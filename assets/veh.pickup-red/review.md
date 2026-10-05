@@ -1,6 +1,6 @@
 # Production review — veh.pickup-red
 
-Four paired 960×540 / 24-sample comparison rounds completed. Final hero is
+Five paired 960×540 / 24-sample comparison rounds completed. Final hero is
 1600×900 / 96 samples. The model retains the red/ivory single-cab silhouette,
 open red ribbed bed, squared wheel openings, chunky tread, perforated steel rims,
 three-bar grille, diamond emblem, rectangular warm lamps, mirrors, handles,
@@ -24,3 +24,6 @@ in browser-check.json and flicker-check.json.
 
 Remaining aesthetic simplifications: fine reference surface wear and optical
 lens refraction. Clean stylized finish is intentional. No real brand names.
+
+Export geometry uses fixed triangulation, sorted merge inputs, and 10 µm vertex
+precision to stabilize repeated builds.
