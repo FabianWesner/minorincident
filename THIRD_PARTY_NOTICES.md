@@ -35,6 +35,8 @@ copyright 2025 Bruno Simon):
 | `InstancedGroup.js` (41046b5) | `src/render/InstancedGroup.ts` — shared mesh batches and dirty placement updates |
 | `PreRenderer.js` (41046b5) | `src/render/GameView.ts`, `src/Game.ts` — shader warm-up before screenshotReady (compileAsync plus two rendered frames) |
 
+| `Explosions.js` (41046b5) | `src/sim/combat/Damage.ts` — radial splash falloff and direction-scaled impulse, without singleton/render dependencies |
+
 All folio-2025 adaptations above reference commit `41046b5`.
 
 ## Bruno Simon MIT license
