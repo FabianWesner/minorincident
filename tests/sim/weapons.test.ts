@@ -79,6 +79,7 @@ for (const side of ['LEFT', 'RIGHT'] as const) for (const def of Object.values(c
   if (def.effect?.kind === 'smoke') w.combat!.effects.noise({ x: 0, z: 0 }, 25, 'weapon.pistol');
   fire(w, side, { x: 1, z: 0 }, { x: 1, z: 0 }); if (def.id === 'weapon.kick') expect(w.entities.get(1)!.survivor!.animation).toBe('kick'); step(w, 120);
   expect(w.events.events().some((e) => e.type === 'combat.attack' && e.actionId === def.id && e.side === side)).toBe(true);
+  if (def.effect) expect(w.events.events().some((e) => e.type === 'combat.effect' && e.actionId === def.id && e.kind === def.effect!.kind)).toBe(true);
   if (def.damage || def.status) { expect(w.events.events().some((e) => e.type === 'combat.hit' && e.actionId === def.id && e.targetId === target)).toBe(true); if (def.status) expect(w.entities.get(target)!.combat!.statuses.some((s) => s.kind === def.status!.kind)).toBe(true); }
   else if (def.effect?.kind === 'lure') expect(w.entities.get(target)!.hearing!.mode).toBe('lured');
   else if (def.effect?.kind === 'smoke') expect(w.entities.get(target)!.hearing!.mode).toBe('idle');
