@@ -35,6 +35,7 @@ export interface SSTestApi {
     /** Begin at scenario tick zero so seed + frames are sufficient for replay. */
     record(): void; stopRecording(): Recording; replay(data: Recording): Promise<void>;
   };
+  /** E06: action IDs spawn walk-over pickups; infected options include reactive hearing fixtures. */
   spawn(defId: string, pos: { x: number; z: number }, opts?: object): number;
   teleport(entityId: number | 'player', pos: { x: number; z: number }): void;
   /** E04: cosmetic selection and sim entry points; weapon and mission resolution remain separate. */
@@ -89,6 +90,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       replay: async (data) => { await game.loadScenario(data.level, data.seed); game.clock.pause(); game.input.recorder.play(data); },
     },
     spawn: (id, pos, opts) => {
+      if (game.world.combat && (id.startsWith('weapon.') || id.startsWith('ability.'))) return game.world.combat.pickups.spawn(id, pos);
       if (game.world.infected) return game.world.infected.spawn(id, pos, opts);
       if (game.world.combat) return game.world.spawnDummy(id, pos, opts);
       throw new Error('Load an infected or combat scenario before spawning');

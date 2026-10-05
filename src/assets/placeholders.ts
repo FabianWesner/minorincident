@@ -1,9 +1,14 @@
-import { BoxGeometry, CapsuleGeometry, Group, Mesh, MeshBasicNodeMaterial } from 'three/webgpu';
+import { BoxGeometry, CapsuleGeometry, Group, Mesh, MeshBasicNodeMaterial, SphereGeometry } from 'three/webgpu';
 import { color, positionLocal, mix } from 'three/tsl';
 import type { AssetDef } from './types';
 
 /** Contract-complete placeholders keep gameplay independent of art status. */
 export function placeholder(def: AssetDef): Group {
+  if (def.actionCategory) {
+    const model = actionPlaceholder(def.actionCategory, def.id);
+    for (const name of new Set([...def.requiredNodes, ...def.animatedNodes, ...def.sockets, ...def.frontNodes])) if (!model.getObjectByName(name)) { const node = new Group(); node.name = name; if (def.frontNodes.includes(name)) node.position.x = 0.75; model.add(node); }
+    return model;
+  }
   const root = new Group(); root.name = def.id; root.userData.placeholder = true;
   const material = new MeshBasicNodeMaterial();
   material.name = 'asset.placeholder'; material.userData.placeholder = true;
@@ -25,5 +30,16 @@ export function placeholder(def: AssetDef): Group {
     } else if (def.animatedNodes.includes(name)) node.add(new Mesh(new BoxGeometry(.05, .05, .05), material));
     root.add(node);
   }
+  return root;
+}
+
+/** +X-forward, origin-at-grip placeholders obey the same socket contract as GLBs. */
+export function actionPlaceholder(category: string, id = ''): Group {
+  const root = new Group(); root.name = 'root'; root.userData.placeholder = true;
+  const grip = new Group(); grip.name = 'grip'; root.add(grip);
+  const material = new MeshBasicNodeMaterial({ color: category === 'throwable' ? '#e28b43' : '#ffd166' }); material.name = 'pal_woodWarm';
+  const body = new Mesh(id === 'wpn.fists' || id === 'wpn.kick' ? new SphereGeometry(0.045, 8, 6) : category === 'throwable' || category === 'ability' ? new SphereGeometry(0.12, 10, 6) : new BoxGeometry(category === 'ranged' ? 0.5 : 0.8, 0.09, 0.09), material);
+  body.name = 'body'; body.position.x = id === 'wpn.fists' || id === 'wpn.kick' ? 0 : category === 'melee' ? 0.35 : category === 'ranged' ? 0.2 : 0; root.add(body);
+  const socket = new Group(); socket.name = category === 'ranged' ? 'muzzle' : 'tip'; socket.position.x = category === 'ranged' ? 0.45 : 0.75; root.add(socket);
   return root;
 }
