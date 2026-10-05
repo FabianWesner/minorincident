@@ -10,10 +10,8 @@ async function load(def = missionSandbox()) {
   const api = missionControls(world); api.begin(); return api;
 }
 function step(ticks = 1) { for (let i = 0; i < ticks; i++) world.update(); }
-function teleport(id: number, x = 5, z = 0) { const e = world.entities.get(id)!; Object.assign(e.transform, { x, z }); world.spatial.set(id, x, z); if (id === 1) world.physics.playerBody!.setTranslation(e.transform, true); }
-function kill(id: number) {
-  world.combat!.damage.apply({ targetId: id, sourceId: 1, attackId: 1, actionId: 'weapon.bat', origin: { x: 0, z: 0 }, direction: { x: 0, z: 0 }, base: 10000, multiplier: 1, type: 'explosive', knockback: 0, stagger: 0 });
-}
+function teleport(id: number, x = 5, z = 0) { missionControls(world).teleport(id,{x,z}); }
+function kill(id: number) { const actor=Object.entries(world.missions!.state.actors).find(([,entity])=>entity===id)![0]; missionControls(world).damageActor(actor,10000); }
 for (const type of objectiveTypes) test(`T-E12-02-${type} @E12 @E12-AC02 mission-sandbox completes ${type} through sim controls`, async () => {
   const api = await load(missionSandbox(type)), actors = api.state()!.actors;
   switch (type) {
@@ -69,4 +67,21 @@ test('@E12 volume enter/exit latches, stand-to-interact cancels outside, filtere
   world.dispose(); const stand = await load(missionSandbox('interact')); teleport(1); step(35); expect(stand.state()!.phase).toBe('playing'); teleport(1, 0); step(); teleport(1); step(35); expect(stand.state()!.phase).toBe('playing'); step(); expect(stand.state()!.phase).toBe('result');
   world.dispose(); const eventDef = missionSandbox('custom'); eventDef.steps[0].complete = { kind: 'event', type: 'device.used', actor: 'car', count: 2 }; const events = await load(eventDef);
   events.signal('device.used','escort'); step(); events.signal('device.used','car'); step(); expect(events.state()!.phase).toBe('playing'); events.signal('device.used','car'); step(); expect(events.state()!.phase).toBe('result');
+});
+test('@E12 @E12-AC05 a boss killed after C stays dead and its restored objective is completable',async()=>{
+  const def=missionSandbox('kill');def.steps.push({...def.steps[0],id:'next',type:'reach',start:{kind:'objectives',ids:['kill'],mode:'all'},complete:{kind:'volume',anchor:'goal',edge:'inside'}});def.finish=['next'];
+  const api=await load(def);api.checkpoint('C');const boss=api.state()!.actors.boss;kill(boss);step();expect(api.state()!.completedObjectives).toEqual(['kill']);world.player!.damage(1000,world.tick);step(120);
+  expect(world.entities.get(boss)!.health.current).toBe(0);step();expect(api.state()!.completedObjectives).toEqual(['kill']);api.completeObjective('next');expect(api.state()!.phase).toBe('result');
+});
+test('@E12 scripted spawn/migration/gate/item/time/state/checkpoint/marker actions are observable and gates collide',async()=>{
+  const def=missionSandbox();def.onStart.push({kind:'migration',group:'actors',to:'goal'},{kind:'timeOfDay',value:'L5'},{kind:'state',key:'power',value:true},{kind:'grant',item:'fuse'},{kind:'checkpoint',id:'C'},{kind:'marker',anchor:'goal'});
+  def.steps[0].onComplete=[{kind:'gate',id:'exit',open:true}];
+  const api=await load(def);expect(api.state()!).toMatchObject({items:['fuse'],states:{power:true},timeOfDay:'L5',checkpoint:'C',marker:'goal'});
+  expect(world.events.events()).toContainEqual({type:'migration.started',id:'actors',to:def.anchors.goal,tick:0});
+  const gates: boolean[]=[];world.physics.world!.colliders.forEach(c=>{if(c.translation().x===5)gates.push(c.isEnabled());});expect(gates).toEqual([true]);
+  api.completeObjective();expect(api.state()!.gates.exit).toBe(true);
+});
+test('@E12 @E12-AC04 a completed timed objective cannot fail while another parallel task continues',async()=>{
+  const def=missionSandbox();def.steps[0].timer=120;def.steps.push({...def.steps[0],id:'parallel',type:'custom',timer:undefined,complete:{kind:'state',key:'power',equals:true}});def.finish=['reach','parallel'];
+  const api=await load(def);teleport(1);step();expect(api.state()!.steps.reach.status).toBe('completed');step(7201);expect(api.state()!.phase).toBe('playing');expect(world.events.events().some(e=>e.type==='mission.failed')).toBe(false);api.setState('power',true);step();expect(api.state()!.phase).toBe('result');
 });

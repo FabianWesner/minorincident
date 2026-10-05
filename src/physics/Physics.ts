@@ -29,9 +29,9 @@ export class Physics implements Lifecycle {
     if (scenario.survivor) this.world.step();
   }
   /** Static layout/blocker AABBs become fixed Rapier colliders at level load only. */
-  addStatic(aabb: Aabb, origin: [number,number]): void {
+  addStatic(aabb: Aabb, origin: [number,number]): number {
     const half = aabb.max.map((v,i)=>(v-aabb.min[i])/2);
-    this.world!.createCollider(RAPIER.ColliderDesc.cuboid(half[0],half[1],half[2]).setTranslation((aabb.min[0]+aabb.max[0])/2+origin[0],(aabb.min[1]+aabb.max[1])/2,(aabb.min[2]+aabb.max[2])/2+origin[1]));
+    return this.world!.createCollider(RAPIER.ColliderDesc.cuboid(half[0],half[1],half[2]).setTranslation((aabb.min[0]+aabb.max[0])/2+origin[0],(aabb.min[1]+aabb.max[1])/2,(aabb.min[2]+aabb.max[2])/2+origin[1])).handle;
   }
   update(): void { if (this.world) { this.world.timestep = FIXED_DT; this.world.step(); } }
   reset(): void { this.characterController = null; this.playerCollider = null; this.playerBody = null; this.world?.free(); this.world = null; }

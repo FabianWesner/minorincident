@@ -27,7 +27,7 @@ export class SimWorld implements Lifecycle {
   missions: Mission | null = null;
   get inputFrame(): InputFrame { return this.input; }
   /** Attach a validated mission after scenario/composition assembly. */
-  loadMission(def: MissionDef): Mission { this.missions?.dispose(); return this.missions = new Mission(this, def); }
+  loadMission(def: MissionDef): Mission { const next=new Mission(this,def);this.missions?.dispose();return this.missions=next; }
   /** Level-owned records survive player death; scenario unload clears them. */
   mission: GameStateSnapshot['mission'] = null;
   progression: GameStateSnapshot['progression'] = null;
@@ -86,8 +86,18 @@ export class SimWorld implements Lifecycle {
     this.events.on('sim.tick',()=>{
       if(this.tick%60!==0)return;
       const player=this.entities.get(1)!;
-      for(const fire of districts.fires)if((player.transform.x-fire.x)**2+(player.transform.z-fire.z)**2<=fire.radius**2)this.player!.damage(fire.damagePerSecond,this.tick);
+      for(const fire of this.districts!.fires)if((player.transform.x-fire.x)**2+(player.transform.z-fire.z)**2<=fire.radius**2)this.player!.damage(fire.damagePerSecond,this.tick);
     },SimPhase.combat);
+  }
+  /** Mission script integration: rebuild decay collision/nav once on a tier change. */
+  setTier(tier: 0|1|2|3|4|5): void {
+    const previous = this.districts; if (!previous || previous.composition.tier === tier) return;
+    const next = new DistrictWorld({...previous.composition,tier},previous.districts.map(d=>d.layout),this.seed);
+    this.districts = next;
+    const {min,max}=next.nav, player=this.entities.get(1)!;
+    this.physics.load({name:next.composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:player.transform});
+    for(const d of next.districts)for(const aabb of d.decay.colliders.map(c=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
+    this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step();
   }
   setInput(patch: Partial<InputFrame>): void {
     const next = { ...this.input, ...structuredClone(patch) };

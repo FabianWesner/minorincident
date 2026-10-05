@@ -13,7 +13,7 @@ export interface ScenarioDefinition {
   player: { x: number; y: number; z: number };
 }
 export function loadScenarioDefinition(name: string): ScenarioDefinition {
-  const definition = name === 'combat-arena' ? combatArena : name === 'empty' ? empty : name === 'lookdev' ? lookdev : survivorScenarios[name] ?? null;
+  const definition = name === 'mission-sandbox' ? { ...combatArena, name } : name === 'combat-arena' ? combatArena : name === 'empty' ? empty : name === 'lookdev' ? lookdev : survivorScenarios[name] ?? null;
   if (!definition) throw new Error(`Unknown scenario: ${name}`);
   if (definition.ground.width <= 0 || definition.ground.depth <= 0 || !Object.values(definition.player).every(Number.isFinite)) throw new Error(`Invalid ${name} scenario`);
   return structuredClone(definition);

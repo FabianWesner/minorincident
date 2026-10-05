@@ -58,6 +58,13 @@ export class Player {
     if (this.entity.survivor!.diedAt !== null) return;
     this.action = action; this.actionUntil = tick + actionTicks[action]; this.animate(action, tick); this.entity.survivor!.animationTick = tick;
   }
+  /** Missions restore serialized records, then reset controller-local damage/action timers. */
+  restoreVitals(tick: number): void {
+    const state=this.entity.survivor!;
+    this.entity.health.current=this.entity.health.max; state.diedAt=null; state.invulnerableUntil=tick;
+    this.lastDamage=-Infinity; this.action=null; this.locomotion.reset(); state.velocity=this.locomotion.velocity;
+    this.animate('idle',tick);
+  }
   setCheckpoint(position: { x: number; y: number; z: number }): void {
     if (!Object.values(position).every(Number.isFinite)) throw new RangeError('Checkpoint must be finite');
     Object.assign(this.entity.survivor!.checkpoint, position);
