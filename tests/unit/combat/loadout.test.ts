@@ -17,3 +17,14 @@ test('T-E05-phases @E05 windup, active and recovery are fixed tick phases and in
   expect(starts).toEqual([1, 31]); expect(hits).toEqual([7]);
   runner.update(frame, 36, false, () => {}, () => {}); expect(runner.running.LEFT).toBeUndefined();
 });
+
+test('T-E05-slot-timers @E05 rack cycling preserves ammo, charge timers and reloads', () => {
+  const rack = new Loadout(['weapon.pistol', 'weapon.grenade'], ['weapon.bat']);
+  const pistol = rack.current('LEFT');
+  for (let tick = 1; tick <= 76; tick += 15) rack.spend('LEFT', tick, action('weapon.pistol'), false);
+  const frame = emptyInput(); frame.selector = 1; rack.input(frame, 77); rack.update(92, () => {});
+  expect(pistol.magazine).toBe(0); expect(rack.current('LEFT').id).toBe('weapon.grenade');
+  rack.spend('LEFT', 92, action('weapon.grenade'), false); const grenade = rack.current('LEFT');
+  rack.input(frame, 100); rack.update(136, () => {}); expect(pistol.magazine).toBe(6);
+  rack.update(811, () => {}); expect(grenade.charges).toBe(1); rack.update(812, () => {}); expect(grenade.charges).toBe(2);
+});

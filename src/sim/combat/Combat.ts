@@ -1,3 +1,4 @@
+import { Rng } from '../../core/Rng';
 import { ActionRunner, type Attack } from './ActionRunner';
 import { Loadout } from './Loadout';
 import { Damage } from './Damage';
@@ -12,6 +13,7 @@ import type { ScenarioDefinition } from '../../levels/loader';
 interface Projectile { attack: Attack; x: number; y: number; z: number; from: Vec2; landing: Vec2 | null; flightTicks: number; travelled: number; landed: boolean }
 /** Small combat composition for E05; AI/catalog/VFX consume the same components and events. */
 export class Combat {
+  private readonly rng: Rng;
   readonly query: HitQuery;
   readonly damage: Damage;
   readonly status: Status;
@@ -21,6 +23,7 @@ export class Combat {
   private readonly direction = { x: 1, z: 0 };
   private readonly origin = { x: 0, z: 0 };
   constructor(private readonly world: SimWorld, readonly definition: ScenarioDefinition) {
+    this.rng = new Rng(world.seed, 'combat');
     this.query = new HitQuery(world.entities, world.spatial, definition.walls ?? []);
     this.damage = new Damage(world); this.status = new Status(world); this.assist = new AimAssist(world.entities, this.query);
     this.runner = new ActionRunner(1, new Loadout(['weapon.bat', 'weapon.pistol'], ['weapon.grenade', 'ability.ground-slam']));
@@ -33,7 +36,7 @@ export class Combat {
   }
   setLoadout(left: string[], right: string[]): void {
     const loadout = new Loadout(left, right), infinite = this.runner.infiniteCharges;
-    this.runner = new ActionRunner(1, loadout); this.runner.infiniteCharges = infinite; this.attach();
+    this.runner = new ActionRunner(1, loadout, this.runner.lastAttackId); this.runner.infiniteCharges = infinite; this.attach();
   }
   intent(frame: InputFrame): void {
     this.runner.loadout.update(this.world.tick, this.switched);
@@ -48,7 +51,13 @@ export class Combat {
   private readonly switched = (side: 'LEFT' | 'RIGHT', actionId: string): void => { this.world.events.emit({ type: 'loadout.switched', tick: this.world.tick, sourceId: 1, side, actionId }); };
   private readonly started = (attack: Attack): void => {
     const source = this.world.entities.get(attack.sourceId)!;
-    if (attack.def.category === 'ranged') this.assist.apply(source.id, source.transform, attack.aim, attack.def.range);
+    if (attack.def.category === 'ranged') {
+      this.assist.apply(source.id, source.transform, attack.aim, attack.def.range);
+      if (attack.def.spread) {
+        const angle = Math.atan2(attack.aim.z, attack.aim.x) + (this.rng.next() - 0.5) * attack.def.spread * Math.PI / 180;
+        attack.aim.x = Math.cos(angle); attack.aim.z = Math.sin(angle);
+      }
+    }
     this.world.events.emit({ type: 'combat.attack', tick: this.world.tick, attackId: attack.id, actionId: attack.def.id, sourceId: source.id, side: attack.side, position: { ...source.transform }, direction: { ...attack.aim } });
     this.world.player?.act(attack.def.category === 'melee' || attack.def.category === 'ability' ? 'swing' : attack.def.category === 'throwable' ? 'throw' : 'shoot', this.world.tick);
   };
@@ -120,6 +129,6 @@ export class Combat {
   }
   snapshot() {
     const attack = (a: Attack) => ({ id: a.id, sourceId: a.sourceId, side: a.side, actionId: a.def.id, aim: a.aim, aimPoint: a.aimPoint, started: a.started, activeAt: a.activeAt, recoveryAt: a.recoveryAt, endsAt: a.endsAt, resolved: a.resolved, hit: [...a.hit] });
-    return { running: Object.values(this.runner.running).map(attack), projectiles: this.projectiles.map((p) => ({ ...p, attack: attack(p.attack) })) };
+    return { sequence: this.runner.lastAttackId, rng: this.rng.snapshot(), god: this.damage.god, infiniteCharges: this.runner.infiniteCharges, aimAssist: this.assist.setting, water: this.status.water, running: Object.values(this.runner.running).map(attack), projectiles: this.projectiles.map((p) => ({ ...p, attack: attack(p.attack) })) };
   }
 }
