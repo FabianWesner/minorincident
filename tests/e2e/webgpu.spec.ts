@@ -1,7 +1,7 @@
 import { expect, test, testUrl } from './fixtures';
 import { mkdirSync, writeFileSync } from 'node:fs';
 
-/** Opt-in headed, real-GPU proof; SwiftShader goldens never run through this project. */
+/** Opt-in WebGPU proofs; SwiftShader WebGL goldens never run through these projects. */
 test('T-E02-01b @E02 @E02-AC01 an available native GPU selects WebGPU and renders lookdev', async ({ page }) => {
   await page.goto(testUrl.replace('&renderer=webgl', ''));
   await page.waitForFunction(() => Boolean(window.__SS__));
@@ -23,7 +23,10 @@ test('T-E07-12-native @E07 @E07-AC12 native WebGPU renders the same instanced in
   const proof = await page.evaluate(async () => {
     const api = window.__SS__!; await api.ready; api.pause(); await api.loadScenario('horde-arena'); api.pause(); api.cheats.god(true);
     for (let i = 0; i < 200; i++) api.spawn('infected.runner', { x: i % 20 * 0.8 - 8, z: Math.floor(i / 20) * 0.8 - 4 }, { state: 'chase' });
-    await api.step(30); await api.screenshotReady(); return { state: api.getState().render, perf: api.perf() };
+    await api.step(30); await api.screenshotReady();
+    const gpu = (navigator as Navigator & { gpu?: { requestAdapter(): Promise<{ info?: { vendor: string; architecture: string; device: string; description: string } } | null> } }).gpu;
+    const adapter = await gpu?.requestAdapter();
+    return { state: api.getState().render, perf: api.perf(), adapter: adapter?.info ? { vendor: adapter.info.vendor, architecture: adapter.info.architecture, device: adapter.info.device, description: adapter.info.description } : null };
   });
   expect(proof.state.backend).toBe('webgpu'); expect(proof.state.crowd!.meshDrawCalls).toBeLessThanOrEqual(30); expect(proof.state.crowd!.nonInstancedMeshes).toBe(0);
   expect(proof.state.crowd!.batches.find((b) => b.id === 'infected.runner')!.instances).toBe(200);

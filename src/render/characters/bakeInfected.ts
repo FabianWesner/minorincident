@@ -1,5 +1,5 @@
 // Runtime adaptation of E17 bake-crowd.ts and Bruno InstancedGroup.js (MIT).
-import { BufferAttribute, Matrix4, Mesh, type Group, type Object3D, type MeshBasicMaterial } from 'three';
+import { BufferAttribute, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, type Group, type Object3D, type MeshBasicMaterial } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { characterNodes, type AnimationState } from '../../data/survivor';
 import { clips } from './clips';
@@ -52,6 +52,19 @@ export function bakeInfected(root: Group) {
     geometries.push(geometry);
   });
   const geometry = mergeGeometries(geometries); if (!geometry) throw new Error('Infected geometry merge failed'); for (const source of geometries) source.dispose();
+  // WebGPU guarantees eight vertex buffers. Six static attributes share one buffer,
+  // leaving room for the instance matrix, tint, clip frame and limb mask (five total).
+  const names = ['position', 'normal', 'color', '_shirt', '_emissive', '_part_index'];
+  const attributes = names.map((name) => geometry.getAttribute(name));
+  const stride = attributes.reduce((sum, attribute) => sum + attribute.itemSize, 0);
+  const data = new InterleavedBuffer(new Float32Array(attributes[0].count * stride), stride);
+  let offset = 0;
+  for (let a = 0; a < attributes.length; a++) {
+    const attribute = attributes[a];
+    for (let i = 0; i < attribute.count; i++) for (let c = 0; c < attribute.itemSize; c++) data.array[i * stride + offset + c] = attribute.getComponent(i, c);
+    geometry.setAttribute(names[a], new InterleavedBufferAttribute(data, attribute.itemSize, offset));
+    offset += attribute.itemSize;
+  }
   const clip: CrowdClip = { parts: characterNodes.slice(), frames: framesPerClip * infectedClips.length, duration: infectedClips.length, matrices };
   return { geometry, clip, shirtColor };
 }

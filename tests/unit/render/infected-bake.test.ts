@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { BoxGeometry, Group, Mesh, MeshBasicMaterial, Vector3 } from 'three';
+import { BoxGeometry, Group, InterleavedBufferAttribute, Mesh, MeshBasicMaterial, Vector3 } from 'three';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
 import { createInfectedPlaceholder } from '../../../src/render/characters/infectedPlaceholder';
 
@@ -15,7 +15,10 @@ test('T-E07-bake @E07 @E07-AC12 merged infected geometry excludes hidden ancesto
   expect(baked.clip.matrices.every(Number.isFinite)).toBe(true);
   const part = baked.geometry.getAttribute('_part_index'), emissive = baked.geometry.getAttribute('_emissive');
   expect(part.count).toBe(baked.geometry.getAttribute('position').count);
-  expect(Array.from(emissive.array).some((value) => value === 1)).toBe(true);
+  expect(Array.from({ length: emissive.count }, (_, i) => emissive.getX(i)).some((value) => value === 1)).toBe(true);
+  const attributes = ['position', 'normal', 'color', '_shirt', '_emissive', '_part_index'].map((name) => baked.geometry.getAttribute(name));
+  expect(attributes.every((attribute) => attribute instanceof InterleavedBufferAttribute)).toBe(true);
+  expect(new Set(attributes.map((attribute) => (attribute as InterleavedBufferAttribute).data)).size).toBe(1);
   expect(baked.geometry.groups).toHaveLength(0);
   baked.geometry.dispose();
   model.traverse((node) => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose(); } });
