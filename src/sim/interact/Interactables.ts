@@ -7,6 +7,7 @@ import type { CoverWall } from '../combat/HitQuery';
 
 export const deviceKinds = ['door', 'gate', 'generator', 'breaker', 'switch', 'lever', 'valve', 'button', 'radio', 'rescue', 'car-door'] as const;
 export type DeviceKind = typeof deviceKinds[number];
+const isDoor = (kind: DeviceKind) => kind === 'door' || kind === 'gate' || kind === 'car-door';
 /** Serialized interaction component. Door cycles re-arm on exit, never while standing inside. */
 export interface Interactable {
   kind: DeviceKind; radius: number; holdTime: number; instant: boolean; interruptOnDamage: boolean;
@@ -41,7 +42,7 @@ export class Interactables {
       interactable: { kind, radius: opts.radius ?? 1.5, holdTime: opts.holdTime ?? (kind === 'generator' ? 3 : .6), instant: opts.instant ?? true, interruptOnDamage: opts.interruptOnDamage ?? true,
         progress: 0, completed: false, enabled: true, hint: '', label: opts.label ?? kind, key: opts.key ?? null, requires: opts.requires ?? [], open: false, barricaded: false, fuel: opts.fuel ?? 0, powered: false, interruptedAt: -1, cycle: 0 } });
     this.world.spatial.set(entity.id, pos.x, pos.z);
-    if (kind === 'door' || kind === 'gate' || kind === 'car-door') this.block(entity.id, { ...pos, y: .7, halfX: opts.halfX ?? .5, halfY: .7, halfZ: opts.halfZ ?? .15 });
+    if (isDoor(kind)) this.block(entity.id, { ...pos, y: .7, halfX: opts.halfX ?? .5, halfY: .7, halfZ: opts.halfZ ?? .15 });
     return entity.id;
   }
   /** Inventory survives player respawn and is cleared by scenario unload. */
@@ -76,7 +77,7 @@ export class Interactables {
   private complete(id: number): void {
     const entity = this.world.entities.get(id)!, c = entity.interactable!;
     c.completed = true; c.progress = 1; c.hint = '';
-    if (['door', 'gate', 'car-door'].includes(c.kind)) {
+    if (isDoor(c.kind)) {
       c.open = !c.open;
       if (c.open) { const b = this.blockers.get(id); if (b) this.doorWalls.set(id, b.wall); this.unblock(id); }
       else this.block(id, this.doorWalls.get(id)!);
@@ -92,7 +93,7 @@ export class Interactables {
       const c = e.interactable; if (!c) continue;
       if (c.powered && c.kind === 'generator') { c.fuel = Math.max(0, c.fuel - 1 / 60); if (c.fuel <= 1e-9) { c.fuel = 0; c.powered = false; c.completed = false; c.progress = 0; } }
       const distance = (e.transform.x - p.transform.x) ** 2 + (e.transform.z - p.transform.z) ** 2;
-      if (c.completed && ['door', 'gate', 'car-door'].includes(c.kind) && distance > c.radius ** 2) { c.completed = false; c.progress = 0; c.cycle++; }
+      if (c.completed && isDoor(c.kind) && distance > c.radius ** 2) { c.completed = false; c.progress = 0; c.cycle++; }
       if (p.health.current > 0 && c.enabled && !c.completed && distance <= c.radius ** 2 && distance < nearest) { nearest = distance; this.activeId = e.id; }
     }
     for (const e of this.world.entities.iterate()) {
