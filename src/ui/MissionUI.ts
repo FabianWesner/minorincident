@@ -86,8 +86,9 @@ export class MissionUI {
       const extent=100;
       for(const s of mission.def.steps){
         let pin=this.pins.get(s.id);if(!pin){pin=document.createElement('span');pin.className='mission-map-pin';pin.dataset.objective=s.id;this.map.append(pin);this.pins.set(s.id,pin);}
-        pin.hidden=state.steps[s.id].status!=='active';const a=mission.def.anchors[s.anchor];
-        pin.style.left=`${50+Math.max(-40,Math.min(40,(a.x-player.transform.x)/extent*40))}%`;pin.style.top=`${50+Math.max(-40,Math.min(40,(a.z-player.transform.z)/extent*40))}%`;
+        pin.hidden=state.steps[s.id].status!=='active';if(pin.hidden)continue;const a=mission.def.anchors[s.anchor];
+        const dx=(a.x-player.transform.x)/extent*40,dy=(a.z-player.transform.z)/extent*40,scale=Math.min(1,40/Math.max(1,Math.hypot(dx,dy)));
+        pin.style.left=`${50+dx*scale}%`;pin.style.top=`${50+dy*scale}%`;
       }
     }else{this.toast.hidden=true;}
   }
