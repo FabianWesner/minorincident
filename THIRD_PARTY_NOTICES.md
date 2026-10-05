@@ -17,6 +17,11 @@ copyright 2025 Bruno Simon):
 | `Inputs/Inputs.js` | `src/input/Buttons.ts` — action sources and latched edges |
 | `Inputs/Keyboard.js` | `src/input/devices/Keyboard.ts` — keys, blur release and disposal |
 
+| `Inputs/Inputs.js` | `src/input/InputSystem.ts` — input phase, action map and schemes |
+| `Inputs/Pointer.js` | `src/input/devices/Pointer.ts` — mouse events and suppression |
+| `Inputs/Wheel.js` | `src/input/devices/Wheel.ts` — normalized selector direction |
+| `RayCursor.js`, `Inputs/Nipple.js` | `src/input/devices/RayCursor.ts` — ground-plane ray math |
+
 ## Bruno Simon MIT license
 
 Copyright (c) 2025 Bruno Simon
