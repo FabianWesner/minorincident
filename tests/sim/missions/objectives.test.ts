@@ -98,3 +98,10 @@ test('@E12 @E12-AC09 optional objective achievement is counted once across check
 test('@E12 @E12-AC06 a skippable failure cinematic ends on Retry',async()=>{
   const def=missionSandbox();def.steps[0].timer=1/60;def.steps[0].onFail=[{kind:'cinematic',id:'twist'}];const api=await load(def);step();expect(api.state()!.phase).toBe('cinematic');world.setInput({interact:true});step(30);expect(api.state()!.phase).toBe('retry');expect(api.state()!.failure).toBe('timeout');
 });
+
+test('@E12 @E12-AC05 restoring a checkpoint clears later transient E06 action effects', async () => {
+  const api = await load(); world.combat!.setLoadout(['weapon.bat'], ['ability.shield-bubble']); api.checkpoint('C');
+  world.setInput({ right: { down: true, held: true, up: false } }); step(30);
+  expect(world.combat!.effects.zones).toHaveLength(1);
+  api.restore('C'); expect(world.combat!.effects.zones).toHaveLength(0);
+});
