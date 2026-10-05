@@ -12,3 +12,10 @@ test('T-E06-01b @E06 @E06-AC01 rejects missing fields and malformed catalog exte
   for (const key of Object.keys(base).filter((key) => !['effect', 'pellets', 'distanceFalloff'].includes(key))) { const def = { ...base }; delete def[key as keyof typeof def]; expect(() => validateAction(def), key).toThrow(); }
   for (const patch of [{ pellets: 0 }, { distanceFalloff: { start: 12, end: 3, minimum: 0.1 } }, { effect: { kind: 'fire', radius: -1, duration: 6 } }]) expect(() => validateAction({ ...base, ...patch } as typeof base)).toThrow();
 });
+
+test('T-E06-01c @E06 @E06-AC01 tuning survives schema limits at all tiers', () => {
+  for (const def of Object.values(catalog)) {
+    expect(def.range).toBeLessThanOrEqual(40); expect(def.damage).toBeLessThanOrEqual(200); expect(def.tier).toBeLessThanOrEqual(2);
+    expect(def.windup + def.active + def.recovery).toBeLessThanOrEqual(1.5); expect(def.upgradeHooks.length).toBeGreaterThan(0);
+  }
+});
