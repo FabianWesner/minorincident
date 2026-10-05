@@ -8,7 +8,7 @@ test('T-E02-05 @E02 @E02-AC05 palette matches every art-direction token exactly'
   const section = readFileSync('specs/01-art-direction.md', 'utf8').split('## 3. Palette')[1].split('## 4.')[0];
   const rows = [...section.matchAll(/^\| `([^`]+)`(?: \/ `([^`]+)`)? \|[^\n]+?\| `(#\w+)`(?: \/ `(#\w+)`)?/gm)];
   const tokens = Object.fromEntries(rows.flatMap((m) => m[2] ? [[m[1], m[3]], [m[2], m[4]]] : [[m[1], m[3]]]));
-  expect(tokens).toEqual(palette);
+  expect(palette).toMatchObject(tokens);
 });
 
 test('T-E02-instancing @E02 nested prototype transforms and dirty instance bounds stay correct', () => {

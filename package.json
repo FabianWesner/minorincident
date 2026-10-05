@@ -18,6 +18,7 @@
     "test:smoke": "vitest run -t @smoke && playwright test --grep @smoke",
     "verify": "tsx tools/verify.ts",
     "sim": "tsx tools/sim-runner/index.ts",
+    "assets:optimize": "tsx tools/assets/optimize.ts",
     "assets:validate": "tsx tools/assets/validate.ts",
     "assets:crop": "tsx tools/assets/crop.ts",
     "assets:turntable": "tsx tools/assets/turntable.ts",
