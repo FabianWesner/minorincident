@@ -85,3 +85,7 @@ test('@E12 @E12-AC04 a completed timed objective cannot fail while another paral
   const def=missionSandbox();def.steps[0].timer=120;def.steps.push({...def.steps[0],id:'parallel',type:'custom',timer:undefined,complete:{kind:'state',key:'power',equals:true}});def.finish=['reach','parallel'];
   const api=await load(def);teleport(1);step();expect(api.state()!.steps.reach.status).toBe('completed');step(7201);expect(api.state()!.phase).toBe('playing');expect(world.events.events().some(e=>e.type==='mission.failed')).toBe(false);api.setState('power',true);step();expect(api.state()!.phase).toBe('result');
 });
+test('@E12 @E12-AC05 restoring an inside-volume checkpoint does not invent a new enter edge',async()=>{
+  const def=missionSandbox();def.steps[0].complete={kind:'all',triggers:[{kind:'volume',anchor:'goal',edge:'enter'},{kind:'state',key:'power',equals:true}]};const api=await load(def);
+  teleport(1);step();api.checkpoint('C');teleport(1,0);step();api.restore('C');api.setState('power',true);step();expect(api.state()!.phase).toBe('playing');teleport(1,0);step();teleport(1);step();expect(api.state()!.phase).toBe('result');
+});
