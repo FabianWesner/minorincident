@@ -52,7 +52,8 @@ export class Interactables {
   refuel(id: number, seconds: number): void {
     const c = this.world.entities.get(id)?.interactable;
     if (c?.kind !== 'generator' || !Number.isFinite(seconds) || seconds <= 0) throw new RangeError('Invalid refuel');
-    c.fuel += seconds; c.completed = false; c.progress = 0;
+    c.fuel += seconds;
+    if (!c.powered) { c.completed = false; c.progress = 0; }
   }
   /** E26 hook: a barricaded door cannot open until the brace is removed. */
   barricade(id: number, on: boolean): void {
@@ -89,7 +90,7 @@ export class Interactables {
       const c = e.interactable; if (!c) continue;
       if (c.powered && c.kind === 'generator') { c.fuel = Math.max(0, c.fuel - 1 / 60); if (c.fuel <= 1e-9) { c.fuel = 0; c.powered = false; c.completed = false; c.progress = 0; } }
       const distance = (e.transform.x - p.transform.x) ** 2 + (e.transform.z - p.transform.z) ** 2;
-      if (c.completed && c.open !== undefined && ['door', 'gate', 'car-door'].includes(c.kind) && distance > c.radius ** 2) { c.completed = false; c.progress = 0; c.cycle++; }
+      if (c.completed && ['door', 'gate', 'car-door'].includes(c.kind) && distance > c.radius ** 2) { c.completed = false; c.progress = 0; c.cycle++; }
       if (p.health.current > 0 && c.enabled && !c.completed && distance <= c.radius ** 2 && distance < nearest) { nearest = distance; this.activeId = e.id; }
     }
     for (const e of this.world.entities.iterate()) {

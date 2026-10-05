@@ -51,7 +51,9 @@ test('T-E11-devices @E11 generator fuel conditions and all objective device type
   w.setInput({ interact: true }); step(w, 1); expect(w.entities.get(g)!.interactable!.hint).toBe('fuel');
   w.interactables!.refuel(g, 2); step(w, 1); w.clearInput();
   expect(w.entities.get(g)!.interactable!.powered).toBe(true);
-  step(w, 120); expect(w.entities.get(g)!.interactable!.powered).toBe(false);
+  w.interactables!.refuel(g, 1); step(w, 120); expect(w.entities.get(g)!.interactable!.powered).toBe(true);
+  expect(w.events.events().filter(e => e.type === 'interact.completed' && e.id === g)).toHaveLength(1);
+  step(w, 60); expect(w.entities.get(g)!.interactable!.powered).toBe(false);
   move(w, 10);
   for (const kind of ['breaker', 'lever', 'valve', 'button', 'radio', 'rescue', 'car-door', 'gate'] as const) {
     const id = w.interactables!.spawn(kind, { x: 10, z: 0 }, { requires: [`fuse.${kind}`] });
