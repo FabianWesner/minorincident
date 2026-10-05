@@ -9,7 +9,7 @@ export type ProgressionPreset = Record<string, unknown>;
 export type Settings = Parameters<Game['view']['settings']>[0] & { aimAssist?: import('../sim/combat/AimAssist').AimAssistSetting };
 export interface BotStatus { running: boolean; policy: string | null }
 
-/** Version 1.4: E10 composition/decay snapshots and district photo spots. Future-epic methods fail explicitly, never silently. */
+/** Version 1.4: E07 crowds and E10 composition/decay snapshots. Future-epic methods fail explicitly, never silently. */
 export interface SSTestApi {
   version: string;
   ready: Promise<void>;
@@ -88,7 +88,11 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       stopRecording: () => game.input.recorder.stop(),
       replay: async (data) => { await game.loadScenario(data.level, data.seed); game.clock.pause(); game.input.recorder.play(data); },
     },
-    spawn: (id, pos, opts) => game.world.infected ? game.world.infected.spawn(id, pos, opts) : game.world.combat ? game.world.spawnDummy(id, pos, opts) : pending('E07', 'spawn'),
+    spawn: (id, pos, opts) => {
+      if (game.world.infected) return game.world.infected.spawn(id, pos, opts);
+      if (game.world.combat) return game.world.spawnDummy(id, pos, opts);
+      throw new Error('Load an infected or combat scenario before spawning');
+    },
     teleport: (id, pos) => {
       if (!Number.isFinite(pos.x) || !Number.isFinite(pos.z)) throw new RangeError('Position must be finite');
       const player = game.world.entities.get(id === 'player' ? 1 : id);
