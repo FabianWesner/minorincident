@@ -132,4 +132,4 @@ with this report. No push.
 
 ## Asset conformance follow-up
 
-The production audit now has zero forward, missing-LOD, unknown-palette and degenerate-triangle findings across 158 slots. See [conformance/report.md](conformance/report.md) for pipeline changes, verification, reviewed screenshots, density exceptions and remaining source-contract findings.
+The production audit now has zero forward, missing-LOD, unknown-palette and degenerate-triangle findings across 160 slots. See [conformance/report.md](conformance/report.md) for pipeline changes, verification, reviewed screenshots, density exceptions and remaining source-contract findings.

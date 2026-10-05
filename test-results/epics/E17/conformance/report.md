@@ -9,7 +9,7 @@ The four requested groups have no remaining findings in `../validate-production.
 | Unknown `pal_*` material | 97 | 0 |
 | Degenerate triangle | 62 | 0 |
 
-The original audit contained 140 slots. The current audit contains 158: main added ten standalone exports after E17's manifest snapshot, including four hero assets. Those exports are now registered and processed as well. All 73 standalone sources produce optimized runtime GLBs. Of 41 hero chains, 14 use their supplied LOD pairs and 27 generate LOD pairs.
+The original audit contained 140 slots. The current audit contains 160: main added twelve standalone exports after E17's manifest snapshot, including four hero assets. Those exports are now registered and processed as well. All 75 standalone sources produce optimized runtime GLBs. Of 41 hero chains, 14 use their supplied LOD pairs and 27 generate LOD pairs.
 
 ## Changes and reproduction
 
@@ -37,7 +37,7 @@ Reviewed the game-camera captures of the female survivor, civilian woman, red se
 
 ## Remaining limitations and deviations
 
-None of the four requested finding groups remains. The full audit has 471 other findings, listed per asset in `other-findings.json`: dimensions, absent/empty animation nodes and stump-cap contracts, plus budgets. These source/manifest contract issues repeat across LODs and were outside this pass.
+None of the four requested finding groups remains. The full audit has 476 other findings, listed per asset in `other-findings.json`: dimensions, absent/empty animation nodes and stump-cap contracts, plus budgets. These source/manifest contract issues repeat across LODs and were outside this pass.
 
 Generated density exceptions are recorded in `generated-lods.json`. LOD1: bathrobe neighbor 15.1%, screamer 17.14%, sprinter 15.58%, teen skater 15.16%. Bus-stop LOD2 is 7.02%. The simplifier's geometry/error limits and preservation of small separate material parts prevent further reduction under the chosen settings; no LOD is missing.
 
@@ -45,4 +45,4 @@ There is no E09 driving runtime or driving suite in this checkout. Vehicle verif
 
 The initial existing unit integration test invoked Blender and rebuilt the fire-engine twice before its behavior was noticed. Subsequent runs use the committed export with a mocked exporter, exercising the actual optimizer, staging, determinism and exporter-error handling without further art rebuilds. The export-only production batch never invokes Blender. No reference images or protected reference directories were edited.
 
-Main was fast-forward merged at `5e3a23d` before implementation. No dependencies or spec files were changed.
+Main was fast-forward merged at `5e3a23d` before implementation, then its pickup update `0dd9607` was merged before completion. No dependencies or spec files were changed.
