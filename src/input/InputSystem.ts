@@ -132,12 +132,14 @@ export class InputSystem implements Lifecycle {
   private screenAngle(x: number, y: number): number { this.screenVector(x, y, this.screen); return Math.atan2(this.screen.z, this.screen.x); }
   /** Frame and math scratch objects are reused; no device polling or scene-mesh raycasts. */
   private readonly cursorPoint = { x: 0, z: 0 };
+  private readonly driving = { throttle: 0, steer: 0 };
   sample(player: Vec2, dt = 1 / 60): InputFrame {
     if (this.recorder.playing) return this.recorder.next() ?? this.frameNeutral();
     if (this.injected) { this.recorder.capture(this.injected); return this.injected; }
     const frame = this.frame;
     frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint;
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
+    this.driving.throttle = -y; this.driving.steer = -x; frame.drive = this.driving; frame.brake = this.touch.braking;
     if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') {
       this.screenVector(x, y, frame.move); const length = Math.hypot(frame.move.x, frame.move.z);
       if (length > 1) { frame.move.x /= length; frame.move.z /= length; }
@@ -173,7 +175,7 @@ export class InputSystem implements Lifecycle {
     this.interact = false; this.pause = false; this.recorder.capture(frame); return frame;
   }
   private frameNeutral(): InputFrame {
-    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint;
+    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.drive; delete frame.brake;
     frame.left.down = frame.left.held = frame.left.up = false; frame.right.down = frame.right.held = frame.right.up = false;
     frame.selector = 0; frame.interact = false; frame.pause = false; return frame;
   }

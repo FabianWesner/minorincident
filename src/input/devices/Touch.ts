@@ -3,7 +3,7 @@
 import { Nipple } from './Nipple';
 import type { Vec2 } from '../InputFrame';
 
-type TouchAction = 'left' | 'right' | 'selector' | 'pause';
+type TouchAction = 'left' | 'right' | 'selector' | 'pause' | 'brake';
 interface Contact { action: TouchAction; x: number; y: number; dx: number; dy: number }
 /** Each contact has its own owner. Cancellation releases without firing an action. */
 export class Touch {
@@ -11,12 +11,13 @@ export class Touch {
   readonly element = document.createElement('div');
   readonly aim: Vec2 = { x: 0, z: 0 };
   aiming = false;
+  get braking(): boolean { return [...this.contacts.values()].some(c => c.action === 'brake'); }
   private stickId: number | null = null;
   private readonly contacts = new Map<number, Contact>();
   constructor(private readonly canvas: HTMLElement, private readonly activity: () => void, private readonly fire: (action: TouchAction, direction: Vec2 | null) => void) {
     this.element.dataset.touchControls = '';
     this.element.style.cssText = 'position:fixed;bottom:16px;right:16px;display:grid;grid-template-columns:64px 64px;gap:8px;touch-action:none';
-    for (const action of ['selector', 'pause', 'left', 'right'] as const) {
+    for (const action of ['selector', 'pause', 'left', 'right', 'brake'] as const) {
       const button = document.createElement('button'); button.dataset.touchAction = action;
       button.textContent = action === 'selector' ? 'NEXT' : action.toUpperCase(); button.setAttribute('aria-label', `Touch ${action}`);
       button.style.cssText = 'height:64px;color:white;background:#182333;border:2px solid white;border-radius:12px;touch-action:none;user-select:none';
@@ -54,7 +55,7 @@ export class Touch {
     const contact = this.contacts.get(event.pointerId);
     if (!contact) return;
     this.contacts.delete(event.pointerId); this.aiming = false;
-    if (fire) {
+    if (fire && contact.action !== 'brake') {
       this.activity(); const distance = Math.hypot(contact.dx, contact.dy);
       if (distance >= 8) { this.aim.x = contact.dx / distance; this.aim.z = contact.dy / distance; }
       this.fire(contact.action, distance >= 8 ? this.aim : null);

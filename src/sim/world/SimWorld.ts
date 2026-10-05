@@ -1,3 +1,4 @@
+import { Vehicles } from '../vehicles/Vehicles';
 import { survivor } from '../../data/survivor';
 import { Combat } from '../combat/Combat';
 import { Status } from '../combat/Status';
@@ -22,6 +23,7 @@ export class SimWorld implements Lifecycle {
   districts: DistrictWorld | null = null;
   player: Player | null = null;
   combat: Combat | null = null;
+  vehicles: Vehicles | null = null;
   /** Level-owned records survive player death; scenario unload clears them. */
   mission: GameStateSnapshot['mission'] = null;
   progression: GameStateSnapshot['progression'] = null;
@@ -30,6 +32,7 @@ export class SimWorld implements Lifecycle {
   scenario: string | null = null;
   previousPlayer: Transform | null = null;
   private input = emptyInput();
+  private readonly drivingCombatInput = emptyInput();
   private scheme: import('../../input/InputFrame').Scheme = 'mouse-only';
   private rng: Rng | null = null;
   async init(): Promise<void> { await this.physics.init(); }
@@ -44,10 +47,14 @@ export class SimWorld implements Lifecycle {
     this.previousPlayer = { ...this.entities.get(1)!.transform };
     this.spatial.set(1, definition.player.x, definition.player.z);
     if (definition.combat) this.combat = new Combat(this, definition);
-    this.events.on('sim.tick', () => { if (this.combat) this.combat.intent(this.input); }, SimPhase.input);
+    if (definition.survivor) this.vehicles = new Vehicles(this);
+    if (name === 'drive-course') { this.vehicles!.spawn('vehicle.sedan', { x: 0, z: 0 }); this.vehicles!.spawn('vehicle.police', { x: 0, z: 12 }); }
+    this.events.on('sim.tick', () => this.vehicles?.prePhysics(this.input, this.scheme), SimPhase.input);
+    this.events.on('sim.tick', () => { if (this.combat && this.vehicles?.active == null) this.combat.intent(this.input); }, SimPhase.input);
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
+      if (this.vehicles?.active != null) return;
       if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1); this.player.prePhysics(this.input, this.tick, !Status.stunned(player, this.tick)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
@@ -56,12 +63,14 @@ export class SimWorld implements Lifecycle {
     this.events.on('sim.tick', () => this.combat?.effects.moveListeners(), SimPhase.ai);
     this.events.on('sim.tick', () => this.physics.update(), SimPhase.physics);
     this.events.on('sim.tick', () => {
+      this.vehicles?.postPhysics();
       if (this.combat) {
         const position = this.physics.playerBody!.translation(); Object.assign(this.entities.get(1)!.transform, position); this.spatial.set(1, position.x, position.z);
-        this.combat.update(this.input);
+        this.combat.update(this.vehicles?.active != null ? this.drivingCombatInput : this.input);
       }
     }, SimPhase.combat);
     this.events.on('sim.tick', () => {
+      if (this.vehicles?.active != null) return;
       if (this.player) { this.player.postPhysics(this.tick); this.spatial.set(1, this.player.entity.transform.x, this.player.entity.transform.z); return; }
       const p = this.physics.playerBody!.translation();
       Object.assign(this.entities.get(1)!.transform, p);
@@ -118,6 +127,7 @@ export class SimWorld implements Lifecycle {
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
   }
   reset(): void {
+    this.vehicles?.dispose(); this.vehicles = null;
     this.mission = null; this.progression = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }
