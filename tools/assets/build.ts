@@ -6,7 +6,7 @@ import manifest from '../../src/assets/manifest.json';
 import { variantPath, type AssetDef } from '../../src/assets/types';
 import { assetIO } from './io';
 import { geometryHash, validateDocument } from './validate';
-import { optimizeAsset } from './optimize';
+import { normalizeForward, optimizeAsset } from './optimize';
 
 /** A script failure aborts before replacing any committed runtime output. */
 export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'low'; decay?: string } = {}): Promise<string> {
@@ -19,8 +19,11 @@ export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'l
   const result = spawnSync('python3', args, { stdio: 'inherit' });
   if (result.error || result.status !== 0) throw new Error(`Blender failed for ${def.id} (${result.status})`);
   const io = await assetIO(), document = await io.read(raw);
+  normalizeForward(document, def);
   const meta = validateDocument(document, { ...def, budget: { ...def.budget, fileKB: Infinity } }, readFileSync(raw).length);
-  if (meta.errors.length) throw new Error(`Raw export invalid: ${meta.errors.join('; ')}`);
+  // Zero-area exporter faces are repaired below; every runtime tier still gets full validation.
+  const rawErrors = meta.errors.filter(error => !error.includes('degenerate triangle'));
+  if (rawErrors.length) throw new Error(`Raw export invalid: ${rawErrors.join('; ')}`);
   const stage = mkdtempSync('.cache/assets/stage-');
   const outputs: [string,string][] = [];
   try {
@@ -30,7 +33,7 @@ export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'l
     if (runtime.errors.length) throw new Error(`Optimized export invalid: ${runtime.errors.join('; ')}`);
     outputs.push([staged,output]);
     if (def.tier === 'hero') {
-      for (const [lod, ratio] of [['lod1', .12], ['lod2', .035]] as const) {
+      for (const [lod, ratio] of [['lod1', .12], ['lod2', .03]] as const) {
         const supplied = `assets/${def.id}/model.${lod}.glb`;
         const output = def.lods?.[lod] && variantPath(def.lods[lod]!,options.decay);
         if (!output) throw new Error(`Missing manifest ${lod} path`);
