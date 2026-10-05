@@ -7,13 +7,17 @@ import json
 import math
 from pathlib import Path
 
-COLORS = {'grass': '#7f9f42', 'asphalt': '#454552', 'sidewalk': '#e3be8a', 'woodWarm': '#aa7047', 'picketWhite': '#f2e6dc', 'brick': '#a8483a', 'survivorRed': '#d9363e', 'backpackTeal': '#2f6e6a', 'schoolBusYellow': '#f2b630', 'policeBlue': '#2f6bff', 'uiDark': '#25222c', 'blood': '#b3121f', 'windowGlow': '#ffc773'}
+COLORS = {'foliage': '#7da23c', 'grass': '#6f8f3a', 'asphalt': '#5b4f5c', 'sidewalk': '#b9a4a0', 'woodWarm': '#b0703f', 'picketWhite': '#f2e6dc', 'brick': '#a8483a', 'survivorRed': '#d9363e', 'backpackTeal': '#2f6e6a', 'schoolBusYellow': '#f2b630', 'policeBlue': '#2f6bff', 'uiDark': '#25222c', 'blood': '#b3121f', 'windowGlow': '#ffc773'}
 
 def material(token):
     name = 'pal_' + token
     m = bpy.data.materials.get(name) or bpy.data.materials.new(name)
     h = COLORS[token].lstrip('#')
     m.diffuse_color = tuple(int(h[i:i+2], 16) / 255 for i in (0, 2, 4)) + (1,)
+    m.use_nodes = True
+    bsdf=m.node_tree.nodes.get('Principled BSDF')
+    bsdf.inputs['Base Color'].default_value=tuple((c/12.92 if c<=.04045 else ((c+.055)/1.055)**2.4) for c in m.diffuse_color[:3])+(1,)
+    bsdf.inputs['Roughness'].default_value=.85
     return m
 
 def box(name, token, size, pos):

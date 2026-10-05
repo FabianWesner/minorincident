@@ -87,6 +87,8 @@ export function buildLayout(
       "-b",
       "-t",
       "4",
+      "--python-exit-code",
+      "1",
       "--factory-startup",
       "-P",
       "tools/blender/build_layout.py",

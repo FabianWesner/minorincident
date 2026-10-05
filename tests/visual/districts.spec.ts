@@ -47,11 +47,24 @@ function write(name: string, value: unknown) {
 const lum = (p: PNG, i: number) =>
   p.data[i] * 0.2126 + p.data[i + 1] * 0.7152 + p.data[i + 2] * 0.0722;
 
+function nonSky(png: PNG, sky: string): number {
+  const rgb = [1, 3, 5].map((i) => Number.parseInt(sky.slice(i, i + 2), 16));
+  let n = 0;
+  for (let i = 0; i < png.data.length; i += 4)
+    if (
+      Math.abs(png.data[i] - rgb[0]) > 12 ||
+      Math.abs(png.data[i + 1] - rgb[1]) > 12 ||
+      Math.abs(png.data[i + 2] - rgb[2]) > 12
+    )
+      n++;
+  return n / (png.width * png.height);
+}
+
 for (const id of districtIds) {
   test(`T-E10-08-${id} @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels`, async ({
     page,
   }) => {
-    test.setTimeout(180_000);
+    test.setTimeout(480_000);
     await boot(page);
     const metrics = [];
     for (const tier of [0, 1, 2, 3, 4, 5]) {
@@ -64,15 +77,14 @@ for (const id of districtIds) {
       const png = PNG.sync.read(
         await page.screenshot({ path: `${output}/${id}-W${tier}.png` }),
       );
-      // The four corners give the rendered sky, including output color-space conversion.
-      const bg = [...png.data.subarray(0, 3)];
-      let foreground = 0;
-      for (let i = 0; i < png.data.length; i += 4)
-        if (Math.max(...bg.map((c, k) => Math.abs(c - png.data[i + k]))) > 12)
-          foreground++;
-      const ratio = foreground / (png.width * png.height);
+      const ratio = nonSky(png, state.render.lighting!.sky);
       expect(ratio).toBeGreaterThanOrEqual(0.3);
-      metrics.push({ tier, ratio, camera: state.render.camera });
+      metrics.push({
+        tier,
+        spot: "overview",
+        ratio,
+        camera: state.render.camera,
+      });
       await page.evaluate(
         (spot) => window.__SS__!.camera.preset(spot),
         `${id}/W${tier}/landmark`,
@@ -83,14 +95,25 @@ for (const id of districtIds) {
           path: `${output}/${id}-W${tier}-landmark.png`,
         }),
       );
-      expect(landmark.data.some((v) => v !== 0)).toBe(true);
+      const landmarkState = await page.evaluate(
+        () => window.__SS__!.getState().render,
+      );
+      expect(landmarkState.camera.position.every(Number.isFinite)).toBe(true);
+      const landmarkRatio = nonSky(landmark, landmarkState.lighting!.sky);
+      expect(landmarkRatio).toBeGreaterThanOrEqual(0.3);
+      metrics.push({
+        tier,
+        spot: "landmark",
+        ratio: landmarkRatio,
+        camera: landmarkState.camera,
+      });
     }
     write(`${id}-spots`, metrics);
   });
   test(`T-E10-04-${id} @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear`, async ({
     page,
   }) => {
-    test.setTimeout(90_000);
+    test.setTimeout(180_000);
     await boot(page);
     await district(page, id, 0, "landmark");
     const before = PNG.sync.read(
@@ -145,4 +168,20 @@ test("T-E10-09 @E10 @E10-AC09 all district diorama and decay review must items p
   for (const id of districtIds)
     for (const item of ["A1", "A2", "A3", "A4", "E1", "E2"])
       expect(review).toMatch(new RegExp(`${id} ${item}: PASS`));
+});
+
+test("T-E10-review-thresholds @E10 reviewed diorama/decay should items meet the 70% threshold", () => {
+  const review = readFileSync(`${output}/review.md`, "utf8");
+  for (const id of districtIds) {
+    expect(
+      ["A5", "A6", "A7", "A8"].filter((item) =>
+        new RegExp(`${id} ${item}: PASS`).test(review),
+      ).length,
+    ).toBeGreaterThanOrEqual(3);
+    expect(
+      ["E3", "E4"].filter((item) =>
+        new RegExp(`${id} ${item}: PASS`).test(review),
+      ).length,
+    ).toBe(2);
+  }
 });

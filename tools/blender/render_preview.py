@@ -6,7 +6,7 @@ except ModuleNotFoundError:
     import os
     import subprocess
     import sys
-    raise SystemExit(subprocess.call([os.environ.get('BLENDER_BIN','/Applications/Blender.app/Contents/MacOS/Blender'),'-b','-t','4','--factory-startup','-P',__file__,'--',*sys.argv[1:]]))
+    raise SystemExit(subprocess.call([os.environ.get('BLENDER_BIN','/Applications/Blender.app/Contents/MacOS/Blender'),'-b','-t','4','--python-exit-code','1','--factory-startup','-P',__file__,'--',*sys.argv[1:]]))
 import json
 import math
 import sys
