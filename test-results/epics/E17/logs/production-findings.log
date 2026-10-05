@@ -1,0 +1,512 @@
+
+> assets:validate
+> tsx tools/assets/validate.ts --production
+
+[
+  {
+    "id": "char.survivor-male:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 57936
+  },
+  {
+    "id": "char.survivor-male:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "char.survivor-male:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "char.survivor-female:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "material: unknown pal_brass",
+      "material: unknown pal_denim",
+      "material: unknown pal_denimLight",
+      "material: unknown pal_hairChestnut",
+      "material: unknown pal_denimStitch",
+      "material: unknown pal_skinWarm",
+      "material: unknown pal_bandage",
+      "material: unknown pal_redDark",
+      "material: unknown pal_sockBlue",
+      "material: unknown pal_skinShadow",
+      "material: unknown pal_tealDark",
+      "material: unknown pal_corgiOrange",
+      "material: unknown pal_skinBlush",
+      "material: unknown pal_tealLight",
+      "material: unknown pal_eyeBrown",
+      "material: unknown pal_hairHighlight",
+      "material: unknown pal_hairWarm",
+      "material: unknown pal_mouth"
+    ],
+    "triangles": 55616
+  },
+  {
+    "id": "char.survivor-female:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "char.survivor-female:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "char.corgi:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "geometry packSocket__pal_backpackTeal: degenerate triangle",
+      "geometry packSocket__pal_backpackTealDark: degenerate triangle",
+      "material: unknown pal_corgiOrange",
+      "material: unknown pal_corgiOrangeLight",
+      "material: unknown pal_corgiPink",
+      "material: unknown pal_corgiTongue",
+      "material: unknown pal_backpackTealDark"
+    ],
+    "triangles": 58624
+  },
+  {
+    "id": "char.corgi:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "char.corgi:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.common-worker:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 37142
+  },
+  {
+    "id": "inf.common-worker:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.common-worker:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.jogger:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 39376
+  },
+  {
+    "id": "inf.jogger:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.jogger:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.baseball-cap:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "geometry head__pal_survivorRed: degenerate triangle",
+      "geometry torso__pal_asphalt: degenerate triangle",
+      "geometry torso__pal_picketWhite: degenerate triangle"
+    ],
+    "triangles": 39738
+  },
+  {
+    "id": "inf.baseball-cap:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.baseball-cap:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.suburban-mom:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "geometry legL__pal_denim: degenerate triangle",
+      "geometry legR__pal_denim: degenerate triangle",
+      "material: unknown pal_denim",
+      "material: unknown pal_denimStitch",
+      "material: unknown pal_leatherShadow",
+      "material: unknown pal_cardiganRose",
+      "material: unknown pal_hairAuburn",
+      "material: unknown pal_hairCopper",
+      "material: unknown pal_hairShadow"
+    ],
+    "triangles": 38322
+  },
+  {
+    "id": "inf.suburban-mom:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.suburban-mom:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.delivery-driver:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "geometry legL__pal_asphalt: degenerate triangle",
+      "geometry legR__pal_asphalt: degenerate triangle",
+      "geometry head__pal_backpackTeal: degenerate triangle",
+      "geometry torso__pal_policeBlue: degenerate triangle",
+      "geometry torso__pal_schoolBusYellow: degenerate triangle",
+      "geometry torso__pal_uiDark: degenerate triangle"
+    ],
+    "triangles": 38431
+  },
+  {
+    "id": "inf.delivery-driver:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.delivery-driver:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.college-student:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 39263
+  },
+  {
+    "id": "inf.college-student:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.college-student:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.crawler:lod0",
+    "errors": [
+      "animated shinL: no separate geometry",
+      "animated shinR: no separate geometry",
+      "animated footL: no separate geometry",
+      "animated footR: no separate geometry",
+      "forward front: not on +X"
+    ],
+    "triangles": 37133
+  },
+  {
+    "id": "inf.crawler:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.crawler:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.brute:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "stump_head: not hidden by default",
+      "stump_armL: not hidden by default",
+      "stump_armR: not hidden by default",
+      "stump_foreArmL: not hidden by default",
+      "stump_foreArmR: not hidden by default",
+      "stump_legL: not hidden by default",
+      "stump_legR: not hidden by default"
+    ],
+    "triangles": 39954
+  },
+  {
+    "id": "inf.brute:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "inf.brute:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "veh.fire-engine:lod0",
+    "errors": [],
+    "triangles": 66335
+  },
+  {
+    "id": "veh.fire-engine:lod1",
+    "errors": [],
+    "triangles": 10821
+  },
+  {
+    "id": "veh.fire-engine:lod2",
+    "errors": [],
+    "triangles": 2507
+  },
+  {
+    "id": "veh.sedan-red:lod0",
+    "errors": [
+      "geometry body_pal_survivorRed: degenerate triangle",
+      "geometry body_pal_uiDark: degenerate triangle",
+      "geometry doorL_pal_survivorRed: degenerate triangle",
+      "geometry doorR_pal_survivorRed: degenerate triangle",
+      "geometry doorRearL_pal_survivorRed: degenerate triangle",
+      "geometry doorRearR_pal_survivorRed: degenerate triangle"
+    ],
+    "triangles": 56860
+  },
+  {
+    "id": "veh.sedan-red:lod1",
+    "errors": [
+      "geometry body_pal_uiDark: degenerate triangle",
+      "geometry doorL_pal_survivorRed: degenerate triangle",
+      "geometry doorR_pal_survivorRed: degenerate triangle",
+      "geometry doorRearL_pal_survivorRed: degenerate triangle",
+      "geometry doorRearR_pal_survivorRed: degenerate triangle"
+    ],
+    "triangles": 8538
+  },
+  {
+    "id": "veh.sedan-red:lod2",
+    "errors": [
+      "geometry body_pal_uiDark: degenerate triangle",
+      "geometry doorL_pal_survivorRed: degenerate triangle",
+      "geometry doorR_pal_survivorRed: degenerate triangle",
+      "geometry doorRearL_pal_survivorRed: degenerate triangle",
+      "geometry doorRearR_pal_survivorRed: degenerate triangle"
+    ],
+    "triangles": 2796
+  },
+  {
+    "id": "veh.sedan-blue:lod0",
+    "errors": [
+      "geometry doorRearL_policeBlue: degenerate triangle"
+    ],
+    "triangles": 35620
+  },
+  {
+    "id": "veh.sedan-blue:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "veh.sedan-blue:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "veh.school-bus:lod0",
+    "errors": [],
+    "triangles": 77740
+  },
+  {
+    "id": "veh.school-bus:lod1",
+    "errors": [],
+    "triangles": 10652
+  },
+  {
+    "id": "veh.school-bus:lod2",
+    "errors": [],
+    "triangles": 3225
+  },
+  {
+    "id": "veh.pickup-red:lod0",
+    "errors": [
+      "geometry body: degenerate triangle",
+      "geometry doorL_pal_asphalt: degenerate triangle",
+      "geometry doorR_pal_asphalt: degenerate triangle",
+      "geometry static_pal_picketWhite: degenerate triangle",
+      "geometry static_pal_sidewalk: degenerate triangle",
+      "geometry wheelFL_pal_sidewalk: degenerate triangle",
+      "geometry wheelFR_pal_sidewalk: degenerate triangle",
+      "geometry wheelRL_pal_sidewalk: degenerate triangle",
+      "geometry wheelRR_pal_sidewalk: degenerate triangle"
+    ],
+    "triangles": 73795
+  },
+  {
+    "id": "veh.pickup-red:lod1",
+    "errors": [
+      "geometry body: degenerate triangle",
+      "geometry doorL_pal_asphalt: degenerate triangle",
+      "geometry doorR_pal_asphalt: degenerate triangle",
+      "geometry static_pal_picketWhite: degenerate triangle",
+      "geometry static_pal_sidewalk: degenerate triangle"
+    ],
+    "triangles": 9706
+  },
+  {
+    "id": "veh.pickup-red:lod2",
+    "errors": [
+      "geometry body: degenerate triangle",
+      "geometry doorL_pal_asphalt: degenerate triangle",
+      "geometry doorR_pal_asphalt: degenerate triangle",
+      "geometry static_pal_picketWhite: degenerate triangle",
+      "geometry static_pal_sidewalk: degenerate triangle"
+    ],
+    "triangles": 3664
+  },
+  {
+    "id": "veh.police-sedan:lod0",
+    "errors": [],
+    "triangles": 73209
+  },
+  {
+    "id": "veh.police-sedan:lod1",
+    "errors": [],
+    "triangles": 10329
+  },
+  {
+    "id": "veh.police-sedan:lod2",
+    "errors": [],
+    "triangles": 2707
+  },
+  {
+    "id": "veh.ambulance:lod0",
+    "errors": [
+      "geometry static_pal_sidewalk: degenerate triangle",
+      "geometry doorL_pal_uiDark: degenerate triangle",
+      "geometry doorR_pal_uiDark: degenerate triangle"
+    ],
+    "triangles": 75596
+  },
+  {
+    "id": "veh.ambulance:lod1",
+    "errors": [
+      "geometry static_pal_sidewalk: degenerate triangle"
+    ],
+    "triangles": 10119
+  },
+  {
+    "id": "veh.ambulance:lod2",
+    "errors": [
+      "geometry static_pal_sidewalk: degenerate triangle"
+    ],
+    "triangles": 2258
+  },
+  {
+    "id": "bld.bus-stop:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "geometry static_pal_asphalt: degenerate triangle",
+      "geometry static_pal_backpackTeal: degenerate triangle",
+      "geometry static_pal_schoolBusYellow: degenerate triangle",
+      "geometry static_pal_woodWarm: degenerate triangle"
+    ],
+    "triangles": 10930
+  },
+  {
+    "id": "bld.bus-stop:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "bld.bus-stop:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0
+  },
+  {
+    "id": "prop.gas-pump:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 11232
+  },
+  {
+    "id": "prop.jukebox:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "geometry body_pal_uiDark: degenerate triangle"
+    ],
+    "triangles": 9960
+  },
+  {
+    "id": "prop.light-tower:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 11544
+  },
+  {
+    "id": "prop.porta-potty:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 10044
+  },
+  {
+    "id": "prop.vending-machine:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 10449
+  }
+]

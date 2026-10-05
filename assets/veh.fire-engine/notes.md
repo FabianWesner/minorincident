@@ -21,3 +21,8 @@ The inventory fire-engine row was an outdated U+L snapshot; it now records
 integrated to match the registry and the production-renderer turntable proof.
 Other supplied production scripts and models are registered without rebuilding
 or rewriting them. Validation findings remain visible in the E17 report.
+
+CPU Cycles AO uses 32 samples and seed 17, exports as active COLOR_0, and
+is multiplied by the runtime palette shader. Lower LODs average AO seams
+before welding/decimation. Newly created socket and siren transforms are
+updated before parenting, and tests check their actual world positions.
