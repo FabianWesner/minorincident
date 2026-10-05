@@ -1,0 +1,86 @@
+
+> verify
+> tsx tools/verify.ts E04
+
+
+Verifying E04: npm run typecheck
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+Verifying E04: npm run lint
+
+> lint
+> eslint src tests tools *.config.ts eslint.config.js
+
+
+Verifying E04: npm run build
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 69 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                           0.53 kB │ gzip:     0.34 kB
+dist/assets/model-CQ-x32BQ.glb        1,388.43 kB
+dist/assets/model-BIu_4IbI.glb        1,422.78 kB
+dist/assets/testApi-CnGVkKyn.js           3.00 kB │ gzip:     1.24 kB
+dist/assets/three.module-O60ovf9n.js    262.71 kB │ gzip:    70.29 kB
+dist/assets/index-fwMEmYUJ.js           842.78 kB │ gzip:   240.53 kB
+dist/assets/rapier-DstIs6Rl.js        4,322.52 kB │ gzip: 1,641.14 kB
+✓ built in 1.59s
+
+Verifying E04: npx vitest run -t @(?:E04)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --reporter=default --reporter=json --outputFile=test-results/epics/E04/vitest.json
+
+ RUN  v5.0.3 /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic
+
+ ↓ tests/sim/runner.test.ts (1 test | 1 skipped)
+ ↓ tests/sim/recorder.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/setup.test.ts (3 tests | 3 skipped)
+ ✓ tests/sim/determinism.test.ts (3 tests | 2 skipped) 212ms
+ ↓ tests/unit/static.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/traceability.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/import-graph.test.ts (2 tests | 2 skipped)
+ ✓ tests/unit/survivor.test.ts (3 tests) 44ms
+ ↓ tests/unit/core/foundation.test.ts (4 tests | 4 skipped)
+ ↓ tests/unit/input/bindings.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/input/buttons.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/input/wheel.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/render/view.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/render/palette.test.ts (2 tests | 2 skipped)
+ ✓ tests/sim/player.test.ts (8 tests) 1340ms
+   ✓ T-E04-02 @E04 @E04-AC02 200-direction capsule sweep never penetrates the static wall ring over 0.02m 1147ms
+
+ Test Files  3 passed | 12 skipped (15)
+      Tests  12 passed | 26 skipped (38)
+   Start at  20:25:31
+   Duration  1.51s (tests 57%, import 26%, transform 15%, worker 1%)
+
+JSON report written to /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/test-results/epics/E04/vitest.json
+
+Verifying E04: npx playwright test --grep @(?:E04)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$)
+
+Running 16 tests using 4 workers
+
+  ✓   4 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (3.2s)
+  ✓   3 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (4.4s)
+  ✓   2 [chromium] › tests/e2e/survivor.spec.ts:29:1 › T-E04-wiring @E04 actual keyboard input moves the survivor; variant selection is cosmetic and unload frees resources (14.1s)
+  ✓   7 [pixel-7] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.9s)
+  ✓   8 [pixel-7] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.2s)
+  ✓   9 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.8s)
+  ✓  10 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.1s)
+  ✓   6 [chromium] › tests/visual/survivor.spec.ts:73:1 › T-E04-11 @E04 @E04-AC11 supplied GLB character sheet has a reviewed Character vision checklist (22.3s)
+  ✓  11 [iphone-14] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.9s)
+  ✓  13 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.9s)
+  ✓  12 [iphone-14] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (3.3s)
+  ✓  14 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.6s)
+  ✓  15 [webkit] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.2s)
+  ✓  16 [webkit] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.1s)
+  ✓   1 [chromium] › tests/e2e/survivor.spec.ts:4:1 › T-E04-09 @E04 @E04-AC09 sixty-second input bot visits every sim clip with zero missing mappings (1.1m)
+  ✓   5 [chromium] › tests/visual/survivor.spec.ts:46:1 › T-E04-10 @E04 @E04-AC10 all five tiers retain red/teal; tier 0 and 4 differ on over 5% of character pixels (1.2m)
+
+  16 passed (1.3m)

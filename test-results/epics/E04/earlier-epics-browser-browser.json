@@ -1,0 +1,2704 @@
+{
+  "config": {
+    "argv": [
+      "/Users/fabianwesner/Library/Application Support/Herd/config/nvm/versions/node/v22.22.2/bin/node",
+      "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/node_modules/.bin/playwright",
+      "test",
+      "--grep",
+      "@E0[1-3](?:-AC\\d+)?(?=\\s|$)"
+    ],
+    "configFile": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/playwright.config.ts",
+    "rootDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e04-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 4,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3315 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3315",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/camera.spec.ts",
+      "file": "e2e/camera.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-01 @E02 @E02-AC01 forced WebGL2 and automatic backend report the initialized backend",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4377,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:26:53.753Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8809442e5b3abcf2477-9c052757eab01733bdc4",
+          "file": "e2e/camera.spec.ts",
+          "line": 7,
+          "column": 1
+        },
+        {
+          "title": "T-E02-03 @E02 @E02-AC03 follow converges after 20 m teleport without overshoot",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC03"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2301,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:26:53.750Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8809442e5b3abcf2477-86d167916466eb8b0f33",
+          "file": "e2e/camera.spec.ts",
+          "line": 22,
+          "column": 1
+        },
+        {
+          "title": "T-E02-02 @E02 @E02-AC02 default camera angles and projected 1.4 m survivor height",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 28572,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:26:53.752Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8809442e5b3abcf2477-fc5bd8c79e8fe0b8380d",
+          "file": "e2e/camera.spec.ts",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "T-E02-04 @E02 @E02-AC04 portrait keeps every point of the 12 m circle inside the viewport",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 2878,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:26:53.727Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8809442e5b3abcf2477-7f745b383231baf56a86",
+          "file": "e2e/camera.spec.ts",
+          "line": 56,
+          "column": 1
+        },
+        {
+          "title": "T-E02-05b @E02 @E02-AC05 lookdev only uses palette or explicitly retained materials",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 28441,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:26:56.235Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8809442e5b3abcf2477-1d9195d734dd34071a61",
+          "file": "e2e/camera.spec.ts",
+          "line": 65,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/harness.spec.ts",
+      "file": "e2e/harness.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E01-04b @E01 @E01-AC04 browser and Node match after 3600 scripted ticks",
+          "ok": true,
+          "tags": [
+            "E01",
+            "E01-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 8459,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:26:56.814Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "696d2ab3be73ec9c37de-fdfa91c4caa1f8cef95d",
+          "file": "e2e/harness.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and epic stubs",
+          "ok": true,
+          "tags": [
+            "E01",
+            "E01-AC05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6650,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:26:58.455Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "696d2ab3be73ec9c37de-52bacfa1ae333370e895",
+          "file": "e2e/harness.spec.ts",
+          "line": 30,
+          "column": 1
+        },
+        {
+          "title": "T-E01-06 @E01 @E01-AC06 pause + exact step and 10x sim time within 2%",
+          "ok": true,
+          "tags": [
+            "E01",
+            "E01-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7371,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:05.122Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "696d2ab3be73ec9c37de-939251e2e875d0499eb9",
+          "file": "e2e/harness.spec.ts",
+          "line": 62,
+          "column": 1
+        },
+        {
+          "title": "T-E01-07 @E01 @E01-AC07 load/unload x20 returns all resources to baseline",
+          "ok": true,
+          "tags": [
+            "E01",
+            "E01-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 32478,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:05.297Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "696d2ab3be73ec9c37de-d3cb45a00f8d475f9885",
+          "file": "e2e/harness.spec.ts",
+          "line": 81,
+          "column": 1
+        },
+        {
+          "title": "T-E01-10 @E01 @E01-AC10 guard detects errors and uncaught exceptions",
+          "ok": true,
+          "tags": [
+            "E01",
+            "E01-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1791,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:12.509Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "696d2ab3be73ec9c37de-f3b7c4c9a023dbb977cb",
+          "file": "e2e/harness.spec.ts",
+          "line": 101,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/input-keyboard.spec.ts",
+      "file": "e2e/input-keyboard.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E03-04 @E03 @E03-AC04 WASD follows screen up at camera azimuth pi/4",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1489,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:14.316Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ae750183f90ce60a669-fe7591eb49d69d5e31a8",
+          "file": "e2e/input-keyboard.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "T-E03-05 @E03 @E03-AC05 keyboard aim turns at 360deg/s, taps snap and action mirrors fire",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2314,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:15.819Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ae750183f90ce60a669-93d8e0893b2f5688bf10",
+          "file": "e2e/input-keyboard.spec.ts",
+          "line": 16,
+          "column": 1
+        },
+        {
+          "title": "T-E03-08 @E03 @E03-AC08 last device selects mouse-only mouse-keyboard and keyboard with matching hint",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2102,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:18.142Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ae750183f90ce60a669-0de855bb32ed703043d7",
+          "file": "e2e/input-keyboard.spec.ts",
+          "line": 50,
+          "column": 1
+        },
+        {
+          "title": "T-E03-09 @E03 @E03-AC09 binding form persists across reload and rejects conflicts with a message",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4603,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:20.258Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ae750183f90ce60a669-946dc64a522710bccd75",
+          "file": "e2e/input-keyboard.spec.ts",
+          "line": 67,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/input-mouse.spec.ts",
+      "file": "e2e/input-mouse.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E03-01 @E03 @E03-AC01 mouse dead zone and linear distance steering",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 3538,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:22.639Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-78e10fe08c5e0795cb29",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 9,
+          "column": 1
+        },
+        {
+          "title": "T-E03-02 @E03 @E03-AC02 mouse buttons preserve down held up and prevent context menus",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1432,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:24.695Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-be346390abfda177b519",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 21,
+          "column": 1
+        },
+        {
+          "title": "T-E03-03 @E03 @E03-AC03 wheel notches pulse once and trackpads debounce 120ms",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC03"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2126,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:24.871Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-13c7b4d1b11b8501d525",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 38,
+          "column": 1
+        },
+        {
+          "title": "T-E03-12 @E03 @E03-AC12 middle-click and E interact without browser autoscroll",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC12"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3599,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:26.138Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-e2b8807053dfdea0b6f4",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 51,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/input-recorder.spec.ts",
+      "file": "e2e/input-recorder.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E03-recorder-browser @E03 @E03-AC10 real device frames replay through the browser input phase",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 3355,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:26.232Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1749e9792bc1e09518b9-ae626e1dd92165874361",
+          "file": "e2e/input-recorder.spec.ts",
+          "line": 7,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/input-touch.spec.ts",
+      "file": "e2e/input-touch.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases within one tick",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1757,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:27.011Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-ec5e957fa987784cc6d6",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 21,
+          "column": 1
+        },
+        {
+          "title": "T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap uses assist",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2284,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:28.778Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-236a02f9b64be73ddf29",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "T-E03-13-blur @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 3208,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:29.620Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-fb8e97dcf3e9cac92022",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-13-hidden @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1595,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:29.758Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-55abdb86dfc7a3a261ff",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-13-pagehide @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2788,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:31.077Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-267149fd62f99b8f1510",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-touch-schemes @E03 @E03-AC08 touch and keyboard switch immediately and hints follow",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1321,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:31.363Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-7a466fb2dc7f984e84fd",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC06",
+            "E03-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1913,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:32.695Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-ea7e46d21b37b6d2461d",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 93,
+          "column": 1
+        },
+        {
+          "title": "T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases within one tick",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2035,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:26.033Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-9129bc7cadf64c2f5710",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 21,
+          "column": 1
+        },
+        {
+          "title": "T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap uses assist",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1283,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:28.213Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-4fa79e66c991c7739c0f",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "T-E03-13-blur @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2011,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:28.822Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-1f6c4695603988701256",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-13-hidden @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1128,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:29.503Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-57452a5e829abc75d4cd",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-13-pagehide @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1021,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:30.640Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-7353ea9734e77ad523ae",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-touch-schemes @E03 @E03-AC08 touch and keyboard switch immediately and hints follow",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 862,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:30.964Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-fcb06d7c6df19aac6b40",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC06",
+            "E03-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1232,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:31.668Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-89857326ea76bdadb9af",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 93,
+          "column": 1
+        },
+        {
+          "title": "T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases within one tick",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2018,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:32.288Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-13b24719f5fc1accb21d",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 21,
+          "column": 1
+        },
+        {
+          "title": "T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap uses assist",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2201,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:33.339Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-04275e26aa727f84ff4e",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "T-E03-13-blur @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1316,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:34.457Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-7d4e1968ba52e13a15f6",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-13-hidden @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1650,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:35.692Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-f7ec12cc21d1b8540388",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-13-pagehide @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1128,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:35.785Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-f9ab5e80a45a7e4dff43",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-touch-schemes @E03 @E03-AC08 touch and keyboard switch immediately and hints follow",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 1894,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:36.883Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-bcb988b3bc104106b2a6",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC06",
+            "E03-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1286,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:36.921Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-684c1550b58385046735",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 93,
+          "column": 1
+        },
+        {
+          "title": "T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases within one tick",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 2157,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:37.447Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-3749eed51ee73ed42d8e",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 21,
+          "column": 1
+        },
+        {
+          "title": "T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap uses assist",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2284,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:37.833Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-e097cc692a3d3155cee0",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "T-E03-13-blur @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2386,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:38.653Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-5885ee13f25245ad0805",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-13-hidden @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 2502,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:39.398Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-b9c800c0efe96c769e2e",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-13-pagehide @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 1552,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:39.748Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-ac69b146be80bae68768",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-touch-schemes @E03 @E03-AC08 touch and keyboard switch immediately and hints follow",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1061,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:40.271Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-f7f7f36f582e083bff57",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC06",
+            "E03-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1335,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:41.213Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-ced6e54d7d0e78ba0941",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 93,
+          "column": 1
+        },
+        {
+          "title": "T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases within one tick",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 2384,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:41.732Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-20b2484bb5406fb73c3b",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 21,
+          "column": 1
+        },
+        {
+          "title": "T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap uses assist",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2505,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:41.793Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-d95cee884161dfa0fa27",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "T-E03-13-blur @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 2725,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:42.553Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-4461f71805e94bf7e221",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-13-hidden @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2775,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:43.231Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-49c21abbfd4143657c70",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-13-pagehide @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 1826,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:44.340Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-10b76ed74991e817c25f",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-touch-schemes @E03 @E03-AC08 touch and keyboard switch immediately and hints follow",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1344,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:44.477Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-613bac79a45ae8289065",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC06",
+            "E03-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 1295,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:45.427Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-ad35f5a90a799658b492",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 93,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/foundation.spec.ts",
+      "file": "perf/foundation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E01-perf @E01 @perf foundation counters report a plane and cube",
+          "ok": true,
+          "tags": [
+            "E01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 4011,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:32.848Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7ffe77fb7b6d748fd8c3-84ea5c78902afc9be272",
+          "file": "perf/foundation.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/input.spec.ts",
+      "file": "perf/input.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E03-perf @E03 @perf device input preserves renderer counters and reports fixed-tick cost",
+          "ok": true,
+          "tags": [
+            "E03",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2513,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:33.884Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "00b339088f740709dc93-2ef2a6a24ba51d607434",
+          "file": "perf/input.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/lookdev.spec.ts",
+      "file": "perf/lookdev.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-perf @E02 @perf lookdev counters, frame costs and lifecycle plateau",
+          "ok": true,
+          "tags": [
+            "E02",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 53783,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:34.622Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a2944a322845cc303a65-42ed33581d0e9596c3b2",
+          "file": "perf/lookdev.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/foundation.spec.ts",
+      "file": "visual/foundation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E01-visual @E01 @visual paused fixture renders stable pixels",
+          "ok": true,
+          "tags": [
+            "E01",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2777,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:36.415Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2afa57ec2c994dd00684-ccff15f1f7bcb3332ff9",
+          "file": "visual/foundation.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/lookdev.spec.ts",
+      "file": "visual/lookdev.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-06 @E02 @E02-AC06 shadow probe is purple-blue and above 15% lightness",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 18988,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:36.881Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-435e85f5bec2060163c5",
+          "file": "visual/lookdev.spec.ts",
+          "line": 26,
+          "column": 1
+        },
+        {
+          "title": "T-E02-07 @E02 @E02-AC07 lamp 8 px ring gains at least 10% brightness from bloom",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 20348,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:37.788Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-eec6d7c6048bd10f027e",
+          "file": "visual/lookdev.spec.ts",
+          "line": 34,
+          "column": 1
+        },
+        {
+          "title": "T-E02-08 @E02 @E02-AC08 occluder fades in 0.3 s, hides roof inside, and preserves >70% player mask",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25411,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:39.211Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-ff400021626808833e8f",
+          "file": "visual/lookdev.spec.ts",
+          "line": 53,
+          "column": 1
+        },
+        {
+          "title": "T-E02-09 @E02 @E02-AC09 L1, L4 and L6 change lighting and screenshot hue/luminance",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 20618,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:55.886Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-1b9cac85c0e1bfb6c32b",
+          "file": "visual/lookdev.spec.ts",
+          "line": 75,
+          "column": 1
+        },
+        {
+          "title": "T-E02-10 @E02 @E02-AC10 golden lookdev has a reviewed North-star vision checklist",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 19172,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:27:58.150Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-8a3469a6745804ecb776",
+          "file": "visual/lookdev.spec.ts",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "T-E02-11 @E02 @E02-AC11 overview, street and shadow-probe match reviewed goldens within 1.5%",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC11"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20941,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:04.640Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-af81e3510293ae3a160f",
+          "file": "visual/lookdev.spec.ts",
+          "line": 96,
+          "column": 1
+        },
+        {
+          "title": "T-E02-dof @E02 optional tilt-shift changes the edges and preserves the central play area",
+          "ok": true,
+          "tags": [
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 20401,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:16.521Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-de9496352a14a4220a4d",
+          "file": "visual/lookdev.spec.ts",
+          "line": 105,
+          "column": 1
+        },
+        {
+          "title": "T-E02-fog @E02 @E02-AC09 palette surfaces beyond fogFar resolve to the preset fog color",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 18982,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T18:28:17.334Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-0b958890ae349cb95c48",
+          "file": "visual/lookdev.spec.ts",
+          "line": 116,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T18:26:52.336Z",
+    "duration": 114441.264,
+    "expected": 66,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
