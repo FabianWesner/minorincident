@@ -40,7 +40,7 @@ for k,(x,z,width,depth) in enumerate(path):
     prev=Vector((path[max(0,k-1)][0],0,path[max(0,k-1)][1]))
     nxt=Vector((path[min(len(path)-1,k+1)][0],0,path[min(len(path)-1,k+1)][1]))
     tangent=(nxt-prev).normalized();normal=Vector((tangent.z,0,-tangent.x))
-    w=width/2;d=depth/2;b=min(.006,d*.4)
+    w=width/2;d=depth/2;b=min(.006,d*.4,w*.35)
     corners=[(-w+b,-d),(w-b,-d),(w,-d+b),(w,d-b),(w-b,d),(-w+b,d),(-w,d-b),(-w,-d+b)]
     ring=[]
     for j in range(8):
@@ -55,11 +55,17 @@ for k in range(len(rings)-1):
     for j in range(32):
         faces.append((rings[k][j],rings[k][(j+1)%32],rings[k+1][(j+1)%32],rings[k+1][j]))
         # Exposed forged foot, irregular paint boundary, and long edge scrapes.
-        exposed=k<11 or (k<21 and rng.random()<(21-k)/12)
-        edge_scrape=(k<49 and j in [0,1,15,16] and rng.random()<.12)
-        scar=(18<=k<=26 and j in [0,1,2]) or (39<=k<=44 and j in [29,30])
-        indices.append((1 if rng.random()<.94 else 2) if exposed or edge_scrape or scar else 0)
-faces.extend([tuple(reversed(rings[0])),tuple(rings[-1])]);indices.extend([1,0])
+        exposed=k<13+round(4*math.sin(j*.63)+2*math.sin(j*1.6))
+        scar=(19<=k<=25 and j in [0,1]) or (36<=k<=43 and j==0) or (47<=k<=52 and j==30)
+        tarnish=(k<10 and j in [27,28]) or (17<=k<=23 and j==1)
+        indices.append((2 if tarnish else 1) if exposed or scar else 0)
+# Centre fans avoid collinear triangles along the subdivided cap perimeter.
+for ring,idx,reverse in [(rings[0],1,True),(rings[-1],0,False)]:
+    centre=sum((Vector(verts[i]) for i in ring),Vector())/len(ring)
+    ci=len(verts);verts.append(tuple(centre))
+    for j in range(len(ring)):
+        edge=(ring[j],ring[(j+1)%len(ring)])
+        faces.append((ci,*reversed(edge)) if reverse else (ci,*edge));indices.append(idx)
 mesh=bpy.data.meshes.new('forged_crowbar');mesh.from_pydata(verts,[],faces);mesh.update()
 o=bpy.data.objects.new('body',mesh);bpy.context.collection.objects.link(o)
 for m in [red,steel,dark]:mesh.materials.append(m)
@@ -77,8 +83,10 @@ bpy.context.view_layer.objects.active=o;o.select_set(True)
 scene.render.engine='CYCLES';scene.cycles.samples=32;scene.cycles.seed=17
 attr=mesh.color_attributes.new(name='ao',type='BYTE_COLOR',domain='CORNER');mesh.color_attributes.active_color=attr
 scene.render.bake.target='VERTEX_COLORS';bpy.ops.object.bake(type='AO')
-triangles=sum(len(f.vertices)-2 for f in mesh.polygons)
-report=dict(id='wpn.crowbar',tier='Side',triangles=triangles,draw_calls=3,materials=[m.name for m in mesh.materials],nodes_ok=True,within_budget=triangles<=6000,rounds=3,webgpu_ok=False,webgl2_ok=False,gaps=[])
+mesh.calc_loop_triangles()
+assert all(t.area>1e-12 for t in mesh.loop_triangles), 'Degenerate crowbar triangle'
+triangles=len(mesh.loop_triangles)
+report=dict(id='wpn.crowbar',tier='Side',triangles=triangles,draw_calls=3,materials=[m.name for m in mesh.materials],nodes_ok=all(bpy.data.objects.get(n) is not None for n in ['root','grip','tip']),within_budget=triangles<=6000 and len(mesh.materials)<=30,rounds=4,webgpu_ok=False,webgl2_ok=False,gaps=[])
 (HERE/'geometry.json').write_text(json.dumps(report,indent=2))
 if a.glb:
     bpy.ops.object.select_all(action='SELECT');bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False)
@@ -90,7 +98,7 @@ if a.render:
     def aim(obj):obj.rotation_euler=(target-obj.location).to_track_quat('-Z','Y').to_euler()
     for loc,power,size,color in [((1,-2,2.5),180,2,(1,.80,.65)),((-1,-.5,1.5),90,1.5,(.65,.72,1)),((.5,1,1.6),220,1,(1,.57,.32))]:
         bpy.ops.object.light_add(type='AREA',location=loc);light=bpy.context.object;light.data.energy=power;light.data.size=size;light.data.color=color;aim(light)
-    views={'ref':(.9,-3,1.0),'game':(2,-2,3),'front':(3,0,.8),'side':(0,-3,.8),'rear':(-1,3,1.3)}
+    views={'ref':(1.7,-3,1.25),'game':(2,-2,3),'front':(3,0,.8),'side':(0,-3,.8),'rear':(-1,3,1.3)}
     bpy.ops.object.camera_add(location=views[a.view]);cam=bpy.context.object;aim(cam);cam.data.type='ORTHO';cam.data.ortho_scale=1.65;scene.camera=cam
     scene.view_settings.view_transform='AgX';scene.view_settings.exposure=-.35
     scene.render.resolution_x=a.width;scene.render.resolution_y=a.height;scene.render.resolution_percentage=100
@@ -98,5 +106,5 @@ if a.render:
     if a.view=='ref':
         cam.location=views['game'];aim(cam);scene.cycles.samples=24
         scene.render.resolution_x=960;scene.render.resolution_y=540
-        scene.render.filepath=str(Path(a.render).with_name(Path(a.render).stem+'-game.png').resolve());bpy.ops.render.render(write_still=True)
+        scene.render.filepath=str(Path(a.render).with_name(('game.png' if Path(a.render).name=='hero.png' else Path(a.render).stem+'-game.png')).resolve());bpy.ops.render.render(write_still=True)
 print('OK',json.dumps(report))
