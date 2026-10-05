@@ -1,0 +1,115 @@
+{
+  "main_merged": "0907b9cea10201de40cfcd68271403e53147ca50",
+  "status": "done",
+  "criteria": [
+    {
+      "criterion": "E04-AC01",
+      "passed_tests": [
+        "T-E04-01 @E04 @E04-AC01 acceleration reaches 95% in 9 ticks and release stops within 6"
+      ]
+    },
+    {
+      "criterion": "E04-AC02",
+      "passed_tests": [
+        "T-E04-02 @E04 @E04-AC02 200-direction capsule sweep never penetrates the static wall ring over 0.02m"
+      ]
+    },
+    {
+      "criterion": "E04-AC03",
+      "passed_tests": [
+        "T-E04-03 @E04 @E04-AC03 diagonal motion keeps at least 60% tangential speed along a wall"
+      ]
+    },
+    {
+      "criterion": "E04-AC04",
+      "passed_tests": [
+        "T-E04-04 @E04 @E04-AC04 aim holds snap in one tick; movement turns at 720 degrees per second"
+      ]
+    },
+    {
+      "criterion": "E04-AC05",
+      "passed_tests": [
+        "T-E04-05 @E04 @E04-AC05 damage grants exactly 36 invulnerable ticks; regen starts at 240 ticks and gives 2 HP/s"
+      ]
+    },
+    {
+      "criterion": "E04-AC06",
+      "passed_tests": [
+        "T-E04-06 @E04 @E04-AC06 death emits once and respawns at last checkpoint at tick 120; level state survives"
+      ]
+    },
+    {
+      "criterion": "E04-AC07",
+      "passed_tests": [
+        "T-E04-07 @E04 @E04-AC07 move-only escape from 12 overlapping infected within 3 seconds; walls remain solid"
+      ]
+    },
+    {
+      "criterion": "E04-AC08",
+      "passed_tests": [
+        "T-E04-08 @E04 @E04-AC08 both supplied GLBs and fallbacks load with every rigid node and 1.4m height",
+        "T-E04-08b @E04 @E04-AC08 missing or invalid assets fall back independently with the same rig"
+      ]
+    },
+    {
+      "criterion": "E04-AC09",
+      "passed_tests": [
+        "T-E04-09 @E04 @E04-AC09 sixty-second input bot visits every sim clip with zero missing mappings"
+      ]
+    },
+    {
+      "criterion": "E04-AC10",
+      "passed_tests": [
+        "T-E04-10 @E04 @E04-AC10 all five tiers retain red/teal; tier 0 and 4 differ on over 5% of character pixels"
+      ]
+    },
+    {
+      "criterion": "E04-AC11",
+      "passed_tests": [
+        "T-E04-11 @E04 @E04-AC11 supplied GLB character sheet has a reviewed Character vision checklist"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "command": "typecheck",
+      "exitCode": 0,
+      "log": "test-results/epics/E04/logs/typecheck.txt"
+    },
+    {
+      "command": "lint",
+      "exitCode": 0,
+      "log": "test-results/epics/E04/logs/lint.txt"
+    },
+    {
+      "command": "build",
+      "exitCode": 0,
+      "log": "test-results/epics/E04/logs/build.txt"
+    },
+    {
+      "command": "test:unit",
+      "exitCode": 0,
+      "log": "test-results/epics/E04/logs/test-unit.txt"
+    },
+    {
+      "command": "test:smoke",
+      "exitCode": 0,
+      "log": "test-results/epics/E04/logs/test-smoke.txt"
+    },
+    {
+      "command": "verify -- E04",
+      "exitCode": 0,
+      "log": "test-results/epics/E04/logs/verify_--_E04.txt"
+    },
+    {
+      "command": "earlier-epics-sim",
+      "exitCode": 0,
+      "log": "test-results/epics/E04/logs/earlier-epics-sim.txt"
+    },
+    {
+      "command": "earlier-epics-browser",
+      "exitCode": 0,
+      "log": "test-results/epics/E04/logs/earlier-epics-browser.txt"
+    }
+  ]
+}

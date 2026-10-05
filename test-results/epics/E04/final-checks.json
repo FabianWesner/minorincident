@@ -1,0 +1,42 @@
+[
+  {
+    "command": "typecheck",
+    "exitCode": 0,
+    "log": "test-results/epics/E04/logs/typecheck.txt"
+  },
+  {
+    "command": "lint",
+    "exitCode": 0,
+    "log": "test-results/epics/E04/logs/lint.txt"
+  },
+  {
+    "command": "build",
+    "exitCode": 0,
+    "log": "test-results/epics/E04/logs/build.txt"
+  },
+  {
+    "command": "test:unit",
+    "exitCode": 0,
+    "log": "test-results/epics/E04/logs/test-unit.txt"
+  },
+  {
+    "command": "test:smoke",
+    "exitCode": 0,
+    "log": "test-results/epics/E04/logs/test-smoke.txt"
+  },
+  {
+    "command": "verify -- E04",
+    "exitCode": 0,
+    "log": "test-results/epics/E04/logs/verify_--_E04.txt"
+  },
+  {
+    "command": "earlier-epics-sim",
+    "exitCode": 0,
+    "log": "test-results/epics/E04/logs/earlier-epics-sim.txt"
+  },
+  {
+    "command": "earlier-epics-browser",
+    "exitCode": 0,
+    "log": "test-results/epics/E04/logs/earlier-epics-browser.txt"
+  }
+]

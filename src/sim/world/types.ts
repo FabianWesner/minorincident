@@ -1,9 +1,11 @@
+import type { SurvivorState } from '../../data/survivor';
 import type { InputFrame, Scheme } from '../../input/InputFrame';
 export { emptyInput, type InputFrame } from '../../input/InputFrame';
 export interface Transform { x: number; y: number; z: number; yaw: number }
 /** Plain components only; physics handles and render objects are never serialized. */
 export interface EntitySnapshot {
   id: number;
+  survivor?: SurvivorState;
   kind: string;
   archetype: string;
   transform: Transform;
@@ -11,6 +13,8 @@ export interface EntitySnapshot {
   faction: string;
 }
 export type GameEvent =
+  | { tick: number; type: 'player.died' | 'player.respawned'; id: number }
+  | { tick: number; type: 'player.damaged'; id: number; amount: number }
   | { tick: number; type: 'sim.tick' }
   | { tick: number; type: 'scenario.loaded'; name: string; seed: number }
   | { tick: number; type: 'scenario.unloaded'; name: string };
@@ -21,8 +25,8 @@ export interface GameStateSnapshot {
   scenario: string | null;
   player: EntitySnapshot | null;
   entities: EntitySnapshot[];
-  mission: null;
-  progression: null;
+  mission: { completedObjectives: string[] } | null;
+  progression: { pickups: string[] } | null;
   rng: { stream: string; state: number; cursor: number }[];
   perf: { entities: number; bodies: number; colliders: number; listeners: number };
 }
