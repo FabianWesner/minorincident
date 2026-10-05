@@ -1,0 +1,394 @@
+{
+  "prop.tree": {
+    "id": "prop.tree",
+    "category": "prop",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 3,
+      "y": 5,
+      "z": 3
+    },
+    "token": "foliage",
+    "solid": false,
+    "forward": "+X",
+    "glb": "/assets/models/prop.tree.glb"
+  },
+  "prop.hedge": {
+    "id": "prop.hedge",
+    "category": "prop",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 2,
+      "y": 1.2,
+      "z": 1
+    },
+    "token": "foliage",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/prop.hedge.glb"
+  },
+  "prop.picket-fence": {
+    "id": "prop.picket-fence",
+    "category": "prop",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 2,
+      "y": 1.1,
+      "z": 0.18
+    },
+    "token": "picketWhite",
+    "solid": false,
+    "forward": "+X",
+    "glb": "/assets/models/prop.picket-fence.glb"
+  },
+  "prop.street-lamp": {
+    "id": "prop.street-lamp",
+    "category": "prop",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 0.8,
+      "y": 3.6,
+      "z": 0.5
+    },
+    "token": "uiDark",
+    "solid": false,
+    "forward": "+X",
+    "glb": "/assets/models/prop.street-lamp.glb"
+  },
+  "prop.traffic-cone": {
+    "id": "prop.traffic-cone",
+    "category": "prop",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 0.5,
+      "y": 0.8,
+      "z": 0.5
+    },
+    "token": "schoolBusYellow",
+    "solid": false,
+    "forward": "+X",
+    "glb": "/assets/models/prop.traffic-cone.glb"
+  },
+  "veh.sedan-red": {
+    "id": "veh.sedan-red",
+    "category": "vehicle",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.5,
+      "z": 1.9
+    },
+    "token": "survivorRed",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/veh.sedan-red.glb"
+  },
+  "veh.wreck": {
+    "id": "veh.wreck",
+    "category": "vehicle",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 4.4,
+      "y": 0.9,
+      "z": 1.9
+    },
+    "token": "uiDark",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/veh.wreck.glb"
+  },
+  "bld.house-a": {
+    "id": "bld.house-a",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 7
+    },
+    "token": "schoolBusYellow",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.house-a.glb"
+  },
+  "bld.house-b": {
+    "id": "bld.house-b",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 8,
+      "y": 4.8,
+      "z": 7
+    },
+    "token": "backpackTeal",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.house-b.glb"
+  },
+  "bld.house-c": {
+    "id": "bld.house-c",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 8,
+      "y": 5.5,
+      "z": 7
+    },
+    "token": "brick",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.house-c.glb"
+  },
+  "bld.diner": {
+    "id": "bld.diner",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 10,
+      "y": 4,
+      "z": 7
+    },
+    "token": "survivorRed",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.diner.glb"
+  },
+  "bld.hardware": {
+    "id": "bld.hardware",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 10,
+      "y": 5.5,
+      "z": 7
+    },
+    "token": "brick",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.hardware.glb"
+  },
+  "bld.gas-station": {
+    "id": "bld.gas-station",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 8,
+      "y": 3.5,
+      "z": 7
+    },
+    "token": "schoolBusYellow",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.gas-station.glb"
+  },
+  "bld.school": {
+    "id": "bld.school",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 12,
+      "y": 6,
+      "z": 8
+    },
+    "token": "brick",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.school.glb"
+  },
+  "bld.gym": {
+    "id": "bld.gym",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 10,
+      "y": 5,
+      "z": 8
+    },
+    "token": "backpackTeal",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.gym.glb"
+  },
+  "bld.supermarket": {
+    "id": "bld.supermarket",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 12,
+      "y": 5,
+      "z": 8
+    },
+    "token": "schoolBusYellow",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.supermarket.glb"
+  },
+  "bld.pharmacy": {
+    "id": "bld.pharmacy",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 10,
+      "y": 4,
+      "z": 7
+    },
+    "token": "picketWhite",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.pharmacy.glb"
+  },
+  "bld.police": {
+    "id": "bld.police",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 10,
+      "y": 5,
+      "z": 8
+    },
+    "token": "policeBlue",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.police.glb"
+  },
+  "bld.fire-station": {
+    "id": "bld.fire-station",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 10,
+      "y": 5,
+      "z": 8
+    },
+    "token": "survivorRed",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.fire-station.glb"
+  },
+  "bld.hospital": {
+    "id": "bld.hospital",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 10,
+      "y": 7,
+      "z": 8
+    },
+    "token": "picketWhite",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.hospital.glb"
+  },
+  "bld.park-lodge": {
+    "id": "bld.park-lodge",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 8,
+      "y": 4,
+      "z": 7
+    },
+    "token": "woodWarm",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.park-lodge.glb"
+  },
+  "bld.zoo-gate": {
+    "id": "bld.zoo-gate",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 10,
+      "y": 4,
+      "z": 6
+    },
+    "token": "schoolBusYellow",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.zoo-gate.glb"
+  },
+  "bld.reptile-house": {
+    "id": "bld.reptile-house",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 10,
+      "y": 4,
+      "z": 8
+    },
+    "token": "backpackTeal",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.reptile-house.glb"
+  },
+  "bld.substation": {
+    "id": "bld.substation",
+    "category": "building",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 8,
+      "y": 4,
+      "z": 7
+    },
+    "token": "uiDark",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/bld.substation.glb"
+  },
+  "prop.picnic-table": {
+    "id": "prop.picnic-table",
+    "category": "prop",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 2,
+      "y": 0.8,
+      "z": 1.4
+    },
+    "token": "woodWarm",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/prop.picnic-table.glb"
+  },
+  "prop.bus-stop": {
+    "id": "prop.bus-stop",
+    "category": "prop",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 3,
+      "y": 2.5,
+      "z": 1.6
+    },
+    "token": "policeBlue",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/prop.bus-stop.glb"
+  },
+  "prop.gas-pump": {
+    "id": "prop.gas-pump",
+    "category": "prop",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 0.8,
+      "y": 1.6,
+      "z": 0.8
+    },
+    "token": "survivorRed",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/prop.gas-pump.glb"
+  },
+  "prop.tent": {
+    "id": "prop.tent",
+    "category": "prop",
+    "status": "placeholder",
+    "dimensions": {
+      "x": 3,
+      "y": 2,
+      "z": 3
+    },
+    "token": "backpackTeal",
+    "solid": true,
+    "forward": "+X",
+    "glb": "/assets/models/prop.tent.glb"
+  }
+}
