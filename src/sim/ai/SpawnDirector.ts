@@ -34,9 +34,9 @@ export class SpawnDirector {
     if (matrix.length !== 16 || !matrix.every(Number.isFinite)) throw new RangeError('Invalid spawn frustum');
     this.frustum.set(matrix); this.hasFrustum = true;
   }
-  visible(position: { x: number; z: number }): boolean {
+  visible(position: { x: number; z: number; y?: number }): boolean {
     if (this.hasFrustum) {
-      const m = this.frustum, x = position.x, y = 0.7, z = position.z;
+      const m = this.frustum, x = position.x, y = position.y ?? 0.7, z = position.z;
       const cx = m[0] * x + m[4] * y + m[8] * z + m[12], cy = m[1] * x + m[5] * y + m[9] * z + m[13];
       const cz = m[2] * x + m[6] * y + m[10] * z + m[14], w = m[3] * x + m[7] * y + m[11] * z + m[15];
       return w > 0 && Math.abs(cx) <= w * 1.1 && Math.abs(cy) <= w * 1.1 && Math.abs(cz) <= w;
@@ -44,9 +44,10 @@ export class SpawnDirector {
     const c = this.camera, dx = position.x - c.x, dz = position.z - c.z;
     return Math.abs(dx * Math.cos(c.yaw) + dz * Math.sin(c.yaw)) <= c.halfWidth * 1.1 && Math.abs(-dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw)) <= c.halfDepth * 1.1;
   }
-  safe(id: string, position: { x: number; z: number }): boolean {
+  safe(id: string, position: { x: number; z: number }, perched?: boolean): boolean {
+    const target = this.ai.perchFor(id, position, perched) ?? position;
     const player = this.ai.world.entities.get(1)!;
-    return Math.hypot(position.x - player.transform.x, position.z - player.transform.z) >= 18 && !this.visible(position) && this.ai.nav.clear(position.x, position.z, infectedDef(id).radius);
+    return Math.hypot(target.x - player.transform.x, target.z - player.transform.z) >= 18 && !this.visible(target) && this.ai.nav.clear(target.x, target.z, infectedDef(id).radius);
   }
   request(archetype: string, position: { x: number; z: number }, options: InfectedSpawn = {}): void {
     infectedDef(archetype); if (!Number.isFinite(position.x) || !Number.isFinite(position.z)) throw new RangeError('Spawn position must be finite');
@@ -67,7 +68,7 @@ export class SpawnDirector {
     let count = this.count;
     for (let i = 0; i < this.queue.length;) {
       const request = this.queue[i], weight = request.archetype === 'infected.crow' ? (request.options.birds ?? 20) * 0.25 : 1;
-      if (count + weight > this.cap || !(request.turning ? this.ai.nav.clear(request.position.x, request.position.z, infectedDef(request.archetype).radius) : this.safe(request.archetype, request.position)) || !this.ai.pool.length) { i++; continue; }
+      if (count + weight > this.cap || !(request.turning ? this.ai.nav.clear(request.position.x, request.position.z, infectedDef(request.archetype).radius) : this.safe(request.archetype, request.position, request.options.perched)) || !this.ai.pool.length) { i++; continue; }
       const id = this.ai.spawn(request.archetype, request.position, request.options);
       if (request.migration) {
         const group = request.migration.group; if (!group.members.length) group.started = this.ai.world.tick;

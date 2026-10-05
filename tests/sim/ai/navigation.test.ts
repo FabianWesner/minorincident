@@ -61,3 +61,16 @@ test('T-E07-02b @E07 @E07-AC02 @E06-AC04 actual infected consume catalog noise, 
   expect(distant.infected!.state).toBe('chase');
   expect(w.events.events().some((e) => e.type === 'ai.alerted' && e.targetId === distant.id && e.cause === 'noise')).toBe(true);
 });
+
+
+test('T-E07-07c @E07 @E07-AC07 scripted cats validate the actual selected perch before spawning', async () => {
+  const w = await arena('animal-lab'), director = w.infected!.director;
+  expect(director.safe('infected.cat', { x: 52, z: 0 })).toBe(false);
+  director.request('infected.cat', { x: 52, z: 0 });
+  director.request('infected.cat', { x: 52, z: 0 }, { perched: false }); step(w, 1);
+  expect(w.infected!.active).toHaveLength(1); expect(w.infected!.active[0].transform.x).toBe(52); expect(director.queue).toHaveLength(1);
+  const player = w.entities.get(1)!; player.transform.x = 52; w.physics.playerBody!.setTranslation(player.transform, true); step(w, 1);
+  expect(director.queue).toHaveLength(0); expect(w.infected!.active).toHaveLength(2);
+  const cat = w.infected!.active[1]; expect(cat.transform.x).toBe(5.1); expect(cat.transform.y).toBe(2.2);
+  expect(director.visible(cat.transform)).toBe(false); expect(Math.hypot(cat.transform.x - 52, cat.transform.z)).toBeGreaterThanOrEqual(18);
+});
