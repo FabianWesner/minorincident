@@ -62,6 +62,12 @@ export function validateMission(def: MissionDef): string[] {
   }
   if (!def.finish.length) errors.push('Missing finish objectives'); def.finish.forEach(id => ref(id, [...ids], 'objective'));
   actions(def.onStart); actions(def.onComplete);
+  const requireCompatibleChoices = (required: string[]): void => {
+    const choices=new Set<string>();
+    for(const id of required){const choice=def.steps.find(s=>s.id===id)?.choice;if(choice){if(choices.has(choice))errors.push(`Unreachable choice conjunction: ${choice}`);choices.add(choice);}}
+  };
+  requireCompatibleChoices(def.finish);
+  for(const s of def.steps)if(s.start?.kind==='objectives'&&s.start.mode==='all')requireCompatibleChoices(s.start.ids);
   const reachable = new Set<string>();
   for (let pass = 0; pass < def.steps.length; pass++) for (const s of def.steps) {
     if (s.start?.kind === 'start' || (s.start?.kind === 'objectives' && s.start.ids.length && (s.start.mode === 'all' ? s.start.ids.every(id => reachable.has(id)) : s.start.ids.some(id => reachable.has(id))))) reachable.add(s.id);

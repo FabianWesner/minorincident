@@ -17,6 +17,9 @@ export class Mission {
   private readonly deadBosses = new Set<string>();
   private readonly rescued = new Set<number>();
   private readonly zones = new Map<string, { inside: boolean; entered: boolean; exited: boolean }>();
+  private readonly gateHandles = new Map<string, number>();
+  private markerObjective: string | null = null;
+  private pendingMarker: string | null = null;
   private pendingCheckpoint: string | null = null;
   private finishApplied = false;
   private readonly startTick: number;
@@ -27,12 +30,12 @@ export class Mission {
       id: def.id, phase: 'briefing', completedObjectives: [],
       steps: Object.fromEntries(def.steps.map(s => [s.id, { status: 'pending', started: 0, kills: [], events: {}, interaction: 0 }])),
       actors: {}, items: [], states: Object.fromEntries(def.states.map(id => [id, false])), counters: Object.fromEntries(def.counters.map(id => [id, 0])),
-      gates: Object.fromEntries(Object.entries(def.gates).map(([id, gate]) => [id, gate.open])), marker: null, checkpoint: null, tier: null, timeOfDay: null,
+      gates: Object.fromEntries(Object.entries(def.gates).map(([id, gate]) => [id, gate.open])), marker: null, checkpoint: null, tier: world.districts?.composition.tier ?? null, timeOfDay: null,
       subtitle: null, cinematic: null, failure: null,
       stats: { time: 0, kills: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] }, result: null,
     };
-    world.mission = this.state;
-    for (const step of def.steps) this.registerZones(step.complete);
+    world.mission = this.state; this.rebuildGates();
+    for (const step of def.steps) {this.registerZones(step.complete); for(const fail of step.fail)this.registerZones(fail.trigger);}
     this.stops.push(world.events.on('sim.tick', () => this.update(), SimPhase.missions));
     for (const type of ['combat.kill', 'player.damaged', 'player.died', 'player.respawned', 'mission.signal'] as const) this.stops.push(world.events.on(type, event => this.event(event), SimPhase.missions));
     this.checkpoints.set('start', this.capture());
@@ -61,7 +64,7 @@ export class Mission {
       case 'objectives': return t.mode === 'all' ? t.ids.every(id => this.state.steps[id].status === 'completed') : t.ids.some(id => this.state.steps[id].status === 'completed');
       case 'volume': { const zone = this.zones.get(`${t.actor ?? 'player'}:${t.anchor}`); return t.edge === 'inside' ? this.inside(t.anchor, t.actor ? this.entity(t.actor) ?? null : undefined) : !!zone?.[t.edge === 'enter' ? 'entered' : 'exited']; }
       case 'interact': return !!step && this.inside(t.anchor) && (this.world.inputFrame.interact || step.interaction >= Math.ceil(t.seconds * 60));
-      case 'kills': return t.actors.filter(id => step?.kills.includes(this.state.actors[id])).length >= (t.count ?? t.actors.length);
+      case 'kills': return t.actors.filter(id => this.deadBosses.has(id) || step?.kills.includes(this.state.actors[id])).length >= (t.count ?? t.actors.length);
       case 'timer': return !!step && this.world.tick - step.started >= Math.ceil(t.seconds * 60);
       case 'dead': return this.entity(t.actor)?.health.current === 0;
       case 'escort': return !!this.entity(t.actor) && this.entity(t.actor)!.health.current > 0 && this.inside(t.anchor, this.entity(t.actor) ?? null);
@@ -104,7 +107,8 @@ export class Mission {
       this.emit({ type: 'objective.started', id: def.id }); this.run(def.onStart ?? []);
     }
     const current = this.def.steps.find(s => this.state.steps[s.id].status === 'active');
-    this.state.marker = current?.anchor ?? null;
+    if(this.markerObjective!==(current?.id??null)){this.markerObjective=current?.id??null;this.state.marker=current?.anchor??null;}
+    if(this.pendingMarker){this.state.marker=this.pendingMarker;this.pendingMarker=null;}
   }
   private complete(def: ObjectiveDef): void {
     this.state.steps[def.id].status = 'completed'; this.state.completedObjectives.push(def.id);
@@ -171,18 +175,26 @@ export class Mission {
     }
     this.emit({ type: 'mission.spawned', id: group });
   }
+  /** Gate collision changes immediately; visual consumers react to gate.changed. */
+  rebuildGates(): void {
+    this.gateHandles.clear();
+    for(const [id,gate]of Object.entries(this.def.gates)) {
+      const a=this.def.anchors[gate.anchor],handle=this.world.physics.addStatic({min:[a.x-a.radius,0,a.z-.2],max:[a.x+a.radius,2.4,a.z+.2]},[0,0]);
+      this.gateHandles.set(id,handle);this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[id]);
+    }
+  }
   private run(actions: ScriptAction[]): void {
     for (const action of actions) switch (action.kind) {
       case 'spawn': this.spawn(action.group); break;
-      case 'migration': this.emit({ type: 'migration.started', id: action.group, to: this.def.anchors[action.to] }); break;
-      case 'tier': this.state.tier = action.tier; this.emit({ type: 'world.tier-requested', tier: action.tier }); break;
-      case 'gate': this.state.gates[action.id] = action.open; this.emit({ type: 'gate.changed', id: action.id, open: action.open }); break;
+      case 'migration': this.spawn(action.group); this.emit({ type: 'migration.started', id: action.group, to: this.def.anchors[action.to] }); break;
+      case 'tier': this.state.tier = action.tier; this.world.setTier(action.tier); this.emit({ type: 'world.tier-requested', tier: action.tier }); break;
+      case 'gate': this.state.gates[action.id] = action.open; this.world.physics.world!.getCollider(this.gateHandles.get(action.id)!).setEnabled(!action.open); this.emit({ type: 'gate.changed', id: action.id, open: action.open }); break;
       case 'radio': this.state.subtitle = { id: action.id, text: dialogue[action.id], until: this.world.tick + 300 }; this.emit({ type: 'dialogue.line', id: action.id, text: dialogue[action.id] }); break;
       case 'cinematic': if (this.state.cinematic) throw new Error('Overlapping cinematics'); this.state.cinematic = { id: action.id, elapsed: 0 }; this.state.phase = 'cinematic'; this.emit({ type: 'cinematic.started', id: action.id }); break;
       case 'timeOfDay': this.state.timeOfDay = action.value; break;
       case 'grant': this.collect(action.item); break;
       case 'checkpoint': this.pendingCheckpoint = action.id; break;
-      case 'marker': this.state.marker = action.anchor; break;
+      case 'marker': this.pendingMarker = action.anchor; break;
       case 'state': this.setState(action.key, action.value); break;
     }
   }
@@ -204,7 +216,7 @@ export class Mission {
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
     const stats = this.state.stats, delta = this.world.tick - checkpoint.tick;
     Object.assign(this.state, structuredClone(checkpoint.state)); this.state.stats = stats; this.state.failure = null; this.state.phase = 'playing'; this.state.cinematic = null; this.state.result = null;
-    this.finishApplied = false;
+    this.finishApplied = false; this.markerObjective=this.def.steps.find(s=>this.state.steps[s.id].status==='active')?.id??null; this.pendingMarker=null;
     for (const step of Object.values(this.state.steps)) if (step.status === 'active') step.started += delta;
     const entities = structuredClone(checkpoint.entities);
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) { const entity = entities.find(e => e.id === entityId); if (entity) entity.health.current = 0; }
@@ -213,7 +225,7 @@ export class Mission {
     Object.assign(player, entities[0]); player.health.current = player.health.max; player.survivor!.diedAt = null;
     this.world.entities.restore(entities, player); this.world.spatial.reset();
     for (const entity of this.world.entities.iterate()) this.world.spatial.set(entity.id, entity.transform.x, entity.transform.z);
-    this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.player!.locomotion.reset(); this.world.previousPlayer = { ...player.transform };
+    this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.player!.restoreVitals(this.world.tick); this.world.previousPlayer = { ...player.transform };
     if (player.weapons && this.world.combat) {
       const saved = player.weapons; this.world.combat.setLoadout(saved.LEFT.rack.map(s => s.id), saved.RIGHT.rack.map(s => s.id));
       Object.assign(this.world.combat.runner.loadout.state, saved);
@@ -221,8 +233,10 @@ export class Mission {
       this.world.combat.projectiles.length = 0;
     }
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(entityId)) step.kills.push(entityId);
+    if (this.state.tier !== null) this.world.setTier(this.state.tier as 0|1|2|3|4|5);
+    for(const [gate,handle]of this.gateHandles)this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[gate]);
     this.zones.forEach(zone => { zone.inside = zone.entered = zone.exited = false; });
     this.emit({ type: 'checkpoint.restored', id });
   }
-  dispose(): void { this.stops.forEach(stop => stop()); }
+  dispose(): void { this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }
 }
