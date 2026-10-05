@@ -8,7 +8,7 @@ export class View {
   readonly focus = new Vector3();
   readonly azimuth = Math.PI / 4;
   readonly polar = Math.PI * 0.30;
-  radius = 28;
+  radius = 35;
   cameraShake = true;
   spot: string | null = null;
   private readonly target = new Vector3();
@@ -22,7 +22,7 @@ export class View {
   resize(width: number, height: number): void {
     this.camera.aspect = width / height;
     const tanV = Math.tan(this.camera.fov * Math.PI / 360);
-    this.radius = this.camera.aspect >= 1 ? 28 : Math.max(28, 12 + 12 / (tanV * this.camera.aspect), 12 + 12 * Math.cos(this.polar) / tanV);
+    this.radius = this.camera.aspect >= 1 ? 35 : Math.max(35, 12 + 12 / (tanV * this.camera.aspect), 12 + 12 * Math.cos(this.polar) / tanV);
     this.camera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z }, 0);
   }
   reset(player: { x: number; z: number }): void {

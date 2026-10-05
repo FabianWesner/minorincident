@@ -12,6 +12,11 @@ export class Lighting {
   readonly color = uniform(new Color());
   readonly intensity = uniform(1);
   readonly shadow = uniform(new Color());
+  readonly skyAmbient = uniform(this.hemisphere.color);
+  readonly groundAmbient = uniform(this.hemisphere.groundColor);
+  readonly fogColor = uniform(new Color());
+  readonly fogNear = uniform(55);
+  readonly fogFar = uniform(140);
   readonly bounce = uniform(new Color('#6f8f3a'));
   preset: TimeOfDay = 'golden';
   constructor(private readonly scene: Scene) {
@@ -25,6 +30,7 @@ export class Lighting {
     this.direction.value.setFromSphericalCoords(1, p.polar, p.azimuth);
     this.color.value.set(p.sun); this.intensity.value = p.intensity; this.shadow.value.set(p.shadow);
     this.sun.color.set(p.sun); this.sun.intensity = p.intensity;
+    this.fogColor.value.set(p.fog); this.fogNear.value = p.fogNear; this.fogFar.value = p.fogFar;
     if (this.scene.background instanceof Color) this.scene.background.set(p.sky); else this.scene.background = new Color(p.sky);
     if (this.scene.fog instanceof Fog) { this.scene.fog.color.set(p.fog); this.scene.fog.near = p.fogNear; this.scene.fog.far = p.fogFar; }
     else this.scene.fog = new Fog(p.fog, p.fogNear, p.fogFar);

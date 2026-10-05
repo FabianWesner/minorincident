@@ -1,6 +1,6 @@
 // Adapted from folio-2025 Materials/MeshDefaultMaterial.js by Bruno Simon (MIT), commit 41046b5.
 import { MeshLambertNodeMaterial, type Texture, type Node } from 'three/webgpu';
-import { Fn, float, max, mix, normalWorld, positionWorld, texture, uniform, vec2, vec4, luminance } from 'three/tsl';
+import { Fn, float, max, mix, normalWorld, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
 
@@ -18,9 +18,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const shadow = max(core, caughtShadow.oneMinus()).clamp(0, 1);
       const bounce = normalWorld.y.negate().max(0).mul(positionWorld.y.max(0).div(1.5).oneMinus().max(0)).mul(0.15);
       const albedo = mix(base, lighting.bounce, bounce);
-      const lit = albedo.mul(lighting.color).mul(lighting.intensity);
+      const ambient = mix(lighting.groundAmbient, lighting.skyAmbient, normalWorld.y.mul(0.5).add(0.5)).mul(0.08);
+      const lit = albedo.mul(lighting.color.rgb.add(ambient)).mul(lighting.intensity);
       const shaded = mix(lit, albedo.mul(lighting.shadow), shadow);
-      const output = emissive > 0 ? base.div(luminance(base).max(0.001)).mul(emissive) : shaded;
+      const output = emissive > 0 ? base.div(luminance(base).max(0.001)).mul(emissive) : mix(shaded, lighting.fogColor, rangeFogFactor(lighting.fogNear, lighting.fogFar));
       return vec4(output, this.fade);
     })();
     this.fog = emissive === 0;

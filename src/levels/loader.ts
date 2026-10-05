@@ -10,6 +10,6 @@ export interface ScenarioDefinition {
 export function loadScenarioDefinition(name: string): ScenarioDefinition {
   const definition = name === 'empty' ? empty : name === 'lookdev' ? lookdev : null;
   if (!definition) throw new Error(`Unknown scenario: ${name}`);
-  if (definition.ground.width <= 0 || definition.ground.depth <= 0 || !Object.values(definition.player).every(Number.isFinite)) throw new Error('Invalid empty scenario');
+  if (definition.ground.width <= 0 || definition.ground.depth <= 0 || !Object.values(definition.player).every(Number.isFinite)) throw new Error(`Invalid ${name} scenario`);
   return structuredClone(definition);
 }
