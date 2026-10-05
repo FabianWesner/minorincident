@@ -85,3 +85,15 @@ test('T-E09-09b @E09-AC09 commanded stuck car starts reverse recovery after a th
     expect(s.car.entity.transform.x).toBeLessThan(0);
   } finally { s.world.dispose(); }
 });
+
+test('T-E09-06b @E09-AC06 a boxed-in driver is forcibly ejected and attached infected are released', async () => {
+  const s = await fixture();
+  try {
+    const infected = s.world.spawnDummy('infected.runner', { x: .8, z: .4 }); s.tick(); expect(s.world.getEntity(infected)!.attachedTo).toBe(2);
+    const R = await import('@dimforge/rapier3d-compat');
+    for (const z of [-1.45, 1.45]) s.world.physics.world!.createCollider(R.ColliderDesc.cuboid(2, .6, .3).setTranslation(0, .6, z));
+    s.world.physics.world!.step(); expect(s.world.vehicles!.exit()).toBe(false);
+    s.world.vehicles!.damage(2, 300); s.tick(180);
+    expect(s.world.vehicles!.active).toBeNull(); expect(s.world.getEntity(1)!.hidden).toBe(false); expect(s.world.getEntity(infected)!.attachedTo).toBeUndefined();
+  } finally { s.world.dispose(); }
+});

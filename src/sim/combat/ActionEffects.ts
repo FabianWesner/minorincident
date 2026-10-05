@@ -66,7 +66,7 @@ export class ActionEffects {
   moveListeners(): void {
     for (const entity of this.world.entities.iterate()) {
       const brain = entity.hearing;
-      if (!brain || entity.health.current <= 0) continue;
+      if (!brain || entity.health.current <= 0 || entity.attachedTo) continue;
       if (brain.mode === 'lured' && this.world.tick >= brain.lureUntil) brain.mode = 'idle';
       if (this.inSmoke(entity.transform)) brain.mode = 'idle';
       if (brain.mode === 'idle' || Status.stunned(entity, this.world.tick)) continue;

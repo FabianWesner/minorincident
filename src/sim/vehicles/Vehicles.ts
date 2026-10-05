@@ -83,14 +83,25 @@ export class Vehicles {
       this.localPoint(car, x, side * (car.physics.def.width / 2 + .55));
       const hit = this.world.physics.world!.intersectionWithShape(this.position, this.identity, this.exitShape, RAPIER.QueryFilterFlags.EXCLUDE_SENSORS, undefined, this.world.physics.playerCollider!);
       if (hit) continue;
-      const player = this.world.entities.get(1)!;
-      Object.assign(player.transform, this.position); player.hidden = false; Object.assign(this.world.previousPlayer!, player.transform);
-      this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(player.transform);
-      this.world.physics.playerCollider!.setEnabled(true); this.world.player!.locomotion.reset(); this.world.spatial.set(1, player.transform.x, player.transform.z);
-      this.active = null; car.entity.vehicle!.driver = null; car.noEnterUntil = this.world.tick + 120; car.doorTicks = 0;
-      this.world.events.emit({ type: 'vehicle.exited', tick: this.world.tick, sourceId: car.entity.id, targetId: 1 }); return true;
+      this.leave(car); return true;
     }
     return false;
+  }
+  private leave(car: Car): void {
+    const player = this.world.entities.get(1)!;
+    Object.assign(player.transform, this.position); player.hidden = false; Object.assign(this.world.previousPlayer!, player.transform);
+    this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    this.world.physics.playerCollider!.setEnabled(true); this.world.player!.locomotion.reset(); this.world.spatial.set(1, player.transform.x, player.transform.z);
+    this.active = null; car.entity.vehicle!.driver = null; car.noEnterUntil = this.world.tick + 120; car.doorTicks = 0;
+    this.world.events.emit({ type: 'vehicle.exited', tick: this.world.tick, sourceId: car.entity.id, targetId: 1 });
+  }
+  private eject(car: Car): void {
+    if (this.active !== car.entity.id || this.exit(car)) return;
+    // If both doors are boxed in, escape onto the roof before the explosion impulse.
+    this.position.x = car.entity.transform.x; this.position.z = car.entity.transform.z;
+    this.position.y = car.entity.transform.y + .45 + survivor.height / 2;
+    this.leave(car);
+    this.position.y = survivor.height / 2 + .02;
   }
   private impacts(car: Car): void {
     const p = car.entity.transform, speed = car.physics.speed, c = Math.cos(p.yaw), s = Math.sin(p.yaw);
@@ -128,12 +139,12 @@ export class Vehicles {
     if (ratio === 0 && state.explodeAt === null) state.explodeAt = this.world.tick + 180;
     if (state.explodeAt !== null && this.world.tick >= state.explodeAt) {
       state.damage = 'exploded';
-      this.exit(car);
+      this.eject(car);
       // Bruno's mass-scaled upward explosion impulse; splash stays in the existing combat resolver.
       car.physics.body.applyImpulse({ x: 0, y: car.physics.def.mass * 4, z: 0 }, true);
       this.world.events.emit({ type: 'vehicle.exploded', tick: this.world.tick, sourceId: car.entity.id });
       for (const target of this.world.entities.iterate()) {
-        if (target.id === car.entity.id || !['infected', 'player', 'vehicle'].includes(target.kind) || target.health.current <= 0 || target.hidden) continue;
+        if (target.id === car.entity.id || !['infected', 'player', 'vehicle'].includes(target.kind) || target.health.current <= 0 || target.hidden || target.attachedTo) continue;
         const dx = target.transform.x - car.entity.transform.x, dz = target.transform.z - car.entity.transform.z, distance = Math.hypot(dx, dz);
         if (distance >= 6) continue;
         if (target.vehicle) this.damage(target.id, 120 * (1 - distance / 6));
@@ -141,18 +152,24 @@ export class Vehicles {
       }
     }
   }
+  private release(car: Car): void {
+    const state = car.entity.vehicle!, p = car.entity.transform;
+    for (const id of state.attached) {
+      const target = this.world.entities.get(id);
+      if (target) { delete target.attachedTo; const side = id % 2 ? 1 : -1; target.transform.x = p.x + Math.sin(p.yaw) * side * 2; target.transform.z = p.z + Math.cos(p.yaw) * side * 2; this.world.spatial.set(id, target.transform.x, target.transform.z); }
+      this.world.events.emit({ type: 'vehicle.shaken', tick: this.world.tick, sourceId: car.entity.id, targetId: id });
+    }
+    state.attached.length = 0;
+  }
   private infected(car: Car): void {
     const state = car.entity.vehicle!, p = car.entity.transform, speed = car.physics.speed;
-    if (car.entity.health.current <= 0) return;
-    if (speed > 8 || Math.abs(car.physics.intent.steer) > .8) {
-      for (const id of state.attached) { const target = this.world.entities.get(id); if (target) { target.hidden = false; const side = id % 2 ? 1 : -1; const c = Math.cos(p.yaw), s = Math.sin(p.yaw); target.transform.x = p.x + s * side * 2; target.transform.z = p.z + c * side * 2; this.world.spatial.set(id, target.transform.x, target.transform.z); } this.world.events.emit({ type: 'vehicle.shaken', tick: this.world.tick, sourceId: car.entity.id, targetId: id }); }
-      state.attached.length = 0;
-    }
+    if (car.entity.health.current <= 0) { this.release(car); return; }
+    if (speed > 8 || Math.abs(car.physics.intent.steer) > .8) this.release(car);
     for (const target of this.world.entities.iterate()) {
-      if (target.kind !== 'infected' || target.health.current <= 0 || target.hidden) continue;
+      if (target.kind !== 'infected' || target.health.current <= 0 || target.hidden || target.attachedTo) continue;
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z, distance = Math.hypot(dx, dz);
       if (speed < 3 && distance <= 1.5 && state.attached.length < 4 && Math.abs(car.physics.intent.steer) <= .8) {
-        state.attached.push(target.id); target.hidden = true;
+        state.attached.push(target.id); target.attachedTo = car.entity.id;
         this.world.events.emit({ type: 'vehicle.grabbed', tick: this.world.tick, sourceId: car.entity.id, targetId: target.id }); continue;
       }
       const c = Math.cos(p.yaw), s = Math.sin(p.yaw), radius = target.combat?.radius ?? .4;
@@ -161,7 +178,7 @@ export class Vehicles {
       this.world.combat?.damage.apply({ attackId: this.world.tick, actionId: car.entity.archetype, sourceId: car.entity.id, targetId: target.id, origin: p, direction: { x: Math.cos(p.yaw), z: -Math.sin(p.yaw) }, base: speed * 30 * car.physics.def.ramStrength, multiplier: 1, type: 'vehicle', knockback: target.archetype === 'infected.brute' ? 3 : 1, stagger: .5 });
       if (target.archetype === 'infected.brute') this.damage(car.entity.id, target.ramDamage ?? 40);
     }
-    for (const id of state.attached) { const target = this.world.entities.get(id); if (target) { Object.assign(target.transform, p); this.world.spatial.set(id, p.x, p.z); } }
+    for (const id of state.attached) { const target = this.world.entities.get(id); if (target) { Object.assign(target.transform, p); const side = id % 2 ? 1 : -1; target.transform.x += Math.sin(p.yaw) * side * car.physics.def.width / 2; target.transform.z += Math.cos(p.yaw) * side * car.physics.def.width / 2; this.world.spatial.set(id, target.transform.x, target.transform.z); } }
   }
   postPhysics(): void {
     for (const car of this.cars.values()) {
@@ -191,7 +208,7 @@ export class Vehicles {
     const p = car.entity.transform;
     const radius = car.physics.def.emergency ? 60 : 30, kind = car.physics.def.emergency ? 'siren' : 'horn';
     if (this.world.combat) { this.world.combat.effects.noise(p, radius, car.entity.archetype, car.entity.id, kind); return; }
-    this.world.events.emit({ type: 'noise', tick: this.world.tick, sourceId: car.entity.id, actionId: car.entity.archetype, position: { x: p.x, y: p.y, z: p.z }, radius: car.physics.def.emergency ? 60 : 30, loudness: 1, kind: car.physics.def.emergency ? 'siren' : 'horn' });
+    this.world.events.emit({ type: 'noise', tick: this.world.tick, sourceId: car.entity.id, actionId: car.entity.archetype, position: { x: p.x, y: p.y, z: p.z }, radius, loudness: 1, kind });
   }
   dispose(): void { this.obstacles.dispose(); for (const car of this.cars.values()) car.physics.dispose(); this.cars.clear(); this.active = null; }
 }
