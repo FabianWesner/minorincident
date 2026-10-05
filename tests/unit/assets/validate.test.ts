@@ -38,10 +38,10 @@ test('T-E17-06 @E17-AC06 every inventory table status matches the manifest', () 
   for (const [id, status] of inventory) expect(manifest.find((a) => a.id === id)?.status, id).toBe(status);
   expect(new Set(manifest.map((a) => a.id)).size).toBe(manifest.length);
 });
-test('T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD and geometry contracts', async () => {
+test('T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts', async () => {
   const assets = manifest as AssetDef[];
   const reports = await validateAssets(assets, true);
   expect(reports.length).toBeGreaterThan(20);
-  const findings = reports.flatMap(r => r.errors).filter(e => e === 'missing LOD' || e.startsWith('forward ') || e.startsWith('material: unknown pal_') || e.includes('degenerate triangle'));
+  const findings = reports.flatMap(r => r.errors).filter(e => e.startsWith('stump_') || e === 'missing LOD' || e.startsWith('forward ') || e.startsWith('material: unknown pal_') || e.includes('degenerate triangle'));
   expect(findings).toEqual([]);
 });

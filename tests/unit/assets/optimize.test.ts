@@ -1,6 +1,8 @@
 import { expect, test } from 'vitest';
 import { assetIO } from '../../../tools/assets/io';
+import { validateDocument } from '../../../tools/assets/validate';
 import { normalizeForward, optimizeDocument } from '../../../tools/assets/optimize';
+import type { AssetDef } from '../../../src/assets/types';
 import { fixture } from './fixture';
 import { compressTextures } from '../../../tools/assets/textures';
 
@@ -68,4 +70,36 @@ test('T-E17-02d @E17-AC02 optimization removes zero-area faces through compresse
   await optimizeDocument(doc,def);
   const io = await assetIO(), result = await io.readBinary(await io.writeBinary(doc));
   expect(result.getRoot().listMeshes()[0].listPrimitives()[0].getIndices()!.getCount()).toBe(3);
+});
+
+test('T-E17-scale @E17-AC03 uniform scale preserves local joints and applies once', async () => {
+  const {doc,def}=fixture(); def.sourceScale=1.25;
+  const body=doc.getRoot().listNodes()[0], local=body.getMatrix();
+  await optimizeDocument(doc,def);
+  expect(body.getMatrix()).toEqual(local);
+  expect(body.getWorldScale()).toEqual([1.25,1.25,1.25]);
+  await optimizeDocument(doc,def);
+  expect(body.getWorldScale()).toEqual([1.25,1.25,1.25]);
+});
+
+test('T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side', async () => {
+  const io=await assetIO();
+  const {default:manifest}=await import('../../../src/assets/manifest.json');
+  const def=manifest.find(d=>d.id==='inf.common-worker')! as AssetDef;
+  const doc=await io.read(def.sourceGlb!);
+  await optimizeDocument(doc,def,.03);
+  const result=await io.readBinary(await io.writeBinary(doc));
+  expect(validateDocument(result,def,0).errors.filter(e=>e.startsWith('dimensions.') || e.startsWith('stump_'))).toEqual([]);
+  for (const name of ['head','armL','armR','foreArmL','foreArmR','legL','legR']) {
+    const limb=result.getRoot().listNodes().find(n=>n.getName()===name)!;
+    const cap=result.getRoot().listNodes().find(n=>n.getName()===`stump_${name}`)!;
+    expect(cap.getExtras().hidden).toBe(true);
+    expect(cap.getParentNode()).toBe(limb.getParentNode());
+    expect(cap.getWorldTranslation()).toEqual(limb.getWorldTranslation());
+    expect(cap.getWorldScale().every(v=>v>0)).toBe(true);
+    let triangles=0;cap.traverse(n=>{for(const p of n.getMesh()?.listPrimitives()??[])triangles+=(p.getIndices()?.getCount()??0)/3;});
+    expect(triangles).toBe(56);
+    const parent=cap.getParentNode()!;parent.removeChild(limb);
+    expect(cap.getParentNode()).toBe(parent);
+  }
 });
