@@ -6,6 +6,8 @@ export type Scheme = 'mouse-only' | 'mouse-keyboard' | 'keyboard' | 'touch';
 export interface InputFrame {
   move: Vec2;
   aim: Vec2 | null;
+  /** Optional world-ground landing point; direction-only devices throw to max range. */
+  aimPoint?: Vec2 | null;
   aimSource: 'pointer' | 'keyboard' | 'touch' | 'assist' | null;
   left: Button;
   right: Button;

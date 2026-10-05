@@ -6,10 +6,10 @@ import type { Game } from '../Game';
 import type { EntityFilter, EntitySnapshot, GameEvent, GameStateSnapshot, InputFrame } from '../sim/world/types';
 
 export type ProgressionPreset = Record<string, unknown>;
-export type Settings = Parameters<Game['view']['settings']>[0];
+export type Settings = Parameters<Game['view']['settings']>[0] & { aimAssist?: import('../sim/combat/AimAssist').AimAssistSetting };
 export interface BotStatus { running: boolean; policy: string | null }
 
-/** Version 1.3: E10 composition/decay snapshots and district photo spots. Future-epic methods fail explicitly, never silently. */
+/** Version 1.4: E10 composition/decay snapshots and district photo spots. Future-epic methods fail explicitly, never silently. */
 export interface SSTestApi {
   version: string;
   ready: Promise<void>;
@@ -59,7 +59,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
-    version: '1.3.0', ready,
+    version: '1.4.0', ready,
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
     loadLevel: (id, opts) => {
@@ -88,7 +88,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       stopRecording: () => game.input.recorder.stop(),
       replay: async (data) => { await game.loadScenario(data.level, data.seed); game.clock.pause(); game.input.recorder.play(data); },
     },
-    spawn: () => pending('E07', 'spawn'),
+    spawn: (id, pos, opts) => game.world.combat ? game.world.spawnDummy(id, pos, opts) : pending('E07', 'spawn'),
     teleport: (id, pos) => {
       if (!Number.isFinite(pos.x) || !Number.isFinite(pos.z)) throw new RangeError('Position must be finite');
       const player = game.world.entities.get(id === 'player' ? 1 : id);
@@ -105,11 +105,11 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       act: (action) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.act(action, game.world.tick); game.view.update(1); },
       checkpoint: (pos) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.setCheckpoint(pos); },
     },
-    setLoadout: () => pending('E05', 'setLoadout'),
-    cheats: { god: () => pending('E05', 'cheats.god'), infiniteCharges: () => pending('E05', 'cheats.infiniteCharges'), killAll: () => pending('E07', 'cheats.killAll'), completeObjective: () => pending('E12', 'cheats.completeObjective') },
+    setLoadout: (left, right) => { if (!game.world.combat) throw new Error('Load combat-arena before setting loadout'); game.world.combat.setLoadout(left, right); },
+    cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => pending('E07', 'cheats.killAll'), completeObjective: () => pending('E12', 'cheats.completeObjective') },
     bot: { start: () => pending('E19', 'bot.start'), stop: () => pending('E19', 'bot.stop'), status: () => pending('E19', 'bot.status') },
     camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose) => game.view.view.cinematic(pose) },
-    settings: { set: (patch) => game.view.settings(patch) },
+    settings: { set: (patch) => { if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.view.settings(patch); } },
     perf: () => game.perf(), screenshotReady: () => game.screenshotReady(),
   };
   window.__SS__ = api; return api;

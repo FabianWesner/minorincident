@@ -361,7 +361,7 @@ for side in ['L','R']:
     parts['foot'+side].location.z-=floor
 for cap in caps:cap.scale=(0,0,0)
 bpy.context.view_layer.update()
-# Measure the visible skull/hair separately from the neck and drips.
+# Record dimensions and rest transforms for the rigid animation contract.
 bpy.context.view_layer.update()
 bounds=[o.matrix_world@v.co for o in objects if not o.name.startswith('stump_') for v in o.data.vertices]
 (P/'rig-rest.json').write_text(json.dumps({
@@ -398,20 +398,24 @@ def apply_pose():
         'shinR_parent':parts['shinR'].parent.name
     },indent=2)+'\n')
 if a.pose:apply_pose()
-def compose_turnaround(path):
+def compose_turnaround(output_path):
     # Assemble already-rendered camera views in Blender, without another GPU render.
     import numpy as np
-    paths=[P/'renders'/n for n in ['front.png','side.png','back.png','review-hero.png']]
+    paths=[P/'renders'/n for n in ['front.png','side.png','back.png']]+[P/'renders'/('hero.png' if (P/'renders'/'hero.png').exists() else 'review-hero.png')]
     panels=[]
     for path in paths:
-        im=bpy.data.images.load(str(path));w,h=im.size
+        im=bpy.data.images.load(str(path))
+        if tuple(im.size)!=(960,540):im.scale(960,540)
+        if path.name=='hero.png':
+            im.filepath_raw=str(P/'renders'/'review-hero.png');im.file_format='PNG';im.save()
+        w,h=im.size
         pixels=np.empty(w*h*4,dtype=np.float32);im.pixels.foreach_get(pixels)
         panels.append(pixels.reshape(h,w,4)[:,(w-420)//2:(w+420)//2,:])
     data=np.concatenate(panels,axis=1);sheet=bpy.data.images.new('turnaround',width=data.shape[1],height=data.shape[0],alpha=True)
-    sheet.pixels.foreach_set(data.ravel());sheet.filepath_raw=str(path);sheet.file_format='PNG';sheet.save()
+    sheet.pixels.foreach_set(data.ravel());sheet.filepath_raw=str(output_path);sheet.file_format='PNG';sheet.save()
 
-if a.render and a.view=='turnaround':
-    compose_turnaround(a.render);print('OK turnaround');sys.exit(0)
+if a.view=='turnaround':
+    compose_turnaround(a.render or P/'renders'/'turnaround.png');print('OK turnaround');sys.exit(0)
 if a.render:
     world=bpy.data.worlds.new('studio');world.use_nodes=True;S.world=world;world.node_tree.nodes['Background'].inputs[0].default_value=(.075,.067,.085,1);world.node_tree.nodes['Background'].inputs[1].default_value=.45
     def light(n,p,power,color,size):
@@ -422,12 +426,7 @@ if a.render:
     views={'hero':(6,-4,2.9),'front':(6,0,1.35),'side':(0,-6,1.35),'back':(-6,0,1.35)}
     cam.location=views.get(a.view,views['hero']);cam.rotation_euler=(Vector((.13,0,.85))-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';cam.data.ortho_scale=2.15*max(a.width/a.height,1)
     S.render.engine='CYCLES';S.cycles.samples=a.samples;S.cycles.use_denoising=True
-    prefs=bpy.context.preferences.addons['cycles'].preferences
-    try:
-        prefs.compute_device_type='METAL';prefs.get_devices()
-        for d in prefs.devices:d.use=True
-        S.cycles.device='GPU'
-    except Exception:pass
+    S.cycles.device='CPU'  # The shared runner owns render concurrency/device policy.
     S.render.resolution_x=a.width;S.render.resolution_y=a.height;S.render.resolution_percentage=100
     S.view_settings.view_transform='AgX';S.render.image_settings.file_format='PNG'
     if a.view=='review-set':

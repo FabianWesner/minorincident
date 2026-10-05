@@ -139,6 +139,17 @@ ell('belt_knot',(.207,-.035,.755),(.033,.042,.028),'sidewalk','torso')
 for s in [-1,1]:
     tube('belt_loop'+str(s),[(.216,-.033,.76),(.236,s*.05-.035,.797),(.235,s*.089-.035,.773),(.22,s*.058-.035,.751)],[.013,.015,.014,.012],'sidewalk','torso',N=8)
     tube('belt_tail'+str(s),[(.216,-.037+s*.015,.737),(.241,-.028+s*.032,.642),(.258,-.043+s*.045,.501),(.248,-.028+s*.047,.453)],[(.012,.024),(.009,.025),(.008,.024),(.008,.023)],'sidewalk','torso',N=8)
+def cloth_ribbon(o,target_name):
+    # Conform pattern ribbons to evaluated cloth, preserving thickness and a 4 mm lift.
+    bpy.context.view_layer.update();target=bpy.data.objects[target_name];inv=target.matrix_world.inverted()
+    original=[v.co.copy() for v in o.data.vertices]
+    for i,vert in enumerate(o.data.vertices):
+        center=sum(original[(i//4)*4:(i//4)*4+4],Vector())/4
+        hit,loc,normal,index=target.closest_point_on_mesh(inv@vert.co)
+        if hit:
+            normal=(target.matrix_world.to_3x3()@normal).normalized()
+            vert.co=target.matrix_world@loc+normal*(.007+(original[i]-center).dot(normal))
+    return o
 # Sleeves, rolled pale cuffs, and oversized curled fingers.
 for s,side in [(1,'L'),(-1,'R')]:
     shoulder=(-.008,s*.237,1.076);elbow=(.021,s*.343,.899);wrist=(.086,s*.418,.744)
@@ -150,10 +161,10 @@ for s,side in [(1,'L'),(-1,'R')]:
         radius=.111 if segment=='upper' else .106
         for j in range(1,4):
             center=A.lerp(B,j/4);points=[center+(u*math.cos(i*2*math.pi/24)+w*math.sin(i*2*math.pi/24))*radius for i in range(25)]
-            tube('sleeve_plaid_band'+side+segment+str(j),points,[.003]*25,'sidewalk',par,N=4,sub=0)
+            cloth_ribbon(tube('sleeve_plaid_band'+side+segment+str(j),points,[.003]*25,'sidewalk',par,N=4,sub=0),('robe_sleeve' if segment=='upper' else 'lower_sleeve')+side)
         for j in range(6):
             t=j*2*math.pi/6;off=(u*math.cos(t)+w*math.sin(t))*radius
-            tube('sleeve_plaid_length'+side+segment+str(j),[A.lerp(B,k/6)+off for k in range(1,6)],[.003]*5,'sidewalk',par,N=4,sub=0)
+            cloth_ribbon(tube('sleeve_plaid_length'+side+segment+str(j),[A.lerp(B,k/6)+off for k in range(1,6)],[.003]*5,'sidewalk',par,N=4,sub=0),('robe_sleeve' if segment=='upper' else 'lower_sleeve')+side)
     tube('rolled_cuff'+side,[(.051,s*.376,.846),(.061,s*.384,.824),(.065,s*.389,.81)],[.108,.112,.10],'sidewalk','foreArm'+side,N=16)
     tube('forearm_skin'+side,[(.064,s*.389,.821),(.076,s*.405,.782),wrist],[.071,.063,.048],'infectedSkin','foreArm'+side,N=12)
     ell('palm'+side,(.087,s*.424,.72),(.063,.072,.079),'infectedSkin','hand'+side)
@@ -240,6 +251,8 @@ for j in range(10):
     x=-.022+.15*math.cos(t);y=.16*math.sin(t)
     lock('low_nape'+str(j),(x*.8,y*.83,1.383),(x-.027,y*1.01,1.316),
          (x-.045,y*.91,1.239+(j%2)*.012),.06)
+ell('upper_gum',(.176,0,1.307),(.02,.064,.013),'blood','head')
+ell('lower_gum',(.18,0,1.205),(.019,.06,.011),'blood','head')
 # Uneven forehead furrows and a swept quiff define the older neighbor face.
 for side in [-1,1]:
     tube('forehead_furrow'+str(side),[(.153,side*.027,1.46),(.137,side*.034,1.485),(.12,side*.055,1.5)],[.007,.008,.004],'infectedSkin','head',N=8)
@@ -389,18 +402,6 @@ if a.pose:
     # Separate the rotated arm chain from its shoulder while revealing proximal cap.
     parts['armL'].location.y+=.25;parts['armL'].location.x+=.16
     cap=bpy.data.objects['stump_armL'];cap.scale=(1,1,1);cap['hidden']=False
-if a.render and a.view=='turnaround':
-    # Assemble already-rendered camera views in Blender, without another GPU render.
-    import numpy as np
-    paths=[P/'renders'/n for n in ['front.png','side.png','back.png','review-hero.png']]
-    panels=[]
-    for path in paths:
-        im=bpy.data.images.load(str(path));w,h=im.size
-        pixels=np.empty(w*h*4,dtype=np.float32);im.pixels.foreach_get(pixels)
-        panels.append(pixels.reshape(h,w,4)[:,(w-420)//2:(w+420)//2,:])
-    data=np.concatenate(panels,axis=1);sheet=bpy.data.images.new('turnaround',width=data.shape[1],height=data.shape[0],alpha=True)
-    sheet.pixels.foreach_set(data.ravel());sheet.filepath_raw=a.render;sheet.file_format='PNG';sheet.save()
-    print('OK turnaround');sys.exit(0)
 if a.render:
     world=bpy.data.worlds.new('studio');world.use_nodes=True;S.world=world;world.node_tree.nodes['Background'].inputs[0].default_value=(.075,.067,.085,1);world.node_tree.nodes['Background'].inputs[1].default_value=.45
     def light(n,p,power,color,size):
@@ -409,7 +410,7 @@ if a.render:
     bpy.ops.mesh.primitive_plane_add(size=200);ground=bpy.context.object;ground.name='studio_floor';ground.data.materials.append(mat('studio','35303b',.88))
     cam=bpy.data.objects.new('camera',bpy.data.cameras.new('camera'));S.collection.objects.link(cam);S.camera=cam
     views={'hero':(6,-4,2.9),'front':(6,0,1.35),'side':(0,-6,1.35),'back':(-6,0,1.35)}
-    cam.location=views.get(a.view,views['hero']);cam.rotation_euler=(Vector((.13,0,.85))-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';cam.data.ortho_scale=2.10*max(a.width/a.height,1)
+    cam.location=(6,4,2.9) if a.pose else views.get(a.view,views['hero']);cam.rotation_euler=(Vector((.13,0,.85))-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';cam.data.ortho_scale=2.10*max(a.width/a.height,1)
     S.render.engine='CYCLES';S.cycles.samples=a.samples;S.cycles.use_denoising=True
     prefs=bpy.context.preferences.addons['cycles'].preferences
     try:
@@ -421,9 +422,18 @@ if a.render:
     S.view_settings.view_transform='AgX';S.render.image_settings.file_format='PNG'
     render_views=['hero','front','side','back'] if a.view=='review-all' or (a.view=='hero' and a.samples==24) else [a.view]
     for view in render_views:
-        cam.location=views.get(view,views['hero']);cam.rotation_euler=(Vector((.13,0,.85))-cam.location).to_track_quat('-Z','Y').to_euler()
+        cam.location=(6,4,2.9) if a.pose else views.get(view,views['hero']);cam.rotation_euler=(Vector((.13,0,.85))-cam.location).to_track_quat('-Z','Y').to_euler()
         dest=Path(a.render) if view=='hero' or len(render_views)==1 else Path(a.render).parent/(view+'.png')
         S.render.filepath=str(dest);bpy.ops.render.render(write_still=True)
+    if a.view=='final':
+        parts['armL'].rotation_euler.x=.45;parts['foreArmL'].rotation_euler.y=-.55;parts['legR'].rotation_euler.y=-.35
+        parts['armL'].location.y+=.25;parts['armL'].location.x+=.16
+        cap=bpy.data.objects['stump_armL'];cap.scale=(1,1,1);cap['hidden']=False
+        bpy.context.view_layer.update()
+        (P/'pose-validation.json').write_text(json.dumps({'rotated':{n:list(parts[n].rotation_euler) for n in ['armL','foreArmL','legR']},'stump_armL_visible':list(cap.scale)==[1,1,1],'left_arm_separated':True},indent=2))
+        cam.location=(6,4,2.9);cam.rotation_euler=(Vector((.13,0,.85))-cam.location).to_track_quat('-Z','Y').to_euler()
+        S.render.resolution_x=960;S.render.resolution_y=540;S.cycles.samples=24
+        S.render.filepath=str(P/'renders'/'pose-test.png');bpy.ops.render.render(write_still=True)
     if len(render_views)>1:
         import numpy as np
         panels=[]
