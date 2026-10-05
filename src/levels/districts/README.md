@@ -32,7 +32,9 @@ are `<district>/W<tier>/<overview|landmark>`. `settings.set({windowMask:true})` 
 probe-only white-window/black-world pass for measured decay. `perf().loadTiming` splits JSON,
 simulation and view load costs. Missions, progression and checkpoints retain explicit stubs.
 
-Render uses the existing Bruno-adapted `InstancedGroup`. Asset prototypes and palette
+Render uses the existing Bruno-adapted `InstancedGroup`. For full-world budgets, the survivor
+merges rigid meshes within each animated joint and bakes authored swatches into vertex colors;
+joints, gear sockets, motion and shadows remain intact. Other character fixtures keep their existing mode. Asset prototypes and palette
 materials are shared across reloads; per-level instance buffers, grass geometry, signs,
 emitter views and physics are disposed on unload. Placeholder assets remain in use until
 manifest status reaches `integrated` or `final`. Lawn grass uses deterministic fixed placement

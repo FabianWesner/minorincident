@@ -1,5 +1,6 @@
 // Adapted from folio-2025 Materials.js by Bruno Simon (MIT), commit 41046b5.
 import { DataTexture, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, type Color } from 'three/webgpu';
+import { attribute } from 'three/tsl';
 import { palette, paletteTokens, type PaletteToken } from '../data/palette';
 import { PaletteMaterial } from './PaletteMaterial';
 import type { Lighting } from './Lighting';
@@ -29,6 +30,15 @@ export class Materials {
     const key = `swatch:${name}:${color.getHexString()}`;
     let material = this.cache.get(key);
     if (!material) { material = new PaletteMaterial('picketWhite', this.texture, this.lighting, 0, color.clone()); material.name = name; this.cache.set(key, material); }
+    return material;
+  }
+  /** One stylized material for rigid meshes whose authored swatches are baked into vertex colors. */
+  vertexColors(): PaletteMaterial {
+    let material = this.cache.get('vertex-colors');
+    if (!material) {
+      material = new PaletteMaterial('picketWhite', this.texture, this.lighting, 0, undefined, attribute('color', 'vec3'));
+      material.userData.sharedPalette = true; this.cache.set('vertex-colors', material);
+    }
     return material;
   }
   unique(token: PaletteToken, emissive = 0, transparent = false): PaletteMaterial {
