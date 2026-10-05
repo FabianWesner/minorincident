@@ -27,6 +27,7 @@ export class Damage {
     if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction) return 0;
     const wasAlive = target.health.current > 0;
     let amount = damageAmount(hit, target);
+    if (target.id === 1 && this.world.combat?.effects.shielded(target.transform)) amount = 0;
     if (target.id === 1 && this.god) amount = 0;
     if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick);
     else { amount = Math.min(amount, target.health.current); target.health.current -= amount; }

@@ -35,6 +35,7 @@ export interface SSTestApi {
     /** Begin at scenario tick zero so seed + frames are sufficient for replay. */
     record(): void; stopRecording(): Recording; replay(data: Recording): Promise<void>;
   };
+  /** E06: action IDs spawn walk-over pickups; infected options include reactive hearing fixtures. */
   spawn(defId: string, pos: { x: number; z: number }, opts?: object): number;
   teleport(entityId: number | 'player', pos: { x: number; z: number }): void;
   /** E04: cosmetic selection and sim entry points; weapon and mission resolution remain separate. */
@@ -59,7 +60,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
-    version: '1.3.0', ready,
+    version: '1.4.0', ready,
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
     loadLevel: async () => pending('E12', 'loadLevel'),
@@ -84,7 +85,10 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       stopRecording: () => game.input.recorder.stop(),
       replay: async (data) => { await game.loadScenario(data.level, data.seed); game.clock.pause(); game.input.recorder.play(data); },
     },
-    spawn: (id, pos, opts) => game.world.combat ? game.world.spawnDummy(id, pos, opts) : pending('E07', 'spawn'),
+    spawn: (id, pos, opts) => {
+      if (!game.world.combat) return pending('E07', 'spawn');
+      return id.startsWith('weapon.') || id.startsWith('ability.') ? game.world.combat.pickups.spawn(id, pos) : game.world.spawnDummy(id, pos, opts);
+    },
     teleport: (id, pos) => {
       if (!Number.isFinite(pos.x) || !Number.isFinite(pos.z)) throw new RangeError('Position must be finite');
       const player = game.world.entities.get(id === 'player' ? 1 : id);
