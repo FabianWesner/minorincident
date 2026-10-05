@@ -27,7 +27,7 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 
 | ID | Criterion | Verification |
 | --- | --- | --- |
-| E03-AC01 | Mouse-only: with the cursor 3 m to the player's +X ground side, `move` points to +X with magnitude 0.75 (±0.05) (linear between 1.2 m and 4 m); inside the 1.2 m ring `move` = 0 and `aim` points to the cursor | e2e (Playwright mouse) |
+| E03-AC01 | Mouse-only: with the cursor 3 m to the player's +X ground side, `move` points to +X with magnitude 0.643 (±0.05) (linear between 1.2 m and 4 m); inside the 1.2 m ring `move` = 0 and `aim` points to the cursor | e2e (Playwright mouse) |
 | E03-AC02 | LMB and RMB map to `left` and `right` (`down`, `held`, `up` edges); the context menu never opens on the canvas | e2e |
 | E03-AC03 | Wheel up and down produce one `selector` edge per notch, with a 120 ms debounce for trackpads | e2e |
 | E03-AC04 | WASD is camera-relative: with the default camera (azimuth π/4), `W` moves the player toward screen-up (the projected motion angle is within 5° of the screen's up vector) | e2e |
