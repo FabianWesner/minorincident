@@ -25,3 +25,30 @@ test('T-E02-03 @E02 @E02-AC03 follow converges after 20 m teleport without overs
   expect(Math.hypot(focuses[59][0] - 20, focuses[59][2])).toBeLessThan(0.01);
   for (const focus of focuses) { expect(focus[0]).toBeGreaterThanOrEqual(0); expect(focus[0]).toBeLessThanOrEqual(20.5); }
 });
+
+test('T-E02-02 @E02 @E02-AC02 default camera angles and projected 1.4 m survivor height', async ({ page }) => {
+  await boot(page);
+  const result = await page.evaluate(async () => {
+    const api = window.__SS__!; await api.loadScenario('lookdev'); api.pause();
+    const top = api.camera.project(0, 1.4, 0), bottom = api.camera.project(0, 0, 0);
+    return { camera: api.getState().render.camera, height: Math.abs(top[1] - bottom[1]) / 2 };
+  });
+  expect(result.camera.fov).toBe(25); expect(result.camera.azimuth).toBeCloseTo(Math.PI / 4, 2); expect(result.camera.polar).toBeCloseTo(Math.PI * 0.3, 2);
+  expect(result.height).toBeGreaterThanOrEqual(1 / 14); expect(result.height).toBeLessThanOrEqual(1 / 10);
+});
+
+test('T-E02-04 @E02 @E02-AC04 portrait keeps every point of the 12 m circle inside the viewport', async ({ page }) => {
+  await boot(page);
+  const desktopRadius = await page.evaluate(() => window.__SS__!.getState().render.camera.radius);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect.poll(() => page.evaluate(() => window.__SS__!.getState().render.camera.radius)).toBeGreaterThan(desktopRadius);
+  const points = await page.evaluate(() => Array.from({ length: 360 }, (_, i) => window.__SS__!.camera.project(12 * Math.cos(i * Math.PI / 180), 0, 12 * Math.sin(i * Math.PI / 180))));
+  for (const p of points) { expect(Math.abs(p[0])).toBeLessThan(1); expect(Math.abs(p[1])).toBeLessThan(1); expect(p[2]).toBeGreaterThan(-1); expect(p[2]).toBeLessThan(1); }
+});
+
+test('T-E02-05b @E02 @E02-AC05 lookdev only uses palette or explicitly retained materials', async ({ page }) => {
+  await boot(page);
+  const materials = await page.evaluate(async () => { await window.__SS__!.loadScenario('lookdev'); return window.__SS__!.getState().render.materials; });
+  expect(materials.length).toBeGreaterThan(10);
+  for (const material of materials) expect(material).toMatch(/^(pal_|emi_|keep_)/);
+});
