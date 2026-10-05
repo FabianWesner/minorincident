@@ -1,5 +1,6 @@
 import { survivor } from '../../data/survivor';
 import { Combat } from '../combat/Combat';
+import { Interactables } from '../interact/Interactables';
 import { Status } from '../combat/Status';
 import { Player } from '../entities/Player';
 import { EventBus, SimPhase } from '../../core/EventBus';
@@ -22,6 +23,7 @@ export class SimWorld implements Lifecycle {
   districts: DistrictWorld | null = null;
   player: Player | null = null;
   combat: Combat | null = null;
+  interactables: Interactables | null = null;
   /** Level-owned records survive player death; scenario unload clears them. */
   mission: GameStateSnapshot['mission'] = null;
   progression: GameStateSnapshot['progression'] = null;
@@ -44,6 +46,7 @@ export class SimWorld implements Lifecycle {
     this.previousPlayer = { ...this.entities.get(1)!.transform };
     this.spatial.set(1, definition.player.x, definition.player.z);
     if (definition.combat) this.combat = new Combat(this, definition);
+    if (this.player) this.interactables = new Interactables(this);
     this.events.on('sim.tick', () => { if (this.combat) this.combat.intent(this.input); }, SimPhase.input);
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
@@ -60,6 +63,7 @@ export class SimWorld implements Lifecycle {
         this.combat.update(this.input);
       }
     }, SimPhase.combat);
+    this.events.on('sim.tick', () => this.interactables?.update(this.input), SimPhase.missions);
     this.events.on('sim.tick', () => {
       if (this.player) { this.player.postPhysics(this.tick); this.spatial.set(1, this.player.entity.transform.x, this.player.entity.transform.z); return; }
       const p = this.physics.playerBody!.translation();
@@ -72,6 +76,7 @@ export class SimWorld implements Lifecycle {
   loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1):void {
     const districts=new DistrictWorld(composition,layouts,seed);
     this.loadScenario('survivor',seed);this.scenario=composition.id;this.districts=districts;
+    this.interactables!.nav = districts.nav;
     const {min,max}=districts.nav;
     this.physics.load({name:composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]}});
     Object.assign(this.entities.get(1)!.transform,{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]});this.previousPlayer={...this.entities.get(1)!.transform};this.player!.setCheckpoint(this.entities.get(1)!.transform);this.spatial.set(1,districts.playerStart[0],districts.playerStart[1]);
@@ -116,7 +121,7 @@ export class SimWorld implements Lifecycle {
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
   }
   reset(): void {
-    this.mission = null; this.progression = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.mission = null; this.progression = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }
   dispose(): void { this.reset(); }

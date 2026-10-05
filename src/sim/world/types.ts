@@ -5,6 +5,8 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 /** Plain components only; physics handles and render objects are never serialized. */
 export interface EntitySnapshot {
   id: number;
+  interactable?: import('../interact/Interactables').Interactable;
+  inventory?: string[];
   survivor?: SurvivorState;
   weapons?: import('../combat/Loadout').LoadoutState;
   combat?: { radius: number; armor: number; shield: boolean; staggerUntil: number; attacking: boolean; damageMultiplier: number; statuses: import('../combat/Status').StatusState[] };
@@ -15,6 +17,8 @@ export interface EntitySnapshot {
   faction: string;
 }
 export type GameEvent =
+  | { tick: number; type: 'interact.completed'; id: number; kind: import('../interact/Interactables').DeviceKind; cycle: number }
+  | { tick: number; type: 'interact.interrupted'; id: number; progress: number }
   | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number } }
   | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number }
   | { tick: number; type: 'combat.hit-stop'; sourceId: number; durationMs: number }
