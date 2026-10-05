@@ -15,6 +15,7 @@ export interface EntitySnapshot {
   faction: string;
 }
 export type GameEvent =
+  | import('../missions/events').MissionEvent
   | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number } }
   | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number }
   | { tick: number; type: 'combat.hit-stop'; sourceId: number; durationMs: number }
@@ -33,7 +34,7 @@ export interface GameStateSnapshot {
   scenario: string | null;
   player: EntitySnapshot | null;
   entities: EntitySnapshot[];
-  mission: { completedObjectives: string[] } | null;
+  mission: import('../missions/types').MissionState | { completedObjectives: string[] } | null;
   progression: { pickups: string[] } | null;
   rng: { stream: string; state: number; cursor: number }[];
   perf: { entities: number; bodies: number; colliders: number; listeners: number };

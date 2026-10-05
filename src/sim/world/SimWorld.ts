@@ -1,3 +1,5 @@
+import { Mission } from '../missions/Mission';
+import type { MissionDef } from '../missions/types';
 import { survivor } from '../../data/survivor';
 import { Combat } from '../combat/Combat';
 import { Status } from '../combat/Status';
@@ -22,6 +24,10 @@ export class SimWorld implements Lifecycle {
   districts: DistrictWorld | null = null;
   player: Player | null = null;
   combat: Combat | null = null;
+  missions: Mission | null = null;
+  get inputFrame(): InputFrame { return this.input; }
+  /** Attach a validated mission after scenario/composition assembly. */
+  loadMission(def: MissionDef): Mission { this.missions?.dispose(); return this.missions = new Mission(this, def); }
   /** Level-owned records survive player death; scenario unload clears them. */
   mission: GameStateSnapshot['mission'] = null;
   progression: GameStateSnapshot['progression'] = null;
@@ -91,7 +97,12 @@ export class SimWorld implements Lifecycle {
   /** Device frames are borrowed for this tick; snapshots are independently copied. */
   applyInput(frame: InputFrame, scheme: import('../../input/InputFrame').Scheme): void { this.input = frame; this.scheme = scheme; }
   clearInput(): void { this.input = emptyInput(); this.scheme = 'mouse-only'; }
-  update(): void { if (this.scenario) this.events.emit({ type: 'sim.tick', tick: ++this.tick }); }
+  update(): void {
+    if (!this.scenario) return;
+    if (this.missions?.state.phase === 'cinematic') { this.missions.advanceCinematic(this.input); return; }
+    if (this.missions && this.missions.state.phase !== 'playing') return;
+    this.events.emit({ type: 'sim.tick', tick: ++this.tick });
+  }
   getEntity(id: number): EntitySnapshot | null { return structuredClone(this.entities.get(id) ?? null); }
   query(filter: EntityFilter): EntitySnapshot[] {
     const nearby = filter.within ? new Set(this.spatial.query(filter.within)) : null;
@@ -116,7 +127,7 @@ export class SimWorld implements Lifecycle {
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
   }
   reset(): void {
-    this.mission = null; this.progression = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }
   dispose(): void { this.reset(); }

@@ -8,6 +8,11 @@ export class EntityStore {
     const record = { ...entity, id: this.nextId++ };
     this.entities.set(record.id, record); return record;
   }
+  /** Checkpoint records keep numeric IDs stable for scripted actor references. */
+  restore(records: EntitySnapshot[], player: EntitySnapshot): void {
+    this.entities.clear(); this.nextId = 1;
+    for (const entity of records) { this.entities.set(entity.id, entity.id === 1 ? player : entity); this.nextId = Math.max(this.nextId, entity.id + 1); }
+  }
   get(id: number): EntitySnapshot | undefined { return this.entities.get(id); }
   values(): EntitySnapshot[] { return [...this.entities.values()].sort((a, b) => a.id - b.id); }
   iterate(): IterableIterator<EntitySnapshot> { return this.entities.values(); }
