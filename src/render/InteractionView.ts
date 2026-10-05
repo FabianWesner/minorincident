@@ -47,14 +47,17 @@ export class InteractionView extends Group {
   /** Asset readiness barrier used at load and screenshotReady, including dynamically spawned objects. */
   async synchronize(): Promise<void> {
     for (const e of this.world.entities.iterate()) {
-      if (!(e.interactable || e.hazard || e.destructible || e.pickup) || this.objects.has(e.id) || this.pending.has(e.id)) continue;
-      const load = this.create(e).then(object => {
-        if (this.disposed) return;
-        this.objects.set(e.id, object); this.add(object);
-      });
-      this.pending.set(e.id, load);
+      this.ensure(e);
     }
-    await Promise.all(this.pending.values()); this.pending.clear();
+    await Promise.all(this.pending.values());
+  }
+  private ensure(e: EntitySnapshot): void {
+    if (!(e.interactable || e.hazard || e.destructible || e.pickup) || this.objects.has(e.id) || this.pending.has(e.id)) return;
+    const load = this.create(e).then(object => {
+      if (!this.disposed) { this.objects.set(e.id, object); this.add(object); }
+      this.pending.delete(e.id);
+    });
+    this.pending.set(e.id, load);
   }
   private async create(e: EntitySnapshot): Promise<Object3D> {
     const id = e.pickup?.kind === 'weapon' ? action(e.pickup.item!).viewAssetId : assetIds[e.archetype];
@@ -71,6 +74,7 @@ export class InteractionView extends Group {
     let selected: EntitySnapshot | null = null, nearest = 64;
     const player = this.world.entities.get(1);
     for (const e of this.world.entities.iterate()) {
+      this.ensure(e);
       const object = this.objects.get(e.id);
       if (object) {
         object.position.set(e.transform.x, 0, e.transform.z); object.rotation.y = e.transform.yaw;
@@ -93,7 +97,7 @@ export class InteractionView extends Group {
       if (this.label.textContent !== label) this.label.textContent = label;
       if (this.caption.textContent !== caption) this.caption.textContent = caption;
       this.panel.dataset.entityId = String(selected.id); this.panel.dataset.hint = c.hint;
-      this.meter.setAttribute('aria-valuenow', String(Math.round(c.progress * 100))); this.meterFill.style.transform = `scaleX(${c.progress})`;
+      this.meter.setAttribute('aria-valuenow', String(Math.round(c.progress * 100 + 1e-8))); this.meterFill.style.transform = `scaleX(${c.progress})`;
     }
     const pieces = this.world.hazards?.debris.pieces ?? [];
     for (let i = 0; i < pieces.length; i++) {
