@@ -5,7 +5,7 @@ import { paletteTokens } from "../data/palette";
 import type { Materials } from "../render/Materials";
 import { placeholder } from "./placeholders";
 import manifest from "./manifest.json";
-/** Per-level cache owns source geometry. Instance batches borrow it; reset disposes batches first. */
+/** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
 export class AssetRegistry {
   private readonly loader = new GLTFLoader();
   private readonly cache = new Map<string, Promise<Group>>();

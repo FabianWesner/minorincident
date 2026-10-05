@@ -34,7 +34,6 @@ export class DistrictView extends Group {
   private readonly black = new MeshBasicNodeMaterial({ color: "#000000" });
   private readonly saved = new Map<Mesh, Material | Material[]>();
   private readonly textures: CanvasTexture[] = [];
-  private readonly fireViews: Mesh[] = [];
   constructor(
     readonly world: DistrictWorld,
     private readonly materials: Materials,
@@ -156,7 +155,6 @@ export class DistrictView extends Group {
           );
         mesh.position.set(f.x + (i - 1) * 0.45, 1.2 - i * 0.2, f.z);
         this.ownedGeometry.push(geometry);
-        this.fireViews.push(mesh);
         this.add(mesh);
       }
       const geometry = new SphereGeometry(1.3, 8, 6),
