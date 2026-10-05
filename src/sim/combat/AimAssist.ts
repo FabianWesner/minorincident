@@ -13,7 +13,7 @@ export class AimAssist {
     const cosine = Math.cos(degrees[this.setting] * Math.PI / 180);
     for (const id of this.query.nearby(origin, range)) {
       const target = this.entities.get(id)!;
-      if (id === sourceId || target.faction !== 'infected' || target.health.current <= 0) continue;
+      if (id === sourceId || target.faction !== 'infected' || target.health.current <= 0 || target.infected?.hidden) continue;
       const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
       if (distance && distance < best && (dx * aim.x + dz * aim.z) / distance >= cosine && this.query.visible(origin, target.transform)) { best = distance; x = dx / distance; z = dz / distance; }
     }

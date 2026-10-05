@@ -16,6 +16,10 @@ export interface EntitySnapshot {
   faction: string;
 }
 export type GameEvent =
+  | { tick: number; type: 'telegraph'; sourceId: number; attackId: number; special: string; duration: number }
+  | { tick: number; type: 'infected.attack'; sourceId: number; attackId: number; targetId: number; special: string; amount: number }
+  | { tick: number; type: 'infected.revived' | 'infected.leg-lost'; sourceId: number; targetId: number }
+
   | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number } }
   | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number }
   | { tick: number; type: 'combat.hit-stop'; sourceId: number; durationMs: number }
@@ -39,4 +43,4 @@ export interface GameStateSnapshot {
   rng: { stream: string; state: number; cursor: number }[];
   perf: { entities: number; bodies: number; colliders: number; listeners: number };
 }
-export interface EntityFilter { kind?: string; archetype?: string; within?: { x: number; z: number; r: number } }
+export interface EntityFilter { kind?: string; archetype?: string; detectable?: boolean; within?: { x: number; z: number; r: number } }
