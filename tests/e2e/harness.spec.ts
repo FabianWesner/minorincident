@@ -40,7 +40,7 @@ test('T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and 
     const errors: Record<string, string> = {};
     const stubs: [string, () => unknown][] = [
       ['spawn', () => api.spawn('infected.stub', { x: 0, z: 0 })],
-      ['cheats.killAll', () => api.cheats.killAll()], ['cheats.completeObjective', () => api.cheats.completeObjective()],
+      ['cheats.killAll', () => api.cheats.killAll()],
       ['bot.start', () => api.bot.start()], ['bot.stop', () => api.bot.stop()], ['bot.status', () => api.bot.status()],
     ];
     for (const [name, call] of stubs) { try { await call(); errors[name] = 'NO ERROR'; } catch (error) { errors[name] = (error as Error).message; } }
@@ -51,8 +51,8 @@ test('T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and 
     return { version: api.version, keys: Object.keys(api).sort(), errors, entity, missing, nearby, events: api.events(0), perf: api.perf() };
   });
   expect(surface.version).toMatch(/^\d+\.\d+\.\d+$/);
-  expect(surface.keys).toEqual(['version', 'ready', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'perf', 'screenshotReady'].sort());
-  const epics: Record<string, string> = { spawn: 'E07', 'cheats.killAll': 'E07', 'cheats.completeObjective': 'E12', 'bot.start': 'E19', 'bot.stop': 'E19', 'bot.status': 'E19' };
+  expect(surface.keys).toEqual(['version', 'ready', 'missions', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'perf', 'screenshotReady'].sort());
+  const epics: Record<string, string> = { spawn: 'E07', 'cheats.killAll': 'E07', 'bot.start': 'E19', 'bot.stop': 'E19', 'bot.status': 'E19' };
   for (const [name, epic] of Object.entries(epics)) expect(surface.errors[name]).toBe(`NotImplemented ${epic}: ${name}`);
   expect(surface.entity?.transform).toMatchObject({ x: 2, z: 3 }); expect(surface.missing).toBeNull(); expect(surface.nearby).toHaveLength(1);
   expect(surface.events).toContainEqual({ tick: 1, type: 'sim.tick' }); expect(surface.perf.entities).toBe(1);

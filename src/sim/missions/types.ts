@@ -59,6 +59,7 @@ export interface MissionResult { time: number; kills: number; damage: number; de
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number }
 export interface MissionState {
   id: string; phase: 'briefing' | 'playing' | 'cinematic' | 'retry' | 'result' | 'progression';
+  volumes: boolean[]; killedBosses: string[];
   completedObjectives: string[]; steps: Record<string, StepState>; actors: Record<string, number>;
   items: string[]; states: Record<string, boolean>; counters: Record<string, number>; gates: Record<string, boolean>;
   marker: string | null; checkpoint: string | null; tier: number | null; timeOfDay: TimeOfDay | null;

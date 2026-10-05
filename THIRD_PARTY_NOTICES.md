@@ -5,6 +5,8 @@ copyright 2025 Bruno Simon):
 
 | Reference | Local adaptation |
 | --- | --- |
+| `Zones.js`, `Respawns.js` (41046b5) | `src/sim/missions/Mission.ts` — volume edge latches and named checkpoint restore |
+| `Notifications.js` (41046b5) | `src/ui/MissionUI.ts` — stable objective/subtitle identity, sim tick expiry |
 | `Game.js` | `src/core/Services.ts`, `src/main.ts`, `src/Game.ts` — staged boot and injected ownership |
 | `Events.js` | `src/core/EventBus.ts` — ordered callback buckets |
 | `Ticker.js` | `src/core/Ticker.ts` — render ticker, with a separate fixed sim clock |

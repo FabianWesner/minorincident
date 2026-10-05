@@ -1,3 +1,5 @@
+import { MissionUI } from '../ui/MissionUI';
+import { ObjectiveMarker } from './ObjectiveMarker';
 import { CombatView } from './CombatView';
 import type { SurvivorState } from '../data/survivor';
 import { CharacterView } from './characters/CharacterView';
@@ -25,6 +27,9 @@ import { PaletteMaterial } from './PaletteMaterial';
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 export class GameView implements Lifecycle {
   readonly scene = new Scene();
+  private missionUI: MissionUI | null = null;
+  private marker: ObjectiveMarker | null = null;
+  private cinematicId: string | null = null;
   readonly view = new View();
   readonly camera = this.view.camera;
   readonly renderer: Renderer;
@@ -60,6 +65,7 @@ export class GameView implements Lifecycle {
     await this.renderer.init(); this.resize();
     this.renderer.domElement.style.display = 'block';
     document.querySelector('#game')!.appendChild(this.renderer.domElement);
+    this.missionUI = new MissionUI(this.world,()=>this.update(1));
     window.addEventListener('resize', this.resize);
   }
   private readonly resize = (): void => {
@@ -108,6 +114,8 @@ export class GameView implements Lifecycle {
       this.cube = new Mesh(new BoxGeometry(1, 1, 1), new MeshBasicNodeMaterial({ color: '#ed935c' }));
       this.meshes.push(ground, this.cube); this.scene.add(...this.meshes);
     }
+    if (this.world.missions) { this.marker = new ObjectiveMarker(this.world); this.scene.add(this.marker); }
+    if (this.world.districts && this.world.combat) { this.combat = new CombatView(this.world, this.materials!); this.scene.add(this.combat); }
     if (import.meta.env.DEV && this.params.has('debug')) {
       this.wireframe = new PhysicsWireframe(this.world.physics); this.scene.add(this.wireframe.lines);
     }
@@ -152,12 +160,19 @@ export class GameView implements Lifecycle {
   getState() {
     const materialInventory = new Map<string, { name: string; palette: boolean }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial }); });
-    return { districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
+    return { missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
       character: this.character?.getState() ?? null,
       materials: [...materialInventory.values()], occlusion: this.occlusion.getState(),
       probes: this.lookdev ? { lamp: this.project(...this.lookdev.lampHead.position.toArray() as [number, number, number]), shadow: this.project(...this.lookdev.shadowProbe.position.toArray() as [number, number, number]) } : null };
   }
+  private syncMission(): void {
+    const mission = this.world.missions, cinematic = mission?.state.cinematic;
+    if (cinematic && this.cinematicId !== cinematic.id) { this.cinematicId = cinematic.id; this.view.cinematic(mission!.def.cinematics[cinematic.id]); }
+    else if (!cinematic && this.cinematicId) { this.cinematicId = null; this.view.follow(); }
+    if (mission?.state.timeOfDay && this.lighting?.preset !== mission.state.timeOfDay) this.lighting?.set(mission.state.timeOfDay);
+  }
   update(alpha = 1): void {
+    this.syncMission();
     const current = this.world.entities.get(1)?.transform, previous = this.world.previousPlayer;
     const survivor = this.world.entities.get(1)?.survivor;
     if (this.character && current && survivor) {
@@ -176,6 +191,7 @@ export class GameView implements Lifecycle {
       this.playerPosition.copy(this.lookdev.player.position);
       this.occlusion.update(this.camera, this.playerPosition, 0, this.lookdev.playerMeshes);
     }
+    this.marker?.update(); this.missionUI?.update(this.camera,innerWidth,innerHeight);
     this.combat?.update();
     this.lighting?.update(this.view);
     this.wireframe?.update();
@@ -199,6 +215,7 @@ export class GameView implements Lifecycle {
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
   }
   reset(): void {
+    this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;}
     this.windowMask=false;
     this.postFx?.dispose();this.postFx = null;
     if(this.districts){this.scene.remove(this.districts);this.districts.dispose();this.districts=null;}
@@ -216,5 +233,5 @@ export class GameView implements Lifecycle {
     this.meshes.length = 0; this.cube = null;
     if (this.wireframe) { this.scene.remove(this.wireframe.lines); this.wireframe.dispose(); this.wireframe = null; }
   }
-  dispose(): void { this.reset();this.districtResources?.registry.dispose();this.districtResources?.grassMaterial.dispose();this.districtResources?.materials.dispose();this.districtResources?.lighting.dispose();this.districtResources=null; window.removeEventListener('resize', this.resize); this.idPlayer.dispose(); this.idBackground.dispose(); this.renderer.dispose(); this.renderer.domElement.remove(); }
+  dispose(): void { this.reset(); this.missionUI?.dispose(); this.missionUI=null;this.districtResources?.registry.dispose();this.districtResources?.grassMaterial.dispose();this.districtResources?.materials.dispose();this.districtResources?.lighting.dispose();this.districtResources=null; window.removeEventListener('resize', this.resize); this.idPlayer.dispose(); this.idBackground.dispose(); this.renderer.dispose(); this.renderer.domElement.remove(); }
 }
