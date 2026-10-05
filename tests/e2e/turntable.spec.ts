@@ -28,7 +28,7 @@ test('T-E17-05e @E17-AC05 pending survivor art uses E04 code rigs with placehold
     return window.__SS__!.getState().render.character!;
   });
   expect(character.sources.map(source => source.source)).toEqual(['placeholder', 'placeholder']);
-  for (const variant of ['female', 'male']) expect(events).toContainEqual({type:'asset.placeholder',id:`char.survivor-${variant}`,reason:'status reference'});
+  for (const variant of ['female', 'male']) expect(events).toContainEqual({type:'asset.placeholder',id:`char.survivor-${variant}`,reason:'Error: status reference'});
 });
 test('T-E17-05c @E17-AC05 pre-integrated production art renders a logged placeholder', async ({page,baseURL}) => {
   await page.goto(`${baseURL}/preview/?asset=inf.common-worker&test=1&renderer=webgl`);

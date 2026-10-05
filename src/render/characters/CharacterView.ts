@@ -2,14 +2,12 @@ import { BoxGeometry, Group, Mesh, type Material } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../assets/manifest.json';
-import { atLeast, type AssetStatus } from '../../assets/types';
+import { atLeast, type AssetDef } from '../../assets/types';
 import { type PaletteToken } from '../../data/palette';
 import type { GearTier, SurvivorState, SurvivorVariant } from '../../data/survivor';
 import type { Materials } from '../Materials';
 import { ProceduralAnimator } from './ProceduralAnimator';
 import { disposeCharacter, loadCharacter } from './rig';
-import femaleUrl from '../../../assets/char.survivor-female/model.glb?url';
-import maleUrl from '../../../assets/char.survivor-male/model.glb?url';
 
 type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { animator: ProceduralAnimator; gear: Group[] };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
@@ -19,16 +17,16 @@ export class CharacterView extends Group {
   private tier: GearTier = 0;
   async init(materials: Materials): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-    for (const [variant, url] of [['female', femaleUrl], ['male', maleUrl]] as const) {
-      const id = `char.survivor-${variant}`, def = manifest.find(asset => asset.id === id);
+    for (const variant of ['female', 'male'] as const) {
+      const id = `char.survivor-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
       const character = await loadCharacter(variant, async () => {
-        if (!def || !atLeast(def.status as AssetStatus, 'integrated')) {
+        if (!def || !atLeast(def.status, 'integrated')) {
           const reason = def ? `status ${def.status}` : 'missing manifest entry';
-          console.info(JSON.stringify({ type: 'asset.placeholder', id, reason }));
           throw new Error(reason);
         }
-        return (await loader.loadAsync(url)).scene;
+        return (await loader.loadAsync('/' + def.glb.replace(/^public\//, ''))).scene;
       });
+      if (character.source === 'placeholder') console.info(JSON.stringify({ type: 'asset.placeholder', id, reason: character.reason }));
       const oldMaterials = new Set<Material>(), replacements = new Map<Material, Material>();
       character.model.traverse((object) => {
         if (!(object instanceof Mesh)) return;
