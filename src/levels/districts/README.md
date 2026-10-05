@@ -25,7 +25,7 @@ selected districts load before play; `L6` composes all eight. District IDs also 
 compositions for authoring/verification. A tier override on an isolated district selects its
 matching day/night mood; campaign compositions retain their authored time of day.
 
-Test API v1.1 implements `loadLevel(id,{seed,tier})` for world composition, adds an optional
+Test API v1.3 implements `loadLevel(id,{seed,tier})` for world composition, adds an optional
 `getState().districts` snapshot (absent in foundation fixtures), and reports render batches,
 nav hash, power state, removal lists, vector minimap, warnings and fire count. Camera poses
 are `<district>/W<tier>/<overview|landmark>`. `settings.set({windowMask:true})` selects a

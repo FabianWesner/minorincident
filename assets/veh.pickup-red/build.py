@@ -628,12 +628,34 @@ for name,loc in [('driverSeat',(-.27,-.40,1.10)),('exitL',(.05,-1.35,0)),('exitR
 col=group('col:body',(0,0,1.22),parent='veh.pickup-red')
 col['collider']='cuboid';col['shape']='cuboid';col['size']=[4.8,2.2,1.9]
 
+def canonical_face_loops(o):
+    """Start each polygon at its smallest coordinate before fixed triangulation."""
+    bm=bmesh.new();bm.from_mesh(o.data)
+    for face in list(bm.faces):
+        vertices=list(face.verts)
+        start=min(range(len(vertices)),key=lambda i:tuple(vertices[i].co))
+        if start:
+            material_index,smooth=face.material_index,face.smooth
+            bm.faces.remove(face)
+            replacement=bm.faces.new(vertices[start:]+vertices[:start])
+            replacement.material_index=material_index;replacement.smooth=smooth
+    bm.to_mesh(o.data);bm.free();o.data.update()
+
+
 # Apply bevel/normal modifiers once, before joining and export.
-for o in list(TRUCK.objects):
+for o in sorted(TRUCK.objects,key=lambda item:item.name):
     if o.type!='MESH': continue
     bpy.ops.object.select_all(action='DESELECT');o.select_set(True)
     bpy.context.view_layer.objects.active=o
-    for mod in list(o.modifiers): bpy.ops.object.modifier_apply(modifier=mod.name)
+    # Freeze triangulation before export so colour-dependent vertex splitting
+    # cannot change the tessellation of stamped panels and Boolean rims.
+    tri=o.modifiers.new('fixed triangulation','TRIANGULATE')
+    tri.quad_method='FIXED';tri.ngon_method='CLIP'
+    normals=next((i for i,m in enumerate(o.modifiers) if m.type=='WEIGHTED_NORMAL'),None)
+    if normals is not None:o.modifiers.move(len(o.modifiers)-1,normals)
+    for mod in list(o.modifiers):
+        if mod.type=='TRIANGULATE':canonical_face_loops(o)
+        bpy.ops.object.modifier_apply(modifier=mod.name)
     bpy.ops.object.transform_apply(location=False,rotation=True,scale=True)
 
 def motion_owner(o):
@@ -650,6 +672,7 @@ for o in list(TRUCK.objects):
         key=(owner,o.data.materials[0].name)
         buckets.setdefault(key,[]).append(o)
 for (owner,matname),obs in buckets.items():
+    obs.sort(key=lambda item:item.name)
     bpy.ops.object.select_all(action='DESELECT')
     for o in obs:o.select_set(True)
     bpy.context.view_layer.objects.active=obs[0]
@@ -681,6 +704,32 @@ for o in list(root.children):
     o.location.z-=min_z
     o.location.x-=center_x
 bpy.context.view_layer.update()
+
+def clean_mesh(o):
+    """Discard zero-area remnants from Boolean cuts/decimation."""
+    bm=bmesh.new();bm.from_mesh(o.data)
+    bmesh.ops.triangulate(bm,faces=list(bm.faces),quad_method='FIXED',ngon_method='EAR_CLIP')
+    def area_squared(face):
+        # Compute in Python double precision: BMesh's area calculation can
+        # give a nonzero result for collinear, float-rounded Boolean corners.
+        a,b,c=(tuple(v.co) for v in face.verts)
+        u=[b[i]-a[i] for i in range(3)];v=[c[i]-a[i] for i in range(3)]
+        cross=(u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0])
+        return sum(value*value for value in cross)
+    bad=[face for face in bm.faces if area_squared(face)<1e-20]
+    if bad:bmesh.ops.delete(bm,geom=bad,context='FACES')
+    bm.to_mesh(o.data);bm.free();o.data.update()
+    # BMesh face cleanup clears split normals; restore the soft bevel shading.
+    wn=o.modifiers.new('clean weighted normals','WEIGHTED_NORMAL');wn.keep_sharp=True
+    bpy.context.view_layer.objects.active=o
+    bpy.ops.object.modifier_apply(modifier=wn.name)
+
+
+# Export precision is 10 micrometres, far below any visible modelling detail.
+for o in meshes:
+    for vertex in o.data.vertices:
+        vertex.co=tuple(round(value,5) for value in vertex.co)
+    clean_mesh(o)
 
 if arg('--glb'):
     scene.render.engine='CYCLES';scene.cycles.samples=32
@@ -738,6 +787,7 @@ if arg('--glb'):
             bpy.context.view_layer.objects.active=o
             d=o.modifiers.new('LOD reduction','DECIMATE');d.ratio=ratio
             bpy.ops.object.modifier_apply(modifier=d.name)
+            clean_mesh(o)
         # Decimation can remove the lowest tyre point; keep each LOD on the ground.
         bpy.context.view_layer.update()
         points=[o.matrix_world@v.co for o in meshes for v in o.data.vertices]
@@ -756,10 +806,13 @@ if arg('--render'):
     print('RENDER OK',arg('--render'))
     # Review pairs share one built scene and one GPU slot.
     render_path=Path(arg('--render'))
-    if arg('--view','ref')=='ref' and '-ref' in render_path.stem:
+    if arg('--view','ref')=='ref' and ('-ref' in render_path.stem or render_path.stem=='hero'):
         scene.camera.location=(9,9,10)
         scene.camera.data.lens=48
         scene.camera.rotation_euler=(Vector((0,0,1))-scene.camera.location).to_track_quat('-Z','Y').to_euler()
-        scene.render.filepath=str(render_path.with_name(render_path.name.replace('-ref','-game')).resolve())
+        game_name='game.png' if render_path.stem=='hero' else render_path.name.replace('-ref','-game')
+        if render_path.stem=='hero':
+            scene.render.resolution_x=960;scene.render.resolution_y=540;scene.cycles.samples=24
+        scene.render.filepath=str(render_path.with_name(game_name).resolve())
         bpy.ops.render.render(write_still=True)
         print('RENDER OK',scene.render.filepath)

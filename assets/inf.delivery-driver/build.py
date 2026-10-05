@@ -10,6 +10,7 @@ import random
 import sys
 from pathlib import Path
 import bpy
+import bmesh
 from mathutils import Matrix, Vector
 
 HERE = Path(__file__).resolve().parent
@@ -52,7 +53,7 @@ M = {k: material(t, h, r, e) for k, t, h, r, e in [
     ('dark', 'uiDark', '#25222c', .7, 0),
     ('denim', 'asphalt', '#695547', .9, 0),
     ('hair', 'woodWarm', '#694336', .78, 0),
-    ('eye', 'infectedEye', '#ff3b2f', .3, 3.0),
+    ('eye', 'infectedEye', '#ff3b2f', .3, 2.0),
     ('blue', 'policeBlue', '#4975ac', .72, 0),
     ('gold', 'schoolBusYellow', '#f2b630', .6, 0),
     ('trim', 'backpackTeal', '#2f4656', .68, 0),
@@ -182,7 +183,8 @@ def shell(name, rings, mat, parent, n=20, sub=1, ragged=False, cut=None):
     faces = [(j*n+i, j*n+(i+1)%n, (j+1)*n+(i+1)%n, (j+1)*n+i)
              for j in range(len(rings)-1) for i in range(n)
              if not (cut and ((cut=='bottom' and j==0) or (cut=='top' and j==len(rings)-2)) and math.cos((i+.5)*math.tau/n)>.20)]
-    faces += [tuple(reversed(range(n))), tuple((len(rings)-1)*n+i for i in range(n))]
+    if cut!='bottom': faces.append(tuple(reversed(range(n))))
+    if cut!='top': faces.append(tuple((len(rings)-1)*n+i for i in range(n)))
     return mesh(name, verts, faces, mat, parent, sub)
 
 
@@ -222,7 +224,7 @@ G['root']['asset_id'] = 'inf.delivery-driver'
 G['root']['forward'] = '+X'
 G['root']['rig'] = 'rigid-parts'
 G['root']['rest_pose'] = 'lurching'
-G['root']['revision'] = 'hero-r3'
+G['root']['revision'] = 'hero-r5'
 shoulders, elbows, wrists = {}, {}, {}
 for side, sn in [(1, 'L'), (-1, 'R')]:
     shoulders[sn] = (-.012, side*.208, 1.108)
@@ -254,7 +256,20 @@ def pizza_badge(name, center, scale, parent, facing='front'):
     points=[(-.055,.065),(.06,.045),(-.015,-.07)]
     if facing=='front': verts=[(x,y+v*scale,z+w*scale) for v,w in points]
     else: verts=[(x,y+v*scale,z+w*scale) for v,w in points]
-    mesh(name,verts,[(0,1,2)],'red' if name.startswith('cap') else 'gold',parent,bevel=.002)
+    faces=[(0,1,2)]
+    if name.startswith('cap'):
+        # Tessellate the badge before fitting it to the curved crown; a single
+        # large triangle would cut through the cap along its chord.
+        corners=[Vector(v) for v in verts];verts=[];indices={};faces=[];n=8
+        for i in range(n+1):
+            for j in range(n+1-i):
+                indices[i,j]=len(verts)
+                verts.append(tuple((corners[0]*(n-i-j)+corners[1]*i+corners[2]*j)/n))
+        for i in range(n):
+            for j in range(n-i):
+                faces.append((indices[i,j],indices[i+1,j],indices[i,j+1]))
+                if i+j<n-1: faces.append((indices[i+1,j],indices[i+1,j+1],indices[i,j+1]))
+    mesh(name,verts,faces,'red' if name.startswith('cap') else 'gold',parent,bevel=.002)
     for v,w in [(-.022,.035),(.022,.02),(-.012,-.02)]:
         ell(name+'_pepperoni',(x+.003 if facing=='front' else x-.003,y+v*scale,z+w*scale),(.003,.013*scale,.012*scale),'gold' if name.startswith('cap') else 'red',parent,0)
     tube(name+'_crust',[(x,y+v*scale,z+w*scale) for v,w in points[:2]],.008*scale,'red',parent)
@@ -304,7 +319,7 @@ for side,sn in [(1,'L'),(-1,'R')]:
     ell('thumb_nail_'+sn,(hx+.071,hy-side*.066,hz-.031),(.006,.012,.012),'blood','hand'+sn,0)
     patch('hand_blood_'+sn,hx+.046,hy,hz,.033,.026,'blood','hand'+sn,seed=9)
 
-# Denim hip, waistband and belt: short, frayed trousers per reference.
+# Cargo trouser hip, waistband, belt and asymmetric torn knee shells.
 ell('denim_hip',(0,0,.736),(.122,.176,.115),'denim','hip')
 shell('waistband',[(0,0,.739,.13,.17),(0,0,.769,.129,.17),(0,0,.782,.121,.164)],'denim','hip')
 shell('belt',[(0,0,.757,.133,.176),(0,0,.778,.129,.171)],'dark','hip',sub=0)
@@ -315,7 +330,7 @@ tube('fly_seam',[(.124,.009,.743),(.131,.009,.689),(.102,.009,.657)],.0025,'hair
 for side,sn in [(1,'L'),(-1,'R')]:
     hip=(0,side*.112,.755); knee=(.018,side*.2,.433); ankle=(.02,side*.236,.146)
     limb('thigh_skin_'+sn,hip,knee,.082,.077,'skin','leg'+sn)
-    shell('denim_short_'+sn,[(.018,side*.20,.405,.105,.115),(.018,side*.194,.482,.12,.12),
+    shell('denim_short_'+sn,[(.018,side*.20,.393 if sn=='R' else .405,.105,.115),(.018,side*.194,.499 if sn=='R' else .482,.12,.12),
         (.003,side*.152,.56,.119,.12),(-.006,side*.13,.676,.12,.12),(-.004,side*.112,.73,.11,.12)],'denim','leg'+sn,ragged=True,cut='bottom')
     for i in range(5):
         angle=-1.1+i*.55
@@ -324,13 +339,14 @@ for side,sn in [(1,'L'),(-1,'R')]:
              (x+.011,y,.45+.012*math.sin(i))],[(0,1,2)],'denim','leg'+sn)
     # Fold ridges and genuine pocket silhouettes on the rear.
     tube('outside_denim_seam_'+sn,[(-.023,side*.214,.708),(-.024,side*.244,.584),(-.009,side*.258,.493)],.003,'hair','leg'+sn)
-    tube('short_fold_'+sn,[(.088,side*.118,.529),(.103,side*.161,.54),(.082,side*.214,.522)],.006,'denim','leg'+sn)
-    verts=[(-.104,side*.088,.695),(-.106,side*.171,.697),(-.111,side*.168,.629),(-.115,side*.133,.611),(-.115,side*.091,.631)]
+    tube('short_fold_'+sn,[(.126,side*.118,.529),(.133,side*.161,.54),(.115,side*.214,.522)],.006,'denim','leg'+sn)
+    verts=[(-.127,side*.088,.695),(-.129,side*.171,.697),(-.133,side*.168,.629),(-.133,side*.133,.611),(-.132,side*.091,.631)]
     mesh('rear_pocket_'+sn,verts,[(0,1,2,3,4)],'denim','leg'+sn,bevel=.003)
     tube('pocket_stitch_'+sn,verts+[verts[0]],.0015,'hair','leg'+sn)
     tube('front_pocket_'+sn,[(.092,side*.063,.742),(.109,side*.104,.701),(.061,side*.183,.682)],.002,'hair','leg'+sn)
     limb('calf_'+sn,knee,ankle,.086,.086,'skin','shin'+sn)
-    ell('kneecap_'+sn,(.076,side*.2,.439),(.034,.055,.045),'skin','shin'+sn)
+    ell('knee_joint_'+sn,(.018,side*.2,.433),(.113,.115,.10),'skin','shin'+sn)
+    ell('kneecap_'+sn,(.089,side*.2,.439),(.027,.068,.057),'skin','shin'+sn)
     patch('knee_blood_'+sn,.105,side*.2,.435,.027,.027,'blood','shin'+sn,seed=7)
     patch('denim_blood_'+sn,.094,side*.172,.576,.033,.028,'blood','leg'+sn,seed=2)
     # High top sneaker: padded ankle, tongue, layered sole and individual laces.
@@ -367,7 +383,7 @@ for side,sn in [(1,'L'),(-1,'R')]:
     ell('red_iris_'+sn,(.173,side*.067,1.377),(.012,.025,.03),'eye','head')
     ell('eye_hot_core_'+sn,(.186,side*.064,1.382),(.003,.007,.009),'white','head',0)
     tube('lower_lid_'+sn,[(.159,side*.036,1.351),(.16,side*.065,1.342),(.146,side*.095,1.362)],.0045,'skin','head')
-    tube('angry_brow_'+sn,[(.158,side*.032,1.398),(.158,side*.068,1.425),(.136,side*.108,1.429)],.009,'dark','head')
+    tube('angry_brow_'+sn,[(.184,side*.032,1.398),(.18,side*.068,1.421),(.153,side*.108,1.429)],.014,'hair','head')
     patch('cheek_splash_'+sn,.151,side*.098,1.31,.024,.034,'blood','head',seed=6)
 ell('nose_bridge',(.151,0,1.358),(.019,.019,.038),'skin','head')
 ell('nose_tip',(.177,0,1.334),(.027,.027,.022),'skin','head')
@@ -397,7 +413,7 @@ for side in [-1,1]:
         tuft('nape_lock',(-.105,side*(.027+j*.026),1.397),(-.138-j*.005,side*(.036+j*.03),1.242+.016*math.sin(j)),.04,.031,'hair')
     for j in range(3):
         tuft('hair_flick',(-.015-j*.042,side*.148,1.399-j*.018),(-.079-j*.041,side*.203,1.407-j*.024),.032,.027,'hair')
-# Cap dome in segmented curved panels, white frontal gore-emblem.
+# Cap dome: dark rear panels, blue front and curved blue brim.
 verts=[]; faces=[]; n=24
 for j in range(9):
     a=(.02+j/8*math.pi/2)
@@ -460,28 +476,27 @@ pizza_badge('cap_pizza',(.13,0,1.52),.65,'head')
 
 for i, (y,z,ry,rz) in enumerate([(-.03,1.063,.06,.076),(.067,1.01,.035,.038),(-.071,.871,.045,.026),(.085,.822,.031,.022)]):
     patch('shirt_blood_back',-.2,y,z,ry,rz,'blood','torso',normal=-1,seed=43+i)
-# Conform decal geometry to curved fabric; no floating plates or texture dependency.
-fabric = [bpy.data.objects[n] for n in ['shirt_body','shirt_hem']]
-for o in list(asset.objects):
-    if o.type != 'MESH' or not o.name.startswith(('shirt_blood','blood_fleck')):
-        continue
-    inv = o.matrix_world.inverted()
-    for vertex in o.data.vertices:
-        world = o.matrix_world @ vertex.co
-        side = 1 if world.x > 0 else -1
-        origin = Vector((side*.6, world.y, world.z))
-        direction = Vector((-side,0,0))
-        hits = []
-        for target in fabric:
-            ti = target.matrix_world.inverted()
-            hit, location, normal, _ = target.ray_cast(ti @ origin, ti.to_3x3() @ direction)
-            if hit:
-                point = target.matrix_world @ location
-                hits.append(point)
-        if hits:
-            point = min(hits,key=lambda p:(p-origin).length)
-            point.x += side*.004
-            vertex.co = inv @ point
+def conform_relief(prefixes, targets, lift=.004, reference_x=None):
+    """Fit palette relief splashes to actual curved skin/fabric with 4 mm clearance."""
+    bpy.context.view_layer.update()
+    for o in list(asset.objects):
+        if o.type!='MESH' or not o.name.startswith(prefixes):
+            continue
+        for vertex in o.data.vertices:
+            world=o.matrix_world @ vertex.co
+            side=1 if world.x>0 else -1
+            origin=Vector((side*.6,world.y,world.z))
+            direction=Vector((-side,0,0))
+            hits=[]
+            for target in targets:
+                inv=target.matrix_world.inverted()
+                hit,point,_,_=target.ray_cast(inv @ origin,inv.to_3x3() @ direction)
+                if hit: hits.append(target.matrix_world @ point)
+            if hits:
+                point=min(hits,key=lambda p:(p-origin).length)
+                point.x+=side*lift + (world.x-reference_x if reference_x is not None else 0)
+                vertex.co=o.matrix_world.inverted() @ point
+conform_relief(('shirt_blood','blood_fleck'),[bpy.data.objects[n] for n in ['shirt_body','shirt_hem']])
 
 # Torn lower shirt tails: individual cloth tabs and gaps around the hem.
 for i in range(12):
@@ -494,25 +509,13 @@ for i in range(12):
 for side in [-1,1]:
     patch('mouth_blood',.183,side*.048,1.236,.025,.037,'blood','head',seed=39+side)
     patch('mouth_blood',.181,side*.066,1.281,.025,.03,'blood','head',seed=51+side)
-# Fit facial blood to the skin surface rather than leaving floating plates.
-face_skin=[bpy.data.objects[n] for n in ['skull','jaw','cheek_L','cheek_R']]
-for o in list(asset.objects):
-    if o.type=='MESH' and o.name.startswith(('mouth_blood','cheek_splash')):
-        for vertex in o.data.vertices:
-            world=o.matrix_world @ vertex.co
-            origin=Vector((.5,world.y,world.z))
-            hits=[]
-            for skin in face_skin:
-                inv=skin.matrix_world.inverted()
-                hit,loc,_,_=skin.ray_cast(inv @ origin,inv.to_3x3() @ Vector((-1,0,0)))
-                if hit:hits.append(skin.matrix_world @ loc)
-            if hits:
-                point=min(hits,key=lambda v:(v-origin).length);point.x+=.004
-                vertex.co=o.matrix_world.inverted() @ point
+conform_relief(('mouth_blood','cheek_splash'),[bpy.data.objects[n] for n in ['skull','jaw','cheek_L','cheek_R']])
 # Lift the crown and brim slightly to expose the enlarged eyes and thick bangs.
 for o in asset.objects:
     if o.type=='MESH' and o.name.startswith('cap_'):
         o.location.z+=.019
+
+conform_relief(('cap_pizza',),[bpy.data.objects[n] for n in ['cap_crown','cap_white_panel']],reference_x=.13)
 
 # Delivery parcel: insulated square carrier, inset yellow panels, piping, lid,
 # corner armour, hinges and the same fictional pizza emblem as the uniform.
@@ -566,6 +569,8 @@ for side,sn in [(1,'L'),(-1,'R')]:
              (x+.008,y,.411+math.sin(j*1.8)*.013)],[(0,1,2)],'denim','shin'+sn)
     patch('shin_gore',.089,yy,.378,.028,.039,'blood','shin'+sn,seed=58)
 
+conform_relief(('knee_blood','shin_gore'),[bpy.data.objects[n] for sn in 'LR' for n in ['knee_joint_'+sn,'kneecap_'+sn,'calf_'+sn]])
+
 # Hidden caps remain at dismemberment pivots, enclosed by the attached rigid part.
 for name in ['head','armL','armR','foreArmL','foreArmR','legL','legR']:
     pivot=G[name].matrix_world.translation.copy()
@@ -613,8 +618,8 @@ for side in 'LR':
     G['arm'+side].rotation_euler.y=math.radians(-47 if side=='R' else -32)
     G['foreArm'+side].rotation_euler.y=math.radians(-25 if side=='R' else -12)
     G['hand'+side].rotation_euler.y=math.radians(35)
-    G['leg'+side].rotation_euler.y=math.radians(-24)
-    G['shin'+side].rotation_euler.y=math.radians(43)
+    G['leg'+side].rotation_euler.y=math.radians(-33 if side=='R' else -24)
+    G['shin'+side].rotation_euler.y=math.radians(52 if side=='R' else 43)
     G['foot'+side].rotation_euler.y=math.radians(-19)
 bpy.context.view_layer.update()
 # Ground both soles while maintaining ankle pivots inside the padded high-tops.
@@ -657,7 +662,26 @@ def triangle_count(objects):
         total+=len(o.data.loop_triangles)
     return total
 meshes=[o for o in asset.objects if o.type=='MESH']
-eligible=[o for o in meshes if not o.name.startswith('stump_') and
+# Canonical mesh order removes edge-tie dependence on Blender's object-join order.
+# Quantization is 10 nanometres, far below the export's float32 precision.
+for o in meshes:
+    coordinates=[tuple(round(float(v),8) for v in vertex.co) for vertex in o.data.vertices]
+    unique=sorted(set(coordinates))
+    index={point:i for i,point in enumerate(unique)}
+    faces=[]
+    for polygon in o.data.polygons:
+        face=[index[coordinates[i]] for i in polygon.vertices]
+        if len(set(face))<3: continue
+        start=face.index(min(face))
+        faces.append(tuple(face[start:]+face[:start]))
+    data=bpy.data.meshes.new(o.name+'_canonical')
+    data.from_pydata(unique,[],sorted(faces))
+    data.update()
+    for material_slot in o.data.materials: data.materials.append(material_slot)
+    for polygon in data.polygons: polygon.use_smooth=True
+    o.data=data
+
+eligible=[o for o in meshes if '__' in o.name and not o.name.startswith('foot') and o.data.materials[0]!=M['skin'] and
           not (o.parent==G['head'] and o.data.materials[0] in [M['skin'],M['eye'],M['blood'],M['dark'],M['white']])]
 count=triangle_count(meshes)
 if count>39000:
@@ -667,6 +691,18 @@ if count>39000:
         modifier=o.modifiers.new('Applied hero tessellation budget','DECIMATE')
         modifier.ratio=ratio
         bpy.ops.object.modifier_apply(modifier=modifier.name)
+
+# Clean the applied mesh before glTF packing, including tiny collapsed curve ends.
+for o in meshes:
+    bm=bmesh.new()
+    bm.from_mesh(o.data)
+    bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=1e-7)
+    bmesh.ops.triangulate(bm,faces=list(bm.faces))
+    collapsed=[face for face in bm.faces if face.calc_area()<1e-10]
+    if collapsed: bmesh.ops.delete(bm,geom=collapsed,context='FACES')
+    bm.normal_update()
+    bm.to_mesh(o.data)
+    bm.free()
 
 required=['root','hip','torso','head','armL','armR','foreArmL','foreArmR','handL','handR','legL','legR','shinL','shinR','footL','footR','backpackSocket']+['stump_'+n for n in ['head','armL','armR','foreArmL','foreArmR','legL','legR']]
 triangles=0
@@ -685,7 +721,7 @@ if args.glb:
     for o in asset.objects:o.select_set(True)
     bpy.ops.export_scene.gltf(filepath=str(Path(args.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_lights=False,export_cameras=False)
     print('GLB OK',args.glb)
-if args.pose or args.view=='pose':
+def pose_test():
     G['armL'].rotation_euler.x=math.radians(-34)
     G['foreArmL'].rotation_euler.y=math.radians(-48)
     G['legR'].rotation_euler.y=math.radians(-20)
@@ -694,6 +730,9 @@ if args.pose or args.view=='pose':
     G['armL'].location.y+=.2
     bpy.data.objects['stump_armL'].hide_render=False
 
+
+if args.pose or args.view=='pose':
+    pose_test()
 
 def stage(view):
     world=bpy.data.worlds.new('warm charcoal studio')
@@ -728,16 +767,29 @@ def stage(view):
 
 if args.render:
     multi=args.view=='turnaround'
-    stage('ref' if multi or args.view=='pose' else args.view)
+    stage('ref' if multi or args.view in ['pose','final'] else args.view)
     output=Path(args.render).resolve()
     output.parent.mkdir(parents=True,exist_ok=True)
-    views=['front','side','back','ref'] if multi else [args.view]
+    views=['front','side','back','ref'] if multi else (['hero','front','side','back','ref','pose'] if args.view=='final' else [args.view])
     for view in views:
-        if multi:
+        if multi or (args.view=='final' and view in ['front','side','back','ref']):
+            scene.cycles.samples=24
+            scene.render.resolution_x=960
+            scene.render.resolution_y=540
             camera=scene.camera
             camera.location={'ref':(4,-3,2.05),'front':(5,0,1.25),'side':(0,-5,1.25),'back':(-5,0,1.25)}[view]
             camera.rotation_euler=(Vector((.23,0,.8))-camera.location).to_track_quat('-Z','Y').to_euler()
-        path=output.with_name(output.stem+'-'+view+'.png') if multi else output
+        if args.view=='final' and view=='pose':
+            pose_test()
+            scene.cycles.samples=24
+            scene.render.resolution_x=args.width
+            scene.render.resolution_y=args.height
+            scene.camera.location=(5,2.2,1.8)
+            scene.camera.rotation_euler=(Vector((.23,0,.8))-scene.camera.location).to_track_quat('-Z','Y').to_euler()
+        if args.view=='final':
+            path=output if view=='hero' else output.parent/('pose-test.png' if view=='pose' else 'round5-'+view+'.png')
+        else:
+            path=output.with_name(output.stem+'-'+view+'.png') if multi else output
         scene.render.filepath=str(path)
         bpy.ops.render.render(write_still=True)
         print('RENDER OK',str(path))

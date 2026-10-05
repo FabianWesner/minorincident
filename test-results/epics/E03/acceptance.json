@@ -1,0 +1,346 @@
+{
+  "epic": "E03",
+  "criteria": 13,
+  "coverage": {
+    "E03-AC01": [
+      {
+        "runner": "playwright",
+        "title": "T-E03-01 @E03 @E03-AC01 mouse dead zone and linear distance steering",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E03-AC02": [
+      {
+        "runner": "playwright",
+        "title": "T-E03-02 @E03 @E03-AC02 mouse buttons preserve down held up and prevent context menus",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E03-AC03": [
+      {
+        "runner": "vitest",
+        "title": "T-E03-wheel @E03 @E03-AC03 trackpad threshold and exact 120ms debounce preserve wheel directions",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-03 @E03 @E03-AC03 wheel notches pulse once and trackpads debounce 120ms",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E03-AC04": [
+      {
+        "runner": "playwright",
+        "title": "T-E03-04 @E03 @E03-AC04 WASD follows screen up at camera azimuth pi/4",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E03-AC05": [
+      {
+        "runner": "playwright",
+        "title": "T-E03-05 @E03 @E03-AC05 keyboard aim turns at 360deg/s, taps snap and action mirrors fire",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E03-AC06": [
+      {
+        "runner": "playwright",
+        "title": "T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases within one tick",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases within one tick",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases within one tick",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases within one tick",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases within one tick",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      }
+    ],
+    "E03-AC07": [
+      {
+        "runner": "playwright",
+        "title": "T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap uses assist",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap uses assist",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap uses assist",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap uses assist",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap uses assist",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      }
+    ],
+    "E03-AC08": [
+      {
+        "runner": "playwright",
+        "title": "T-E03-08 @E03 @E03-AC08 last device selects mouse-only mouse-keyboard and keyboard with matching hint",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-touch-schemes @E03 @E03-AC08 touch and keyboard switch immediately and hints follow",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-touch-schemes @E03 @E03-AC08 touch and keyboard switch immediately and hints follow",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-touch-schemes @E03 @E03-AC08 touch and keyboard switch immediately and hints follow",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-touch-schemes @E03 @E03-AC08 touch and keyboard switch immediately and hints follow",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-touch-schemes @E03 @E03-AC08 touch and keyboard switch immediately and hints follow",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      }
+    ],
+    "E03-AC09": [
+      {
+        "runner": "vitest",
+        "title": "T-E03-bindings @E03 @E03-AC09 each logical action can be rebound and persists without conflicts",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-09 @E03 @E03-AC09 binding form persists across reload and rejects conflicts with a message",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E03-AC10": [
+      {
+        "runner": "vitest",
+        "title": "T-E03-10 @E03 @E03-AC10 serialized recording replays identical sim state hashes at every tick",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-recorder-browser @E03 @E03-AC10 real device frames replay through the browser input phase",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E03-AC11": [
+      {
+        "runner": "vitest",
+        "title": "T-E03-11 @E03 @E03-AC11 a real key event reaches the next sampled tick",
+        "status": "passed"
+      }
+    ],
+    "E03-AC12": [
+      {
+        "runner": "playwright",
+        "title": "T-E03-12 @E03 @E03-AC12 middle-click and E interact without browser autoscroll",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E03-AC13": [
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-blur @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-hidden @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-pagehide @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-blur @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-hidden @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-pagehide @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-blur @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-hidden @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-pagehide @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-blur @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-hidden @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-pagehide @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-blur @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-hidden @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-13-pagehide @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      }
+    ]
+  }
+}
