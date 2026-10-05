@@ -1,0 +1,181 @@
+{
+  "scope": "AC01\u2013AC08 increment",
+  "criteria": {
+    "E17-AC01": {
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E17-01 @E17-AC01 real Blender builds are deterministic and script errors are fatal",
+          "file": "tests/unit/assets/build.test.ts",
+          "runner": "vitest"
+        }
+      ]
+    },
+    "E17-AC04": {
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate",
+          "file": "tests/unit/assets/build.test.ts",
+          "runner": "vitest"
+        },
+        {
+          "title": "T-E17-08 @E17-AC08 @E17-AC04 five fire-engine views cover 10\u201380% and preserve contract nodes",
+          "file": "e2e/turntable.spec.ts",
+          "runner": "playwright"
+        }
+      ],
+      "vision": {
+        "verdict": "PASS",
+        "review": "test-results/epics/E17/review.md",
+        "comparison": "test-results/epics/E17/comparison.png"
+      }
+    },
+    "E17-AC07": {
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E17-07 @E17-AC07 baked part coordinates reproduce source hierarchy poses at five clip times",
+          "file": "tests/unit/assets/crowd.test.ts",
+          "runner": "vitest"
+        },
+        {
+          "title": "T-E17-07b @E17-AC07 100 infected use one draw per material and GPU poses match at five times",
+          "file": "e2e/crowd.spec.ts",
+          "runner": "playwright"
+        }
+      ]
+    },
+    "E17-AC03": {
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip",
+          "file": "tests/unit/assets/optimize.test.ts",
+          "runner": "vitest"
+        },
+        {
+          "title": "T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed",
+          "file": "tests/unit/assets/optimize.test.ts",
+          "runner": "vitest"
+        },
+        {
+          "title": "T-E17-03c @E17-AC03 texture-free builds work without toktx and atlas encoder failures are fatal",
+          "file": "tests/unit/assets/optimize.test.ts",
+          "runner": "vitest"
+        }
+      ]
+    },
+    "E17-AC10": {
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E17-10 @E17-AC10 final assets require a complete passing checklist and existing comparison",
+          "file": "tests/unit/assets/production-gates.test.ts",
+          "runner": "vitest"
+        }
+      ],
+      "scope": "tooling; production reviews pending"
+    },
+    "E17-AC05": {
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E17-05d @E17-AC05 data references all resolve to a declared manifest ID",
+          "file": "tests/unit/assets/references.test.ts",
+          "runner": "vitest"
+        },
+        {
+          "title": "T-E17-sources @E17-AC05 every supplied standalone export and LOD is registered",
+          "file": "tests/unit/assets/references.test.ts",
+          "runner": "vitest"
+        },
+        {
+          "title": "T-E17-05 @E17-AC05 missing GLB and pre-integrated art fall back with logs and contract nodes",
+          "file": "tests/unit/assets/registry.test.ts",
+          "runner": "vitest"
+        },
+        {
+          "title": "T-E17-05b @E17-AC05 prototypes are independently cloned and every LOD uses its declared path",
+          "file": "tests/unit/assets/registry.test.ts",
+          "runner": "vitest"
+        },
+        {
+          "title": "T-E17-05e @E17-AC05 pending survivor art uses E04 code rigs with placeholder logs",
+          "file": "e2e/turntable.spec.ts",
+          "runner": "playwright"
+        },
+        {
+          "title": "T-E17-05c @E17-AC05 pre-integrated production art renders a logged placeholder",
+          "file": "e2e/turntable.spec.ts",
+          "runner": "playwright"
+        }
+      ]
+    },
+    "E17-AC02": {
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E17-02 @E17-AC02 validates geometry and rejects independent contract violations",
+          "file": "tests/unit/assets/validate.test.ts",
+          "runner": "vitest"
+        },
+        {
+          "title": "T-E17-02b @E17-AC02 existing standalone exports are inspected without modifying source scripts",
+          "file": "tests/unit/assets/validate.test.ts",
+          "runner": "vitest"
+        }
+      ]
+    },
+    "E17-AC06": {
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E17-06 @E17-AC06 every inventory table status matches the manifest",
+          "file": "tests/unit/assets/validate.test.ts",
+          "runner": "vitest"
+        }
+      ]
+    },
+    "E17-AC08": {
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E17-08 @E17-AC08 @E17-AC04 five fire-engine views cover 10\u201380% and preserve contract nodes",
+          "file": "e2e/turntable.spec.ts",
+          "runner": "playwright"
+        }
+      ],
+      "vision": {
+        "verdict": "PASS",
+        "review": "test-results/epics/E17/review.md",
+        "comparison": "test-results/epics/E17/comparison.png"
+      }
+    }
+  },
+  "pending": [
+    "E17-AC09",
+    "E17-AC11"
+  ],
+  "readinessTests": {
+    "E17-AC09": [
+      {
+        "title": "T-E17-09 @E17-AC09 production gate rejects pending P0 art (milestone production is deferred)",
+        "file": "tests/unit/assets/production-gates.test.ts",
+        "runner": "vitest"
+      }
+    ],
+    "E17-AC11": [
+      {
+        "title": "T-E17-11b @E17-AC11 infected validator rejects exports without hidden stump geometry",
+        "file": "tests/unit/assets/production-gates.test.ts",
+        "runner": "vitest"
+      },
+      {
+        "title": "T-E17-11 @E17-AC11 placeholder infected caps are hidden and can cover detached limbs",
+        "file": "tests/unit/assets/registry.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  }
+}

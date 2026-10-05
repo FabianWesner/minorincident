@@ -1,11 +1,12 @@
-import { BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, SphereGeometry, Vector3 } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
 import { catalog, action } from '../data/actions/catalog';
-import { AssetRegistry, type LoadedActionAsset } from '../assets/registry';
+import { AssetRegistry, type PlaceholderLog } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
 import type { CharacterView } from './characters/CharacterView';
 import type { Side } from '../data/actions/schema';
 
+interface LoadedActionAsset { model: Object3D; source: 'glb' | 'placeholder'; reason: string | null }
 const sides = ['LEFT', 'RIGHT'] as const;
 
 /** Selected-side telegraph; fixed geometry buffers and reusable projectile meshes.
@@ -13,9 +14,10 @@ const sides = ['LEFT', 'RIGHT'] as const;
  * Gameplay sockets/VFX/SFX hooks come from ActionDef and combat events, never render state. */
 export class ActionView extends Group {
   private readonly registry: AssetRegistry;
+  private readonly placeholders: PlaceholderLog[] = [];
   private readonly assets = new Map<string, LoadedActionAsset>();
-  private readonly held: Partial<Record<Side, { id: string; model: Group }>> = {};
-  private readonly pickups = new Map<number, Group>();
+  private readonly held: Partial<Record<Side, { id: string; model: Object3D }>> = {};
+  private readonly pickups = new Map<number, Object3D>();
   private readonly geometry = new BufferGeometry();
   private readonly positions = new Float32Array(256 * 18);
   private readonly material = new MeshBasicNodeMaterial({ color: '#ffd166', depthWrite: false, side: DoubleSide });
@@ -30,12 +32,24 @@ export class ActionView extends Group {
   private selected: Side = 'LEFT';
   private shape = 'cone';
   private landing = { x: 0, z: 0 };
-  constructor(private readonly world: SimWorld, private readonly character: CharacterView, materials: Materials) {
-    super(); this.registry = new AssetRegistry(materials);
+  constructor(private readonly world: SimWorld, private readonly character: CharacterView, private readonly materials: Materials, renderer: WebGPURenderer) {
+    super(); this.registry = new AssetRegistry((event) => this.placeholders.push(event), { renderer });
     this.geometry.setAttribute('position', new BufferAttribute(this.positions, 3)); this.geometry.setDrawRange(0, 0); this.indicator.frustumCulled = false; this.indicator.renderOrder = 2; this.add(this.indicator);
     for (let i = 0; i < 32; i++) { const mesh = new Mesh(this.projectileGeometry, this.projectileMaterial); mesh.visible = false; this.projectiles.push(mesh); this.add(mesh); }
   }
-  async init(): Promise<void> { for (const def of Object.values(catalog)) if (!this.assets.has(def.viewAssetId)) this.assets.set(def.viewAssetId, await this.registry.loadAsset(def.viewAssetId)); }
+  async init(): Promise<void> {
+    for (const def of Object.values(catalog)) if (!this.assets.has(def.viewAssetId)) {
+      const model = await this.registry.loadAsset(def.viewAssetId);
+      model.traverse((node) => {
+        if (!(node instanceof Mesh)) return;
+        const remap = (source: Material): Material => { const material = this.materials.fromColor(source.name, (source as import('three').MeshStandardMaterial).color); material.userData.sharedPalette = true; return material; };
+        node.material = Array.isArray(node.material) ? node.material.map(remap) : remap(node.material); node.castShadow = node.receiveShadow = true;
+      });
+      const grip = model.getObjectByName('grip')!; model.updateMatrixWorld(true); grip.getWorldPosition(this.gripPosition); model.position.sub(this.gripPosition);
+      const log = this.placeholders.find((e) => e.id === def.viewAssetId);
+      this.assets.set(def.viewAssetId, { model, source: model.userData.placeholder ? 'placeholder' : 'glb', reason: log?.reason ?? null });
+    }
+  }
   /** Six vertices form a thick ribbon segment; all buffers are allocated once. */
   private segment(ax: number, ay: number, az: number, bx: number, by: number, bz: number, width = 0.035): void {
     const dx = bx - ax, dz = bz - az, length = Math.hypot(dx, dz) || 1;
@@ -90,7 +104,7 @@ export class ActionView extends Group {
       const def = held && action(held.id), asset = def && this.assets.get(def.viewAssetId);
       return { side, actionId: held?.id, socket: nodes.socket.name, handDistance: this.socketPosition.distanceTo(this.handPosition), gripDistance: this.gripPosition.distanceTo(this.socketPosition), attached: held?.model.parent === nodes.socket, source: asset?.source, sockets: def ? ['grip', def.category === 'ranged' ? 'muzzle' : 'tip'].filter((name) => held?.model.getObjectByName(name)) : [] };
     });
-    return { indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, landing: { ...this.landing } }, attachments, placeholders: this.registry.placeholders };
+    return { indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
   }
-  dispose(): void { for (const held of Object.values(this.held)) held.model.removeFromParent(); this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.pickups.clear(); this.clear(); }
+  dispose(): void { for (const held of Object.values(this.held)) held.model.removeFromParent(); void this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.pickups.clear(); this.clear(); }
 }

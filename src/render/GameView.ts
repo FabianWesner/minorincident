@@ -83,7 +83,7 @@ export class GameView implements Lifecycle {
         });
       }
       this.character = new CharacterView(); await this.character.init(this.materials); this.scene.add(this.character);
-      if (this.world.combat) { this.actions = new ActionView(this.world, this.character, this.materials); await this.actions.init(); this.actions.update(); this.scene.add(this.actions); }
+      if (this.world.combat) { this.actions = new ActionView(this.world, this.character, this.materials, this.renderer); await this.actions.init(); this.actions.update(); this.scene.add(this.actions); }
     } else if (this.world.scenario === 'lookdev') {
       this.renderer.shadowMap.enabled = true;
       this.lighting = new Lighting(this.scene); this.materials = new Materials(this.lighting);

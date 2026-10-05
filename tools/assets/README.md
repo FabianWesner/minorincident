@@ -1,0 +1,49 @@
+# Asset tooling
+
+`npm run assets:build -- veh.fire-engine` runs Blender 5.2, validates the raw
+export, bakes CPU Cycles AO, optimizes all three hero LODs and validates them
+before replacing runtime outputs. `BLENDER_BIN` overrides the standard macOS
+installation. Builds use three threads, four global process slots and one
+Cycles slot, shared with the reference runner when its locks exist.
+
+Shared scripts implement `build(ctx)` and return a root object. The context
+contains `quality`, `seed` and `decay`; the CLI accepts `--quality high|low`
+and `--decay <declared variant>`. Batch selection supports `--all` and
+`--changed` (working-tree changes against HEAD). Existing standalone scripts
+accept `--glb`. This E17 lane rebuilt only the fire engine; supplied production
+exports were inspected unchanged.
+
+`npm run assets:validate` checks modeled/integrated/final assets and their hero
+LOD chains. `-- --production` also inspects existing `sourceGlb` exports,
+without running their scripts. Findings are written to
+`test-results/epics/E17/validate-production.json` and cause exit 1. Inventory
+status is authoritative: source files alone do not promote an asset.
+
+Palette tokens live in `src/assets/palette.json`. AO is the active `COLOR_0`
+attribute. PNG atlases require `toktx` on PATH or `TOKTX_BIN`; color maps use
+ETC1S, detail maps use UASTC. Texture-free builds need no encoder. The bundled
+Three.js Basis transcoder is loaded by KTX2Loader.
+
+`npm run assets:bake-crowd -- inf.common-worker` reads a supplied LOD1 or
+generates lower-density geometry without rebuilding Blender. It exports one
+primitive per palette material, `_PART_INDEX` and a sampled rigid-part clip
+in scene extras. E07 can supply its clip evaluator to `bakeCrowd`.
+
+The registry returns independent clones of cached prototypes and logs
+`asset.placeholder` for unavailable or pre-integrated art. Use
+`loadAsset(id, 'lod0'|'lod1'|'lod2', decay?)`; `lodForScreenHeight` selects
+tiers at 160 and 40 pixels. Palette replacement preserves named gameplay
+nodes, light/collider extras and sockets.
+
+`/preview/?asset=<id>` provides orbit, wireframe, explode, node, LOD and decay
+controls. With a production preview already running on the lane port,
+`E2E_PORT=3313 npm run assets:turntable -- veh.fire-engine` saves four views
+plus the gameplay camera and a reference comparison. It also accepts `--all`
+(integrated/final assets) and `--changed`. It never starts another server.
+`npm run assets:crop -- veh.fire-engine` uses `assets/regions.json`.
+
+References first resolve locally, then in the supplied main checkout. Template
+briefs and reviews are in `tools/assets/templates/`. Final status requires an
+existing comparison, all must items passing and at least 70% of should items.
+Milestone production and the infected gore-probe review remain separate batch
+work; a passing readiness guard does not complete those criteria.

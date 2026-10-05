@@ -12,11 +12,11 @@ test('T-E06-08 @E06 @E06-AC08 every action maps to real icon and socket-compatib
   for (const def of Object.values(catalog)) {
     const view = manifest.find((e) => e.id === def.viewAssetId)!, icon = manifest.find((e) => e.id === def.iconId)!;
     expect(view, def.id).toBeDefined(); expect(icon, def.id).toBeDefined(); expect(readFileSync(icon.icon!, 'utf8')).toContain('<svg');
-    if (view.status === 'integrated') {
-      const glb = readFileSync(view.glb!), json = JSON.parse(glb.subarray(20, 20 + glb.readUInt32LE(12)).toString());
+    if (view.sourceGlb) {
+      const glb = readFileSync(view.sourceGlb!), json = JSON.parse(glb.subarray(20, 20 + glb.readUInt32LE(12)).toString());
       const names = json.nodes.map((node: { name: string }) => node.name);
       for (const socket of view.requiredNodes) expect(names, def.id).toContain(socket);
-    } else { const model = actionPlaceholder(view.placeholder); for (const socket of view.requiredNodes) expect(model.getObjectByName(socket)).toBeDefined(); disposeCharacter(model); }
+    } else { const model = actionPlaceholder(view.actionCategory!); for (const socket of view.requiredNodes) expect(model.getObjectByName(socket)).toBeDefined(); disposeCharacter(model); }
   }
 });
 

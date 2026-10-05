@@ -1,0 +1,113 @@
+{
+  "epic": "E17",
+  "laneComplete": true,
+  "done": true,
+  "pending": [
+    "E17-AC09",
+    "E17-AC11 (vision)"
+  ],
+  "checks": {
+    "typecheck": 0,
+    "lint": 0,
+    "build": 0,
+    "test:unit": 0,
+    "test:smoke": 0,
+    "verify -- E01": 0,
+    "verify -- E02": 0,
+    "verify -- E17": 0,
+    "test:sim": 0,
+    "assets:validate": 0,
+    "E03 browser regression": 0,
+    "final asset browser capture": 0
+  },
+  "unitTests": 43,
+  "verifyUnitTests": 19,
+  "verifyBrowserTests": 16,
+  "crowd": {
+    "instances": 100,
+    "materials": 8,
+    "drawCalls": 8,
+    "poseError": 7.492977966881419e-08
+  },
+  "fireEngine": [
+    {
+      "id": "veh.fire-engine:lod0",
+      "errors": [],
+      "triangles": 66335,
+      "materials": 11,
+      "drawCalls": 39,
+      "fileKB": 3664.95703125,
+      "dimensions": [
+        7.3999997594266915,
+        3.5500002052808965,
+        2.09997340526437
+      ],
+      "hash": "fb969cc3fb41bc67f6a44628298d14195f1a22cd306f804a3376f04ba6d328e5"
+    },
+    {
+      "id": "veh.fire-engine:lod1",
+      "errors": [],
+      "triangles": 10821,
+      "materials": 11,
+      "drawCalls": 39,
+      "fileKB": 873.6328125,
+      "dimensions": [
+        7.341862692948013,
+        3.5406175075198254,
+        2.09997340526437
+      ],
+      "hash": "275010f2371df2b43957994df4aead092bb609d387c04ea803b9edc2d44281ae"
+    },
+    {
+      "id": "veh.fire-engine:lod2",
+      "errors": [],
+      "triangles": 2505,
+      "materials": 11,
+      "drawCalls": 38,
+      "fileKB": 283.26953125,
+      "dimensions": [
+        7.271262002906438,
+        3.512349466561491,
+        2.09997340526437
+      ],
+      "hash": "205d7ba49647b98ca01e8433b43db0a534b1eed32858f5507326dcf2c9d9f790"
+    }
+  ],
+  "needsHuman": [
+    "char.corgi",
+    "char.survivor-male"
+  ],
+  "epicComplete": false,
+  "scope": "E17-AC01\u2013AC08 increment",
+  "epicStatus": "in-progress",
+  "mergedMain": "b3c4e07",
+  "regressions": {
+    "E01": {
+      "vitest": 16,
+      "browser": 19
+    },
+    "E02": {
+      "vitest": 6,
+      "browser": 26
+    },
+    "E03": {
+      "browser": 45
+    },
+    "sim": 13,
+    "historical": "E01/E02/E03 merge regression evidence predates the final pinned base; final full unit/sim and smoke cover current base."
+  },
+  "mergeCommit": "da91b4e",
+  "sourceCommit": "2a0c3f1",
+  "manifestIds": 223,
+  "sourceExports": 63,
+  "productionAudit": {
+    "slots": 140,
+    "passed": 15,
+    "findings": 125
+  },
+  "workers": {
+    "playwright": 2,
+    "vitest": 4
+  },
+  "finalBrowserTests": 16
+}

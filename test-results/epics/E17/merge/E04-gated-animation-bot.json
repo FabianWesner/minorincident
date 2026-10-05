@@ -1,0 +1,47 @@
+{
+  "seen": [
+    "idle",
+    "walk",
+    "run",
+    "swing",
+    "hurt",
+    "die",
+    "shoot",
+    "throw",
+    "kick",
+    "interact",
+    "enter-car"
+  ],
+  "mismatches": 0,
+  "tick": 3612,
+  "character": {
+    "variant": "female",
+    "gearTier": 0,
+    "animation": "idle",
+    "missingClips": 0,
+    "evaluations": 320,
+    "sources": [
+      {
+        "variant": "female",
+        "source": "placeholder",
+        "reason": "Error: status reference"
+      },
+      {
+        "variant": "male",
+        "source": "placeholder",
+        "reason": "Error: status reference"
+      }
+    ]
+  },
+  "perf": {
+    "fps": 0.8572653236176596,
+    "frameMs": 1166.5,
+    "simMs": 0.10000002384185791,
+    "drawCalls": 18,
+    "triangles": 483,
+    "geometries": 54,
+    "textures": 5,
+    "entities": 1,
+    "backend": "webgl"
+  }
+}

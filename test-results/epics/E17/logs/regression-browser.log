@@ -1,0 +1,21 @@
+
+> test:e2e
+> playwright test --project=chromium
+
+
+Running 12 tests using 4 workers
+
+  ✓   3 [chromium] › tests/e2e/harness.spec.ts:29:1 › T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and epic stubs (2.3s)
+  ✓   4 [chromium] › tests/e2e/harness.spec.ts:12:1 › T-E01-04b @E01 @E01-AC04 browser and Node match after 3600 scripted ticks (6.5s)
+  ✓   6 [chromium] › tests/e2e/harness.spec.ts:101:1 › T-E01-10 @E01 @E01-AC10 guard detects errors and uncaught exceptions (150ms)
+  ✓   2 [chromium] › tests/e2e/crowd.spec.ts:4:1 › T-E17-07b @E17-AC07 100 infected use one draw per material and GPU poses match at five times (7.8s)
+  ✓   7 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.9s)
+  ✓   1 [chromium] › tests/e2e/harness.spec.ts:62:1 › T-E01-06 @E01 @E01-AC06 pause + exact step and 10x sim time within 2% (8.6s)
+  ✓  10 [chromium] › tests/e2e/turntable.spec.ts:16:1 › T-E17-05c @E17-AC05 pre-integrated production art renders a logged placeholder (1.7s)
+  ✓   8 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.6s)
+  ✓  11 [chromium] › tests/perf/foundation.spec.ts:4:1 › T-E01-perf @E01 @perf foundation counters report a plane and cube (2.1s)
+  ✓  12 [chromium] › tests/visual/foundation.spec.ts:5:1 › T-E01-visual @E01 @visual paused fixture renders stable pixels (2.7s)
+  ✓   9 [chromium] › tests/e2e/turntable.spec.ts:4:1 › T-E17-08 @E17-AC08 @E17-AC04 five fire-engine views cover 10–80% and preserve contract nodes (5.0s)
+  ✓   5 [chromium] › tests/e2e/harness.spec.ts:81:1 › T-E01-07 @E01 @E01-AC07 load/unload x20 returns all resources to baseline (19.6s)
+
+  12 passed (22.8s)
