@@ -84,6 +84,10 @@ export class Hazards {
       if (target.faction === 'infected' && target.health.current > 0) {
         target.noiseTarget ??= { id: e.id, until: e.hazard!.activeUntil };
         target.noiseTarget.id = e.id; target.noiseTarget.until = e.hazard!.activeUntil;
+        if (target.hearing) {
+          target.hearing.mode = 'lured'; target.hearing.target.x = e.transform.x; target.hearing.target.z = e.transform.z;
+          target.hearing.lureUntil = e.hazard!.activeUntil;
+        }
       }
     }
   }
@@ -109,6 +113,7 @@ export class Hazards {
   snapshot() { return { blastTicks: [...this.blastTicks], blastCursor: this.blastCursor }; }
   update(): void {
     const tick = this.world.tick;
+    const actionZones = this.world.combat?.effects.zones;
     let fireReach = 2;
     for (const e of this.world.entities.iterate()) if (e.hazard?.kind === 'fire' && tick < e.hazard.activeUntil) fireReach = Math.max(fireReach, e.hazard.radius);
     for (const e of this.world.entities.iterate()) {
@@ -120,6 +125,9 @@ export class Hazards {
         if (d.burningUntil && tick >= d.burningUntil) { e.health.current = 0; this.destroy(e); }
         else if (!d.burningUntil) {
           let exposed = false;
+          if (actionZones) for (const zone of actionZones) {
+            if (zone.kind === 'fire' && tick < zone.expires && (zone.x - e.transform.x) ** 2 + (zone.z - e.transform.z) ** 2 <= zone.radius ** 2) { exposed = true; break; }
+          }
           for (const id of this.nearby(e, fireReach)) {
             const source = this.world.entities.get(id)!;
             const distance = (source.transform.x - e.transform.x) ** 2 + (source.transform.z - e.transform.z) ** 2;

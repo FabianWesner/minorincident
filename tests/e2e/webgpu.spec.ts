@@ -38,3 +38,20 @@ test('T-E11-webgpu @E11 @E11-AC09 native WebGPU renders the interaction ring and
   writeFileSync('test-results/epics/E11/native-perf.json', JSON.stringify(metrics, null, 2) + '\n');
   await page.screenshot({ path: 'test-results/epics/E11/interact-ui-W5-webgpu.png' });
 });
+
+test('T-E06-webgpu @E06 headed native WebGPU renders catalog attachments and selected telegraphs', async ({ page }) => {
+  await page.goto(testUrl.replace('&renderer=webgl', '')); await page.waitForFunction(() => Boolean(window.__SS__));
+  const result = await page.evaluate(async () => {
+    const api = window.__SS__!; await api.ready; await api.loadScenario('combat-arena', { seed: 1 }); api.pause(); api.camera.preset('aim');
+    const states = [];
+    for (const id of ['weapon.pistol', 'weapon.bat', 'weapon.grenade']) {
+      api.setLoadout([id], [id]); api.input.set({ aim: { x: 1, z: 0 }, aimPoint: { x: 8, z: 0 } }); await api.step(1); api.input.clear(); await api.screenshotReady(); states.push(api.getState().render.actions!);
+    }
+    return { backend: api.getState().render.backend, states, perf: api.perf() };
+  });
+  expect(result.backend).toBe('webgpu'); expect(result.states.map((s) => s.indicator.shape)).toEqual(['line', 'cone', 'arc']);
+  for (const state of result.states) for (const attachment of state.attachments) { expect(attachment.attached).toBe(true); expect(attachment.handDistance).toBeLessThanOrEqual(0.05); }
+  expect(result.perf.drawCalls).toBeLessThanOrEqual(600); expect(result.perf.triangles).toBeLessThanOrEqual(1_500_000);
+  const { mkdirSync, writeFileSync } = await import('node:fs'); mkdirSync('test-results/epics/E06', { recursive: true });
+  writeFileSync('test-results/epics/E06/webgpu.json', JSON.stringify(result, null, 2)); await page.screenshot({ path: 'test-results/epics/E06/webgpu.png' });
+});

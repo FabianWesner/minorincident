@@ -19,14 +19,28 @@ test('T-E11-04 @E11 @E11-AC04 propane waits 18 ticks, chains at 4m, damages play
 });
 test('T-E11-05 @E11 @E11-AC05 a real bullet triggers a 20m/10s alarm and nearby infected target the car', async () => {
   const w = await arena(), h = w.hazards!, car = h.spawn('car-alarm', { x: 3, z: 0 });
-  const near = dummy(w, 18, 2), far = dummy(w, 25, 2);
+  const near = w.spawnDummy('infected.worker', { x: 1, z: 2 }, { reactive: true }), far = dummy(w, 25, 2);
   equip(w, ['weapon.pistol']); fire(w); step(w, 20);
-  const noise = w.events.events().find(e => e.type === 'noise');
+  const noise = w.events.events().find(e => e.type === 'noise' && e.sourceId === car);
   expect(noise).toMatchObject({ sourceId: car, radius: 20, duration: 10 });
   expect(w.entities.get(near)!.noiseTarget?.id).toBe(car); expect(w.entities.get(far)!.noiseTarget).toBeUndefined();
+  expect(w.entities.get(near)!.hearing).toMatchObject({ mode: 'lured', target: { x: 3, z: 0 } });
+  expect(w.entities.get(near)!.transform.x).toBeGreaterThan(1); // car is right of it; player is left
   const expiry = w.entities.get(near)!.noiseTarget!.until;
   step(w, expiry - w.tick); expect(w.entities.get(near)!.noiseTarget).toBeUndefined();
   expect(w.entities.get(car)!.hazard!.activeUntil).toBe(expiry);
+  expect(w.entities.get(near)!.hearing!.mode).toBe('idle');
+});
+
+test('T-E11-molotov @E11 @E11-AC06 E06 thrown fire ignites E11 wood and respects its burn time', async () => {
+  const w = await arena(), crate = w.hazards!.spawn('crate', { x: 6, z: 2 }, { hp: 1000, burnTime: 4 });
+  equip(w, ['weapon.pistol'], ['weapon.molotov']); fire(w, 'RIGHT', { x: 1, z: 0 }, { x: 6, z: 0 }); step(w, 180);
+  const zone = w.combat!.effects.zones.find(z => z.kind === 'fire')!;
+  const ignition = w.events.events().find(e => e.type === 'prop.ignited' && e.id === crate)!;
+  expect(ignition.tick - zone.created).toBeLessThanOrEqual(180);
+  const prop = w.entities.get(crate)!.destructible!;
+  expect(prop.burningUntil).toBe(ignition.tick + 240);
+  step(w, prop.burningUntil - w.tick); expect(prop.broken).toBe(true);
 });
 test('T-E11-06 @E11 @E11-AC06 fire ignites adjacent wood within 3s and burns out after authored burn time', async () => {
   const w = await arena(), h = w.hazards!;
