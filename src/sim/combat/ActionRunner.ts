@@ -9,9 +9,9 @@ export interface Attack {
 /** Fixed-tick phases; each active action resolves once, independent of render rate. */
 export class ActionRunner {
   readonly running: Partial<Record<Side, Attack>> = {};
-  private sequence = 0;
   infiniteCharges = false;
-  constructor(readonly sourceId: number, readonly loadout: Loadout) {}
+  constructor(readonly sourceId: number, readonly loadout: Loadout, private sequence = 0) {}
+  get lastAttackId(): number { return this.sequence; }
   update(frame: InputFrame, tick: number, enabled: boolean, started: (attack: Attack) => void, resolve: (attack: Attack) => void): void {
     for (const side of ['LEFT', 'RIGHT'] as const) {
       let attack = this.running[side];

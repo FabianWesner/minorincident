@@ -172,3 +172,35 @@ test('T-E05-statuses @E05 stunned gates attacks/movement, slowed/toxic reduce sp
   w.combat!.status.apply(target, { kind: 'toxic', duration: 1, maxStacks: 1, dps: 5, slow: 0.25 }, 1, 'test.toxic');
   expect(Status.speed(target)).toBe(0.75); w.clearInput(); step(w, 60); expect(health(w, id)).toBe(35);
 });
+
+test('T-E05-lifetime @E05 re-equipping preserves attack IDs and dead/stunned sources cannot resolve new attacks', async () => {
+  const w = await arena(); equip(w, ['weapon.pistol']); dummy(w, 5);
+  fire(w); equip(w, ['weapon.pistol']); fire(w);
+  expect(w.events.events().filter((e) => e.type === 'combat.attack').map((e) => e.type === 'combat.attack' ? e.attackId : 0)).toEqual([1, 2]);
+  w.player!.damage(100, w.tick); fire(w); step(w, 30);
+  expect(w.events.events().filter((e) => e.type === 'combat.attack')).toHaveLength(2);
+});
+
+test('T-E05-cover @E05 melee/hitscan and swept projectiles stop at full-cover walls', async () => {
+  for (const weapon of ['weapon.bat', 'weapon.pistol', 'weapon.test-projectile']) {
+    const w = await arena(); equip(w, [weapon]); const id = dummy(w, 1.5);
+    (w.combat!.query.walls as { x: number; y: number; z: number; halfX: number; halfY: number; halfZ: number }[]).push({ x: 0.75, y: 1, z: 0, halfX: 0.1, halfY: 1, halfZ: 2 });
+    fire(w); step(w, 30); expect(health(w, id), weapon).toBe(100);
+  }
+});
+
+test('T-E05-spread @E05 seeded spread is repeatable, bounded, and serialized in gameplay state', async () => {
+  const pistol = action('weapon.pistol'), previous = pistol.spread, directions = [];
+  try {
+    pistol.spread = 10;
+    for (let run = 0; run < 2; run++) {
+      const w = await arena(); equip(w, ['weapon.pistol']); w.combat!.assist.setting = 'Off'; fire(w);
+      const attack = w.events.events().find((e) => e.type === 'combat.attack')!;
+      if (attack.type === 'combat.attack') {
+        const angle = Math.atan2(attack.direction.z, attack.direction.x); expect(Math.abs(angle)).toBeLessThanOrEqual(5 * Math.PI / 180); directions.push(attack.direction);
+      }
+      expect(w.getState().combat!.rng.cursor).toBe(1);
+    }
+    expect(directions[0]).toEqual(directions[1]);
+  } finally { pistol.spread = previous; }
+});
