@@ -65,7 +65,8 @@ test("T-E10-runtime @E10 gameplay blockers have Rapier colliders, fires damage o
     const comp = { ...compositions.L6, tier: 5 as const };
     world.loadComposition(comp, Object.values(layouts), 42);
     expect(world.districts!.getState().districts).toHaveLength(8);
-    expect(world.player).not.toBeNull();expect(world.physics.characterController).not.toBeNull();
+    expect(world.player).not.toBeNull();
+    expect(world.physics.characterController).not.toBeNull();
     const colliderCount =
       2 +
       world.districts!.districts.reduce(
@@ -76,7 +77,11 @@ test("T-E10-runtime @E10 gameplay blockers have Rapier colliders, fires damage o
     for (let i = 0; i < 60; i++) world.update();
     expect(world.entities.get(1)!.health.current).toBe(100);
     const fire = world.districts!.fires[0];
-    Object.assign(world.entities.get(1)!.transform,{x:fire.x,y:.705,z:fire.z});
+    Object.assign(world.entities.get(1)!.transform, {
+      x: fire.x,
+      y: 0.705,
+      z: fire.z,
+    });
     world.physics.playerBody!.setTranslation(
       { x: fire.x, y: 0.5, z: fire.z },
       true,

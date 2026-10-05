@@ -49,11 +49,12 @@ export function layoutSourceHash(id: string): string {
       ),
     ),
   ].sort();
-  const manifest=JSON.parse(readFileSync("src/assets/manifest.json","utf8"));
+  const manifest = JSON.parse(readFileSync("src/assets/manifest.json", "utf8"));
   for (const asset of ids) {
     const path = `assets/${asset}/model.glb`;
     hash
-      .update(asset).update(JSON.stringify(manifest[asset]))
+      .update(asset)
+      .update(JSON.stringify(manifest[asset]))
       .update(existsSync(path) ? readFileSync(path) : "placeholder");
   }
   return hash.digest("hex");

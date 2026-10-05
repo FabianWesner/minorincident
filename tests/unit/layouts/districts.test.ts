@@ -1,5 +1,7 @@
 import { readFileSync } from "node:fs";
 import { expect, test } from "vitest";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { Mesh, Raycaster, Vector3 } from "three";
 import manifest from "../../../src/assets/manifest.json";
 import {
   districtIds,
@@ -48,8 +50,14 @@ test("T-E10-03 @E10 @E10-AC03 cumulative decay grows wrecks, removes base nodes 
       expect(states[t].lights.length).toBeLessThanOrEqual(
         states[t - 1].lights.length,
       );
-      const emitters=(state:typeof states[number])=>state.placements.filter((p)=>(p.assetId.startsWith('bld.')||['prop.street-lamp','veh.sedan-red'].includes(p.assetId))&&state.lights.includes(p.lightGroup)).length;
-      expect(emitters(states[t])).toBeLessThanOrEqual(emitters(states[t-1]));
+      const emitters = (state: (typeof states)[number]) =>
+        state.placements.filter(
+          (p) =>
+            (p.assetId.startsWith("bld.") ||
+              ["prop.street-lamp", "veh.sedan-red"].includes(p.assetId)) &&
+            state.lights.includes(p.lightGroup),
+        ).length;
+      expect(emitters(states[t])).toBeLessThanOrEqual(emitters(states[t - 1]));
     }
     expect(states[0].lights).toHaveLength(4);
     expect(states[3].lights).toHaveLength(2);
@@ -85,9 +93,47 @@ test("T-E10-07 @E10 @E10-AC07 every building/heavy prop collider matches transfo
       }
     }
 });
-test("T-E10-10 @E10 @E10-AC10 vector minimap preserves 3D road centerlines within one metre", () => {
+test("T-E10-10 @E10 @E10-AC10 vector minimap overlays exported 3D roads within one metre", async () => {
   for (const layout of layouts) {
     const map = minimapData(layout);
+    const buffer = readFileSync(
+      `public/assets/layouts/${layout.district}.base.glb`,
+    );
+    const { scene } = await new GLTFLoader().parseAsync(
+      buffer.buffer.slice(
+        buffer.byteOffset,
+        buffer.byteOffset + buffer.byteLength,
+      ),
+      "",
+    );
+    scene.updateMatrixWorld(true);
+    const roadMeshes: Mesh[] = [];
+    scene.traverse((node) => {
+      if (
+        node instanceof Mesh &&
+        !Array.isArray(node.material) &&
+        node.material.name === "pal_asphalt"
+      )
+        roadMeshes.push(node);
+    });
+    expect(roadMeshes.length).toBeGreaterThan(0);
+    const ray = new Raycaster(new Vector3(), new Vector3(0, -1, 0), 0, 5);
+    for (const road of map.roads)
+      for (let i = 1; i < road.length; i++) {
+        const a = road[i - 1],
+          b = road[i],
+          length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+        for (let distance = 0.5; distance < length; distance += 1) {
+          const x = a[0] + ((b[0] - a[0]) * distance) / length,
+            z = a[1] + ((b[1] - a[1]) * distance) / length;
+          ray.ray.origin.set(x, 2, z);
+          const hit = ray.intersectObjects(roadMeshes, false)[0];
+          expect(hit, `${layout.district} road at ${x},${z}`).toBeDefined();
+          expect(
+            Math.hypot(hit.point.x - x, hit.point.z - z),
+          ).toBeLessThanOrEqual(1);
+        }
+      }
     expect(map.buildings).toHaveLength(layout.buildings.length);
     map.roads.forEach((road, i) =>
       road.forEach((point, j) =>

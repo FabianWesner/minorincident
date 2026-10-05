@@ -1,15 +1,21 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { expect, test } from "vitest";
-import { buildLayout, layoutSourceHash } from "../../../tools/layouts/build";
+import {
+  buildLayout,
+  districts,
+  layoutSourceHash,
+} from "../../../tools/layouts/build";
 
 test("T-E10-12 @E10 @E10-AC12 headless Blender rebuild is deterministic and TS gameplay does not rebuild", () => {
-  buildLayout("D-RES", true);
-  const path = "public/assets/layouts/D-RES.layout.json",
-    first = readFileSync(path, "utf8");
-  const hash = JSON.parse(first).geometryHash;
-  buildLayout("D-RES", true);
-  expect(readFileSync(path, "utf8")).toBe(first);
-  expect(JSON.parse(readFileSync(path, "utf8")).geometryHash).toBe(hash);
+  for (const id of districts) {
+    buildLayout(id, true);
+    const path = `public/assets/layouts/${id}.layout.json`,
+      first = readFileSync(path, "utf8");
+    const hash = JSON.parse(first).geometryHash;
+    buildLayout(id, true);
+    expect(readFileSync(path, "utf8"), id).toBe(first);
+    expect(JSON.parse(readFileSync(path, "utf8")).geometryHash, id).toBe(hash);
+  }
   const gameplay = "src/levels/districts/D-RES.ts",
     source = readFileSync(gameplay, "utf8"),
     key = layoutSourceHash("D-RES");
@@ -36,4 +42,4 @@ test("T-E10-12 @E10 @E10-AC12 headless Blender rebuild is deterministic and TS g
   } finally {
     writeFileSync(layout, script);
   }
-}, 120_000);
+}, 180_000);
