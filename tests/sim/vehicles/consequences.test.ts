@@ -97,3 +97,8 @@ test('T-E09-06b @E09-AC06 a boxed-in driver is forcibly ejected and attached inf
     expect(s.world.vehicles!.active).toBeNull(); expect(s.world.getEntity(1)!.hidden).toBe(false); expect(s.world.getEntity(infected)!.attachedTo).toBeUndefined();
   } finally { s.world.dispose(); }
 });
+
+test('T-E09-06c @E09-AC06 RIGHT can exit a zero-HP car during its fuse', async () => {
+  const s = await fixture();
+  try { s.world.vehicles!.damage(2, 300); const input = emptyInput(); input.right.down = true; s.world.applyInput(input, 'keyboard'); s.tick(); expect(s.world.vehicles!.active).toBeNull(); expect(s.car.entity.vehicle!.damage).toBe('burning'); } finally { s.world.dispose(); }
+});

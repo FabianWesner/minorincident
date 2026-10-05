@@ -33,8 +33,8 @@ export class Vehicles {
     for (const car of this.cars.values()) {
       const state = car.entity.vehicle!, drive = car.physics.intent;
       drive.throttle = drive.steer = 0; drive.brake = true; drive.boost = false;
+      if (this.active === car.entity.id && frame.right.down) this.exit(car);
       if (car.entity.health.current > 0 && this.active === car.entity.id) {
-        if (frame.right.down) this.exit(car);
         if (this.active === car.entity.id) {
           if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
             drive.throttle = frame.drive?.throttle ?? frame.move.x;
