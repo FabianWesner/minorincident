@@ -24,12 +24,13 @@ test('T-E15-webgpu @E15 native WebGPU compiles particles, ground tells and blood
     const api = window.__SS__!; await api.ready; api.pause();
     await api.loadScenario('vfx-showcase'); api.pause(); api.camera.preset('L6');
     await api.step(1); api.vfx.stepRender(0.12); await api.screenshotReady();
-    // Measure actual RAF frames on the native GPU, without accelerated API stepping.
-    const frameMs: number[] = [];
+    // Measure regular gameplay RAF frames on the native GPU, without API stepping.
+    const frameMs: number[] = []; api.resume();
     for (let i = 0; i < 120; i++) {
       await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
       frameMs.push(api.perf().frameMs);
     }
+    api.pause(); await api.screenshotReady();
     return { render: api.getState().render, perf: api.perf(), frameMs };
   });
   expect(result.render.backend).toBe('webgpu');

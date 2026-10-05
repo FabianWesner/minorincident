@@ -10,7 +10,7 @@ export interface ScenarioDefinition {
   survivor?: boolean;
   combat?: boolean;
   walls?: { x: number; y: number; z: number; halfX: number; halfY: number; halfZ: number }[];
-  ground: { width: number; depth: number };
+  ground: { width: number; depth: number; center?: { x: number; z: number } };
   player: { x: number; y: number; z: number };
 }
 export function loadScenarioDefinition(name: string): ScenarioDefinition {
