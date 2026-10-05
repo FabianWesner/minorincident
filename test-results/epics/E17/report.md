@@ -133,3 +133,30 @@ e2d565a feat(assets): bake instanced rigid crowds and enforce production readine
 ```
 
 The final evidence/report commit follows these implementation commits. No push.
+
+## Full-goal continuation audit
+
+The committed lane remains clean and `main` remains at `2ffb7b7`. The main
+checkout now has uncommitted per-asset batch edits. They were inspected
+read-only, without copying or rebuilding their source files; they are not yet
+available through the required merge of `main`.
+
+`main-working-tree-audit.json` records 59 supplied export/LOD slots (excluding
+the lane's fire-engine proof): 12 pass and 47 have findings. All three supplied
+sedan-red and pickup-red LODs now pass this audit. Other findings still include
+missing hero LODs/front markers, unregistered material tokens, malformed
+geometry, changed dimensions against the declared contracts, missing crawler
+part geometry, and brute caps without hidden-default metadata.
+
+Full E17 completion remains unproven: only the fire engine is integrated in
+the manifest; there are no milestone-level placeholder ID-pass proofs or
+gore-probe vision artifacts. AC09 was expressly assigned to later batches,
+and existing standalone sources must remain unchanged in this lane. Those
+batch outputs need to be committed, validated/integrated with inventory sync,
+and accompanied by their milestone/gore evidence before the full goal can be
+achieved. Passing readiness guards do not replace these requirements.
+
+Additional main-only exports are present for sedan-white, house-a/b/c, porch
+stairs, Joe's diner, mainstreet brick and pharmacy/clinic. Their presence is
+recorded in the audit, but presence alone does not establish validation,
+integration or milestone photo-spot completion.
