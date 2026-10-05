@@ -182,7 +182,10 @@ export class InfectedSystem {
   }
   private readonly obstacles = new WeakMap<EntitySnapshot, { transform: EntitySnapshot['transform']; radius: number }>();
   private obstacle(e: EntitySnapshot) {
-    let obstacle = this.obstacles.get(e); if (!obstacle) { obstacle = { transform: e.transform, radius: e.combat!.radius }; this.obstacles.set(e, obstacle); } return obstacle;
+    let obstacle = this.obstacles.get(e);
+    if (!obstacle) { obstacle = { transform: e.transform, radius: e.combat!.radius }; this.obstacles.set(e, obstacle); }
+    else obstacle.radius = e.combat!.radius;
+    return obstacle;
   }
   playerSpeedScale(): number {
     for (const e of this.active) {

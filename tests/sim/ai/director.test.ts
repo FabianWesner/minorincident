@@ -39,6 +39,14 @@ test('T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms si
   const times: number[] = []; for (let i = 0; i < 600; i++) { const start = performance.now(); w.update(); times.push(performance.now() - start); } times.sort((a, b) => a - b); const p95 = times[Math.floor(times.length * 0.95)]; const metrics = { scenario: 'horde-arena', infected: 200, simMsP95: p95, budget: 4 }; mkdirSync('test-results/epics/E07', { recursive: true }); writeFileSync('test-results/epics/E07/sim-perf.json', JSON.stringify(metrics, null, 2) + '\n'); console.log(JSON.stringify(metrics)); expect(p95).toBeLessThanOrEqual(4);
 });
 
+test('T-E07-10b @E07 @E07-AC10 recycled archetypes refresh borrowed player-collision radii', async () => {
+  const w = await arena(), runner = spawn(w, 'runner', 10, 0, 'idle'); step(w, 1);
+  expect(w.player!.locomotion.crowd[0].radius).toBe(0.35);
+  runner.health.current = 0; step(w, 2762);
+  const gorilla = spawn(w, 'gorilla', 10, 0, 'idle'); expect(gorilla).toBe(runner); step(w, 1);
+  expect(w.player!.locomotion.crowd[0].radius).toBe(0.7);
+});
+
 test('T-E07-08b @E07 @E07-AC08 revival respects cap and retries instead of exceeding it', async () => {
   const w = await arena(), ai = w.infected!, runner = spawn(w, 'runner', 2, 0, 'idle'); runner.health.current = 0; const nurse = spawn(w, 'nurse', 1); ai.director.levelCap = 1;
   step(w, 25); expect(ai.director.count).toBe(1); expect(runner.health.current).toBe(0); expect(nurse.infected!.reviveUsed).toBe(false);
