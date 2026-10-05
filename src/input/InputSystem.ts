@@ -131,11 +131,12 @@ export class InputSystem implements Lifecycle {
   }
   private screenAngle(x: number, y: number): number { this.screenVector(x, y, this.screen); return Math.atan2(this.screen.z, this.screen.x); }
   /** Frame and math scratch objects are reused; no device polling or scene-mesh raycasts. */
+  private readonly cursorPoint = { x: 0, z: 0 };
   sample(player: Vec2, dt = 1 / 60): InputFrame {
     if (this.recorder.playing) return this.recorder.next() ?? this.frameNeutral();
     if (this.injected) { this.recorder.capture(this.injected); return this.injected; }
     const frame = this.frame;
-    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null;
+    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint;
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
     if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') {
       this.screenVector(x, y, frame.move); const length = Math.hypot(frame.move.x, frame.move.z);
@@ -144,6 +145,7 @@ export class InputSystem implements Lifecycle {
     if ((this.scheme === 'mouse-only' || this.scheme === 'mouse-keyboard') && this.pointer.valid) {
       const point = this.cursor.project(this.pointer.x, this.pointer.y);
       if (point) {
+        frame.aimPoint = this.cursorPoint; this.cursorPoint.x = point.x; this.cursorPoint.z = point.z;
         const dx = point.x - player.x, dz = point.z - player.z, distance = Math.hypot(dx, dz);
         if (distance > 1e-6) {
           this.aim.x = dx / distance; this.aim.z = dz / distance;
@@ -171,7 +173,7 @@ export class InputSystem implements Lifecycle {
     this.interact = false; this.pause = false; this.recorder.capture(frame); return frame;
   }
   private frameNeutral(): InputFrame {
-    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null;
+    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint;
     frame.left.down = frame.left.held = frame.left.up = false; frame.right.down = frame.right.held = frame.right.up = false;
     frame.selector = 0; frame.interact = false; frame.pause = false; return frame;
   }
