@@ -840,7 +840,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.bbq-dad/model.glb",
+    "script": "assets/inf.bbq-dad/build.py"
   },
   {
     "id": "inf.cashier",
@@ -907,7 +909,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.cashier/model.glb",
+    "script": "assets/inf.cashier/build.py"
   },
   {
     "id": "inf.bathrobe-neighbor",
@@ -1878,7 +1882,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.baseball-bat/model.glb",
+    "script": "assets/wpn.baseball-bat/build.py"
   },
   {
     "id": "wpn.nail-bat",
@@ -1936,7 +1942,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.crowbar/model.glb",
+    "script": "assets/wpn.crowbar/build.py"
   },
   {
     "id": "wpn.machete",
@@ -1965,7 +1973,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.machete/model.glb",
+    "script": "assets/wpn.machete/build.py"
   },
   {
     "id": "wpn.shovel",
@@ -2226,7 +2236,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/pick.medkit/model.glb",
+    "script": "assets/pick.medkit/build.py"
   },
   {
     "id": "pick.soda",
@@ -2255,7 +2267,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/pick.soda/model.glb",
+    "script": "assets/pick.soda/build.py"
   },
   {
     "id": "pick.energy-drink",
@@ -2902,7 +2916,11 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "assets/veh.sedan-blue/model.lod1.glb",
+      "lod2": "assets/veh.sedan-blue/model.lod2.glb"
+    }
   },
   {
     "id": "veh.sedan-white",
@@ -2948,7 +2966,12 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.sedan-white/model.glb",
+    "lods": {
+      "lod1": "assets/veh.sedan-white/model.lod1.glb",
+      "lod2": "assets/veh.sedan-white/model.lod2.glb"
+    }
   },
   {
     "id": "veh.school-bus",
@@ -3480,7 +3503,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.house-a/model.glb",
+    "script": "assets/bld.house-a/build.py",
+    "lods": {
+      "lod1": "assets/bld.house-a/model.lod1.glb",
+      "lod2": "assets/bld.house-a/model.lod2.glb"
+    }
   },
   {
     "id": "bld.house-b",
@@ -3509,7 +3538,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.house-b/model.glb",
+    "script": "assets/bld.house-b/build.py",
+    "lods": {
+      "lod1": "assets/bld.house-b/model.lod1.glb",
+      "lod2": "assets/bld.house-b/model.lod2.glb"
+    }
   },
   {
     "id": "bld.house-c",
@@ -3539,7 +3574,12 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.house-c/model.glb",
+    "lods": {
+      "lod1": "assets/bld.house-c/model.lod1.glb",
+      "lod2": "assets/bld.house-c/model.lod2.glb"
+    }
   },
   {
     "id": "bld.safe-house",
@@ -3597,7 +3637,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/kit.porch-stairs/model.glb",
+    "script": "assets/kit.porch-stairs/build.py"
   },
   {
     "id": "bld.shed",
@@ -3655,7 +3697,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.joes-diner/model.glb",
+    "script": "assets/bld.joes-diner/build.py",
+    "lods": {
+      "lod1": "assets/bld.joes-diner/model.lod1.glb",
+      "lod2": "assets/bld.joes-diner/model.lod2.glb"
+    }
   },
   {
     "id": "bld.gas-station",
@@ -3742,7 +3790,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.mainstreet-brick/model.glb",
+    "script": "assets/bld.mainstreet-brick/build.py",
+    "lods": {
+      "lod1": "assets/bld.mainstreet-brick/model.lod1.glb",
+      "lod2": "assets/bld.mainstreet-brick/model.lod2.glb"
+    }
   },
   {
     "id": "bld.bus-stop",
@@ -4005,7 +4059,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/int.pharmacy-clinic/model.glb",
+    "script": "assets/int.pharmacy-clinic/build.py"
   },
   {
     "id": "bld.fire-station",
@@ -4905,7 +4961,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.patient-zero-courier/model.glb",
+    "script": "assets/npc.patient-zero-courier/build.py"
   },
   {
     "id": "prop.medical-cooler",
@@ -4934,7 +4992,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.medical-cooler/model.glb",
+    "script": "assets/prop.medical-cooler/build.py"
   },
   {
     "id": "veh.courier-van",
@@ -4979,7 +5039,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.courier-van/model.glb",
+    "script": "assets/veh.courier-van/build.py",
+    "lods": {
+      "lod1": "assets/veh.courier-van/model.lod1.glb",
+      "lod2": "assets/veh.courier-van/model.lod2.glb"
+    }
   },
   {
     "id": "npc.brother",
@@ -5043,7 +5109,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.brother/model.glb",
+    "script": "assets/npc.brother/build.py"
   },
   {
     "id": "npc.mrs-alvarez",
@@ -5107,7 +5175,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.mrs-alvarez/model.glb",
+    "script": "assets/npc.mrs-alvarez/build.py"
   },
   {
     "id": "npc.police-officer",
@@ -5607,7 +5677,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.smg/model.glb",
+    "script": "assets/wpn.smg/build.py"
   },
   {
     "id": "wpn.hunting-rifle",
@@ -5636,7 +5708,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.hunting-rifle/model.glb",
+    "script": "assets/wpn.hunting-rifle/build.py"
   },
   {
     "id": "wpn.assault-rifle",
@@ -5781,7 +5855,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/thr.frag-grenade/model.glb",
+    "script": "assets/thr.frag-grenade/build.py"
   },
   {
     "id": "thr.flashbang",
@@ -6354,7 +6430,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.civic-center/model.glb",
+    "script": "assets/bld.civic-center/build.py",
+    "lods": {
+      "lod1": "assets/bld.civic-center/model.lod1.glb",
+      "lod2": "assets/bld.civic-center/model.lod2.glb"
+    }
   },
   {
     "id": "decay.dropped-belongings",
@@ -8171,6 +8253,680 @@
       "materials": 12,
       "fileKB": 1200,
       "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.civilian-man-a",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-man-a.glb",
+    "dimensions": {
+      "x": 0.37313416600227356,
+      "y": 1.431667448952794,
+      "z": 0.6651999652385712,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-man-a/model.glb",
+    "script": "assets/npc.civilian-man-a/build.py"
+  },
+  {
+    "id": "npc.civilian-man-b",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-man-b.glb",
+    "dimensions": {
+      "x": 0.4227200448513031,
+      "y": 1.4376665391027927,
+      "z": 0.6695751547813416,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-man-b/model.glb",
+    "script": "assets/npc.civilian-man-b/build.py"
+  },
+  {
+    "id": "npc.civilian-woman-a",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-woman-a.glb",
+    "dimensions": {
+      "x": 0.5174842649139464,
+      "y": 1.4140521343797445,
+      "z": 0.7555636763572693,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-woman-a/model.glb",
+    "script": "assets/npc.civilian-woman-a/build.py"
+  },
+  {
+    "id": "npc.civilian-woman-b",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-woman-b.glb",
+    "dimensions": {
+      "x": 0.42142805457115173,
+      "y": 1.4000000953674316,
+      "z": 0.6310051083564758,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-woman-b/model.glb",
+    "script": "assets/npc.civilian-woman-b/build.py"
+  },
+  {
+    "id": "prop.barricade",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.barricade.glb",
+    "dimensions": {
+      "x": 1.16103994846344,
+      "y": 1.8040308952331543,
+      "z": 2.250000238418579,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.barricade/model.glb",
+    "script": "assets/prop.barricade/build.py"
+  },
+  {
+    "id": "prop.bench",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.bench.glb",
+    "dimensions": {
+      "x": 0.7541895508766174,
+      "y": 1.0899329781532288,
+      "z": 1.899999976158142,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.bench/model.glb",
+    "script": "assets/prop.bench/build.py"
+  },
+  {
+    "id": "prop.fire-hydrant",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.fire-hydrant.glb",
+    "dimensions": {
+      "x": 0.6431257128715515,
+      "y": 1.0820000171661377,
+      "z": 0.6431257128715515,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.fire-hydrant/model.glb",
+    "script": "assets/prop.fire-hydrant/build.py"
+  },
+  {
+    "id": "prop.hedge",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.hedge.glb",
+    "dimensions": {
+      "x": 2.528046131134033,
+      "y": 1.563220500946045,
+      "z": 0.8810849189758301,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.hedge/model.glb",
+    "script": "assets/prop.hedge/build.py"
+  },
+  {
+    "id": "prop.mailbox-blue",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.mailbox-blue.glb",
+    "dimensions": {
+      "x": 0.7389999963343143,
+      "y": 1.5390000343322754,
+      "z": 0.9420000314712524,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.mailbox-blue/model.glb",
+    "script": "assets/prop.mailbox-blue/build.py"
+  },
+  {
+    "id": "prop.picket-fence",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.picket-fence.glb",
+    "dimensions": {
+      "x": 0.25093501806259155,
+      "y": 1.3388891220092773,
+      "z": 2.640678286552429,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.picket-fence/model.glb",
+    "script": "assets/prop.picket-fence/build.py"
+  },
+  {
+    "id": "prop.street-lamp",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.street-lamp.glb",
+    "dimensions": {
+      "x": 0.6399999856948853,
+      "y": 3.865000009536743,
+      "z": 0.6399999856948853,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.street-lamp/model.glb",
+    "script": "assets/prop.street-lamp/build.py"
+  },
+  {
+    "id": "prop.street-sign",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.street-sign.glb",
+    "dimensions": {
+      "x": 0.3400000035762787,
+      "y": 2.86899995803833,
+      "z": 1.159999966621399,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.street-sign/model.glb",
+    "script": "assets/prop.street-sign/build.py"
+  },
+  {
+    "id": "prop.traffic-cone",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.traffic-cone.glb",
+    "dimensions": {
+      "x": 0.47999998927116394,
+      "y": 0.6460000276565552,
+      "z": 0.47999998927116394,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.traffic-cone/model.glb",
+    "script": "assets/prop.traffic-cone/build.py"
+  },
+  {
+    "id": "prop.trash-bin",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.trash-bin.glb",
+    "dimensions": {
+      "x": 0.7239999920129776,
+      "y": 1.2180000860681264,
+      "z": 1.781999975685821,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.trash-bin/model.glb",
+    "script": "assets/prop.trash-bin/build.py"
+  },
+  {
+    "id": "prop.utility-pole",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.utility-pole.glb",
+    "dimensions": {
+      "x": 0.8599999845027924,
+      "y": 7.142499923706055,
+      "z": 3.24536669254303,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.utility-pole/model.glb",
+    "script": "assets/prop.utility-pole/build.py"
+  },
+  {
+    "id": "inf.teen-skater",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/inf.teen-skater/build.py",
+    "glb": "public/assets/models/inf.teen-skater.glb",
+    "sourceGlb": "assets/inf.teen-skater/model.glb",
+    "dimensions": {
+      "x": 0.9556333422660828,
+      "y": 1.6637544706463814,
+      "z": 1.217635691165924,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
     },
     "decayVariants": []
   }

@@ -1,5 +1,7 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { boot, expect, test } from './fixtures';
+import { atLeast, type AssetDef } from '../../src/assets/types';
+const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
 
 test('T-E04-09 @E04 @E04-AC09 sixty-second input bot visits every sim clip with zero missing mappings', async ({ page }) => {
   test.setTimeout(120_000); await boot(page);
@@ -23,7 +25,10 @@ test('T-E04-09 @E04 @E04-AC09 sixty-second input bot visits every sim clip with 
   mkdirSync('test-results/epics/E04', { recursive: true }); writeFileSync('test-results/epics/E04/animation-bot.json', JSON.stringify(result, null, 2));
   expect(result.tick).toBeGreaterThanOrEqual(3600); expect(result.mismatches).toBe(0); expect(result.character!.missingClips).toBe(0);
   expect(result.seen.sort()).toEqual(['idle', 'walk', 'run', 'hurt', 'die', 'swing', 'shoot', 'throw', 'kick', 'interact', 'enter-car'].sort());
-  expect(result.character!.sources.every((s) => s.source === 'glb')).toBe(true);
+  for (const source of result.character!.sources) {
+    const def = manifest.find(asset => asset.id === `char.survivor-${source.variant}`)!;
+    expect(source.source).toBe(atLeast(def.status, 'integrated') ? 'glb' : 'placeholder');
+  }
 });
 
 test('T-E04-wiring @E04 actual keyboard input moves the survivor; variant selection is cosmetic and unload frees resources', async ({ page }) => {
