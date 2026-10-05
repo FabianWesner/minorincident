@@ -79,3 +79,13 @@ test('T-E11-chain-budget @E11 @E11-AC04 large chains honor eight blasts per sim 
   expect(w.events.events().filter(e => e.type === 'hazard.exploded')).toHaveLength(8);
   step(w, 60); expect(w.events.events().filter(e => e.type === 'hazard.exploded')).toHaveLength(12);
 });
+test('T-E11-cosmetic-debris @E11 @E11-AC07 pooled pieces collide with the ground and do not obstruct the survivor', async () => {
+  const w = await arena(), baseline = await arena(), crate = w.hazards!.spawn('crate', { x: 8, z: 0 });
+  w.hazards!.hit(crate, 1000, 'melee');
+  for (const [i, p] of w.hazards!.debris.pieces.entries()) {
+    p.body.setTranslation({ x: .6 + i * .15, y: .7, z: 0 }, true); p.body.setLinvel({ x: 0, y: 0, z: 0 }, true);
+  }
+  for (const world of [w, baseline]) { world.setInput({ move: { x: 1, z: 0 } }); step(world, 60); }
+  expect(w.entities.get(1)!.transform.x).toBeCloseTo(baseline.entities.get(1)!.transform.x, 3);
+  expect(w.hazards!.debris.snapshot().every(p => p.position.y > 0)).toBe(true);
+});

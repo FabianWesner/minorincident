@@ -22,7 +22,7 @@ export class Physics implements Lifecycle {
     this.world.createCollider(RAPIER.ColliderDesc.cuboid(scenario.ground.width / 2, 0.1, scenario.ground.depth / 2), ground);
     const p = scenario.player;
     this.playerBody = this.world.createRigidBody((scenario.survivor ? RAPIER.RigidBodyDesc.kinematicPositionBased() : RAPIER.RigidBodyDesc.dynamic()).setTranslation(p.x, p.y, p.z).lockRotations());
-    this.playerCollider = this.world.createCollider((scenario.survivor ? RAPIER.ColliderDesc.capsule(survivor.height / 2 - survivor.radius, survivor.radius) : RAPIER.ColliderDesc.cuboid(0.5, 0.5, 0.5)).setFriction(0), this.playerBody);
+    this.playerCollider = this.world.createCollider((scenario.survivor ? RAPIER.ColliderDesc.capsule(survivor.height / 2 - survivor.radius, survivor.radius) : RAPIER.ColliderDesc.cuboid(0.5, 0.5, 0.5)).setFriction(0).setCollisionGroups(0x00010001), this.playerBody);
     for (const wall of scenario.walls ?? []) this.world.createCollider(RAPIER.ColliderDesc.cuboid(wall.halfX, wall.halfY, wall.halfZ).setTranslation(wall.x, wall.y, wall.z));
     if (scenario.survivor) { this.characterController = this.world.createCharacterController(0.005); this.characterController.setSlideEnabled(true); this.characterController.enableSnapToGround(0.1); }
     // Populate query structures before the first character sweep.
