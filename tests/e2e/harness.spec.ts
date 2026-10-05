@@ -48,10 +48,11 @@ test('T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and 
     const entity = api.getEntity(1), missing = api.getEntity(999), nearby = api.query({ kind: 'player', archetype: 'player.stub', within: { x: 2, z: 3, r: 1 } });
     api.input.set({ move: { x: 1, z: 0 } }); api.input.clear(); await api.step(1);
     await api.screenshotReady();
-    return { version: api.version, keys: Object.keys(api).sort(), errors, entity, missing, nearby, events: api.events(0), perf: api.perf() };
+    return { version: api.version, keys: Object.keys(api).sort(), vfxKeys: Object.keys(api.vfx).sort(), errors, entity, missing, nearby, events: api.events(0), perf: api.perf() };
   });
   expect(surface.version).toMatch(/^\d+\.\d+\.\d+$/);
-  expect(surface.keys).toEqual(['version', 'ready', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'perf', 'screenshotReady'].sort());
+  expect(surface.keys).toEqual(['version', 'ready', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'vfx', 'perf', 'screenshotReady'].sort());
+  expect(surface.vfxKeys).toEqual(['emit', 'stepRender']);
   const epics: Record<string, string> = { loadLevel: 'E12', spawn: 'E07', 'cheats.killAll': 'E07', 'cheats.completeObjective': 'E12', 'bot.start': 'E19', 'bot.stop': 'E19', 'bot.status': 'E19' };
   for (const [name, epic] of Object.entries(epics)) expect(surface.errors[name]).toBe(`NotImplemented ${epic}: ${name}`);
   expect(surface.entity?.transform).toMatchObject({ x: 2, z: 3 }); expect(surface.missing).toBeNull(); expect(surface.nearby).toHaveLength(1);

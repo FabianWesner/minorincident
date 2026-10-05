@@ -1,4 +1,5 @@
 import { expect, test, testUrl } from './fixtures';
+import { mkdirSync, writeFileSync } from 'node:fs';
 
 /** Opt-in headed, real-GPU proof; SwiftShader goldens never run through this project. */
 test('T-E02-01b @E02 @E02-AC01 an available native GPU selects WebGPU and renders lookdev', async ({ page }) => {
@@ -23,11 +24,19 @@ test('T-E15-webgpu @E15 native WebGPU compiles particles, ground tells and blood
     const api = window.__SS__!; await api.ready; api.pause();
     await api.loadScenario('vfx-showcase'); api.pause(); api.camera.preset('L6');
     await api.step(1); api.vfx.stepRender(0.12); await api.screenshotReady();
-    return { render: api.getState().render, perf: api.perf() };
+    // Measure actual RAF frames on the native GPU, without accelerated API stepping.
+    const frameMs: number[] = [];
+    for (let i = 0; i < 120; i++) {
+      await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+      frameMs.push(api.perf().frameMs);
+    }
+    return { render: api.getState().render, perf: api.perf(), frameMs };
   });
   expect(result.render.backend).toBe('webgpu');
   expect(result.render.vfx!.particles).toBeGreaterThan(0);
   expect(result.render.vfx!.telegraphs).toHaveLength(1);
   expect(result.perf.drawCalls).toBeGreaterThan(1);
+  mkdirSync('test-results/epics/E15', { recursive: true });
+  writeFileSync('test-results/epics/E15/native-perf.json', JSON.stringify(result, null, 2) + '\n');
   await page.screenshot({ path: 'test-results/epics/E15/webgpu.png' });
 });
