@@ -1,0 +1,2 @@
+# Delivery driver hero
+Reference: blue short-sleeve uniform and cap, chunky brown cargo pants with open knees, dark high-top trainers with red laces, yellow pizza delivery parcel. Hair brown and volumetric; adult angry face and glowing red eyes. Large head about one third of height. Rigid procedural hierarchy, translation-only rest pivots, torso-parented parcel and straps. Applied organic subdivision, per-part material batching, hidden stump caps attached to the surviving parent. No image textures.

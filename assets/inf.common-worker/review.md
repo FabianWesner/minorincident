@@ -1,0 +1,13 @@
+# Common Worker — revised hero review
+
+The revised hero replaces the earlier upright model. Five visual passes in this revision addressed the orchestrator's ordered feedback: enlarged chibi head and face, big hooked hands and chunky shoes; a baked hunched forward-reaching stance with bent knees; emissive red eyes, open toothed mouth, gums and blood across the jaw; thick layered fringe/crown/nape volumes; real shirt/sleeve tears, cloth creases, ragged flaps and blood on the claws and outfit.
+
+Final height is 1.665 m; both soles touch z=0. +X remains forward. All required character/infected nodes and seven hidden stump caps exist. Joint rotations are zero and scales are one in the exported rest pose: the lurch is baked into the geometry and joint locations, so runtime rotations add motion around the actual joints. The cap meshes are stored at zero scale with hidden/stumpFor extras; restore scale to one to expose them. They stay on proximal nodes when distal limbs detach.
+
+The GLB contains 37,142 triangles, 58 mesh records and eight documented palette/emissive materials. The jaw's two material regions become 59 mesh primitives in Three.js. No image textures, nonfinite positions or degenerate triangles. Applied subdivision, decimation and explicit triangulation keep the sculpted forms below the 40k infected budget. Duplicate material slots are consolidated before merging static details within each rigid parent.
+
+The required browser capture passed on WebGPU and WebGL2 without console warnings/errors. Six captures show front/rear/gameplay views. The final hero is 1600×900 at 96 samples; camera review views and pose are 960×540 at 24 samples. The turnaround assembles front, side, back and three-quarter previews. The pose test rotates armL, foreArmL and legR, exposes stump_armL, and hides the opposite arm to show stump_armR clearly. Hand/forearm and shin/shoe remain attached through their respective hierarchies.
+
+Final comparison used reference-upscaled.png, the original crop from the initial review, the hero, all turnaround views and pose test. The worker now has the enlarged head, forward clawing silhouette, bloodied face and messy hair missing from the previous version. Outfit identity is preserved. Remaining visual gap: clothing folds and distressed edges are less intricate than the supplied reference. Technical verdict: pass. The remaining hero-detail difference is recorded for art review rather than hidden.
+
+The restricted-session Metal startup crash is resolved in this full-access session. All final model/export/render files were regenerated successfully through the required shared Blender runner. No references or specifications were edited.

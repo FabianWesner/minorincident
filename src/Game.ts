@@ -1,0 +1,67 @@
+// Adapted from folio-2025 by Bruno Simon (MIT).
+import { Clock } from './core/Clock';
+import { Services } from './core/Services';
+import { Ticker } from './core/Ticker';
+import { GameView } from './render/GameView';
+import { SimWorld } from './sim/world/SimWorld';
+
+/** Injected composition root, with staged initialization adapted from Bruno Game.js. */
+export class Game {
+  readonly services = new Services();
+  readonly world = this.services.add(new SimWorld());
+  readonly clock: Clock;
+  readonly view: GameView;
+  readonly ticker = new Ticker();
+  frameMs = 0;
+  simMs = 0;
+  private loading = false;
+  private levelQueue: Promise<void> = Promise.resolve();
+  constructor(readonly params: URLSearchParams) {
+    this.clock = new Clock(params.get('test') === '1' ? 20 : 5);
+    this.view = this.services.add(new GameView(this.world, params));
+  }
+  async init(): Promise<void> {
+    await this.services.init();
+    await this.loadScenario('empty', Number(this.params.get('seed') ?? 1));
+    this.ticker.events.on('frame', ({ seconds }) => {
+      this.frameMs = seconds * 1000;
+      if (!this.loading) {
+        const start = performance.now();
+        this.clock.advance(seconds, () => this.world.update());
+        this.simMs = performance.now() - start;
+        this.view.update(this.clock.paused ? 1 : this.clock.alpha);
+      }
+    });
+    this.ticker.init();
+  }
+  /** Serialize native-world changes so overlapping API loads cannot leak resources. */
+  loadScenario(name: string | null, seed = 1): Promise<void> {
+    const load = this.levelQueue.then(async () => {
+      this.loading = true;
+      try {
+        this.view.reset(); this.world.reset(); this.clock.reset();
+        if (name !== null) { this.world.loadScenario(name, seed); await this.view.load(); }
+        else this.view.update();
+      } finally { this.loading = false; this.ticker.reset(); }
+    });
+    this.levelQueue = load.catch(() => {}); return load;
+  }
+  async step(ticks: number): Promise<void> {
+    if (!Number.isSafeInteger(ticks) || ticks < 0) throw new RangeError('Ticks must be a nonnegative integer');
+    await this.levelQueue;
+    if (!this.clock.paused) throw new Error('step requires pause()');
+    if (!this.world.scenario) throw new Error('step requires a loaded scenario');
+    for (let i = 0; i < ticks; i++) this.world.update();
+    this.view.update(1);
+  }
+  async screenshotReady(): Promise<void> {
+    await this.levelQueue;
+    await this.view.renderer.compileAsync(this.view.scene, this.view.camera);
+    for (let i = 0; i < 2; i++) { await new Promise<void>((resolve) => requestAnimationFrame(() => resolve())); this.view.update(this.clock.paused ? 1 : this.clock.alpha); }
+  }
+  perf(): { fps: number; frameMs: number; simMs: number; drawCalls: number; triangles: number; geometries: number; textures: number; entities: number } {
+    const info = this.view.renderer.info;
+    return { fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size };
+  }
+  dispose(): void { this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); }
+}
