@@ -66,10 +66,12 @@ export class Interactables {
     const handle = this.world.physics.addBlocker(wall);
     this.blockers.set(id, { wall, handle }); this.walls.push(wall);
     this.nav?.block(id, wall);
+    this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id, blocked: true, wall });
   }
   unblock(id: number): void {
     const b = this.blockers.get(id); if (!b) return;
     this.world.physics.removeBlocker(b.handle); this.walls.splice(this.walls.indexOf(b.wall), 1); this.blockers.delete(id); this.nav?.unblock(id);
+    this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id, blocked: false, wall: b.wall });
   }
   private complete(id: number): void {
     const entity = this.world.entities.get(id)!, c = entity.interactable!;

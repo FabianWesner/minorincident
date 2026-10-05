@@ -40,6 +40,7 @@ test('T-E11-03 @E11 @E11-AC03 locked hint, key requirement, open/close and nav u
   w.interactables!.giveItem('key.house'); step(w, 1); w.clearInput();
   expect(w.entities.get(id)!.interactable!.open).toBe(true);
   expect(nav.flood([-2, 0])[nav.index(3, 0)]).toBe(1);
+  expect(w.events.events().filter(e => e.type === 'world.blocker.changed')).toMatchObject([{ id, blocked: true, tick: 0 }, { id, blocked: false, tick: w.tick }]);
   const colliderCount = w.physics.colliderCount;
   step(w, 120); expect(w.entities.get(id)!.interactable!.open).toBe(true);
   move(w, -3); step(w, 1); move(w, 0); w.setInput({ interact: true }); step(w, 1);
