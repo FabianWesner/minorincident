@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 
-test('T-E17-07b @E17-AC07 100 infected use one draw per material and GPU poses match at five times', async ({page,baseURL}) => {
+test('T-E17-07b @E17-AC07 100 infected use one draw per material and GPU poses match at five times and four headings', async ({page,baseURL}) => {
   const errors:string[]=[];
   page.on('pageerror',(e)=>errors.push(e.message));
   page.on('console',(e)=>{if(e.type()==='error')errors.push(e.text());});

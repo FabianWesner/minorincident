@@ -3,6 +3,8 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { Crowd } from './crowd';
 import { AssetRegistry, type PlaceholderLog } from './registry';
+import manifest from './manifest.json';
+import type { AssetDef } from './types';
 
 export interface AssetViewerApi {
   ready: Promise<void>;
@@ -25,7 +27,11 @@ export async function assetViewer(): Promise<void> {
   const camera = new PerspectiveCamera(25, innerWidth / innerHeight, .01, 500);
   const controls = new OrbitControls(camera, renderer.domElement);
   const events: PlaceholderLog[] = [];
-  const registry = new AssetRegistry((event) => { events.push(event); console.info(event.type, event.id, event.reason); }, { renderer });
+  const registry = new AssetRegistry((event) => { events.push(event); console.info(event.type, event.id, event.reason); }, { renderer,
+    // Explicit production inspection leaves normal registry status gates in place.
+    manifest: (import.meta.env.DEV || params.has('test')) && params.has('production')
+      ? (manifest as AssetDef[]).map(def => def.id === id ? { ...def, status: 'integrated' } : def) : undefined,
+  });
   const decay = document.querySelector<HTMLSelectElement>('#decay')!;
   for (const name of registry.definition(id).decayVariants) { const option = new Option(name,name); decay.add(option); }
   decay.disabled = !registry.definition(id).decayVariants.length;
