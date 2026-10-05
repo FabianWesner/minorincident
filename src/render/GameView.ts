@@ -1,3 +1,4 @@
+import { VehicleView } from './VehicleView';
 import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
 import { CombatView } from './CombatView';
@@ -31,6 +32,7 @@ export class GameView implements Lifecycle {
   readonly camera = this.view.camera;
   readonly renderer: Renderer;
   private readonly meshes: Mesh[] = [];
+  private vehicles: VehicleView | null = null;
   private actions: ActionView | null = null;
   private combat: CombatView | null = null;
   private stopHitStop: (() => void) | null = null;
@@ -112,6 +114,8 @@ export class GameView implements Lifecycle {
       this.cube = new Mesh(new BoxGeometry(1, 1, 1), new MeshBasicNodeMaterial({ color: '#ed935c' }));
       this.meshes.push(ground, this.cube); this.scene.add(...this.meshes);
     }
+    if (this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials); await this.vehicles.load(); this.scene.add(this.vehicles); }
+    if (this.world.scenario === 'drive-course') this.postFx = new PostFx(this.renderer, this.scene, this.camera);
     if (import.meta.env.DEV && this.params.has('debug')) {
       this.wireframe = new PhysicsWireframe(this.world.physics); this.scene.add(this.wireframe.lines);
     }
@@ -122,6 +126,7 @@ export class GameView implements Lifecycle {
     this.districts?.advance(seconds);
     const player = this.world.entities.get(1);
     if (player) {
+      this.view.driving = this.world.vehicles?.active != null;
       this.view.update(player.transform, seconds);
       this.playerPosition.set(player.transform.x, player.transform.y - 0.5, player.transform.z);
       if (this.lookdev) this.occlusion.update(this.camera, this.playerPosition, seconds, this.lookdev.playerMeshes);
@@ -129,6 +134,7 @@ export class GameView implements Lifecycle {
   }
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
+    if (this.world.vehicles && name === 'vehicle') { this.view.preset(name, { position: [-9, 6, 21], target: [0, .8, 12] }); this.update(1); return; }
     if (this.world.combat && name === 'aim') { this.view.preset(name, combatPhotoSpots.aim); this.update(1); return; }
     if(this.districts){const pose=this.districts.spots.get(name);if(!pose)throw new Error(`Unknown district photo spot: ${name}`);this.view.preset(name,pose);this.update(1);return;}
     if (this.character) {
@@ -158,7 +164,7 @@ export class GameView implements Lifecycle {
     const materialInventory = new Map<string, { name: string; palette: boolean }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial }); });
     return { districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
-      character: this.character?.getState() ?? null, actions: this.actions?.getState() ?? null,
+      vehicles: this.vehicles?.snapshot() ?? [], character: this.character?.getState() ?? null, actions: this.actions?.getState() ?? null,
       materials: [...materialInventory.values()], occlusion: this.occlusion.getState(),
       probes: this.lookdev ? { lamp: this.project(...this.lookdev.lampHead.position.toArray() as [number, number, number]), shadow: this.project(...this.lookdev.shadowProbe.position.toArray() as [number, number, number]) } : null };
   }
@@ -181,7 +187,11 @@ export class GameView implements Lifecycle {
       this.playerPosition.copy(this.lookdev.player.position);
       this.occlusion.update(this.camera, this.playerPosition, 0, this.lookdev.playerMeshes);
     }
+    if (this.character) this.character.visible = !this.world.entities.get(1)?.hidden;
+    if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials); this.scene.add(this.vehicles); }
+    this.vehicles?.update(alpha);
     this.combat?.update(); this.actions?.update();
+    if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.lighting?.update(this.view);
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
@@ -203,7 +213,9 @@ export class GameView implements Lifecycle {
       this.savedMaterials.clear(); this.scene.background = background; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
   }
+  async ready(): Promise<void> { await this.vehicles?.ready(); }
   reset(): void {
+    if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
     this.windowMask=false;
     this.postFx?.dispose();this.postFx = null;
     if(this.districts){this.scene.remove(this.districts);this.districts.dispose();this.districts=null;}

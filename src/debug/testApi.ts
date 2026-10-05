@@ -1,3 +1,4 @@
+import { Driver } from './bot/Driver';
 import type { ActionState, GearTier, SurvivorVariant } from '../data/survivor';
 import { Vector3 } from 'three';
 import type { Action, BindingMap } from '../data/bindings';
@@ -9,7 +10,7 @@ export type ProgressionPreset = Record<string, unknown>;
 export type Settings = Parameters<Game['view']['settings']>[0] & { aimAssist?: import('../sim/combat/AimAssist').AimAssistSetting };
 export interface BotStatus { running: boolean; policy: string | null }
 
-/** Version 1.4: E10 composition/decay snapshots and district photo spots. Future-epic methods fail explicitly, never silently. */
+/** Version 1.5: E09 vehicle snapshots, spawning and driver bot; E10 district photo spots. Future-epic methods fail explicitly, never silently. */
 export interface SSTestApi {
   version: string;
   ready: Promise<void>;
@@ -42,7 +43,7 @@ export interface SSTestApi {
   survivor: { select(variant: SurvivorVariant, tier?: GearTier): void; damage(amount: number): number; act(action: ActionState): void; checkpoint(pos: { x: number; y: number; z: number }): void };
   setLoadout(left: string[], right: string[]): void;
   cheats: { god(on: boolean): void; infiniteCharges(on: boolean): void; killAll(): void; completeObjective(id?: string): void };
-  bot: { start(policy?: 'complete' | 'newbie' | 'idle' | 'aggressive'): void; stop(): void; status(): BotStatus };
+  bot: { start(policy?: 'complete' | 'newbie' | 'idle' | 'aggressive' | 'driver'): void; stop(): void; status(): BotStatus };
   /** E02: scenario photo spots, follow, bounded shake, cinematic blend, and NDC world projection. */
   camera: { preset(name: string): void; follow(): void; shake(intensity: number): void; project(x: number, y: number, z: number): number[]; cinematic(pose: import('../render/View').CameraPose): void };
   /** E02 presentation patch: cameraShake, bloom, cheapDof, timeOfDay; idPass/occludersVisible are test probes. */
@@ -60,7 +61,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
-    version: '1.4.0', ready,
+    version: '1.5.0', ready,
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
     loadLevel: (id, opts) => {
@@ -90,6 +91,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       replay: async (data) => { await game.loadScenario(data.level, data.seed); game.clock.pause(); game.input.recorder.play(data); },
     },
     spawn: (id, pos, opts) => {
+      if (id.startsWith('vehicle.')) { if (!game.world.vehicles) throw new Error('Load a survivor scenario'); const entityId = game.world.vehicles.spawn(id, pos); game.view.update(1); return entityId; }
       if (!game.world.combat) return pending('E07', 'spawn');
       return id.startsWith('weapon.') || id.startsWith('ability.') ? game.world.combat.pickups.spawn(id, pos) : game.world.spawnDummy(id, pos, opts);
     },
@@ -111,7 +113,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     },
     setLoadout: (left, right) => { if (!game.world.combat) throw new Error('Load combat-arena before setting loadout'); game.world.combat.setLoadout(left, right); },
     cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => pending('E07', 'cheats.killAll'), completeObjective: () => pending('E12', 'cheats.completeObjective') },
-    bot: { start: () => pending('E19', 'bot.start'), stop: () => pending('E19', 'bot.stop'), status: () => pending('E19', 'bot.status') },
+    bot: { start: (policy) => { if (policy !== 'driver' || game.world.scenario !== 'drive-course') pending('E19', 'bot.start'); game.driver = new Driver(game.world); }, stop: () => { game.driver = null; }, status: () => ({ running: !!game.driver && !game.driver.finished, policy: game.driver ? 'driver' : null }) },
     camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose) => game.view.view.cinematic(pose) },
     settings: { set: (patch) => { if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.view.settings(patch); } },
     perf: () => game.perf(), screenshotReady: () => game.screenshotReady(),

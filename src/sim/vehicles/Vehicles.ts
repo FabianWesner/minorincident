@@ -20,7 +20,7 @@ export class Vehicles {
   readonly obstacles: Obstacles;
   private readonly exitShape = new RAPIER.Capsule(survivor.height / 2 - survivor.radius, survivor.radius);
   private readonly identity = { x: 0, y: 0, z: 0, w: 1 };
-  private readonly position = { x: 0, y: survivor.height / 2 + .005, z: 0 };
+  private readonly position = { x: 0, y: survivor.height / 2 + .02, z: 0 };
   constructor(private readonly world: SimWorld) { this.obstacles = new Obstacles(world); }
   spawn(id: string, pos: { x: number; z: number }, yaw = 0): number {
     if (![pos.x, pos.z, yaw].every(Number.isFinite)) throw new RangeError('Vehicle position must be finite');
@@ -189,6 +189,8 @@ export class Vehicles {
   }
   private noise(car: Car): void {
     const p = car.entity.transform;
+    const radius = car.physics.def.emergency ? 60 : 30, kind = car.physics.def.emergency ? 'siren' : 'horn';
+    if (this.world.combat) { this.world.combat.effects.noise(p, radius, car.entity.archetype, car.entity.id, kind); return; }
     this.world.events.emit({ type: 'noise', tick: this.world.tick, sourceId: car.entity.id, actionId: car.entity.archetype, position: { x: p.x, y: p.y, z: p.z }, radius: car.physics.def.emergency ? 60 : 30, loudness: 1, kind: car.physics.def.emergency ? 'siren' : 'horn' });
   }
   dispose(): void { this.obstacles.dispose(); for (const car of this.cars.values()) car.physics.dispose(); this.cars.clear(); this.active = null; }
