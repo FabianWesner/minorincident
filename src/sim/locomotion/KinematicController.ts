@@ -11,6 +11,7 @@ export class KinematicController {
   readonly velocity = { x: 0, z: 0 };
   readonly displacement = { x: 0, y: 0, z: 0 };
   private readonly next = { x: 0, y: 0, z: 0 };
+  speedScale = 1;
   crowd: readonly CrowdObstacle[] = [];
   constructor(private readonly physics: Physics) {}
   move(input: InputFrame, transform: Transform, enabled: boolean): void {
@@ -18,8 +19,8 @@ export class KinematicController {
     const magnitude = Math.min(1, length);
     const x = enabled && length > 0 ? input.move.x / length : 0;
     const z = enabled && length > 0 ? input.move.z / length : 0;
-    const dx = x * magnitude * survivor.speed - this.velocity.x;
-    const dz = z * magnitude * survivor.speed - this.velocity.z;
+    const dx = x * magnitude * survivor.speed * this.speedScale - this.velocity.x;
+    const dz = z * magnitude * survivor.speed * this.speedScale - this.velocity.z;
     const delta = Math.hypot(dx, dz);
     const amount = Math.min(delta, (length > 0 && enabled ? survivor.acceleration : survivor.deceleration) * FIXED_DT);
     if (delta > 0) { this.velocity.x += dx / delta * amount; this.velocity.z += dz / delta * amount; }
