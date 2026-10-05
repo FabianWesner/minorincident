@@ -18,7 +18,7 @@
     "test:smoke": "vitest run -t @smoke && playwright test --grep @smoke",
     "verify": "tsx tools/verify.ts",
     "sim": "tsx tools/sim-runner/index.ts",
-    "assets:validate": "tsx tools/assets/pending.ts validate",
+    "assets:validate": "tsx tools/assets/validate.ts",
     "assets:turntable": "tsx tools/assets/pending.ts turntable",
     "deploy": "npm run build && npx --yes wrangler@4 pages deploy dist --project-name minor-incident"
   },
@@ -28,14 +28,19 @@
     "tweakpane": "4.0.5"
   },
   "devDependencies": {
+    "@gltf-transform/core": "^4.5.1",
+    "@gltf-transform/extensions": "^4.5.1",
+    "@gltf-transform/functions": "^4.5.1",
     "@playwright/test": "1.63.0",
     "@tweakpane/core": "2.0.5",
     "@types/node": "22.19.1",
     "@types/pngjs": "6.0.5",
     "@types/three": "0.186.0",
     "eslint": "10.12.0",
+    "meshoptimizer": "^1.3.0",
     "pixelmatch": "7.1.0",
     "pngjs": "7.0.0",
+    "sharp": "^0.34.5",
     "tsx": "4.23.15",
     "typescript": "5.9.3",
     "typescript-eslint": "8.71.0",
