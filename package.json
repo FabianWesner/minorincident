@@ -21,7 +21,8 @@
     "assets:validate": "tsx tools/assets/pending.ts validate",
     "assets:turntable": "tsx tools/assets/pending.ts turntable",
     "deploy": "npm run build && npx --yes wrangler@4 pages deploy dist --project-name minor-incident",
-    "test:e2e:webgpu": "E2E_WEBGPU=1 playwright test --project=webgpu"
+    "test:e2e:webgpu": "E2E_WEBGPU=1 playwright test --project=webgpu",
+    "layouts:build": "tsx tools/layouts/build.ts"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "0.21.0",

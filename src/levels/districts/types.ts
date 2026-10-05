@@ -1,0 +1,39 @@
+import type { TimeOfDay } from '../../data/timeOfDay';
+export const districtIds = ['D-RES', 'D-MAIN', 'D-SCHOOL', 'D-SHOP', 'D-CIVIC', 'D-PARK', 'D-ZOO', 'D-EDGE'] as const;
+export type DistrictId = typeof districtIds[number];
+export type Tier = 0 | 1 | 2 | 3 | 4 | 5;
+export type Point = [number, number];
+export interface PlacementTransform { position: [number, number, number]; yaw: number }
+export interface Aabb { min: [number, number, number]; max: [number, number, number] }
+export interface Placement extends PlacementTransform { id: string; assetId: string; scale: [number, number, number]; minTier: Tier; maxTier: Tier; allowRoad: boolean; visualAabb: Aabb }
+export interface StaticCollider { id: string; aabb: Aabb; minTier: Tier; maxTier: Tier }
+/** Versioned Blender export. Positions are game-space metres (+Y up), independent of gameplay. */
+export interface DistrictLayout {
+  version: 1; district: DistrictId; title: string; geometryHash: string; bounds: Point[];
+  roads: { nodes: { id: string; point: Point }[]; edges: { id: string; start: string; end: string; points: Point[]; laneWidth: number }[] };
+  placements: Placement[]; anchors: Record<string, PlacementTransform>;
+  buildings: { id: string; assetId: string; aabb: Aabb; label: string }[]; colliders: StaticCollider[];
+  walkable: { cellSize: number; excluded: Point[][] }; lawns: { min: Point; max: Point }[];
+  lightGroups: { id: string; offAt: Tier }[];
+  acousticZones: { id: string; preset: string; polygon: Point[] }[];
+  surfaces: { surface: 'asphalt' | 'grass' | 'wood' | 'tile' | 'metal' | 'gravel'; polygon: Point[] }[];
+  layers: { tier: Tier; remove: string[]; disableLights: string[] }[];
+}
+export type PositionRef = { anchor: string } | { x: number; z: number };
+/** An authoring reference, resolved and validated against the exported anchor table at load. */
+export const anchor = (name: string): PositionRef => ({ anchor: name });
+export interface DistrictGameplay {
+  id: DistrictId; playerStart: PositionRef; spawns: PositionRef[];
+  spawnVolumes: { center: PositionRef; radius: number }[];
+  triggers: { id: string; position: PositionRef; radius: number }[];
+  objectives: { id: string; position: PositionRef }[];
+  interactables: { id: string; position: PositionRef }[];
+  civilianRoutes: PositionRef[][]; safePoints: PositionRef[];
+  photoSpots: { name: string; target: PositionRef; offset: [number, number, number] }[];
+  decay: { tier: Tier; blockers: Aabb[]; fires: { position: PositionRef; radius: number; damagePerSecond: number }[]; powerOut: string[] }[];
+}
+/** Composition owns world placement/tier/light and gameplay overrides; missions remain in E12. */
+export interface LevelComposition {
+  id: string; tier: Tier; timeOfDay: TimeOfDay;
+  districts: { id: DistrictId; origin: Point; overrides?: Partial<Pick<DistrictGameplay, 'spawns' | 'triggers' | 'objectives'>> }[];
+}
