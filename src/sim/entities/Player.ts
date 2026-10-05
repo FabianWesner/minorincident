@@ -21,7 +21,7 @@ export class Player {
     const pose = this.entity.survivor!;
     if (pose.animation !== state) { pose.animation = state; pose.animationTick = tick; }
   }
-  prePhysics(input: InputFrame, tick: number): void {
+  prePhysics(input: InputFrame, tick: number, enabled = true): void {
     const state = this.entity.survivor!, health = this.entity.health;
     if (state.diedAt !== null && tick - state.diedAt >= survivor.respawnTicks) {
       Object.assign(this.entity.transform, state.checkpoint);
@@ -32,7 +32,7 @@ export class Player {
     }
     if (state.diedAt === null && tick - this.lastDamage >= survivor.regenDelayTicks) health.current = Math.min(health.max, health.current + survivor.regenPerSecond * FIXED_DT);
     if (input.interact && state.diedAt === null) this.act('interact', tick);
-    this.locomotion.move(input, this.entity.transform, state.diedAt === null);
+    this.locomotion.move(input, this.entity.transform, state.diedAt === null && enabled);
   }
   postPhysics(tick: number): void {
     const p = this.physics.playerBody!.translation(), state = this.entity.survivor!;

@@ -1,0 +1,146 @@
+[
+  {
+    "criterion": "E05-AC01",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-01 @E05 @E05-AC01 MG, rotate, grenade, rotate retain independent side aims",
+        "report": "vitest.json"
+      },
+      {
+        "title": "T-E05-held-selection @E05 @E05-AC01 cooling held gun does not steal selection from the last-used grenade",
+        "report": "vitest.json"
+      }
+    ]
+  },
+  {
+    "criterion": "E05-AC02",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-02 @E05 @E05-AC02 selected rack wraps both ways, locks for 15 ticks and emits switched",
+        "report": "vitest.json"
+      }
+    ]
+  },
+  {
+    "criterion": "E05-AC03",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-03 @E05 @E05-AC03 bat arc/range/maxTargets boundaries, once per swing",
+        "report": "vitest.json"
+      }
+    ]
+  },
+  {
+    "criterion": "E05-AC04",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-04 @E05 @E05-AC04 held pistol fires every 15 ticks, reloads empty at 60 ticks with infinite reserve",
+        "report": "vitest.json"
+      }
+    ]
+  },
+  {
+    "criterion": "E05-AC05",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-05 @E05 @E05-AC05 grenade landing clamps to range, fuse/falloff and cover LOS",
+        "report": "vitest.json"
+      }
+    ]
+  },
+  {
+    "criterion": "E05-AC06",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-06 @E05 @E05-AC06 two charges, reject third, first recharges at 720 ticks exactly",
+        "report": "vitest.json"
+      }
+    ]
+  },
+  {
+    "criterion": "E05-AC07",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-07 @E05 @E05-AC07 authored displacement along hit direction; stagger cancels infected attack",
+        "report": "vitest.json"
+      }
+    ]
+  },
+  {
+    "criterion": "E05-AC08",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-08 @E05 @E05-AC08 front shield \u00b160\u00b0, rear full bullets and explosives ignore shield",
+        "report": "vitest.json"
+      }
+    ]
+  },
+  {
+    "criterion": "E05-AC09",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-09 @E05 @E05-AC09 burning integrates 10 DPS over duration with capped stacks; water extinguishes",
+        "report": "vitest.json"
+      }
+    ]
+  },
+  {
+    "criterion": "E05-AC10",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-10 @E05 @E05-AC10 own explosive gives player 30% and escort 100%",
+        "report": "vitest.json"
+      }
+    ]
+  },
+  {
+    "criterion": "E05-AC11",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-11 @E05 @E05-AC11 Default snaps 8\u00b0, not 15\u00b0; Off never snaps; nearest visible valid target",
+        "report": "vitest.json"
+      }
+    ]
+  },
+  {
+    "criterion": "E05-AC12",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-12 @E05 @E05-AC12 attack/hit/kill carry stable entity IDs, positions and one lethal event",
+        "report": "vitest.json"
+      }
+    ]
+  },
+  {
+    "criterion": "E05-AC13",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-13 @E05 @E05-AC13 real cursor LMB RMB wheel matches sim side/rack state",
+        "report": "verify-playwright.json"
+      }
+    ]
+  },
+  {
+    "criterion": "E05-AC14",
+    "status": "PASS",
+    "tests": [
+      {
+        "title": "T-E05-14 @E05 @E05-AC14 measure every reference weapon \u00d7 archetype TTK in authored bands",
+        "report": "vitest.json"
+      }
+    ]
+  }
+]

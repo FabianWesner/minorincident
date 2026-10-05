@@ -27,7 +27,7 @@ export class Recorder {
     const vector = (v: { x: number; z: number }): boolean => Boolean(v) && Number.isFinite(v.x) && Number.isFinite(v.z);
     const button = (b: InputFrame['left']): boolean => Boolean(b) && typeof b.down === 'boolean' && typeof b.held === 'boolean' && typeof b.up === 'boolean';
     if (!data || data.version !== 1 || !Number.isSafeInteger(data.seed) || typeof data.level !== 'string' || (data.checkpoint !== undefined && typeof data.checkpoint !== 'string') || !Array.isArray(data.frames) || data.frames.some((f) =>
-      !f || !vector(f.move) || (f.aim !== null && !vector(f.aim)) || ![null, 'pointer', 'keyboard', 'touch', 'assist'].includes(f.aimSource) || !button(f.left) || !button(f.right) || ![-1, 0, 1].includes(f.selector) || typeof f.interact !== 'boolean' || typeof f.pause !== 'boolean'
+      !f || !vector(f.move) || (f.aim !== null && !vector(f.aim)) || (f.aimPoint != null && !vector(f.aimPoint)) || ![null, 'pointer', 'keyboard', 'touch', 'assist'].includes(f.aimSource) || !button(f.left) || !button(f.right) || ![-1, 0, 1].includes(f.selector) || typeof f.interact !== 'boolean' || typeof f.pause !== 'boolean'
     )) throw new Error('Invalid .ssrec recording');
     return data;
   }

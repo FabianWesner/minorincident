@@ -1,0 +1,84 @@
+[
+  {
+    "check": "typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0
+  },
+  {
+    "check": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0
+  },
+  {
+    "check": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exitCode": 0
+  },
+  {
+    "check": "test-unit",
+    "command": [
+      "npm",
+      "run",
+      "test:unit"
+    ],
+    "exitCode": 0
+  },
+  {
+    "check": "test-smoke",
+    "command": [
+      "npm",
+      "run",
+      "test:smoke"
+    ],
+    "exitCode": 0
+  },
+  {
+    "check": "verify",
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E05"
+    ],
+    "exitCode": 0
+  },
+  {
+    "check": "regression-sim",
+    "command": [
+      "npx",
+      "vitest",
+      "run",
+      "-t",
+      "@E0[1-4](?:-AC\\d+)?(?=\\s|$)",
+      "--reporter=default",
+      "--reporter=json",
+      "--outputFile=test-results/epics/E05/regression-vitest.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "check": "regression-browser",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=2",
+      "--grep",
+      "@E0[1-4](?:-AC\\d+)?(?=\\s|$)"
+    ],
+    "exitCode": 0
+  }
+]
