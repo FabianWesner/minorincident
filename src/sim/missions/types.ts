@@ -64,7 +64,7 @@ export interface MissionState {
   items: string[]; states: Record<string, boolean>; counters: Record<string, number>; gates: Record<string, boolean>;
   marker: string | null; checkpoint: string | null; tier: number | null; timeOfDay: TimeOfDay | null;
   subtitle: { id: string; text: string; until: number } | null;
-  cinematic: { id: string; elapsed: number } | null; failure: FailReason | null;
+  cinematic: { id: string; elapsed: number; resume: 'playing' | 'retry' } | null; failure: FailReason | null;
   stats: MissionResult; result: MissionResult | null;
 }
 export interface MissionCheckpoint { tick: number; state: MissionState; entities: EntitySnapshot[] }

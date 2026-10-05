@@ -89,3 +89,12 @@ test('@E12 @E12-AC05 restoring an inside-volume checkpoint does not invent a new
   const def=missionSandbox();def.steps[0].complete={kind:'all',triggers:[{kind:'volume',anchor:'goal',edge:'enter'},{kind:'state',key:'power',equals:true}]};const api=await load(def);
   teleport(1);step();api.checkpoint('C');teleport(1,0);step();api.restore('C');api.setState('power',true);step();expect(api.state()!.phase).toBe('playing');teleport(1,0);step();teleport(1);step();expect(api.state()!.phase).toBe('result');
 });
+test('@E12 @E12-AC04 timeout still fires while the player waits to respawn',async()=>{
+  const def=missionSandbox();def.steps[0].timer=1;const api=await load(def);world.player!.damage(1000,0);step(60);expect(api.state()!.phase).toBe('retry');expect(world.events.events()).toContainEqual({type:'mission.failed',tick:60,reason:'timeout'});
+});
+test('@E12 @E12-AC09 optional objective achievement is counted once across checkpoint retries',async()=>{
+  const def=missionSandbox();def.steps[0].optional=true;def.steps.push({...def.steps[0],id:'main',type:'custom',optional:false,complete:{kind:'state',key:'power',equals:true}});def.finish=['main'];const api=await load(def);api.checkpoint('C');teleport(1);step();api.restore('C');teleport(1);step();api.completeObjective('main');expect(api.state()!.result!.optionalObjectives).toEqual(['reach']);
+});
+test('@E12 @E12-AC06 a skippable failure cinematic ends on Retry',async()=>{
+  const def=missionSandbox();def.steps[0].timer=1/60;def.steps[0].onFail=[{kind:'cinematic',id:'twist'}];const api=await load(def);step();expect(api.state()!.phase).toBe('cinematic');world.setInput({interact:true});step(30);expect(api.state()!.phase).toBe('retry');expect(api.state()!.failure).toBe('timeout');
+});
