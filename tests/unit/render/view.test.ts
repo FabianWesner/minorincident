@@ -30,3 +30,12 @@ test('T-E02-camera @E02 follow is frame-rate independent and portrait protects t
     expect(Math.abs(p.x)).toBeLessThan(1); expect(Math.abs(p.y)).toBeLessThan(1);
   }
 });
+
+test('T-E02-cinematic @E02 cinematic pose blends to the target and follow restores the combat pose', () => {
+  const view = new View(); view.reset({ x: 0, z: 0 }); const combat = view.camera.position.clone();
+  view.cinematic({ position: [4, 7, 9], target: [0, 0, 0] });
+  expect(view.camera.position.equals(combat)).toBe(true);
+  view.update({ x: 0, z: 0 }, 0.5); expect(view.camera.position.distanceTo(new Vector3(4, 7, 9))).toBeGreaterThan(0);
+  view.update({ x: 0, z: 0 }, 0.5); expect(view.camera.position.toArray()).toEqual([4, 7, 9]);
+  view.follow(); view.update({ x: 0, z: 0 }, 1); expect(view.camera.position.distanceTo(combat)).toBeLessThan(1e-10);
+});

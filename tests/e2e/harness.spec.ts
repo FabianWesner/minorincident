@@ -43,7 +43,6 @@ test('T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and 
       ['setLoadout', () => api.setLoadout([], [])], ['cheats.god', () => api.cheats.god(true)], ['cheats.infiniteCharges', () => api.cheats.infiniteCharges(true)],
       ['cheats.killAll', () => api.cheats.killAll()], ['cheats.completeObjective', () => api.cheats.completeObjective()],
       ['bot.start', () => api.bot.start()], ['bot.stop', () => api.bot.stop()], ['bot.status', () => api.bot.status()],
-      ['camera.preset', () => api.camera.preset('empty')], ['settings.set', () => api.settings.set({})],
     ];
     for (const [name, call] of stubs) { try { await call(); errors[name] = 'NO ERROR'; } catch (error) { errors[name] = (error as Error).message; } }
     api.teleport('player', { x: 2, z: 3 });
@@ -54,7 +53,7 @@ test('T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and 
   });
   expect(surface.version).toMatch(/^\d+\.\d+\.\d+$/);
   expect(surface.keys).toEqual(['version', 'ready', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'teleport', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'perf', 'screenshotReady'].sort());
-  const epics: Record<string, string> = { loadLevel: 'E12', spawn: 'E07', setLoadout: 'E05', 'cheats.god': 'E05', 'cheats.infiniteCharges': 'E05', 'cheats.killAll': 'E07', 'cheats.completeObjective': 'E12', 'bot.start': 'E19', 'bot.stop': 'E19', 'bot.status': 'E19', 'camera.preset': 'E02', 'settings.set': 'E14' };
+  const epics: Record<string, string> = { loadLevel: 'E12', spawn: 'E07', setLoadout: 'E05', 'cheats.god': 'E05', 'cheats.infiniteCharges': 'E05', 'cheats.killAll': 'E07', 'cheats.completeObjective': 'E12', 'bot.start': 'E19', 'bot.stop': 'E19', 'bot.status': 'E19' };
   for (const [name, epic] of Object.entries(epics)) expect(surface.errors[name]).toBe(`NotImplemented ${epic}: ${name}`);
   expect(surface.entity?.transform).toMatchObject({ x: 2, z: 3 }); expect(surface.missing).toBeNull(); expect(surface.nearby).toHaveLength(1);
   expect(surface.events).toContainEqual({ tick: 1, type: 'sim.tick' }); expect(surface.perf.entities).toBe(1);

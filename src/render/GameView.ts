@@ -1,4 +1,4 @@
-import { BoxGeometry, Color, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Scene } from 'three/webgpu';
+import { BoxGeometry, Color, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Scene, type Material } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -6,8 +6,16 @@ import { MeshGridMaterial } from './MeshGridMaterial';
 import { PhysicsWireframe } from './PhysicsWireframe';
 import { View } from './View';
 import { Renderer } from './Renderer';
+import { Lighting } from './Lighting';
+import { Materials } from './Materials';
+import { Lookdev } from './Lookdev';
+import { Occlusion } from './Occlusion';
+import { PostFx } from './PostFx';
+import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
+import type { TimeOfDay } from '../data/timeOfDay';
+import { Vector3 } from 'three';
 
-/** E01 presentation only: plane + debug cube, with state flowing from sim to view. */
+/** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 export class GameView implements Lifecycle {
   readonly scene = new Scene();
   readonly view = new View();
@@ -16,10 +24,21 @@ export class GameView implements Lifecycle {
   private readonly meshes: Mesh[] = [];
   private cube: Mesh | null = null;
   private wireframe: PhysicsWireframe | null = null;
+  private lighting: Lighting | null = null;
+  private materials: Materials | null = null;
+  private lookdev: Lookdev | null = null;
+  private postFx: PostFx | null = null;
+  private readonly occlusion = new Occlusion();
+  private readonly playerPosition = new Vector3();
+  private readonly projection = new Vector3();
+  private idPass = false;
+  private readonly idBackground = new MeshBasicNodeMaterial({ color: '#000000' });
+  private readonly idPlayer = new MeshBasicNodeMaterial({ color: '#ff00ff' });
+  private readonly savedMaterials = new Map<Mesh, Material | Material[]>();
   constructor(private readonly world: SimWorld, private readonly params: URLSearchParams) {
     this.renderer = new Renderer(params);
+    this.idBackground.name = 'keep_idBackground'; this.idPlayer.name = 'keep_idPlayer';
     this.scene.background = new Color('#293447');
-    
   }
   async init(): Promise<void> {
     await this.renderer.init(); this.resize();
@@ -31,39 +50,94 @@ export class GameView implements Lifecycle {
     const dpr = Number(this.params.get('dpr') ?? Math.min(devicePixelRatio, 2));
     this.renderer.setPixelRatio(Number.isFinite(dpr) && dpr > 0 ? dpr : 1);
     this.renderer.setSize(innerWidth, innerHeight);
-    this.view.resize(innerWidth, innerHeight);
+    this.view.resize(innerWidth, innerHeight); this.update(1);
   };
   async load(): Promise<void> {
     this.reset();
     const player = this.world.entities.get(1);
     this.view.reset(player?.transform ?? { x: 0, z: 0 });
-    const ground = new Mesh(new PlaneGeometry(100, 100), new MeshGridMaterial());
-    ground.rotation.x = -Math.PI / 2;
-    this.cube = new Mesh(new BoxGeometry(1, 1, 1), new MeshBasicNodeMaterial({ color: '#ed935c' }));
-    this.meshes.push(ground, this.cube); this.scene.add(...this.meshes);
+    if (this.world.scenario === 'lookdev') {
+      this.renderer.shadowMap.enabled = true;
+      this.lighting = new Lighting(this.scene); this.materials = new Materials(this.lighting);
+      this.lookdev = new Lookdev(this.materials, this.occlusion); this.scene.add(this.lookdev);
+      this.postFx = new PostFx(this.renderer, this.scene, this.camera);
+    } else {
+      const ground = new Mesh(new PlaneGeometry(100, 100), new MeshGridMaterial());
+      ground.rotation.x = -Math.PI / 2;
+      this.cube = new Mesh(new BoxGeometry(1, 1, 1), new MeshBasicNodeMaterial({ color: '#ed935c' }));
+      this.meshes.push(ground, this.cube); this.scene.add(...this.meshes);
+    }
     if (import.meta.env.DEV && this.params.has('debug')) {
       this.wireframe = new PhysicsWireframe(this.world.physics); this.scene.add(this.wireframe.lines);
     }
     await this.renderer.compileAsync(this.scene, this.camera);
-    this.update(1);
+    this.idPass = this.params.get('idpass') === '1'; this.update(1);
   }
   advance(seconds: number): void {
     const player = this.world.entities.get(1);
-    if (player) this.view.update(player.transform, seconds);
+    if (player) {
+      this.view.update(player.transform, seconds);
+      this.playerPosition.set(player.transform.x, player.transform.y - 0.5, player.transform.z);
+      if (this.lookdev) this.occlusion.update(this.camera, this.playerPosition, seconds, this.lookdev.playerMeshes);
+    }
   }
-  getState() { return { backend: this.renderer.selectedBackend, camera: this.view.getState() }; }
+  /** Photo spots are only registered by the current scenario. */
+  preset(name: string): void {
+    const pose = photoSpots[name as keyof typeof photoSpots];
+    if (!this.lookdev || !pose) throw new Error(`Unknown photo spot: ${name}`);
+    this.view.preset(name, pose); this.update(1);
+  }
+  settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean }): void {
+    if (patch.cameraShake !== undefined) { this.view.cameraShake = patch.cameraShake; this.advance(0); }
+    if (patch.bloom !== undefined && this.postFx) this.postFx.bloomEnabled.value = Number(patch.bloom);
+    if (patch.cheapDof !== undefined && this.postFx) this.postFx.setDof(patch.cheapDof);
+    if (patch.timeOfDay !== undefined) this.lighting?.set(patch.timeOfDay);
+    if (patch.occludersVisible !== undefined) this.occlusion.visible = patch.occludersVisible;
+    if (patch.idPass !== undefined) this.idPass = patch.idPass;
+    this.update(1);
+  }
+  /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
+  project(x: number, y: number, z: number): number[] { return this.projection.set(x, y, z).project(this.camera).toArray(); }
+  getState() {
+    const materialNames = new Set<string>();
+    this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialNames.add(material.name); });
+    return { backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
+      materials: [...materialNames], occlusion: this.occlusion.getState(),
+      probes: this.lookdev ? { lamp: this.project(...this.lookdev.lampHead.position.toArray() as [number, number, number]), shadow: this.project(...this.lookdev.shadowProbe.position.toArray() as [number, number, number]) } : null };
+  }
   update(alpha = 1): void {
     const current = this.world.entities.get(1)?.transform, previous = this.world.previousPlayer;
     if (this.cube && current) {
       this.cube.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha), lerp(previous?.z ?? current.z, current.z, alpha));
       this.cube.rotation.y = current.yaw;
     }
+    if (this.lookdev && current) {
+      this.lookdev.player.position.set(lerp(previous?.x ?? current.x, current.x, alpha), current.y - 0.5, lerp(previous?.z ?? current.z, current.z, alpha));
+      this.lookdev.player.rotation.y = current.yaw;
+      this.playerPosition.copy(this.lookdev.player.position);
+      this.occlusion.update(this.camera, this.playerPosition, 0, this.lookdev.playerMeshes);
+    }
+    this.lighting?.update(this.view);
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset();
-    this.renderer.render(this.scene, this.camera);
+    if (this.idPass && this.lookdev) {
+      const background = this.scene.background, fog = this.scene.fog, shadow = this.renderer.shadowMap.enabled;
+      this.scene.background = new Color(0); this.scene.fog = null; this.renderer.shadowMap.enabled = false;
+      this.scene.traverse((child) => {
+        if (child instanceof Mesh) { this.savedMaterials.set(child, child.material); child.material = this.lookdev!.playerMeshes.includes(child) ? this.idPlayer : this.idBackground; }
+      });
+      this.idPlayer.depthTest = !this.occlusion.getState().some((building) => building.blocked);
+      this.renderer.render(this.scene, this.camera);
+      for (const [mesh, material] of this.savedMaterials) mesh.material = material;
+      this.savedMaterials.clear(); this.scene.background = background; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
+    } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
   }
   reset(): void {
+    this.postFx?.dispose(); this.postFx = null;
+    if (this.lookdev) { this.scene.remove(this.lookdev); this.lookdev.dispose(); this.lookdev = null; }
+    this.materials?.dispose(); this.materials = null; this.lighting?.dispose(); this.lighting = null;
+    this.occlusion.reset(); this.idPass = false; this.scene.fog = null; this.scene.background = new Color('#293447'); this.renderer.shadowMap.enabled = false;
     for (const mesh of this.meshes) {
       this.scene.remove(mesh); mesh.geometry.dispose();
       for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) material.dispose();
@@ -71,5 +145,5 @@ export class GameView implements Lifecycle {
     this.meshes.length = 0; this.cube = null;
     if (this.wireframe) { this.scene.remove(this.wireframe.lines); this.wireframe.dispose(); this.wireframe = null; }
   }
-  dispose(): void { this.reset(); window.removeEventListener('resize', this.resize); this.renderer.dispose(); this.renderer.domElement.remove(); }
+  dispose(): void { this.reset(); window.removeEventListener('resize', this.resize); this.idPlayer.dispose(); this.idBackground.dispose(); this.renderer.dispose(); this.renderer.domElement.remove(); }
 }
