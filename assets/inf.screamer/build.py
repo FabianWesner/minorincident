@@ -20,7 +20,7 @@ def mat(token,hex,rough=.7,emit=0):
     b=m.node_tree.nodes.get('Principled BSDF');b.inputs['Base Color'].default_value=c;b.inputs['Roughness'].default_value=rough
     if emit:b.inputs['Emission Color'].default_value=c;b.inputs['Emission Strength'].default_value=emit
     m.diffuse_color=c;return m
-M={k:mat(k,v,r) for k,v,r in [('infectedSkin','c9a39a',.68),('picketWhite','f2e6dc',.85),('asphalt','5b4f5c',.8),('uiDark','25222c',.78),('blood','b3121f',.35),('survivorRed','d9363e',.73),('sidewalk','b9a4a0',.8),('woodWarm','b0703f',.72),('brick','a8483a',.72)]}
+M={k:mat(k,v,r) for k,v,r in [('infectedSkin','c9a39a',.68),('picketWhite','f2e6dc',.85),('asphalt','5b4f5c',.8),('uiDark','25222c',.78),('blood','b3121f',.35),('survivorRed','d9363e',.73),('sidewalk','b9a4a0',.8),('woodWarm','704538',.72),('brick','a8483a',.72)]}
 M['eye']=mat('infectedEye','ff3b2f',.24,2.5)
 def node(n,p,par=None):
     o=bpy.data.objects.new(n,None);S.collection.objects.link(o);o.location=p
@@ -95,11 +95,24 @@ for s in [-1,1]:
     box('string_tip'+str(s),(.18,s*.093,.98),(.01,.01,.022),'woodWarm','torso',.003)
     for j in range(3):
         yy=s*(.138+j*.029)
-        patch('jacket_rag'+str(s)+str(j),[(.15,yy,.742),(.143,yy+s*.034,.721),(.151,yy+s*.015,.651+j*.011)],'picketWhite','torso',.012)
+        patch('jacket_rag'+str(s)+str(j),[(.17,yy,.737),(.164,yy+s*.034,.716),(.166,yy+s*.015,.672+j*.007)],'picketWhite','torso',.012)
     tube('pocket_welt'+str(s),[(.065,s*.193,.814),(.135,s*.151,.792)],[.01,.01],'sidewalk','torso',N=8)
-    for j in range(3):
-        z=.85+j*.049
-        tube('cloth_crease'+str(s)+str(j),[(.115,s*.132,z+.011),(.097,s*.185,z),(.018,s*.214,z+.019)],[.005,.01,.002],'picketWhite','torso',N=8)
+# Broad softly folded front panels, with thickness, join the flared rear shell.
+for sign,side in [(1,'L'),(-1,'R')]:
+    rows=[(.688,.176,.268,.125),(.716,.145,.249,.163),(.80,.098,.207,.168),(.91,.091,.213,.175),(1.044,.078,.224,.161),(1.106,.066,.209,.122)]
+    vertices=[];faces=[]
+    for z,inner,outer,front in rows:
+        for i in range(5):
+            t=i/4;y=inner*(1-t)+outer*t
+            x=front*(1-t)+(.004 if z<1.07 else -.014)*t+.03*math.sin(t*math.pi)
+            vertices.append((x,sign*y,z))
+    for j in range(len(rows)-1):
+        for i in range(4):
+            k=j*5+i;faces.append((k,k+1,k+6,k+5) if sign==1 else (k+5,k+6,k+1,k))
+    panel=mesh('front_panel'+side,vertices,faces,'picketWhite','torso',2)
+    mod=panel.modifiers.new('panel thickness','SOLIDIFY');mod.thickness=.014
+    bpy.context.view_layer.objects.active=panel;bpy.ops.object.modifier_apply(modifier=mod.name)
+    tube('panel_soft_fold'+side,[(.146,sign*.12,.816),(.164,sign*.124,.896),(.143,sign*.127,.98)],[.003,.009,.002],'picketWhite','torso',N=8)
 # Raised elbows, palms beside temples, chunky curled fingers with separate nails.
 for s,side in [(1,'L'),(-1,'R')]:
     shoulder=(-.02,s*.211,1.072);elbow=(.043,s*.403,1.009);wrist=(.092,s*.346,1.316)
@@ -124,9 +137,13 @@ for s,side in [(1,'L'),(-1,'R')]:
     tube('thigh'+side,[hp,(-.014,s*.175,.629),(.07,s*.235,.472),knee],[.113,.124,.104,.084],'infectedSkin','leg'+side,N=12)
     tube('shorts'+side,[hp,(-.026,s*.163,.675),(.011,s*.198,.569),(.026,s*.213,.537)],[.134,.14,.137,.133],'asphalt','leg'+side,N=12)
     for j in range(6):
+        if j in [0,1,5]:continue
         t=j*2*math.pi/6
         x=.026+.12*math.cos(t);y=s*.21+.126*math.sin(t)
         tube('shorts_torn_hem'+side+str(j),[(x,y,.558),(x+.011,y,.536),(x+.008,y,.507+(j%3)*.01)],[.032,.034,.005],'asphalt','leg'+side,N=6)
+    for j in range(4):
+        yy=s*(.127+j*.037)
+        patch('shorts_front_rag'+side+str(j),[(.137,yy,.574),(.147,yy+s*.041,.559),(.151,yy+s*.023,.505-(j%2)*.018),(.148,yy+s*.009,.53)],'asphalt','leg'+side,.015)
     ell('knee'+side,knee,(.099,.096,.092),'infectedSkin','shin'+side)
     tube('calf'+side,[knee,(.068,s*.28,.361),(.007,s*.327,.229),ankle],[.084,.092,.076,.052],'infectedSkin','shin'+side,N=12)
     tube('sock'+side,[(0,s*.332,.187),ankle],[.066,.068],'picketWhite','shin'+side,N=12)
@@ -188,21 +205,28 @@ ell('hair_cap',(-.046,0,1.508),(.187,.218,.165),'asphalt','head',seg=16,rings=10
 # Back layers stream behind and below the shoulders; varied tips give a wild silhouette.
 for layer in range(3):
     for j in range(11):
-        t=1.13+j*(4.02/10);z=1.48-layer*.095
+        t=1.13+j*(4.02/10);z=1.58-layer*.13+(j%3)*.013
         start=(-.035+.128*math.cos(t),.174*math.sin(t),z)
         mid=(-.092+.20*math.cos(t),.237*math.sin(t),z-.09)
-        end=(-.173+.25*math.cos(t),.274*math.sin(t),z-.22-(j%3)*.022)
-        lock('mane_'+str(layer)+'_'+str(j),start,mid,end,.06+(j%3)*.008,'woodWarm' if (j+layer)%3 else 'asphalt')
+        end=(-.205+.28*math.cos(t),.274*math.sin(t)+(j%2)*.012,z-.26-(j%3)*.031)
+        lock('mane_'+str(layer)+'_'+str(j),start,mid,end,.06+(j%3)*.008,'woodWarm' if (j+layer)%7 else 'asphalt')
 # Loose energetic crown, hooked tips and broad forward bangs.
 for j in range(11):
     t=j*2*math.pi/11
-    lock('crown_'+str(j),(-.028,.075*math.sin(t),1.573),(-.073+.1*math.cos(t),.153*math.sin(t),1.696+(j%3)*.015),(-.17+.19*math.cos(t),.235*math.sin(t),1.624+(j%2)*.035),.054,'woodWarm' if j%3 else 'brick')
+    lock('crown_'+str(j),(-.028,.075*math.sin(t),1.573),(-.073+.1*math.cos(t),.153*math.sin(t),1.696+(j%3)*.015),(-.17+.19*math.cos(t),.235*math.sin(t),1.624+(j%2)*.035),.054,'woodWarm' if j%5 else 'brick')
 for j in range(5):
     y=-.176+j*.083
-    lock('fringe_'+str(j),(.02,y,1.62),(.154,y-.025,1.586),(.191,y-.047,1.46+(j%3)*.018),.062,'woodWarm' if j%2 else 'asphalt')
+    lock('fringe_'+str(j),(.02,y,1.62),(.154,y-.025,1.586),(.191,y-.047,1.452+(j%3)*.029),.062,'woodWarm')
 for s in [-1,1]:
     lock('temple_lock'+str(s),(.034,s*.171,1.582),(.136,s*.225,1.477),(.125,s*.247,1.298),.073)
     lock('side_curl'+str(s),(-.01,s*.205,1.432),(-.051,s*.269,1.356),(.057,s*.276,1.246),.061)
+# Broad wind-swept upper layers close the rear scalp and break the combed silhouette.
+for j in range(8):
+    y=-.20+j*.056
+    lock('upper_back_lock'+str(j),(-.045,y*.77,1.614),(-.177,y,1.574+(j%3)*.012),(-.34-(j%3)*.03,y*1.12,1.443+(j%2)*.051),.069)
+for j in range(7):
+    y=-.22+j*.069
+    lock('flying_lock'+str(j),(-.12,y*.82,1.5-(j%3)*.041),(-.32,y,1.474-(j%3)*.035),(-.51+(j%3)*.041,y*1.25,1.425-(j%3)*.057),.043,'woodWarm' if j%3 else 'brick')
 # Blood is actual separated geometry projected onto curved surfaces, >= 3 mm proud.
 def splat(n,targets,center,ry,rz,back=False):
     x,y,z=center;pts=[Vector((x,y,z))]
@@ -222,7 +246,7 @@ def splat(n,targets,center,ry,rz,back=False):
     for f in o.data.polygons:f.use_smooth=False
 for s,side in [(1,'L'),(-1,'R')]:
     for j,(y,z,ry,rz) in enumerate([(s*.156,.94,.033,.045),(s*.183,.826,.027,.035),(s*.192,.72,.043,.029)]):
-        splat('jacket_blood'+side+str(j),['hoodie_shell'],(.3,y,z),ry,rz)
+        splat('jacket_blood'+side+str(j),['front_panel'+side,'hoodie_shell'],(.3,y,z),ry,rz)
     for j,(y,z) in enumerate([(s*.28,1.074),(s*.35,1.027)]):
         splat('sleeve_blood'+side+str(j),['upper_sleeve'+side],(.2,y,z),.039,.033)
     splat('cuff_blood'+side,['rolled_sleeve'+side],(.2,s*.4,1.075),.033,.034)
@@ -247,6 +271,16 @@ for s,side in [(1,'L'),(-1,'R')]:
     for j in range(3):
         patch('torn_sleeve_edge'+side+str(j),[(.113,s*(.27+j*.02),1.092),(.112,s*(.29+j*.02),1.096),(.109,s*(.285+j*.02),1.05)],'picketWhite','arm'+side)
     tear('hoodie_shell',(.12,s*.19,.903),(.059,.031,.048))
+    tear('front_panel'+side,(.137,s*.184,.903),(.03,.023,.033))
+# Small dispersed spatters and torn edges complement the larger stains.
+for side,sign in [('L',1),('R',-1)]:
+    for j in range(7):
+        splat('jacket_fleck'+side+str(j),['front_panel'+side,'hoodie_shell'],(.3,sign*(.14+(j%3)*.022),.77+j*.044),.006+(j%2)*.003,.008)
+    for j in range(5):
+        splat('back_fleck'+side+str(j),['hoodie_shell'],(-.3,sign*(.067+(j%3)*.031),.76+j*.051),.011,.012,back=True)
+    tube('cheek_blood_drip'+side,[(.168,sign*.128,1.372),(.176,sign*.133,1.332),(.165,sign*.123,1.286)],[.009,.012,.004],'blood','head',N=6)
+    for j in range(3):
+        tube('shorts_front_fold'+side+str(j),[(.13,sign*.12,.67-j*.035),(.154,sign*.17,.661-j*.035),(.116,sign*.231,.65-j*.035)],[.004,.008,.002],'asphalt','leg'+side,N=8)
 # Seven hidden caps on proximal parts survive removal of the distal limb.
 for key,parent,p,sz in [('head','torso',(.025,0,1.16),(.077,.085,.015)),('armL','torso',(-.02,.211,1.072),(.08,.018,.08)),('armR','torso',(-.02,-.211,1.072),(.08,.018,.08)),('foreArmL','armL',(.043,.403,1.009),(.074,.074,.018)),('foreArmR','armR',(.043,-.403,1.009),(.074,.074,.018)),('legL','hip',(-.035,.133,.703),(.105,.11,.015)),('legR','hip',(-.035,-.133,.703),(.105,.11,.015))]:
     o=ell('stump_'+key,p,sz,'blood',parent,seg=12,rings=6);o['stumpFor']=key;o['hidden']=True;o.scale=(0,0,0)
@@ -289,6 +323,11 @@ for (parent,material),group in buckets.items():
     o=group[0];o.name=parent+'__'+material[0]+('_regions' if len(material)>1 else '');joined.append(o)
 objects=joined+caps
 
+# Lurch forward while preserving raised arms; bake into zero-rotation rest joints.
+parts['torso'].rotation_euler.y=.17
+parts['head'].rotation_euler.y=-.05
+parts['armL'].rotation_euler.x=.07
+parts['armR'].rotation_euler.x=-.12
 # Caps have an export-hidden zero scale; restore temporarily to bake their actual surfaces.
 for cap in caps:cap.scale=(1,1,1)
 bpy.context.view_layer.update()
@@ -328,33 +367,32 @@ if a.glb:
     bpy.ops.object.select_all(action='DESELECT')
     for o in objects+list(parts.values()):o.select_set(True)
     bpy.ops.export_scene.gltf(filepath=a.glb,export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_cameras=False,export_lights=False)
-if a.pose:
+def pose_test():
     parts['armL'].rotation_euler.x=.48
     parts['foreArmL'].rotation_euler.y=-.68
     parts['legR'].rotation_euler.y=-.38
-    # Requested left cap visible; left limb ghosted away for a clear amputation test.
-    for o in objects:
-        parent=o.parent
-        while parent:
-            if parent==parts['armL']:o.hide_render=True;break
-            parent=parent.parent
-    cap=bpy.data.objects['stump_armL'];cap.scale=(1,1,1);cap['hidden']=False
-    # Detached left assembly also displayed offset, preserving the visibly rotated elbow.
+    # Offset the detached, rotated assembly so its elbow and shoulder cap are both visible.
     parts['armL'].location.y+=.34
-    for o in objects:
-        if o.hide_render:o.hide_render=False
-if a.render and a.view=='turnaround':
-    # Assemble already-rendered camera views in Blender, without another GPU render.
+    cap=bpy.data.objects['stump_armL'];cap.scale=(1,1,1);cap['hidden']=False
+    bpy.context.view_layer.update()
+    (P/'pose-test.json').write_text(json.dumps({
+        'rotated_joints':{n:list(parts[n].rotation_euler) for n in ['armL','foreArmL','legR']},
+        'stump_armL_visible':list(cap.scale)==[1,1,1],
+        'stump_parent':cap.parent.name,'detached_arm_offset_m':.34
+    },indent=2))
+if a.pose:pose_test()
+def turnaround(path):
     import numpy as np
-    paths=[P/'renders'/n for n in ['front.png','side.png','back.png','review-hero.png']]
     panels=[]
-    for path in paths:
-        im=bpy.data.images.load(str(path));w,h=im.size
+    for name in ['front.png','side.png','back.png','review-hero.png']:
+        im=bpy.data.images.load(str(P/'renders'/name));w,h=im.size
         pixels=np.empty(w*h*4,dtype=np.float32);im.pixels.foreach_get(pixels)
         panels.append(pixels.reshape(h,w,4)[:,(w-420)//2:(w+420)//2,:])
-    data=np.concatenate(panels,axis=1);sheet=bpy.data.images.new('turnaround',width=data.shape[1],height=data.shape[0],alpha=True)
-    sheet.pixels.foreach_set(data.ravel());sheet.filepath_raw=a.render;sheet.file_format='PNG';sheet.save()
-    print('OK turnaround');sys.exit(0)
+    data=np.concatenate(panels,axis=1)
+    sheet=bpy.data.images.new('turnaround',width=data.shape[1],height=data.shape[0],alpha=True)
+    sheet.pixels.foreach_set(data.ravel());sheet.filepath_raw=str(path);sheet.file_format='PNG';sheet.save()
+if a.render and a.view=='turnaround':
+    turnaround(a.render);print('OK turnaround');sys.exit(0)
 if a.render:
     world=bpy.data.worlds.new('studio');world.use_nodes=True;S.world=world;world.node_tree.nodes['Background'].inputs[0].default_value=(.075,.067,.085,1);world.node_tree.nodes['Background'].inputs[1].default_value=.45
     def light(n,p,power,color,size):
@@ -362,7 +400,7 @@ if a.render:
     light('warm key',(3,-4,5),460,(1,.83,.69),3);light('cool fill',(1,4,3),260,(.63,.72,1),3);light('amber rim',(-3,1,3.5),600,(1,.46,.2),2)
     bpy.ops.mesh.primitive_plane_add(size=200);ground=bpy.context.object;ground.name='studio_floor';ground.data.materials.append(mat('studio','35303b',.88))
     cam=bpy.data.objects.new('camera',bpy.data.cameras.new('camera'));S.collection.objects.link(cam);S.camera=cam
-    views={'hero':(6,-4,2.9),'front':(6,0,1.35),'side':(0,-6,1.35),'back':(-6,0,1.35)}
+    views={'hero':(6,-4,2.9),'front':(6,0,1.35),'side':(0,-6,1.35),'back':(-6,0,1.35),'pose':(6,4,2.9)}
     cam.location=views.get(a.view,views['hero']);cam.rotation_euler=(Vector((-.06,0,.85))-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';cam.data.ortho_scale=1.95*max(a.width/a.height,1)
     S.render.engine='CYCLES';S.cycles.samples=a.samples;S.cycles.use_denoising=True
     prefs=bpy.context.preferences.addons['cycles'].preferences
@@ -372,5 +410,22 @@ if a.render:
         S.cycles.device='GPU'
     except Exception:pass
     S.render.resolution_x=a.width;S.render.resolution_y=a.height;S.render.resolution_percentage=100
-    S.view_settings.view_transform='AgX';S.render.image_settings.file_format='PNG';S.render.filepath=a.render;bpy.ops.render.render(write_still=True)
+    S.view_settings.view_transform='AgX';S.render.image_settings.file_format='PNG'
+    review=Path(a.render).stem.startswith('round') or a.view=='review-set'
+    render_views=['hero','front','side','back'] if review else [a.view]
+    if a.view=='deliverables':render_views=['front','side','back','hero','final','pose']
+    for view in render_views:
+        cam.location=views.get(view,views['hero'])
+        cam.rotation_euler=(Vector((-.06,0,.85))-cam.location).to_track_quat('-Z','Y').to_euler()
+        S.render.filepath=str(Path(a.render).with_name(Path(a.render).stem+'-'+view+'.png')) if review and view!='hero' else a.render
+        if a.view=='deliverables':
+            if view=='pose':pose_test()
+            final=view=='final'
+            S.cycles.samples=96 if final else 24
+            S.render.resolution_x=1600 if final else 960
+            S.render.resolution_y=900 if final else 540
+            filename={'hero':'review-hero.png','final':'hero.png','pose':'pose-test.png'}.get(view,view+'.png')
+            S.render.filepath=str(P/'renders'/filename)
+        bpy.ops.render.render(write_still=True)
+    if a.view=='deliverables':turnaround(P/'renders'/'turnaround.png')
 print('OK',triangles,'triangles',len(objects),'meshes')
