@@ -4057,9 +4057,9 @@
     "tier": "hero",
     "glb": "public/assets/models/bld.school-elementary.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 10.0675,
+      "y": 6.14,
+      "z": 12.67,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -4077,7 +4077,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.school-elementary/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/bld.school-elementary.lod1.glb",
+      "lod2": "public/assets/models/bld.school-elementary.lod2.glb"
+    }
   },
   {
     "id": "int.gym-cafeteria",
@@ -4115,9 +4121,9 @@
     "tier": "side",
     "glb": "public/assets/models/kit.playground.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 8.2955,
+      "y": 3.83,
+      "z": 9.7733,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -4135,7 +4141,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/kit.playground/model.glb",
+    "sourceForward": "+X"
   },
   {
     "id": "int.supermarket",
@@ -4144,9 +4152,9 @@
     "tier": "hero",
     "glb": "public/assets/models/int.supermarket.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 8.4,
+      "y": 3.435,
+      "z": 9.0185,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -4164,7 +4172,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/int.supermarket/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/int.supermarket.lod1.glb",
+      "lod2": "public/assets/models/int.supermarket.lod2.glb"
+    }
   },
   {
     "id": "int.mini-mall",
@@ -4329,9 +4343,9 @@
     "tier": "side",
     "glb": "public/assets/models/kit.police-checkpoint.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 9.4,
+      "y": 4.4,
+      "z": 8.2,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -4349,7 +4363,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/kit.police-checkpoint/model.glb",
+    "sourceForward": "+X"
   },
   {
     "id": "kit.evac-camp",
@@ -5109,7 +5125,7 @@
     "dimensions": {
       "x": 0.9137,
       "y": 1.8,
-      "z": 0.8793,
+      "z": 0.7562,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5406,9 +5422,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.police-officer.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.5824,
+      "y": 1.8,
+      "z": 0.8587,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5461,7 +5477,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.police-officer/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.police-officer.lod1.glb",
+      "lod2": "public/assets/models/npc.police-officer.lod2.glb"
+    },
+    "sourceScale": 1.2694477414759615
   },
   {
     "id": "npc.paramedic",

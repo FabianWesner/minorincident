@@ -8,7 +8,7 @@
   "findings_after": {
     "stump": 0,
     "dimensions": 3,
-    "other": 14
+    "other": 12
   },
   "rescaled": [
     "char.survivor-male",
@@ -32,7 +32,8 @@
     "npc.civilian-man-b",
     "npc.civilian-woman-a",
     "npc.civilian-woman-b",
-    "veh.school-bus"
+    "veh.school-bus",
+    "npc.police-officer"
   ],
   "manifest_updated": [
     "char.survivor-male",
@@ -86,7 +87,12 @@
     "npc.civilian-woman-b",
     "veh.suv-dark",
     "bld.gas-station",
-    "veh.school-bus"
+    "veh.school-bus",
+    "bld.school-elementary",
+    "kit.playground",
+    "int.supermarket",
+    "kit.police-checkpoint",
+    "npc.police-officer"
   ],
   "needs_decision": [
     {
@@ -105,12 +111,14 @@
   "commits": [
     "aad2036",
     "244d690",
-    "611da75"
+    "611da75",
+    "53ecdf6",
+    "1cbd283"
   ],
   "notes": [
-    "Main merged through bb7b6b9.",
+    "Main merged through 300cc57 in 1cbd283; all newly supplied standalone exports registered (180 audit slots).",
     "61 unit tests and final verify E17 (28 unit, 25 browser) pass; smoke passes.",
-    "14 pre-existing findings outside this pass remain (crawler limb geometry and clinic budgets).",
+    "12 crawler shin/foot geometry findings outside this pass remain. Latest main clinic source cleared its two prior budget findings.",
     "E10 unit tests initially ran 16 Blender layout rebuilds; outputs restored and test mocked. No asset models or reference images rebuilt."
   ]
 }
