@@ -8,8 +8,9 @@ test('T-E06-03 @E06 @E06-AC03 close shotgun / distant SMG role differentiation a
     const target = dummy(w, range, 0, 100000); w.setInput({ aim: { x: 1, z: 0 }, left: { down: false, held: true, up: false } }); step(w, 600);
     return (100000 - health(w, target)) / 10;
   };
-  expect(await dps('weapon.shotgun', 3)).toBeGreaterThan(await dps('weapon.smg', 3));
-  expect(await dps('weapon.smg', 12)).toBeGreaterThan(await dps('weapon.shotgun', 12));
+  const roles = { shotgun3m: await dps('weapon.shotgun', 3), smg3m: await dps('weapon.smg', 3), shotgun12m: await dps('weapon.shotgun', 12), smg12m: await dps('weapon.smg', 12) };
+  expect(roles.shotgun3m).toBeGreaterThan(roles.smg3m); expect(roles.smg12m).toBeGreaterThan(roles.shotgun12m);
+  const { mkdirSync, writeFileSync } = await import('node:fs'); mkdirSync('test-results/epics/E06', { recursive: true }); writeFileSync('test-results/epics/E06/roles.json', JSON.stringify(roles, null, 2));
   const w = await arena(); equip(w, ['weapon.hunting-rifle']); Object.assign(w.entities.get(1)!.transform, { x: -12.5 }); w.physics.playerBody!.setTranslation(w.entities.get(1)!.transform, true); const target = dummy(w, 12.5); fire(w); step(w, 2); expect(health(w, target)).toBeLessThan(100);
   expect(action('weapon.rocket-launcher').splash!.radius).toBeGreaterThanOrEqual(3.5);
   Object.assign(w.entities.get(1)!.transform, { x: 0 }); w.physics.playerBody!.setTranslation(w.entities.get(1)!.transform, true);
@@ -76,7 +77,7 @@ for (const side of ['LEFT', 'RIGHT'] as const) for (const def of Object.values(c
   const w = await arena(); equip(w, [def.id], [def.id]); w.combat!.damage.god = true;
   const target = w.spawnDummy('infected.runner', { x: 1, z: 0 }, { reactive: true, hp: 1000 });
   if (def.effect?.kind === 'smoke') w.combat!.effects.noise({ x: 0, z: 0 }, 25, 'weapon.pistol');
-  fire(w, side, { x: 1, z: 0 }, { x: 1, z: 0 }); step(w, 120);
+  fire(w, side, { x: 1, z: 0 }, { x: 1, z: 0 }); if (def.id === 'weapon.kick') expect(w.entities.get(1)!.survivor!.animation).toBe('kick'); step(w, 120);
   expect(w.events.events().some((e) => e.type === 'combat.attack' && e.actionId === def.id && e.side === side)).toBe(true);
   if (def.damage || def.status) { expect(w.events.events().some((e) => e.type === 'combat.hit' && e.actionId === def.id && e.targetId === target)).toBe(true); if (def.status) expect(w.entities.get(target)!.combat!.statuses.some((s) => s.kind === def.status!.kind)).toBe(true); }
   else if (def.effect?.kind === 'lure') expect(w.entities.get(target)!.hearing!.mode).toBe('lured');
