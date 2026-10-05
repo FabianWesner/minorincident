@@ -44,7 +44,7 @@ class Layout:
         self.box('terrain', 'grass', [56,0.25,56], [0,-0.13,0])
         self.data['surfaces'].append(dict(surface='grass', polygon=self.data['bounds']))
         self.road_cross()
-        for name, p in {'player-start': [0,0,4], 'arrival': [0,0,24], 'exit': [0,0,-24], 'safe-point': [5,0,5], 'cat-perch': [-18,3,-19], 'crow-roost': [20,4,-20]}.items(): self.anchor(name,p)
+        for name, p in {'player-start': [0,0,4], 'arrival': [0,0,24], 'exit': [0,0,-24], 'safe-point': [5,0,11], 'cat-perch': [-18,3,-19], 'crow-roost': [20,4,-20]}.items(): self.anchor(name,p)
         for i, (x,z) in enumerate([(-23,-23),(23,-23),(-23,23),(23,23)]):
             self.data['lawns'].append(dict(min=[x-3,z-3], max=[x+3,z+3]))
             for dx,dz in [(0,0),(2,0),(0,2)]: self.place('prop.tree', [x+dx,0,z+dz])
