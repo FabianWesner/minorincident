@@ -1,0 +1,33 @@
+
+> test:smoke
+> vitest run -t @smoke && playwright test --grep @smoke
+
+
+ RUN  v5.0.3 /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e17-epic
+
+
+ Test Files  1 passed | 22 skipped (23)
+      Tests  1 passed | 55 skipped (56)
+   Start at  21:17:08
+   Duration  1.54s (import 51%, transform 37%, tests 10%, worker 2%)
+
+    Isolate  23 workers spawned · ~93ms startup each (spawn + environment, per file)
+             at least ~442ms faster with isolate: false — reuses workers across files instead of one per file
+
+
+Running 12 tests using 2 workers
+
+  ✓   1 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (3.3s)
+  ✓   2 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (4.8s)
+  ✓   3 [pixel-7] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.4s)
+  ✓   4 [pixel-7] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (3.4s)
+  ✓   5 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.1s)
+  ✓   6 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (3.1s)
+  ✓   7 [iphone-14] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.0s)
+  ✓   9 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.1s)
+  ✓   8 [iphone-14] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.9s)
+  ✓  11 [webkit] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.2s)
+  ✓  10 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (3.1s)
+  ✓  12 [webkit] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.1s)
+
+  12 passed (22.6s)
