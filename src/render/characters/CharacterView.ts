@@ -1,6 +1,8 @@
 import { BoxGeometry, Group, Mesh, type Material } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import manifest from '../../assets/manifest.json';
+import { atLeast, type AssetStatus } from '../../assets/types';
 import { type PaletteToken } from '../../data/palette';
 import type { GearTier, SurvivorState, SurvivorVariant } from '../../data/survivor';
 import type { Materials } from '../Materials';
@@ -18,7 +20,15 @@ export class CharacterView extends Group {
   async init(materials: Materials): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     for (const [variant, url] of [['female', femaleUrl], ['male', maleUrl]] as const) {
-      const character = await loadCharacter(variant, async () => (await loader.loadAsync(url)).scene);
+      const id = `char.survivor-${variant}`, def = manifest.find(asset => asset.id === id);
+      const character = await loadCharacter(variant, async () => {
+        if (!def || !atLeast(def.status as AssetStatus, 'integrated')) {
+          const reason = def ? `status ${def.status}` : 'missing manifest entry';
+          console.info(JSON.stringify({ type: 'asset.placeholder', id, reason }));
+          throw new Error(reason);
+        }
+        return (await loader.loadAsync(url)).scene;
+      });
       const oldMaterials = new Set<Material>(), replacements = new Map<Material, Material>();
       character.model.traverse((object) => {
         if (!(object instanceof Mesh)) return;
