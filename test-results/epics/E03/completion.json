@@ -1,0 +1,41 @@
+{
+  "epic": "E03",
+  "status": "done",
+  "criteria": 13,
+  "checks": {
+    "typecheck": 0,
+    "lint": 0,
+    "build": 0,
+    "test:unit": 0,
+    "test:smoke": 0,
+    "verify -- E03": 0,
+    "verify -- E01": 0
+  },
+  "unitPassed": 16,
+  "optionalPreviewSkipped": 1,
+  "epicVitestPassed": 7,
+  "epicBrowserPassed": 57,
+  "smokeVitestPassed": 1,
+  "smokeBrowserPassed": 12,
+  "regressionVitestPassed": 15,
+  "regressionBrowserPassed": 19,
+  "warnings": 0,
+  "unexpectedBrowserFailures": 0,
+  "retries": 0,
+  "validatedMain": "2ffb7b7ea6ae5400bae665b9feaad1e4556fd5ad",
+  "perf": {
+    "ticks": 600,
+    "elapsedMs": 12.399999976158142,
+    "meanTickMsIncludingFinalRender": 0.020666666626930237,
+    "perf": {
+      "fps": 0.8451656524678839,
+      "frameMs": 1183.1999999999998,
+      "simMs": 0,
+      "drawCalls": 3,
+      "triangles": 15,
+      "geometries": 3,
+      "textures": 2,
+      "entities": 1
+    }
+  }
+}

@@ -1,4 +1,5 @@
-// Adapted from folio-2025 Inputs/Inputs.js by Bruno Simon (MIT).
+// Adapted from folio-2025 by Bruno Simon (MIT).
+// Source: Inputs/Inputs.js, commit 41046b5.
 import { Vector3, type Camera } from 'three';
 import type { Lifecycle } from '../core/Lifecycle';
 import { defaultBindings, type Action } from '../data/bindings';
@@ -129,7 +130,7 @@ export class InputSystem implements Lifecycle {
     out.x = -forwardZ * x - forwardX * y; out.z = forwardX * x - forwardZ * y;
   }
   private screenAngle(x: number, y: number): number { this.screenVector(x, y, this.screen); return Math.atan2(this.screen.z, this.screen.x); }
-  /** Reused frame. No device polling, scene raycasts or per-tick input allocations. */
+  /** Frame and math scratch objects are reused; no device polling or scene-mesh raycasts. */
   sample(player: Vec2, dt = 1 / 60): InputFrame {
     if (this.recorder.playing) return this.recorder.next() ?? this.frameNeutral();
     if (this.injected) { this.recorder.capture(this.injected); return this.injected; }

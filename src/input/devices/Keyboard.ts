@@ -1,4 +1,5 @@
-// Adapted from folio-2025 Inputs/Keyboard.js by Bruno Simon (MIT).
+// Adapted from folio-2025 by Bruno Simon (MIT).
+// Source: Inputs/Keyboard.js, commit 41046b5.
 /** Key codes, repeat suppression and blur release; injected event target allows Node tests. */
 export class Keyboard {
   readonly pressed = new Set<string>();

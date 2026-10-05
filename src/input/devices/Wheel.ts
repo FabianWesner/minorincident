@@ -1,4 +1,5 @@
-// Adapted from folio-2025 Inputs/Wheel.js by Bruno Simon (MIT).
+// Adapted from folio-2025 by Bruno Simon (MIT).
+// Source: Inputs/Wheel.js, commit 41046b5.
 /** Pixel trackpad gestures debounce for 120ms; line/page and discrete 100px notches do not. */
 export class Wheel {
   private lastTrackpad = -Infinity;

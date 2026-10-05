@@ -1,4 +1,5 @@
-// Adapted from folio-2025 Inputs/Nipple.js by Bruno Simon (MIT).
+// Adapted from folio-2025 by Bruno Simon (MIT).
+// Source: Inputs/Nipple.js, commit 41046b5.
 import type { Vec2 } from '../InputFrame';
 /** Floating 60px stick: Bruno's radial progress/angle, presented as functional DOM for E14. */
 export class Nipple {
