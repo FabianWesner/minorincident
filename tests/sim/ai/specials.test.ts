@@ -1,13 +1,13 @@
 import { expect, test } from 'vitest';
-import { humanInfected } from '../../../src/data/infected';
+import { infectedDefinitions } from '../../../src/data/infected';
 import { arena, hit, spawn, step } from './helpers';
-test('T-E07-05 @E07 @E07-AC05 every human attack including death explosion has a sufficient telegraph', async () => {
-  for (const def of humanInfected) {
+test('T-E07-05 @E07 @E07-AC05 every archetype attack including death explosion has a sufficient telegraph', async () => {
+  for (const def of infectedDefinitions) {
     const w = await arena(); const e = spawn(w, def.id.slice(9), 0.9); if (def.special === 'explode') e.health.current = 0;
-    step(w, 130); const log = w.events.events(), attacks = log.filter((event) => event.type === 'infected.attack');
-    if (def.special !== 'scream') expect(attacks.length, def.id).toBeGreaterThan(0);
+    step(w, 130); const log = w.events.events(), attacks = log.filter((event) => event.type === 'combat.hit' && event.actionId.startsWith('infected.') && event.amount > 0);
+    if (!['scream', 'dive'].includes(def.special)) expect(attacks.length, def.id).toBeGreaterThan(0);
     for (const event of attacks) {
-      if (event.type !== 'infected.attack') continue;
+      if (event.type !== 'combat.hit') continue;
       const telegraph = log.find((entry) => entry.type === 'telegraph' && entry.attackId === event.attackId);
       expect(telegraph, def.id).toBeDefined(); expect(event.tick - telegraph!.tick).toBeGreaterThanOrEqual(def.special === 'charge' ? 48 : 21);
     }

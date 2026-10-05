@@ -34,6 +34,7 @@ export type GameEvent =
   | { tick: number; type: 'scenario.unloaded'; name: string };
 export interface GameStateSnapshot {
   tick: number;
+  ai?: ReturnType<import('../ai/InfectedSystem').InfectedSystem['snapshot']>;
   combat?: ReturnType<import('../combat/Combat').Combat['snapshot']>;
   input: { scheme: Scheme; frame: InputFrame };
   seed: number;

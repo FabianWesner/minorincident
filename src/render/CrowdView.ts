@@ -1,14 +1,14 @@
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
 import { CircleGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, type BufferGeometry } from 'three/webgpu';
-import { attribute, normalLocal, positionLocal, vec4 } from 'three/tsl';
+import { attribute, normalLocal, positionLocal, mix, vec4 } from 'three/tsl';
 import { clipTexture, crowdMatrix } from '../assets/crowd';
 import { AssetRegistry } from '../assets/registry';
 import { infectedDefinitions } from '../data/infected';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { createInfectedPlaceholder } from './characters/infectedPlaceholder';
 import { bakeInfected, framesPerClip, infectedClips } from './characters/bakeInfected';
-interface Batch { mesh: InstancedMesh; frame: InstancedBufferAttribute; limb: InstancedBufferAttribute; texture: import('three').DataTexture; count: number; placeholders: boolean }
-const assetIds: Record<string, string> = { runner: 'inf.common-worker', riot: 'inf.riot-cop', armored: 'inf.armored-football', dog: 'inf.dog-retriever', cat: 'inf.cat-tabby' };
+interface Batch { mesh: InstancedMesh; frame: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; windup: number; limb: InstancedBufferAttribute; texture: import('three').DataTexture; count: number; placeholders: boolean }
+const variantShirts: Record<string, Color> = { 'inf.jogger': new Color('#3178ac'), 'inf.cashier': new Color('#e5d9b9'), 'inf.delivery-driver': new Color('#d4ad32'), 'inf.suburban-mom': new Color('#79865b'), 'inf.bbq-dad': new Color('#a86645'), 'inf.bathrobe-neighbor': new Color('#ac7a91') };
 /** One instanced, rigid-part GPU batch per archetype. Scene graph size never grows with infected population. */
 export class CrowdView extends Group {
   private readonly registry: AssetRegistry;
@@ -28,20 +28,21 @@ export class CrowdView extends Group {
   }
   async init(): Promise<void> {
     for (const def of infectedDefinitions) {
-      const role = def.id.slice(9), asset = assetIds[role] ?? `inf.${role}`;
+      const role = def.id.slice(9), asset = def.asset;
       const loaded = await this.registry.loadAsset(asset) as Group;
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const baked = bakeInfected(model), texture = clipTexture(baked.clip), capacity = role === 'crow' ? 800 : 350;
+      const tint = new InstancedBufferAttribute(new Float32Array(capacity * 3), 3);
       const frame = new InstancedBufferAttribute(new Float32Array(capacity), 1), limb = new InstancedBufferAttribute(new Float32Array(capacity), 1);
-      baked.geometry.setAttribute('_clip_frame', frame); baked.geometry.setAttribute('_limb', limb);
-      const material = Object.assign(new MeshLambertNodeMaterial({ vertexColors: true }), { emissiveNode: attribute('color', 'vec3').mul(attribute('_emissive', 'float')).mul(3) });
+      baked.geometry.setAttribute('_variant', tint); baked.geometry.setAttribute('_clip_frame', frame); baked.geometry.setAttribute('_limb', limb);
+      const material = Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float')), emissiveNode: attribute('color', 'vec3').mul(attribute('_emissive', 'float')).mul(3) });
       const matrix = crowdMatrix(texture, attribute('_part_index', 'float'), attribute('_clip_frame', 'float'));
       const part = attribute('_part_index', 'float'), leg = baked.clip.parts.indexOf('legL'), shin = baked.clip.parts.indexOf('shinL'), foot = baked.clip.parts.indexOf('footL');
       const visible = part.equal(leg).or(part.equal(shin)).or(part.equal(foot)).select(attribute('_limb', 'float').oneMinus(), 1);
       material.positionNode = matrix.mul(vec4(positionLocal, 1)).xyz.mul(visible);
       material.normalNode = matrix.mul(vec4(normalLocal, 0)).xyz.normalize();
       const mesh = new InstancedMesh(baked.geometry as BufferGeometry, material, capacity); mesh.name = def.id; mesh.frustumCulled = false; mesh.count = 0;
-      this.batches.set(def.id, { mesh, frame, limb, texture, count: 0, placeholders: fallback }); this.add(mesh);
+      this.batches.set(def.id, { mesh, frame, limb, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
     }
     this.update();
@@ -52,23 +53,25 @@ export class CrowdView extends Group {
     const player = this.world.entities.get(1)!;
     for (const e of this.world.infected!.active) {
       const b = e.infected!, batch = this.batches.get(e.archetype)!;
-      if (b.hidden || Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) > 60) continue;
+      const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
+      if (b.hidden || distance > 60) continue;
+      const tick = distance > 35 ? Math.floor(this.world.tick / 2) * 2 : this.world.tick;
       let clip: typeof infectedClips[number] = b.state === 'dead' ? 'die' : b.legLost || e.archetype === 'infected.crawler' ? 'crawl' : b.state === 'attack' ? this.world.tick < b.until ? 'windup' : 'swing' : b.state === 'stagger' ? 'hurt' : ['chase', 'migration', 'scatter', 'wander'].includes(b.state) ? 'run' : 'idle';
       if (b.special === 'dive') clip = 'run';
-      const phase = clip === 'die' ? Math.min(23, Math.floor((this.world.tick - b.deadAt) / 36 * 23)) : clip === 'windup' ? Math.min(23, Math.floor((1 - (b.until - this.world.tick) / (infectedDefinitions.find((d) => d.id === e.archetype)!.windup * 60)) * 23)) : Math.floor((this.world.tick + e.id * 7) % 60 / 60 * 24);
-      const frame = infectedClips.indexOf(clip) * framesPerClip + phase;
+      const phase = clip === 'die' ? Math.min(23, Math.floor((this.world.tick - b.deadAt) / 36 * 23)) : clip === 'windup' ? Math.min(23, Math.floor((1 - (b.until - this.world.tick) / (batch.windup * 60)) * 23)) : Math.floor((tick + e.id * 7) % 60 / 60 * 24);
+      const frame = infectedClips.indexOf(clip) * framesPerClip + phase, tint = variantShirts[b.variant] ?? batch.shirt;
       if (e.archetype === 'infected.crow') {
-        for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); batch.frame.setX(batch.count, frame); batch.limb.setX(batch.count++, 0); }
+        for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); batch.frame.setX(batch.count, frame); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.limb.setX(batch.count++, 0); }
       } else {
         this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(e.transform.x, e.transform.y - 0.7, e.transform.z);
-        batch.mesh.setMatrixAt(batch.count, this.transform); batch.frame.setX(batch.count, frame); batch.limb.setX(batch.count++, Number(b.detached));
+        batch.mesh.setMatrixAt(batch.count, this.transform); batch.frame.setX(batch.count, frame); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.limb.setX(batch.count++, Number(b.detached));
       }
       if (e.health.current > 0 && e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, 0.018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
       if (b.state === 'attack' && this.world.tick < b.until) {
         const mesh = this.telegraphs[['charge', 'pin', 'pounce'].includes(b.special) ? 1 : 0]; this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); this.transform.setPosition(e.transform.x, 0.06, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
       }
     }
-    for (const batch of this.batches.values()) { batch.mesh.count = batch.count; if (batch.count) { batch.mesh.instanceMatrix.needsUpdate = true; batch.frame.needsUpdate = true; batch.limb.needsUpdate = true; } }
+    for (const batch of this.batches.values()) { batch.mesh.count = batch.count; if (batch.count) { batch.mesh.instanceMatrix.needsUpdate = true; batch.frame.needsUpdate = true; batch.tint.needsUpdate = true; batch.limb.needsUpdate = true; } }
     for (const mesh of this.telegraphs) if (mesh.count) mesh.instanceMatrix.needsUpdate = true;
     if (this.shadows.count) this.shadows.instanceMatrix.needsUpdate = true;
   }

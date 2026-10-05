@@ -11,11 +11,14 @@ export class NavGrid {
   private readonly parent: Int32Array;
   private readonly cost: Float64Array;
   private readonly open: Uint8Array;
+  private searchFrom = -1;
+  private searchTo = -1;
+  private searching = false;
   private head = 0;
   private tail = 0;
   target = -1;
   expansions = 0;
-  constructor(readonly ground: { width: number; depth: number }, readonly walls: readonly Wall[], readonly clearance = 0.65) {
+  constructor(readonly ground: { width: number; depth: number }, readonly walls: readonly Wall[], readonly clearance = 0.65, readonly center = { x: 0, z: 0 }) {
     this.width = Math.ceil(ground.width / this.cellSize); this.depth = Math.ceil(ground.depth / this.cellSize);
     const count = this.width * this.depth;
     this.blocked = new Uint8Array(count); this.distance = new Int32Array(count); this.queue = new Int32Array(count);
@@ -24,13 +27,13 @@ export class NavGrid {
     for (let cell = 0; cell < count; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), clearance));
   }
   cell(x: number, z: number): number {
-    const cx = Math.floor((x + this.ground.width / 2) / this.cellSize), cz = Math.floor((z + this.ground.depth / 2) / this.cellSize);
+    const cx = Math.floor((x - this.center.x + this.ground.width / 2) / this.cellSize), cz = Math.floor((z - this.center.z + this.ground.depth / 2) / this.cellSize);
     return cx < 0 || cz < 0 || cx >= this.width || cz >= this.depth ? -1 : cz * this.width + cx;
   }
-  x(cell: number): number { return (cell % this.width + 0.5) * this.cellSize - this.ground.width / 2; }
-  z(cell: number): number { return (Math.floor(cell / this.width) + 0.5) * this.cellSize - this.ground.depth / 2; }
+  x(cell: number): number { return (cell % this.width + 0.5) * this.cellSize - this.ground.width / 2 + this.center.x; }
+  z(cell: number): number { return (Math.floor(cell / this.width) + 0.5) * this.cellSize - this.ground.depth / 2 + this.center.z; }
   clear(x: number, z: number, radius = 0): boolean {
-    if (Math.abs(x) + radius >= this.ground.width / 2 || Math.abs(z) + radius >= this.ground.depth / 2) return false;
+    if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
     for (const w of this.walls) if (Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
     return true;
   }
@@ -76,14 +79,17 @@ export class NavGrid {
   path(from: number, to: number, result: number[], budget: number): boolean {
     result.length = 0; this.expansions = 0;
     if (from < 0 || to < 0 || this.blocked[from] || this.blocked[to]) return false;
-    this.cost.fill(Infinity); this.parent.fill(-1); this.open.fill(0); this.cost[from] = 0; this.open[from] = 1;
+    if (!this.searching || this.searchFrom !== from || this.searchTo !== to) {
+      this.searchFrom = from; this.searchTo = to; this.searching = true;
+      this.cost.fill(Infinity); this.parent.fill(-1); this.open.fill(0); this.cost[from] = 0; this.open[from] = 1;
+    }
     const tx = to % this.width, tz = Math.floor(to / this.width);
     while (this.expansions < budget) {
       let best = -1, score = Infinity, heuristic = Infinity;
       for (let i = 0; i < this.open.length; i++) if (this.open[i] === 1) { const h = Math.abs(i % this.width - tx) + Math.abs(Math.floor(i / this.width) - tz), f = this.cost[i] + h; if (f < score || (f === score && h < heuristic)) { score = f; heuristic = h; best = i; } }
-      if (best < 0) return false;
+      if (best < 0) { this.searching = false; return false; }
       this.expansions++; this.open[best] = 2;
-      if (best === to) { for (let cell = to; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true; }
+      if (best === to) { this.searching = false; for (let cell = to; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true; }
       for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n]) { this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; } }
     }
     return false;

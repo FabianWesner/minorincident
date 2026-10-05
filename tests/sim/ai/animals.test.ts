@@ -51,3 +51,8 @@ test('T-E07-19b @E07 @E07-AC19 lion pounce pins for 1.5 seconds unless interrupt
 });
 
 test('T-E07-floor @E07 the large arena keeps a stationary survivor grounded', async () => { const w = await arena(); step(w, 600); expect(w.entities.get(1)!.transform.y).toBeCloseTo(0.705, 2); });
+
+test('T-E07-17b @E07 @E07-AC17 cat uses layout-authored perch points', async () => {
+  const w = await arena(); w.loadScenario('animal-lab'); const cat = spawn(w, 'cat', 6, 0, 'idle');
+  expect(cat.transform.x).toBe(5.1); expect(cat.transform.y).toBe(2.2); step(w, 1); expect(cat.infected!.hidden).toBe(true);
+});
