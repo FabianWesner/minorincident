@@ -1,3 +1,4 @@
+import type { ActionState, GearTier, SurvivorVariant } from '../data/survivor';
 import { Vector3 } from 'three';
 import type { Action, BindingMap } from '../data/bindings';
 import type { Recording } from '../input/Recorder';
@@ -36,6 +37,8 @@ export interface SSTestApi {
   };
   spawn(defId: string, pos: { x: number; z: number }, opts?: object): number;
   teleport(entityId: number | 'player', pos: { x: number; z: number }): void;
+  /** E04: cosmetic selection and sim entry points; weapon and mission resolution remain separate. */
+  survivor: { select(variant: SurvivorVariant, tier?: GearTier): void; damage(amount: number): number; act(action: ActionState): void; checkpoint(pos: { x: number; y: number; z: number }): void };
   setLoadout(left: string[], right: string[]): void;
   cheats: { god(on: boolean): void; infiniteCharges(on: boolean): void; killAll(): void; completeObjective(id?: string): void };
   bot: { start(policy?: 'complete' | 'newbie' | 'idle' | 'aggressive'): void; stop(): void; status(): BotStatus };
@@ -56,7 +59,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
-    version: '1.1.0', ready,
+    version: '1.2.0', ready,
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
     loadLevel: async () => pending('E12', 'loadLevel'),
@@ -91,6 +94,12 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       game.world.physics.playerBody!.setTranslation(player.transform, true);
       game.world.spatial.set(player.id, pos.x, pos.z);
       game.view.update(1);
+    },
+    survivor: {
+      select: (variant, tier = 0) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.select(variant, tier); game.view.update(1); },
+      damage: (amount) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); const taken = game.world.player.damage(amount, game.world.tick); game.view.update(1); return taken; },
+      act: (action) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.act(action, game.world.tick); game.view.update(1); },
+      checkpoint: (pos) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.setCheckpoint(pos); },
     },
     setLoadout: () => pending('E05', 'setLoadout'),
     cheats: { god: () => pending('E05', 'cheats.god'), infiniteCharges: () => pending('E05', 'cheats.infiniteCharges'), killAll: () => pending('E07', 'cheats.killAll'), completeObjective: () => pending('E12', 'cheats.completeObjective') },
