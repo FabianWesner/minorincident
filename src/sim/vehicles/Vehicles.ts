@@ -35,24 +35,22 @@ export class Vehicles {
       drive.throttle = drive.steer = 0; drive.brake = true; drive.boost = false;
       if (this.active === car.entity.id && frame.right.down) this.exit(car);
       if (car.entity.health.current > 0 && this.active === car.entity.id) {
-        if (this.active === car.entity.id) {
-          if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
-            drive.throttle = frame.drive?.throttle ?? frame.move.x;
-            drive.steer = frame.drive?.steer ?? -frame.move.z;
-            drive.brake = frame.brake ?? false;
-          } else {
-            const dx = scheme === 'mouse-only' ? (frame.aimPoint?.x ?? player.transform.x) - player.transform.x : frame.move.x;
-            const dz = scheme === 'mouse-only' ? (frame.aimPoint?.z ?? player.transform.z) - player.transform.z : frame.move.z;
-            const distance = Math.hypot(dx, dz), angle = Math.atan2(-dz, dx);
-            const delta = Math.atan2(Math.sin(angle - car.entity.transform.yaw), Math.cos(angle - car.entity.transform.yaw));
-            drive.steer = Math.max(-1, Math.min(1, delta * 2));
-            drive.throttle = scheme === 'mouse-only' ? Math.min(1, Math.max(0, (distance - 1.2) / 2.8)) : Math.min(1, distance);
-            drive.brake = distance < (scheme === 'mouse-only' ? 1.2 : .05) || !!frame.brake;
-          }
-          drive.boost = frame.left.held;
-          if (frame.left.down || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
-          if (state.recoveringUntil > this.world.tick) { drive.throttle = -.8; drive.steer = .6; drive.brake = false; }
+        if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
+          drive.throttle = frame.drive?.throttle ?? frame.move.x;
+          drive.steer = frame.drive?.steer ?? -frame.move.z;
+          drive.brake = frame.brake ?? false;
+        } else {
+          const dx = scheme === 'mouse-only' ? (frame.aimPoint?.x ?? player.transform.x) - player.transform.x : frame.move.x;
+          const dz = scheme === 'mouse-only' ? (frame.aimPoint?.z ?? player.transform.z) - player.transform.z : frame.move.z;
+          const distance = Math.hypot(dx, dz), angle = Math.atan2(-dz, dx);
+          const delta = Math.atan2(Math.sin(angle - car.entity.transform.yaw), Math.cos(angle - car.entity.transform.yaw));
+          drive.steer = Math.max(-1, Math.min(1, delta * 2));
+          drive.throttle = scheme === 'mouse-only' ? Math.min(1, Math.max(0, (distance - 1.2) / 2.8)) : Math.min(1, distance);
+          drive.brake = distance < (scheme === 'mouse-only' ? 1.2 : .05) || !!frame.brake;
         }
+        drive.boost = frame.left.held;
+        if (frame.left.down || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
+        if (state.recoveringUntil > this.world.tick) { drive.throttle = -.8; drive.steer = .6; drive.brake = false; }
       } else if (this.active === null && player.health.current > 0 && car.entity.health.current > 0 && this.world.tick >= car.noEnterUntil && car.physics.speed < 1) {
         this.localPoint(car, .2, car.physics.def.width / 2 + .55);
         const near = Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= .7;
