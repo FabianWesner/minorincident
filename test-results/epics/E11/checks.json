@@ -1,0 +1,58 @@
+{
+  "target": "E11",
+  "epics": [
+    "E11"
+  ],
+  "pattern": "@(?:E11)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E11)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E11/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@(?:E11)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+      ],
+      "exitCode": 0
+    }
+  ]
+}

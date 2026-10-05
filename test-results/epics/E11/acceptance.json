@@ -1,0 +1,252 @@
+{
+  "sourceCommit": "cb91d5941b1df04a9bdb9eeffed3ac3603703241",
+  "allCriteriaPassed": true,
+  "criteria": {
+    "E11-AC01": [
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-01 @E11 @E11-AC01 ring fills, exit decays twice as fast and completion emits once",
+        "status": "passed"
+      },
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-01b @E11 @E11-AC01 instant input requires range and permission; nearest ring wins",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-01 @E11 @E11-AC01 ring fills, exit decays twice as fast and completion emits once",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-01b @E11 @E11-AC01 instant input requires range and permission; nearest ring wins",
+        "status": "passed"
+      },
+      {
+        "report": "playwright-verify.json",
+        "file": "e2e/interact.spec.ts",
+        "test": "T-E11-01-keyboard @E11 @E11-AC01 real keyboard completes instantly and unload clears the prompt",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "report": "playwright-verify.json",
+        "file": "e2e/interact.spec.ts",
+        "test": "T-E11-01-middle-click @E11 @E11-AC01 real middle-click completes instantly and unload clears the prompt",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E11-AC02": [
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-02 @E11 @E11-AC02 accepted damage floors progress to a 25% notch only on interruptible devices",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-02 @E11 @E11-AC02 accepted damage floors progress to a 25% notch only on interruptible devices",
+        "status": "passed"
+      }
+    ],
+    "E11-AC03": [
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-03 @E11 @E11-AC03 locked hint, key requirement, open/close and nav update in one tick",
+        "status": "passed"
+      },
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-composition @E11 @E11-AC03 authored district objects respect origin and open runtime collider/nav",
+        "status": "passed"
+      },
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-overlapping-nav @E11 @E11-AC03 @E11-AC07 overlapping blockers restore only originally walkable cells",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-03 @E11 @E11-AC03 locked hint, key requirement, open/close and nav update in one tick",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-composition @E11 @E11-AC03 authored district objects respect origin and open runtime collider/nav",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-overlapping-nav @E11 @E11-AC03 @E11-AC07 overlapping blockers restore only originally walkable cells",
+        "status": "passed"
+      }
+    ],
+    "E11-AC04": [
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-04 @E11 @E11-AC04 propane waits 18 ticks, chains at 4m, damages player at 30% and props",
+        "status": "passed"
+      },
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-shared-damage @E11 @E11-AC04 environmental damage respects the existing combat god-mode switch",
+        "status": "passed"
+      },
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-chain-budget @E11 @E11-AC04 large chains honor eight blasts per sim second without dropping links",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-04 @E11 @E11-AC04 propane waits 18 ticks, chains at 4m, damages player at 30% and props",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-shared-damage @E11 @E11-AC04 environmental damage respects the existing combat god-mode switch",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-chain-budget @E11 @E11-AC04 large chains honor eight blasts per sim second without dropping links",
+        "status": "passed"
+      }
+    ],
+    "E11-AC05": [
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-05 @E11 @E11-AC05 a real bullet triggers a 20m/10s alarm and nearby infected target the car",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-05 @E11 @E11-AC05 a real bullet triggers a 20m/10s alarm and nearby infected target the car",
+        "status": "passed"
+      }
+    ],
+    "E11-AC06": [
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-molotov @E11 @E11-AC06 E06 thrown fire ignites E11 wood and respects its burn time",
+        "status": "passed"
+      },
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-06 @E11 @E11-AC06 fire ignites adjacent wood within 3s and burns out after authored burn time",
+        "status": "passed"
+      },
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-fire-radius @E11 @E11-AC06 authored fire-zone radius governs spread and expired fires stop igniting",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-molotov @E11 @E11-AC06 E06 thrown fire ignites E11 wood and respects its burn time",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-06 @E11 @E11-AC06 fire ignites adjacent wood within 3s and burns out after authored burn time",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-fire-radius @E11 @E11-AC06 authored fire-zone radius governs spread and expired fires stop igniting",
+        "status": "passed"
+      }
+    ],
+    "E11-AC07": [
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-07 @E11 @E11-AC07 real melee destroys fence, opens nav, physics debris is capped and expires after 8s",
+        "status": "passed"
+      },
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-breakables @E11 @E11-AC07 every light prop breaks once and pooled debris stays bounded",
+        "status": "passed"
+      },
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-cosmetic-debris @E11 @E11-AC07 pooled pieces collide with the ground and do not obstruct the survivor",
+        "status": "passed"
+      },
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-overlapping-nav @E11 @E11-AC03 @E11-AC07 overlapping blockers restore only originally walkable cells",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-07 @E11 @E11-AC07 real melee destroys fence, opens nav, physics debris is capped and expires after 8s",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-breakables @E11 @E11-AC07 every light prop breaks once and pooled debris stays bounded",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-cosmetic-debris @E11 @E11-AC07 pooled pieces collide with the ground and do not obstruct the survivor",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-overlapping-nav @E11 @E11-AC03 @E11-AC07 overlapping blockers restore only originally walkable cells",
+        "status": "passed"
+      }
+    ],
+    "E11-AC08": [
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-08 @E11 @E11-AC08 pickups apply exact effects once; health caps and objective items persist",
+        "status": "passed"
+      },
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-08b @E11 @E11-AC08 full/unsupported pickups wait, dead players cannot collect; respawn keeps inventory",
+        "status": "passed"
+      },
+      {
+        "report": "all-sim.json",
+        "test": "T-E11-weapon-bridge @E11 @E11-AC08 full catalog pickups reuse E06 replacement and drop arming",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-08 @E11 @E11-AC08 pickups apply exact effects once; health caps and objective items persist",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-08b @E11 @E11-AC08 full/unsupported pickups wait, dead players cannot collect; respawn keeps inventory",
+        "status": "passed"
+      },
+      {
+        "report": "vitest.json",
+        "test": "T-E11-weapon-bridge @E11 @E11-AC08 full catalog pickups reuse E06 replacement and drop arming",
+        "status": "passed"
+      }
+    ],
+    "E11-AC09": [
+      {
+        "report": "playwright-verify.json",
+        "file": "visual/interact.spec.ts",
+        "test": "T-E11-09-desktop @E11 @E11-AC09 @visual interact-ui is readable above world at every tier",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "report": "playwright-verify.json",
+        "file": "visual/interact.spec.ts",
+        "test": "T-E11-09-mobile @E11 @E11-AC09 @visual interact-ui is readable above world at every tier",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ]
+  }
+}

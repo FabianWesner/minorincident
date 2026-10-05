@@ -1,0 +1,125 @@
+
+> verify
+> tsx tools/verify.ts E11
+
+
+Verifying E11: npm run typecheck
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+Verifying E11: npm run lint
+
+> lint
+> eslint src tests tools *.config.ts eslint.config.js
+
+
+Verifying E11: npm run build
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 160 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                 0.76 kB │ gzip:     0.40 kB
+dist/preview/index.html                         1.10 kB │ gzip:     0.60 kB
+dist/assets/basis_transcoder-o4Hde_L7.js       57.53 kB
+dist/assets/basis_transcoder-VXdx5NbI.wasm    527.33 kB │ gzip:   247.62 kB
+dist/assets/index-_9wkKMfS.css                  0.75 kB │ gzip:     0.40 kB
+dist/assets/crowdProbe-IPxcLu2Q.js              1.28 kB │ gzip:     0.75 kB
+dist/assets/testApi-D360SWXx.js                 4.23 kB │ gzip:     1.70 kB
+dist/assets/Pickups-BcBi2pAo.js                22.63 kB │ gzip:     7.16 kB
+dist/assets/index-Cf1FYoYv.js                  25.91 kB │ gzip:     7.05 kB
+dist/assets/index-DtDaXojU.js                 155.66 kB │ gzip:    44.81 kB
+dist/assets/three.module-DZtQj_Lg.js          265.93 kB │ gzip:    71.16 kB
+dist/assets/registry-BhCEuxLV.js              984.81 kB │ gzip:   256.51 kB
+dist/assets/rapier-DstIs6Rl.js              4,322.52 kB │ gzip: 1,641.14 kB
+✓ built in 3.27s
+
+Verifying E11: npx vitest run -t @(?:E11)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --reporter=default --reporter=json --outputFile=test-results/epics/E11/vitest.json
+
+ RUN  v5.0.3 /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e11-epic
+
+ ↓ tests/sim/districts.test.ts (2 tests | 2 skipped)
+ ↓ tests/sim/player.test.ts (8 tests | 8 skipped)
+ ✓ tests/sim/combat/combat.test.ts (19 tests | 18 skipped) 208ms
+ ↓ tests/sim/recorder.test.ts (1 test | 1 skipped)
+ ✓ tests/sim/determinism.test.ts (3 tests | 2 skipped) 354ms
+   ✓ S-05-foundation @smoke empty scripted 1800-tick golden hash 352ms
+ ↓ tests/sim/runner.test.ts (1 test | 1 skipped)
+ ✓ tests/sim/combat/balance.test.ts (3 tests | 2 skipped) 428ms
+   ✓ S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash 427ms
+ ↓ tests/unit/static.test.ts (1 test | 1 skipped)
+ ↓ tests/sim/weapons.test.ts (69 tests | 69 skipped)
+ ↓ tests/unit/setup.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/traceability.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/survivor.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/import-graph.test.ts (2 tests | 2 skipped)
+ ✓ tests/sim/interact/devices.test.ts (5 tests) 364ms
+ ↓ tests/unit/core/foundation.test.ts (4 tests | 4 skipped)
+ ↓ tests/unit/assets/build.test.ts (2 tests | 2 skipped)
+ ✓ tests/sim/interact/pickups.test.ts (3 tests) 725ms
+   ✓ T-E11-08 @E11 @E11-AC08 pickups apply exact effects once; health caps and objective items persist 692ms
+ ✓ tests/sim/interact/hazards.test.ts (11 tests) 1173ms
+   ✓ T-E11-04 @E11 @E11-AC04 propane waits 18 ticks, chains at 4m, damages player at 30% and props 413ms
+ ↓ tests/unit/assets/crowd.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/assets/png-pixels.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/assets/optimize.test.ts (10 tests | 10 skipped)
+ ↓ tests/unit/assets/production-gates.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/assets/references.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/assets/validate.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/assets/registry.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/combat/events.test.ts (1 test | 1 skipped)
+ ✓ tests/sim/interact/integration.test.ts (4 tests) 1803ms
+   ✓ T-E11-composition @E11 @E11-AC03 authored district objects respect origin and open runtime collider/nav 325ms
+   ✓ T-E11-perf @E11 @perf 100 infected and 200 flammable props stay below 6ms sim p95; debris remains <=32 1389ms
+ ↓ tests/unit/combat/loadout.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/data/actions.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/data/action-assets.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/render/view.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/input/bindings.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/render/palette.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/input/buttons.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/input/wheel.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/layouts/build.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/layouts/crossval.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/layouts/districts.test.ts (4 tests | 4 skipped)
+ ↓ tests/unit/layouts/visual-bounds.test.ts (1 test | 1 skipped)
+
+ Test Files  7 passed | 32 skipped (39)
+      Tests  26 passed | 169 skipped (195)
+   Start at  01:09:10
+   Duration  4.09s (tests 46%, import 30%, transform 22%, worker 2%)
+
+     Import  151 modules were evaluated 737 times · 3.33s total, 30% of tracked time
+             ~452ms faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+JSON report written to /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e11-epic/test-results/epics/E11/vitest.json
+
+Verifying E11: sh tools/e2e-lock.sh npx playwright test --grep @(?:E11)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$)
+
+Running 16 tests using 2 workers
+
+  ✓   2 [chromium] › tests/e2e/interact.spec.ts:3:3 › T-E11-01-middle-click @E11 @E11-AC01 real middle-click completes instantly and unload clears the prompt (6.4s)
+  ✓   1 [chromium] › tests/e2e/interact.spec.ts:3:3 › T-E11-01-keyboard @E11 @E11-AC01 real keyboard completes instantly and unload clears the prompt (6.5s)
+  ✓   3 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.1s)
+  ✓   4 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (3.7s)
+  ✓   6 [chromium] › tests/visual/interact.spec.ts:7:3 › T-E11-09-mobile @E11 @E11-AC09 @visual interact-ui is readable above world at every tier (2.0m)
+  ✓   5 [chromium] › tests/visual/interact.spec.ts:7:3 › T-E11-09-desktop @E11 @E11-AC09 @visual interact-ui is readable above world at every tier (2.0m)
+  ✓   7 [pixel-7] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.2s)
+  ✓   8 [pixel-7] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (3.3s)
+  ✓   9 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.0s)
+  ✓  10 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.8s)
+  ✓  11 [iphone-14] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.9s)
+  ✓  13 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.9s)
+  ✓  12 [iphone-14] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (3.0s)
+  ✓  14 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.2s)
+  ✓  15 [webkit] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.2s)
+  ✓  16 [webkit] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.2s)
+
+  16 passed (2.4m)
