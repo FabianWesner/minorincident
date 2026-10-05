@@ -38,7 +38,7 @@ def mat(token, color, rough=.45, metal=0, emission=0, alpha=1):
 
 # Palette colors retain material identity; the blue starts from policeBlue.
 mat('policeBlue','4167c0',.46,.05)
-M['policeBlue'].node_tree.nodes['Principled BSDF'].inputs['Specular IOR Level'].default_value=.18
+M['policeBlue'].node_tree.nodes['Principled BSDF'].inputs['Specular IOR Level'].default_value=.05
 M['policeBlue'].node_tree.nodes['Principled BSDF'].inputs['Coat Weight'].default_value=0
 mat('uiDark','25222c',.6)
 mat('asphalt','5b4f5c',.42,.35)
@@ -85,6 +85,18 @@ def panel(name, vs, token, group='body', thickness=.012):
     back=[tuple(Vector(v)-normal*thickness) for v in vs]
     return mesh(name,vs+back,[tuple(range(n)),tuple(range(n,2*n))]+[(i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n)],token,group,.005)
 
+def frame(name, vs, token, group='body'):
+    # A hollow window seal, leaving a real opening into the cabin.
+    center=sum((Vector(v) for v in vs),Vector())/len(vs)
+    inner=[tuple(center+(Vector(v)-center)*.88) for v in vs]
+    normal=(Vector(vs[1])-Vector(vs[0])).cross(Vector(vs[2])-Vector(vs[0])).normalized()
+    front=vs+inner; back=[tuple(Vector(v)-normal*.022) for v in front]
+    faces=[]
+    for i in range(4):
+        j=(i+1)%4
+        faces.extend([(i,j,j+4,i+4),(i+8,i+12,j+12,j+8),(i,i+8,j+8,j),(i+4,j+4,j+12,i+12)])
+    return mesh(name,front+back,faces,token,group,.004)
+
 def beam(name,start,end,width,token,group='body'):
     mid=(Vector(start)+Vector(end))/2; length=(Vector(end)-Vector(start)).length
     o=box(name,(0,0,0),(width,width,length),token,group,width*.22)
@@ -117,7 +129,7 @@ for s in [-1,1]:
 for tag,bl,tl in [('windshield',1.00,.57),('rearGlass',-1.35,-1.035)]:
     offset=.012 if tag=='windshield' else -.012
     v=[(bl,-.805,1.145),(bl,.805,1.145),(tl,.695,1.60),(tl,-.695,1.60)]
-    panel(tag+' seal',v,'uiDark',thickness=.03)
+    frame(tag+' seal',v,'uiDark')
     v=[(bl+offset,-.753,1.171),(bl+offset,.753,1.171),(tl+offset,.65,1.565),(tl+offset,-.65,1.565)]
     panel(tag,v,'backpackTeal')
 # Four complete separate door assemblies; origins at front hinges.
@@ -133,7 +145,7 @@ for s,suffix in [(-1,'L'),(1,'R')]:
         window=[(x0+.03,1.17),(x1-.035,1.17),(.55 if front else -.19,1.575),(-.075 if front else -1.015,1.575)]
         # tapered cabin y follows height; seals and glazing are distinct slabs.
         verts=[(x,s*(.853-(z-1.17)*.31),z) for x,z in window]
-        panel('door window gasket',verts,'uiDark',g,.024)
+        frame('door window gasket',verts,'uiDark',g)
         cx=sum(x for x,z in window)/4; cz=sum(z for x,z in window)/4
         inner=[(cx+(x-cx)*.89,cz+(z-cz)*.86) for x,z in window]
         panel('door glazing',[(x,s*(.866-(z-1.17)*.31),z) for x,z in inner],'backpackTeal',g)
@@ -201,7 +213,7 @@ for s in [-1,1]:
     for pos,token in [('headlight','light_led_white'),('brake','light_siren_red')]:
         e=empty('light:'+pos+('L' if s<0 else 'R'),((2.17 if pos=='headlight' else -2.17),s*.60,.88),root)
         e.rotation_euler=(Vector((1,0,-.12)) if pos=='headlight' else Vector((-1,0,0))).to_track_quat('-Z','Y').to_euler()
-        e['ss_light']=json.dumps({'type':'spot' if pos=='headlight' else 'point','color':token,'intensity':1.5,'range':14 if pos=='headlight' else 2,'angle':48,'penumbra':.35,'pool':True,'beam':'soft' if pos=='headlight' else 'none','shadow':'hero','powerGroup':'self','emissiveNodes':['lightsFront' if pos=='headlight' else 'lightsBrake']})
+        e['ss_light']=json.dumps({'type':'spot' if pos=='headlight' else 'point','color':token,'intensity':1.5,'range':14 if pos=='headlight' else 2,'angle':48,'penumbra':.35,'pool':True,'beam':'soft' if pos=='headlight' else 'none','shadow':'hero','powerGroup':'self','emissiveNodes':(['lightsFront_windowGlow','lightsFront_schoolBusYellow'] if pos=='headlight' else ['lightsBrake_sirenRed','lightsBrake_schoolBusYellow'])})
 box('rear trunk handle',(-2.122,0,1.016),(.035,.17,.038),'sidewalk',bevel=.008)
 beam('exhaust',(-1.85,.56,.29),(-2.21,.56,.29),.082,'asphalt')
 box('exhaust opening',(-2.254,.56,.29),(.008,.052,.049),'uiDark',bevel=.014)
@@ -255,8 +267,8 @@ if a.lod:
 triangles=0
 for o in meshes:
     o.data.calc_loop_triangles(); triangles+=len(o.data.loop_triangles)
-report={'id':'veh.sedan-blue','tier':'Hero','triangles':triangles,'draw_calls':len(meshes),'materials':sorted(m.name for m in M.values()),'nodes_ok':all(n in groups for n in ['body','wheelFL','wheelFR','wheelRL','wheelRR','lightsFront','lightsBrake','driverSeat','exitL','exitR']),'within_budget':triangles<=80000 and len(meshes)<=40,'rounds':3,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
-(HERE/'metrics.json').write_text(json.dumps(report,indent=2)+'\n')
+report={'id':'veh.sedan-blue','tier':'Hero','triangles':triangles,'draw_calls':len(meshes),'materials':sorted(m.name for m in M.values()),'nodes_ok':all(n in groups for n in ['body','wheelFL','wheelFR','wheelRL','wheelRR','lightsFront','lightsBrake','driverSeat','exitL','exitR']),'within_budget':triangles<=80000 and len(meshes)<=40,'rounds':4,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
+(HERE/('metrics.json' if not a.lod else f'metrics.lod{a.lod}.json')).write_text(json.dumps(report,indent=2)+'\n')
 if a.glb:
     bpy.ops.object.select_all(action='SELECT')
     bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
