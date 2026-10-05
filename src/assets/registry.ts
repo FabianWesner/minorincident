@@ -1,77 +1,73 @@
-import { Group, Mesh, type BufferGeometry, type Material } from "three/webgpu";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import type { PaletteToken } from "../data/palette";
-import { paletteTokens } from "../data/palette";
-import type { Materials } from "../render/Materials";
-import { placeholder } from "./placeholders";
-import manifest from "./manifest.json";
-/** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
+// Adapted from Bruno Simon's ResourcesLoader (MIT): loaders + promise cache.
+import { Group, type Object3D, type WebGPURenderer } from 'three/webgpu';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import manifest from './manifest.json';
+import { atLeast, variantPath, type AssetDef, type AssetQuality } from './types';
+import { placeholder } from './placeholders';
+import { AssetMaterials } from './materials';
+
+export type PlaceholderLog = { type: 'asset.placeholder'; id: string; reason: string };
+type Loader = (url: string) => Promise<Object3D>;
+/** LOD selection is based on projected height; callers update only when the tier changes. */
+export function lodForScreenHeight(pixels: number): 'lod0' | 'lod1' | 'lod2' { return pixels >= 160 ? 'lod0' : pixels >= 40 ? 'lod1' : 'lod2'; }
 export class AssetRegistry {
-  private readonly loader = new GLTFLoader();
-  private readonly cache = new Map<string, Promise<Group>>();
-  private readonly geometries = new Set<BufferGeometry>();
-  constructor(private readonly materials: Materials) {}
-  private remember(root: Group): Group {
-    root.traverse((o) => {
-      if (o instanceof Mesh) this.geometries.add(o.geometry);
+  private readonly definitions: Map<string, AssetDef>;
+  private readonly cache = new Map<string, Promise<Object3D>>();
+  private readonly materials = new AssetMaterials();
+  private readonly ktx?: KTX2Loader;
+  private readonly load: Loader;
+  constructor(private readonly log: (event: PlaceholderLog) => void, options: { manifest?: AssetDef[]; load?: Loader; renderer?: WebGPURenderer } = {}) {
+    this.definitions = new Map((options.manifest ?? manifest as AssetDef[]).map((a) => [a.id, a]));
+    const gltf = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+    if (options.renderer) {
+      this.ktx = new KTX2Loader().detectSupport(options.renderer);
+      gltf.setKTX2Loader(this.ktx);
+    }
+    this.load = options.load ?? (async (url) => {
+      const parsed = await gltf.loadAsync(url);
+      // GLTFLoader sanitizes ':' and '.' for animation binding; restore contract IDs.
+      parsed.scene.traverse((node) => {
+        const index = parsed.parser.associations.get(node)?.nodes;
+        if (index !== undefined) node.name = parsed.parser.json.nodes[index].name ?? node.name;
+      });
+      return parsed.scene;
     });
-    return root;
   }
-  async glb(url: string, lit = true): Promise<Group> {
-    const key = `${url}:${lit}`;
-    if (!this.cache.has(key))
-      this.cache.set(
-        key,
-        this.loader
-          .loadAsync(url)
-          .then(({ scene }) => {
-            scene.traverse((o) => {
-              if (!(o instanceof Mesh)) return;
-              const remap = (m: Material) => {
-                const token = m.name.replace(/^(pal|emi)_/, "") as PaletteToken;
-                if (!paletteTokens.includes(token))
-                  throw new Error(
-                    `Unknown palette material ${m.name} in ${url}`,
-                  );
-                const emi = m.name.startsWith("emi_");
-                m.dispose();
-                return this.materials.get(
-                  emi && !lit ? "backpackTeal" : token,
-                  emi && lit ? 2 : 0,
-                );
-              };
-              o.material = Array.isArray(o.material)
-                ? o.material.map(remap)
-                : remap(o.material);
-              o.castShadow = true;
-              o.receiveShadow = true;
-            });
-            return this.remember(scene);
-          })
-          .catch((e) => {
-            this.cache.delete(key);
-            throw e;
-          }),
-      );
-    return this.cache.get(key)!;
+  definition(id: string): AssetDef { const def = this.definitions.get(id); if (!def) throw new Error(`Unknown asset ID ${id}`); return def; }
+  async loadAsset(id: string, quality: AssetQuality = 'high', decay?: string): Promise<Object3D> {
+    const def = this.definition(id), lod = quality === 'high' ? 'lod0' : quality === 'low' ? 'lod1' : quality;
+    if (decay && !def.decayVariants.includes(decay)) throw new Error(`Unknown decay variant ${id}:${decay}`);
+    const key = `${id}:${lod}:${decay ?? ''}`;
+    let pending = this.cache.get(key);
+    if (!pending) {
+      pending = this.prototype(def, lod, decay); this.cache.set(key, pending);
+    }
+    return (await pending).clone(true);
   }
-  async asset(id: string, lit = true): Promise<Group> {
-    const def = manifest[id as keyof typeof manifest];
-    if (!def) throw new Error(`Unknown asset: ${id}`);
-    // Only integrated/final assets may replace a code placeholder. All current E10 entries are placeholders.
-    if (["integrated", "final"].includes(def.status))
-      return this.glb(def.glb, lit);
-    const key = `${id}:${lit}`;
-    if (!this.cache.has(key))
-      this.cache.set(
-        key,
-        Promise.resolve(this.remember(placeholder(def, this.materials, lit))),
-      );
-    return this.cache.get(key)!;
+  private async prototype(def: AssetDef, lod: 'lod0' | 'lod1' | 'lod2', decay?: string): Promise<Object3D> {
+    const fallback = (reason: string): Group => { this.log({ type: 'asset.placeholder', id: def.id, reason }); return placeholder(def); };
+    if (!atLeast(def.status, 'integrated')) return fallback(`status ${def.status}`);
+    const path = lod === 'lod0' ? def.glb : def.lods?.[lod];
+    if (!path) return fallback(`missing ${lod}`);
+    try {
+      const root = await this.load('/' + variantPath(path,decay).replace(/^public\//, ''));
+      for (const name of [...def.requiredNodes, ...def.animatedNodes, ...def.sockets]) if (!root.getObjectByName(name)) throw new Error(`missing node ${name}`);
+      root.traverse((node) => { if (node.name.startsWith('stump_') || node.userData.hidden) node.visible = false; });
+      this.materials.swap(root);
+      return root;
+    } catch (error) { return fallback(String(error)); }
   }
-  dispose(): void {
-    for (const geometry of this.geometries) geometry.dispose();
-    this.geometries.clear();
-    this.cache.clear();
+  async dispose(): Promise<void> {
+    const geometries = new Set<import('three').BufferGeometry>(), materials = new Set<import('three').Material>();
+    for (const pending of this.cache.values()) (await pending).traverse((node) => {
+      const mesh = node as import('three').Mesh;
+      if (mesh.geometry) geometries.add(mesh.geometry);
+      if (mesh.material) for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
+    });
+    for (const geometry of geometries) geometry.dispose();
+    for (const material of materials) material.dispose();
+    this.cache.clear(); this.materials.dispose(); this.ktx?.dispose();
   }
 }

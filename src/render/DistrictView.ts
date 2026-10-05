@@ -14,7 +14,7 @@ import {
   type Material,
 } from "three/webgpu";
 import type { DistrictWorld } from "../sim/world/DistrictWorld";
-import type { AssetRegistry } from "../assets/registry";
+import type { DistrictAssets } from "../assets/DistrictAssets";
 import type { Materials } from "./Materials";
 import { InstancedGroup } from "./InstancedGroup";
 import { Grass, windPhase } from "./Grass";
@@ -37,7 +37,7 @@ export class DistrictView extends Group {
   constructor(
     readonly world: DistrictWorld,
     private readonly materials: Materials,
-    private readonly registry: AssetRegistry,
+    private readonly registry: DistrictAssets,
     readonly phase: ReturnType<typeof windPhase>,
     private readonly grassMaterial: ReturnType<typeof Grass.material>,
   ) {

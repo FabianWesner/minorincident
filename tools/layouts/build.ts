@@ -49,7 +49,7 @@ export function layoutSourceHash(id: string): string {
       ),
     ),
   ].sort();
-  const manifest = JSON.parse(readFileSync("src/assets/manifest.json", "utf8"));
+  const manifest = Object.fromEntries(JSON.parse(readFileSync("src/assets/manifest.json", "utf8")).map((asset: { id: string }) => [asset.id, asset]));
   for (const asset of ids) {
     const path = `assets/${asset}/model.glb`;
     hash
@@ -82,20 +82,8 @@ export function buildLayout(
   )
     return { rebuilt: false, sourceHash };
   const result = spawnSync(
-    process.env.BLENDER_BIN ??
-      "/Applications/Blender.app/Contents/MacOS/Blender",
-    [
-      "-b",
-      "-t",
-      "4",
-      "--python-exit-code",
-      "1",
-      "--factory-startup",
-      "-P",
-      "tools/blender/build_layout.py",
-      "--",
-      id,
-    ],
+    "python3",
+    ["tools/blender/run.py", "tools/blender/build_layout.py", id],
     { encoding: "utf8", env: { ...process.env, PYTHONHASHSEED: "0" } },
   );
   if (result.status !== 0 || !outputs.every(existsSync))
@@ -110,7 +98,7 @@ if (
   process.argv[1] &&
   resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
-  const id = process.argv[2];
+  const id = process.argv.slice(2).find((arg) => !arg.startsWith("--"));
   for (const district of id && id !== "--changed" ? [id] : districts)
     console.log(
       district,

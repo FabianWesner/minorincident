@@ -5,7 +5,8 @@
 coordinates: metres, +Y up, +X forward. Base and W1–W5 geometry are merged by palette material;
 removable base nodes keep their names. Build with `npm run layouts:build -- D-RES` (all districts
 if no ID), or force a deterministic rebuild with `--force`. Preview with
-`python3 tools/blender/render_preview.py --layout D-RES`.
+`python3 tools/blender/render_preview.py --layout D-RES`. Builds and previews use E17’s
+shared headless runner, including its process and Cycles limits.
 
 The committed layout JSON is the gameplay source for bounds, roads/lanes, footprints,
 collider AABBs, excluded walkable regions, lawn masks, named anchors, acoustic presets,
@@ -32,9 +33,9 @@ are `<district>/W<tier>/<overview|landmark>`. `settings.set({windowMask:true})` 
 probe-only white-window/black-world pass for measured decay. `perf().loadTiming` splits JSON,
 simulation and view load costs. Missions, progression and checkpoints retain explicit stubs.
 
-Render uses the existing Bruno-adapted `InstancedGroup`. For full-world budgets, the survivor
-merges rigid meshes within each animated joint and bakes authored swatches into vertex colors;
-joints, gear sockets, motion and shadows remain intact. Other character fixtures keep their existing mode. Asset prototypes and palette
+Render uses the existing Bruno-adapted `InstancedGroup` and E04 character presentation.
+`DistrictAssets` caches layout GLBs and styled code placeholders using the canonical E17
+manifest dimensions; integrated assets load through E17’s registry. Asset prototypes and palette
 materials are shared across reloads; per-level instance buffers, grass geometry, signs,
 emitter views and physics are disposed on unload. Placeholder assets remain in use until
 manifest status reaches `integrated` or `final`. Lawn grass uses deterministic fixed placement

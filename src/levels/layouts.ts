@@ -6,7 +6,7 @@ import type {
   Tier,
 } from "./districts/types";
 import { validateLayout } from "./districts/validate";
-import manifest from "../assets/manifest.json";
+import { worldAssets as manifest } from "../assets/worldDefinitions";
 const cache = new Map<DistrictId, Promise<DistrictLayout>>();
 /** Load all selected districts before sim/render assembly. No background streaming during play. */
 export async function loadLayouts(

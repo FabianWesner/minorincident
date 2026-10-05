@@ -1,0 +1,90 @@
+{
+  "baseline": {
+    "fps": 4,
+    "frameMs": 250,
+    "simMs": 0,
+    "drawCalls": 1,
+    "triangles": 1,
+    "geometries": 1,
+    "textures": 2,
+    "entities": 0,
+    "backend": "webgl"
+  },
+  "loads": [
+    {
+      "fps": 1.7646020822304576,
+      "frameMs": 566.6999999999998,
+      "simMs": 0,
+      "drawCalls": 182,
+      "triangles": 62433,
+      "geometries": 90,
+      "textures": 18,
+      "entities": 1,
+      "backend": "webgl"
+    },
+    {
+      "fps": 1.8751171948246792,
+      "frameMs": 533.2999999999993,
+      "simMs": 0,
+      "drawCalls": 182,
+      "triangles": 62433,
+      "geometries": 90,
+      "textures": 18,
+      "entities": 1,
+      "backend": "webgl"
+    },
+    {
+      "fps": 1.8181818181818181,
+      "frameMs": 550,
+      "simMs": 0,
+      "drawCalls": 182,
+      "triangles": 62433,
+      "geometries": 90,
+      "textures": 18,
+      "entities": 1,
+      "backend": "webgl"
+    }
+  ],
+  "unloads": [
+    {
+      "fps": 2.857142857142857,
+      "frameMs": 350,
+      "simMs": 0,
+      "drawCalls": 1,
+      "triangles": 1,
+      "geometries": 1,
+      "textures": 2,
+      "entities": 0,
+      "backend": "webgl"
+    },
+    {
+      "fps": 60.24096385542697,
+      "frameMs": 16.599999999998545,
+      "simMs": 0,
+      "drawCalls": 1,
+      "triangles": 1,
+      "geometries": 1,
+      "textures": 2,
+      "entities": 0,
+      "backend": "webgl"
+    },
+    {
+      "fps": 59.523809523824994,
+      "frameMs": 16.799999999995634,
+      "simMs": 0,
+      "drawCalls": 1,
+      "triangles": 1,
+      "geometries": 1,
+      "textures": 2,
+      "entities": 0,
+      "backend": "webgl"
+    }
+  ],
+  "pausedCounts": {
+    "before": 182,
+    "after": 182
+  },
+  "cpuSubmissionMedianMs": 0.10000002384185791,
+  "cpuSubmissionP95Ms": 2.8000000715255737,
+  "note": "CPU submission timings only (asynchronous GPU work excluded); RAF frame counters are from paused SwiftShader captures, not a hardware FPS measurement."
+}

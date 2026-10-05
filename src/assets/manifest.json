@@ -1,408 +1,9509 @@
-{
-  "prop.tree": {
+[
+  {
+    "id": "char.survivor-male",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/char.survivor-male/build.py",
+    "glb": "public/assets/models/char.survivor-male.glb",
+    "sourceGlb": "assets/char.survivor-male/model.glb",
+    "dimensions": {
+      "x": 0.5459499955177307,
+      "y": 1.3985192775726318,
+      "z": 0.8251995146274567,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "char.survivor-female",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/char.survivor-female/build.py",
+    "glb": "public/assets/models/char.survivor-female.glb",
+    "sourceGlb": "assets/char.survivor-female/model.glb",
+    "dimensions": {
+      "x": 0.49503825046122074,
+      "y": 1.4101895559579134,
+      "z": 0.6668463051319122,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "char.corgi",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/char.corgi/build.py",
+    "glb": "public/assets/models/char.corgi.glb",
+    "sourceGlb": "assets/char.corgi/model.glb",
+    "dimensions": {
+      "x": 1.67207366530916,
+      "y": 0.9531968384981155,
+      "z": 0.8469999972730875,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "head",
+      "tail",
+      "legFL",
+      "legFR",
+      "legBL",
+      "legBR"
+    ],
+    "animatedNodes": [
+      "head",
+      "tail",
+      "legFL",
+      "legFR",
+      "legBL",
+      "legBR"
+    ],
+    "sockets": [
+      "packSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "equip.backpack-teal",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/equip.backpack-teal.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "equip.backpack-red",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/equip.backpack-red.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "equip.backpack-green",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/equip.backpack-green.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "equip.backpack-blue",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/equip.backpack-blue.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.common-worker",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/inf.common-worker/build.py",
+    "glb": "public/assets/models/inf.common-worker.glb",
+    "sourceGlb": "assets/inf.common-worker/model.glb",
+    "dimensions": {
+      "x": 0.8522652089595795,
+      "y": 1.6650989055633545,
+      "z": 1.217635691165924,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.jogger",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/inf.jogger/build.py",
+    "glb": "public/assets/models/inf.jogger.glb",
+    "sourceGlb": "assets/inf.jogger/model.glb",
+    "dimensions": {
+      "x": 0.9753881394863129,
+      "y": 1.7378920372575521,
+      "z": 0.8821343034505844,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.baseball-cap",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/inf.baseball-cap/build.py",
+    "glb": "public/assets/models/inf.baseball-cap.glb",
+    "sourceGlb": "assets/inf.baseball-cap/model.glb",
+    "dimensions": {
+      "x": 0.7588488608598709,
+      "y": 1.6723075211048126,
+      "z": 1.0381288528442383,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.suburban-mom",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/inf.suburban-mom/build.py",
+    "glb": "public/assets/models/inf.suburban-mom.glb",
+    "sourceGlb": "assets/inf.suburban-mom/model.glb",
+    "dimensions": {
+      "x": 0.5416581469294359,
+      "y": 1.5626188296928414,
+      "z": 0.873999834060669,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.delivery-driver",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/inf.delivery-driver/build.py",
+    "glb": "public/assets/models/inf.delivery-driver.glb",
+    "sourceGlb": "assets/inf.delivery-driver/model.glb",
+    "dimensions": {
+      "x": 1.0051109194755554,
+      "y": 1.6886346638202667,
+      "z": 1.0474485233426094,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.skater",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.skater.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.college-student",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/inf.college-student/build.py",
+    "glb": "public/assets/models/inf.college-student.glb",
+    "sourceGlb": "assets/inf.college-student/model.glb",
+    "dimensions": {
+      "x": 0.5043846163898706,
+      "y": 1.64644193649292,
+      "z": 0.8140000104904175,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.bbq-dad",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.bbq-dad.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.bbq-dad/model.glb",
+    "script": "assets/inf.bbq-dad/build.py"
+  },
+  {
+    "id": "inf.cashier",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.cashier.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.cashier/model.glb",
+    "script": "assets/inf.cashier/build.py"
+  },
+  {
+    "id": "inf.bathrobe-neighbor",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.bathrobe-neighbor.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.bathrobe-neighbor/model.glb"
+  },
+  {
+    "id": "inf.construction-worker",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.construction-worker.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.crawler",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/inf.crawler/build.py",
+    "glb": "public/assets/models/inf.crawler.glb",
+    "sourceGlb": "assets/inf.crawler/model.glb",
+    "dimensions": {
+      "x": 1.5008147731423378,
+      "y": 1.0542653462735276,
+      "z": 1.0496913194656372,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.corpse-poses",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.corpse-poses.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.riot-cop",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.riot-cop.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.hazmat",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.hazmat.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.firefighter",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.firefighter.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.bloated",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.bloated.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.bloated/model.glb"
+  },
+  {
+    "id": "inf.screamer",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.screamer.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.screamer/model.glb"
+  },
+  {
+    "id": "inf.sprinter",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.sprinter.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.sprinter/model.glb"
+  },
+  {
+    "id": "inf.armored-football",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.armored-football.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.butcher",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.butcher.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.nurse",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.nurse.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.brute",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/inf.brute/build.py",
+    "glb": "public/assets/models/inf.brute.glb",
+    "sourceGlb": "assets/inf.brute/model.glb",
+    "dimensions": {
+      "x": 0.9560014605522156,
+      "y": 2.2042266838252544,
+      "z": 2.0100095570087433,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "wpn.baseball-bat",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.baseball-bat.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.baseball-bat/model.glb",
+    "script": "assets/wpn.baseball-bat/build.py"
+  },
+  {
+    "id": "wpn.nail-bat",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.nail-bat.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.nail-bat/model.glb"
+  },
+  {
+    "id": "wpn.crowbar",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.crowbar.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.crowbar/model.glb",
+    "script": "assets/wpn.crowbar/build.py"
+  },
+  {
+    "id": "wpn.machete",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.machete.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.machete/model.glb",
+    "script": "assets/wpn.machete/build.py"
+  },
+  {
+    "id": "wpn.shovel",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.shovel.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "wpn.police-baton",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.police-baton.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "wpn.pistol",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.pistol.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.pistol/model.glb"
+  },
+  {
+    "id": "wpn.shotgun",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.shotgun.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.shotgun/model.glb"
+  },
+  {
+    "id": "wpn.nail-gun",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.nail-gun.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.nail-gun/model.glb"
+  },
+  {
+    "id": "thr.molotov",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/thr.molotov.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/thr.molotov/model.glb"
+  },
+  {
+    "id": "thr.pipe-bomb",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/thr.pipe-bomb.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/thr.pipe-bomb/model.glb"
+  },
+  {
+    "id": "thr.firecracker-lure",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/thr.firecracker-lure.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "pick.medkit",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/pick.medkit.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/pick.medkit/model.glb",
+    "script": "assets/pick.medkit/build.py"
+  },
+  {
+    "id": "pick.soda",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/pick.soda.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/pick.soda/model.glb",
+    "script": "assets/pick.soda/build.py"
+  },
+  {
+    "id": "pick.energy-drink",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/pick.energy-drink.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "pick.bandages",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/pick.bandages.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "pick.pistol-ammo",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/pick.pistol-ammo.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "pick.shotgun-ammo",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/pick.shotgun-ammo.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "pick.nail-ammo",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/pick.nail-ammo.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "util.flashlight",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/util.flashlight.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "util.radio",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/util.radio.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "util.keys",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/util.keys.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "util.batteries",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/util.batteries.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "util.lockpick-kit",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/util.lockpick-kit.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "haz.spike-barricade",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/haz.spike-barricade.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "haz.gas-can",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/haz.gas-can.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "haz.car-alarm",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/haz.car-alarm.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "haz.fuse-box",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/haz.fuse-box.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "haz.propane-tank",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/haz.propane-tank.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.shopping-cart",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.shopping-cart.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.folding-chair",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.folding-chair.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.fire-engine",
+    "category": "vehicle",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.fire-engine.glb",
+    "dimensions": {
+      "x": 7.4,
+      "y": 3.55,
+      "z": 2.1,
+      "tolerance": 0.05
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake",
+      "ladder",
+      "sirenL",
+      "sirenR"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "ladder",
+      "sirenL",
+      "sirenR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "script": "assets/veh.fire-engine/build.py",
+    "lods": {
+      "lod1": "public/assets/models/veh.fire-engine.lod1.glb",
+      "lod2": "public/assets/models/veh.fire-engine.lod2.glb"
+    }
+  },
+  {
+    "id": "veh.sedan-red",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/veh.sedan-red/build.py",
+    "glb": "public/assets/models/veh.sedan-red.glb",
+    "sourceGlb": "assets/veh.sedan-red/model.glb",
+    "lods": {
+      "lod1": "assets/veh.sedan-red/model.lod1.glb",
+      "lod2": "assets/veh.sedan-red/model.lod2.glb"
+    },
+    "dimensions": {
+      "x": 4.634000062942505,
+      "y": 1.6075001260067228,
+      "z": 2.2880001068115234,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "survivorRed",
+      "solid": true
+    }
+  },
+  {
+    "id": "veh.sedan-blue",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/veh.sedan-blue/build.py",
+    "glb": "public/assets/models/veh.sedan-blue.glb",
+    "sourceGlb": "assets/veh.sedan-blue/model.glb",
+    "dimensions": {
+      "x": 4.54200005531311,
+      "y": 1.6799999475479126,
+      "z": 2.1600000858306885,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "lods": {
+      "lod1": "assets/veh.sedan-blue/model.lod1.glb",
+      "lod2": "assets/veh.sedan-blue/model.lod2.glb"
+    }
+  },
+  {
+    "id": "veh.sedan-white",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/veh.sedan-white/build.py",
+    "glb": "public/assets/models/veh.sedan-white.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.sedan-white/model.glb",
+    "lods": {
+      "lod1": "assets/veh.sedan-white/model.lod1.glb",
+      "lod2": "assets/veh.sedan-white/model.lod2.glb"
+    }
+  },
+  {
+    "id": "veh.school-bus",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/veh.school-bus/build.py",
+    "glb": "public/assets/models/veh.school-bus.glb",
+    "sourceGlb": "assets/veh.school-bus/model.glb",
+    "lods": {
+      "lod1": "assets/veh.school-bus/model.lod1.glb",
+      "lod2": "assets/veh.school-bus/model.lod2.glb"
+    },
+    "dimensions": {
+      "x": 8.76300048828125,
+      "y": 3.728499948978424,
+      "z": 3.5999999046325684,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.suv-dark",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.suv-dark.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.pickup-red",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/veh.pickup-red/build.py",
+    "glb": "public/assets/models/veh.pickup-red.glb",
+    "sourceGlb": "assets/veh.pickup-red/model.glb",
+    "lods": {
+      "lod1": "assets/veh.pickup-red/model.lod1.glb",
+      "lod2": "assets/veh.pickup-red/model.lod2.glb"
+    },
+    "dimensions": {
+      "x": 5.120999574661255,
+      "y": 2.2342242002487183,
+      "z": 2.549999952316284,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.pickup-white",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.pickup-white.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.sedan-green",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.sedan-green.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.suv-green",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.suv-green.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.police-sedan",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/veh.police-sedan/build.py",
+    "glb": "public/assets/models/veh.police-sedan.glb",
+    "sourceGlb": "assets/veh.police-sedan/model.glb",
+    "lods": {
+      "lod1": "assets/veh.police-sedan/model.lod1.glb",
+      "lod2": "assets/veh.police-sedan/model.lod2.glb"
+    },
+    "dimensions": {
+      "x": 5.437000036239624,
+      "y": 1.9294999986886978,
+      "z": 2.320000112056732,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.police-suv",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.police-suv.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.ambulance",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/veh.ambulance/build.py",
+    "glb": "public/assets/models/veh.ambulance.glb",
+    "sourceGlb": "assets/veh.ambulance/model.glb",
+    "lods": {
+      "lod1": "assets/veh.ambulance/model.lod1.glb",
+      "lod2": "assets/veh.ambulance/model.lod2.glb"
+    },
+    "dimensions": {
+      "x": 6.658999681472778,
+      "y": 3.3754999339580536,
+      "z": 2.740000009536743,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.jeep-red",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.jeep-red.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.stop-here-sign-trailer",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.stop-here-sign-trailer.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.house-a",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.house-a.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.house-a/model.glb",
+    "script": "assets/bld.house-a/build.py",
+    "lods": {
+      "lod1": "assets/bld.house-a/model.lod1.glb",
+      "lod2": "assets/bld.house-a/model.lod2.glb"
+    },
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.house-b",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.house-b.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.house-b/model.glb",
+    "script": "assets/bld.house-b/build.py",
+    "lods": {
+      "lod1": "assets/bld.house-b/model.lod1.glb",
+      "lod2": "assets/bld.house-b/model.lod2.glb"
+    },
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.house-c",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/bld.house-c/build.py",
+    "glb": "public/assets/models/bld.house-c.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.house-c/model.glb",
+    "lods": {
+      "lod1": "assets/bld.house-c/model.lod1.glb",
+      "lod2": "assets/bld.house-c/model.lod2.glb"
+    },
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.safe-house",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.safe-house.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.porch-stairs",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/kit.porch-stairs.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/kit.porch-stairs/model.glb",
+    "script": "assets/kit.porch-stairs/build.py"
+  },
+  {
+    "id": "bld.shed",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.shed.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.joes-diner",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.joes-diner.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.joes-diner/model.glb",
+    "script": "assets/bld.joes-diner/build.py",
+    "lods": {
+      "lod1": "assets/bld.joes-diner/model.lod1.glb",
+      "lod2": "assets/bld.joes-diner/model.lod2.glb"
+    }
+  },
+  {
+    "id": "bld.gas-station",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.gas-station.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.maple-hardware",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.maple-hardware.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.mainstreet-brick",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.mainstreet-brick.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.mainstreet-brick/model.glb",
+    "script": "assets/bld.mainstreet-brick/build.py",
+    "lods": {
+      "lod1": "assets/bld.mainstreet-brick/model.lod1.glb",
+      "lod2": "assets/bld.mainstreet-brick/model.lod2.glb"
+    }
+  },
+  {
+    "id": "bld.bus-stop",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/bld.bus-stop/build.py",
+    "glb": "public/assets/models/bld.bus-stop.glb",
+    "sourceGlb": "assets/bld.bus-stop/model.glb",
+    "dimensions": {
+      "x": 2.0414009504020214,
+      "y": 2.6750000715255737,
+      "z": 4.969200611114502,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "int.diner",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/int.diner.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.school-elementary",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.school-elementary.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "int.gym-cafeteria",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/int.gym-cafeteria.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.playground",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/kit.playground.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "int.supermarket",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/int.supermarket.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "int.mini-mall",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/int.mini-mall.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "int.food-court",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/int.food-court.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "int.pharmacy-clinic",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/int.pharmacy-clinic.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/int.pharmacy-clinic/model.glb",
+    "script": "assets/int.pharmacy-clinic/build.py"
+  },
+  {
+    "id": "bld.fire-station",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.fire-station.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "survivorRed",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.hospital-exterior",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.hospital-exterior.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.police-checkpoint",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/kit.police-checkpoint.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.evac-camp",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/kit.evac-camp.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.gazebo",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.gazebo.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.restroom-block",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.restroom-block.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.dugout",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.dugout.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.bleachers",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/kit.bleachers.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.scoreboard",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.scoreboard.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.creek-bridge-wood",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/kit.creek-bridge-wood.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.campground",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/kit.campground.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decal.blood-splats",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decal.blood-splats.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decal.footprints",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decal.footprints.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decal.papers",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decal.papers.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "ui.logo",
+    "category": "ui",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/ui.logo.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "ui.hud-layout",
+    "category": "ui",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/ui.hud-layout.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "ui.portrait.survivor-m",
+    "category": "ui",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/ui.portrait.survivor-m.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "ui.portrait.survivor-f",
+    "category": "ui",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/ui.portrait.survivor-f.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "ui.portrait.corgi",
+    "category": "ui",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/ui.portrait.corgi.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "ui.palette-swatches",
+    "category": "ui",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/ui.palette-swatches.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.civilian-adult-m",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-adult-m.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.civilian-adult-f",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-adult-f.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.civilian-kid",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-kid.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.civilian-elderly",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-elderly.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.patient-zero-courier",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.patient-zero-courier.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.patient-zero-courier/model.glb",
+    "script": "assets/npc.patient-zero-courier/build.py"
+  },
+  {
+    "id": "prop.medical-cooler",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.medical-cooler.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.medical-cooler/model.glb",
+    "script": "assets/prop.medical-cooler/build.py"
+  },
+  {
+    "id": "veh.courier-van",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.courier-van.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.courier-van/model.glb",
+    "script": "assets/veh.courier-van/build.py",
+    "lods": {
+      "lod1": "assets/veh.courier-van/model.lod1.glb",
+      "lod2": "assets/veh.courier-van/model.lod2.glb"
+    }
+  },
+  {
+    "id": "npc.brother",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.brother.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.brother/model.glb",
+    "script": "assets/npc.brother/build.py"
+  },
+  {
+    "id": "npc.mrs-alvarez",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.mrs-alvarez.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.mrs-alvarez/model.glb",
+    "script": "assets/npc.mrs-alvarez/build.py"
+  },
+  {
+    "id": "npc.police-officer",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.police-officer.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.paramedic",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.paramedic.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.firefighter-alive",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.firefighter-alive.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.national-guard",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.national-guard.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.survivor-group",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.survivor-group.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.helicopter-pilot",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.helicopter-pilot.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "wpn.knife",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.knife.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "wpn.fire-axe",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.fire-axe.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "wpn.katana",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.katana.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "wpn.smg",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.smg.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.smg/model.glb",
+    "script": "assets/wpn.smg/build.py"
+  },
+  {
+    "id": "wpn.hunting-rifle",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.hunting-rifle.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.hunting-rifle/model.glb",
+    "script": "assets/wpn.hunting-rifle/build.py"
+  },
+  {
+    "id": "wpn.assault-rifle",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.assault-rifle.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "wpn.machine-gun",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.machine-gun.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "wpn.rocket-launcher",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.rocket-launcher.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "proj.rocket",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/proj.rocket.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "thr.frag-grenade",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/thr.frag-grenade.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/thr.frag-grenade/model.glb",
+    "script": "assets/thr.frag-grenade/build.py"
+  },
+  {
+    "id": "thr.flashbang",
+    "category": "weapon",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/thr.flashbang.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "abl.shield-bubble",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/abl.shield-bubble.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "abl.ground-slam",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/abl.ground-slam.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "abl.turret",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/abl.turret.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.military-truck",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.military-truck.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.box-truck",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.box-truck.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.semi-trailer",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.semi-trailer.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.helicopter",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.helicopter.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.train-freight",
+    "category": "vehicle",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.train-freight.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.river-bridge",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.river-bridge.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.river-terrain",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/kit.river-terrain.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.rail-crossing",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/kit.rail-crossing.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.tunnel-portal",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.tunnel-portal.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.power-substation",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.power-substation.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.highway-onramp",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/kit.highway-onramp.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.helipad",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.helipad.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.civic-center",
+    "category": "building",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.civic-center.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.civic-center/model.glb",
+    "script": "assets/bld.civic-center/build.py",
+    "lods": {
+      "lod1": "assets/bld.civic-center/model.lod1.glb",
+      "lod2": "assets/bld.civic-center/model.lod2.glb"
+    }
+  },
+  {
+    "id": "decay.dropped-belongings",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decay.dropped-belongings.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decay.broken-glass",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decay.broken-glass.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decay.boarded-windows",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decay.boarded-windows.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decay.furniture-barricade",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decay.furniture-barricade.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decay.burned-facade",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decay.burned-facade.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decay.collapsed-facade",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decay.collapsed-facade.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decay.rubble-pile",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decay.rubble-pile.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decay.downed-power-line",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decay.downed-power-line.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decay.fallen-tree",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decay.fallen-tree.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decay.crater",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decay.crater.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decay.body-bag",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decay.body-bag.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decay.abandoned-checkpoint",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decay.abandoned-checkpoint.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decay.graffiti",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decay.graffiti.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.light-tower-trailer",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.light-tower-trailer.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.plank-stack",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.plank-stack.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.sandbag-pallet",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.sandbag-pallet.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.dumpster",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.dumpster.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.sofa",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.sofa.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.pallet",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.pallet.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.vending-cart",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.vending-cart.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.fire-extinguisher",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.fire-extinguisher.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "thr.smoke-grenade",
+    "category": "weapon",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/thr.smoke-grenade.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.tear-gas-canister",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.tear-gas-canister.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "debris.wood-small",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/debris.wood-small.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "debris.metal",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/debris.metal.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "debris.glass",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/debris.glass.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "debris.rubble",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/debris.rubble.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.fuel-truck",
+    "category": "vehicle",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.fuel-truck.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 1.8,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.dog-retriever",
+    "category": "infected",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.dog-retriever.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.dog-dachshund",
+    "category": "infected",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.dog-dachshund.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.dog-k9",
+    "category": "infected",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.dog-k9.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.cat-tabby",
+    "category": "infected",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.cat-tabby.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.cat-black",
+    "category": "infected",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.cat-black.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.crow",
+    "category": "infected",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.crow.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "amb.pigeon",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/amb.pigeon.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.lion",
+    "category": "infected",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.lion.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.gorilla",
+    "category": "infected",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.gorilla.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "inf.flamingo",
+    "category": "infected",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.flamingo.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.6,
+      "z": 0.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "amb.zebra",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/amb.zebra.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "amb.elephant",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/amb.elephant.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "gib.chunk-set",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/gib.chunk-set.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "gib.limb-generic",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/gib.limb-generic.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decal.blood-pool",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decal.blood-pool.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decal.blood-trail",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decal.blood-trail.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decal.arterial-spray",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/decal.arterial-spray.glb",
+    "dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.gas-pump",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "script": "assets/prop.gas-pump/build.py",
+    "glb": "public/assets/models/prop.gas-pump.glb",
+    "sourceGlb": "assets/prop.gas-pump/model.glb",
+    "dimensions": {
+      "x": 0.6787500008940697,
+      "y": 2.7469999194145203,
+      "z": 1.3846525251865387,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "survivorRed",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.jukebox",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "script": "assets/prop.jukebox/build.py",
+    "glb": "public/assets/models/prop.jukebox.glb",
+    "sourceGlb": "assets/prop.jukebox/model.glb",
+    "dimensions": {
+      "x": 0.8500392725691199,
+      "y": 2.098742254078388,
+      "z": 1.1161243915557861,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.light-tower",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "script": "assets/prop.light-tower/build.py",
+    "glb": "public/assets/models/prop.light-tower.glb",
+    "sourceGlb": "assets/prop.light-tower/model.glb",
+    "dimensions": {
+      "x": 2.5475302173887715,
+      "y": 4.148666361223772,
+      "z": 1.9015644437845822,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.porta-potty",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "script": "assets/prop.porta-potty/build.py",
+    "glb": "public/assets/models/prop.porta-potty.glb",
+    "sourceGlb": "assets/prop.porta-potty/model.glb",
+    "dimensions": {
+      "x": 1.3125,
+      "y": 2.4549999237060547,
+      "z": 1.3259999752044678,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.vending-machine",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "script": "assets/prop.vending-machine/build.py",
+    "glb": "public/assets/models/prop.vending-machine.glb",
+    "sourceGlb": "assets/prop.vending-machine/model.glb",
+    "dimensions": {
+      "x": 0.784500002861023,
+      "y": 2.1740000038407743,
+      "z": 1.034000039100647,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.civilian-man-a",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-man-a.glb",
+    "dimensions": {
+      "x": 0.37313416600227356,
+      "y": 1.431667448952794,
+      "z": 0.6651999652385712,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-man-a/model.glb",
+    "script": "assets/npc.civilian-man-a/build.py"
+  },
+  {
+    "id": "npc.civilian-man-b",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-man-b.glb",
+    "dimensions": {
+      "x": 0.4227200448513031,
+      "y": 1.4376665391027927,
+      "z": 0.6695751547813416,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-man-b/model.glb",
+    "script": "assets/npc.civilian-man-b/build.py"
+  },
+  {
+    "id": "npc.civilian-woman-a",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-woman-a.glb",
+    "dimensions": {
+      "x": 0.5174842649139464,
+      "y": 1.4140521343797445,
+      "z": 0.7555636763572693,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-woman-a/model.glb",
+    "script": "assets/npc.civilian-woman-a/build.py"
+  },
+  {
+    "id": "npc.civilian-woman-b",
+    "category": "character",
+    "status": "reference",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-woman-b.glb",
+    "dimensions": {
+      "x": 0.42142805457115173,
+      "y": 1.4000000953674316,
+      "z": 0.6310051083564758,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-woman-b/model.glb",
+    "script": "assets/npc.civilian-woman-b/build.py"
+  },
+  {
+    "id": "prop.barricade",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.barricade.glb",
+    "dimensions": {
+      "x": 1.16103994846344,
+      "y": 1.8040308952331543,
+      "z": 2.250000238418579,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.barricade/model.glb",
+    "script": "assets/prop.barricade/build.py"
+  },
+  {
+    "id": "prop.bench",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.bench.glb",
+    "dimensions": {
+      "x": 0.7541895508766174,
+      "y": 1.0899329781532288,
+      "z": 1.899999976158142,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.bench/model.glb",
+    "script": "assets/prop.bench/build.py"
+  },
+  {
+    "id": "prop.fire-hydrant",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.fire-hydrant.glb",
+    "dimensions": {
+      "x": 0.6431257128715515,
+      "y": 1.0820000171661377,
+      "z": 0.6431257128715515,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.fire-hydrant/model.glb",
+    "script": "assets/prop.fire-hydrant/build.py"
+  },
+  {
+    "id": "prop.hedge",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.hedge.glb",
+    "dimensions": {
+      "x": 2.528046131134033,
+      "y": 1.563220500946045,
+      "z": 0.8810849189758301,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.hedge/model.glb",
+    "script": "assets/prop.hedge/build.py",
+    "world": {
+      "token": "foliage",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.mailbox-blue",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.mailbox-blue.glb",
+    "dimensions": {
+      "x": 0.7389999963343143,
+      "y": 1.5390000343322754,
+      "z": 0.9420000314712524,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.mailbox-blue/model.glb",
+    "script": "assets/prop.mailbox-blue/build.py"
+  },
+  {
+    "id": "prop.picket-fence",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.picket-fence.glb",
+    "dimensions": {
+      "x": 0.25093501806259155,
+      "y": 1.3388891220092773,
+      "z": 2.640678286552429,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.picket-fence/model.glb",
+    "script": "assets/prop.picket-fence/build.py",
+    "world": {
+      "token": "picketWhite",
+      "solid": false
+    }
+  },
+  {
+    "id": "prop.street-lamp",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.street-lamp.glb",
+    "dimensions": {
+      "x": 0.6399999856948853,
+      "y": 3.865000009536743,
+      "z": 0.6399999856948853,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.street-lamp/model.glb",
+    "script": "assets/prop.street-lamp/build.py",
+    "world": {
+      "token": "uiDark",
+      "solid": false
+    }
+  },
+  {
+    "id": "prop.street-sign",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.street-sign.glb",
+    "dimensions": {
+      "x": 0.3400000035762787,
+      "y": 2.86899995803833,
+      "z": 1.159999966621399,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.street-sign/model.glb",
+    "script": "assets/prop.street-sign/build.py"
+  },
+  {
+    "id": "prop.traffic-cone",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.traffic-cone.glb",
+    "dimensions": {
+      "x": 0.47999998927116394,
+      "y": 0.6460000276565552,
+      "z": 0.47999998927116394,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.traffic-cone/model.glb",
+    "script": "assets/prop.traffic-cone/build.py",
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": false
+    }
+  },
+  {
+    "id": "prop.trash-bin",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.trash-bin.glb",
+    "dimensions": {
+      "x": 0.7239999920129776,
+      "y": 1.2180000860681264,
+      "z": 1.781999975685821,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.trash-bin/model.glb",
+    "script": "assets/prop.trash-bin/build.py"
+  },
+  {
+    "id": "prop.utility-pole",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "glb": "public/assets/models/prop.utility-pole.glb",
+    "dimensions": {
+      "x": 0.8599999845027924,
+      "y": 7.142499923706055,
+      "z": 3.24536669254303,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.utility-pole/model.glb",
+    "script": "assets/prop.utility-pole/build.py"
+  },
+  {
+    "id": "inf.teen-skater",
+    "category": "infected",
+    "status": "reference",
+    "tier": "hero",
+    "script": "assets/inf.teen-skater/build.py",
+    "glb": "public/assets/models/inf.teen-skater.glb",
+    "sourceGlb": "assets/inf.teen-skater/model.glb",
+    "dimensions": {
+      "x": 0.9556333422660828,
+      "y": 1.6637544706463814,
+      "z": 1.217635691165924,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
     "id": "prop.tree",
     "category": "prop",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.tree.glb",
     "dimensions": {
       "x": 3,
       "y": 5,
-      "z": 3
+      "z": 3,
+      "tolerance": 0.1
     },
-    "token": "foliage",
-    "solid": false,
     "forward": "+X",
-    "glb": "/assets/models/prop.tree.glb"
-  },
-  "prop.hedge": {
-    "id": "prop.hedge",
-    "category": "prop",
-    "status": "placeholder",
-    "dimensions": {
-      "x": 2,
-      "y": 1.2,
-      "z": 1
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
     },
-    "token": "foliage",
-    "solid": true,
-    "forward": "+X",
-    "glb": "/assets/models/prop.hedge.glb"
+    "decayVariants": [],
+    "world": {
+      "token": "foliage",
+      "solid": false
+    }
   },
-  "prop.picket-fence": {
-    "id": "prop.picket-fence",
-    "category": "prop",
-    "status": "placeholder",
-    "dimensions": {
-      "x": 2,
-      "y": 1.1,
-      "z": 0.18
-    },
-    "token": "picketWhite",
-    "solid": false,
-    "forward": "+X",
-    "glb": "/assets/models/prop.picket-fence.glb"
-  },
-  "prop.street-lamp": {
-    "id": "prop.street-lamp",
-    "category": "prop",
-    "status": "placeholder",
-    "dimensions": {
-      "x": 0.8,
-      "y": 3.6,
-      "z": 0.5
-    },
-    "token": "uiDark",
-    "solid": false,
-    "forward": "+X",
-    "glb": "/assets/models/prop.street-lamp.glb"
-  },
-  "prop.traffic-cone": {
-    "id": "prop.traffic-cone",
-    "category": "prop",
-    "status": "placeholder",
-    "dimensions": {
-      "x": 0.5,
-      "y": 0.8,
-      "z": 0.5
-    },
-    "token": "schoolBusYellow",
-    "solid": false,
-    "forward": "+X",
-    "glb": "/assets/models/prop.traffic-cone.glb"
-  },
-  "veh.sedan-red": {
-    "id": "veh.sedan-red",
-    "category": "vehicle",
-    "status": "placeholder",
-    "dimensions": {
-      "x": 4.4,
-      "y": 1.5,
-      "z": 1.9
-    },
-    "token": "survivorRed",
-    "solid": true,
-    "forward": "+X",
-    "glb": "/assets/models/veh.sedan-red.glb"
-  },
-  "veh.wreck": {
+  {
     "id": "veh.wreck",
     "category": "vehicle",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/veh.wreck.glb",
     "dimensions": {
       "x": 4.4,
       "y": 0.9,
-      "z": 1.9
+      "z": 1.9,
+      "tolerance": 0.1
     },
-    "token": "uiDark",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/veh.wreck.glb"
-  },
-  "bld.house-a": {
-    "id": "bld.house-a",
-    "category": "building",
-    "status": "placeholder",
-    "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 7
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
     },
-    "token": "schoolBusYellow",
-    "solid": true,
-    "forward": "+X",
-    "glb": "/assets/models/bld.house-a.glb"
+    "decayVariants": [],
+    "world": {
+      "token": "uiDark",
+      "solid": true
+    }
   },
-  "bld.house-b": {
-    "id": "bld.house-b",
-    "category": "building",
-    "status": "placeholder",
-    "dimensions": {
-      "x": 8,
-      "y": 4.8,
-      "z": 7
-    },
-    "token": "backpackTeal",
-    "solid": true,
-    "forward": "+X",
-    "glb": "/assets/models/bld.house-b.glb"
-  },
-  "bld.house-c": {
-    "id": "bld.house-c",
-    "category": "building",
-    "status": "placeholder",
-    "dimensions": {
-      "x": 8,
-      "y": 5.5,
-      "z": 7
-    },
-    "token": "brick",
-    "solid": true,
-    "forward": "+X",
-    "glb": "/assets/models/bld.house-c.glb"
-  },
-  "bld.diner": {
+  {
     "id": "bld.diner",
     "category": "building",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.diner.glb",
     "dimensions": {
       "x": 10,
       "y": 4,
-      "z": 7
+      "z": 7,
+      "tolerance": 0.1
     },
-    "token": "survivorRed",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/bld.diner.glb"
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "survivorRed",
+      "solid": true
+    }
   },
-  "bld.hardware": {
+  {
     "id": "bld.hardware",
     "category": "building",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.hardware.glb",
     "dimensions": {
       "x": 10,
       "y": 5.5,
-      "z": 7
+      "z": 7,
+      "tolerance": 0.1
     },
-    "token": "brick",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/bld.hardware.glb"
-  },
-  "bld.gas-station": {
-    "id": "bld.gas-station",
-    "category": "building",
-    "status": "placeholder",
-    "dimensions": {
-      "x": 8,
-      "y": 3.5,
-      "z": 7
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
     },
-    "token": "schoolBusYellow",
-    "solid": true,
-    "forward": "+X",
-    "glb": "/assets/models/bld.gas-station.glb"
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
   },
-  "bld.school": {
+  {
     "id": "bld.school",
     "category": "building",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.school.glb",
     "dimensions": {
       "x": 12,
       "y": 6,
-      "z": 8
+      "z": 8,
+      "tolerance": 0.1
     },
-    "token": "brick",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/bld.school.glb"
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
   },
-  "bld.gym": {
+  {
     "id": "bld.gym",
     "category": "building",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.gym.glb",
     "dimensions": {
       "x": 10,
       "y": 5,
-      "z": 8
+      "z": 8,
+      "tolerance": 0.1
     },
-    "token": "backpackTeal",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/bld.gym.glb"
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
+    }
   },
-  "bld.supermarket": {
+  {
     "id": "bld.supermarket",
     "category": "building",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.supermarket.glb",
     "dimensions": {
       "x": 12,
       "y": 5,
-      "z": 8
+      "z": 8,
+      "tolerance": 0.1
     },
-    "token": "schoolBusYellow",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/bld.supermarket.glb"
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
+    }
   },
-  "bld.pharmacy": {
+  {
     "id": "bld.pharmacy",
     "category": "building",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.pharmacy.glb",
     "dimensions": {
       "x": 10,
       "y": 4,
-      "z": 7
+      "z": 7,
+      "tolerance": 0.1
     },
-    "token": "picketWhite",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/bld.pharmacy.glb"
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "picketWhite",
+      "solid": true
+    }
   },
-  "bld.police": {
+  {
     "id": "bld.police",
     "category": "building",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.police.glb",
     "dimensions": {
       "x": 10,
       "y": 5,
-      "z": 8
+      "z": 8,
+      "tolerance": 0.1
     },
-    "token": "policeBlue",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/bld.police.glb"
-  },
-  "bld.fire-station": {
-    "id": "bld.fire-station",
-    "category": "building",
-    "status": "placeholder",
-    "dimensions": {
-      "x": 10,
-      "y": 5,
-      "z": 8
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
     },
-    "token": "survivorRed",
-    "solid": true,
-    "forward": "+X",
-    "glb": "/assets/models/bld.fire-station.glb"
+    "decayVariants": [],
+    "world": {
+      "token": "policeBlue",
+      "solid": true
+    }
   },
-  "bld.hospital": {
+  {
     "id": "bld.hospital",
     "category": "building",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.hospital.glb",
     "dimensions": {
       "x": 10,
       "y": 7,
-      "z": 8
+      "z": 8,
+      "tolerance": 0.1
     },
-    "token": "picketWhite",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/bld.hospital.glb"
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "picketWhite",
+      "solid": true
+    }
   },
-  "bld.park-lodge": {
+  {
     "id": "bld.park-lodge",
     "category": "building",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.park-lodge.glb",
     "dimensions": {
       "x": 8,
       "y": 4,
-      "z": 7
+      "z": 7,
+      "tolerance": 0.1
     },
-    "token": "woodWarm",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/bld.park-lodge.glb"
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    }
   },
-  "bld.zoo-gate": {
+  {
     "id": "bld.zoo-gate",
     "category": "building",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.zoo-gate.glb",
     "dimensions": {
       "x": 10,
       "y": 4,
-      "z": 6
+      "z": 6,
+      "tolerance": 0.1
     },
-    "token": "schoolBusYellow",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/bld.zoo-gate.glb"
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
+    }
   },
-  "bld.reptile-house": {
+  {
     "id": "bld.reptile-house",
     "category": "building",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.reptile-house.glb",
     "dimensions": {
       "x": 10,
       "y": 4,
-      "z": 8
+      "z": 8,
+      "tolerance": 0.1
     },
-    "token": "backpackTeal",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/bld.reptile-house.glb"
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
+    }
   },
-  "bld.substation": {
+  {
     "id": "bld.substation",
     "category": "building",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.substation.glb",
     "dimensions": {
       "x": 8,
       "y": 4,
-      "z": 7
+      "z": 7,
+      "tolerance": 0.1
     },
-    "token": "uiDark",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/bld.substation.glb"
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "uiDark",
+      "solid": true
+    }
   },
-  "prop.picnic-table": {
+  {
     "id": "prop.picnic-table",
     "category": "prop",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.picnic-table.glb",
     "dimensions": {
       "x": 2,
       "y": 0.8,
-      "z": 1.4
+      "z": 1.4,
+      "tolerance": 0.1
     },
-    "token": "woodWarm",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/prop.picnic-table.glb"
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    }
   },
-  "prop.bus-stop": {
+  {
     "id": "prop.bus-stop",
     "category": "prop",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.bus-stop.glb",
     "dimensions": {
       "x": 3,
       "y": 2.5,
-      "z": 1.6
+      "z": 1.6,
+      "tolerance": 0.1
     },
-    "token": "policeBlue",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/prop.bus-stop.glb"
-  },
-  "prop.gas-pump": {
-    "id": "prop.gas-pump",
-    "category": "prop",
-    "status": "placeholder",
-    "dimensions": {
-      "x": 0.8,
-      "y": 1.6,
-      "z": 0.8
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
     },
-    "token": "survivorRed",
-    "solid": true,
-    "forward": "+X",
-    "glb": "/assets/models/prop.gas-pump.glb"
+    "decayVariants": [],
+    "world": {
+      "token": "policeBlue",
+      "solid": true
+    }
   },
-  "prop.tent": {
+  {
     "id": "prop.tent",
     "category": "prop",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.tent.glb",
     "dimensions": {
       "x": 3,
       "y": 2,
-      "z": 3
+      "z": 3,
+      "tolerance": 0.1
     },
-    "token": "backpackTeal",
-    "solid": true,
     "forward": "+X",
-    "glb": "/assets/models/prop.tent.glb"
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
+    }
   },
-  "prop.flower": {
+  {
     "id": "prop.flower",
     "category": "prop",
     "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.flower.glb",
     "dimensions": {
       "x": 0.3,
       "y": 0.5,
-      "z": 0.3
+      "z": 0.3,
+      "tolerance": 0.1
     },
-    "token": "schoolBusYellow",
-    "solid": false,
     "forward": "+X",
-    "glb": "/assets/models/prop.flower.glb"
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": false
+    }
   }
-}
+]

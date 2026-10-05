@@ -1,0 +1,25 @@
+
+Running 20 tests using 4 workers
+
+  ✓   1 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.7s)
+  ✓   3 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (4.0s)
+  ✓   5 [chromium] › tests/e2e/survivor.spec.ts:34:1 › T-E04-wiring @E04 actual keyboard input moves the survivor; variant selection is cosmetic and unload frees resources (10.3s)
+  ✓   6 [chromium] › tests/e2e/turntable.spec.ts:5:1 › T-E17-08 @E17-AC08 @E17-AC04 five fire-engine views cover 10–80% and preserve contract nodes (9.4s)
+  ✓   8 [chromium] › tests/e2e/turntable.spec.ts:33:1 › T-E17-05c @E17-AC05 pre-integrated production art renders a logged placeholder (777ms)
+  ✓   7 [chromium] › tests/e2e/turntable.spec.ts:17:1 › T-E17-05e @E17-AC05 pending survivor art uses E04 code rigs with placeholder logs (3.0s)
+  ✓   4 [chromium] › tests/e2e/crowd.spec.ts:4:1 › T-E17-07b @E17-AC07 100 infected use one draw per material and GPU poses match at five times (22.2s)
+  ✓  11 [pixel-7] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (4.1s)
+  ✓  10 [chromium] › tests/visual/survivor.spec.ts:73:1 › T-E04-11 @E04 @E04-AC11 character sheet reviews integrated art or records pending placeholders (15.3s)
+  ✓  12 [pixel-7] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (5.9s)
+  ✓  13 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (5.7s)
+  ✓  14 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (7.0s)
+  ✓  15 [iphone-14] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (6.9s)
+  ✓  16 [iphone-14] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (11.0s)
+  ✓  17 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (5.0s)
+  ✓  18 [webkit] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.9s)
+  ✓   2 [chromium] › tests/e2e/survivor.spec.ts:6:1 › T-E04-09 @E04 @E04-AC09 sixty-second input bot visits every sim clip with zero missing mappings (59.5s)
+  ✓  19 [webkit] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.3s)
+  ✓  20 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (7.0s)
+  ✓   9 [chromium] › tests/visual/survivor.spec.ts:46:1 › T-E04-10 @E04 @E04-AC10 all five tiers retain red/teal; tier 0 and 4 differ on over 5% of character pixels (1.5m)
+
+  20 passed (1.8m)

@@ -17,7 +17,7 @@ import { PostFx } from './PostFx';
 import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
 import type { TimeOfDay } from '../data/timeOfDay';
 import { Vector3 } from 'three';
-import { AssetRegistry } from '../assets/registry';
+import { DistrictAssets } from '../assets/DistrictAssets';
 import { Grass, windPhase } from './Grass';
 import { DistrictView } from './DistrictView';
 import { PaletteMaterial } from './PaletteMaterial';
@@ -39,7 +39,7 @@ export class GameView implements Lifecycle {
   private wireframe: PhysicsWireframe | null = null;
   private lighting: Lighting | null = null;
   private materials: Materials | null = null;
-  private districtResources:{lighting:Lighting;materials:Materials;registry:AssetRegistry;phase:ReturnType<typeof windPhase>;grassMaterial:ReturnType<typeof Grass.material>}|null=null;
+  private districtResources:{lighting:Lighting;materials:Materials;registry:DistrictAssets;phase:ReturnType<typeof windPhase>;grassMaterial:ReturnType<typeof Grass.material>}|null=null;
   private districts:DistrictView|null=null;
   private windowMask=false;
   private lookdev: Lookdev | null = null;
@@ -75,14 +75,14 @@ export class GameView implements Lifecycle {
     if (this.world.districts) {
       this.renderer.shadowMap.enabled=true;
       if(!this.districtResources){
-        const lighting=new Lighting(this.scene),materials=new Materials(lighting),registry=new AssetRegistry(materials),phase=windPhase();
+        const lighting=new Lighting(this.scene),materials=new Materials(lighting),registry=new DistrictAssets(materials),phase=windPhase();
         this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
       }
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial);await this.districts.load(1);
       this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera);
 
-      this.character=new CharacterView();await this.character.init(this.materials,true);this.scene.add(this.character);
+      this.character=new CharacterView();await this.character.init(this.materials);this.scene.add(this.character);
     } else if (this.world.player) {
       this.renderer.shadowMap.enabled = true;
       this.lighting = new Lighting(this.scene); this.materials = new Materials(this.lighting);
