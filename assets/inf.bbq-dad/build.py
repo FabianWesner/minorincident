@@ -25,6 +25,7 @@ M['hair']=M['woodWarm']
 M['shorts']=M['asphalt']
 M['metal']=M['sidewalk']
 M['metal'].node_tree.nodes.get('Principled BSDF').inputs['Metallic'].default_value=.75
+M['metal'].node_tree.nodes.get('Principled BSDF').inputs['Roughness'].default_value=.32
 M['eye']=mat('infectedEye','ff3b2f',.24,2.5)
 def node(n,p,par=None):
     o=bpy.data.objects.new(n,None);S.collection.objects.link(o);o.location=p
@@ -95,6 +96,15 @@ mod=apron.modifiers.new('fabric thickness','SOLIDIFY');mod.thickness=.012;bpy.co
 for s in [-1,1]:
     tube('apron_bound_edge'+str(s),[(x-.085+.008*math.cos(math.pi*3)+.004,s*w,z+.018) for z,w,x in rows],[.006]*len(rows),'asphalt','torso',N=6)
     tube('apron_fold'+str(s),[(.263,s*.19,.79),(.259,s*.23,.686),(.221,s*.275,.57)],[.002,.01,.003],'asphalt','torso',N=8)
+# A separate camp-shirt hem hangs below the waist belt across the back and sides.
+v=[];f=[];N=24
+for z,rx,ry in [(.682,.207,.29),(.692,.218,.301),(.746,.219,.3),(.802,.213,.295)]:
+    for i in range(N):
+        t=math.tau*i/N;v.append((-.016+rx*math.cos(t),ry*math.sin(t),z))
+for j in range(3):
+    for i in range(N):q=j*N+i;k=j*N+(i+1)%N;f.append((q,k,k+N,q+N))
+hem=mesh('shirt_hem_shell',v,f,'picketWhite','torso',1)
+mod=hem.modifiers.new('hem thickness','SOLIDIFY');mod.thickness=.012;bpy.context.view_layer.objects.active=hem;bpy.ops.object.modifier_apply(modifier=mod.name)
 # Waist tie wraps sides and ends in a sculpted knot and bow at the back.
 pts=[(.005+.244*math.cos(i*2*math.pi/32),.31*math.sin(i*2*math.pi/32),.773) for i in range(33)]
 tube('waist_tie',pts,[.014]*33,'uiDark','torso',N=8)
@@ -174,7 +184,7 @@ for name in ['cranium','jaw']:
     bpy.context.view_layer.objects.active=obj;bpy.ops.object.modifier_apply(modifier=mod.name)
 bpy.data.objects.remove(cutter,do_unlink=True)
 # Mouth dark cavity and raised irregular lip ring, not a painted line.
-ell('mouth_cavity',(.156,0,1.254),(.031,.069,.077),'hair','head',seg=20,rings=12)
+ell('mouth_cavity',(.156,0,1.254),(.031,.069,.077),'uiDark','head',seg=20,rings=12)
 pts=[]
 for i in range(25):
     t=i*2*math.pi/24;pts.append((.196,.072*math.cos(t),1.257+.082*math.sin(t)))
@@ -216,14 +226,17 @@ for j in range(10):
          (x-.045,y*.91,1.239+(j%2)*.012),.06)
 # Raised surface-conforming blood smears, offset 4 mm from the actual mesh.
 def splat(n,y,z,ry,rz,target,par,back=False):
-    ob=bpy.data.objects[target];pts=[(y,z)]
+    targets=[bpy.data.objects[t] for t in (target if isinstance(target,list) else [target])];pts=[(y,z)]
     for i in range(11):
         t=i*math.tau/11;r=rng.uniform(.63,1.13);pts.append((y+math.cos(t)*ry*r,z+math.sin(t)*rz*r))
-    bpy.context.view_layer.update();v=[];direction=Vector((1,0,0) if back else (-1,0,0));inv=ob.matrix_world.inverted()
+    bpy.context.view_layer.update();v=[];direction=Vector((1,0,0) if back else (-1,0,0))
     for yy,zz in pts:
-        start=Vector((-1 if back else 1,yy,zz));hit,loc,normal,index=ob.ray_cast(inv@start,inv.to_3x3()@direction)
-        if not hit:continue
-        p=ob.matrix_world@loc;p.x+=(-.004 if back else .004);v.append(p)
+        start=Vector((-1 if back else 1,yy,zz));hits=[]
+        for ob in targets:
+            inv=ob.matrix_world.inverted();hit,loc,normal,index=ob.ray_cast(inv@start,inv.to_3x3()@direction)
+            if hit:hits.append(ob.matrix_world@loc)
+        if not hits:continue
+        p=min(hits,key=lambda h:(h-start).length);p.x+=(-.004 if back else .004);v.append(p)
     if len(v)<4:return None
     return mesh(n,v,[(0,i,i+1) for i in range(1,len(v)-1)],'blood',par,0)
 for j,(y,z,ry,rz) in enumerate([(-.15,.68,.06,.07),(.17,.62,.07,.044),(-.03,.76,.036,.017),(.13,.81,.026,.039),(-.13,.95,.035,.026),(.03,.59,.026,.025)]):
@@ -241,7 +254,11 @@ for side,s in [('L',1),('R',-1)]:
         tube('sleeve_fold'+side+str(j),[(.068,s*.33,1.066-j*.02),(.096,s*.361,1.048-j*.02),(.068,s*.395,1.02-j*.02)],[.004,.01,.002],'picketWhite','arm'+side,N=8)
     tube('short_front_fold'+side,[(.098,s*.12,.544),(.149,s*.22,.536),(.104,s*.3,.511)],[.004,.012,.003],'shorts','leg'+side,N=8)
 for j,(y,z,ry,rz) in enumerate([(-.112,1.3,.02,.05),(.11,1.293,.02,.045),(-.045,1.217,.029,.039),(.045,1.24,.029,.026),(-.04,1.453,.016,.025)]):
-    splat('face_smear'+str(j),y,z,ry,rz,'cranium' if z>1.3 else 'jaw','head')
+    splat('face_smear'+str(j),y,z,ry,rz,['cranium','jaw','cheek-1','cheek1'],'head')
+for side in [-1,1]:
+    splat('cheek_heavy_smear'+str(side),side*.10,1.283,.022,.055,['cranium','jaw','cheek-1','cheek1'],'head')
+for j in range(12):
+    splat('shirt_front_fleck'+str(j),rng.choice([-1,1])*rng.uniform(.11,.23),rng.uniform(1.025,1.13),.006,.009,'camp_shirt','torso')
 tube('chin_blood_drip',[(.18,-.03,1.2),(.171,-.03,1.158),(.16,-.03,1.134)],[.012,.009,.002],'blood','head',N=8)
 # Proximal stump children persist when the corresponding limb subtree detaches.
 for key,parent,p,sz in [('head','torso',(.035,0,1.19),(.08,.09,.012)),('armL','torso',(-.012,.292,1.095),(.09,.016,.09)),('armR','torso',(-.012,-.292,1.095),(.09,.016,.09)),('foreArmL','armL',(.043,.415,.913),(.07,.014,.07)),('foreArmR','armR',(.043,-.415,.913),(.07,.014,.07)),('legL','hip',(-.02,.16,.671),(.115,.115,.014)),('legR','hip',(-.02,-.16,.671),(.115,.115,.014))]:
@@ -323,9 +340,14 @@ for side in ['L','R']:
     shoe_objects=[o for o in objects if o.parent==parts['foot'+side]]
     floor=min((o.matrix_world@v.co).z for o in shoe_objects for v in o.data.vertices)
     parts['foot'+side].location.z-=floor
-for cap in caps:cap.scale=(0,0,0)
+# Cap origins share the cut joint, so toggling scale reveals them in place.
+for cap in caps:
+    pivot=node_positions[cap['stumpFor']]
+    cap.data.transform(Matrix.Translation(-pivot))
+    cap.matrix_world=Matrix.Translation(pivot)
+    cap.scale=(0,0,0)
 bpy.context.view_layer.update()
-# Measure the visible skull/hair separately from the neck and drips.
+# Record grounded bounds and neutral joint transforms for export validation.
 bpy.context.view_layer.update()
 bounds=[o.matrix_world@v.co for o in objects if not o.name.startswith('stump_') for v in o.data.vertices]
 (P/'rig-rest.json').write_text(json.dumps({
@@ -345,18 +367,6 @@ if a.glb:
     bpy.ops.export_scene.gltf(filepath=a.glb,export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_cameras=False,export_lights=False)
 if a.pose:
     parts['armL'].rotation_euler.x=.45;parts['foreArmL'].rotation_euler.y=-.55;parts['legR'].rotation_euler.y=-.35
-if a.render and a.view=='turnaround':
-    # Assemble already-rendered camera views in Blender, without another GPU render.
-    import numpy as np
-    paths=[P/'renders'/n for n in ['front.png','side.png','back.png','review-hero.png']]
-    panels=[]
-    for path in paths:
-        im=bpy.data.images.load(str(path));w,h=im.size
-        pixels=np.empty(w*h*4,dtype=np.float32);im.pixels.foreach_get(pixels)
-        panels.append(pixels.reshape(h,w,4)[:,(w-420)//2:(w+420)//2,:])
-    data=np.concatenate(panels,axis=1);sheet=bpy.data.images.new('turnaround',width=data.shape[1],height=data.shape[0],alpha=True)
-    sheet.pixels.foreach_set(data.ravel());sheet.filepath_raw=a.render;sheet.file_format='PNG';sheet.save()
-    print('OK turnaround');sys.exit(0)
 if a.render:
     world=bpy.data.worlds.new('studio');world.use_nodes=True;S.world=world;world.node_tree.nodes['Background'].inputs[0].default_value=(.075,.067,.085,1);world.node_tree.nodes['Background'].inputs[1].default_value=.45
     def light(n,p,power,color,size):
