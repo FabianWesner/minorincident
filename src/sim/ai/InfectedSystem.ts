@@ -5,12 +5,14 @@ import { Status } from '../combat/Status';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { ScenarioDefinition } from '../../levels/loader';
+import { SpawnDirector } from './SpawnDirector';
 import { NavGrid } from './NavGrid';
 import type { InfectedState } from './types';
 export interface InfectedSpawn { state?: InfectedState['state']; yaw?: number; variant?: string; pack?: number; packIndex?: number; perched?: boolean; birds?: number }
 /** Fixed-step infected brain. Entities and path storage are prewarmed and reused, without Rapier bodies. */
 export class InfectedSystem {
   gore: 'Full' | 'Reduced' | 'Off' = 'Full';
+  readonly director: SpawnDirector;
   readonly nav: NavGrid;
   readonly rng: Rng;
   readonly active: EntitySnapshot[] = [];
@@ -23,7 +25,7 @@ export class InfectedSystem {
   private budget = 0;
   private readonly waypoint = { x: 0, z: 0 };
   constructor(readonly world: SimWorld, definition: ScenarioDefinition) {
-    validateInfected(); this.rng = new Rng(world.seed, 'infected'); this.nav = new NavGrid(definition.ground, definition.walls ?? []);
+    validateInfected(); this.rng = new Rng(world.seed, 'infected'); this.nav = new NavGrid(definition.ground, definition.walls ?? []); this.director = new SpawnDirector(this);
     for (let i = 0; i < 350; i++) {
       const brain: InfectedState = { state: 'idle', activeUntil: 0, speed: 0, until: 0, cooldown: 0, attackId: 0, special: '', hidden: false, deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: 0, packIndex: 0, birds: 0, birdPositions: new Array(60).fill(0), scatterUntil: 0, variant: '', path: [], pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: false };
       this.pool.push({ id: 0, kind: 'infected', archetype: '', faction: 'infected', health: { current: 0, max: 0 }, transform: { x: 0, y: 0.7, z: 0, yaw: 0 }, infected: brain, combat: { radius: 0.35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } }); this.counters.allocated++;
@@ -47,6 +49,8 @@ export class InfectedSystem {
   }
   spawn(id: string, position: { x: number; z: number }, opts: InfectedSpawn = {}): number {
     const def = infectedDef(id);
+    const weight = id === 'infected.crow' ? (opts.birds ?? 20) * 0.25 : 1;
+    if (this.director.count + weight > this.director.cap) throw new Error('Infected concurrency cap reached');
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || !this.nav.clear(position.x, position.z, def.radius)) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
     entity.archetype = id; entity.health.current = entity.health.max = def.hp;
@@ -69,7 +73,7 @@ export class InfectedSystem {
   }
   alert(entity: EntitySnapshot): void { if (entity.infected!.state === 'idle' || entity.infected!.state === 'wander') { entity.infected!.state = 'alerted'; entity.infected!.until = this.world.tick + 6; } }
   update(): void {
-    const player = this.world.entities.get(1)!; this.budget = 2000;
+    const player = this.world.entities.get(1)!; this.budget = 2000; this.director.update();
     if (this.active.length > 20) this.nav.flow(player.transform.x, player.transform.z, 1500);
     this.crowd.length = 0;
     for (const e of this.active) {
@@ -78,8 +82,13 @@ export class InfectedSystem {
       const dx = player.transform.x - e.transform.x, dz = player.transform.z - e.transform.z, distance = Math.hypot(dx, dz);
       if (b.state === 'idle' || b.state === 'wander') {
         if (distance <= 14 && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180)) && this.world.combat!.query.visible(e.transform, player.transform)) this.alert(e);
+        if (b.state === 'wander') {
+          this.nav.move(e.transform, b.dx * b.speed / 120, b.dz * b.speed / 120, e.combat!.radius); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+          if (this.world.tick >= b.until) b.state = 'idle';
+        } else if (this.world.tick >= 240 && this.world.tick % 240 === e.id % 240) { b.state = 'wander'; b.until = this.world.tick + 120; const angle = this.rng.next() * Math.PI * 2; b.dx = Math.cos(angle); b.dz = Math.sin(angle); }
         continue;
       }
+      if (b.state === 'migration') continue;
       if (b.state === 'alerted') { if (this.world.tick >= b.until) b.state = 'chase'; else continue; }
       if (Status.stunned(e, this.world.tick)) { b.state = 'stagger'; continue; }
       if (b.state === 'stagger') b.state = 'chase';
