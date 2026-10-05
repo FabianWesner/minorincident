@@ -32,7 +32,7 @@ test('T-E09-controls @E09 keyboard WASD uses local driving axes', async ({ page 
   await page.keyboard.up('KeyW'); await page.keyboard.up('KeyA');
 });
 
-test('T-E09-touch @E09 touch stick accelerates and a held brake stops without exiting', async ({ page, context }) => {
+test('T-E09-touch @E09 touch stick accelerates, LEFT holds boost and brake stops without exiting', async ({ page, context }) => {
   await page.setViewportSize({ width: 390, height: 844 }); await boot(page);
   await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('drive-course'); a.pause(); await a.step(36); });
   const cdp = await context.newCDPSession(page);
@@ -43,11 +43,15 @@ test('T-E09-touch @E09 touch stick accelerates and a held brake stops without ex
   await touch('touchStart', [{ id: 1, x: 80, y: 400 }]); await touch('touchMove', [{ id: 1, x: 140, y: 400 }]);
   await page.evaluate(async () => { await window.__SS__!.step(120); });
   expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.speed)).toBeGreaterThan(3);
+  const horn = await page.locator('[data-touch-action=left]').boundingBox(); expect(horn).not.toBeNull();
+  await touch('touchStart', [{ id: 1, x: 140, y: 400 }, { id: 3, x: horn!.x + horn!.width / 2, y: horn!.y + horn!.height / 2 }]);
+  await page.evaluate(async () => { await window.__SS__!.step(6); });
+  expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.boosting)).toBe(true);
   await touch('touchEnd', []);
   const box = await page.locator('[data-touch-action=brake]').boundingBox(); expect(box).not.toBeNull();
   await touch('touchStart', [{ id: 2, x: box!.x + box!.width / 2, y: box!.y + box!.height / 2 }]);
   await page.evaluate(async () => { await window.__SS__!.step(120); });
-  const car = await page.evaluate(() => window.__SS__!.getEntity(2)!); expect(car.vehicle!.speed).toBeLessThan(.1); expect(car.vehicle!.driver).toBe(1);
+  const car = await page.evaluate(() => window.__SS__!.getEntity(2)!); expect(car.vehicle!.speed).toBeLessThan(.1); expect(car.vehicle!.driver).toBe(1); expect(car.vehicle!.boosting).toBe(false);
   await touch('touchEnd', []);
 });
 test('T-E09-asset @E09-AC01 dynamically spawned integrated fire engine renders and unloads its native resources', async ({ page }) => {

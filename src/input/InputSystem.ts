@@ -173,6 +173,7 @@ export class InputSystem implements Lifecycle {
       frame.aim = this.aim; frame.aimSource = this.touchFire ?? 'touch'; this.touchFire = null;
     }
     frame.left = this.left.sample(); frame.right = this.right.sample();
+    if (this.drivingContext && this.scheme === 'touch' && this.touch.holdingLeft) frame.left.held = true;
     frame.selector = this.selectors.shift() ?? 0; frame.interact = this.interact; frame.pause = this.pause;
     this.interact = false; this.pause = false; this.recorder.capture(frame); return frame;
   }
