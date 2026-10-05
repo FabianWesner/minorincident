@@ -8,7 +8,8 @@ test('T-E11-04 @E11 @E11-AC04 propane waits 18 ticks, chains at 4m, damages play
   const a = h.spawn('propane', { x: 1, z: 0 }), b = h.spawn('propane', { x: 5, z: 0 });
   const infected = dummy(w, 2), outside = dummy(w, 12), prop = h.spawn('crate', { x: 2, z: 1 });
   h.hit(a, 100, 'bullet'); step(w, 17); expect(health(w, infected)).toBe(100);
-  step(w, 1); expect(health(w, infected)).toBeLessThan(100); expect(health(w, prop)).toBeLessThan(100);
+  step(w, 1); expect(health(w, infected)).toBe(20); expect(health(w, prop)).toBe(0);
+  expect(w.entities.get(prop)!.destructible!.broken).toBe(true);
   expect(health(w, 1)).toBeCloseTo(100 - 100 * .8 * .3);
   expect(w.entities.get(b)!.hazard!.fuseAt).toBe(36);
   expect(w.events.events().filter(e => e.type === 'hazard.exploded')).toHaveLength(1);

@@ -1,8 +1,28 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { arena, step, dummy } from '../combat/helpers';
 import { stateHash } from '../../../src/sim/world/stateHash';
 import { NavGrid } from '../../../src/sim/world/NavGrid';
+import { districtGameplay } from '../../../src/levels/districts';
+import { resolvePosition } from '../../../src/levels/districts/validate';
+import type { DistrictLayout } from '../../../src/levels/districts/types';
+
+test('T-E11-composition @E11 @E11-AC03 authored district objects respect origin and open runtime collider/nav', async () => {
+  const w = await arena(), layout: DistrictLayout = JSON.parse(readFileSync('public/assets/layouts/D-RES.layout.json', 'utf8'));
+  const [x, z] = resolvePosition(districtGameplay['D-RES'].playerStart, layout);
+  w.loadComposition({ id: 'E11-composition', tier: 0, timeOfDay: 'L1', districts: [{ id: 'D-RES', origin: [50, -50], overrides: { interactions: {
+    devices: [{ kind: 'door', position: { x: x + 1, z }, options: { key: 'key.house' } }],
+    pickups: [{ kind: 'item', position: { x, z }, item: 'key.house' }],
+  } } }] }, [layout]);
+  const door = w.query({ archetype: 'device.door' })[0], nav = w.districts!.nav, colliders = w.physics.colliderCount;
+  expect(door.transform).toMatchObject({ x: x + 51, z: z - 50 });
+  expect(nav.walkable([door.transform.x, door.transform.z])).toBe(false);
+  w.setInput({ interact: true }); step(w, 1);
+  expect(w.entities.get(door.id)!.interactable!.open).toBe(true);
+  expect(nav.walkable([door.transform.x, door.transform.z])).toBe(true);
+  expect(w.physics.colliderCount).toBe(colliders - 1);
+  w.reset(); expect(w.getState().perf).toEqual({ entities: 0, bodies: 0, colliders: 0, listeners: 0 });
+});
 
 test('T-E11-lifecycle @E11 authored yard is deterministic across unload/reload including hazard timers and debris', async () => {
   const w = await arena(); const hashes = [];
