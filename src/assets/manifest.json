@@ -5894,7 +5894,15 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.helicopter-pilot/model.glb",
+    "script": "assets/npc.helicopter-pilot/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.helicopter-pilot.lod1.glb",
+      "lod2": "public/assets/models/npc.helicopter-pilot.lod2.glb"
+    },
+    "sourceScale": 1.273240958716773
   },
   {
     "id": "wpn.knife",
@@ -6268,7 +6276,10 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "actionCategory": "throwable"
+    "actionCategory": "throwable",
+    "sourceGlb": "assets/thr.flashbang/model.glb",
+    "script": "assets/thr.flashbang/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "abl.shield-bubble",
@@ -6445,7 +6456,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.box-truck/model.glb",
+    "script": "assets/veh.box-truck/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/veh.box-truck.lod1.glb",
+      "lod2": "public/assets/models/veh.box-truck.lod2.glb"
+    }
   },
   {
     "id": "veh.semi-trailer",
