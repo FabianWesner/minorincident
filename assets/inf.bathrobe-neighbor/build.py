@@ -76,39 +76,62 @@ def patch(n,pts,m,par,depth=.006):
 ell('pelvis',(0,0,.695),(.153,.225,.125),'infectedSkin','hip')
 ell('exposed_chest',(.017,0,1.012),(.153,.188,.18),'infectedSkin','torso')
 ell('neck',(.013,0,1.184),(.076,.088,.089),'infectedSkin','head')
-def plaid(o):
-    o.data.materials.append(M['plaid']);o.data.materials.append(M['asphalt'])
-    bpy.context.view_layer.update()
-    for f in o.data.polygons:
-        p=o.matrix_world@f.center
-        # Woven check is geometry material regions: no textures or floating decals.
-        u=(p.y if abs(f.normal.x)>.3 else p.x)*14;v=p.z*14
-        du=abs(u-round(u));dv=abs(v-round(v))
-        if du<.085 or dv<.085:f.material_index=1
-        elif du<.17 or dv<.17:f.material_index=2
-    return o
-N=96;rows=66;v=[];f=[]
+def robe_radius(z):
+    if z<.73:return (.21+(.73-z)*.15,.27+(.73-z)*.18)
+    return (.19,.245+max(0,z-.93)*.18)
+N=48;rows=34;v=[];f=[]
 for j in range(rows):
-    z=.49+j*.010
-    if z<.73:rx=.21+( .73-z)*.15;ry=.27+(.73-z)*.18
-    else:rx=.19;ry=.245+max(0,z-.93)*.18
+    z=.49+j*.65/(rows-1);rx,ry=robe_radius(z)
+    opening=.07 if z<.74 else .35
     for i in range(N):
-        t=.35+(2*math.pi-.70)*i/(N-1)
-        zz=z+(.009*math.sin(i*1.8)+.007*math.sin(i*.7) if j<3 else 0)
+        t=opening+(2*math.pi-2*opening)*i/(N-1)
+        zz=z+(.009*math.sin(i*1.8)+.007*math.sin(i*.7) if j<2 else 0)
         v.append((rx*math.cos(t)-.018,ry*math.sin(t),zz))
 for j in range(rows-1):
     for i in range(N-1):f.append((j*N+i,j*N+i+1,(j+1)*N+i+1,(j+1)*N+i))
-o=mesh('robe_shell',v,f,'robe','torso',0);plaid(o)
+o=mesh('robe_shell',v,f,'robe','torso',0)
 mod=o.modifiers.new('cloth thickness','SOLIDIFY');mod.thickness=.016;bpy.context.view_layer.objects.active=o;bpy.ops.object.modifier_apply(modifier=mod.name)
+# Fine woven grid ribbons follow the shell curvature at a 4 mm offset.
+for j,z in enumerate([.536,.613,.69,.787,.864,.941,1.018,1.095]):
+    rx,ry=robe_radius(z);opening=.08 if z<.74 else .36
+    points=[]
+    for i in range(49):
+        t=opening+(2*math.pi-2*opening)*i/48
+        points.append(((rx+.004)*math.cos(t)-.018,(ry+.004)*math.sin(t),z))
+    tube('plaid_cross'+str(j),points,[.003]*len(points),'sidewalk','torso',N=4,sub=0)
+    tube('plaid_cross_shadow'+str(j),[(x,y,zz+.014) for x,y,zz in points],[.005]*len(points),'asphalt','torso',N=4,sub=0)
+for j in range(18):
+    t=.42+j*(2*math.pi-.84)/17;points=[]
+    for k in range(22):
+        z=.508+k*.623/21;rx,ry=robe_radius(z)
+        points.append(((rx+.004)*math.cos(t)-.018,(ry+.004)*math.sin(t),z))
+    tube('plaid_vertical'+str(j),points,[.003]*len(points),'sidewalk','torso',N=4,sub=0)
 for s in [-1,1]:
     # Broad shawl collar describes a V-shaped exposed chest.
     tube('shawl_collar'+str(s),[(-.045,s*.092,1.16),(.083,s*.144,1.135),(.166,s*.133,1.018),(.184,s*.075,.844),(.197,0,.727)],[(.038,.03),(.038,.037),(.033,.034),(.025,.033),(.022,.024)],'sidewalk','torso',N=12)
-    patch('robe_front_overlap'+str(s),[(.183,s*.01,.752),(.20,s*.143,.748),(.204,s*.205,.585),(.198,s*.183,.508),(.216,s*.11,.489),(.208,s*.014,.524)],'robe','torso',.018)
+    o=patch('robe_front_overlap'+str(s),[(.183,s*.01,.752),(.20,s*.143,.748),(.204,s*.205,.585),(.198,s*.183,.508),(.216,s*.11,.489),(.208,s*.014,.524)],'robe','torso',.018)
     # A patch pocket with its opening, welt and stitches.
     box('pocket'+str(s),(.15,s*.231,.669),(.025,.098,.091),'robe','torso',.012,rot=(0,0,s*.23))
     tube('pocket_welt'+str(s),[(.168,s*.182,.716),(.177,s*.229,.72),(.149,s*.277,.705)],[.006,.007,.006],'sidewalk','torso',N=6)
     for j in range(3):
         tube('robe_fold'+str(s)+str(j),[(.117,s*(.15+j*.027),.82),(.15,s*(.17+j*.025),.77),(.139,s*(.18+j*.025),.74)],[.006,.013,.003],'robe','torso',N=8)
+for s in [-1,1]:
+    for j in range(3):
+        z=.545+j*.075
+        tube('front_grid_cross'+str(s)+str(j),[(.212,s*.035,z),(.215,s*.10,z+.005),(.218,s*.169,z+.012)],[.003]*3,'sidewalk','torso',N=4,sub=0)
+    for j in range(2):
+        y=s*(.06+j*.065)
+        tube('front_grid_vertical'+str(s)+str(j),[(.222,y,.54),(.219,y,.62),(.214,y,.714)],[.003]*3,'sidewalk','torso',N=4,sub=0)
+bpy.context.view_layer.update()
+for o in objects:
+    if o.name.startswith('front_grid'):
+        for vert in o.data.vertices:
+            start=Vector((.6,vert.co.y,vert.co.z));hits=[]
+            for target_name in ['robe_shell','robe_front_overlap-1','robe_front_overlap1']:
+                target=bpy.data.objects[target_name];inv=target.matrix_world.inverted()
+                hit,loc,normal,index=target.ray_cast(inv@start,inv.to_3x3()@Vector((-1,0,0)))
+                if hit:hits.append(target.matrix_world@loc)
+            if hits:vert.co.x=min(hits,key=lambda q:(q-start).length).x+.004
 # Belt wraps the robe at the waist; knot, loops and two hanging tails.
 pts=[(.195*math.cos(i*2*math.pi/48)-.018,.274*math.sin(i*2*math.pi/48),.747+.009*math.cos(i*2*math.pi/48)) for i in range(49)]
 tube('robe_belt',pts,[(.018,.025)]*49,'sidewalk','torso',N=8)
@@ -120,8 +143,17 @@ for s in [-1,1]:
 for s,side in [(1,'L'),(-1,'R')]:
     shoulder=(-.008,s*.237,1.076);elbow=(.021,s*.343,.899);wrist=(.086,s*.418,.744)
     node('arm'+side,shoulder,'torso');node('foreArm'+side,elbow,'arm'+side);node('hand'+side,wrist,'foreArm'+side)
-    o=tube('robe_sleeve'+side,[shoulder,(-.005,s*.28,1.054),(.006,s*.313,.958),elbow],[.112,.123,.111,.101],'robe','arm'+side,N=24,sub=1);plaid(o)
-    o=tube('lower_sleeve'+side,[elbow,(.04,s*.363,.86),(.058,s*.381,.827)],[.103,.103,.098],'robe','foreArm'+side,N=24,sub=1);plaid(o)
+    o=tube('robe_sleeve'+side,[shoulder,(-.005,s*.28,1.054),(.006,s*.313,.958),elbow],[.112,.123,.111,.101],'robe','arm'+side,N=16,sub=1)
+    o=tube('lower_sleeve'+side,[elbow,(.04,s*.363,.86),(.058,s*.381,.827)],[.103,.103,.098],'robe','foreArm'+side,N=16,sub=1)
+    for segment,par,A,B in [('upper','arm'+side,Vector(shoulder),Vector(elbow)),('lower','foreArm'+side,Vector(elbow),Vector((.058,s*.381,.827)))]:
+        tangent=(B-A).normalized();u=tangent.cross(Vector((1,0,0))).normalized();w=tangent.cross(u)
+        radius=.111 if segment=='upper' else .106
+        for j in range(1,4):
+            center=A.lerp(B,j/4);points=[center+(u*math.cos(i*2*math.pi/24)+w*math.sin(i*2*math.pi/24))*radius for i in range(25)]
+            tube('sleeve_plaid_band'+side+segment+str(j),points,[.003]*25,'sidewalk',par,N=4,sub=0)
+        for j in range(6):
+            t=j*2*math.pi/6;off=(u*math.cos(t)+w*math.sin(t))*radius
+            tube('sleeve_plaid_length'+side+segment+str(j),[A.lerp(B,k/6)+off for k in range(1,6)],[.003]*5,'sidewalk',par,N=4,sub=0)
     tube('rolled_cuff'+side,[(.051,s*.376,.846),(.061,s*.384,.824),(.065,s*.389,.81)],[.108,.112,.10],'sidewalk','foreArm'+side,N=16)
     tube('forearm_skin'+side,[(.064,s*.389,.821),(.076,s*.405,.782),wrist],[.071,.063,.048],'infectedSkin','foreArm'+side,N=12)
     ell('palm'+side,(.087,s*.424,.72),(.063,.072,.079),'infectedSkin','hand'+side)
@@ -193,10 +225,10 @@ for layer in range(3):
         lock('hair_layer'+str(layer)+'_'+str(j),(x*.6,y*.63,z+.089),
              (x-.011,y,z+.042),(x+.052*math.cos(t)-.045,y+.045*math.sin(t)-.035,z-.068),.066+(j%3)*.005,
              'sidewalk' if j in [2,7] and layer==2 else 'hair')
-for j in range(7):
-    y=-.142+j*.046
+for j in range(5):
+    y=-.136+j*.063
     lock('heavy_fringe'+str(j),(-.025,y+.048,1.577),(.10,y-.009,1.524),
-         (.149,y-.047,1.466+(j%3)*.012),.065+(j%2)*.012)
+         (.144,y-.065,1.505+(j%3)*.022),.065+(j%2)*.012)
 for j in range(9):
     t=j*2*math.pi/9
     lock('messy_crown'+str(j),(-.028,.04*math.sin(t),1.52),
@@ -208,6 +240,10 @@ for j in range(10):
     x=-.022+.15*math.cos(t);y=.16*math.sin(t)
     lock('low_nape'+str(j),(x*.8,y*.83,1.383),(x-.027,y*1.01,1.316),
          (x-.045,y*.91,1.239+(j%2)*.012),.06)
+# Uneven forehead furrows and a swept quiff define the older neighbor face.
+for side in [-1,1]:
+    tube('forehead_furrow'+str(side),[(.153,side*.027,1.46),(.137,side*.034,1.485),(.12,side*.055,1.5)],[.007,.008,.004],'infectedSkin','head',N=8)
+lock('swept_quiff',(-.053,-.07,1.591),(.081,-.036,1.639),(.143,.096,1.536),.087)
 # Surface-projected blood silhouettes, offset at least 4 mm from skin/cloth.
 def stain(n,y,z,ry,rz,par,targets,front=True):
     pts=[Vector((0,y,z))]
@@ -239,6 +275,12 @@ for side,s in [('L',1),('R',-1)]:
 for j in range(8):
     y=rng.uniform(-.22,.22);z=rng.uniform(.51,.86)
     stain('robe_blood'+str(j),y,z,.026,.029,'torso',['robe_shell','robe_front_overlap-1','robe_front_overlap1'])
+for o in objects:
+    if o.name.startswith('claw'):
+        o.data.materials.append(M['blood'])
+        for f in o.data.polygons:
+            p=o.matrix_world@f.center
+            if p.x>.164 and p.z<.68:f.material_index=len(o.data.materials)-1
 # Small collar stitches and shoulder cloth creases, useful at hero camera distances.
 for s,side in [(1,'L'),(-1,'R')]:
     for j in range(3):
@@ -250,7 +292,7 @@ for key,parent,p,sz in [('head','torso',(.014,0,1.19),(.075,.084,.012)),('armL',
 for o in objects:
     if sum(len(f.vertices)-2 for f in o.data.polygons)>80:
         bpy.context.view_layer.objects.active=o
-        mod=o.modifiers.new('game mesh reduction','DECIMATE');mod.ratio=.68 if len(o.data.materials)>1 else .38
+        mod=o.modifiers.new('game mesh reduction','DECIMATE');mod.ratio=.40 if len(o.data.materials)>1 else .33
         bpy.ops.object.modifier_apply(modifier=mod.name)
 # Triangulate explicitly and discard zero-area remnants from bevels/boolean cuts.
 for o in objects:
@@ -293,6 +335,7 @@ for side,sign in [('L',1),('R',-1)]:
     parts['foreArm'+side].rotation_euler.y=-.46 if side=='L' else -.55
     parts['hand'+side].scale=(1.38,1.45,1.40)
     parts['hand'+side].rotation_euler.z=math.pi
+    parts['leg'+side].location.y+=sign*.045
     parts['leg'+side].rotation_euler.y=-.40 if side=='L' else -.48
     parts['shin'+side].rotation_euler.y=.72 if side=='L' else .80
     parts['foot'+side].rotation_euler.y=-.38
