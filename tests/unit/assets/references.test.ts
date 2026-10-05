@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest';
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import manifest from '../../../src/assets/manifest.json';
 import { assetReferences, dataReferences } from '../../../tools/assets/references';
 
@@ -11,15 +12,20 @@ test('T-E17-05d @E17-AC05 data references all resolve to a declared manifest ID'
   for (const id of ['veh.fire-engine','inf.common-worker','char.survivor-female','wpn.baseball-bat']) expect(manifest.some((a)=>a.id===id)).toBe(true);
 });
 
-test('T-E17-sources @E17-AC05 every supplied standalone export and LOD is registered', () => {
-  for (const directory of readdirSync('assets', { withFileTypes: true })) {
-    const source = `assets/${directory.name}/model.glb`;
-    if (!directory.isDirectory() || !existsSync(source)) continue;
-    const def = manifest.find(asset => asset.id === directory.name);
-    expect(def?.sourceGlb, directory.name).toBe(source);
+test('T-E17-sources @E17-AC05 every tracked standalone export and LOD is registered and exported', () => {
+  // Accepted sources are committed; untracked pipeline output is still work in progress.
+  const sources = new Set(execFileSync('git', ['ls-files', '-z', 'assets/*/model*.glb'], { encoding: 'utf8' }).split('\0').filter(Boolean));
+  for (const source of sources) {
+    if (!source.endsWith('/model.glb')) continue;
+    const id = source.split('/')[1];
+    const def = manifest.find(asset => asset.id === id);
+    expect(def?.sourceGlb, id).toBe(source);
+    expect(existsSync(def!.glb), def!.glb).toBe(true);
     for (const lod of ['lod1', 'lod2'] as const) {
-      const source = `assets/${directory.name}/model.${lod}.glb`;
-      if (existsSync(source)) expect(def?.lods?.[lod], source).toBe(def?.glb.replace('.glb', `.${lod}.glb`));
+      const source = `assets/${id}/model.${lod}.glb`;
+      if (sources.has(source)) expect(def?.lods?.[lod], source).toBe(def?.glb.replace('.glb', `.${lod}.glb`));
+      const output = def?.lods?.[lod];
+      if (output) expect(existsSync(output), output).toBe(true);
     }
   }
 });
