@@ -1,0 +1,7 @@
+# Render review
+
+- Round 1: complete character and accessories, 69,759 triangles. Knee caps left gaps; fringe appeared too thin. Initial WebGPU and WebGL2 checks both returned empty errors arrays. GLB height measured 1.4 m; required hierarchy present and no image textures.
+- Round 2: front, left-side, back and three-quarter review. Knee shells now overlap; fringe is broader, scalp silhouette improved, sole outlines rounded. 63,796 triangles. Rear pocket plates were too prominent and rear hair needed gathered volumes.
+- Round 3: adds gathered nape locks and fuller bun folds, replaces rear pocket plates with seams, reduces curve and sphere tessellation, recalculates outward normals. Final front/side/back/three-quarter images and 1600×900, 96-sample hero reviewed against the turnaround. Pose test rotates armL, foreArmL and legR, with an additional knee bend, and confirms the hierarchy. Final GLB: 58,931 triangles, 58 meshes, all 19 required nodes, unit rigid transforms, feet at ground zero, height 1.4 m, zero degenerate triangles and zero textures. WebGPU and WebGL2 both load without console errors or warnings. Final script review consolidated duplicate pose code and kept the helper set small.
+
+The reference-specific skin, hair, lavender, navy, leather and brass palette entries are local pal_* materials, matching the accepted survivor scripts. These entries need registration in the shared runtime palette when integrating this asset; that file is outside the permitted asset-only scope. Existing shared tokens retain their exact spec colours.

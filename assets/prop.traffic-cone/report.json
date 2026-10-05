@@ -1,0 +1,18 @@
+{
+  "id": "prop.traffic-cone",
+  "tier": "Side",
+  "triangles": 8352,
+  "draw_calls": 2,
+  "materials": [
+    "pal_schoolBusYellow",
+    "pal_picketWhite"
+  ],
+  "nodes_ok": true,
+  "within_budget": true,
+  "rounds": 3,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "gaps": [
+    "Palette lacks orange: pal_schoolBusYellow uses #ff6614; runtime palette replacement must preserve this variant."
+  ]
+}

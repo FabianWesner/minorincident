@@ -1,0 +1,7 @@
+# Main-street brick building
+
+Reference proportions: connected 8 m frontage, 5.5 m depth, 7.5 m two-storey parapet. Bakery occupies 60% of frontage; pharmacy 40%. Front +X, bakery -Y, ground slab touches z=0. Brick piers, stone cornice, narrow tall windows, two small rooftop mechanical units and three chimney stacks preserve the principal reference forms.
+
+Geometry-only details: staggered bevelled bricks, scalloped red/cream and teal/cream awnings, dimensional BAKERY / DRUGS lettering, green pharmacy cross, three pastry display shelves, pharmacy bottles, planted windows and wood planter, electrical boxes and conduits. Rear and right surfaces inferred conservatively. No image textures or external font dependencies; lettering uses Blender’s bundled font. Pharmacy masonry uses the non-emissive windowGlow palette family with a muted warm-tan scalar colour. All overlays have real thickness and stand at least 3 mm clear of supporting surfaces. Glowing cross uses a single outline mesh to avoid coplanar intersecting bars.
+
+Static geometry merges by palette material within body, roof and interior assemblies. Perimeter walls retain a hollow interior for roof cutaway. Hinged bakery/pharmacy door origins sit at left vertical hinges. Roof can be hidden independently. Collider and light contract nodes are empties. Vertex AO is baked on GLB export; LOD1 and LOD2 preserve assembly names and pivots.
