@@ -14,6 +14,9 @@ copyright 2025 Bruno Simon):
 | `Materials/MeshGridMaterial.js` | `src/render/MeshGridMaterial.ts` — trimmed XZ grid shader |
 | `utilities/maths.js` | `src/core/maths.ts` — clamp and lerp |
 
+| `Inputs/Inputs.js` | `src/input/Buttons.ts` — action sources and latched edges |
+| `Inputs/Keyboard.js` | `src/input/devices/Keyboard.ts` — keys, blur release and disposal |
+
 ## Bruno Simon MIT license
 
 Copyright (c) 2025 Bruno Simon
