@@ -22,6 +22,7 @@ test('T-E17-05 @E17-AC05 missing GLB and pre-integrated art fall back with logs 
 });
 test('T-E17-05b @E17-AC05 prototypes are independently cloned and every LOD uses its declared path', async () => {
   const { def } = fixture(); def.status = 'integrated'; def.lods = { lod1: 'public/test.lod1.glb', lod2: 'public/test.lod2.glb' };
+  def.decayVariants = ['burned'];
   const urls: string[] = [];
   const registry = new AssetRegistry(() => {}, { manifest: [def], load: async (url) => {
     urls.push(url); const root = new Group();
@@ -32,6 +33,9 @@ test('T-E17-05b @E17-AC05 prototypes are independently cloned and every LOD uses
   expect((await registry.loadAsset(def.id)).position.x).toBe(0);
   await registry.loadAsset(def.id, 'low'); await registry.loadAsset(def.id, 'lod2');
   expect(urls).toEqual(['/test.glb', '/test.lod1.glb', '/test.lod2.glb']);
+  await registry.loadAsset(def.id,'lod1','burned');
+  expect(urls.at(-1)).toBe('/test.burned.lod1.glb');
+  await expect(registry.loadAsset(def.id,'high','unknown')).rejects.toThrow('Unknown decay variant');
   expect([lodForScreenHeight(200),lodForScreenHeight(80),lodForScreenHeight(20)]).toEqual(['lod0','lod1','lod2']);
   await registry.dispose();
 });

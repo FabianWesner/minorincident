@@ -558,7 +558,7 @@ def build(ctx):
         pivots.parent(node, root)
         for index in indices:
             pivots.parent(bpy.data.objects[f'beacon_{index}'], node)
-    for name, prefix, position in [('lightsFront','headlamp_lens',(4.1,0,1.32)),('lightsBrake','rear_tail',(-4.2,0,1))]:
+    for name, prefix, position in [('lightsFront','headlamp_lens',(4.1,0,1.32)),('lightsBrake','tail_lamp',(-4.2,0,1))]:
         node = sockets.empty(name, position)
         pivots.parent(node, root)
         matches = [o for o in list(root.children_recursive) if o.type=='MESH' and o.name.startswith(prefix)]

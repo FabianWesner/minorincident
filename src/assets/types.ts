@@ -23,3 +23,7 @@ export interface AssetDef {
 export function atLeast(status: AssetStatus, minimum: AssetStatus): boolean {
   return statuses.indexOf(status) >= statuses.indexOf(minimum);
 }
+/** Variants use the same node contract and LOD suffixes as the base asset. */
+export function variantPath(path: string, decay?: string): string {
+  return decay ? path.replace(/(\.lod[12])?\.glb$/, `.${decay}$1.glb`) : path;
+}

@@ -9,13 +9,15 @@ export class AssetMaterials {
       if (!(node instanceof Mesh)) return;
       const replace = (source: Material): Material => {
         const match = source.name.match(/^(pal|emi)_(.+)$/);
-        if (!match || !(match[2] in palette)) return source;
-        let material = this.cache.get(source.name);
+        if (!match || !Object.hasOwn(palette,match[2])) return source;
+        const vertexColors = match[1] === 'pal' && node.geometry.hasAttribute('color');
+        const key = `${source.name}:${vertexColors}`;
+        let material = this.cache.get(key);
         if (!material) {
-          const created = match[1] === 'emi' ? new MeshBasicNodeMaterial({ color: palette[match[2]] }) : new MeshLambertNodeMaterial({ color: palette[match[2]] });
+          const created = match[1] === 'emi' ? new MeshBasicNodeMaterial({ color: palette[match[2]] }) : new MeshLambertNodeMaterial({ color: palette[match[2]], vertexColors });
           if (match[1] === 'emi') created.color.multiplyScalar(3);
           material = created;
-          material.name = source.name; this.cache.set(source.name, material);
+          material.name = source.name; this.cache.set(key, material);
         }
         return material;
       };

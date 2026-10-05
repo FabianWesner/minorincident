@@ -3,5 +3,5 @@ import tokens from './palette.json';
 export const palette: Record<string, string> = tokens;
 export function validMaterial(name: string): boolean {
   const match = name.match(/^(pal|emi|keep)_(.+)$/);
-  return !!match && (match[1] === 'keep' ? ['glass', 'neon'].includes(match[2]) : match[2] in palette);
+  return !!match && (match[1] === 'keep' ? ['glass', 'neon'].includes(match[2]) : Object.hasOwn(palette,match[2]));
 }

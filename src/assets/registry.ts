@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from './manifest.json';
-import { atLeast, type AssetDef, type AssetQuality } from './types';
+import { atLeast, variantPath, type AssetDef, type AssetQuality } from './types';
 import { placeholder } from './placeholders';
 import { AssetMaterials } from './materials';
 
@@ -22,28 +22,37 @@ export class AssetRegistry {
     this.definitions = new Map((options.manifest ?? manifest as AssetDef[]).map((a) => [a.id, a]));
     const gltf = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     if (options.renderer) {
-      this.ktx = new KTX2Loader().setTranscoderPath('/basis/').detectSupport(options.renderer);
+      this.ktx = new KTX2Loader().detectSupport(options.renderer);
       gltf.setKTX2Loader(this.ktx);
     }
-    this.load = options.load ?? (async (url) => (await gltf.loadAsync(url)).scene);
+    this.load = options.load ?? (async (url) => {
+      const parsed = await gltf.loadAsync(url);
+      // GLTFLoader sanitizes ':' and '.' for animation binding; restore contract IDs.
+      parsed.scene.traverse((node) => {
+        const index = parsed.parser.associations.get(node)?.nodes;
+        if (index !== undefined) node.name = parsed.parser.json.nodes[index].name ?? node.name;
+      });
+      return parsed.scene;
+    });
   }
   definition(id: string): AssetDef { const def = this.definitions.get(id); if (!def) throw new Error(`Unknown asset ID ${id}`); return def; }
-  async loadAsset(id: string, quality: AssetQuality = 'high'): Promise<Object3D> {
+  async loadAsset(id: string, quality: AssetQuality = 'high', decay?: string): Promise<Object3D> {
     const def = this.definition(id), lod = quality === 'high' ? 'lod0' : quality === 'low' ? 'lod1' : quality;
-    const key = `${id}:${lod}`;
+    if (decay && !def.decayVariants.includes(decay)) throw new Error(`Unknown decay variant ${id}:${decay}`);
+    const key = `${id}:${lod}:${decay ?? ''}`;
     let pending = this.cache.get(key);
     if (!pending) {
-      pending = this.prototype(def, lod); this.cache.set(key, pending);
+      pending = this.prototype(def, lod, decay); this.cache.set(key, pending);
     }
     return (await pending).clone(true);
   }
-  private async prototype(def: AssetDef, lod: 'lod0' | 'lod1' | 'lod2'): Promise<Object3D> {
+  private async prototype(def: AssetDef, lod: 'lod0' | 'lod1' | 'lod2', decay?: string): Promise<Object3D> {
     const fallback = (reason: string): Group => { this.log({ type: 'asset.placeholder', id: def.id, reason }); return placeholder(def); };
     if (!atLeast(def.status, 'integrated')) return fallback(`status ${def.status}`);
     const path = lod === 'lod0' ? def.glb : def.lods?.[lod];
     if (!path) return fallback(`missing ${lod}`);
     try {
-      const root = await this.load('/' + path.replace(/^public\//, ''));
+      const root = await this.load('/' + variantPath(path,decay).replace(/^public\//, ''));
       for (const name of [...def.requiredNodes, ...def.animatedNodes, ...def.sockets]) if (!root.getObjectByName(name)) throw new Error(`missing node ${name}`);
       root.traverse((node) => { if (node.name.startsWith('stump_') || node.userData.hidden) node.visible = false; });
       this.materials.swap(root);
