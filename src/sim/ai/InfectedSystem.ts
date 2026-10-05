@@ -66,14 +66,17 @@ export class InfectedSystem {
       }
     });
   }
+  /** The director validates the same authored perch that spawn will use. */
+  perchFor(id: string, position: { x: number; z: number }, perched?: boolean): { x: number; z: number; y: number } | undefined {
+    if (id !== 'infected.cat' || perched === false) return;
+    let closest: { x: number; z: number; y: number } | undefined, distance = Infinity;
+    for (const point of this.perches) { const d = Math.hypot(point.x - position.x, point.z - position.z); if (d < distance) { distance = d; closest = point; } }
+    return closest;
+  }
   spawn(id: string, position: { x: number; z: number }, opts: InfectedSpawn = {}): number {
     const def = infectedDef(id);
-    let perch: { x: number; z: number; y: number } | undefined;
-    if (id === 'infected.cat' && opts.perched !== false && this.perches.length) {
-      let distance = Infinity;
-      for (const point of this.perches) { const d = Math.hypot(point.x - position.x, point.z - position.z); if (d < distance) { distance = d; perch = point; } }
-      position = perch!;
-    }
+    const perch = this.perchFor(id, position, opts.perched);
+    if (perch) position = perch;
     if (opts.yaw !== undefined && !Number.isFinite(opts.yaw)) throw new RangeError('Invalid infected facing');
     if (id === 'infected.crow' && opts.birds !== undefined && (!Number.isInteger(opts.birds) || opts.birds < 1 || opts.birds > 20)) throw new RangeError('A flock contains 1–20 birds');
     const weight = id === 'infected.crow' ? (opts.birds ?? 20) * 0.25 : 1;
