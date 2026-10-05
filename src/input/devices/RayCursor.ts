@@ -1,4 +1,5 @@
-// Adapted from folio-2025 RayCursor.js / Inputs/Nipple.js by Bruno Simon (MIT).
+// Adapted from folio-2025 by Bruno Simon (MIT).
+// Source: RayCursor.js / Inputs/Nipple.js, commit 41046b5.
 import { Plane, Raycaster, Vector2, Vector3, type Camera } from 'three';
 /** Scratch math objects are retained; input raycasts against the XZ plane, never scene meshes. */
 export class RayCursor {

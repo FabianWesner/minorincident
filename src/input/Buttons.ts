@@ -1,4 +1,5 @@
-// Adapted from folio-2025 Inputs/Inputs.js by Bruno Simon (MIT).
+// Adapted from folio-2025 by Bruno Simon (MIT).
+// Source: Inputs/Inputs.js, commit 41046b5.
 import type { Button } from './InputFrame';
 
 /** Latches event transitions until the next tick, including a click between ticks. */
