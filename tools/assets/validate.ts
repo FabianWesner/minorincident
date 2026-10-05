@@ -7,6 +7,7 @@ import type { AssetDef } from '../../src/assets/types';
 import { atLeast } from '../../src/assets/types';
 import { validMaterial } from '../../src/assets/palette';
 import { assetIO } from './io';
+import { reviewErrors } from './review';
 
 export interface Validation { id: string; errors: string[]; triangles: number; materials: number; drawCalls: number; fileKB: number; dimensions: number[]; hash: string }
 export function geometryHash(document: Document): string {
@@ -118,7 +119,8 @@ export async function validateAssets(manifest: AssetDef[], production = false): 
     }
     if (def.status === 'final') {
       const review = `assets/${def.id}/review.md`;
-      if (!existsSync(review) || !/Verdict:\s*PASS/i.test(readFileSync(review, 'utf8')) || !/comparison.*\.png/i.test(readFileSync(review, 'utf8'))) results.push({ id: def.id, errors: ['final review missing pass/comparison'], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' });
+      const errors = existsSync(review) ? reviewErrors(readFileSync(review,'utf8')) : ['final review missing'];
+      if (errors.length) results.push({ id: def.id, errors, triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' });
     }
   }
   return results;
