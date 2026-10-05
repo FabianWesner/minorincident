@@ -1,5 +1,5 @@
 // Adapted from Bruno Simon's scripts/compress.js (MIT): raw export → compression.
-import { mkdirSync, existsSync } from 'node:fs';
+import { mkdirSync, existsSync, readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { Matrix4, Quaternion, Vector3, Color } from 'three';
@@ -7,6 +7,7 @@ import manifest from '../../src/assets/manifest.json';
 import type { Document, Node } from '@gltf-transform/core';
 import { dedup, prune, weld, join, meshopt, simplify, normals, getBounds } from '@gltf-transform/functions';
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
+import type { DistrictLayout } from '../../src/levels/districts/types';
 import type { AssetDef } from '../../src/assets/types';
 import { assetIO } from './io';
 import { compressTextures } from './textures';
@@ -74,24 +75,33 @@ export function generateStumpCaps(document: Document, def: AssetDef): void {
     if (!limb || !parent) throw new Error(`${def.id}: no joint for ${cap.getName()}`);
     const inverse = new Matrix4().fromArray(limb.getWorldMatrix()).invert(), points: Vector3[] = [];
     // Only the proximal part: elbow/knee/hand children have their own joint caps.
-    const collect = (node: Node): void => {
-      if (node !== limb && (def.animatedNodes.includes(node.getName()) || node.getName().startsWith('stump_'))) return;
+    const collect = (node: Node, owner = limb, output = points): void => {
+      if (node !== owner && (def.animatedNodes.includes(node.getName()) || node.getName().startsWith('stump_'))) return;
       const matrix = new Matrix4().multiplyMatrices(inverse,new Matrix4().fromArray(node.getWorldMatrix()));
       for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
         const position=primitive.getAttribute('POSITION')!, point: number[]=[];
-        for(let i=0;i<position.getCount();i++) {position.getElement(i,point);points.push(new Vector3().fromArray(point).applyMatrix4(matrix));}
+        for(let i=0;i<position.getCount();i++) {position.getElement(i,point);output.push(new Vector3().fromArray(point).applyMatrix4(matrix));}
       }
-      for(const child of node.listChildren()) collect(child);
+      for(const child of node.listChildren()) collect(child,owner,output);
     };
     collect(limb);
     if (!points.length) throw new Error(`${def.id}: empty limb ${limb.getName()}`);
     const center = points.reduce((sum,p)=>sum.add(p),new Vector3()).divideScalar(points.length);
-    const axis = center.lengthSq()>1e-8 ? center.normalize() : new Vector3(0,1,0);
+    const axis = limb.getName()==='head' ? new Vector3(0,1,0) : center.lengthSq()>1e-8 ? center.normalize() : new Vector3(0,1,0);
     const orientation = new Quaternion().setFromUnitVectors(new Vector3(0,1,0),axis);
     const undo = orientation.clone().invert(), projected=points.map(p=>p.clone().applyQuaternion(undo));
     const closest=Math.min(...projected.map(p=>Math.abs(p.y))), extent=Math.max(...projected.map(p=>Math.abs(p.y)));
     const section=projected.filter(p=>Math.abs(p.y)<=closest+(extent-closest)*.2);
-    const rx=Math.max(.025,...section.map(p=>Math.abs(p.x))), rz=Math.max(.025,...section.map(p=>Math.abs(p.z)));
+    let rx=Math.max(.025,...section.map(p=>Math.abs(p.x))), rz=Math.max(.025,...section.map(p=>Math.abs(p.z)));
+    if (limb.getName()==='head') {
+      // The jaw/hair silhouette is wider than the neck: infer the cut from the torso.
+      const torso: Vector3[]=[];collect(parent,parent,torso);
+      const section=torso.map(p=>p.applyQuaternion(undo));
+      if(section.length) {
+        rx=Math.min(rx,Math.max(.025,(Math.max(...section.map(p=>p.x))-Math.min(...section.map(p=>p.x)))*.2));
+        rz=Math.min(rz,Math.max(.025,(Math.max(...section.map(p=>p.z))-Math.min(...section.map(p=>p.z)))*.2));
+      }
+    }
     const depth=Math.min(rx,rz)*.25;
     const mesh=document.createMesh();
     // Eight-sided annulus + outer wall (32 tris), closed bone stub (24 tris).
@@ -230,9 +240,43 @@ export async function optimizeExports(def: AssetDef): Promise<void> {
     await optimizeAsset(handMade ? supplied : source, output, def, handMade ? 1 : targetRatio);
   }
 }
+/** Refresh exported collision/minimap metadata after canonical dimensions change, without Blender. */
+export function conformLayoutDimensions(definitions: AssetDef[]): void {
+  const directory='public/assets/layouts';
+  if(!existsSync(directory)) return;
+  const byId=new Map(definitions.map(def=>[def.id,def]));
+  for(const file of readdirSync(directory).filter(name=>name.endsWith('.layout.json'))) {
+    const path=`${directory}/${file}`, before=readFileSync(path,'utf8'), layout=JSON.parse(before) as DistrictLayout;
+    for(const placement of layout.placements) {
+      const def=byId.get(placement.assetId); if(!def?.world?.solid) continue;
+      const {x,y,z}=def.dimensions, [px,py,pz]=placement.position, [sx,sy,sz]=placement.scale;
+      const cosine=Math.abs(Math.cos(placement.yaw)), sine=Math.abs(Math.sin(placement.yaw));
+      const hx=(cosine*x*sx+sine*z*sz)/2, hz=(sine*x*sx+cosine*z*sz)/2;
+      const old=placement.visualAabb, box={min:[px-hx,py,pz-hz],max:[px+hx,py+y*sy,pz+hz]} as typeof old;
+      // Authoring places entrance anchors one metre beyond a building's front bound.
+      if(layout.buildings.some(b=>b.id===placement.id)) for(const anchor of Object.values(layout.anchors)) {
+        if(Math.abs(anchor.position[0]-px)<1e-6 && Math.abs(anchor.position[2]-old.max[2]-1)<1e-6) anchor.position[2]=box.max[2]+1;
+      }
+      placement.visualAabb=box;
+      const collider=layout.colliders.find(c=>c.id===placement.id); if(collider) collider.aabb=box;
+      const building=layout.buildings.find(b=>b.id===placement.id); if(building) building.aabb=box;
+      const polygon=(a:typeof old)=>[[a.min[0],a.min[2]],[a.max[0],a.min[2]],[a.max[0],a.max[2]],[a.min[0],a.max[2]],[a.min[0],a.min[2]]] as [number,number][];
+      const replacePolygon=(p:[number,number][])=>JSON.stringify(p)===JSON.stringify(polygon(old)) ? polygon(box) : p;
+      layout.walkable.excluded=layout.walkable.excluded.map(replacePolygon);
+      for(const zone of layout.acousticZones) if(zone.id===placement.id) {
+        for(const surface of layout.surfaces) if(JSON.stringify(surface.polygon)===JSON.stringify(zone.polygon)) surface.polygon=polygon(box);
+        zone.polygon=polygon(box);
+      }
+      for(const surface of layout.surfaces) surface.polygon=replacePolygon(surface.polygon);
+    }
+    const after=JSON.stringify(layout,null,2)+'\n'; if(after!==before) writeFileSync(path,after);
+  }
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const target = process.argv[2];
   const selected = (manifest as AssetDef[]).filter(d => target === '--production' ? !!d.sourceGlb : d.id === target);
   if (!selected.length) throw new Error('Usage: assets:optimize -- <id>|--production');
   for (const def of selected) { await optimizeExports(def); console.log(def.id); }
+  conformLayoutDimensions(manifest as AssetDef[]);
 }

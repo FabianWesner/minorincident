@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { getBounds } from '@gltf-transform/functions';
 import { expect, test } from 'vitest';
 import { assetIO } from '../../../tools/assets/io';
 import { validateDocument } from '../../../tools/assets/validate';
@@ -101,5 +103,31 @@ test('T-E17-caps @E17-AC11 exported caps survive compression and stay on the sur
     expect(triangles).toBe(56);
     const parent=cap.getParentNode()!;parent.removeChild(limb);
     expect(cap.getParentNode()).toBe(parent);
+  }
+});
+
+
+test('T-E17-height @E17-AC02 adult exports stay 1.75–1.85 m at every LOD', async () => {
+  const {default:manifest}=await import('../../../src/assets/manifest.json'), io=await assetIO();
+  const exceptions=new Set(['char.corgi','npc.brother','inf.crawler','inf.brute','inf.teen-skater']);
+  for(const def of manifest as AssetDef[]) {
+    if(!def.sourceGlb || !['character','infected'].includes(def.category) || exceptions.has(def.id)) continue;
+    for(const path of [def.glb,def.lods?.lod1,def.lods?.lod2].filter((p):p is string=>!!p)) {
+      const doc=await io.read(path),bounds=getBounds(doc.getRoot().listScenes()[0]),height=bounds.max[1]-bounds.min[1];
+      expect(height,path).toBeGreaterThanOrEqual(1.75);expect(height,path).toBeLessThanOrEqual(1.85);
+    }
+  }
+});
+
+test('T-E17-lanes @E17-AC02 vehicle envelopes including mirrors fit district lanes at every LOD', async () => {
+  const layout=JSON.parse(readFileSync('public/assets/layouts/D-MAIN.layout.json','utf8'));
+  const lane=Math.min(...layout.roads.edges.map((edge:{laneWidth:number})=>edge.laneWidth/2));
+  const {default:manifest}=await import('../../../src/assets/manifest.json'),io=await assetIO();
+  for(const def of manifest as AssetDef[]) {
+    if(def.category!=='vehicle' || (!def.sourceGlb && def.status!=='integrated')) continue;
+    for(const path of [def.glb,def.lods?.lod1,def.lods?.lod2].filter((p):p is string=>!!p)) {
+      const doc=await io.read(path),bounds=getBounds(doc.getRoot().listScenes()[0]);
+      expect(bounds.max[2]-bounds.min[2],path).toBeLessThan(lane-.1);
+    }
   }
 });
