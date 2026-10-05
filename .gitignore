@@ -1,0 +1,80 @@
+# Reference repos (cloned separately, not part of this project)
+/folio-2025/
+/references/img2threejs/
+
+# Dependencies
+node_modules
+
+# Build output & caches
+dist/
+dist-ssr/
+.vite/
+.vite-cache/
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Tooling
+.playwright-mcp/
+coverage/
+.cache/
+
+# Editors & OS
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+.DS_Store
+Thumbs.db
+
+# Blender by-products (build.py is the source of truth)
+*.blend
+*.blend1
+*.blend@
+
+# Asset experiment: keep scripts, briefs, reports and results; drop heavy outputs
+experiment/gallery/
+experiment/**/*.glb
+experiment/**/renders/
+experiment/tools/.locks/
+epics-pipeline/load.log
+
+# ---- Public repo scope: game only (decision 2026-10-05) ----
+# Concept drafts, references and the draft pipeline
+/initial-drafts/
+/drafts-pipeline/
+/assets/regions/
+/assets/**/reference*.png
+/assets/**/prompt.md
+/assets/**/description.txt
+/assets/**/renders/
+/assets/**/notes-review/
+# Experiments, pilots and analysis
+/experiment/
+/assets/fire-engine/
+/assets/fire-engine-blender/
+/docs/bruno-reference/
+# Orchestration and dev-only tooling
+/epics-pipeline/
+/preview/
+# Test artefacts (screenshots/videos are deleted after verification)
+/test-results/
+/playwright-report/
+# Per asset keep only the source script, exported models and its notes/review/report
+/assets/*/*
+!/assets/*/build.py
+!/assets/*/model*.glb
+!/assets/*/notes.md
+!/assets/*/review.md
+!/assets/*/report.json
+/.claude/

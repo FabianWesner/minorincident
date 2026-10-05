@@ -1,0 +1,45 @@
+{
+  "name": "minor-incident",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 3300 --configLoader runner",
+    "build": "NODE_ENV=production vite build --configLoader runner",
+    "preview": "vite preview --host 127.0.0.1 --port 3301 --strictPort --configLoader runner",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.sim.json",
+    "lint": "eslint src tests tools *.config.ts eslint.config.js",
+    "test:unit": "vitest run tests/unit",
+    "test:sim": "vitest run tests/sim",
+    "test:e2e": "playwright test --project=chromium",
+    "test:e2e:mobile": "playwright test --project=pixel-7 --project=pixel-7-landscape --project=iphone-14 --project=iphone-14-landscape",
+    "test:e2e:webkit": "playwright test --project=webkit",
+    "test:visual": "playwright test tests/visual --project=chromium",
+    "test:perf": "playwright test tests/perf --project=chromium",
+    "test:smoke": "vitest run -t @smoke && playwright test --grep @smoke",
+    "verify": "tsx tools/verify.ts",
+    "sim": "tsx tools/sim-runner/index.ts",
+    "assets:validate": "tsx tools/assets/pending.ts validate",
+    "assets:turntable": "tsx tools/assets/pending.ts turntable",
+    "deploy": "npm run build && npx --yes wrangler@4 pages deploy dist --project-name minor-incident"
+  },
+  "dependencies": {
+    "@dimforge/rapier3d-compat": "0.21.0",
+    "three": "0.186.0",
+    "tweakpane": "4.0.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@tweakpane/core": "2.0.5",
+    "@types/node": "22.19.1",
+    "@types/pngjs": "6.0.5",
+    "@types/three": "0.186.0",
+    "eslint": "10.12.0",
+    "pixelmatch": "7.1.0",
+    "pngjs": "7.0.0",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.0",
+    "vite": "6.4.3",
+    "vitest": "5.0.3"
+  }
+}
