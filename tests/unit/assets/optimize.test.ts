@@ -1,10 +1,11 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { getBounds } from '@gltf-transform/functions';
 import { expect, test } from 'vitest';
 import { assetIO } from '../../../tools/assets/io';
 import { validateDocument } from '../../../tools/assets/validate';
 import { normalizeForward, optimizeDocument } from '../../../tools/assets/optimize';
 import type { AssetDef } from '../../../src/assets/types';
+import { atLeast } from '../../../src/assets/types';
 import { fixture } from './fixture';
 import { compressTextures } from '../../../tools/assets/textures';
 
@@ -113,6 +114,9 @@ test('T-E17-height @E17-AC02 adult exports stay 1.75–1.85 m at every LOD', asy
   for(const def of manifest as AssetDef[]) {
     if(!def.sourceGlb || !['character','infected'].includes(def.category) || exceptions.has(def.id)) continue;
     for(const path of [def.glb,def.lods?.lod1,def.lods?.lod2].filter((p):p is string=>!!p)) {
+      // Raw reference deliveries use code placeholders until the production pipeline runs.
+      // Existing exports are still checked; modeled assets must have their declared outputs.
+      if (!existsSync(path) && !atLeast(def.status, 'modeled')) continue;
       const doc=await io.read(path),bounds=getBounds(doc.getRoot().listScenes()[0]),height=bounds.max[1]-bounds.min[1];
       expect(height,path).toBeGreaterThanOrEqual(1.75);expect(height,path).toBeLessThanOrEqual(1.85);
     }
