@@ -45,7 +45,7 @@ export class KinematicController {
       }
     }
     const controller = this.physics.characterController!, collider = this.physics.playerCollider!;
-    controller.computeColliderMovement(collider, this.displacement);
+    controller.computeColliderMovement(collider, this.displacement, undefined, collider.collisionGroups());
     controller.computedMovement(this.displacement);
     this.next.x = transform.x + this.displacement.x; this.next.y = transform.y + this.displacement.y; this.next.z = transform.z + this.displacement.z;
     this.physics.playerBody!.setNextKinematicTranslation(this.next);
