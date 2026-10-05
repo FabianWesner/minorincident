@@ -5053,9 +5053,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.civilian-kid.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.5572077967226505,
+      "y": 1.4744024276733398,
+      "z": 0.6619207859039307,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5108,7 +5108,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-kid/model.glb",
+    "script": "assets/npc.civilian-kid/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-kid.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-kid.lod2.glb"
+    }
   },
   {
     "id": "npc.civilian-elderly",
@@ -5624,9 +5631,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.firefighter-alive.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.6766336584529581,
+      "y": 1.8000000000000003,
+      "z": 0.9104761829501424,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5679,7 +5686,15 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.firefighter-alive/model.glb",
+    "script": "assets/npc.firefighter-alive/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.firefighter-alive.lod1.glb",
+      "lod2": "public/assets/models/npc.firefighter-alive.lod2.glb"
+    },
+    "sourceScale": 1.236492203102856
   },
   {
     "id": "npc.national-guard",
@@ -5688,9 +5703,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.national-guard.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.7083720916763953,
+      "y": 1.8,
+      "z": 0.792938240244154,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5743,7 +5758,15 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.national-guard/model.glb",
+    "script": "assets/npc.national-guard/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.national-guard.lod1.glb",
+      "lod2": "public/assets/models/npc.national-guard.lod2.glb"
+    },
+    "sourceScale": 1.2599546567761748
   },
   {
     "id": "npc.survivor-group",
@@ -6653,9 +6676,9 @@
     "tier": "hero",
     "glb": "public/assets/models/bld.tunnel-portal.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 7.300000190734863,
+      "y": 8.640716791152954,
+      "z": 12.394163131713867,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -6673,7 +6696,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.tunnel-portal/model.glb",
+    "script": "assets/bld.tunnel-portal/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/bld.tunnel-portal.lod1.glb",
+      "lod2": "public/assets/models/bld.tunnel-portal.lod2.glb"
+    }
   },
   {
     "id": "bld.power-substation",
