@@ -170,7 +170,7 @@ test("T-E10-09 @E10 @E10-AC09 all district diorama and decay review must items p
       expect(review).toMatch(new RegExp(`${id} ${item}: PASS`));
 });
 
-test("T-E10-review-thresholds @E10 reviewed diorama/decay should items meet the 70% threshold", () => {
+test("T-E10-review-thresholds @E10 @E10-AC09 @E10-AC04 reviewed diorama/decay should items meet the 70% threshold", () => {
   const review = readFileSync(`${output}/review.md`, "utf8");
   for (const id of districtIds) {
     expect(
