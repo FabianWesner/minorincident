@@ -10,7 +10,7 @@ export function vehiclePlaceholder(def: VehicleDef, paint?: Material): Group {
   box('cabin', def.length * .52, .65, def.width * .88, -.15, 1.25, 0, glass);
   for (let i = 0; i < 4; i++) {
     const node = new Group(); node.name = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR'][i]; node.position.set(i < 2 ? def.wheelbase / 2 : -def.wheelbase / 2, def.wheelRadius, (i % 2 === 0 ? 1 : -1) * def.width * .4);
-    const wheel = new Mesh(new CylinderGeometry(def.wheelRadius, def.wheelRadius, .22, 12), dark); wheel.rotation.x = Math.PI / 2; node.add(wheel); root.add(node);
+    const wheel = new Mesh(new CylinderGeometry(def.wheelRadius, def.wheelRadius, .22, 12), dark); wheel.rotation.x = Math.PI / 2; node.add(wheel); const spoke = new Mesh(new BoxGeometry(.06, def.wheelRadius * 1.5, .23), bodyMaterial); node.add(spoke); root.add(node);
   }
   box('lightsFront', .08, .18, def.width * .8, def.length / 2, .8, 0, new MeshBasicNodeMaterial({ color: '#ffc773' }));
   box('lightsBrake', .08, .18, def.width * .8, -def.length / 2, .8, 0, new MeshBasicNodeMaterial({ color: '#ff2d2d' }));

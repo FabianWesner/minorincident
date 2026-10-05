@@ -21,8 +21,15 @@ export class Touch {
       const button = document.createElement('button'); button.dataset.touchAction = action;
       button.textContent = action === 'selector' ? 'NEXT' : action.toUpperCase(); button.setAttribute('aria-label', `Touch ${action}`);
       button.style.cssText = 'height:64px;color:white;background:#182333;border:2px solid white;border-radius:12px;touch-action:none;user-select:none';
+      if (action === 'brake') button.hidden = true;
       this.element.append(button);
     }
+  }
+  /** Driving reuses LEFT/RIGHT and reveals its dedicated hold-to-brake control. */
+  setDriving(on: boolean): void {
+    this.element.querySelector<HTMLButtonElement>('[data-touch-action=brake]')!.hidden = !on;
+    this.element.querySelector<HTMLButtonElement>('[data-touch-action=left]')!.textContent = on ? 'HORN' : 'LEFT';
+    this.element.querySelector<HTMLButtonElement>('[data-touch-action=right]')!.textContent = on ? 'EXIT' : 'RIGHT';
   }
   init(): void {
     this.canvas.style.touchAction = 'none';

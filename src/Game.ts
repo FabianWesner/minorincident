@@ -1,3 +1,4 @@
+import { Driver } from './debug/bot/Driver';
 // Adapted from folio-2025 by Bruno Simon (MIT).
 import { InputSystem } from './input/InputSystem';
 import { Clock } from './core/Clock';
@@ -17,6 +18,7 @@ export class Game {
   readonly input: InputSystem;
   readonly ticker = new Ticker();
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
+  driver: Driver | null = null;
   frameMs = 0;
   simMs = 0;
   private loading = false;
@@ -47,7 +49,7 @@ export class Game {
     const load = this.levelQueue.then(async () => {
       this.loading = true;
       try {
-        this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
+        this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
         if (name !== null) { this.world.loadScenario(name, seed); await this.view.load(); }
         else this.view.update();
       } finally { this.loading = false; this.ticker.reset(); }
@@ -63,7 +65,7 @@ export class Game {
         const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(url);if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
         const data=performance.now();
         const cosmetic=this.world.entities.get(1)?.survivor;
-        this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
+        this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
         const sim=performance.now();await this.view.load();this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:performance.now()-sim};
       }finally{this.loading=false;this.ticker.reset();}
@@ -78,13 +80,15 @@ export class Game {
     this.view.update(1);
   }
   private simTick(): void {
+    this.input.setDriving(this.world.vehicles?.active != null);
     const player = this.world.entities.get(1)?.transform;
-    if (player) this.world.applyInput(this.input.sample(player), this.input.scheme);
+    if (this.driver) this.world.applyInput(this.driver.sample(), 'keyboard');
+    else if (player) this.world.applyInput(this.input.sample(player), this.input.scheme);
     this.world.update();
     this.view.advance(1 / 60);
   }
   async screenshotReady(): Promise<void> {
-    await this.levelQueue;
+    await this.levelQueue; await this.view.ready();
     for (let i = 0; i < 2; i++) { await new Promise<void>((resolve) => requestAnimationFrame(() => resolve())); this.view.update(this.clock.paused ? 1 : this.clock.alpha); }
   }
   perf(): { fps: number; frameMs: number; simMs: number; drawCalls: number; triangles: number; geometries: number; textures: number; entities: number; backend: string; loadTiming:Game['lastLoad'] } {

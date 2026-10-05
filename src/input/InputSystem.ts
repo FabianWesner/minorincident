@@ -25,6 +25,8 @@ export class InputSystem implements Lifecycle {
   private touchFire: 'touch' | 'assist' | null = null;
   readonly frame = emptyInput();
   scheme: Scheme = 'mouse-only';
+  private drivingContext = false;
+  setDriving(on: boolean): void { if (on !== this.drivingContext) { this.drivingContext = on; this.touch.setDriving(on); } }
   private readonly left = new Buttons();
   private readonly right = new Buttons();
   private readonly active = new Set<Action>();
@@ -139,7 +141,7 @@ export class InputSystem implements Lifecycle {
     const frame = this.frame;
     frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint;
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
-    this.driving.throttle = -y; this.driving.steer = -x; frame.drive = this.driving; frame.brake = this.touch.braking;
+    this.driving.throttle = -y; this.driving.steer = x; frame.drive = this.driving; frame.brake = this.touch.braking;
     if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') {
       this.screenVector(x, y, frame.move); const length = Math.hypot(frame.move.x, frame.move.z);
       if (length > 1) { frame.move.x /= length; frame.move.z /= length; }
@@ -189,7 +191,7 @@ export class InputSystem implements Lifecycle {
     this.selectors.length = 0; this.interact = false; this.pause = false;
   };
   update(): void { /* Input is sampled in the fixed input phase, not the render update. */ }
-  reset(): void { this.release(); this.left.reset(); this.right.reset(); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.setScheme(navigator.maxTouchPoints > 0 ? 'touch' : 'mouse-only'); this.frameNeutral(); }
+  reset(): void { this.setDriving(false); this.release(); this.left.reset(); this.right.reset(); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.setScheme(navigator.maxTouchPoints > 0 ? 'touch' : 'mouse-only'); this.frameNeutral(); }
   dispose(): void {
     this.reset(); this.keyboard.dispose(); this.pointer.dispose(); this.wheel.dispose(); this.touch.dispose();
     window.removeEventListener('blur', this.release); window.removeEventListener('pagehide', this.release); document.removeEventListener('visibilitychange', this.visibility);

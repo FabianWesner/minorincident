@@ -33,3 +33,19 @@ test('T-E09-02b @E09-AC02 walking or leaving the ring resets the full dwell time
   const world = new SimWorld(); await world.init(); world.loadScenario('drive-course');
   try { step(world, 20); world.setInput({ move: { x: 1, z: 0 } }); step(world, 1); world.clearInput(); step(world, 35); expect(world.vehicles!.active).toBeNull(); step(world, 1); expect(world.vehicles!.active).toBe(2); } finally { world.dispose(); }
 });
+
+test('T-E09-siren @E09 police siren lures hearing fixtures through the shared noise response', async () => {
+  const world = new SimWorld(); await world.init(); world.loadScenario('drive-course');
+  try {
+    const player = world.entities.get(1)!; player.transform.z = 13.45; world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    const infected = world.spawnDummy('infected.runner', { x: 20, z: 12 }, { reactive: true }); step(world, 60);
+    expect(world.entities.get(infected)!.hearing!.mode).toBe('investigate'); expect(world.entities.get(infected)!.hearing!.target.z).toBeCloseTo(12);
+    expect(world.events.events().some(e => e.type === 'noise' && e.sourceId === 3 && e.kind === 'siren')).toBe(true);
+  } finally { world.dispose(); }
+});
+
+test('T-E09-02c @E09-AC02 a moving car can exit after a 50m drive on the large course ground', async () => {
+  const { Driver } = await import('../../../src/debug/bot/Driver');
+  const world = new SimWorld(); await world.init(); world.loadScenario('drive-course');
+  try { const driver = new Driver(world); for (let i = 0; i < 480; i++) { world.applyInput(driver.sample(), 'keyboard'); world.update(); } expect(world.getEntity(2)!.transform.x).toBeGreaterThan(50); expect(world.vehicles!.exit()).toBe(true); expect(world.getEntity(1)!.hidden).toBe(false); } finally { world.dispose(); }
+});
