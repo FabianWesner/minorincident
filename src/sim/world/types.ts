@@ -6,6 +6,8 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 export interface EntitySnapshot {
   id: number;
   hidden?: boolean;
+  /** Retaliation HP cost for vehicle ramming; supplied by infected definitions. */
+  ramDamage?: number;
   vehicle?: import('../vehicles/Vehicles').VehicleState;
   survivor?: SurvivorState;
   weapons?: import('../combat/Loadout').LoadoutState;
@@ -20,6 +22,7 @@ export interface EntitySnapshot {
   faction: string;
 }
 export type GameEvent =
+  | { tick: number; type: 'vehicle.obstacle-broken'; targetId: number }
   | { tick: number; type: 'vehicle.entered' | 'vehicle.exited' | 'vehicle.grabbed' | 'vehicle.shaken'; sourceId: number; targetId: number }
   | { tick: number; type: 'vehicle.smoking' | 'vehicle.burning' | 'vehicle.exploded' | 'vehicle.recovering'; sourceId: number }
   | { tick: number; type: 'noise'; sourceId: number; actionId: string; position: { x: number; y: number; z: number }; radius: number; loudness: number; kind: string }
@@ -27,7 +30,7 @@ export type GameEvent =
   | { tick: number; type: 'combat.effect'; sourceId: number; actionId: string; kind: import('../../data/actions/schema').ActionEffect['kind']; position: { x: number; y: number; z: number }; radius: number; expires: number }
   | { tick: number; type: 'pickup.collected'; sourceId: number; pickupId: number; side: import('../../data/actions/schema').Side; actionId: string; replaced: string | null }
   | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number } }
-  | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number }
+  | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number; cause?: 'vehicle' }
   | { tick: number; type: 'combat.hit-stop'; sourceId: number; durationMs: number }
   | { tick: number; type: 'loadout.switched'; sourceId: number; side: import('../../data/actions/schema').Side; actionId: string }
   | { tick: number; type: 'combat.landed' | 'combat.exploded'; sourceId: number; attackId: number; position: { x: number; y: number; z: number } }

@@ -48,7 +48,8 @@ export class SimWorld implements Lifecycle {
     this.spatial.set(1, definition.player.x, definition.player.z);
     if (definition.combat) this.combat = new Combat(this, definition);
     if (definition.survivor) this.vehicles = new Vehicles(this);
-    if (name === 'drive-course') { this.vehicles!.spawn('vehicle.sedan', { x: 0, z: 0 }); this.vehicles!.spawn('vehicle.police', { x: 0, z: 12 }); }
+    if (name === 'drive-course') { this.vehicles!.spawn('vehicle.sedan', { x: 0, z: 0 }); this.vehicles!.spawn('vehicle.police', { x: 0, z: 12 });
+      for (let x = 25; x <= 575; x += 25) { const z = Math.sin(x / 40) * 3; this.vehicles!.obstacles.spawn('cone', { x, z: z - 2 }); this.vehicles!.obstacles.spawn('cone', { x, z: z + 2 }); }  }
     this.events.on('sim.tick', () => this.vehicles?.prePhysics(this.input, this.scheme), SimPhase.input);
     this.events.on('sim.tick', () => { if (this.combat && this.vehicles?.active == null) this.combat.intent(this.input); }, SimPhase.input);
     this.events.on('sim.tick', () => {
@@ -110,11 +111,12 @@ export class SimWorld implements Lifecycle {
   getState(): GameStateSnapshot {
     return { ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities: this.query({}), mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
   }
-  spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number; reactive?: boolean } = {}): number {
+  spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number; reactive?: boolean; ramDamage?: number } = {}): number {
     if (!this.combat) throw new Error('Load combat-arena before spawning dummies');
     const hp = opts.hp ?? 100, armor = opts.armor ?? 0, yaw = opts.yaw ?? 0, radius = opts.radius ?? 0.4;
     if (![pos.x, pos.z, hp, armor, yaw, radius].every(Number.isFinite) || hp <= 0 || armor < 0 || armor > 1 || radius <= 0) throw new RangeError('Invalid dummy');
     const entity = this.entities.create({ kind: opts.faction === 'escort' ? 'escort' : 'infected', archetype, transform: { ...pos, y: 0.7, yaw }, health: { current: hp, max: hp }, faction: opts.faction ?? 'infected', combat: { radius, armor, shield: opts.shield ?? archetype === 'infected.riot', staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
+    if (opts.ramDamage !== undefined) entity.ramDamage = opts.ramDamage;
     if (opts.reactive && entity.faction === 'infected') entity.hearing = { mode: 'idle', target: { x: pos.x, z: pos.z }, lureUntil: 0 };
     this.spatial.set(entity.id, pos.x, pos.z); return entity.id;
   }
