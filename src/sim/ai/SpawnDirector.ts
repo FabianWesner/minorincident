@@ -3,7 +3,7 @@ import type { InfectedSystem, InfectedSpawn } from './InfectedSystem';
 import type { EntitySnapshot } from '../world/types';
 /** Conservative ground camera footprint, authored with the gameplay camera. Expanded 10% at query time. */
 export interface CameraEnvelope { x: number; z: number; halfWidth: number; halfDepth: number; yaw: number }
-interface Request { archetype: string; position: { x: number; z: number }; options: InfectedSpawn }
+interface Request { archetype: string; position: { x: number; z: number }; options: InfectedSpawn; turning?: boolean }
 export interface Migration {
   points: readonly { x: number; z: number }[]; samples: Float64Array; lengths: Float64Array;
   length: number; speed: number; expectedSeconds: number; started: number; arrived: number; members: number[];
@@ -39,6 +39,10 @@ export class SpawnDirector {
     infectedDef(archetype); if (!Number.isFinite(position.x) || !Number.isFinite(position.z)) throw new RangeError('Spawn position must be finite');
     this.queue.push({ archetype, position: { ...position }, options: { ...options } });
   }
+  /** E08 turning is an on-screen transformation, rather than an off-screen population spawn. */
+  requestTurn(archetype: string, position: { x: number; z: number }, variant: string): void {
+    this.request(archetype, position, { variant, state: 'chase' }); this.queue[this.queue.length - 1].turning = true;
+  }
   wave(archetype: string, count: number): void {
     if (!Number.isInteger(count) || count < 0) throw new RangeError('Invalid wave size');
     for (let i = 0; i < count; i++) this.request(archetype, this.spawnPoints[this.point++ % this.spawnPoints.length], { state: 'chase' });
@@ -50,7 +54,7 @@ export class SpawnDirector {
     let count = this.count;
     for (let i = 0; i < this.queue.length;) {
       const request = this.queue[i], weight = request.archetype === 'infected.crow' ? (request.options.birds ?? 20) * 0.25 : 1;
-      if (count + weight > this.cap || !this.safe(request.archetype, request.position) || !this.ai.pool.length) { i++; continue; }
+      if (count + weight > this.cap || !(request.turning ? this.ai.nav.clear(request.position.x, request.position.z, infectedDef(request.archetype).radius) : this.safe(request.archetype, request.position)) || !this.ai.pool.length) { i++; continue; }
       this.ai.spawn(request.archetype, request.position, request.options); count += weight; this.queue.splice(i, 1);
     }
     for (const e of this.ai.active) if (e.infected!.state === 'migration') this.advanceMigration(e);

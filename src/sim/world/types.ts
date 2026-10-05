@@ -16,6 +16,8 @@ export interface EntitySnapshot {
   faction: string;
 }
 export type GameEvent =
+  | { tick: number; type: 'civilian.grabbed'; sourceId: number; targetId: number; variant: string; rescueUntil: number }
+  | { tick: number; type: 'infected.prop-thrown'; sourceId: number; propId: number; attackId: number }
   | { tick: number; type: 'telegraph'; sourceId: number; attackId: number; special: string; duration: number }
   | { tick: number; type: 'infected.attack'; sourceId: number; attackId: number; targetId: number; special: string; amount: number }
   | { tick: number; type: 'infected.revived' | 'infected.leg-lost'; sourceId: number; targetId: number }

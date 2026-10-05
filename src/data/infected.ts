@@ -4,7 +4,7 @@ export interface InfectedDef {
   windup: number; special: string; weight: number; grabChance: number; asset: string;
 }
 function role(name: string, hp: number, speed: number, special = 'lunge', radius = 0.35, windup = 0.35): InfectedDef {
-  return { id: `infected.${name}`, hp, speed, radius, special, windup, damage: 10, range: 1.1, weight: 1, grabChance: 0.15, asset: `inf.${name}` };
+  return { id: `infected.${name}`, hp, speed, radius, special, windup, damage: 10, range: 1.1, weight: 1, grabChance: name === 'butcher' ? 0.6 : name === 'crawler' ? 0.35 : 0.15, asset: `inf.${name}` };
 }
 export const humanInfected: readonly InfectedDef[] = [
   role('runner', 40, 4.2), role('crawler', 25, 2, 'grab'), role('brute', 300, 3, 'charge', 0.6, 0.8),
