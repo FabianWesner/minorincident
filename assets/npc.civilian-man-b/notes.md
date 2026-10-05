@@ -1,0 +1,4 @@
+# Civilian man B
+Reference: mustard pullover/short zip hoodie, ivory tee hem, cuffed blue jeans, navy/cream trucker cap with sunset patch, brown layered hair and beard, friendly brown eyes and smile, cream/navy/teal trainers. Adult chibi proportions; nominal height 1.4 m; head including cap about .36 m. Relaxed symmetric stance, feet on ground, +X forward, -Y right.
+
+Construction: applied subdivision on garment rings, tapered limb/finger tubes and hair volumes; separate hood roll, kangaroo pocket, drawstrings, ribbed cuffs/hem, denim folds/pockets, multi-layer shoes and laces, six-panel cap and curved bill. Decoration joins only within a rigid joint/material. Joint empties preserve required hierarchy and sockets. No skinning, no textures. Reference-specific palette extensions use pal_ prefixes and scalar Principled materials.
