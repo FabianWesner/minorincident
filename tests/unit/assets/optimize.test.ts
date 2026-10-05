@@ -109,7 +109,7 @@ test('T-E17-caps @E17-AC11 exported caps survive compression and stay on the sur
 
 test('T-E17-height @E17-AC02 adult exports stay 1.75–1.85 m at every LOD', async () => {
   const {default:manifest}=await import('../../../src/assets/manifest.json'), io=await assetIO();
-  const exceptions=new Set(['char.corgi','npc.brother','inf.crawler','inf.brute','inf.teen-skater']);
+  const exceptions=new Set(['char.corgi','npc.brother','npc.civilian-kid','inf.crawler','inf.brute','inf.teen-skater']);
   for(const def of manifest as AssetDef[]) {
     if(!def.sourceGlb || !['character','infected'].includes(def.category) || exceptions.has(def.id)) continue;
     for(const path of [def.glb,def.lods?.lod1,def.lods?.lod2].filter((p):p is string=>!!p)) {
