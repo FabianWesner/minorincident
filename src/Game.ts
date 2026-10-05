@@ -5,6 +5,8 @@ import { Clock } from './core/Clock';
 import { Services } from './core/Services';
 import { Ticker } from './core/Ticker';
 import { GameView } from './render/GameView';
+import { loadLayouts } from './levels/layouts';
+import type { Tier } from './levels/districts/types';
 import { SimWorld } from './sim/world/SimWorld';
 
 /** Injected composition root, with staged initialization adapted from Bruno Game.js. */
@@ -15,6 +17,7 @@ export class Game {
   readonly view: GameView;
   readonly input: InputSystem;
   readonly ticker = new Ticker();
+  lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
   frameMs = 0;
   simMs = 0;
   private readonly spawnFrustum = new Matrix4();
@@ -53,6 +56,21 @@ export class Game {
     });
     this.levelQueue = load.catch(() => {}); return load;
   }
+  /** E10 level composition only. Mission/checkpoint/progression behavior is provided by later epics. */
+  loadLevel(id:string,opts?:{seed?:number;tier?:Tier}):Promise<void>{
+    const load=this.levelQueue.then(async()=>{
+      this.loading=true;
+      try{
+        const start=performance.now();
+        const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(url);if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
+        const data=performance.now();
+        const cosmetic=this.world.entities.get(1)?.survivor;
+        this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
+        if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
+        const sim=performance.now();await this.view.load();this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:performance.now()-sim};
+      }finally{this.loading=false;this.ticker.reset();}
+    });this.levelQueue=load.catch(()=>{});return load;
+  }
   async step(ticks: number): Promise<void> {
     if (!Number.isSafeInteger(ticks) || ticks < 0) throw new RangeError('Ticks must be a nonnegative integer');
     await this.levelQueue;
@@ -76,9 +94,9 @@ export class Game {
     await this.levelQueue;
     for (let i = 0; i < 2; i++) { await new Promise<void>((resolve) => requestAnimationFrame(() => resolve())); this.view.update(this.clock.paused ? 1 : this.clock.alpha); }
   }
-  perf(): { fps: number; frameMs: number; simMs: number; drawCalls: number; triangles: number; geometries: number; textures: number; entities: number; backend: string } {
+  perf(): { fps: number; frameMs: number; simMs: number; drawCalls: number; triangles: number; geometries: number; textures: number; entities: number; backend: string; loadTiming:Game['lastLoad'] } {
     const info = this.view.renderer.info;
-    return { fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend };
+    return { fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad };
   }
   dispose(): void { this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); }
 }

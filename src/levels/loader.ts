@@ -13,7 +13,7 @@ export interface ScenarioDefinition {
   navigation?: import('../sim/ai/DistrictNavigation').NavDistrict[];
   perches?: { x: number; z: number; y: number }[];
   walls?: { x: number; y: number; z: number; halfX: number; halfY: number; halfZ: number }[];
-  ground: { width: number; depth: number };
+  ground: { width: number; depth: number; center?: { x: number; z: number } };
   player: { x: number; y: number; z: number };
 }
 export function loadScenarioDefinition(name: string): ScenarioDefinition {
