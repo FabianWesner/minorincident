@@ -1,0 +1,42 @@
+
+> test:unit
+> vitest run tests/unit
+
+
+ RUN  v5.0.3 /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e06-epic
+
+ ❯ tests/unit/assets/validate.test.ts (3 tests | 1 failed) 15904ms
+   × T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD and geometry contracts 15887ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/assets/validate.test.ts > T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD and geometry contracts
+AssertionError: expected [ 'missing LOD', 'missing LOD', …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "missing LOD",
++   "missing LOD",
++   "missing LOD",
++   "missing LOD",
++ ]
+
+ ❯ tests/unit/assets/validate.test.ts:46:20
+     44|   expect(reports.length).toBeGreaterThan(20);
+     45|   const findings = reports.flatMap(r => r.errors).filter(e => e === 'm…
+     46|   expect(findings).toEqual([]);
+       |                    ^
+     47| });
+     48|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 26 passed (27)
+      Tests  1 failed | 61 passed (62)
+   Start at  23:53:43
+   Duration  29.25s (tests 96%, import 2%, transform 1%)
+

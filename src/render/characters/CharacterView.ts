@@ -10,15 +10,14 @@ import type { PaletteMaterial } from '../PaletteMaterial';
 import { ProceduralAnimator } from './ProceduralAnimator';
 import { disposeCharacter, loadCharacter } from './rig';
 
-type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { animator: ProceduralAnimator; gear: Group[] };
+type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { animator: ProceduralAnimator; gear: Group[]; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
 export class CharacterView extends Group {
   private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
   private variant: SurvivorVariant = 'female';
   private tier: GearTier = 0;
   private readonly bloodMaterials: PaletteMaterial[] = [];
-  private readonly weaponMaterials: PaletteMaterial[] = [];
-  async init(materials: Materials, weaponFeedback = false): Promise<void> {
+  async init(materials: Materials, bloodFeedback = false): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     for (const variant of ['female', 'male'] as const) {
       const id = `char.survivor-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
@@ -37,21 +36,16 @@ export class CharacterView extends Group {
           let replacement = replacements.get(source);
           if (replacement) return replacement;
           const token = source.name.replace(/^pal_/, '') as PaletteToken;
-          if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = weaponFeedback ? materials.unique(token) : materials.get(token);
+          if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = bloodFeedback ? materials.unique(token) : materials.get(token);
           else replacement = materials.fromColor(`${variant}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
           replacement.userData.sharedPalette = true;
-          if (weaponFeedback) this.bloodMaterials.push(replacement as PaletteMaterial);
+          if (bloodFeedback) this.bloodMaterials.push(replacement as PaletteMaterial);
           oldMaterials.add(source); replacements.set(source, replacement); return replacement;
         };
         object.material = Array.isArray(object.material) ? object.material.map(remap) : remap(object.material);
         object.castShadow = object.receiveShadow = true;
       });
       for (const material of oldMaterials) material.dispose();
-      if (weaponFeedback) {
-        const material = materials.unique('picketWhite'), weapon = new Mesh(new BoxGeometry(0.1, 0.65, 0.12), material);
-        material.userData.sharedPalette = true; weapon.name = 'weapon-feedback-placeholder'; weapon.position.y = 0.2;
-        character.rig.weaponSocketR.add(weapon); this.weaponMaterials.push(material);
-      }
       const gear: Group[] = [];
       const attachment = (tier: number, parent: import('three').Object3D, size: [number, number, number], position: [number, number, number], token: PaletteToken): void => {
         const group = new Group(); group.name = `gear-tier-${tier}`; const mesh = new Mesh(new BoxGeometry(...size), materials.get(token));
@@ -68,7 +62,7 @@ export class CharacterView extends Group {
       attachment(3, character.rig.head, [0.23, 0.055, 0.4], [0, 0.14, 0], 'survivorRed');
       attachment(4, character.rig.torso, [0.14, 0.25, 0.37], [0.16, 0.08, 0], 'policeBlue');
       attachment(4, character.rig.head, [0.08, 0.11, 0.16], [0.18, 0.005, 0], 'uiDark');
-      this.characters.set(variant, { ...character, animator: new ProceduralAnimator(character.rig), gear }); this.add(character.model);
+      this.characters.set(variant, { ...character, animator: new ProceduralAnimator(character.rig), gear, sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
   }
   update(pose: SurvivorState, tick: number, alpha: number): void {
@@ -79,11 +73,13 @@ export class CharacterView extends Group {
       if (character.model.visible) character.animator.update(pose, tick, alpha);
     }
   }
-  setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; for (const material of this.weaponMaterials) material.bloodCoverage.value = coverage; }
+  setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; }
+  /** Held views borrow these nodes; CharacterView retains ownership of the rig. */
+  socket(side: 'LEFT' | 'RIGHT') { return this.characters.get(this.variant)!.sockets[side]; }
   getState() {
     const character = this.characters.get(this.variant);
-    return { bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, weaponBloodCoverage: this.weaponMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, missingClips: character?.animator.missingClips ?? 0,
+    return { bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, missingClips: character?.animator.missingClips ?? 0,
       evaluations: character?.animator.evaluations ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
   }
-  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.characters.clear(); this.bloodMaterials.length = this.weaponMaterials.length = 0; this.clear(); }
+  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.characters.clear(); this.bloodMaterials.length = 0; this.clear(); }
 }

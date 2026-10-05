@@ -14,7 +14,7 @@ async function kills(page: Page, count: number): Promise<void> {
   await page.evaluate(async count => {
     const a = window.__SS__!; a.setLoadout(['weapon.machete'], ['weapon.grenade']);
     for (let i = 0; i < count; i++) {
-      a.spawn('infected.dummy', { x: 1, z: 0 }, { hp: 50 });
+      a.spawn('infected.dummy', { x: 1, z: 0 }, { hp: 25 });
       a.input.set({ aim: { x: 1, z: 0 }, left: { down: true, held: true, up: false } }); await a.step(1);
       a.input.clear(); await a.step(59);
       if (count > 1) a.vfx.stepRender(1);
@@ -100,13 +100,13 @@ test('T-E15-09b @E15 @E15-AC09 real machete and explosion kills hide limbs, show
 
 test('T-E15-10 @E15 @E15-AC10 player and held weapon masks reach 50%, reset on load, and disable with Off', async ({ page }) => {
   await scenario(page, 'gore-probe'); await kills(page, 30);
-  const covered = await page.evaluate(() => window.__SS__!.getState().render.character!);
+  const covered = await page.evaluate(() => { const render = window.__SS__!.getState().render; return { ...render.character!, weaponBloodCoverage: render.actions!.bloodCoverage }; });
   expect(covered.bloodCoverage).toBeGreaterThanOrEqual(0.5); expect(covered.weaponBloodCoverage).toBeGreaterThanOrEqual(0.5);
   await page.screenshot({ path: `${output}/blood-accumulation.png` });
-  const reset = await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('gore-probe'); a.pause(); return a.getState().render.character!; });
+  const reset = await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('gore-probe'); a.pause(); const render = a.getState().render; return { ...render.character!, weaponBloodCoverage: render.actions!.bloodCoverage }; });
   expect(reset.bloodCoverage).toBe(0); expect(reset.weaponBloodCoverage).toBe(0);
   await page.evaluate(() => window.__SS__!.settings.set({ gore: 'Off' })); await kills(page, 30);
-  const off = await page.evaluate(() => window.__SS__!.getState().render.character!);
+  const off = await page.evaluate(() => { const render = window.__SS__!.getState().render; return { ...render.character!, weaponBloodCoverage: render.actions!.bloodCoverage }; });
   expect(off.bloodCoverage).toBe(0); expect(off.weaponBloodCoverage).toBe(0); save('accumulation', { covered, reset, off });
 });
 

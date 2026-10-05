@@ -3,7 +3,7 @@ import { mkdirSync, readFileSync } from 'node:fs';
 import type { AssetDef } from '../../src/assets/types';
 const manifest = JSON.parse(readFileSync('src/assets/manifest.json','utf8')) as AssetDef[];
 
-for (const id of ['char.survivor-female', 'veh.sedan-red', 'prop.bench', 'npc.civilian-woman-a']) {
+for (const id of ['char.survivor-female', 'veh.sedan-red', 'prop.bench', 'npc.civilian-woman-a', 'veh.suv-dark']) {
   test(`T-E17-conformance ${id} @E17-AC02 optimized export renders in the game camera`, async ({page,baseURL}) => {
     const errors: string[] = [];
     page.on('pageerror', error => errors.push(error.message));
@@ -43,3 +43,16 @@ test('T-E17-direction @E17-AC03 E04 survivor turns toward keyboard movement', as
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({path:'test-results/epics/E17/conformance/survivor-movement.png'});
 });
+
+for (const [id,limb] of [['inf.common-worker','armR'],['inf.suburban-mom','head'],['inf.riot-cop','foreArmR']]) {
+  test(`T-E17-gore-probe ${id} ${limb} @E17-AC11 hidden cap closes detached joint`, async ({page,baseURL}) => {
+    await page.goto(`${baseURL}/preview/?asset=${id}&production=1&test=1&renderer=webgl`);
+    await page.waitForFunction(()=>!!window.__ASSET__);
+    await page.evaluate(()=>window.__ASSET__!.ready);
+    const result=await page.evaluate(limb=>window.__ASSET__!.goreProbe!(limb),limb);
+    expect(result.hiddenBefore).toBe(true); expect(result.visibleAfter).toBe(true);
+    expect(result.capTriangles).toBe(56); expect(result.jointError).toBeLessThan(.001);
+    mkdirSync('test-results/epics/E17/conformance-2',{recursive:true});
+    await page.locator('canvas').screenshot({path:`test-results/epics/E17/conformance-2/${id}.${limb}.png`});
+  });
+}

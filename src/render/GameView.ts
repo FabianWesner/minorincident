@@ -1,3 +1,5 @@
+import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
+import { ActionView } from './ActionView';
 import { CombatView } from './CombatView';
 import type { SurvivorState } from '../data/survivor';
 import { CharacterView } from './characters/CharacterView';
@@ -31,6 +33,7 @@ export class GameView implements Lifecycle {
   readonly camera = this.view.camera;
   readonly renderer: Renderer;
   private readonly meshes: Mesh[] = [];
+  private actions: ActionView | null = null;
   private combat: CombatView | null = null;
   vfx: Vfx | null = null;
   private vehicles: VehicleFeedback | null = null;
@@ -104,7 +107,7 @@ export class GameView implements Lifecycle {
         this.vfx = new Vfx(this.world, {
           flash: (id, strength) => this.combat?.flash(id, strength),
           detach: (id, limb) => this.combat?.detach(id, limb),
-          blood: (coverage) => this.character?.setBlood(coverage),
+          blood: (coverage) => { this.character?.setBlood(coverage); this.actions?.setBlood(coverage); },
           vehicle: (event, bloodEnabled) => this.vehicles?.update(event, bloodEnabled),
           vehicleBloodEnabled: (enabled) => this.vehicles?.setBloodEnabled(enabled),
           clearGore: () => this.combat?.clearGore(),
@@ -113,6 +116,7 @@ export class GameView implements Lifecycle {
         this.vfx.set({ quality: this.params.get('quality') === 'low' ? 'low' : 'high', ...this.vfxSettings }); this.scene.add(this.vfx);
         this.frozenPose = structuredClone(this.world.entities.get(1)!.survivor!);
       }
+      if (this.world.combat) { this.actions = new ActionView(this.world, this.character, this.materials, this.renderer); await this.actions.init(); this.actions.update(); this.scene.add(this.actions); }
     } else if (this.world.scenario === 'lookdev') {
       this.renderer.shadowMap.enabled = true;
       this.lighting = new Lighting(this.scene); this.materials = new Materials(this.lighting);
@@ -143,6 +147,7 @@ export class GameView implements Lifecycle {
   }
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
+    if (this.world.combat && name === 'aim') { this.view.preset(name, combatPhotoSpots.aim); this.update(1); return; }
     if (this.world.scenario?.startsWith('vfx') || this.world.scenario === 'blood-probe' || this.world.scenario === 'gore-probe') {
       if (!['blood-probe', 'gore-probe', 'vfx-stress', 'vfx-showcase', 'L4', 'L6', 'lunge', 'charge', 'splash', 'bloated'].includes(name)) throw new Error(`Unknown VFX photo spot: ${name}`);
       if (name === 'L4' || name === 'L6') this.lighting?.set(name);
@@ -181,7 +186,7 @@ export class GameView implements Lifecycle {
     const materialInventory = new Map<string, { name: string; palette: boolean }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial }); });
     return { districts: this.districts?.getState() ?? null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
-      character: this.character?.getState() ?? null, vfx: this.vfx?.snapshot() ?? null, vehicles: this.vehicles?.getState() ?? [], infected: this.combat?.getState() ?? [],
+      character: this.character?.getState() ?? null, actions: this.actions?.getState() ?? null, vfx: this.vfx?.snapshot() ?? null, vehicles: this.vehicles?.getState() ?? [], infected: this.combat?.getState() ?? [],
       materials: [...materialInventory.values()], occlusion: this.occlusion.getState(),
       probes: this.lookdev ? { lamp: this.project(...this.lookdev.lampHead.position.toArray() as [number, number, number]), shadow: this.project(...this.lookdev.shadowProbe.position.toArray() as [number, number, number]) } : null };
   }
@@ -213,7 +218,7 @@ export class GameView implements Lifecycle {
       this.occlusion.update(this.camera, this.playerPosition, 0, this.lookdev.playerMeshes);
     }
     this.flashOverlay.style.opacity = String(this.vfx?.flash ?? 0);
-    this.combat?.update();
+    this.combat?.update(); this.actions?.update();
     this.lighting?.update(this.view);
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
@@ -242,6 +247,7 @@ export class GameView implements Lifecycle {
     this.windowMask=false;
     this.postFx?.dispose();this.postFx = null;
     if(this.districts){this.scene.remove(this.districts);this.districts.dispose();this.districts=null;}
+    if (this.actions) { this.scene.remove(this.actions); this.actions.dispose(); this.actions = null; }
     if (this.combat) { this.scene.remove(this.combat); this.combat.dispose(); this.combat = null; }
     if (this.character) { this.scene.remove(this.character); this.character.dispose(); this.character = null; }
     if (this.lookdev) { this.scene.remove(this.lookdev); this.lookdev.dispose(); this.lookdev = null; }
