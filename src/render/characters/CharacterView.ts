@@ -37,10 +37,10 @@ export class CharacterView extends Group {
           let replacement = replacements.get(source);
           if (replacement) return replacement;
           const token = source.name.replace(/^pal_/, '') as PaletteToken;
-          if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = materials.unique(token);
+          if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = weaponFeedback ? materials.unique(token) : materials.get(token);
           else replacement = materials.fromColor(`${variant}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
           replacement.userData.sharedPalette = true;
-          this.bloodMaterials.push(replacement as PaletteMaterial);
+          if (weaponFeedback) this.bloodMaterials.push(replacement as PaletteMaterial);
           oldMaterials.add(source); replacements.set(source, replacement); return replacement;
         };
         object.material = Array.isArray(object.material) ? object.material.map(remap) : remap(object.material);

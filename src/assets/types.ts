@@ -3,6 +3,8 @@ export type AssetStatus = typeof statuses[number];
 export type AssetQuality = 'high' | 'low' | 'lod0' | 'lod1' | 'lod2';
 export interface AssetDef {
   id: string;
+  /** District code placeholder palette and collision ownership. */
+  world?: { token: import("../data/palette").PaletteToken; solid: boolean };
   category: 'vehicle' | 'character' | 'infected' | 'weapon' | 'prop' | 'building' | 'tile' | 'fx' | 'ui';
   status: AssetStatus;
   tier: 'hero' | 'side' | 'distant';
