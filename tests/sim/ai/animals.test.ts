@@ -56,3 +56,12 @@ test('T-E07-17b @E07 @E07-AC17 cat uses layout-authored perch points', async () 
   const w = await arena(); w.loadScenario('animal-lab'); const cat = spawn(w, 'cat', 6, 0, 'idle');
   expect(cat.transform.x).toBe(5.1); expect(cat.transform.y).toBe(2.2); step(w, 1); expect(cat.infected!.hidden).toBe(true);
 });
+
+test('T-E07-18b @E07 @E07-AC18 rays and shotgun cones hit individual birds rather than deleting the flock', async () => {
+  const w = await arena(), flock = spawn(w, 'crow', 5, 0, 'idle'), b = flock.infected!;
+  for (let i = 0; i < 20; i++) { b.birdPositions[i * 3] = 5; b.birdPositions[i * 3 + 2] = i - 10; }
+  const ray = w.combat!.damage.apply({ sourceId: 1, targetId: flock.id, attackId: 100, actionId: 'weapon.pistol', origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 20, multiplier: 1, type: 'bullet', radius: 20, spread: 0, knockback: 0, stagger: 0 });
+  expect(ray).toBe(1); expect(b.birds).toBe(19);
+  const blast = w.combat!.damage.apply({ sourceId: 1, targetId: flock.id, attackId: 101, actionId: 'weapon.shotgun', origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 40, multiplier: 1, type: 'bullet', radius: 12, spread: 50, knockback: 0, stagger: 0 });
+  expect(blast).toBe(4); expect(b.birds).toBe(15); expect(b.state).toBe('scatter'); expect(b.scatterUntil).toBe(w.tick + 300);
+});

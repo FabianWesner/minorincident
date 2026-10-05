@@ -31,7 +31,8 @@ export function bakeInfected(root: Group) {
   const geometries: import('three').BufferGeometry[] = [], relative = new Matrix4();
   let shirtColor: import('three').Color | undefined;
   root.traverse((node) => {
-    if (!(node instanceof Mesh) || !node.visible || node.name.startsWith('stump_')) return;
+    if (!(node instanceof Mesh)) return;
+    for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if (!ancestor.visible || ancestor.name.startsWith('stump_')) return;
     let owner: Object3D | null = node.parent;
     while (owner && !parts.includes(owner)) owner = owner.parent;
     const part = parts.indexOf(owner ?? rig.root);
@@ -41,7 +42,12 @@ export function bakeInfected(root: Group) {
     const material = (Array.isArray(node.material) ? node.material[0] : node.material) as MeshBasicMaterial;
     const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), emissive = new Float32Array(count), indices = new Float32Array(count), shirt = new Float32Array(count);
     const clothing = material.name === 'pal_infectedShirt'; if (clothing) shirtColor = material.color.clone();
-    for (let i = 0; i < count; i++) { colors.set(material.color?.toArray() ?? [0.4, 0.3, 0.25], i * 3); emissive[i] = Number(material.name.startsWith('emi_')); indices[i] = part; shirt[i] = Number(clothing); }
+    const sourceColor = geometry.getAttribute('color');
+    for (let i = 0; i < count; i++) {
+      const color = material.color?.toArray() ?? [0.4, 0.3, 0.25];
+      if (material.vertexColors && sourceColor) { color[0] *= sourceColor.getX(i); color[1] *= sourceColor.getY(i); color[2] *= sourceColor.getZ(i); }
+      colors.set(color, i * 3); emissive[i] = Number(material.name.startsWith('emi_')); indices[i] = part; shirt[i] = Number(clothing);
+    }
     geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1)); geometry.deleteAttribute('uv');
     geometries.push(geometry);
   });

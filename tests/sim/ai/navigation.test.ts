@@ -1,4 +1,5 @@
 import { afterEach, expect, test } from 'vitest';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { humanInfected, validateInfected } from '../../../src/data/infected';
 const worlds: SimWorld[] = [];
@@ -27,7 +28,8 @@ test('T-E07-04 @E07 @E07-AC04 spatial separation keeps deep overlaps below 2 per
   const w = await arena(); for (let i = 0; i < 100; i++) w.infected!.spawn('infected.runner', { x: (i % 10 - 5) * 0.8, z: 8 + Math.floor(i / 10) * 0.8 }, { state: 'chase' });
   let overlap = 0;
   for (let tick = 0; tick < 600; tick++) { w.update(); const entities = w.infected!.active; for (let i = 0; i < entities.length; i++) for (let j = i + 1; j < entities.length; j++) if (Math.hypot(entities[i].transform.x - entities[j].transform.x, entities[i].transform.z - entities[j].transform.z) < 0.5 * (entities[i].combat!.radius + entities[j].combat!.radius)) overlap++; }
-  expect(overlap / (600 * 4950)).toBeLessThan(0.02);
+  const share = overlap / (600 * 4950); expect(share).toBeLessThan(0.02);
+  mkdirSync('test-results/epics/E07', { recursive: true }); writeFileSync('test-results/epics/E07/separation.json', JSON.stringify({ ticks: 600, infected: 100, pairsPerTick: 4950, averageDeepOverlapShare: share, budget: 0.02 }, null, 2) + '\n');
 });
 
 test('T-E07-03b @E07 @E07-AC03 grid A* resumes unfinished work without exceeding its per-tick budget', async () => {

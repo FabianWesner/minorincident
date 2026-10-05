@@ -5,10 +5,10 @@ test('T-E07-05 @E07 @E07-AC05 every archetype attack including death explosion h
   for (const def of infectedDefinitions) {
     const w = await arena(); const e = spawn(w, def.id.slice(9), 0.9); if (def.special === 'explode') e.health.current = 0;
     step(w, 130); const log = w.events.events(), attacks = log.filter((event) => event.type === 'combat.hit' && event.actionId.startsWith('infected.') && event.amount > 0);
-    if (!['scream', 'dive'].includes(def.special)) expect(attacks.length, def.id).toBeGreaterThan(0);
+    if (def.special !== 'scream') expect(attacks.length, def.id).toBeGreaterThan(0);
     for (const event of attacks) {
       if (event.type !== 'combat.hit') continue;
-      const telegraph = log.find((entry) => entry.type === 'telegraph' && entry.attackId === event.attackId);
+      const telegraph = log.find((entry) => entry.type === 'telegraph' && entry.sourceId === event.sourceId && entry.attackId === event.attackId);
       expect(telegraph, def.id).toBeDefined(); expect(event.tick - telegraph!.tick).toBeGreaterThanOrEqual(def.special === 'charge' ? 48 : 21);
     }
   }

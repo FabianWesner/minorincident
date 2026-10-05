@@ -32,7 +32,7 @@ export class Damage {
     if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction) return 0;
     const wasAlive = target.health.current > 0;
     let amount = damageAmount(hit, target);
-    if (target.archetype === 'infected.crow' && this.world.infected) amount = this.world.infected.hitFlock(target, hit.origin, hit.direction, hit.radius ?? 30, hit.type === 'explosive' ? 360 : hit.spread ?? 0);
+    if (amount > 0 && target.archetype === 'infected.crow' && this.world.infected) amount = this.world.infected.hitFlock(target, hit.origin, hit.direction, hit.radius ?? 30, hit.type === 'explosive' ? 360 : hit.spread ?? 0);
     if (target.id === 1 && this.god) amount = 0;
     if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick);
     else { amount = Math.min(amount, target.health.current); target.health.current -= amount; }
