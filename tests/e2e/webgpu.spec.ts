@@ -15,3 +15,19 @@ test('T-E02-01b @E02 @E02-AC01 an available native GPU selects WebGPU and render
   expect(result.backend).toBe('webgpu'); expect(result.perf.backend).toBe('webgpu'); expect(result.perf.drawCalls).toBeGreaterThan(1);
   await page.screenshot({ path: 'test-results/epics/E02/webgpu.png' });
 });
+
+test('T-E15-webgpu @E15 native WebGPU compiles particles, ground tells and blood materials', async ({ page }) => {
+  await page.goto(testUrl.replace('&renderer=webgl', ''));
+  await page.waitForFunction(() => Boolean(window.__SS__));
+  const result = await page.evaluate(async () => {
+    const api = window.__SS__!; await api.ready; api.pause();
+    await api.loadScenario('vfx-showcase'); api.pause(); api.camera.preset('L6');
+    await api.step(1); api.vfx.stepRender(0.12); await api.screenshotReady();
+    return { render: api.getState().render, perf: api.perf() };
+  });
+  expect(result.render.backend).toBe('webgpu');
+  expect(result.render.vfx!.particles).toBeGreaterThan(0);
+  expect(result.render.vfx!.telegraphs).toHaveLength(1);
+  expect(result.perf.drawCalls).toBeGreaterThan(1);
+  await page.screenshot({ path: 'test-results/epics/E15/webgpu.png' });
+});
