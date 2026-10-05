@@ -17,6 +17,13 @@ test('T-E11-04 @E11 @E11-AC04 propane waits 18 ticks, chains at 4m, damages play
   expect(blasts).toHaveLength(2); expect(blasts[0]).toMatchObject({ radius: 5, tick: 18 });
   expect(health(w, outside)).toBe(100); step(w, 60); expect(w.events.events().filter(e => e.type === 'hazard.exploded')).toHaveLength(2);
 });
+test('T-E11-shared-damage @E11 @E11-AC04 environmental damage respects the existing combat god-mode switch', async () => {
+  const w = await arena(), tank = w.hazards!.spawn('propane', { x: 1, z: 0 }), infected = dummy(w, 1.5);
+  w.combat!.damage.god = true; w.hazards!.hit(tank, 100, 'bullet'); step(w, 18);
+  expect(health(w, 1)).toBe(100); expect(health(w, infected)).toBe(10);
+  w.hazards!.spawn('fire', { x: 0, z: 0 }); step(w, 42); expect(health(w, 1)).toBe(100);
+  w.combat!.damage.god = false; step(w, 60); expect(health(w, 1)).toBe(90);
+});
 test('T-E11-05 @E11 @E11-AC05 a real bullet triggers a 20m/10s alarm and nearby infected target the car', async () => {
   const w = await arena(), h = w.hazards!, car = h.spawn('car-alarm', { x: 3, z: 0 });
   const near = w.spawnDummy('infected.worker', { x: 1, z: 2 }, { reactive: true }), far = dummy(w, 25, 2);
