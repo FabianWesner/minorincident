@@ -21,6 +21,7 @@ import { DistrictAssets } from '../assets/DistrictAssets';
 import { Grass, windPhase } from './Grass';
 import { DistrictView } from './DistrictView';
 import { PaletteMaterial } from './PaletteMaterial';
+import { InteractionView } from './InteractionView';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 export class GameView implements Lifecycle {
@@ -30,6 +31,7 @@ export class GameView implements Lifecycle {
   readonly renderer: Renderer;
   private readonly meshes: Mesh[] = [];
   private combat: CombatView | null = null;
+  private interactions: InteractionView | null = null;
   private stopHitStop: (() => void) | null = null;
   private hitStopUntil = 0;
   private hitStopTick = 0;
@@ -108,6 +110,9 @@ export class GameView implements Lifecycle {
       this.cube = new Mesh(new BoxGeometry(1, 1, 1), new MeshBasicNodeMaterial({ color: '#ed935c' }));
       this.meshes.push(ground, this.cube); this.scene.add(...this.meshes);
     }
+    if (this.world.interactables && this.materials) {
+      this.interactions = new InteractionView(this.world, this.materials); this.scene.add(this.interactions); await this.interactions.synchronize();
+    }
     if (import.meta.env.DEV && this.params.has('debug')) {
       this.wireframe = new PhysicsWireframe(this.world.physics); this.scene.add(this.wireframe.lines);
     }
@@ -125,6 +130,10 @@ export class GameView implements Lifecycle {
   }
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
+    if (name === 'interact-ui' && this.world.interactables) {
+      const p = this.world.entities.get(1)!.transform;
+      this.view.preset(name, { position: [p.x + 15, 18, p.z + 15], target: [p.x, .4, p.z] }); this.update(1); return;
+    }
     if(this.districts){const pose=this.districts.spots.get(name);if(!pose)throw new Error(`Unknown district photo spot: ${name}`);this.view.preset(name,pose);this.update(1);return;}
     if (this.character) {
       const poses = { front: [7, 2.5, 0], back: [-7, 2.5, 0], left: [0, 2.5, -7], right: [0, 2.5, 7], gameplay: [15, 18, 15] } as const;
@@ -177,6 +186,7 @@ export class GameView implements Lifecycle {
       this.occlusion.update(this.camera, this.playerPosition, 0, this.lookdev.playerMeshes);
     }
     this.combat?.update();
+    this.interactions?.update(this.camera);
     this.lighting?.update(this.view);
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
@@ -199,6 +209,7 @@ export class GameView implements Lifecycle {
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
   }
   reset(): void {
+    if (this.interactions) { this.scene.remove(this.interactions); this.interactions.dispose(); this.interactions = null; }
     this.windowMask=false;
     this.postFx?.dispose();this.postFx = null;
     if(this.districts){this.scene.remove(this.districts);this.districts.dispose();this.districts=null;}
@@ -216,5 +227,7 @@ export class GameView implements Lifecycle {
     this.meshes.length = 0; this.cube = null;
     if (this.wireframe) { this.scene.remove(this.wireframe.lines); this.wireframe.dispose(); this.wireframe = null; }
   }
+  /** Newly spawned E11 objects are loaded before screenshot/shader readiness resolves. */
+  async synchronizeInteractions(): Promise<void> { await this.interactions?.synchronize(); }
   dispose(): void { this.reset();this.districtResources?.registry.dispose();this.districtResources?.grassMaterial.dispose();this.districtResources?.materials.dispose();this.districtResources?.lighting.dispose();this.districtResources=null; window.removeEventListener('resize', this.resize); this.idPlayer.dispose(); this.idBackground.dispose(); this.renderer.dispose(); this.renderer.domElement.remove(); }
 }

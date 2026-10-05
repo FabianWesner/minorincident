@@ -78,6 +78,8 @@ export interface DistrictGameplay {
   triggers: { id: string; position: PositionRef; radius: number }[];
   objectives: { id: string; position: PositionRef }[];
   interactables: { id: string; position: PositionRef }[];
+  /** E11 runtime objects, distinct from E10's landmark placement markers. */
+  interactions?: import('../loader').InteractionPlacements;
   civilianRoutes: PositionRef[][];
   safePoints: PositionRef[];
   photoSpots: {
@@ -101,7 +103,7 @@ export interface LevelComposition {
     id: DistrictId;
     origin: Point;
     overrides?: Partial<
-      Pick<DistrictGameplay, "spawns" | "triggers" | "objectives">
+      Pick<DistrictGameplay, "spawns" | "triggers" | "objectives" | "interactions">
     >;
   }[];
 }

@@ -4,12 +4,15 @@ import type { Action, BindingMap } from '../data/bindings';
 import type { Recording } from '../input/Recorder';
 import type { Game } from '../Game';
 import type { EntityFilter, EntitySnapshot, GameEvent, GameStateSnapshot, InputFrame } from '../sim/world/types';
+import { deviceKinds, type DeviceKind, type DeviceOptions } from '../sim/interact/Interactables';
+import { hazardKinds, destructibleKinds, type HazardKind, type DestructibleKind, type HazardOptions } from '../sim/interact/Hazards';
+import { pickupKinds, type PickupKind } from '../sim/interact/Pickups';
 
 export type ProgressionPreset = Record<string, unknown>;
 export type Settings = Parameters<Game['view']['settings']>[0] & { aimAssist?: import('../sim/combat/AimAssist').AimAssistSetting };
 export interface BotStatus { running: boolean; policy: string | null }
 
-/** Version 1.4: E10 composition/decay snapshots and district photo spots. Future-epic methods fail explicitly, never silently. */
+/** Version 1.5: E11 device/prop/hazard/pickup spawn IDs, interaction hooks and interact-ui photo spot. */
 export interface SSTestApi {
   version: string;
   ready: Promise<void>;
@@ -36,6 +39,8 @@ export interface SSTestApi {
     record(): void; stopRecording(): Recording; replay(data: Recording): Promise<void>;
   };
   spawn(defId: string, pos: { x: number; z: number }, opts?: object): number;
+  /** E11 authoring/debug hooks. Spawn opts are DeviceOptions/HazardOptions or {item:string}. */
+  interact: { giveItem(id: string): void; refuel(id: number, seconds: number): void; barricade(id: number, on: boolean): void; hit(id: number, amount: number, type: import('../sim/combat/Damage').DamageEvent['type']): number };
   teleport(entityId: number | 'player', pos: { x: number; z: number }): void;
   /** E04: cosmetic selection and sim entry points; weapon and mission resolution remain separate. */
   survivor: { select(variant: SurvivorVariant, tier?: GearTier): void; damage(amount: number): number; act(action: ActionState): void; checkpoint(pos: { x: number; y: number; z: number }): void };
@@ -59,7 +64,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
-    version: '1.4.0', ready,
+    version: '1.5.0', ready,
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
     loadLevel: (id, opts) => {
@@ -88,7 +93,17 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       stopRecording: () => game.input.recorder.stop(),
       replay: async (data) => { await game.loadScenario(data.level, data.seed); game.clock.pause(); game.input.recorder.play(data); },
     },
-    spawn: (id, pos, opts) => game.world.combat ? game.world.spawnDummy(id, pos, opts) : pending('E07', 'spawn'),
+    spawn: (id, pos, opts) => {
+      const [prefix, kind] = id.split('.');
+      if (prefix === 'device' && (deviceKinds as readonly string[]).includes(kind) && game.world.interactables) return game.world.interactables.spawn(kind as DeviceKind, pos, opts as DeviceOptions);
+      if (((prefix === 'hazard' && (hazardKinds as readonly string[]).includes(kind)) || (prefix === 'prop' && (destructibleKinds as readonly string[]).includes(kind))) && game.world.hazards) return game.world.hazards.spawn(kind as HazardKind | DestructibleKind, pos, opts as HazardOptions);
+      if (prefix === 'pickup' && (pickupKinds as readonly string[]).includes(kind) && game.world.pickups) return game.world.pickups.spawn(kind as PickupKind, pos, (opts as { item?: string } | undefined)?.item);
+      return game.world.combat ? game.world.spawnDummy(id, pos, opts) : pending('E07', 'spawn');
+    },
+    interact: {
+      giveItem: id => game.world.interactables!.giveItem(id), refuel: (id, seconds) => game.world.interactables!.refuel(id, seconds),
+      barricade: (id, on) => game.world.interactables!.barricade(id, on), hit: (id, amount, type) => game.world.hazards!.hit(id, amount, type),
+    },
     teleport: (id, pos) => {
       if (!Number.isFinite(pos.x) || !Number.isFinite(pos.z)) throw new RangeError('Position must be finite');
       const player = game.world.entities.get(id === 'player' ? 1 : id);

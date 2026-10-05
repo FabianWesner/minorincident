@@ -85,6 +85,7 @@ export class Game {
   }
   async screenshotReady(): Promise<void> {
     await this.levelQueue;
+    await this.view.synchronizeInteractions();
     for (let i = 0; i < 2; i++) { await new Promise<void>((resolve) => requestAnimationFrame(() => resolve())); this.view.update(this.clock.paused ? 1 : this.clock.alpha); }
   }
   perf(): { fps: number; frameMs: number; simMs: number; drawCalls: number; triangles: number; geometries: number; textures: number; entities: number; backend: string; loadTiming:Game['lastLoad'] } {
