@@ -85,7 +85,7 @@ export class FxPool {
     this.expires = new Float64Array(cap);
   }
   /** Returns a stable slot index; callers retain it only for attack-lifetime telegraphs. */
-  spawn(now: number, life: number, x: number, y: number, z: number, vx: number, vy: number, vz: number, size: number, shape: number, color: string, gravity = 0, aspect = 1, preserveLive = false): number {
+  spawn(now: number, life: number, x: number, y: number, z: number, vx: number, vy: number, vz: number, size: number, shape: number, color: number, gravity = 0, aspect = 1, preserveLive = false): number {
     let slot = this.cursor++ % this.budget;
     if (preserveLive) {
       let searched = 0;
@@ -94,7 +94,7 @@ export class FxPool {
     }
     this.origin.setXYZW(slot, x, y, z, now); this.motion.setXYZW(slot, vx, vy, vz, life);
     this.style.setXYZW(slot, size, shape, gravity, aspect);
-    this.tint.set(color); this.colors.setXYZ(slot, this.tint.r, this.tint.g, this.tint.b);
+    this.tint.setHex(color); this.colors.setXYZ(slot, this.tint.r, this.tint.g, this.tint.b);
     this.expires[slot] = now + life;
     this.origin.needsUpdate = this.motion.needsUpdate = this.style.needsUpdate = this.colors.needsUpdate = true;
     return slot;

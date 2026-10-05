@@ -5,6 +5,19 @@ import { Vfx, type Gore } from '../../../src/render/vfx/Vfx';
 
 const targets = () => ({ flash() {}, detach() {}, blood() {}, clearGore() {}, shake() {} });
 
+test('T-E15-hit-flash @E15 repeated hits refresh the pulse; expiration and VFX disable clear it', async () => {
+  const world = new SimWorld(); await world.init(); world.loadScenario('gore-probe');
+  const id = world.spawnDummy('infected.dummy', { x: 1, z: 0 });
+  let strength = 0;
+  const fx = new Vfx(world, { ...targets(), flash(_id, value) { strength = value; } });
+  const hit = () => world.events.emit({ type: 'combat.hit', tick: world.tick, attackId: 1, actionId: 'weapon.machete', sourceId: 1, targetId: id, position: world.entities.get(id)!.transform, amount: 10 });
+  try {
+    hit(); expect(strength).toBe(0.45); fx.advance(0.08); expect(strength).toBeCloseTo(0.09);
+    hit(); expect(strength).toBe(0.45); fx.advance(0.11); expect(strength).toBe(0);
+    hit(); fx.set({ vfx: false }); expect(strength).toBe(0);
+  } finally { fx.dispose(); world.dispose(); }
+});
+
 test('T-E15-01 @E15 @E15-AC01 60s combat hash is identical with all visual settings', async () => {
   const hashes: string[] = [];
   for (const gore of ['Full', 'Reduced', 'Off'] as Gore[]) for (const enabled of [true, false]) {
