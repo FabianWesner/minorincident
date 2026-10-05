@@ -9,7 +9,8 @@ const swiftshader = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '
 export default defineConfig({
   testDir: './tests',
   testMatch: '**/*.spec.ts',
-  workers: 4,
+  // Shared machine: keep SwiftShader concurrency at two across epic checks.
+  workers: 2,
   fullyParallel: true,
   retries: 0,
   snapshotPathTemplate: '{testDir}/visual/__goldens__/{arg}{ext}',
