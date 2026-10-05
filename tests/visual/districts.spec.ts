@@ -29,7 +29,8 @@ async function district(
       const api = window.__SS__!;
       await api.loadLevel(id, { tier: tier as 0 | 5, seed: 1 });
       api.pause();
-      api.teleport("player", { x: point[0], z: point[1] + 1 });
+      // Stand clear of landmark awnings so the survivor remains readable in the review.
+      api.teleport("player", { x: point[0], z: point[1] + 3 });
       api.camera.preset(`${id}/W${tier}/${spot}`);
       await api.step(0);
       await api.screenshotReady();

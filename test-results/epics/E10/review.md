@@ -2,7 +2,7 @@
 
 Reviewed with the image-reading tool: all eight `compare/<district>.png` sheets, W0 overview captures, and matching `*-decay-W0.png` / `*-decay-W5.png` landmark captures. References are the draft sheets in the read-only main checkout. D-ZOO and D-EDGE receive the same checks in addition to the six districts expressly listed by AC09.
 
-Capture conditions: pinned Chromium, WebGL2/SwiftShader, DPR 1, 1600×900, production build, seed 1, paused, fixed camera and player position. W0 uses L1 warm afternoon lighting; W5 uses L6 night lighting. The exact window mask and measurements are saved beside each pair. The integrated E04 survivor is used.
+Capture conditions: pinned Chromium, WebGL2/SwiftShader, DPR 1, 1600×900, production build, seed 1, paused, fixed camera and player position. W0 uses L1 warm afternoon lighting; W5 uses L6 night lighting. The exact window mask and measurements are saved beside each pair. E17’s status gate selects E04’s red-clad code survivor because the survivor GLBs are still at reference status.
 
 Assets below integrated status use the required code placeholders. This review judges the checklist against those visible placeholders; it does not claim final asset fidelity. All mandatory A/E items pass; A passes 3/4 optional items (75%), E passes 2/2 (100%). A8 fails and is recorded as a follow-up in report.md.
 
@@ -16,7 +16,7 @@ Evidence: [comparison](compare/D-RES.png), [W0](./D-RES-decay-W0.png), [W5](./D-
 - D-RES A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
 - D-RES A5: PASS — Cars, building blocks and trim have thick toy proportions; the static geometry has small bevels and foliage is rounded.
 - D-RES A6: PASS — Clustered rounded tree crowns and hedges frame the landmark, with repeated yellow flowers and colored garden accents.
-- D-RES A7: PASS — At the landmark photo spot the red-clad survivor is about 80 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
+- D-RES A7: PASS — At the landmark photo spot the red-clad survivor is about 70 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
 - D-RES A8: FAIL — The district has fewer small props and less clutter than the detailed S05 sheet; the placeholder layout leaves visibly open lawns and forecourts.
 - D-RES E1: PASS — W0 and W5 retain the same road, building footprint, sign and garden positions, so the landmark is immediately recognizable.
 - D-RES E2: PASS — W5 replaces bright windows with dark frontage, extinguishes street lamps, and adds rubble, wrecks and/or nearby fire, making the higher tier visibly worse.
@@ -35,7 +35,7 @@ Evidence: [comparison](compare/D-MAIN.png), [W0](./D-MAIN-decay-W0.png), [W5](./
 - D-MAIN A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
 - D-MAIN A5: PASS — Cars, building blocks and trim have thick toy proportions; the static geometry has small bevels and foliage is rounded.
 - D-MAIN A6: PASS — Clustered rounded tree crowns and hedges frame the landmark, with repeated yellow flowers and colored garden accents.
-- D-MAIN A7: PASS — At the landmark photo spot the red-clad survivor is about 80 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
+- D-MAIN A7: PASS — At the landmark photo spot the red-clad survivor is about 70 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
 - D-MAIN A8: FAIL — The district has fewer small props and less clutter than the detailed S06 sheet; the placeholder layout leaves visibly open lawns and forecourts.
 - D-MAIN E1: PASS — W0 and W5 retain the same road, building footprint, sign and garden positions, so the landmark is immediately recognizable.
 - D-MAIN E2: PASS — W5 replaces bright windows with dark frontage, extinguishes street lamps, and adds rubble, wrecks and/or nearby fire, making the higher tier visibly worse.
@@ -54,7 +54,7 @@ Evidence: [comparison](compare/D-SCHOOL.png), [W0](./D-SCHOOL-decay-W0.png), [W5
 - D-SCHOOL A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
 - D-SCHOOL A5: PASS — Cars, building blocks and trim have thick toy proportions; the static geometry has small bevels and foliage is rounded.
 - D-SCHOOL A6: PASS — Clustered rounded tree crowns and hedges frame the landmark, with repeated yellow flowers and colored garden accents.
-- D-SCHOOL A7: PASS — At the landmark photo spot the red-clad survivor is about 80 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
+- D-SCHOOL A7: PASS — At the landmark photo spot the red-clad survivor is about 70 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
 - D-SCHOOL A8: FAIL — The district has fewer small props and less clutter than the detailed S07 sheet; the placeholder layout leaves visibly open lawns and forecourts.
 - D-SCHOOL E1: PASS — W0 and W5 retain the same road, building footprint, sign and garden positions, so the landmark is immediately recognizable.
 - D-SCHOOL E2: PASS — W5 replaces bright windows with dark frontage, extinguishes street lamps, and adds rubble, wrecks and/or nearby fire, making the higher tier visibly worse.
@@ -73,7 +73,7 @@ Evidence: [comparison](compare/D-SHOP.png), [W0](./D-SHOP-decay-W0.png), [W5](./
 - D-SHOP A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
 - D-SHOP A5: PASS — Cars, building blocks and trim have thick toy proportions; the static geometry has small bevels and foliage is rounded.
 - D-SHOP A6: PASS — Clustered rounded tree crowns and hedges frame the landmark, with repeated yellow flowers and colored garden accents.
-- D-SHOP A7: PASS — At the landmark photo spot the red-clad survivor is about 80 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
+- D-SHOP A7: PASS — At the landmark photo spot the red-clad survivor is about 70 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
 - D-SHOP A8: FAIL — The district has fewer small props and less clutter than the detailed S08 sheet; the placeholder layout leaves visibly open lawns and forecourts.
 - D-SHOP E1: PASS — W0 and W5 retain the same road, building footprint, sign and garden positions, so the landmark is immediately recognizable.
 - D-SHOP E2: PASS — W5 replaces bright windows with dark frontage, extinguishes street lamps, and adds rubble, wrecks and/or nearby fire, making the higher tier visibly worse.
@@ -92,7 +92,7 @@ Evidence: [comparison](compare/D-CIVIC.png), [W0](./D-CIVIC-decay-W0.png), [W5](
 - D-CIVIC A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
 - D-CIVIC A5: PASS — Cars, building blocks and trim have thick toy proportions; the static geometry has small bevels and foliage is rounded.
 - D-CIVIC A6: PASS — Clustered rounded tree crowns and hedges frame the landmark, with repeated yellow flowers and colored garden accents.
-- D-CIVIC A7: PASS — At the landmark photo spot the red-clad survivor is about 80 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
+- D-CIVIC A7: PASS — At the landmark photo spot the red-clad survivor is about 70 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
 - D-CIVIC A8: FAIL — The district has fewer small props and less clutter than the detailed S10 sheet; the placeholder layout leaves visibly open lawns and forecourts.
 - D-CIVIC E1: PASS — W0 and W5 retain the same road, building footprint, sign and garden positions, so the landmark is immediately recognizable.
 - D-CIVIC E2: PASS — W5 replaces bright windows with dark frontage, extinguishes street lamps, and adds rubble, wrecks and/or nearby fire, making the higher tier visibly worse.
@@ -111,7 +111,7 @@ Evidence: [comparison](compare/D-PARK.png), [W0](./D-PARK-decay-W0.png), [W5](./
 - D-PARK A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
 - D-PARK A5: PASS — Cars, building blocks and trim have thick toy proportions; the static geometry has small bevels and foliage is rounded.
 - D-PARK A6: PASS — Clustered rounded tree crowns and hedges frame the landmark, with repeated yellow flowers and colored garden accents.
-- D-PARK A7: PASS — At the landmark photo spot the red-clad survivor is about 80 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
+- D-PARK A7: PASS — At the landmark photo spot the red-clad survivor is about 70 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
 - D-PARK A8: FAIL — The district has fewer small props and less clutter than the detailed S09 sheet; the placeholder layout leaves visibly open lawns and forecourts.
 - D-PARK E1: PASS — W0 and W5 retain the same road, building footprint, sign and garden positions, so the landmark is immediately recognizable.
 - D-PARK E2: PASS — W5 replaces bright windows with dark frontage, extinguishes street lamps, and adds rubble, wrecks and/or nearby fire, making the higher tier visibly worse.
@@ -130,7 +130,7 @@ Evidence: [comparison](compare/D-ZOO.png), [W0](./D-ZOO-decay-W0.png), [W5](./D-
 - D-ZOO A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
 - D-ZOO A5: PASS — Cars, building blocks and trim have thick toy proportions; the static geometry has small bevels and foliage is rounded.
 - D-ZOO A6: PASS — Clustered rounded tree crowns and hedges frame the landmark, with repeated yellow flowers and colored garden accents.
-- D-ZOO A7: PASS — At the landmark photo spot the red-clad survivor is about 80 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
+- D-ZOO A7: PASS — At the landmark photo spot the red-clad survivor is about 70 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
 - D-ZOO A8: FAIL — The district has fewer small props and less clutter than the detailed S16 sheet; the placeholder layout leaves visibly open lawns and forecourts.
 - D-ZOO E1: PASS — W0 and W5 retain the same road, building footprint, sign and garden positions, so the landmark is immediately recognizable.
 - D-ZOO E2: PASS — W5 replaces bright windows with dark frontage, extinguishes street lamps, and adds rubble, wrecks and/or nearby fire, making the higher tier visibly worse.
@@ -149,7 +149,7 @@ Evidence: [comparison](compare/D-EDGE.png), [W0](./D-EDGE-decay-W0.png), [W5](./
 - D-EDGE A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
 - D-EDGE A5: PASS — Cars, building blocks and trim have thick toy proportions; the static geometry has small bevels and foliage is rounded.
 - D-EDGE A6: PASS — Clustered rounded tree crowns and hedges frame the landmark, with repeated yellow flowers and colored garden accents.
-- D-EDGE A7: PASS — At the landmark photo spot the red-clad survivor is about 80 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
+- D-EDGE A7: PASS — At the landmark photo spot the red-clad survivor is about 70 pixels tall in the 900-pixel frame and the small upper-left controls panel stays clear of the action.
 - D-EDGE A8: FAIL — The district has fewer small props and less clutter than the detailed S17/S21 sheet; the placeholder layout leaves visibly open lawns and forecourts.
 - D-EDGE E1: PASS — W0 and W5 retain the same road, building footprint, sign and garden positions, so the landmark is immediately recognizable.
 - D-EDGE E2: PASS — W5 replaces bright windows with dark frontage, extinguishes street lamps, and adds rubble, wrecks and/or nearby fire, making the higher tier visibly worse.
