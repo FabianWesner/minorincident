@@ -1,12 +1,5 @@
-/** Logical per-tick data; device adapters arrive in E03. */
-export interface InputFrame {
-  move: { x: number; z: number };
-  aim: { x: number; z: number };
-  primary: boolean;
-  secondary: boolean;
-  interact: boolean;
-}
-export const emptyInput = (): InputFrame => ({ move: { x: 0, z: 0 }, aim: { x: 1, z: 0 }, primary: false, secondary: false, interact: false });
+import type { InputFrame, Scheme } from '../../input/InputFrame';
+export { emptyInput, type InputFrame } from '../../input/InputFrame';
 export interface Transform { x: number; y: number; z: number; yaw: number }
 /** Plain components only; physics handles and render objects are never serialized. */
 export interface EntitySnapshot {
@@ -23,6 +16,7 @@ export type GameEvent =
   | { tick: number; type: 'scenario.unloaded'; name: string };
 export interface GameStateSnapshot {
   tick: number;
+  input: { scheme: Scheme; frame: InputFrame };
   seed: number;
   scenario: string | null;
   player: EntitySnapshot | null;
