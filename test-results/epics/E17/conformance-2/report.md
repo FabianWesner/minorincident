@@ -20,8 +20,8 @@ These LODs are preserved. Uniform scaling would change the other matching dimens
 
 ## Verification
 
-Full unit suite: 61 passed, including adult height at every LOD, vehicle envelopes against road lanes, and all district collider/navigation contracts. Typecheck/lint/build pass. The first E17 verification passed 26 unit and 25 browser tests; final geometry verification has passed 28 selected unit tests and is waiting on the machine-wide browser lock. The earlier smoke run passed 3 unit and 12 browser tests; those same smoke cases are included in verify E17.
+Full unit suite: 61 passed, including adult height at every LOD, vehicle envelopes against road lanes, and all district collider/navigation contracts. Typecheck/lint/build pass. Final verify E17 passed typecheck/lint/build, 28 selected unit tests and 25 browser tests. The earlier smoke run passed 3 unit and 12 browser tests; those same smoke cases are included in verify E17.
 
-All browser runs use E2E_PORT=3319, lockf /tmp/minor-incident-e2e.lock, and two workers. No game gore-probe exists in the merged main yet; the preview goreProbe detaches actual production limbs and reveals their surviving caps. Screenshots/logs are saved here.
+All browser runs use E2E_PORT=3319, lockf /tmp/minor-incident-e2e.lock, and two workers. No game gore-probe exists in the merged main yet; the preview goreProbe detaches actual production limbs and reveals their surviving caps. Screenshots/logs are saved here. Visual review confirmed closed shoulder, neck and forearm cuts with readable flesh/bone surfaces; the neck-cap correction removes the oversized jaw plate. Adult and SUV previews remain readable in the game camera; E04 survivor movement and the E17 crowd pose/direction probe pass.
 
 The newly merged E10 unit test initially invoked its direct Blender runner for 16 layout rebuilds during test:unit. Outputs were restored. Its exporter/cache boundary is now mocked so unit tests exercise cache invalidation and fatal exporter failures without Blender. No asset models or reference images were rebuilt.

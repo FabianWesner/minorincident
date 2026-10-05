@@ -980,5 +980,24 @@
   ],
   "audit_slots_before": 163,
   "audit_slots_after": 169,
-  "merged_main": "bb7b6b9"
+  "merged_main": "bb7b6b9",
+  "verification": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "test:unit": 61,
+    "test:smoke": {
+      "unit": 3,
+      "browser": 12,
+      "same_cases_in_final_verify": true
+    },
+    "verify E17": {
+      "unit": 28,
+      "browser": 25
+    },
+    "visual": "Closed shoulder/neck/forearm caps and character/SUV previews reviewed.",
+    "renderer": "webgl",
+    "E2E_PORT": 3319,
+    "workers": 2
+  }
 }

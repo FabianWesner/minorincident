@@ -1,0 +1,116 @@
+{
+  "done": true,
+  "findings_before": {
+    "stump": 315,
+    "dimensions": 171,
+    "other": 14
+  },
+  "findings_after": {
+    "stump": 0,
+    "dimensions": 3,
+    "other": 14
+  },
+  "rescaled": [
+    "char.survivor-male",
+    "char.survivor-female",
+    "inf.common-worker",
+    "inf.jogger",
+    "inf.baseball-cap",
+    "inf.suburban-mom",
+    "inf.delivery-driver",
+    "inf.college-student",
+    "inf.bbq-dad",
+    "inf.cashier",
+    "inf.bathrobe-neighbor",
+    "inf.riot-cop",
+    "inf.bloated",
+    "inf.screamer",
+    "inf.sprinter",
+    "npc.patient-zero-courier",
+    "npc.mrs-alvarez",
+    "npc.civilian-man-a",
+    "npc.civilian-man-b",
+    "npc.civilian-woman-a",
+    "npc.civilian-woman-b",
+    "veh.school-bus"
+  ],
+  "manifest_updated": [
+    "char.survivor-male",
+    "char.survivor-female",
+    "inf.common-worker",
+    "inf.jogger",
+    "inf.baseball-cap",
+    "inf.suburban-mom",
+    "inf.delivery-driver",
+    "inf.college-student",
+    "inf.bbq-dad",
+    "inf.cashier",
+    "inf.bathrobe-neighbor",
+    "inf.riot-cop",
+    "inf.bloated",
+    "inf.screamer",
+    "inf.sprinter",
+    "wpn.baseball-bat",
+    "wpn.nail-bat",
+    "wpn.crowbar",
+    "wpn.machete",
+    "wpn.pistol",
+    "wpn.shotgun",
+    "wpn.nail-gun",
+    "thr.molotov",
+    "thr.pipe-bomb",
+    "pick.medkit",
+    "pick.soda",
+    "pick.energy-drink",
+    "pick.bandages",
+    "veh.sedan-white",
+    "bld.house-a",
+    "bld.house-b",
+    "bld.house-c",
+    "kit.porch-stairs",
+    "bld.joes-diner",
+    "bld.mainstreet-brick",
+    "int.pharmacy-clinic",
+    "npc.patient-zero-courier",
+    "prop.medical-cooler",
+    "veh.courier-van",
+    "npc.brother",
+    "npc.mrs-alvarez",
+    "wpn.smg",
+    "wpn.hunting-rifle",
+    "thr.frag-grenade",
+    "bld.civic-center",
+    "npc.civilian-man-a",
+    "npc.civilian-man-b",
+    "npc.civilian-woman-a",
+    "npc.civilian-woman-b",
+    "veh.suv-dark",
+    "bld.gas-station",
+    "veh.school-bus"
+  ],
+  "needs_decision": [
+    {
+      "id": "bld.house-b:lod2",
+      "reason": "dimensions.x: 8.598852809367624 expected 7.518; hand-made LOD2 envelope is inflated relative to LOD0; uniform scale would distort the other matching axes."
+    },
+    {
+      "id": "bld.house-c:lod2",
+      "reason": "dimensions.x: 10.706032916903496 expected 9.4032; hand-made LOD2 envelope is inflated relative to LOD0; uniform scale would distort the other matching axes."
+    },
+    {
+      "id": "bld.joes-diner:lod2",
+      "reason": "dimensions.z: 13.262648582458496 expected 11.745; hand-made LOD2 envelope is inflated relative to LOD0; uniform scale would distort the other matching axes."
+    }
+  ],
+  "commits": [
+    "aad2036",
+    "244d690",
+    "611da75"
+  ],
+  "notes": [
+    "Main merged through bb7b6b9.",
+    "61 unit tests and final verify E17 (28 unit, 25 browser) pass; smoke passes.",
+    "14 pre-existing findings outside this pass remain (crawler limb geometry and clinic budgets).",
+    "E10 unit tests initially ran 16 Blender layout rebuilds; outputs restored and test mocked. No asset models or reference images rebuilt."
+  ]
+}
