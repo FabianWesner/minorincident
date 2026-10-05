@@ -1,22 +1,26 @@
 {
-  "id": "int.pharmacy-clinic",
+  "id": "int.supermarket",
   "tier": "Hero",
-  "triangles": 66700,
-  "draw_calls": 29,
+  "triangles": 94980,
+  "draw_calls": 40,
   "materials": [
     "emi_picketWhite",
-    "keep_glass",
+    "emi_windowGlow",
+    "pal_asphalt",
     "pal_backpackTeal",
     "pal_blood",
     "pal_foliage",
     "pal_grass",
-    "pal_infectedSkin",
     "pal_picketWhite",
     "pal_policeBlue",
     "pal_schoolBusYellow",
     "pal_sidewalk",
+    "pal_skinBlush",
+    "pal_skinWarm",
     "pal_survivorRed",
-    "pal_uiDark"
+    "pal_tealLight",
+    "pal_uiDark",
+    "pal_woodWarm"
   ],
   "nodes_ok": true,
   "within_budget": true,
@@ -24,6 +28,7 @@
   "webgpu_ok": true,
   "webgl2_ok": true,
   "gaps": [
-    "Fine package artwork and mottled floor reflections are simplified."
+    "Rectangular base replaces the reference chamfered/notched footprint.",
+    "Stock packaging and chest-freezer glass are simplified."
   ]
 }
