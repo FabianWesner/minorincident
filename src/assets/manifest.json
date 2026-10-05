@@ -1982,10 +1982,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2015,10 +2019,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2047,10 +2055,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2080,10 +2092,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2113,10 +2129,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2143,10 +2163,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2173,10 +2197,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2205,10 +2233,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2237,10 +2269,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2272,7 +2308,9 @@
       "grip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2304,7 +2342,9 @@
       "grip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2336,7 +2376,9 @@
       "grip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -4091,11 +4133,11 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/bld.school-elementary/model.glb",
-    "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/bld.school-elementary.lod1.glb",
       "lod2": "public/assets/models/bld.school-elementary.lod2.glb"
     },
+    "sourceForward": "+X",
     "script": "assets/bld.school-elementary/build.py"
   },
   {
@@ -4188,11 +4230,11 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/int.supermarket/model.glb",
-    "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/int.supermarket.lod1.glb",
       "lod2": "public/assets/models/int.supermarket.lod2.glb"
     },
+    "sourceForward": "+X",
     "script": "assets/int.supermarket/build.py"
   },
   {
@@ -5132,11 +5174,11 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/npc.civilian-elderly/model.glb",
-    "script": "assets/npc.civilian-elderly/build.py",
     "lods": {
       "lod1": "public/assets/models/npc.civilian-elderly.lod1.glb",
       "lod2": "public/assets/models/npc.civilian-elderly.lod2.glb"
-    }
+    },
+    "script": "assets/npc.civilian-elderly/build.py"
   },
   {
     "id": "npc.patient-zero-courier",
@@ -5501,11 +5543,11 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/npc.police-officer/model.glb",
-    "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/npc.police-officer.lod1.glb",
       "lod2": "public/assets/models/npc.police-officer.lod2.glb"
     },
+    "sourceForward": "+X",
     "sourceScale": 1.2694477414759615,
     "script": "assets/npc.police-officer/build.py"
   },
@@ -5846,10 +5888,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -5876,10 +5922,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -5906,10 +5956,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -5936,10 +5990,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -5969,10 +6027,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -6002,10 +6064,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -6032,10 +6098,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -6062,10 +6132,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -6124,7 +6198,9 @@
       "grip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -6157,7 +6233,9 @@
       "grip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -7347,7 +7425,9 @@
       "grip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
