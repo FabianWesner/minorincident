@@ -106,7 +106,6 @@ export class GameView implements Lifecycle {
         });
       }
       this.character = new CharacterView(); await this.character.init(this.materials); this.scene.add(this.character);
-      if (this.world.combat) { this.actions = new ActionView(this.world, this.character, this.materials, this.renderer); await this.actions.init(); this.actions.update(); this.scene.add(this.actions); }
     } else if (this.world.scenario === 'lookdev') {
       this.renderer.shadowMap.enabled = true;
       this.lighting = new Lighting(this.scene); this.materials = new Materials(this.lighting);
@@ -118,6 +117,7 @@ export class GameView implements Lifecycle {
       this.cube = new Mesh(new BoxGeometry(1, 1, 1), new MeshBasicNodeMaterial({ color: '#ed935c' }));
       this.meshes.push(ground, this.cube); this.scene.add(...this.meshes);
     }
+    if (this.world.combat && this.character) { this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer); await this.actions.init(); this.actions.update(); this.scene.add(this.actions); }
     if (this.world.missions) { this.marker = new ObjectiveMarker(this.world); this.scene.add(this.marker); }
     if (this.world.districts && this.world.combat) { this.combat = new CombatView(this.world, this.materials!); this.scene.add(this.combat); }
     if (import.meta.env.DEV && this.params.has('debug')) {
