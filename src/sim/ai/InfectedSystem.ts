@@ -185,11 +185,18 @@ export class InfectedSystem {
     let obstacle = this.obstacles.get(e); if (!obstacle) { obstacle = { transform: e.transform, radius: e.combat!.radius }; this.obstacles.set(e, obstacle); } return obstacle;
   }
   playerSpeedScale(): number {
-    for (const e of this.active) if (e.health.current > 0 && e.infected!.grabUntil > this.world.tick && ['grab', 'cling', 'combo-grab'].includes(e.infected!.special)) return 0.5;
+    for (const e of this.active) {
+      const b = e.infected!;
+      if (e.health.current > 0 && b.grabUntil > this.world.tick && (b.special === 'grab' || b.special === 'cling' || b.special === 'combo-grab')) return 0.5;
+    }
     return 1;
   }
   playerPinned(): boolean {
-    return this.active.some((e) => e.health.current > 0 && e.infected!.grabUntil > this.world.tick && ['pounce', 'pin'].includes(e.infected!.special));
+    for (const e of this.active) {
+      const b = e.infected!;
+      if (e.health.current > 0 && b.grabUntil > this.world.tick && (b.special === 'pounce' || b.special === 'pin')) return true;
+    }
+    return false;
   }
   private windup(e: EntitySnapshot): void {
     const b = e.infected!, def = infectedDef(e.archetype); b.state = 'attack'; b.attackId = ++this.sequence;
@@ -224,7 +231,7 @@ export class InfectedSystem {
       }
       return true;
     }
-    if (['lunge', 'charge', 'pounce', 'cling', 'pin'].includes(b.special)) {
+    if (b.special === 'lunge' || b.special === 'charge' || b.special === 'pounce' || b.special === 'cling' || b.special === 'pin') {
       const distance = Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z);
       const step = Math.min(Math.max(0, distance - def.range), (b.special === 'charge' ? 8 : b.special === 'cling' ? 6 : b.special === 'pin' ? 7.5 : 7) / 60);
       if (b.special === 'cling') e.transform.y = 0.7 + Math.sin(Math.min(1, (this.world.tick - b.until) / 60) * Math.PI) * 1.5;
@@ -234,7 +241,7 @@ export class InfectedSystem {
     if (Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z) > (b.special === 'aura' ? 3 : def.range) + 0.15) return true;
     this.attackPlayer(e, def.damage);
     if (b.special === 'aura') this.world.combat!.status.apply(player, { kind: 'toxic', duration: 2, dps: 3, maxStacks: 1, slow: 0.25 }, e.id, e.archetype, b.attackId);
-    if (['grab', 'combo-grab', 'cling', 'pounce', 'pin'].includes(b.special)) {
+    if (b.special === 'grab' || b.special === 'combo-grab' || b.special === 'cling' || b.special === 'pounce' || b.special === 'pin') {
       b.grabUntil = this.world.tick + (b.special === 'cling' ? 120 : b.special === 'pounce' ? 36 : 90); b.grabHits = 0; b.grabNextTick = this.world.tick + 60; b.grabX = player.transform.x; b.grabZ = player.transform.z;
     }
     return true;

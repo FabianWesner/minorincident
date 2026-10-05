@@ -27,7 +27,7 @@ test('T-E01-04b @E01 @E01-AC04 browser and Node match after 3600 scripted ticks'
   } finally { world.dispose(); }
 });
 
-test('T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and epic stubs', async ({ page }) => {
+test('T-E01-05 @E01 @E01-AC05 API query gate, semver, delivered methods and remaining epic stubs', async ({ page }) => {
   const scripts: string[] = [];
   page.on('request', (request) => { if (request.resourceType() === 'script') scripts.push(request.url()); });
   await page.goto('/?renderer=webgl');
@@ -52,10 +52,19 @@ test('T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and 
   });
   expect(surface.version).toMatch(/^\d+\.\d+\.\d+$/);
   expect(surface.keys).toEqual(['version', 'ready', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'perf', 'screenshotReady'].sort());
-  const epics: Record<string, string> = { spawn: 'E07', 'cheats.killAll': 'E07', 'cheats.completeObjective': 'E12', 'bot.start': 'E19', 'bot.stop': 'E19', 'bot.status': 'E19' };
+  expect(surface.errors.spawn).toBe('Load an infected or combat scenario before spawning');
+  expect(surface.errors['cheats.killAll']).toBe('NO ERROR');
+  const epics: Record<string, string> = { 'cheats.completeObjective': 'E12', 'bot.start': 'E19', 'bot.stop': 'E19', 'bot.status': 'E19' };
   for (const [name, epic] of Object.entries(epics)) expect(surface.errors[name]).toBe(`NotImplemented ${epic}: ${name}`);
   expect(surface.entity?.transform).toMatchObject({ x: 2, z: 3 }); expect(surface.missing).toBeNull(); expect(surface.nearby).toHaveLength(1);
   expect(surface.events).toContainEqual({ tick: 1, type: 'sim.tick' }); expect(surface.perf.entities).toBe(1);
+  const infected = await page.evaluate(async () => {
+    const api = window.__SS__!; await api.loadScenario('horde-arena'); api.pause();
+    const id = api.spawn('infected.runner', { x: 3, z: 0 });
+    const alive = api.getEntity(id)!.health.current; api.cheats.killAll();
+    return { alive, killed: api.getEntity(id)!.health.current, player: api.getEntity(1)!.health.current };
+  });
+  expect(infected.alive).toBeGreaterThan(0); expect(infected.killed).toBe(0); expect(infected.player).toBeGreaterThan(0);
 });
 
 test('T-E01-06 @E01 @E01-AC06 pause + exact step and 10x sim time within 2%', async ({ page }) => {
