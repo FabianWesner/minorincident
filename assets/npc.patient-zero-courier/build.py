@@ -11,6 +11,8 @@ ap.add_argument('--state',choices=['healthy','sick','infected'],default='healthy
 ap.add_argument('--render');ap.add_argument('--glb');ap.add_argument('--view',default='hero')
 ap.add_argument('--samples',type=int,default=24);ap.add_argument('--width',type=int,default=960);ap.add_argument('--height',type=int,default=540)
 ap.add_argument('--pose',action='store_true')
+ap.add_argument('--lod',type=int,choices=[0,1,2],default=0)
+ap.add_argument('--lod-chain',action='store_true')
 a=ap.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 bpy.ops.wm.read_factory_settings(use_empty=True)
 S=bpy.context.scene;parts={};objects=[];infected=a.state=='infected';sick=a.state=='sick'
@@ -161,11 +163,10 @@ for s,side in [(1,'L'),(-1,'R')]:
     tube('sneaker_side_mark'+side,[(.084,s*.219,.10),(.043,s*.234,.087),(.008,s*.229,.125)],[.009,.01,.008],'picketWhite','foot'+side,N=8)
 # Expressive face with thick sculpted hair under a fitted delivery cap.
 ell('skull',(0,0,1.196),(.133,.143,.165),'skin','head',seg=20,rings=14)
-ell('jaw',(.047,0,1.108),(.106,.113,.078),'skin','head',seg=16,rings=10)
+ell('jaw',(.028,0,1.112),(.088,.108,.052),'skin','head',seg=16,rings=10)
 for s in [-1,1]:
     ell('ear'+str(s),(0,s*.145,1.176),(.039,.03,.05),'skin','head')
-    ell('ear_inner'+str(s),(.024,s*.158,1.177),(.013,.011,.03),'woodWarm','head')
-    ell('cheek'+str(s),(.067,s*.079,1.134),(.04,.045,.041),'skin','head')
+    ell('ear_inner'+str(s),(.024,s*.158,1.177),(.012,.009,.027),'skin','head')
     ell('eye_rim'+str(s),(.105,s*.063,1.222),(.016,.046,.05),'hair','head')
     ell('eye_white'+str(s),(.119,s*.063,1.222),(.012,.037,.041),'eye' if infected else 'picketWhite','head')
     if not infected:
@@ -174,9 +175,9 @@ for s in [-1,1]:
     ell('eye_spark'+str(s),(.141,s*.052,1.234),(.004,.007,.01),'picketWhite','head',seg=8,rings=6)
     z=1.282 if sick else 1.275
     tube('brow'+str(s),[(.126,s*.021,z+(.012 if sick else -.006)),(.134,s*.061,z+.011),(.10,s*.106,z-.008)],[.009,.013,.006],'hair','head',N=8)
-ell('nose_bridge',(.128,0,1.193),(.021,.022,.04),'skin','head')
-ell('nose_tip',(.154,0,1.171),(.024,.027,.019),'skin','head')
-for s in [-1,1]:ell('nostril'+str(s),(.171,s*.014,1.162),(.004,.007,.004),'woodWarm','head',seg=8,rings=6)
+ell('nose_bridge',(.125,0,1.194),(.015,.018,.029),'skin','head')
+ell('nose_tip',(.142,0,1.176),(.017,.021,.013),'skin','head')
+for s in [-1,1]:ell('nostril'+str(s),(.154,s*.011,1.168),(.003,.004,.0025),'woodWarm','head',seg=8,rings=6)
 if infected:
     # Cut a genuine cavity through both face volumes before adding lining and teeth.
     bpy.ops.mesh.primitive_uv_sphere_add(segments=20,ring_count=12,location=(.19,0,1.102))
@@ -194,25 +195,26 @@ if infected:
     ell('tongue',(.178,0,1.065),(.011,.03,.013),'survivorRed','head')
     tube('chin_blood',[(.173,-.027,1.053),(.142,-.031,1.021),(.117,-.039,.979)],[.009,.012,.002],'blood','head',N=8)
 else:
-    pts=[(.146,-.059,1.113),(.155,-.032,1.103),(.158,0,1.099),(.155,.032,1.103),(.146,.059,1.113)]
-    if sick:pts=[(.151,-.059,1.102),(.158,-.03,1.109),(.158,0,1.114),(.158,.03,1.109),(.151,.059,1.099)]
-    tube('mouth',pts,[.004 if not sick else .008]*5,'hair','head',N=8)
-    tube('smile_teeth',[(p[0]+.005,p[1],p[2]+.003) for p in pts[1:4]],[.003 if not sick else .004]*3,'picketWhite','head',N=6)
+    pts=[(.105,-.076,1.132),(.123,-.042,1.114),(.132,0,1.11),(.123,.042,1.114),(.105,.076,1.132)]
+    if sick:pts=[(.114,-.066,1.114),(.127,-.034,1.123),(.133,0,1.126),(.127,.034,1.123),(.114,.066,1.11)]
+    tube('mouth',pts,[.005 if not sick else .007]*5,'hair','head',N=8)
+    tube('smile_teeth',[(p[0]+.003,p[1],p[2]+.003) for p in pts],[.0035 if not sick else .003]*5,'picketWhite','head',N=6)
+    if not sick:
+        tube('lower_smile_lip',[(p[0]-.003,p[1],p[2]-.009) for p in pts[1:4]],[.004,.005,.004],'skin','head',N=8)
 # Brown locks shaped as tapered volumes instead of flat spikes.
-ell('hair_base',(-.032,0,1.259),(.132,.15,.12),'hair','head',seg=16,rings=10)
+ell('hair_base',(-.035,0,1.307),(.129,.14,.069),'hair','head',seg=16,rings=10)
 for j in range(9):
     y=-.135+j*.033
     tube('fringe'+str(j),[(-.015,y+.016,1.335),(.077,y,1.313),(.12,y-.021,1.276),(.111,y-.03,1.231+(j%3)*.017)],[.016,(.031,.022),(.024,.014),.002],'hair','head',N=8)
+# Keep side locks tucked between cap and ear tops; no cheek-level sideburns or nape curtain.
 for s in [-1,1]:
-    for j in range(5):tube('side_lock'+str(s)+str(j),[(-.034-j*.013,s*.118,1.295-j*.02),(-.067-j*.013,s*.163,1.274-j*.022),(-.108-j*.01,s*.188,1.272-j*.025)],[.02,.027,.002],'hair','head',N=8)
-    tube('sideburn'+str(s),[(.014,s*.132,1.262),(.012,s*.15,1.217),(.029,s*.137,1.181)],[.028,.023,.004],'hair','head',N=8)
-for j in range(7):
-    y=-.117+j*.038;tube('nape'+str(j),[(-.118,y,1.263),(-.151,y,1.207),(-.13,y,1.153+(j%2)*.012)],[.021,.027,.004],'hair','head',N=8)
+    for j in range(3):
+        tube('side_lock'+str(s)+str(j),[(-.038-j*.025,s*.117,1.302),(-.065-j*.025,s*.151,1.289),(-.09-j*.025,s*.164,1.267)],[.015,.021,.002],'hair','head',N=8)
 # Cap hemispherical cloth crown with panel seams; brim forms a swept padded crescent.
 ell('cap_crown',(-.031,0,1.331),(.148,.157,.101),'blue','head',seg=20,rings=12)
 box('cap_band',(-.023,0,1.296),(.276,.295,.026),'blue','head',.016)
-ell('cap_bill',(.132,0,1.299),(.143,.182,.017),'blue','head',rot=(0,.08,0),seg=20,rings=10)
-tube('bill_piping',[(.132+.136*math.cos(t),.175*math.sin(t),1.297-.009*math.cos(t)) for t in [(-math.pi/2+i*math.pi/20) for i in range(21)]],[.0035]*21,'orange','head',N=6,sub=0)
+ell('cap_bill',(.132,0,1.315),(.143,.182,.017),'blue','head',rot=(0,.08,0),seg=20,rings=10)
+tube('bill_piping',[(.132+.136*math.cos(t),.175*math.sin(t),1.313-.009*math.cos(t)) for t in [(-math.pi/2+i*math.pi/20) for i in range(21)]],[.0035]*21,'orange','head',N=6,sub=0)
 for yy in [-.093,.093]:tube('cap_panel_seam'+str(yy),[(.10,yy*.78,1.319),(.081,yy,1.371),(.02,yy*.9,1.418),(-.071,yy*.6,1.419),(-.165,yy*.4,1.342)],[.0025]*5,'policeBlue','head',N=6,sub=0)
 ell('cap_button',(-.043,0,1.43),(.011,.012,.007),'orange','head')
 box('cap_envelope',(.112,0,1.357),(.018,.085,.057),'orange','head',.005,rot=(0,-.2,0))
@@ -246,6 +248,36 @@ caps=[]
 if infected:
     for key,par,sz in [('head','torso',(.059,.063,.012)),('armL','torso',(.066,.014,.065)),('armR','torso',(.066,.014,.065)),('foreArmL','armL',(.05,.012,.053)),('foreArmR','armR',(.05,.012,.053)),('legL','hip',(.074,.074,.014)),('legR','hip',(.074,.074,.014))]:
         o=ell('stump_'+key,parts[key].matrix_world.translation,sz,'blood',par);o['stumpFor']=key;o['hidden']=True;caps.append(o)
+# Leaner young-adult body: redistribute 7.5cm from waist-to-neck to the legs.
+# Deform garment vertices and their joint locations together, retaining exact pivots.
+def body_z(z):
+    if z<=.15 or z>=1.04:return z
+    if z<=.61:return z+.075*(z-.15)/.46
+    return z+.075*(1.04-z)/.43
+bpy.context.view_layer.update()
+for o in objects:
+    if o.parent==parts['head']:continue
+    pack=o.name.startswith(('pack_','parcel_','rear_envelope'))
+    inv=o.matrix_world.inverted()
+    for v in o.data.vertices:
+        q=o.matrix_world@v.co
+        if pack:q.z+=.025
+        else:
+            if o.parent.name.startswith('foot'):q.y-=o.parent.matrix_world.translation.y*.14
+            else:q.x*=.9;q.y*=.86;q.z=body_z(q.z)
+        v.co=inv@q
+# Set all world joint positions together before restoring their existing hierarchy.
+mesh_world={o.name:o.matrix_world.copy() for o in objects}
+joint_positions={n:o.matrix_world.translation.copy() for n,o in parts.items()}
+for n,q in joint_positions.items():
+    if n=='head':continue
+    q.x*=.9;q.y*=.86;q.z=body_z(q.z)
+for n,o in parts.items():
+    o.location=joint_positions[n];o.matrix_parent_inverse=Matrix.Identity(4)
+    if o.parent:o.location-=joint_positions[o.parent.name]
+bpy.context.view_layer.update()
+for o in objects:o.matrix_world=mesh_world[o.name]
+bpy.context.view_layer.update()
 # Keep the enlarged infected geometry under its 40k crowd-source budget.
 for o in objects:
     if len(o.data.polygons)>100:
@@ -308,12 +340,34 @@ for side in ['L','R']:
 for cap in caps:cap.scale=(0,0,0)
 required=['root','hip','torso','head','armL','armR','foreArmL','foreArmR','handL','handR','legL','legR','shinL','shinR','footL','footR','weaponSocketR','weaponSocketL','backpackSocket']
 if infected:required+=['stump_'+key for key in ['head','armL','armR','foreArmL','foreArmR','legL','legR']]
-triangles=sum(len(o.data.polygons) for o in objects)
-(P/('stats-'+a.state+'.json')).write_text(json.dumps({'triangles':triangles,'meshes':len(objects),'missing_nodes':[n for n in required if n not in bpy.data.objects]},indent=2))
-if a.glb:
+if a.lod:
+    for o in objects:
+        if len(o.data.polygons)>24:
+            bpy.context.view_layer.objects.active=o
+            mod=o.modifiers.new('rigid LOD reduction','DECIMATE');mod.ratio=.16 if a.lod==1 else .055
+            bpy.ops.object.modifier_apply(modifier=mod.name)
+triangles=sum(sum(len(f.vertices)-2 for f in o.data.polygons) for o in objects)
+(P/('stats-'+a.state+(f'-lod{a.lod}' if a.lod else '')+'.json')).write_text(json.dumps({'triangles':triangles,'meshes':len(objects),'missing_nodes':[n for n in required if n not in bpy.data.objects]},indent=2))
+def export_model(path):
     bpy.ops.object.select_all(action='DESELECT')
     for o in objects+list(parts.values()):o.select_set(True)
-    bpy.ops.export_scene.gltf(filepath=a.glb,export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_cameras=False,export_lights=False)
+    bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_cameras=False,export_lights=False)
+if a.glb:
+    export_model(a.glb)
+    if a.lod_chain:
+        high_data={o:o.data for o in objects}
+        for level,ratio in [(1,.16),(2,.055)]:
+            for o in objects:
+                o.data=high_data[o].copy()
+                if len(o.data.polygons)>24:
+                    bpy.context.view_layer.objects.active=o
+                    mod=o.modifiers.new('rigid LOD reduction','DECIMATE');mod.ratio=ratio
+                    bpy.ops.object.modifier_apply(modifier=mod.name)
+            path=Path(a.glb);export_model(path.with_name(path.stem+f'.lod{level}.glb'))
+            count=sum(sum(len(f.vertices)-2 for f in o.data.polygons) for o in objects)
+            (P/f'stats-{a.state}-lod{level}.json').write_text(json.dumps({'triangles':count,'meshes':len(objects),'missing_nodes':[]},indent=2))
+            for o in objects:
+                low=o.data;o.data=high_data[o];bpy.data.meshes.remove(low)
 if a.pose:
     parts['armL'].rotation_euler.x=.6;parts['foreArmL'].rotation_euler.y=-.75;parts['legR'].rotation_euler.y=-.4
     if infected:
