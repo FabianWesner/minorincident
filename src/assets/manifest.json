@@ -5108,7 +5108,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-kid/model.glb",
+    "script": "assets/npc.civilian-kid/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-kid.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-kid.lod2.glb"
+    }
   },
   {
     "id": "npc.civilian-elderly",
@@ -5179,7 +5186,8 @@
       "lod2": "public/assets/models/npc.civilian-elderly.lod2.glb"
     },
     "script": "assets/npc.civilian-elderly/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "sourceScale": 1.2866332647759229
   },
   {
     "id": "npc.patient-zero-courier",
@@ -5678,7 +5686,15 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.firefighter-alive/model.glb",
+    "script": "assets/npc.firefighter-alive/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.firefighter-alive.lod1.glb",
+      "lod2": "public/assets/models/npc.firefighter-alive.lod2.glb"
+    },
+    "sourceScale": 1.236492203102856
   },
   {
     "id": "npc.national-guard",
@@ -5742,7 +5758,15 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.national-guard/model.glb",
+    "script": "assets/npc.national-guard/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.national-guard.lod1.glb",
+      "lod2": "public/assets/models/npc.national-guard.lod2.glb"
+    },
+    "sourceScale": 1.2599546567761748
   },
   {
     "id": "npc.survivor-group",
@@ -6672,7 +6696,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.tunnel-portal/model.glb",
+    "script": "assets/bld.tunnel-portal/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/bld.tunnel-portal.lod1.glb",
+      "lod2": "public/assets/models/bld.tunnel-portal.lod2.glb"
+    }
   },
   {
     "id": "bld.power-substation",
