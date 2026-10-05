@@ -43,7 +43,9 @@ export class FxPool {
     geometry.setAttribute('fxStyle', this.style); geometry.setAttribute('fxColor', this.colors);
     const origin = attribute('fxOrigin', 'vec4'), motion = attribute('fxMotion', 'vec4'), style = attribute('fxStyle', 'vec4');
     const age = this.clock.sub(origin.w), life = motion.w.max(0.001), progress = age.div(life).clamp(0, 1);
-    const alive = age.greaterThanEqual(0).and(age.lessThan(life)).and(motion.w.greaterThan(0)).select(1, 0);
+    // Slots are born at the current clock, never scheduled in the future. Testing age >= 0
+    // in the fragment shader creates holes when interpolated birth time rounds above now.
+    const alive = age.lessThan(life).and(motion.w.greaterThan(0)).select(1, 0);
     const material = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, side: DoubleSide });
     material.positionNode = Fn(() => {
       const size = style.x.mul(alive);

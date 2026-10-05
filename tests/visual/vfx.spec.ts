@@ -48,6 +48,9 @@ test('T-E15-04 @E15 @E15-AC04 @visual each sim telegraph appears in the next fra
     }, kind);
     expect(tell.state.telegraphs).toHaveLength(1); expect(tell.state.telegraphs[0].kind).toBe(kind);
     const on = await capture(page, `telegraph-${kind}`); const pixels = changed(baseline, on); expect(pixels).toBeGreaterThan(100);
+    await page.evaluate(() => window.__SS__!.vfx.stepRender(0.05));
+    const settled = await capture(page, `telegraph-${kind}-settled`);
+    expect(changed(on, settled), 'birth frame must have the same solid footprint as the settled tell').toBeLessThan(200);
     const persistence = await page.evaluate(async () => { const a = window.__SS__!; await a.step(180); for (let i = 0; i < 5; i++) a.vfx.stepRender(1); const during = a.getState().render.vfx!; a.vfx.emit({ type: 'attack.resolved', attackId: 7 }); return { during, after: a.getState().render.vfx! }; });
     expect(persistence.during.telegraphs).toHaveLength(1); expect(persistence.after.telegraphs).toHaveLength(0); results.push({ index, kind, pixels, tell, persistence });
   }
