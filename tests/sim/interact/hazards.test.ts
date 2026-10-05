@@ -89,3 +89,13 @@ test('T-E11-cosmetic-debris @E11 @E11-AC07 pooled pieces collide with the ground
   expect(w.entities.get(1)!.transform.x).toBeCloseTo(baseline.entities.get(1)!.transform.x, 3);
   expect(w.hazards!.debris.snapshot().every(p => p.position.y > 0)).toBe(true);
 });
+test('T-E11-fire-radius @E11 @E11-AC06 authored fire-zone radius governs spread and expired fires stop igniting', async () => {
+  const w = await arena();
+  w.hazards!.spawn('fire', { x: 10, z: 0 }, { radius: 4, duration: 2 });
+  const crate = w.hazards!.spawn('crate', { x: 13, z: 0 });
+  step(w, 119); expect(w.entities.get(crate)!.destructible!.exposure).toBe(119);
+  step(w, 1); expect(w.entities.get(crate)!.destructible!.burningUntil).toBe(0);
+  step(w, 60); expect(w.entities.get(crate)!.destructible!.exposure).toBe(0);
+  w.hazards!.spawn('fire', { x: 10, z: 0 }, { radius: 4 }); step(w, 120);
+  expect(w.entities.get(crate)!.destructible!.burningUntil).toBe(w.tick + 360);
+});

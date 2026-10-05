@@ -108,6 +108,8 @@ export class Hazards {
   snapshot() { return { blastTicks: [...this.blastTicks], blastCursor: this.blastCursor }; }
   update(): void {
     const tick = this.world.tick;
+    let fireReach = 2;
+    for (const e of this.world.entities.iterate()) if (e.hazard?.kind === 'fire' && tick < e.hazard.activeUntil) fireReach = Math.max(fireReach, e.hazard.radius);
     for (const e of this.world.entities.iterate()) {
       if (e.noiseTarget && tick >= e.noiseTarget.until) delete e.noiseTarget;
       const h = e.hazard, d = e.destructible;
@@ -117,9 +119,10 @@ export class Hazards {
         if (d.burningUntil && tick >= d.burningUntil) { e.health.current = 0; this.destroy(e); }
         else if (!d.burningUntil) {
           let exposed = false;
-          for (const id of this.nearby(e, 2)) {
+          for (const id of this.nearby(e, fireReach)) {
             const source = this.world.entities.get(id)!;
-            if (source.id !== e.id && ((source.hazard?.kind === 'fire' && tick < source.hazard.activeUntil) || (source.destructible && !source.destructible.broken && source.destructible.burningUntil > tick))) { exposed = true; break; }
+            const distance = (source.transform.x - e.transform.x) ** 2 + (source.transform.z - e.transform.z) ** 2;
+            if (source.id !== e.id && ((source.hazard?.kind === 'fire' && tick < source.hazard.activeUntil && distance <= source.hazard.radius ** 2) || (source.destructible && !source.destructible.broken && source.destructible.burningUntil > tick && distance <= 4))) { exposed = true; break; }
           }
           d.exposure = exposed ? d.exposure + 1 : 0;
           if (d.exposure >= 120) { d.burningUntil = tick + Math.ceil(d.burnTime * 60); this.world.events.emit({ type: 'prop.ignited', tick, id: e.id, until: d.burningUntil }); }
