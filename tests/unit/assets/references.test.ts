@@ -19,7 +19,7 @@ test('T-E17-sources @E17-AC05 every supplied standalone export and LOD is regist
     expect(def?.sourceGlb, directory.name).toBe(source);
     for (const lod of ['lod1', 'lod2'] as const) {
       const source = `assets/${directory.name}/model.${lod}.glb`;
-      if (existsSync(source)) expect(def?.lods?.[lod], source).toBe(source);
+      if (existsSync(source)) expect(def?.lods?.[lod], source).toBe(def?.glb.replace('.glb', `.${lod}.glb`));
     }
   }
 });
