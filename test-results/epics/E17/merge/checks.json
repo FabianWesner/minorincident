@@ -1,0 +1,38 @@
+{
+  "mergedMain": "0907b9cea10201de40cfcd68271403e53147ca50",
+  "scope": "E17-AC01\u2013AC08 increment",
+  "checks": {
+    "typecheck": 0,
+    "lint": 0,
+    "build": 0,
+    "test:unit": 0,
+    "test:smoke": 0,
+    "verify -- E01": 0,
+    "verify -- E02": 0,
+    "verify -- E17": 0,
+    "test:sim": 0,
+    "assets:validate": 0,
+    "E03 browser regression": 0,
+    "final asset browser capture": 0
+  },
+  "warnings": [],
+  "E2E_PORT": 3313,
+  "workers": {
+    "playwright": 4,
+    "vitest": 4
+  },
+  "counts": {
+    "E01": {
+      "vitest": 16,
+      "browser": 19
+    },
+    "E02": {
+      "vitest": 6,
+      "browser": 26
+    },
+    "E03": {
+      "browser": 45
+    },
+    "sim": 5
+  }
+}

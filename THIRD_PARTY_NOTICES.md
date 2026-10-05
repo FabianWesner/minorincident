@@ -12,23 +12,21 @@ copyright 2025 Bruno Simon):
 | `Physics/PhysicsWireframe.js` | `src/render/PhysicsWireframe.ts` — debug collider buffers |
 | `Debug.js` | `src/debug/Debug.ts` — dev-only Tweakpane |
 | `Materials/MeshGridMaterial.js` | `src/render/MeshGridMaterial.ts` — trimmed XZ grid shader |
+| `ResourcesLoader.js` | `src/assets/registry.ts` — promise cache and loaders |
+| `Materials.js` | `src/assets/materials.ts` — material swap by name |
+| `scripts/compress.js` | `tools/assets/optimize.ts` — compression stage adapted for meshopt |
 | `utilities/maths.js` | `src/core/maths.ts` — clamp and lerp |
-
 | `Inputs/Inputs.js` | `src/input/Buttons.ts` — action sources and latched edges |
 | `Inputs/Keyboard.js` | `src/input/devices/Keyboard.ts` — keys, blur release and disposal |
-
 | `Inputs/Inputs.js` | `src/input/InputSystem.ts` — input phase, action map and schemes |
 | `Inputs/Pointer.js` | `src/input/devices/Pointer.ts` — mouse events and suppression |
 | `Inputs/Wheel.js` | `src/input/devices/Wheel.ts` — normalized selector direction |
 | `RayCursor.js`, `Inputs/Nipple.js` | `src/input/devices/RayCursor.ts` — ground-plane ray math |
-
 | `Inputs/Nipple.js` | `src/input/devices/Nipple.ts` — radial progress/angle, floating DOM presentation |
 | `Inputs/InteractiveButtons.js`, `Inputs/Pointer.js` | `src/input/devices/Touch.ts` — touch actions and independent contact ownership |
-
 | `Player.js` (41046b5) | `src/sim/entities/Player.ts`, `src/sim/locomotion/KinematicController.ts` — input intent before physics, survivor pose after physics |
 | `View.js` (41046b5) | `src/render/View.ts` — focus, aspect adaptation, shake and cinematic blending |
 | `Rendering.js`, `Viewport.js` (41046b5) | `src/render/Renderer.ts` — backend bootstrap and pixel ratio |
-
 | `Materials/MeshDefaultMaterial.js`, `Materials.js` (41046b5) | `src/render/PaletteMaterial.ts`, `src/render/Materials.ts` — palette texture, captured tinted shadows, core shade, bounce, normalized HDR emissive |
 | `Ligthing.js`, `Fog.js`, `Cycles/DayCycles.js` (41046b5) | `src/render/Lighting.ts`, `src/data/timeOfDay.ts` — fitted sun shadows, coherent level moods and fog |
 | `Rendering.js`, `Passes/cheapDOF.js` (41046b5) | `src/render/PostFx.ts` — bloom and optional edge-only hash blur |
@@ -68,4 +66,8 @@ pixelmatch, pngjs and DefinitelyTyped types use MIT or the permissive licenses
 distributed with those packages. Rapier and Playwright use Apache-2.0.
 Project dependency versions are pinned in package-lock.json. Wrangler is a
 deploy-only tool invoked through npx and is not a project dependency.
+glTF Transform, meshoptimizer, ndarray and pngjs use MIT.
+The local PNG-only ndarray-pixels adapter avoids Sharp/libvips and its
+non-permissive native dependency. Production atlases must be PNG. Basis Universal runtime transcoders bundled
+by Three.js use Apache-2.0 (Binomial LLC).
 No reference art, meshes, textures, or audio from folio-2025 are reused.

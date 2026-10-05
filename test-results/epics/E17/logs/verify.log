@@ -1,0 +1,289 @@
+
+> verify
+> tsx tools/verify.ts E17
+
+
+Verifying E17: npm run typecheck
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+Verifying E17: npm run lint
+
+> lint
+> eslint src tests tools *.config.ts eslint.config.js
+
+
+Verifying E17: npm run build
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 50 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                 0.53 kB │ gzip:     0.35 kB
+dist/preview/index.html                         1.02 kB │ gzip:     0.58 kB
+dist/assets/basis_transcoder-o4Hde_L7.js       57.53 kB
+dist/assets/basis_transcoder-VXdx5NbI.wasm    527.33 kB │ gzip:   247.62 kB
+dist/assets/crowdProbe-HJ7eulLe.js              1.08 kB │ gzip:     0.64 kB
+dist/assets/testApi-vgod5mC_.js                 1.64 kB │ gzip:     0.79 kB
+dist/assets/index-BO34EA79.js                  12.01 kB │ gzip:     4.48 kB
+dist/assets/index-DNcd_KKi.js                 259.50 kB │ gzip:    59.42 kB
+dist/assets/three.tsl-CPyF5CQM.js             929.68 kB │ gzip:   255.65 kB
+dist/assets/rapier-DstIs6Rl.js              4,322.52 kB │ gzip: 1,641.14 kB
+✓ built in 1.51s
+
+Verifying E17: npx vitest run -t @(?:E17)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --reporter=default --reporter=json --outputFile=test-results/epics/E17/vitest.json
+
+ RUN  v5.0.3 /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e17-epic
+
+ ↓ tests/sim/runner.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/static.test.ts (1 test | 1 skipped)
+ ✓ tests/sim/determinism.test.ts (3 tests | 2 skipped) 157ms
+ ↓ tests/unit/import-graph.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/setup.test.ts (3 tests | 3 skipped)
+ ✓ tests/unit/assets/crowd.test.ts (1 test) 194ms
+ ✓ tests/unit/assets/production-gates.test.ts (3 tests) 42ms
+ ↓ tests/unit/core/foundation.test.ts (4 tests | 4 skipped)
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Mesh (1), Primitive (2), Accessor (4)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Accessor (2)
+
+ ✓ tests/unit/assets/optimize.test.ts (3 tests) 20ms
+ ✓ tests/unit/assets/registry.test.ts (3 tests) 9ms
+ ↓ tests/unit/traceability.test.ts (2 tests | 2 skipped)
+ ✓ tests/unit/assets/references.test.ts (1 test) 2ms
+ ✓ tests/unit/assets/png-pixels.test.ts (1 test) 6ms
+ ✓ tests/unit/assets/validate.test.ts (3 tests) 4028ms
+   ✓ T-E17-02b @E17-AC02 existing standalone exports are inspected without modifying source scripts 4016ms
+INFO Draco is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_draco_bridge.dylib
+INFO MeshOptimizer is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_meshopt_bridge.dylib
+14:19:12 | INFO: Starting glTF 2.0 export
+14:19:12 | INFO: Extracting primitive: body_emi_schoolBusYellow
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: body_pal_picketWhite
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: body_pal_sidewalk
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: body_pal_uiDark
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: wheelFL_pal_picketWhite
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: wheelFL_pal_survivorRed
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: wheelFL_pal_uiDark
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: wheelFR_pal_picketWhite
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: wheelFR_pal_survivorRed
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: wheelFR_pal_uiDark
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: wheelRL_pal_picketWhite
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: wheelRL_pal_survivorRed
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: wheelRL_pal_uiDark
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: wheelRR_pal_picketWhite
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: wheelRR_pal_survivorRed
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: wheelRR_pal_uiDark
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: ladder_emi_schoolBusYellow
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: ladder_pal_asphalt
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: ladder_pal_blood
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: ladder_pal_picketWhite
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: ladder_pal_sidewalk
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: ladder_pal_survivorRed
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: lightsBrake_emi_sirenRed
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: lightsFront_emi_windowGlow
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: root_emi_schoolBusYellow
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: root_emi_sirenRed
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: root_emi_windowGlow
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: root_pal_asphalt
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: root_pal_blood
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: root_pal_picketWhite
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: root_pal_schoolBusYellow
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: root_pal_sidewalk
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: root_pal_survivorRed
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: root_pal_uiDark
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: sirenL_emi_policeBlue
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: sirenL_emi_sirenRed
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: sirenR_emi_policeBlue
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: sirenR_emi_sirenRed
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Extracting primitive: sirenR_emi_windowGlow
+14:19:12 | INFO: Primitives created: 1
+14:19:12 | INFO: Finished glTF 2.0 export in 0.09047222137451172 s
+
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+Blender quit
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 real Blender builds are deterministic and script errors are fatal
+prune: Removed types... Accessor (156)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 real Blender builds are deterministic and script errors are fatal
+prune: Removed types... Accessor (195)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 real Blender builds are deterministic and script errors are fatal
+prune: Removed types... Accessor (191)
+
+INFO Draco is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_draco_bridge.dylib
+INFO MeshOptimizer is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_meshopt_bridge.dylib
+14:19:22 | INFO: Starting glTF 2.0 export
+14:19:22 | INFO: Extracting primitive: body_emi_schoolBusYellow
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: body_pal_picketWhite
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: body_pal_sidewalk
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: body_pal_uiDark
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: wheelFL_pal_picketWhite
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: wheelFL_pal_survivorRed
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: wheelFL_pal_uiDark
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: wheelFR_pal_picketWhite
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: wheelFR_pal_survivorRed
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: wheelFR_pal_uiDark
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: wheelRL_pal_picketWhite
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: wheelRL_pal_survivorRed
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: wheelRL_pal_uiDark
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: wheelRR_pal_picketWhite
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: wheelRR_pal_survivorRed
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: wheelRR_pal_uiDark
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: ladder_emi_schoolBusYellow
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: ladder_pal_asphalt
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: ladder_pal_blood
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: ladder_pal_picketWhite
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: ladder_pal_sidewalk
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: ladder_pal_survivorRed
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: lightsBrake_emi_sirenRed
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: lightsFront_emi_windowGlow
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: root_emi_schoolBusYellow
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: root_emi_sirenRed
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: root_emi_windowGlow
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: root_pal_asphalt
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: root_pal_blood
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: root_pal_picketWhite
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: root_pal_schoolBusYellow
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: root_pal_sidewalk
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: root_pal_survivorRed
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: root_pal_uiDark
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: sirenL_emi_policeBlue
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: sirenL_emi_sirenRed
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: sirenR_emi_policeBlue
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: sirenR_emi_sirenRed
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Extracting primitive: sirenR_emi_windowGlow
+14:19:22 | INFO: Primitives created: 1
+14:19:22 | INFO: Finished glTF 2.0 export in 0.08882713317871094 s
+
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+Blender quit
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 real Blender builds are deterministic and script errors are fatal
+prune: Removed types... Accessor (156)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 real Blender builds are deterministic and script errors are fatal
+prune: Removed types... Accessor (195)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 real Blender builds are deterministic and script errors are fatal
+prune: Removed types... Accessor (191)
+
+ ✓ tests/unit/assets/build.test.ts (2 tests) 22373ms
+   ✓ T-E17-01 @E17-AC01 real Blender builds are deterministic and script errors are fatal 22031ms
+   ✓ T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate 340ms
+
+ Test Files  9 passed | 6 skipped (15)
+      Tests  18 passed | 15 skipped (33)
+   Start at  14:19:03
+   Duration  22.54s (tests 96%, import 3%, transform 1%)
+
+JSON report written to /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e17-epic/test-results/epics/E17/vitest.json
+
+Verifying E17: npx playwright test --grep @(?:E17)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$)
+
+Running 15 tests using 4 workers
+
+  ✓   1 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.9s)
+  ✓   2 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.7s)
+  ✓   5 [chromium] › tests/e2e/turntable.spec.ts:16:1 › T-E17-05c @E17-AC05 pre-integrated production art renders a logged placeholder (1.2s)
+  ✓   6 [pixel-7] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.2s)
+  ✓   3 [chromium] › tests/e2e/turntable.spec.ts:4:1 › T-E17-08 @E17-AC08 @E17-AC04 five fire-engine views cover 10–80% and preserve contract nodes (5.0s)
+  ✓   7 [pixel-7] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (1.9s)
+  ✓   8 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.2s)
+  ✓  10 [iphone-14] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.2s)
+  ✓   9 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.0s)
+  ✓   4 [chromium] › tests/e2e/crowd.spec.ts:4:1 › T-E17-07b @E17-AC07 100 infected use one draw per material and GPU poses match at five times (7.7s)
+  ✓  11 [iphone-14] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.0s)
+  ✓  12 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.3s)
+  ✓  14 [webkit] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.1s)
+  ✓  13 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (1.9s)
+  ✓  15 [webkit] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.1s)
+
+  15 passed (12.5s)
