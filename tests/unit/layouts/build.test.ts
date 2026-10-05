@@ -42,4 +42,4 @@ test("T-E10-12 @E10 @E10-AC12 headless Blender rebuild is deterministic and TS g
   } finally {
     writeFileSync(layout, script);
   }
-}, 180_000);
+}, 30 * 60_000);

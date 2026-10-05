@@ -7,17 +7,11 @@ import json
 import math
 from pathlib import Path
 
-COLORS = {'foliage': '#7da23c', 'grass': '#6f8f3a', 'asphalt': '#5b4f5c', 'sidewalk': '#b9a4a0', 'woodWarm': '#b0703f', 'picketWhite': '#f2e6dc', 'brick': '#a8483a', 'survivorRed': '#d9363e', 'backpackTeal': '#2f6e6a', 'schoolBusYellow': '#f2b630', 'policeBlue': '#2f6bff', 'uiDark': '#25222c', 'blood': '#b3121f', 'windowGlow': '#ffc773'}
+from sslib.palette import mat
 
 def material(token):
-    name = 'pal_' + token
-    m = bpy.data.materials.get(name) or bpy.data.materials.new(name)
-    h = COLORS[token].lstrip('#')
-    m.diffuse_color = tuple(int(h[i:i+2], 16) / 255 for i in (0, 2, 4)) + (1,)
-    m.use_nodes = True
-    bsdf=m.node_tree.nodes.get('Principled BSDF')
-    bsdf.inputs['Base Color'].default_value=tuple((c/12.92 if c<=.04045 else ((c+.055)/1.055)**2.4) for c in m.diffuse_color[:3])+(1,)
-    bsdf.inputs['Roughness'].default_value=.85
+    m = mat(token)
+    m.node_tree.nodes['Principled BSDF'].inputs['Roughness'].default_value = .85
     return m
 
 def box(name, token, size, pos):
@@ -40,7 +34,7 @@ class Layout:
     def __init__(self, district, title):
         bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
         self.root = Path(__file__).resolve().parents[3]
-        self.manifest = json.loads((self.root / 'src/assets/manifest.json').read_text())
+        self.manifest = {a['id']: a for a in json.loads((self.root / 'src/assets/manifest.json').read_text())}
         self.layers = [[] for _ in range(6)]
         self.empties = []
         self.data = dict(version=1, district=district, title=title, bounds=[[-28,-28],[28,-28],[28,28],[-28,28],[-28,-28]], roads={'nodes': [], 'edges': []}, placements=[], anchors={}, buildings=[], colliders=[], lawns=[], walkable={'cellSize': 1, 'excluded': []}, lightGroups=[], acousticZones=[], surfaces=[], layers=[dict(tier=i, remove=[], disableLights=[]) for i in range(1,6)])
@@ -55,7 +49,7 @@ class Layout:
             self.place('prop.hedge', [x-2,0,z])
             for j in range(5): self.box('flower', 'schoolBusYellow' if j%2 else 'survivorRed', [.18,.2,.18], [x-2+j*.7,.25,z-2])
         for z in range(-20,21,8):
-            for x in [-5,5]: self.place('prop.street-lamp', [x,0,z]); self.place('prop.picket-fence', [x*1.6,0,z])
+            for x in [-5,5]: self.place('prop.street-lamp', [x,0,z]); self.place('prop.picket-fence', [x*1.6,0,z], yaw=math.pi/2)
         for x,z in [(-6,-6),(6,6),(-6,6),(6,-6)]: self.place('prop.traffic-cone', [x,0,z])
         for x,z in [(10,-6),(-10,6),(20,-6),(-20,6)]: self.place('veh.sedan-red', [x,0,z])
         for block in range(4): self.data['lightGroups'].append(dict(id=f'block-{block}', offAt=3 if block%2==0 else 5))
@@ -110,7 +104,7 @@ class Layout:
         p=dict(id=id,assetId=asset,position=pos,yaw=yaw,scale=list(scale),minTier=tier,maxTier=5,allowRoad=allowed,visualAabb=aabb,lightGroup=f'block-{len(self.data["placements"])%4}')
         self.data['placements'].append(p)
         o=empty('inst:'+asset+':'+str(len(self.data['placements'])),pos,yaw,scale); o['assetId']=asset; o['lightGroup']=p['lightGroup']; o['minTier']=tier; o['maxTier']=5; self.empties.append(o)
-        if m.get('solid'): self.data['colliders'].append(dict(id=id,aabb=aabb,minTier=tier,maxTier=5))
+        if m['world']['solid']: self.data['colliders'].append(dict(id=id,aabb=aabb,minTier=tier,maxTier=5))
         return id
     def building(self,asset,x,z,door,title):
         id=self.place(asset,[x,0,z]); aabb=self.data['placements'][-1]['visualAabb']

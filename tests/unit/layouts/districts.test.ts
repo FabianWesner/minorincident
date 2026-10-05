@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { expect, test } from "vitest";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { Mesh, Raycaster, Vector3 } from "three";
-import manifest from "../../../src/assets/manifest.json";
+import { worldAssets as manifest } from "../../../src/assets/worldDefinitions";
 import {
   districtIds,
   type DistrictLayout,
@@ -69,7 +69,7 @@ test("T-E10-07 @E10 @E10-AC07 every building/heavy prop collider matches transfo
   for (const layout of layouts)
     for (const p of layout.placements) {
       const def = manifest[p.assetId as keyof typeof manifest];
-      if (!def.solid) continue;
+      if (!def.world.solid) continue;
       const c = layout.colliders.find((c) => c.id === p.id)!;
       expect(c).toBeDefined();
       const sx =

@@ -9,7 +9,7 @@ export default defineConfig({
     target: 'es2022',
     chunkSizeWarningLimit: 4500,
     rollupOptions: {
-      input: 'index.html',
+      input: ['index.html', 'preview/index.html'],
       output: {
         manualChunks: (id) => id.includes('/@dimforge/rapier3d-compat/') ? 'rapier' : undefined,
       },

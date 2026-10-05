@@ -1,7 +1,7 @@
 """Deterministic rigid-part hero Screamer. +X forward, Z up, -Y character right.
 Run through experiment/tools/blender_run.py. All subdivision is applied before GLB.
 """
-import argparse, math, sys, json, random
+import argparse, math, sys, json, random, hashlib
 from pathlib import Path
 import bpy, bmesh
 from mathutils import Vector, Matrix
@@ -29,7 +29,7 @@ def node(n,p,par=None):
     parts[n]=o;return o
 node('root',(0,0,0));node('hip',(-.035,0,.70),'root');node('torso',(-.025,0,.79),'hip');node('head',(.025,0,1.16),'torso');node('backpackSocket',(-.20,0,1.03),'torso')
 def finish(o,n,m,par,sub=0):
-    o.name=n;o.data.materials.append(M[m]);bpy.context.view_layer.objects.active=o
+    o.name=n;o.data.materials.append(M[m]);bpy.ops.object.select_all(action='DESELECT');o.select_set(True);bpy.context.view_layer.objects.active=o
     if sub:
         mod=o.modifiers.new('sculpt smoothing','SUBSURF');mod.levels=sub;bpy.ops.object.modifier_apply(modifier=mod.name)
     for f in o.data.polygons:f.use_smooth=True
@@ -38,8 +38,26 @@ def finish(o,n,m,par,sub=0):
         bpy.context.view_layer.update();o.parent=parts[par];o.matrix_parent_inverse=o.parent.matrix_world.inverted()
     objects.append(o);return o
 
+def sphere(n,seg,rings):
+    # Explicit ordered UV topology avoids operator-dependent vertex ordering across builds.
+    vertices=[(0,0,1)]
+    for j in range(1,rings):
+        phi=math.pi*j/rings
+        for i in range(seg):
+            t=i*2*math.pi/seg
+            vertices.append((math.sin(phi)*math.cos(t),math.sin(phi)*math.sin(t),math.cos(phi)))
+    south=len(vertices);vertices.append((0,0,-1));faces=[]
+    for i in range(seg):faces.append((0,1+i,1+(i+1)%seg))
+    for j in range(rings-2):
+        for i in range(seg):
+            k=1+j*seg+i;kn=1+j*seg+(i+1)%seg
+            faces.append((k,k+seg,kn+seg,kn))
+    last=1+(rings-2)*seg
+    for i in range(seg):faces.append((south,last+(i+1)%seg,last+i))
+    me=bpy.data.meshes.new(n);me.from_pydata(vertices,[],faces);me.update()
+    o=bpy.data.objects.new(n,me);S.collection.objects.link(o);bpy.ops.object.select_all(action='DESELECT');o.select_set(True);bpy.context.view_layer.objects.active=o;return o
 def ell(n,p,sz,m,par,rot=None,seg=10,rings=6):
-    bpy.ops.mesh.primitive_uv_sphere_add(segments=seg,ring_count=rings,location=p);o=bpy.context.object;o.scale=sz
+    o=sphere(n,seg,rings);o.location=p;o.scale=sz
     if rot:o.rotation_euler=rot
     return finish(o,n,m,par,1)
 def box(n,p,sz,m,par,bevel=.015,rot=None):
@@ -179,7 +197,7 @@ for s in [-1,1]:
     tube('brow'+str(s),[(.179,s*.037,1.486),(.184,s*.09,1.481),(.147,s*.153,1.467)],[.016,.025,.014],'asphalt','head',N=8)
     tube('lower_eyelid'+str(s),[(.2,s*.05,1.379),(.193,s*.102,1.365),(.168,s*.145,1.385)],[.01,.013,.007],'infectedSkin','head',N=8)
 # Genuine recessed mouth opening, rounded lips, teeth, gum ridges, tongue and throat.
-bpy.ops.mesh.primitive_uv_sphere_add(segments=24,ring_count=16,location=(.202,0,1.266));cutter=bpy.context.object;cutter.scale=(.103,.092,.117);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
+cutter=sphere('mouth cutter',24,16);cutter.location=(.202,0,1.266);bpy.context.view_layer.objects.active=cutter;cutter.select_set(True);cutter.scale=(.103,.092,.117);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
 for name in ['cranium','jaw']:
     obj=bpy.data.objects[name];mod=obj.modifiers.new('screaming mouth','BOOLEAN');mod.operation='DIFFERENCE';mod.object=cutter;bpy.context.view_layer.objects.active=obj;bpy.ops.object.modifier_apply(modifier=mod.name)
 bpy.data.objects.remove(cutter,do_unlink=True)
@@ -263,7 +281,7 @@ for j in range(5):
     splat('top_blood'+str(j),['top'],(.3,(-.08+j*.042),.82+(j%3)*.075),.028,.038)
 # Torn shell openings expose the red shirt; torn sleeve holes reveal skin.
 def tear(name,center,size):
-    obj=bpy.data.objects[name];bpy.ops.mesh.primitive_uv_sphere_add(segments=12,ring_count=8,location=center);cut=bpy.context.object;cut.scale=size;bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
+    obj=bpy.data.objects[name];cut=sphere('tear cutter',12,8);cut.location=center;bpy.context.view_layer.objects.active=cut;cut.select_set(True);cut.scale=size;bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
     mod=obj.modifiers.new('ragged opening','BOOLEAN');mod.operation='DIFFERENCE';mod.object=cut;bpy.context.view_layer.objects.active=obj;bpy.ops.object.modifier_apply(modifier=mod.name);bpy.data.objects.remove(cut,do_unlink=True)
 for s,side in [(1,'L'),(-1,'R')]:
     tear('upper_sleeve'+side,(.108,s*.295,1.069),(.046,.037,.034))
@@ -284,11 +302,30 @@ for side,sign in [('L',1),('R',-1)]:
 # Seven hidden caps on proximal parts survive removal of the distal limb.
 for key,parent,p,sz in [('head','torso',(.025,0,1.16),(.077,.085,.015)),('armL','torso',(-.02,.211,1.072),(.08,.018,.08)),('armR','torso',(-.02,-.211,1.072),(.08,.018,.08)),('foreArmL','armL',(.043,.403,1.009),(.074,.074,.018)),('foreArmR','armR',(.043,-.403,1.009),(.074,.074,.018)),('legL','hip',(-.035,.133,.703),(.105,.11,.015)),('legR','hip',(-.035,-.133,.703),(.105,.11,.015))]:
     o=ell('stump_'+key,p,sz,'blood',parent,seg=12,rings=6);o['stumpFor']=key;o['hidden']=True;o.scale=(0,0,0)
+def canonical_mesh(o):
+    # Boolean solvers may return equivalent topology in different vertex/face order.
+    coords=[tuple(round(c,6) for c in v.co) for v in o.data.vertices]
+    vertices=sorted(set(coords));lookup={p:i for i,p in enumerate(vertices)}
+    faces=[]
+    for poly in o.data.polygons:
+        face=tuple(lookup[coords[i]] for i in poly.vertices)
+        start=face.index(min(face));face=face[start:]+face[:start]
+        if len(set(face))>=3:faces.append((face,poly.material_index,poly.use_smooth))
+    faces.sort()
+    me=bpy.data.meshes.new(o.name+'_ordered');me.from_pydata(vertices,[],[f[0] for f in faces]);me.update()
+    for m in o.data.materials:me.materials.append(m)
+    for poly,(_,index,smooth) in zip(me.polygons,faces):poly.material_index=index;poly.use_smooth=smooth
+    o.data=me
 # Apply smooth forms, then reduce redundant geometry to a 36k game mesh.
 raw=sum(len(f.vertices)-2 for o in objects for f in o.data.polygons)
 ratio=min(1.0,35000/raw)
 for o in objects:
     if sum(len(f.vertices)-2 for f in o.data.polygons)>80:
+        canonical_mesh(o)
+        # Symmetric surfaces otherwise tie in Decimate's collapse queue across processes.
+        noise=random.Random(int(hashlib.sha256(o.name.encode()).hexdigest()[:16],16))
+        for v in o.data.vertices:
+            v.co+=Vector(tuple(noise.uniform(-.00005,.00005) for _ in range(3)))
         bpy.context.view_layer.objects.active=o
         mod=o.modifiers.new('game mesh reduction','DECIMATE');mod.ratio=ratio
         bpy.ops.object.modifier_apply(modifier=mod.name)
