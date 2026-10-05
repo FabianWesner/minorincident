@@ -10,3 +10,5 @@ Review rounds:
 3. Final hero and four-view batch, followed by articulated pose and final GLB audit.
 
 Render commands use experiment/tools/blender_run.py with the shared GPU pool. --deliverables renders the requested hero, four neutral views, and the pose test in one run. Export happens in the neutral pose before any review articulation.
+
+Final numeric cleanup uses direct triangle cross products, eliminating export-collapsed bevel slivers without changing the visible silhouette. The exported height is 1.4317 m and ground contact is within floating-point tolerance of zero.

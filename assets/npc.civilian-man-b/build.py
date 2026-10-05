@@ -235,6 +235,9 @@ for o,world in head_world.items():
 # Join decorative pieces per rigid joint and material to limit draw calls.
 for o in objects:
  if len(o.data.polygons)>150:
+  # Stable ten-micron offsets reduce exact symmetry before mesh reduction.
+  for i,v in enumerate(o.data.vertices):
+   v.co+=Vector((math.sin(i*13.73+.4),math.sin(i*17.17+1.2),math.sin(i*19.31+2.1)))*.00001
   bpy.context.view_layer.objects.active=o;mod=o.modifiers.new('game density','DECIMATE');mod.ratio=.64;bpy.ops.object.modifier_apply(modifier=mod.name)
  bm=bmesh.new();bm.from_mesh(o.data);bmesh.ops.triangulate(bm,faces=list(bm.faces))
  tiny=[f for f in bm.faces if f.calc_area()<1e-9]
@@ -257,8 +260,9 @@ if a.glb:
  bpy.ops.object.select_all(action='DESELECT')
  for o in objects+list(parts.values()):o.select_set(True)
  bpy.ops.export_scene.gltf(filepath=a.glb,export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_cameras=False,export_lights=False)
-if a.pose:
+def pose_test():
  parts['armL'].rotation_euler.x=.55;parts['foreArmL'].rotation_euler.y=-.85;parts['legR'].rotation_euler.y=-.48
+if a.pose:pose_test()
 def turnaround(destination):
     # Assemble already-rendered camera views in Blender, without another GPU render.
     import numpy as np
@@ -304,9 +308,7 @@ if a.render:
             ground.hide_render=view!='hero'
             S.render.filepath=str(P/'renders'/('round3.png' if view=='hero' else 'round3-'+view+'.png'));bpy.ops.render.render(write_still=True)
         cam.location=views['hero'];cam.rotation_euler=(Vector((.02,0,.70))-cam.location).to_track_quat('-Z','Y').to_euler();ground.hide_render=False
-        parts['armL'].rotation_euler.x=.55;parts['foreArmL'].rotation_euler.y=-.85;parts['legR'].rotation_euler.y=-.48
-        S.cycles.samples=24;S.render.resolution_x=960;S.render.resolution_y=540
+        pose_test()
         S.render.filepath=str(P/'renders/pose-test.png');bpy.ops.render.render(write_still=True)
-        if all((P/'renders'/n).exists() for n in ['round3-front.png','round3-side.png','round3-back.png','round3.png']):
-            turnaround(P/'renders/turnaround.png')
+        turnaround(P/'renders/turnaround.png')
 print('OK',triangles,'triangles',len(objects),'meshes')

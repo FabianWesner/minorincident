@@ -164,7 +164,9 @@ for j in range(7):
     lock('fringe'+str(j),(.035,y+.015,1.293),(.132,y,1.272),(.16,y-.039,1.245+(j%3)*.008),.045)
 for layer in range(2):
     for j in range(11):
-        t=.65+j*(2*math.pi-1.3)/10;x=-.032+.136*math.cos(t);y=.167*math.sin(t);z=1.106+layer*.104
+        t=.65+j*(2*math.pi-1.3)/10
+        if layer==0 and math.cos(t)>.1:continue  # Nape locks stay behind the cheeks.
+        x=-.032+.136*math.cos(t);y=.167*math.sin(t);z=1.106+layer*.104
         lock('side_hair'+str(layer)+'_'+str(j),(x*.8,y*.86,z+.055),(x-.016,y,z+.03),(x+.065*math.cos(t),y+.04*math.sin(t),z-.032),.045+(j%3)*.006)
 # Keep swept hair below the hat lip; no locks break through the cream panel.
 for o in objects:
