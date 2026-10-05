@@ -1,0 +1,46 @@
+{
+  "epic": "E03",
+  "status": "done",
+  "criteria": 13,
+  "checks": {
+    "typecheck": 0,
+    "lint": 0,
+    "build": 0,
+    "test:unit": 0,
+    "test:smoke": 0,
+    "verify -- E01": 0,
+    "verify -- E02": 0,
+    "verify -- E03": 0
+  },
+  "unitPassed": 21,
+  "optionalPreviewSkipped": 1,
+  "epicVitestPassed": 7,
+  "epicBrowserPassed": 57,
+  "smokeVitestPassed": 1,
+  "smokeBrowserPassed": 12,
+  "regressionVitestPassed": 15,
+  "regressionBrowserPassed": 19,
+  "E02VitestPassed": 6,
+  "E02BrowserPassed": 27,
+  "nativeWebgpuVerified": true,
+  "warnings": 0,
+  "unexpectedBrowserFailures": 0,
+  "retries": 0,
+  "validatedMain": "c4891e400e918489ec9beeb35f5498c81c4b2a26",
+  "perf": {
+    "ticks": 600,
+    "elapsedMs": 14.600000023841858,
+    "meanTickMsIncludingFinalRender": 0.024333333373069765,
+    "perf": {
+      "fps": 1.6215339711366952,
+      "frameMs": 616.7,
+      "simMs": 0,
+      "drawCalls": 3,
+      "triangles": 15,
+      "geometries": 3,
+      "textures": 2,
+      "entities": 1,
+      "backend": "webgl"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+[
+  {
+    "name": "unit",
+    "command": [
+      "npm",
+      "run",
+      "test:unit",
+      "--",
+      "--reporter=default",
+      "--reporter=json",
+      "--outputFile=test-results/epics/E03/unit.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "smoke",
+    "command": [
+      "npm",
+      "run",
+      "test:smoke"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "regression-E01",
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E01"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "regression-E02",
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E02"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "verify",
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E03"
+    ],
+    "exitCode": 0
+  }
+]

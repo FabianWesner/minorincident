@@ -1,0 +1,108 @@
+{
+  "epic": "E01",
+  "criteria": 11,
+  "coverage": {
+    "E01-AC01": [
+      {
+        "runner": "vitest",
+        "title": "T-E01-01 @E01 @E01-AC01 app and deployment scripts",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings",
+        "status": "passed"
+      }
+    ],
+    "E01-AC02": [
+      {
+        "runner": "vitest",
+        "title": "T-E01-02 @E01 @E01-AC02 600 ticks match at 30, 60 and 144 render Hz",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "T-E01-02a @E01 @E01-AC02 fixed 60 Hz, interpolation and capped catch-up",
+        "status": "passed"
+      }
+    ],
+    "E01-AC03": [
+      {
+        "runner": "vitest",
+        "title": "T-E01-03 @E01 @E01-AC03 sim transitive import graph has no renderer or DOM dependencies",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "T-E01-03b @E01 @E01-AC03 lint rejects unseeded randomness, DOM and renderer imports",
+        "status": "passed"
+      }
+    ],
+    "E01-AC04": [
+      {
+        "runner": "vitest",
+        "title": "T-E01-04 @E01 @E01-AC04 same seed and script give the same 3600-tick state",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E01-04b @E01 @E01-AC04 browser and Node match after 3600 scripted ticks",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E01-AC05": [
+      {
+        "runner": "playwright",
+        "title": "T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and epic stubs",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E01-AC06": [
+      {
+        "runner": "playwright",
+        "title": "T-E01-06 @E01 @E01-AC06 pause + exact step and 10x sim time within 2%",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E01-AC07": [
+      {
+        "runner": "playwright",
+        "title": "T-E01-07 @E01 @E01-AC07 load/unload x20 returns all resources to baseline",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E01-AC08": [
+      {
+        "runner": "vitest",
+        "title": "T-E01-08 @E01 @E01-AC08 npm sim writes a headless JSON report",
+        "status": "passed"
+      }
+    ],
+    "E01-AC09": [
+      {
+        "runner": "vitest",
+        "title": "T-E01-09 @E01 @E01-AC09 ordered typed events and a 10k ring",
+        "status": "passed"
+      }
+    ],
+    "E01-AC10": [
+      {
+        "runner": "playwright",
+        "title": "T-E01-10 @E01 @E01-AC10 guard detects errors and uncaught exceptions",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E01-AC11": [
+      {
+        "runner": "vitest",
+        "title": "T-E01-11 @E01 @E01-AC11 verify selects only exact E01 tags plus smoke across runners",
+        "status": "passed"
+      }
+    ]
+  }
+}

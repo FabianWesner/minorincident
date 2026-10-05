@@ -1,4 +1,5 @@
 // Adapted from folio-2025 by Bruno Simon (MIT).
+import { InputSystem } from './input/InputSystem';
 import { Clock } from './core/Clock';
 import { Services } from './core/Services';
 import { Ticker } from './core/Ticker';
@@ -11,6 +12,7 @@ export class Game {
   readonly world = this.services.add(new SimWorld());
   readonly clock: Clock;
   readonly view: GameView;
+  readonly input: InputSystem;
   readonly ticker = new Ticker();
   frameMs = 0;
   simMs = 0;
@@ -19,6 +21,7 @@ export class Game {
   constructor(readonly params: URLSearchParams) {
     this.clock = new Clock(params.get('test') === '1' ? 20 : 5);
     this.view = this.services.add(new GameView(this.world, params));
+    this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera));
   }
   async init(): Promise<void> {
     await this.services.init();
@@ -27,7 +30,7 @@ export class Game {
       this.frameMs = seconds * 1000;
       if (!this.loading) {
         const start = performance.now();
-        this.clock.advance(seconds, () => { this.world.update(); this.view.advance(1 / 60); });
+        this.clock.advance(seconds, () => this.simTick());
         this.simMs = performance.now() - start;
         if (!this.clock.paused) this.view.update(this.clock.alpha);
       }
@@ -39,7 +42,7 @@ export class Game {
     const load = this.levelQueue.then(async () => {
       this.loading = true;
       try {
-        this.view.reset(); this.world.reset(); this.clock.reset();
+        this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
         if (name !== null) { this.world.loadScenario(name, seed); await this.view.load(); }
         else this.view.update();
       } finally { this.loading = false; this.ticker.reset(); }
@@ -51,8 +54,14 @@ export class Game {
     await this.levelQueue;
     if (!this.clock.paused) throw new Error('step requires pause()');
     if (!this.world.scenario) throw new Error('step requires a loaded scenario');
-    for (let i = 0; i < ticks; i++) { this.world.update(); this.view.advance(1 / 60); }
+    for (let i = 0; i < ticks; i++) this.simTick();
     this.view.update(1);
+  }
+  private simTick(): void {
+    const player = this.world.entities.get(1)?.transform;
+    if (player) this.world.applyInput(this.input.sample(player), this.input.scheme);
+    this.world.update();
+    this.view.advance(1 / 60);
   }
   async screenshotReady(): Promise<void> {
     await this.levelQueue;
