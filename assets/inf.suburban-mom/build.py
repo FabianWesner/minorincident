@@ -2,14 +2,14 @@
 Reproducible palette-only geometry. Subdivision and bevels applied before GLB.
 Use only experiment/tools/blender_run.py to execute this script.
 """
-import bpy, math, sys, json, random
+import bpy, bmesh, math, sys, json, random
 from pathlib import Path
 from mathutils import Vector
 HERE = Path(__file__).resolve().parent
 ARGS = sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
 def arg(k,d=None): return ARGS[ARGS.index(k)+1] if k in ARGS else d
-# Contact sheet assembly uses Blender image buffers; source renders stay untouched.
-if arg('--view')=='sheet':
+def contact_sheet(output):
+    # Assemble rendered pixels without modifying the reference images.
     from array import array
     w,h=960,540
     sheet=bpy.data.images.new('turnaround',width=w*2,height=h*2,alpha=True)
@@ -20,8 +20,10 @@ if arg('--view')=='sheet':
         for y in range(h):
             start=((row*h+y)*w*2+col*w)*4
             buffer[start:start+w*4]=pixels[y*w*4:(y+1)*w*4]
-    sheet.pixels.foreach_set(buffer);sheet.filepath_raw=str(Path(arg('--render')).resolve());sheet.file_format='PNG';sheet.save()
-    print('SHEET OK');sys.exit(0)
+    sheet.pixels.foreach_set(buffer);sheet.filepath_raw=str(Path(output).resolve());sheet.file_format='PNG';sheet.save()
+    print('SHEET OK')
+if arg('--view')=='sheet':
+    contact_sheet(arg('--render'));sys.exit(0)
 bpy.ops.wm.read_factory_settings(use_empty=True)
 scene=bpy.context.scene
 parts={}
@@ -41,7 +43,7 @@ M={
  'blood':mat('blood','#b3121f',.29), 'dark':mat('uiDark','#25222c'),
  'pack':mat('woodWarm','#b0703f'), 'leather':mat('leatherShadow','#77482e'),
  'gold':mat('schoolBusYellow','#f2b630',.4), 'stitch':mat('denimStitch','#a4a4b3'),
- 'eye':mat('infectedEye','#ff3b2f',.25,3.5)}
+ 'eye':mat('infectedEye','#ff3b2f',.25,4.5)}
 def parent_keep(o,p):
     bpy.context.view_layer.update(); mw=o.matrix_world.copy(); o.parent=parts[p] if isinstance(p,str) else p; o.matrix_world=mw
 
@@ -81,16 +83,7 @@ def sculpt(n,c,s,m,p):
     return finish(o,n,m,p)
 
 def tube(n,points,radii,m,p,segments=8):
-    # Catmull-Rom interpolation turns hair control points into soft swept volumes.
     source=[Vector(q) for q in points]
-    if n.startswith(('hair','bang','curl')):
-        sampled=[]; radii_new=[]
-        for i in range(len(source)-1):
-            a=source[max(0,i-1)];b=source[i];c=source[i+1];d=source[min(len(source)-1,i+2)]
-            for t in (0,):
-                sampled.append(.5*((2*b)+(-a+c)*t+(2*a-5*b+4*c-d)*t*t+(-a+3*b-3*c+d)*t*t*t))
-                radii_new.append(radii[i]*(1-t)+radii[i+1]*t)
-        sampled.append(source[-1]);radii_new.append(radii[-1]);source=sampled;radii=radii_new
     pts=source; vs=[]; fs=[]
     for i,q in enumerate(pts):
         tangent=(pts[min(i+1,len(pts)-1)]-pts[max(0,i-1)]).normalized()
@@ -114,7 +107,7 @@ def limb(n,a,b,r1,r2,m,p):
     pts=[a.lerp(b,t) for t in (0,.08,.25,.55,.85,1)]
     return tube(n,pts,[r1,r1,r1*.98,(r1+r2)/2,r2,r2],m,p,12)
 
-# A 1.55 m adult miniature, broad head and crouched runner silhouette.
+# Authored body; the R2 proportions and lunging rest pose are applied below.
 node('root',(0,0,0));parts['root']['asset_id']='inf.suburban-mom';parts['root']['forward']='+X';parts['root']['animation']='rigid-part'
 node('hip',(-.045,0,.70),'root');node('torso',(-.025,0,.78),'hip');node('head',(.055,0,1.10),'torso')
 node('backpackSocket',(-.14,0,1.01),'torso')
@@ -127,7 +120,16 @@ for side,s in [('L',1),('R',-1)]:
     node('foot'+side,(-.002,s*.215,.135),'shin'+side)
 # Buttoned pink cardigan shell, white pointed collar, tailored back and hem.
 sculpt('jeansSeat',(-.045,0,.683),(.143,.168,.102),'denim','hip')
-ell('cardiganTorso',(-.015,0,.881),(.145,.205,.224),'jacket','torso')
+# Fitted garment rings keep the hem joined to the shell, rather than
+# tapering an ellipsoid to a point beneath the waist trim.
+shirt_rings=[(-.025,.685,.153,.19),(-.025,.705,.153,.19),(-.022,.75,.15,.193),(-.015,.88,.148,.203),(-.008,1.01,.14,.202),(.005,1.066,.112,.165),(.025,1.10,.063,.083)]
+verts=[(x+rx*math.cos(j*2*math.pi/20),ry*math.sin(j*2*math.pi/20),z) for x,z,rx,ry in shirt_rings for j in range(20)]
+faces=[(k*20+j,k*20+(j+1)%20,(k+1)*20+(j+1)%20,(k+1)*20+j) for k in range(len(shirt_rings)-1) for j in range(20)]
+faces.extend([tuple(range(19,-1,-1)),tuple((len(shirt_rings)-1)*20+j for j in range(20))])
+me=bpy.data.meshes.new('Cardigan shell');me.from_pydata(verts,[],faces);me.update()
+o=bpy.data.objects.new('Cardigan shell',me);scene.collection.objects.link(o)
+mod=o.modifiers.new('Applied garment sculpt','SUBSURF');mod.levels=1
+finish(o,'cardiganTorso','jacket','torso')
 sculpt('cardiganBack',(-.10,0,.91),(.066,.186,.188),'jacket','torso')
 line('ribHem',[(.084,-.155,.704),(.119,-.08,.691),(.126,0,.689),(.119,.08,.691),(.084,.155,.704)],.016,'jacket','torso')
 for i in range(19):
@@ -158,8 +160,8 @@ def cut_ellipsoid(o,c,r):
 for side,s in [('L',1),('R',-1)]:
     p='leg'+side;sh='shin'+side;f='foot'+side
     thigh=limb('denimThigh',(-.045,s*.105,.69),(.038,s*.17,.415),.102,.078,'denim',p)
-    cut_ellipsoid(thigh,(.114,s*.17,.453),(.059,.057,.035))
-    ell('exposedKnee',(.060,s*.17,.451),(.052,.052,.033),'skin',p)
+    cut_ellipsoid(thigh,(.114,s*.17,.453),(.075,.066,.045))
+    ell('exposedKnee',(.060,s*.17,.451),(.062,.059,.039),'skin',p)
     for j in range(7):
         yy=s*.17+(j-3)*.014
         patch('tornDenimTab',[(.108,yy-.008,.477),(.133,yy,.459+(j%2)*.008),(.112,yy+.008,.478)],'denim',p)
@@ -172,7 +174,8 @@ for side,s in [('L',1),('R',-1)]:
     line('rolledCuffEdge',[(.075,s*.158,.204),(.08,s*.212,.207),(.072,s*.271,.2)],.005,'denim',sh)
     line('outerSeam',[(.02,s*.248,.4),(.012,s*.275,.3),(.001,s*.284,.211)],.002,'stitch',sh)
     line('frontPocket',[(.081,s*.065,.723),(.094,s*.116,.681),(.062,s*.17,.674)],.0025,'stitch','hip')
-    line('backPocket',[(-.158,s*.045,.707),(-.171,s*.133,.706),(-.163,s*.136,.649),(-.173,s*.073,.629),(-.158,s*.045,.707)],.0025,'stitch','hip')
+    box('rearJeanPocket',(-.137,s*.108,.658),(.014,.084,.071),'denim',p,.009)
+    line('backPocketStitch',[(-.147,s*.071,.685),(-.15,s*.148,.685),(-.15,s*.143,.636),(-.15,s*.104,.628),(-.147,s*.071,.645)],.002,'stitch',p)
     box('beltLoop',(.066,s*.12,.713),(.022,.014,.044),'denim','hip',.004)
     # Pink-coral sneakers, cream bumper, stitching, laces and sole tread.
     ell('ankle',(-.001,s*.214,.137),(.047,.049,.041),'skin',f)
@@ -203,8 +206,9 @@ for side,s in [('L',1),('R',-1)]:
     sculpt('palm',(.301,s*.366,.745),(.057,.064,.046),'skin',h)
     for j in range(4):
         yy=s*.366+(j-1.5)*.036;zz=.736+abs(j-1.5)*.009
-        tube('clawFinger',[(.32,yy,zz),(.358,yy,.712),(.382,yy,.681),(.378,yy,.655),(.359,yy,.654)],[.016,.016,.013,.010,.006],'skin',h)
-        ell('bloodyNail',(.368,yy,.653),(.011,.011,.012),'blood',h,0)
+        tip_y=yy+(j-1.5)*.009;short=.008*abs(j-1.5)
+        tube('clawFinger',[(.32,yy,zz),(.358,yy,.712+short),(.382,tip_y,.681+short),(.378,tip_y,.655+short),(.359,tip_y,.654+short)],[.016,.016,.013,.010,.006],'skin',h)
+        ell('bloodyNail',(.368,tip_y,.653+short),(.011,.011,.012),'blood',h,0)
         ell('knuckle',(.341,yy,.731),(.017,.017,.016),'skin',h,0)
     tube('thumb',[(.296,s*(.366-.046),.75),(.34,s*.285,.735),(.37,s*.28,.706),(.355,s*.301,.694)],[.022,.019,.015,.009],'skin',h)
     if side=='R':
@@ -242,7 +246,7 @@ for s in [-1,1]:
     line('earRim',[(.071,s*.21,1.324),(.087,s*.22,1.29),(.059,s*.216,1.253)],.006,'skin','head')
     ell('eyeSocket',(.191,s*.082,1.321),(.024,.057,.055),'blood','head')
     ell('eyeWhite',(.211,s*.083,1.326),(.015,.045,.042),'cream','head')
-    ell('infectedIris',(.227,s*.08,1.328),(.009,.026,.029),'eye','head')
+    ell('infectedIris',(.227,s*.08,1.328),(.009,.035,.036),'eye','head')
     ell('pupil',(.236,s*.077,1.328),(.003,.010,.019),'dark','head',0)
     ell('eyeHighlight',(.240,s*.07,1.344),(.003,.006,.007),'cream','head',0)
     line('upperLid',[(.211,s*.129,1.346),(.232,s*.087,1.365),(.224,s*.041,1.353)],.006,'hairDark','head')
@@ -250,7 +254,13 @@ for s in [-1,1]:
     line('angryBrow',[(.192,s*.134,1.396),(.219,s*.089,1.391),(.213,s*.037,1.370)],.013,'hairDark','head')
     ell('nostril',(.264,s*.018,1.238),(.006,.009,.006),'dark','head',0)
 # Thick auburn shoulder-length waves. Seeded asymmetry, a left-parted fringe and back tie.
-ell('hairMass',(-.044,0,1.382),(.158,.193,.168),'hairDark','head')
+# Continuous scalp shell follows the cranium 7 mm above the skin. Its
+# sloping hairline keeps the forehead open while filling gaps between locks.
+cap=ell('hairMass',(.046,0,1.316),(.177,.201,.217),'hair','head')
+bm=bmesh.new();bm.from_mesh(cap.data)
+remove=[v for v in bm.verts if v.co.z+1.316 < 1.33+.082*max(-1,min(1,v.co.x/.17))]
+bmesh.ops.delete(bm,geom=remove,context='VERTS');bm.to_mesh(cap.data);bm.free()
+
 for s in [-1,1]:
     for j in range(4):
         yy=s*(.035+j*.046)
@@ -262,11 +272,11 @@ for s in [-1,1]:
         tube('curlFlyaway',[(.005,s*.202,1.42),(.06,s*(.25+j*.02),1.38),(.12,s*(.27+j*.025),1.37),(.14,s*(.28+j*.02),1.39)],[.004,.006,.004,.001],'hairLight','head')
     for j in range(3):
         xx=-.10+j*.065
-        tube('hairShoulderCurl',[(xx,s*.19,1.37),(xx-.01,s*.278,1.29),(xx+.035,s*.31,1.215),(xx+.07,s*.275,1.135),(xx+.11,s*.32,1.145)],[.036,.049,.047,.031,.002],'hairLight' if j==1 else 'hair','head',10)
+        tube('hairShoulderCurl',[(xx,s*.19,1.37),(xx-.01,s*.285,1.31),(xx+.04,s*.34,1.25),(xx+.095,s*.335,1.19),(xx+.13,s*.28,1.17),(xx+.09,s*.25,1.21),(xx+.065,s*.29,1.235)],[.041,.053,.051,.046,.035,.022,.002],'hairLight' if j==1 else 'hair','head',10)
         tube('curlWildWisp',[(xx,s*.26,1.27),(xx+.02,s*.35,1.245),(xx+.09,s*.37,1.267),(xx+.105,s*.34,1.30)],[.006,.008,.005,.001],'hairLight','head')
 for j in range(9):
     yy=(j-4)*.040
-    tube('hairBackWave',[(-.052,yy*.7,1.543),(-.16,yy,1.47),(-.20,yy,1.36),(-.16,yy*1.1,1.27),(-.19,yy*1.14,1.193),(-.11,yy*1.2,1.18+(j%3)*.025)],[.028,.041,.044,.04,.025,.001],'hairLight' if j%3==1 else 'hair','head',10)
+    tube('hairBackWave',[(-.052,yy*.7,1.543),(-.16,yy,1.47),(-.20,yy+.022*math.sin(j),1.36),(-.16,yy*1.1-.025*math.cos(j),1.27),(-.19,yy*1.14+.015*math.sin(j),1.193),(-.11,yy*1.2+.032*math.cos(j),1.18+(j%3)*.025)],[.028,.041,.044,.04,.025,.001],'hairLight' if j%3==1 else 'hair','head',10)
 for j in range(5):
     yy=(j-2)*.035
     tube('hairCrownWave',[(-.09,yy,1.535),(-.03,yy,1.555),(.04,yy+.03,1.552),(.10,yy+.03,1.51)],[.027,.029,.026,.009],'hair','head',10)
@@ -306,7 +316,12 @@ def splat(n,c,ry,rz,p,surface=None):
     if surface:verts[0]=(surface(y,z),y,z)
     fs=[(0,i+1,(i+1)%12+1) for i in range(12)]
     me=bpy.data.meshes.new(n);me.from_pydata(verts,[],fs);me.update();o=bpy.data.objects.new(n,me);scene.collection.objects.link(o);return finish(o,n,'blood',p)
-def shirt_surface(y,z):return -.015+.145*math.sqrt(max(.02,1-(y/.205)**2-((z-.881)/.224)**2))+.005
+def shirt_surface(y,z):
+    for a,b in zip(shirt_rings,shirt_rings[1:]):
+        if a[1]<=z<=b[1]:
+            t=(z-a[1])/(b[1]-a[1]);x=a[0]*(1-t)+b[0]*t;rx=a[2]*(1-t)+b[2]*t;ry=a[3]*(1-t)+b[3]*t
+            return x+rx*math.sqrt(max(.02,1-(y/ry)**2))+.006
+    return .15
 for c,ry,rz in [((.15,-.05,1.018),.04,.06),((.15,.02,.949),.035,.051),((.15,-.025,.886),.023,.044),((.15,.07,.801),.024,.021)]:splat('cardiganBlood',c,ry,rz,'torso',shirt_surface)
 for i in range(30):
     y=rng.uniform(-.12,.12);z=rng.uniform(.74,1.068)
@@ -329,24 +344,105 @@ for side,s in [('L',1),('R',-1)]:
 # Connect rigid knee seams beneath the torn shells.
 for side,s in [('L',1),('R',-1)]:
     ell('kneeJoint',(.035,s*.172,.407),(.061,.068,.055),'denim','shin'+side)
-# A hunched lurch: the torso carries head, reaching arms and strap together.
-parts['torso'].rotation_euler.y=.17
-parts['head'].rotation_euler.y=.07
+# R2: reshape the authored rigid surfaces, then place each joint at its new
+# anatomical rest location. Details and blood move with their shell surfaces.
+def meshes_of(part):
+    return [o for o in scene.objects if o.type=='MESH' and o.parent==parts[part]]
+
+def warp_meshes(part, transform):
+    for o in meshes_of(part):
+        world=o.matrix_world.copy();inverse=world.inverted()
+        for v in o.data.vertices:v.co=inverse @ transform(world @ v.co)
+        o.data.update()
+        if o.data.has_custom_normals:o.data.normals_split_custom_set([(0,0,0)]*len(o.data.loops))
+
+def move_joint(part, location):
+    o=parts[part]
+    children=[(c,c.matrix_world.copy()) for c in o.children]
+    o.matrix_world.translation=Vector(location)
+    bpy.context.view_layer.update()
+    for c,world in children:c.matrix_world=world
+    bpy.context.view_layer.update()
+
+# Lower the pelvis before fitting the bent legs; upper-body descendants follow.
+parts['hip'].location+=Vector((-.055,0,-.06))
 bpy.context.view_layer.update()
+head_origin=parts['head'].matrix_world.translation.copy()
+warp_meshes('head',lambda v: head_origin+Vector(((v.x-head_origin.x)*1.10,(v.y-head_origin.y)*1.24,(v.z-head_origin.z)*1.18)))
+# The head is broad, with a large face rather than a long narrow silhouette.
+for side in ['L','R']:
+    origin=parts['hand'+side].matrix_world.translation.copy()
+    warp_meshes('hand'+side,lambda v,o=origin:o+(v-o)*1.48)
+    # Upper arm and forearm thickness, with axial length unchanged.
+    for part,child,bulk in [('arm','foreArm',1.16),('foreArm','hand',1.24)]:
+        origin=parts[part+side].matrix_world.translation.copy()
+        axis=(parts[child+side].matrix_world.translation-origin).normalized()
+        def radial(v,o=origin,a=axis,k=bulk):
+            d=v-o;along=a*d.dot(a)
+            return o+along+(d-along)*k
+        warp_meshes(part+side,radial)
+
+# Bent knees and a staggered planted stance, forward is +X.
+targets={
+    'legL':(-.10,.12,.64),'shinL':(.115,.23,.37),'footL':(-.08,.30,.1458),
+    'legR':(-.10,-.12,.64),'shinR':(.22,-.23,.385),'footR':(.135,-.30,.1458)}
+for side in ['L','R']:
+    for part,child,bulk in [('leg','shin',1.20),('shin','foot',1.24)]:
+        name=part+side;end=child+side
+        old_a=parts[name].matrix_world.translation.copy();old_b=parts[end].matrix_world.translation.copy()
+        new_a=Vector(targets[name]);new_b=Vector(targets[end])
+        old_axis=(old_b-old_a).normalized();new_axis=(new_b-new_a).normalized()
+        turn=old_axis.rotation_difference(new_axis);length=(new_b-new_a).length/(old_b-old_a).length
+        def bent(v,a=old_a,b=new_a,axis=old_axis,q=turn,k=length,r=bulk):
+            d=v-a;axial=axis*d.dot(axis)
+            return b+q @ (axial*k+(d-axial)*r)
+        warp_meshes(name,bent)
+    old=parts['foot'+side].matrix_world.translation.copy();new=Vector(targets['foot'+side])
+    warp_meshes('foot'+side,lambda v,a=old,b=new:b+Vector(((v.x-a.x)*1.20,(v.y-a.y)*1.24,(v.z-a.z)*1.08)))
+    for name in ['leg'+side,'shin'+side,'foot'+side]:move_joint(name,targets[name])
+# A wider denim seat overlaps the new hip origins naturally.
+hip_origin=parts['hip'].matrix_world.translation.copy()
+for obj in meshes_of('hip'):
+    if obj.name.startswith(('jeansSeat','frontPocket','beltLoop','fly')):
+        world=obj.matrix_world.copy();inv=world.inverted()
+        for v in obj.data.vertices:
+            q=world@v.co;d=q-hip_origin
+            v.co=inv@(hip_origin+Vector((d.x*1.12,d.y*1.17,d.z)))
+        obj.data.update()
+# A strong forward lean with the head counter-tilted to keep the snarl visible.
+parts['torso'].rotation_euler.y=.48
+parts['head'].rotation_euler.y=-.20
+parts['armL'].rotation_euler=(.13,-1.12,-.04)
+parts['armR'].rotation_euler=(-.08,-1.20,.05)
+parts['foreArmL'].rotation_euler.y=.12
+parts['foreArmR'].rotation_euler.y=.23
+bpy.context.view_layer.update()
+
+# Record joint placement and posed silhouette dimensions for review.
+points=[o.matrix_world @ v.co for o in scene.objects if o.type=='MESH' for v in o.data.vertices]
+height=max(v.z for v in points)-min(v.z for v in points)
+metrics={'height':round(height,4),'min_z':round(min(v.z for v in points),6),'head_above_neck_ratio':round((max((o.matrix_world @ v.co).z for o in meshes_of('head') for v in o.data.vertices)-parts['head'].matrix_world.translation.z)/height,4),'torso_lean_degrees':round(math.degrees(.48),2),'joint_positions':{n:[round(v,4) for v in o.matrix_world.translation] for n,o in parts.items()},'knee_flexion_degrees':{}}
+for side in ['L','R']:
+    hip=parts['leg'+side].matrix_world.translation;knee=parts['shin'+side].matrix_world.translation;ankle=parts['foot'+side].matrix_world.translation
+    metrics['knee_flexion_degrees'][side]=round(180-math.degrees((hip-knee).angle(ankle-knee)),2)
+(HERE/'rig-metrics.json').write_text(json.dumps(metrics,indent=2))
 
 # Parent-side stump caps remain behind when the named limb subtree is detached.
 for part in ['head','armL','armR','foreArmL','foreArmR','legL','legR']:
     loc=parts[part].matrix_world.translation.copy()
-    dims=(.066,.066,.014) if part=='head' else ((.09,.084,.018) if part.startswith('leg') else (.068,.065,.015))
+    dims=(.066,.066,.014) if part=='head' else ((.118,.11,.018) if part.startswith('leg') else ((.060,.055,.012) if part.startswith('fore') else (.100,.098,.018)))
     cap=ell('stump_'+part,loc,dims,'blood',parts[part].parent,0)
-    if part.startswith(('arm','fore')):cap.rotation_euler.y=math.radians(45)
+    next_joint=('foreArm'+part[-1] if part.startswith('arm') else ('hand'+part[-1] if part.startswith('fore') else ('shin'+part[-1] if part.startswith('leg') else None)))
+    direction=parts[next_joint].matrix_world.translation-loc if next_joint else Vector((.17,0,1))
+    cap.rotation_mode='QUATERNION'
+    cap.rotation_quaternion=cap.parent.matrix_world.to_quaternion().inverted() @ direction.to_track_quat('Z','Y')
     cap['hidden']=True;cap['stumpFor']=part;cap['showScale']=[1,1,1];cap.scale=(0,0,0);parts['stump_'+part]=cap
 
 # Collapse redundant smooth-surface triangles before joint/material batching.
 for obj in list(scene.objects):
     if obj.type=='MESH' and len(obj.data.polygons)>130 and not obj.name.startswith('stump_'):
         bpy.context.view_layer.objects.active=obj
-        mod=obj.modifiers.new('Applied silhouette reduction','DECIMATE');mod.ratio=.32
+        mod=obj.modifiers.new('Applied silhouette reduction','DECIMATE');mod.ratio=.31
         bpy.ops.object.modifier_apply(modifier=mod.name)
 
 # Merge by material within each rigid part, preserving all joint origins and caps.
@@ -369,12 +465,15 @@ if arg('--glb'):
     bpy.ops.object.select_all(action='SELECT')
     bpy.ops.export_scene.gltf(filepath=str(Path(arg('--glb')).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
     print('EXPORT OK',triangles,'triangles',len(meshes),'meshes')
-# Optional pose occurs after rest-pose export.
-if arg('--view')=='pose':
-    parts['armL'].rotation_euler.x=-.8;parts['foreArmL'].rotation_euler.y=-.9;parts['legR'].rotation_euler.y=-.45
+# Pose changes happen only after the rest-pose GLB export.
+def pose_test():
+    parts['armL'].rotation_euler.x=-.8
+    parts['foreArmL'].rotation_euler.y=-.9
+    parts['legR'].rotation_euler.y=-.45
     parts['stump_armL'].scale=(1,1,1)
-    # detach raised arm from shoulder slightly to expose the demonstrated cap
-    parts['armL'].location.y+=.13
+    # Small shoulder separation exposes the retained cap for review.
+    parts['armL'].location.y+=.24
+if arg('--view')=='pose':pose_test()
 if arg('--render'):
     world=bpy.data.worlds.new('Purple studio');world.use_nodes=True;world.node_tree.nodes['Background'].inputs[0].default_value=(.12,.10,.17,1);world.node_tree.nodes['Background'].inputs[1].default_value=.5;scene.world=world
     # Studio ground excluded from export.
@@ -385,7 +484,7 @@ if arg('--render'):
     area('coolFill',(1,3,3),260,(.64,.70,1),3)
     area('hairRim',(-2,1,3.2),500,(1,.40,.15),2)
     cam=bpy.data.objects.new('camera',bpy.data.cameras.new('camera'));scene.collection.objects.link(cam);scene.camera=cam;cam.data.type='ORTHO';cam.data.ortho_scale=3.35
-    view=arg('--view','hero');positions={'hero':(5,-3,2.55),'front':(5,0,1.7),'side':(0,-5,1.7),'back':(-5,0,1.7),'pose':(5,3,2.65)}
+    view=arg('--view','hero');positions={'hero':(5,-3,2.55),'front':(5,0,1.7),'side':(0,-5,1.7),'back':(-5,0,1.7),'pose':(4,5,2.2)}
     cam.location=positions.get(view,positions['hero']);cam.rotation_euler=(Vector((0,0,.81))-cam.location).to_track_quat('-Z','Y').to_euler()
     scene.render.engine='CYCLES';scene.cycles.samples=int(arg('--samples','24'));scene.cycles.use_denoising=True
     prefs=bpy.context.preferences.addons['cycles'].preferences
@@ -397,9 +496,16 @@ if arg('--render'):
     scene.render.resolution_x=int(arg('--width','960'));scene.render.resolution_y=int(arg('--height','540'));scene.render.resolution_percentage=100
     scene.view_settings.view_transform='AgX';scene.render.image_settings.file_format='PNG';scene.render.filepath=str(Path(arg('--render')).resolve());Path(scene.render.filepath).parent.mkdir(parents=True,exist_ok=True)
     bpy.ops.render.render(write_still=True);print('RENDER OK',view)
-    if view=='reviewAll':
+    if view in ('reviewAll','final'):
+        scene.cycles.samples=24;scene.render.resolution_x=960;scene.render.resolution_y=540
         for study in ['front','side','back']:
             cam.location=positions[study];cam.rotation_euler=(Vector((0,0,.81))-cam.location).to_track_quat('-Z','Y').to_euler()
             scene.render.filepath=str(HERE/'renders'/f'{study}.png')
             bpy.ops.render.render(write_still=True);print('RENDER OK',study)
 
+    if view=='final':
+        pose_test()
+        cam.location=positions['pose'];cam.rotation_euler=(Vector((0,0,.81))-cam.location).to_track_quat('-Z','Y').to_euler()
+        scene.render.filepath=str(HERE/'renders'/'pose-test.png')
+        bpy.ops.render.render(write_still=True);print('RENDER OK pose')
+        contact_sheet(HERE/'renders'/'turnaround.png')

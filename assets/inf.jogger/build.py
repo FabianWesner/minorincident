@@ -4,24 +4,25 @@ Use only experiment/tools/blender_run.py to execute this script.
 """
 import bpy, math, sys, json, random
 from pathlib import Path
-from mathutils import Vector
+from mathutils import Matrix, Vector
 HERE = Path(__file__).resolve().parent
 ARGS = sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
 def arg(k,d=None): return ARGS[ARGS.index(k)+1] if k in ARGS else d
-# Contact sheet assembly uses Blender image buffers; source renders stay untouched.
-if arg('--view')=='sheet':
+def turnaround_sheet():
     from array import array
     w,h=960,540
     sheet=bpy.data.images.new('turnaround',width=w*2,height=h*2,alpha=True)
     buffer=array('f',[0])*(w*h*16)
-    for name,col,row in [('front',0,1),('side',1,1),('back',0,0),('hero',1,0)]:
+    for name,col,row in [('front',0,1),('side',1,1),('back',0,0),('three-quarter',1,0)]:
         im=bpy.data.images.load(str(HERE/'renders'/f'{name}.png'));im.scale(w,h)
         pixels=array('f',[0])*(w*h*4);im.pixels.foreach_get(pixels)
         for y in range(h):
             start=((row*h+y)*w*2+col*w)*4
             buffer[start:start+w*4]=pixels[y*w*4:(y+1)*w*4]
-    sheet.pixels.foreach_set(buffer);sheet.filepath_raw=str(Path(arg('--render')).resolve());sheet.file_format='PNG';sheet.save()
-    print('SHEET OK');sys.exit(0)
+    sheet.pixels.foreach_set(buffer);sheet.filepath_raw=str(Path(HERE/'renders'/'turnaround.png').resolve());sheet.file_format='PNG';sheet.save()
+    print('SHEET OK')
+if arg('--view')=='sheet':
+    turnaround_sheet();sys.exit(0)
 bpy.ops.wm.read_factory_settings(use_empty=True)
 scene=bpy.context.scene
 parts={}
@@ -78,7 +79,7 @@ def sculpt(n,c,s,m,p):
     return finish(o,n,m,p)
 
 def tube(n,points,radii,m,p,segments=8):
-    # Catmull-Rom interpolation turns hair control points into soft swept volumes.
+    # Catmull-Rom interpolation makes flowing volumetric hair locks.
     source=[Vector(q) for q in points]
     if m=='hair':
         sampled=[]; radii_new=[]
@@ -148,6 +149,7 @@ def sleeve(n,a,b,p):
             edge=t+(.035*math.sin(i*2.2) if t==1 else 0)
             vs.append(tuple(a.lerp(b,edge)+q@Vector((r*math.cos(angle),r*math.sin(angle),0))))
     fs=[(j*N+i,j*N+(i+1)%N,(j+1)*N+(i+1)%N,(j+1)*N+i) for j in range(3) for i in range(N)]
+    fs.append(tuple(reversed(range(N))))
     o=mesh(n,vs,fs,'cream',p,1)
     bpy.context.view_layer.objects.active=o;md=o.modifiers.new('Sleeve shell thickness','SOLIDIFY');md.thickness=.006;bpy.ops.object.modifier_apply(modifier=md.name)
     return o
@@ -246,7 +248,7 @@ for sy in (-1,1):
     ell('earTragus',(.142,sy*.221,1.337),(.013,.009,.023),'skin','head')
     ell('eyeSocket',(.279,sy*.088,1.396),(.024,.06,.058),'blood','head')
     ell('eyeWhite',(.291,sy*.088,1.398),(.028,.049,.046),'cream','head')
-    ell('redIris',(.317,sy*.087,1.398),(.008,.027,.030),'eye','head')
+    ell('redIris',(.317,sy*.087,1.398),(.008,.036,.038),'eye','head')
     ell('pupil',(.325,sy*.084,1.4),(.003,.011,.016),'dark','head',0)
     ell('eyeGlint',(.328,sy*.077,1.415),(.004,.006,.007),'cream','head',0)
     line('angryBrow',[(.282,sy*.145,1.465),(.31,sy*.101,1.466),(.308,sy*.045,1.443)],.013,'hair','head')
@@ -263,7 +265,7 @@ for i in range(5):box('lowerTooth',(.335,(i-2)*.024,1.197),(.016,.018,.014),'cre
 ell('hairCap',(.064,0,1.455),(.183,.204,.185),'hair','head')
 for j in range(9):
     y=(j-4)*.039;endz=1.459+.022*abs(j-4)
-    tube('sweptBang',[(.04,.035,1.62),(.12,y*.5,1.589),(.23,y,1.539),(.292-.08*abs(y)/.16,y+.021,1.492),(.28-.11*abs(y)/.16,y+.03,endz)],[.034,.043,.039,.027,.002],'hair','head',12)
+    tube('sweptBang',[(.04,.035,1.62),(.12,y*.5,1.589),(.20,y,1.539),(.28-.10*abs(y)/.16,y+.021,1.492),(.27-.13*abs(y)/.16,y+.03,endz)],[.034,.043,.039,.027,.002],'hair','head',12)
 for sy in (-1,1):
     tube('faceTendril',[(.19,sy*.178,1.515),(.217,sy*.209,1.421),(.178,sy*.216,1.31),(.206,sy*.205,1.218)],[.022,.026,.019,.002],'hair','head',12)
     for j in range(4):
@@ -354,6 +356,50 @@ for typ,name in [('REMESH','Continuous skin'),('SMOOTH','Sculpt relaxation'),('D
     else:md.ratio=.55
     bpy.ops.object.modifier_apply(modifier=md.name)
 for poly in face.data.polygons:poly.use_smooth=True
+# Hero proportions: broaden the face and athletic limbs around their joint axes.
+# Radial limb growth preserves segment lengths, clothing fit and raised blood clearance.
+for side in 'LR':
+    for prefix,child in [('arm','foreArm'),('foreArm','hand'),('leg','shin'),('shin','foot')]:
+        joint=parts[prefix+side];pivot=joint.matrix_world.translation.copy()
+        axis=(parts[child+side].matrix_world.translation-pivot).normalized()
+        width=1.24 if prefix in ('leg','shin') else 1.20
+        for o in scene.objects:
+            if o.type=='MESH' and o.parent==joint:
+                inv=o.matrix_world.inverted()
+                for v in o.data.vertices:
+                    delta=o.matrix_world@v.co-pivot
+                    axial=axis*delta.dot(axis)
+                    v.co=inv@(pivot+axial+(delta-axial)*width)
+# Pose once, then bake it into geometry and joint positions for procedural clips.
+parts['head'].scale=(1.25,1.28,1.13)
+parts['hip'].location.z-=.12
+parts['torso'].rotation_euler.y=.38
+parts['head'].rotation_euler.y=-.24
+for side in 'LR':
+    parts['arm'+side].rotation_euler.y=-.65 if side=='L' else -.72
+    parts['foreArm'+side].rotation_euler.y=-.28 if side=='L' else -.33
+    parts['hand'+side].scale=(1.25,1.28,1.20)
+    parts['hand'+side].rotation_euler.y=.50
+    parts['leg'+side].rotation_euler.y=-.35 if side=='L' else -.50
+    parts['shin'+side].rotation_euler.y=.72 if side=='L' else .86
+    parts['foot'+side].rotation_euler.y=-.37 if side=='L' else -.36
+    parts['foot'+side].scale=(1.25,1.30,1.15)
+bpy.context.view_layer.update()
+# Place both soles exactly at ground contact while preserving ankle origins.
+for side in 'LR':
+    foot=parts['foot'+side]
+    children=[o for o in scene.objects if o.type=='MESH' and o.parent==foot]
+    bottom=min((o.matrix_world@v.co).z for o in children for v in o.data.vertices)
+    world=foot.matrix_world.copy();world.translation.z-=bottom;foot.matrix_world=world
+bpy.context.view_layer.update()
+posed_meshes={o.name:(o.matrix_world.copy(),o.parent) for o in scene.objects if o.type=='MESH'}
+posed_joints={n:o.matrix_world.translation.copy() for n,o in parts.items()}
+for n,o in parts.items():
+    o.matrix_world=Matrix.Translation(posed_joints[n]);bpy.context.view_layer.update()
+for n,(world,parent) in posed_meshes.items():
+    o=bpy.data.objects[n];o.data.transform(parent.matrix_world.inverted()@world)
+    o.matrix_basis=Matrix.Identity(4)
+bpy.context.view_layer.update()
 # Caps stay on the surviving side of the joint. Zero-scale is portable GLB hiding.
 for n in ['head','armL','armR','foreArmL','foreArmR','legL','legR']:
     pivot=parts[n].matrix_world.translation.copy()
@@ -390,9 +436,10 @@ if arg('--glb'):
     bpy.ops.object.select_all(action='SELECT')
     bpy.ops.export_scene.gltf(filepath=str(Path(arg('--glb')).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
     print('EXPORT OK',triangles)
-if arg('--view')=='pose':
+def pose_test():
     parts['armL'].rotation_euler.x=-.8;parts['foreArmL'].rotation_euler.y=-.9;parts['legR'].rotation_euler.y=-.45
     parts['armL'].location.y+=.18;parts['stump_armL'].scale=(1,1,1)
+if arg('--view')=='pose':pose_test()
 if arg('--render'):
     world=bpy.data.worlds.new('Purple studio');world.use_nodes=True;world.node_tree.nodes['Background'].inputs[0].default_value=(.12,.10,.17,1);world.node_tree.nodes['Background'].inputs[1].default_value=.5;scene.world=world
     bpy.ops.mesh.primitive_plane_add(size=200);floor=bpy.context.object;floor.name='studioFloor';floor.data.materials.append(mat('studio','#36333e',.85))
@@ -411,7 +458,21 @@ if arg('--render'):
     except Exception:pass
     scene.render.resolution_x=int(arg('--width','960'));scene.render.resolution_y=int(arg('--height','540'));scene.render.resolution_percentage=100
     scene.view_settings.view_transform='AgX';scene.render.image_settings.file_format='PNG';scene.render.filepath=str(Path(arg('--render')).resolve());Path(scene.render.filepath).parent.mkdir(parents=True,exist_ok=True)
-    if view=='review':
+    if view=='deliver':
+        import shutil
+        # One allocated slot produces all final artifacts from the same rest model.
+        for v in ('front','side','back','hero','pose'):
+            if v=='pose':pose_test()
+            cam.location=positions[v]
+            cam.rotation_euler=(Vector((.15,0,.8))-cam.location).to_track_quat('-Z','Y').to_euler()
+            scene.render.resolution_x=1600 if v=='hero' else 960
+            scene.render.resolution_y=900 if v=='hero' else 540
+            scene.cycles.samples=96 if v=='hero' else 24
+            scene.render.filepath=str(HERE/'renders'/('pose-test.png' if v=='pose' else v+'.png'))
+            bpy.ops.render.render(write_still=True);print('RENDER OK',v)
+        shutil.copyfile(HERE/'renders'/'hero.png',HERE/'renders'/'three-quarter.png')
+        turnaround_sheet()
+    elif view=='review':
         # Four views share one build and one allocated render slot.
         output=Path(arg('--render')).resolve()
         for v in ('front','side','back','hero'):
