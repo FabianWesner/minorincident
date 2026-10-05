@@ -37,7 +37,16 @@ export function bakeInfected(root: Group) {
     while (owner && !parts.includes(owner)) owner = owner.parent;
     const part = parts.indexOf(owner ?? rig.root);
     relative.copy(parts[part].matrixWorld).invert().multiply(node.matrixWorld);
-    const geometry = node.geometry.index ? node.geometry.toNonIndexed() : node.geometry.clone(); geometry.applyMatrix4(relative);
+    const geometry = node.geometry.index ? node.geometry.toNonIndexed() : node.geometry.clone();
+    // Meshopt GLBs may use normalized integer attributes; transforms must write floats.
+    for (const name of ['position', 'normal']) {
+      const attribute = geometry.getAttribute(name);
+      if (attribute.array instanceof Float32Array && !attribute.normalized) continue;
+      const values = new Float32Array(attribute.count * attribute.itemSize);
+      for (let i = 0; i < attribute.count; i++) for (let c = 0; c < attribute.itemSize; c++) values[i * attribute.itemSize + c] = attribute.getComponent(i, c);
+      geometry.setAttribute(name, new BufferAttribute(values, attribute.itemSize));
+    }
+    geometry.applyMatrix4(relative);
     // Every source material is folded into vertex colors, yielding one draw per role.
     const material = (Array.isArray(node.material) ? node.material[0] : node.material) as MeshBasicMaterial;
     const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), emissive = new Float32Array(count), indices = new Float32Array(count), shirt = new Float32Array(count);

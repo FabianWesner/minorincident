@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { BoxGeometry, Group, InterleavedBufferAttribute, Mesh, MeshBasicMaterial, Vector3 } from 'three';
+import { BoxGeometry, BufferAttribute, BufferGeometry, Group, InterleavedBufferAttribute, Mesh, MeshBasicMaterial, Vector3 } from 'three';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
 import { createInfectedPlaceholder } from '../../../src/render/characters/infectedPlaceholder';
 
@@ -22,4 +22,17 @@ test('T-E07-bake @E07 @E07-AC12 merged infected geometry excludes hidden ancesto
   expect(baked.geometry.groups).toHaveLength(0);
   baked.geometry.dispose();
   model.traverse((node) => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose(); } });
+});
+
+test('T-E07-bake-quantized @E07 @E07-AC12 quantized GLB vertices retain part-local offsets when baked', () => {
+  const root = new Group(); root.name = 'root';
+  const geometry = new BufferGeometry();
+  geometry.setAttribute('position', new BufferAttribute(new Uint16Array([0, 0, 0, 65535, 0, 0, 0, 65535, 0]), 3, true));
+  geometry.setAttribute('normal', new BufferAttribute(new Int16Array([0, 0, 32767, 0, 0, 32767, 0, 0, 32767]), 3, true));
+  const material = new MeshBasicMaterial({ color: 'red' }), mesh = new Mesh(geometry, material);
+  mesh.position.set(0.2, 0.3, 0.4); root.add(mesh);
+  const baked = bakeInfected(root), position = baked.geometry.getAttribute('position');
+  expect(position.getX(1)).toBeCloseTo(1.2); expect(position.getY(2)).toBeCloseTo(1.3); expect(position.getZ(0)).toBeCloseTo(0.4);
+  expect(baked.geometry.getAttribute('normal').getZ(0)).toBeCloseTo(1);
+  baked.geometry.dispose(); geometry.dispose(); material.dispose();
 });
