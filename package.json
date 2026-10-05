@@ -20,7 +20,8 @@
     "sim": "tsx tools/sim-runner/index.ts",
     "assets:validate": "tsx tools/assets/pending.ts validate",
     "assets:turntable": "tsx tools/assets/pending.ts turntable",
-    "deploy": "npm run build && npx --yes wrangler@4 pages deploy dist --project-name minor-incident"
+    "deploy": "npm run build && npx --yes wrangler@4 pages deploy dist --project-name minor-incident",
+    "test:e2e:webgpu": "E2E_WEBGPU=1 playwright test --project=webgpu"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "0.21.0",

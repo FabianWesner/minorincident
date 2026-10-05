@@ -1,0 +1,118 @@
+{
+  "epic": "E02",
+  "criteria": 12,
+  "coverage": {
+    "E02-AC01": [
+      {
+        "runner": "playwright",
+        "title": "T-E02-01 @E02 @E02-AC01 forced WebGL2 and automatic backend report the initialized backend",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E02-01b @E02 @E02-AC01 an available native GPU selects WebGPU and renders lookdev",
+        "project": "webgpu",
+        "status": "passed"
+      }
+    ],
+    "E02-AC02": [
+      {
+        "runner": "playwright",
+        "title": "T-E02-02 @E02 @E02-AC02 default camera angles and projected 1.4 m survivor height",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E02-AC03": [
+      {
+        "runner": "playwright",
+        "title": "T-E02-03 @E02 @E02-AC03 follow converges after 20 m teleport without overshoot",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E02-AC04": [
+      {
+        "runner": "playwright",
+        "title": "T-E02-04 @E02 @E02-AC04 portrait keeps every point of the 12 m circle inside the viewport",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E02-AC05": [
+      {
+        "runner": "vitest",
+        "title": "T-E02-05 @E02 @E02-AC05 palette matches every art-direction token exactly",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E02-05b @E02 @E02-AC05 lookdev only uses palette or explicitly retained materials",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E02-AC06": [
+      {
+        "runner": "playwright",
+        "title": "T-E02-06 @E02 @E02-AC06 shadow probe is purple-blue and above 15% lightness",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E02-AC07": [
+      {
+        "runner": "playwright",
+        "title": "T-E02-07 @E02 @E02-AC07 lamp 8 px ring gains at least 10% brightness from bloom",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E02-AC08": [
+      {
+        "runner": "playwright",
+        "title": "T-E02-08 @E02 @E02-AC08 occluder fades in 0.3 s, hides roof inside, and preserves >70% player mask",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E02-AC09": [
+      {
+        "runner": "playwright",
+        "title": "T-E02-09 @E02 @E02-AC09 L1, L4 and L6 change lighting and screenshot hue/luminance",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E02-fog @E02 @E02-AC09 palette surfaces beyond fogFar resolve to the preset fog color",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E02-AC10": [
+      {
+        "runner": "playwright",
+        "title": "T-E02-10 @E02 @E02-AC10 golden lookdev has a reviewed North-star vision checklist",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E02-AC11": [
+      {
+        "runner": "playwright",
+        "title": "T-E02-11 @E02 @E02-AC11 overview, street and shadow-probe match reviewed goldens within 1.5%",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E02-AC12": [
+      {
+        "runner": "vitest",
+        "title": "T-E02-12 @E02 @E02-AC12 shake is bounded and respects the setting immediately",
+        "status": "passed"
+      }
+    ]
+  }
+}

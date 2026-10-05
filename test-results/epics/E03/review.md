@@ -18,3 +18,7 @@ Screenshots opened for review: `desktop.png` (1600×900), `stick-pixel-7.png` an
 All four applicable must items and both should items pass. The initial long `SELECTOR` label clipped; it was replaced with `NEXT`, rebuilt, re-captured, and reviewed again. The landscape screenshot contact was moved inside the viewport; the test now exercises a valid on-screen origin.
 
 Of the standard §7 checklist F items, text legibility is applicable and passes. Portrait/health, minimap, slot cards, selected-rack visuals and final mockup styling belong to E14 and are not evaluated here. Drag direction and release timing are proven by E03-AC07 frame assertions rather than inferred from a still image of the E01 cube.
+
+## E02 integration review
+
+Re-captured and opened `desktop.png`, portrait `stick-pixel-7.png` / `aim-pixel-7.png`, and landscape `stick-iphone-14-landscape.png` / `aim-iphone-14-landscape.png` after merging main `c4891e4`. The narrower follow camera and portrait radius change the fixture framing, while all four must items and both should items above still pass: labels remain legible, the full floating stick remains in the movement region, and the player is visible clear of the controls. The E02 visual regression suite passes its unchanged goldens separately.
