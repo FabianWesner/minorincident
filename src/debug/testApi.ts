@@ -38,6 +38,7 @@ export interface SSTestApi {
     /** Begin at scenario tick zero so seed + frames are sufficient for replay. */
     record(): void; stopRecording(): Recording; replay(data: Recording): Promise<void>;
   };
+  /** E06: action IDs spawn walk-over pickups; infected options include reactive hearing fixtures. */
   spawn(defId: string, pos: { x: number; z: number }, opts?: object): number;
   /** E11 authoring/debug hooks. Spawn opts are DeviceOptions/HazardOptions or {item:string}. */
   interact: { giveItem(id: string): void; refuel(id: number, seconds: number): void; barricade(id: number, on: boolean): void; hit(id: number, amount: number, type: import('../sim/combat/Damage').DamageEvent['type']): number };
@@ -98,6 +99,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       if (prefix === 'device' && (deviceKinds as readonly string[]).includes(kind) && game.world.interactables) return game.world.interactables.spawn(kind as DeviceKind, pos, opts as DeviceOptions);
       if (((prefix === 'hazard' && (hazardKinds as readonly string[]).includes(kind)) || (prefix === 'prop' && (destructibleKinds as readonly string[]).includes(kind))) && game.world.hazards) return game.world.hazards.spawn(kind as HazardKind | DestructibleKind, pos, opts as HazardOptions);
       if (prefix === 'pickup' && (pickupKinds as readonly string[]).includes(kind) && game.world.pickups) return game.world.pickups.spawn(kind as PickupKind, pos, (opts as { item?: string } | undefined)?.item);
+      if (game.world.combat && (id.startsWith('weapon.') || id.startsWith('ability.'))) return game.world.combat.pickups.spawn(id, pos);
       return game.world.combat ? game.world.spawnDummy(id, pos, opts) : pending('E07', 'spawn');
     },
     interact: {

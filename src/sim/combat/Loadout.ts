@@ -1,4 +1,4 @@
-import { action } from '../../data/actions/fixtures';
+import { action } from '../../data/actions/catalog';
 import { ticks, type ActionDef, type Side } from '../../data/actions/schema';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 export interface ActionSlot { id: string; magazine: number; reserve: 'infinite'; charges: number; nextCharge: number; reloadUntil: number; readyAt: number }
@@ -26,15 +26,13 @@ export class Loadout {
       side.index = (side.index + frame.selector + side.rack.length) % side.rack.length; side.swapUntil = tick + 15;
     }
   }
-  current(side: Side): ActionSlot { const state = this.state[side]; return state.rack[state.index]; }
-  /** E11 weapon pickup preserves the other rack's timers and existing slots. */
-  pickup(id: string): void {
-    const side = this.state[this.state.selectedSide], existing = side.rack.findIndex(s => s.id === id);
-    if (existing >= 0) { side.index = existing; return; }
-    const added = slot(id);
-    if (side.rack.length < 3) { side.rack.push(added); side.index = side.rack.length - 1; }
-    else side.rack[side.index] = added;
+  /** Adds to selected rack; full racks replace exactly the current slot. */
+  collect(side: Side, id: string): string | null {
+    const rack = this.state[side], next = slot(id);
+    if (rack.rack.length < 3) { rack.rack.push(next); return null; }
+    const previous = rack.rack[rack.index].id; rack.rack[rack.index] = next; return previous;
   }
+  current(side: Side): ActionSlot { const state = this.state[side]; return state.rack[state.index]; }
   update(tick: number, switched: (side: Side, id: string) => void): void {
     for (const name of ['LEFT', 'RIGHT'] as const) {
       const side = this.state[name];

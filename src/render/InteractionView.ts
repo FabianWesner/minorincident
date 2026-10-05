@@ -2,7 +2,6 @@
 // highlighted active point above geometry, range-based reveal, separate presentation state.
 import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, RingGeometry, Vector3, type Camera, type Object3D } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
-import { action } from '../data/actions/fixtures';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { EntitySnapshot } from '../sim/world/types';
 import type { Materials } from './Materials';
@@ -52,7 +51,7 @@ export class InteractionView extends Group {
     await Promise.all(this.pending.values());
   }
   private ensure(e: EntitySnapshot): void {
-    if (!(e.interactable || e.hazard || e.destructible || e.pickup) || this.objects.has(e.id) || this.pending.has(e.id)) return;
+    if (!(e.interactable || e.hazard || e.destructible || (e.pickup && 'kind' in e.pickup)) || this.objects.has(e.id) || this.pending.has(e.id)) return;
     const load = this.create(e).then(object => {
       if (!this.disposed) { this.objects.set(e.id, object); this.add(object); }
       this.pending.delete(e.id);
@@ -60,11 +59,12 @@ export class InteractionView extends Group {
     this.pending.set(e.id, load);
   }
   private async create(e: EntitySnapshot): Promise<Object3D> {
-    const id = e.pickup?.kind === 'weapon' ? action(e.pickup.item!).viewAssetId : assetIds[e.archetype];
+    const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined;
+    const id = pickup?.kind === 'item' && pickup.item?.startsWith('key.') ? 'util.keys' : pickup?.item === 'batteries' ? 'util.batteries' : assetIds[e.archetype];
     if (id) return this.registry.loadAsset(id);
     // Devices without an integrated art entry use gameplay-shaped code placeholders.
-    const g = new Group(), body = new Mesh(this.box, this.materials.get(e.pickup ? 'backpackTeal' : e.hazard?.kind === 'toxic' ? 'grass' : e.destructible ? 'woodWarm' : 'policeBlue'));
-    if (e.pickup) body.scale.set(.3, .3, .3);
+    const g = new Group(), body = new Mesh(this.box, this.materials.get(pickup ? 'backpackTeal' : e.hazard?.kind === 'toxic' ? 'grass' : e.destructible ? 'woodWarm' : 'policeBlue'));
+    if (pickup) body.scale.set(.3, .3, .3);
     else if (e.interactable?.kind === 'door' || e.interactable?.kind === 'gate' || e.interactable?.kind === 'car-door') body.scale.set(.9, 1.4, .15);
     else if (e.hazard && ['fire', 'water', 'toxic', 'live-wire', 'fuel-trail'].includes(e.hazard.kind)) body.scale.set(e.hazard.radius * 2, .03, e.hazard.radius * 2);
     else body.scale.set(.8, 1, .6);
@@ -77,8 +77,9 @@ export class InteractionView extends Group {
       this.ensure(e);
       const object = this.objects.get(e.id);
       if (object) {
+        const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined;
         object.position.set(e.transform.x, 0, e.transform.z); object.rotation.y = e.transform.yaw;
-        object.visible = !e.pickup?.collected && !e.destructible?.broken && !e.hazard?.exploded;
+        object.visible = !pickup?.collected && !e.destructible?.broken && !e.hazard?.exploded;
         if (e.interactable?.open) object.rotation.y += Math.PI / 2;
       }
       if (player && e.interactable?.enabled && !e.interactable.completed) {

@@ -33,16 +33,19 @@ test('T-E11-02 @E11 @E11-AC02 accepted damage floors progress to a 25% notch onl
 test('T-E11-03 @E11 @E11-AC03 locked hint, key requirement, open/close and nav update in one tick', async () => {
   const w = await arena(), nav = new NavGrid([-3, -1], [4, 2]); nav.cells.fill(1); w.interactables!.nav = nav;
   const id = w.interactables!.spawn('door', { x: 1, z: 0 }, { key: 'key.house', halfX: .4, halfZ: 2 });
+  const infected = w.spawnDummy('infected.worker', { x: 3, z: 0 }, { reactive: true });
+  const listener = w.entities.get(infected)!; listener.hearing!.mode = 'investigate'; listener.hearing!.target.x = 0;
   expect(nav.flood([-2, 0])[nav.index(3, 0)]).toBe(0);
   w.setInput({ interact: true }); step(w, 1);
   expect(w.entities.get(id)!.interactable!.hint).toBe('locked');
   expect(w.entities.get(id)!.interactable!.open).toBe(false);
-  w.interactables!.giveItem('key.house'); step(w, 1); w.clearInput();
+  w.clearInput(); step(w, 60); expect(listener.transform.x).toBeGreaterThan(1.4);
+  w.interactables!.giveItem('key.house'); w.setInput({ interact: true }); step(w, 1); w.clearInput();
   expect(w.entities.get(id)!.interactable!.open).toBe(true);
   expect(nav.flood([-2, 0])[nav.index(3, 0)]).toBe(1);
   expect(w.events.events().filter(e => e.type === 'world.blocker.changed')).toMatchObject([{ id, blocked: true, tick: 0 }, { id, blocked: false, tick: w.tick }]);
   const colliderCount = w.physics.colliderCount;
-  step(w, 120); expect(w.entities.get(id)!.interactable!.open).toBe(true);
+  step(w, 120); expect(w.entities.get(id)!.interactable!.open).toBe(true); expect(listener.transform.x).toBeLessThan(.6);
   move(w, -3); step(w, 1); move(w, 0); w.setInput({ interact: true }); step(w, 1);
   expect(w.entities.get(id)!.interactable!.open).toBe(false);
   expect(w.physics.colliderCount).toBe(colliderCount + 1);
