@@ -142,8 +142,11 @@ export class GameView implements Lifecycle {
   }
   /** Render settings only; persistence and gameplay accessibility remain owned by E14. */
   settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean } & VfxSettings): void {
-    Object.assign(this.vfxSettings, { ...(patch.vfx !== undefined ? { vfx: patch.vfx } : {}), ...(patch.gore !== undefined ? { gore: patch.gore } : {}), ...(patch.flashReduction !== undefined ? { flashReduction: patch.flashReduction } : {}), ...(patch.quality !== undefined ? { quality: patch.quality } : {}) });
     this.vfx?.set(patch);
+    if (patch.vfx !== undefined) this.vfxSettings.vfx = patch.vfx;
+    if (patch.gore !== undefined) this.vfxSettings.gore = patch.gore;
+    if (patch.flashReduction !== undefined) this.vfxSettings.flashReduction = patch.flashReduction;
+    if (patch.quality !== undefined) this.vfxSettings.quality = patch.quality;
     if (patch.cameraShake !== undefined) { this.view.cameraShake = patch.cameraShake; this.advance(0); }
     if (patch.bloom !== undefined && this.postFx) this.postFx.bloomEnabled.value = Number(patch.bloom);
     if (patch.cheapDof !== undefined && this.postFx) this.postFx.setDof(patch.cheapDof);

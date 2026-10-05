@@ -108,7 +108,7 @@ export class Combat {
         if (progress === 1 && !p.landed) { p.landed = true; this.world.events.emit({ type: 'combat.landed', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, position: { x: p.x, y: p.y, z: p.z } }); }
         if (p.landed && age >= ticks(def.fuse)) {
           if (def.splash) this.splash(p.attack, p);
-          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, position: { x: p.x, y: p.y, z: p.z } });
+          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
           this.projectiles.splice(i, 1);
         }
       } else if (age > 0) {

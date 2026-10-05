@@ -19,6 +19,7 @@ export class GibPool {
   private readonly velocity = { x: 0, y: 0, z: 0 };
   private cursor = 0;
   private remainder = 0;
+  private dirty = true;
   count = 0;
   constructor(geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
     this.ownsGeometry = !geometries;
@@ -36,13 +37,15 @@ export class GibPool {
   }
   spawn(now: number, x: number, y: number, z: number, rng: Rng, head = false): void {
     const slot = this.cursor++ % this.cap, body = this.bodies[slot];
-    this.isHead[slot] = Number(head);
+    this.dirty = true; this.isHead[slot] = Number(head);
     this.velocity.x = x; this.velocity.y = y; this.velocity.z = z;
     body.setTranslation(this.velocity, false); body.setEnabled(true);
     this.velocity.x = (rng.next() - 0.5) * 5; this.velocity.y = 2 + rng.next() * 3; this.velocity.z = (rng.next() - 0.5) * 5;
     body.setLinvel(this.velocity, true); body.setAngvel(this.velocity, true); this.expires[slot] = now + 30;
   }
   advance(now: number, seconds: number): void {
+    if (!this.count && !this.dirty) { this.remainder = 0; return; }
+    this.dirty = false;
     this.remainder += seconds;
     while (this.remainder + 1e-9 >= 1 / 60) { this.physics.timestep = 1 / 60; this.physics.step(); this.remainder -= 1 / 60; }
     this.count = 0;
@@ -58,6 +61,6 @@ export class GibPool {
     }
     this.mesh.instanceMatrix.needsUpdate = this.heads.instanceMatrix.needsUpdate = true;
   }
-  reset(): void { this.expires.fill(0); this.cursor = this.remainder = this.count = 0; this.advance(0, 0); }
+  reset(): void { this.dirty = true; this.expires.fill(0); this.cursor = this.remainder = this.count = 0; this.advance(0, 0); }
   dispose(): void { this.physics.free(); this.mesh.dispose(); this.heads.dispose(); if (this.ownsGeometry) { this.mesh.geometry.dispose(); this.heads.geometry.dispose(); } (this.mesh.material as MeshBasicNodeMaterial).dispose(); }
 }

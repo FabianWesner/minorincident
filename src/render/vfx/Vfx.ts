@@ -38,7 +38,6 @@ export class Vfx extends Group {
   private flashUntil = 0;
   private readonly pools = [this.particles, this.decals, this.telegraphs, this.waves];
   private readonly stops: (() => void)[] = [];
-  private readonly attacks = new Map<number, string>();
   private readonly tells = new Map<number, { slot: number; kind: TelegraphKind; spawned: number }>();
   private readonly flashes = new Map<number, number>();
   private readonly vehicles = new Map<number, VehicleFeedbackEvent>();
@@ -63,7 +62,7 @@ export class Vfx extends Group {
     if (patch.quality !== undefined && !['high', 'low'].includes(patch.quality)) throw new RangeError('Invalid VFX quality');
     if (patch.vfx !== undefined) this.enabled = patch.vfx;
     if (patch.flashReduction !== undefined) this.flashReduction = patch.flashReduction;
-    if (patch.quality !== undefined) { this.quality = patch.quality; this.particles.reset(); this.particles.budget = this.quality === 'low' ? 512 : 2048; }
+    if (patch.quality !== undefined) { this.quality = patch.quality; this.particles.reset(); this.particles.budget = this.quality === 'low' ? 512 : 2048; this.particles.mesh.count = this.particles.budget; }
     if (patch.gore !== undefined && patch.gore !== this.gore) {
       this.gore = patch.gore; this.particles.reset(); this.decals.reset(); this.gibs.reset(); this.targets.clearGore();
       if (this.gore === 'Off') { this.coverage = 0; this.targets.blood(0); }
@@ -86,11 +85,6 @@ export class Vfx extends Group {
     if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, 0.015, z, this.rng.next() * Math.PI, 0, 0, kill ? 1.8 : 0.65, 0, '#b3121f');
   }
   readonly receive = (event: GameEvent): void => {
-    if (event.type === 'combat.attack') {
-      this.attacks.set(event.attackId, event.actionId);
-      // Attack metadata is bounded even during long automatic-fire stress.
-      if (this.attacks.size > 64) this.attacks.delete(this.attacks.keys().next().value!);
-    }
     if (event.type === 'vehicle.feedback') {
       let vehicle = this.vehicles.get(event.id);
       if (!vehicle) { vehicle = { ...event, position: { ...event.position } }; this.vehicles.set(event.id, vehicle); }
@@ -135,8 +129,7 @@ export class Vfx extends Group {
         if (this.quality === 'high') this.burst(p.x, 0.9, p.z, '#d7af65', 1, 0.08, 2);
       }
     } else if (event.type === 'combat.exploded') {
-      const def = actions[this.attacks.get(event.attackId) ?? 'weapon.grenade'];
-      this.effect('explosion', event.position.x, event.position.z, def?.splash?.radius ?? 4);
+      if (event.radius > 0) this.effect('explosion', event.position.x, event.position.z, event.radius);
     } else if (event.type === 'telegraph') {
       if (this.tells.has(event.attackId)) return;
       const shape = telegraphShapes[event.kind];
