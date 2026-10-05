@@ -2,6 +2,9 @@ export const statuses = ['placeholder', 'reference', 'upscaled', 'scripted', 'mo
 export type AssetStatus = typeof statuses[number];
 export type AssetQuality = 'high' | 'low' | 'lod0' | 'lod1' | 'lod2';
 export interface AssetDef {
+  /** E06 code icons and category-specific fallbacks use the same manifest/status gates. */
+  icon?: string;
+  actionCategory?: 'melee' | 'ranged' | 'throwable' | 'ability';
   id: string;
   /** District code placeholder palette and collision ownership. */
   world?: { token: import("../data/palette").PaletteToken; solid: boolean };
