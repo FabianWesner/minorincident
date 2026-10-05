@@ -9,7 +9,7 @@ const swiftshader = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '
 export default defineConfig({
   testDir: './tests',
   testMatch: '**/*.spec.ts',
-  workers: 2,
+  workers: 2, // SwiftShader runs WebGL on the CPU; several lanes share one Mac
   fullyParallel: true,
   retries: 0,
   snapshotPathTemplate: '{testDir}/visual/__goldens__/{arg}{ext}',

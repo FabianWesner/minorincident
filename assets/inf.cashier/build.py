@@ -379,7 +379,7 @@ if a.glb:
     bpy.ops.object.select_all(action='DESELECT')
     for o in objects+list(parts.values()):o.select_set(True)
     bpy.ops.export_scene.gltf(filepath=a.glb,export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_cameras=False,export_lights=False)
-if a.pose:
+def apply_pose():
     parts['armL'].rotation_euler.x=.45;parts['foreArmL'].rotation_euler.y=-.55;parts['legR'].rotation_euler.y=-.35
     # Show an amputation on the other arm, while all requested joints visibly move.
     for o in objects:
@@ -389,7 +389,16 @@ if a.pose:
             p=p.parent
     cap=bpy.data.objects['stump_armL'];cap.scale=(1,1,1);cap['hidden']=False
     bpy.data.objects['stump_armR'].scale=(1,1,1)
-if a.render and a.view=='turnaround':
+    bpy.context.view_layer.update()
+    (P/'pose-audit.json').write_text(json.dumps({
+        'rotated':{name:list(parts[name].rotation_euler) for name in ['armL','foreArmL','legR']},
+        'stump_armL_visible':list(cap.scale)==[1,1,1],
+        'foreArmL_parent':parts['foreArmL'].parent.name,
+        'handL_parent':parts['handL'].parent.name,
+        'shinR_parent':parts['shinR'].parent.name
+    },indent=2)+'\n')
+if a.pose:apply_pose()
+def compose_turnaround(path):
     # Assemble already-rendered camera views in Blender, without another GPU render.
     import numpy as np
     paths=[P/'renders'/n for n in ['front.png','side.png','back.png','review-hero.png']]
@@ -399,8 +408,10 @@ if a.render and a.view=='turnaround':
         pixels=np.empty(w*h*4,dtype=np.float32);im.pixels.foreach_get(pixels)
         panels.append(pixels.reshape(h,w,4)[:,(w-420)//2:(w+420)//2,:])
     data=np.concatenate(panels,axis=1);sheet=bpy.data.images.new('turnaround',width=data.shape[1],height=data.shape[0],alpha=True)
-    sheet.pixels.foreach_set(data.ravel());sheet.filepath_raw=a.render;sheet.file_format='PNG';sheet.save()
-    print('OK turnaround');sys.exit(0)
+    sheet.pixels.foreach_set(data.ravel());sheet.filepath_raw=str(path);sheet.file_format='PNG';sheet.save()
+
+if a.render and a.view=='turnaround':
+    compose_turnaround(a.render);print('OK turnaround');sys.exit(0)
 if a.render:
     world=bpy.data.worlds.new('studio');world.use_nodes=True;S.world=world;world.node_tree.nodes['Background'].inputs[0].default_value=(.075,.067,.085,1);world.node_tree.nodes['Background'].inputs[1].default_value=.45
     def light(n,p,power,color,size):
@@ -425,4 +436,10 @@ if a.render:
             S.render.filepath=str(P/'renders'/filename);bpy.ops.render.render(write_still=True)
     else:
         S.render.filepath=a.render;bpy.ops.render.render(write_still=True)
+        if a.view=='delivery':
+            compose_turnaround(P/'renders'/'turnaround.png')
+            apply_pose()
+            cam.location=views['hero'];cam.rotation_euler=(Vector((.13,0,.85))-cam.location).to_track_quat('-Z','Y').to_euler()
+            S.cycles.samples=24;S.render.resolution_x=960;S.render.resolution_y=540
+            S.render.filepath=str(P/'renders'/'pose-test.png');bpy.ops.render.render(write_still=True)
 print('OK',triangles,'triangles',len(objects),'meshes')
