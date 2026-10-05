@@ -1,6 +1,8 @@
 import { survivor } from '../../data/survivor';
 import { Combat } from '../combat/Combat';
 import { Interactables } from '../interact/Interactables';
+import { Hazards } from '../interact/Hazards';
+import { Pickups } from '../interact/Pickups';
 import { Status } from '../combat/Status';
 import { Player } from '../entities/Player';
 import { EventBus, SimPhase } from '../../core/EventBus';
@@ -24,6 +26,8 @@ export class SimWorld implements Lifecycle {
   player: Player | null = null;
   combat: Combat | null = null;
   interactables: Interactables | null = null;
+  hazards: Hazards | null = null;
+  pickups: Pickups | null = null;
   /** Level-owned records survive player death; scenario unload clears them. */
   mission: GameStateSnapshot['mission'] = null;
   progression: GameStateSnapshot['progression'] = null;
@@ -45,13 +49,15 @@ export class SimWorld implements Lifecycle {
     if (definition.survivor) this.player = new Player(this.entities.get(1)!, this.physics, this.events);
     this.previousPlayer = { ...this.entities.get(1)!.transform };
     this.spatial.set(1, definition.player.x, definition.player.z);
-    if (definition.combat) this.combat = new Combat(this, definition);
     if (this.player) this.interactables = new Interactables(this);
+    if (definition.combat) this.combat = new Combat(this, definition);
+    if (this.player) this.hazards = new Hazards(this);
+    if (this.player) this.pickups = new Pickups(this);
     this.events.on('sim.tick', () => { if (this.combat) this.combat.intent(this.input); }, SimPhase.input);
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
-      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = Status.speed(player); this.player.prePhysics(this.input, this.tick, !Status.stunned(player, this.tick)); return; }
+      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = Status.speed(player) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.prePhysics(this.input, this.tick, !Status.stunned(player, this.tick)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
       body.setLinvel({ x: this.input.move.x * 5, y: body.linvel().y, z: this.input.move.z * 5 }, true);
@@ -63,7 +69,7 @@ export class SimWorld implements Lifecycle {
         this.combat.update(this.input);
       }
     }, SimPhase.combat);
-    this.events.on('sim.tick', () => this.interactables?.update(this.input), SimPhase.missions);
+    this.events.on('sim.tick', () => { this.hazards?.update(); this.pickups?.update(); this.interactables?.update(this.input); }, SimPhase.missions);
     this.events.on('sim.tick', () => {
       if (this.player) { this.player.postPhysics(this.tick); this.spatial.set(1, this.player.entity.transform.x, this.player.entity.transform.z); return; }
       const p = this.physics.playerBody!.translation();
@@ -121,7 +127,7 @@ export class SimWorld implements Lifecycle {
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
   }
   reset(): void {
-    this.mission = null; this.progression = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.mission = null; this.progression = null; this.pickups = null; this.hazards = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }
   dispose(): void { this.reset(); }

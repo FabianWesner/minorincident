@@ -24,7 +24,7 @@ export class Combat {
   private readonly origin = { x: 0, z: 0 };
   constructor(private readonly world: SimWorld, readonly definition: ScenarioDefinition) {
     this.rng = new Rng(world.seed, 'combat');
-    this.query = new HitQuery(world.entities, world.spatial, definition.walls ?? []);
+    this.query = new HitQuery(world.entities, world.spatial, definition.walls ?? [], world.interactables?.walls);
     this.damage = new Damage(world); this.status = new Status(world); this.assist = new AimAssist(world.entities, this.query);
     this.runner = new ActionRunner(1, new Loadout(['weapon.bat', 'weapon.pistol'], ['weapon.grenade', 'ability.ground-slam']));
     this.attach();

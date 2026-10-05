@@ -27,6 +27,14 @@ export class Loadout {
     }
   }
   current(side: Side): ActionSlot { const state = this.state[side]; return state.rack[state.index]; }
+  /** E11 weapon pickup preserves the other rack's timers and existing slots. */
+  pickup(id: string): void {
+    const side = this.state[this.state.selectedSide], existing = side.rack.findIndex(s => s.id === id);
+    if (existing >= 0) { side.index = existing; return; }
+    const added = slot(id);
+    if (side.rack.length < 3) { side.rack.push(added); side.index = side.rack.length - 1; }
+    else side.rack[side.index] = added;
+  }
   update(tick: number, switched: (side: Side, id: string) => void): void {
     for (const name of ['LEFT', 'RIGHT'] as const) {
       const side = this.state[name];
