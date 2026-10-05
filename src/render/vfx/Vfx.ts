@@ -66,9 +66,9 @@ export class Vfx extends Group {
     if (patch.quality !== undefined && !['high', 'low'].includes(patch.quality)) throw new RangeError('Invalid VFX quality');
     if (patch.vfx !== undefined) this.enabled = patch.vfx;
     if (patch.flashReduction !== undefined) this.flashReduction = patch.flashReduction;
-    if (patch.quality !== undefined) { this.quality = patch.quality; this.particles.reset(); this.particles.budget = this.quality === 'low' ? 512 : 2048; this.particles.mesh.count = this.particles.budget; }
+    if (patch.quality !== undefined) { this.quality = patch.quality; this.particles.reset(this.time); this.particles.budget = this.quality === 'low' ? 512 : 2048; this.particles.mesh.count = this.particles.budget; }
     if (patch.gore !== undefined && patch.gore !== this.gore) {
-      this.gore = patch.gore; this.particles.reset(); this.decals.reset(); this.gibs.reset(); this.targets.clearGore();
+      this.gore = patch.gore; this.particles.reset(this.time); this.decals.reset(this.time); this.gibs.reset(); this.targets.clearGore();
       if (this.gore === 'Off') { this.coverage = 0; this.targets.blood(0); }
     }
     this.targets.vehicleBloodEnabled?.(this.enabled && this.gore !== 'Off');
@@ -79,7 +79,7 @@ export class Vfx extends Group {
       this.resetPools();
     } else this.targets.blood(this.gore === 'Off' ? 0 : this.coverage);
   }
-  private resetPools(): void { for (const pool of this.pools) pool.reset(); this.gibs.reset(); this.tells.clear(); this.hitCount = this.hitCursor = 0; }
+  private resetPools(): void { for (const pool of this.pools) pool.reset(this.time); this.gibs.reset(); this.tells.clear(); this.hitCount = this.hitCursor = 0; }
   private pulse(id: number): void {
     let slot = 0;
     while (slot < this.hitCount && this.hitIds[slot] !== id) slot++;
