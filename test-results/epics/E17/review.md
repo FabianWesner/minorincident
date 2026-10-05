@@ -20,7 +20,9 @@ The palette version uses stylized matte trim rather than the reference's
 photographic chrome. Rear and far-side details are inferred from the single
 reference. No failed must or should item.
 
-Post-merge review: final captures refreshed after merging E02/E03 main
-`0907b9c` and rebuilding the production bundle with the final generated assets.
-All four must and both should items remain PASS. No visual regression in part
-layout, palette separation or gameplay readability was found.
+Post-merge review: final captures refreshed on 2026-10-05 after the pinned
+main merge (`b3c4e07` through `da91b4e`) and rebuilding with the final generated
+GLBs. The reference/comparison was inspected again. All four must and both
+should items remain PASS; compartment layout, palette separation, wheel
+spacing and gameplay readability remain consistent. Matte trim and inferred
+hidden-side details retain the stated stylization.

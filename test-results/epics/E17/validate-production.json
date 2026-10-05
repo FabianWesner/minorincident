@@ -187,18 +187,19 @@
   {
     "id": "inf.jogger:lod0",
     "errors": [
+      "dimensions.x: 1.2031332850456238 expected 0.9753881394863129",
       "forward front: not on +X"
     ],
-    "triangles": 39376,
+    "triangles": 39361,
     "materials": 9,
     "drawCalls": 57,
-    "fileKB": 933.94140625,
+    "fileKB": 931.28515625,
     "dimensions": [
-      0.9753881394863129,
-      1.7378920372575521,
-      0.8821343034505844
+      1.2031332850456238,
+      1.6741559505462646,
+      0.9552787393331528
     ],
-    "hash": "46118229211ea0c7824f8cb2689e1457f5e508a8d0d93552790767a213ed7509"
+    "hash": "a0a7e4e1102ff3b6574f8d57123df1bedec4131d04cc44ff0b2bb381c2d88355"
   },
   {
     "id": "inf.jogger:lod1",
@@ -270,6 +271,8 @@
   {
     "id": "inf.suburban-mom:lod0",
     "errors": [
+      "dimensions.x: 0.9231259381291522 expected 0.5416581469294359",
+      "dimensions.z: 1.0115260277446736 expected 0.873999834060669",
       "forward front: not on +X",
       "geometry legL__pal_denim: degenerate triangle",
       "geometry legR__pal_denim: degenerate triangle",
@@ -281,16 +284,16 @@
       "material: unknown pal_hairCopper",
       "material: unknown pal_hairShadow"
     ],
-    "triangles": 38322,
+    "triangles": 38826,
     "materials": 15,
     "drawCalls": 65,
-    "fileKB": 950.0625,
+    "fileKB": 980.30859375,
     "dimensions": [
-      0.5416581469294359,
-      1.5626188296928414,
-      0.873999834060669
+      0.9231259381291522,
+      1.5314187983169454,
+      1.0115260277446736
     ],
-    "hash": "8d998dd475ca83370819ee82d7c2cb5cffba5d2b137aa0553ab57e1fbab50c5c"
+    "hash": "2477664f5a07a7de1d70f562344e69b78a3289ebcd724c66d806168cfbe507dd"
   },
   {
     "id": "inf.suburban-mom:lod1",
@@ -319,24 +322,18 @@
   {
     "id": "inf.delivery-driver:lod0",
     "errors": [
-      "forward front: not on +X",
-      "geometry legL__pal_asphalt: degenerate triangle",
-      "geometry legR__pal_asphalt: degenerate triangle",
-      "geometry head__pal_backpackTeal: degenerate triangle",
-      "geometry torso__pal_policeBlue: degenerate triangle",
-      "geometry torso__pal_schoolBusYellow: degenerate triangle",
-      "geometry torso__pal_uiDark: degenerate triangle"
+      "forward front: not on +X"
     ],
-    "triangles": 38431,
+    "triangles": 38466,
     "materials": 11,
     "drawCalls": 74,
-    "fileKB": 1031.84375,
+    "fileKB": 766.87890625,
     "dimensions": [
       1.0051109194755554,
       1.6886346638202667,
       1.0474485233426094
     ],
-    "hash": "b1a4c9039316aab8a33dba7473a01ce09918e3b4aef2ccc8f4a483e84a225123"
+    "hash": "e95fba5bd97f4501f6e2f301af9bd799e14fcebdcdf3eac3f281e6844f708e61"
   },
   {
     "id": "inf.delivery-driver:lod1",
@@ -403,6 +400,88 @@
     "hash": ""
   },
   {
+    "id": "inf.bbq-dad:lod0",
+    "errors": [
+      "dimensions.z: 1.3104021549224854 expected 0.6",
+      "forward front: not on +X"
+    ],
+    "triangles": 34708,
+    "materials": 9,
+    "drawCalls": 52,
+    "fileKB": 944.07421875,
+    "dimensions": [
+      0.7396879699081182,
+      1.6015273332595825,
+      1.3104021549224854
+    ],
+    "hash": "53660e7c5559c132bb2235ebc5a2ba82295a590c3a21bc1808cbd40246fdfbf8"
+  },
+  {
+    "id": "inf.bbq-dad:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "inf.bbq-dad:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "inf.cashier:lod0",
+    "errors": [
+      "dimensions.z: 1.1505332589149475 expected 0.6",
+      "forward front: not on +X"
+    ],
+    "triangles": 39307,
+    "materials": 9,
+    "drawCalls": 60,
+    "fileKB": 1094.2421875,
+    "dimensions": [
+      0.6698842346668243,
+      1.6350779570639133,
+      1.1505332589149475
+    ],
+    "hash": "02a7a7a838d67f48b93d50cd901408a47611cb6878c16bba2ee28af37ab88fc0"
+  },
+  {
+    "id": "inf.cashier:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "inf.cashier:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
     "id": "inf.crawler:lod0",
     "errors": [
       "animated shinL: no separate geometry",
@@ -414,13 +493,13 @@
     "triangles": 37133,
     "materials": 7,
     "drawCalls": 44,
-    "fileKB": 876.26953125,
+    "fileKB": 856.328125,
     "dimensions": [
       1.5008147731423378,
-      1.0542653462735276,
+      1.0542652851727004,
       1.0496913194656372
     ],
-    "hash": "197f4b8e49b3b9566e0bcd13317b44f5b8fa0f15b88e4322a68adf9f3061b895"
+    "hash": "4f67df9bba39d7bc53e59ac3e229b92f9a4905cddda3aacf339c499648f2d44f"
   },
   {
     "id": "inf.crawler:lod1",
@@ -494,12 +573,106 @@
     "hash": ""
   },
   {
+    "id": "wpn.baseball-bat:lod0",
+    "errors": [
+      "dimensions.y: 0.11400295794010162 expected 1",
+      "dimensions.z: 0.11483193933963776 expected 1",
+      "forward front: not on +X"
+    ],
+    "triangles": 1632,
+    "materials": 3,
+    "drawCalls": 3,
+    "fileKB": 119.6640625,
+    "dimensions": [
+      0.9220000207424164,
+      0.11400295794010162,
+      0.11483193933963776
+    ],
+    "hash": "4c69edb6e986f94d686cf75bc9d282415f0303b2de616f21e2a944957f6a2dec"
+  },
+  {
+    "id": "wpn.crowbar:lod0",
+    "errors": [
+      "dimensions.x: 0.39255619049072266 expected 1",
+      "dimensions.y: 0.8217455744743347 expected 1",
+      "dimensions.z: 0.06700000166893005 expected 1",
+      "forward front: not on +X"
+    ],
+    "triangles": 5248,
+    "materials": 3,
+    "drawCalls": 3,
+    "fileKB": 233.3359375,
+    "dimensions": [
+      0.39255619049072266,
+      0.8217455744743347,
+      0.06700000166893005
+    ],
+    "hash": "789d8cd175b67b47a966db571059be4c5346f98c1b3234eba856a96b607127bd"
+  },
+  {
+    "id": "wpn.machete:lod0",
+    "errors": [
+      "dimensions.y: 0.08599999896250665 expected 1",
+      "dimensions.z: 0.15400000661611557 expected 1",
+      "forward front: not on +X",
+      "geometry static_woodWarm: degenerate triangle"
+    ],
+    "triangles": 3508,
+    "materials": 7,
+    "drawCalls": 7,
+    "fileKB": 265.65234375,
+    "dimensions": [
+      0.984999991953373,
+      0.08599999896250665,
+      0.15400000661611557
+    ],
+    "hash": "83652106c70c97251f3770efd67de4347d315123cca73278887374f801fbda8c"
+  },
+  {
+    "id": "pick.medkit:lod0",
+    "errors": [
+      "dimensions.x: 0.26550000719726086 expected 1",
+      "dimensions.y: 0.7305000200867653 expected 1",
+      "dimensions.z: 0.75 expected 1",
+      "forward front: not on +X"
+    ],
+    "triangles": 9272,
+    "materials": 5,
+    "drawCalls": 7,
+    "fileKB": 320.5703125,
+    "dimensions": [
+      0.26550000719726086,
+      0.7305000200867653,
+      0.75
+    ],
+    "hash": "847e1f0b617a2c940bf2ba5495a4087f4b6dfbc8f92f0ddbf6e4805d097e462c"
+  },
+  {
+    "id": "pick.soda:lod0",
+    "errors": [
+      "dimensions.x: 0.10144999995827675 expected 1",
+      "dimensions.y: 0.18230000138282776 expected 1",
+      "dimensions.z: 0.09099999815225601 expected 1",
+      "forward front: not on +X"
+    ],
+    "triangles": 10656,
+    "materials": 6,
+    "drawCalls": 6,
+    "fileKB": 922.99609375,
+    "dimensions": [
+      0.10144999995827675,
+      0.18230000138282776,
+      0.09099999815225601
+    ],
+    "hash": "07de09d04bcc1e4d1151d6777778fb489d94b214a5bd827058beb0cc2cd53bfc"
+  },
+  {
     "id": "veh.fire-engine:lod0",
     "errors": [],
     "triangles": 66335,
     "materials": 11,
     "drawCalls": 39,
-    "fileKB": 3664.73828125,
+    "fileKB": 3664.95703125,
     "dimensions": [
       7.3999997594266915,
       3.5500002052808965,
@@ -513,128 +686,165 @@
     "triangles": 10821,
     "materials": 11,
     "drawCalls": 39,
-    "fileKB": 873.953125,
+    "fileKB": 873.6328125,
     "dimensions": [
       7.341862692948013,
       3.5406175075198254,
       2.09997340526437
     ],
-    "hash": "236b042b1654fca2b337b326f261e3180ceca3e633b1e45a53ba8e6534b5d9c7"
+    "hash": "275010f2371df2b43957994df4aead092bb609d387c04ea803b9edc2d44281ae"
   },
   {
     "id": "veh.fire-engine:lod2",
     "errors": [],
-    "triangles": 2507,
+    "triangles": 2505,
     "materials": 11,
     "drawCalls": 38,
-    "fileKB": 283.5546875,
+    "fileKB": 283.26953125,
     "dimensions": [
       7.271262002906438,
       3.512349466561491,
       2.09997340526437
     ],
-    "hash": "8965c98578601f693aa7b684bfbe28e0c3e59f11aa6b7f0e6c426c2d83c3f278"
+    "hash": "205d7ba49647b98ca01e8433b43db0a534b1eed32858f5507326dcf2c9d9f790"
   },
   {
     "id": "veh.sedan-red:lod0",
-    "errors": [
-      "geometry body_pal_survivorRed: degenerate triangle",
-      "geometry body_pal_uiDark: degenerate triangle",
-      "geometry doorL_pal_survivorRed: degenerate triangle",
-      "geometry doorR_pal_survivorRed: degenerate triangle",
-      "geometry doorRearL_pal_survivorRed: degenerate triangle",
-      "geometry doorRearR_pal_survivorRed: degenerate triangle"
-    ],
-    "triangles": 56860,
+    "errors": [],
+    "triangles": 57352,
     "materials": 10,
-    "drawCalls": 40,
-    "fileKB": 2791.98828125,
+    "drawCalls": 39,
+    "fileKB": 4642.7734375,
     "dimensions": [
       4.634000062942505,
       1.6075001260067228,
       2.2880001068115234
     ],
-    "hash": "d015d04ec8b99bbe8336e6b3a4fea7a84daf74d60c767398a27fd306e45b908f"
+    "hash": "d440959b23b3ef05b3363ba108224ec5c006619885bb6eaf5f178626369ee998"
   },
   {
     "id": "veh.sedan-red:lod1",
-    "errors": [
-      "geometry body_pal_uiDark: degenerate triangle",
-      "geometry doorL_pal_survivorRed: degenerate triangle",
-      "geometry doorR_pal_survivorRed: degenerate triangle",
-      "geometry doorRearL_pal_survivorRed: degenerate triangle",
-      "geometry doorRearR_pal_survivorRed: degenerate triangle"
-    ],
-    "triangles": 8538,
+    "errors": [],
+    "triangles": 8382,
     "materials": 10,
-    "drawCalls": 40,
-    "fileKB": 545.01953125,
+    "drawCalls": 39,
+    "fileKB": 775.96875,
     "dimensions": [
-      4.635506868362427,
-      1.6020259762446232,
-      2.2631581127643585
+      4.63368558883667,
+      1.6053529883066955,
+      2.272637262940407
     ],
-    "hash": "91c2cb2b5093e1d34e86573dd703ec1dfe079d1903240657183a3f8d81d73624"
+    "hash": "3e4030b6904482bf561531793bfb9d9a4872ad0f818a195a0588f8c1472f9e82"
   },
   {
     "id": "veh.sedan-red:lod2",
-    "errors": [
-      "geometry body_pal_uiDark: degenerate triangle",
-      "geometry doorL_pal_survivorRed: degenerate triangle",
-      "geometry doorR_pal_survivorRed: degenerate triangle",
-      "geometry doorRearL_pal_survivorRed: degenerate triangle",
-      "geometry doorRearR_pal_survivorRed: degenerate triangle"
-    ],
-    "triangles": 2796,
+    "errors": [],
+    "triangles": 2318,
     "materials": 10,
-    "drawCalls": 40,
-    "fileKB": 234.14453125,
+    "drawCalls": 39,
+    "fileKB": 268.125,
     "dimensions": [
-      4.637559652328491,
-      1.5905931099578206,
-      2.2643777430057526
+      4.631800651550293,
+      1.5916787489577595,
+      2.264397442340851
     ],
-    "hash": "a86f21bdae30de1d550d93c0bb7bc910121d19bc2df304b1ddf45e01968eaf6d"
+    "hash": "ef53b3b5e81d7d02150e30eedeaa34635faec791c907017a69eaac4fb8ec66d6"
   },
   {
     "id": "veh.sedan-blue:lod0",
     "errors": [
       "geometry doorRearL_policeBlue: degenerate triangle"
     ],
-    "triangles": 35620,
+    "triangles": 36796,
     "materials": 9,
     "drawCalls": 38,
-    "fileKB": 1101.375,
+    "fileKB": 1174.87109375,
     "dimensions": [
       4.54200005531311,
       1.6799999475479126,
       2.1600000858306885
     ],
-    "hash": "55fad9608109c5bf72c8b0d9fbcb46ad8887b24cf926dd5fc66801cef7c698a1"
+    "hash": "00eac12c9afa176b7d3eb57eb9c54092fb69207b6abedc37ff95d09f1472b708"
   },
   {
     "id": "veh.sedan-blue:lod1",
     "errors": [
-      "missing LOD"
+      "geometry doorRearL_policeBlue: degenerate triangle"
     ],
-    "triangles": 0,
-    "materials": 0,
-    "drawCalls": 0,
-    "fileKB": 0,
-    "dimensions": [],
-    "hash": ""
+    "triangles": 5501,
+    "materials": 9,
+    "drawCalls": 38,
+    "fileKB": 218.546875,
+    "dimensions": [
+      4.538818597793579,
+      1.6788594722747803,
+      2.1534033715724945
+    ],
+    "hash": "b72b6a16339e3ce1996878f5e1c21c2c476924b3f7069d3d22f387eee15d692b"
   },
   {
     "id": "veh.sedan-blue:lod2",
     "errors": [
-      "missing LOD"
+      "geometry doorRearL_policeBlue: degenerate triangle"
     ],
-    "triangles": 0,
-    "materials": 0,
-    "drawCalls": 0,
-    "fileKB": 0,
-    "dimensions": [],
-    "hash": ""
+    "triangles": 1778,
+    "materials": 9,
+    "drawCalls": 38,
+    "fileKB": 110.16796875,
+    "dimensions": [
+      4.538626432418823,
+      1.675847589969635,
+      2.1406394690275192
+    ],
+    "hash": "23b5d8e2d7d9c19915160a839ac92114d5c3a463f40d3baafe986689a1bb0d3e"
+  },
+  {
+    "id": "veh.sedan-white:lod0",
+    "errors": [
+      "dimensions.z: 2.385999917984009 expected 1.9"
+    ],
+    "triangles": 54240,
+    "materials": 7,
+    "drawCalls": 39,
+    "fileKB": 2248.9609375,
+    "dimensions": [
+      4.803499937057495,
+      1.8269999325275421,
+      2.385999917984009
+    ],
+    "hash": "7a564fe025c9df24f0c7d956a4dfee7050efe026f630c723887146107a608c73"
+  },
+  {
+    "id": "veh.sedan-white:lod1",
+    "errors": [
+      "dimensions.z: 2.381684958934784 expected 1.9"
+    ],
+    "triangles": 7556,
+    "materials": 7,
+    "drawCalls": 39,
+    "fileKB": 396.078125,
+    "dimensions": [
+      4.7990617752075195,
+      1.823550134897232,
+      2.381684958934784
+    ],
+    "hash": "2d6f55fccc5749e933c031a272a31e1fe1aba923b37aa786908c95a9573dbed3"
+  },
+  {
+    "id": "veh.sedan-white:lod2",
+    "errors": [
+      "dimensions.z: 2.4584152698516846 expected 1.9"
+    ],
+    "triangles": 2301,
+    "materials": 7,
+    "drawCalls": 39,
+    "fileKB": 166.203125,
+    "dimensions": [
+      4.767137050628662,
+      1.8313219249248505,
+      2.4584152698516846
+    ],
+    "hash": "a446eb7aed4f426c51585ac201d1d636e26dcd794543b305ab2519e015f2bb6d"
   },
   {
     "id": "veh.school-bus:lod0",
@@ -680,67 +890,45 @@
   },
   {
     "id": "veh.pickup-red:lod0",
-    "errors": [
-      "geometry body: degenerate triangle",
-      "geometry doorL_pal_asphalt: degenerate triangle",
-      "geometry doorR_pal_asphalt: degenerate triangle",
-      "geometry static_pal_picketWhite: degenerate triangle",
-      "geometry static_pal_sidewalk: degenerate triangle",
-      "geometry wheelFL_pal_sidewalk: degenerate triangle",
-      "geometry wheelFR_pal_sidewalk: degenerate triangle",
-      "geometry wheelRL_pal_sidewalk: degenerate triangle",
-      "geometry wheelRR_pal_sidewalk: degenerate triangle"
-    ],
-    "triangles": 73795,
+    "errors": [],
+    "triangles": 72320,
     "materials": 9,
     "drawCalls": 37,
-    "fileKB": 2810.28515625,
+    "fileKB": 2931.46875,
     "dimensions": [
-      5.120999574661255,
-      2.2342242002487183,
-      2.549999952316284
+      5.121000051498413,
+      2.234220027923584,
+      2.550000011920929
     ],
-    "hash": "8ef4fc1e6e78bb1001346e830ad70a72b915ce704f0923a8fd4eb8c5c95aeebe"
+    "hash": "b7f4152d80538654fcb2f0ad33f412d84da60a3a67f281394f0037435b8257ff"
   },
   {
     "id": "veh.pickup-red:lod1",
-    "errors": [
-      "geometry body: degenerate triangle",
-      "geometry doorL_pal_asphalt: degenerate triangle",
-      "geometry doorR_pal_asphalt: degenerate triangle",
-      "geometry static_pal_picketWhite: degenerate triangle",
-      "geometry static_pal_sidewalk: degenerate triangle"
-    ],
-    "triangles": 9706,
+    "errors": [],
+    "triangles": 10086,
     "materials": 9,
     "drawCalls": 37,
-    "fileKB": 478.77734375,
+    "fileKB": 542,
     "dimensions": [
-      5.120999574661255,
-      2.2199703752994537,
-      2.5395084619522095
+      5.121000051498413,
+      2.2320163547992706,
+      2.540746420621872
     ],
-    "hash": "6093749514087ed571fa3ebb92b5aae584546fa8b0694004caedd98ed74a269f"
+    "hash": "66c7c5f5f351aff2cbba30b4311c11acdeaf59b16f36fad4aa2a96326316a6eb"
   },
   {
     "id": "veh.pickup-red:lod2",
-    "errors": [
-      "geometry body: degenerate triangle",
-      "geometry doorL_pal_asphalt: degenerate triangle",
-      "geometry doorR_pal_asphalt: degenerate triangle",
-      "geometry static_pal_picketWhite: degenerate triangle",
-      "geometry static_pal_sidewalk: degenerate triangle"
-    ],
-    "triangles": 3664,
+    "errors": [],
+    "triangles": 2663,
     "materials": 9,
     "drawCalls": 37,
-    "fileKB": 246.79296875,
+    "fileKB": 207.8515625,
     "dimensions": [
-      5.281861305236816,
-      2.2404339611530304,
-      2.617113918066025
+      5.106279373168945,
+      2.24291655421257,
+      2.6054160594940186
     ],
-    "hash": "4ea5b0ba0c0ba72a31ac755160ce4de3399fd7bd3de2d7dc7074a6dd5d200789"
+    "hash": "85d814e904daf019ef1b4467220dba8b1fa54b831c0a9caa4457f6282056bcb0"
   },
   {
     "id": "veh.police-sedan:lod0",
@@ -835,6 +1023,323 @@
     "hash": "b43bc32c09f81772564c14b57f6f9104d5bcc7815e1debaf29345ff4331a7f78"
   },
   {
+    "id": "bld.house-a:lod0",
+    "errors": [
+      "dimensions.x: 7.14249974489212 expected 8",
+      "dimensions.z: 7.170000076293945 expected 6",
+      "forward front: not on +X",
+      "geometry body_pal_sidewalk: degenerate triangle",
+      "geometry roof_pal_asphalt: degenerate triangle",
+      "fileKB: 6585.75 > 6000"
+    ],
+    "triangles": 84618,
+    "materials": 9,
+    "drawCalls": 33,
+    "fileKB": 6585.75,
+    "dimensions": [
+      7.14249974489212,
+      4.554178237915039,
+      7.170000076293945
+    ],
+    "hash": "2384e5f32912c82924128752b1cb055a308c3dbf5bc17097150c309faad8ac18"
+  },
+  {
+    "id": "bld.house-a:lod1",
+    "errors": [
+      "dimensions.x: 7.1351199969649315 expected 8",
+      "dimensions.z: 7.1572020053863525 expected 6",
+      "forward front: not on +X",
+      "geometry body_pal_sidewalk: degenerate triangle",
+      "geometry roof_pal_asphalt: degenerate triangle"
+    ],
+    "triangles": 12662,
+    "materials": 9,
+    "drawCalls": 33,
+    "fileKB": 1100.74609375,
+    "dimensions": [
+      7.1351199969649315,
+      4.551784455776215,
+      7.1572020053863525
+    ],
+    "hash": "12f0dc19dfcda0dd50c7c6edef67b62a83f8bec58b8a46bffcfdb5cb302fbd6e"
+  },
+  {
+    "id": "bld.house-a:lod2",
+    "errors": [
+      "dimensions.x: 7.153939887881279 expected 8",
+      "dimensions.z: 7.202050685882568 expected 6",
+      "forward front: not on +X",
+      "geometry body_pal_sidewalk: degenerate triangle",
+      "geometry roof_pal_asphalt: degenerate triangle"
+    ],
+    "triangles": 2129,
+    "materials": 9,
+    "drawCalls": 33,
+    "fileKB": 231.5859375,
+    "dimensions": [
+      7.153939887881279,
+      4.561898708343506,
+      7.202050685882568
+    ],
+    "hash": "d4b06fb7ba4ba8a004b9a64616c2e4f2bc8dde7159299a4e92896020c189250e"
+  },
+  {
+    "id": "bld.house-b:lod0",
+    "errors": [
+      "dimensions.y: 6.804000075906515 expected 5",
+      "dimensions.z: 11.03499972820282 expected 6",
+      "forward front: not on +X",
+      "fileKB: 8894.19921875 > 6000"
+    ],
+    "triangles": 77684,
+    "materials": 10,
+    "drawCalls": 32,
+    "fileKB": 8894.19921875,
+    "dimensions": [
+      7.518082141876221,
+      6.804000075906515,
+      11.03499972820282
+    ],
+    "hash": "990081b800104a97dd4dfdc52e8f6abd1bacf26d7935c536da11e41a9b8c585a"
+  },
+  {
+    "id": "bld.house-b:lod1",
+    "errors": [
+      "dimensions.y: 6.800829526502639 expected 5",
+      "dimensions.z: 11.019084811210632 expected 6",
+      "forward front: not on +X"
+    ],
+    "triangles": 9859,
+    "materials": 10,
+    "drawCalls": 32,
+    "fileKB": 1245.3359375,
+    "dimensions": [
+      7.509716987609863,
+      6.800829526502639,
+      11.019084811210632
+    ],
+    "hash": "bf153c7f2e3962d4af66ea1b43e9aae532bac03fed44c94d1c9abf87c79f8dc9"
+  },
+  {
+    "id": "bld.house-b:lod2",
+    "errors": [
+      "dimensions.y: 7.0485086143016815 expected 5",
+      "dimensions.z: 10.982987880706787 expected 6",
+      "forward front: not on +X"
+    ],
+    "triangles": 2481,
+    "materials": 10,
+    "drawCalls": 32,
+    "fileKB": 356.52734375,
+    "dimensions": [
+      8.598877544514835,
+      7.0485086143016815,
+      10.982987880706787
+    ],
+    "hash": "76df5133443414c90681bf2a35a028393f38125170fce76596be27f03b34d014"
+  },
+  {
+    "id": "bld.house-c:lod0",
+    "errors": [
+      "dimensions.x: 9.403176844120026 expected 8",
+      "dimensions.y: 5.767500162124634 expected 5",
+      "dimensions.z: 7.800360679626465 expected 6",
+      "forward front: not on +X"
+    ],
+    "triangles": 89883,
+    "materials": 11,
+    "drawCalls": 39,
+    "fileKB": 5425.734375,
+    "dimensions": [
+      9.403176844120026,
+      5.767500162124634,
+      7.800360679626465
+    ],
+    "hash": "7f14893471ba00f4c9053e6dd7441a2353238300cb5a076a51b59cf735c74395"
+  },
+  {
+    "id": "bld.house-c:lod1",
+    "errors": [
+      "dimensions.x: 9.405894339084625 expected 8",
+      "dimensions.y: 5.769264727830887 expected 5",
+      "dimensions.z: 7.756484746932983 expected 6",
+      "forward front: not on +X"
+    ],
+    "triangles": 8135,
+    "materials": 11,
+    "drawCalls": 39,
+    "fileKB": 753.44921875,
+    "dimensions": [
+      9.405894339084625,
+      5.769264727830887,
+      7.756484746932983
+    ],
+    "hash": "390be7627accc3a8caf2b923254d49fd554491e9c5744d5405ff52e4a7aaa2dc"
+  },
+  {
+    "id": "bld.house-c:lod2",
+    "errors": [
+      "dimensions.x: 10.706032916903496 expected 8",
+      "dimensions.y: 5.775117263197899 expected 5",
+      "dimensions.z: 7.898638725280762 expected 6",
+      "forward front: not on +X"
+    ],
+    "triangles": 1763,
+    "materials": 9,
+    "drawCalls": 12,
+    "fileKB": 180.93359375,
+    "dimensions": [
+      10.706032916903496,
+      5.775117263197899,
+      7.898638725280762
+    ],
+    "hash": "fa4e6400749a571949a5e365aedd90f1946916feefa50a37909ff8d80031be6e"
+  },
+  {
+    "id": "kit.porch-stairs:lod0",
+    "errors": [
+      "dimensions.x: 3.1596570312976837 expected 1",
+      "dimensions.y: 2.780000075697899 expected 1",
+      "dimensions.z: 6.860399812459946 expected 1",
+      "forward front: not on +X",
+      "geometry door_L: degenerate triangle",
+      "geometry door_R: degenerate triangle",
+      "geometry static_pal_brick: degenerate triangle"
+    ],
+    "triangles": 11768,
+    "materials": 9,
+    "drawCalls": 15,
+    "fileKB": 1029.0078125,
+    "dimensions": [
+      3.1596570312976837,
+      2.780000075697899,
+      6.860399812459946
+    ],
+    "hash": "ba43fd6634c6ed68726cab762bd6db4c03d5ebe010792f63fc7e6c708c5cff4c"
+  },
+  {
+    "id": "bld.joes-diner:lod0",
+    "errors": [
+      "dimensions.x: 6.9700000286102295 expected 8",
+      "dimensions.y: 6.320000171661377 expected 5",
+      "dimensions.z: 11.74500036239624 expected 6",
+      "forward front: not on +X",
+      "geometry interior_emi_windowGlow: degenerate triangle",
+      "geometry interior_pal_uiDark: degenerate triangle",
+      "geometry roof_pal_uiDark: degenerate triangle",
+      "geometry root_pal_schoolBusYellow: degenerate triangle",
+      "fileKB: 7609.27734375 > 6000"
+    ],
+    "triangles": 91963,
+    "materials": 14,
+    "drawCalls": 39,
+    "fileKB": 7609.27734375,
+    "dimensions": [
+      6.9700000286102295,
+      6.320000171661377,
+      11.74500036239624
+    ],
+    "hash": "0c5cef65534b27565616798d0e35f879de3a71fd0865f7f53cf956c7d7889f26"
+  },
+  {
+    "id": "bld.joes-diner:lod1",
+    "errors": [
+      "dimensions.x: 6.941203832626343 expected 8",
+      "dimensions.y: 6.401704300194979 expected 5",
+      "dimensions.z: 12.208086967468262 expected 6",
+      "forward front: not on +X",
+      "geometry interior_emi_windowGlow: degenerate triangle",
+      "geometry interior_pal_uiDark: degenerate triangle",
+      "geometry roof_pal_uiDark: degenerate triangle",
+      "geometry root_pal_schoolBusYellow: degenerate triangle"
+    ],
+    "triangles": 13049,
+    "materials": 14,
+    "drawCalls": 39,
+    "fileKB": 1461.75,
+    "dimensions": [
+      6.941203832626343,
+      6.401704300194979,
+      12.208086967468262
+    ],
+    "hash": "5d234dd3eba14cd72a377598177570d2b15833fe5394413bb4ab87f133d91fb9"
+  },
+  {
+    "id": "bld.joes-diner:lod2",
+    "errors": [
+      "dimensions.x: 7.035684943199158 expected 8",
+      "dimensions.y: 6.417396240867674 expected 5",
+      "dimensions.z: 13.262648582458496 expected 6",
+      "forward front: not on +X",
+      "geometry interior_emi_windowGlow: degenerate triangle"
+    ],
+    "triangles": 1288,
+    "materials": 14,
+    "drawCalls": 35,
+    "fileKB": 183.42578125,
+    "dimensions": [
+      7.035684943199158,
+      6.417396240867674,
+      13.262648582458496
+    ],
+    "hash": "7bae7890bd2e3f0314da4db9ecb6b37c00d3dc6589aed6bf9752759392b89a5e"
+  },
+  {
+    "id": "bld.mainstreet-brick:lod0",
+    "errors": [
+      "dimensions.y: 8.55399951338768 expected 5",
+      "dimensions.z: 9.702499866485596 expected 6",
+      "forward front: not on +X",
+      "fileKB: 10511.4609375 > 6000"
+    ],
+    "triangles": 95698,
+    "materials": 14,
+    "drawCalls": 26,
+    "fileKB": 10511.4609375,
+    "dimensions": [
+      7.388000011444092,
+      8.55399951338768,
+      9.702499866485596
+    ],
+    "hash": "8b3d5f47fc7025fc118e8520be9a2fdb5a81306209f6b363380ab686379c824b"
+  },
+  {
+    "id": "bld.mainstreet-brick:lod1",
+    "errors": [
+      "dimensions.y: 8.537948727607727 expected 5",
+      "dimensions.z: 9.652626514434814 expected 6",
+      "forward front: not on +X"
+    ],
+    "triangles": 13209,
+    "materials": 14,
+    "drawCalls": 26,
+    "fileKB": 1684.10546875,
+    "dimensions": [
+      7.3722726702690125,
+      8.537948727607727,
+      9.652626514434814
+    ],
+    "hash": "30cc1991de995500769369731ebbae0214ed6458fb413e187d188dfd528c60ce"
+  },
+  {
+    "id": "bld.mainstreet-brick:lod2",
+    "errors": [
+      "dimensions.y: 9.373448997735977 expected 5",
+      "dimensions.z: 10.290001392364502 expected 6",
+      "forward front: not on +X"
+    ],
+    "triangles": 2208,
+    "materials": 14,
+    "drawCalls": 26,
+    "fileKB": 313.97265625,
+    "dimensions": [
+      7.65874171257019,
+      9.373448997735977,
+      10.290001392364502
+    ],
+    "hash": "6bdf35bff54bf53fe9ac07f2437bfe946ca1ed07c96c4cee2d92941f121642ef"
+  },
+  {
     "id": "bld.bus-stop:lod0",
     "errors": [
       "forward front: not on +X",
@@ -877,6 +1382,403 @@
     "fileKB": 0,
     "dimensions": [],
     "hash": ""
+  },
+  {
+    "id": "int.pharmacy-clinic:lod0",
+    "errors": [
+      "dimensions.x: 6.300000011920929 expected 8",
+      "dimensions.y: 3.614999920129776 expected 5",
+      "forward front: not on +X",
+      "geometry interior_pal_grass: degenerate triangle",
+      "geometry wheelL_pal_sidewalk: degenerate triangle",
+      "geometry wheelR_pal_sidewalk: degenerate triangle",
+      "triangles: 156724 > 100000",
+      "fileKB: 12581.43359375 > 6000"
+    ],
+    "triangles": 156724,
+    "materials": 13,
+    "drawCalls": 32,
+    "fileKB": 12581.43359375,
+    "dimensions": [
+      6.300000011920929,
+      3.614999920129776,
+      6.350000202655792
+    ],
+    "hash": "dbe1dc5e0308590ed5864917c1996b022029daa10165a77b776923b129c35233"
+  },
+  {
+    "id": "int.pharmacy-clinic:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "int.pharmacy-clinic:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "npc.patient-zero-courier:lod0",
+    "errors": [
+      "dimensions.y: 1.4144864082336426 expected 1.6",
+      "dimensions.z: 0.6909636855125427 expected 0.6",
+      "forward front: not on +X"
+    ],
+    "triangles": 52970,
+    "materials": 8,
+    "drawCalls": 41,
+    "fileKB": 1301.80078125,
+    "dimensions": [
+      0.7180309593677521,
+      1.4144864082336426,
+      0.6909636855125427
+    ],
+    "hash": "d88734b9189017bb6e47c74ffd12f00de3fed3ac4468964799d7a675bfbdb3d0"
+  },
+  {
+    "id": "npc.patient-zero-courier:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "npc.patient-zero-courier:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "prop.medical-cooler:lod0",
+    "errors": [
+      "dimensions.x: 0.5414999891157725 expected 1",
+      "dimensions.z: 0.8346639573574066 expected 1",
+      "forward front: not on +X",
+      "geometry body_pal_schoolBusYellow: degenerate triangle",
+      "geometry body_pal_uiDark: degenerate triangle",
+      "geometry body_pal_woodWarm: degenerate triangle",
+      "geometry lid_pal_schoolBusYellow: degenerate triangle"
+    ],
+    "triangles": 9960,
+    "materials": 5,
+    "drawCalls": 11,
+    "fileKB": 382.89453125,
+    "dimensions": [
+      0.5414999891157725,
+      0.9974999725818634,
+      0.8346639573574066
+    ],
+    "hash": "ab2f505fd4c008e7343e28a8467ccc689319a65e0e9d4f00d7d92db8a0a529b1"
+  },
+  {
+    "id": "veh.courier-van:lod0",
+    "errors": [
+      "dimensions.x: 5.469567775726318 expected 4.4",
+      "dimensions.y: 3.005999982357025 expected 1.8",
+      "dimensions.z: 2.7100000381469727 expected 1.9"
+    ],
+    "triangles": 71990,
+    "materials": 8,
+    "drawCalls": 38,
+    "fileKB": 3148.91796875,
+    "dimensions": [
+      5.469567775726318,
+      3.005999982357025,
+      2.7100000381469727
+    ],
+    "hash": "dc00aea1a3158fb5a74ed658a9e42b12a13b1013a573663eb62b2d27c47fdc9c"
+  },
+  {
+    "id": "veh.courier-van:lod1",
+    "errors": [
+      "dimensions.x: 5.471999883651733 expected 4.4",
+      "dimensions.y: 3.003499984741211 expected 1.8",
+      "dimensions.z: 2.7100000381469727 expected 1.9"
+    ],
+    "triangles": 8372,
+    "materials": 8,
+    "drawCalls": 38,
+    "fileKB": 319.546875,
+    "dimensions": [
+      5.471999883651733,
+      3.003499984741211,
+      2.7100000381469727
+    ],
+    "hash": "da70a19d43d162cafdd33f5f4dfc31188af5485e6f61e2108c1f633accc8e64c"
+  },
+  {
+    "id": "veh.courier-van:lod2",
+    "errors": [
+      "dimensions.x: 5.3999998569488525 expected 4.4",
+      "dimensions.y: 3.003499984741211 expected 1.8",
+      "dimensions.z: 2.709999978542328 expected 1.9"
+    ],
+    "triangles": 2360,
+    "materials": 8,
+    "drawCalls": 37,
+    "fileKB": 118.22265625,
+    "dimensions": [
+      5.3999998569488525,
+      3.003499984741211,
+      2.709999978542328
+    ],
+    "hash": "39c09121137e8f6e613a4e821a022b799788669c6328d10c95608c0050ff4a97"
+  },
+  {
+    "id": "npc.brother:lod0",
+    "errors": [
+      "dimensions.y: 1.42654150724411 expected 1.6",
+      "dimensions.z: 0.6681413352489471 expected 0.6",
+      "forward front: not on +X",
+      "material: unknown pal_blueTrim",
+      "material: unknown pal_skinWarm",
+      "material: unknown pal_redShadow",
+      "material: unknown pal_skinBlush",
+      "material: unknown pal_hairBrown",
+      "material: unknown pal_eyeBrown",
+      "material: unknown pal_backpackBlue",
+      "material: unknown pal_hairLight"
+    ],
+    "triangles": 53892,
+    "materials": 13,
+    "drawCalls": 49,
+    "fileKB": 1366.6953125,
+    "dimensions": [
+      0.6756395809352398,
+      1.42654150724411,
+      0.6681413352489471
+    ],
+    "hash": "4487836f53bb9f5d02b5c23a78b3d62399cf17116ae655cea46a2b343b9299ac"
+  },
+  {
+    "id": "npc.brother:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "npc.brother:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "npc.mrs-alvarez:lod0",
+    "errors": [
+      "dimensions.x: 0.5102722942829132 expected 0.7",
+      "dimensions.z: 0.775772362947464 expected 0.6",
+      "forward front: not on +X",
+      "material: unknown pal_trouserViolet",
+      "material: unknown pal_apronSage",
+      "material: unknown pal_pocketRose",
+      "material: unknown pal_apronOlive",
+      "material: unknown pal_skinWarm",
+      "material: unknown pal_shoeTan",
+      "material: unknown pal_cardiganTrim",
+      "material: unknown pal_cardiganLavender",
+      "material: unknown pal_gloveKhaki",
+      "material: unknown pal_skinBlush",
+      "material: unknown pal_hairShadow",
+      "material: unknown pal_hairSilver",
+      "material: unknown pal_hairHighlight"
+    ],
+    "triangles": 56986,
+    "materials": 20,
+    "drawCalls": 58,
+    "fileKB": 1062.02734375,
+    "dimensions": [
+      0.5102722942829132,
+      1.4490698426961899,
+      0.775772362947464
+    ],
+    "hash": "6b3cee94942705f02284eb3d1383427dbdae2772de5412ab85fd79a216c40664"
+  },
+  {
+    "id": "npc.mrs-alvarez:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "npc.mrs-alvarez:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "wpn.smg:lod0",
+    "errors": [
+      "dimensions.x: 0.8425001844740685 expected 1",
+      "dimensions.y: 0.4771428541862406 expected 1",
+      "dimensions.z: 0.1340000033378601 expected 1",
+      "forward front: not on +X"
+    ],
+    "triangles": 5616,
+    "materials": 4,
+    "drawCalls": 8,
+    "fileKB": 519.58984375,
+    "dimensions": [
+      0.8425001844740685,
+      0.4771428541862406,
+      0.1340000033378601
+    ],
+    "hash": "14087a0755e447cc5deeb6c116f599da586c50e6f5205bcd1d1f2417c575f5c8"
+  },
+  {
+    "id": "wpn.hunting-rifle:lod0",
+    "errors": [
+      "dimensions.x: 1.3129999991506338 expected 1",
+      "dimensions.y: 0.3351213186979294 expected 1",
+      "dimensions.z: 0.11400000005960464 expected 1",
+      "forward front: not on +X"
+    ],
+    "triangles": 4920,
+    "materials": 4,
+    "drawCalls": 6,
+    "fileKB": 371.1875,
+    "dimensions": [
+      1.3129999991506338,
+      0.3351213186979294,
+      0.11400000005960464
+    ],
+    "hash": "3b7e63499aef775513baeb223f0003051a99ab0a8554f9087d0ca001cf0edae6"
+  },
+  {
+    "id": "thr.frag-grenade:lod0",
+    "errors": [
+      "dimensions.x: 0.15220370329916477 expected 1",
+      "dimensions.y: 0.23819999769330025 expected 1",
+      "dimensions.z: 0.1395222246646881 expected 1",
+      "forward front: not on +X"
+    ],
+    "triangles": 3904,
+    "materials": 4,
+    "drawCalls": 6,
+    "fileKB": 315.57421875,
+    "dimensions": [
+      0.15220370329916477,
+      0.23819999769330025,
+      0.1395222246646881
+    ],
+    "hash": "8e65ca77ef01fa006fed5993e9ccc2b7dbd4176337c1fcb957702566ebe55303"
+  },
+  {
+    "id": "bld.civic-center:lod0",
+    "errors": [
+      "dimensions.x: 13.582000374794006 expected 8",
+      "dimensions.y: 7.390000224113464 expected 5",
+      "dimensions.z: 14.432000756263733 expected 6",
+      "forward front: not on +X",
+      "geometry door lower inset: degenerate triangle",
+      "geometry door lower inset.001: degenerate triangle",
+      "geometry root_pal_picketWhite: degenerate triangle",
+      "geometry root_pal_uiDark: degenerate triangle",
+      "fileKB: 6245.48046875 > 6000"
+    ],
+    "triangles": 84460,
+    "materials": 11,
+    "drawCalls": 39,
+    "fileKB": 6245.48046875,
+    "dimensions": [
+      13.582000374794006,
+      7.390000224113464,
+      14.432000756263733
+    ],
+    "hash": "ffa15a217e675ecdfcb7fbf39ac1ccf54f895895b2314a03f7b907545c9e4c9a"
+  },
+  {
+    "id": "bld.civic-center:lod1",
+    "errors": [
+      "dimensions.x: 13.619500696659088 expected 8",
+      "dimensions.y: 7.30200008302927 expected 5",
+      "dimensions.z: 14.469502031803131 expected 6",
+      "forward front: not on +X",
+      "geometry door lower inset: degenerate triangle",
+      "geometry door lower inset.001: degenerate triangle",
+      "geometry root_pal_picketWhite: degenerate triangle",
+      "geometry root_pal_uiDark: degenerate triangle"
+    ],
+    "triangles": 8261,
+    "materials": 11,
+    "drawCalls": 39,
+    "fileKB": 700.78125,
+    "dimensions": [
+      13.619500696659088,
+      7.30200008302927,
+      14.469502031803131
+    ],
+    "hash": "4071644580eb7e53aa7ac43ba4b277301ce7e93001d4660aa2d06cbb92698758"
+  },
+  {
+    "id": "bld.civic-center:lod2",
+    "errors": [
+      "dimensions.x: 13.817113935947418 expected 8",
+      "dimensions.y: 7.2124167419970036 expected 5",
+      "dimensions.z: 14.864728927612305 expected 6",
+      "forward front: not on +X",
+      "geometry door lower inset: degenerate triangle",
+      "geometry door lower inset.001: degenerate triangle",
+      "geometry root_pal_picketWhite: degenerate triangle",
+      "geometry root_pal_uiDark: degenerate triangle"
+    ],
+    "triangles": 2855,
+    "materials": 11,
+    "drawCalls": 39,
+    "fileKB": 331.37890625,
+    "dimensions": [
+      13.817113935947418,
+      7.2124167419970036,
+      14.864728927612305
+    ],
+    "hash": "dfecdbb305ece5768544c6e99a0fd5ab6af196cbb9707a00583a21a541f65d1f"
   },
   {
     "id": "prop.gas-pump:lod0",
@@ -958,5 +1860,431 @@
       1.034000039100647
     ],
     "hash": "3fc49ed8ec9a9aa0cb4ea14c2f78431831fca19c2b378bc9fb79042881f568a2"
+  },
+  {
+    "id": "npc.civilian-man-a:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "material: unknown pal_khaki",
+      "material: unknown pal_khakiLight",
+      "material: unknown pal_khakiSeam",
+      "material: unknown pal_leather",
+      "material: unknown pal_silver",
+      "material: unknown pal_polo",
+      "material: unknown pal_poloDark",
+      "material: unknown pal_poloLight",
+      "material: unknown pal_skinWarm",
+      "material: unknown pal_bandage",
+      "material: unknown pal_eyeBrown",
+      "material: unknown pal_hairChestnut",
+      "material: unknown pal_hairHighlight",
+      "material: unknown pal_hairWarm",
+      "material: unknown pal_mouth",
+      "material: unknown pal_skinBlush",
+      "material: unknown pal_skinShadow",
+      "material: unknown pal_orange"
+    ],
+    "triangles": 55554,
+    "materials": 20,
+    "drawCalls": 61,
+    "fileKB": 1346.10546875,
+    "dimensions": [
+      0.37313416600227356,
+      1.431667448952794,
+      0.6651999652385712
+    ],
+    "hash": "d2d2d0e9d506d8191f631ba5ec30c1503ed50c7cef573a3ae70fb135ce8887c9"
+  },
+  {
+    "id": "npc.civilian-man-a:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "npc.civilian-man-a:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "npc.civilian-man-b:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "material: unknown pal_denimBlue",
+      "material: unknown pal_denimLight",
+      "material: unknown pal_hoodieShade",
+      "material: unknown pal_capNavy",
+      "material: unknown pal_skinWarm",
+      "material: unknown pal_skinBlush"
+    ],
+    "triangles": 59164,
+    "materials": 12,
+    "drawCalls": 50,
+    "fileKB": 1411.25,
+    "dimensions": [
+      0.4227195233106613,
+      1.4376751221716404,
+      0.6695938408374786
+    ],
+    "hash": "df9ee398e27af9d63c412f8c2ca75bb9024d2f0c2c85a57494b5e50c6c3f63cb"
+  },
+  {
+    "id": "npc.civilian-man-b:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "npc.civilian-man-b:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "npc.civilian-woman-a:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "geometry torso_pal_canvasTan: degenerate triangle",
+      "material: unknown pal_skinWarm",
+      "material: unknown pal_eyeBrown",
+      "material: unknown pal_hairChestnut",
+      "material: unknown pal_hairHighlight",
+      "material: unknown pal_skinBlush",
+      "material: unknown pal_canvasTan"
+    ],
+    "triangles": 56966,
+    "materials": 13,
+    "drawCalls": 35,
+    "fileKB": 1400.375,
+    "dimensions": [
+      0.5174842649139464,
+      1.4140521343797445,
+      0.7555636763572693
+    ],
+    "hash": "20b90f9613303b5ddac75ef909c73418ff422bdd46bb8a598e2697b48675e332"
+  },
+  {
+    "id": "npc.civilian-woman-a:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "npc.civilian-woman-a:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "npc.civilian-woman-b:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "material: unknown pal_brass",
+      "material: unknown pal_leather",
+      "material: unknown pal_navy",
+      "material: unknown pal_navySeam",
+      "material: unknown pal_leatherEdge",
+      "material: unknown pal_skinWarm",
+      "material: unknown pal_lavender",
+      "material: unknown pal_lavenderLight",
+      "material: unknown pal_lavenderShadow",
+      "material: unknown pal_eyeBrown",
+      "material: unknown pal_hairChestnut",
+      "material: unknown pal_hairHighlight",
+      "material: unknown pal_hairWarm",
+      "material: unknown pal_mouth",
+      "material: unknown pal_skinBlush",
+      "material: unknown pal_skinShadow"
+    ],
+    "triangles": 58931,
+    "materials": 19,
+    "drawCalls": 58,
+    "fileKB": 1325.96875,
+    "dimensions": [
+      0.42142805457115173,
+      1.4000000953674316,
+      0.6310051083564758
+    ],
+    "hash": "5cd0776243d04ccbef49b694eea64c447decddb0602e579160b19338e7cdddfa"
+  },
+  {
+    "id": "npc.civilian-woman-b:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "npc.civilian-woman-b:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "prop.barricade:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 9624,
+    "materials": 3,
+    "drawCalls": 3,
+    "fileKB": 841.4453125,
+    "dimensions": [
+      1.16103994846344,
+      1.8040308952331543,
+      2.250000238418579
+    ],
+    "hash": "39e489b547801f1570c475f14539dcbadeb6bbeaa6b95f6509eb48a73b607813"
+  },
+  {
+    "id": "prop.bench:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 9268,
+    "materials": 2,
+    "drawCalls": 2,
+    "fileKB": 642.55859375,
+    "dimensions": [
+      0.7541895508766174,
+      1.0899329781532288,
+      1.899999976158142
+    ],
+    "hash": "aa1dfb2eefad401649edeeceaaf3ccc4fe5bcdc709c568dd41fa59b02024a86a"
+  },
+  {
+    "id": "prop.fire-hydrant:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 7064,
+    "materials": 2,
+    "drawCalls": 2,
+    "fileKB": 480.70703125,
+    "dimensions": [
+      0.6431257128715515,
+      1.0820000171661377,
+      0.6431257128715515
+    ],
+    "hash": "a26e43c388529f3383879aa0c22384c314fa5da65ad3651bba85116e7c30c6c6"
+  },
+  {
+    "id": "prop.hedge:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 9036,
+    "materials": 3,
+    "drawCalls": 3,
+    "fileKB": 1066.171875,
+    "dimensions": [
+      2.528046131134033,
+      1.563220500946045,
+      0.8810849189758301
+    ],
+    "hash": "88b27384615fd69ad66fe2e4760158bf3058a26de2811de926d655b811b6a30e"
+  },
+  {
+    "id": "prop.mailbox-blue:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 6964,
+    "materials": 5,
+    "drawCalls": 8,
+    "fileKB": 237.6015625,
+    "dimensions": [
+      0.7389999963343143,
+      1.5390000343322754,
+      0.9420000314712524
+    ],
+    "hash": "991e0e13d100f83ecb3859d3bc35bbf24893e6dceb50e0a11fa51bb3f6f4f4af"
+  },
+  {
+    "id": "prop.picket-fence:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 6352,
+    "materials": 1,
+    "drawCalls": 1,
+    "fileKB": 589.6484375,
+    "dimensions": [
+      0.25093501806259155,
+      1.3388891220092773,
+      2.640678286552429
+    ],
+    "hash": "4ffaba5140e47097f1a9d59d82675c8abd75445f433439e2ba4568372b9767bd"
+  },
+  {
+    "id": "prop.street-lamp:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "geometry body: degenerate triangle"
+    ],
+    "triangles": 6844,
+    "materials": 2,
+    "drawCalls": 2,
+    "fileKB": 531.1796875,
+    "dimensions": [
+      0.6399999856948853,
+      3.865000009536743,
+      0.6399999856948853
+    ],
+    "hash": "75f18f5e9874f7d27222023385682796ad34e9bb770a4b14b3f48a62540460bf"
+  },
+  {
+    "id": "prop.street-sign:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 9556,
+    "materials": 4,
+    "drawCalls": 4,
+    "fileKB": 701.16796875,
+    "dimensions": [
+      0.3400000035762787,
+      2.86899995803833,
+      1.159999966621399
+    ],
+    "hash": "fcd7f8c8cf476d1187ce243526e29f042920a39411e6544cac0e9620eeec9dcb"
+  },
+  {
+    "id": "prop.traffic-cone:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "geometry body: degenerate triangle"
+    ],
+    "triangles": 8352,
+    "materials": 2,
+    "drawCalls": 2,
+    "fileKB": 383.53125,
+    "dimensions": [
+      0.47999998927116394,
+      0.6460000276565552,
+      0.47999998927116394
+    ],
+    "hash": "f1e88f23f94f4ad7fde7083b3a6d6aee9b6946392b124f171ba48a1ff1e0ff4d"
+  },
+  {
+    "id": "prop.trash-bin:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 9420,
+    "materials": 6,
+    "drawCalls": 13,
+    "fileKB": 985.34375,
+    "dimensions": [
+      0.7239999920129776,
+      1.2180000860681264,
+      1.781999975685821
+    ],
+    "hash": "8840005a2a48766843d110efe1cf953ebae02f892203401b6f98c8d9f2a0fe7f"
+  },
+  {
+    "id": "prop.utility-pole:lod0",
+    "errors": [
+      "forward front: not on +X",
+      "geometry static_uiDark: degenerate triangle"
+    ],
+    "triangles": 11068,
+    "materials": 4,
+    "drawCalls": 4,
+    "fileKB": 660.96484375,
+    "dimensions": [
+      0.8599999845027924,
+      7.142499923706055,
+      3.24536669254303
+    ],
+    "hash": "e0aa2f6a9aaf0b107134573324661092ad7f9fa0dc448db48cba8e94661b43cb"
+  },
+  {
+    "id": "inf.teen-skater:lod0",
+    "errors": [
+      "forward front: not on +X"
+    ],
+    "triangles": 37809,
+    "materials": 9,
+    "drawCalls": 64,
+    "fileKB": 1166.0703125,
+    "dimensions": [
+      0.9556333422660828,
+      1.6637544706463814,
+      1.217635691165924
+    ],
+    "hash": "852f8af7df2070581f3d3e4652fde5edf1d2bb805d513b30536cac44dde2792b"
+  },
+  {
+    "id": "inf.teen-skater:lod1",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
+  },
+  {
+    "id": "inf.teen-skater:lod2",
+    "errors": [
+      "missing LOD"
+    ],
+    "triangles": 0,
+    "materials": 0,
+    "drawCalls": 0,
+    "fileKB": 0,
+    "dimensions": [],
+    "hash": ""
   }
 ]
