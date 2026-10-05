@@ -374,7 +374,7 @@ if a.render:
     light('warm key',(3,-4,5),460,(1,.83,.69),3);light('cool fill',(1,4,3),260,(.63,.72,1),3);light('amber rim',(-3,1,3.5),600,(1,.46,.2),2)
     bpy.ops.mesh.primitive_plane_add(size=200);ground=bpy.context.object;ground.name='studio_floor';ground.data.materials.append(mat('studio','35303b',.88))
     cam=bpy.data.objects.new('camera',bpy.data.cameras.new('camera'));S.collection.objects.link(cam);S.camera=cam
-    views={'hero':(6,-4,2.9),'front':(6,0,1.35),'side':(0,-6,1.35),'back':(-6,0,1.35)}
+    views={'hero':(6,-4,2.9),'pose':(6,4,2.9),'front':(6,0,1.35),'side':(0,-6,1.35),'back':(-6,0,1.35)}
     cam.location=views.get(a.view,views['hero']);cam.rotation_euler=(Vector((.13,0,.85))-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';cam.data.ortho_scale=2.10*max(a.width/a.height,1)
     S.render.engine='CYCLES';S.cycles.samples=a.samples;S.cycles.use_denoising=True
     prefs=bpy.context.preferences.addons['cycles'].preferences
@@ -397,21 +397,23 @@ if a.render:
             if crop:pixels=pixels[:,(w-crop)//2:(w+crop)//2,:]
             panels.append(pixels)
         data=np.concatenate(panels,axis=1);sheet=bpy.data.images.new('comparison',width=data.shape[1],height=data.shape[0],alpha=True);sheet.pixels.foreach_set(data.ravel());sheet.filepath_raw=str(path);sheet.file_format='PNG';sheet.save()
-    if a.view in ['review-all','final-all']:
+    if a.view in ['review-all','final-all','pose-pair']:
         out=Path(a.render).parent
-        for view,filename in [('front','front.png'),('side','side.png'),('back','back.png'),('hero','review-hero.png')]:render_view(view,out/filename)
-        combine([out/n for n in ['front.png','side.png','back.png','review-hero.png']],out/'turnaround.png',460)
+        if a.view!='pose-pair':
+            for view,filename in [('front','front.png'),('side','side.png'),('back','back.png'),('hero','review-hero.png')]:render_view(view,out/filename)
+            combine([out/n for n in ['front.png','side.png','back.png','review-hero.png']],out/'turnaround.png',460)
         if a.view=='final-all':
             render_view('hero',out/'hero.png',1600,900,96)
+        if a.view in ['final-all','pose-pair']:
             parts['armL'].rotation_euler.x=.45;parts['foreArmL'].rotation_euler.y=-.55;parts['legR'].rotation_euler.y=-.35
-            render_view('hero',out/'pose-articulated.png')
+            render_view('pose',out/'pose-articulated.png')
             for o in objects:
                 parent=o.parent
                 while parent:
                     if parent==parts['armL']:o.hide_render=True;break
                     parent=parent.parent
             bpy.data.objects['stump_armL'].scale=(1,1,1)
-            render_view('hero',out/'pose-amputated.png')
+            render_view('pose',out/'pose-amputated.png')
             combine([out/'pose-articulated.png',out/'pose-amputated.png'],out/'pose-test.png',600)
     else:render_view(a.view,a.render,a.width,a.height,a.samples)
 print('OK',triangles,'triangles',len(objects),'meshes')
