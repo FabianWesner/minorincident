@@ -26,12 +26,7 @@ export class ActionEffects {
     const zone: ActionZone = { ...effect, x: position.x, z: position.z, created: this.world.tick, expires: this.world.tick + ticks(effect.duration), nextPulse: this.world.tick, attack };
     this.zones.push(zone);
     this.world.events.emit({ type: 'combat.effect', tick: this.world.tick, sourceId: attack.sourceId, actionId: attack.def.id, kind: effect.kind, position: { x: zone.x, y: 0, z: zone.z }, radius: zone.radius, expires: zone.expires });
-    if (effect.kind === 'lure') {
-      this.noise(position, effect.radius, attack.def.id);
-      for (const entity of this.world.entities.iterate()) if (entity.hearing && entity.health.current > 0 && this.contains(zone, entity.transform)) {
-        entity.hearing.mode = 'lured'; entity.hearing.target.x = zone.x; entity.hearing.target.z = zone.z; entity.hearing.lureUntil = zone.expires;
-      }
-    }
+    if (effect.kind === 'lure') this.noise(position, effect.radius, attack.def.id);
   }
   private contains(zone: ActionZone, position: Vec2): boolean { return (position.x - zone.x) ** 2 + (position.z - zone.z) ** 2 <= zone.radius ** 2; }
   inSmoke(position: Vec2): boolean { return this.zones.some((z) => z.kind === 'smoke' && this.contains(z, position) && z.expires > this.world.tick); }
@@ -43,11 +38,15 @@ export class ActionEffects {
       const zone = this.zones[i];
       if (this.world.tick >= zone.expires) { this.zones.splice(i, 1); continue; }
       if (zone.kind === 'shield' || zone.kind === 'adrenaline') { const player = this.world.entities.get(zone.attack.sourceId)!; zone.x = player.transform.x; zone.z = player.transform.z; }
-      if (this.world.tick < zone.nextPulse) continue;
-      if (zone.kind === 'fire') {
-        for (const entity of this.world.entities.iterate()) if (entity.faction === 'infected' && entity.health.current > 0 && this.contains(zone, entity.transform) && zone.attack.def.status) this.world.combat!.status.apply(entity, zone.attack.def.status, zone.attack.sourceId, zone.attack.def.id);
-        zone.nextPulse += 60;
-      } else if (zone.kind === 'turret') {
+      if (zone.kind === 'lure') {
+        for (const entity of this.world.entities.iterate()) if (entity.hearing && entity.health.current > 0 && this.contains(zone, entity.transform) && entity.hearing.lureUntil <= zone.expires) {
+          entity.hearing.mode = 'lured'; entity.hearing.target.x = zone.x; entity.hearing.target.z = zone.z; entity.hearing.lureUntil = zone.expires;
+        }
+      } else if (zone.kind === 'fire') {
+        const pulse = this.world.tick >= zone.nextPulse;
+        for (const entity of this.world.entities.iterate()) if (entity.faction === 'infected' && entity.health.current > 0 && this.contains(zone, entity.transform) && zone.attack.def.status && (pulse || !entity.combat?.statuses.some((s) => s.kind === 'burning'))) this.world.combat!.status.apply(entity, zone.attack.def.status, zone.attack.sourceId, zone.attack.def.id);
+        if (pulse) zone.nextPulse += 60;
+      } else if (zone.kind === 'turret' && this.world.tick >= zone.nextPulse) {
         const combat = this.world.combat!;
         let target: import('../world/types').EntitySnapshot | undefined, nearest = zone.radius;
         for (const entity of this.world.entities.iterate()) {
@@ -74,7 +73,7 @@ export class ActionEffects {
       let dx = brain.target.x - entity.transform.x, dz = brain.target.z - entity.transform.z, distance = Math.hypot(dx, dz);
       if (distance < 0.1) { if (brain.mode !== 'lured') brain.mode = 'idle'; continue; }
       for (const zone of this.zones) {
-        if (zone.kind !== 'fire' || this.contains(zone, brain.target)) continue;
+        if (zone.kind !== 'fire' || zone.expires <= this.world.tick || this.contains(zone, brain.target)) continue;
         const px = entity.transform.x - zone.x, pz = entity.transform.z - zone.z, radial = Math.hypot(px, pz), radius = zone.radius + 0.5;
         const along = -(px * dx + pz * dz) / distance, cross = (px * dz - pz * dx) / distance;
         if (radial > zone.radius && along > 0 && along < distance && Math.abs(cross) < radius) {

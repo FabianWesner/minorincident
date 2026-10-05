@@ -118,3 +118,15 @@ test('T-E06-smoke-role @E06 @E06-AC02 @E06-AC10 smoke breaks investigation and s
   w.combat!.effects.noise({ x: 0, z: 0 }, 25, 'weapon.pistol'); step(w, 60); expect(w.entities.get(id)!.transform).toEqual(position);
   step(w, zone.expires - w.tick); w.combat!.effects.noise({ x: 0, z: 0 }, 25, 'weapon.pistol'); expect(w.entities.get(id)!.hearing!.mode).toBe('investigate'); step(w, 30); expect(w.entities.get(id)!.transform.x).toBeLessThan(position.x);
 });
+
+
+test('T-E06-zone-entry @E06 @E06-AC05 @E06-AC06 late entrants burn or become lured until zone expiry', async () => {
+  for (const [id, radius] of [['weapon.molotov', 4], ['weapon.firecracker-lure', 15]] as const) {
+    const w = await arena(); equip(w, [id]); w.combat!.damage.god = true;
+    fire(w, 'LEFT', { x: 1, z: 0 }, { x: 6, z: 0 }); step(w, 35);
+    const targetId = w.spawnDummy('infected.runner', { x: 6, z: radius + 0.1 }, { reactive: true }), target = w.entities.get(targetId)!;
+    target.transform.z = radius - 0.1; w.spatial.set(targetId, target.transform.x, target.transform.z); step(w, 1);
+    if (id === 'weapon.molotov') expect(target.combat!.statuses.some((s) => s.kind === 'burning')).toBe(true);
+    else { expect(target.hearing!.mode).toBe('lured'); expect(target.hearing!.target).toEqual({ x: 6, z: 0 }); expect(target.hearing!.lureUntil).toBe(w.combat!.effects.zones[0].expires); }
+  }
+});
