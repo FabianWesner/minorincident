@@ -34,6 +34,11 @@ export class Physics implements Lifecycle {
     this.world!.createCollider(RAPIER.ColliderDesc.cuboid(half[0],half[1],half[2]).setTranslation((aabb.min[0]+aabb.max[0])/2+origin[0],(aabb.min[1]+aabb.max[1])/2,(aabb.min[2]+aabb.max[2])/2+origin[1]));
   }
   update(): void { if (this.world) { this.world.timestep = FIXED_DT; this.world.step(); } }
+  /** E11 removable doors/props. The caller owns the handle until removed or reset. */
+  addBlocker(wall: NonNullable<ScenarioDefinition['walls']>[number]): number {
+    return this.world!.createCollider(RAPIER.ColliderDesc.cuboid(wall.halfX, wall.halfY, wall.halfZ).setTranslation(wall.x, wall.y, wall.z)).handle;
+  }
+  removeBlocker(handle: number): void { const collider = this.world!.getCollider(handle); if (collider) this.world!.removeCollider(collider, true); }
   reset(): void { this.characterController = null; this.playerCollider = null; this.playerBody = null; this.world?.free(); this.world = null; }
   dispose(): void { this.reset(); }
   get bodyCount(): number { return this.world?.bodies.len() ?? 0; }
