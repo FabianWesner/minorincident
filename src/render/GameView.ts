@@ -17,6 +17,8 @@ import { PostFx } from './PostFx';
 import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
 import type { TimeOfDay } from '../data/timeOfDay';
 import { Vector3 } from 'three';
+import { VehicleFeedback } from './vfx/VehicleFeedback';
+import { Vfx, type VfxSettings } from './vfx/Vfx';
 import { PaletteMaterial } from './PaletteMaterial';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
@@ -27,9 +29,11 @@ export class GameView implements Lifecycle {
   readonly renderer: Renderer;
   private readonly meshes: Mesh[] = [];
   private combat: CombatView | null = null;
-  private stopHitStop: (() => void) | null = null;
-  private hitStopUntil = 0;
+  vfx: Vfx | null = null;
+  private vehicles: VehicleFeedback | null = null;
+  private readonly vfxSettings: VfxSettings = {};
   private hitStopTick = 0;
+  private frozenStarted = -1;
   private frozenPose: SurvivorState | null = null;
   private cube: Mesh | null = null;
   private character: CharacterView | null = null;
@@ -42,6 +46,7 @@ export class GameView implements Lifecycle {
   private readonly playerPosition = new Vector3();
   private readonly projection = new Vector3();
   private idPass = false;
+  private readonly flashOverlay = document.createElement('div');
   private readonly idBackground = new MeshBasicNodeMaterial({ color: '#000000' });
   private readonly idPlayer = new MeshBasicNodeMaterial({ color: '#ff00ff' });
   private readonly savedMaterials = new Map<Mesh, Material | Material[]>();
@@ -54,6 +59,8 @@ export class GameView implements Lifecycle {
     await this.renderer.init(); this.resize();
     this.renderer.domElement.style.display = 'block';
     document.querySelector('#game')!.appendChild(this.renderer.domElement);
+    this.flashOverlay.style.cssText = 'position:fixed;inset:0;background:white;opacity:0;pointer-events:none;z-index:3';
+    document.querySelector('#game')!.appendChild(this.flashOverlay);
     window.addEventListener('resize', this.resize);
   }
   private readonly resize = (): void => {
@@ -73,13 +80,22 @@ export class GameView implements Lifecycle {
       this.meshes.push(ground); this.scene.add(ground);
       if (this.world.combat) {
         this.combat = new CombatView(this.world, this.materials); this.scene.add(this.combat);
-        this.stopHitStop = this.world.events.on('combat.hit-stop', (event) => {
-          if (event.type !== 'combat.hit-stop') return;
-          this.hitStopTick = this.world.tick; this.hitStopUntil = this.world.tick + Math.ceil(event.durationMs * 60 / 1000);
-          this.frozenPose = structuredClone(this.world.entities.get(1)!.survivor!);
-        });
       }
-      this.character = new CharacterView(); await this.character.init(this.materials); this.scene.add(this.character);
+      this.character = new CharacterView(); await this.character.init(this.materials, Boolean(this.world.combat)); this.scene.add(this.character);
+      if (this.world.combat) {
+        this.vehicles = new VehicleFeedback(this.materials); this.scene.add(this.vehicles);
+        this.vfx = new Vfx(this.world, {
+          flash: (id, strength) => this.combat?.flash(id, strength),
+          detach: (id, limb) => this.combat?.detach(id, limb),
+          blood: (coverage) => this.character?.setBlood(coverage),
+          vehicle: (event, bloodEnabled) => this.vehicles?.update(event, bloodEnabled),
+          vehicleBloodEnabled: (enabled) => this.vehicles?.setBloodEnabled(enabled),
+          clearGore: () => this.combat?.clearGore(),
+          shake: (strength) => this.view.shake(strength),
+        }, this.combat!.gibGeometries);
+        this.vfx.set({ quality: this.params.get('quality') === 'low' ? 'low' : 'high', ...this.vfxSettings }); this.scene.add(this.vfx);
+        this.frozenPose = structuredClone(this.world.entities.get(1)!.survivor!);
+      }
     } else if (this.world.scenario === 'lookdev') {
       this.renderer.shadowMap.enabled = true;
       this.lighting = new Lighting(this.scene); this.materials = new Materials(this.lighting);
@@ -97,6 +113,8 @@ export class GameView implements Lifecycle {
     await this.renderer.compileAsync(this.scene, this.camera);
     this.idPass = this.params.get('idpass') === '1'; this.update(1);
   }
+  /** Real render seconds, deliberately independent of sim ticks/time scale. */
+  frame(seconds: number): void { this.vfx?.advance(Math.min(1, seconds)); this.combat?.advance(seconds); }
   advance(seconds: number): void {
     const player = this.world.entities.get(1);
     if (player) {
@@ -107,6 +125,11 @@ export class GameView implements Lifecycle {
   }
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
+    if (this.world.scenario?.startsWith('vfx') || this.world.scenario === 'blood-probe' || this.world.scenario === 'gore-probe') {
+      if (!['blood-probe', 'gore-probe', 'vfx-stress', 'vfx-showcase', 'L4', 'L6', 'lunge', 'charge', 'splash', 'bloated'].includes(name)) throw new Error(`Unknown VFX photo spot: ${name}`);
+      if (name === 'L4' || name === 'L6') this.lighting?.set(name);
+      this.view.preset(name, { position: [15, 18, 15], target: [0, 0, 0] }); this.update(1); return;
+    }
     if (this.character) {
       const poses = { front: [7, 2.5, 0], back: [-7, 2.5, 0], left: [0, 2.5, -7], right: [0, 2.5, 7], gameplay: [15, 18, 15] } as const;
       const position = poses[name as keyof typeof poses];
@@ -118,7 +141,9 @@ export class GameView implements Lifecycle {
     this.view.preset(name, pose); this.update(1);
   }
   /** Render settings only; persistence and gameplay accessibility remain owned by E14. */
-  settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean }): void {
+  settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean } & VfxSettings): void {
+    Object.assign(this.vfxSettings, { ...(patch.vfx !== undefined ? { vfx: patch.vfx } : {}), ...(patch.gore !== undefined ? { gore: patch.gore } : {}), ...(patch.flashReduction !== undefined ? { flashReduction: patch.flashReduction } : {}), ...(patch.quality !== undefined ? { quality: patch.quality } : {}) });
+    this.vfx?.set(patch);
     if (patch.cameraShake !== undefined) { this.view.cameraShake = patch.cameraShake; this.advance(0); }
     if (patch.bloom !== undefined && this.postFx) this.postFx.bloomEnabled.value = Number(patch.bloom);
     if (patch.cheapDof !== undefined && this.postFx) this.postFx.setDof(patch.cheapDof);
@@ -133,7 +158,7 @@ export class GameView implements Lifecycle {
     const materialInventory = new Map<string, { name: string; palette: boolean }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial }); });
     return { backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
-      character: this.character?.getState() ?? null,
+      character: this.character?.getState() ?? null, vfx: this.vfx?.snapshot() ?? null, vehicles: this.vehicles?.getState() ?? [], infected: this.combat?.getState() ?? [],
       materials: [...materialInventory.values()], occlusion: this.occlusion.getState(),
       probes: this.lookdev ? { lamp: this.project(...this.lookdev.lampHead.position.toArray() as [number, number, number]), shadow: this.project(...this.lookdev.shadowProbe.position.toArray() as [number, number, number]) } : null };
   }
@@ -144,7 +169,15 @@ export class GameView implements Lifecycle {
       this.character.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha) - 0.7, lerp(previous?.z ?? current.z, current.z, alpha));
       const from = previous?.yaw ?? current.yaw;
       this.character.rotation.y = from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha;
-      this.character.update(this.frozenPose && this.world.tick < this.hitStopUntil ? this.frozenPose : survivor, this.world.tick < this.hitStopUntil ? this.hitStopTick : this.world.tick, alpha);
+      const stopped = this.vfx?.hitStop.active(this.vfx.time) ?? false;
+      if (stopped && this.vfx!.hitStop.started !== this.frozenStarted && this.frozenPose) {
+        this.frozenStarted = this.vfx!.hitStop.started; this.hitStopTick = this.world.tick;
+        const velocity = this.frozenPose.velocity, checkpoint = this.frozenPose.checkpoint;
+        Object.assign(this.frozenPose, survivor);
+        this.frozenPose.velocity = velocity; Object.assign(velocity, survivor.velocity);
+        this.frozenPose.checkpoint = checkpoint; Object.assign(checkpoint, survivor.checkpoint);
+      }
+      this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, alpha);
     }
     if (this.cube && current) {
       this.cube.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha), lerp(previous?.z ?? current.z, current.z, alpha));
@@ -156,6 +189,7 @@ export class GameView implements Lifecycle {
       this.playerPosition.copy(this.lookdev.player.position);
       this.occlusion.update(this.camera, this.playerPosition, 0, this.lookdev.playerMeshes);
     }
+    this.flashOverlay.style.opacity = String(this.vfx?.flash ?? 0);
     this.combat?.update();
     this.lighting?.update(this.view);
     this.wireframe?.update();
@@ -176,7 +210,9 @@ export class GameView implements Lifecycle {
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
   }
   reset(): void {
-    this.stopHitStop?.(); this.stopHitStop = null; this.hitStopUntil = 0; this.frozenPose = null;
+    if (this.vfx) { this.scene.remove(this.vfx); this.vfx.dispose(); this.vfx = null; }
+    if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
+    this.frozenStarted = -1; this.frozenPose = null;
     if (this.combat) { this.scene.remove(this.combat); this.combat.dispose(); this.combat = null; }
     if (this.character) { this.scene.remove(this.character); this.character.dispose(); this.character = null; }
     this.postFx?.dispose(); this.postFx = null;
@@ -190,5 +226,5 @@ export class GameView implements Lifecycle {
     this.meshes.length = 0; this.cube = null;
     if (this.wireframe) { this.scene.remove(this.wireframe.lines); this.wireframe.dispose(); this.wireframe = null; }
   }
-  dispose(): void { this.reset(); window.removeEventListener('resize', this.resize); this.idPlayer.dispose(); this.idBackground.dispose(); this.renderer.dispose(); this.renderer.domElement.remove(); }
+  dispose(): void { this.reset(); window.removeEventListener('resize', this.resize); this.idPlayer.dispose(); this.idBackground.dispose(); this.renderer.dispose(); this.renderer.domElement.remove(); this.flashOverlay.remove(); }
 }

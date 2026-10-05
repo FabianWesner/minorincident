@@ -1,3 +1,4 @@
+import { installVfxScenario } from '../../../tests/fixtures/scenarios/vfx';
 import { Combat } from '../combat/Combat';
 import { Status } from '../combat/Status';
 import { Player } from '../entities/Player';
@@ -62,6 +63,7 @@ export class SimWorld implements Lifecycle {
       Object.assign(this.entities.get(1)!.transform, p);
       this.spatial.set(1, p.x, p.z);
     }, SimPhase.cleanup);
+    installVfxScenario(this);
     this.events.emit({ tick: 0, type: 'scenario.loaded', name, seed });
   }
   setInput(patch: Partial<InputFrame>): void {
@@ -86,7 +88,7 @@ export class SimWorld implements Lifecycle {
     const hp = opts.hp ?? 100, armor = opts.armor ?? 0, yaw = opts.yaw ?? 0, radius = opts.radius ?? 0.4;
     if (![pos.x, pos.z, hp, armor, yaw, radius].every(Number.isFinite) || hp <= 0 || armor < 0 || armor > 1 || radius <= 0) throw new RangeError('Invalid dummy');
     const entity = this.entities.create({ kind: opts.faction === 'escort' ? 'escort' : 'infected', archetype, transform: { ...pos, y: 0.7, yaw }, health: { current: hp, max: hp }, faction: opts.faction ?? 'infected', combat: { radius, armor, shield: opts.shield ?? archetype === 'infected.riot', staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
-    this.spatial.set(entity.id, pos.x, pos.z); return entity.id;
+    this.spatial.set(entity.id, pos.x, pos.z); this.events.emit({ type: 'entity.spawned', tick: this.tick, id: entity.id }); return entity.id;
   }
   /** E05 impulse is the authored displacement in metres, swept against full cover. */
   knockback(entity: EntitySnapshot, direction: { x: number; z: number }, impulse: number): void {

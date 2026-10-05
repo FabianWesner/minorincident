@@ -31,6 +31,7 @@ export class Game {
     this.ticker.events.on('frame', ({ seconds }) => {
       this.frameMs = seconds * 1000;
       if (!this.loading) {
+        if (!this.clock.paused) this.view.frame(seconds);
         const start = performance.now();
         this.clock.advance(seconds, () => this.simTick());
         this.simMs = performance.now() - start;

@@ -20,3 +20,13 @@ test('T-E15-hit-stop @E15 @E15-AC06 render time owns the 50 ms freeze and crowds
   stop.hit(1.5); expect(stop.active(1.549)).toBe(true);
   stop.reset(); expect(stop.active(1.5)).toBe(false);
 });
+
+test('T-E15-tell-slots @E15 @E15-AC04 long tells survive repeated short attacks', () => {
+  const pool = new FxPool(8, 'ground');
+  const persistent = pool.spawn(0, 100, 0, 0, 0, 0, 0, 0, 1, 1, '#59e8ff', 0, 1, true);
+  for (let i = 0; i < 40; i++) {
+    const slot = pool.spawn(i, 1, 0, 0, 0, 0, 0, 0, 1, 1, '#59e8ff', 0, 1, true);
+    expect(slot).not.toBe(persistent); pool.remove(slot);
+  }
+  pool.advance(40); expect(pool.count).toBe(1); pool.remove(persistent); expect(pool.count).toBe(0); pool.dispose();
+});
