@@ -1,3 +1,4 @@
+import { InfectedSystem } from '../ai/InfectedSystem';
 import { Combat } from '../combat/Combat';
 import { Status } from '../combat/Status';
 import { Player } from '../entities/Player';
@@ -18,6 +19,7 @@ export class SimWorld implements Lifecycle {
   readonly spatial = new SpatialHash();
   player: Player | null = null;
   combat: Combat | null = null;
+  infected: InfectedSystem | null = null;
   /** Level-owned records survive player death; scenario unload clears them. */
   mission: GameStateSnapshot['mission'] = null;
   progression: GameStateSnapshot['progression'] = null;
@@ -49,6 +51,7 @@ export class SimWorld implements Lifecycle {
       // Deliberately only a cube input fixture, no survivor controller (E04).
       body.setLinvel({ x: this.input.move.x * 5, y: body.linvel().y, z: this.input.move.z * 5 }, true);
     }, SimPhase.intent);
+    if (definition.infected) { this.infected = new InfectedSystem(this, definition); this.events.on('sim.tick', () => this.infected!.update(), SimPhase.ai); }
     this.events.on('sim.tick', () => this.physics.update(), SimPhase.physics);
     this.events.on('sim.tick', () => {
       if (this.combat) {
@@ -97,7 +100,7 @@ export class SimWorld implements Lifecycle {
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
   }
   reset(): void {
-    this.mission = null; this.progression = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.mission = null; this.progression = null; this.infected = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.tick = 0; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }
   dispose(): void { this.reset(); }
