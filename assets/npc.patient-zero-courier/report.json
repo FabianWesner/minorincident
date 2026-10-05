@@ -1,9 +1,9 @@
 {
   "id": "npc.patient-zero-courier",
   "triangles": {
-    "healthy": 52970,
-    "sick": 54500,
-    "infected": 34140
+    "healthy": 49672,
+    "sick": 50978,
+    "infected": 32636
   },
   "meshes": {
     "healthy": 41,
@@ -12,7 +12,31 @@
   },
   "nodes_ok": true,
   "missing_nodes": [],
-  "rounds": 4,
+  "rounds": 6,
+  "qa_rounds": 2,
+  "qa_fixes": [
+    "Smaller nose/chin, clean jaw and wider healthy smile",
+    "Hair confined under cap and above ears",
+    "Torso narrowed 14%, depth reduced 10%, waist raised 75mm for longer legs"
+  ],
+  "lod_triangles": {
+    "healthy": [
+      49672,
+      7903,
+      2686
+    ],
+    "sick": [
+      50978,
+      8113,
+      2758
+    ],
+    "infected": [
+      32636,
+      5173,
+      1699
+    ]
+  },
+  "lod_nodes_ok": true,
   "webgpu_ok": true,
   "webgl2_ok": true,
   "gaps": []
