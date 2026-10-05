@@ -28,7 +28,9 @@ export interface SSTestApi {
   setLoadout(left: string[], right: string[]): void;
   cheats: { god(on: boolean): void; infiniteCharges(on: boolean): void; killAll(): void; completeObjective(id?: string): void };
   bot: { start(policy?: 'complete' | 'newbie' | 'idle' | 'aggressive'): void; stop(): void; status(): BotStatus };
+  /** E02: scenario photo spots, follow, bounded shake, cinematic blend, and NDC world projection. */
   camera: { preset(name: string): void; follow(): void; shake(intensity: number): void; project(x: number, y: number, z: number): number[]; cinematic(pose: import('../render/View').CameraPose): void };
+  /** E02 presentation patch: cameraShake, bloom, cheapDof, timeOfDay; idPass/occludersVisible are test probes. */
   settings: { set(patch: Partial<Settings>): void };
   perf(): ReturnType<Game['perf']>;
   screenshotReady(): Promise<void>;

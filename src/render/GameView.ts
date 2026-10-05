@@ -14,6 +14,7 @@ import { PostFx } from './PostFx';
 import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
 import type { TimeOfDay } from '../data/timeOfDay';
 import { Vector3 } from 'three';
+import { PaletteMaterial } from './PaletteMaterial';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 export class GameView implements Lifecycle {
@@ -87,6 +88,7 @@ export class GameView implements Lifecycle {
     if (!this.lookdev || !pose) throw new Error(`Unknown photo spot: ${name}`);
     this.view.preset(name, pose); this.update(1);
   }
+  /** Render settings only; persistence and gameplay accessibility remain owned by E14. */
   settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean }): void {
     if (patch.cameraShake !== undefined) { this.view.cameraShake = patch.cameraShake; this.advance(0); }
     if (patch.bloom !== undefined && this.postFx) this.postFx.bloomEnabled.value = Number(patch.bloom);
@@ -99,10 +101,10 @@ export class GameView implements Lifecycle {
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
   project(x: number, y: number, z: number): number[] { return this.projection.set(x, y, z).project(this.camera).toArray(); }
   getState() {
-    const materialNames = new Set<string>();
-    this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialNames.add(material.name); });
+    const materialInventory = new Map<string, { name: string; palette: boolean }>();
+    this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial }); });
     return { backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
-      materials: [...materialNames], occlusion: this.occlusion.getState(),
+      materials: [...materialInventory.values()], occlusion: this.occlusion.getState(),
       probes: this.lookdev ? { lamp: this.project(...this.lookdev.lampHead.position.toArray() as [number, number, number]), shadow: this.project(...this.lookdev.shadowProbe.position.toArray() as [number, number, number]) } : null };
   }
   update(alpha = 1): void {

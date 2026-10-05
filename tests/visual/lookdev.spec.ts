@@ -101,3 +101,25 @@ test('T-E02-11 @E02 @E02-AC11 overview, street and shadow-probe match reviewed g
     expect(png).toMatchSnapshot(`${spot}.png`, { threshold: 0.1, maxDiffPixelRatio: 0.015 });
   }
 });
+
+test('T-E02-dof @E02 optional tilt-shift changes the edges and preserves the central play area', async ({ page }) => {
+  await lookdev(page);
+  const sharp = await capture(page, 'cheap-dof-off');
+  await page.evaluate(() => window.__SS__!.settings.set({ cheapDof: true }));
+  const blurred = await capture(page, 'cheap-dof-on');
+  const { default: pixelmatch } = await import('pixelmatch');
+  const top = Math.floor(sharp.height * 0.2), height = Math.floor(sharp.height * 0.6), stride = sharp.width * 4;
+  expect(pixelmatch(sharp.data.subarray(top * stride, (top + height) * stride), blurred.data.subarray(top * stride, (top + height) * stride), undefined, sharp.width, height, { threshold: 0.01 })).toBe(0);
+  expect(pixelmatch(sharp.data, blurred.data, undefined, sharp.width, sharp.height, { threshold: 0.01 })).toBeGreaterThan(100);
+});
+
+test('T-E02-fog @E02 @E02-AC09 palette surfaces beyond fogFar resolve to the preset fog color', async ({ page }) => {
+  await lookdev(page);
+  const p = await page.evaluate(async () => {
+    const api = window.__SS__!; api.camera.cinematic({ position: [100, 100, 100], target: [0, 0, 0] }); await api.step(60);
+    return api.camera.project(0, 0.05, 8);
+  });
+  const image = await capture(page, 'fog-far'); const color = rgb(image, (p[0] + 1) / 2 * image.width, (1 - p[1]) / 2 * image.height);
+  artifact('fog', { color, expected: [229, 179, 158] });
+  for (let c = 0; c < 3; c++) expect(Math.abs(color[c] - [229, 179, 158][c])).toBeLessThanOrEqual(2);
+});
