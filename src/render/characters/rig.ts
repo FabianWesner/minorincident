@@ -6,6 +6,8 @@ export type CharacterRig = Record<CharacterNode, Object3D>;
 export function resolveRig(model: Group): CharacterRig {
   const nodes = {} as CharacterRig;
   for (const name of characterNodes) { const node = model.getObjectByName(name); if (!node) throw new Error(`Missing character node ${name}`); nodes[name] = node; }
+  // Exported palm sockets can lie beyond the hand-node tolerance; preserve direction, cap offset.
+  for (const side of ['L', 'R'] as const) { const socket = nodes[`weaponSocket${side}`]; if (socket.position.length() > 0.045) socket.position.setLength(0.045); }
   const bounds = new Box3().setFromObject(model), height = bounds.max.y - bounds.min.y;
   if (Math.abs(height - 1.4) > 0.07) throw new Error(`Invalid character height ${height}`);
   return nodes;

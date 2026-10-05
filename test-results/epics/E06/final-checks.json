@@ -1,0 +1,572 @@
+[
+  {
+    "check": "typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "seconds": 6.152,
+    "warnings": false,
+    "main": "0dd9607391535d57bae06df775e759a5a3c7d231",
+    "head": "d46d08463b849cbc6027c5db77be686031a7901c"
+  },
+  {
+    "check": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0,
+    "seconds": 1.796,
+    "warnings": false,
+    "main": "0dd9607391535d57bae06df775e759a5a3c7d231",
+    "head": "d46d08463b849cbc6027c5db77be686031a7901c"
+  },
+  {
+    "check": "test:unit",
+    "command": [
+      "npm",
+      "run",
+      "test:unit"
+    ],
+    "exitCode": 0,
+    "seconds": 298.118,
+    "warnings": false,
+    "main": "0dd9607391535d57bae06df775e759a5a3c7d231",
+    "head": "d46d08463b849cbc6027c5db77be686031a7901c"
+  },
+  {
+    "check": "test:sim",
+    "command": [
+      "npm",
+      "run",
+      "test:sim"
+    ],
+    "exitCode": 0,
+    "seconds": 5.714,
+    "warnings": false,
+    "main": "0dd9607391535d57bae06df775e759a5a3c7d231",
+    "head": "d46d08463b849cbc6027c5db77be686031a7901c"
+  },
+  {
+    "check": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exitCode": 0,
+    "seconds": 4.35,
+    "warnings": false,
+    "main": "0dd9607391535d57bae06df775e759a5a3c7d231",
+    "head": "d46d08463b849cbc6027c5db77be686031a7901c"
+  },
+  {
+    "check": "test:smoke",
+    "command": [
+      "npm",
+      "run",
+      "test:smoke"
+    ],
+    "exitCode": 0,
+    "seconds": 28.972,
+    "warnings": false,
+    "main": "0dd9607391535d57bae06df775e759a5a3c7d231",
+    "head": "d46d08463b849cbc6027c5db77be686031a7901c"
+  },
+  {
+    "check": "verify -- E06",
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E06"
+    ],
+    "exitCode": 0,
+    "seconds": 63.37,
+    "warnings": false,
+    "main": "0dd9607391535d57bae06df775e759a5a3c7d231",
+    "head": "d46d08463b849cbc6027c5db77be686031a7901c"
+  },
+  {
+    "check": "browser:regression",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=2"
+    ],
+    "exitCode": 0,
+    "seconds": 281.764,
+    "warnings": false,
+    "main": "0dd9607391535d57bae06df775e759a5a3c7d231",
+    "head": "5e4ce77609e919c567e80e742d2cf7959bfb82c5"
+  },
+  {
+    "check": "webgpu",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--project=webgpu",
+      "--workers=2"
+    ],
+    "exitCode": 0,
+    "seconds": 8.686,
+    "warnings": false,
+    "head": "5e4ce77609e919c567e80e742d2cf7959bfb82c5",
+    "main": "0dd9607391535d57bae06df775e759a5a3c7d231"
+  },
+  {
+    "check": "typecheck",
+    "phase": "after-final-review",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "seconds": 3.974,
+    "warnings": false,
+    "head": "5e4ce77609e919c567e80e742d2cf7959bfb82c5",
+    "main": "5abf93c33f4a6fbd5cc56e9476edc9177ce739bd"
+  },
+  {
+    "check": "lint",
+    "phase": "after-final-review",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0,
+    "seconds": 2.557,
+    "warnings": false,
+    "head": "5e4ce77609e919c567e80e742d2cf7959bfb82c5",
+    "main": "5abf93c33f4a6fbd5cc56e9476edc9177ce739bd"
+  },
+  {
+    "check": "test:unit",
+    "phase": "after-final-review",
+    "command": [
+      "npm",
+      "run",
+      "test:unit"
+    ],
+    "exitCode": 0,
+    "seconds": 695.17,
+    "warnings": false,
+    "head": "538e63ac3e22ff4bb2c462cc1a82f655c7d1e0ec",
+    "main": "e6f212fa7e06fc88adaf44293b8c5219ef522889"
+  },
+  {
+    "check": "test:sim",
+    "phase": "after-final-review",
+    "command": [
+      "npm",
+      "run",
+      "test:sim"
+    ],
+    "exitCode": 0,
+    "seconds": 4.099,
+    "warnings": false,
+    "head": "538e63ac3e22ff4bb2c462cc1a82f655c7d1e0ec",
+    "main": "e6f212fa7e06fc88adaf44293b8c5219ef522889"
+  },
+  {
+    "check": "build",
+    "phase": "after-final-review",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exitCode": 0,
+    "seconds": 2.378,
+    "warnings": false,
+    "head": "538e63ac3e22ff4bb2c462cc1a82f655c7d1e0ec",
+    "main": "e6f212fa7e06fc88adaf44293b8c5219ef522889"
+  },
+  {
+    "check": "test:smoke",
+    "phase": "after-final-review",
+    "command": [
+      "npm",
+      "run",
+      "test:smoke"
+    ],
+    "exitCode": 0,
+    "seconds": 21.463,
+    "warnings": false,
+    "head": "538e63ac3e22ff4bb2c462cc1a82f655c7d1e0ec",
+    "main": "e6f212fa7e06fc88adaf44293b8c5219ef522889"
+  },
+  {
+    "check": "verify -- E06",
+    "phase": "after-final-review",
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E06"
+    ],
+    "exitCode": 0,
+    "seconds": 552.091,
+    "warnings": false,
+    "head": "538e63ac3e22ff4bb2c462cc1a82f655c7d1e0ec",
+    "main": "9e31bde8c4c20b6924707e99a8249a1a7e01d398"
+  },
+  {
+    "check": "typecheck",
+    "phase": "after-main-conformance-merge",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "seconds": 5.362,
+    "warnings": false,
+    "head": "9f15d346ed5054de10cdf10092ef04b18593d88f",
+    "main": "9e31bde8c4c20b6924707e99a8249a1a7e01d398"
+  },
+  {
+    "check": "lint",
+    "phase": "after-main-conformance-merge",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0,
+    "seconds": 2.218,
+    "warnings": false,
+    "head": "9f15d346ed5054de10cdf10092ef04b18593d88f",
+    "main": "9e31bde8c4c20b6924707e99a8249a1a7e01d398"
+  },
+  {
+    "check": "test:unit",
+    "phase": "after-main-conformance-merge",
+    "command": [
+      "npm",
+      "run",
+      "test:unit"
+    ],
+    "exitCode": 0,
+    "seconds": 23.001,
+    "warnings": false,
+    "head": "9f15d346ed5054de10cdf10092ef04b18593d88f",
+    "main": "9e31bde8c4c20b6924707e99a8249a1a7e01d398"
+  },
+  {
+    "check": "test:sim",
+    "phase": "after-main-conformance-merge",
+    "command": [
+      "npm",
+      "run",
+      "test:sim"
+    ],
+    "exitCode": 0,
+    "seconds": 4.08,
+    "warnings": false,
+    "head": "9f15d346ed5054de10cdf10092ef04b18593d88f",
+    "main": "9e31bde8c4c20b6924707e99a8249a1a7e01d398"
+  },
+  {
+    "check": "build",
+    "phase": "after-main-conformance-merge",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exitCode": 0,
+    "seconds": 2.179,
+    "warnings": false,
+    "head": "9f15d346ed5054de10cdf10092ef04b18593d88f",
+    "main": "9e31bde8c4c20b6924707e99a8249a1a7e01d398"
+  },
+  {
+    "check": "typecheck",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 3.225,
+    "warnings": false,
+    "head": "28ae9e0d0597023de3427daa2de642bdfe289693",
+    "main": "b24338ec4dec98e76e844a51788cd3fdff2caf2a"
+  },
+  {
+    "check": "lint",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 1.611,
+    "warnings": false,
+    "head": "28ae9e0d0597023de3427daa2de642bdfe289693",
+    "main": "b24338ec4dec98e76e844a51788cd3fdff2caf2a"
+  },
+  {
+    "check": "test:unit",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "test:unit"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 30.021,
+    "warnings": false,
+    "head": "28ae9e0d0597023de3427daa2de642bdfe289693",
+    "main": "b24338ec4dec98e76e844a51788cd3fdff2caf2a"
+  },
+  {
+    "check": "test:sim",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "test:sim"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 3.965,
+    "warnings": false,
+    "head": "28ae9e0d0597023de3427daa2de642bdfe289693",
+    "main": "b24338ec4dec98e76e844a51788cd3fdff2caf2a"
+  },
+  {
+    "check": "build",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 2.069,
+    "warnings": false,
+    "head": "28ae9e0d0597023de3427daa2de642bdfe289693",
+    "main": "b24338ec4dec98e76e844a51788cd3fdff2caf2a"
+  },
+  {
+    "check": "test:smoke",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "test:smoke"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 19.794,
+    "warnings": false,
+    "head": "28ae9e0d0597023de3427daa2de642bdfe289693",
+    "main": "b24338ec4dec98e76e844a51788cd3fdff2caf2a"
+  },
+  {
+    "check": "verify -- E06",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E06"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 42.675,
+    "warnings": false,
+    "head": "28ae9e0d0597023de3427daa2de642bdfe289693",
+    "main": "b24338ec4dec98e76e844a51788cd3fdff2caf2a"
+  },
+  {
+    "check": "browser:regression",
+    "phase": "globally-locked-final",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "npx",
+      "playwright",
+      "test",
+      "--workers=2"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 939.165,
+    "warnings": false,
+    "head": "28ae9e0d0597023de3427daa2de642bdfe289693",
+    "main": "b24338ec4dec98e76e844a51788cd3fdff2caf2a"
+  },
+  {
+    "check": "typecheck",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 3.316,
+    "warnings": false,
+    "head": "f6dfb2441cb41ea5291bd5c615825b6aecfdbb1f",
+    "main": "300cc57ed0b3bdff3207bace776bc128948ea8e9"
+  },
+  {
+    "check": "lint",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 1.803,
+    "warnings": false,
+    "head": "f6dfb2441cb41ea5291bd5c615825b6aecfdbb1f",
+    "main": "300cc57ed0b3bdff3207bace776bc128948ea8e9"
+  },
+  {
+    "check": "test:unit",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "test:unit"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 1,
+    "seconds": 29.756,
+    "warnings": false,
+    "head": "f6dfb2441cb41ea5291bd5c615825b6aecfdbb1f",
+    "main": "300cc57ed0b3bdff3207bace776bc128948ea8e9",
+    "artifact": "logs/merged-npc-contract-failure.log"
+  },
+  {
+    "check": "typecheck",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 2.99,
+    "warnings": false,
+    "head": "c6f57861d8023e0d35bf7a85bb90b92fc2f580c8",
+    "main": "300cc57ed0b3bdff3207bace776bc128948ea8e9"
+  },
+  {
+    "check": "lint",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 1.361,
+    "warnings": false,
+    "head": "c6f57861d8023e0d35bf7a85bb90b92fc2f580c8",
+    "main": "300cc57ed0b3bdff3207bace776bc128948ea8e9"
+  },
+  {
+    "check": "test:unit",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "test:unit"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 29.795,
+    "warnings": false,
+    "head": "c6f57861d8023e0d35bf7a85bb90b92fc2f580c8",
+    "main": "300cc57ed0b3bdff3207bace776bc128948ea8e9"
+  },
+  {
+    "check": "test:sim",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "test:sim"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 8.395,
+    "warnings": false,
+    "head": "c6f57861d8023e0d35bf7a85bb90b92fc2f580c8",
+    "main": "300cc57ed0b3bdff3207bace776bc128948ea8e9"
+  },
+  {
+    "check": "build",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 2.226,
+    "warnings": false,
+    "head": "c6f57861d8023e0d35bf7a85bb90b92fc2f580c8",
+    "main": "300cc57ed0b3bdff3207bace776bc128948ea8e9"
+  },
+  {
+    "check": "test:smoke",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "test:smoke"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 18.735,
+    "warnings": false,
+    "head": "c6f57861d8023e0d35bf7a85bb90b92fc2f580c8",
+    "main": "300cc57ed0b3bdff3207bace776bc128948ea8e9"
+  },
+  {
+    "check": "verify -- E06",
+    "phase": "globally-locked-final",
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E06"
+    ],
+    "globalLock": "/tmp/minor-incident-e2e.lock",
+    "exitCode": 0,
+    "seconds": 41.051,
+    "warnings": false,
+    "head": "c6f57861d8023e0d35bf7a85bb90b92fc2f580c8",
+    "main": "300cc57ed0b3bdff3207bace776bc128948ea8e9"
+  }
+]

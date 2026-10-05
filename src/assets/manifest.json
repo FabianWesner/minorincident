@@ -1967,10 +1967,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -1980,7 +1984,8 @@
     "decayVariants": [],
     "sourceGlb": "assets/wpn.baseball-bat/model.glb",
     "script": "assets/wpn.baseball-bat/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "actionCategory": "melee"
   },
   {
     "id": "wpn.nail-bat",
@@ -1999,10 +2004,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2011,7 +2020,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/wpn.nail-bat/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "actionCategory": "melee"
   },
   {
     "id": "wpn.crowbar",
@@ -2030,10 +2040,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2043,7 +2057,8 @@
     "decayVariants": [],
     "sourceGlb": "assets/wpn.crowbar/model.glb",
     "script": "assets/wpn.crowbar/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "actionCategory": "melee"
   },
   {
     "id": "wpn.machete",
@@ -2062,10 +2077,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2075,7 +2094,8 @@
     "decayVariants": [],
     "sourceGlb": "assets/wpn.machete/model.glb",
     "script": "assets/wpn.machete/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "actionCategory": "melee"
   },
   {
     "id": "wpn.shovel",
@@ -2094,17 +2114,22 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "actionCategory": "melee"
   },
   {
     "id": "wpn.police-baton",
@@ -2123,17 +2148,22 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "actionCategory": "melee"
   },
   {
     "id": "wpn.pistol",
@@ -2152,10 +2182,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2164,7 +2198,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/wpn.pistol/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "actionCategory": "ranged"
   },
   {
     "id": "wpn.shotgun",
@@ -2183,10 +2218,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2195,7 +2234,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/wpn.shotgun/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "actionCategory": "ranged"
   },
   {
     "id": "wpn.nail-gun",
@@ -2214,10 +2254,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2226,7 +2270,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/wpn.nail-gun/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "actionCategory": "ranged"
   },
   {
     "id": "thr.molotov",
@@ -2248,7 +2293,9 @@
       "grip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2257,7 +2304,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/thr.molotov/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "actionCategory": "throwable"
   },
   {
     "id": "thr.pipe-bomb",
@@ -2279,7 +2327,9 @@
       "grip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -2288,7 +2338,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/thr.pipe-bomb/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "actionCategory": "throwable"
   },
   {
     "id": "thr.firecracker-lure",
@@ -2310,14 +2361,17 @@
       "grip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "actionCategory": "throwable"
   },
   {
     "id": "pick.medkit",
@@ -4061,7 +4115,12 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.school-elementary/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.school-elementary.lod1.glb",
+      "lod2": "public/assets/models/bld.school-elementary.lod2.glb"
+    }
   },
   {
     "id": "int.gym-cafeteria",
@@ -4119,7 +4178,8 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/kit.playground/model.glb"
   },
   {
     "id": "int.supermarket",
@@ -4148,7 +4208,12 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/int.supermarket/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/int.supermarket.lod1.glb",
+      "lod2": "public/assets/models/int.supermarket.lod2.glb"
+    }
   },
   {
     "id": "int.mini-mall",
@@ -4333,7 +4398,8 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/kit.police-checkpoint/model.glb"
   },
   {
     "id": "kit.evac-camp",
@@ -5082,7 +5148,12 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-elderly/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-elderly.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-elderly.lod2.glb"
+    }
   },
   {
     "id": "npc.patient-zero-courier",
@@ -5443,7 +5514,12 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.police-officer/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/npc.police-officer.lod1.glb",
+      "lod2": "public/assets/models/npc.police-officer.lod2.glb"
+    }
   },
   {
     "id": "npc.paramedic",
@@ -5782,17 +5858,22 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "actionCategory": "melee"
   },
   {
     "id": "wpn.fire-axe",
@@ -5811,17 +5892,22 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "actionCategory": "melee"
   },
   {
     "id": "wpn.katana",
@@ -5840,17 +5926,22 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "tip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "actionCategory": "melee"
   },
   {
     "id": "wpn.smg",
@@ -5869,10 +5960,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -5882,7 +5977,8 @@
     "decayVariants": [],
     "sourceGlb": "assets/wpn.smg/model.glb",
     "script": "assets/wpn.smg/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "actionCategory": "ranged"
   },
   {
     "id": "wpn.hunting-rifle",
@@ -5901,10 +5997,14 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -5914,7 +6014,8 @@
     "decayVariants": [],
     "sourceGlb": "assets/wpn.hunting-rifle/model.glb",
     "script": "assets/wpn.hunting-rifle/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "actionCategory": "ranged"
   },
   {
     "id": "wpn.assault-rifle",
@@ -5933,17 +6034,22 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "actionCategory": "ranged"
   },
   {
     "id": "wpn.machine-gun",
@@ -5962,17 +6068,22 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "actionCategory": "ranged"
   },
   {
     "id": "wpn.rocket-launcher",
@@ -5991,17 +6102,22 @@
       "front"
     ],
     "requiredNodes": [
-      "grip"
+      "grip",
+      "muzzle"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip",
+      "muzzle"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "actionCategory": "ranged"
   },
   {
     "id": "proj.rocket",
@@ -6052,7 +6168,9 @@
       "grip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
@@ -6062,7 +6180,8 @@
     "decayVariants": [],
     "sourceGlb": "assets/thr.frag-grenade/model.glb",
     "script": "assets/thr.frag-grenade/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "actionCategory": "throwable"
   },
   {
     "id": "thr.flashbang",
@@ -6084,14 +6203,17 @@
       "grip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "actionCategory": "throwable"
   },
   {
     "id": "abl.shield-bubble",
@@ -7273,14 +7395,17 @@
       "grip"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "grip"
+    ],
     "budget": {
       "triangles": 6000,
       "materials": 12,
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "actionCategory": "throwable"
   },
   {
     "id": "prop.tear-gas-canister",
@@ -9660,5 +9785,969 @@
       "token": "schoolBusYellow",
       "solid": false
     }
+  },
+  {
+    "id": "wpn.fists",
+    "category": "weapon",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.fists.glb",
+    "dimensions": {
+      "x": 0.8,
+      "y": 0.24,
+      "z": 0.24,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [
+      "grip",
+      "tip"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "actionCategory": "melee"
+  },
+  {
+    "id": "icon.fists",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/fists.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "wpn.kick",
+    "category": "weapon",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.kick.glb",
+    "dimensions": {
+      "x": 0.8,
+      "y": 0.24,
+      "z": 0.24,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [
+      "grip",
+      "tip"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "actionCategory": "melee"
+  },
+  {
+    "id": "icon.kick",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/kick.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.bat",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/bat.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.crowbar",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/crowbar.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.machete",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/machete.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.knife",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/knife.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.nail-bat",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/nail-bat.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.shovel",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/shovel.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.police-baton",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/police-baton.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.fire-axe",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/fire-axe.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.katana",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/katana.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.pistol",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/pistol.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.shotgun",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/shotgun.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.nail-gun",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/nail-gun.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.smg",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/smg.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.hunting-rifle",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/hunting-rifle.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.assault-rifle",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/assault-rifle.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.machine-gun",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/machine-gun.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.rocket-launcher",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/rocket-launcher.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.grenade",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/grenade.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.molotov",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/molotov.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.pipe-bomb",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/pipe-bomb.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.firecracker-lure",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/firecracker-lure.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.smoke-grenade",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/smoke-grenade.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.flashbang",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/flashbang.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "ability.corgi-lure",
+    "category": "weapon",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/ability.corgi-lure.glb",
+    "dimensions": {
+      "x": 0.8,
+      "y": 0.24,
+      "z": 0.24,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "grip"
+    ],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "actionCategory": "ability"
+  },
+  {
+    "id": "icon.corgi-lure",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/corgi-lure.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "icon.slam",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/ground-slam.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "ability.shield-bubble",
+    "category": "weapon",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/ability.shield-bubble.glb",
+    "dimensions": {
+      "x": 0.8,
+      "y": 0.24,
+      "z": 0.24,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "grip"
+    ],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "actionCategory": "ability"
+  },
+  {
+    "id": "icon.shield-bubble",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/shield-bubble.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "ability.adrenaline",
+    "category": "weapon",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/ability.adrenaline.glb",
+    "dimensions": {
+      "x": 0.8,
+      "y": 0.24,
+      "z": 0.24,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "grip"
+    ],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "actionCategory": "ability"
+  },
+  {
+    "id": "icon.adrenaline",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/adrenaline.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "ability.turret",
+    "category": "weapon",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/ability.turret.glb",
+    "dimensions": {
+      "x": 0.8,
+      "y": 0.24,
+      "z": 0.24,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [
+      "grip"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "grip"
+    ],
+    "budget": {
+      "triangles": 6000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "actionCategory": "ability"
+  },
+  {
+    "id": "icon.turret",
+    "category": "ui",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/turret.svg",
+    "dimensions": {
+      "x": 0.1,
+      "y": 0.1,
+      "z": 0.1,
+      "tolerance": 0.01
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12,
+      "materials": 1,
+      "fileKB": 2,
+      "drawCalls": 1
+    },
+    "decayVariants": []
   }
 ]
