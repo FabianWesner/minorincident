@@ -9,6 +9,9 @@ export interface EntitySnapshot {
   survivor?: SurvivorState;
   weapons?: import('../combat/Loadout').LoadoutState;
   combat?: { radius: number; armor: number; shield: boolean; staggerUntil: number; attacking: boolean; damageMultiplier: number; statuses: import('../combat/Status').StatusState[] };
+  /** Reactive fixture hearing; E07 brains consume the same noise contract. */
+  hearing?: { mode: 'idle' | 'investigate' | 'lured'; target: { x: number; z: number }; lureUntil: number };
+  pickup?: { actionId: string; armed: boolean };
   kind: string;
   archetype: string;
   transform: Transform;
@@ -22,6 +25,10 @@ export type GameEvent =
   | { tick: number; type: 'infected.attack'; sourceId: number; attackId: number; targetId: number; special: string; amount: number }
   | { tick: number; type: 'infected.revived' | 'infected.leg-lost'; sourceId: number; targetId: number }
 
+  | { tick: number; type: 'noise'; sourceId: number; actionId: string; position: { x: number; y: number; z: number }; radius: number; loudness: number; kind: string }
+  | { tick: number; type: 'ai.alerted'; sourceId: number; targetId: number; cause: 'noise'; position: Transform }
+  | { tick: number; type: 'combat.effect'; sourceId: number; actionId: string; kind: import('../../data/actions/schema').ActionEffect['kind']; position: { x: number; y: number; z: number }; radius: number; expires: number }
+  | { tick: number; type: 'pickup.collected'; sourceId: number; pickupId: number; side: import('../../data/actions/schema').Side; actionId: string; replaced: string | null }
   | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number } }
   | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number }
   | { tick: number; type: 'combat.hit-stop'; sourceId: number; durationMs: number }

@@ -1,4 +1,4 @@
-import { action } from '../../data/actions/fixtures';
+import { action } from '../../data/actions/catalog';
 import { ticks, type ActionDef, type Side } from '../../data/actions/schema';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import { Loadout } from './Loadout';

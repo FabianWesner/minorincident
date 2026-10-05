@@ -10,6 +10,7 @@ export interface AssetViewerApi {
   ready: Promise<void>;
   view(index: number): Promise<void>;
   info(): { placeholder: boolean; drawCalls: number; triangles: number; nodes: string[]; events: PlaceholderLog[] };
+  goreProbe?(limb: string): Promise<{ hiddenBefore: boolean; visibleAfter: boolean; capTriangles: number; jointError: number }>;
   crowdProbe?(): Promise<{ instances: number; materials: number; drawCalls: number; poseError: number }>;
 }
 declare global { interface Window { __ASSET__?: AssetViewerApi } }
@@ -85,6 +86,15 @@ export async function assetViewer(): Promise<void> {
   if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, info: () => {
     const nodes: string[] = []; object.traverse((node) => { if (node.name) nodes.push(node.name); });
     return { placeholder: !!object.userData.placeholder, drawCalls: renderer.info.render.drawCalls, triangles: renderer.info.render.triangles, nodes, events };
+  }, goreProbe: async (name) => {
+    const limb=object.getObjectByName(name), cap=object.getObjectByName(`stump_${name}`);
+    if (!limb || !cap || cap.parent !== limb.parent) throw new Error(`Missing surviving-side cap for ${name}`);
+    const hiddenBefore=!cap.visible, jointError=limb.getWorldPosition(new Vector3()).distanceTo(cap.getWorldPosition(new Vector3()));
+    let capTriangles=0;
+    cap.traverse(node=>{if(node instanceof Mesh)capTriangles+=(node.geometry.index?.count ?? node.geometry.attributes.position.count)/3;});
+    limb.removeFromParent(); cap.visible=true;
+    await renderer.compileAsync(scene,camera); render(); render();
+    return {hiddenBefore,visibleAfter:cap.visible,capTriangles,jointError};
   }, crowdProbe: async () => {
     if (!(object instanceof Crowd)) throw new Error('Not the crowd-bake probe');
     const { crowdPoseError } = await import('./crowdProbe');

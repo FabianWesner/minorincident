@@ -1,15 +1,17 @@
 // Adapted from Bruno Simon's scripts/compress.js (MIT): raw export → compression.
-import { mkdirSync, existsSync } from 'node:fs';
+import { mkdirSync, existsSync, readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { Matrix4, Quaternion, Vector3 } from 'three';
+import { Matrix4, Quaternion, Vector3, Color } from 'three';
 import manifest from '../../src/assets/manifest.json';
-import type { Document } from '@gltf-transform/core';
+import type { Document, Node } from '@gltf-transform/core';
 import { dedup, prune, weld, join, meshopt, simplify, normals, getBounds } from '@gltf-transform/functions';
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
+import type { DistrictLayout } from '../../src/levels/districts/types';
 import type { AssetDef } from '../../src/assets/types';
 import { assetIO } from './io';
 import { compressTextures } from './textures';
+import { palette } from '../../src/assets/palette';
 
 /** Rotate the entire assembly, leaving joint-local animation axes and sockets intact. */
 export function normalizeForward(document: Document, def: AssetDef): void {
@@ -44,6 +46,94 @@ export function normalizeForward(document: Document, def: AssetDef): void {
   }
 }
 
+/** Scale at the scene root so joint translations, geometry and animation stay together. */
+export function normalizeScale(document: Document, def: AssetDef): void {
+  const scale = def.sourceScale ?? 1;
+  if (!Number.isFinite(scale) || scale <= 0) throw new Error(`${def.id}: invalid sourceScale`);
+  for (const scene of document.getRoot().listScenes()) {
+    const applied = Number(scene.getExtras().sourceScale ?? 1);
+    if (scale !== applied) {
+      const assembly = document.createNode('assetScale').setScale([scale/applied,scale/applied,scale/applied]);
+      for (const child of scene.listChildren()) assembly.addChild(child);
+      scene.addChild(assembly);
+    }
+    if (scale !== 1 || applied !== 1) scene.setExtras({...scene.getExtras(),sourceScale:scale});
+  }
+}
+
+/** Repair zero-scale exporter placeholders at the surviving side of each joint. */
+export function generateStumpCaps(document: Document, def: AssetDef): void {
+  if (def.category !== 'infected') return;
+  const root = document.getRoot(), buffer = root.listBuffers()[0] ?? document.createBuffer();
+  const materials = ['flesh','bone'].map(token => root.listMaterials().find(m=>m.getName()===`pal_${token}`)
+    ?? document.createMaterial(`pal_${token}`).setBaseColorFactor(new Color(palette[token]).toArray().concat(1) as [number,number,number,number]).setRoughnessFactor(.85).setDoubleSided(true));
+  for (const cap of root.listNodes().filter(n=>n.getName().startsWith('stump_'))) {
+    let hasMesh = false; cap.traverse(n=>{if(n.getMesh()) hasMesh=true;});
+    if (hasMesh) continue;
+    const limb = root.listNodes().find(n=>n.getName()===cap.getName().slice(6));
+    const parent = limb?.getParentNode();
+    if (!limb || !parent) throw new Error(`${def.id}: no joint for ${cap.getName()}`);
+    const inverse = new Matrix4().fromArray(limb.getWorldMatrix()).invert(), points: Vector3[] = [];
+    // Only the proximal part: elbow/knee/hand children have their own joint caps.
+    const collect = (node: Node, owner = limb, output = points): void => {
+      if (node !== owner && (def.animatedNodes.includes(node.getName()) || node.getName().startsWith('stump_'))) return;
+      const matrix = new Matrix4().multiplyMatrices(inverse,new Matrix4().fromArray(node.getWorldMatrix()));
+      for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
+        const position=primitive.getAttribute('POSITION')!, point: number[]=[];
+        for(let i=0;i<position.getCount();i++) {position.getElement(i,point);output.push(new Vector3().fromArray(point).applyMatrix4(matrix));}
+      }
+      for(const child of node.listChildren()) collect(child,owner,output);
+    };
+    collect(limb);
+    if (!points.length) throw new Error(`${def.id}: empty limb ${limb.getName()}`);
+    const center = points.reduce((sum,p)=>sum.add(p),new Vector3()).divideScalar(points.length);
+    const axis = limb.getName()==='head' ? new Vector3(0,1,0) : center.lengthSq()>1e-8 ? center.normalize() : new Vector3(0,1,0);
+    const orientation = new Quaternion().setFromUnitVectors(new Vector3(0,1,0),axis);
+    const undo = orientation.clone().invert(), projected=points.map(p=>p.clone().applyQuaternion(undo));
+    const closest=Math.min(...projected.map(p=>Math.abs(p.y))), extent=Math.max(...projected.map(p=>Math.abs(p.y)));
+    const section=projected.filter(p=>Math.abs(p.y)<=closest+(extent-closest)*.2);
+    let rx=Math.max(.025,...section.map(p=>Math.abs(p.x))), rz=Math.max(.025,...section.map(p=>Math.abs(p.z)));
+    if (limb.getName()==='head') {
+      // The jaw/hair silhouette is wider than the neck: infer the cut from the torso.
+      const torso: Vector3[]=[];collect(parent,parent,torso);
+      const section=torso.map(p=>p.applyQuaternion(undo));
+      if(section.length) {
+        rx=Math.min(rx,Math.max(.025,(Math.max(...section.map(p=>p.x))-Math.min(...section.map(p=>p.x)))*.2));
+        rz=Math.min(rz,Math.max(.025,(Math.max(...section.map(p=>p.z))-Math.min(...section.map(p=>p.z)))*.2));
+      }
+    }
+    const depth=Math.min(rx,rz)*.25;
+    const mesh=document.createMesh();
+    // Eight-sided annulus + outer wall (32 tris), closed bone stub (24 tris).
+    for (let part=0;part<2;part++) {
+      const positions:number[]=[],indices:number[]=[];
+      const vertex=(x:number,y:number,z:number)=>{positions.push(x,y,z);return positions.length/3-1;};
+      const ring=(r:number,y:number)=>Array.from({length:8},(_,i)=>vertex(Math.cos(i*Math.PI/4)*rx*r,y,Math.sin(i*Math.PI/4)*rz*r));
+      const outer=ring(part ? .3 : 1,0), top=ring(part ? .3 : 1,part ? depth*2 : -depth);
+      const inner=part ? [] : ring(.3,0);
+      for(let i=0;i<8;i++) {
+        const j=(i+1)%8;
+        if(part) indices.push(outer[i],top[i],top[j],outer[i],top[j],outer[j]);
+        else indices.push(outer[i],top[j],top[i],outer[i],outer[j],top[j],outer[i],inner[j],outer[j],outer[i],inner[i],inner[j]);
+      }
+      if(part) {const tip=vertex(0,depth*2,0);for(let i=0;i<8;i++)indices.push(tip,top[(i+1)%8],top[i]);}
+      const flatPositions:number[]=[],flatNormals:number[]=[];
+      for(let i=0;i<indices.length;i+=3) {
+        const [a,b,c]=indices.slice(i,i+3).map(id=>new Vector3().fromArray(positions,id*3));
+        const normal=b.clone().sub(a).cross(c.clone().sub(a)).normalize().toArray();
+        for(const point of [a,b,c]) {flatPositions.push(...point.toArray());flatNormals.push(...normal);}
+      }
+      mesh.addPrimitive(document.createPrimitive().setMaterial(materials[part])
+        .setAttribute('POSITION',document.createAccessor().setType('VEC3').setArray(new Float32Array(flatPositions)).setBuffer(buffer))
+        .setAttribute('NORMAL',document.createAccessor().setType('VEC3').setArray(new Float32Array(flatNormals)).setBuffer(buffer))
+        .setIndices(document.createAccessor().setType('SCALAR').setArray(Uint16Array.from(indices,(_,i)=>i)).setBuffer(buffer)));
+    }
+    parent.addChild(cap);
+    cap.setTranslation(limb.getTranslation()).setRotation(new Quaternion().fromArray(limb.getRotation()).multiply(orientation).toArray())
+      .setScale(limb.getScale()).setMesh(mesh).setExtras({...cap.getExtras(),hidden:true,generatedCap:true});
+  }
+}
+
 /** Evaluate quantized positions in world units, matching the validator's area threshold. */
 function removeDegenerateTriangles(document: Document): void {
   for (const node of document.getRoot().listNodes()) for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
@@ -66,6 +156,7 @@ function removeDegenerateTriangles(document: Document): void {
 /** Named transforms are gameplay pivots; quantization acts on geometry children. */
 export async function optimizeDocument(document: Document, def: AssetDef, ratio = 1): Promise<void> {
   normalizeForward(document, def);
+  normalizeScale(document, def);
   removeDegenerateTriangles(document);
   compressTextures(document);
   await Promise.all([MeshoptEncoder.ready, MeshoptSimplifier.ready]);
@@ -79,7 +170,7 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
   }
   for (const node of document.getRoot().listNodes()) {
     if (!protectedNames.has(node.getName()) && !/^(stump_|light:|col:)/.test(node.getName())) continue;
-    pivots.set(node.getName(), node.getWorldTranslation());
+    if (!node.getName().startsWith('stump_')) pivots.set(node.getName(), node.getWorldTranslation());
     const mesh = node.getMesh();
     if (mesh) { node.setMesh(null); node.addChild(document.createNode().setMesh(mesh)); }
   }
@@ -120,6 +211,7 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
     } };
     await document.transform(weld(), simplify({ simplifier: lodSimplifier, ratio, error: ratio < .05 ? .3 : .1 }), normals(), weld());
   }
+  generateStumpCaps(document, def);
   await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'medium', quantizePosition: 16, quantizeNormal: 10, cleanup: false }));
   removeDegenerateTriangles(document);
   await document.transform(prune({ keepLeaves: true, keepAttributes: true, keepExtras: true }));
@@ -143,12 +235,48 @@ export async function optimizeExports(def: AssetDef): Promise<void> {
     const supplied = `assets/${def.id}/model.${lod}.glb`, output = def.lods?.[lod];
     if (!output) throw new Error(`${def.id}: missing manifest ${lod} path`);
     const handMade = existsSync(supplied);
-    await optimizeAsset(handMade ? supplied : source, output, def, handMade ? 1 : ratio);
+    // Reserve the 7 × 56 cap triangles within the LOD1 budget.
+    const targetRatio = lod === 'lod1' && def.category === 'infected' ? .10 : ratio;
+    await optimizeAsset(handMade ? supplied : source, output, def, handMade ? 1 : targetRatio);
   }
 }
+/** Refresh exported collision/minimap metadata after canonical dimensions change, without Blender. */
+export function conformLayoutDimensions(definitions: AssetDef[]): void {
+  const directory='public/assets/layouts';
+  if(!existsSync(directory)) return;
+  const byId=new Map(definitions.map(def=>[def.id,def]));
+  for(const file of readdirSync(directory).filter(name=>name.endsWith('.layout.json'))) {
+    const path=`${directory}/${file}`, before=readFileSync(path,'utf8'), layout=JSON.parse(before) as DistrictLayout;
+    for(const placement of layout.placements) {
+      const def=byId.get(placement.assetId); if(!def?.world?.solid) continue;
+      const {x,y,z}=def.dimensions, [px,py,pz]=placement.position, [sx,sy,sz]=placement.scale;
+      const cosine=Math.abs(Math.cos(placement.yaw)), sine=Math.abs(Math.sin(placement.yaw));
+      const hx=(cosine*x*sx+sine*z*sz)/2, hz=(sine*x*sx+cosine*z*sz)/2;
+      const old=placement.visualAabb, box={min:[px-hx,py,pz-hz],max:[px+hx,py+y*sy,pz+hz]} as typeof old;
+      // Authoring places entrance anchors one metre beyond a building's front bound.
+      if(layout.buildings.some(b=>b.id===placement.id)) for(const anchor of Object.values(layout.anchors)) {
+        if(Math.abs(anchor.position[0]-px)<1e-6 && Math.abs(anchor.position[2]-old.max[2]-1)<1e-6) anchor.position[2]=box.max[2]+1;
+      }
+      placement.visualAabb=box;
+      const collider=layout.colliders.find(c=>c.id===placement.id); if(collider) collider.aabb=box;
+      const building=layout.buildings.find(b=>b.id===placement.id); if(building) building.aabb=box;
+      const polygon=(a:typeof old)=>[[a.min[0],a.min[2]],[a.max[0],a.min[2]],[a.max[0],a.max[2]],[a.min[0],a.max[2]],[a.min[0],a.min[2]]] as [number,number][];
+      const replacePolygon=(p:[number,number][])=>JSON.stringify(p)===JSON.stringify(polygon(old)) ? polygon(box) : p;
+      layout.walkable.excluded=layout.walkable.excluded.map(replacePolygon);
+      for(const zone of layout.acousticZones) if(zone.id===placement.id) {
+        for(const surface of layout.surfaces) if(JSON.stringify(surface.polygon)===JSON.stringify(zone.polygon)) surface.polygon=polygon(box);
+        zone.polygon=polygon(box);
+      }
+      for(const surface of layout.surfaces) surface.polygon=replacePolygon(surface.polygon);
+    }
+    const after=JSON.stringify(layout,null,2)+'\n'; if(after!==before) writeFileSync(path,after);
+  }
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const target = process.argv[2];
   const selected = (manifest as AssetDef[]).filter(d => target === '--production' ? !!d.sourceGlb : d.id === target);
   if (!selected.length) throw new Error('Usage: assets:optimize -- <id>|--production');
   for (const def of selected) { await optimizeExports(def); console.log(def.id); }
+  conformLayoutDimensions(manifest as AssetDef[]);
 }
