@@ -5,6 +5,8 @@ import { WebGPURenderer } from 'three/webgpu';
 export class Renderer extends WebGPURenderer {
   constructor(params: URLSearchParams) {
     super({ antialias: true, forceWebGL: params.get('renderer') === 'webgl' });
+    // Game owns RAF and resets once per rendered frame, including explicit paused captures.
+    this.info.autoReset = false;
   }
   get selectedBackend(): 'webgpu' | 'webgl' {
     return (this.backend as unknown as { isWebGPUBackend?: boolean }).isWebGPUBackend ? 'webgpu' : 'webgl';
