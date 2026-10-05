@@ -5,7 +5,7 @@ export type ProgressionPreset = Record<string, unknown>;
 export type Settings = Parameters<Game['view']['settings']>[0];
 export interface BotStatus { running: boolean; policy: string | null }
 
-/** Version 1 foundation API. Future-epic methods fail explicitly, never silently. */
+/** Version 1.1: E10 composition/decay snapshots and district photo spots. Future-epic methods fail explicitly, never silently. */
 export interface SSTestApi {
   version: string;
   ready: Promise<void>;
@@ -18,7 +18,7 @@ export interface SSTestApi {
   loadScenario(name: string, opts?: { seed?: number }): Promise<void>;
   /** Additive E01 harness hook: unload all scenario-owned sim and GPU resources. */
   unloadScenario(): Promise<void>;
-  getState(): GameStateSnapshot & { render: ReturnType<Game['view']['getState']> };
+  getState(): GameStateSnapshot & { districts?:ReturnType<import('../sim/world/DistrictWorld').DistrictWorld['getState']>|null; render: ReturnType<Game['view']['getState']> };
   getEntity(id: number): EntitySnapshot | null;
   query(filter: EntityFilter): EntitySnapshot[];
   events(sinceTick?: number): GameEvent[];
@@ -45,13 +45,17 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
-    version: '1.0.0', ready,
+    version: '1.1.0', ready,
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
-    loadLevel: async () => pending('E12', 'loadLevel'),
+    loadLevel: (id, opts) => {
+      if(opts?.checkpoint)pending('E12','loadLevel.checkpoint');
+      if(opts?.progression)pending('E13','loadLevel.progression');
+      return game.loadLevel(id, opts);
+    },
     loadScenario: (name, opts) => game.loadScenario(name, opts?.seed),
     unloadScenario: () => game.loadScenario(null),
-    getState: () => ({ ...game.world.getState(), render: game.view.getState() }), getEntity: (id) => game.world.getEntity(id),
+    getState: () => ({ ...game.world.getState(), ...(game.world.districts?{districts:game.world.districts.getState()}:{}), render: game.view.getState() }), getEntity: (id) => game.world.getEntity(id),
     query: (filter) => game.world.query(filter), events: (since) => game.world.events.events(since),
     input: { set: (frame) => game.world.setInput(frame), clear: () => game.world.clearInput() },
     spawn: () => pending('E07', 'spawn'),

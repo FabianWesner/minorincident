@@ -1,6 +1,12 @@
 """Shared studio layout preview: blender -b -P this.py -- --layout D-RES."""
 import argparse
-import bpy
+try:
+    import bpy
+except ModuleNotFoundError:
+    import os
+    import subprocess
+    import sys
+    raise SystemExit(subprocess.call([os.environ.get('BLENDER_BIN','/Applications/Blender.app/Contents/MacOS/Blender'),'-b','-t','4','--factory-startup','-P',__file__,'--',*sys.argv[1:]]))
 import json
 import math
 import sys

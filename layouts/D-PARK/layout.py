@@ -9,4 +9,5 @@ l.box('footbridge','woodWarm',[3,.25,5],[14,.2,19])
 for x in [-18,-12]: l.place('prop.picnic-table',[x,0,15])
 l.place('prop.tent',[-20,0,20])
 l.anchor('objective', [5,0,-8])
+l.data['walkable']['excluded'] = [[[4, 17.5], [12.5, 17.5], [12.5, 20.5], [4, 20.5], [4, 17.5]], [[15.5, 17.5], [24, 17.5], [24, 20.5], [15.5, 20.5], [15.5, 17.5]]]
 l.export()
