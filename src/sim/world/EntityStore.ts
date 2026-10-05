@@ -8,6 +8,9 @@ export class EntityStore {
     const record = { ...entity, id: this.nextId++ };
     this.entities.set(record.id, record); return record;
   }
+  /** Adopt a prewarmed pooled record without creating a new entity object. */
+  adopt(entity: EntitySnapshot): void { entity.id = this.nextId++; this.entities.set(entity.id, entity); }
+  delete(id: number): void { this.entities.delete(id); }
   get(id: number): EntitySnapshot | undefined { return this.entities.get(id); }
   values(): EntitySnapshot[] { return [...this.entities.values()].sort((a, b) => a.id - b.id); }
   iterate(): IterableIterator<EntitySnapshot> { return this.entities.values(); }
