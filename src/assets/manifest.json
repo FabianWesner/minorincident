@@ -5829,9 +5829,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.helicopter-pilot.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.621629070228083,
+      "y": 1.8,
+      "z": 0.9090940275241751,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5884,7 +5884,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.helicopter-pilot/model.glb",
+    "sourceForward": "+X",
+    "sourceScale": 1.273240958716773,
+    "lods": {
+      "lod1": "public/assets/models/npc.helicopter-pilot.lod1.glb",
+      "lod2": "public/assets/models/npc.helicopter-pilot.lod2.glb"
+    }
   },
   {
     "id": "wpn.knife",
@@ -6400,9 +6407,9 @@
     "tier": "hero",
     "glb": "public/assets/models/veh.box-truck.glb",
     "dimensions": {
-      "x": 4.4,
-      "y": 1.8,
-      "z": 1.9,
+      "x": 6.824947357177734,
+      "y": 3.987185478210449,
+      "z": 2.7900002002716064,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -6436,7 +6443,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.box-truck/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/veh.box-truck.lod1.glb",
+      "lod2": "public/assets/models/veh.box-truck.lod2.glb"
+    }
   },
   {
     "id": "veh.semi-trailer",
