@@ -8,14 +8,22 @@ test('T-E02-perf @E02 @perf lookdev counters, frame costs and lifecycle plateau'
     const api = window.__SS__!; await api.unloadScenario(); await api.screenshotReady();
     const baseline = api.perf(), loads: ReturnType<typeof api.perf>[] = [], unloads: ReturnType<typeof api.perf>[] = [];
     const samples: number[] = [];
+    let pausedCounts: { before: number; after: number } | null = null;
     for (let i = 0; i < 3; i++) {
       await api.loadScenario('lookdev', { seed: 1 }); api.pause(); await api.step(60); await api.screenshotReady(); loads.push(api.perf());
+      if (i === 0) {
+        const before = api.perf().drawCalls;
+        for (let frame = 0; frame < 2; frame++) await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+        pausedCounts = { before, after: api.perf().drawCalls };
+      }
       if (i === 0) for (let n = 0; n < 10; n++) { const start = performance.now(); await api.step(1); samples.push(performance.now() - start); }
       await api.unloadScenario(); await api.screenshotReady(); unloads.push(api.perf());
     }
     samples.sort((a, b) => a - b);
-    return { baseline, loads, unloads, cpuSubmissionMedianMs: samples[5], cpuSubmissionP95Ms: samples[9], note: 'CPU submission timings only (asynchronous GPU work excluded); RAF frame counters are from paused SwiftShader captures, not a hardware FPS measurement.' };
+    return { baseline, loads, unloads, pausedCounts, cpuSubmissionMedianMs: samples[5], cpuSubmissionP95Ms: samples[9], note: 'CPU submission timings only (asynchronous GPU work excluded); RAF frame counters are from paused SwiftShader captures, not a hardware FPS measurement.' };
   });
+  expect(result.pausedCounts!.after).toBe(result.pausedCounts!.before);
+  expect(result.pausedCounts!.after).toBeGreaterThan(1);
   for (const load of result.loads) { expect(load.drawCalls).toBeLessThan(250); expect(load.triangles).toBeLessThan(150_000); }
   for (const unload of result.unloads) { expect(unload.geometries).toBe(result.baseline.geometries); expect(unload.textures).toBe(result.baseline.textures); }
   expect(result.loads.map((p) => p.geometries)).toEqual([result.loads[0].geometries, result.loads[0].geometries, result.loads[0].geometries]);
