@@ -1,0 +1,589 @@
+{
+  "epic": "E07",
+  "status": "passed",
+  "criterionCount": 19,
+  "passedCriterionCount": 19,
+  "criteria": [
+    {
+      "id": "E07-AC01",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-01 @E07 @E07-AC01 all twelve human roles validate and spawn",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-01 @E07 @E07-AC01 all twelve human roles validate and spawn",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC02",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-02 @E07 @E07-AC02 sight cone and facing-independent gunshot perception",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-02b @E07 @E07-AC02 @E06-AC04 actual infected consume catalog noise, with silent melee misses and bounded kill noise",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-02 @E07 @E07-AC02 sight cone and facing-independent gunshot perception",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-02b @E07 @E07-AC02 @E06-AC04 actual infected consume catalog noise, with silent melee misses and bounded kill noise",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC03",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-03 @E07 @E07-AC03 maze path covers 40 m without crossing static colliders in 15 s",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-03b @E07 @E07-AC03 grid A* resumes unfinished work without exceeding its per-tick budget",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-03c @E07 @E07-AC03 collider-baked AI navigation honors E10 offset ground bounds",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-03 @E07 @E07-AC03 maze path covers 40 m without crossing static colliders in 15 s",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-03b @E07 @E07-AC03 grid A* resumes unfinished work without exceeding its per-tick budget",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-03c @E07 @E07-AC03 collider-baked AI navigation honors E10 offset ground bounds",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC04",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-04 @E07 @E07-AC04 spatial separation keeps deep overlaps below 2 percent",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-04 @E07 @E07-AC04 spatial separation keeps deep overlaps below 2 percent",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC05",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-05 @E07 @E07-AC05 every archetype attack including death explosion has a sufficient telegraph",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-05 @E07 @E07-AC05 every archetype attack including death explosion has a sufficient telegraph",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC06",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-06a @E07 @E07-AC06 screamer alerts every infected within 20 m, not beyond",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-06b @E07 @E07-AC06 bloated burst damages both factions only within 3 m",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-06c @E07 @E07-AC06 riot frontal bullets block while flank and explosives hit",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-06d @E07 @E07-AC06 nurse revives one downed runner once",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-06e @E07 @E07-AC06 brute charge displaces player at least 3 m after 0.8 s",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-06f @E07 @E07-AC06 crawler slow ends after 3 hits or 1.5 s",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-06a @E07 @E07-AC06 screamer alerts every infected within 20 m, not beyond",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-06b @E07 @E07-AC06 bloated burst damages both factions only within 3 m",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-06c @E07 @E07-AC06 riot frontal bullets block while flank and explosives hit",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-06d @E07 @E07-AC06 nurse revives one downed runner once",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-06e @E07 @E07-AC06 brute charge displaces player at least 3 m after 0.8 s",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-06f @E07 @E07-AC06 crawler slow ends after 3 hits or 1.5 s",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC07",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-07 @E07 @E07-AC07 director excludes player radius, expanded camera footprint and colliders",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-07b @E07 @E07-AC07 supplied camera volume uses the 10 percent expanded frustum",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-07c @E07 @E07-AC07 scripted cats validate the actual selected perch before spawning",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-07 @E07 @E07-AC07 director excludes player radius, expanded camera footprint and colliders",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-07b @E07 @E07-AC07 supplied camera volume uses the 10 percent expanded frustum",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-07c @E07 @E07-AC07 scripted cats validate the actual selected perch before spawning",
+          "file": "sim/ai/navigation.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC08",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-08 @E07 @E07-AC08 scripted waves queue and resume within both tier caps",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-08b @E07 @E07-AC08 revival respects cap and retries instead of exceeding it",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-08c @E07 @E07-AC08 a capped scripted migration remains queued and begins when capacity returns",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-08 @E07 @E07-AC08 scripted waves queue and resume within both tier caps",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-08b @E07 @E07-AC08 revival respects cap and retries instead of exceeding it",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-08c @E07 @E07-AC08 a capped scripted migration remains queued and begins when capacity returns",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC09",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-09 @E07 @E07-AC09 150-infected stream follows spline on time and fans out",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-09 @E07 @E07-AC09 150-infected stream follows spline on time and fans out",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC10",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed entity objects",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-10b @E07 @E07-AC10 recycled archetypes refresh borrowed player-collision radii",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed entity objects",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-10b @E07 @E07-AC10 recycled archetypes refresh borrowed player-collision radii",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC11",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+          "file": "sim/ai/director.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC12",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-bake @E07 @E07-AC12 merged infected geometry excludes hidden ancestor stumps and preserves rigid part poses",
+          "file": "unit/render/infected-bake.test.ts",
+          "artifact": "unit.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-bake-quantized @E07 @E07-AC12 quantized GLB vertices retain part-local offsets when baked",
+          "file": "unit/render/infected-bake.test.ts",
+          "artifact": "unit.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-bake @E07 @E07-AC12 merged infected geometry excludes hidden ancestor stumps and preserves rigid part poses",
+          "file": "unit/render/infected-bake.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-bake-quantized @E07 @E07-AC12 quantized GLB vertices retain part-local offsets when baked",
+          "file": "unit/render/infected-bake.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and at most 30 crowd draws",
+          "file": "perf/horde.spec.ts",
+          "artifact": "verify-browser.json",
+          "project": "chromium",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-12-native @E07 @E07-AC12 native WebGPU renders the same instanced infected crowd",
+          "file": "e2e/webgpu.spec.ts",
+          "artifact": "webgpu-headless-browser.json",
+          "project": "webgpu-headless",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and at most 30 crowd draws",
+          "file": "perf/horde.spec.ts",
+          "artifact": "browser-regression-browser.json",
+          "project": "chromium",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC13",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-13 @E07 @E07-AC13 @vision golden-hour street has 60 separable runners glowing eyes and an identifiable player",
+          "file": "perf/horde.spec.ts",
+          "artifact": "verify-browser.json",
+          "project": "chromium",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-13 @E07 @E07-AC13 @vision golden-hour street has 60 separable runners glowing eyes and an identifiable player",
+          "file": "perf/horde.spec.ts",
+          "artifact": "browser-regression-browser.json",
+          "project": "chromium",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC14",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-14 @E07 @E07-AC14 corpses remain 45 seconds, sink, and oldest first cap is 100",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-14 @E07 @E07-AC14 corpses remain 45 seconds, sink, and oldest first cap is 100",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC15",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-15 @E07 @E07-AC15 leg-targeted explosions make surviving runners crawl with identical gameplay in every gore mode",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-15 @E07 @E07-AC15 leg-targeted explosions make surviving runners crawl with identical gameplay in every gore mode",
+          "file": "sim/ai/specials.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC16",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-16 @E07 @E07-AC16 four dogs flank from at least two directions and telegraph 0.6 s knockdown pounces",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-16 @E07 @E07-AC16 four dogs flank from at least two directions and telegraph 0.6 s knockdown pounces",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC17",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-17 @E07 @E07-AC17 cat remains hidden beyond 5 m then leaps/clings with three escape paths",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-17b @E07 @E07-AC17 cat uses layout-authored perch points",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-17 @E07 @E07-AC17 cat remains hidden beyond 5 m then leaps/clings with three escape paths",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-17b @E07 @E07-AC17 cat uses layout-authored perch points",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC18",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-18 @E07 @E07-AC18 flock circles, telegraphs wave dives, individual birds die and survivors scatter at least 5 seconds",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-18b @E07 @E07-AC18 rays and shotgun cones hit individual birds rather than deleting the flock",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-18c @E07 @E07-AC18 force-killed flocks clear bird masks before capacity is reused",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-18 @E07 @E07-AC18 flock circles, telegraphs wave dives, individual birds die and survivors scatter at least 5 seconds",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-18b @E07 @E07-AC18 rays and shotgun cones hit individual birds rather than deleting the flock",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-18c @E07 @E07-AC18 force-killed flocks clear bird masks before capacity is reused",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "id": "E07-AC19",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E07-19a @E07 @E07-AC19 gorilla throws nearest medium E26 body with momentum damage and sixfold barricade damage",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-19b @E07 @E07-AC19 lion pounce pins for 1.5 seconds unless interrupted by two attack inputs",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "sim.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-19a @E07 @E07-AC19 gorilla throws nearest medium E26 body with momentum damage and sixfold barricade damage",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-19b @E07 @E07-AC19 lion pounce pins for 1.5 seconds unless interrupted by two attack inputs",
+          "file": "sim/ai/animals.test.ts",
+          "artifact": "vitest.json",
+          "status": "passed"
+        }
+      ]
+    }
+  ]
+}

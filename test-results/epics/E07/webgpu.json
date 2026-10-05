@@ -1,0 +1,598 @@
+{
+  "state": {
+    "districts": null,
+    "backend": "webgpu",
+    "camera": {
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 35,
+      "focus": [
+        -0.42442164606120775,
+        0,
+        -0.4248744919846782
+      ],
+      "position": [
+        19.59772745255774,
+        20.57248383023656,
+        19.597274606634276
+      ],
+      "spot": null
+    },
+    "lighting": {
+      "preset": "golden",
+      "sunDirection": [
+        -0.7680643717081566,
+        0.4084874408841574,
+        0.49316846163604844
+      ],
+      "sunColor": "#ffdb9a",
+      "sky": "#eeb888",
+      "fog": "#e5b39e",
+      "intensity": 1.15
+    },
+    "character": {
+      "variant": "female",
+      "gearTier": 0,
+      "animation": "walk",
+      "missingClips": 0,
+      "evaluations": 4,
+      "sources": [
+        {
+          "variant": "female",
+          "source": "placeholder",
+          "reason": "Error: status reference"
+        },
+        {
+          "variant": "male",
+          "source": "placeholder",
+          "reason": "Error: status reference"
+        }
+      ]
+    },
+    "crowd": {
+      "instances": 416,
+      "meshDrawCalls": 3,
+      "objects": 21,
+      "nonInstancedMeshes": 0,
+      "batches": [
+        {
+          "id": "infected.runner",
+          "instances": 200,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.crawler",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.brute",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.screamer",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.sprinter",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.riot",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.bloated",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.firefighter",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.hazmat",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.armored",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.butcher",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.nurse",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.dog",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.cat",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.crow",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.lion",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.gorilla",
+          "instances": 0,
+          "source": "placeholder"
+        },
+        {
+          "id": "infected.flamingo",
+          "instances": 0,
+          "source": "placeholder"
+        }
+      ],
+      "assets": [
+        {
+          "type": "asset.placeholder",
+          "id": "inf.common-worker",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.crawler",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.brute",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.screamer",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.sprinter",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.riot-cop",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.bloated",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.firefighter",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.hazmat",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.armored-football",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.butcher",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.nurse",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.dog-retriever",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.cat-tabby",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.crow",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.lion",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.gorilla",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "inf.flamingo",
+          "reason": "status placeholder"
+        }
+      ]
+    },
+    "actions": {
+      "indicator": {
+        "selectedSide": "LEFT",
+        "shape": "cone",
+        "visibleSides": [
+          "LEFT"
+        ],
+        "vertices": 300,
+        "maxHeight": 0.04,
+        "landing": {
+          "x": 0,
+          "z": 0
+        }
+      },
+      "attachments": [
+        {
+          "side": "LEFT",
+          "actionId": "weapon.bat",
+          "iconUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMyOTM0NDciLz48ZyBzdHJva2U9IiNmZmQxNjYiIHN0cm9rZS13aWR0aD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTUgNDdMNDMgMTlNMzkgMTVMNDkgMjVNMTIgNDJMMjIgNTIiLz48L2c+PHRleHQgeD0iNDgiIHk9IjU5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiPkJBPC90ZXh0Pjwvc3ZnPgo=",
+          "socket": "weaponSocketL",
+          "handDistance": 0.04499999999999995,
+          "gripDistance": 0,
+          "attached": true,
+          "source": "placeholder",
+          "sockets": [
+            "grip",
+            "tip"
+          ]
+        },
+        {
+          "side": "RIGHT",
+          "actionId": "weapon.grenade",
+          "iconUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMyOTM0NDciLz48ZyBzdHJva2U9IiNmZmQxNjYiIHN0cm9rZS13aWR0aD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48Y2lyY2xlIGN4PSIzMiIgY3k9IjM2IiByPSIxNCIvPjxwYXRoIGQ9Ik0yOSAyMlYxNEgzOE0zNyAxNkw0MyAxMCIvPjwvZz48dGV4dCB4PSI0OCIgeT0iNTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCI+R1I8L3RleHQ+PC9zdmc+Cg==",
+          "socket": "weaponSocketR",
+          "handDistance": 0.045000000000000026,
+          "gripDistance": 0,
+          "attached": true,
+          "source": "placeholder",
+          "sockets": [
+            "grip",
+            "tip"
+          ]
+        }
+      ],
+      "placeholders": [
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.fists",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.kick",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.baseball-bat",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.crowbar",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.machete",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.knife",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.nail-bat",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.shovel",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.police-baton",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.fire-axe",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.katana",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.pistol",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.shotgun",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.nail-gun",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.smg",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.hunting-rifle",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.assault-rifle",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.machine-gun",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.rocket-launcher",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.frag-grenade",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.molotov",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.pipe-bomb",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.firecracker-lure",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.smoke-grenade",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.flashbang",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.corgi-lure",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.shield-bubble",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.adrenaline",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.turret",
+          "reason": "status placeholder"
+        }
+      ]
+    },
+    "materials": [
+      {
+        "name": "pal_sidewalk",
+        "palette": true
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "pal_survivorRed",
+        "palette": true
+      },
+      {
+        "name": "",
+        "palette": true
+      },
+      {
+        "name": "pal_uiDark",
+        "palette": true
+      },
+      {
+        "name": "pal_backpackTeal",
+        "palette": true
+      },
+      {
+        "name": "keep_placeholder",
+        "palette": true
+      },
+      {
+        "name": "pal_woodWarm",
+        "palette": true
+      },
+      {
+        "name": "pal_woodWarm",
+        "palette": true
+      },
+      {
+        "name": "pal_policeBlue",
+        "palette": true
+      },
+      {
+        "name": "keep_placeholder",
+        "palette": true
+      },
+      {
+        "name": "keep_placeholder",
+        "palette": true
+      },
+      {
+        "name": "pal_woodWarm",
+        "palette": true
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      }
+    ],
+    "occlusion": [],
+    "probes": null
+  },
+  "perf": {
+    "fps": 59.88023952095874,
+    "frameMs": 16.699999999999818,
+    "simMs": 0,
+    "drawCalls": 42,
+    "triangles": 130055,
+    "geometries": 78,
+    "textures": 23,
+    "entities": 201,
+    "backend": "webgpu",
+    "loadTiming": null
+  },
+  "adapter": {
+    "vendor": "apple",
+    "architecture": "metal-3",
+    "device": "",
+    "description": ""
+  }
+}

@@ -1,0 +1,63 @@
+
+Running 2 tests using 1 worker
+
+  ✓  1 [webgpu] › tests/e2e/webgpu.spec.ts:5:1 › T-E02-01b @E02 @E02-AC01 an available native GPU selects WebGPU and renders lookdev (3.8s)
+  ✘  2 [webgpu] › tests/e2e/webgpu.spec.ts:20:1 › T-E07-12-native @E07 @E07-AC12 native WebGPU renders the same instanced infected crowd (1.0m)
+
+
+  1) [webgpu] › tests/e2e/webgpu.spec.ts:20:1 › T-E07-12-native @E07 @E07-AC12 native WebGPU renders the same instanced infected crowd
+
+    Test timeout of 60000ms exceeded.
+
+    Error: Uncaught errors, console errors and failed requests
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 8
+
+    - Array []
+    + Array [
+    +   "console.error: THREE.WebGPURenderer: Async render pipeline creation failed (renderPipeline_MeshLambertNodeMaterial_67): Vertex buffer count (10) exceeds the maximum number of vertex buffers (8).
+    +  - While validating vertex state.
+    + ",
+    +   "console.error: THREE.WebGPURenderer: Async render pipeline creation failed (renderPipeline_MeshLambertNodeMaterial_110): Vertex buffer count (10) exceeds the maximum number of vertex buffers (8).
+    +  - While validating vertex state.
+    + ",
+    + ]
+
+       at e2e/fixtures.ts:19
+
+      17 |     const guard = attachErrorGuard(page);
+      18 |     await use(); guard.dispose();
+    > 19 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);
+         |                                                                                 ^
+      20 |   }, { auto: true }],
+      21 | });
+      22 | export { expect };
+        at Object.base.extend.errorGuard.auto (/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e07-epic/tests/e2e/fixtures.ts:19:81)
+
+    Error: page.evaluate: Test timeout of 60000ms exceeded.
+
+      21 |   await page.goto(testUrl.replace('&renderer=webgl', ''));
+      22 |   await page.waitForFunction(() => Boolean(window.__SS__));
+    > 23 |   const proof = await page.evaluate(async () => {
+         |                            ^
+      24 |     const api = window.__SS__!; await api.ready; api.pause(); await api.loadScenario('horde-arena'); api.pause(); api.cheats.god(true);
+      25 |     for (let i = 0; i < 200; i++) api.spawn('infected.runner', { x: i % 20 * 0.8 - 8, z: Math.floor(i / 20) * 0.8 - 4 }, { state: 'chase' });
+      26 |     await api.step(30); await api.screenshotReady(); return { state: api.getState().render, perf: api.perf() };
+        at /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e07-epic/tests/e2e/webgpu.spec.ts:23:28
+
+    Error Context: test-results/playwright/run/e2e-webgpu-T-E07-12-native-dd91b-me-instanced-infected-crowd-webgpu/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run/e2e-webgpu-T-E07-12-native-dd91b-me-instanced-infected-crowd-webgpu/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run/e2e-webgpu-T-E07-12-native-dd91b-me-instanced-infected-crowd-webgpu/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [webgpu] › tests/e2e/webgpu.spec.ts:20:1 › T-E07-12-native @E07 @E07-AC12 native WebGPU renders the same instanced infected crowd
+  1 passed (1.1m)
