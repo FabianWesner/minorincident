@@ -14,6 +14,18 @@ copyright 2025 Bruno Simon):
 | `Materials/MeshGridMaterial.js` | `src/render/MeshGridMaterial.ts` — trimmed XZ grid shader |
 | `utilities/maths.js` | `src/core/maths.ts` — clamp and lerp |
 
+| `Inputs/Inputs.js` | `src/input/Buttons.ts` — action sources and latched edges |
+| `Inputs/Keyboard.js` | `src/input/devices/Keyboard.ts` — keys, blur release and disposal |
+
+| `Inputs/Inputs.js` | `src/input/InputSystem.ts` — input phase, action map and schemes |
+| `Inputs/Pointer.js` | `src/input/devices/Pointer.ts` — mouse events and suppression |
+| `Inputs/Wheel.js` | `src/input/devices/Wheel.ts` — normalized selector direction |
+| `RayCursor.js`, `Inputs/Nipple.js` | `src/input/devices/RayCursor.ts` — ground-plane ray math |
+
+| `Inputs/Nipple.js` | `src/input/devices/Nipple.ts` — radial progress/angle, floating DOM presentation |
+| `Inputs/InteractiveButtons.js`, `Inputs/Pointer.js` | `src/input/devices/Touch.ts` — touch actions and independent contact ownership |
+
+| `Player.js` (41046b5) | `src/sim/entities/Player.ts`, `src/sim/locomotion/KinematicController.ts` — input intent before physics, survivor pose after physics |
 | `View.js` (41046b5) | `src/render/View.ts` — focus, aspect adaptation, shake and cinematic blending |
 | `Rendering.js`, `Viewport.js` (41046b5) | `src/render/Renderer.ts` — backend bootstrap and pixel ratio |
 
@@ -22,6 +34,8 @@ copyright 2025 Bruno Simon):
 | `Rendering.js`, `Passes/cheapDOF.js` (41046b5) | `src/render/PostFx.ts` — bloom and optional edge-only hash blur |
 | `InstancedGroup.js` (41046b5) | `src/render/InstancedGroup.ts` — shared mesh batches and dirty placement updates |
 | `PreRenderer.js` (41046b5) | `src/render/GameView.ts`, `src/Game.ts` — shader warm-up before screenshotReady (compileAsync plus two rendered frames) |
+
+All folio-2025 adaptations above reference commit `41046b5`.
 
 ## Bruno Simon MIT license
 

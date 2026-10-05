@@ -26,7 +26,6 @@ export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
   readonly batches: InstancedGroup[] = [];
   readonly windows: Mesh[] = [];
-  readonly player = new Group();
 
   private readonly grass: Grass[] = [];
   private readonly ownedGeometry: BufferGeometry[] = [];
@@ -174,17 +173,8 @@ export class DistrictView extends Group {
       }
       this.ownedGeometry.push(geometry);
     }
-    this.box(this.player, "survivorRed", [0.6, 0.7, 0.5], [0, 0.8, 0]);
-    this.box(this.player, "backpackTeal", [0.3, 0.45, 0.5], [-0.4, 0.85, 0]);
-    const head = new SphereGeometry(0.25, 10, 7);
-    this.ownedGeometry.push(head);
-    const mesh = new Mesh(head, this.materials.get("infectedSkin"));
-    mesh.position.y = 1.4;
-    this.player.add(mesh);
-    for (const z of [-0.2, 0.2])
-      this.box(this.player, "uiDark", [0.25, 0.4, 0.2], [0, 0.25, z]);
-    this.add(this.player);
   }
+
   private box(
     root: Group,
     token: import("../data/palette").PaletteToken,

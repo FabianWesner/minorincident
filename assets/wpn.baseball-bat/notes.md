@@ -1,0 +1,4 @@
+Reference: unbranded warm orange wooden bat, rounded faceted barrel, long gradual taper, six dark purple charcoal grip courses and broad wooden knob. Length 0.922 m, maximum barrel diameter 0.114 m, grip length 0.245 m. Tip points +X; rests at z=0. Static body/tape/grain joined by material; grip and tip attachment empties. Grain relief clears shell by at least 3 mm. No moving parts or lamps.
+
+Round 1: silhouette/tape rhythm readable; lower barrel and tape too slender, grain too faint. WebGPU and WebGL2 initial export both clean (1564 triangles, 3 meshes). Round 2 thickens lower taper, tape and knob; adds visible charcoal knots and sinks grain bases into shell instead of leaving floating relief.
+Round 2: chunkier handle reads well; straight grain streaks need more organic shape. Round 3 replaces diamond grain with bent six-point relief and increases knot size. Final hero + game generated together; no extra scene or rendering abstractions needed.

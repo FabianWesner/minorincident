@@ -1,3 +1,4 @@
+import { CharacterView } from './characters/CharacterView';
 import { BoxGeometry, Color, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Scene, type Material } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
@@ -27,6 +28,7 @@ export class GameView implements Lifecycle {
   readonly renderer: Renderer;
   private readonly meshes: Mesh[] = [];
   private cube: Mesh | null = null;
+  private character: CharacterView | null = null;
   private wireframe: PhysicsWireframe | null = null;
   private lighting: Lighting | null = null;
   private materials: Materials | null = null;
@@ -73,6 +75,13 @@ export class GameView implements Lifecycle {
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial);await this.districts.load(1);
       this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera);
 
+      this.character=new CharacterView();await this.character.init(this.materials);this.scene.add(this.character);
+    } else if (this.world.player) {
+      this.renderer.shadowMap.enabled = true;
+      this.lighting = new Lighting(this.scene); this.materials = new Materials(this.lighting);
+      const ground = new Mesh(new PlaneGeometry(100, 100), this.materials.get('sidewalk')); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;
+      this.meshes.push(ground); this.scene.add(ground);
+      this.character = new CharacterView(); await this.character.init(this.materials); this.scene.add(this.character);
     } else if (this.world.scenario === 'lookdev') {
       this.renderer.shadowMap.enabled = true;
       this.lighting = new Lighting(this.scene); this.materials = new Materials(this.lighting);
@@ -102,6 +111,12 @@ export class GameView implements Lifecycle {
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
     if(this.districts){const pose=this.districts.spots.get(name);if(!pose)throw new Error(`Unknown district photo spot: ${name}`);this.view.preset(name,pose);this.update(1);return;}
+    if (this.character) {
+      const poses = { front: [7, 2.5, 0], back: [-7, 2.5, 0], left: [0, 2.5, -7], right: [0, 2.5, 7], gameplay: [15, 18, 15] } as const;
+      const position = poses[name as keyof typeof poses];
+      if (!position) throw new Error(`Unknown survivor photo spot: ${name}`);
+      this.view.preset(name, { position: [...position], target: [0, 0.7, 0] }); this.update(1); return;
+    }
     const pose = photoSpots[name as keyof typeof photoSpots];
     if (!this.lookdev || !pose) throw new Error(`Unknown photo spot: ${name}`);
     this.view.preset(name, pose); this.update(1);
@@ -123,11 +138,19 @@ export class GameView implements Lifecycle {
     const materialInventory = new Map<string, { name: string; palette: boolean }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial }); });
     return { districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
+      character: this.character?.getState() ?? null,
       materials: [...materialInventory.values()], occlusion: this.occlusion.getState(),
       probes: this.lookdev ? { lamp: this.project(...this.lookdev.lampHead.position.toArray() as [number, number, number]), shadow: this.project(...this.lookdev.shadowProbe.position.toArray() as [number, number, number]) } : null };
   }
   update(alpha = 1): void {
     const current = this.world.entities.get(1)?.transform, previous = this.world.previousPlayer;
+    const survivor = this.world.entities.get(1)?.survivor;
+    if (this.character && current && survivor) {
+      this.character.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha) - 0.7, lerp(previous?.z ?? current.z, current.z, alpha));
+      const from = previous?.yaw ?? current.yaw;
+      this.character.rotation.y = from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha;
+      this.character.update(survivor, this.world.tick, alpha);
+    }
     if (this.cube && current) {
       this.cube.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha), lerp(previous?.z ?? current.z, current.z, alpha));
       this.cube.rotation.y = current.yaw;
@@ -138,19 +161,20 @@ export class GameView implements Lifecycle {
       this.playerPosition.copy(this.lookdev.player.position);
       this.occlusion.update(this.camera, this.playerPosition, 0, this.lookdev.playerMeshes);
     }
-    if(this.districts&&current){this.districts.player.position.set(current.x,current.y-.5,current.z);this.districts.player.rotation.y=current.yaw;}
     this.lighting?.update(this.view);
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset();
     if(this.windowMask&&this.districts){
       const background=this.scene.background,fog=this.scene.fog,shadow=this.renderer.shadowMap.enabled;
-      this.scene.background=new Color(0);this.scene.fog=null;this.renderer.shadowMap.enabled=false;this.districts.mask(true);this.renderer.render(this.scene,this.camera);this.districts.mask(false);this.scene.background=background;this.scene.fog=fog;this.renderer.shadowMap.enabled=shadow;
-    } else if (this.idPass && this.lookdev) {
+      this.scene.background=new Color(0);this.scene.fog=null;this.renderer.shadowMap.enabled=false;this.districts.mask(true);const heroVisible=this.character?.visible;if(this.character)this.character.visible=false;this.renderer.render(this.scene,this.camera);if(this.character)this.character.visible=heroVisible!;this.districts.mask(false);this.scene.background=background;this.scene.fog=fog;this.renderer.shadowMap.enabled=shadow;
+    } else if (this.idPass && (this.lookdev || this.character)) {
       const background = this.scene.background, fog = this.scene.fog, shadow = this.renderer.shadowMap.enabled;
       this.scene.background = new Color(0); this.scene.fog = null; this.renderer.shadowMap.enabled = false;
       this.scene.traverse((child) => {
-        if (child instanceof Mesh) { this.savedMaterials.set(child, child.material); child.material = this.lookdev!.playerMeshes.includes(child) ? this.idPlayer : this.idBackground; }
+        if (child instanceof Mesh) { this.savedMaterials.set(child, child.material); let hero = this.lookdev?.playerMeshes.includes(child) ?? false;
+          if (this.character) for (let parent = child.parent; parent; parent = parent.parent) if (parent === this.character) { hero = true; break; }
+          child.material = hero ? this.idPlayer : this.idBackground; }
       });
       this.idPlayer.depthTest = !this.occlusion.getState().some((building) => building.blocked);
       this.renderer.render(this.scene, this.camera);
@@ -162,13 +186,14 @@ export class GameView implements Lifecycle {
     this.windowMask=false;
     this.postFx?.dispose();this.postFx = null;
     if(this.districts){this.scene.remove(this.districts);this.districts.dispose();this.districts=null;}
+    if (this.character) { this.scene.remove(this.character); this.character.dispose(); this.character = null; }
     if (this.lookdev) { this.scene.remove(this.lookdev); this.lookdev.dispose(); this.lookdev = null; }
     if(this.materials!==this.districtResources?.materials)this.materials?.dispose();this.materials=null;
     if(this.lighting===this.districtResources?.lighting)this.scene.remove(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);else this.lighting?.dispose();this.lighting=null;
     this.occlusion.reset(); this.idPass = false; this.scene.fog = null; this.scene.background = new Color('#293447'); this.renderer.shadowMap.enabled = false;
     for (const mesh of this.meshes) {
       this.scene.remove(mesh); mesh.geometry.dispose();
-      for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) material.dispose();
+      for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) if (!(material instanceof PaletteMaterial)) material.dispose();
     }
     this.meshes.length = 0; this.cube = null;
     if (this.wireframe) { this.scene.remove(this.wireframe.lines); this.wireframe.dispose(); this.wireframe = null; }

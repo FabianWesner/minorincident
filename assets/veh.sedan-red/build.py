@@ -48,17 +48,13 @@ M={
     'black':material('uiDark','25222c',.72),
     'trim':material('asphalt','5b4f5c',.45),
     'rim':material('sidewalk','938698',.38,.42),
-    'glass':material('backpackTeal','2f6e6a',.21,.06,alpha=.84),
+    'glass':material('backpackTeal','38394e',.35,.06,alpha=.74),
     'head':material('windowGlow','ffc773',.29,emission=.7),
     'amber':material('schoolBusYellow','f2b630',.34,emission=.22),
     'brake':material('sirenRed','ff2d2d',.32,emission=.22),
     'cream':material('picketWhite','f2e6dc',.5),
 }
-# Glass is tinted slate in the reference: keep the shared teal identity but subdued.
-M['glass'].node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value=(*linear('38394e'),1)
-M['glass'].diffuse_color=(*linear('38394e'),.74)
-M['glass'].node_tree.nodes['Principled BSDF'].inputs['Alpha'].default_value=.74
-M['glass'].node_tree.nodes['Principled BSDF'].inputs['Roughness'].default_value=.35
+# Smoked slate glazing matches the reference.
 M['glass'].node_tree.nodes['Principled BSDF'].inputs['Specular IOR Level'].default_value=.18
 
 
@@ -138,6 +134,17 @@ for x in (-1.32,1.34):
     mod=shell.modifiers.new('Wheel opening','BOOLEAN'); mod.operation='DIFFERENCE'; mod.object=cutter
     bpy.ops.object.modifier_apply(modifier=mod.name)
     bpy.data.objects.remove(cutter,do_unlink=True)
+# Open lower door apertures so hinged doors reveal the cabin instead of a red wall.
+for side in (-1,1):
+    for lo,hi in [(-.87,.08),(.10,1.16)]:
+        cutter=box('Door aperture',((lo+hi)/2,side*.91,.74),(hi-lo,.30,.80),'red',bevel=0)
+        bpy.context.view_layer.objects.active=shell
+        mod=shell.modifiers.new('Door opening','BOOLEAN');mod.operation='DIFFERENCE';mod.object=cutter
+        bpy.ops.object.modifier_apply(modifier=mod.name)
+        bpy.data.objects.remove(cutter,do_unlink=True)
+# Boolean cutters must not introduce a second material into the painted shell.
+for face in shell.data.polygons:face.material_index=0
+while len(shell.data.materials)>1:shell.data.materials.pop(index=1)
 box('Underbody',(0,0,.30),(3.73,1.43,.15),'black',bevel=.035)
 # Hood and trunk sit >3mm above the shell, with raised creases.
 prism('Hood',[(1.20,1.106),(2.06,1.026),(2.06,1.043),(1.20,1.121)],-.84,.84,'red',bevel=.018)
@@ -166,9 +173,14 @@ for s,side in [(-1,'L'),(1,'R')]:
         name=('door'+side) if front else ('doorRear'+side)
         g=empty(name,(1.16 if front else .12,s*.90,1.0),root)
         lo,hi=(.10,1.16) if front else (-.87,.08)
-        panel=[(lo,.36),(hi,.36),(hi,1.085),(lo,1.085)]
+        if front:
+            end=math.acos((hi-1.34)/.443)
+            panel=[(lo,.36),(.897,.36)]+[(1.34+.443*math.cos(math.pi+(end-math.pi)*i/12),.37+.443*math.sin(math.pi+(end-math.pi)*i/12)) for i in range(13)]+[(hi,1.085),(lo,1.085)]
+        else:
+            panel=[(lo,.36),(hi,.36),(hi,1.085),(lo,1.085)]
         prism('Door skin',panel,min(s*.906,s*.924),max(s*.906,s*.924),'red',g,.014)
-        box('Door moulding',((lo+hi)/2,s*.946,.60),(hi-lo-.025,.033,.062),'trim',g,.009)
+        trim_hi=.94 if front else hi
+        box('Door moulding',((lo+trim_hi)/2,s*.946,.60),(trim_hi-lo-.025,.033,.062),'trim',g,.009)
         # Diagonal A/C edges define trapezoidal windows.
         coords=([( .14,1.105),(1.12,1.105),(.69,1.51),(.14,1.51)] if front else [(-1.37,1.105),(.035,1.105),(.035,1.51),(-.93,1.51)])
         vs=[(x,s*(.885-(z-1.105)*.34),z) for x,z in coords]
@@ -266,11 +278,20 @@ box('Fuel flap face',(-1.78,.928,.997),(.195,.012,.118),'red',bevel=.012)
 for name,loc in [('driverSeat',(.2,-.4,.87)),('exitL',(.35,-1.35,0)),('exitR',(.35,1.35,0))]:empty(name,loc,root)
 col=empty('col:chassis',(0,0,.78),root);col['collider']='cuboid';col['shape']='cuboid';col['size']=[4.4,1.8,1.48]
 
+def clean_mesh(o):
+    bm=bmesh.new();bm.from_mesh(o.data)
+    bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=1e-6)
+    bmesh.ops.triangulate(bm,faces=list(bm.faces))
+    bad=[f for f in bm.faces if f.calc_area()<1e-9]
+    if bad:bmesh.ops.delete(bm,geom=bad,context='FACES')
+    bm.to_mesh(o.data);bm.free();o.data.update()
+
 # Apply modifiers then join only within each joint/material partition.
 for o in list(scene.objects):
     if o.type!='MESH':continue
     bpy.context.view_layer.objects.active=o
     for mod in list(o.modifiers):bpy.ops.object.modifier_apply(modifier=mod.name)
+    clean_mesh(o)
 partitions={}
 for o in list(scene.objects):
     if o.type=='MESH':partitions.setdefault((o.parent.name,o.data.materials[0].name),[]).append(o)
@@ -296,24 +317,40 @@ if a.glb:
             o.data.color_attributes.active_color=attr
             o.select_set(True);bpy.context.view_layer.objects.active=o
     bpy.ops.object.bake(type='AO',target='VERTEX_COLORS',use_clear=True)
+    # Keep baked contact shading gentle in the warm miniature palette.
+    for o in scene.objects:
+        if o.type=='MESH':
+            for color in o.data.color_attributes['ao'].data:
+                color.color=tuple(.9+.1*max(0,min(1,c)) for c in color.color[:3])+(1,)
+    # Transparent panes do not receive solid-surface occlusion.
+    for o in scene.objects:
+        if o.type=='MESH' and o.data.materials[0]==M['glass']:
+            for color in o.data.color_attributes['ao'].data:color.color=(1,1,1,1)
     print('AO OK')
 
 for o in scene.objects:
     if o.type=='MESH':o.data.calc_loop_triangles()
 triangles=sum(len(o.data.loop_triangles) for o in scene.objects if o.type=='MESH')
-report={'id':'veh.sedan-red','tier':'Hero','triangles':triangles,'draw_calls':len(partitions),'materials':sorted(m.name for m in M.values()),'nodes_ok':all(bpy.data.objects.get(n) for n in ['body','wheelFL','wheelFR','wheelRL','wheelRR','doorL','lightsFront','lightsBrake','driverSeat','exitL','exitR']),'within_budget':triangles<=80000 and len(partitions)<=40,'rounds':3,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
+report={'id':'veh.sedan-red','tier':'Hero','triangles':triangles,'draw_calls':len(partitions),'materials':sorted(m.name for m in M.values()),'nodes_ok':all(bpy.data.objects.get(n) for n in ['body','wheelFL','wheelFR','wheelRL','wheelRR','doorL','lightsFront','lightsBrake','driverSeat','exitL','exitR']),'within_budget':triangles<=80000 and len(partitions)<=40,'rounds':5,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
 (HERE/'build-stats.json').write_text(json.dumps(report,indent=2)+'\n')
 if a.glb:
     bpy.ops.object.select_all(action='SELECT')
-    bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_all_vertex_colors=True)
+    bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
     # Independently exported LODs preserve all node names and joint transforms.
+    meshes=[o for o in scene.objects if o.type=='MESH']
+    originals={o:o.data for o in meshes}
     for suffix,ratio in [('lod1',.15),('lod2',.045)]:
+        for o in meshes:
+            o.data=originals[o].copy()
         for o in scene.objects:
             if o.type=='MESH':
                 d=o.modifiers.new('LOD','DECIMATE');d.ratio=ratio
-        bpy.ops.export_scene.gltf(filepath=str(HERE/('model.'+suffix+'.glb')),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_all_vertex_colors=True)
-        for o in scene.objects:
-            if o.type=='MESH':o.modifiers.remove(o.modifiers['LOD'])
+                bpy.context.view_layer.objects.active=o
+                bpy.ops.object.modifier_apply(modifier=d.name)
+                clean_mesh(o)
+        bpy.ops.export_scene.gltf(filepath=str(HERE/('model.'+suffix+'.glb')),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
+        for o in meshes:
+            reduced=o.data;o.data=originals[o];bpy.data.meshes.remove(reduced)
     print('GLB OK',report)
 if a.render:
     world=bpy.data.worlds.new('Studio');scene.world=world;world.use_nodes=True
@@ -328,13 +365,21 @@ if a.render:
     ground.data.materials.clear();gm=material('studio','302c36',.85);ground.data.materials.append(gm)
     cam=bpy.data.objects.new('Camera',bpy.data.cameras.new('Camera'));scene.collection.objects.link(cam);scene.camera=cam
     views={'ref':(6,-8,4.7),'game':(7,-7,8.4),'front':(9,0,2.8),'rear':(-8,-5,3.8),'side':(0,-10,2.3)}
-    cam.location=views[a.view];cam.rotation_euler=(Vector((0,0,.78))-cam.location).to_track_quat('-Z','Y').to_euler()
-    cam.data.type='ORTHO';cam.data.ortho_scale=6.3 if a.view!='game' else 6.7
-    scene.render.engine='CYCLES';scene.cycles.samples=a.samples;scene.cycles.use_denoising=True
+    cam.data.type='ORTHO'
+    scene.render.engine='CYCLES';scene.cycles.use_denoising=True
     prefs=bpy.context.preferences.addons['cycles'].preferences;prefs.compute_device_type='METAL';prefs.get_devices()
     for d in prefs.devices:d.use=True
     scene.cycles.device='GPU'
     scene.view_settings.view_transform='AgX';scene.view_settings.look='AgX - Medium High Contrast';scene.view_settings.exposure=-.30
-    scene.render.resolution_x=a.width;scene.render.resolution_y=a.height;scene.render.resolution_percentage=100
-    scene.render.filepath=str(Path(a.render).resolve());bpy.ops.render.render(write_still=True)
-    print('RENDER OK',a.render)
+    requests=[(a.view,Path(a.render).resolve(),a.width,a.height,a.samples)]
+    # Produce both final deliverables while holding one shared render lease.
+    if Path(a.render).name=='hero.png':
+        requests.append(('game',HERE/'renders/game.png',960,540,24))
+    for view,path,width,height,samples in requests:
+        cam.location=views[view]
+        cam.rotation_euler=(Vector((0,0,.78))-cam.location).to_track_quat('-Z','Y').to_euler()
+        cam.data.ortho_scale=6.7 if view=='game' else 6.3
+        scene.cycles.samples=samples
+        scene.render.resolution_x=width;scene.render.resolution_y=height;scene.render.resolution_percentage=100
+        scene.render.filepath=str(path);bpy.ops.render.render(write_still=True)
+        print('RENDER OK',path)

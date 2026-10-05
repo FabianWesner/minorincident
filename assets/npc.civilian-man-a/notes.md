@@ -1,0 +1,12 @@
+# Civilian man A
+
+Measured target: 1.4 m, head and hair approximately 0.36 m. Relaxed adult stance; +X forward, -Y right. Teal polo, tan cargo khakis, dark belt, left watch and teal/white lace sneakers. Hair consists of overlapping swept volumes.
+
+Geometry is deterministic and rigid, with applied subdivision. Required joint empties carry static meshes consolidated per material. Skin, brown hair, khaki and teal cloth extend the starter palette using pal_* tokens, matching the reference. No images or branded marks.
+
+Review rounds:
+1. Built full character, 56,049 triangles; corrected torso/leg balance after first render. Both runtime backends loaded without errors.
+2. Inspected four views, 55,991 triangles; refined open finger tips, hair nape and crown silhouette, rectangular buckle, cloth width and removed overly raised fold strips.
+3. Final hero and four-view batch, followed by articulated pose and final GLB audit.
+
+Render commands use experiment/tools/blender_run.py with the shared GPU pool. --deliverables renders the requested hero, four neutral views, and the pose test in one run. Export happens in the neutral pose before any review articulation.

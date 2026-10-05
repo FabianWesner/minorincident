@@ -14,9 +14,9 @@ PI=math.pi
 W=.90
 bpy.ops.wm.read_factory_settings(use_empty=True)
 scene=bpy.context.scene
-TRUCK=bpy.data.collections.new('Sedan')
+CAR=bpy.data.collections.new('Sedan')
 STAGE=bpy.data.collections.new('Stage')
-scene.collection.children.link(TRUCK)
+scene.collection.children.link(CAR)
 scene.collection.children.link(STAGE)
 def srgb(h):
     h = h.lstrip('#')
@@ -44,19 +44,19 @@ def material(name, color, rough=0.5, metal=0.0, coat=0.0, coat_rough=0.03, emit=
 
 
 M = {
-    
-    
     'white': material('pal_picketWhite', '#f2e6dc', .34, coat=.45),
-    'chrome': material('pal_sidewalk', '#b9a4a0', .24, .85),
+    'chrome': material('pal_sidewalk', '#b9a4a0', .28, .45),
     'black': material('pal_uiDark', '#25222c', .65),
-    'glass': material('pal_asphalt', '#5b4f5c', .16, coat=.6, alpha=.82),
+    'glass': material('pal_asphalt', '#5b4f5c', .36, coat=0, alpha=.50),
     'amber': material('emi_schoolBusYellow', '#f2b630', .28, emit='#f2b630', strength=.45),
     'lamp': material('emi_sirenRed', '#ff2d2d', .28, emit='#ff2d2d', strength=.55),
-    'head': material('emi_windowGlow', '#ffc773', .24, emit='#ffc773', strength=1.8),
+    'head': material('emi_windowGlow', '#ffc773', .24, emit='#ffc773', strength=3.0),
 }
 # A single charcoal material serves tyre and trim; no suffixed palette variants.
-M['rubber'] = M['black']
-M['rim'] = M['chrome']
+
+# Keep glass dark and readable under the broad studio key.
+M['glass'].node_tree.nodes['Principled BSDF'].inputs['Specular IOR Level'].default_value=.12
+M['glass'].node_tree.nodes['Principled BSDF'].inputs['IOR'].default_value=1.12
 
 GROUPS = {}
 
@@ -65,7 +65,7 @@ def group(name, location=(0, 0, 0), parent=None):
     e = bpy.data.objects.new(name, None)
     e.empty_display_size = 0.3
     e.location = location
-    TRUCK.objects.link(e)
+    CAR.objects.link(e)
     if parent:
         e.parent = GROUPS[parent]
         e.matrix_parent_inverse = GROUPS[parent].matrix_world.inverted()
@@ -75,7 +75,7 @@ def group(name, location=(0, 0, 0), parent=None):
 
 
 def finish(obj, mat, parent, bevel=0.0, segs=2, smooth=True, harden=True, angle=40):
-    TRUCK.objects.link(obj)
+    CAR.objects.link(obj)
     if isinstance(mat, str):
         mat = M[mat]
     if mat is not None and obj.type == 'MESH' and not obj.data.materials:
@@ -238,10 +238,6 @@ def raw_box(name, center, size):
     return o
 
 
-def arc(cx, cz, r, a0, a1, n):
-    return [(cx + r * math.cos(a0 + (a1 - a0) * i / n), cz + r * math.sin(a0 + (a1 - a0) * i / n)) for i in range(n + 1)]
-
-
 root=group('veh.sedan-white')
 root['assetId']='veh.sedan-white';root['tier']='Hero'
 root['lodFiles']=['model.glb','model.lod1.glb','model.lod2.glb']
@@ -249,7 +245,7 @@ root['ss_physics']={'class':'heavy','mass':1150.0,'friction':.8,'restitution':.0
 STATIC='veh.sedan-white'
 moving=set()
 # Continuous lower shell, with genuine wheel arches and cabin aperture.
-shell=prism('body_shell',[(-2.18,.43),(2.19,.43),(2.19,1.06),(2.05,1.15),(1.04,1.22),(-1.49,1.22),(-2.14,1.14)],-.90,.90,'white',STATIC,.035,3)
+shell=prism('body_shell',[(-2.18,.43),(2.19,.43),(2.19,1.06),(2.05,1.15),(1.04,1.22),(-1.49,1.22),(-2.14,1.14)],-.90,.90,'white',STATIC,.050,3)
 for x in [-1.40,1.40]:
     cut(shell,raw_cyl('wheel_arch',(x,0,.39),.465,2.3,'y',64))
 # Interior void also makes the lower door apertures functional.
@@ -258,27 +254,30 @@ for s,lr in [(-1,'L'),(1,'R')]:
     for name,x0,x1 in [('door'+lr,-.12,1.03),('doorRear'+lr,-1.34,-.13)]:
         cut(shell,raw_box('door_aperture',((x0+x1)/2,s*.85,.90),(x1-x0, .40,.62)))
         g=group(name,(x1,s*.88,1.05),STATIC);moving.add(g)
-        box(name+'_skin',((x0+x1)/2,s*.888,.90),(x1-x0-.015,.055,.61),'white',name,.013,3)
-        box(name+'_molding',((x0+x1)/2,s*.925,.70),(x1-x0-.045,.026,.065),'black',name,.009)
-        box(name+'_rocker_line',((x0+x1)/2,s*.921,.51),(x1-x0-.04,.012,.017),'chrome',name,.004)
+        panel=box(name+'_skin',((x0+x1)/2,s*.888,.90),(x1-x0-.015,.055,.61),'white',name,.013,3)
+        for axle in [-1.4,1.4]:cut(panel,raw_cyl('door_arch',(axle,0,.39),.468,2.3,'y',64))
+        molding=box(name+'_molding',((x0+x1)/2,s*.925,.70),(x1-x0-.045,.026,.065),'black',name,.009)
+        rocker=box(name+'_rocker_line',((x0+x1)/2,s*.921,.51),(x1-x0-.04,.012,.017),'chrome',name,.004)
+        for part in [molding,rocker]:
+            for axle in [-1.4,1.4]:cut(part,raw_cyl('trim_arch',(axle,0,.39),.474,2.3,'y',64))
         box(name+'_handle_recess',(x0+.20,s*.926,1.063),(.21,.025,.086),'black',name,.014,3)
         box(name+'_handle',(x0+.20,s*.947,1.078),(.17,.025,.033),'black',name,.008)
         if name=='door'+lr:
-            cyl=cylinder(name+'_lock',(x0+.16,s*.946,1.021),.012,.012,'y','chrome',name,16)
+            cylinder(name+'_lock',(x0+.16,s*.946,1.021),.012,.012,'y','chrome',name,16)
     # Separate window loops form open frames; glazing is recessed from the gasket.
     front=[(-.11,1.23),(.98,1.23),(.43,1.73),(-.11,1.73)]
     rear=[(-1.37,1.23),(-.18,1.23),(-.18,1.73),(-.91,1.73)]
     for name,outer in [('door'+lr,front),('doorRear'+lr,rear)]:
         cx=sum(x for x,z in outer)/4;cz=sum(z for x,z in outer)/4
-        inner=[(cx+(x-cx)*.89,cz+(z-cz)*.87) for x,z in outer]
+        inner=[(cx+(x-cx)*.94,cz+(z-cz)*.91) for x,z in outer]
         ring(name+'_window_frame',outer,inner,s,.047,'white',name,y_skin=.835,bevel=.009)
-        inset=[(cx+(x-cx)*.97,cz+(z-cz)*.96) for x,z in inner]
+        inset=[(cx+(x-cx)*.89,cz+(z-cz)*.87) for x,z in inner]
         ring(name+'_gasket',inner,inset,s,.022,'black',name,y_skin=.861,bevel=.005)
         plate(name+'_glass',inset,s,.012,'glass',name,y_skin=.853,bevel=.009)
     # Rear quarter pane divider and B pillar.
     plate('quarter_pillar'+lr,[(-1.21,1.27),(-1.17,1.27),(-.82,1.69),(-.86,1.69)],s,.025,'black','doorRear'+lr,y_skin=.866)
     box('B_pillar'+lr,(-.145,s*.866,1.49),(.052,.044,.55),'black',STATIC,.007)
-    box('roof_rain_gutter'+lr,(-.25,s*.878,1.765),(1.52,.028,.026),'chrome',STATIC,.008)
+    box('roof_rain_gutter'+lr,(-.25,s*.878,1.765),(1.52,.022,.020),'white',STATIC,.008)
     # Mirror mounts follow the front doors.
     plate('mirror_triangle'+lr,[(.72,1.24),(.97,1.24),(.80,1.44)],s,.032,'black','door'+lr,y_skin=.875)
     box('mirror_stalk'+lr,(.85,s*.981,1.30),(.065,.17,.055),'black','door'+lr,.012)
@@ -291,7 +290,8 @@ for s,lr in [(-1,'L'),(1,'R')]:
         plate('arch_lip'+lr+str(x),outer+inner,s,.035,'white',STATIC,y_skin=.896,bevel=.008)
     box('fender_marker'+lr,(1.08,s*.925,1.055),(.10,.024,.036),'amber',STATIC,.009)
     # Rocker under closed doors; dark wheel wells stay inside the shell.
-    box('sill'+lr,(-.14,s*.843,.448),(1.83,.10,.055),'white',STATIC,.015)
+    sill=box('sill'+lr,(-.14,s*.843,.448),(1.83,.10,.055),'white',STATIC,.015)
+    for axle in [-1.4,1.4]:cut(sill,raw_cyl('sill_arch',(axle,0,.39),.476,2.3,'y',64))
 box('chassis',(0,0,.41),(3.99,1.43,.115),'black',STATIC,.035)
 for x in [-1.4,1.4]:cylinder('axle',(x,0,.39),.045,1.63,'y','black',STATIC)
 # Roof, raked windshield, rear glass and purposeful cabin fittings.
@@ -356,15 +356,16 @@ for s,lr in [(-1,'L'),(1,'R')]:
         a['ss_light']={'type':kind,'color':'light_window_warm' if kind=='spot' else 'light_siren_red','intensity':3 if kind=='spot' else 1,'range':20 if kind=='spot' else 2,'angle':48,'penumbra':.4,'pool':kind=='spot','beam':'soft' if kind=='spot' else 'none','flare':True,'reflect':True,'shadow':'hero' if kind=='spot' else 'none','heroPriority':2 if kind=='spot' else 0,'flicker':'none','powerGroup':'self','breakable':True,'emissiveNodes':[emitnode],'tiers':'all'}
 # Dark bumpers with inset amber slots and blank reference-style plates.
 for x in [-2.24,2.25]:
-    bumper=box('bumper',(x,0,.631),(.26,1.94,.24),'black',STATIC,.041,4)
+    bumper=box('bumper',(x,0,.631),(.26,1.94,.24),'black',STATIC,.072,4)
     face=x+math.copysign(.14,x)
     if x>0:
         for y in [-.65,.65]:
             cut(bumper,raw_box('indicator_slot',(face,y,.625),(.10,.24,.092)))
             box('bumper_amber',(face-.048,y,.625),(.014,.203,.060),'amber',STATIC,.007)
-    box('plate_mount',(face+math.copysign(.008,x),0,.628),(.025,.40,.265),'black',STATIC,.012)
-    box('license_plate',(face+math.copysign(.03,x),0,.628),(.014,.35,.235),'white',STATIC,.010)
-    for y in [-.13,.13]:cylinder('plate_screw',(face+math.copysign(.04,x),y,.72),.005,.007,'x','chrome',STATIC,12)
+    if x>0:
+        box('plate_mount',(face+math.copysign(.008,x),0,.628),(.025,.40,.265),'black',STATIC,.012)
+        box('license_plate',(face+math.copysign(.03,x),0,.628),(.014,.35,.235),'white',STATIC,.010)
+        for y in [-.13,.13]:cylinder('plate_screw',(face+math.copysign(.04,x),y,.72),.005,.007,'x','chrome',STATIC,12)
 box('rear_plate_recess',(-2.211,0,.993),(.024,.67,.235),'chrome',STATIC,.012)
 box('rear_plate',(-2.234,0,.993),(.014,.40,.17),'white',STATIC,.01)
 cylinder('trunk_lock',(-2.241,0,1.155),.018,.012,'x','chrome',STATIC,16)
@@ -393,7 +394,7 @@ for x,ax in [(1.4,'F'),(-1.4,'R')]:
 for name,loc in [('driverSeat',(.02,-.42,.98)),('exitL',(.36,-1.28,0)),('exitR',(.36,1.28,0))]:group(name,loc,STATIC)
 col=group('col:body',(0,0,1.02),STATIC);col['collider']='cuboid';col['shape']='cuboid';col['size']=[4.7,1.83,1.61]
 # Consolidate once after bevels. One mesh/material per animation owner.
-for o in list(TRUCK.objects):
+for o in list(CAR.objects):
     if o.type!='MESH':continue
     bpy.ops.object.select_all(action='DESELECT');o.select_set(True);bpy.context.view_layer.objects.active=o
     for mod in list(o.modifiers):bpy.ops.object.modifier_apply(modifier=mod.name)
@@ -405,7 +406,7 @@ def motion_owner(o):
         p=p.parent
     return None
 buckets={}
-for o in list(TRUCK.objects):
+for o in list(CAR.objects):
     if o.type=='MESH':buckets.setdefault((motion_owner(o),o.data.materials[0].name),[]).append(o)
 for (owner,matname),obs in buckets.items():
     bpy.ops.object.select_all(action='DESELECT')
@@ -415,13 +416,29 @@ for (owner,matname),obs in buckets.items():
     o.name='body' if owner is None and matname=='pal_picketWhite' else (owner.name if owner else 'static')+'_'+matname
     o.data.name=o.name;scene.cursor.location=owner.matrix_world.translation if owner else (0,0,0)
     bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
-meshes=[o for o in TRUCK.objects if o.type=='MESH']
+meshes=[o for o in CAR.objects if o.type=='MESH']
+def clean_mesh(o):
+    # Work in final pivot-local float coordinates, matching glTF export precision.
+    bm=bmesh.new();bm.from_mesh(o.data)
+    bmesh.ops.triangulate(bm,faces=list(bm.faces))
+    thin=[f for f in bm.faces if f.calc_area()<max(e.calc_length()**2 for e in f.edges)*1e-5]
+    if thin:bmesh.ops.delete(bm,geom=thin,context='FACES')
+    bm.to_mesh(o.data);bm.free();o.data.update()
+    bpy.context.view_layer.objects.active=o
+    normals=o.modifiers.new('clean_normals','WEIGHTED_NORMAL');normals.keep_sharp=True
+    bpy.ops.object.modifier_apply(modifier=normals.name)
+for o in meshes:clean_mesh(o)
+points=[o.matrix_world@v.co for o in meshes for v in o.data.vertices]
+min_z=min(v.z for v in points);cx=(min(v.x for v in points)+max(v.x for v in points))*.5
+for o in list(root.children):o.location.z-=min_z;o.location.x-=cx
+bpy.context.view_layer.update()
 for o in meshes:o.data.calc_loop_triangles()
 tris=sum(len(o.data.loop_triangles) for o in meshes)
 draws=len(meshes)
 required=['body','wheelFL','wheelFR','wheelRL','wheelRR','doorL','doorR','doorRearL','doorRearR','lightsFront','lightsBrake','driverSeat','exitL','exitR']
 report={'id':'veh.sedan-white','tier':'Hero','triangles':tris,'draw_calls':draws,'materials':sorted({m.name for o in meshes for m in o.data.materials}),'nodes_ok':all(n in bpy.data.objects for n in required),'within_budget':tris<=80000 and draws<=40,'rounds':0,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
 (HERE/'build-stats.json').write_text(json.dumps(report,indent=2)+'\n')
+assert report['nodes_ok'] and report['within_budget'], report
 print('BUILD OK',json.dumps(report))
 if arg('--glb'):
     scene.render.engine='CYCLES';scene.cycles.samples=32;scene.cycles.seed=0;scene.cycles.device='CPU'
@@ -433,7 +450,7 @@ if arg('--glb'):
     bpy.ops.object.bake(type='AO');print('AO OK')
     def export_glb(path):
         bpy.ops.object.select_all(action='DESELECT')
-        for o in TRUCK.objects:o.select_set(True)
+        for o in CAR.objects:o.select_set(True)
         bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_lights=False,export_cameras=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
         print('GLB OK',path)
     export_glb(arg('--glb'))
@@ -442,6 +459,7 @@ if arg('--glb'):
         for o,me in original.items():
             o.data=me.copy();bpy.context.view_layer.objects.active=o
             d=o.modifiers.new('LOD','DECIMATE');d.ratio=ratio;bpy.ops.object.modifier_apply(modifier=d.name)
+            clean_mesh(o)
         export_glb(HERE/f'model.lod{level}.glb')
         for o,me in original.items():o.data=me
 
@@ -472,7 +490,10 @@ def stage(view):
 if arg('--render'):
     path=Path(arg('--render'));path.parent.mkdir(parents=True,exist_ok=True)
     stage(arg('--view','ref'));scene.render.filepath=str(path.resolve());bpy.ops.render.render(write_still=True);print('RENDER OK',path)
-    if '-ref' in path.stem:
+    if '-ref' in path.stem or path.name=='hero.png':
         scene.camera.location=(8,-8,10);scene.camera.data.ortho_scale=8
         scene.camera.rotation_euler=(Vector((0,0,.87))-scene.camera.location).to_track_quat('-Z','Y').to_euler()
-        scene.render.filepath=str(path.with_name(path.name.replace('-ref','-game')).resolve());bpy.ops.render.render(write_still=True);print('RENDER OK game')
+        game_path=path.with_name('game.png' if path.name=='hero.png' else path.name.replace('-ref','-game'))
+        if path.name=='hero.png':
+            scene.cycles.samples=24;scene.render.resolution_x=960;scene.render.resolution_y=540
+        scene.render.filepath=str(game_path.resolve());bpy.ops.render.render(write_still=True);print('RENDER OK game')
