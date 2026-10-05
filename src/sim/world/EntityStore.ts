@@ -16,6 +16,7 @@ export class EntityStore {
   get(id: number): EntitySnapshot | undefined { return this.entities.get(id); }
   values(): EntitySnapshot[] { return [...this.entities.values()].sort((a, b) => a.id - b.id); }
   iterate(): IterableIterator<EntitySnapshot> { return this.entities.values(); }
+  remove(id: number): void { this.entities.delete(id); }
   get size(): number { return this.entities.size; }
   init(): void { this.reset(); }
   update(): void {}

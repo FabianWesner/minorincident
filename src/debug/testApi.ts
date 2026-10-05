@@ -38,6 +38,7 @@ export interface SSTestApi {
     /** Begin at scenario tick zero so seed + frames are sufficient for replay. */
     record(): void; stopRecording(): Recording; replay(data: Recording): Promise<void>;
   };
+  /** E06: action IDs spawn walk-over pickups; infected options include reactive hearing fixtures. */
   spawn(defId: string, pos: { x: number; z: number }, opts?: object): number;
   teleport(entityId: number | 'player', pos: { x: number; z: number }): void;
   /** E04: cosmetic selection and sim entry points; weapon and mission resolution remain separate. */
@@ -90,7 +91,10 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       stopRecording: () => game.input.recorder.stop(),
       replay: async (data) => { await game.loadScenario(data.level, data.seed); game.clock.pause(); game.input.recorder.play(data); },
     },
-    spawn: (id, pos, opts) => game.world.combat ? game.world.spawnDummy(id, pos, opts) : pending('E07', 'spawn'),
+    spawn: (id, pos, opts) => {
+      if (!game.world.combat) return pending('E07', 'spawn');
+      return id.startsWith('weapon.') || id.startsWith('ability.') ? game.world.combat.pickups.spawn(id, pos) : game.world.spawnDummy(id, pos, opts);
+    },
     teleport: (id,pos) => { missionControls(game.world).teleport(id,pos); game.view.update(1); },
     survivor: {
       select: (variant, tier = 0) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.select(variant, tier); game.view.update(1); },

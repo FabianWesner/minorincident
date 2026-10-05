@@ -6,7 +6,7 @@ import manifest from '../../src/assets/manifest.json';
 import { variantPath, type AssetDef } from '../../src/assets/types';
 import { assetIO } from './io';
 import { geometryHash, validateDocument } from './validate';
-import { normalizeForward, optimizeAsset } from './optimize';
+import { normalizeForward, normalizeScale, generateStumpCaps, optimizeAsset } from './optimize';
 
 /** A script failure aborts before replacing any committed runtime output. */
 export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'low'; decay?: string } = {}): Promise<string> {
@@ -20,6 +20,8 @@ export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'l
   if (result.error || result.status !== 0) throw new Error(`Blender failed for ${def.id} (${result.status})`);
   const io = await assetIO(), document = await io.read(raw);
   normalizeForward(document, def);
+  normalizeScale(document, def);
+  generateStumpCaps(document, def);
   const meta = validateDocument(document, { ...def, budget: { ...def.budget, fileKB: Infinity } }, readFileSync(raw).length);
   // Zero-area exporter faces are repaired below; every runtime tier still gets full validation.
   const rawErrors = meta.errors.filter(error => !error.includes('degenerate triangle'));
@@ -39,7 +41,7 @@ export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'l
         if (!output) throw new Error(`Missing manifest ${lod} path`);
         const staged = `${stage}/${basename(output)}`;
         const useSupplied = !options.decay && existsSync(supplied);
-        await optimizeAsset(useSupplied ? supplied : raw, staged, def, useSupplied ? 1 : ratio);
+        await optimizeAsset(useSupplied ? supplied : raw, staged, def, useSupplied ? 1 : lod === 'lod1' && def.category === 'infected' ? .10 : ratio);
         const validation = validateDocument(await io.read(staged), def, readFileSync(staged).length, lod === 'lod1' ? 1 : 2);
         if (validation.errors.length) throw new Error(`${lod} invalid: ${validation.errors.join('; ')}`);
         outputs.push([staged,output]);

@@ -54,11 +54,12 @@ export class SimWorld implements Lifecycle {
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
-      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = Status.speed(player); this.player.prePhysics(this.input, this.tick, !Status.stunned(player, this.tick)); return; }
+      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1); this.player.prePhysics(this.input, this.tick, !Status.stunned(player, this.tick)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
       body.setLinvel({ x: this.input.move.x * 5, y: body.linvel().y, z: this.input.move.z * 5 }, true);
     }, SimPhase.intent);
+    this.events.on('sim.tick', () => this.combat?.effects.moveListeners(), SimPhase.ai);
     this.events.on('sim.tick', () => this.physics.update(), SimPhase.physics);
     this.events.on('sim.tick', () => {
       if (this.combat) {
@@ -121,11 +122,12 @@ export class SimWorld implements Lifecycle {
   getState(): GameStateSnapshot {
     return { ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities: this.query({}), mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
   }
-  spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number } = {}): number {
+  spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number; reactive?: boolean } = {}): number {
     if (!this.combat) throw new Error('Load combat-arena before spawning dummies');
     const hp = opts.hp ?? 100, armor = opts.armor ?? 0, yaw = opts.yaw ?? 0, radius = opts.radius ?? 0.4;
     if (![pos.x, pos.z, hp, armor, yaw, radius].every(Number.isFinite) || hp <= 0 || armor < 0 || armor > 1 || radius <= 0) throw new RangeError('Invalid dummy');
     const entity = this.entities.create({ kind: opts.faction === 'escort' ? 'escort' : 'infected', archetype, transform: { ...pos, y: 0.7, yaw }, health: { current: hp, max: hp }, faction: opts.faction ?? 'infected', combat: { radius, armor, shield: opts.shield ?? archetype === 'infected.riot', staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
+    if (opts.reactive && entity.faction === 'infected') entity.hearing = { mode: 'idle', target: { x: pos.x, z: pos.z }, lureUntil: 0 };
     this.spatial.set(entity.id, pos.x, pos.z); return entity.id;
   }
   /** E05 impulse is the authored displacement in metres, swept against full cover. */
