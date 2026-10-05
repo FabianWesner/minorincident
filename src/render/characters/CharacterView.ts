@@ -4,6 +4,7 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { type PaletteToken } from '../../data/palette';
 import type { GearTier, SurvivorState, SurvivorVariant } from '../../data/survivor';
 import type { Materials } from '../Materials';
+import { batchRigidParts } from './batchRigidParts';
 import { ProceduralAnimator } from './ProceduralAnimator';
 import { disposeCharacter, loadCharacter } from './rig';
 import femaleUrl from '../../../assets/char.survivor-female/model.glb?url';
@@ -15,14 +16,16 @@ export class CharacterView extends Group {
   private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
   private variant: SurvivorVariant = 'female';
   private tier: GearTier = 0;
-  async init(materials: Materials): Promise<void> {
+  async init(materials: Materials, batchRigid = false): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     for (const [variant, url] of [['female', femaleUrl], ['male', maleUrl]] as const) {
       const character = await loadCharacter(variant, async () => (await loader.loadAsync(url)).scene);
+      if (batchRigid) batchRigidParts(character.model, materials.vertexColors());
       const oldMaterials = new Set<Material>(), replacements = new Map<Material, Material>();
       character.model.traverse((object) => {
         if (!(object instanceof Mesh)) return;
         const remap = (source: Material): Material => {
+          if (source.userData.sharedPalette) return source;
           let replacement = replacements.get(source);
           if (replacement) return replacement;
           const token = source.name.replace(/^pal_/, '') as PaletteToken;

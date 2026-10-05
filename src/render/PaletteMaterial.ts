@@ -7,10 +7,10 @@ import type { Lighting } from './Lighting';
 /** Palette-sampled Lambert node material with Bruno's captured drop-shadow, core shade and terrain bounce. */
 export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly fade = uniform(1);
-  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color) {
+  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, baseNode?: Node<'vec3'>) {
     super(); this.name = `${emissive ? 'emi' : 'pal'}_${token}`;
     this.normalNode = normalWorld;
-    const base = swatch ? uniform(swatch) : texture(palette, vec2((paletteTokens.indexOf(token) + 0.5) / paletteTokens.length, 0.5)).rgb;
+    const base = baseNode ?? (swatch ? uniform(swatch) : texture(palette, vec2((paletteTokens.indexOf(token) + 0.5) / paletteTokens.length, 0.5)).rgb);
     const caughtShadow = float(1).toVar();
     this.receivedShadowNode = Fn(([shadow]: [Node<'vec3'>]) => { caughtShadow.mulAssign(shadow.r); return float(1); }) as unknown as NonNullable<MeshLambertNodeMaterial['receivedShadowNode']>;
     this.outputNode = Fn(() => {

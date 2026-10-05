@@ -75,7 +75,7 @@ export class GameView implements Lifecycle {
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial);await this.districts.load(1);
       this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera);
 
-      this.character=new CharacterView();await this.character.init(this.materials);this.scene.add(this.character);
+      this.character=new CharacterView();await this.character.init(this.materials,true);this.scene.add(this.character);
     } else if (this.world.player) {
       this.renderer.shadowMap.enabled = true;
       this.lighting = new Lighting(this.scene); this.materials = new Materials(this.lighting);

@@ -70,7 +70,7 @@ No reference art, meshes, textures, or audio from folio-2025 are reused.
 
 E10 district assembly and placement-empty batching adapt the patterns in Bruno Simon's
 `World/World.js` and `References.js` (folio-2025, MIT, commit 41046b5) in
-`tools/blender/sslib/layout.py`. GPU grass/wind will use the same MIT notice.
+`tools/blender/sslib/layout.py`. GPU grass/wind uses the same MIT notice.
 
 E10 also adapts `World/Grass.js` / `Wind.js` in `src/render/Grass.ts`,
 `World/World.js` / `References.js` in `src/render/DistrictView.ts`, and the
