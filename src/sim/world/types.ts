@@ -6,6 +6,8 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 export interface EntitySnapshot {
   id: number;
   survivor?: SurvivorState;
+  weapons?: import('../combat/Loadout').LoadoutState;
+  combat?: { radius: number; armor: number; shield: boolean; staggerUntil: number; attacking: boolean; damageMultiplier: number; statuses: import('../combat/Status').StatusState[] };
   kind: string;
   archetype: string;
   transform: Transform;
@@ -13,6 +15,11 @@ export interface EntitySnapshot {
   faction: string;
 }
 export type GameEvent =
+  | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number } }
+  | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number }
+  | { tick: number; type: 'combat.hit-stop'; sourceId: number; durationMs: number }
+  | { tick: number; type: 'loadout.switched'; sourceId: number; side: import('../../data/actions/schema').Side; actionId: string }
+  | { tick: number; type: 'combat.landed' | 'combat.exploded'; sourceId: number; attackId: number; position: { x: number; y: number; z: number } }
   | { tick: number; type: 'player.died' | 'player.respawned'; id: number }
   | { tick: number; type: 'player.damaged'; id: number; amount: number }
   | { tick: number; type: 'sim.tick' }
@@ -20,6 +27,7 @@ export type GameEvent =
   | { tick: number; type: 'scenario.unloaded'; name: string };
 export interface GameStateSnapshot {
   tick: number;
+  combat?: ReturnType<import('../combat/Combat').Combat['snapshot']>;
   input: { scheme: Scheme; frame: InputFrame };
   seed: number;
   scenario: string | null;
