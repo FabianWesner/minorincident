@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest';
 import { arena, step, dummy, health, equip, fire } from '../combat/helpers';
 import { NavGrid } from '../../../src/sim/world/NavGrid';
+import { destructibleKinds } from '../../../src/sim/interact/Hazards';
 
 test('T-E11-04 @E11 @E11-AC04 propane waits 18 ticks, chains at 4m, damages player at 30% and props', async () => {
   const w = await arena(), h = w.hazards!;
@@ -61,4 +62,20 @@ test('T-E11-hazard-scope @E11 gas leaks on bullets, fuse electrifies water/fence
   step(w, 60); expect(health(w, 1)).toBeLessThan(100);
   step(w, 240); expect(w.entities.get(water)!.hazard!.activeUntil).toBe(w.tick);
   const victim = dummy(w, 15); h.spawn('toxic', { x: 15, z: 0 }); step(w, 60); expect(health(w, victim)).toBeLessThan(100);
+});
+test('T-E11-breakables @E11 @E11-AC07 every light prop breaks once and pooled debris stays bounded', async () => {
+  const w = await arena();
+  for (const [i, kind] of destructibleKinds.entries()) {
+    const id = w.hazards!.spawn(kind, { x: 10 + i * 2, z: 10 });
+    w.hazards!.hit(id, 1000, 'melee'); w.hazards!.hit(id, 1000, 'melee');
+    expect(w.events.events().filter(e => e.type === 'prop.broken' && e.id === id)).toHaveLength(1);
+  }
+  expect(w.hazards!.debris.snapshot().length).toBeLessThanOrEqual(32);
+});
+test('T-E11-chain-budget @E11 @E11-AC04 large chains honor eight blasts per sim second without dropping links', async () => {
+  const w = await arena(); const ids = [];
+  for (let i = 0; i < 12; i++) ids.push(w.hazards!.spawn('propane', { x: 10 + i * .01, z: 0 }));
+  w.hazards!.hit(ids[0], 100, 'bullet'); step(w, 59);
+  expect(w.events.events().filter(e => e.type === 'hazard.exploded')).toHaveLength(8);
+  step(w, 60); expect(w.events.events().filter(e => e.type === 'hazard.exploded')).toHaveLength(12);
 });

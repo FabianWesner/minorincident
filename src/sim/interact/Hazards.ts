@@ -19,6 +19,8 @@ export class Hazards {
   private readonly damage: Damage;
   private readonly neighbors: number[] = [];
   private readonly area = { x: 0, z: 0, r: 0 };
+  private readonly blastTicks = new Int32Array(8).fill(-60);
+  private blastCursor = 0;
   constructor(private readonly world: SimWorld) {
     this.debris = new DebrisPool(world.physics); this.damage = new Damage(world);
     world.events.on('combat.hit', e => {
@@ -88,6 +90,9 @@ export class Hazards {
     }
   }
   private explode(e: EntitySnapshot): void {
+    // 07 §4: cap chain work to eight blasts per rolling sim second.
+    if (this.world.tick - this.blastTicks[this.blastCursor] < 60) return;
+    this.blastTicks[this.blastCursor] = this.world.tick; this.blastCursor = (this.blastCursor + 1) % 8;
     const h = e.hazard!; h.exploded = true; this.world.interactables!.unblock(e.id);
     this.world.events.emit({ type: 'hazard.exploded', tick: this.world.tick, id: e.id, position: { x: e.transform.x, y: .7, z: e.transform.z }, radius: h.radius });
     // Copy the query IDs once per blast: hit events may query neighbors recursively (alarm/fuse).
@@ -97,6 +102,7 @@ export class Hazards {
       this.damage.apply({ attackId: 0, actionId: 'hazard.propane', sourceId: e.id, targetId: id, origin: e.transform, direction: { x: 0, z: 0 }, base: 100 * Math.max(0, h.radius - distance) / h.radius, multiplier: 1, type: 'explosive', knockback: 0, stagger: 0 });
     }
   }
+  snapshot() { return { blastTicks: [...this.blastTicks], blastCursor: this.blastCursor }; }
   update(): void {
     const tick = this.world.tick;
     for (const e of this.world.entities.iterate()) {

@@ -44,6 +44,7 @@ export type GameEvent =
   | { tick: number; type: 'scenario.unloaded'; name: string };
 export interface GameStateSnapshot {
   tick: number;
+  interactions?: { activeId: number | null; debris: ReturnType<import('../../physics/DebrisPool').DebrisPool['snapshot']>; hazards: ReturnType<import('../interact/Hazards').Hazards['snapshot']> | null };
   combat?: ReturnType<import('../combat/Combat').Combat['snapshot']>;
   input: { scheme: Scheme; frame: InputFrame };
   seed: number;

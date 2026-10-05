@@ -12,7 +12,7 @@ export class CombatView extends Group {
   constructor(private readonly world: SimWorld, private readonly materials: Materials) { super(); }
   update(): void {
     for (const entity of this.world.entities.iterate()) {
-      if (entity.id === 1 || !entity.combat) continue;
+      if (entity.id === 1 || !entity.combat || entity.faction === 'environment') continue;
       let dummy = this.dummies.get(entity.id);
       if (!dummy) {
         dummy = new Group();

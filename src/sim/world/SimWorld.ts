@@ -10,7 +10,7 @@ import { Rng } from '../../core/Rng';
 import type { Lifecycle } from '../../core/Lifecycle';
 import { DistrictWorld } from './DistrictWorld';
 import type { DistrictLayout, LevelComposition } from '../../levels/districts/types';
-import { loadScenarioDefinition } from '../../levels/loader';
+import { loadScenarioDefinition, type InteractionPlacements } from '../../levels/loader';
 import { Physics } from '../../physics/Physics';
 import { SpatialHash } from '../spatial/SpatialHash';
 import { EntityStore } from './EntityStore';
@@ -53,6 +53,7 @@ export class SimWorld implements Lifecycle {
     if (definition.combat) this.combat = new Combat(this, definition);
     if (this.player) this.hazards = new Hazards(this);
     if (this.player) this.pickups = new Pickups(this);
+    this.placeInteractions(definition);
     this.events.on('sim.tick', () => { if (this.combat) this.combat.intent(this.input); }, SimPhase.input);
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
@@ -69,7 +70,10 @@ export class SimWorld implements Lifecycle {
         this.combat.update(this.input);
       }
     }, SimPhase.combat);
-    this.events.on('sim.tick', () => { this.hazards?.update(); this.pickups?.update(); this.interactables?.update(this.input); }, SimPhase.missions);
+    this.events.on('sim.tick', () => {
+      if (this.player) Object.assign(this.player.entity.transform, this.physics.playerBody!.translation());
+      this.hazards?.update(); this.pickups?.update(); this.interactables?.update(this.input);
+    }, SimPhase.missions);
     this.events.on('sim.tick', () => {
       if (this.player) { this.player.postPhysics(this.tick); this.spatial.set(1, this.player.entity.transform.x, this.player.entity.transform.z); return; }
       const p = this.physics.playerBody!.translation();
@@ -88,6 +92,9 @@ export class SimWorld implements Lifecycle {
     Object.assign(this.entities.get(1)!.transform,{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]});this.previousPlayer={...this.entities.get(1)!.transform};this.player!.setCheckpoint(this.entities.get(1)!.transform);this.spatial.set(1,districts.playerStart[0],districts.playerStart[1]);
     for(const d of districts.districts)for(const aabb of d.decay.colliders.map((c)=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
     this.physics.world!.step();
+    for (const d of districts.districts) {
+      this.placeInteractions(d.gameplay.interactions ?? {}, d.origin);
+    }
     this.events.on('sim.tick',()=>{
       if(this.tick%60!==0)return;
       const player=this.entities.get(1)!;
@@ -99,6 +106,13 @@ export class SimWorld implements Lifecycle {
     for (const vector of [next.move, next.aim, next.aimPoint]) if (vector && (!Number.isFinite(vector.x) || !Number.isFinite(vector.z))) throw new RangeError('Input vectors must be finite');
     this.input = next;
   }
+  /** World-space E11 gameplay placements. Static Blender geometry remains owned by E10. */
+  private placeInteractions(data: InteractionPlacements, origin: [number, number] = [0, 0]): void {
+    const pos = (p: { x: number; z: number }) => ({ x: p.x + origin[0], z: p.z + origin[1] });
+    for (const d of data.devices ?? []) this.interactables!.spawn(d.kind, pos(d.position), d.options);
+    for (const h of data.hazards ?? []) this.hazards!.spawn(h.kind, pos(h.position), h.options);
+    for (const p of data.pickups ?? []) this.pickups!.spawn(p.kind, pos(p.position), p.item);
+  }
   /** Device frames are borrowed for this tick; snapshots are independently copied. */
   applyInput(frame: InputFrame, scheme: import('../../input/InputFrame').Scheme): void { this.input = frame; this.scheme = scheme; }
   clearInput(): void { this.input = emptyInput(); this.scheme = 'mouse-only'; }
@@ -109,7 +123,8 @@ export class SimWorld implements Lifecycle {
     return structuredClone(this.entities.values().filter((e) => (!filter.kind || e.kind === filter.kind) && (!filter.archetype || e.archetype === filter.archetype) && (!nearby || nearby.has(e.id))));
   }
   getState(): GameStateSnapshot {
-    return { ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities: this.query({}), mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
+    const entities = this.query({});
+    return { ...(entities.some(e => e.interactable || e.hazard || e.pickup || e.destructible) ? { interactions: { activeId: this.interactables?.activeId ?? null, debris: this.hazards?.debris.snapshot() ?? [], hazards: this.hazards?.snapshot() ?? null } } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities, mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
   }
   spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number } = {}): number {
     if (!this.combat) throw new Error('Load combat-arena before spawning dummies');

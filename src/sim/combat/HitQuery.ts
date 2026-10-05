@@ -40,7 +40,7 @@ export class HitQuery {
     const limit = Math.cos(arc * Math.PI / 360);
     for (const id of this.nearby(origin, range + 1e-6)) {
       const target = this.entities.get(id)!;
-      if (id === sourceId || target.health.current <= 0 || (target.faction !== 'infected' && !target.destructible && !target.hazard)) continue;
+      if (id === sourceId || target.health.current <= 0 || (target.faction !== 'infected' && !(target.faction === 'environment' && target.combat))) continue;
       const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
       if ((!distance || (dx * aim.x + dz * aim.z) / distance >= limit - 1e-6) && this.visible(origin, target.transform, target.id)) this.hits.push(target);
       if (this.hits.length === maxTargets) break;
@@ -52,7 +52,7 @@ export class HitQuery {
     let nearest = wallDistance, hit: EntitySnapshot | null = null;
     for (const id of this.nearby(origin, range + 0.5)) {
       const target = this.entities.get(id)!;
-      if (id === sourceId || excluded?.has(id) || target.health.current <= 0 || (target.faction !== 'infected' && !target.destructible && !target.hazard)) continue;
+      if (id === sourceId || excluded?.has(id) || target.health.current <= 0 || (target.faction !== 'infected' && !(target.faction === 'environment' && target.combat))) continue;
       const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z;
       const along = dx * direction.x + dz * direction.z, perpendicular = dx * dx + dz * dz - along * along;
       const radius = target.combat?.radius ?? 0.4;
