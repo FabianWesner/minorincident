@@ -17,7 +17,7 @@ test('T-E05-01 @E05 @E05-AC01 MG, rotate, grenade, rotate retain independent sid
 });
 
 test('T-E05-02 @E05 @E05-AC02 selected rack wraps both ways, locks for 15 ticks and emits switched', async () => {
-  const w = await arena(); equip(w, ['weapon.bat', 'weapon.pistol', 'weapon.machine-gun']);
+  const w = await arena(); equip(w, ['weapon.bat', 'weapon.pistol', 'weapon.machine-gun'], ['weapon.grenade', 'ability.ground-slam']);
   w.setInput({ selector: -1 }); step(w, 1); w.clearInput();
   const rack = w.combat!.runner.loadout;
   expect(rack.state.LEFT.index).toBe(2); expect(rack.state.RIGHT.index).toBe(0);
@@ -28,7 +28,7 @@ test('T-E05-02 @E05 @E05-AC02 selected rack wraps both ways, locks for 15 ticks 
   expect(w.events.events()).toContainEqual({ tick: 16, type: 'loadout.switched', sourceId: 1, side: 'LEFT', actionId: 'weapon.machine-gun' });
   w.setInput({ selector: 1 }); step(w, 1); w.clearInput(); expect(rack.state.LEFT.index).toBe(0);
   fire(w, 'RIGHT'); w.setInput({ selector: 1 }); step(w, 1); w.clearInput();
-  expect(rack.state.LEFT.index).toBe(0); expect(rack.state.RIGHT.index).toBe(0);
+  expect(rack.state.LEFT.index).toBe(0); expect(rack.state.RIGHT.index).toBe(1);
 });
 
 test('T-E05-03 @E05 @E05-AC03 bat arc/range/maxTargets boundaries, once per swing', async () => {
@@ -133,6 +133,19 @@ test('T-E05-11 @E05 @E05-AC11 Default snaps 8°, not 15°; Off never snaps; near
     expect(attack).toMatchObject({ direction: hit ? { x: Math.cos(angle * Math.PI / 180), z: Math.sin(angle * Math.PI / 180) } : { x: 1, z: 0 } });
     expect(w.entities.get(1)!.weapons!.LEFT.aim).toEqual({ x: 1, z: 0 });
   }
+});
+
+test('T-E05-assist-filter @E05 nearest living infected in range and LOS beats a nearer-angle distant target', async () => {
+  const w = await arena(); equip(w, ['weapon.pistol']);
+  const near = dummy(w, 5 * Math.cos(8 * Math.PI / 180), 5 * Math.sin(8 * Math.PI / 180));
+  const far = dummy(w, 9 * Math.cos(4 * Math.PI / 180), 9 * Math.sin(4 * Math.PI / 180));
+  const dead = dummy(w, 1); w.entities.get(dead)!.health.current = 0;
+  w.spawnDummy('escort.dummy', { x: 2, z: 0 }, { faction: 'escort' });
+  const blocked = dummy(w, 3, -0.3);
+  (w.combat!.query.walls as { x: number; y: number; z: number; halfX: number; halfY: number; halfZ: number }[]).push({ x: 2, y: 1, z: -0.2, halfX: 0.1, halfY: 1, halfZ: 0.05 });
+  fire(w); expect(health(w, near)).toBe(80); expect(health(w, far)).toBe(100); expect(health(w, blocked)).toBe(100);
+  const outside = dummy(w, 21); const aim = { x: 1, z: 0 }; w.combat!.assist.apply(1, { x: 0, z: 0 }, aim, 2.5);
+  expect(aim).toEqual({ x: 1, z: 0 }); expect(health(w, outside)).toBe(100);
 });
 
 test('S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy', async () => {
