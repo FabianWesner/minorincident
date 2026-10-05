@@ -11,6 +11,7 @@ export class Touch {
   readonly element = document.createElement('div');
   readonly aim: Vec2 = { x: 0, z: 0 };
   aiming = false;
+  get holdingLeft(): boolean { for (const c of this.contacts.values()) if (c.action === 'left') return true; return false; }
   get braking(): boolean { for (const c of this.contacts.values()) if (c.action === 'brake') return true; return false; }
   private stickId: number | null = null;
   private readonly contacts = new Map<number, Contact>();
@@ -28,7 +29,7 @@ export class Touch {
   /** Driving reuses LEFT/RIGHT and reveals its dedicated hold-to-brake control. */
   setDriving(on: boolean): void {
     this.element.querySelector<HTMLButtonElement>('[data-touch-action=brake]')!.hidden = !on;
-    this.element.querySelector<HTMLButtonElement>('[data-touch-action=left]')!.textContent = on ? 'HORN' : 'LEFT';
+    this.element.querySelector<HTMLButtonElement>('[data-touch-action=left]')!.textContent = on ? 'HORN/BOOST' : 'LEFT';
     this.element.querySelector<HTMLButtonElement>('[data-touch-action=right]')!.textContent = on ? 'EXIT' : 'RIGHT';
   }
   init(): void {
