@@ -58,7 +58,11 @@ test('T-E03-12 @E03 @E03-AC12 middle-click and E interact without browser autosc
     const event = new MouseEvent(type, { button: 1, bubbles: true, cancelable: true }); canvas.dispatchEvent(event); return event.defaultPrevented;
   }));
   expect(defaults).toEqual([true, true]);
-  // Idle remains a legal frame for E11's stand-to-interact; no middle-button state is required.
-  const idle = await tick(page); expect(idle.interact).toBe(false);
+  // E03 provides uninterrupted idle input for E11's stand-to-interact, with no physical device flags.
+  await page.evaluate(async () => { await window.__SS__!.loadScenario('empty'); window.__SS__!.pause(); });
+  const idle = await tick(page, 36); expect(idle.interact).toBe(false);
+  expect(idle.move).toEqual({ x: 0, z: 0 });
+  expect(idle.left).toEqual({ down: false, held: false, up: false });
+  expect(idle.right).toEqual({ down: false, held: false, up: false });
   expect(await page.evaluate(() => ({ x: scrollX, y: scrollY }))).toEqual({ x: 0, y: 0 });
 });

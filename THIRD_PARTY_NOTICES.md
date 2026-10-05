@@ -22,6 +22,11 @@ copyright 2025 Bruno Simon):
 | `Inputs/Wheel.js` | `src/input/devices/Wheel.ts` — normalized selector direction |
 | `RayCursor.js`, `Inputs/Nipple.js` | `src/input/devices/RayCursor.ts` — ground-plane ray math |
 
+| `Inputs/Nipple.js` | `src/input/devices/Nipple.ts` — radial progress/angle, floating DOM presentation |
+| `Inputs/InteractiveButtons.js`, `Inputs/Pointer.js` | `src/input/devices/Touch.ts` — touch actions and independent contact ownership |
+
+All folio-2025 adaptations above reference commit `41046b5`.
+
 ## Bruno Simon MIT license
 
 Copyright (c) 2025 Bruno Simon

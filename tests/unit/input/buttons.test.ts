@@ -1,5 +1,7 @@
 import { expect, test } from 'vitest';
 import { Buttons } from '../../../src/input/Buttons';
+import { Clock } from '../../../src/core/Clock';
+import { emptyInput } from '../../../src/input/InputFrame';
 import { Keyboard } from '../../../src/input/devices/Keyboard';
 
 test('T-E03-11 @E03 @E03-AC11 a real key event reaches the next sampled tick', () => {
@@ -7,22 +9,24 @@ test('T-E03-11 @E03 @E03-AC11 a real key event reaches the next sampled tick', (
   const buttons = new Buttons();
   const keyboard = new Keyboard(target, (code, held) => { if (code === 'KeyJ') buttons.set(code, held); });
   keyboard.init();
+  const frame = emptyInput(); const clock = new Clock();
+  const nextTick = () => { clock.advance(1 / 60, () => { frame.left = buttons.sample(); }); return structuredClone(frame.left); };
   const dispatch = (type: string): void => {
     const event = new Event(type, { cancelable: true });
     Object.assign(event, { code: 'KeyJ', repeat: false });
     target.dispatchEvent(event);
   };
-  expect(buttons.sample()).toEqual({ down: false, held: false, up: false });
+  expect(nextTick()).toEqual({ down: false, held: false, up: false });
   dispatch('keydown');
-  expect(buttons.sample()).toEqual({ down: true, held: true, up: false });
+  expect(nextTick()).toEqual({ down: true, held: true, up: false });
   dispatch('keydown');
-  expect(buttons.sample()).toEqual({ down: false, held: true, up: false });
+  expect(nextTick()).toEqual({ down: false, held: true, up: false });
   dispatch('keyup');
-  expect(buttons.sample()).toEqual({ down: false, held: false, up: true });
+  expect(nextTick()).toEqual({ down: false, held: false, up: true });
   dispatch('keydown'); dispatch('keyup');
-  expect(buttons.sample()).toEqual({ down: true, held: false, up: true });
+  expect(nextTick()).toEqual({ down: true, held: false, up: true });
   keyboard.dispose(); dispatch('keydown');
-  expect(buttons.sample().held).toBe(false);
+  expect(nextTick().held).toBe(false);
 });
 
 test('T-E03-buttons @E03 sources combine without releasing another held binding', () => {

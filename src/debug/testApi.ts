@@ -31,6 +31,7 @@ export interface SSTestApi {
     bindings(): BindingMap; rebind(action: Action, code: string): { ok: boolean; message: string };
     /** Ground → client pixels using the current camera. Tests still send real device events. */
     project(pos: { x: number; z: number }): { x: number; y: number };
+    /** Begin at scenario tick zero so seed + frames are sufficient for replay. */
     record(): void; stopRecording(): Recording; replay(data: Recording): Promise<void>;
   };
   spawn(defId: string, pos: { x: number; z: number }, opts?: object): number;
@@ -71,7 +72,10 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
         const rect = game.view.renderer.domElement.getBoundingClientRect();
         return { x: rect.left + (point.x + 1) / 2 * rect.width, y: rect.top + (1 - point.y) / 2 * rect.height };
       },
-      record: () => game.input.recorder.start({ level: game.world.scenario ?? 'empty', seed: game.world.seed }),
+      record: () => {
+        if (!game.world.scenario || game.world.tick !== 0) throw new Error('Load and pause a scenario before recording at tick zero.');
+        game.input.recorder.start({ level: game.world.scenario, seed: game.world.seed });
+      },
       stopRecording: () => game.input.recorder.stop(),
       replay: async (data) => { await game.loadScenario(data.level, data.seed); game.clock.pause(); game.input.recorder.play(data); },
     },
