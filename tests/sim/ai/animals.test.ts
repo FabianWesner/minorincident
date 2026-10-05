@@ -65,3 +65,12 @@ test('T-E07-18b @E07 @E07-AC18 rays and shotgun cones hit individual birds rathe
   const blast = w.combat!.damage.apply({ sourceId: 1, targetId: flock.id, attackId: 101, actionId: 'weapon.shotgun', origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 40, multiplier: 1, type: 'bullet', radius: 12, spread: 50, knockback: 0, stagger: 0 });
   expect(blast).toBe(4); expect(b.birds).toBe(15); expect(b.state).toBe('scatter'); expect(b.scatterUntil).toBe(w.tick + 300);
 });
+
+test('T-E07-18c @E07 @E07-AC18 force-killed flocks clear bird masks before capacity is reused', async () => {
+  const w = await arena(), ai = w.infected!;
+  for (let i = 0; i < 40; i++) spawn(w, 'crow', i % 10 * 3 - 15, 10 + Math.floor(i / 10) * 3, 'idle');
+  expect(ai.director.count).toBe(200); for (const e of ai.active) e.health.current = 0; step(w, 1);
+  expect(ai.director.count).toBe(0); expect(ai.active.every((e) => e.infected!.birds === 0 && e.infected!.birdAlive.every((alive) => alive === 0))).toBe(true);
+  for (let i = 0; i < 40; i++) spawn(w, 'crow', i % 10 * 3 - 15, 10 + Math.floor(i / 10) * 3, 'idle');
+  expect(ai.director.count).toBe(200); expect(ai.active.reduce((count, e) => count + e.infected!.birdAlive.filter(Boolean).length, 0)).toBe(800);
+});

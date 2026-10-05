@@ -248,6 +248,7 @@ export class InfectedSystem {
     const b = e.infected!;
     if (b.state !== 'dead') {
       b.state = 'dead'; b.deadAt = this.world.tick; b.grabUntil = 0;
+      if (e.archetype === 'infected.crow') { b.birds = 0; b.birdAlive.fill(0); }
       if (b.special === 'explode') { b.attackId = ++this.sequence; b.until = this.world.tick + 21; this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: 'explode', duration: 0.35 }); }
     }
     if (b.special === 'explode' && this.world.tick === b.until) {
