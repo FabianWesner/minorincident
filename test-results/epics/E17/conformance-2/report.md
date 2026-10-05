@@ -1,14 +1,14 @@
 # Asset conformance follow-up
 
-Main merged through 6ab4bda (dark SUV and gas station). No Blender rebuilds or source/reference edits.
+Main merged through bb7b6b9 (including E10 districts/roads), merge commit 244d690. No asset models, reference images, or specs were edited.
 
-The baseline 163-slot audit had 315 stump and 171 dimension findings. The final audit includes the newly merged SUV and gas station (169 slots), with zero stump findings and three dimension findings. The 14 unrelated crawler limb-geometry / clinic triangle-budget findings remain unchanged.
+The baseline 163-slot audit had 315 stump and 171 dimension findings. The audit now includes SUV and gas-station exports (169 slots): zero stump findings, three dimension findings, and the 14 unchanged crawler limb-geometry / clinic triangle-budget findings outside this pass.
 
-The optimizer repairs empty, zero-scale stump placeholders with a 56-triangle flesh ring and bone stub. Each cap uses the proximal limb geometry near its joint to determine radius and axis, sits at the limb pivot on the surviving parent, and uses hidden metadata consumed by the loader. Caps are generated after simplification; generated infected LOD1s reserve cap budget. Runtime dimensions exclude hidden geometry. Shared JSON palette tokens automatically reach runtime and Blender palette readers.
+The optimizer repairs empty, zero-scale stump placeholders with a 56-triangle flesh ring and bone stub. Caps use proximal geometry at the joint, sit on the surviving parent, and use loader-hidden metadata. Neck caps use the surviving torso cross-section so chibi jaws do not produce oversized plates. Caps are generated after simplification, and generated infected LOD1s reserve their triangle budget. Default dimensions exclude hidden geometry. Shared JSON palette tokens automatically reach runtime and Blender readers.
 
-21 adult character/infected exports are uniformly rescaled to 1.8 m through manifest sourceScale. All local joint/animation transforms stay intact; scale is applied once to the whole assembly. The E04 physics capsule stays at its existing value. Brother is a child; teen-skater, crawler and brute retain authored silhouettes. 51 manifest expectations are corrected from reference construction notes or scaled adult envelopes. Tolerances are unchanged. All individual decisions are recorded in decisions.json.
+21 adult character/infected exports are uniformly rescaled to 1.8 m through manifest sourceScale. Local joints and animations remain intact; scale is applied once to the whole assembly. E04 physics stays unchanged. Brother is a child; teen-skater, crawler and brute retain authored silhouettes. The school bus is uniformly scaled to 3.3 m including mirrors, fitting E10’s 7 m roads as two 3.5 m lanes. All vehicle LODs retain at least 0.1 m lane clearance. 52 manifest expectations are corrected from construction notes or new uniform scales; tolerances are unchanged. Individual decisions are in decisions.json.
 
-Vehicles retain authored metres from their construction notes, including mirrors and roof accessories. The school bus has 2.32 m axle track; its 3.6 m envelope includes mirrors. No driving/road layout is implemented yet, so gameplay lane fit cannot be exercised.
+The same optimizer refreshes exported district collider/footprint/acoustic/surface metadata and derived entrance offsets from canonical dimensions. Layout mesh exports are preserved. This prevents updated asset dimensions from leaving stale collider boxes or entrances inside enlarged footprints.
 
 ## Proportions needing a decision
 
@@ -20,4 +20,8 @@ These LODs are preserved. Uniform scaling would change the other matching dimens
 
 ## Verification
 
-Full unit suite: 52 passed. Smoke: 3 unit and 12 browser passed. Verify E17 uses E2E_PORT=3319 and the main branch lockf wrapper with two Playwright workers. No game gore-probe exists yet; preview goreProbe detaches the actual production limb and reveals the surviving cap. Screenshots and final verification results are saved beside this report.
+Full unit suite: 61 passed, including adult height at every LOD, vehicle envelopes against road lanes, and all district collider/navigation contracts. Typecheck/lint/build pass. The first E17 verification passed 26 unit and 25 browser tests; final geometry verification has passed 28 selected unit tests and is waiting on the machine-wide browser lock. The earlier smoke run passed 3 unit and 12 browser tests; those same smoke cases are included in verify E17.
+
+All browser runs use E2E_PORT=3319, lockf /tmp/minor-incident-e2e.lock, and two workers. No game gore-probe exists in the merged main yet; the preview goreProbe detaches actual production limbs and reveals their surviving caps. Screenshots/logs are saved here.
+
+The newly merged E10 unit test initially invoked its direct Blender runner for 16 layout rebuilds during test:unit. Outputs were restored. Its exporter/cache boundary is now mocked so unit tests exercise cache invalidation and fatal exporter failures without Blender. No asset models or reference images were rebuilt.

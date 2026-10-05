@@ -104,6 +104,11 @@
       "id": "npc.civilian-woman-b",
       "scale": 1.28571343,
       "reason": "Uniform adult art height to 1.8 m; retain silhouette and pose."
+    },
+    {
+      "id": "veh.school-bus",
+      "scale": 0.91666669,
+      "reason": "3.3 m including mirrors fits the two 3.5 m lanes of the exported 7 m E10 roads."
     }
   ],
   "manifest_updated": [
@@ -922,6 +927,22 @@
         "tolerance": 0.1
       },
       "reason": "New main export: reference dimensions from construction notes; replaces generic category envelope."
+    },
+    {
+      "id": "veh.school-bus",
+      "before": {
+        "x": 8.76300048828125,
+        "y": 3.728499948978424,
+        "z": 3.5999999046325684,
+        "tolerance": 0.1
+      },
+      "after": {
+        "x": 8.0328,
+        "y": 3.4178,
+        "z": 3.3,
+        "tolerance": 0.1
+      },
+      "reason": "Uniform bus scale to fit road lanes with mirror clearance."
     }
   ],
   "needs_decision": [
@@ -949,13 +970,15 @@
     "other": 14
   },
   "notes": [
-    "Hidden caps are excluded from default visible dimensions. Caps remain closed 56-triangle geometry in every LOD.",
-    "Adult visual exports normalized to 1.8 m; E04 controller capsule unchanged. Brother is a child; teen-skater, crawler and brute retain authored silhouettes.",
-    "No game gore-probe scenario exists yet; preview goreProbe tests exercise detachment through the production loader.",
-    "Vehicle metres preserved using construction notes; school-bus axle track is 2.32 m, 3.6 m total includes mirrors. No driving/road layout implemented yet for lane-fit gameplay verification.",
+    "Hidden caps are excluded from default visible dimensions. Each generated cap is 56 triangles in every LOD; neck caps use the surviving torso rather than the oversized jaw.",
+    "21 adult visual exports normalized to 1.8 m; E04 controller capsule unchanged. Brother is a child; teen-skater, crawler and brute retain authored silhouettes.",
+    "The bus is uniformly scaled to 3.3 m including mirrors; all vehicle LODs fit the exported 7 m roads as two 3.5 m lanes with at least 0.1 m clearance.",
+    "E10 layout collider/footprint/acoustic/surface metadata and derived entrance offsets refresh from canonical dimensions in the optimizer; layout meshes remain unchanged.",
+    "No game gore-probe scenario exists in the merged main yet; preview goreProbe tests exercise actual production detachment through the production loader.",
+    "The newly merged E10 unit test initially invoked its direct Blender runner for 16 layout rebuilds. Outputs were restored, and the unit test now mocks the exporter/cache boundary. No asset models or reference images were rebuilt.",
     "Out-of-scope baseline findings: crawler missing shin/foot geometry (12 slots), pharmacy/clinic triangle budgets (2 slots)."
   ],
   "audit_slots_before": 163,
   "audit_slots_after": 169,
-  "merged_main": "6ab4bda"
+  "merged_main": "bb7b6b9"
 }
