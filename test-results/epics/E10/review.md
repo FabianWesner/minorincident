@@ -1,16 +1,16 @@
 # E10 visual review — 2026-10-05
 
-Reviewed with the image-reading tool: all eight `compare/<district>.png` sheets, W0 overview captures, and matching `*-decay-W0.png` / `*-decay-W5.png` landmark captures. References are the draft sheets in the read-only main checkout. D-ZOO and D-EDGE receive the same checks in addition to the six districts expressly listed by AC09.
+Reviewed with the image-reading tool: all eight `compare/<district>.png` sheets, W0 overview captures, the final [overview contact sheet](compare/overviews.png), and matching `compare/*-decay.png` W0/W5 landmark pairs. Also opened the final [eight-district decay contact sheet](compare/decay-contact.png) after the verifier refreshed every capture. References are the draft sheets in the read-only main checkout. D-ZOO and D-EDGE receive the same checks in addition to the six districts expressly listed by AC09.
 
-Capture conditions: pinned Chromium, WebGL2/SwiftShader, DPR 1, 1600×900, production build, seed 1, paused, fixed camera and player position. W0 uses L1 warm afternoon lighting; W5 uses L6 night lighting. The exact window mask and measurements are saved beside each pair. E17’s status gate selects E04’s red-clad code survivor because the survivor GLBs are still at reference status.
+Capture conditions: pinned Chromium, WebGL2/SwiftShader, DPR 1, 1600×900, production build, seed 1, paused, fixed camera and player position. W0 uses L1 warm afternoon lighting; W5 uses L6 night lighting. The landmark captures place the survivor three metres forward of the anchor, clear of awnings; the camera and survivor position match across both tiers. The exact window mask and measurements are saved beside each pair. E17’s status gate selects E04’s red-clad code survivor because the survivor GLBs are still at reference status.
 
 Assets below integrated status use the required code placeholders. This review judges the checklist against those visible placeholders; it does not claim final asset fidelity. All mandatory A/E items pass; A passes 3/4 optional items (75%), E passes 2/2 (100%). A8 fails and is recorded as a follow-up in report.md.
 
 ## D-RES — S05
 
-Evidence: [comparison](compare/D-RES.png), [W0](./D-RES-decay-W0.png), [W5](./D-RES-decay-W5.png), [overview](./D-RES-W0.png).
+Evidence: [comparison](compare/D-RES.png), [decay pair](compare/D-RES-decay.png), [W0](./D-RES-decay-W0.png), [W5](./D-RES-decay-W5.png), [overview](./D-RES-W0.png).
 
-- D-RES A1: PASS — The yellow gabled home, red roof and garden uses warm saturated paint, green lawns and colored props rather than default gray materials.
+- D-RES A1: PASS — The yellow gabled home, red roof and garden use warm saturated paint, green lawns and colored props rather than default gray materials.
 - D-RES A2: PASS — The pavement and shaded building sides read purple-blue, with softened shadow edges rather than black silhouettes.
 - D-RES A3: PASS — W0 window strips and lamp heads visibly bloom around their bright cores.
 - D-RES A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
@@ -27,9 +27,9 @@ Result: **PASS** (A must 4/4, should 3/4; E must 2/2, should 2/2).
 
 ## D-MAIN — S06
 
-Evidence: [comparison](compare/D-MAIN.png), [W0](./D-MAIN-decay-W0.png), [W5](./D-MAIN-decay-W5.png), [overview](./D-MAIN-W0.png).
+Evidence: [comparison](compare/D-MAIN.png), [decay pair](compare/D-MAIN-decay.png), [W0](./D-MAIN-decay-W0.png), [W5](./D-MAIN-decay-W5.png), [overview](./D-MAIN-W0.png).
 
-- D-MAIN A1: PASS — The red diner, gas forecourt and hardware storefront uses warm saturated paint, green lawns and colored props rather than default gray materials.
+- D-MAIN A1: PASS — The red diner, gas forecourt and hardware storefront use warm saturated paint, green lawns and colored props rather than default gray materials.
 - D-MAIN A2: PASS — The pavement and shaded building sides read purple-blue, with softened shadow edges rather than black silhouettes.
 - D-MAIN A3: PASS — W0 window strips and lamp heads visibly bloom around their bright cores.
 - D-MAIN A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
@@ -46,9 +46,9 @@ Result: **PASS** (A must 4/4, should 3/4; E must 2/2, should 2/2).
 
 ## D-SCHOOL — S07
 
-Evidence: [comparison](compare/D-SCHOOL.png), [W0](./D-SCHOOL-decay-W0.png), [W5](./D-SCHOOL-decay-W5.png), [overview](./D-SCHOOL-W0.png).
+Evidence: [comparison](compare/D-SCHOOL.png), [decay pair](compare/D-SCHOOL-decay.png), [W0](./D-SCHOOL-decay-W0.png), [W5](./D-SCHOOL-decay-W5.png), [overview](./D-SCHOOL-W0.png).
 
-- D-SCHOOL A1: PASS — The brick school, teal gym and yellow playground frame uses warm saturated paint, green lawns and colored props rather than default gray materials.
+- D-SCHOOL A1: PASS — The brick school, teal gym and yellow playground frame use warm saturated paint, green lawns and colored props rather than default gray materials.
 - D-SCHOOL A2: PASS — The pavement and shaded building sides read purple-blue, with softened shadow edges rather than black silhouettes.
 - D-SCHOOL A3: PASS — W0 window strips and lamp heads visibly bloom around their bright cores.
 - D-SCHOOL A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
@@ -65,9 +65,9 @@ Result: **PASS** (A must 4/4, should 3/4; E must 2/2, should 2/2).
 
 ## D-SHOP — S08
 
-Evidence: [comparison](compare/D-SHOP.png), [W0](./D-SHOP-decay-W0.png), [W5](./D-SHOP-decay-W5.png), [overview](./D-SHOP-W0.png).
+Evidence: [comparison](compare/D-SHOP.png), [decay pair](compare/D-SHOP-decay.png), [W0](./D-SHOP-decay-W0.png), [W5](./D-SHOP-decay-W5.png), [overview](./D-SHOP-W0.png).
 
-- D-SHOP A1: PASS — The pharmacy awning, market and food-court blocks uses warm saturated paint, green lawns and colored props rather than default gray materials.
+- D-SHOP A1: PASS — The pharmacy awning, market and food-court blocks use warm saturated paint, green lawns and colored props rather than default gray materials.
 - D-SHOP A2: PASS — The pavement and shaded building sides read purple-blue, with softened shadow edges rather than black silhouettes.
 - D-SHOP A3: PASS — W0 window strips and lamp heads visibly bloom around their bright cores.
 - D-SHOP A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
@@ -84,9 +84,9 @@ Result: **PASS** (A must 4/4, should 3/4; E must 2/2, should 2/2).
 
 ## D-CIVIC — S10
 
-Evidence: [comparison](compare/D-CIVIC.png), [W0](./D-CIVIC-decay-W0.png), [W5](./D-CIVIC-decay-W5.png), [overview](./D-CIVIC-W0.png).
+Evidence: [comparison](compare/D-CIVIC.png), [decay pair](compare/D-CIVIC-decay.png), [W0](./D-CIVIC-decay-W0.png), [W5](./D-CIVIC-decay-W5.png), [overview](./D-CIVIC-W0.png).
 
-- D-CIVIC A1: PASS — The hospital, blue police block and red fire station uses warm saturated paint, green lawns and colored props rather than default gray materials.
+- D-CIVIC A1: PASS — The hospital, blue police block and red fire station use warm saturated paint, green lawns and colored props rather than default gray materials.
 - D-CIVIC A2: PASS — The pavement and shaded building sides read purple-blue, with softened shadow edges rather than black silhouettes.
 - D-CIVIC A3: PASS — W0 window strips and lamp heads visibly bloom around their bright cores.
 - D-CIVIC A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
@@ -103,9 +103,9 @@ Result: **PASS** (A must 4/4, should 3/4; E must 2/2, should 2/2).
 
 ## D-PARK — S09
 
-Evidence: [comparison](compare/D-PARK.png), [W0](./D-PARK-decay-W0.png), [W5](./D-PARK-decay-W5.png), [overview](./D-PARK-W0.png).
+Evidence: [comparison](compare/D-PARK.png), [decay pair](compare/D-PARK-decay.png), [W0](./D-PARK-decay-W0.png), [W5](./D-PARK-decay-W5.png), [overview](./D-PARK-W0.png).
 
-- D-PARK A1: PASS — The warm lodge, creek, picnic tables and campground uses warm saturated paint, green lawns and colored props rather than default gray materials.
+- D-PARK A1: PASS — The warm lodge, creek, picnic tables and campground use warm saturated paint, green lawns and colored props rather than default gray materials.
 - D-PARK A2: PASS — The pavement and shaded building sides read purple-blue, with softened shadow edges rather than black silhouettes.
 - D-PARK A3: PASS — W0 window strips and lamp heads visibly bloom around their bright cores.
 - D-PARK A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
@@ -122,9 +122,9 @@ Result: **PASS** (A must 4/4, should 3/4; E must 2/2, should 2/2).
 
 ## D-ZOO — S16
 
-Evidence: [comparison](compare/D-ZOO.png), [W0](./D-ZOO-decay-W0.png), [W5](./D-ZOO-decay-W5.png), [overview](./D-ZOO-W0.png).
+Evidence: [comparison](compare/D-ZOO.png), [decay pair](compare/D-ZOO-decay.png), [W0](./D-ZOO-decay-W0.png), [W5](./D-ZOO-decay-W5.png), [overview](./D-ZOO-W0.png).
 
-- D-ZOO A1: PASS — The yellow zoo entrance, reptile house and fenced enclosures uses warm saturated paint, green lawns and colored props rather than default gray materials.
+- D-ZOO A1: PASS — The yellow zoo entrance, reptile house and fenced enclosures use warm saturated paint, green lawns and colored props rather than default gray materials.
 - D-ZOO A2: PASS — The pavement and shaded building sides read purple-blue, with softened shadow edges rather than black silhouettes.
 - D-ZOO A3: PASS — W0 window strips and lamp heads visibly bloom around their bright cores.
 - D-ZOO A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
@@ -141,9 +141,9 @@ Result: **PASS** (A must 4/4, should 3/4; E must 2/2, should 2/2).
 
 ## D-EDGE — S17/S21
 
-Evidence: [comparison](compare/D-EDGE.png), [W0](./D-EDGE-decay-W0.png), [W5](./D-EDGE-decay-W5.png), [overview](./D-EDGE-W0.png).
+Evidence: [comparison](compare/D-EDGE.png), [decay pair](compare/D-EDGE-decay.png), [W0](./D-EDGE-decay-W0.png), [W5](./D-EDGE-decay-W5.png), [overview](./D-EDGE-W0.png).
 
-- D-EDGE A1: PASS — The power house, rail crossing, river bridge and helipad uses warm saturated paint, green lawns and colored props rather than default gray materials.
+- D-EDGE A1: PASS — The power house, rail crossing, river bridge and helipad use warm saturated paint, green lawns and colored props rather than default gray materials.
 - D-EDGE A2: PASS — The pavement and shaded building sides read purple-blue, with softened shadow edges rather than black silhouettes.
 - D-EDGE A3: PASS — W0 window strips and lamp heads visibly bloom around their bright cores.
 - D-EDGE A4: PASS — The fixed high three-quarter camera shows roofs and fronts with little perspective convergence.
