@@ -1,22 +1,12 @@
 import { expect, test } from 'vitest';
-import { Document } from '@gltf-transform/core';
+import type { Document } from '@gltf-transform/core';
+import { fixture } from './fixture';
 import { readFileSync } from 'node:fs';
 import manifest from '../../../src/assets/manifest.json';
 import type { AssetDef } from '../../../src/assets/types';
 import { parseInventory } from '../../../tools/assets/inventory';
 import { validateDocument, geometryHash, validateAssets } from '../../../tools/assets/validate';
 
-export function fixture(): { doc: Document; def: AssetDef } {
-  const doc = new Document(), buffer = doc.createBuffer();
-  const pos = doc.createAccessor().setType('VEC3').setArray(new Float32Array([0,0,0, 1,0,0, 0,1,1])).setBuffer(buffer);
-  const material = doc.createMaterial('pal_survivorRed');
-  const mesh = doc.createMesh().addPrimitive(doc.createPrimitive().setAttribute('POSITION', pos).setMaterial(material));
-  const body = doc.createNode('body').setMesh(mesh), front = doc.createNode('front').setTranslation([1,0,0]);
-  const scene = doc.createScene().addChild(body).addChild(front);
-  doc.getRoot().setDefaultScene(scene);
-  const def: AssetDef = { id: 'prop.test', category: 'prop', status: 'modeled', tier: 'side', glb: 'test.glb', dimensions: { x: 1, y: 1, z: 1, tolerance: .05 }, forward: '+X', frontNodes: ['front'], requiredNodes: ['body'], animatedNodes: ['body'], sockets: ['front'], budget: { triangles: 2, materials: 1, fileKB: 2, drawCalls: 1 }, decayVariants: [] };
-  return { doc, def };
-}
 test('T-E17-02 @E17-AC02 validates geometry and rejects independent contract violations', () => {
   const { doc, def } = fixture();
   expect(validateDocument(doc, def, 1024).errors).toEqual([]);

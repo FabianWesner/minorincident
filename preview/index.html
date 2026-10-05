@@ -1,0 +1,5 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Minor Incident · GLB viewer</title>
+<style>body{margin:0;background:#2a2730;color:#f2e6dc;font:14px system-ui}#toolbar{position:absolute;top:12px;left:12px;display:flex;gap:8px;background:#25222c;padding:8px;border-radius:8px}button,select{font:inherit}canvas{display:block}</style></head>
+<body><div id="stage"></div><div id="toolbar"><button id="wireframe">Wireframe</button><button id="explode">Explode</button><select id="quality" aria-label="Quality"><option value="high">LOD0</option><option value="lod1">LOD1</option><option value="lod2">LOD2</option></select><select id="nodes" aria-label="Node picker"></select></div>
+<script type="module">import { assetViewer } from '/src/assets/viewer.ts'; assetViewer();</script></body></html>

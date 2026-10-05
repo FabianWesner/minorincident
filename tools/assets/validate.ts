@@ -11,16 +11,20 @@ import { assetIO } from './io';
 export interface Validation { id: string; errors: string[]; triangles: number; materials: number; drawCalls: number; fileKB: number; dimensions: number[]; hash: string }
 export function geometryHash(document: Document): string {
   const hash = createHash('sha256');
-  for (const node of document.getRoot().listNodes()) {
+  for (const node of document.getRoot().listNodes().sort((a,b) => a.getName().localeCompare(b.getName()))) {
     hash.update(JSON.stringify([node.getName(), node.getMatrix()]));
     for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
-      for (const semantic of primitive.listSemantics().sort()) {
-        hash.update(semantic);
-        const array = primitive.getAttribute(semantic)?.getArray();
-        if (array) hash.update(Buffer.from(array.buffer, array.byteOffset, array.byteLength));
+      // Exporters may renumber split vertices while keeping identical triangles.
+      // Hash geometry and winding, independent of vertex ordering and normals.
+      const pos = primitive.getAttribute('POSITION');
+      if (!pos) continue;
+      const indices = primitive.getIndices(), count = indices?.getCount() ?? pos.getCount();
+      const triangles: string[] = [], point = [0,0,0];
+      for (let i = 0; i < count; i += 3) {
+        const corners = [0,1,2].map((j) => { pos.getElement(indices?.getScalar(i+j) ?? i+j,point); return JSON.stringify(point); });
+        triangles.push([0,1,2].map((j) => [corners[j],corners[(j+1)%3],corners[(j+2)%3]].join('|')).sort()[0]);
       }
-      const indices = primitive.getIndices()?.getArray();
-      if (indices) hash.update(Buffer.from(indices.buffer, indices.byteOffset, indices.byteLength));
+      hash.update(JSON.stringify(triangles.sort()));
     }
   }
   return hash.digest('hex');

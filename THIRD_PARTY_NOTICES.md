@@ -12,6 +12,9 @@ copyright 2025 Bruno Simon):
 | `Physics/PhysicsWireframe.js` | `src/render/PhysicsWireframe.ts` — debug collider buffers |
 | `Debug.js` | `src/debug/Debug.ts` — dev-only Tweakpane |
 | `Materials/MeshGridMaterial.js` | `src/render/MeshGridMaterial.ts` — trimmed XZ grid shader |
+| `ResourcesLoader.js` | `src/assets/registry.ts` — promise cache and loaders |
+| `Materials.js` | `src/assets/materials.ts` — material swap by name |
+| `scripts/compress.js` | `tools/assets/optimize.ts` — compression stage adapted for meshopt |
 | `utilities/maths.js` | `src/core/maths.ts` — clamp and lerp |
 
 ## Bruno Simon MIT license
