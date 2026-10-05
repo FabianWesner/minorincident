@@ -6,6 +6,8 @@ export interface AssetDef {
   icon?: string;
   actionCategory?: 'melee' | 'ranged' | 'throwable' | 'ability';
   id: string;
+  /** District code placeholder palette and collision ownership. */
+  world?: { token: import("../data/palette").PaletteToken; solid: boolean };
   category: 'vehicle' | 'character' | 'infected' | 'weapon' | 'prop' | 'building' | 'tile' | 'fx' | 'ui';
   status: AssetStatus;
   tier: 'hero' | 'side' | 'distant';

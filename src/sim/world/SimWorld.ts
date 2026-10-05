@@ -1,9 +1,12 @@
+import { survivor } from '../../data/survivor';
 import { Combat } from '../combat/Combat';
 import { Status } from '../combat/Status';
 import { Player } from '../entities/Player';
 import { EventBus, SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
 import type { Lifecycle } from '../../core/Lifecycle';
+import { DistrictWorld } from './DistrictWorld';
+import type { DistrictLayout, LevelComposition } from '../../levels/districts/types';
 import { loadScenarioDefinition } from '../../levels/loader';
 import { Physics } from '../../physics/Physics';
 import { SpatialHash } from '../spatial/SpatialHash';
@@ -16,6 +19,7 @@ export class SimWorld implements Lifecycle {
   readonly events = new EventBus<GameEvent>();
   readonly entities = new EntityStore();
   readonly spatial = new SpatialHash();
+  districts: DistrictWorld | null = null;
   player: Player | null = null;
   combat: Combat | null = null;
   /** Level-owned records survive player death; scenario unload clears them. */
@@ -65,6 +69,21 @@ export class SimWorld implements Lifecycle {
     }, SimPhase.cleanup);
     this.events.emit({ tick: 0, type: 'scenario.loaded', name, seed });
   }
+  /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
+  loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1):void {
+    const districts=new DistrictWorld(composition,layouts,seed);
+    this.loadScenario('survivor',seed);this.scenario=composition.id;this.districts=districts;
+    const {min,max}=districts.nav;
+    this.physics.load({name:composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]}});
+    Object.assign(this.entities.get(1)!.transform,{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]});this.previousPlayer={...this.entities.get(1)!.transform};this.player!.setCheckpoint(this.entities.get(1)!.transform);this.spatial.set(1,districts.playerStart[0],districts.playerStart[1]);
+    for(const d of districts.districts)for(const aabb of d.decay.colliders.map((c)=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
+    this.physics.world!.step();
+    this.events.on('sim.tick',()=>{
+      if(this.tick%60!==0)return;
+      const player=this.entities.get(1)!;
+      for(const fire of districts.fires)if((player.transform.x-fire.x)**2+(player.transform.z-fire.z)**2<=fire.radius**2)this.player!.damage(fire.damagePerSecond,this.tick);
+    },SimPhase.combat);
+  }
   setInput(patch: Partial<InputFrame>): void {
     const next = { ...this.input, ...structuredClone(patch) };
     for (const vector of [next.move, next.aim, next.aimPoint]) if (vector && (!Number.isFinite(vector.x) || !Number.isFinite(vector.z))) throw new RangeError('Input vectors must be finite');
@@ -100,7 +119,7 @@ export class SimWorld implements Lifecycle {
   }
   reset(): void {
     this.mission = null; this.progression = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
-    this.tick = 0; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
+    this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }
   dispose(): void { this.reset(); }
 }
