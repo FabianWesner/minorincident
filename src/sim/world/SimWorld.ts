@@ -18,6 +18,7 @@ export class SimWorld implements Lifecycle {
   scenario: string | null = null;
   previousPlayer: Transform | null = null;
   private input = emptyInput();
+  private scheme: import('../../input/InputFrame').Scheme = 'mouse-only';
   private rng: Rng | null = null;
   async init(): Promise<void> { await this.physics.init(); }
   loadScenario(name: string, seed = 1): void {
@@ -46,10 +47,12 @@ export class SimWorld implements Lifecycle {
   }
   setInput(patch: Partial<InputFrame>): void {
     const next = { ...this.input, ...structuredClone(patch) };
-    for (const vector of [next.move, next.aim]) if (!Number.isFinite(vector.x) || !Number.isFinite(vector.z)) throw new RangeError('Input vectors must be finite');
+    for (const vector of [next.move, next.aim]) if (vector && (!Number.isFinite(vector.x) || !Number.isFinite(vector.z))) throw new RangeError('Input vectors must be finite');
     this.input = next;
   }
-  clearInput(): void { this.input = emptyInput(); }
+  /** Device frames are borrowed for this tick; snapshots are independently copied. */
+  applyInput(frame: InputFrame, scheme: import('../../input/InputFrame').Scheme): void { this.input = frame; this.scheme = scheme; }
+  clearInput(): void { this.input = emptyInput(); this.scheme = 'mouse-only'; }
   update(): void { if (this.scenario) this.events.emit({ type: 'sim.tick', tick: ++this.tick }); }
   getEntity(id: number): EntitySnapshot | null { return structuredClone(this.entities.get(id) ?? null); }
   query(filter: EntityFilter): EntitySnapshot[] {
@@ -57,7 +60,7 @@ export class SimWorld implements Lifecycle {
     return structuredClone(this.entities.values().filter((e) => (!filter.kind || e.kind === filter.kind) && (!filter.archetype || e.archetype === filter.archetype) && (!nearby || nearby.has(e.id))));
   }
   getState(): GameStateSnapshot {
-    return { tick: this.tick, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities: this.query({}), mission: null, progression: null, rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
+    return { tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities: this.query({}), mission: null, progression: null, rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
   }
   reset(): void {
     this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
