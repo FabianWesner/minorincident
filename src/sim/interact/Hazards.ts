@@ -10,6 +10,7 @@ export const hazardKinds = ['propane', 'barrel', 'gas-can', 'car-alarm', 'fuse-b
 export const destructibleKinds = ['fence', 'crate', 'barricade', 'cone', 'trash-can', 'mailbox', 'glass'] as const;
 export type HazardKind = typeof hazardKinds[number];
 export type DestructibleKind = typeof destructibleKinds[number];
+const harmfulKinds: readonly HazardKind[] = ['fire', 'toxic', 'water', 'metal-fence', 'live-wire'];
 export interface Hazard { kind: HazardKind; radius: number; fuseAt: number; exploded: boolean; activeUntil: number; leaked: boolean }
 export interface Destructible { kind: DestructibleKind | 'fuel-trail'; flammable: boolean; exposure: number; burnTime: number; burningUntil: number; broken: boolean }
 export interface HazardOptions { hp?: number; radius?: number; burnTime?: number; halfX?: number; halfZ?: number; duration?: number }
@@ -129,7 +130,7 @@ export class Hazards {
         }
       }
       const burns = d && !d.broken && d.burningUntil > tick;
-      const harms = h && tick < h.activeUntil && ['fire', 'toxic', 'water', 'metal-fence', 'live-wire'].includes(h.kind);
+      const harms = h && tick < h.activeUntil && harmfulKinds.includes(h.kind);
       if (tick % 60 === 0 && (burns || harms)) {
         for (const id of this.nearby(e, h?.radius ?? 1)) {
           const target = this.world.entities.get(id)!;
