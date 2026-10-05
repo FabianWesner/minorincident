@@ -77,7 +77,8 @@ export class Mission {
     }
   }
   private update(): void {
-    if (this.state.phase !== 'playing' || this.world.entities.get(1)!.health.current <= 0) return;
+    if (this.state.phase !== 'playing') return;
+    const alive=this.world.entities.get(1)!.health.current>0;
     this.state.stats.time = (this.world.tick - this.startTick) / 60;
     if (this.state.subtitle && this.world.tick >= this.state.subtitle.until) this.state.subtitle = null;
     for (const zone of this.zones.values()) {
@@ -87,11 +88,11 @@ export class Mission {
     // Only steps active at tick start can complete: no accidental cascading through a graph.
     for (const def of this.def.steps) {
       const step = this.state.steps[def.id]; if (step.status !== 'active') continue;
-      step.interaction = this.inside(def.anchor) ? step.interaction + 1 : 0;
+      step.interaction = alive && this.inside(def.anchor) ? step.interaction + 1 : 0;
       const failure = def.fail.find(f => this.satisfied(f.trigger, step));
       if (failure) { this.fail(failure.reason, def); break; }
       if (def.timer !== undefined && this.world.tick - step.started >= Math.ceil(def.timer * 60)) { this.fail('timeout', def); break; }
-      if (this.satisfied(def.complete, step)) this.complete(def);
+      if (alive && this.satisfied(def.complete, step)) this.complete(def);
       if (this.state.phase !== 'playing') break;
     }
     this.activate(); this.finish(); this.flushCheckpoint();
@@ -110,7 +111,7 @@ export class Mission {
   }
   private complete(def: ObjectiveDef): void {
     this.state.steps[def.id].status = 'completed'; this.state.completedObjectives.push(def.id);
-    if (def.optional) this.state.stats.optionalObjectives.push(def.id);
+    if (def.optional && !this.state.stats.optionalObjectives.includes(def.id)) this.state.stats.optionalObjectives.push(def.id);
     if (def.choice) for (const sibling of this.def.steps) if (sibling.id !== def.id && sibling.choice === def.choice) this.state.steps[sibling.id].status = 'cancelled';
     if (def.type === 'escort' && def.complete.kind === 'escort') this.rescue(this.state.actors[def.complete.actor]);
     this.emit({ type: 'objective.completed', id: def.id }); this.run(def.onComplete ?? []);
@@ -188,7 +189,7 @@ export class Mission {
       case 'tier': this.state.tier = action.tier; this.world.setTier(action.tier); this.emit({ type: 'world.tier-requested', tier: action.tier }); break;
       case 'gate': this.state.gates[action.id] = action.open; this.world.physics.world!.getCollider(this.gateHandles.get(action.id)!).setEnabled(!action.open); this.emit({ type: 'gate.changed', id: action.id, open: action.open }); break;
       case 'radio': this.state.subtitle = { id: action.id, text: dialogue[action.id], until: this.world.tick + 300 }; this.emit({ type: 'dialogue.line', id: action.id, text: dialogue[action.id] }); break;
-      case 'cinematic': if (this.state.cinematic) throw new Error('Overlapping cinematics'); this.state.cinematic = { id: action.id, elapsed: 0 }; this.state.phase = 'cinematic'; this.emit({ type: 'cinematic.started', id: action.id }); break;
+      case 'cinematic': if (this.state.cinematic) throw new Error('Overlapping cinematics'); this.state.cinematic = { id: action.id, elapsed: 0, resume:this.state.phase==='retry'?'retry':'playing' }; this.state.phase = 'cinematic'; this.emit({ type: 'cinematic.started', id: action.id }); break;
       case 'timeOfDay': this.state.timeOfDay = action.value; break;
       case 'grant': this.collect(action.item); break;
       case 'checkpoint': this.pendingCheckpoints.push(action.id); break;
@@ -202,7 +203,7 @@ export class Mission {
     current.elapsed++;
     const action = input.left.down || input.left.held || input.left.up || input.right.down || input.right.held || input.right.up || input.interact || input.selector !== 0 || input.pause || input.move.x !== 0 || input.move.z !== 0;
     if (current.elapsed < Math.ceil(this.def.cinematics[current.id].seconds * 60) && !(current.elapsed >= 30 && action)) return;
-    this.state.cinematic = null; this.state.phase = 'playing'; this.run(this.def.cinematics[current.id].actions);
+    this.state.cinematic = null; this.state.phase = current.resume; this.run(this.def.cinematics[current.id].actions);
     this.emit({ type: 'cinematic.completed', id: current.id });
     this.activate(); this.flushCheckpoint(); if (this.finishApplied && !this.state.cinematic) this.result();
   }
