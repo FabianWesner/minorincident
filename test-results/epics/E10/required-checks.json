@@ -1,0 +1,87 @@
+{
+  "typecheck": {
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0
+  },
+  "lint": {
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0
+  },
+  "build": {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exitCode": 0
+  },
+  "test:unit": {
+    "command": [
+      "npm",
+      "run",
+      "test:unit",
+      "--",
+      "--reporter=default",
+      "--reporter=json",
+      "--outputFile=test-results/epics/E10/unit.json"
+    ],
+    "exitCode": 0
+  },
+  "test:sim": {
+    "command": [
+      "npm",
+      "run",
+      "test:sim",
+      "--",
+      "--reporter=default",
+      "--reporter=json",
+      "--outputFile=test-results/epics/E10/sim.json"
+    ],
+    "exitCode": 0
+  },
+  "test:smoke": {
+    "command": [
+      "lockf",
+      "-k",
+      "/tmp/minor-incident-e2e.lock",
+      "npm",
+      "run",
+      "test:smoke",
+      "--",
+      "--workers=2"
+    ],
+    "exitCode": 0
+  },
+  "regression": {
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--grep-invert",
+      "@E10-AC06",
+      "--workers=2"
+    ],
+    "exitCode": 0
+  },
+  "verify -- E10": {
+    "command": [
+      "lockf",
+      "-k",
+      "/tmp/minor-incident-e2e.lock",
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E10"
+    ],
+    "exitCode": 0
+  }
+}
