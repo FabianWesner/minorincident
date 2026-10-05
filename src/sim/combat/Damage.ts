@@ -4,7 +4,7 @@ import type { EntitySnapshot, GameEvent } from '../world/types';
 import type { SimWorld } from '../world/SimWorld';
 export interface DamageEvent {
   attackId: number; actionId: string; sourceId: number; targetId: number; origin: Vec2; direction: Vec2;
-  part?: 'leg';
+  part?: 'leg'; radius?: number; spread?: number;
   base: number; multiplier: number; type: 'melee' | 'bullet' | 'explosive' | 'status'; knockback: number; stagger: number;
 }
 /** Directional shields only stop front bullets; splash is radial and ignores shields. */
@@ -32,6 +32,7 @@ export class Damage {
     if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction) return 0;
     const wasAlive = target.health.current > 0;
     let amount = damageAmount(hit, target);
+    if (target.archetype === 'infected.crow' && this.world.infected) amount = this.world.infected.hitFlock(target, hit.origin, hit.direction, hit.radius ?? 30, hit.type === 'explosive' ? 360 : hit.spread ?? 0);
     if (target.id === 1 && this.god) amount = 0;
     if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick);
     else { amount = Math.min(amount, target.health.current); target.health.current -= amount; }

@@ -47,3 +47,12 @@ test('T-E07-15 @E07 @E07-AC15 leg-targeted explosions make surviving runners cra
     expect(e.health.current).toBe(30); expect(e.infected!.speed).toBe(2); expect(e.infected!.legLost).toBe(true); expect(e.infected!.detached).toBe(gore === 'Full');
   }
 });
+
+test('T-E07-role-extras @E07 hazmat aura, fire immunity, armor and butcher combo are mechanical roles', async () => {
+  const w = await arena(), hazmat = spawn(w, 'hazmat', 2), firefighter = spawn(w, 'firefighter', 10, 0, 'idle');
+  const toxic = { kind: 'toxic' as const, duration: 2, dps: 3, maxStacks: 1, slow: 0.25 };
+  w.combat!.status.apply(hazmat, toxic, 1, 'weapon.test'); w.combat!.status.apply(firefighter, { ...toxic, kind: 'burning' }, 1, 'weapon.test'); expect(hazmat.combat!.statuses).toHaveLength(0); expect(firefighter.combat!.statuses).toHaveLength(0);
+  step(w, 22); expect(w.entities.get(1)!.combat!.statuses.some((s) => s.kind === 'toxic')).toBe(true);
+  const armored = spawn(w, 'armored', 10, 5, 'idle'); armored.transform.yaw = Math.PI; expect(hit(w, armored.id, 40, 'bullet')).toBe(10); armored.transform.yaw = 0; expect(hit(w, armored.id, 40, 'bullet')).toBe(40);
+  const w2 = await arena(), butcher = spawn(w2, 'butcher', 1); w2.combat!.damage.god = true; step(w2, 70); expect(w2.events.events().filter((e) => e.type === 'infected.attack' && e.sourceId === butcher.id)).toHaveLength(3);
+});

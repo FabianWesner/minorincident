@@ -56,6 +56,7 @@ export class SimWorld implements Lifecycle {
     this.events.on('sim.tick', () => {
       if (this.combat) {
         const position = this.physics.playerBody!.translation(); Object.assign(this.entities.get(1)!.transform, position); this.spatial.set(1, position.x, position.z);
+        this.infected?.props.update();
         this.combat.update(this.input);
       }
     }, SimPhase.combat);
