@@ -24,14 +24,14 @@ test('T-E07-09 @E07 @E07-AC09 150-infected stream follows spline on time and fan
   const before = w.infected!.active.map((e) => ({ ...e.transform })); step(w, 30); expect(w.infected!.active.filter((e, i) => Math.hypot(e.transform.x - before[i].x, e.transform.z - before[i].z) > 0.5).length).toBeGreaterThan(100);
 });
 test('T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed entity objects', async () => {
-  const w = await arena(), ai = w.infected!, allocated = ai.counters.allocated, records = new Set(ai.pool); w.combat!.damage.god = true;
+  const w = await arena(), ai = w.infected!, allocated = ai.counters.allocated, records = new Set(ai.pool); w.combat!.damage.god = true; let allRecordsReused = true;
   for (let tick = 0; tick < 18000; tick++) {
     if (tick % 60 === 0) for (const e of ai.active) e.health.current = 0;
     w.update(); // Exercise normal corpse-cap cleanup, rather than manually returning entities to the pool.
     if (tick % 60 === 0) for (let i = 0; i < 150; i++) spawn(w, 'runner', i % 15 - 7, 10 + Math.floor(i / 15), 'idle');
-    for (const e of ai.active) expect(records.has(e)).toBe(true);
+    for (const e of ai.active) allRecordsReused = records.has(e) && allRecordsReused;
   }
-  expect(ai.counters.allocated).toBe(allocated); expect(ai.counters.reused).toBe(45000); expect(ai.active.filter((e) => e.health.current <= 0)).toHaveLength(100);
+  expect(allRecordsReused).toBe(true); expect(ai.counters.allocated).toBe(allocated); expect(ai.counters.reused).toBe(45000); expect(ai.active.filter((e) => e.health.current <= 0)).toHaveLength(100);
   mkdirSync('test-results/epics/E07', { recursive: true }); writeFileSync('test-results/epics/E07/pooling.json', JSON.stringify({ ticks: w.tick, seconds: w.tick / 60, concurrent: 150, corpsesAtEnd: 100, available: ai.pool.length, allocatedAfterWarmup: allocated, ...ai.counters }, null, 2) + '\n');
 });
 test('T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget', async () => {
