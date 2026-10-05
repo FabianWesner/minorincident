@@ -1,11 +1,10 @@
 """Faceted wooden bat, sculpted grain and six bevelled grip-tape courses.
 All markings are solid relief, merged by palette; no textures or decals.
 """
-import argparse, math, sys, json
+import argparse, math, sys
 from pathlib import Path
 import bpy
 from mathutils import Vector
-HERE=Path(__file__).resolve().parent
 p=argparse.ArgumentParser()
 for name in ('render','glb'): p.add_argument('--'+name)
 p.add_argument('--view',default='ref')
@@ -56,11 +55,12 @@ def mark(x,theta,length,width,material):
     count=len(ring)
     vs=ring+[(xx,y*.90,Z+(z-Z)*.90) for xx,y,z in ring]
     fs=[tuple(range(count)),tuple(range(2*count-1,count-1,-1))]+[(i,(i+1)%count,(i+1)%count+count,i+count) for i in range(count)]
+    fs=[tuple(reversed(f)) for f in fs]  # outward normals on the cylindrical relief
     me=bpy.data.meshes.new('grain'); me.from_pydata(vs,[],fs); me.update()
     o=bpy.data.objects.new('grain',me); bpy.context.collection.objects.link(o); o.data.materials.append(material); o.parent=root
 for t in [0,.8,1.7,2.6,3.4,4.3,5.2]:
-    for j in range(3):
-        mark(-.06+j*.17+.018*math.sin(t*3+j),t,.105+.022*j,.050,grain)
+    for j in range(2):
+        mark(-.015+j*.25+.035*math.sin(t*3+j),t+.22*math.sin(t+j),.10+.035*j,.16,grain)
 for x,t in [(.36,5.2),(.18,4.9),(-.02,5.4),(.26,1.4),(.08,.4)]: mark(x,t,.032,.14,dark)
 # Merge every static part by material, preserving melee attachment nodes.
 objects=[]
