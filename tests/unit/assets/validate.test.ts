@@ -44,4 +44,4 @@ test('T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, 
   expect(reports.length).toBeGreaterThan(20);
   const findings = reports.flatMap(r => r.errors).filter(e => e.startsWith('stump_') || e === 'missing LOD' || e.startsWith('forward ') || e.startsWith('material: unknown pal_') || e.includes('degenerate triangle'));
   expect(findings).toEqual([]);
-});
+}, 120_000); // Decode the complete production inventory on the shared build machine.

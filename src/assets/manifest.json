@@ -8,9 +8,9 @@
     "glb": "public/assets/models/char.survivor-male.glb",
     "sourceGlb": "assets/char.survivor-male/model.glb",
     "dimensions": {
-      "x": 0.5459499955177307,
-      "y": 1.3985192775726318,
-      "z": 0.8251995146274567,
+      "x": 0.7027,
+      "y": 1.8,
+      "z": 1.0621,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -63,7 +63,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/char.survivor-male.lod1.glb",
+      "lod2": "public/assets/models/char.survivor-male.lod2.glb"
+    },
+    "sourceScale": 1.28707416
   },
   {
     "id": "char.survivor-female",
@@ -74,9 +80,9 @@
     "glb": "public/assets/models/char.survivor-female.glb",
     "sourceGlb": "assets/char.survivor-female/model.glb",
     "dimensions": {
-      "x": 0.49503825046122074,
-      "y": 1.4101895559579134,
-      "z": 0.6668463051319122,
+      "x": 0.6319,
+      "y": 1.8,
+      "z": 0.8512,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -129,7 +135,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/char.survivor-female.lod1.glb",
+      "lod2": "public/assets/models/char.survivor-female.lod2.glb"
+    },
+    "sourceScale": 1.27642341
   },
   {
     "id": "char.corgi",
@@ -176,7 +188,12 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/char.corgi.lod1.glb",
+      "lod2": "public/assets/models/char.corgi.lod2.glb"
+    }
   },
   {
     "id": "equip.backpack-teal",
@@ -303,9 +320,9 @@
     "glb": "public/assets/models/inf.common-worker.glb",
     "sourceGlb": "assets/inf.common-worker/model.glb",
     "dimensions": {
-      "x": 0.8522652089595795,
-      "y": 1.6650989055633545,
-      "z": 1.217635691165924,
+      "x": 0.9213,
+      "y": 1.8,
+      "z": 1.3163,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -361,7 +378,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.common-worker.lod1.glb",
+      "lod2": "public/assets/models/inf.common-worker.lod2.glb"
+    },
+    "sourceScale": 1.08101627
   },
   {
     "id": "inf.jogger",
@@ -372,9 +395,9 @@
     "glb": "public/assets/models/inf.jogger.glb",
     "sourceGlb": "assets/inf.jogger/model.glb",
     "dimensions": {
-      "x": 0.9753881394863129,
-      "y": 1.7378920372575521,
-      "z": 0.8821343034505844,
+      "x": 1.2936,
+      "y": 1.8,
+      "z": 1.0271,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -430,7 +453,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.jogger.lod1.glb",
+      "lod2": "public/assets/models/inf.jogger.lod2.glb"
+    },
+    "sourceScale": 1.07516837
   },
   {
     "id": "inf.baseball-cap",
@@ -441,9 +470,9 @@
     "glb": "public/assets/models/inf.baseball-cap.glb",
     "sourceGlb": "assets/inf.baseball-cap/model.glb",
     "dimensions": {
-      "x": 0.7588488608598709,
-      "y": 1.6723075211048126,
-      "z": 1.0381288528442383,
+      "x": 0.8168,
+      "y": 1.8,
+      "z": 1.1174,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -499,7 +528,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.baseball-cap.lod1.glb",
+      "lod2": "public/assets/models/inf.baseball-cap.lod2.glb"
+    },
+    "sourceScale": 1.07635484
   },
   {
     "id": "inf.suburban-mom",
@@ -510,9 +545,9 @@
     "glb": "public/assets/models/inf.suburban-mom.glb",
     "sourceGlb": "assets/inf.suburban-mom/model.glb",
     "dimensions": {
-      "x": 0.5416581469294359,
-      "y": 1.5626188296928414,
-      "z": 0.873999834060669,
+      "x": 1.085,
+      "y": 1.8,
+      "z": 1.1889,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -568,7 +603,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.suburban-mom.lod1.glb",
+      "lod2": "public/assets/models/inf.suburban-mom.lod2.glb"
+    },
+    "sourceScale": 1.17538151
   },
   {
     "id": "inf.delivery-driver",
@@ -579,9 +620,9 @@
     "glb": "public/assets/models/inf.delivery-driver.glb",
     "sourceGlb": "assets/inf.delivery-driver/model.glb",
     "dimensions": {
-      "x": 1.0051109194755554,
-      "y": 1.6886346638202667,
-      "z": 1.0474485233426094,
+      "x": 1.0714,
+      "y": 1.8,
+      "z": 1.1165,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -637,7 +678,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.delivery-driver.lod1.glb",
+      "lod2": "public/assets/models/inf.delivery-driver.lod2.glb"
+    },
+    "sourceScale": 1.06594941
   },
   {
     "id": "inf.skater",
@@ -715,9 +762,9 @@
     "glb": "public/assets/models/inf.college-student.glb",
     "sourceGlb": "assets/inf.college-student/model.glb",
     "dimensions": {
-      "x": 0.5043846163898706,
-      "y": 1.64644193649292,
-      "z": 0.8140000104904175,
+      "x": 0.5514,
+      "y": 1.8,
+      "z": 0.8899,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -773,7 +820,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.college-student.lod1.glb",
+      "lod2": "public/assets/models/inf.college-student.lod2.glb"
+    },
+    "sourceScale": 1.09326425
   },
   {
     "id": "inf.bbq-dad",
@@ -782,9 +835,9 @@
     "tier": "hero",
     "glb": "public/assets/models/inf.bbq-dad.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.8314,
+      "y": 1.8,
+      "z": 1.4728,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -842,7 +895,13 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/inf.bbq-dad/model.glb",
-    "script": "assets/inf.bbq-dad/build.py"
+    "script": "assets/inf.bbq-dad/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.bbq-dad.lod1.glb",
+      "lod2": "public/assets/models/inf.bbq-dad.lod2.glb"
+    },
+    "sourceScale": 1.12392643
   },
   {
     "id": "inf.cashier",
@@ -851,9 +910,9 @@
     "tier": "hero",
     "glb": "public/assets/models/inf.cashier.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.7374,
+      "y": 1.8,
+      "z": 1.2666,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -911,7 +970,13 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/inf.cashier/model.glb",
-    "script": "assets/inf.cashier/build.py"
+    "script": "assets/inf.cashier/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.cashier.lod1.glb",
+      "lod2": "public/assets/models/inf.cashier.lod2.glb"
+    },
+    "sourceScale": 1.10086369
   },
   {
     "id": "inf.bathrobe-neighbor",
@@ -920,9 +985,9 @@
     "tier": "hero",
     "glb": "public/assets/models/inf.bathrobe-neighbor.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.8855,
+      "y": 1.8,
+      "z": 1.4104,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -978,7 +1043,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.bathrobe-neighbor/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.bathrobe-neighbor.lod1.glb",
+      "lod2": "public/assets/models/inf.bathrobe-neighbor.lod2.glb"
+    },
+    "sourceScale": 1.08101233
   },
   {
     "id": "inf.construction-worker",
@@ -1114,7 +1186,12 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.crawler.lod1.glb",
+      "lod2": "public/assets/models/inf.crawler.lod2.glb"
+    }
   },
   {
     "id": "inf.corpse-poses",
@@ -1190,9 +1267,9 @@
     "tier": "hero",
     "glb": "public/assets/models/inf.riot-cop.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.8017,
+      "y": 1.8,
+      "z": 1.3467,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -1248,7 +1325,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.riot-cop/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.riot-cop.lod1.glb",
+      "lod2": "public/assets/models/inf.riot-cop.lod2.glb"
+    },
+    "sourceScale": 1.14126421
   },
   {
     "id": "inf.hazmat",
@@ -1391,9 +1475,9 @@
     "tier": "hero",
     "glb": "public/assets/models/inf.bloated.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.9947,
+      "y": 1.8,
+      "z": 1.374,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -1449,7 +1533,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.bloated/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.bloated.lod1.glb",
+      "lod2": "public/assets/models/inf.bloated.lod2.glb"
+    },
+    "sourceScale": 1.04725043
   },
   {
     "id": "inf.screamer",
@@ -1458,9 +1549,9 @@
     "tier": "hero",
     "glb": "public/assets/models/inf.screamer.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.8182,
+      "y": 1.8,
+      "z": 1.0249,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -1516,7 +1607,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.screamer/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.screamer.lod1.glb",
+      "lod2": "public/assets/models/inf.screamer.lod2.glb"
+    },
+    "sourceScale": 1.04136095
   },
   {
     "id": "inf.sprinter",
@@ -1525,9 +1623,9 @@
     "tier": "hero",
     "glb": "public/assets/models/inf.sprinter.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 1.031,
+      "y": 1.8,
+      "z": 1.251,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -1583,7 +1681,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.sprinter/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.sprinter.lod1.glb",
+      "lod2": "public/assets/models/inf.sprinter.lod2.glb"
+    },
+    "sourceScale": 1.09697273
   },
   {
     "id": "inf.armored-football",
@@ -1853,7 +1958,12 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.brute.lod1.glb",
+      "lod2": "public/assets/models/inf.brute.lod2.glb"
+    }
   },
   {
     "id": "wpn.baseball-bat",
@@ -1862,9 +1972,9 @@
     "tier": "side",
     "glb": "public/assets/models/wpn.baseball-bat.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.922,
+      "y": 0.114,
+      "z": 0.1148,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -1884,7 +1994,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/wpn.baseball-bat/model.glb",
-    "script": "assets/wpn.baseball-bat/build.py"
+    "script": "assets/wpn.baseball-bat/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "wpn.nail-bat",
@@ -1893,9 +2004,9 @@
     "tier": "side",
     "glb": "public/assets/models/wpn.nail-bat.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 1.004,
+      "y": 0.2999,
+      "z": 0.3184,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -1913,7 +2024,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.nail-bat/model.glb",
+    "sourceForward": "+X"
   },
   {
     "id": "wpn.crowbar",
@@ -1922,9 +2035,9 @@
     "tier": "side",
     "glb": "public/assets/models/wpn.crowbar.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.3926,
+      "y": 0.8217,
+      "z": 0.067,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -1944,7 +2057,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/wpn.crowbar/model.glb",
-    "script": "assets/wpn.crowbar/build.py"
+    "script": "assets/wpn.crowbar/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "wpn.machete",
@@ -1953,9 +2067,9 @@
     "tier": "side",
     "glb": "public/assets/models/wpn.machete.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.985,
+      "y": 0.086,
+      "z": 0.154,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -1975,7 +2089,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/wpn.machete/model.glb",
-    "script": "assets/wpn.machete/build.py"
+    "script": "assets/wpn.machete/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "wpn.shovel",
@@ -2042,9 +2157,9 @@
     "tier": "side",
     "glb": "public/assets/models/wpn.pistol.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.3097,
+      "y": 0.231,
+      "z": 0.07,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -2062,7 +2177,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.pistol/model.glb",
+    "sourceForward": "+X"
   },
   {
     "id": "wpn.shotgun",
@@ -2071,9 +2188,9 @@
     "tier": "side",
     "glb": "public/assets/models/wpn.shotgun.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 1.22,
+      "y": 0.3804,
+      "z": 0.154,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -2091,7 +2208,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.shotgun/model.glb",
+    "sourceForward": "+X"
   },
   {
     "id": "wpn.nail-gun",
@@ -2100,9 +2219,9 @@
     "tier": "side",
     "glb": "public/assets/models/wpn.nail-gun.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.6275,
+      "y": 0.514,
+      "z": 0.166,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -2120,7 +2239,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/wpn.nail-gun/model.glb",
+    "sourceForward": "+X"
   },
   {
     "id": "thr.molotov",
@@ -2129,9 +2250,9 @@
     "tier": "side",
     "glb": "public/assets/models/thr.molotov.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.1305,
+      "y": 0.442,
+      "z": 0.278,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -2149,7 +2270,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/thr.molotov/model.glb",
+    "sourceForward": "+X"
   },
   {
     "id": "thr.pipe-bomb",
@@ -2158,9 +2281,9 @@
     "tier": "side",
     "glb": "public/assets/models/thr.pipe-bomb.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.642,
+      "y": 0.2678,
+      "z": 0.2987,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -2178,7 +2301,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/thr.pipe-bomb/model.glb",
+    "sourceForward": "+X"
   },
   {
     "id": "thr.firecracker-lure",
@@ -2216,9 +2341,9 @@
     "tier": "side",
     "glb": "public/assets/models/pick.medkit.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.2655,
+      "y": 0.7305,
+      "z": 0.75,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -2238,7 +2363,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/pick.medkit/model.glb",
-    "script": "assets/pick.medkit/build.py"
+    "script": "assets/pick.medkit/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "pick.soda",
@@ -2247,9 +2373,9 @@
     "tier": "side",
     "glb": "public/assets/models/pick.soda.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.1014,
+      "y": 0.1823,
+      "z": 0.091,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -2269,7 +2395,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/pick.soda/model.glb",
-    "script": "assets/pick.soda/build.py"
+    "script": "assets/pick.soda/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "pick.energy-drink",
@@ -2278,9 +2405,9 @@
     "tier": "side",
     "glb": "public/assets/models/pick.energy-drink.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.157,
+      "y": 0.354,
+      "z": 0.152,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -2298,7 +2425,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/pick.energy-drink/model.glb",
+    "sourceForward": "+X"
   },
   {
     "id": "pick.bandages",
@@ -2307,9 +2436,9 @@
     "tier": "side",
     "glb": "public/assets/models/pick.bandages.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.763,
+      "y": 0.6424,
+      "z": 1.0225,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -2327,7 +2456,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/pick.bandages/model.glb",
+    "sourceForward": "+X"
   },
   {
     "id": "pick.pistol-ammo",
@@ -2829,8 +2960,8 @@
     "glb": "public/assets/models/veh.sedan-red.glb",
     "sourceGlb": "assets/veh.sedan-red/model.glb",
     "lods": {
-      "lod1": "assets/veh.sedan-red/model.lod1.glb",
-      "lod2": "assets/veh.sedan-red/model.lod2.glb"
+      "lod1": "public/assets/models/veh.sedan-red.lod1.glb",
+      "lod2": "public/assets/models/veh.sedan-red.lod2.glb"
     },
     "dimensions": {
       "x": 4.634000062942505,
@@ -2869,7 +3000,12 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "world": {
+      "token": "survivorRed",
+      "solid": true
+    }
   },
   {
     "id": "veh.sedan-blue",
@@ -2918,9 +3054,10 @@
     },
     "decayVariants": [],
     "lods": {
-      "lod1": "assets/veh.sedan-blue/model.lod1.glb",
-      "lod2": "assets/veh.sedan-blue/model.lod2.glb"
-    }
+      "lod1": "public/assets/models/veh.sedan-blue.lod1.glb",
+      "lod2": "public/assets/models/veh.sedan-blue.lod2.glb"
+    },
+    "sourceForward": "+X"
   },
   {
     "id": "veh.sedan-white",
@@ -2930,9 +3067,9 @@
     "script": "assets/veh.sedan-white/build.py",
     "glb": "public/assets/models/veh.sedan-white.glb",
     "dimensions": {
-      "x": 4.4,
-      "y": 1.8,
-      "z": 1.9,
+      "x": 4.8035,
+      "y": 1.827,
+      "z": 2.386,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -2969,9 +3106,10 @@
     "decayVariants": [],
     "sourceGlb": "assets/veh.sedan-white/model.glb",
     "lods": {
-      "lod1": "assets/veh.sedan-white/model.lod1.glb",
-      "lod2": "assets/veh.sedan-white/model.lod2.glb"
-    }
+      "lod1": "public/assets/models/veh.sedan-white.lod1.glb",
+      "lod2": "public/assets/models/veh.sedan-white.lod2.glb"
+    },
+    "sourceForward": "+X"
   },
   {
     "id": "veh.school-bus",
@@ -2982,13 +3120,13 @@
     "glb": "public/assets/models/veh.school-bus.glb",
     "sourceGlb": "assets/veh.school-bus/model.glb",
     "lods": {
-      "lod1": "assets/veh.school-bus/model.lod1.glb",
-      "lod2": "assets/veh.school-bus/model.lod2.glb"
+      "lod1": "public/assets/models/veh.school-bus.lod1.glb",
+      "lod2": "public/assets/models/veh.school-bus.lod2.glb"
     },
     "dimensions": {
-      "x": 8.76300048828125,
-      "y": 3.728499948978424,
-      "z": 3.5999999046325684,
+      "x": 8.0328,
+      "y": 3.4178,
+      "z": 3.3,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3022,7 +3160,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "sourceScale": 0.91666669
   },
   {
     "id": "veh.suv-dark",
@@ -3031,9 +3171,9 @@
     "tier": "hero",
     "glb": "public/assets/models/veh.suv-dark.glb",
     "dimensions": {
-      "x": 4.4,
-      "y": 1.8,
-      "z": 1.9,
+      "x": 5.1435,
+      "y": 2.5591,
+      "z": 2.74,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3067,7 +3207,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.suv-dark/model.glb",
+    "script": "assets/veh.suv-dark/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/veh.suv-dark.lod1.glb",
+      "lod2": "public/assets/models/veh.suv-dark.lod2.glb"
+    }
   },
   {
     "id": "veh.pickup-red",
@@ -3078,8 +3225,8 @@
     "glb": "public/assets/models/veh.pickup-red.glb",
     "sourceGlb": "assets/veh.pickup-red/model.glb",
     "lods": {
-      "lod1": "assets/veh.pickup-red/model.lod1.glb",
-      "lod2": "assets/veh.pickup-red/model.lod2.glb"
+      "lod1": "public/assets/models/veh.pickup-red.lod1.glb",
+      "lod2": "public/assets/models/veh.pickup-red.lod2.glb"
     },
     "dimensions": {
       "x": 5.120999574661255,
@@ -3118,7 +3265,8 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X"
   },
   {
     "id": "veh.pickup-white",
@@ -3264,8 +3412,8 @@
     "glb": "public/assets/models/veh.police-sedan.glb",
     "sourceGlb": "assets/veh.police-sedan/model.glb",
     "lods": {
-      "lod1": "assets/veh.police-sedan/model.lod1.glb",
-      "lod2": "assets/veh.police-sedan/model.lod2.glb"
+      "lod1": "public/assets/models/veh.police-sedan.lod1.glb",
+      "lod2": "public/assets/models/veh.police-sedan.lod2.glb"
     },
     "dimensions": {
       "x": 5.437000036239624,
@@ -3304,7 +3452,8 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X"
   },
   {
     "id": "veh.police-suv",
@@ -3360,8 +3509,8 @@
     "glb": "public/assets/models/veh.ambulance.glb",
     "sourceGlb": "assets/veh.ambulance/model.glb",
     "lods": {
-      "lod1": "assets/veh.ambulance/model.lod1.glb",
-      "lod2": "assets/veh.ambulance/model.lod2.glb"
+      "lod1": "public/assets/models/veh.ambulance.lod1.glb",
+      "lod2": "public/assets/models/veh.ambulance.lod2.glb"
     },
     "dimensions": {
       "x": 6.658999681472778,
@@ -3400,7 +3549,8 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X"
   },
   {
     "id": "veh.jeep-red",
@@ -3483,9 +3633,9 @@
     "tier": "hero",
     "glb": "public/assets/models/bld.house-a.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 7.1425,
+      "y": 4.5542,
+      "z": 7.17,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3507,8 +3657,13 @@
     "sourceGlb": "assets/bld.house-a/model.glb",
     "script": "assets/bld.house-a/build.py",
     "lods": {
-      "lod1": "assets/bld.house-a/model.lod1.glb",
-      "lod2": "assets/bld.house-a/model.lod2.glb"
+      "lod1": "public/assets/models/bld.house-a.lod1.glb",
+      "lod2": "public/assets/models/bld.house-a.lod2.glb"
+    },
+    "sourceForward": "+X",
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
     }
   },
   {
@@ -3518,9 +3673,9 @@
     "tier": "hero",
     "glb": "public/assets/models/bld.house-b.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 7.518,
+      "y": 6.804,
+      "z": 11.035,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3542,8 +3697,13 @@
     "sourceGlb": "assets/bld.house-b/model.glb",
     "script": "assets/bld.house-b/build.py",
     "lods": {
-      "lod1": "assets/bld.house-b/model.lod1.glb",
-      "lod2": "assets/bld.house-b/model.lod2.glb"
+      "lod1": "public/assets/models/bld.house-b.lod1.glb",
+      "lod2": "public/assets/models/bld.house-b.lod2.glb"
+    },
+    "sourceForward": "+X",
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
     }
   },
   {
@@ -3554,9 +3714,9 @@
     "script": "assets/bld.house-c/build.py",
     "glb": "public/assets/models/bld.house-c.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 9.4032,
+      "y": 5.7675,
+      "z": 7.8004,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3577,8 +3737,13 @@
     "decayVariants": [],
     "sourceGlb": "assets/bld.house-c/model.glb",
     "lods": {
-      "lod1": "assets/bld.house-c/model.lod1.glb",
-      "lod2": "assets/bld.house-c/model.lod2.glb"
+      "lod1": "public/assets/models/bld.house-c.lod1.glb",
+      "lod2": "public/assets/models/bld.house-c.lod2.glb"
+    },
+    "sourceForward": "+X",
+    "world": {
+      "token": "brick",
+      "solid": true
     }
   },
   {
@@ -3617,9 +3782,9 @@
     "tier": "side",
     "glb": "public/assets/models/kit.porch-stairs.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 3.1596,
+      "y": 2.7801,
+      "z": 6.8604,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3639,7 +3804,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/kit.porch-stairs/model.glb",
-    "script": "assets/kit.porch-stairs/build.py"
+    "script": "assets/kit.porch-stairs/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "bld.shed",
@@ -3677,9 +3843,9 @@
     "tier": "hero",
     "glb": "public/assets/models/bld.joes-diner.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 6.9699,
+      "y": 6.32,
+      "z": 11.745,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3701,8 +3867,13 @@
     "sourceGlb": "assets/bld.joes-diner/model.glb",
     "script": "assets/bld.joes-diner/build.py",
     "lods": {
-      "lod1": "assets/bld.joes-diner/model.lod1.glb",
-      "lod2": "assets/bld.joes-diner/model.lod2.glb"
+      "lod1": "public/assets/models/bld.joes-diner.lod1.glb",
+      "lod2": "public/assets/models/bld.joes-diner.lod2.glb"
+    },
+    "sourceForward": "+X",
+    "world": {
+      "token": "survivorRed",
+      "solid": true
     }
   },
   {
@@ -3712,9 +3883,9 @@
     "tier": "hero",
     "glb": "public/assets/models/bld.gas-station.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 10.34,
+      "y": 7.69,
+      "z": 10.51,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3732,7 +3903,18 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
+    },
+    "sourceGlb": "assets/bld.gas-station/model.glb",
+    "script": "assets/bld.gas-station/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/bld.gas-station.lod1.glb",
+      "lod2": "public/assets/models/bld.gas-station.lod2.glb"
+    }
   },
   {
     "id": "bld.maple-hardware",
@@ -3770,9 +3952,9 @@
     "tier": "hero",
     "glb": "public/assets/models/bld.mainstreet-brick.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 7.3881,
+      "y": 8.554,
+      "z": 9.7025,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3794,8 +3976,13 @@
     "sourceGlb": "assets/bld.mainstreet-brick/model.glb",
     "script": "assets/bld.mainstreet-brick/build.py",
     "lods": {
-      "lod1": "assets/bld.mainstreet-brick/model.lod1.glb",
-      "lod2": "assets/bld.mainstreet-brick/model.lod2.glb"
+      "lod1": "public/assets/models/bld.mainstreet-brick.lod1.glb",
+      "lod2": "public/assets/models/bld.mainstreet-brick.lod2.glb"
+    },
+    "sourceForward": "+X",
+    "world": {
+      "token": "brick",
+      "solid": true
     }
   },
   {
@@ -3827,7 +4014,12 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/bld.bus-stop.lod1.glb",
+      "lod2": "public/assets/models/bld.bus-stop.lod2.glb"
+    }
   },
   {
     "id": "int.diner",
@@ -3865,9 +4057,9 @@
     "tier": "hero",
     "glb": "public/assets/models/bld.school-elementary.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 10.0675,
+      "y": 6.14,
+      "z": 12.67,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3885,7 +4077,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.school-elementary/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/bld.school-elementary.lod1.glb",
+      "lod2": "public/assets/models/bld.school-elementary.lod2.glb"
+    }
   },
   {
     "id": "int.gym-cafeteria",
@@ -3923,9 +4121,9 @@
     "tier": "side",
     "glb": "public/assets/models/kit.playground.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 8.2955,
+      "y": 3.83,
+      "z": 9.7733,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3943,7 +4141,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/kit.playground/model.glb",
+    "sourceForward": "+X"
   },
   {
     "id": "int.supermarket",
@@ -3952,9 +4152,9 @@
     "tier": "hero",
     "glb": "public/assets/models/int.supermarket.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 8.4,
+      "y": 3.435,
+      "z": 9.0185,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3972,7 +4172,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/int.supermarket/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/int.supermarket.lod1.glb",
+      "lod2": "public/assets/models/int.supermarket.lod2.glb"
+    }
   },
   {
     "id": "int.mini-mall",
@@ -4039,9 +4245,9 @@
     "tier": "hero",
     "glb": "public/assets/models/int.pharmacy-clinic.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 6.3,
+      "y": 3.615,
+      "z": 6.35,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -4061,7 +4267,12 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/int.pharmacy-clinic/model.glb",
-    "script": "assets/int.pharmacy-clinic/build.py"
+    "script": "assets/int.pharmacy-clinic/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/int.pharmacy-clinic.lod1.glb",
+      "lod2": "public/assets/models/int.pharmacy-clinic.lod2.glb"
+    }
   },
   {
     "id": "bld.fire-station",
@@ -4090,7 +4301,11 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "world": {
+      "token": "survivorRed",
+      "solid": true
+    }
   },
   {
     "id": "bld.hospital-exterior",
@@ -4128,9 +4343,9 @@
     "tier": "side",
     "glb": "public/assets/models/kit.police-checkpoint.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 9.4,
+      "y": 4.4,
+      "z": 8.2,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -4148,7 +4363,9 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/kit.police-checkpoint/model.glb",
+    "sourceForward": "+X"
   },
   {
     "id": "kit.evac-camp",
@@ -4906,9 +5123,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.patient-zero-courier.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.9137,
+      "y": 1.8,
+      "z": 0.7562,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -4963,7 +5180,13 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/npc.patient-zero-courier/model.glb",
-    "script": "assets/npc.patient-zero-courier/build.py"
+    "script": "assets/npc.patient-zero-courier/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.patient-zero-courier.lod1.glb",
+      "lod2": "public/assets/models/npc.patient-zero-courier.lod2.glb"
+    },
+    "sourceScale": 1.27254578
   },
   {
     "id": "prop.medical-cooler",
@@ -4972,9 +5195,9 @@
     "tier": "side",
     "glb": "public/assets/models/prop.medical-cooler.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.5415,
+      "y": 0.9975,
+      "z": 0.8347,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -4994,7 +5217,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.medical-cooler/model.glb",
-    "script": "assets/prop.medical-cooler/build.py"
+    "script": "assets/prop.medical-cooler/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "veh.courier-van",
@@ -5003,9 +5227,9 @@
     "tier": "hero",
     "glb": "public/assets/models/veh.courier-van.glb",
     "dimensions": {
-      "x": 4.4,
-      "y": 1.8,
-      "z": 1.9,
+      "x": 5.4696,
+      "y": 3.006,
+      "z": 2.71,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5043,9 +5267,10 @@
     "sourceGlb": "assets/veh.courier-van/model.glb",
     "script": "assets/veh.courier-van/build.py",
     "lods": {
-      "lod1": "assets/veh.courier-van/model.lod1.glb",
-      "lod2": "assets/veh.courier-van/model.lod2.glb"
-    }
+      "lod1": "public/assets/models/veh.courier-van.lod1.glb",
+      "lod2": "public/assets/models/veh.courier-van.lod2.glb"
+    },
+    "sourceForward": "+X"
   },
   {
     "id": "npc.brother",
@@ -5054,9 +5279,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.brother.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.6756,
+      "y": 1.4265,
+      "z": 0.6681,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5111,7 +5336,12 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/npc.brother/model.glb",
-    "script": "assets/npc.brother/build.py"
+    "script": "assets/npc.brother/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.brother.lod1.glb",
+      "lod2": "public/assets/models/npc.brother.lod2.glb"
+    }
   },
   {
     "id": "npc.mrs-alvarez",
@@ -5120,9 +5350,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.mrs-alvarez.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.6338,
+      "y": 1.8,
+      "z": 0.9636,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5177,7 +5407,13 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/npc.mrs-alvarez/model.glb",
-    "script": "assets/npc.mrs-alvarez/build.py"
+    "script": "assets/npc.mrs-alvarez/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.mrs-alvarez.lod1.glb",
+      "lod2": "public/assets/models/npc.mrs-alvarez.lod2.glb"
+    },
+    "sourceScale": 1.24217543
   },
   {
     "id": "npc.police-officer",
@@ -5186,9 +5422,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.police-officer.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.5824,
+      "y": 1.8,
+      "z": 0.8587,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5241,7 +5477,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.police-officer/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.police-officer.lod1.glb",
+      "lod2": "public/assets/models/npc.police-officer.lod2.glb"
+    },
+    "sourceScale": 1.2694477414759615
   },
   {
     "id": "npc.paramedic",
@@ -5657,9 +5900,9 @@
     "tier": "side",
     "glb": "public/assets/models/wpn.smg.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.8425,
+      "y": 0.4771,
+      "z": 0.134,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5679,7 +5922,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/wpn.smg/model.glb",
-    "script": "assets/wpn.smg/build.py"
+    "script": "assets/wpn.smg/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "wpn.hunting-rifle",
@@ -5688,9 +5932,9 @@
     "tier": "side",
     "glb": "public/assets/models/wpn.hunting-rifle.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 1.313,
+      "y": 0.3351,
+      "z": 0.114,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5710,7 +5954,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/wpn.hunting-rifle/model.glb",
-    "script": "assets/wpn.hunting-rifle/build.py"
+    "script": "assets/wpn.hunting-rifle/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "wpn.assault-rifle",
@@ -5835,9 +6080,9 @@
     "tier": "side",
     "glb": "public/assets/models/thr.frag-grenade.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.1522,
+      "y": 0.2382,
+      "z": 0.1395,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5857,7 +6102,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/thr.frag-grenade/model.glb",
-    "script": "assets/thr.frag-grenade/build.py"
+    "script": "assets/thr.frag-grenade/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "thr.flashbang",
@@ -6410,9 +6656,9 @@
     "tier": "hero",
     "glb": "public/assets/models/bld.civic-center.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 13.5819,
+      "y": 7.3899,
+      "z": 14.432,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -6434,9 +6680,10 @@
     "sourceGlb": "assets/bld.civic-center/model.glb",
     "script": "assets/bld.civic-center/build.py",
     "lods": {
-      "lod1": "assets/bld.civic-center/model.lod1.glb",
-      "lod2": "assets/bld.civic-center/model.lod2.glb"
-    }
+      "lod1": "public/assets/models/bld.civic-center.lod1.glb",
+      "lod2": "public/assets/models/bld.civic-center.lod2.glb"
+    },
+    "sourceForward": "+X"
   },
   {
     "id": "decay.dropped-belongings",
@@ -8130,7 +8377,12 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "world": {
+      "token": "survivorRed",
+      "solid": true
+    }
   },
   {
     "id": "prop.jukebox",
@@ -8161,7 +8413,8 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X"
   },
   {
     "id": "prop.light-tower",
@@ -8192,7 +8445,8 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X"
   },
   {
     "id": "prop.porta-potty",
@@ -8223,7 +8477,8 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X"
   },
   {
     "id": "prop.vending-machine",
@@ -8254,7 +8509,8 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X"
   },
   {
     "id": "npc.civilian-man-a",
@@ -8263,9 +8519,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.civilian-man-a.glb",
     "dimensions": {
-      "x": 0.37313416600227356,
-      "y": 1.431667448952794,
-      "z": 0.6651999652385712,
+      "x": 0.4691,
+      "y": 1.8,
+      "z": 0.8363,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -8320,7 +8576,13 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/npc.civilian-man-a/model.glb",
-    "script": "assets/npc.civilian-man-a/build.py"
+    "script": "assets/npc.civilian-man-a/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-man-a.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-man-a.lod2.glb"
+    },
+    "sourceScale": 1.25727403
   },
   {
     "id": "npc.civilian-man-b",
@@ -8329,9 +8591,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.civilian-man-b.glb",
     "dimensions": {
-      "x": 0.4227200448513031,
-      "y": 1.4376665391027927,
-      "z": 0.6695751547813416,
+      "x": 0.5293,
+      "y": 1.8,
+      "z": 0.8383,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -8386,7 +8648,13 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/npc.civilian-man-b/model.glb",
-    "script": "assets/npc.civilian-man-b/build.py"
+    "script": "assets/npc.civilian-man-b/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-man-b.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-man-b.lod2.glb"
+    },
+    "sourceScale": 1.25201906
   },
   {
     "id": "npc.civilian-woman-a",
@@ -8395,9 +8663,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.civilian-woman-a.glb",
     "dimensions": {
-      "x": 0.5174842649139464,
-      "y": 1.4140521343797445,
-      "z": 0.7555636763572693,
+      "x": 0.6587,
+      "y": 1.8,
+      "z": 0.9618,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -8452,7 +8720,13 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/npc.civilian-woman-a/model.glb",
-    "script": "assets/npc.civilian-woman-a/build.py"
+    "script": "assets/npc.civilian-woman-a/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-woman-a.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-woman-a.lod2.glb"
+    },
+    "sourceScale": 1.27293605
   },
   {
     "id": "npc.civilian-woman-b",
@@ -8461,9 +8735,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.civilian-woman-b.glb",
     "dimensions": {
-      "x": 0.42142805457115173,
-      "y": 1.4000000953674316,
-      "z": 0.6310051083564758,
+      "x": 0.5418,
+      "y": 1.8,
+      "z": 0.8113,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -8518,7 +8792,13 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/npc.civilian-woman-b/model.glb",
-    "script": "assets/npc.civilian-woman-b/build.py"
+    "script": "assets/npc.civilian-woman-b/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-woman-b.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-woman-b.lod2.glb"
+    },
+    "sourceScale": 1.28571343
   },
   {
     "id": "prop.barricade",
@@ -8549,7 +8829,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.barricade/model.glb",
-    "script": "assets/prop.barricade/build.py"
+    "script": "assets/prop.barricade/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "prop.bench",
@@ -8580,7 +8861,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.bench/model.glb",
-    "script": "assets/prop.bench/build.py"
+    "script": "assets/prop.bench/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "prop.fire-hydrant",
@@ -8611,7 +8893,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.fire-hydrant/model.glb",
-    "script": "assets/prop.fire-hydrant/build.py"
+    "script": "assets/prop.fire-hydrant/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "prop.hedge",
@@ -8642,7 +8925,12 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.hedge/model.glb",
-    "script": "assets/prop.hedge/build.py"
+    "script": "assets/prop.hedge/build.py",
+    "sourceForward": "+X",
+    "world": {
+      "token": "foliage",
+      "solid": true
+    }
   },
   {
     "id": "prop.mailbox-blue",
@@ -8673,7 +8961,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.mailbox-blue/model.glb",
-    "script": "assets/prop.mailbox-blue/build.py"
+    "script": "assets/prop.mailbox-blue/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "prop.picket-fence",
@@ -8704,7 +8993,12 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.picket-fence/model.glb",
-    "script": "assets/prop.picket-fence/build.py"
+    "script": "assets/prop.picket-fence/build.py",
+    "sourceForward": "+X",
+    "world": {
+      "token": "picketWhite",
+      "solid": false
+    }
   },
   {
     "id": "prop.street-lamp",
@@ -8735,7 +9029,12 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.street-lamp/model.glb",
-    "script": "assets/prop.street-lamp/build.py"
+    "script": "assets/prop.street-lamp/build.py",
+    "sourceForward": "+X",
+    "world": {
+      "token": "uiDark",
+      "solid": false
+    }
   },
   {
     "id": "prop.street-sign",
@@ -8766,7 +9065,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.street-sign/model.glb",
-    "script": "assets/prop.street-sign/build.py"
+    "script": "assets/prop.street-sign/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "prop.traffic-cone",
@@ -8797,7 +9097,12 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.traffic-cone/model.glb",
-    "script": "assets/prop.traffic-cone/build.py"
+    "script": "assets/prop.traffic-cone/build.py",
+    "sourceForward": "+X",
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": false
+    }
   },
   {
     "id": "prop.trash-bin",
@@ -8828,7 +9133,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.trash-bin/model.glb",
-    "script": "assets/prop.trash-bin/build.py"
+    "script": "assets/prop.trash-bin/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "prop.utility-pole",
@@ -8859,7 +9165,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.utility-pole/model.glb",
-    "script": "assets/prop.utility-pole/build.py"
+    "script": "assets/prop.utility-pole/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "inf.teen-skater",
@@ -8928,6 +9235,475 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.teen-skater.lod1.glb",
+      "lod2": "public/assets/models/inf.teen-skater.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.tree",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.tree.glb",
+    "dimensions": {
+      "x": 3,
+      "y": 5,
+      "z": 3,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "foliage",
+      "solid": false
+    }
+  },
+  {
+    "id": "veh.wreck",
+    "category": "vehicle",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/veh.wreck.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 0.9,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "uiDark",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.school",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.school.glb",
+    "dimensions": {
+      "x": 12,
+      "y": 6,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.gym",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.gym.glb",
+    "dimensions": {
+      "x": 10,
+      "y": 5,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.supermarket",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.supermarket.glb",
+    "dimensions": {
+      "x": 12,
+      "y": 5,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.pharmacy",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.pharmacy.glb",
+    "dimensions": {
+      "x": 10,
+      "y": 4,
+      "z": 7,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "picketWhite",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.police",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.police.glb",
+    "dimensions": {
+      "x": 10,
+      "y": 5,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "policeBlue",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.hospital",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.hospital.glb",
+    "dimensions": {
+      "x": 10,
+      "y": 7,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "picketWhite",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.park-lodge",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.park-lodge.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 4,
+      "z": 7,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.zoo-gate",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.zoo-gate.glb",
+    "dimensions": {
+      "x": 10,
+      "y": 4,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.reptile-house",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.reptile-house.glb",
+    "dimensions": {
+      "x": 10,
+      "y": 4,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.substation",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.substation.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 4,
+      "z": 7,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "uiDark",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.picnic-table",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.picnic-table.glb",
+    "dimensions": {
+      "x": 2,
+      "y": 0.8,
+      "z": 1.4,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.bus-stop",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.bus-stop.glb",
+    "dimensions": {
+      "x": 3,
+      "y": 2.5,
+      "z": 1.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "policeBlue",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.tent",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.tent.glb",
+    "dimensions": {
+      "x": 3,
+      "y": 2,
+      "z": 3,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.flower",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.flower.glb",
+    "dimensions": {
+      "x": 0.3,
+      "y": 0.5,
+      "z": 0.3,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": false
+    }
   }
 ]
