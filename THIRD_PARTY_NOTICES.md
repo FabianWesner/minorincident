@@ -14,6 +14,9 @@ copyright 2025 Bruno Simon):
 | `Materials/MeshGridMaterial.js` | `src/render/MeshGridMaterial.ts` — trimmed XZ grid shader |
 | `utilities/maths.js` | `src/core/maths.ts` — clamp and lerp |
 
+| `View.js` (41046b5) | `src/render/View.ts` — focus, aspect adaptation, shake and cinematic blending |
+| `Rendering.js`, `Viewport.js` (41046b5) | `src/render/Renderer.ts` — backend bootstrap and pixel ratio |
+
 ## Bruno Simon MIT license
 
 Copyright (c) 2025 Bruno Simon

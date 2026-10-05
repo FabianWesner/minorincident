@@ -1,22 +1,25 @@
-import { BoxGeometry, Color, Mesh, MeshBasicNodeMaterial, PerspectiveCamera, PlaneGeometry, Scene, WebGPURenderer } from 'three/webgpu';
+import { BoxGeometry, Color, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Scene } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { MeshGridMaterial } from './MeshGridMaterial';
 import { PhysicsWireframe } from './PhysicsWireframe';
+import { View } from './View';
+import { Renderer } from './Renderer';
 
 /** E01 presentation only: plane + debug cube, with state flowing from sim to view. */
 export class GameView implements Lifecycle {
   readonly scene = new Scene();
-  readonly camera = new PerspectiveCamera(35, 1, 0.1, 250);
-  readonly renderer: WebGPURenderer;
+  readonly view = new View();
+  readonly camera = this.view.camera;
+  readonly renderer: Renderer;
   private readonly meshes: Mesh[] = [];
   private cube: Mesh | null = null;
   private wireframe: PhysicsWireframe | null = null;
   constructor(private readonly world: SimWorld, private readonly params: URLSearchParams) {
-    this.renderer = new WebGPURenderer({ antialias: true, forceWebGL: params.get('renderer') === 'webgl' });
+    this.renderer = new Renderer(params);
     this.scene.background = new Color('#293447');
-    this.camera.position.set(12, 12, 12); this.camera.lookAt(0, 0, 0);
+    
   }
   async init(): Promise<void> {
     await this.renderer.init(); this.resize();
@@ -28,10 +31,12 @@ export class GameView implements Lifecycle {
     const dpr = Number(this.params.get('dpr') ?? Math.min(devicePixelRatio, 2));
     this.renderer.setPixelRatio(Number.isFinite(dpr) && dpr > 0 ? dpr : 1);
     this.renderer.setSize(innerWidth, innerHeight);
-    this.camera.aspect = innerWidth / innerHeight; this.camera.updateProjectionMatrix();
+    this.view.resize(innerWidth, innerHeight);
   };
   async load(): Promise<void> {
     this.reset();
+    const player = this.world.entities.get(1);
+    this.view.reset(player?.transform ?? { x: 0, z: 0 });
     const ground = new Mesh(new PlaneGeometry(100, 100), new MeshGridMaterial());
     ground.rotation.x = -Math.PI / 2;
     this.cube = new Mesh(new BoxGeometry(1, 1, 1), new MeshBasicNodeMaterial({ color: '#ed935c' }));
@@ -42,8 +47,13 @@ export class GameView implements Lifecycle {
     await this.renderer.compileAsync(this.scene, this.camera);
     this.update(1);
   }
+  advance(seconds: number): void {
+    const player = this.world.entities.get(1);
+    if (player) this.view.update(player.transform, seconds);
+  }
+  getState() { return { backend: this.renderer.selectedBackend, camera: this.view.getState() }; }
   update(alpha = 1): void {
-    const current = this.world.getEntity(1)?.transform, previous = this.world.previousPlayer;
+    const current = this.world.entities.get(1)?.transform, previous = this.world.previousPlayer;
     if (this.cube && current) {
       this.cube.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha), lerp(previous?.z ?? current.z, current.z, alpha));
       this.cube.rotation.y = current.yaw;
