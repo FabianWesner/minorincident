@@ -85,3 +85,35 @@ for (const side of ['LEFT', 'RIGHT'] as const) for (const def of Object.values(c
   else if (def.effect?.kind === 'adrenaline') expect(w.combat!.effects.speedMultiplier).toBe(1.5);
   else throw new Error(`Unverified utility ${def.id}`);
 });
+
+test('T-E06-utility-timers @E06 @E06-AC02 @E06-AC10 utilities demonstrate effects and restore their timed state', async () => {
+  const w = await arena(); equip(w, ['ability.adrenaline'], ['ability.shield-bubble']);
+  fire(w); w.setInput({ move: { x: 1, z: 0 } }); step(w, 60);
+  expect(w.entities.get(1)!.transform.x).toBeGreaterThan(6); w.clearInput(); step(w, 250); expect(w.combat!.effects.speedMultiplier).toBe(1);
+  const enemy = dummy(w, 1); fire(w, 'RIGHT'); step(w, 1);
+  const hit = { attackId: 0, actionId: 'test', sourceId: enemy, targetId: 1, origin: { x: 1, z: 0 }, direction: { x: -1, z: 0 }, base: 10, multiplier: 1, type: 'melee' as const, knockback: 0, stagger: 0 };
+  expect(w.combat!.damage.apply(hit)).toBe(0); step(w, 240); expect(w.combat!.damage.apply(hit)).toBe(10);
+});
+
+test('T-E06-perf @E06 @perf sustained weapons, fire and 200 reactive infected stay below 4ms sim p95', async () => {
+  const { performance } = await import('node:perf_hooks'), { mkdirSync, writeFileSync } = await import('node:fs');
+  const w = await arena(); equip(w, ['weapon.smg'], ['weapon.molotov']); w.combat!.damage.god = true; w.combat!.runner.infiniteCharges = true;
+  for (let i = 0; i < 200; i++) w.spawnDummy('infected.runner', { x: 2 + i % 10, z: Math.floor(i / 10) - 10 }, { reactive: true, hp: 100000 });
+  const frame = (await import('../../src/input/InputFrame')).emptyInput(); frame.aim = { x: 1, z: 0 }; frame.aimPoint = { x: 6, z: 0 }; frame.left.held = true;
+  const times: number[] = [];
+  for (let i = 0; i < 3720; i++) { frame.right.down = i % 360 === 0; w.applyInput(frame, 'keyboard'); const start = performance.now(); w.update(); if (i >= 120) times.push(performance.now() - start); }
+  times.sort((a, b) => a - b); const data = { ticks: times.length, infected: 200, simMsP95: times[Math.floor(times.length * 0.95)], budgetMs: 4 };
+  mkdirSync('test-results/epics/E06', { recursive: true }); writeFileSync('test-results/epics/E06/sim-perf.json', JSON.stringify(data, null, 2)); expect(data.simMsP95).toBeLessThan(4);
+});
+
+test('T-E06-smoke-role @E06 @E06-AC02 @E06-AC10 smoke breaks investigation and suppresses hearing for 12s', async () => {
+  const w = await arena(); equip(w, ['weapon.smoke-grenade']);
+  const id = w.spawnDummy('infected.runner', { x: 4, z: 0 }, { reactive: true });
+  w.combat!.effects.noise({ x: 0, z: 0 }, 25, 'weapon.pistol'); expect(w.entities.get(id)!.hearing!.mode).toBe('investigate');
+  fire(w, 'LEFT', { x: 1, z: 0 }, { x: 4, z: 0 }); step(w, 30);
+  const zone = w.combat!.effects.zones[0], position = { ...w.entities.get(id)!.transform };
+  expect(zone.kind).toBe('smoke'); expect(zone.radius).toBe(6); expect(zone.expires - zone.created).toBe(720);
+  expect(position.x).toBeGreaterThan(2); expect(w.entities.get(id)!.hearing!.mode).toBe('idle');
+  w.combat!.effects.noise({ x: 0, z: 0 }, 25, 'weapon.pistol'); step(w, 60); expect(w.entities.get(id)!.transform).toEqual(position);
+  step(w, zone.expires - w.tick); w.combat!.effects.noise({ x: 0, z: 0 }, 25, 'weapon.pistol'); expect(w.entities.get(id)!.hearing!.mode).toBe('investigate'); step(w, 30); expect(w.entities.get(id)!.transform.x).toBeLessThan(position.x);
+});

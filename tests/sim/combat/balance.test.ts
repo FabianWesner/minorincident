@@ -2,12 +2,12 @@ import { expect, test } from 'vitest';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { performance } from 'node:perf_hooks';
 import { arena, dummy, equip, step } from './helpers';
-import { actions } from '../../../src/data/actions/fixtures';
+import { balanceActions as actions } from '../../../src/data/actions/catalog';
 import { combatArchetypes, ttkBands } from '../../../src/data/balance';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { stateHash } from '../../../src/sim/world/stateHash';
 
-test('T-E05-14 @E05 @E05-AC14 measure every reference weapon × archetype TTK in authored bands', async () => {
+test('T-E05-14 T-E06-10 @E05 @E05-AC14 @E06 @E06-AC10 measure every reference weapon × archetype TTK in authored bands', async () => {
   const rows = [];
   for (const weapon of Object.values(actions)) for (const [name, archetype] of Object.entries(combatArchetypes)) {
     const w = await arena(); equip(w, [weapon.id]); w.combat!.damage.god = true;

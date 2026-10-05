@@ -42,3 +42,6 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
 ] satisfies ActionDef[]).map((definition) => { const def = validateAction(definition); return [def.id, def]; }));
 /** Fixture-only projectile remains available for E05 regression, outside the player roster. */
 export function action(id: string): ActionDef { const def = catalog[id] ?? fixtures[id]; if (!def) throw new Error(`Unknown action: ${id}`); return def; }
+
+/** Damage balance keeps the E05 swept-projectile reference alongside every damaging catalog action. */
+export const balanceActions = [...Object.values(catalog).filter((def) => def.damage > 0), fixtures['weapon.test-projectile']];
