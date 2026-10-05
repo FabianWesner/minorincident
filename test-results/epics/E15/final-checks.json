@@ -1,0 +1,29 @@
+{
+  "sourceCommit": "4de353f",
+  "baseCommit": "5d7b048",
+  "typecheck": 0,
+  "lint": 0,
+  "build": 0,
+  "test:unit": {
+    "exit": 0,
+    "passed": 73
+  },
+  "test:sim": {
+    "exit": 0,
+    "passed": 106
+  },
+  "test:smoke": {
+    "exit": 0,
+    "nodePassed": 3,
+    "browserPassed": 12
+  },
+  "verify -- E15": {
+    "exit": 0,
+    "nodePassed": 10,
+    "browserPassed": 24
+  },
+  "acceptance": "10/10 passing tagged IDs",
+  "browserLock": "/tmp/minor-incident-e2e.lock",
+  "crossEpicRegression": "orchestrator-owned per final scheduler instruction",
+  "nativeWebGpu": "not run"
+}
