@@ -47,5 +47,10 @@ test('T-E07-13 @E07 @E07-AC13 @vision golden-hour street has 60 separable runner
   expect(heroPixels).toBeGreaterThan(1000);
   await page.evaluate(async () => { const api = window.__SS__!; api.settings.set({ idPass: false }); api.spawn('infected.brute', { x: -2, z: -2 }, { state: 'chase' }); api.spawn('infected.runner', { x: -1.5, z: 1 }, { state: 'chase' }); await api.step(1); await api.screenshotReady(); });
   await page.locator('canvas').screenshot({ path: 'test-results/epics/E07/telegraphs.png' });
+  const burst = await page.evaluate(async () => {
+    const api = window.__SS__!; api.spawn('infected.bloated', { x: 3, z: 0 }, { state: 'idle' }); api.cheats.killAll(); await api.step(1); await api.screenshotReady(); return api.getState();
+  });
+  expect(burst.render.crowd!.meshDrawCalls).toBe(4); // Three corpse archetypes plus the still-active death explosion telegraph.
+  await page.locator('canvas').screenshot({ path: 'test-results/epics/E07/bloated-windup.png' });
   writeFileSync('test-results/epics/E07/readability.json', JSON.stringify({ eyePixels, redPixels, heroPixels, crowd: state.render.crowd, lighting: state.render.lighting }, null, 2) + '\n');
 });

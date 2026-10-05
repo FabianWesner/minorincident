@@ -72,8 +72,8 @@ export class CrowdView extends Group {
         batch.mesh.setMatrixAt(batch.count, this.transform); batch.frame.setX(batch.count, frame); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.limb.setX(batch.count++, Number(b.detached));
       }
       if (e.health.current > 0 && e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, 0.018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
-      if (b.state === 'attack' && this.world.tick < b.until) {
-        const mesh = this.telegraphs[b.special === 'charge' || b.special === 'pin' || b.special === 'pounce' ? 1 : 0]; this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); this.transform.setPosition(e.transform.x, 0.06, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
+      if ((b.state === 'attack' || (b.state === 'dead' && b.special === 'explode')) && this.world.tick < b.until) {
+        const mesh = this.telegraphs[b.special === 'charge' || b.special === 'pin' || b.special === 'pounce' ? 1 : 0]; if (b.special === 'explode') this.transform.makeScale(3.75, 1, 3.75); else this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); this.transform.setPosition(e.transform.x, 0.06, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
       }
     }
     for (const batch of this.batches.values()) { batch.mesh.count = batch.count; if (batch.count) { batch.mesh.instanceMatrix.needsUpdate = true; batch.frame.needsUpdate = true; batch.tint.needsUpdate = true; batch.limb.needsUpdate = true; } }
