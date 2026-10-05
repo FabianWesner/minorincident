@@ -23,7 +23,7 @@ export class Hazards {
   private readonly blastTicks = new Int32Array(8).fill(-60);
   private blastCursor = 0;
   constructor(private readonly world: SimWorld) {
-    this.debris = new DebrisPool(world.physics); this.damage = new Damage(world);
+    this.debris = new DebrisPool(world.physics); this.damage = world.combat?.damage ?? new Damage(world);
     world.events.on('combat.hit', e => {
       if (e.type !== 'combat.hit' || e.amount <= 0) return;
       const entity = world.entities.get(e.targetId); if (!entity) return;
