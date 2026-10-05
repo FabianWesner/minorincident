@@ -48,8 +48,10 @@ export class SimWorld implements Lifecycle {
     this.spatial.set(1, definition.player.x, definition.player.z);
     if (definition.combat) this.combat = new Combat(this, definition);
     if (definition.survivor) this.vehicles = new Vehicles(this);
-    if (name === 'drive-course') { this.vehicles!.spawn('vehicle.sedan', { x: 0, z: 0 }); this.vehicles!.spawn('vehicle.police', { x: 0, z: 12 });
-      for (let x = 25; x <= 575; x += 25) { const z = Math.sin(x / 40) * 3; this.vehicles!.obstacles.spawn('cone', { x, z: z - 2 }); this.vehicles!.obstacles.spawn('cone', { x, z: z + 2 }); }  }
+    if (name === 'drive-course') {
+      this.vehicles!.spawn('vehicle.sedan', { x: 0, z: 0 }); this.vehicles!.spawn('vehicle.police', { x: 0, z: 12 });
+      for (let x = 25; x <= 575; x += 25) { const z = Math.sin(x / 40) * 3; this.vehicles!.obstacles.spawn('cone', { x, z: z - 2 }); this.vehicles!.obstacles.spawn('cone', { x, z: z + 2 }); }
+    }
     this.events.on('sim.tick', () => this.vehicles?.prePhysics(this.input, this.scheme), SimPhase.input);
     this.events.on('sim.tick', () => { if (this.combat && this.vehicles?.active == null) this.combat.intent(this.input); }, SimPhase.input);
     this.events.on('sim.tick', () => {

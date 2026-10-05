@@ -6,6 +6,8 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 export interface EntitySnapshot {
   id: number;
   hidden?: boolean;
+  /** Infected currently clinging to this vehicle entity. */
+  attachedTo?: number;
   /** Retaliation HP cost for vehicle ramming; supplied by infected definitions. */
   ramDamage?: number;
   vehicle?: import('../vehicles/Vehicles').VehicleState;

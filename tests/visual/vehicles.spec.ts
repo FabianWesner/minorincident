@@ -6,7 +6,7 @@ test('T-E09-10 @E09-AC10 wheel spin/steer, brake lamps and alternating siren pix
   mkdirSync(output, { recursive: true }); await boot(page);
   await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('drive-course'); a.pause(); a.teleport('player', { x: .2, z: 13.45 }); await a.step(36); a.camera.preset('vehicle'); await a.screenshotReady(); });
   const first = await page.evaluate(() => window.__SS__!.getState().render.vehicles.find(v => v.id === 3)!);
-  const capture = async (name: string) => { await page.evaluate(async () => { await window.__SS__!.screenshotReady(); }); return PNG.sync.read(await page.screenshot({ path: `${output}/${name}.png` })); };
+  const capture = async (name: string) => { await page.evaluate(async () => { await window.__SS__!.screenshotReady(); }); const png = PNG.sync.read(await page.screenshot({ path: `${output}/${name}.png` })); await expect(page).toHaveScreenshot(`vehicle-${name}.png`, { threshold: .1, maxDiffPixelRatio: .015 }); return png; };
   const brakePoint = async () => page.evaluate(() => { const a = window.__SS__!, p = a.getEntity(3)!.transform; return a.camera.project(p.x - Math.cos(p.yaw) * 2.1, p.y - .79 + .8, p.z + Math.sin(p.yaw) * 2.1); });
   const firstBrake = await brakePoint();
   const on = await capture('brake-siren-right');

@@ -47,6 +47,7 @@ export class VehicleView extends Group {
       for (let i = 0; i < 4; i++) { const wheel = record.wheels[i], physics = body.wheels[i]; wheel.node.rotation.y = wheel.steer + physics.steer; wheel.node.rotation.z = wheel.spin + physics.rotation; wheel.node.position.y = wheel.y + body.def.suspension - physics.suspension; }
       record.brake.color.set('#ff2d2d').multiplyScalar(state.braking ? 4 : .15);
       for (let i = 0; i < record.sirens.length; i++) record.sirens[i].color.set(i === 0 ? '#ff2d2d' : '#2f6bff').multiplyScalar((Math.floor(this.world.tick / 30) % 2 === i) ? 4 : .1);
+      record.door.position.y = .025 + body.def.suspension + body.def.wheelRadius + .15 - p.y;
       record.door.visible = this.world.vehicles!.active === null && car.entity.health.current > 0;
       record.smoke.visible = state.damage !== 'normal'; record.fire.visible = state.damage === 'burning' || state.damage === 'exploded';
       record.smoke.position.y = (this.world.tick % 60) / 120;
