@@ -18,7 +18,7 @@ export interface SSTestApi {
   loadScenario(name: string, opts?: { seed?: number }): Promise<void>;
   /** Additive E01 harness hook: unload all scenario-owned sim and GPU resources. */
   unloadScenario(): Promise<void>;
-  getState(): GameStateSnapshot;
+  getState(): GameStateSnapshot & { render: ReturnType<Game['view']['getState']> };
   getEntity(id: number): EntitySnapshot | null;
   query(filter: EntityFilter): EntitySnapshot[];
   events(sinceTick?: number): GameEvent[];
@@ -49,7 +49,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     loadLevel: async () => pending('E12', 'loadLevel'),
     loadScenario: (name, opts) => game.loadScenario(name, opts?.seed),
     unloadScenario: () => game.loadScenario(null),
-    getState: () => game.world.getState(), getEntity: (id) => game.world.getEntity(id),
+    getState: () => ({ ...game.world.getState(), render: game.view.getState() }), getEntity: (id) => game.world.getEntity(id),
     query: (filter) => game.world.query(filter), events: (since) => game.world.events.events(since),
     input: { set: (frame) => game.world.setInput(frame), clear: () => game.world.clearInput() },
     spawn: () => pending('E07', 'spawn'),
@@ -66,7 +66,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     setLoadout: () => pending('E05', 'setLoadout'),
     cheats: { god: () => pending('E05', 'cheats.god'), infiniteCharges: () => pending('E05', 'cheats.infiniteCharges'), killAll: () => pending('E07', 'cheats.killAll'), completeObjective: () => pending('E12', 'cheats.completeObjective') },
     bot: { start: () => pending('E19', 'bot.start'), stop: () => pending('E19', 'bot.stop'), status: () => pending('E19', 'bot.status') },
-    camera: { preset: () => pending('E02', 'camera.preset'), follow: () => pending('E02', 'camera.follow') },
+    camera: { preset: () => pending('E02', 'camera.preset'), follow: () => game.view.view.follow() },
     settings: { set: () => pending('E14', 'settings.set') },
     perf: () => game.perf(), screenshotReady: () => game.screenshotReady(),
   };
