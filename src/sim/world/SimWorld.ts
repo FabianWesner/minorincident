@@ -46,7 +46,7 @@ export class SimWorld implements Lifecycle {
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
-      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = Status.speed(player); this.player.prePhysics(this.input, this.tick, !Status.stunned(player, this.tick)); return; }
+      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = Status.speed(player) * (this.infected?.playerSpeedScale() ?? 1); this.player.prePhysics(this.input, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
       body.setLinvel({ x: this.input.move.x * 5, y: body.linvel().y, z: this.input.move.z * 5 }, true);
@@ -79,7 +79,7 @@ export class SimWorld implements Lifecycle {
   getEntity(id: number): EntitySnapshot | null { return structuredClone(this.entities.get(id) ?? null); }
   query(filter: EntityFilter): EntitySnapshot[] {
     const nearby = filter.within ? new Set(this.spatial.query(filter.within)) : null;
-    return structuredClone(this.entities.values().filter((e) => (!filter.kind || e.kind === filter.kind) && (!filter.archetype || e.archetype === filter.archetype) && (!nearby || nearby.has(e.id))));
+    return structuredClone(this.entities.values().filter((e) => (!filter.detectable || !e.infected?.hidden) && (!filter.kind || e.kind === filter.kind) && (!filter.archetype || e.archetype === filter.archetype) && (!nearby || nearby.has(e.id))));
   }
   getState(): GameStateSnapshot {
     return { ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities: this.query({}), mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
