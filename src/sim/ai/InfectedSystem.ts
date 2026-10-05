@@ -5,7 +5,6 @@ import { Status } from '../combat/Status';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { ScenarioDefinition } from '../../levels/loader';
-import { actions } from '../../data/actions/fixtures';
 import { DistrictNavigation } from './DistrictNavigation';
 import { PropThrows } from './PropThrows';
 import { updateFlock } from './Flock';
@@ -51,7 +50,7 @@ export class InfectedSystem {
       const brain: InfectedState = { state: 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: 0, until: 0, cooldown: 0, attackId: 0, special: '', hidden: false, deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: 0, packIndex: 0, birds: 0, birdPositions: new Array(60).fill(0), birdAlive: new Array(20).fill(0), scatterUntil: 0, variant: '', path: [], pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: false };
       this.pool.push({ id: 0, kind: 'infected', archetype: '', faction: 'infected', health: { current: 0, max: 0 }, transform: { x: 0, y: 0.7, z: 0, yaw: 0 }, infected: brain, combat: { radius: 0.35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } }); this.counters.allocated++;
     }
-    world.events.on('combat.exploded', (event) => { if (event.type === 'combat.exploded') this.noise(event.position, 25, true); });
+    world.events.on('noise', (event) => { if (event.type === 'noise') this.noise(event.position, event.radius, event.radius >= 25, event.sourceId); });
     world.events.on('combat.hit', (event) => {
       if (event.type !== 'combat.hit' || event.amount <= 0) return;
       const target = world.entities.get(event.targetId);
@@ -66,7 +65,6 @@ export class InfectedSystem {
         else if (e.infected!.special === 'pin' && ++e.infected!.grabHits >= 2) e.infected!.grabUntil = 0;
       }
     });
-    world.events.on('combat.attack', (event) => { if (event.type === 'combat.attack') this.noise(event.position, actions[event.actionId]?.noiseRadius ?? 6, event.actionId.includes('shotgun')); });
   }
   spawn(id: string, position: { x: number; z: number }, opts: InfectedSpawn = {}): number {
     const def = infectedDef(id);
@@ -96,8 +94,10 @@ export class InfectedSystem {
     this.active.splice(index, 1); this.world.entities.delete(entity.id); this.world.spatial.delete(entity.id); this.pool.push(entity); this.counters.released++;
   }
   /** Hearing ignores facing; sight uses a 110° cone and collider line of sight. */
-  noise(position: { x: number; z: number }, radius: number, loud = false): void {
+  noise(position: { x: number; z: number }, radius: number, loud = false, sourceId?: number): void {
     for (const e of this.active) if (e.health.current > 0 && Math.hypot(e.transform.x - position.x, e.transform.z - position.z) <= radius) {
+      if (sourceId !== undefined && this.world.combat?.effects.inSmoke(e.transform)) continue;
+      if (sourceId !== undefined && (e.infected!.state === 'idle' || e.infected!.state === 'wander')) this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId, targetId: e.id, cause: 'noise', position: { ...e.transform } });
       if (loud && e.archetype === 'infected.crow') { e.infected!.state = 'scatter'; e.infected!.scatterUntil = this.world.tick + 300; }
       else this.alert(e);
     }
