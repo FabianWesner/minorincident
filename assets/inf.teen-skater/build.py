@@ -20,7 +20,7 @@ def mat(token,hex,rough=.7,emit=0):
     b=m.node_tree.nodes.get('Principled BSDF');b.inputs['Base Color'].default_value=c;b.inputs['Roughness'].default_value=rough
     if emit:b.inputs['Emission Color'].default_value=c;b.inputs['Emission Strength'].default_value=emit
     m.diffuse_color=c;return m
-M={k:mat(k,v,r) for k,v,r in [('infectedSkin','c9a39a',.68),('picketWhite','f2e6dc',.85),('asphalt','5b4f5c',.8),('uiDark','25222c',.78),('blood','b3121f',.35),('survivorRed','d9363e',.73),('sidewalk','b9a4a0',.8),('woodWarm','b0703f',.75),('backpackTeal','2f6e6a',.8)]}
+M={k:mat(k,v,r) for k,v,r in [('infectedSkin','c9a39a',.68),('picketWhite','f2e6dc',.85),('asphalt','5b4f5c',.8),('uiDark','25222c',.78),('blood','b3121f',.35),('survivorRed','d9363e',.73),('sidewalk','b9a4a0',.8),('woodWarm','b0703f',.75)]}
 M['eye']=mat('infectedEye','ff3b2f',.24,2.5)
 def node(n,p,par=None):
     o=bpy.data.objects.new(n,None);S.collection.objects.link(o);o.location=p
@@ -258,7 +258,7 @@ for j in range(3):
     splat('hair_blood'+str(j),.18,-.09+j*.07,1.505+(j%2)*.04,.03,.014,'head')
 ell('upper_gum',(.176,0,1.307),(.02,.064,.013),'blood','head')
 ell('lower_gum',(.18,0,1.205),(.019,.06,.011),'blood','head')
-# Large blood smears beneath the mouth, on sleeves and on the torn worker shirt.
+# Large blood smears beneath the mouth, on sleeves and on the torn skater shirt.
 for j,(y,z,ry,rz) in enumerate([(-.043,1.193,.038,.042),(.048,1.215,.025,.043),(-.105,1.27,.025,.039),(.111,1.285,.019,.033)]):
     splat('mouth_blood'+str(j),.19,y,z,ry,rz,'head')
 for side,sign in [('L',1),('R',-1)]:
@@ -510,6 +510,7 @@ if a.render:
                     if parent==parts['armL']:o.hide_render=True;break
                     parent=parent.parent
             cap=bpy.data.objects['stump_armL'];cap.scale=(1,1,1);cap['hidden']=False
+            cam.location=(5,4,2.5);cam.rotation_euler=(Vector((.13,0,.85))-cam.location).to_track_quat('-Z','Y').to_euler()
             S.render.filepath=str(P/'renders'/'pose-amputation.png');bpy.ops.render.render(write_still=True)
             amputated=bpy.data.images.load(S.render.filepath);amputated.pixels.foreach_get(pixels)
             second=pixels.reshape(h,w,4)[:,(w-500)//2:(w+500)//2,:].copy()
