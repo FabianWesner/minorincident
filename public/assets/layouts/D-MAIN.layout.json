@@ -24,85 +24,85 @@
           -28
         ]
       ],
-      "preset": "suburban-outdoor"
+      "preset": "street"
     },
     {
-      "id": "bld.diner:53",
-      "polygon": [
-        [
-          -19.0,
-          -17.5
-        ],
-        [
-          -9.0,
-          -17.5
-        ],
-        [
-          -9.0,
-          -10.5
-        ],
-        [
-          -19.0,
-          -10.5
-        ],
-        [
-          -19.0,
-          -17.5
-        ]
-      ],
-      "preset": "small-room"
-    },
-    {
-      "id": "bld.hardware:54",
-      "polygon": [
-        [
-          9.0,
-          -17.5
-        ],
-        [
-          19.0,
-          -17.5
-        ],
-        [
-          19.0,
-          -10.5
-        ],
-        [
-          9.0,
-          -10.5
-        ],
-        [
-          9.0,
-          -17.5
-        ]
-      ],
-      "preset": "small-room"
-    },
-    {
-      "id": "bld.gas-station:55",
+      "id": "bld.joes-diner:53",
       "polygon": [
         [
           -18.0,
-          10.5
+          -17.0
         ],
         [
           -10.0,
-          10.5
+          -17.0
         ],
         [
           -10.0,
-          17.5
+          -11.0
         ],
         [
           -18.0,
-          17.5
+          -11.0
         ],
         [
           -18.0,
-          10.5
+          -17.0
         ]
       ],
-      "preset": "small-room"
+      "preset": "interior-small"
+    },
+    {
+      "id": "bld.mainstreet-brick:78",
+      "polygon": [
+        [
+          10.0,
+          -17.0
+        ],
+        [
+          18.0,
+          -17.0
+        ],
+        [
+          18.0,
+          -11.0
+        ],
+        [
+          10.0,
+          -11.0
+        ],
+        [
+          10.0,
+          -17.0
+        ]
+      ],
+      "preset": "interior-small"
+    },
+    {
+      "id": "bld.gas-station:103",
+      "polygon": [
+        [
+          -18.0,
+          11.0
+        ],
+        [
+          -10.0,
+          11.0
+        ],
+        [
+          -10.0,
+          17.0
+        ],
+        [
+          -18.0,
+          17.0
+        ],
+        [
+          -18.0,
+          11.0
+        ]
+      ],
+      "preset": "interior-small"
     }
   ],
   "anchors": {
@@ -134,7 +134,7 @@
       "position": [
         -14,
         0,
-        -9.5
+        -10.0
       ],
       "yaw": 0
     },
@@ -150,7 +150,7 @@
       "position": [
         -14,
         0,
-        18.5
+        18.0
       ],
       "yaw": 0
     },
@@ -158,7 +158,7 @@
       "position": [
         14,
         0,
-        -9.5
+        -10.0
       ],
       "yaw": 0
     },
@@ -213,52 +213,52 @@
     {
       "aabb": {
         "max": [
-          -9.0,
-          4,
-          -10.5
+          -10.0,
+          5,
+          -11.0
         ],
         "min": [
-          -19.0,
+          -18.0,
           0,
-          -17.5
+          -17.0
         ]
       },
-      "assetId": "bld.diner",
-      "id": "bld.diner:53",
+      "assetId": "bld.joes-diner",
+      "id": "bld.joes-diner:53",
       "label": "Joe\u2019s Diner"
     },
     {
       "aabb": {
         "max": [
-          19.0,
-          5.5,
-          -10.5
+          18.0,
+          5,
+          -11.0
         ],
         "min": [
-          9.0,
+          10.0,
           0,
-          -17.5
+          -17.0
         ]
       },
-      "assetId": "bld.hardware",
-      "id": "bld.hardware:54",
+      "assetId": "bld.mainstreet-brick",
+      "id": "bld.mainstreet-brick:78",
       "label": "Maple Hardware"
     },
     {
       "aabb": {
         "max": [
           -10.0,
-          3.5,
-          17.5
+          5,
+          17.0
         ],
         "min": [
           -18.0,
           0,
-          10.5
+          11.0
         ]
       },
       "assetId": "bld.gas-station",
-      "id": "bld.gas-station:55",
+      "id": "bld.gas-station:103",
       "label": "Sunset Fuel"
     }
   ],
@@ -266,14 +266,14 @@
     {
       "aabb": {
         "max": [
-          -24.0,
-          1.2,
-          -22.5
+          -23.735976934432983,
+          1.563220500946045,
+          -22.559457540512085
         ],
         "min": [
-          -26.0,
+          -26.264023065567017,
           0,
-          -23.5
+          -23.440542459487915
         ]
       },
       "id": "prop.hedge:3",
@@ -283,14 +283,14 @@
     {
       "aabb": {
         "max": [
-          22.0,
-          1.2,
-          -22.5
+          22.264023065567017,
+          1.563220500946045,
+          -22.559457540512085
         ],
         "min": [
-          20.0,
+          19.735976934432983,
           0,
-          -23.5
+          -23.440542459487915
         ]
       },
       "id": "prop.hedge:7",
@@ -300,14 +300,14 @@
     {
       "aabb": {
         "max": [
-          -24.0,
-          1.2,
-          23.5
+          -23.735976934432983,
+          1.563220500946045,
+          23.440542459487915
         ],
         "min": [
-          -26.0,
+          -26.264023065567017,
           0,
-          22.5
+          22.559457540512085
         ]
       },
       "id": "prop.hedge:11",
@@ -317,14 +317,14 @@
     {
       "aabb": {
         "max": [
-          22.0,
-          1.2,
-          23.5
+          22.264023065567017,
+          1.563220500946045,
+          23.440542459487915
         ],
         "min": [
-          20.0,
+          19.735976934432983,
           0,
-          22.5
+          22.559457540512085
         ]
       },
       "id": "prop.hedge:15",
@@ -334,14 +334,14 @@
     {
       "aabb": {
         "max": [
-          12.2,
-          1.5,
-          -5.05
+          12.317000031471252,
+          1.6075001260067228,
+          -4.855999946594238
         ],
         "min": [
-          7.8,
+          7.682999968528748,
           0,
-          -6.95
+          -7.144000053405762
         ]
       },
       "id": "veh.sedan-red:44",
@@ -351,14 +351,14 @@
     {
       "aabb": {
         "max": [
-          -7.8,
-          1.5,
-          6.95
+          -7.682999968528748,
+          1.6075001260067228,
+          7.144000053405762
         ],
         "min": [
-          -12.2,
+          -12.317000031471252,
           0,
-          5.05
+          4.855999946594238
         ]
       },
       "id": "veh.sedan-red:45",
@@ -368,14 +368,14 @@
     {
       "aabb": {
         "max": [
-          22.2,
-          1.5,
-          -5.05
+          22.317000031471252,
+          1.6075001260067228,
+          -4.855999946594238
         ],
         "min": [
-          17.8,
+          17.682999968528748,
           0,
-          -6.95
+          -7.144000053405762
         ]
       },
       "id": "veh.sedan-red:46",
@@ -385,14 +385,14 @@
     {
       "aabb": {
         "max": [
-          -17.8,
-          1.5,
-          6.95
+          -17.682999968528748,
+          1.6075001260067228,
+          7.144000053405762
         ],
         "min": [
-          -22.2,
+          -22.317000031471252,
           0,
-          5.05
+          4.855999946594238
         ]
       },
       "id": "veh.sedan-red:47",
@@ -487,34 +487,102 @@
     {
       "aabb": {
         "max": [
-          -9.0,
-          4,
-          -10.5
+          -10.0,
+          5,
+          -11.0
         ],
         "min": [
-          -19.0,
+          -18.0,
           0,
-          -17.5
+          -17.0
         ]
       },
-      "id": "bld.diner:53",
+      "id": "bld.joes-diner:53",
       "maxTier": 5,
       "minTier": 0
     },
     {
       "aabb": {
         "max": [
-          19.0,
-          5.5,
-          -10.5
+          -15.455976934432982,
+          1.563220500946045,
+          -10.009457540512084
         ],
         "min": [
-          9.0,
+          -17.984023065567015,
           0,
-          -17.5
+          -10.890542459487914
         ]
       },
-      "id": "bld.hardware:54",
+      "id": "prop.hedge:57",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -10.015976934432983,
+          1.563220500946045,
+          -10.009457540512084
+        ],
+        "min": [
+          -12.544023065567016,
+          0,
+          -10.890542459487914
+        ]
+      },
+      "id": "prop.hedge:69",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          18.0,
+          5,
+          -11.0
+        ],
+        "min": [
+          10.0,
+          0,
+          -17.0
+        ]
+      },
+      "id": "bld.mainstreet-brick:78",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          12.544023065567016,
+          1.563220500946045,
+          -10.009457540512084
+        ],
+        "min": [
+          10.015976934432983,
+          0,
+          -10.890542459487914
+        ]
+      },
+      "id": "prop.hedge:82",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          17.984023065567015,
+          1.563220500946045,
+          -10.009457540512084
+        ],
+        "min": [
+          15.455976934432982,
+          0,
+          -10.890542459487914
+        ]
+      },
+      "id": "prop.hedge:94",
       "maxTier": 5,
       "minTier": 0
     },
@@ -522,16 +590,50 @@
       "aabb": {
         "max": [
           -10.0,
-          3.5,
-          17.5
+          5,
+          17.0
         ],
         "min": [
           -18.0,
           0,
-          10.5
+          11.0
         ]
       },
-      "id": "bld.gas-station:55",
+      "id": "bld.gas-station:103",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -15.455976934432982,
+          1.563220500946045,
+          17.990542459487916
+        ],
+        "min": [
+          -17.984023065567015,
+          0,
+          17.109457540512086
+        ]
+      },
+      "id": "prop.hedge:107",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -10.015976934432983,
+          1.563220500946045,
+          17.990542459487916
+        ],
+        "min": [
+          -12.544023065567016,
+          0,
+          17.109457540512086
+        ]
+      },
+      "id": "prop.hedge:119",
       "maxTier": 5,
       "minTier": 0
     },
@@ -548,64 +650,64 @@
           6.2
         ]
       },
-      "id": "prop.bus-stop:56",
+      "id": "prop.bus-stop:128",
       "maxTier": 5,
       "minTier": 0
     },
     {
       "aabb": {
         "max": [
-          -17.6,
-          1.6,
-          8.4
+          -17.660624999552965,
+          2.7469999194145203,
+          8.69232626259327
         ],
         "min": [
-          -18.4,
+          -18.339375000447035,
           0,
-          7.6
+          7.307673737406731
         ]
       },
-      "id": "prop.gas-pump:57",
+      "id": "prop.gas-pump:129",
       "maxTier": 5,
       "minTier": 0
     },
     {
       "aabb": {
         "max": [
-          -13.6,
-          1.6,
-          8.4
+          -13.660624999552965,
+          2.7469999194145203,
+          8.69232626259327
         ],
         "min": [
-          -14.4,
+          -14.339375000447035,
           0,
-          7.6
+          7.307673737406731
         ]
       },
-      "id": "prop.gas-pump:58",
+      "id": "prop.gas-pump:130",
       "maxTier": 5,
       "minTier": 0
     },
     {
       "aabb": {
         "max": [
-          -9.6,
-          1.6,
-          8.4
+          -9.660624999552965,
+          2.7469999194145203,
+          8.69232626259327
         ],
         "min": [
-          -10.4,
+          -10.339375000447035,
           0,
-          7.6
+          7.307673737406731
         ]
       },
-      "id": "prop.gas-pump:59",
+      "id": "prop.gas-pump:131",
       "maxTier": 5,
       "minTier": 0
     }
   ],
   "district": "D-MAIN",
-  "geometryHash": "04f912479042e3c3af5098df937e697eb0f64f95c5e4f0698f4ea6b953a8816e",
+  "geometryHash": "17949ba0d057a133baae87c31ae66731c1874cac45e1136f2a730de161dedc8c",
   "lawns": [
     {
       "max": [
@@ -645,6 +747,36 @@
       "min": [
         20,
         20
+      ]
+    },
+    {
+      "max": [
+        -10.0,
+        -8.3
+      ],
+      "min": [
+        -18.0,
+        -9.5
+      ]
+    },
+    {
+      "max": [
+        18.0,
+        -8.3
+      ],
+      "min": [
+        10.0,
+        -9.5
+      ]
+    },
+    {
+      "max": [
+        -10.0,
+        19.7
+      ],
+      "min": [
+        -18.0,
+        18.5
       ]
     }
   ],
@@ -706,6 +838,7 @@
       "allowRoad": false,
       "assetId": "prop.tree",
       "id": "prop.tree:0",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -736,6 +869,7 @@
       "allowRoad": false,
       "assetId": "prop.tree",
       "id": "prop.tree:1",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -766,6 +900,7 @@
       "allowRoad": false,
       "assetId": "prop.tree",
       "id": "prop.tree:2",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -796,6 +931,7 @@
       "allowRoad": false,
       "assetId": "prop.hedge",
       "id": "prop.hedge:3",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -810,14 +946,14 @@
       ],
       "visualAabb": {
         "max": [
-          -24.0,
-          1.2,
-          -22.5
+          -23.735976934432983,
+          1.563220500946045,
+          -22.559457540512085
         ],
         "min": [
-          -26.0,
+          -26.264023065567017,
           0,
-          -23.5
+          -23.440542459487915
         ]
       },
       "yaw": 0
@@ -826,6 +962,7 @@
       "allowRoad": false,
       "assetId": "prop.tree",
       "id": "prop.tree:4",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -856,6 +993,7 @@
       "allowRoad": false,
       "assetId": "prop.tree",
       "id": "prop.tree:5",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -886,6 +1024,7 @@
       "allowRoad": false,
       "assetId": "prop.tree",
       "id": "prop.tree:6",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -916,6 +1055,7 @@
       "allowRoad": false,
       "assetId": "prop.hedge",
       "id": "prop.hedge:7",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -930,14 +1070,14 @@
       ],
       "visualAabb": {
         "max": [
-          22.0,
-          1.2,
-          -22.5
+          22.264023065567017,
+          1.563220500946045,
+          -22.559457540512085
         ],
         "min": [
-          20.0,
+          19.735976934432983,
           0,
-          -23.5
+          -23.440542459487915
         ]
       },
       "yaw": 0
@@ -946,6 +1086,7 @@
       "allowRoad": false,
       "assetId": "prop.tree",
       "id": "prop.tree:8",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -976,6 +1117,7 @@
       "allowRoad": false,
       "assetId": "prop.tree",
       "id": "prop.tree:9",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1006,6 +1148,7 @@
       "allowRoad": false,
       "assetId": "prop.tree",
       "id": "prop.tree:10",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1036,6 +1179,7 @@
       "allowRoad": false,
       "assetId": "prop.hedge",
       "id": "prop.hedge:11",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1050,14 +1194,14 @@
       ],
       "visualAabb": {
         "max": [
-          -24.0,
-          1.2,
-          23.5
+          -23.735976934432983,
+          1.563220500946045,
+          23.440542459487915
         ],
         "min": [
-          -26.0,
+          -26.264023065567017,
           0,
-          22.5
+          22.559457540512085
         ]
       },
       "yaw": 0
@@ -1066,6 +1210,7 @@
       "allowRoad": false,
       "assetId": "prop.tree",
       "id": "prop.tree:12",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1096,6 +1241,7 @@
       "allowRoad": false,
       "assetId": "prop.tree",
       "id": "prop.tree:13",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1126,6 +1272,7 @@
       "allowRoad": false,
       "assetId": "prop.tree",
       "id": "prop.tree:14",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1156,6 +1303,7 @@
       "allowRoad": false,
       "assetId": "prop.hedge",
       "id": "prop.hedge:15",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1170,14 +1318,14 @@
       ],
       "visualAabb": {
         "max": [
-          22.0,
-          1.2,
-          23.5
+          22.264023065567017,
+          1.563220500946045,
+          23.440542459487915
         ],
         "min": [
-          20.0,
+          19.735976934432983,
           0,
-          22.5
+          22.559457540512085
         ]
       },
       "yaw": 0
@@ -1186,6 +1334,7 @@
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:16",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1200,14 +1349,14 @@
       ],
       "visualAabb": {
         "max": [
-          -4.6,
-          3.6,
-          -19.75
+          -4.680000007152557,
+          3.865000009536743,
+          -19.680000007152557
         ],
         "min": [
-          -5.4,
+          -5.319999992847443,
           0,
-          -20.25
+          -20.319999992847443
         ]
       },
       "yaw": 0
@@ -1216,6 +1365,7 @@
       "allowRoad": false,
       "assetId": "prop.picket-fence",
       "id": "prop.picket-fence:17",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1230,22 +1380,23 @@
       ],
       "visualAabb": {
         "max": [
-          -7.0,
-          1.1,
-          -19.91
+          -6.679660856723785,
+          1.3388891220092773,
+          -19.874532490968704
         ],
         "min": [
-          -9.0,
+          -9.320339143276215,
           0,
-          -20.09
+          -20.125467509031296
         ]
       },
-      "yaw": 0
+      "yaw": 1.5707963267948966
     },
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:18",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1260,14 +1411,14 @@
       ],
       "visualAabb": {
         "max": [
-          5.4,
-          3.6,
-          -19.75
+          5.319999992847443,
+          3.865000009536743,
+          -19.680000007152557
         ],
         "min": [
-          4.6,
+          4.680000007152557,
           0,
-          -20.25
+          -20.319999992847443
         ]
       },
       "yaw": 0
@@ -1276,6 +1427,7 @@
       "allowRoad": false,
       "assetId": "prop.picket-fence",
       "id": "prop.picket-fence:19",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1290,22 +1442,23 @@
       ],
       "visualAabb": {
         "max": [
-          9.0,
-          1.1,
-          -19.91
+          9.320339143276215,
+          1.3388891220092773,
+          -19.874532490968704
         ],
         "min": [
-          7.0,
+          6.679660856723785,
           0,
-          -20.09
+          -20.125467509031296
         ]
       },
-      "yaw": 0
+      "yaw": 1.5707963267948966
     },
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:20",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1320,14 +1473,14 @@
       ],
       "visualAabb": {
         "max": [
-          -4.6,
-          3.6,
-          -11.75
+          -4.680000007152557,
+          3.865000009536743,
+          -11.680000007152557
         ],
         "min": [
-          -5.4,
+          -5.319999992847443,
           0,
-          -12.25
+          -12.319999992847443
         ]
       },
       "yaw": 0
@@ -1336,6 +1489,7 @@
       "allowRoad": false,
       "assetId": "prop.picket-fence",
       "id": "prop.picket-fence:21",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1350,22 +1504,23 @@
       ],
       "visualAabb": {
         "max": [
-          -7.0,
-          1.1,
-          -11.91
+          -6.679660856723785,
+          1.3388891220092773,
+          -11.874532490968704
         ],
         "min": [
-          -9.0,
+          -9.320339143276215,
           0,
-          -12.09
+          -12.125467509031296
         ]
       },
-      "yaw": 0
+      "yaw": 1.5707963267948966
     },
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:22",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1380,14 +1535,14 @@
       ],
       "visualAabb": {
         "max": [
-          5.4,
-          3.6,
-          -11.75
+          5.319999992847443,
+          3.865000009536743,
+          -11.680000007152557
         ],
         "min": [
-          4.6,
+          4.680000007152557,
           0,
-          -12.25
+          -12.319999992847443
         ]
       },
       "yaw": 0
@@ -1396,6 +1551,7 @@
       "allowRoad": false,
       "assetId": "prop.picket-fence",
       "id": "prop.picket-fence:23",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1410,22 +1566,23 @@
       ],
       "visualAabb": {
         "max": [
-          9.0,
-          1.1,
-          -11.91
+          9.320339143276215,
+          1.3388891220092773,
+          -11.874532490968704
         ],
         "min": [
-          7.0,
+          6.679660856723785,
           0,
-          -12.09
+          -12.125467509031296
         ]
       },
-      "yaw": 0
+      "yaw": 1.5707963267948966
     },
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:24",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1440,14 +1597,14 @@
       ],
       "visualAabb": {
         "max": [
-          -4.6,
-          3.6,
-          -3.75
+          -4.680000007152557,
+          3.865000009536743,
+          -3.6800000071525574
         ],
         "min": [
-          -5.4,
+          -5.319999992847443,
           0,
-          -4.25
+          -4.319999992847443
         ]
       },
       "yaw": 0
@@ -1456,6 +1613,7 @@
       "allowRoad": false,
       "assetId": "prop.picket-fence",
       "id": "prop.picket-fence:25",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1470,22 +1628,23 @@
       ],
       "visualAabb": {
         "max": [
-          -7.0,
-          1.1,
-          -3.91
+          -6.679660856723785,
+          1.3388891220092773,
+          -3.8745324909687042
         ],
         "min": [
-          -9.0,
+          -9.320339143276215,
           0,
-          -4.09
+          -4.125467509031296
         ]
       },
-      "yaw": 0
+      "yaw": 1.5707963267948966
     },
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:26",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1500,14 +1659,14 @@
       ],
       "visualAabb": {
         "max": [
-          5.4,
-          3.6,
-          -3.75
+          5.319999992847443,
+          3.865000009536743,
+          -3.6800000071525574
         ],
         "min": [
-          4.6,
+          4.680000007152557,
           0,
-          -4.25
+          -4.319999992847443
         ]
       },
       "yaw": 0
@@ -1516,6 +1675,7 @@
       "allowRoad": false,
       "assetId": "prop.picket-fence",
       "id": "prop.picket-fence:27",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1530,22 +1690,23 @@
       ],
       "visualAabb": {
         "max": [
-          9.0,
-          1.1,
-          -3.91
+          9.320339143276215,
+          1.3388891220092773,
+          -3.8745324909687042
         ],
         "min": [
-          7.0,
+          6.679660856723785,
           0,
-          -4.09
+          -4.125467509031296
         ]
       },
-      "yaw": 0
+      "yaw": 1.5707963267948966
     },
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:28",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1560,14 +1721,14 @@
       ],
       "visualAabb": {
         "max": [
-          -4.6,
-          3.6,
-          4.25
+          -4.680000007152557,
+          3.865000009536743,
+          4.319999992847443
         ],
         "min": [
-          -5.4,
+          -5.319999992847443,
           0,
-          3.75
+          3.6800000071525574
         ]
       },
       "yaw": 0
@@ -1576,6 +1737,7 @@
       "allowRoad": false,
       "assetId": "prop.picket-fence",
       "id": "prop.picket-fence:29",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1590,22 +1752,23 @@
       ],
       "visualAabb": {
         "max": [
-          -7.0,
-          1.1,
-          4.09
+          -6.679660856723785,
+          1.3388891220092773,
+          4.125467509031296
         ],
         "min": [
-          -9.0,
+          -9.320339143276215,
           0,
-          3.91
+          3.8745324909687042
         ]
       },
-      "yaw": 0
+      "yaw": 1.5707963267948966
     },
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:30",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1620,14 +1783,14 @@
       ],
       "visualAabb": {
         "max": [
-          5.4,
-          3.6,
-          4.25
+          5.319999992847443,
+          3.865000009536743,
+          4.319999992847443
         ],
         "min": [
-          4.6,
+          4.680000007152557,
           0,
-          3.75
+          3.6800000071525574
         ]
       },
       "yaw": 0
@@ -1636,6 +1799,7 @@
       "allowRoad": false,
       "assetId": "prop.picket-fence",
       "id": "prop.picket-fence:31",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1650,22 +1814,23 @@
       ],
       "visualAabb": {
         "max": [
-          9.0,
-          1.1,
-          4.09
+          9.320339143276215,
+          1.3388891220092773,
+          4.125467509031296
         ],
         "min": [
-          7.0,
+          6.679660856723785,
           0,
-          3.91
+          3.8745324909687042
         ]
       },
-      "yaw": 0
+      "yaw": 1.5707963267948966
     },
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:32",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1680,14 +1845,14 @@
       ],
       "visualAabb": {
         "max": [
-          -4.6,
-          3.6,
-          12.25
+          -4.680000007152557,
+          3.865000009536743,
+          12.319999992847443
         ],
         "min": [
-          -5.4,
+          -5.319999992847443,
           0,
-          11.75
+          11.680000007152557
         ]
       },
       "yaw": 0
@@ -1696,6 +1861,7 @@
       "allowRoad": false,
       "assetId": "prop.picket-fence",
       "id": "prop.picket-fence:33",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1710,22 +1876,23 @@
       ],
       "visualAabb": {
         "max": [
-          -7.0,
-          1.1,
-          12.09
+          -6.679660856723785,
+          1.3388891220092773,
+          12.125467509031296
         ],
         "min": [
-          -9.0,
+          -9.320339143276215,
           0,
-          11.91
+          11.874532490968704
         ]
       },
-      "yaw": 0
+      "yaw": 1.5707963267948966
     },
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:34",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1740,14 +1907,14 @@
       ],
       "visualAabb": {
         "max": [
-          5.4,
-          3.6,
-          12.25
+          5.319999992847443,
+          3.865000009536743,
+          12.319999992847443
         ],
         "min": [
-          4.6,
+          4.680000007152557,
           0,
-          11.75
+          11.680000007152557
         ]
       },
       "yaw": 0
@@ -1756,6 +1923,7 @@
       "allowRoad": false,
       "assetId": "prop.picket-fence",
       "id": "prop.picket-fence:35",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1770,22 +1938,23 @@
       ],
       "visualAabb": {
         "max": [
-          9.0,
-          1.1,
-          12.09
+          9.320339143276215,
+          1.3388891220092773,
+          12.125467509031296
         ],
         "min": [
-          7.0,
+          6.679660856723785,
           0,
-          11.91
+          11.874532490968704
         ]
       },
-      "yaw": 0
+      "yaw": 1.5707963267948966
     },
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:36",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1800,14 +1969,14 @@
       ],
       "visualAabb": {
         "max": [
-          -4.6,
-          3.6,
-          20.25
+          -4.680000007152557,
+          3.865000009536743,
+          20.319999992847443
         ],
         "min": [
-          -5.4,
+          -5.319999992847443,
           0,
-          19.75
+          19.680000007152557
         ]
       },
       "yaw": 0
@@ -1816,6 +1985,7 @@
       "allowRoad": false,
       "assetId": "prop.picket-fence",
       "id": "prop.picket-fence:37",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1830,22 +2000,23 @@
       ],
       "visualAabb": {
         "max": [
-          -7.0,
-          1.1,
-          20.09
+          -6.679660856723785,
+          1.3388891220092773,
+          20.125467509031296
         ],
         "min": [
-          -9.0,
+          -9.320339143276215,
           0,
-          19.91
+          19.874532490968704
         ]
       },
-      "yaw": 0
+      "yaw": 1.5707963267948966
     },
     {
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:38",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1860,14 +2031,14 @@
       ],
       "visualAabb": {
         "max": [
-          5.4,
-          3.6,
-          20.25
+          5.319999992847443,
+          3.865000009536743,
+          20.319999992847443
         ],
         "min": [
-          4.6,
+          4.680000007152557,
           0,
-          19.75
+          19.680000007152557
         ]
       },
       "yaw": 0
@@ -1876,6 +2047,7 @@
       "allowRoad": false,
       "assetId": "prop.picket-fence",
       "id": "prop.picket-fence:39",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1890,22 +2062,23 @@
       ],
       "visualAabb": {
         "max": [
-          9.0,
-          1.1,
-          20.09
+          9.320339143276215,
+          1.3388891220092773,
+          20.125467509031296
         ],
         "min": [
-          7.0,
+          6.679660856723785,
           0,
-          19.91
+          19.874532490968704
         ]
       },
-      "yaw": 0
+      "yaw": 1.5707963267948966
     },
     {
       "allowRoad": false,
       "assetId": "prop.traffic-cone",
       "id": "prop.traffic-cone:40",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1920,14 +2093,14 @@
       ],
       "visualAabb": {
         "max": [
-          -5.75,
-          0.8,
-          -5.75
+          -5.760000005364418,
+          0.6460000276565552,
+          -5.760000005364418
         ],
         "min": [
-          -6.25,
+          -6.239999994635582,
           0,
-          -6.25
+          -6.239999994635582
         ]
       },
       "yaw": 0
@@ -1936,6 +2109,7 @@
       "allowRoad": false,
       "assetId": "prop.traffic-cone",
       "id": "prop.traffic-cone:41",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1950,14 +2124,14 @@
       ],
       "visualAabb": {
         "max": [
-          6.25,
-          0.8,
-          6.25
+          6.239999994635582,
+          0.6460000276565552,
+          6.239999994635582
         ],
         "min": [
-          5.75,
+          5.760000005364418,
           0,
-          5.75
+          5.760000005364418
         ]
       },
       "yaw": 0
@@ -1966,6 +2140,7 @@
       "allowRoad": false,
       "assetId": "prop.traffic-cone",
       "id": "prop.traffic-cone:42",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -1980,14 +2155,14 @@
       ],
       "visualAabb": {
         "max": [
-          -5.75,
-          0.8,
-          6.25
+          -5.760000005364418,
+          0.6460000276565552,
+          6.239999994635582
         ],
         "min": [
-          -6.25,
+          -6.239999994635582,
           0,
-          5.75
+          5.760000005364418
         ]
       },
       "yaw": 0
@@ -1996,6 +2171,7 @@
       "allowRoad": false,
       "assetId": "prop.traffic-cone",
       "id": "prop.traffic-cone:43",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -2010,14 +2186,14 @@
       ],
       "visualAabb": {
         "max": [
-          6.25,
-          0.8,
-          -5.75
+          6.239999994635582,
+          0.6460000276565552,
+          -5.760000005364418
         ],
         "min": [
-          5.75,
+          5.760000005364418,
           0,
-          -6.25
+          -6.239999994635582
         ]
       },
       "yaw": 0
@@ -2026,6 +2202,7 @@
       "allowRoad": false,
       "assetId": "veh.sedan-red",
       "id": "veh.sedan-red:44",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -2040,14 +2217,14 @@
       ],
       "visualAabb": {
         "max": [
-          12.2,
-          1.5,
-          -5.05
+          12.317000031471252,
+          1.6075001260067228,
+          -4.855999946594238
         ],
         "min": [
-          7.8,
+          7.682999968528748,
           0,
-          -6.95
+          -7.144000053405762
         ]
       },
       "yaw": 0
@@ -2056,6 +2233,7 @@
       "allowRoad": false,
       "assetId": "veh.sedan-red",
       "id": "veh.sedan-red:45",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -2070,14 +2248,14 @@
       ],
       "visualAabb": {
         "max": [
-          -7.8,
-          1.5,
-          6.95
+          -7.682999968528748,
+          1.6075001260067228,
+          7.144000053405762
         ],
         "min": [
-          -12.2,
+          -12.317000031471252,
           0,
-          5.05
+          4.855999946594238
         ]
       },
       "yaw": 0
@@ -2086,6 +2264,7 @@
       "allowRoad": false,
       "assetId": "veh.sedan-red",
       "id": "veh.sedan-red:46",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -2100,14 +2279,14 @@
       ],
       "visualAabb": {
         "max": [
-          22.2,
-          1.5,
-          -5.05
+          22.317000031471252,
+          1.6075001260067228,
+          -4.855999946594238
         ],
         "min": [
-          17.8,
+          17.682999968528748,
           0,
-          -6.95
+          -7.144000053405762
         ]
       },
       "yaw": 0
@@ -2116,6 +2295,7 @@
       "allowRoad": false,
       "assetId": "veh.sedan-red",
       "id": "veh.sedan-red:47",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -2130,14 +2310,14 @@
       ],
       "visualAabb": {
         "max": [
-          -17.8,
-          1.5,
-          6.95
+          -17.682999968528748,
+          1.6075001260067228,
+          7.144000053405762
         ],
         "min": [
-          -22.2,
+          -22.317000031471252,
           0,
-          5.05
+          4.855999946594238
         ]
       },
       "yaw": 0
@@ -2146,6 +2326,7 @@
       "allowRoad": true,
       "assetId": "veh.wreck",
       "id": "veh.wreck:48",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 1,
       "position": [
@@ -2176,6 +2357,7 @@
       "allowRoad": true,
       "assetId": "veh.wreck",
       "id": "veh.wreck:49",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 2,
       "position": [
@@ -2206,6 +2388,7 @@
       "allowRoad": true,
       "assetId": "veh.wreck",
       "id": "veh.wreck:50",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 3,
       "position": [
@@ -2236,6 +2419,7 @@
       "allowRoad": true,
       "assetId": "veh.wreck",
       "id": "veh.wreck:51",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 4,
       "position": [
@@ -2266,6 +2450,7 @@
       "allowRoad": true,
       "assetId": "veh.wreck",
       "id": "veh.wreck:52",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 5,
       "position": [
@@ -2294,8 +2479,9 @@
     },
     {
       "allowRoad": false,
-      "assetId": "bld.diner",
-      "id": "bld.diner:53",
+      "assetId": "bld.joes-diner",
+      "id": "bld.joes-diner:53",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -2310,12 +2496,43 @@
       ],
       "visualAabb": {
         "max": [
-          -9.0,
-          4,
-          -10.5
+          -10.0,
+          5,
+          -11.0
         ],
         "min": [
-          -19.0,
+          -18.0,
+          0,
+          -17.0
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:54",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -19.2,
+        0,
+        -16
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.7,
+          5,
+          -14.5
+        ],
+        "min": [
+          -20.7,
           0,
           -17.5
         ]
@@ -2324,8 +2541,722 @@
     },
     {
       "allowRoad": false,
-      "assetId": "bld.hardware",
-      "id": "bld.hardware:54",
+      "assetId": "prop.tree",
+      "id": "prop.tree:55",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -19.2,
+        0,
+        -14
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.7,
+          5,
+          -12.5
+        ],
+        "min": [
+          -20.7,
+          0,
+          -15.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:56",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -19.2,
+        0,
+        -12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.7,
+          5,
+          -10.5
+        ],
+        "min": [
+          -20.7,
+          0,
+          -13.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:57",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -16.72,
+        0,
+        -10.45
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -15.455976934432982,
+          1.563220500946045,
+          -10.009457540512084
+        ],
+        "min": [
+          -17.984023065567015,
+          0,
+          -10.890542459487914
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:58",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -17.459999999999997,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.31,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -17.609999999999996,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:59",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -17.209999999999997,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.06,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -17.359999999999996,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:60",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -16.959999999999997,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -16.81,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -17.109999999999996,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:61",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -16.709999999999997,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -16.56,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -16.859999999999996,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:62",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -16.459999999999997,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -16.31,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -16.609999999999996,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:63",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -16.209999999999997,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -16.06,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -16.359999999999996,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:64",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -15.959999999999999,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -15.809999999999999,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -16.11,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:65",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -15.709999999999999,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -15.559999999999999,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -15.86,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:66",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -8.8,
+        0,
+        -16
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -7.300000000000001,
+          5,
+          -14.5
+        ],
+        "min": [
+          -10.3,
+          0,
+          -17.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:67",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -8.8,
+        0,
+        -14
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -7.300000000000001,
+          5,
+          -12.5
+        ],
+        "min": [
+          -10.3,
+          0,
+          -15.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:68",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -8.8,
+        0,
+        -12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -7.300000000000001,
+          5,
+          -10.5
+        ],
+        "min": [
+          -10.3,
+          0,
+          -13.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:69",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -11.28,
+        0,
+        -10.45
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -10.015976934432983,
+          1.563220500946045,
+          -10.009457540512084
+        ],
+        "min": [
+          -12.544023065567016,
+          0,
+          -10.890542459487914
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:70",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -12.34,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -12.19,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -12.49,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:71",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -12.09,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -11.94,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -12.24,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:72",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -11.84,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -11.69,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -11.99,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:73",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -11.59,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -11.44,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -11.74,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:74",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -11.34,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -11.19,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -11.49,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:75",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -11.09,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -10.94,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -11.24,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:76",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -10.84,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -10.69,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -10.99,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:77",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -10.59,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -10.44,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          -10.74,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.mainstreet-brick",
+      "id": "bld.mainstreet-brick:78",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -2340,12 +3271,43 @@
       ],
       "visualAabb": {
         "max": [
-          19.0,
-          5.5,
-          -10.5
+          18.0,
+          5,
+          -11.0
         ],
         "min": [
-          9.0,
+          10.0,
+          0,
+          -17.0
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:79",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        8.8,
+        0,
+        -16
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          10.3,
+          5,
+          -14.5
+        ],
+        "min": [
+          7.300000000000001,
           0,
           -17.5
         ]
@@ -2354,8 +3316,722 @@
     },
     {
       "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:80",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        8.8,
+        0,
+        -14
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          10.3,
+          5,
+          -12.5
+        ],
+        "min": [
+          7.300000000000001,
+          0,
+          -15.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:81",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        8.8,
+        0,
+        -12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          10.3,
+          5,
+          -10.5
+        ],
+        "min": [
+          7.300000000000001,
+          0,
+          -13.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:82",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        11.28,
+        0,
+        -10.45
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          12.544023065567016,
+          1.563220500946045,
+          -10.009457540512084
+        ],
+        "min": [
+          10.015976934432983,
+          0,
+          -10.890542459487914
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:83",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        10.54,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          10.69,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          10.389999999999999,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:84",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        10.79,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          10.94,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          10.639999999999999,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:85",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        11.04,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          11.19,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          10.889999999999999,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:86",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        11.29,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          11.44,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          11.139999999999999,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:87",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        11.54,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          11.69,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          11.389999999999999,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:88",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        11.79,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          11.94,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          11.639999999999999,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:89",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        12.04,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          12.19,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          11.889999999999999,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:90",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        12.29,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          12.44,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          12.139999999999999,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:91",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        19.2,
+        0,
+        -16
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          20.7,
+          5,
+          -14.5
+        ],
+        "min": [
+          17.7,
+          0,
+          -17.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:92",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        19.2,
+        0,
+        -14
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          20.7,
+          5,
+          -12.5
+        ],
+        "min": [
+          17.7,
+          0,
+          -15.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:93",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        19.2,
+        0,
+        -12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          20.7,
+          5,
+          -10.5
+        ],
+        "min": [
+          17.7,
+          0,
+          -13.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:94",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        16.72,
+        0,
+        -10.45
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          17.984023065567015,
+          1.563220500946045,
+          -10.009457540512084
+        ],
+        "min": [
+          15.455976934432982,
+          0,
+          -10.890542459487914
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:95",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        15.659999999999998,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          15.809999999999999,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          15.509999999999998,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:96",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        15.909999999999998,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          16.06,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          15.759999999999998,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:97",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        16.16,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          16.31,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          16.01,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:98",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        16.41,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          16.56,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          16.26,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:99",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        16.66,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          16.81,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          16.51,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:100",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        16.91,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          17.06,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          16.76,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:101",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        17.16,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          17.31,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          17.01,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:102",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        17.41,
+        0,
+        -9.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          17.56,
+          0.5,
+          -9.65
+        ],
+        "min": [
+          17.26,
+          0,
+          -9.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
       "assetId": "bld.gas-station",
-      "id": "bld.gas-station:55",
+      "id": "bld.gas-station:103",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -2371,11 +4047,42 @@
       "visualAabb": {
         "max": [
           -10.0,
-          3.5,
-          17.5
+          5,
+          17.0
         ],
         "min": [
           -18.0,
+          0,
+          11.0
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:104",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -19.2,
+        0,
+        12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.7,
+          5,
+          13.5
+        ],
+        "min": [
+          -20.7,
           0,
           10.5
         ]
@@ -2384,8 +4091,722 @@
     },
     {
       "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:105",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -19.2,
+        0,
+        14
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.7,
+          5,
+          15.5
+        ],
+        "min": [
+          -20.7,
+          0,
+          12.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:106",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -19.2,
+        0,
+        16
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.7,
+          5,
+          17.5
+        ],
+        "min": [
+          -20.7,
+          0,
+          14.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:107",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -16.72,
+        0,
+        17.55
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -15.455976934432982,
+          1.563220500946045,
+          17.990542459487916
+        ],
+        "min": [
+          -17.984023065567015,
+          0,
+          17.109457540512086
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:108",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -17.459999999999997,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.31,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -17.609999999999996,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:109",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -17.209999999999997,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.06,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -17.359999999999996,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:110",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -16.959999999999997,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -16.81,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -17.109999999999996,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:111",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -16.709999999999997,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -16.56,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -16.859999999999996,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:112",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -16.459999999999997,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -16.31,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -16.609999999999996,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:113",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -16.209999999999997,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -16.06,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -16.359999999999996,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:114",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -15.959999999999999,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -15.809999999999999,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -16.11,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:115",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -15.709999999999999,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -15.559999999999999,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -15.86,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:116",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -8.8,
+        0,
+        12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -7.300000000000001,
+          5,
+          13.5
+        ],
+        "min": [
+          -10.3,
+          0,
+          10.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:117",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -8.8,
+        0,
+        14
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -7.300000000000001,
+          5,
+          15.5
+        ],
+        "min": [
+          -10.3,
+          0,
+          12.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:118",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -8.8,
+        0,
+        16
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -7.300000000000001,
+          5,
+          17.5
+        ],
+        "min": [
+          -10.3,
+          0,
+          14.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:119",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -11.28,
+        0,
+        17.55
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -10.015976934432983,
+          1.563220500946045,
+          17.990542459487916
+        ],
+        "min": [
+          -12.544023065567016,
+          0,
+          17.109457540512086
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:120",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -12.34,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -12.19,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -12.49,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:121",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -12.09,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -11.94,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -12.24,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:122",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -11.84,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -11.69,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -11.99,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:123",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -11.59,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -11.44,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -11.74,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:124",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -11.34,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -11.19,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -11.49,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:125",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -11.09,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -10.94,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -11.24,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:126",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -10.84,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -10.69,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -10.99,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:127",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -10.59,
+        0,
+        18.2
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -10.44,
+          0.5,
+          18.349999999999998
+        ],
+        "min": [
+          -10.74,
+          0,
+          18.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
       "assetId": "prop.bus-stop",
-      "id": "prop.bus-stop:56",
+      "id": "prop.bus-stop:128",
+      "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -2415,7 +4836,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.gas-pump",
-      "id": "prop.gas-pump:57",
+      "id": "prop.gas-pump:129",
+      "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -2430,14 +4852,14 @@
       ],
       "visualAabb": {
         "max": [
-          -17.6,
-          1.6,
-          8.4
+          -17.660624999552965,
+          2.7469999194145203,
+          8.69232626259327
         ],
         "min": [
-          -18.4,
+          -18.339375000447035,
           0,
-          7.6
+          7.307673737406731
         ]
       },
       "yaw": 0
@@ -2445,7 +4867,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.gas-pump",
-      "id": "prop.gas-pump:58",
+      "id": "prop.gas-pump:130",
+      "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -2460,14 +4883,14 @@
       ],
       "visualAabb": {
         "max": [
-          -13.6,
-          1.6,
-          8.4
+          -13.660624999552965,
+          2.7469999194145203,
+          8.69232626259327
         ],
         "min": [
-          -14.4,
+          -14.339375000447035,
           0,
-          7.6
+          7.307673737406731
         ]
       },
       "yaw": 0
@@ -2475,7 +4898,8 @@
     {
       "allowRoad": false,
       "assetId": "prop.gas-pump",
-      "id": "prop.gas-pump:59",
+      "id": "prop.gas-pump:131",
+      "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
       "position": [
@@ -2490,14 +4914,14 @@
       ],
       "visualAabb": {
         "max": [
-          -9.6,
-          1.6,
-          8.4
+          -9.660624999552965,
+          2.7469999194145203,
+          8.69232626259327
         ],
         "min": [
-          -10.4,
+          -10.339375000447035,
           0,
-          7.6
+          7.307673737406731
         ]
       },
       "yaw": 0
@@ -2637,6 +5061,106 @@
     {
       "polygon": [
         [
+          -28.0,
+          -4.9
+        ],
+        [
+          28.0,
+          -4.9
+        ],
+        [
+          28.0,
+          -3.5
+        ],
+        [
+          -28.0,
+          -3.5
+        ],
+        [
+          -28.0,
+          -4.9
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "polygon": [
+        [
+          -28.0,
+          3.5
+        ],
+        [
+          28.0,
+          3.5
+        ],
+        [
+          28.0,
+          4.9
+        ],
+        [
+          -28.0,
+          4.9
+        ],
+        [
+          -28.0,
+          3.5
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "polygon": [
+        [
+          -4.9,
+          -28.0
+        ],
+        [
+          -3.5,
+          -28.0
+        ],
+        [
+          -3.5,
+          28.0
+        ],
+        [
+          -4.9,
+          28.0
+        ],
+        [
+          -4.9,
+          -28.0
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "polygon": [
+        [
+          3.5,
+          -28.0
+        ],
+        [
+          4.9,
+          -28.0
+        ],
+        [
+          4.9,
+          28.0
+        ],
+        [
+          3.5,
+          28.0
+        ],
+        [
+          3.5,
+          -28.0
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "polygon": [
+        [
           -3.5,
           -28
         ],
@@ -2687,24 +5211,24 @@
     {
       "polygon": [
         [
-          -19.0,
-          -17.5
+          -18.0,
+          -17.0
         ],
         [
-          -9.0,
-          -17.5
+          -10.0,
+          -17.0
         ],
         [
-          -9.0,
-          -10.5
+          -10.0,
+          -11.0
         ],
         [
-          -19.0,
-          -10.5
+          -18.0,
+          -11.0
         ],
         [
-          -19.0,
-          -17.5
+          -18.0,
+          -17.0
         ]
       ],
       "surface": "tile"
@@ -2712,24 +5236,24 @@
     {
       "polygon": [
         [
-          9.0,
-          -17.5
+          10.0,
+          -17.0
         ],
         [
-          19.0,
-          -17.5
+          18.0,
+          -17.0
         ],
         [
-          19.0,
-          -10.5
+          18.0,
+          -11.0
         ],
         [
-          9.0,
-          -10.5
+          10.0,
+          -11.0
         ],
         [
-          9.0,
-          -17.5
+          10.0,
+          -17.0
         ]
       ],
       "surface": "tile"
@@ -2738,23 +5262,48 @@
       "polygon": [
         [
           -18.0,
-          10.5
+          11.0
         ],
         [
           -10.0,
-          10.5
+          11.0
         ],
         [
           -10.0,
-          17.5
+          17.0
         ],
         [
           -18.0,
-          17.5
+          17.0
         ],
         [
           -18.0,
-          10.5
+          11.0
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "polygon": [
+        [
+          -20.5,
+          8.5
+        ],
+        [
+          -7.5,
+          8.5
+        ],
+        [
+          -7.5,
+          19.5
+        ],
+        [
+          -20.5,
+          19.5
+        ],
+        [
+          -20.5,
+          8.5
         ]
       ],
       "surface": "tile"
