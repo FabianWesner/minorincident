@@ -52,6 +52,14 @@ test('T-E15-04 @E15 @E15-AC04 @visual each sim telegraph appears in the next fra
     expect(persistence.during.telegraphs).toHaveLength(1); expect(persistence.after.telegraphs).toHaveLength(0); results.push({ index, kind, pixels, tell, persistence });
   }
   expect(new Set(results.map(r => r.pixels)).size).toBe(4); save('telegraphs', results);
+  // Re-enabling at a nonzero paused visual time must still show the next tell immediately.
+  await page.evaluate(() => window.__SS__!.settings.set({ vfx: false }));
+  const off = await capture(page, 'telegraph-toggle-off');
+  await page.evaluate(() => {
+    const a = window.__SS__!; a.settings.set({ vfx: true });
+    a.vfx.emit({ type: 'telegraph', attackId: 8, kind: 'lunge', position: { x: 3, z: 0 }, radius: 2, angle: 0 });
+  });
+  const on = await capture(page, 'telegraph-toggle-on'); expect(changed(off, on)).toBeGreaterThan(100);
 });
 
 test('T-E15-05 @E15 @E15-AC05 @visual measured shockwave screen radius scales with splash radius ±15%', async ({ page }) => {
