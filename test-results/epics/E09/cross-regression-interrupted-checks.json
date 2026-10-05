@@ -1,0 +1,16 @@
+[
+  {
+    "name": "regression",
+    "command": [
+      "npm",
+      "run",
+      "test:e2e",
+      "--",
+      "--grep-invert",
+      "@E10-AC06",
+      "--workers=2"
+    ],
+    "exitCode": 130,
+    "elapsedSeconds": 1246.83
+  }
+]

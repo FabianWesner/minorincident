@@ -1,0 +1,447 @@
+{
+  "config": {
+    "argv": [
+      "/Users/fabianwesner/Library/Application Support/Herd/config/nvm/versions/node/v22.22.2/bin/node",
+      "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/node_modules/.bin/playwright",
+      "test",
+      "--project=chromium",
+      "tests/e2e/driving.spec.ts",
+      "tests/visual/vehicles.spec.ts",
+      "--workers=2",
+      "--update-snapshots"
+    ],
+    "configFile": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/playwright.config.ts",
+    "rootDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "changed",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3323 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3323",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/driving.spec.ts",
+      "file": "e2e/driving.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E09-08 @E09-AC08 real mouse aims ahead-left to accelerate/turn and dead ring brakes",
+          "ok": true,
+          "tags": [
+            "E09-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9290,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T22:56:34.242Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-7bac17c06bf378db8a6a",
+          "file": "e2e/driving.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real right-click exit",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 5363,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T22:56:34.241Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-48a8369a19aa5e31510a",
+          "file": "e2e/driving.spec.ts",
+          "line": 20,
+          "column": 1
+        },
+        {
+          "title": "T-E09-controls @E09 keyboard WASD uses local driving axes",
+          "ok": true,
+          "tags": [
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4620,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T22:56:39.735Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-083c45fa806c40c358d0",
+          "file": "e2e/driving.spec.ts",
+          "line": 28,
+          "column": 1
+        },
+        {
+          "title": "T-E09-touch @E09 touch stick accelerates and a held brake stops without exiting",
+          "ok": true,
+          "tags": [
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4228,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T22:56:43.653Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-b9ed920dd551f56b7994",
+          "file": "e2e/driving.spec.ts",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "T-E09-asset @E09-AC01 dynamically spawned integrated fire engine renders and unloads its native resources",
+          "ok": true,
+          "tags": [
+            "E09-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4087,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T22:56:44.363Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-9fffa25039356ae07111",
+          "file": "e2e/driving.spec.ts",
+          "line": 53,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/vehicles.spec.ts",
+      "file": "visual/vehicles.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E09-10 @E09-AC10 wheel spin/steer, brake lamps and alternating siren pixels",
+          "ok": true,
+          "tags": [
+            "E09-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9703,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "A snapshot doesn't exist at /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests/visual/__goldens__/vehicle-brake-siren-right.png, writing actual.\n"
+                    },
+                    {
+                      "text": "A snapshot doesn't exist at /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests/visual/__goldens__/vehicle-driving-wheels.png, writing actual.\n"
+                    },
+                    {
+                      "text": "A snapshot doesn't exist at /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests/visual/__goldens__/vehicle-brake-siren-left.png, writing actual.\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-05T22:56:47.898Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "vehicle-brake-siren-right-expected.png",
+                      "contentType": "image/png",
+                      "path": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests/visual/__goldens__/vehicle-brake-siren-right.png"
+                    },
+                    {
+                      "name": "vehicle-brake-siren-right-actual.png",
+                      "contentType": "image/png",
+                      "path": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run/visual-vehicles-T-E09-10-E-9659c-nd-alternating-siren-pixels-chromium/vehicle-brake-siren-right-actual.png"
+                    },
+                    {
+                      "name": "vehicle-driving-wheels-expected.png",
+                      "contentType": "image/png",
+                      "path": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests/visual/__goldens__/vehicle-driving-wheels.png"
+                    },
+                    {
+                      "name": "vehicle-driving-wheels-actual.png",
+                      "contentType": "image/png",
+                      "path": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run/visual-vehicles-T-E09-10-E-9659c-nd-alternating-siren-pixels-chromium/vehicle-driving-wheels-actual.png"
+                    },
+                    {
+                      "name": "vehicle-brake-siren-left-expected.png",
+                      "contentType": "image/png",
+                      "path": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests/visual/__goldens__/vehicle-brake-siren-left.png"
+                    },
+                    {
+                      "name": "vehicle-brake-siren-left-actual.png",
+                      "contentType": "image/png",
+                      "path": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run/visual-vehicles-T-E09-10-E-9659c-nd-alternating-siren-pixels-chromium/vehicle-brake-siren-left-actual.png"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1a4605bacf3dc1575163-5fa30d7f56a1f3336aee",
+          "file": "visual/vehicles.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-05T22:56:33.419Z",
+    "duration": 24225.559999999998,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

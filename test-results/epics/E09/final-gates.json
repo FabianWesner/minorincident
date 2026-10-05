@@ -1,0 +1,74 @@
+[
+  {
+    "name": "typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 4.81
+  },
+  {
+    "name": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.882
+  },
+  {
+    "name": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 3.358
+  },
+  {
+    "name": "unit",
+    "command": [
+      "npm",
+      "run",
+      "test:unit"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 24.731
+  },
+  {
+    "name": "sim",
+    "command": [
+      "npm",
+      "run",
+      "test:sim"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 8.491
+  },
+  {
+    "name": "smoke",
+    "command": [
+      "npm",
+      "run",
+      "test:smoke"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 48.914
+  },
+  {
+    "name": "verify",
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E09"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 46.855
+  }
+]
