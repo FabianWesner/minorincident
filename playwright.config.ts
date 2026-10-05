@@ -12,6 +12,7 @@ export default defineConfig({
   workers: 4,
   fullyParallel: true,
   retries: 0,
+  snapshotPathTemplate: '{testDir}/visual/__goldens__/{arg}{ext}',
   timeout: 60_000,
   outputDir: 'test-results/playwright/run',
   reporter: [['list'], ['json', { outputFile: 'test-results/playwright/results.json' }]],
@@ -23,11 +24,12 @@ export default defineConfig({
     launchOptions: { args: swiftshader },
   },
   projects: [
-    { name: 'chromium', use: { browserName: 'chromium' } },
+    { name: 'chromium', testIgnore: '**/webgpu.spec.ts', use: { browserName: 'chromium' } },
     { name: 'pixel-7', testMatch: '**/smoke.spec.ts', use: { ...devices['Pixel 7'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
     { name: 'pixel-7-landscape', testMatch: '**/smoke.spec.ts', use: { ...devices['Pixel 7 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
     { name: 'iphone-14', testMatch: '**/smoke.spec.ts', use: { ...devices['iPhone 14'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
     { name: 'iphone-14-landscape', testMatch: '**/smoke.spec.ts', use: { ...devices['iPhone 14 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
+    ...(process.env.E2E_WEBGPU === '1' ? [{ name: 'webgpu', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: false, launchOptions: { args: ['--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } } }] : []),
     { name: 'webkit', testMatch: '**/smoke.spec.ts', use: { browserName: 'webkit' } },
   ],
   // Test the real production output, including the query-gated API chunk.
