@@ -1,0 +1,2 @@
+1.004 m wooden melee bat along +X; radial nails and seven tape wraps. Grip and tip sockets. Static geometry joined by four palette materials; wood markings stand 3.2 mm proud. All nail heads are blunt circular heads as in the reference. Bottommost nail grounded at z=0. No moving parts or light anchors required.
+Final: 5756 triangles, four draw calls; metal uses pal_asphalt, 8-sided shafts and 16 mm-radius chamfered heads. Three.js WebGPU and WebGL2 pass, including identical-frame flicker check.
