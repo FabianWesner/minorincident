@@ -11,17 +11,17 @@ const commands: string[][] = [
   ['npx', 'vitest', 'run', '-t', selection.pattern, '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
   ...(target === 'E10'
     ? [
-      ['npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E10-AC06', '--workers=2'],
+      ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E10-AC06', '--workers=2'],
       // Native GPU load timing opens a headed window: run once, after the headless suite.
-      ['npx', 'playwright', 'test', 'tests/perf/district-load.spec.ts', '--grep', '@E10-AC06', '--project=chromium', '--workers=2'],
+      ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/district-load.spec.ts', '--grep', '@E10-AC06', '--project=chromium', '--workers=2'],
     ]
-    : [['npx', 'playwright', 'test', '--grep', selection.pattern]]),
+    : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern]]),
 ];
 const checks: { command: string[]; exitCode: number | null }[] = [];
 for (const [command, ...args] of commands) {
   console.log(`\nVerifying ${target}: ${command} ${args.join(' ')}`);
   const result = spawnSync(command, args, { stdio: 'inherit', env: process.env });
-  if (target === 'E10' && args[0] === 'playwright') copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('@E10-AC06') && !args.includes('--grep-invert') ? 'gpu' : 'headless'}.json`);
+  if (target === 'E10' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('@E10-AC06') && !args.includes('--grep-invert') ? 'gpu' : 'headless'}.json`);
   checks.push({ command: [command, ...args], exitCode: result.status });
   writeFileSync(`${output}/checks.json`, JSON.stringify({ target, ...selection, checks }, null, 2) + '\n');
   if (result.error || result.status !== 0) { process.exitCode = result.status || 1; break; }
