@@ -34,6 +34,7 @@ test('T-E07-13 @E07 @E07-AC13 @vision golden-hour street has 60 separable runner
   await boot(page); await page.evaluate(async () => {
     const api = window.__SS__!; await api.loadScenario('horde-readability'); api.pause();
     for (let i = 0; i < 60; i++) api.spawn('infected.runner', { x: i % 6 * 0.9 - 2.3, z: Math.floor(i / 6) * 1.2 - 14 }, { state: 'idle', yaw: -Math.PI / 4 });
+    api.spawn('weapon.bat', { x: -3, z: 3 }); api.spawn('weapon.grenade', { x: 2, z: 5 });
     api.camera.preset('horde-readability'); api.settings.set({ timeOfDay: 'golden', bloom: true }); await api.step(0); await api.screenshotReady();
   });
   const image = await page.locator('canvas').screenshot({ path: 'test-results/epics/E07/horde-readability.png' }), pixels = PNG.sync.read(image);
