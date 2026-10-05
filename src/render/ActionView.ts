@@ -1,4 +1,5 @@
 import { BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
+import { actionIconUrl } from '../assets/icons';
 import { catalog, action } from '../data/actions/catalog';
 import { AssetRegistry, type PlaceholderLog } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -29,6 +30,7 @@ export class ActionView extends Group {
   private readonly handPosition = new Vector3();
   private readonly gripPosition = new Vector3();
   private offset = 0;
+  private maxHeight = 0;
   private selected: Side = 'LEFT';
   private shape = 'cone';
   private landing = { x: 0, z: 0 };
@@ -52,6 +54,7 @@ export class ActionView extends Group {
   }
   /** Six vertices form a thick ribbon segment; all buffers are allocated once. */
   private segment(ax: number, ay: number, az: number, bx: number, by: number, bz: number, width = 0.035): void {
+    this.maxHeight = Math.max(this.maxHeight, ay, by);
     const dx = bx - ax, dz = bz - az, length = Math.hypot(dx, dz) || 1;
     const x = -dz / length * width, z = dx / length * width;
     if (this.offset + 18 > this.positions.length) return;
@@ -71,7 +74,7 @@ export class ActionView extends Group {
       const socket = this.character.socket(side).socket; if (held.model.parent !== socket) socket.add(held.model);
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = action(loadout.current(this.selected).id), origin = player.transform;
-    this.shape = def.aimIndicator; this.offset = 0; this.material.color.set(this.selected === 'LEFT' ? '#ffd166' : '#44ffe0');
+    this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(this.selected === 'LEFT' ? '#ffd166' : '#44ffe0');
     const aim = state.aim, angle = Math.atan2(aim.z, aim.x), halfArc = def.arc * Math.PI / 360;
     if (def.aimIndicator === 'line') this.segment(origin.x, 0.04, origin.z, origin.x + aim.x * def.range, 0.04, origin.z + aim.z * def.range);
     else if (def.aimIndicator === 'cone') {
@@ -102,9 +105,9 @@ export class ActionView extends Group {
       const nodes = this.character.socket(side), held = this.held[side]; nodes.socket.getWorldPosition(this.socketPosition); nodes.hand.getWorldPosition(this.handPosition);
       held?.model.getObjectByName('grip')?.getWorldPosition(this.gripPosition);
       const def = held && action(held.id), asset = def && this.assets.get(def.viewAssetId);
-      return { side, actionId: held?.id, socket: nodes.socket.name, handDistance: this.socketPosition.distanceTo(this.handPosition), gripDistance: this.gripPosition.distanceTo(this.socketPosition), attached: held?.model.parent === nodes.socket, source: asset?.source, sockets: def ? ['grip', def.category === 'ranged' ? 'muzzle' : 'tip'].filter((name) => held?.model.getObjectByName(name)) : [] };
+      return { side, actionId: held?.id, iconUrl: def ? actionIconUrl(def.iconId) : null, socket: nodes.socket.name, handDistance: this.socketPosition.distanceTo(this.handPosition), gripDistance: this.gripPosition.distanceTo(this.socketPosition), attached: held?.model.parent === nodes.socket, source: asset?.source, sockets: def ? ['grip', def.category === 'ranged' ? 'muzzle' : 'tip'].filter((name) => held?.model.getObjectByName(name)) : [] };
     });
-    return { indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
+    return { indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, maxHeight: this.maxHeight, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
   }
   dispose(): void { for (const held of Object.values(this.held)) held.model.removeFromParent(); void this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.pickups.clear(); this.clear(); }
 }

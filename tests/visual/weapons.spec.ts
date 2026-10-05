@@ -12,8 +12,10 @@ for (const [category, id, shape] of [['ranged', 'weapon.pistol', 'line'], ['mele
   const states = [];
   for (const side of ['LEFT', 'RIGHT'] as const) {
     if (side === 'RIGHT') await page.evaluate(async () => { const api = window.__SS__!; api.input.set({ right: { down: true, held: true, up: false }, aim: { x: 0.8, z: 0.6 }, aimPoint: { x: 8, z: 3 } }); await api.step(1); api.input.clear(); await api.screenshotReady(); });
-    const state = await page.evaluate(() => window.__SS__!.getState().render.actions!); expect(state.indicator.selectedSide).toBe(side); expect(state.indicator.visibleSides).toEqual([side]); expect(state.indicator.shape).toBe(shape); expect(state.indicator.vertices).toBeGreaterThan(shape === 'arc' ? 400 : 0); states.push(state);
-    const image = PNG.sync.read(await page.screenshot({ path: `${output}/aim-${category}-${side.toLowerCase()}.png` }));
+    const state = await page.evaluate(() => window.__SS__!.getState().render.actions!); expect(state.indicator.selectedSide).toBe(side); expect(state.indicator.visibleSides).toEqual([side]); expect(state.indicator.shape).toBe(shape); expect(state.indicator.vertices).toBeGreaterThan(shape === 'arc' ? 400 : 0); expect(state.indicator.maxHeight).toBeLessThan(shape === 'arc' ? 2 : 0.1); if (shape === 'arc') expect(state.indicator.maxHeight).toBeGreaterThan(0.8); states.push(state);
+    const buffer = await page.screenshot({ path: `${output}/aim-${category}-${side.toLowerCase()}.png` });
+    expect(buffer).toMatchSnapshot(`aim-${category}-${side.toLowerCase()}.png`, { threshold: 0.1, maxDiffPixelRatio: 0.015 });
+    const image = PNG.sync.read(buffer);
     let colored = 0;
     for (let i = 0; i < image.data.length; i += 4) { const [r, g, b] = image.data.subarray(i, i + 3); if (side === 'LEFT' ? r > 220 && g > 150 && b < 140 : r < 130 && g > 220 && b > 160) colored++; }
     expect(colored, `${side} indicator pixels`).toBeGreaterThan(80);
