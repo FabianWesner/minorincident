@@ -65,6 +65,12 @@ test("T-E10-runtime @E10 gameplay blockers have Rapier colliders, fires damage o
     const comp = { ...compositions.L6, tier: 5 as const };
     world.loadComposition(comp, Object.values(layouts), 42);
     expect(world.districts!.getState().districts).toHaveLength(8);
+    const start = world.districts!.playerStart;
+    expect(
+      world
+        .query({ within: { x: start[0], z: start[1], r: 1 } })
+        .map((entity) => entity.id),
+    ).toEqual([1]);
     expect(world.player).not.toBeNull();
     expect(world.physics.characterController).not.toBeNull();
     const colliderCount =

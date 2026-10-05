@@ -119,7 +119,7 @@ class Layout:
         width=aabb['max'][0]-aabb['min'][0]; height=aabb['max'][1]
         front=aabb['max'][2]
         for side in [-1,1]:
-            self.place('prop.tree',[x+side*(width*.65),0,z])
+            for dz in [-2,0,2]: self.place('prop.tree',[x+side*(width*.65),0,z+dz])
             self.place('prop.hedge',[x+side*(width*.34),0,front+.55])
             for j in range(8): self.place('prop.flower',[x+side*(width*.32)+j*.25-.9,0,front+1.2])
         self.data['lawns'].append(dict(min=[x-width*.5,front+1.5],max=[x+width*.5,front+2.7]))
