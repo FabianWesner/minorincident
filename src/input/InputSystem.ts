@@ -9,6 +9,7 @@ import { Recorder } from './Recorder';
 import { Keyboard } from './devices/Keyboard';
 import { Pointer } from './devices/Pointer';
 import { RayCursor } from './devices/RayCursor';
+import { Touch } from './devices/Touch';
 import { Wheel } from './devices/Wheel';
 
 /** Device ownership ends here. sample() runs immediately before every fixed sim tick. */
@@ -19,6 +20,8 @@ export class InputSystem implements Lifecycle {
   readonly pointer: Pointer;
   readonly wheel: Wheel;
   readonly cursor: RayCursor;
+  readonly touch: Touch;
+  private touchFire: 'touch' | 'assist' | null = null;
   readonly frame = emptyInput();
   scheme: Scheme = 'mouse-only';
   private readonly left = new Buttons();
@@ -30,6 +33,7 @@ export class InputSystem implements Lifecycle {
   private pause = false;
   private injected: InputFrame | null = null;
   private readonly direction = new Vector3();
+  private readonly screen: Vec2 = { x: 0, z: 0 };
   private readonly aim: Vec2 = { x: 1, z: 0 };
   private aimAngle = 0;
   private arrowStart = 0;
@@ -46,9 +50,18 @@ export class InputSystem implements Lifecycle {
     this.keyboard = new Keyboard(window, this.key);
     this.pointer = new Pointer(canvas, window, this.mouseActivity, this.token);
     this.wheel = new Wheel(canvas, (direction) => { this.mouseActivity(); this.selectors.push(direction); });
+    this.touch = new Touch(canvas, () => { this.pointer.valid = false; this.setScheme('touch'); }, (action, direction) => {
+      if (action === 'selector') this.selectors.push(1);
+      else if (action === 'pause') this.pause = true;
+      else {
+        if (direction) { this.aimAngle = this.screenAngle(direction.x, direction.z); }
+        this.touchFire = direction ? 'touch' : 'assist';
+        (action === 'left' ? this.left : this.right).pulse();
+      }
+    });
   }
   init(): void {
-    this.keyboard.init(); this.pointer.init(); this.wheel.init();
+    this.keyboard.init(); this.pointer.init(); this.wheel.init(); this.touch.init();
     window.addEventListener('blur', this.release); window.addEventListener('pagehide', this.release);
     document.addEventListener('visibilitychange', this.visibility);
     this.hint.dataset.inputHint = ''; this.hint.setAttribute('role', 'note'); this.hint.style.cssText = 'position:fixed;top:12px;left:12px;color:white;background:#182333;padding:8px;font:14px sans-serif;pointer-events:none';
@@ -69,6 +82,8 @@ export class InputSystem implements Lifecycle {
     if (result.ok) this.release(); this.message.textContent = result.message; return result;
   }
   private setScheme(scheme: Scheme): void {
+    if (scheme === this.scheme && this.hint.textContent) return;
+    this.touch.element.hidden = scheme !== 'touch'; this.touch.element.style.display = scheme === 'touch' ? 'grid' : 'none';
     this.scheme = scheme; this.hint.dataset.scheme = scheme;
     this.hint.textContent = {
       'mouse-only': 'Mouse: steer · LMB / RMB · wheel · middle-click',
@@ -84,6 +99,7 @@ export class InputSystem implements Lifecycle {
   private readonly key = (code: string, held: boolean): void => {
     const action = held ? this.bindings.action(code) : this.heldTokens.get(code);
     if (held && action) {
+      if (action.startsWith('aim')) this.pointer.valid = false;
       this.setScheme(action.startsWith('aim') || this.scheme === 'touch' ? 'keyboard' : this.pointer.valid ? 'mouse-keyboard' : 'keyboard');
       if (action.startsWith('aim') && !this.aiming()) this.arrowStart = performance.now();
     }
@@ -112,7 +128,7 @@ export class InputSystem implements Lifecycle {
     const forwardX = this.direction.x / length, forwardZ = this.direction.z / length;
     out.x = -forwardZ * x - forwardX * y; out.z = forwardX * x - forwardZ * y;
   }
-  private screenAngle(x: number, y: number): number { this.screenVector(x, y, this.aim); return Math.atan2(this.aim.z, this.aim.x); }
+  private screenAngle(x: number, y: number): number { this.screenVector(x, y, this.screen); return Math.atan2(this.screen.z, this.screen.x); }
   /** Reused frame. No device polling, scene raycasts or per-tick input allocations. */
   sample(player: Vec2, dt = 1 / 60): InputFrame {
     if (this.recorder.playing) return this.recorder.next() ?? this.frameNeutral();
@@ -136,10 +152,18 @@ export class InputSystem implements Lifecycle {
       }
     } else if (this.scheme === 'keyboard') {
       if (this.aiming()) {
+        const ax = this.axis('aimRight', 'aimLeft'), ay = this.axis('aimDown', 'aimUp');
+        if (ax || ay) this.arrowTarget = this.screenAngle(ax, ay);
         const delta = Math.atan2(Math.sin(this.arrowTarget - this.aimAngle), Math.cos(this.arrowTarget - this.aimAngle));
         this.aimAngle += Math.sign(delta) * Math.min(Math.abs(delta), Math.PI * 2 * dt);
       }
       this.aim.x = Math.cos(this.aimAngle); this.aim.z = Math.sin(this.aimAngle); frame.aim = this.aim; frame.aimSource = 'keyboard';
+    }
+    if (this.scheme === 'touch') {
+      this.screenVector(this.touch.stick.move.x, this.touch.stick.move.z, frame.move);
+      if (this.touch.aiming) this.aimAngle = this.screenAngle(this.touch.aim.x, this.touch.aim.z);
+      this.aim.x = Math.cos(this.aimAngle); this.aim.z = Math.sin(this.aimAngle);
+      frame.aim = this.aim; frame.aimSource = this.touchFire ?? 'touch'; this.touchFire = null;
     }
     frame.left = this.left.sample(); frame.right = this.right.sample();
     frame.selector = this.selectors.shift() ?? 0; frame.interact = this.interact; frame.pause = this.pause;
@@ -156,13 +180,13 @@ export class InputSystem implements Lifecycle {
   private readonly visibility = (): void => { if (document.hidden) this.release(); };
   readonly release = (): void => {
     this.releasing = true; this.keyboard.release(); this.pointer.release(); this.releasing = false;
-    this.left.release(); this.right.release(); this.active.clear(); this.heldTokens.clear();
+    this.touch.release(); this.wheel.reset(); this.touchFire = null; this.left.release(); this.right.release(); this.active.clear(); this.heldTokens.clear();
     this.selectors.length = 0; this.interact = false; this.pause = false;
   };
   update(): void { /* Input is sampled in the fixed input phase, not the render update. */ }
-  reset(): void { this.release(); this.left.reset(); this.right.reset(); this.wheel.reset(); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.setScheme('mouse-only'); this.frameNeutral(); }
+  reset(): void { this.release(); this.left.reset(); this.right.reset(); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.setScheme(navigator.maxTouchPoints > 0 ? 'touch' : 'mouse-only'); this.frameNeutral(); }
   dispose(): void {
-    this.reset(); this.keyboard.dispose(); this.pointer.dispose(); this.wheel.dispose();
+    this.reset(); this.keyboard.dispose(); this.pointer.dispose(); this.wheel.dispose(); this.touch.dispose();
     window.removeEventListener('blur', this.release); window.removeEventListener('pagehide', this.release); document.removeEventListener('visibilitychange', this.visibility);
     this.controls.querySelector('form')?.removeEventListener('submit', this.submit); this.controls.remove(); this.hint.remove();
   }

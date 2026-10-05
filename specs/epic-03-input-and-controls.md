@@ -38,7 +38,7 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E03-AC09 | Rebinding persists in `localStorage` across reloads; conflicting binds are rejected with a message | e2e |
 | E03-AC10 | A recorded input session replays into an identical sim state hash (`Recorder` round trip) | sim |
 | E03-AC11 | Input latency: a key press is reflected in the `InputFrame` of the next sim tick (≤ 1 tick) | unit |
-| E03-AC12 | Middle-click (wheel click, button 1) produces an `interact` edge; the browser's autoscroll never activates (`preventDefault` on `mousedown` and `auxclick`); `E` produces the same edge; on mice without a middle button, stand-to-interact still works (no dependency) | e2e |
+| E03-AC12 | Middle-click (wheel click, button 1) produces an `interact` edge; the browser's autoscroll never activates (`preventDefault` on `mousedown` and `auxclick`); `E` produces the same edge; on mice without a middle button, idle movement/action frames require no `interact` edge (stand-to-interact completion is verified by E11-AC01) | e2e |
 | E03-AC13 | Focus loss: with W, LMB, and the touch stick held, a window `blur` or tab hide emits `up` for every held input and the next `InputFrame` has zero move and no pressed actions; on return nothing is held until pressed again | e2e |
 
 ## Verification recipe
