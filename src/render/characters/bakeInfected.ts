@@ -29,6 +29,7 @@ export function bakeInfected(root: Group) {
   for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
   root.updateMatrixWorld(true);
   const geometries: import('three').BufferGeometry[] = [], relative = new Matrix4();
+  let shirtColor: import('three').Color | undefined;
   root.traverse((node) => {
     if (!(node instanceof Mesh) || !node.visible || node.name.startsWith('stump_')) return;
     let owner: Object3D | null = node.parent;
@@ -38,12 +39,13 @@ export function bakeInfected(root: Group) {
     const geometry = node.geometry.index ? node.geometry.toNonIndexed() : node.geometry.clone(); geometry.applyMatrix4(relative);
     // Every source material is folded into vertex colors, yielding one draw per role.
     const material = (Array.isArray(node.material) ? node.material[0] : node.material) as MeshBasicMaterial;
-    const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), emissive = new Float32Array(count), indices = new Float32Array(count);
-    for (let i = 0; i < count; i++) { colors.set(material.color?.toArray() ?? [0.4, 0.3, 0.25], i * 3); emissive[i] = Number(material.name.startsWith('emi_')); indices[i] = part; }
-    geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1)); geometry.deleteAttribute('uv');
+    const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), emissive = new Float32Array(count), indices = new Float32Array(count), shirt = new Float32Array(count);
+    const clothing = material.name === 'pal_infectedShirt'; if (clothing) shirtColor = material.color.clone();
+    for (let i = 0; i < count; i++) { colors.set(material.color?.toArray() ?? [0.4, 0.3, 0.25], i * 3); emissive[i] = Number(material.name.startsWith('emi_')); indices[i] = part; shirt[i] = Number(clothing); }
+    geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1)); geometry.deleteAttribute('uv');
     geometries.push(geometry);
   });
   const geometry = mergeGeometries(geometries); if (!geometry) throw new Error('Infected geometry merge failed'); for (const source of geometries) source.dispose();
   const clip: CrowdClip = { parts: characterNodes.slice(), frames: framesPerClip * infectedClips.length, duration: infectedClips.length, matrices };
-  return { geometry, clip };
+  return { geometry, clip, shirtColor };
 }

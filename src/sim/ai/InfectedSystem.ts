@@ -5,6 +5,8 @@ import { Status } from '../combat/Status';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { ScenarioDefinition } from '../../levels/loader';
+import { actions } from '../../data/actions/fixtures';
+import { DistrictNavigation } from './DistrictNavigation';
 import { PropThrows } from './PropThrows';
 import { updateFlock } from './Flock';
 import { SpawnDirector } from './SpawnDirector';
@@ -14,6 +16,7 @@ export interface InfectedSpawn { state?: InfectedState['state']; yaw?: number; v
 /** Fixed-step infected brain. Entities and path storage are prewarmed and reused, without Rapier bodies. */
 export class InfectedSystem {
   gore: 'Full' | 'Reduced' | 'Off' = 'Full';
+  readonly navigation: DistrictNavigation;
   readonly props: PropThrows;
   readonly director: SpawnDirector;
   readonly nav: NavGrid;
@@ -21,8 +24,10 @@ export class InfectedSystem {
   readonly active: EntitySnapshot[] = [];
   readonly pool: EntitySnapshot[] = [];
   readonly counters = { allocated: 0, reused: 0, released: 0 };
+  readonly perches: NonNullable<ScenarioDefinition['perches']>;
   readonly crowd: { transform: EntitySnapshot['transform']; radius: number }[] = [];
   private readonly neighbors: number[] = [];
+  private readonly barricades: EntitySnapshot[] = [];
   private readonly query = { x: 0, z: 0, r: 2 };
   /** E08 calls this for adjacent adult civilians; its rescue/turning lifecycle remains in E08. */
   tryGrabCivilian(sourceId: number, target: { id: number; adult: boolean; variant: string; position: { x: number; z: number } }): { sourceId: number; rescueUntil: number } | null {
@@ -40,11 +45,13 @@ export class InfectedSystem {
   private budget = 0;
   private readonly waypoint = { x: 0, z: 0 };
   constructor(readonly world: SimWorld, definition: ScenarioDefinition) {
-    validateInfected(); this.rng = new Rng(world.seed, 'infected'); this.nav = new NavGrid(definition.ground, definition.walls ?? []); this.director = new SpawnDirector(this); this.props = new PropThrows(world);
+    this.perches = definition.perches ?? [];
+    validateInfected(); this.rng = new Rng(world.seed, 'infected'); this.nav = new NavGrid(definition.ground, definition.walls ?? []); this.navigation = new DistrictNavigation(definition, this.nav); this.director = new SpawnDirector(this); this.props = new PropThrows(world);
     for (let i = 0; i < 350; i++) {
-      const brain: InfectedState = { state: 'idle', combo: 0, targetId: 0, activeUntil: 0, speed: 0, until: 0, cooldown: 0, attackId: 0, special: '', hidden: false, deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: 0, packIndex: 0, birds: 0, birdPositions: new Array(60).fill(0), birdAlive: new Array(20).fill(0), scatterUntil: 0, variant: '', path: [], pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: false };
+      const brain: InfectedState = { state: 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: 0, until: 0, cooldown: 0, attackId: 0, special: '', hidden: false, deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: 0, packIndex: 0, birds: 0, birdPositions: new Array(60).fill(0), birdAlive: new Array(20).fill(0), scatterUntil: 0, variant: '', path: [], pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: false };
       this.pool.push({ id: 0, kind: 'infected', archetype: '', faction: 'infected', health: { current: 0, max: 0 }, transform: { x: 0, y: 0.7, z: 0, yaw: 0 }, infected: brain, combat: { radius: 0.35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } }); this.counters.allocated++;
     }
+    world.events.on('combat.exploded', (event) => { if (event.type === 'combat.exploded') this.noise(event.position, 25, true); });
     world.events.on('combat.hit', (event) => {
       if (event.type !== 'combat.hit' || event.amount <= 0) return;
       const target = world.entities.get(event.targetId);
@@ -59,18 +66,26 @@ export class InfectedSystem {
         else if (e.infected!.special === 'pin' && ++e.infected!.grabHits >= 2) e.infected!.grabUntil = 0;
       }
     });
-    world.events.on('combat.attack', (event) => { if (event.type === 'combat.attack') this.noise(event.position, event.actionId.includes('pistol') || event.actionId.includes('shotgun') || event.actionId.includes('rifle') ? 25 : 6, event.actionId.includes('shotgun')); });
+    world.events.on('combat.attack', (event) => { if (event.type === 'combat.attack') this.noise(event.position, actions[event.actionId]?.noiseRadius ?? 6, event.actionId.includes('shotgun')); });
   }
   spawn(id: string, position: { x: number; z: number }, opts: InfectedSpawn = {}): number {
     const def = infectedDef(id);
+    let perch: { x: number; z: number; y: number } | undefined;
+    if (id === 'infected.cat' && opts.perched !== false && this.perches.length) {
+      let distance = Infinity;
+      for (const point of this.perches) { const d = Math.hypot(point.x - position.x, point.z - position.z); if (d < distance) { distance = d; perch = point; } }
+      position = perch!;
+    }
+    if (opts.yaw !== undefined && !Number.isFinite(opts.yaw)) throw new RangeError('Invalid infected facing');
+    if (id === 'infected.crow' && opts.birds !== undefined && (!Number.isInteger(opts.birds) || opts.birds < 1 || opts.birds > 20)) throw new RangeError('A flock contains 1–20 birds');
     const weight = id === 'infected.crow' ? (opts.birds ?? 20) * 0.25 : 1;
     if (this.director.count + weight > this.director.cap) throw new Error('Infected concurrency cap reached');
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || !this.nav.clear(position.x, position.z, def.radius)) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
     entity.archetype = id; entity.health.current = entity.health.max = def.hp;
-    Object.assign(entity.transform, position); entity.transform.y = 0.7; entity.transform.yaw = opts.yaw ?? 0;
+    Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0;
-    Object.assign(entity.infected!, { state: opts.state ?? 'idle', combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0;
+    Object.assign(entity.infected!, { state: opts.state ?? 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0;
     for (let bird = 0; bird < 20; bird++) { entity.infected!.birdAlive[bird] = Number(bird < entity.infected!.birds); entity.infected!.birdPositions[bird * 3] = position.x + Math.cos(bird * 2.399963) * 2; entity.infected!.birdPositions[bird * 3 + 1] = 3; entity.infected!.birdPositions[bird * 3 + 2] = position.z + Math.sin(bird * 2.399963) * 2; }
     if (id === 'infected.crow') entity.health.current = entity.health.max = entity.infected!.birds;
     this.world.entities.adopt(entity); this.active.push(entity); this.world.spatial.set(entity.id, position.x, position.z); this.counters.reused++;
@@ -90,7 +105,8 @@ export class InfectedSystem {
   alert(entity: EntitySnapshot): void { if (entity.infected!.state === 'idle' || entity.infected!.state === 'wander') { entity.infected!.state = 'alerted'; entity.infected!.until = this.world.tick + 6; } }
   update(): void {
     const player = this.world.entities.get(1)!; this.budget = 2000; this.director.update();
-    if (this.active.length > 20) this.nav.flow(player.transform.x, player.transform.z, 1500);
+    this.barricades.length = 0; for (const e of this.world.entities.iterate()) if (e.kind === 'barricade' && e.health.current > 0) this.barricades.push(e);
+    if (this.active.length > 20) this.navigation.flow(player.transform, 1500);
     this.crowd.length = 0;
     for (const e of this.active) {
       const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }
@@ -103,10 +119,11 @@ export class InfectedSystem {
       const dx = player.transform.x - e.transform.x, dz = player.transform.z - e.transform.z, distance = Math.hypot(dx, dz);
       if (b.special === 'cling' && b.hidden) {
         if (distance > 5) continue;
-        b.hidden = false; b.perched = false; b.state = 'chase';
+        b.hidden = false; b.perched = false; b.state = 'chase'; e.transform.y = 0.7;
       }
       if (b.grabUntil > this.world.tick && b.special === 'cling') {
-        e.transform.x = player.transform.x; e.transform.z = player.transform.z; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
+        if (this.world.tick >= b.grabNextTick) { this.attackPlayer(e, 3); b.grabNextTick += 60; }
+        e.transform.x = player.transform.x; e.transform.y = player.transform.y + 0.3; e.transform.z = player.transform.z; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
       if (b.state === 'idle' || b.state === 'wander') {
         if (distance <= 14 && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180)) && this.world.combat!.query.visible(e.transform, player.transform)) this.alert(e);
@@ -127,7 +144,7 @@ export class InfectedSystem {
       if (b.state === 'chase') {
         if (this.world.tick >= b.cooldown) {
           let obstacle: EntitySnapshot | undefined;
-          for (const target of this.world.entities.iterate()) if (target.kind === 'barricade' && target.health.current > 0 && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2) { obstacle = target; break; }
+          for (const target of this.barricades) if (target.health.current > 0 && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2) { obstacle = target; break; }
           if (obstacle) { this.windup(e); b.targetId = obstacle.id; continue; }
         }
         const def = infectedDef(e.archetype);
@@ -197,7 +214,7 @@ export class InfectedSystem {
     if (b.special === 'scream') { this.noise(e.transform, 20); return true; }
     if (b.special === 'revive' && !b.reviveUsed) {
       const downed = this.revivable(e);
-      if (downed) { downed.health.current = downed.health.max; downed.infected!.revived = true; downed.infected!.deadAt = -1; downed.infected!.state = 'chase'; b.reviveUsed = true; this.world.events.emit({ type: 'infected.revived', tick: this.world.tick, sourceId: e.id, targetId: downed.id }); return true; }
+      if (downed && this.director.count + 1 <= this.director.cap) { downed.health.current = downed.health.max; downed.infected!.revived = true; downed.infected!.deadAt = -1; downed.infected!.state = 'chase'; b.reviveUsed = true; this.world.events.emit({ type: 'infected.revived', tick: this.world.tick, sourceId: e.id, targetId: downed.id }); return true; }
     }
     if (b.special === 'prop-throw' && this.props.launch(e, b.attackId)) return true;
     if (b.special === 'dive') {
@@ -210,14 +227,15 @@ export class InfectedSystem {
     if (['lunge', 'charge', 'pounce', 'cling', 'pin'].includes(b.special)) {
       const distance = Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z);
       const step = Math.min(Math.max(0, distance - def.range), (b.special === 'charge' ? 8 : b.special === 'cling' ? 6 : b.special === 'pin' ? 7.5 : 7) / 60);
+      if (b.special === 'cling') e.transform.y = 0.7 + Math.sin(Math.min(1, (this.world.tick - b.until) / 60) * Math.PI) * 1.5;
       this.nav.move(e.transform, b.dx * step, b.dz * step, def.radius); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
       if (distance > def.range + 0.15) return this.world.tick >= b.activeUntil;
     }
     if (Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z) > (b.special === 'aura' ? 3 : def.range) + 0.15) return true;
     this.attackPlayer(e, def.damage);
-    if (b.special === 'aura') this.world.combat!.status.apply(player, { kind: 'toxic', duration: 2, dps: 3, maxStacks: 1, slow: 0.25 }, e.id, e.archetype);
+    if (b.special === 'aura') this.world.combat!.status.apply(player, { kind: 'toxic', duration: 2, dps: 3, maxStacks: 1, slow: 0.25 }, e.id, e.archetype, b.attackId);
     if (['grab', 'combo-grab', 'cling', 'pounce', 'pin'].includes(b.special)) {
-      b.grabUntil = this.world.tick + (b.special === 'cling' ? 120 : b.special === 'pounce' ? 36 : 90); b.grabHits = 0; b.grabX = player.transform.x; b.grabZ = player.transform.z;
+      b.grabUntil = this.world.tick + (b.special === 'cling' ? 120 : b.special === 'pounce' ? 36 : 90); b.grabHits = 0; b.grabNextTick = this.world.tick + 60; b.grabX = player.transform.x; b.grabZ = player.transform.z;
     }
     return true;
   }
@@ -258,29 +276,36 @@ export class InfectedSystem {
     if (b.birds > 0) { b.state = 'scatter'; b.scatterUntil = this.world.tick + 300; }
     return killed;
   }
+  /** Stable test/debug surface, including RNG and pool/director counters needed for deterministic replay. */
+  snapshot() {
+    return { rng: this.rng.snapshot(), pool: { ...this.counters, available: this.pool.length }, cap: this.director.cap, count: this.director.count, queued: this.director.queue.map((q) => ({ archetype: q.archetype, position: q.position, options: q.options, turning: q.turning ?? false })), migrations: this.director.migrations.map((m) => ({ started: m.started, arrived: m.arrived, expectedSeconds: m.expectedSeconds, members: m.members })) };
+  }
   /** E26 uses the same authored attack damage when resolving barricades. */
   barricadeDamage(sourceId: number, base: number): number { return base * (this.world.entities.get(sourceId)?.archetype === 'infected.gorilla' ? 6 : this.world.entities.get(sourceId)?.archetype === 'infected.brute' ? 5 : 1); }
   private seek(e: EntitySnapshot, target: { x: number; z: number }): void {
-    const b = e.infected!; let x = target.x, z = target.z;
-    const from = this.nav.cell(e.transform.x, e.transform.z), to = this.nav.cell(x, z);
-    if (!this.nav.visible(e.transform, target, e.combat!.radius)) {
+    const grid = this.navigation.district(e.transform), b = e.infected!;
+    if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }
+    const nav = this.navigation.grid(e.transform); target = this.navigation.target(e.transform, target);
+    let x = target.x, z = target.z;
+    const from = nav.cell(e.transform.x, e.transform.z), to = nav.cell(x, z);
+    if (!nav.visible(e.transform, target, e.combat!.radius)) {
       let next = from;
-      if (this.active.length > 20) next = this.nav.flowNext(from);
+      if (this.active.length > 20) next = nav.flowNext(from);
       else {
         if ((b.goal !== to || b.pathIndex >= b.path.length) && this.budget > 0) {
-          this.nav.path(from, to, b.path, this.budget); this.budget -= this.nav.expansions; b.pathIndex = 0; b.goal = to;
+          nav.path(from, to, b.path, this.budget); this.budget -= nav.expansions; b.pathIndex = 0; b.goal = to;
         }
         if (b.pathIndex < b.path.length) {
           while (b.pathIndex + 1 < b.path.length) {
             const candidate = b.path[b.pathIndex + 1];
-            this.waypoint.x = this.nav.x(candidate); this.waypoint.z = this.nav.z(candidate);
-            if (!this.nav.visible(e.transform, this.waypoint, e.combat!.radius)) break;
+            this.waypoint.x = nav.x(candidate); this.waypoint.z = nav.z(candidate);
+            if (!nav.visible(e.transform, this.waypoint, e.combat!.radius)) break;
             b.pathIndex++;
           }
-          next = b.path[b.pathIndex]; if (Math.hypot(this.nav.x(next) - e.transform.x, this.nav.z(next) - e.transform.z) < 0.15) next = b.path[++b.pathIndex] ?? to; }
+          next = b.path[b.pathIndex]; if (Math.hypot(nav.x(next) - e.transform.x, nav.z(next) - e.transform.z) < 0.15) next = b.path[++b.pathIndex] ?? to; }
       }
       if (next < 0 || (this.active.length > 20 && next === from)) return;
-      x = this.nav.x(next); z = this.nav.z(next);
+      x = nav.x(next); z = nav.z(next);
     }
     const dx = x - e.transform.x, dz = z - e.transform.z, distance = Math.hypot(dx, dz);
     const remaining = x === target.x && z === target.z ? distance - e.combat!.radius - 0.36 : distance;
@@ -289,11 +314,11 @@ export class InfectedSystem {
     e.transform.yaw = -Math.atan2(dz, dx);
   }
   private separate(e: EntitySnapshot): void {
-    this.query.x = e.transform.x; this.query.z = e.transform.z; this.world.spatial.query(this.query, this.neighbors);
+    this.query.x = e.transform.x; this.query.z = e.transform.z; this.query.r = e.combat!.radius + 0.7; this.world.spatial.query(this.query, this.neighbors, false);
     for (const id of this.neighbors) {
       const other = this.world.entities.get(id); if (!other || other === e || !other.infected || other.health.current <= 0) continue;
-      const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, distance = Math.hypot(dx, dz), radius = e.combat!.radius + other.combat!.radius;
-      if (distance < radius) { const amount = Math.min(0.08, (radius - distance) * 0.5); const angle = (e.id * 2.399963); this.nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * amount, (distance ? dz / distance : Math.sin(angle)) * amount, e.combat!.radius); }
+      const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, squared = dx * dx + dz * dz, radius = e.combat!.radius + other.combat!.radius;
+      if (squared < radius * radius) { const distance = Math.sqrt(squared), amount = Math.min(0.08, (radius - distance) * 0.5); const angle = (e.id * 2.399963); this.nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * amount, (distance ? dz / distance : Math.sin(angle)) * amount, e.combat!.radius); }
     }
   }
 }

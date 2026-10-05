@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest';
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { Matrix4 } from 'three';
 import { performance } from 'node:perf_hooks';
 import { arena, spawn, step } from './helpers';
 test('T-E07-07 @E07 @E07-AC07 director excludes player radius, expanded camera footprint and colliders', async () => {
@@ -32,4 +33,23 @@ test('T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed enti
 test('T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget', async () => {
   const w = await arena(); w.combat!.damage.god = true; for (let i = 0; i < 200; i++) spawn(w, 'runner', i % 20 - 10, 10 + Math.floor(i / 20)); step(w, 120);
   const times: number[] = []; for (let i = 0; i < 600; i++) { const start = performance.now(); w.update(); times.push(performance.now() - start); } times.sort((a, b) => a - b); const p95 = times[Math.floor(times.length * 0.95)]; const metrics = { scenario: 'horde-arena', infected: 200, simMsP95: p95, budget: 4 }; mkdirSync('test-results/epics/E07', { recursive: true }); writeFileSync('test-results/epics/E07/sim-perf.json', JSON.stringify(metrics, null, 2) + '\n'); console.log(JSON.stringify(metrics)); expect(p95).toBeLessThanOrEqual(4);
+});
+
+test('T-E07-08b @E07 @E07-AC08 revival respects cap and retries instead of exceeding it', async () => {
+  const w = await arena(), ai = w.infected!, runner = spawn(w, 'runner', 2, 0, 'idle'); runner.health.current = 0; const nurse = spawn(w, 'nurse', 1); ai.director.levelCap = 1;
+  step(w, 25); expect(ai.director.count).toBe(1); expect(runner.health.current).toBe(0); expect(nurse.infected!.reviveUsed).toBe(false);
+  ai.director.levelCap = 2; step(w, 100); expect(ai.director.count).toBe(2); expect(runner.health.current).toBe(40);
+});
+
+test('T-E07-08c @E07 @E07-AC08 a capped scripted migration remains queued and begins when capacity returns', async () => {
+  const w = await arena(), ai = w.infected!; ai.director.levelCap = 1; const blocker = spawn(w, 'runner', 20, 0, 'idle');
+  const m = ai.director.migration([{ x: -48, z: -20 }, { x: 48, z: -20 }], 1); expect(m.members).toHaveLength(0); expect(ai.director.queue).toHaveLength(1); step(w, 30); expect(ai.director.count).toBe(1);
+  blocker.health.current = 0; step(w, 1); expect(m.members).toHaveLength(1); expect(ai.director.queue).toHaveLength(0); expect(m.started).toBe(w.tick);
+});
+
+test('T-E07-07b @E07 @E07-AC07 supplied camera volume uses the 10 percent expanded frustum', async () => {
+  const w = await arena(), d = w.infected!.director, matrix = new Matrix4().makeOrthographic(-20, 20, 20, -20, 0.1, 100);
+  // XZ orthographic view from above: view Z=-Y, view Y=world Z.
+  matrix.multiply(new Matrix4().makeRotationX(Math.PI / 2)).multiply(new Matrix4().makeTranslation(0, -50, 0));
+  d.setFrustum(matrix.elements); expect(d.visible({ x: 21.9, z: 0 })).toBe(true); expect(d.visible({ x: 22.1, z: 0 })).toBe(false); expect(d.safe('infected.runner', { x: 21.9, z: 0 })).toBe(false);
 });

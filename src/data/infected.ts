@@ -3,8 +3,9 @@ export interface InfectedDef {
   id: string; hp: number; speed: number; radius: number; damage: number; range: number;
   windup: number; special: string; weight: number; grabChance: number; asset: string;
 }
+const assetIds: Record<string, string> = { runner: 'inf.common-worker', riot: 'inf.riot-cop', armored: 'inf.armored-football', dog: 'inf.dog-retriever', cat: 'inf.cat-tabby' };
 function role(name: string, hp: number, speed: number, special = 'lunge', radius = 0.35, windup = 0.35): InfectedDef {
-  return { id: `infected.${name}`, hp, speed, radius, special, windup, damage: 10, range: 1.1, weight: 1, grabChance: name === 'butcher' ? 0.6 : name === 'crawler' ? 0.35 : 0.15, asset: `inf.${name}` };
+  return { id: `infected.${name}`, hp, speed, radius, special, windup, damage: 10, range: 1.1, weight: 1, grabChance: name === 'butcher' ? 0.6 : name === 'crawler' ? 0.35 : 0.15, asset: assetIds[name] ?? `inf.${name}` };
 }
 export const humanInfected: readonly InfectedDef[] = [
   role('runner', 40, 4.2), role('crawler', 25, 2, 'grab'), role('brute', 300, 3, 'charge', 0.6, 0.8),

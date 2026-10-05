@@ -68,7 +68,7 @@ export class Combat {
     this.direction.x = distance ? dx / distance : attack.aim.x; this.direction.z = distance ? dz / distance : attack.aim.z;
     const def = attack.def;
     const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, direction: this.direction, base: def.damage * falloff, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, radius: def.splash?.radius ?? def.range, spread: def.spread, knockback: def.knockback * falloff, stagger: def.stagger });
-    if (amount && def.status) this.status.apply(target, def.status, attack.sourceId, def.id);
+    if (amount && def.status) this.status.apply(target, def.status, attack.sourceId, def.id, attack.id);
   }
   private splash(attack: Attack, position: Vec2): void {
     const def = attack.def, splash = def.splash!;

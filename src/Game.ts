@@ -1,4 +1,5 @@
 // Adapted from folio-2025 by Bruno Simon (MIT).
+import { Matrix4 } from 'three';
 import { InputSystem } from './input/InputSystem';
 import { Clock } from './core/Clock';
 import { Services } from './core/Services';
@@ -16,6 +17,7 @@ export class Game {
   readonly ticker = new Ticker();
   frameMs = 0;
   simMs = 0;
+  private readonly spawnFrustum = new Matrix4();
   private loading = false;
   private levelQueue: Promise<void> = Promise.resolve();
   constructor(readonly params: URLSearchParams) {
@@ -62,6 +64,11 @@ export class Game {
   private simTick(): void {
     const player = this.world.entities.get(1)?.transform;
     if (player) this.world.applyInput(this.input.sample(player), this.input.scheme);
+    if (this.world.infected) {
+      this.view.camera.updateMatrixWorld();
+      this.spawnFrustum.multiplyMatrices(this.view.camera.projectionMatrix, this.view.camera.matrixWorldInverse);
+      this.world.infected.director.setFrustum(this.spawnFrustum.elements);
+    }
     this.world.update();
     this.view.advance(1 / 60);
   }

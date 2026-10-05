@@ -13,7 +13,7 @@ test('T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and
   mkdirSync('test-results/epics/E07', { recursive: true }); writeFileSync('test-results/epics/E07/render-perf.json', JSON.stringify(proof, null, 2) + '\n');
   await page.locator('canvas').screenshot({ path: 'test-results/epics/E07/horde-200.png' });
   // Remove all infected and compare actual renderer draws, including fixed crowd shadow/telegraph batches.
-  const before = proof.perf.drawCalls; const after = await page.evaluate(async () => { const api = window.__SS__!; api.cheats.killAll(); await api.step(2762); await api.screenshotReady(); return api.perf().drawCalls; }); expect(before - after).toBeGreaterThan(0); expect(before - after).toBeLessThanOrEqual(30);
+  const before = proof.perf.drawCalls; const after = await page.evaluate(async () => { const api = window.__SS__!; api.cheats.killAll(); await api.step(2762); await api.screenshotReady(); return api.perf().drawCalls; }); expect(before - after).toBeGreaterThan(0); expect(before - after).toBeLessThanOrEqual(30); writeFileSync('test-results/epics/E07/render-perf.json', JSON.stringify({ ...proof, removedDrawCalls: after, crowdDrawDelta: before - after }, null, 2) + '\n');
 });
 test('T-E07-13 @E07 @E07-AC13 @vision golden-hour street has 60 separable runners glowing eyes and an identifiable player', async ({ page }) => {
   mkdirSync('test-results/epics/E07', { recursive: true });
