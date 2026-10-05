@@ -129,3 +129,7 @@ Core implementation: `bc2b57a`, `aa222a6`, `0952781`, `e2d565a`, `67b9b9b`.
 Merge/integration: `a09d09a`, `986d036`, `94b4d2a`, `23a7008`, `c6a66c0`,
 `7a77925`, `da91b4e`, `2a0c3f1`. Final generated assets and evidence are committed
 with this report. No push.
+
+## Asset conformance follow-up
+
+The production audit now has zero forward, missing-LOD, unknown-palette and degenerate-triangle findings across 158 slots. See [conformance/report.md](conformance/report.md) for pipeline changes, verification, reviewed screenshots, density exceptions and remaining source-contract findings.

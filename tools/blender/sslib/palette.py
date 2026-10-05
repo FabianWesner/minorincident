@@ -1,3 +1,4 @@
+"""Shared environment and character palette, also used by runtime material swaps."""
 import json
 from pathlib import Path
 import bpy

@@ -1,0 +1,197 @@
+
+> verify
+> tsx tools/verify.ts E17
+
+
+Verifying E17: npm run typecheck
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+Verifying E17: npm run lint
+
+> lint
+> eslint src tests tools *.config.ts eslint.config.js
+
+
+Verifying E17: npm run build
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 97 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                 0.61 kB │ gzip:     0.36 kB
+dist/preview/index.html                         1.10 kB │ gzip:     0.59 kB
+dist/assets/basis_transcoder-o4Hde_L7.js       57.53 kB
+dist/assets/basis_transcoder-VXdx5NbI.wasm    527.33 kB │ gzip:   247.62 kB
+dist/assets/crowdProbe-BFzfq6p0.js              1.29 kB │ gzip:     0.74 kB
+dist/assets/testApi-CStceC3I.js                 3.38 kB │ gzip:     1.39 kB
+dist/assets/index-B90VbN86.js                  88.67 kB │ gzip:    32.82 kB
+dist/assets/index-1-pyYmc0.js                  90.73 kB │ gzip:    29.44 kB
+dist/assets/three.module-DEafDQLe.js          264.49 kB │ gzip:    70.81 kB
+dist/assets/three.tsl-BfMAj9Nr.js             892.26 kB │ gzip:   226.98 kB
+dist/assets/rapier-DstIs6Rl.js              4,322.52 kB │ gzip: 1,641.14 kB
+✓ built in 4.56s
+
+Verifying E17: npx vitest run -t @(?:E17)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --reporter=default --reporter=json --outputFile=test-results/epics/E17/vitest.json
+
+ RUN  v5.0.3 /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/asset-conformance
+
+ ↓ tests/unit/static.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/import-graph.test.ts (2 tests | 2 skipped)
+ ✓ tests/unit/assets/crowd.test.ts (1 test) 702ms
+   ✓ T-E17-07 @E17-AC07 baked part coordinates reproduce source hierarchy poses at five clip times 702ms
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (39)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (156)
+
+ ✓ tests/sim/combat/balance.test.ts (3 tests | 2 skipped) 452ms
+   ✓ S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash 451ms
+ ✓ tests/sim/determinism.test.ts (3 tests | 2 skipped) 312ms
+   ✓ S-05-foundation @smoke empty scripted 1800-tick golden hash 312ms
+ ↓ tests/unit/combat/events.test.ts (1 test | 1 skipped)
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (117)
+
+ ↓ tests/unit/setup.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/core/foundation.test.ts (4 tests | 4 skipped)
+ ✓ tests/sim/combat/combat.test.ts (19 tests | 18 skipped) 329ms
+   ✓ S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy 329ms
+ ✓ tests/unit/assets/production-gates.test.ts (3 tests) 155ms
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+prune: Removed types... Accessor (1)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+prune: Removed types... Accessor (3)
+
+ ↓ tests/unit/survivor.test.ts (3 tests | 3 skipped)
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Accessor (1)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Mesh (1), Primitive (2), Accessor (4)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+prune: Removed types... Accessor (1)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+prune: Removed types... Accessor (2)
+
+ ✓ tests/unit/assets/optimize.test.ts (6 tests) 139ms
+ ↓ tests/unit/render/view.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/traceability.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/input/buttons.test.ts (2 tests | 2 skipped)
+ ✓ tests/unit/assets/registry.test.ts (3 tests) 10ms
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (39)
+
+ ↓ tests/unit/input/bindings.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/render/palette.test.ts (2 tests | 2 skipped)
+ ✓ tests/unit/assets/png-pixels.test.ts (1 test) 6ms
+ ↓ tests/unit/combat/loadout.test.ts (3 tests | 3 skipped)
+ ✓ tests/unit/assets/references.test.ts (2 tests) 5ms
+ ↓ tests/unit/input/wheel.test.ts (1 test | 1 skipped)
+ ↓ tests/sim/player.test.ts (8 tests | 8 skipped)
+ ↓ tests/sim/recorder.test.ts (1 test | 1 skipped)
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (195)
+
+ ↓ tests/sim/runner.test.ts (1 test | 1 skipped)
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (117)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (39)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (195)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (117)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (39)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (156)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (117)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (39)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (195)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (117)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (39)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (195)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (117)
+
+ ✓ tests/unit/assets/build.test.ts (2 tests) 6930ms
+   ✓ T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal 6274ms
+   ✓ T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate 649ms
+ ✓ tests/unit/assets/validate.test.ts (3 tests) 20038ms
+   ✓ T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD and geometry contracts 20027ms
+
+ Test Files  11 passed | 16 skipped (27)
+      Tests  24 passed | 61 skipped (85)
+   Start at  21:57:26
+   Duration  20.46s (tests 89%, import 6%, transform 5%)
+
+JSON report written to /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/asset-conformance/test-results/epics/E17/vitest.json
+
+Verifying E17: npx playwright test --grep @(?:E17)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$)
+
+Running 21 tests using 2 workers
+
+  ✓   1 [chromium] › tests/e2e/asset-conformance.spec.ts:7:3 › T-E17-conformance veh.sedan-red @E17-AC02 optimized export renders in the game camera (4.4s)
+  ✓   2 [chromium] › tests/e2e/asset-conformance.spec.ts:7:3 › T-E17-conformance char.survivor-female @E17-AC02 optimized export renders in the game camera (5.4s)
+  ✓   3 [chromium] › tests/e2e/asset-conformance.spec.ts:7:3 › T-E17-conformance prop.bench @E17-AC02 optimized export renders in the game camera (1.6s)
+  ✓   4 [chromium] › tests/e2e/asset-conformance.spec.ts:7:3 › T-E17-conformance npc.civilian-woman-a @E17-AC02 optimized export renders in the game camera (2.6s)
+  ✓   5 [chromium] › tests/e2e/asset-conformance.spec.ts:31:1 › T-E17-direction @E17-AC03 E04 survivor turns toward keyboard movement (4.0s)
+  ✓   7 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.0s)
+  ✓   8 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (3.6s)
+  ✓   6 [chromium] › tests/e2e/crowd.spec.ts:4:1 › T-E17-07b @E17-AC07 100 infected use one draw per material and GPU poses match at five times and four headings (18.5s)
+  ✓   9 [chromium] › tests/e2e/turntable.spec.ts:5:1 › T-E17-08 @E17-AC08 @E17-AC04 five fire-engine views cover 10–80% and preserve contract nodes (11.5s)
+  ✓  11 [chromium] › tests/e2e/turntable.spec.ts:33:1 › T-E17-05c @E17-AC05 pre-integrated production art renders a logged placeholder (1.2s)
+  ✓  10 [chromium] › tests/e2e/turntable.spec.ts:17:1 › T-E17-05e @E17-AC05 pending survivor art uses E04 code rigs with placeholder logs (4.6s)
+  ✓  12 [pixel-7] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.3s)
+  ✓  14 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.3s)
+  ✓  13 [pixel-7] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (3.5s)
+  ✓  15 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (3.2s)
+  ✓  16 [iphone-14] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (3.2s)
+  ✓  17 [iphone-14] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (3.4s)
+  ✓  18 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.5s)
+  ✓  20 [webkit] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.5s)
+  ✓  19 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (4.2s)
+  ✓  21 [webkit] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.3s)
+
+  21 passed (50.1s)
