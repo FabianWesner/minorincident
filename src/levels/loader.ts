@@ -4,7 +4,7 @@ import { empty } from '../../tests/fixtures/scenarios/empty';
 /** E01 data contract. Real campaign levels and progression arrive in E10/E12/E13. */
 export interface ScenarioDefinition {
   name: string;
-  ground: { width: number; depth: number };
+  ground: { width: number; depth: number; center?: { x: number; z: number } };
   player: { x: number; y: number; z: number };
 }
 export function loadScenarioDefinition(name: string): ScenarioDefinition {

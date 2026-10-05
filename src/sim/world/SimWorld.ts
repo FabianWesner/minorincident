@@ -1,6 +1,8 @@
 import { EventBus, SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
 import type { Lifecycle } from '../../core/Lifecycle';
+import { DistrictWorld } from './DistrictWorld';
+import type { DistrictLayout, LevelComposition } from '../../levels/districts/types';
 import { loadScenarioDefinition } from '../../levels/loader';
 import { Physics } from '../../physics/Physics';
 import { SpatialHash } from '../spatial/SpatialHash';
@@ -13,6 +15,7 @@ export class SimWorld implements Lifecycle {
   readonly events = new EventBus<GameEvent>();
   readonly entities = new EntityStore();
   readonly spatial = new SpatialHash();
+  districts: DistrictWorld | null = null;
   tick = 0;
   seed = 1;
   scenario: string | null = null;
@@ -44,6 +47,19 @@ export class SimWorld implements Lifecycle {
     }, SimPhase.cleanup);
     this.events.emit({ tick: 0, type: 'scenario.loaded', name, seed });
   }
+  /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
+  loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1):void {
+    const districts=new DistrictWorld(composition,layouts,seed);
+    this.loadScenario('empty',seed);this.scenario=composition.id;this.districts=districts;
+    const {min,max}=districts.nav;
+    this.physics.load({name:composition.id,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:{x:districts.playerStart[0],y:.5,z:districts.playerStart[1]}});
+    Object.assign(this.entities.get(1)!.transform,{x:districts.playerStart[0],y:.5,z:districts.playerStart[1]});this.previousPlayer={...this.entities.get(1)!.transform};
+    for(const d of districts.districts)for(const aabb of d.decay.colliders.map((c)=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
+    this.events.on('sim.tick',()=>{
+      const player=this.entities.get(1)!;
+      for(const fire of districts.fires)if((player.transform.x-fire.x)**2+(player.transform.z-fire.z)**2<=fire.radius**2)player.health.current=Math.max(0,player.health.current-fire.damagePerSecond/60);
+    },SimPhase.combat);
+  }
   setInput(patch: Partial<InputFrame>): void {
     const next = { ...this.input, ...structuredClone(patch) };
     for (const vector of [next.move, next.aim]) if (!Number.isFinite(vector.x) || !Number.isFinite(vector.z)) throw new RangeError('Input vectors must be finite');
@@ -61,7 +77,7 @@ export class SimWorld implements Lifecycle {
   }
   reset(): void {
     this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
-    this.tick = 0; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
+    this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }
   dispose(): void { this.reset(); }
 }
