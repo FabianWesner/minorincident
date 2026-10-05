@@ -2986,7 +2986,11 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "survivorRed",
+      "solid": true
+    }
   },
   {
     "id": "veh.sedan-blue",
@@ -3190,11 +3194,11 @@
     "decayVariants": [],
     "sourceGlb": "assets/veh.suv-dark/model.glb",
     "script": "assets/veh.suv-dark/build.py",
+    "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/veh.suv-dark.lod1.glb",
       "lod2": "public/assets/models/veh.suv-dark.lod2.glb"
-    },
-    "sourceForward": "+X"
+    }
   },
   {
     "id": "veh.pickup-red",
@@ -3640,7 +3644,11 @@
       "lod1": "public/assets/models/bld.house-a.lod1.glb",
       "lod2": "public/assets/models/bld.house-a.lod2.glb"
     },
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
+    }
   },
   {
     "id": "bld.house-b",
@@ -3676,7 +3684,11 @@
       "lod1": "public/assets/models/bld.house-b.lod1.glb",
       "lod2": "public/assets/models/bld.house-b.lod2.glb"
     },
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
+    }
   },
   {
     "id": "bld.house-c",
@@ -3712,7 +3724,11 @@
       "lod1": "public/assets/models/bld.house-c.lod1.glb",
       "lod2": "public/assets/models/bld.house-c.lod2.glb"
     },
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
   },
   {
     "id": "bld.safe-house",
@@ -3838,7 +3854,11 @@
       "lod1": "public/assets/models/bld.joes-diner.lod1.glb",
       "lod2": "public/assets/models/bld.joes-diner.lod2.glb"
     },
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "survivorRed",
+      "solid": true
+    }
   },
   {
     "id": "bld.gas-station",
@@ -3868,13 +3888,17 @@
       "drawCalls": 40
     },
     "decayVariants": [],
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
+    },
     "sourceGlb": "assets/bld.gas-station/model.glb",
     "script": "assets/bld.gas-station/build.py",
+    "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/bld.gas-station.lod1.glb",
       "lod2": "public/assets/models/bld.gas-station.lod2.glb"
-    },
-    "sourceForward": "+X"
+    }
   },
   {
     "id": "bld.maple-hardware",
@@ -3939,7 +3963,11 @@
       "lod1": "public/assets/models/bld.mainstreet-brick.lod1.glb",
       "lod2": "public/assets/models/bld.mainstreet-brick.lod2.glb"
     },
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
   },
   {
     "id": "bld.bus-stop",
@@ -4033,7 +4061,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.school-elementary/model.glb",
+    "script": "assets/bld.school-elementary/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/bld.school-elementary.lod1.glb",
+      "lod2": "public/assets/models/bld.school-elementary.lod2.glb"
+    }
   },
   {
     "id": "int.gym-cafeteria",
@@ -4091,7 +4126,10 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/kit.playground/model.glb",
+    "script": "assets/kit.playground/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "int.supermarket",
@@ -4243,7 +4281,11 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "world": {
+      "token": "survivorRed",
+      "solid": true
+    }
   },
   {
     "id": "bld.hospital-exterior",
@@ -8305,7 +8347,11 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "survivorRed",
+      "solid": true
+    }
   },
   {
     "id": "prop.jukebox",
@@ -8845,7 +8891,11 @@
     "decayVariants": [],
     "sourceGlb": "assets/prop.hedge/model.glb",
     "script": "assets/prop.hedge/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "foliage",
+      "solid": true
+    }
   },
   {
     "id": "prop.mailbox-blue",
@@ -8909,7 +8959,11 @@
     "decayVariants": [],
     "sourceGlb": "assets/prop.picket-fence/model.glb",
     "script": "assets/prop.picket-fence/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "picketWhite",
+      "solid": false
+    }
   },
   {
     "id": "prop.street-lamp",
@@ -8941,7 +8995,11 @@
     "decayVariants": [],
     "sourceGlb": "assets/prop.street-lamp/model.glb",
     "script": "assets/prop.street-lamp/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "uiDark",
+      "solid": false
+    }
   },
   {
     "id": "prop.street-sign",
@@ -9005,7 +9063,11 @@
     "decayVariants": [],
     "sourceGlb": "assets/prop.traffic-cone/model.glb",
     "script": "assets/prop.traffic-cone/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": false
+    }
   },
   {
     "id": "prop.trash-bin",
@@ -9143,6 +9205,470 @@
     "lods": {
       "lod1": "public/assets/models/inf.teen-skater.lod1.glb",
       "lod2": "public/assets/models/inf.teen-skater.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.tree",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.tree.glb",
+    "dimensions": {
+      "x": 3,
+      "y": 5,
+      "z": 3,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "foliage",
+      "solid": false
+    }
+  },
+  {
+    "id": "veh.wreck",
+    "category": "vehicle",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/veh.wreck.glb",
+    "dimensions": {
+      "x": 4.4,
+      "y": 0.9,
+      "z": 1.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "uiDark",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.school",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.school.glb",
+    "dimensions": {
+      "x": 12,
+      "y": 6,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.gym",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.gym.glb",
+    "dimensions": {
+      "x": 10,
+      "y": 5,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.supermarket",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.supermarket.glb",
+    "dimensions": {
+      "x": 12,
+      "y": 5,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.pharmacy",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.pharmacy.glb",
+    "dimensions": {
+      "x": 10,
+      "y": 4,
+      "z": 7,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "picketWhite",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.police",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.police.glb",
+    "dimensions": {
+      "x": 10,
+      "y": 5,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "policeBlue",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.hospital",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.hospital.glb",
+    "dimensions": {
+      "x": 10,
+      "y": 7,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "picketWhite",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.park-lodge",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.park-lodge.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 4,
+      "z": 7,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.zoo-gate",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.zoo-gate.glb",
+    "dimensions": {
+      "x": 10,
+      "y": 4,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.reptile-house",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.reptile-house.glb",
+    "dimensions": {
+      "x": 10,
+      "y": 4,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.substation",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.substation.glb",
+    "dimensions": {
+      "x": 8,
+      "y": 4,
+      "z": 7,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "uiDark",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.picnic-table",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.picnic-table.glb",
+    "dimensions": {
+      "x": 2,
+      "y": 0.8,
+      "z": 1.4,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.bus-stop",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.bus-stop.glb",
+    "dimensions": {
+      "x": 3,
+      "y": 2.5,
+      "z": 1.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "policeBlue",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.tent",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.tent.glb",
+    "dimensions": {
+      "x": 3,
+      "y": 2,
+      "z": 3,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.flower",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.flower.glb",
+    "dimensions": {
+      "x": 0.3,
+      "y": 0.5,
+      "z": 0.3,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 10000,
+      "materials": 8,
+      "fileKB": 512,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": false
     }
   }
 ]
