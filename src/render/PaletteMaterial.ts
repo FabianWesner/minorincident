@@ -1,5 +1,5 @@
 // Adapted from folio-2025 Materials/MeshDefaultMaterial.js by Bruno Simon (MIT), commit 41046b5.
-import { MeshLambertNodeMaterial, type Texture, type Node } from 'three/webgpu';
+import { MeshLambertNodeMaterial, type Texture, type Node, type Color } from 'three/webgpu';
 import { Fn, float, max, mix, normalWorld, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
@@ -7,10 +7,10 @@ import type { Lighting } from './Lighting';
 /** Palette-sampled Lambert node material with Bruno's captured drop-shadow, core shade and terrain bounce. */
 export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly fade = uniform(1);
-  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0) {
+  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color) {
     super(); this.name = `${emissive ? 'emi' : 'pal'}_${token}`;
     this.normalNode = normalWorld;
-    const base = texture(palette, vec2((paletteTokens.indexOf(token) + 0.5) / paletteTokens.length, 0.5)).rgb;
+    const base = swatch ? uniform(swatch) : texture(palette, vec2((paletteTokens.indexOf(token) + 0.5) / paletteTokens.length, 0.5)).rgb;
     const caughtShadow = float(1).toVar();
     this.receivedShadowNode = Fn(([shadow]: [Node<'vec3'>]) => { caughtShadow.mulAssign(shadow.r); return float(1); }) as unknown as NonNullable<MeshLambertNodeMaterial['receivedShadowNode']>;
     this.outputNode = Fn(() => {

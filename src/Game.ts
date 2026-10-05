@@ -25,7 +25,9 @@ export class Game {
   }
   async init(): Promise<void> {
     await this.services.init();
-    await this.loadScenario('empty', Number(this.params.get('seed') ?? 1));
+    await this.loadScenario(this.params.get('test') === '1' ? 'empty' : 'survivor', Number(this.params.get('seed') ?? 1));
+    this.world.player?.select(this.params.get('survivor') === 'male' ? 'male' : 'female', 0);
+    this.view.update(1);
     this.ticker.events.on('frame', ({ seconds }) => {
       this.frameMs = seconds * 1000;
       if (!this.loading) {

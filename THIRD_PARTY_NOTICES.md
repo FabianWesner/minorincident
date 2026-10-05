@@ -25,6 +25,7 @@ copyright 2025 Bruno Simon):
 | `Inputs/Nipple.js` | `src/input/devices/Nipple.ts` — radial progress/angle, floating DOM presentation |
 | `Inputs/InteractiveButtons.js`, `Inputs/Pointer.js` | `src/input/devices/Touch.ts` — touch actions and independent contact ownership |
 
+| `Player.js` (41046b5) | `src/sim/entities/Player.ts`, `src/sim/locomotion/KinematicController.ts` — input intent before physics, survivor pose after physics |
 | `View.js` (41046b5) | `src/render/View.ts` — focus, aspect adaptation, shake and cinematic blending |
 | `Rendering.js`, `Viewport.js` (41046b5) | `src/render/Renderer.ts` — backend bootstrap and pixel ratio |
 

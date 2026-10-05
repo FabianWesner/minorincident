@@ -8,7 +8,7 @@ import { SpatialHash } from '../spatial/SpatialHash';
 import { EntityStore } from './EntityStore';
 import { emptyInput, type EntityFilter, type EntitySnapshot, type GameEvent, type GameStateSnapshot, type InputFrame, type Transform } from './types';
 
-/** Headless composition root; movement here is only a controllable E01 fixture stub. */
+/** Headless composition root: survivor gameplay and the preserved E01/E02 cube fixtures. */
 export class SimWorld implements Lifecycle {
   readonly physics = new Physics();
   readonly events = new EventBus<GameEvent>();
@@ -46,7 +46,7 @@ export class SimWorld implements Lifecycle {
     }, SimPhase.intent);
     this.events.on('sim.tick', () => this.physics.update(), SimPhase.physics);
     this.events.on('sim.tick', () => {
-      if (this.player) this.player.postPhysics(this.tick);
+      if (this.player) { this.player.postPhysics(this.tick); this.spatial.set(1, this.player.entity.transform.x, this.player.entity.transform.z); return; }
       const p = this.physics.playerBody!.translation();
       Object.assign(this.entities.get(1)!.transform, p);
       this.spatial.set(1, p.x, p.z);

@@ -95,11 +95,11 @@ test('T-E04-07 @E04 @E04-AC07 move-only escape from 12 overlapping infected with
   expect(wall.player!.entity.transform.x + survivor.radius).toBeLessThanOrEqual(5.02);
 });
 
-test('T-E04-perf @E04 fixed-step survivor reference scenario stays below 6ms p95 with twelve crowd circles', async () => {
+test('T-E04-perf @E04 fixed-step survivor reference scenario stays below 4ms p95 with twelve crowd circles', async () => {
   const w = await setup(); w.player!.locomotion.crowd = Array.from({ length: 12 }, (_, i) => ({ transform: { x: Math.cos(i) * 0.85, z: Math.sin(i) * 0.85 }, radius: 0.4 }));
   const times: number[] = []; w.setInput({ move: { x: 1, z: 0 } }); step(w, 120);
   for (let i = 0; i < 3600; i++) { const start = performance.now(); w.update(); times.push(performance.now() - start); }
   times.sort((a, b) => a - b); const p95 = times[Math.floor(times.length * 0.95)];
-  mkdirSync('test-results/epics/E04', { recursive: true }); writeFileSync('test-results/epics/E04/sim-perf.json', JSON.stringify({ ticks: 3600, crowd: 12, simMsP95: p95, budgetMs: 6 }));
-  expect(p95).toBeLessThan(6);
+  mkdirSync('test-results/epics/E04', { recursive: true }); writeFileSync('test-results/epics/E04/sim-perf.json', JSON.stringify({ ticks: 3600, crowd: 12, simMsP95: p95, budgetMs: 4 }));
+  expect(p95).toBeLessThan(4);
 });

@@ -54,9 +54,9 @@ export class Player {
   }
   /** Presentation intent only: E05/E06 resolve weapons separately. */
   act(action: ActionState, tick: number): void {
-    if (!(action in actionTicks)) throw new RangeError('Unknown survivor action');
+    if (!Object.hasOwn(actionTicks, action)) throw new RangeError('Unknown survivor action');
     if (this.entity.survivor!.diedAt !== null) return;
-    this.action = action; this.actionUntil = tick + actionTicks[action]; this.animate(action, tick);
+    this.action = action; this.actionUntil = tick + actionTicks[action]; this.animate(action, tick); this.entity.survivor!.animationTick = tick;
   }
   setCheckpoint(position: { x: number; y: number; z: number }): void {
     if (!Object.values(position).every(Number.isFinite)) throw new RangeError('Checkpoint must be finite');
