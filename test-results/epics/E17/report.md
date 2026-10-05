@@ -133,3 +133,11 @@ with this report. No push.
 ## Asset conformance follow-up
 
 The production audit now has zero forward, missing-LOD, unknown-palette and degenerate-triangle findings across 163 slots. See [conformance/report.md](conformance/report.md) for pipeline changes, verification, reviewed screenshots, density exceptions and remaining source-contract findings.
+
+## Main registry reconciliation (2026-10-06)
+
+`T-E17-sources` now enumerates git-tracked source exports rather than unreviewed working files, and checks registered runtime outputs exist. All 88 accepted standalone sources are registered and their 192 declared runtime exports exist.
+
+Optimized the accepted elderly civilian source with `sourceScale = 1.27233734`; measured LOD heights are 1.780, 1.779 and 1.775 m. Registered its 17 source palette colors without changing source geometry or build scripts. Also registered and optimized the tunnel portal, civilian kid, living firefighter and national guard accepted in `bce6bc2` during this reconciliation. The two adults normalize to 1.80 m; the explicitly modeled child retains its source height and is excluded from the adult-height check. Seven child palette colors were added from the export. Asset statuses remain inventory-controlled. No specs, reference images or asset build scripts changed.
+
+Validation: typecheck, lint and production build pass; unit suite 66/66; smoke 3 Node tests and 12 browser tests pass; `verify -- E17` passes 28 Node tests and 25 browser tests. Browser suites used the shared e2e lock, port 3324 and two workers.
