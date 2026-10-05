@@ -28,7 +28,7 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | ID | Criterion | Verification |
 | --- | --- | --- |
 | E06-AC01 | Every roster action exists in `src/data/actions/*.ts` and validates against the schema (no missing fields, sane ranges) | unit |
-| E06-AC02 | Every action is usable on either side: an automated test equips each action on LEFT, then on RIGHT, uses it in `combat-arena`, and observes at least one `combat.hit` | sim |
+| E06-AC02 | Every action is usable on either side: an automated test equips each action on LEFT, then on RIGHT, uses it in `combat-arena`, and observes at least one `combat.hit` for damage/status actions; utility actions (lures, smoke, shield, adrenaline) emit `combat.effect` and demonstrate their defined gameplay effect | sim |
 | E06-AC03 | Role differentiation: shotgun DPS at 3 m > SMG at 3 m; SMG DPS at 12 m > shotgun at 12 m; rifle effective range ≥ 25 m; rocket splash ≥ 3.5 m | sim |
 | E06-AC04 | Noise: firing a pistol alerts idle infected within 25 m (`ai.alerted` with cause `noise`); a melee kill alerts only within 6 m | sim |
 | E06-AC05 | Molotov creates a fire zone (4 m radius, 6 s) that applies burning and blocks infected pathing preference (they route around it when possible) | sim |
@@ -36,4 +36,4 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E06-AC07 | Pickup: walking over a weapon pickup adds it to the selected side's rack; with a full rack it replaces the current action and drops the old one as a pickup | sim |
 | E06-AC08 | Each action has an icon and a view asset ID in the manifest (placeholder allowed), and the in-hand model attaches to the correct socket (the socket world position is within 0.05 m of the hand node) | unit/e2e |
 | E06-AC09 | Aim indicators: line (ranged), cone (melee), arc + landing circle (throwable) render for the selected side only (screenshot in `combat-arena`, one per category) | visual |
-| E06-AC10 | TTK table regenerated (E05-AC14) with all roster actions, within bands | sim |
+| E06-AC10 | TTK table regenerated (E05-AC14) with all damaging roster actions, within bands; non-damaging utility/status actions have role-effect tests rather than a fictitious kill time | sim |

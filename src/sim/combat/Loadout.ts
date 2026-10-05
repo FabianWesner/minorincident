@@ -1,4 +1,4 @@
-import { action } from '../../data/actions/fixtures';
+import { action } from '../../data/actions/catalog';
 import { ticks, type ActionDef, type Side } from '../../data/actions/schema';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 export interface ActionSlot { id: string; magazine: number; reserve: 'infinite'; charges: number; nextCharge: number; reloadUntil: number; readyAt: number }
@@ -25,6 +25,12 @@ export class Loadout {
     if (frame.selector && tick >= side.swapUntil) {
       side.index = (side.index + frame.selector + side.rack.length) % side.rack.length; side.swapUntil = tick + 15;
     }
+  }
+  /** Adds to selected rack; full racks replace exactly the current slot. */
+  collect(side: Side, id: string): string | null {
+    const rack = this.state[side], next = slot(id);
+    if (rack.rack.length < 3) { rack.rack.push(next); return null; }
+    const previous = rack.rack[rack.index].id; rack.rack[rack.index] = next; return previous;
   }
   current(side: Side): ActionSlot { const state = this.state[side]; return state.rack[state.index]; }
   update(tick: number, switched: (side: Side, id: string) => void): void {
