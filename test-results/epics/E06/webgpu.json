@@ -1,0 +1,592 @@
+{
+  "backend": "webgpu",
+  "states": [
+    {
+      "indicator": {
+        "selectedSide": "LEFT",
+        "shape": "line",
+        "visibleSides": [
+          "LEFT"
+        ],
+        "vertices": 6,
+        "maxHeight": 0.04,
+        "landing": {
+          "x": 0,
+          "z": 0
+        }
+      },
+      "attachments": [
+        {
+          "side": "LEFT",
+          "actionId": "weapon.pistol",
+          "iconUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMyOTM0NDciLz48ZyBzdHJva2U9IiNmZmQxNjYiIHN0cm9rZS13aWR0aD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTIgMjVINTBWMzVIMzFWNDlIMTlWMzVIMTJaIi8+PC9nPjx0ZXh0IHg9IjQ4IiB5PSI1OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIj5QSTwvdGV4dD48L3N2Zz4K",
+          "socket": "weaponSocketL",
+          "handDistance": 0.04499999999999999,
+          "gripDistance": 0,
+          "attached": true,
+          "source": "placeholder",
+          "sockets": [
+            "grip",
+            "muzzle"
+          ]
+        },
+        {
+          "side": "RIGHT",
+          "actionId": "weapon.pistol",
+          "iconUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMyOTM0NDciLz48ZyBzdHJva2U9IiNmZmQxNjYiIHN0cm9rZS13aWR0aD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTIgMjVINTBWMzVIMzFWNDlIMTlWMzVIMTJaIi8+PC9nPjx0ZXh0IHg9IjQ4IiB5PSI1OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiIGZvbnQtd2VpZ2h0PSJib2xkIj5QSTwvdGV4dD48L3N2Zz4K",
+          "socket": "weaponSocketR",
+          "handDistance": 0.04499999999999999,
+          "gripDistance": 0,
+          "attached": true,
+          "source": "placeholder",
+          "sockets": [
+            "grip",
+            "muzzle"
+          ]
+        }
+      ],
+      "placeholders": [
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.fists",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.kick",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.baseball-bat",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.crowbar",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.machete",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.knife",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.nail-bat",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.shovel",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.police-baton",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.fire-axe",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.katana",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.pistol",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.shotgun",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.nail-gun",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.smg",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.hunting-rifle",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.assault-rifle",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.machine-gun",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.rocket-launcher",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.frag-grenade",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.molotov",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.pipe-bomb",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.firecracker-lure",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.smoke-grenade",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.flashbang",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.corgi-lure",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.shield-bubble",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.adrenaline",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.turret",
+          "reason": "status placeholder"
+        }
+      ]
+    },
+    {
+      "indicator": {
+        "selectedSide": "LEFT",
+        "shape": "cone",
+        "visibleSides": [
+          "LEFT"
+        ],
+        "vertices": 300,
+        "maxHeight": 0.04,
+        "landing": {
+          "x": 0,
+          "z": 0
+        }
+      },
+      "attachments": [
+        {
+          "side": "LEFT",
+          "actionId": "weapon.bat",
+          "iconUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMyOTM0NDciLz48ZyBzdHJva2U9IiNmZmQxNjYiIHN0cm9rZS13aWR0aD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTUgNDdMNDMgMTlNMzkgMTVMNDkgMjVNMTIgNDJMMjIgNTIiLz48L2c+PHRleHQgeD0iNDgiIHk9IjU5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiPkJBPC90ZXh0Pjwvc3ZnPgo=",
+          "socket": "weaponSocketL",
+          "handDistance": 0.04500000000000004,
+          "gripDistance": 0,
+          "attached": true,
+          "source": "placeholder",
+          "sockets": [
+            "grip",
+            "tip"
+          ]
+        },
+        {
+          "side": "RIGHT",
+          "actionId": "weapon.bat",
+          "iconUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMyOTM0NDciLz48ZyBzdHJva2U9IiNmZmQxNjYiIHN0cm9rZS13aWR0aD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTUgNDdMNDMgMTlNMzkgMTVMNDkgMjVNMTIgNDJMMjIgNTIiLz48L2c+PHRleHQgeD0iNDgiIHk9IjU5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiPkJBPC90ZXh0Pjwvc3ZnPgo=",
+          "socket": "weaponSocketR",
+          "handDistance": 0.04500000000000004,
+          "gripDistance": 0,
+          "attached": true,
+          "source": "placeholder",
+          "sockets": [
+            "grip",
+            "tip"
+          ]
+        }
+      ],
+      "placeholders": [
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.fists",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.kick",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.baseball-bat",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.crowbar",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.machete",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.knife",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.nail-bat",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.shovel",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.police-baton",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.fire-axe",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.katana",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.pistol",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.shotgun",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.nail-gun",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.smg",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.hunting-rifle",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.assault-rifle",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.machine-gun",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.rocket-launcher",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.frag-grenade",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.molotov",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.pipe-bomb",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.firecracker-lure",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.smoke-grenade",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.flashbang",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.corgi-lure",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.shield-bubble",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.adrenaline",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.turret",
+          "reason": "status placeholder"
+        }
+      ]
+    },
+    {
+      "indicator": {
+        "selectedSide": "LEFT",
+        "shape": "arc",
+        "visibleSides": [
+          "LEFT"
+        ],
+        "vertices": 480,
+        "maxHeight": 0.9511523437499999,
+        "landing": {
+          "x": 8,
+          "z": 0
+        }
+      },
+      "attachments": [
+        {
+          "side": "LEFT",
+          "actionId": "weapon.grenade",
+          "iconUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMyOTM0NDciLz48ZyBzdHJva2U9IiNmZmQxNjYiIHN0cm9rZS13aWR0aD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48Y2lyY2xlIGN4PSIzMiIgY3k9IjM2IiByPSIxNCIvPjxwYXRoIGQ9Ik0yOSAyMlYxNEgzOE0zNyAxNkw0MyAxMCIvPjwvZz48dGV4dCB4PSI0OCIgeT0iNTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCI+R1I8L3RleHQ+PC9zdmc+Cg==",
+          "socket": "weaponSocketL",
+          "handDistance": 0.045000000000000005,
+          "gripDistance": 0,
+          "attached": true,
+          "source": "placeholder",
+          "sockets": [
+            "grip",
+            "tip"
+          ]
+        },
+        {
+          "side": "RIGHT",
+          "actionId": "weapon.grenade",
+          "iconUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMyOTM0NDciLz48ZyBzdHJva2U9IiNmZmQxNjYiIHN0cm9rZS13aWR0aD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48Y2lyY2xlIGN4PSIzMiIgY3k9IjM2IiByPSIxNCIvPjxwYXRoIGQ9Ik0yOSAyMlYxNEgzOE0zNyAxNkw0MyAxMCIvPjwvZz48dGV4dCB4PSI0OCIgeT0iNTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCI+R1I8L3RleHQ+PC9zdmc+Cg==",
+          "socket": "weaponSocketR",
+          "handDistance": 0.045,
+          "gripDistance": 0,
+          "attached": true,
+          "source": "placeholder",
+          "sockets": [
+            "grip",
+            "tip"
+          ]
+        }
+      ],
+      "placeholders": [
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.fists",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.kick",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.baseball-bat",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.crowbar",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.machete",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.knife",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.nail-bat",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.shovel",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.police-baton",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.fire-axe",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.katana",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.pistol",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.shotgun",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.nail-gun",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.smg",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.hunting-rifle",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.assault-rifle",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.machine-gun",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "wpn.rocket-launcher",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.frag-grenade",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.molotov",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.pipe-bomb",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.firecracker-lure",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.smoke-grenade",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "thr.flashbang",
+          "reason": "status reference"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.corgi-lure",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.shield-bubble",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.adrenaline",
+          "reason": "status placeholder"
+        },
+        {
+          "type": "asset.placeholder",
+          "id": "ability.turret",
+          "reason": "status placeholder"
+        }
+      ]
+    }
+  ],
+  "perf": {
+    "fps": 59.88023952095874,
+    "frameMs": 16.699999999999818,
+    "simMs": 0,
+    "drawCalls": 39,
+    "triangles": 1523,
+    "geometries": 58,
+    "textures": 5,
+    "entities": 1,
+    "backend": "webgpu"
+  }
+}
