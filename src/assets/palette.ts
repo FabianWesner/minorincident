@@ -1,0 +1,12 @@
+/** Art-direction §3: shared tokens, deliberately independent of renderer and Blender. */
+export const palette: Record<string, string> = {
+  asphalt: '#5b4f5c', sidewalk: '#b9a4a0', grass: '#6f8f3a', foliage: '#7da23c',
+  woodWarm: '#b0703f', picketWhite: '#f2e6dc', brick: '#a8483a', survivorRed: '#d9363e',
+  backpackTeal: '#2f6e6a', schoolBusYellow: '#f2b630', policeBlue: '#2f6bff',
+  sirenRed: '#ff2d2d', windowGlow: '#ffc773', blood: '#b3121f', infectedSkin: '#c9a39a',
+  infectedEye: '#ff3b2f', uiDark: '#25222c',
+};
+export function validMaterial(name: string): boolean {
+  const match = name.match(/^(pal|emi|keep)_(.+)$/);
+  return !!match && (match[1] === 'keep' ? ['glass', 'neon'].includes(match[2]) : match[2] in palette);
+}

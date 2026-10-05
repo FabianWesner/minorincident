@@ -43,4 +43,5 @@ pixelmatch, pngjs and DefinitelyTyped types use MIT or the permissive licenses
 distributed with those packages. Rapier and Playwright use Apache-2.0.
 Project dependency versions are pinned in package-lock.json. Wrangler is a
 deploy-only tool invoked through npx and is not a project dependency.
+glTF Transform and meshoptimizer use MIT; sharp uses Apache-2.0.
 No reference art, meshes, textures, or audio from folio-2025 are reused.
