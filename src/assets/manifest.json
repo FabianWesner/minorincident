@@ -3731,6 +3731,10 @@
     "lods": {
       "lod1": "assets/bld.joes-diner/model.lod1.glb",
       "lod2": "assets/bld.joes-diner/model.lod2.glb"
+    },
+    "world": {
+      "token": "survivorRed",
+      "solid": true
     }
   },
   {
@@ -3828,6 +3832,10 @@
     "lods": {
       "lod1": "assets/bld.mainstreet-brick/model.lod1.glb",
       "lod2": "assets/bld.mainstreet-brick/model.lod2.glb"
+    },
+    "world": {
+      "token": "brick",
+      "solid": true
     }
   },
   {
@@ -9041,64 +9049,6 @@
     "decayVariants": [],
     "world": {
       "token": "uiDark",
-      "solid": true
-    }
-  },
-  {
-    "id": "bld.diner",
-    "category": "building",
-    "status": "placeholder",
-    "tier": "side",
-    "glb": "public/assets/models/bld.diner.glb",
-    "dimensions": {
-      "x": 10,
-      "y": 4,
-      "z": 7,
-      "tolerance": 0.1
-    },
-    "forward": "+X",
-    "frontNodes": [],
-    "requiredNodes": [],
-    "animatedNodes": [],
-    "sockets": [],
-    "budget": {
-      "triangles": 10000,
-      "materials": 8,
-      "fileKB": 512,
-      "drawCalls": 8
-    },
-    "decayVariants": [],
-    "world": {
-      "token": "survivorRed",
-      "solid": true
-    }
-  },
-  {
-    "id": "bld.hardware",
-    "category": "building",
-    "status": "placeholder",
-    "tier": "side",
-    "glb": "public/assets/models/bld.hardware.glb",
-    "dimensions": {
-      "x": 10,
-      "y": 5.5,
-      "z": 7,
-      "tolerance": 0.1
-    },
-    "forward": "+X",
-    "frontNodes": [],
-    "requiredNodes": [],
-    "animatedNodes": [],
-    "sockets": [],
-    "budget": {
-      "triangles": 10000,
-      "materials": 8,
-      "fileKB": 512,
-      "drawCalls": 8
-    },
-    "decayVariants": [],
-    "world": {
-      "token": "brick",
       "solid": true
     }
   },
