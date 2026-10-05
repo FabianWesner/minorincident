@@ -46,6 +46,8 @@ export interface SSTestApi {
   camera: { preset(name: string): void; follow(): void; shake(intensity: number): void; project(x: number, y: number, z: number): number[]; cinematic(pose: import('../render/View').CameraPose): void };
   /** E02 presentation patch: cameraShake, bloom, cheapDof, timeOfDay; idPass/occludersVisible are test probes. */
   settings: { set(patch: Partial<Settings>): void };
+  /** E15 render-only clock/event probes. stepRender never advances simulation or its RNG; the next render consumes the new time. */
+  vfx: { stepRender(seconds: number): void; emit(event: Omit<Extract<GameEvent, { type: 'vfx.effect' }>, 'tick'> | Omit<Extract<GameEvent, { type: 'telegraph' }>, 'tick'> | Omit<Extract<GameEvent, { type: 'attack.resolved' }>, 'tick'> | Omit<Extract<GameEvent, { type: 'vehicle.feedback' }>, 'tick'>): void };
   perf(): ReturnType<Game['perf']>;
   screenshotReady(): Promise<void>;
 }
@@ -59,7 +61,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
-    version: '1.3.0', ready,
+    version: '1.4.0', ready,
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
     loadLevel: async () => pending('E12', 'loadLevel'),
@@ -106,6 +108,10 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     bot: { start: () => pending('E19', 'bot.start'), stop: () => pending('E19', 'bot.stop'), status: () => pending('E19', 'bot.status') },
     camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose) => game.view.view.cinematic(pose) },
     settings: { set: (patch) => { if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.view.settings(patch); } },
+    vfx: {
+      stepRender: (seconds) => game.view.frame(seconds),
+      emit: (event) => { game.world.events.emit({ ...event, tick: game.world.tick } as GameEvent); game.view.update(1); },
+    },
     perf: () => game.perf(), screenshotReady: () => game.screenshotReady(),
   };
   window.__SS__ = api; return api;

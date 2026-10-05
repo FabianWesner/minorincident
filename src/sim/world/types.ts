@@ -14,7 +14,16 @@ export interface EntitySnapshot {
   health: { current: number; max: number };
   faction: string;
 }
+/** Presentation events contain only plain authored geometry; views never write back. */
+export type TelegraphKind = 'lunge' | 'charge' | 'splash' | 'bloated';
+export type EffectKind = 'explosion' | 'fire' | 'smoke' | 'toxic' | 'electric' | 'screamer' | 'objective' | 'pickup' | 'ash' | 'vehicle-smoke' | 'vehicle-fire';
 export type GameEvent =
+  | { tick: number; type: 'entity.spawned'; id: number }
+  /** E09 → E15 feedback only: no vehicle control/physics in the view. Blood is level-local 0..1. */
+  | { tick: number; type: 'vehicle.feedback'; id: number; position: { x: number; z: number }; yaw: number; healthFraction: number; blood: number }
+  | { tick: number; type: 'telegraph'; attackId: number; kind: TelegraphKind; position: { x: number; z: number }; radius: number; angle: number }
+  | { tick: number; type: 'attack.resolved'; attackId: number }
+  | { tick: number; type: 'vfx.effect'; kind: EffectKind; position: { x: number; z: number }; radius: number }
   | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number } }
   | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number }
   | { tick: number; type: 'combat.hit-stop'; sourceId: number; durationMs: number }

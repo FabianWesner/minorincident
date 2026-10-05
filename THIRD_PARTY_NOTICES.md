@@ -35,6 +35,8 @@ copyright 2025 Bruno Simon):
 
 | `Explosions.js` (41046b5) | `src/sim/combat/Damage.ts` — radial splash falloff and direction-scaled impulse, without singleton/render dependencies |
 
+| `Noises.js`, `World/Confetti.js`, `World/Leaves.js`, `Trails.js` (41046b5) | `src/render/vfx/FxPool.ts` — fixed instancing, shader burst trajectories, shared sine noise and tracer slots |
+
 All folio-2025 adaptations above reference commit `41046b5`.
 
 ## Bruno Simon MIT license

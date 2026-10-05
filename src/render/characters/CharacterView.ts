@@ -6,6 +6,7 @@ import { atLeast, type AssetDef } from '../../assets/types';
 import { type PaletteToken } from '../../data/palette';
 import type { GearTier, SurvivorState, SurvivorVariant } from '../../data/survivor';
 import type { Materials } from '../Materials';
+import type { PaletteMaterial } from '../PaletteMaterial';
 import { ProceduralAnimator } from './ProceduralAnimator';
 import { disposeCharacter, loadCharacter } from './rig';
 
@@ -15,7 +16,9 @@ export class CharacterView extends Group {
   private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
   private variant: SurvivorVariant = 'female';
   private tier: GearTier = 0;
-  async init(materials: Materials): Promise<void> {
+  private readonly bloodMaterials: PaletteMaterial[] = [];
+  private readonly weaponMaterials: PaletteMaterial[] = [];
+  async init(materials: Materials, weaponFeedback = false): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     for (const variant of ['female', 'male'] as const) {
       const id = `char.survivor-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
@@ -34,15 +37,21 @@ export class CharacterView extends Group {
           let replacement = replacements.get(source);
           if (replacement) return replacement;
           const token = source.name.replace(/^pal_/, '') as PaletteToken;
-          if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = materials.get(token);
-          else replacement = materials.fromColor(source.name, (source as import('three').MeshStandardMaterial).color);
+          if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = materials.unique(token);
+          else replacement = materials.fromColor(`${variant}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
           replacement.userData.sharedPalette = true;
+          this.bloodMaterials.push(replacement as PaletteMaterial);
           oldMaterials.add(source); replacements.set(source, replacement); return replacement;
         };
         object.material = Array.isArray(object.material) ? object.material.map(remap) : remap(object.material);
         object.castShadow = object.receiveShadow = true;
       });
       for (const material of oldMaterials) material.dispose();
+      if (weaponFeedback) {
+        const material = materials.unique('picketWhite'), weapon = new Mesh(new BoxGeometry(0.1, 0.65, 0.12), material);
+        material.userData.sharedPalette = true; weapon.name = 'weapon-feedback-placeholder'; weapon.position.y = 0.2;
+        character.rig.weaponSocketR.add(weapon); this.weaponMaterials.push(material);
+      }
       const gear: Group[] = [];
       const attachment = (tier: number, parent: import('three').Object3D, size: [number, number, number], position: [number, number, number], token: PaletteToken): void => {
         const group = new Group(); group.name = `gear-tier-${tier}`; const mesh = new Mesh(new BoxGeometry(...size), materials.get(token));
@@ -70,10 +79,11 @@ export class CharacterView extends Group {
       if (character.model.visible) character.animator.update(pose, tick, alpha);
     }
   }
+  setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; for (const material of this.weaponMaterials) material.bloodCoverage.value = coverage; }
   getState() {
     const character = this.characters.get(this.variant);
-    return { variant: this.variant, gearTier: this.tier, animation: character?.animator.state, missingClips: character?.animator.missingClips ?? 0,
+    return { bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, weaponBloodCoverage: this.weaponMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, missingClips: character?.animator.missingClips ?? 0,
       evaluations: character?.animator.evaluations ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
   }
-  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.characters.clear(); this.clear(); }
+  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.characters.clear(); this.bloodMaterials.length = this.weaponMaterials.length = 0; this.clear(); }
 }

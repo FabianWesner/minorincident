@@ -48,6 +48,14 @@ export const ttkBands: Record<string, Record<CombatArchetype, readonly [number, 
     gorilla: [23.48, 24.4],
     flamingo: [0.01, 0.9],
   },
+  // E15 probe blade uses the E05 0.5s swing timing and 60 damage, pending the E06 catalog.
+  'weapon.machete': {
+    runner: [0.01, 0.9], crawler: [0.01, 0.9], brute: [1.98, 2.9], screamer: [0.01, 0.9],
+    sprinter: [0.01, 0.9], riot: [0.98, 1.9], bloated: [0.48, 1.4], firefighter: [0.98, 1.9],
+    hazmat: [0.48, 1.4], armored: [6.48, 7.4], butcher: [6.98, 7.9], nurse: [0.48, 1.4],
+    dog: [0.01, 0.9], dachshund: [0.01, 0.9], k9: [0.01, 0.9], cat: [0.01, 0.9],
+    crow: [0.01, 0.9], lion: [2.98, 3.9], gorilla: [9.48, 10.4], flamingo: [0.01, 0.9],
+  },
   'weapon.pistol': {
     runner: [0.13, 0.55],
     crawler: [0.13, 0.55],
