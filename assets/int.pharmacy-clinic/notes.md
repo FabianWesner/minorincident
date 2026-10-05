@@ -8,6 +8,11 @@ The named front is +X; Blender Z is up; bottom of foundation is z=0.
 Purposeful additions behind the shopfront: prescription counter with register,
 three cabinet doors, paper pad, and examination couch/step in the consultation
 alcove. No real brands. All printed marks are geometry and stand at least 3 mm
-proud; the floor splatter stands 8 mm above the tiles. Tile and masonry seams
+proud; the floor splatter stands 40 mm above the tiles. Tile and masonry seams
 are actual gaps. No image textures. Static meshes join by palette material;
 shop doors and wheelchair wheels retain joint empties and their own meshes.
+
+The final layout mirrors the authored Y positions to show the glazed side to
+Three.js' fixed +X/-Y study/game camera. Lettering is transformed independently
+so it remains readable. The counter sits behind the display shelving, and the
+consultation couch occupies the alcove behind the care-message wall.

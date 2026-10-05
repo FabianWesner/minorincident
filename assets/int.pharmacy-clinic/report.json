@@ -1,8 +1,8 @@
 {
   "id": "int.pharmacy-clinic",
   "tier": "Hero",
-  "triangles": 156724,
-  "draw_calls": 32,
+  "triangles": 66700,
+  "draw_calls": 29,
   "materials": [
     "emi_picketWhite",
     "keep_glass",
@@ -19,9 +19,11 @@
     "pal_uiDark"
   ],
   "nodes_ok": true,
-  "within_budget": false,
-  "rounds": 1,
-  "webgpu_ok": false,
-  "webgl2_ok": false,
-  "gaps": []
+  "within_budget": true,
+  "rounds": 5,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "gaps": [
+    "Fine package artwork and mottled floor reflections are simplified."
+  ]
 }
