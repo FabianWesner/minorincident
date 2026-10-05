@@ -49,12 +49,13 @@ class Layout:
             self.data['lawns'].append(dict(min=[x-3,z-3], max=[x+3,z+3]))
             for dx,dz in [(0,0),(2,0),(0,2)]: self.place('prop.tree', [x+dx,0,z+dz])
             self.place('prop.hedge', [x-2,0,z])
+            for j in range(5): self.box('flower', 'schoolBusYellow' if j%2 else 'survivorRed', [.18,.2,.18], [x-2+j*.7,.25,z-2])
         for z in range(-20,21,8):
             for x in [-5,5]: self.place('prop.street-lamp', [x,0,z]); self.place('prop.picket-fence', [x*1.6,0,z])
         for x,z in [(-6,-6),(6,6),(-6,6),(6,-6)]: self.place('prop.traffic-cone', [x,0,z])
         for x,z in [(10,-6),(-10,6),(20,-6),(-20,6)]: self.place('veh.sedan-red', [x,0,z])
         for block in range(4): self.data['lightGroups'].append(dict(id=f'block-{block}', offAt=3 if block%2==0 else 5))
-        self.data['acousticZones'].append(dict(id='outdoor', preset='suburban-outdoor', polygon=self.data['bounds']))
+        self.data['acousticZones'].append(dict(id='outdoor', preset='park' if district=='D-PARK' else 'suburb-open' if district=='D-RES' else 'street', polygon=self.data['bounds']))
         for tier in range(1,6):
             self.place('veh.wreck', [(-1 if tier%2 else 1)*3,0,-22+tier*7], tier=tier, allowed=True)
             for j in range(tier): self.box(f'rubble-{tier}-{j}', 'brick' if tier<4 else 'uiDark', [0.8+j*.25,.3+j*.1,.6], [-9+j, .2, -8+tier*4], tier)
@@ -88,7 +89,12 @@ class Layout:
         self.data['surfaces'] += [dict(surface='asphalt', polygon=[[-3.5,-28],[3.5,-28],[3.5,28],[-3.5,28],[-3.5,-28]]),dict(surface='asphalt', polygon=[[-28,-3.5],[28,-3.5],[28,3.5],[-28,3.5],[-28,-3.5]])]
 
     def box(self,name,token,size,pos,tier=0):
-        o=box(name,token,size,pos); self.layers[tier].append(o); return o
+        o=box(name,token,size,pos); self.layers[tier].append(o)
+        if tier==0 and pos[1]<.4 and size[1]<.4 and token in ['woodWarm','sidewalk','uiDark']:
+            x,z=pos[0],pos[2]; hx,hz=size[0]/2,size[2]/2
+            surface='wood' if token=='woodWarm' else 'metal' if name=='rail' else 'gravel' if token=='uiDark' else 'tile'
+            self.data['surfaces'].append(dict(surface=surface,polygon=[[x-hx,z-hz],[x+hx,z-hz],[x+hx,z+hz],[x-hx,z+hz],[x-hx,z-hz]]))
+        return o
     def anchor(self,name,pos):
         self.data['anchors'][name]=dict(position=pos,yaw=0)
         self.empties.append(empty('anchor:'+name,pos))
@@ -97,16 +103,27 @@ class Layout:
         m=self.manifest[asset]; dims=[m['dimensions'][a]*scale[i] for i,a in enumerate(['x','y','z'])]
         sx=abs(math.cos(yaw))*dims[0]+abs(math.sin(yaw))*dims[2]; sz=abs(math.sin(yaw))*dims[0]+abs(math.cos(yaw))*dims[2]
         aabb=dict(min=[pos[0]-sx/2,pos[1],pos[2]-sz/2],max=[pos[0]+sx/2,pos[1]+dims[1],pos[2]+sz/2])
-        p=dict(id=id,assetId=asset,position=pos,yaw=yaw,scale=list(scale),minTier=tier,maxTier=5,allowRoad=allowed,visualAabb=aabb)
+        p=dict(id=id,assetId=asset,position=pos,yaw=yaw,scale=list(scale),minTier=tier,maxTier=5,allowRoad=allowed,visualAabb=aabb,lightGroup=f'block-{len(self.data["placements"])%4}')
         self.data['placements'].append(p)
-        o=empty('inst:'+asset+':'+str(len(self.data['placements'])),pos,yaw,scale); o['assetId']=asset; o['minTier']=tier; o['maxTier']=5; self.empties.append(o)
+        o=empty('inst:'+asset+':'+str(len(self.data['placements'])),pos,yaw,scale); o['assetId']=asset; o['lightGroup']=p['lightGroup']; o['minTier']=tier; o['maxTier']=5; self.empties.append(o)
         if m.get('solid'): self.data['colliders'].append(dict(id=id,aabb=aabb,minTier=tier,maxTier=5))
         return id
     def building(self,asset,x,z,door,title):
         id=self.place(asset,[x,0,z]); aabb=self.data['placements'][-1]['visualAabb']
         self.data['buildings'].append(dict(id=id,assetId=asset,aabb=aabb,label=title))
         self.anchor(door,[x,0,z+ (aabb['max'][2]-z)+1])
-        self.data['acousticZones'].append(dict(id=id,preset='small-room',polygon=[[aabb['min'][0],aabb['min'][2]],[aabb['max'][0],aabb['min'][2]],[aabb['max'][0],aabb['max'][2]],[aabb['min'][0],aabb['max'][2]],[aabb['min'][0],aabb['min'][2]]]))
+        width=aabb['max'][0]-aabb['min'][0]; height=aabb['max'][1]
+        front=aabb['max'][2]
+        for side in [-1,1]:
+            self.place('prop.tree',[x+side*(width*.65),0,z])
+            self.place('prop.hedge',[x+side*(width*.34),0,front+.55])
+            for j in range(8): self.place('prop.flower',[x+side*(width*.32)+j*.25-.9,0,front+1.2])
+        self.data['lawns'].append(dict(min=[x-width*.5,front+1.5],max=[x+width*.5,front+2.7]))
+        self.box('burned-facade', 'uiDark', [width*.8,height*.5,.035], [x,height*.32,aabb['max'][2]+.055],3)
+        for j in range(4):
+            self.box('fallen-facade', 'brick', [.7+j*.12,.25+j*.07,.5], [x-width*.35+j*width*.22,.2,aabb['max'][2]+.8],5)
+        self.box('broken-roof', 'uiDark', [width*.45,.25,1.2], [x+width*.2,height*.72,z],5)
+        self.data['acousticZones'].append(dict(id=id,preset='interior-large' if asset in ['bld.supermarket','bld.school','bld.gym','bld.hospital'] else 'interior-small',polygon=[[aabb['min'][0],aabb['min'][2]],[aabb['max'][0],aabb['min'][2]],[aabb['max'][0],aabb['max'][2]],[aabb['min'][0],aabb['max'][2]],[aabb['min'][0],aabb['min'][2]]]))
         self.data['surfaces'].append(dict(surface='tile',polygon=self.data['acousticZones'][-1]['polygon']))
 
     def export(self):
@@ -115,7 +132,7 @@ class Layout:
         canonical=[]
         for tier,objects in enumerate(self.layers):
             for o in objects:
-                canonical.append([tier,o.name,o.data.materials[0].name,[list(v.co) for v in o.data.vertices],list(o.location)])
+                canonical.append([tier,o.name,o.data.materials[0].name,[list(v.co) for v in o.data.vertices],[list(p.vertices) for p in o.data.polygons],list(o.location)])
         self.data['geometryHash']=hashlib.sha256(json.dumps(canonical,sort_keys=True,separators=(',',':')).encode()).hexdigest()
         for tier,objects in enumerate(self.layers):
             removable=set(sum([l['remove'] for l in self.data['layers']],[]))

@@ -10,4 +10,5 @@ l.box('helipad','asphalt',[14,.06,14],[-14,.02,15])
 for x in [-16,-12]: l.box('pad-H','picketWhite',[.4,.02,5],[x,.08,15])
 l.box('pad-H-cross','picketWhite',[4,.02,.4],[-14,.08,15])
 l.anchor('objective', [5,0,-8])
+l.data['walkable']['excluded'] = [[[5, -20], [11, -20], [11, -12], [5, -12], [5, -20]], [[19, -20], [25, -20], [25, -12], [19, -12], [19, -20]]]
 l.export()

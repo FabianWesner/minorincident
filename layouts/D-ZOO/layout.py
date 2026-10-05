@@ -8,4 +8,5 @@ for cx in [-14,14]:
     l.box('enclosure-rock','woodWarm',[3,1.5,2],[cx, .75,15])
 l.box('flamingo-pond','backpackTeal',[8,.08,5],[-14,.03,19])
 l.anchor('objective', [5,0,-8])
+l.data['walkable']['excluded'] = [[[-18, 16.5], [-10, 16.5], [-10, 21.5], [-18, 21.5], [-18, 16.5]]]
 l.export()
