@@ -4137,8 +4137,7 @@
       "lod1": "public/assets/models/bld.school-elementary.lod1.glb",
       "lod2": "public/assets/models/bld.school-elementary.lod2.glb"
     },
-    "sourceForward": "+X",
-    "script": "assets/bld.school-elementary/build.py"
+    "sourceForward": "+X"
   },
   {
     "id": "int.gym-cafeteria",
@@ -4198,8 +4197,7 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/kit.playground/model.glb",
-    "sourceForward": "+X",
-    "script": "assets/kit.playground/build.py"
+    "sourceForward": "+X"
   },
   {
     "id": "int.supermarket",
@@ -4234,8 +4232,7 @@
       "lod1": "public/assets/models/int.supermarket.lod1.glb",
       "lod2": "public/assets/models/int.supermarket.lod2.glb"
     },
-    "sourceForward": "+X",
-    "script": "assets/int.supermarket/build.py"
+    "sourceForward": "+X"
   },
   {
     "id": "int.mini-mall",
@@ -4422,8 +4419,7 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/kit.police-checkpoint/model.glb",
-    "sourceForward": "+X",
-    "script": "assets/kit.police-checkpoint/build.py"
+    "sourceForward": "+X"
   },
   {
     "id": "kit.evac-camp",
@@ -5053,9 +5049,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.civilian-kid.glb",
     "dimensions": {
-      "x": 0.5572077967226505,
-      "y": 1.4744024276733398,
-      "z": 0.6619207859039307,
+      "x": 0.5572,
+      "y": 1.4744,
+      "z": 0.6619,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5110,7 +5106,6 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/npc.civilian-kid/model.glb",
-    "script": "assets/npc.civilian-kid/build.py",
     "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/npc.civilian-kid.lod1.glb",
@@ -5124,9 +5119,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.civilian-elderly.glb",
     "dimensions": {
-      "x": 0.5852935513741321,
-      "y": 1.8,
-      "z": 0.859262058734986,
+      "x": 0.5788,
+      "y": 1.78,
+      "z": 0.8497,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5185,9 +5180,7 @@
       "lod1": "public/assets/models/npc.civilian-elderly.lod1.glb",
       "lod2": "public/assets/models/npc.civilian-elderly.lod2.glb"
     },
-    "script": "assets/npc.civilian-elderly/build.py",
-    "sourceScale": 1.2866332647759229,
-    "sourceForward": "+X"
+    "sourceScale": 1.27233734
   },
   {
     "id": "npc.patient-zero-courier",
@@ -5557,8 +5550,7 @@
       "lod2": "public/assets/models/npc.police-officer.lod2.glb"
     },
     "sourceForward": "+X",
-    "sourceScale": 1.2694477414759615,
-    "script": "assets/npc.police-officer/build.py"
+    "sourceScale": 1.2694477414759615
   },
   {
     "id": "npc.paramedic",
@@ -5631,9 +5623,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.firefighter-alive.glb",
     "dimensions": {
-      "x": 0.6766336584529581,
-      "y": 1.8000000000000003,
-      "z": 0.9104761829501424,
+      "x": 0.6766,
+      "y": 1.8,
+      "z": 0.9105,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5688,13 +5680,12 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/npc.firefighter-alive/model.glb",
-    "script": "assets/npc.firefighter-alive/build.py",
     "sourceForward": "+X",
+    "sourceScale": 1.2364922,
     "lods": {
       "lod1": "public/assets/models/npc.firefighter-alive.lod1.glb",
       "lod2": "public/assets/models/npc.firefighter-alive.lod2.glb"
-    },
-    "sourceScale": 1.236492203102856
+    }
   },
   {
     "id": "npc.national-guard",
@@ -5703,9 +5694,9 @@
     "tier": "hero",
     "glb": "public/assets/models/npc.national-guard.glb",
     "dimensions": {
-      "x": 0.7083720916763953,
+      "x": 0.7084,
       "y": 1.8,
-      "z": 0.792938240244154,
+      "z": 0.7929,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5760,13 +5751,12 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/npc.national-guard/model.glb",
-    "script": "assets/npc.national-guard/build.py",
     "sourceForward": "+X",
+    "sourceScale": 1.25995466,
     "lods": {
       "lod1": "public/assets/models/npc.national-guard.lod1.glb",
       "lod2": "public/assets/models/npc.national-guard.lod2.glb"
-    },
-    "sourceScale": 1.2599546567761748
+    }
   },
   {
     "id": "npc.survivor-group",
@@ -6676,9 +6666,9 @@
     "tier": "hero",
     "glb": "public/assets/models/bld.tunnel-portal.glb",
     "dimensions": {
-      "x": 7.300000190734863,
-      "y": 8.640716791152954,
-      "z": 12.394163131713867,
+      "x": 7.3,
+      "y": 8.6407,
+      "z": 12.3942,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -6698,7 +6688,6 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/bld.tunnel-portal/model.glb",
-    "script": "assets/bld.tunnel-portal/build.py",
     "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/bld.tunnel-portal.lod1.glb",

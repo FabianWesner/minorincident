@@ -109,7 +109,6 @@ test('T-E17-caps @E17-AC11 exported caps survive compression and stay on the sur
 
 test('T-E17-height @E17-AC02 adult exports stay 1.75–1.85 m at every LOD', async () => {
   const {default:manifest}=await import('../../../src/assets/manifest.json'), io=await assetIO();
-  // The authored civilian kid is a protected child (05 asset inventory), not an adult-height export.
   const exceptions=new Set(['char.corgi','npc.brother','npc.civilian-kid','inf.crawler','inf.brute','inf.teen-skater']);
   for(const def of manifest as AssetDef[]) {
     if(!def.sourceGlb || !['character','infected'].includes(def.category) || exceptions.has(def.id)) continue;
