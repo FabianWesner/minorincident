@@ -1,0 +1,76 @@
+{
+  "target": "E10",
+  "epics": [
+    "E10"
+  ],
+  "pattern": "@(?:E10)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E10)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E10/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@(?:E10)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--grep-invert",
+        "@E10-AC06",
+        "--workers=2"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/district-load.spec.ts",
+        "--grep",
+        "@E10-AC06",
+        "--project=chromium",
+        "--workers=2"
+      ],
+      "exitCode": 0
+    }
+  ]
+}

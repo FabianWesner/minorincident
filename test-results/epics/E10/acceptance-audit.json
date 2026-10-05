@@ -1,0 +1,215 @@
+{
+  "epic": "E10",
+  "allPassed": true,
+  "criteria": {
+    "E10-AC01": [
+      {
+        "title": "T-E10-01 @E10 @E10-AC01 closed bounds, connected roads, manifest references and lane exclusion",
+        "source": "unit.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-01 @E10 @E10-AC01 closed bounds, connected roads, manifest references and lane exclusion",
+        "source": "vitest.json",
+        "status": "passed"
+      }
+    ],
+    "E10-AC02": [
+      {
+        "title": "T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objective from player start at every tier",
+        "source": "sim.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objective from player start at every tier",
+        "source": "vitest.json",
+        "status": "passed"
+      }
+    ],
+    "E10-AC03": [
+      {
+        "title": "T-E10-03 @E10 @E10-AC03 cumulative decay grows wrecks, removes base nodes and disables lights monotonically",
+        "source": "unit.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-03 @E10 @E10-AC03 cumulative decay grows wrecks, removes base nodes and disables lights monotonically",
+        "source": "vitest.json",
+        "status": "passed"
+      }
+    ],
+    "E10-AC04": [
+      {
+        "title": "T-E10-04-D-RES @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-04-D-MAIN @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-04-D-SCHOOL @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-04-D-SHOP @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-04-D-CIVIC @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-04-D-PARK @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-04-D-ZOO @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-04-D-EDGE @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-review-thresholds @E10 @E10-AC09 @E10-AC04 reviewed diorama/decay should items meet the 70% threshold",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      }
+    ],
+    "E10-AC05": [
+      {
+        "title": "T-E10-05 @E10 @E10-AC05 repeated props use instance batches and full high-tier district <=250 draw calls",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      }
+    ],
+    "E10-AC06": [
+      {
+        "title": "T-E10-06 @E10 @E10-AC06 largest L6 composition loads in <=6 seconds with warm cache in production",
+        "source": "playwright-gpu.json",
+        "status": "passed"
+      }
+    ],
+    "E10-AC07": [
+      {
+        "title": "T-E10-07 @E10 @E10-AC07 every building/heavy prop collider matches transformed manifest AABB within 10%",
+        "source": "unit.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-07b @E10 @E10-AC07 actual placeholder geometry and collider contract agree in X/Z within 10%",
+        "source": "unit.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-07 @E10 @E10-AC07 every building/heavy prop collider matches transformed manifest AABB within 10%",
+        "source": "vitest.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-07b @E10 @E10-AC07 actual placeholder geometry and collider contract agree in X/Z within 10%",
+        "source": "vitest.json",
+        "status": "passed"
+      }
+    ],
+    "E10-AC08": [
+      {
+        "title": "T-E10-08-D-RES @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-08-D-MAIN @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-08-D-SCHOOL @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-08-D-SHOP @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-08-D-CIVIC @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-08-D-PARK @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-08-D-ZOO @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-08-D-EDGE @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      }
+    ],
+    "E10-AC09": [
+      {
+        "title": "T-E10-09 @E10 @E10-AC09 all district diorama and decay review must items pass",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-review-thresholds @E10 @E10-AC09 @E10-AC04 reviewed diorama/decay should items meet the 70% threshold",
+        "source": "playwright-headless.json",
+        "status": "passed"
+      }
+    ],
+    "E10-AC10": [
+      {
+        "title": "T-E10-10 @E10 @E10-AC10 vector minimap overlays exported 3D roads within one metre",
+        "source": "unit.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-10 @E10 @E10-AC10 vector minimap overlays exported 3D roads within one metre",
+        "source": "vitest.json",
+        "status": "passed"
+      }
+    ],
+    "E10-AC11": [
+      {
+        "title": "T-E10-11 @E10 @E10-AC11 all TS anchor references, spawn volumes, triggers and objectives validate against layout/nav",
+        "source": "unit.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-11 @E10 @E10-AC11 all TS anchor references, spawn volumes, triggers and objectives validate against layout/nav",
+        "source": "vitest.json",
+        "status": "passed"
+      }
+    ],
+    "E10-AC12": [
+      {
+        "title": "T-E10-12 @E10 @E10-AC12 headless Blender rebuild is deterministic and TS gameplay does not rebuild",
+        "source": "unit.json",
+        "status": "passed"
+      },
+      {
+        "title": "T-E10-12 @E10 @E10-AC12 headless Blender rebuild is deterministic and TS gameplay does not rebuild",
+        "source": "vitest.json",
+        "status": "passed"
+      }
+    ]
+  }
+}
