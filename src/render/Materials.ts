@@ -1,5 +1,5 @@
 // Adapted from folio-2025 Materials.js by Bruno Simon (MIT), commit 41046b5.
-import { DataTexture, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType } from 'three/webgpu';
+import { DataTexture, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, type Color } from 'three/webgpu';
 import { palette, paletteTokens, type PaletteToken } from '../data/palette';
 import { PaletteMaterial } from './PaletteMaterial';
 import type { Lighting } from './Lighting';
@@ -22,6 +22,13 @@ export class Materials {
     const key = `${token}:${emissive}`;
     let material = this.cache.get(key);
     if (!material) { material = new PaletteMaterial(token, this.texture, this.lighting, emissive); this.cache.set(key, material); }
+    return material;
+  }
+  /** Imported hero detail swatches retain their authored colors with the same stylized shading. */
+  fromColor(name: string, color: Color): PaletteMaterial {
+    const key = `swatch:${name}:${color.getHexString()}`;
+    let material = this.cache.get(key);
+    if (!material) { material = new PaletteMaterial('picketWhite', this.texture, this.lighting, 0, color.clone()); material.name = name; this.cache.set(key, material); }
     return material;
   }
   unique(token: PaletteToken, emissive = 0, transparent = false): PaletteMaterial {
