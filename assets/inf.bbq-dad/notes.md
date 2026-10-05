@@ -1,0 +1,2 @@
+# BBQ dad reference study
+Adult infected, broad stocky torso and heavy arms. Cream camp shirt, charcoal bib apron with GRILL / flame / CHILL motif, taupe cuffed cargo shorts, dark brown two-strap sandals, swept brown hair, blood smears and open snarling mouth. Right hand holds slotted metal spatula. Target 1.6 m height, head roughly one third including hair, wide bent stance. Rigid hierarchy with proximal hidden stump caps; +X forward, -Y right. Subdivision applied before export per explicit task.
