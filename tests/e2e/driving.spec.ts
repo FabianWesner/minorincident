@@ -50,3 +50,15 @@ test('T-E09-touch @E09 touch stick accelerates and a held brake stops without ex
   const car = await page.evaluate(() => window.__SS__!.getEntity(2)!); expect(car.vehicle!.speed).toBeLessThan(.1); expect(car.vehicle!.driver).toBe(1);
   await touch('touchEnd', []);
 });
+test('T-E09-asset @E09-AC01 dynamically spawned integrated fire engine renders and unloads its native resources', async ({ page }) => {
+  await boot(page);
+  const result = await page.evaluate(async () => {
+    const a = window.__SS__!; await a.loadScenario('survivor'); a.pause(); const id = a.spawn('vehicle.fire-engine', { x: 0, z: 12 }); a.camera.preset('vehicle'); await a.screenshotReady();
+    return { vehicle: a.getState().render.vehicles.find(v => v.id === id), perf: a.perf() };
+  });
+  expect(result.vehicle).toBeDefined(); expect(result.vehicle!.placeholder).toBe(false); expect(result.vehicle!.wheels).toHaveLength(4);
+  expect(result.perf.drawCalls).toBeLessThanOrEqual(600); expect(result.perf.triangles).toBeLessThanOrEqual(1_500_000);
+  await page.screenshot({ path: 'test-results/epics/E09/fire-engine.png' });
+  await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('empty'); a.pause(); await a.screenshotReady(); });
+  const state = await page.evaluate(() => window.__SS__!.getState()); expect(state.perf.bodies).toBe(2); expect(state.render.vehicles).toEqual([]);
+});

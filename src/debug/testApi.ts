@@ -36,7 +36,7 @@ export interface SSTestApi {
     /** Begin at scenario tick zero so seed + frames are sufficient for replay. */
     record(): void; stopRecording(): Recording; replay(data: Recording): Promise<void>;
   };
-  /** E06: action IDs spawn walk-over pickups; infected options include reactive hearing fixtures. */
+  /** E06 action IDs spawn pickups; E09 vehicle.* IDs spawn drivable vehicles. Infected options include hearing fixtures. */
   spawn(defId: string, pos: { x: number; z: number }, opts?: object): number;
   teleport(entityId: number | 'player', pos: { x: number; z: number }): void;
   /** E04: cosmetic selection and sim entry points; weapon and mission resolution remain separate. */
