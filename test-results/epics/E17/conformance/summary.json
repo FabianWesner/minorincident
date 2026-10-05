@@ -1,0 +1,38 @@
+{
+  "findings_before": {
+    "forward": 67,
+    "missing_lod": 46,
+    "unknown_palette": 97,
+    "degenerate_triangle": 62
+  },
+  "findings_after": {
+    "forward": 0,
+    "missing_lod": 0,
+    "unknown_palette": 0,
+    "degenerate_triangle": 0
+  },
+  "slots_before": 140,
+  "slots_after": 163,
+  "other_findings": 500,
+  "palette_tokens_added": 60,
+  "source_exports": 76,
+  "supplied_lod_pairs": 14,
+  "generated_lod_pairs": 28,
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "unit_tests": 50,
+    "verify_unit_tests": 24,
+    "verify_browser_tests": 21,
+    "targeted_e04_and_preview_browser_tests": 8,
+    "smoke_unit_tests": 3,
+    "smoke_browser_tests": 12
+  },
+  "crowd": {
+    "instances": 100,
+    "materials": 8,
+    "drawCalls": 8,
+    "poseError": 2.6723240786207227e-07
+  }
+}
