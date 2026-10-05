@@ -74,7 +74,8 @@ test('T-E15-06 @E15 @E15-AC06 render clock freezes 50ms independent of sim scale
 });
 
 test('T-E15-09b @E15 @E15-AC09 real machete and explosion kills hide limbs, show stump caps, expire gibs; settings preserve hash', async ({ page }) => {
-  test.setTimeout(300_000); await boot(page); const results = [];
+  // 600 real kills render 1,200 combat frames; leave headroom for shared-machine SwiftShader.
+  test.setTimeout(600_000); await boot(page); const results = [];
   for (const gore of ['Full', 'Reduced', 'Off'] as Gore[]) {
     await page.evaluate(async gore => { const a = window.__SS__!; await a.loadScenario('gore-probe', { seed: 1 }); a.pause(); a.settings.set({ gore, vfx: true, cameraShake: false, aimAssist: 'Off' }); }, gore);
     await kills(page, 200);
