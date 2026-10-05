@@ -3,6 +3,8 @@ import { defineConfig, devices } from '@playwright/test';
 // Playwright forces color in child workers; avoid conflicting inherited NO_COLOR.
 delete process.env.NO_COLOR;
 
+// Parallel worktrees each set their own E2E_PORT so they never reuse another lane's server.
+const port = Number(process.env.E2E_PORT ?? 3301);
 const swiftshader = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
 export default defineConfig({
   testDir: './tests',
@@ -14,7 +16,7 @@ export default defineConfig({
   outputDir: 'test-results/playwright/run',
   reporter: [['list'], ['json', { outputFile: 'test-results/playwright/results.json' }]],
   use: {
-    baseURL: 'http://127.0.0.1:3301',
+    baseURL: `http://127.0.0.1:${port}`,
     viewport: { width: 1600, height: 900 },
     deviceScaleFactor: 1,
     trace: 'retain-on-failure',
@@ -29,5 +31,5 @@ export default defineConfig({
     { name: 'webkit', testMatch: '**/smoke.spec.ts', use: { browserName: 'webkit' } },
   ],
   // Test the real production output, including the query-gated API chunk.
-  webServer: { command: 'npm run preview', url: 'http://127.0.0.1:3301', reuseExistingServer: !process.env.CI, timeout: 30_000 },
+  webServer: { command: `npx vite preview --host 127.0.0.1 --port ${port} --strictPort --configLoader runner`, url: `http://127.0.0.1:${port}`, reuseExistingServer: !process.env.CI && !process.env.E2E_PORT, timeout: 30_000 },
 });
