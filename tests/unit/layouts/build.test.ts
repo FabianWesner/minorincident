@@ -28,6 +28,11 @@ test("T-E10-12 @E10 @E10-AC12 headless Blender rebuild is deterministic and TS g
   try {
     writeFileSync(layout, script + "\n# authoring change\n");
     expect(layoutSourceHash("D-RES")).not.toBe(key);
+    writeFileSync(
+      layout,
+      'raise RuntimeError("intentional E10 build failure probe")\n' + script,
+    );
+    expect(() => buildLayout("D-RES", true)).toThrow();
   } finally {
     writeFileSync(layout, script);
   }
