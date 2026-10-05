@@ -19,3 +19,8 @@ Measured occupied pixels (toolbar hidden): 11.11%, 51.42%, 11.25%, 51.26%, 16.06
 The palette version uses stylized matte trim rather than the reference's
 photographic chrome. Rear and far-side details are inferred from the single
 reference. No failed must or should item.
+
+Post-merge review: final captures refreshed after merging E02/E03 main
+`0907b9c` and rebuilding the production bundle with the final generated assets.
+All four must and both should items remain PASS. No visual regression in part
+layout, palette separation or gameplay readability was found.

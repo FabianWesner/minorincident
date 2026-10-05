@@ -1,0 +1,56 @@
+{
+  "target": "E02",
+  "epics": [
+    "E02"
+  ],
+  "pattern": "@(?:E02)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E02)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E02/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@(?:E02)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+      ],
+      "exitCode": 0
+    }
+  ]
+}

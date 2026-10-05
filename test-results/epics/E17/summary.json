@@ -1,7 +1,7 @@
 {
   "epic": "E17",
   "laneComplete": true,
-  "done": false,
+  "done": true,
   "pending": [
     "E17-AC09",
     "E17-AC11 (vision)"
@@ -12,12 +12,15 @@
     "build": 0,
     "test:unit": 0,
     "test:smoke": 0,
+    "verify -- E01": 0,
+    "verify -- E02": 0,
     "verify -- E17": 0,
-    "assets:validate": 0,
     "test:sim": 0,
-    "test:e2e": 0
+    "assets:validate": 0,
+    "E03 browser regression": 0,
+    "final asset browser capture": 0
   },
-  "unitTests": 29,
+  "unitTests": 39,
   "verifyUnitTests": 18,
   "verifyBrowserTests": 15,
   "crowd": {
@@ -33,7 +36,7 @@
       "triangles": 66335,
       "materials": 11,
       "drawCalls": 39,
-      "fileKB": 3664.73828125,
+      "fileKB": 3665.171875,
       "dimensions": [
         7.3999997594266915,
         3.5500002052808965,
@@ -47,31 +50,49 @@
       "triangles": 10821,
       "materials": 11,
       "drawCalls": 39,
-      "fileKB": 873.953125,
+      "fileKB": 874.375,
       "dimensions": [
         7.341862692948013,
         3.5406175075198254,
         2.09997340526437
       ],
-      "hash": "236b042b1654fca2b337b326f261e3180ceca3e633b1e45a53ba8e6534b5d9c7"
+      "hash": "e67723d3d3dc9ce152935349cc15697836fee2d0903ad508e2fae090ed81c3c9"
     },
     {
       "id": "veh.fire-engine:lod2",
       "errors": [],
-      "triangles": 2507,
+      "triangles": 2503,
       "materials": 11,
       "drawCalls": 38,
-      "fileKB": 283.5546875,
+      "fileKB": 282.87890625,
       "dimensions": [
         7.271262002906438,
         3.512349466561491,
-        2.09997340526437
+        2.1000477289431227
       ],
-      "hash": "8965c98578601f693aa7b684bfbe28e0c3e59f11aa6b7f0e6c426c2d83c3f278"
+      "hash": "66c5b67a8f5f6c46c831dfe812c863db8a85b3800d5400d48a2f8fc6770728ed"
     }
   ],
   "needsHuman": [
     "char.corgi",
     "char.survivor-male"
-  ]
+  ],
+  "epicComplete": false,
+  "scope": "E17-AC01\u2013AC08 increment",
+  "epicStatus": "in-progress",
+  "mergedMain": "0907b9cea10201de40cfcd68271403e53147ca50",
+  "regressions": {
+    "E01": {
+      "vitest": 16,
+      "browser": 19
+    },
+    "E02": {
+      "vitest": 6,
+      "browser": 26
+    },
+    "E03": {
+      "browser": 45
+    },
+    "sim": 5
+  }
 }
