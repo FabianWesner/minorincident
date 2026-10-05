@@ -1,5 +1,6 @@
 import { afterEach, expect, test } from 'vitest';
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { Matrix4 } from 'three';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { humanInfected, validateInfected } from '../../../src/data/infected';
 const worlds: SimWorld[] = [];
@@ -73,4 +74,6 @@ test('T-E07-07c @E07 @E07-AC07 scripted cats validate the actual selected perch 
   expect(director.queue).toHaveLength(0); expect(w.infected!.active).toHaveLength(2);
   const cat = w.infected!.active[1]; expect(cat.transform.x).toBe(5.1); expect(cat.transform.y).toBe(2.2);
   expect(director.visible(cat.transform)).toBe(false); expect(Math.hypot(cat.transform.x - 52, cat.transform.z)).toBeGreaterThanOrEqual(18);
+  director.setFrustum(new Matrix4().makeScale(0.01, 1, 0.01).elements);
+  expect(director.visible({ x: cat.transform.x, z: cat.transform.z, y: 0.7 })).toBe(true); expect(director.visible(cat.transform)).toBe(false);
 });
