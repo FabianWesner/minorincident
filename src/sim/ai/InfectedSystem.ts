@@ -253,7 +253,7 @@ export class InfectedSystem {
     if (b.special === 'explode' && this.world.tick === b.until) {
       for (const target of this.world.entities.iterate()) {
         if (target === e || target.health.current <= 0 || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > 3 || !this.world.combat!.query.visible(e.transform, target.transform)) continue;
-        const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId: target.id, origin: e.transform, direction: { x: 0, z: 0 }, base: 35, multiplier: 1, type: 'explosive', knockback: 0, stagger: 0 });
+        const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId: target.id, origin: e.transform, direction: { x: 0, z: 0 }, base: 35, multiplier: 1, type: 'explosive', radius: 3, knockback: 0, stagger: 0 });
         this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId: target.id, special: 'explode', amount });
       }
     }
@@ -270,7 +270,9 @@ export class InfectedSystem {
     const b = e.infected!; let killed = 0;
     for (let i = 0; i < 20; i++) if (b.birdAlive[i]) {
       const dx = b.birdPositions[i * 3] - origin.x, dz = b.birdPositions[i * 3 + 2] - origin.z, distance = Math.hypot(dx, dz);
-      if (distance <= radius && (spread >= 360 || !distance || (dx * direction.x + dz * direction.z) / distance >= Math.cos(spread * Math.PI / 360))) { b.birdAlive[i] = 0; killed++; if (spread === 0) break; }
+      const along = dx * direction.x + dz * direction.z;
+      const inside = spread === 0 ? along >= 0 && Math.abs(dx * direction.z - dz * direction.x) <= 0.2 : spread >= 360 || !distance || along / distance >= Math.cos(spread * Math.PI / 360);
+      if (distance <= radius && inside) { b.birdAlive[i] = 0; killed++; if (spread === 0) break; }
     }
     b.birds -= killed;
     if (b.birds > 0) { b.state = 'scatter'; b.scatterUntil = this.world.tick + 300; }

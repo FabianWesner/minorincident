@@ -1,7 +1,7 @@
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
-import { CircleGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, type BufferGeometry } from 'three/webgpu';
-import { attribute, normalLocal, positionLocal, mix, vec4 } from 'three/tsl';
-import { clipTexture, crowdMatrix } from '../assets/crowd';
+import { CircleGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, type BufferGeometry } from 'three/webgpu';
+import { attribute, instancedBufferAttribute, mat4, normalGeometry, positionGeometry, mix, vec4 } from 'three/tsl';
+import { clipTexture, crowdMatrix, crowdPosition } from '../assets/crowd';
 import { AssetRegistry } from '../assets/registry';
 import { infectedDefinitions } from '../data/infected';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -29,7 +29,7 @@ export class CrowdView extends Group {
   async init(): Promise<void> {
     for (const def of infectedDefinitions) {
       const role = def.id.slice(9), asset = def.asset;
-      const loaded = await this.registry.loadAsset(asset) as Group;
+      const loaded = await this.registry.loadAsset(asset, 'low') as Group;
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const baked = bakeInfected(model), texture = clipTexture(baked.clip), capacity = role === 'crow' ? 800 : 350;
       const tint = new InstancedBufferAttribute(new Float32Array(capacity * 3), 3);
@@ -39,9 +39,14 @@ export class CrowdView extends Group {
       const matrix = crowdMatrix(texture, attribute('_part_index', 'float'), attribute('_clip_frame', 'float'));
       const part = attribute('_part_index', 'float'), leg = baked.clip.parts.indexOf('legL'), shin = baked.clip.parts.indexOf('shinL'), foot = baked.clip.parts.indexOf('footL');
       const visible = part.equal(leg).or(part.equal(shin)).or(part.equal(foot)).select(attribute('_limb', 'float').oneMinus(), 1);
-      material.positionNode = matrix.mul(vec4(positionLocal, 1)).xyz.mul(visible);
-      material.normalNode = matrix.mul(vec4(normalLocal, 0)).xyz.normalize();
       const mesh = new InstancedMesh(baked.geometry as BufferGeometry, material, capacity); mesh.name = def.id; mesh.frustumCulled = false; mesh.count = 0;
+      // E17's explicit instance * part order: positionNode runs after default instancing.
+      const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1);
+      mesh.onBeforeRender = () => { matrices.version = mesh.instanceMatrix.version; };
+      const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset);
+      const instance = mat4(column(0), column(4), column(8), column(12));
+      material.positionNode = crowdPosition(instance, texture, part, attribute('_clip_frame', 'float'), positionGeometry.mul(visible));
+      material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.normalize();
       this.batches.set(def.id, { mesh, frame, limb, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
     }
@@ -56,7 +61,7 @@ export class CrowdView extends Group {
       const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
       if (b.hidden || distance > 60) continue;
       const tick = distance > 35 ? Math.floor(this.world.tick / 2) * 2 : this.world.tick;
-      let clip: typeof infectedClips[number] = b.state === 'dead' ? 'die' : b.legLost || e.archetype === 'infected.crawler' ? 'crawl' : b.state === 'attack' ? this.world.tick < b.until ? 'windup' : 'swing' : b.state === 'stagger' ? 'hurt' : ['chase', 'migration', 'scatter', 'wander'].includes(b.state) ? 'run' : 'idle';
+      let clip: typeof infectedClips[number] = b.state === 'dead' ? 'die' : b.legLost || e.archetype === 'infected.crawler' ? 'crawl' : b.state === 'attack' ? this.world.tick < b.until ? 'windup' : 'swing' : b.state === 'stagger' ? 'hurt' : (b.state === 'chase' || b.state === 'migration' || b.state === 'scatter' || b.state === 'wander') ? 'run' : 'idle';
       if (b.special === 'dive') clip = 'run';
       const phase = clip === 'die' ? Math.min(23, Math.floor((this.world.tick - b.deadAt) / 36 * 23)) : clip === 'windup' ? Math.min(23, Math.floor((1 - (b.until - this.world.tick) / (batch.windup * 60)) * 23)) : Math.floor((tick + e.id * 7) % 60 / 60 * 24);
       const frame = infectedClips.indexOf(clip) * framesPerClip + phase, tint = variantShirts[b.variant] ?? batch.shirt;
@@ -68,7 +73,7 @@ export class CrowdView extends Group {
       }
       if (e.health.current > 0 && e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, 0.018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
       if (b.state === 'attack' && this.world.tick < b.until) {
-        const mesh = this.telegraphs[['charge', 'pin', 'pounce'].includes(b.special) ? 1 : 0]; this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); this.transform.setPosition(e.transform.x, 0.06, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
+        const mesh = this.telegraphs[b.special === 'charge' || b.special === 'pin' || b.special === 'pounce' ? 1 : 0]; this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); this.transform.setPosition(e.transform.x, 0.06, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
       }
     }
     for (const batch of this.batches.values()) { batch.mesh.count = batch.count; if (batch.count) { batch.mesh.instanceMatrix.needsUpdate = true; batch.frame.needsUpdate = true; batch.tint.needsUpdate = true; batch.limb.needsUpdate = true; } }

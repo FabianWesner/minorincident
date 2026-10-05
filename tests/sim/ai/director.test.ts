@@ -20,6 +20,7 @@ test('T-E07-09 @E07 @E07-AC09 150-infected stream follows spline on time and fan
   const w = await arena(), d = w.infected!.director; const m = d.migration([{ x: -48, z: -20 }, { x: -10, z: -18 }, { x: 25, z: -24 }, { x: 48, z: -20 }]);
   const ticks = Math.ceil(m.expectedSeconds * 60); step(w, ticks); expect(m.arrived).toBe(150); expect(w.tick / 60 / m.expectedSeconds).toBeGreaterThanOrEqual(0.8); expect(w.tick / 60 / m.expectedSeconds).toBeLessThanOrEqual(1.2);
   for (const id of m.members) { const e = w.entities.get(id)!; expect(Math.hypot(e.transform.x - 48, e.transform.z + 20)).toBeLessThan(4.5); }
+  mkdirSync('test-results/epics/E07', { recursive: true }); writeFileSync('test-results/epics/E07/migration.json', JSON.stringify({ requested: m.requested, arrived: m.arrived, expectedSeconds: m.expectedSeconds, actualSeconds: w.tick / 60, fanRadius: 4.5 }, null, 2) + '\n');
   const before = w.infected!.active.map((e) => ({ ...e.transform })); step(w, 30); expect(w.infected!.active.filter((e, i) => Math.hypot(e.transform.x - before[i].x, e.transform.z - before[i].z) > 0.5).length).toBeGreaterThan(100);
 });
 test('T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed entity objects', async () => {
@@ -29,6 +30,7 @@ test('T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed enti
     w.update(); for (const e of ai.active) expect(records.has(e)).toBe(true);
   }
   expect(ai.counters.allocated).toBe(allocated); expect(ai.counters.reused).toBe(45000);
+  mkdirSync('test-results/epics/E07', { recursive: true }); writeFileSync('test-results/epics/E07/pooling.json', JSON.stringify({ ticks: w.tick, seconds: w.tick / 60, concurrent: 150, allocatedAfterWarmup: allocated, ...ai.counters }, null, 2) + '\n');
 });
 test('T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget', async () => {
   const w = await arena(); w.combat!.damage.god = true; for (let i = 0; i < 200; i++) spawn(w, 'runner', i % 20 - 10, 10 + Math.floor(i / 20)); step(w, 120);

@@ -1,6 +1,8 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { expect, test, boot } from '../e2e/fixtures';
 import { PNG } from 'pngjs';
+import { infectedDefinitions } from '../../src/data/infected';
+const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as { id: string; status: string }[];
 test('T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and at most 30 crowd draws', async ({ page }) => {
   mkdirSync('test-results/epics/E07', { recursive: true });
   await boot(page); await page.evaluate(async () => {
@@ -9,11 +11,23 @@ test('T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and
     await api.step(0); await api.screenshotReady();
   });
   const proof = await page.evaluate(() => ({ crowd: window.__SS__!.getState().render.crowd!, perf: window.__SS__!.perf() }));
-  expect(proof.crowd.batches.find((b) => b.id === 'infected.runner')!.instances).toBe(200); expect(proof.crowd.meshDrawCalls).toBeLessThanOrEqual(30); expect(proof.crowd.nonInstancedMeshes).toBe(0); expect(proof.crowd.objects).toBeLessThan(30);
+  const runners = proof.crowd.batches.find((b) => b.id === 'infected.runner')!;
+  if (manifest.find((asset) => asset.id === 'inf.common-worker')!.status === 'integrated') expect(runners.source).toBe('glb');
+  expect(runners.instances).toBe(200); expect(proof.crowd.meshDrawCalls).toBeLessThanOrEqual(30); expect(proof.crowd.nonInstancedMeshes).toBe(0); expect(proof.crowd.objects).toBeLessThan(30);
   mkdirSync('test-results/epics/E07', { recursive: true }); writeFileSync('test-results/epics/E07/render-perf.json', JSON.stringify(proof, null, 2) + '\n');
   await page.locator('canvas').screenshot({ path: 'test-results/epics/E07/horde-200.png' });
   // Remove all infected and compare actual renderer draws, including fixed crowd shadow/telegraph batches.
   const before = proof.perf.drawCalls; const after = await page.evaluate(async () => { const api = window.__SS__!; api.cheats.killAll(); await api.step(2762); await api.screenshotReady(); return api.perf().drawCalls; }); expect(before - after).toBeGreaterThan(0); expect(before - after).toBeLessThanOrEqual(30); writeFileSync('test-results/epics/E07/render-perf.json', JSON.stringify({ ...proof, removedDrawCalls: after, crowdDrawDelta: before - after }, null, 2) + '\n');
+  const roles = infectedDefinitions.filter((def) => def.id !== 'infected.crow').map((def) => def.id);
+  const mixed = await page.evaluate(async (roles) => {
+    const api = window.__SS__!;
+    for (let i = 0; i < 190; i++) api.spawn(roles[i % roles.length], { x: i % 20 * 1.2 - 12, z: Math.floor(i / 20) * 1.2 - 6 }, { state: 'idle', perched: false });
+    api.spawn('infected.crow', { x: -8, z: -4 }); api.spawn('infected.crow', { x: 8, z: -4 });
+    await api.step(0); await api.screenshotReady(); return api.getState();
+  }, roles);
+  expect(mixed.ai!.count).toBe(200); expect(mixed.render.crowd!.meshDrawCalls).toBeLessThanOrEqual(30); expect(mixed.render.crowd!.objects).toBe(proof.crowd.objects); expect(mixed.render.crowd!.nonInstancedMeshes).toBe(0);
+  await page.locator('canvas').screenshot({ path: 'test-results/epics/E07/horde-archetypes.png' });
+  writeFileSync('test-results/epics/E07/mixed-render.json', JSON.stringify(mixed.render.crowd, null, 2) + '\n');
 });
 test('T-E07-13 @E07 @E07-AC13 @vision golden-hour street has 60 separable runners glowing eyes and an identifiable player', async ({ page }) => {
   mkdirSync('test-results/epics/E07', { recursive: true });
