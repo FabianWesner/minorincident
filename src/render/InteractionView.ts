@@ -91,7 +91,8 @@ export class InteractionView extends Group {
       const c = selected.interactable!;
       this.ring.position.set(selected.transform.x, .05, selected.transform.z); this.ring.scale.setScalar(c.radius);
       this.fillGeometry.setDrawRange(0, Math.round(c.progress * 64) * 6);
-      this.projection.set(selected.transform.x, 1.6, selected.transform.z).project(camera);
+      // Leave the survivor's head/torso clear when they stand just behind the device.
+      this.projection.set(selected.transform.x, 2.8, selected.transform.z).project(camera);
       this.panel.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.panel.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`;
       const label = c.label, caption = c.hint || (nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring');
       if (this.label.textContent !== label) this.label.textContent = label;

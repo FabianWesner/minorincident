@@ -23,6 +23,7 @@ export interface EntitySnapshot {
   faction: string;
 }
 export type GameEvent =
+  | { tick: number; type: 'world.blocker.changed'; id: number; blocked: boolean; wall: import('../combat/HitQuery').CoverWall }
   | { tick: number; type: 'pickup.collected'; id: number; kind: import('../interact/Pickups').PickupKind; item: string | null }
   | { tick: number; type: 'noise'; sourceId: number; position: { x: number; z: number }; radius: number; duration: number }
   | { tick: number; type: 'hazard.armed'; id: number; fuseAt: number }

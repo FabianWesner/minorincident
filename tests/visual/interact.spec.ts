@@ -15,7 +15,8 @@ for (const mobile of [false, true]) {
         const id = api.spawn('device.generator', { x: p.x, z: p.z + 1 }, { holdTime: 4, fuel: 20, label: 'Start generator' });
         await api.step(90); api.camera.preset('interact-ui'); await api.screenshotReady();
         const e = api.getEntity(id)!;
-        return { id, progress: e.interactable!.progress, ndc: api.camera.project(e.transform.x, .05, e.transform.z), perf: api.perf() };
+        const player = api.getState().player!.transform;
+        return { id, progress: e.interactable!.progress, ndc: api.camera.project(e.transform.x, .05, e.transform.z), hero: api.camera.project(player.x, 1.65, player.z), perf: api.perf() };
       }, tier);
       const panel = page.getByTestId('interaction-prompt'); await expect(panel).toBeVisible();
       await expect(panel).toContainText('Start generator'); await expect(panel).toContainText('E / middle-click');
@@ -31,6 +32,8 @@ for (const mobile of [false, true]) {
       const viewport = page.viewportSize()!;
       expect(style.bounds.x).toBeGreaterThanOrEqual(0); expect(style.bounds.y).toBeGreaterThanOrEqual(0);
       expect(style.bounds.x + style.bounds.width).toBeLessThanOrEqual(viewport.width);
+      const heroX = (point.hero[0] + 1) * viewport.width / 2, heroY = (1 - point.hero[1]) * viewport.height / 2;
+      expect(heroX < style.bounds.x || heroX > style.bounds.x + style.bounds.width || heroY < style.bounds.y || heroY > style.bounds.y + style.bounds.height, 'prompt leaves the survivor head clear').toBe(true);
       const buffer = await page.screenshot({ path: `${output}/interact-ui-W${tier}-${mobile ? 'mobile' : 'desktop'}.png` });
       const image = PNG.sync.read(buffer), cx = (point.ndc[0] + 1) * image.width / 2, cy = (1 - point.ndc[1]) * image.height / 2;
       let teal = 0;
