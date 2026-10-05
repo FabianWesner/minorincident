@@ -2,7 +2,7 @@
 
 Reference: main-checkout `assets/fire-engine/reference-upscaled.png`.
 Comparison: `test-results/epics/E17/comparison.png`.
-Reviewer: Codex, 2026-10-05, five actual game-renderer views at 1600×900.
+Reviewer: Codex, 2026-10-05, five actual game-renderer views at 1600×900, with CPU-baked AO.
 
 Checklist C:
 
@@ -15,7 +15,7 @@ Checklist C:
 
 Verdict: PASS
 
-Measured occupied pixels: 11.78%, 52.10%, 11.92%, 51.95%, 16.75%.
+Measured occupied pixels (toolbar hidden): 11.11%, 51.42%, 11.25%, 51.26%, 16.06%.
 The palette version uses stylized matte trim rather than the reference's
 photographic chrome. Rear and far-side details are inferred from the single
 reference. No failed must or should item.
