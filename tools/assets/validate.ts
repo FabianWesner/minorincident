@@ -2,7 +2,7 @@ import { readFileSync, existsSync, statSync, mkdirSync, writeFileSync } from 'no
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { getBounds } from '@gltf-transform/functions';
-import type { Document, Node } from '@gltf-transform/core';
+import type { Document, Node, Scene, Mesh } from '@gltf-transform/core';
 import type { AssetDef } from '../../src/assets/types';
 import { atLeast } from '../../src/assets/types';
 import { validMaterial } from '../../src/assets/palette';
@@ -33,12 +33,25 @@ export function geometryHash(document: Document): string {
 function descendants(node: Node): Node[] {
   return [node, ...node.listChildren().flatMap(descendants)];
 }
+/** Runtime hides gore/collider helpers; they do not contribute to the default silhouette. */
+function visibleBounds(scene: Scene): ReturnType<typeof getBounds> {
+  const hidden: [Node,Mesh][]=[];
+  scene.traverse(node=>{
+    let ancestor: Node|null=node, invisible=false;
+    while(ancestor) {if(ancestor.getExtras().hidden===true) invisible=true;ancestor=ancestor.getParentNode();}
+    const mesh=node.getMesh();
+    if(invisible && mesh) {hidden.push([node,mesh]);node.setMesh(null);}
+  });
+  try { return getBounds(scene); }
+  finally { for(const [node,mesh] of hidden) node.setMesh(mesh); }
+}
+
 /** No renderer needed: validate actual geometry, hierarchy and export contracts. */
 export function validateDocument(document: Document, def: AssetDef, bytes: number, lod = 0): Validation {
   const errors: string[] = [];
   const root = document.getRoot(), nodes = root.listNodes();
   const byName = new Map(nodes.map((n) => [n.getName(), n]));
-  const bounds = root.listScenes()[0] ? getBounds(root.listScenes()[0]) : { min: [0, 0, 0], max: [0, 0, 0] };
+  const bounds = root.listScenes()[0] ? visibleBounds(root.listScenes()[0]) : { min: [0, 0, 0], max: [0, 0, 0] };
   const dimensions = bounds.max.map((v, i) => v - bounds.min[i]);
   for (const [i, axis] of ['x', 'y', 'z'].entries()) {
     const expected = def.dimensions[axis as 'x' | 'y' | 'z'];

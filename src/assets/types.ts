@@ -18,6 +18,8 @@ export interface AssetDef {
   lods?: { lod1?: string; lod2?: string };
   dimensions: { x: number; y: number; z: number; tolerance: number };
   forward: '+X';
+  /** Uniform metres conversion applied to the entire exported assembly once. */
+  sourceScale?: number;
   /** Forward in the standalone export, when it has no front marker (glTF Y-up). */
   sourceForward?: '+X' | '-X' | '+Z' | '-Z';
   frontNodes: string[];
