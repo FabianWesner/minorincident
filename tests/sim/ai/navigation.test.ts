@@ -43,3 +43,21 @@ test('T-E07-03c @E07 @E07-AC03 collider-baked AI navigation honors E10 offset gr
   for (let i = 0; i < 450; i++) { w.update(); expect(ai.nav.clear(e.transform.x, e.transform.z, e.combat!.radius)).toBe(true); }
   expect(Math.hypot(e.transform.x - 105, e.transform.z - 50)).toBeLessThan(1.2); expect(w.entities.get(1)!.transform.y).toBeCloseTo(0.705, 2);
 });
+
+
+test('T-E07-02b @E07 @E07-AC02 @E06-AC04 actual infected consume catalog noise, with silent melee misses and bounded kill noise', async () => {
+  const w = await arena();
+  const near = w.entities.get(w.infected!.spawn('infected.runner', { x: 0, z: 5 }))!;
+  const outside = w.entities.get(w.infected!.spawn('infected.runner', { x: 0, z: 7 }))!;
+  const distant = w.entities.get(w.infected!.spawn('infected.runner', { x: 0, z: 24 }))!;
+  const attack = () => { w.setInput({ left: { down: true, held: true, up: false }, aim: { x: 1, z: 0 } }); step(w, 1); w.clearInput(); step(w, 30); };
+  w.combat!.setLoadout(['weapon.bat'], ['weapon.grenade']); attack();
+  expect(near.infected!.state).toBe('idle'); expect(w.events.events().filter((e) => e.type === 'noise')).toHaveLength(0);
+  const victim = w.entities.get(w.infected!.spawn('infected.runner', { x: 1, z: 0 }))!; victim.health.current = 1;
+  attack();
+  expect(victim.health.current).toBe(0); expect(near.infected!.state).not.toBe('idle'); expect(outside.infected!.state).toBe('idle');
+  expect(w.events.events().some((e) => e.type === 'ai.alerted' && e.targetId === near.id && e.cause === 'noise')).toBe(true);
+  w.combat!.setLoadout(['weapon.hunting-rifle'], ['weapon.grenade']); attack();
+  expect(distant.infected!.state).toBe('chase');
+  expect(w.events.events().some((e) => e.type === 'ai.alerted' && e.targetId === distant.id && e.cause === 'noise')).toBe(true);
+});
