@@ -1,3 +1,5 @@
+import { ActionEffects } from './ActionEffects';
+import { Pickups } from './Pickups';
 import { Rng } from '../../core/Rng';
 import { ActionRunner, type Attack } from './ActionRunner';
 import { Loadout } from './Loadout';
@@ -17,6 +19,10 @@ export class Combat {
   readonly query: HitQuery;
   readonly damage: Damage;
   readonly status: Status;
+  readonly effects: ActionEffects;
+  readonly pickups: Pickups;
+  private readonly pelletHits = new Map<EntitySnapshot, number>();
+  private readonly pelletDirection = { x: 1, z: 0 };
   readonly assist: AimAssist;
   runner: ActionRunner;
   readonly projectiles: Projectile[] = [];
@@ -25,6 +31,7 @@ export class Combat {
   constructor(private readonly world: SimWorld, readonly definition: ScenarioDefinition) {
     this.rng = new Rng(world.seed, 'combat');
     this.query = new HitQuery(world.entities, world.spatial, definition.walls ?? []);
+    this.effects = new ActionEffects(world); this.pickups = new Pickups(world);
     this.damage = new Damage(world); this.status = new Status(world); this.assist = new AimAssist(world.entities, this.query);
     this.runner = new ActionRunner(1, new Loadout(['weapon.bat', 'weapon.pistol'], ['weapon.grenade', 'ability.ground-slam']));
     this.attach();
@@ -47,28 +54,33 @@ export class Combat {
     const player = this.world.entities.get(1)!;
     this.runner.update(frame, this.world.tick, player.health.current > 0 && !Status.stunned(player, this.world.tick), this.started, this.resolve);
     this.updateProjectiles();
+    this.effects.update(); this.pickups.update();
   }
   private readonly switched = (side: 'LEFT' | 'RIGHT', actionId: string): void => { this.world.events.emit({ type: 'loadout.switched', tick: this.world.tick, sourceId: 1, side, actionId }); };
   private readonly started = (attack: Attack): void => {
     const source = this.world.entities.get(attack.sourceId)!;
     if (attack.def.category === 'ranged') {
       this.assist.apply(source.id, source.transform, attack.aim, attack.def.range);
-      if (attack.def.spread) {
+      if (attack.def.spread && (attack.def.pellets ?? 1) === 1) {
         const angle = Math.atan2(attack.aim.z, attack.aim.x) + (this.rng.next() - 0.5) * attack.def.spread * Math.PI / 180;
         attack.aim.x = Math.cos(angle); attack.aim.z = Math.sin(angle);
       }
     }
     this.world.events.emit({ type: 'combat.attack', tick: this.world.tick, attackId: attack.id, actionId: attack.def.id, sourceId: source.id, side: attack.side, position: { ...source.transform }, direction: { ...attack.aim } });
-    this.world.player?.act(attack.def.category === 'melee' || attack.def.category === 'ability' ? 'swing' : attack.def.category === 'throwable' ? 'throw' : 'shoot', this.world.tick);
+    if (attack.def.category === 'ranged') this.effects.noise(source.transform, attack.def.noiseRadius, attack.def.id);
+    this.world.player?.act(attack.def.id === 'weapon.kick' ? 'kick' : attack.def.category === 'melee' || attack.def.category === 'ability' ? 'swing' : attack.def.category === 'throwable' ? 'throw' : 'shoot', this.world.tick);
   };
   private hit(attack: Attack, target: EntitySnapshot, origin: Vec2, type: 'melee' | 'bullet' | 'explosive', falloff = 1): void {
     if (attack.hit.has(target.id)) return;
     attack.hit.add(target.id);
     const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
     this.direction.x = distance ? dx / distance : attack.aim.x; this.direction.z = distance ? dz / distance : attack.aim.z;
-    const def = attack.def;
+    const def = attack.def, distanceFalloff = def.distanceFalloff;
+    if (distanceFalloff) falloff *= 1 - (1 - distanceFalloff.minimum) * Math.max(0, Math.min(1, (distance - distanceFalloff.start) / (distanceFalloff.end - distanceFalloff.start)));
+    const alive = target.health.current > 0;
     const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, direction: this.direction, base: def.damage * falloff, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, knockback: def.knockback * falloff, stagger: def.stagger });
-    if (amount && def.status) this.status.apply(target, def.status, attack.sourceId, def.id);
+    if (alive && target.health.current === 0 && def.category === 'melee') this.effects.noise(origin, def.noiseRadius, def.id);
+    if (alive && target.faction === 'infected' && (amount || def.damage === 0) && def.status) this.status.apply(target, def.status, attack.sourceId, def.id);
   }
   private splash(attack: Attack, position: Vec2): void {
     const def = attack.def, splash = def.splash!;
@@ -81,6 +93,7 @@ export class Combat {
   }
   private readonly resolve = (attack: Attack): void => {
     const source = this.world.entities.get(attack.sourceId)!, def = attack.def;
+    if (def.effect && def.category === 'ability') { this.effects.create(attack, source.transform); return; }
     if (def.category === 'throwable' || def.projectile) {
       let landing: Vec2 | null = null;
       if (def.category === 'throwable') {
@@ -93,6 +106,16 @@ export class Combat {
     } else if (def.splash) this.splash(attack, source.transform);
     else if (def.category === 'melee' || def.category === 'ability') {
       for (const target of this.query.melee(source.id, source.transform, attack.aim, def.range, def.arc, def.maxTargets)) this.hit(attack, target, source.transform, 'melee');
+    } else if ((def.pellets ?? 1) > 1) {
+      this.pelletHits.clear();
+      const count = def.pellets!, angle = Math.atan2(attack.aim.z, attack.aim.x);
+      for (let i = 0; i < count; i++) {
+        const direction = angle + (i / (count - 1) - 0.5) * def.spread * Math.PI / 180;
+        this.pelletDirection.x = Math.cos(direction); this.pelletDirection.z = Math.sin(direction);
+        const target = this.query.ray(source.id, source.transform, this.pelletDirection, def.range);
+        if (target) this.pelletHits.set(target, (this.pelletHits.get(target) ?? 0) + 1);
+      }
+      for (const [target, hits] of this.pelletHits) this.hit(attack, target, source.transform, 'bullet', hits / count);
     } else {
       const target = this.query.ray(source.id, source.transform, attack.aim, def.range);
       if (target) this.hit(attack, target, source.transform, 'bullet');
@@ -108,6 +131,8 @@ export class Combat {
         if (progress === 1 && !p.landed) { p.landed = true; this.world.events.emit({ type: 'combat.landed', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, position: { x: p.x, y: p.y, z: p.z } }); }
         if (p.landed && age >= ticks(def.fuse)) {
           if (def.splash) this.splash(p.attack, p);
+          this.effects.create(p.attack, p);
+          if (def.category === 'throwable' && def.damage) this.effects.noise(p, def.noiseRadius, def.id);
           this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
           this.projectiles.splice(i, 1);
         }
@@ -115,12 +140,19 @@ export class Combat {
         const step = Math.min(def.range - p.travelled, def.projectile!.speed / 60);
         this.origin.x = p.x; this.origin.z = p.z;
         let target = this.query.ray(p.attack.sourceId, this.origin, p.attack.aim, step, p.attack.hit);
+        const wall = this.query.clearDistance(this.origin, p.attack.aim, step);
+        if (def.splash && (target || wall < step || p.travelled + wall >= def.range)) {
+          if (target) { p.x = target.transform.x; p.z = target.transform.z; }
+          else { p.x += p.attack.aim.x * wall; p.z += p.attack.aim.z * wall; }
+          this.splash(p.attack, p); this.effects.noise(p, def.noiseRadius, def.id);
+          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
+          this.projectiles.splice(i, 1); continue;
+        }
         while (target && p.attack.hit.size < def.maxTargets) {
           this.hit(p.attack, target, this.origin, 'bullet');
           if (p.attack.hit.size > def.projectile!.pierce) break;
           target = this.query.ray(p.attack.sourceId, this.origin, p.attack.aim, step, p.attack.hit);
         }
-        const wall = this.query.clearDistance(this.origin, p.attack.aim, step);
         p.x += p.attack.aim.x * wall; p.z += p.attack.aim.z * wall; p.travelled += wall;
         p.y -= def.projectile!.gravity * (age - 0.5) / 3600;
         if (wall < step || p.travelled >= def.range || p.y < 0 || p.attack.hit.size > def.projectile!.pierce || p.attack.hit.size >= def.maxTargets) this.projectiles.splice(i, 1);
@@ -129,6 +161,6 @@ export class Combat {
   }
   snapshot() {
     const attack = (a: Attack) => ({ id: a.id, sourceId: a.sourceId, side: a.side, actionId: a.def.id, aim: a.aim, aimPoint: a.aimPoint, started: a.started, activeAt: a.activeAt, recoveryAt: a.recoveryAt, endsAt: a.endsAt, resolved: a.resolved, hit: [...a.hit] });
-    return { sequence: this.runner.lastAttackId, rng: this.rng.snapshot(), god: this.damage.god, infiniteCharges: this.runner.infiniteCharges, aimAssist: this.assist.setting, water: this.status.water, running: Object.values(this.runner.running).map(attack), projectiles: this.projectiles.map((p) => ({ ...p, attack: attack(p.attack) })) };
+    return { ...(this.effects.zones.length ? { zones: this.effects.snapshot() } : {}), sequence: this.runner.lastAttackId, rng: this.rng.snapshot(), god: this.damage.god, infiniteCharges: this.runner.infiniteCharges, aimAssist: this.assist.setting, water: this.status.water, running: Object.values(this.runner.running).map(attack), projectiles: this.projectiles.map((p) => ({ ...p, attack: attack(p.attack) })) };
   }
 }

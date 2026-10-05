@@ -8,7 +8,6 @@ const base: ActionDef = {
 };
 export const actions: Readonly<Record<string, ActionDef>> = Object.fromEntries([
   base,
-  { ...base, id: 'weapon.machete', damage: 60, viewAssetId: 'wpn.machete', iconId: 'icon.machete' },
   { ...base, id: 'weapon.pistol', category: 'ranged', damage: 20, range: 20, arc: 0, maxTargets: 1, windup: 0, active: 1 / 60, recovery: 0, cooldown: 0, fireRate: 4, magazine: 6, reloadTime: 1, knockback: 0, stagger: 0, noiseRadius: 25, aimIndicator: 'line', viewAssetId: 'wpn.pistol', iconId: 'icon.pistol' },
   { ...base, id: 'weapon.machine-gun', category: 'ranged', damage: 10, range: 25, arc: 0, maxTargets: 1, windup: 0, active: 1 / 60, recovery: 0, cooldown: 0, fireRate: 10, magazine: 30, reloadTime: 2, knockback: 0, stagger: 0, noiseRadius: 35, aimIndicator: 'line', viewAssetId: 'wpn.machine-gun', iconId: 'icon.machine-gun' },
   { ...base, id: 'weapon.grenade', category: 'throwable', damage: 100, range: 10, arc: 0, maxTargets: 1000, windup: 0, active: 1 / 60, recovery: 0.2, cooldown: 0.25, charges: 2, recharge: 12, projectile: { speed: 12, gravity: 9.81, pierce: 0 }, splash: { radius: 4, falloff: 1 }, fuse: 1.5, knockback: 0.5, stagger: 0.5, aimIndicator: 'arc', viewAssetId: 'thr.frag-grenade', iconId: 'icon.grenade' },

@@ -1,6 +1,10 @@
+import { readFileSync } from 'node:fs';
+import { getBounds } from '@gltf-transform/functions';
 import { expect, test } from 'vitest';
 import { assetIO } from '../../../tools/assets/io';
+import { validateDocument } from '../../../tools/assets/validate';
 import { normalizeForward, optimizeDocument } from '../../../tools/assets/optimize';
+import type { AssetDef } from '../../../src/assets/types';
 import { fixture } from './fixture';
 import { compressTextures } from '../../../tools/assets/textures';
 
@@ -68,4 +72,62 @@ test('T-E17-02d @E17-AC02 optimization removes zero-area faces through compresse
   await optimizeDocument(doc,def);
   const io = await assetIO(), result = await io.readBinary(await io.writeBinary(doc));
   expect(result.getRoot().listMeshes()[0].listPrimitives()[0].getIndices()!.getCount()).toBe(3);
+});
+
+test('T-E17-scale @E17-AC03 uniform scale preserves local joints and applies once', async () => {
+  const {doc,def}=fixture(); def.sourceScale=1.25;
+  const body=doc.getRoot().listNodes()[0], local=body.getMatrix();
+  await optimizeDocument(doc,def);
+  expect(body.getMatrix()).toEqual(local);
+  expect(body.getWorldScale()).toEqual([1.25,1.25,1.25]);
+  await optimizeDocument(doc,def);
+  expect(body.getWorldScale()).toEqual([1.25,1.25,1.25]);
+});
+
+test('T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side', async () => {
+  const io=await assetIO();
+  const {default:manifest}=await import('../../../src/assets/manifest.json');
+  const def=manifest.find(d=>d.id==='inf.common-worker')! as AssetDef;
+  const doc=await io.read(def.sourceGlb!);
+  await optimizeDocument(doc,def,.03);
+  const result=await io.readBinary(await io.writeBinary(doc));
+  expect(validateDocument(result,def,0).errors.filter(e=>e.startsWith('dimensions.') || e.startsWith('stump_'))).toEqual([]);
+  for (const name of ['head','armL','armR','foreArmL','foreArmR','legL','legR']) {
+    const limb=result.getRoot().listNodes().find(n=>n.getName()===name)!;
+    const cap=result.getRoot().listNodes().find(n=>n.getName()===`stump_${name}`)!;
+    expect(cap.getExtras().hidden).toBe(true);
+    expect(cap.getParentNode()).toBe(limb.getParentNode());
+    expect(cap.getWorldTranslation()).toEqual(limb.getWorldTranslation());
+    expect(cap.getWorldScale().every(v=>v>0)).toBe(true);
+    let triangles=0;cap.traverse(n=>{for(const p of n.getMesh()?.listPrimitives()??[])triangles+=(p.getIndices()?.getCount()??0)/3;});
+    expect(triangles).toBe(56);
+    const parent=cap.getParentNode()!;parent.removeChild(limb);
+    expect(cap.getParentNode()).toBe(parent);
+  }
+});
+
+
+test('T-E17-height @E17-AC02 adult exports stay 1.75–1.85 m at every LOD', async () => {
+  const {default:manifest}=await import('../../../src/assets/manifest.json'), io=await assetIO();
+  const exceptions=new Set(['char.corgi','npc.brother','inf.crawler','inf.brute','inf.teen-skater']);
+  for(const def of manifest as AssetDef[]) {
+    if(!def.sourceGlb || !['character','infected'].includes(def.category) || exceptions.has(def.id)) continue;
+    for(const path of [def.glb,def.lods?.lod1,def.lods?.lod2].filter((p):p is string=>!!p)) {
+      const doc=await io.read(path),bounds=getBounds(doc.getRoot().listScenes()[0]),height=bounds.max[1]-bounds.min[1];
+      expect(height,path).toBeGreaterThanOrEqual(1.75);expect(height,path).toBeLessThanOrEqual(1.85);
+    }
+  }
+});
+
+test('T-E17-lanes @E17-AC02 vehicle envelopes including mirrors fit district lanes at every LOD', async () => {
+  const layout=JSON.parse(readFileSync('public/assets/layouts/D-MAIN.layout.json','utf8'));
+  const lane=Math.min(...layout.roads.edges.map((edge:{laneWidth:number})=>edge.laneWidth/2));
+  const {default:manifest}=await import('../../../src/assets/manifest.json'),io=await assetIO();
+  for(const def of manifest as AssetDef[]) {
+    if(def.category!=='vehicle' || (!def.sourceGlb && def.status!=='integrated')) continue;
+    for(const path of [def.glb,def.lods?.lod1,def.lods?.lod2].filter((p):p is string=>!!p)) {
+      const doc=await io.read(path),bounds=getBounds(doc.getRoot().listScenes()[0]);
+      expect(bounds.max[2]-bounds.min[2],path).toBeLessThan(lane-.1);
+    }
+  }
 });

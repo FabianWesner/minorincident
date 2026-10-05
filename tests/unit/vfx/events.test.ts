@@ -26,7 +26,7 @@ test('T-E15-01 @E15 @E15-AC01 60s combat hash is identical with all visual setti
     try {
       world.combat!.setLoadout(['weapon.machete'], ['weapon.grenade']);
       for (let t = 0; t < 3600; t++) {
-        if (t % 60 === 0) world.spawnDummy('infected.dummy', { x: 1, z: 0 }, { hp: 50 });
+        if (t % 60 === 0) world.spawnDummy('infected.dummy', { x: 1, z: 0 }, { hp: 25 });
         world.setInput({ aim: { x: 1, z: 0 }, left: { down: t % 60 === 0, held: t % 60 < 10, up: t % 60 === 10 } });
         world.update(); fx.advance(1 / 60);
       }
@@ -44,15 +44,15 @@ test('T-E15-09 @E15 @E15-AC09 seeded 200 machete kills detach 35% ±5%; gore nev
     const fx = new Vfx(world, targets()); fx.set({ gore });
     try {
       for (let i = 0; i < 200; i++) {
-        const targetId = world.spawnDummy('infected.dummy', { x: 1, z: 0 }, { hp: 50 });
-        world.combat!.damage.apply({ attackId: i + 1, actionId: 'weapon.machete', sourceId: 1, targetId, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 60, multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
+        const targetId = world.spawnDummy('infected.dummy', { x: 1, z: 0 }, { hp: 25 });
+        world.combat!.damage.apply({ attackId: i + 1, actionId: 'weapon.machete', sourceId: 1, targetId, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 32, multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
       }
       fx.advance(0); expect(fx.kills).toBe(200); hashes.push(stateHash(world.getState())); results.push(fx.dismemberedKills);
       if (gore === 'Full') { expect(fx.dismemberedKills).toBeGreaterThanOrEqual(60); expect(fx.dismemberedKills).toBeLessThanOrEqual(80); expect(fx.gibs.count).toBe(fx.detached); }
       else { expect(fx.detached).toBe(0); expect(fx.gibs.count).toBe(0); }
       for (let i = 0; i < 30; i++) fx.advance(1);
       expect(fx.gibs.count).toBe(0);
-      const targetId = world.spawnDummy('infected.dummy', { x: 1, z: 0 }, { hp: 50 });
+      const targetId = world.spawnDummy('infected.dummy', { x: 1, z: 0 }, { hp: 25 });
       const before = fx.detached;
       world.combat!.damage.apply({ attackId: 201, actionId: 'weapon.grenade', sourceId: 1, targetId, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 100, multiplier: 1, type: 'explosive', knockback: 0, stagger: 0 });
       expect(fx.detached - before).toBe(gore === 'Full' ? 5 : 0);
@@ -71,5 +71,8 @@ test('T-E15-events @E15 @E15-AC04 tells persist until their resolution event; se
     world.events.emit({ tick: 1, type: 'attack.resolved', attackId: 1 }); expect(fx.telegraphs.count).toBe(0);
     fx.effect('explosion', 0, 0, 3); expect(fx.decals.count).toBe(1);
     fx.set({ gore: 'Off' }); expect(fx.decals.count).toBe(0); expect(fx.coverage).toBe(0);
+    const hash = stateHash(world.getState());
+    world.events.emit({ tick: world.tick, type: 'combat.effect', sourceId: 1, actionId: 'weapon.molotov', kind: 'fire', position: { x: 0, y: 0, z: 0 }, radius: 4, expires: 360 });
+    expect(fx.particles.count).toBeGreaterThan(0); expect(stateHash(world.getState())).toBe(hash);
   } finally { fx.dispose(); world.dispose(); }
 });

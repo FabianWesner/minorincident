@@ -1,6 +1,6 @@
 import { Group, type BufferGeometry } from 'three/webgpu';
 import { Rng } from '../../core/Rng';
-import { actions } from '../../data/actions/fixtures';
+import { catalog as actions } from '../../data/actions/catalog';
 import type { EffectKind, TelegraphKind, GameEvent } from '../../sim/world/types';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { FxPool } from './FxPool';
@@ -20,7 +20,7 @@ export interface VfxTargets {
   clearGore(): void;
   shake(strength: number): void;
 }
-const eventTypes = ['combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.hit-stop', 'telegraph', 'attack.resolved', 'vfx.effect', 'vehicle.feedback'] as const;
+const eventTypes = ['combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'attack.resolved', 'vfx.effect', 'vehicle.feedback'] as const;
 const limbs = 5;
 const heavyBlade = /machete|axe|katana|shovel/;
 const telegraphShapes = { lunge: 3, charge: 2, splash: 1, bloated: 4 } as const;
@@ -112,7 +112,7 @@ export class Vfx extends Group {
       this.kills++; this.blood(event.position.x, event.position.z, true);
       const def = actions[event.actionId], melee = def?.category === 'melee';
       if (melee && this.gore !== 'Off' && event.sourceId === 1) { this.coverage = Math.min(1, this.coverage + 0.025); this.targets.blood(this.coverage); }
-      const explosive = def?.category === 'throwable' && Boolean(def.splash) || event.actionId.includes('explos') || event.actionId.includes('rocket');
+      const explosive = Boolean(def?.splash) && def?.effect?.kind !== 'fire' || event.actionId.includes('explos') || event.actionId.includes('rocket');
       const heavy = heavyBlade.test(event.actionId);
       if (heavy && this.gore !== 'Off') {
         const source = this.world.entities.get(event.sourceId), dx = event.position.x - (source?.transform.x ?? 0), dz = event.position.z - (source?.transform.z ?? 0), distance = Math.max(0.1, Math.hypot(dx, dz));
@@ -143,6 +143,8 @@ export class Vfx extends Group {
       }
     } else if (event.type === 'combat.exploded') {
       if (event.radius > 0) this.effect('explosion', event.position.x, event.position.z, event.radius);
+    } else if (event.type === 'combat.effect') {
+      if (event.kind === 'fire' || event.kind === 'smoke') this.effect(event.kind, event.position.x, event.position.z, event.radius);
     } else if (event.type === 'telegraph') {
       if (this.tells.has(event.attackId)) return;
       const shape = telegraphShapes[event.kind];
@@ -185,9 +187,12 @@ export class Vfx extends Group {
         this.hitCount--; this.hitIds[i] = this.hitIds[this.hitCount]; this.hitUntil[i] = this.hitUntil[this.hitCount];
       } else i++;
     }
-    if (Math.floor(this.time * 4) !== Math.floor((this.time - seconds) * 4) && this.enabled) for (const vehicle of this.vehicles.values()) {
-      if (vehicle.healthFraction < 0.4) this.effect('vehicle-smoke', vehicle.position.x, vehicle.position.z, 0.7);
-      if (vehicle.healthFraction < 0.15) this.effect('vehicle-fire', vehicle.position.x, vehicle.position.z, 0.6);
+    if (Math.floor(this.time * 4) !== Math.floor((this.time - seconds) * 4) && this.enabled) {
+      for (const vehicle of this.vehicles.values()) {
+        if (vehicle.healthFraction < 0.4) this.effect('vehicle-smoke', vehicle.position.x, vehicle.position.z, 0.7);
+        if (vehicle.healthFraction < 0.15) this.effect('vehicle-fire', vehicle.position.x, vehicle.position.z, 0.6);
+      }
+      for (const zone of this.world.combat?.effects.zones ?? []) if (zone.kind === 'fire' || zone.kind === 'smoke') this.effect(zone.kind, zone.x, zone.z, zone.radius);
     }
     // Wounded-infected droplets are based on visual time, never extra sim events or damage.
     if (Math.floor(this.time * 2) !== Math.floor((this.time - seconds) * 2) && this.enabled && this.gore !== 'Off') {
