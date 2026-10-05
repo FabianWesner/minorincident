@@ -204,3 +204,20 @@ test('T-E05-spread @E05 seeded spread is repeatable, bounded, and serialized in 
     expect(directions[0]).toEqual(directions[1]);
   } finally { pistol.spread = previous; }
 });
+
+test('T-E05-held-selection @E05 @E05-AC01 cooling held gun does not steal selection from the last-used grenade', async () => {
+  const w = await arena(); equip(w, ['weapon.machine-gun']);
+  w.setInput({ aim: { x: 1, z: 0 }, left: { down: true, held: true, up: false } }); step(w, 1);
+  w.setInput({ left: { down: false, held: true, up: false }, right: { down: true, held: false, up: true } }); step(w, 1);
+  w.setInput({ aim: { x: 0, z: 1 }, right: { down: false, held: false, up: false } }); step(w, 1);
+  const state = w.entities.get(1)!.weapons!;
+  expect(state.selectedSide).toBe('RIGHT'); expect(state.RIGHT.aim).toEqual({ x: 0, z: 1 }); expect(state.LEFT.aim).toEqual({ x: 1, z: 0 });
+  step(w, 4); expect(state.selectedSide).toBe('LEFT');
+  w.setInput({ aim: { x: -1, z: 0 } }); step(w, 1); expect(state.LEFT.aim).toEqual({ x: -1, z: 0 }); expect(state.RIGHT.aim).toEqual({ x: 0, z: 1 });
+});
+
+test('T-E05-snapshots @E05 snapshots cannot mutate active attacks, projectile landings or water zones', async () => {
+  const w = await arena(); equip(w); fire(w, 'RIGHT'); w.combat!.status.water.push({ x: 1, z: 1, radius: 2 });
+  const snapshot = w.getState(); snapshot.combat!.projectiles[0].landing!.x = 999; snapshot.combat!.projectiles[0].attack.aim.x = 999; snapshot.combat!.water[0].radius = 999;
+  expect(w.getState().combat!.projectiles[0].landing!.x).toBeCloseTo(10); expect(w.getState().combat!.projectiles[0].attack.aim.x).toBe(1); expect(w.getState().combat!.water[0].radius).toBe(2);
+});

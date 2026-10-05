@@ -20,6 +20,7 @@ export class ActionRunner {
       const button = side === 'LEFT' ? frame.left : frame.right;
       const def = action(this.loadout.current(side).id);
       if (!attack && (button.down || (button.held && (def.category === 'melee' || def.category === 'ranged'))) && this.loadout.usable(side, tick)) {
+        this.loadout.state.selectedSide = side;
         const state = this.loadout.state[side];
         attack = { id: ++this.sequence, sourceId: this.sourceId, side, def, aim: { ...state.aim }, aimPoint: state.aimPoint ? { ...state.aimPoint } : null, started: tick, activeAt: tick + ticks(def.windup), recoveryAt: tick + ticks(def.windup + def.active), endsAt: tick + ticks(def.windup + def.active + def.recovery), resolved: false, hit: new Set() };
         this.running[side] = attack; this.loadout.spend(side, tick, def, this.infiniteCharges); started(attack);
