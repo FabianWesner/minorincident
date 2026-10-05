@@ -37,3 +37,9 @@ test('T-E07-03b @E07 @E07-AC03 grid A* resumes unfinished work without exceeding
   for (let tick = 0; tick < 500 && !complete; tick++) { complete = nav.path(nav.cell(-20, 0), nav.cell(20, 0), result, 10); expect(nav.expansions).toBeLessThanOrEqual(10); }
   expect(complete).toBe(true); expect(result.length).toBeGreaterThan(80); for (const cell of result) expect(nav.blocked[cell]).toBe(0);
 });
+
+test('T-E07-03c @E07 @E07-AC03 collider-baked AI navigation honors E10 offset ground bounds', async () => {
+  const w = await arena('offset-horde'), ai = w.infected!; const e = w.entities.get(ai.spawn('infected.runner', { x: 95, z: 50 }, { state: 'chase' }))!;
+  for (let i = 0; i < 450; i++) { w.update(); expect(ai.nav.clear(e.transform.x, e.transform.z, e.combat!.radius)).toBe(true); }
+  expect(Math.hypot(e.transform.x - 105, e.transform.z - 50)).toBeLessThan(1.2); expect(w.entities.get(1)!.transform.y).toBeCloseTo(0.705, 2);
+});
