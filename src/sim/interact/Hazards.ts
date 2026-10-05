@@ -80,7 +80,10 @@ export class Hazards {
   private lure(e: EntitySnapshot): void {
     for (const id of this.nearby(e, 20)) {
       const target = this.world.entities.get(id)!;
-      if (target.faction === 'infected' && target.health.current > 0) target.noiseTarget = { id: e.id, until: e.hazard!.activeUntil };
+      if (target.faction === 'infected' && target.health.current > 0) {
+        target.noiseTarget ??= { id: e.id, until: e.hazard!.activeUntil };
+        target.noiseTarget.id = e.id; target.noiseTarget.until = e.hazard!.activeUntil;
+      }
     }
   }
   private electrify(e: EntitySnapshot): void {
