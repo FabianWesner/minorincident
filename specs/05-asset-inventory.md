@@ -139,7 +139,7 @@ Legend: **D** = draft on sheet · **U** = upscaled · **S** = Blender script exi
 
 | Asset ID | Source | Status | Prio |
 | --- | --- | --- | --- |
-| `veh.fire-engine` | S10 | **U + L** (Blender rebuild = E17-AC04, the pipeline's first proof) | P2 (L6 set piece); built early as the pipeline pilot |
+| `veh.fire-engine` | S10 | **integrated** (Blender pilot, E17-AC04; legacy study retained as reference) | P2 (L6 set piece); built early as the pipeline pilot |
 | `veh.sedan-red`, `veh.sedan-blue`, `veh.sedan-white` | S05 | D | P0 (traffic) / P1 (drivable) |
 | `veh.school-bus` | S05, S07, SM | D | P1 |
 | `veh.suv-dark` (safe-house) | S05 | D | P1 |
