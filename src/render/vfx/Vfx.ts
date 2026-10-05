@@ -22,8 +22,9 @@ export interface VfxTargets {
 }
 const eventTypes = ['combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.hit-stop', 'telegraph', 'attack.resolved', 'vfx.effect', 'vehicle.feedback'] as const;
 const limbs = 5;
+const heavyBlade = /machete|axe|katana|shovel/;
 const telegraphShapes = { lunge: 3, charge: 2, splash: 1, bloated: 4 } as const;
-const effectColors = { fire: '#ff923a', smoke: '#665f73', toxic: '#96d354', objective: '#ffe18e', pickup: '#84e7ff', ash: '#bcb0c8', 'vehicle-smoke': '#535360', 'vehicle-fire': '#ff8c32' } as const;
+const effectColors = { fire: 0xff923a, smoke: 0x665f73, toxic: 0x96d354, objective: 0xffe18e, pickup: 0x84e7ff, ash: 0xbcb0c8, 'vehicle-smoke': 0x535360, 'vehicle-fire': 0xff8c32 } as const;
 /** Event-driven view. All randomness, time, masks and bodies belong here, outside simulation.
  * Infrastructure presets deliberately leave E27's seven-beat choreography to E27. */
 export class Vfx extends Group {
@@ -39,7 +40,10 @@ export class Vfx extends Group {
   private readonly pools = [this.particles, this.decals, this.telegraphs, this.waves];
   private readonly stops: (() => void)[] = [];
   private readonly tells = new Map<number, { slot: number; kind: TelegraphKind; spawned: number }>();
-  private readonly flashes = new Map<number, number>();
+  private readonly hitIds = new Uint32Array(512);
+  private readonly hitUntil = new Float64Array(512);
+  private hitCount = 0;
+  private hitCursor = 0;
   private readonly vehicles = new Map<number, VehicleFeedbackEvent>();
   private enabled = true;
   private gore: Gore = 'Full';
@@ -71,18 +75,27 @@ export class Vfx extends Group {
     this.visible = this.enabled;
     if (!this.enabled) {
       this.hitStop.reset(); this.targets.clearGore(); this.targets.blood(0);
-      for (const id of this.flashes.keys()) this.targets.flash(id, 0);
+      for (let i = 0; i < this.hitCount; i++) this.targets.flash(this.hitIds[i], 0);
       this.resetPools();
     } else this.targets.blood(this.gore === 'Off' ? 0 : this.coverage);
   }
-  private resetPools(): void { for (const pool of this.pools) pool.reset(); this.gibs.reset(); this.tells.clear(); this.flashes.clear(); }
-  private burst(x: number, y: number, z: number, color: string, count: number, size = 0.18, life = 0.7, gravity = 9.81): void {
+  private resetPools(): void { for (const pool of this.pools) pool.reset(); this.gibs.reset(); this.tells.clear(); this.hitCount = this.hitCursor = 0; }
+  private pulse(id: number): void {
+    let slot = 0;
+    while (slot < this.hitCount && this.hitIds[slot] !== id) slot++;
+    if (slot === this.hitCount) {
+      if (this.hitCount < this.hitIds.length) this.hitCount++;
+      else { slot = this.hitCursor++ % this.hitIds.length; this.targets.flash(this.hitIds[slot], 0); }
+    }
+    this.hitIds[slot] = id; this.hitUntil[slot] = this.time + 0.1; this.targets.flash(id, 0.45);
+  }
+  private burst(x: number, y: number, z: number, color: number, count: number, size = 0.18, life = 0.7, gravity = 9.81): void {
     const n = this.quality === 'low' ? Math.ceil(count / 4) : count;
     for (let i = 0; i < n; i++) this.particles.spawn(this.time, life, x, y, z, (this.rng.next() - 0.5) * 4, this.rng.next() * 3, (this.rng.next() - 0.5) * 4, size, 0, color, gravity);
   }
   private blood(x: number, z: number, kill: boolean): void {
-    this.burst(x, 0.7, z, this.gore === 'Off' ? '#38353d' : '#b3121f', kill ? 32 : 16);
-    if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, 0.015, z, this.rng.next() * Math.PI, 0, 0, kill ? 1.8 : 0.65, 0, '#b3121f');
+    this.burst(x, 0.7, z, this.gore === 'Off' ? 0x38353d : 0xb3121f, kill ? 32 : 16);
+    if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, 0.015, z, this.rng.next() * Math.PI, 0, 0, kill ? 1.8 : 0.65, 0, 0xb3121f);
   }
   readonly receive = (event: GameEvent): void => {
     if (event.type === 'vehicle.feedback') {
@@ -94,16 +107,16 @@ export class Vfx extends Group {
     if (!this.enabled) return;
     if (event.type === 'combat.hit' && event.amount > 0) {
       this.blood(event.position.x, event.position.z, false);
-      this.flashes.set(event.targetId, this.time + 0.1); this.targets.flash(event.targetId, 0.45);
+      this.pulse(event.targetId);
     } else if (event.type === 'combat.kill') {
       this.kills++; this.blood(event.position.x, event.position.z, true);
       const def = actions[event.actionId], melee = def?.category === 'melee';
       if (melee && this.gore !== 'Off' && event.sourceId === 1) { this.coverage = Math.min(1, this.coverage + 0.025); this.targets.blood(this.coverage); }
       const explosive = def?.category === 'throwable' && Boolean(def.splash) || event.actionId.includes('explos') || event.actionId.includes('rocket');
-      const heavy = /machete|axe|katana|shovel/.test(event.actionId);
+      const heavy = heavyBlade.test(event.actionId);
       if (heavy && this.gore !== 'Off') {
         const source = this.world.entities.get(event.sourceId), dx = event.position.x - (source?.transform.x ?? 0), dz = event.position.z - (source?.transform.z ?? 0), distance = Math.max(0.1, Math.hypot(dx, dz));
-        for (let i = 0; i < 12; i++) this.particles.spawn(this.time, 0.9, event.position.x, 1, event.position.z, dx / distance * (1 + i * 0.08), 3 + i * 0.12, dz / distance * (1 + i * 0.08), 0.07, 0, '#b3121f', 9.81);
+        for (let i = 0; i < 12; i++) this.particles.spawn(this.time, 0.9, event.position.x, 1, event.position.z, dx / distance * (1 + i * 0.08), 3 + i * 0.12, dz / distance * (1 + i * 0.08), 0.07, 0, 0xb3121f, 9.81);
       }
       const shotgun = event.actionId.includes('shotgun') && Math.hypot(event.position.x - (this.world.entities.get(event.sourceId)?.transform.x ?? 0), event.position.z - (this.world.entities.get(event.sourceId)?.transform.z ?? 0)) <= 3;
       const vehicle = event.actionId === 'vehicle.high-speed';
@@ -117,23 +130,23 @@ export class Vfx extends Group {
           this.gibs.spawn(this.time, position?.x ?? event.position.x, position?.y ?? 1, position?.z ?? event.position.z, this.rng, limb === 4);
         }
         if (explosive) for (let i = 0; i < 3; i++) this.gibs.spawn(this.time, event.position.x, 0.7, event.position.z, this.rng);
-        this.burst(event.position.x, 1, event.position.z, '#b3121f', 24, 0.18, 1.2);
+        this.burst(event.position.x, 1, event.position.z, 0xb3121f, 24, 0.18, 1.2);
       }
     } else if (event.type === 'combat.hit-stop') this.hitStop.hit(this.time);
     else if (event.type === 'combat.attack') {
       const def = actions[event.actionId];
       if (def?.category === 'ranged') {
         const p = event.position;
-        this.burst(p.x + event.direction.x * 0.7, 0.9, p.z + event.direction.z * 0.7, '#ffe7a0', 6, 0.25, 0.06, 0);
-        for (let i = 1; i <= 12; i++) this.particles.spawn(this.time, 0.08, p.x + event.direction.x * i * 0.7, 0.9, p.z + event.direction.z * i * 0.7, 0, 0, 0, 0.06, 0, '#ffe7a0');
-        if (this.quality === 'high') this.burst(p.x, 0.9, p.z, '#d7af65', 1, 0.08, 2);
+        this.burst(p.x + event.direction.x * 0.7, 0.9, p.z + event.direction.z * 0.7, 0xffe7a0, 6, 0.25, 0.06, 0);
+        for (let i = 1; i <= 12; i++) this.particles.spawn(this.time, 0.08, p.x + event.direction.x * i * 0.7, 0.9, p.z + event.direction.z * i * 0.7, 0, 0, 0, 0.06, 0, 0xffe7a0);
+        if (this.quality === 'high') this.burst(p.x, 0.9, p.z, 0xd7af65, 1, 0.08, 2);
       }
     } else if (event.type === 'combat.exploded') {
       if (event.radius > 0) this.effect('explosion', event.position.x, event.position.z, event.radius);
     } else if (event.type === 'telegraph') {
       if (this.tells.has(event.attackId)) return;
       const shape = telegraphShapes[event.kind];
-      const slot = this.telegraphs.spawn(this.time, 1e9, event.position.x, 0.025, event.position.z, event.angle, 0, 0, event.radius * 2, shape, event.kind === 'bloated' ? '#ffe45b' : '#59e8ff', 0, event.kind === 'charge' ? 0.3 : 1, true);
+      const slot = this.telegraphs.spawn(this.time, 1e9, event.position.x, 0.025, event.position.z, event.angle, 0, 0, event.radius * 2, shape, event.kind === 'bloated' ? 0xffe45b : 0x59e8ff, 0, event.kind === 'charge' ? 0.3 : 1, true);
       this.tells.set(event.attackId, { slot, kind: event.kind, spawned: this.time });
     } else if (event.type === 'attack.resolved') {
       const tell = this.tells.get(event.attackId); if (tell) { this.telegraphs.remove(tell.slot); this.tells.delete(event.attackId); }
@@ -144,16 +157,16 @@ export class Vfx extends Group {
     if (!this.enabled) return;
     if (kind === 'explosion') {
       this.lastExplosionRadius = radius; this.flashUntil = this.time + 0.1;
-      this.waves.spawn(this.time, 0.8, x, 0.035, z, 0, 0, 0, radius * 2, 1, '#ffe19a', 1);
-      this.burst(x, 1, z, '#ff8c32', 64, radius * 0.3, 0.65, 2);
-      this.burst(x, 0.8, z, '#685866', 32, radius * 0.4, 2, -0.5);
-      this.burst(x, 0.3, z, '#b09b85', 16, 0.13, 1.6);
-      if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, 0.012, z, 0, 0, 0, radius, 0, '#37323c');
+      this.waves.spawn(this.time, 0.8, x, 0.035, z, 0, 0, 0, radius * 2, 1, 0xffe19a, 1);
+      this.burst(x, 1, z, 0xff8c32, 64, radius * 0.3, 0.65, 2);
+      this.burst(x, 0.8, z, 0x685866, 32, radius * 0.4, 2, -0.5);
+      this.burst(x, 0.3, z, 0xb09b85, 16, 0.13, 1.6);
+      if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, 0.012, z, 0, 0, 0, radius, 0, 0x37323c);
       this.targets.shake(this.flashReduction ? 0.08 : Math.min(0.35, radius * 0.05));
-    } else if (kind === 'screamer') this.waves.spawn(this.time, 1, x, 0.03, z, 0, 0, 0, radius * 2, 1, '#ef92ff', 1);
+    } else if (kind === 'screamer') this.waves.spawn(this.time, 1, x, 0.03, z, 0, 0, 0, radius * 2, 1, 0xef92ff, 1);
     else if (kind === 'electric') {
-      this.burst(x, 0.7, z, '#94ecff', 12, 0.07, 0.25, 0);
-      for (let i = 0; i < 16; i++) this.particles.spawn(this.time, 0.25, x + i * 0.08, 0.7 + Math.sin(i * 0.7) * 0.15, z + (i % 2 ? 0.08 : -0.08), 0, 0, 0, 0.14, 0, '#94ecff');
+      this.burst(x, 0.7, z, 0x94ecff, 12, 0.07, 0.25, 0);
+      for (let i = 0; i < 16; i++) this.particles.spawn(this.time, 0.25, x + i * 0.08, 0.7 + Math.sin(i * 0.7) * 0.15, z + (i % 2 ? 0.08 : -0.08), 0, 0, 0, 0.14, 0, 0x94ecff);
     }
     else {
       const smoke = kind.includes('smoke') || kind === 'toxic', sparkle = kind === 'objective' || kind === 'pickup';
@@ -166,9 +179,11 @@ export class Vfx extends Group {
     this.time += seconds;
     for (const pool of this.pools) pool.advance(this.time);
     this.gibs.advance(this.time, seconds);
-    for (const [id, until] of this.flashes) {
-      this.targets.flash(id, Math.max(0, (until - this.time) * 4.5));
-      if (until <= this.time) this.flashes.delete(id);
+    for (let i = 0; i < this.hitCount;) {
+      this.targets.flash(this.hitIds[i], Math.max(0, (this.hitUntil[i] - this.time) * 4.5));
+      if (this.hitUntil[i] <= this.time) {
+        this.hitCount--; this.hitIds[i] = this.hitIds[this.hitCount]; this.hitUntil[i] = this.hitUntil[this.hitCount];
+      } else i++;
     }
     if (Math.floor(this.time * 4) !== Math.floor((this.time - seconds) * 4) && this.enabled) for (const vehicle of this.vehicles.values()) {
       if (vehicle.healthFraction < 0.4) this.effect('vehicle-smoke', vehicle.position.x, vehicle.position.z, 0.7);
@@ -177,7 +192,7 @@ export class Vfx extends Group {
     // Wounded-infected droplets are based on visual time, never extra sim events or damage.
     if (Math.floor(this.time * 2) !== Math.floor((this.time - seconds) * 2) && this.enabled && this.gore !== 'Off') {
       let emitted = 0;
-      for (const e of this.world.entities.iterate()) if (e.faction === 'infected' && e.health.current > 0 && e.health.current < e.health.max * 0.5 && emitted++ < 32) this.decals.spawn(this.time, 120, e.transform.x, 0.016, e.transform.z, 0, 0, 0, 0.25, 0, '#b3121f');
+      for (const e of this.world.entities.iterate()) if (e.faction === 'infected' && e.health.current > 0 && e.health.current < e.health.max * 0.5 && emitted++ < 32) this.decals.spawn(this.time, 120, e.transform.x, 0.016, e.transform.z, 0, 0, 0, 0.25, 0, 0xb3121f);
     }
   }
   get flash(): number { return this.enabled ? Math.max(0, (this.flashUntil - this.time) / 0.1) * (this.flashReduction ? 0.12 : 0.6) : 0; }

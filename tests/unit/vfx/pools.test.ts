@@ -6,7 +6,7 @@ test('T-E15-pool @E15 @E15-AC02 fixed slots reuse buffers and expire without res
   const pool = new FxPool(8, 'ground');
   const geometry = pool.mesh.geometry, material = pool.mesh.material;
   for (let t = 0; t < 600; t++) {
-    for (let i = 0; i < 100; i++) pool.spawn(t, 2, i, 0, 0, 0, 0, 0, 1, 0, '#b3121f');
+    for (let i = 0; i < 100; i++) pool.spawn(t, 2, i, 0, 0, 0, 0, 0, 1, 0, 0xb3121f);
     pool.advance(t); expect(pool.count).toBeLessThanOrEqual(8);
     expect(pool.mesh.geometry).toBe(geometry); expect(pool.mesh.material).toBe(material);
   }
@@ -23,9 +23,9 @@ test('T-E15-hit-stop @E15 @E15-AC06 render time owns the 50 ms freeze and crowds
 
 test('T-E15-tell-slots @E15 @E15-AC04 long tells survive repeated short attacks', () => {
   const pool = new FxPool(8, 'ground');
-  const persistent = pool.spawn(0, 100, 0, 0, 0, 0, 0, 0, 1, 1, '#59e8ff', 0, 1, true);
+  const persistent = pool.spawn(0, 100, 0, 0, 0, 0, 0, 0, 1, 1, 0x59e8ff, 0, 1, true);
   for (let i = 0; i < 40; i++) {
-    const slot = pool.spawn(i, 1, 0, 0, 0, 0, 0, 0, 1, 1, '#59e8ff', 0, 1, true);
+    const slot = pool.spawn(i, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0x59e8ff, 0, 1, true);
     expect(slot).not.toBe(persistent); pool.remove(slot);
   }
   pool.advance(40); expect(pool.count).toBe(1); pool.remove(persistent); expect(pool.count).toBe(0); pool.dispose();
