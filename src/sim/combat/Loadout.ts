@@ -19,7 +19,8 @@ export class Loadout {
     const side = this.state[this.state.selectedSide], aim = frame.aim;
     if (aim && Math.hypot(aim.x, aim.z) > 0) {
       const length = Math.hypot(aim.x, aim.z); side.aim.x = aim.x / length; side.aim.z = aim.z / length;
-      side.aimPoint = frame.aimPoint ? { ...frame.aimPoint } : null;
+      if (frame.aimPoint) { side.aimPoint ??= { x: 0, z: 0 }; side.aimPoint.x = frame.aimPoint.x; side.aimPoint.z = frame.aimPoint.z; }
+      else side.aimPoint = null;
     }
     if (frame.selector && tick >= side.swapUntil) {
       side.index = (side.index + frame.selector + side.rack.length) % side.rack.length; side.swapUntil = tick + 15;

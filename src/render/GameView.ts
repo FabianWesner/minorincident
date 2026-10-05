@@ -1,3 +1,5 @@
+import { CombatView } from './CombatView';
+import type { SurvivorState } from '../data/survivor';
 import { CharacterView } from './characters/CharacterView';
 import { BoxGeometry, Color, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Scene, type Material } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
@@ -24,6 +26,11 @@ export class GameView implements Lifecycle {
   readonly camera = this.view.camera;
   readonly renderer: Renderer;
   private readonly meshes: Mesh[] = [];
+  private combat: CombatView | null = null;
+  private stopHitStop: (() => void) | null = null;
+  private hitStopUntil = 0;
+  private hitStopTick = 0;
+  private frozenPose: SurvivorState | null = null;
   private cube: Mesh | null = null;
   private character: CharacterView | null = null;
   private wireframe: PhysicsWireframe | null = null;
@@ -64,6 +71,14 @@ export class GameView implements Lifecycle {
       this.lighting = new Lighting(this.scene); this.materials = new Materials(this.lighting);
       const ground = new Mesh(new PlaneGeometry(100, 100), this.materials.get('sidewalk')); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;
       this.meshes.push(ground); this.scene.add(ground);
+      if (this.world.combat) {
+        this.combat = new CombatView(this.world, this.materials); this.scene.add(this.combat);
+        this.stopHitStop = this.world.events.on('combat.hit-stop', (event) => {
+          if (event.type !== 'combat.hit-stop') return;
+          this.hitStopTick = this.world.tick; this.hitStopUntil = this.world.tick + Math.ceil(event.durationMs * 60 / 1000);
+          this.frozenPose = structuredClone(this.world.entities.get(1)!.survivor!);
+        });
+      }
       this.character = new CharacterView(); await this.character.init(this.materials); this.scene.add(this.character);
     } else if (this.world.scenario === 'lookdev') {
       this.renderer.shadowMap.enabled = true;
@@ -129,7 +144,7 @@ export class GameView implements Lifecycle {
       this.character.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha) - 0.7, lerp(previous?.z ?? current.z, current.z, alpha));
       const from = previous?.yaw ?? current.yaw;
       this.character.rotation.y = from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha;
-      this.character.update(survivor, this.world.tick, alpha);
+      this.character.update(this.frozenPose && this.world.tick < this.hitStopUntil ? this.frozenPose : survivor, this.world.tick < this.hitStopUntil ? this.hitStopTick : this.world.tick, alpha);
     }
     if (this.cube && current) {
       this.cube.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha), lerp(previous?.z ?? current.z, current.z, alpha));
@@ -141,6 +156,7 @@ export class GameView implements Lifecycle {
       this.playerPosition.copy(this.lookdev.player.position);
       this.occlusion.update(this.camera, this.playerPosition, 0, this.lookdev.playerMeshes);
     }
+    this.combat?.update();
     this.lighting?.update(this.view);
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
@@ -160,6 +176,8 @@ export class GameView implements Lifecycle {
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
   }
   reset(): void {
+    this.stopHitStop?.(); this.stopHitStop = null; this.hitStopUntil = 0; this.frozenPose = null;
+    if (this.combat) { this.scene.remove(this.combat); this.combat.dispose(); this.combat = null; }
     if (this.character) { this.scene.remove(this.character); this.character.dispose(); this.character = null; }
     this.postFx?.dispose(); this.postFx = null;
     if (this.lookdev) { this.scene.remove(this.lookdev); this.lookdev.dispose(); this.lookdev = null; }
