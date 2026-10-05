@@ -27,7 +27,7 @@ test('T-E01-04b @E01 @E01-AC04 browser and Node match after 3600 scripted ticks'
   } finally { world.dispose(); }
 });
 
-test('T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and epic stubs', async ({ page }) => {
+test('T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, every contract method and epic stubs', async ({ page }) => {
   const scripts: string[] = [];
   page.on('request', (request) => { if (request.resourceType() === 'script') scripts.push(request.url()); });
   await page.goto('/?renderer=webgl');
@@ -41,19 +41,21 @@ test('T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and 
     const stubs: [string, () => unknown][] = [
       ['spawn', () => api.spawn('infected.stub', { x: 0, z: 0 })],
       ['cheats.killAll', () => api.cheats.killAll()], ['cheats.completeObjective', () => api.cheats.completeObjective()],
-      ['bot.start', () => api.bot.start()], ['bot.stop', () => api.bot.stop()], ['bot.status', () => api.bot.status()],
+      ['bot.start', () => api.bot.start()],
     ];
     for (const [name, call] of stubs) { try { await call(); errors[name] = 'NO ERROR'; } catch (error) { errors[name] = (error as Error).message; } }
+    api.bot.stop(); const bot = api.bot.status();
     api.teleport('player', { x: 2, z: 3 });
     const entity = api.getEntity(1), missing = api.getEntity(999), nearby = api.query({ kind: 'player', archetype: 'player.stub', within: { x: 2, z: 3, r: 1 } });
     api.input.set({ move: { x: 1, z: 0 } }); api.input.clear(); await api.step(1);
     await api.screenshotReady();
-    return { version: api.version, keys: Object.keys(api).sort(), errors, entity, missing, nearby, events: api.events(0), perf: api.perf() };
+    return { version: api.version, keys: Object.keys(api).sort(), errors, bot, entity, missing, nearby, events: api.events(0), perf: api.perf() };
   });
   expect(surface.version).toMatch(/^\d+\.\d+\.\d+$/);
   expect(surface.keys).toEqual(['version', 'ready', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'perf', 'screenshotReady'].sort());
-  const epics: Record<string, string> = { spawn: 'E07', 'cheats.killAll': 'E07', 'cheats.completeObjective': 'E12', 'bot.start': 'E19', 'bot.stop': 'E19', 'bot.status': 'E19' };
+  const epics: Record<string, string> = { spawn: 'E07', 'cheats.killAll': 'E07', 'cheats.completeObjective': 'E12', 'bot.start': 'E19' };
   for (const [name, epic] of Object.entries(epics)) expect(surface.errors[name]).toBe(`NotImplemented ${epic}: ${name}`);
+  expect(surface.bot).toEqual({ running: false, policy: null });
   expect(surface.entity?.transform).toMatchObject({ x: 2, z: 3 }); expect(surface.missing).toBeNull(); expect(surface.nearby).toHaveLength(1);
   expect(surface.events).toContainEqual({ tick: 1, type: 'sim.tick' }); expect(surface.perf.entities).toBe(1);
 });
