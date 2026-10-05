@@ -1,3 +1,4 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { Physics } from '../../../src/physics/Physics';
 import { vehicleDef } from '../../../src/data/vehicles';
@@ -9,7 +10,7 @@ test('T-E09-03 @E09-AC03 sedan acceleration, full-lock radius and slalom stabili
     for (let i = 0; i < 60; i++) s.tick();
     s.car.intent.throttle = 1; s.car.intent.brake = false;
     for (let i = 0; i < 240; i++) s.tick();
-    expect(s.car.speed).toBeGreaterThanOrEqual(14.4);
+    const accelerationSpeed = s.car.speed; expect(accelerationSpeed).toBeGreaterThanOrEqual(14.4);
     // Hold approximately 10 m/s through a real full-lock physics turn.
     s.car.intent.steer = 1;
     let distance = 0, angle = 0, speed = 0;
@@ -20,12 +21,11 @@ test('T-E09-03 @E09-AC03 sedan acceleration, full-lock radius and slalom stabili
       distance += Math.hypot(s.car.transform.x - s.car.previous.x, s.car.transform.z - s.car.previous.z);
       angle += Math.abs(Math.atan2(Math.sin(s.car.transform.yaw - yaw), Math.cos(s.car.transform.yaw - yaw))); speed += s.car.speed;
     }
-    console.log({ accelerationSpeed: s.car.speed, radius: distance / angle, turnSpeed: speed / 300 });
     expect(speed / 300).toBeGreaterThan(9); expect(speed / 300).toBeLessThan(11);
     expect(distance / angle).toBeGreaterThanOrEqual(8); expect(distance / angle).toBeLessThanOrEqual(14);
     let maxRoll = 0;
     for (let i = 0; i < 1800; i++) { s.car.intent.throttle = 1; s.car.intent.steer = Math.sin(i / 45); s.tick(); maxRoll = Math.max(maxRoll, Math.abs(s.car.roll)); }
-    expect(maxRoll).toBeLessThan(Math.PI / 3);
+    expect(maxRoll).toBeLessThan(Math.PI / 3); mkdirSync('test-results/epics/E09', { recursive: true }); writeFileSync('test-results/epics/E09/handling-metrics.json', JSON.stringify({ accelerationSpeed, radius: distance / angle, turnSpeed: speed / 300, maxRollDegrees: maxRoll * 180 / Math.PI }, null, 2));
   } finally { s.physics.dispose(); }
 });
 test('T-E09-11 @E09-AC11 30 second scripted Rapier drive is deterministic across three worlds', async () => {

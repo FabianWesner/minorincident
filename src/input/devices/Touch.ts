@@ -11,7 +11,7 @@ export class Touch {
   readonly element = document.createElement('div');
   readonly aim: Vec2 = { x: 0, z: 0 };
   aiming = false;
-  get braking(): boolean { return [...this.contacts.values()].some(c => c.action === 'brake'); }
+  get braking(): boolean { for (const c of this.contacts.values()) if (c.action === 'brake') return true; return false; }
   private stickId: number | null = null;
   private readonly contacts = new Map<number, Contact>();
   constructor(private readonly canvas: HTMLElement, private readonly activity: () => void, private readonly fire: (action: TouchAction, direction: Vec2 | null) => void) {
