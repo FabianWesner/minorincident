@@ -1,0 +1,4214 @@
+{
+  "acousticZones": [
+    {
+      "id": "outdoor",
+      "polygon": [
+        [
+          -28,
+          -28
+        ],
+        [
+          28,
+          -28
+        ],
+        [
+          28,
+          28
+        ],
+        [
+          -28,
+          28
+        ],
+        [
+          -28,
+          -28
+        ]
+      ],
+      "preset": "street"
+    },
+    {
+      "id": "bld.school:53",
+      "polygon": [
+        [
+          -20.0,
+          -18.0
+        ],
+        [
+          -8.0,
+          -18.0
+        ],
+        [
+          -8.0,
+          -10.0
+        ],
+        [
+          -20.0,
+          -10.0
+        ],
+        [
+          -20.0,
+          -18.0
+        ]
+      ],
+      "preset": "interior-large"
+    },
+    {
+      "id": "bld.gym:78",
+      "polygon": [
+        [
+          9.0,
+          -18.0
+        ],
+        [
+          19.0,
+          -18.0
+        ],
+        [
+          19.0,
+          -10.0
+        ],
+        [
+          9.0,
+          -10.0
+        ],
+        [
+          9.0,
+          -18.0
+        ]
+      ],
+      "preset": "interior-large"
+    }
+  ],
+  "anchors": {
+    "arrival": {
+      "position": [
+        0,
+        0,
+        24
+      ],
+      "yaw": 0
+    },
+    "cat-perch": {
+      "position": [
+        -18,
+        3,
+        -19
+      ],
+      "yaw": 0
+    },
+    "crow-roost": {
+      "position": [
+        20,
+        4,
+        -20
+      ],
+      "yaw": 0
+    },
+    "exit": {
+      "position": [
+        0,
+        0,
+        -24
+      ],
+      "yaw": 0
+    },
+    "gym-door": {
+      "position": [
+        14,
+        0,
+        -9.0
+      ],
+      "yaw": 0
+    },
+    "objective": {
+      "position": [
+        5,
+        0,
+        -8
+      ],
+      "yaw": 0
+    },
+    "player-start": {
+      "position": [
+        0,
+        0,
+        4
+      ],
+      "yaw": 0
+    },
+    "safe-point": {
+      "position": [
+        5,
+        0,
+        11
+      ],
+      "yaw": 0
+    },
+    "school-entrance": {
+      "position": [
+        -14,
+        0,
+        -9.0
+      ],
+      "yaw": 0
+    }
+  },
+  "bounds": [
+    [
+      -28,
+      -28
+    ],
+    [
+      28,
+      -28
+    ],
+    [
+      28,
+      28
+    ],
+    [
+      -28,
+      28
+    ],
+    [
+      -28,
+      -28
+    ]
+  ],
+  "buildings": [
+    {
+      "aabb": {
+        "max": [
+          -8.0,
+          6,
+          -10.0
+        ],
+        "min": [
+          -20.0,
+          0,
+          -18.0
+        ]
+      },
+      "assetId": "bld.school",
+      "id": "bld.school:53",
+      "label": "Sunset Grove Elementary"
+    },
+    {
+      "aabb": {
+        "max": [
+          19.0,
+          5,
+          -10.0
+        ],
+        "min": [
+          9.0,
+          0,
+          -18.0
+        ]
+      },
+      "assetId": "bld.gym",
+      "id": "bld.gym:78",
+      "label": "Sunset Grove Gym"
+    }
+  ],
+  "colliders": [
+    {
+      "aabb": {
+        "max": [
+          -23.735976934432983,
+          1.563220500946045,
+          -22.559457540512085
+        ],
+        "min": [
+          -26.264023065567017,
+          0,
+          -23.440542459487915
+        ]
+      },
+      "id": "prop.hedge:3",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          22.264023065567017,
+          1.563220500946045,
+          -22.559457540512085
+        ],
+        "min": [
+          19.735976934432983,
+          0,
+          -23.440542459487915
+        ]
+      },
+      "id": "prop.hedge:7",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -23.735976934432983,
+          1.563220500946045,
+          23.440542459487915
+        ],
+        "min": [
+          -26.264023065567017,
+          0,
+          22.559457540512085
+        ]
+      },
+      "id": "prop.hedge:11",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          22.264023065567017,
+          1.563220500946045,
+          23.440542459487915
+        ],
+        "min": [
+          19.735976934432983,
+          0,
+          22.559457540512085
+        ]
+      },
+      "id": "prop.hedge:15",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          12.317000031471252,
+          1.6075001260067228,
+          -4.855999946594238
+        ],
+        "min": [
+          7.682999968528748,
+          0,
+          -7.144000053405762
+        ]
+      },
+      "id": "veh.sedan-red:44",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -7.682999968528748,
+          1.6075001260067228,
+          7.144000053405762
+        ],
+        "min": [
+          -12.317000031471252,
+          0,
+          4.855999946594238
+        ]
+      },
+      "id": "veh.sedan-red:45",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          22.317000031471252,
+          1.6075001260067228,
+          -4.855999946594238
+        ],
+        "min": [
+          17.682999968528748,
+          0,
+          -7.144000053405762
+        ]
+      },
+      "id": "veh.sedan-red:46",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -17.682999968528748,
+          1.6075001260067228,
+          7.144000053405762
+        ],
+        "min": [
+          -22.317000031471252,
+          0,
+          4.855999946594238
+        ]
+      },
+      "id": "veh.sedan-red:47",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -0.7999999999999998,
+          0.9,
+          -14.05
+        ],
+        "min": [
+          -5.2,
+          0,
+          -15.95
+        ]
+      },
+      "id": "veh.wreck:48",
+      "maxTier": 5,
+      "minTier": 1
+    },
+    {
+      "aabb": {
+        "max": [
+          5.2,
+          0.9,
+          -7.05
+        ],
+        "min": [
+          0.7999999999999998,
+          0,
+          -8.95
+        ]
+      },
+      "id": "veh.wreck:49",
+      "maxTier": 5,
+      "minTier": 2
+    },
+    {
+      "aabb": {
+        "max": [
+          -0.7999999999999998,
+          0.9,
+          -0.050000000000000044
+        ],
+        "min": [
+          -5.2,
+          0,
+          -1.95
+        ]
+      },
+      "id": "veh.wreck:50",
+      "maxTier": 5,
+      "minTier": 3
+    },
+    {
+      "aabb": {
+        "max": [
+          5.2,
+          0.9,
+          6.95
+        ],
+        "min": [
+          0.7999999999999998,
+          0,
+          5.05
+        ]
+      },
+      "id": "veh.wreck:51",
+      "maxTier": 5,
+      "minTier": 4
+    },
+    {
+      "aabb": {
+        "max": [
+          -0.7999999999999998,
+          0.9,
+          13.95
+        ],
+        "min": [
+          -5.2,
+          0,
+          12.05
+        ]
+      },
+      "id": "veh.wreck:52",
+      "maxTier": 5,
+      "minTier": 5
+    },
+    {
+      "aabb": {
+        "max": [
+          -8.0,
+          6,
+          -10.0
+        ],
+        "min": [
+          -20.0,
+          0,
+          -18.0
+        ]
+      },
+      "id": "bld.school:53",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -16.81597693443298,
+          1.563220500946045,
+          -9.009457540512084
+        ],
+        "min": [
+          -19.344023065567015,
+          0,
+          -9.890542459487914
+        ]
+      },
+      "id": "prop.hedge:57",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -8.655976934432983,
+          1.563220500946045,
+          -9.009457540512084
+        ],
+        "min": [
+          -11.184023065567017,
+          0,
+          -9.890542459487914
+        ]
+      },
+      "id": "prop.hedge:69",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          19.0,
+          5,
+          -10.0
+        ],
+        "min": [
+          9.0,
+          0,
+          -18.0
+        ]
+      },
+      "id": "bld.gym:78",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          11.864023065567016,
+          1.563220500946045,
+          -9.009457540512084
+        ],
+        "min": [
+          9.335976934432983,
+          0,
+          -9.890542459487914
+        ]
+      },
+      "id": "prop.hedge:82",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          18.664023065567015,
+          1.563220500946045,
+          -9.009457540512084
+        ],
+        "min": [
+          16.135976934432982,
+          0,
+          -9.890542459487914
+        ]
+      },
+      "id": "prop.hedge:94",
+      "maxTier": 5,
+      "minTier": 0
+    }
+  ],
+  "district": "D-SCHOOL",
+  "geometryHash": "cfdbc978e3c680f3647d077b95383d370c4045661cb5a661e4dd2ec52d4ad13a",
+  "lawns": [
+    {
+      "max": [
+        -20,
+        -20
+      ],
+      "min": [
+        -26,
+        -26
+      ]
+    },
+    {
+      "max": [
+        26,
+        -20
+      ],
+      "min": [
+        20,
+        -26
+      ]
+    },
+    {
+      "max": [
+        -20,
+        26
+      ],
+      "min": [
+        -26,
+        20
+      ]
+    },
+    {
+      "max": [
+        26,
+        26
+      ],
+      "min": [
+        20,
+        20
+      ]
+    },
+    {
+      "max": [
+        -8.0,
+        -7.3
+      ],
+      "min": [
+        -20.0,
+        -8.5
+      ]
+    },
+    {
+      "max": [
+        19.0,
+        -7.3
+      ],
+      "min": [
+        9.0,
+        -8.5
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 1
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 2
+    },
+    {
+      "disableLights": [
+        "block-0",
+        "block-2"
+      ],
+      "remove": [],
+      "tier": 3
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 4
+    },
+    {
+      "disableLights": [
+        "block-1",
+        "block-3"
+      ],
+      "remove": [
+        "collapse-canopy"
+      ],
+      "tier": 5
+    }
+  ],
+  "lightGroups": [
+    {
+      "id": "block-0",
+      "offAt": 3
+    },
+    {
+      "id": "block-1",
+      "offAt": 5
+    },
+    {
+      "id": "block-2",
+      "offAt": 3
+    },
+    {
+      "id": "block-3",
+      "offAt": 5
+    }
+  ],
+  "placements": [
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:0",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -23,
+        0,
+        -23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -21.5,
+          5,
+          -21.5
+        ],
+        "min": [
+          -24.5,
+          0,
+          -24.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:1",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -21,
+        0,
+        -23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -19.5,
+          5,
+          -21.5
+        ],
+        "min": [
+          -22.5,
+          0,
+          -24.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:2",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -23,
+        0,
+        -21
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -21.5,
+          5,
+          -19.5
+        ],
+        "min": [
+          -24.5,
+          0,
+          -22.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:3",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -25,
+        0,
+        -23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -23.735976934432983,
+          1.563220500946045,
+          -22.559457540512085
+        ],
+        "min": [
+          -26.264023065567017,
+          0,
+          -23.440542459487915
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:4",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        23,
+        0,
+        -23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          24.5,
+          5,
+          -21.5
+        ],
+        "min": [
+          21.5,
+          0,
+          -24.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:5",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        25,
+        0,
+        -23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          26.5,
+          5,
+          -21.5
+        ],
+        "min": [
+          23.5,
+          0,
+          -24.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:6",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        23,
+        0,
+        -21
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          24.5,
+          5,
+          -19.5
+        ],
+        "min": [
+          21.5,
+          0,
+          -22.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:7",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        21,
+        0,
+        -23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          22.264023065567017,
+          1.563220500946045,
+          -22.559457540512085
+        ],
+        "min": [
+          19.735976934432983,
+          0,
+          -23.440542459487915
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:8",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -23,
+        0,
+        23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -21.5,
+          5,
+          24.5
+        ],
+        "min": [
+          -24.5,
+          0,
+          21.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:9",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -21,
+        0,
+        23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -19.5,
+          5,
+          24.5
+        ],
+        "min": [
+          -22.5,
+          0,
+          21.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:10",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -23,
+        0,
+        25
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -21.5,
+          5,
+          26.5
+        ],
+        "min": [
+          -24.5,
+          0,
+          23.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:11",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -25,
+        0,
+        23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -23.735976934432983,
+          1.563220500946045,
+          23.440542459487915
+        ],
+        "min": [
+          -26.264023065567017,
+          0,
+          22.559457540512085
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:12",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        23,
+        0,
+        23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          24.5,
+          5,
+          24.5
+        ],
+        "min": [
+          21.5,
+          0,
+          21.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:13",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        25,
+        0,
+        23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          26.5,
+          5,
+          24.5
+        ],
+        "min": [
+          23.5,
+          0,
+          21.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:14",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        23,
+        0,
+        25
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          24.5,
+          5,
+          26.5
+        ],
+        "min": [
+          21.5,
+          0,
+          23.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:15",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        21,
+        0,
+        23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          22.264023065567017,
+          1.563220500946045,
+          23.440542459487915
+        ],
+        "min": [
+          19.735976934432983,
+          0,
+          22.559457540512085
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:16",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -5,
+        0,
+        -20
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -4.680000007152557,
+          3.865000009536743,
+          -19.680000007152557
+        ],
+        "min": [
+          -5.319999992847443,
+          0,
+          -20.319999992847443
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.picket-fence",
+      "id": "prop.picket-fence:17",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -8.0,
+        0,
+        -20
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -6.679660856723785,
+          1.3388891220092773,
+          -19.874532490968704
+        ],
+        "min": [
+          -9.320339143276215,
+          0,
+          -20.125467509031296
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:18",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        5,
+        0,
+        -20
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          5.319999992847443,
+          3.865000009536743,
+          -19.680000007152557
+        ],
+        "min": [
+          4.680000007152557,
+          0,
+          -20.319999992847443
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.picket-fence",
+      "id": "prop.picket-fence:19",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        8.0,
+        0,
+        -20
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          9.320339143276215,
+          1.3388891220092773,
+          -19.874532490968704
+        ],
+        "min": [
+          6.679660856723785,
+          0,
+          -20.125467509031296
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:20",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -5,
+        0,
+        -12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -4.680000007152557,
+          3.865000009536743,
+          -11.680000007152557
+        ],
+        "min": [
+          -5.319999992847443,
+          0,
+          -12.319999992847443
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.picket-fence",
+      "id": "prop.picket-fence:21",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -8.0,
+        0,
+        -12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -6.679660856723785,
+          1.3388891220092773,
+          -11.874532490968704
+        ],
+        "min": [
+          -9.320339143276215,
+          0,
+          -12.125467509031296
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:22",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        5,
+        0,
+        -12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          5.319999992847443,
+          3.865000009536743,
+          -11.680000007152557
+        ],
+        "min": [
+          4.680000007152557,
+          0,
+          -12.319999992847443
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.picket-fence",
+      "id": "prop.picket-fence:23",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        8.0,
+        0,
+        -12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          9.320339143276215,
+          1.3388891220092773,
+          -11.874532490968704
+        ],
+        "min": [
+          6.679660856723785,
+          0,
+          -12.125467509031296
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:24",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -5,
+        0,
+        -4
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -4.680000007152557,
+          3.865000009536743,
+          -3.6800000071525574
+        ],
+        "min": [
+          -5.319999992847443,
+          0,
+          -4.319999992847443
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.picket-fence",
+      "id": "prop.picket-fence:25",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -8.0,
+        0,
+        -4
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -6.679660856723785,
+          1.3388891220092773,
+          -3.8745324909687042
+        ],
+        "min": [
+          -9.320339143276215,
+          0,
+          -4.125467509031296
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:26",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        5,
+        0,
+        -4
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          5.319999992847443,
+          3.865000009536743,
+          -3.6800000071525574
+        ],
+        "min": [
+          4.680000007152557,
+          0,
+          -4.319999992847443
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.picket-fence",
+      "id": "prop.picket-fence:27",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        8.0,
+        0,
+        -4
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          9.320339143276215,
+          1.3388891220092773,
+          -3.8745324909687042
+        ],
+        "min": [
+          6.679660856723785,
+          0,
+          -4.125467509031296
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:28",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -5,
+        0,
+        4
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -4.680000007152557,
+          3.865000009536743,
+          4.319999992847443
+        ],
+        "min": [
+          -5.319999992847443,
+          0,
+          3.6800000071525574
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.picket-fence",
+      "id": "prop.picket-fence:29",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -8.0,
+        0,
+        4
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -6.679660856723785,
+          1.3388891220092773,
+          4.125467509031296
+        ],
+        "min": [
+          -9.320339143276215,
+          0,
+          3.8745324909687042
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:30",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        5,
+        0,
+        4
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          5.319999992847443,
+          3.865000009536743,
+          4.319999992847443
+        ],
+        "min": [
+          4.680000007152557,
+          0,
+          3.6800000071525574
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.picket-fence",
+      "id": "prop.picket-fence:31",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        8.0,
+        0,
+        4
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          9.320339143276215,
+          1.3388891220092773,
+          4.125467509031296
+        ],
+        "min": [
+          6.679660856723785,
+          0,
+          3.8745324909687042
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:32",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -5,
+        0,
+        12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -4.680000007152557,
+          3.865000009536743,
+          12.319999992847443
+        ],
+        "min": [
+          -5.319999992847443,
+          0,
+          11.680000007152557
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.picket-fence",
+      "id": "prop.picket-fence:33",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -8.0,
+        0,
+        12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -6.679660856723785,
+          1.3388891220092773,
+          12.125467509031296
+        ],
+        "min": [
+          -9.320339143276215,
+          0,
+          11.874532490968704
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:34",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        5,
+        0,
+        12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          5.319999992847443,
+          3.865000009536743,
+          12.319999992847443
+        ],
+        "min": [
+          4.680000007152557,
+          0,
+          11.680000007152557
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.picket-fence",
+      "id": "prop.picket-fence:35",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        8.0,
+        0,
+        12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          9.320339143276215,
+          1.3388891220092773,
+          12.125467509031296
+        ],
+        "min": [
+          6.679660856723785,
+          0,
+          11.874532490968704
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:36",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -5,
+        0,
+        20
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -4.680000007152557,
+          3.865000009536743,
+          20.319999992847443
+        ],
+        "min": [
+          -5.319999992847443,
+          0,
+          19.680000007152557
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.picket-fence",
+      "id": "prop.picket-fence:37",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -8.0,
+        0,
+        20
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -6.679660856723785,
+          1.3388891220092773,
+          20.125467509031296
+        ],
+        "min": [
+          -9.320339143276215,
+          0,
+          19.874532490968704
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:38",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        5,
+        0,
+        20
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          5.319999992847443,
+          3.865000009536743,
+          20.319999992847443
+        ],
+        "min": [
+          4.680000007152557,
+          0,
+          19.680000007152557
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.picket-fence",
+      "id": "prop.picket-fence:39",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        8.0,
+        0,
+        20
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          9.320339143276215,
+          1.3388891220092773,
+          20.125467509031296
+        ],
+        "min": [
+          6.679660856723785,
+          0,
+          19.874532490968704
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.traffic-cone",
+      "id": "prop.traffic-cone:40",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -6,
+        0,
+        -6
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -5.760000005364418,
+          0.6460000276565552,
+          -5.760000005364418
+        ],
+        "min": [
+          -6.239999994635582,
+          0,
+          -6.239999994635582
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.traffic-cone",
+      "id": "prop.traffic-cone:41",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        6,
+        0,
+        6
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          6.239999994635582,
+          0.6460000276565552,
+          6.239999994635582
+        ],
+        "min": [
+          5.760000005364418,
+          0,
+          5.760000005364418
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.traffic-cone",
+      "id": "prop.traffic-cone:42",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -6,
+        0,
+        6
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -5.760000005364418,
+          0.6460000276565552,
+          6.239999994635582
+        ],
+        "min": [
+          -6.239999994635582,
+          0,
+          5.760000005364418
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.traffic-cone",
+      "id": "prop.traffic-cone:43",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        6,
+        0,
+        -6
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          6.239999994635582,
+          0.6460000276565552,
+          -5.760000005364418
+        ],
+        "min": [
+          5.760000005364418,
+          0,
+          -6.239999994635582
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.sedan-red",
+      "id": "veh.sedan-red:44",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        10,
+        0,
+        -6
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          12.317000031471252,
+          1.6075001260067228,
+          -4.855999946594238
+        ],
+        "min": [
+          7.682999968528748,
+          0,
+          -7.144000053405762
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.sedan-red",
+      "id": "veh.sedan-red:45",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -10,
+        0,
+        6
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -7.682999968528748,
+          1.6075001260067228,
+          7.144000053405762
+        ],
+        "min": [
+          -12.317000031471252,
+          0,
+          4.855999946594238
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.sedan-red",
+      "id": "veh.sedan-red:46",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        20,
+        0,
+        -6
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          22.317000031471252,
+          1.6075001260067228,
+          -4.855999946594238
+        ],
+        "min": [
+          17.682999968528748,
+          0,
+          -7.144000053405762
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.sedan-red",
+      "id": "veh.sedan-red:47",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -20,
+        0,
+        6
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.682999968528748,
+          1.6075001260067228,
+          7.144000053405762
+        ],
+        "min": [
+          -22.317000031471252,
+          0,
+          4.855999946594238
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": true,
+      "assetId": "veh.wreck",
+      "id": "veh.wreck:48",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 1,
+      "position": [
+        -3,
+        0,
+        -15
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -0.7999999999999998,
+          0.9,
+          -14.05
+        ],
+        "min": [
+          -5.2,
+          0,
+          -15.95
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": true,
+      "assetId": "veh.wreck",
+      "id": "veh.wreck:49",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 2,
+      "position": [
+        3,
+        0,
+        -8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          5.2,
+          0.9,
+          -7.05
+        ],
+        "min": [
+          0.7999999999999998,
+          0,
+          -8.95
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": true,
+      "assetId": "veh.wreck",
+      "id": "veh.wreck:50",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 3,
+      "position": [
+        -3,
+        0,
+        -1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -0.7999999999999998,
+          0.9,
+          -0.050000000000000044
+        ],
+        "min": [
+          -5.2,
+          0,
+          -1.95
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": true,
+      "assetId": "veh.wreck",
+      "id": "veh.wreck:51",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 4,
+      "position": [
+        3,
+        0,
+        6
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          5.2,
+          0.9,
+          6.95
+        ],
+        "min": [
+          0.7999999999999998,
+          0,
+          5.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": true,
+      "assetId": "veh.wreck",
+      "id": "veh.wreck:52",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 5,
+      "position": [
+        -3,
+        0,
+        13
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -0.7999999999999998,
+          0.9,
+          13.95
+        ],
+        "min": [
+          -5.2,
+          0,
+          12.05
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.school",
+      "id": "bld.school:53",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -14,
+        0,
+        -14
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -8.0,
+          6,
+          -10.0
+        ],
+        "min": [
+          -20.0,
+          0,
+          -18.0
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:54",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -21.8,
+        0,
+        -16
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -20.3,
+          5,
+          -14.5
+        ],
+        "min": [
+          -23.3,
+          0,
+          -17.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:55",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -21.8,
+        0,
+        -14
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -20.3,
+          5,
+          -12.5
+        ],
+        "min": [
+          -23.3,
+          0,
+          -15.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:56",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -21.8,
+        0,
+        -12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -20.3,
+          5,
+          -10.5
+        ],
+        "min": [
+          -23.3,
+          0,
+          -13.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:57",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -18.08,
+        0,
+        -9.45
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -16.81597693443298,
+          1.563220500946045,
+          -9.009457540512084
+        ],
+        "min": [
+          -19.344023065567015,
+          0,
+          -9.890542459487914
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:58",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -18.74,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -18.59,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -18.889999999999997,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:59",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -18.49,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -18.34,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -18.639999999999997,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:60",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -18.24,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -18.09,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -18.389999999999997,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:61",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -17.99,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.84,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -18.139999999999997,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:62",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -17.74,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.59,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -17.889999999999997,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:63",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -17.49,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.34,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -17.639999999999997,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:64",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -17.24,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -17.09,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -17.389999999999997,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:65",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -16.99,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -16.84,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -17.139999999999997,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:66",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -6.199999999999999,
+        0,
+        -16
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -4.699999999999999,
+          5,
+          -14.5
+        ],
+        "min": [
+          -7.699999999999999,
+          0,
+          -17.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:67",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -6.199999999999999,
+        0,
+        -14
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -4.699999999999999,
+          5,
+          -12.5
+        ],
+        "min": [
+          -7.699999999999999,
+          0,
+          -15.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:68",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -6.199999999999999,
+        0,
+        -12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -4.699999999999999,
+          5,
+          -10.5
+        ],
+        "min": [
+          -7.699999999999999,
+          0,
+          -13.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:69",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -9.92,
+        0,
+        -9.45
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -8.655976934432983,
+          1.563220500946045,
+          -9.009457540512084
+        ],
+        "min": [
+          -11.184023065567017,
+          0,
+          -9.890542459487914
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:70",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -11.06,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -10.91,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -11.21,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:71",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -10.81,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -10.66,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -10.96,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:72",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -10.56,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -10.41,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -10.71,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:73",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -10.31,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -10.16,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -10.46,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:74",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -10.06,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -9.91,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -10.21,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:75",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -9.81,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -9.66,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -9.96,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:76",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -9.56,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -9.41,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -9.71,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:77",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -9.31,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -9.16,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          -9.46,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.gym",
+      "id": "bld.gym:78",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        14,
+        0,
+        -14
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          19.0,
+          5,
+          -10.0
+        ],
+        "min": [
+          9.0,
+          0,
+          -18.0
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:79",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        7.5,
+        0,
+        -16
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          9.0,
+          5,
+          -14.5
+        ],
+        "min": [
+          6.0,
+          0,
+          -17.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:80",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        7.5,
+        0,
+        -14
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          9.0,
+          5,
+          -12.5
+        ],
+        "min": [
+          6.0,
+          0,
+          -15.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:81",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        7.5,
+        0,
+        -12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          9.0,
+          5,
+          -10.5
+        ],
+        "min": [
+          6.0,
+          0,
+          -13.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:82",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        10.6,
+        0,
+        -9.45
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          11.864023065567016,
+          1.563220500946045,
+          -9.009457540512084
+        ],
+        "min": [
+          9.335976934432983,
+          0,
+          -9.890542459487914
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:83",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        9.9,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          10.05,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          9.75,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:84",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        10.15,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          10.3,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          10.0,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:85",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        10.4,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          10.55,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          10.25,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:86",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        10.65,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          10.8,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          10.5,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:87",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        10.9,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          11.05,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          10.75,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:88",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        11.15,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          11.3,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          11.0,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:89",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        11.4,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          11.55,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          11.25,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:90",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        11.65,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          11.8,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          11.5,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:91",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        20.5,
+        0,
+        -16
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          22.0,
+          5,
+          -14.5
+        ],
+        "min": [
+          19.0,
+          0,
+          -17.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:92",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        20.5,
+        0,
+        -14
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          22.0,
+          5,
+          -12.5
+        ],
+        "min": [
+          19.0,
+          0,
+          -15.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:93",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        20.5,
+        0,
+        -12
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          22.0,
+          5,
+          -10.5
+        ],
+        "min": [
+          19.0,
+          0,
+          -13.5
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:94",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        17.4,
+        0,
+        -9.45
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          18.664023065567015,
+          1.563220500946045,
+          -9.009457540512084
+        ],
+        "min": [
+          16.135976934432982,
+          0,
+          -9.890542459487914
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:95",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        16.3,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          16.45,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          16.150000000000002,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:96",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        16.55,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          16.7,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          16.400000000000002,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:97",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        16.8,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          16.95,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          16.650000000000002,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:98",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        17.05,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          17.2,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          16.900000000000002,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:99",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        17.3,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          17.45,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          17.150000000000002,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:100",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        17.55,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          17.7,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          17.400000000000002,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:101",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        17.8,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          17.95,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          17.650000000000002,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.flower",
+      "id": "prop.flower:102",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        18.05,
+        0,
+        -8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          18.2,
+          0.5,
+          -8.65
+        ],
+        "min": [
+          17.900000000000002,
+          0,
+          -8.950000000000001
+        ]
+      },
+      "yaw": 0
+    }
+  ],
+  "roads": {
+    "edges": [
+      {
+        "end": "north",
+        "id": "north",
+        "laneWidth": 7,
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            -28
+          ]
+        ],
+        "start": "center"
+      },
+      {
+        "end": "south",
+        "id": "south",
+        "laneWidth": 7,
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            28
+          ]
+        ],
+        "start": "center"
+      },
+      {
+        "end": "west",
+        "id": "west",
+        "laneWidth": 7,
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            -28,
+            0
+          ]
+        ],
+        "start": "center"
+      },
+      {
+        "end": "east",
+        "id": "east",
+        "laneWidth": 7,
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            28,
+            0
+          ]
+        ],
+        "start": "center"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "center",
+        "point": [
+          0,
+          0
+        ]
+      },
+      {
+        "id": "north",
+        "point": [
+          0,
+          -28
+        ]
+      },
+      {
+        "id": "south",
+        "point": [
+          0,
+          28
+        ]
+      },
+      {
+        "id": "west",
+        "point": [
+          -28,
+          0
+        ]
+      },
+      {
+        "id": "east",
+        "point": [
+          28,
+          0
+        ]
+      }
+    ]
+  },
+  "surfaces": [
+    {
+      "polygon": [
+        [
+          -28,
+          -28
+        ],
+        [
+          28,
+          -28
+        ],
+        [
+          28,
+          28
+        ],
+        [
+          -28,
+          28
+        ],
+        [
+          -28,
+          -28
+        ]
+      ],
+      "surface": "grass"
+    },
+    {
+      "polygon": [
+        [
+          -28.0,
+          -4.9
+        ],
+        [
+          28.0,
+          -4.9
+        ],
+        [
+          28.0,
+          -3.5
+        ],
+        [
+          -28.0,
+          -3.5
+        ],
+        [
+          -28.0,
+          -4.9
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "polygon": [
+        [
+          -28.0,
+          3.5
+        ],
+        [
+          28.0,
+          3.5
+        ],
+        [
+          28.0,
+          4.9
+        ],
+        [
+          -28.0,
+          4.9
+        ],
+        [
+          -28.0,
+          3.5
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "polygon": [
+        [
+          -4.9,
+          -28.0
+        ],
+        [
+          -3.5,
+          -28.0
+        ],
+        [
+          -3.5,
+          28.0
+        ],
+        [
+          -4.9,
+          28.0
+        ],
+        [
+          -4.9,
+          -28.0
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "polygon": [
+        [
+          3.5,
+          -28.0
+        ],
+        [
+          4.9,
+          -28.0
+        ],
+        [
+          4.9,
+          28.0
+        ],
+        [
+          3.5,
+          28.0
+        ],
+        [
+          3.5,
+          -28.0
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "polygon": [
+        [
+          -3.5,
+          -28
+        ],
+        [
+          3.5,
+          -28
+        ],
+        [
+          3.5,
+          28
+        ],
+        [
+          -3.5,
+          28
+        ],
+        [
+          -3.5,
+          -28
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "polygon": [
+        [
+          -28,
+          -3.5
+        ],
+        [
+          28,
+          -3.5
+        ],
+        [
+          28,
+          3.5
+        ],
+        [
+          -28,
+          3.5
+        ],
+        [
+          -28,
+          -3.5
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "polygon": [
+        [
+          -20.0,
+          -18.0
+        ],
+        [
+          -8.0,
+          -18.0
+        ],
+        [
+          -8.0,
+          -10.0
+        ],
+        [
+          -20.0,
+          -10.0
+        ],
+        [
+          -20.0,
+          -18.0
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "polygon": [
+        [
+          9.0,
+          -18.0
+        ],
+        [
+          19.0,
+          -18.0
+        ],
+        [
+          19.0,
+          -10.0
+        ],
+        [
+          9.0,
+          -10.0
+        ],
+        [
+          9.0,
+          -18.0
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "polygon": [
+        [
+          -22.0,
+          8.5
+        ],
+        [
+          -6.0,
+          8.5
+        ],
+        [
+          -6.0,
+          21.5
+        ],
+        [
+          -22.0,
+          21.5
+        ],
+        [
+          -22.0,
+          8.5
+        ]
+      ],
+      "surface": "tile"
+    }
+  ],
+  "title": "Sunset Grove Elementary",
+  "version": 1,
+  "walkable": {
+    "cellSize": 1,
+    "excluded": []
+  }
+}
