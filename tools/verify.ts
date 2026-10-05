@@ -9,7 +9,7 @@ mkdirSync(output, { recursive: true });
 const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'], ['npm', 'run', 'build'],
   ['npx', 'vitest', 'run', '-t', selection.pattern, '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
-  ['npx', 'playwright', 'test', '--grep', selection.pattern],
+  ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern], // one browser run at a time per machine
 ];
 const checks: { command: string[]; exitCode: number | null }[] = [];
 for (const [command, ...args] of commands) {
