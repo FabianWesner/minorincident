@@ -57,4 +57,5 @@ def glb(root, path):
         obj.select_set(obj in objects)
     bpy.ops.export_scene.gltf(filepath=str(path), export_format='GLB', use_selection=True,
                               export_apply=True, export_yup=True, export_extras=True,
+                              export_vertex_color='ACTIVE', export_all_vertex_colors=False,
                               export_cameras=False, export_lights=False)

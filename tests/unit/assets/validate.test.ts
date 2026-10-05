@@ -20,6 +20,7 @@ test('T-E17-02 @E17-AC02 validates geometry and rejects independent contract vio
     ['materials', (_d,a) => a.budget.materials = 0],
     ['fileKB', (_d,a) => a.budget.fileKB = 0],
     ['material: unknown', (d) => d.getRoot().listMaterials()[0].setName('pal_unknown')],
+    ['material: unknown', (d) => d.getRoot().listMaterials()[0].setName('pal_constructor')],
     ['non-finite', (d) => d.getRoot().listAccessors()[0].setArray(new Float32Array([NaN,0,0, 1,0,0, 0,1,1]))],
     ['degenerate', (d) => d.getRoot().listAccessors()[0].setArray(new Float32Array([0,0,0, 0,0,0, 0,0,0]))],
   ];

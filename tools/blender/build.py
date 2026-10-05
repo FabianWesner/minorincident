@@ -14,6 +14,7 @@ parser.add_argument('--asset', required=True)
 parser.add_argument('--quality', choices=['high', 'low'], default='high')
 parser.add_argument('--output', required=True)
 parser.add_argument('--decay')
+parser.add_argument('--bake-ao', action='store_true')
 args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
 if bpy.app.version[:2] != (5, 2):
     raise RuntimeError(f'Expected Blender 5.2, got {bpy.app.version_string}')
@@ -24,13 +25,16 @@ output = Path(args.output).resolve()
 output.parent.mkdir(parents=True, exist_ok=True)
 # Standalone scripts consume --glb; shared scripts return a root from build(ctx).
 sys.argv = [str(script), '--', '--glb', str(output), '--quality', args.quality]
+bpy.ops.wm.read_factory_settings(use_empty=True)
 namespace = runpy.run_path(str(script))
 if callable(namespace.get('build')):
-    from sslib import sockets, export
+    from sslib import sockets, export, ao
     root = sockets.empty(args.asset)
     ctx = SimpleNamespace(root=root, quality=args.quality, seed=17, decay=args.decay)
     root = namespace['build'](ctx)
     bpy.context.view_layer.update()
+    if args.bake_ao:
+        ao.bake_all(root.children_recursive)
     export.glb(root, output)
 if not output.exists():
     raise RuntimeError(f'{script} did not produce {output}')

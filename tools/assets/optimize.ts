@@ -6,23 +6,52 @@ import { dedup, prune, weld, join, meshopt, simplify, normals } from '@gltf-tran
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
 import type { AssetDef } from '../../src/assets/types';
 import { assetIO } from './io';
+import { compressTextures } from './textures';
 
 /** Named transforms are gameplay pivots; quantization acts on geometry children. */
 export async function optimizeDocument(document: Document, def: AssetDef, ratio = 1): Promise<void> {
+  compressTextures(document);
   await Promise.all([MeshoptEncoder.ready, MeshoptSimplifier.ready]);
-  const protectedNames = new Set([...def.requiredNodes, ...def.animatedNodes, ...def.sockets]);
+  const protectedNames = new Set([...def.requiredNodes, ...def.animatedNodes, ...def.sockets, ...def.frontNodes]);
+  for (const animation of document.getRoot().listAnimations()) for (const channel of animation.listChannels()) {
+    const target = channel.getTargetNode(); if (target) protectedNames.add(target.getName());
+  }
   const pivots = new Map<string, number[]>();
+  if (!document.getRoot().listTextures().length) for (const mesh of document.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
+    for (const semantic of primitive.listSemantics()) if (semantic.startsWith('TEXCOORD_')) primitive.setAttribute(semantic,null);
+  }
   for (const node of document.getRoot().listNodes()) {
     if (!protectedNames.has(node.getName()) && !/^(stump_|light:|col:)/.test(node.getName())) continue;
     pivots.set(node.getName(), node.getWorldTranslation());
     const mesh = node.getMesh();
-    if (mesh) { node.setMesh(null); node.addChild(document.createNode(`${node.getName()}_geometry`).setMesh(mesh)); }
+    if (mesh) { node.setMesh(null); node.addChild(document.createNode().setMesh(mesh)); }
   }
-  await document.transform(dedup(), prune({ keepLeaves: true, keepAttributes: true, keepExtras: true }), weld(), join({ keepNamed: true, cleanup: false }));
+  // Static siblings may join by material; rigid assemblies and contract names remain separate.
+  for (const node of document.getRoot().listNodes()) if (node.getMesh() && !protectedNames.has(node.getName()) && !/^(stump_|light:|col:)/.test(node.getName())) {
+    node.setName(''); node.getMesh()!.setName('');
+  }
+  await document.transform(dedup(), prune({ keepLeaves: true, keepAttributes: true, keepExtras: true }), weld(), join({ keepNamed: true, cleanup: false }), prune({ keepLeaves: true, keepAttributes: true, keepExtras: true }));
   if (ratio < 1) {
     // Split hard normals prevent decimation; regenerate normals on the lower tier.
-    for (const mesh of document.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) primitive.setAttribute('NORMAL', null);
-    await document.transform(weld(), simplify({ simplifier: MeshoptSimplifier, ratio, error: ratio < .05 ? .1 : .02 }), normals());
+    for (const mesh of document.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
+      primitive.setAttribute('NORMAL', null);
+      const position = primitive.getAttribute('POSITION')!, color = primitive.getAttribute('COLOR_0');
+      if (!color) continue;
+      // Average corner AO at shared positions so lower LODs can weld hard seams.
+      const sums = new Map<string,{sum:number[];count:number}>(), keys: string[] = [], point = [0,0,0], value: number[] = [];
+      for (let i=0;i<position.getCount();i++) {
+        position.getElement(i,point); color.getElement(i,value);
+        const key = point.join('|'); keys.push(key);
+        const entry = sums.get(key) ?? {sum:new Array(color.getElementSize()).fill(0),count:0};
+        for(let channel=0;channel<entry.sum.length;channel++)entry.sum[channel]+=value[channel];
+        entry.count++; sums.set(key,entry);
+      }
+      for(let i=0;i<keys.length;i++) {
+        const entry=sums.get(keys[i])!;
+        color.setElement(i,entry.sum.map(v=>v/entry.count));
+      }
+    }
+    await document.transform(weld(), simplify({ simplifier: MeshoptSimplifier, ratio, error: ratio < .05 ? .1 : .02 }), normals(), weld());
   }
   await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'medium', quantizePosition: 16, quantizeNormal: 10, cleanup: false }));
   // Quantization can collapse microscopic triangles; omit these zero-area faces.
