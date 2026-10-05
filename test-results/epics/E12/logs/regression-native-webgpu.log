@@ -1,0 +1,10 @@
+
+> test:e2e
+> sh tools/e2e-lock.sh playwright test --project=chromium tests/perf/district-load.spec.ts --grep @E10-AC06 --workers=2
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/perf/district-load.spec.ts:8:1 › T-E10-06 @E10 @E10-AC06 largest L6 composition loads in <=6 seconds with warm cache in production (5.4s)
+
+  1 passed (8.1s)

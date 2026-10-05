@@ -1,0 +1,17 @@
+{
+  "requiredFinalBrowserGates": [
+    "npm run verify -- E12",
+    "npm run test:smoke"
+  ],
+  "sourceCommit": "5ad709f",
+  "frozenMainBase": "5d7b0488cb17a7bd80707719d0b584026b63aa41",
+  "orchestratorOwnsMergedCrossEpicRegression": true,
+  "supplementalPassed": {
+    "chromium": 90,
+    "nativeL6Load": 1
+  },
+  "skipped": [
+    "regression-webgpu-project"
+  ],
+  "cancellation": "Own request was still queued at lockf; no browser child had started."
+}

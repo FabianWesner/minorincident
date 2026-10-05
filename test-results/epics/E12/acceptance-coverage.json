@@ -1,0 +1,328 @@
+{
+  "E12-AC01": [
+    {
+      "runner": "vitest",
+      "test": "T-E12-01 @E12 @E12-AC01 rejects broken graphs, unknown IDs, and missing triggers",
+      "file": "unit/missions/schema.test.ts",
+      "status": "passed"
+    }
+  ],
+  "E12-AC02": [
+    {
+      "runner": "vitest",
+      "test": "T-E12-02-reach @E12 @E12-AC02 mission-sandbox completes reach through sim controls",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-02-interact @E12 @E12-AC02 mission-sandbox completes interact through sim controls",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-02-kill @E12 @E12-AC02 mission-sandbox completes kill through sim controls",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-02-killAll @E12 @E12-AC02 mission-sandbox completes killAll through sim controls",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-02-survive @E12 @E12-AC02 mission-sandbox completes survive through sim controls",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-02-defend @E12 @E12-AC02 mission-sandbox completes defend through sim controls",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-02-escort @E12 @E12-AC02 mission-sandbox completes escort through sim controls",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-02-collect @E12 @E12-AC02 mission-sandbox completes collect through sim controls",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-02-drive @E12 @E12-AC02 mission-sandbox completes drive through sim controls",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-02-custom @E12 @E12-AC02 mission-sandbox completes custom through sim controls",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    }
+  ],
+  "E12-AC03": [
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC03 L4 full graph task order breaker-3,crossing,blockade",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC03 L4 full graph task order breaker-3,blockade,crossing",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC03 L4 full graph task order crossing,breaker-3,blockade",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC03 L4 full graph task order crossing,blockade,breaker-3",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC03 L4 full graph task order blockade,breaker-3,crossing",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC03 L4 full graph task order blockade,crossing,breaker-3",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-03-abc @E12 @E12-AC03 parallel tasks join in a,b,c",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-03-acb @E12 @E12-AC03 parallel tasks join in a,c,b",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-03-bac @E12 @E12-AC03 parallel tasks join in b,a,c",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-03-bca @E12 @E12-AC03 parallel tasks join in b,c,a",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-03-cab @E12 @E12-AC03 parallel tasks join in c,a,b",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-03-cba @E12 @E12-AC03 parallel tasks join in c,b,a",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    }
+  ],
+  "E12-AC04": [
+    {
+      "runner": "vitest",
+      "test": "T-E12-04 @E12 @E12-AC04 timeout at exactly 120s, retry restores timer, completing cancels timeout",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC04 a completed timed objective cannot fail while another parallel task continues",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC04 timeout still fires while the player waits to respawn",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    }
+  ],
+  "E12-AC05": [
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC05 authored source checkpoint can be loaded fresh and retains its reached snapshot",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-05 @E12 @E12-AC05 death restores C objectives, full HP, charges and escorts; scripted boss remains dead",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC05 a boss killed after C stays dead and its restored objective is completable",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC05 restoring an inside-volume checkpoint does not invent a new enter edge",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC05 restoring a checkpoint clears later transient E06 action effects",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    }
+  ],
+  "E12-AC06": [
+    {
+      "runner": "vitest",
+      "test": "T-E12-06-left @E12 @E12-AC06 left skips at 0.5s and watch/skip gameplay hashes match",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-06-right @E12 @E12-AC06 right skips at 0.5s and watch/skip gameplay hashes match",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-06-interact @E12 @E12-AC06 interact skips at 0.5s and watch/skip gameplay hashes match",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-06-selector @E12 @E12-AC06 selector skips at 0.5s and watch/skip gameplay hashes match",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-06-move @E12 @E12-AC06 move skips at 0.5s and watch/skip gameplay hashes match",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-06-pause @E12 @E12-AC06 pause skips at 0.5s and watch/skip gameplay hashes match",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC06 a skippable failure cinematic ends on Retry",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "playwright",
+      "test": "T-E12-06-browser @E12 @E12-AC06 real keyboard skip, caption/letterbox and watch/skip hashes equal",
+      "file": "e2e/mission-ui.spec.ts",
+      "status": "passed"
+    }
+  ],
+  "E12-AC07": [
+    {
+      "runner": "vitest",
+      "test": "T-E12-07-L1 @E12 @E12-AC07 every cheat advances exactly one L1 step to level.completed",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-07-L2 @E12 @E12-AC07 every cheat advances exactly one L2 step to level.completed",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-07-L3 @E12 @E12-AC07 every cheat advances exactly one L3 step to level.completed",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-07-L4 @E12 @E12-AC07 every cheat advances exactly one L4 step to level.completed",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-07-L5 @E12 @E12-AC07 every cheat advances exactly one L5 step to level.completed",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "T-E12-07-L6 @E12 @E12-AC07 every cheat advances exactly one L6 step to level.completed",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC07 L3 park route cancels the alternative and reaches the finale",
+      "file": "sim/missions/campaign.test.ts",
+      "status": "passed"
+    }
+  ],
+  "E12-AC08": [
+    {
+      "runner": "playwright",
+      "test": "T-E12-08 @E12 @E12-AC08 active world anchor, HUD distance, minimap and clamped direction arrow",
+      "file": "e2e/mission-ui.spec.ts",
+      "status": "passed"
+    }
+  ],
+  "E12-AC09": [
+    {
+      "runner": "vitest",
+      "test": "@E12 @E12-AC09 optional objective achievement is counted once across checkpoint retries",
+      "file": "sim/missions/objectives.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "playwright",
+      "test": "T-E12-09 @E12 @E12-AC09 results equal accumulated sim events; continue requests progression",
+      "file": "e2e/mission-ui.spec.ts",
+      "status": "passed"
+    }
+  ],
+  "E12-AC10": [
+    {
+      "runner": "vitest",
+      "test": "T-E12-10 @E12 @E12-AC10 every campaign radio line has a stable existing subtitle ID",
+      "file": "unit/missions/dialogue.test.ts",
+      "status": "passed"
+    },
+    {
+      "runner": "playwright",
+      "test": "T-E12-10-browser @E12 @E12-AC10 radio subtitle text and ID match the dialogue event",
+      "file": "e2e/mission-ui.spec.ts",
+      "status": "passed"
+    }
+  ]
+}
