@@ -84,7 +84,7 @@ def finish(obj, mat, parent, bevel=0.0, segs=2, smooth=True, harden=True, angle=
     if obj.type == 'MESH':
         for p in obj.data.polygons:
             p.use_smooth = smooth
-    if LEVEL==2:bevel=0
+    if LEVEL:bevel=0
     if LEVEL==1:segs=1
     if bevel > 0:
         b = obj.modifiers.new('bevel', 'BEVEL')
@@ -114,7 +114,7 @@ def from_bm(name, bm):
 
 def box(name, center, size, mat, parent=None, bevel=0.02, segs=2, rot=(0, 0, 0)):
     if LEVEL and name in {'tread','vent_slats','head_lens_flute','antenna','antenna_base'}:return None
-    if LEVEL==2 and name in {'cargo_panel_reveal','cargo_panel','rear_panel_reveal','rear_panel','mirror_face','seat','seat_back','headrest','dashboard','steering_spoke','hood_vent','mudflap','panel_seam','rocker','plate_mount','blank_plate','lower_intake','front_indicator','side_indicator','tail_side','wiper','cab_bulkhead'}:return None
+    if LEVEL==2 and name in {'cargo_floor','chassis','fog_lens','cargo_panel_reveal','cargo_panel','rear_panel_reveal','rear_panel','mirror_face','seat','seat_back','headrest','dashboard','steering_spoke','hood_vent','mudflap','panel_seam','rocker','plate_mount','blank_plate','lower_intake','front_indicator','side_indicator','tail_side','wiper','cab_bulkhead'}:return None
     bm = bmesh.new()
     bmesh.ops.create_cube(bm, size=1.0)
     bmesh.ops.scale(bm, vec=Vector(size), verts=bm.verts)
@@ -146,6 +146,7 @@ def plate(name, pts_xz, side, depth, mat, parent=None, y_skin=W, bevel=0.006, se
 
 def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.005, lift=0.0):
     """Frame between two loops with equal vertex count, on a side skin."""
+    if LEVEL==2 and name=='window_rubber':return None
     bm = bmesh.new()
     y0 = side * (y_skin + lift)
     y1 = side * (y_skin + lift + depth)
@@ -169,7 +170,7 @@ def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.00
 def lathe(name, profile, center, axis, mat, parent=None, segs=40, smooth=True):
     """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
     if LEVEL==2 and name in {'rim_lip','hub_cap','sidewall_rib','steering'}:return None
-    if LEVEL:segs=min(segs,16 if LEVEL==1 else 12)
+    if LEVEL:segs=min(segs,16 if LEVEL==1 else 8)
     bm = bmesh.new()
     rings = []
     for r, a in profile:
@@ -200,6 +201,7 @@ def lathe(name, profile, center, axis, mat, parent=None, segs=40, smooth=True):
 
 
 def cylinder(name, center, r, depth, axis, mat, parent=None, segs=40, bevel=0.0):
+    if LEVEL==2 and name=='axle':return None
     if LEVEL and name in {'lug','lock','clamp_bolt','hinge_pin'}:return None
     prof = [(1e-4, -depth / 2), (r, -depth / 2), (r, depth / 2), (1e-4, depth / 2)]
     o = lathe(name, prof, center, axis, mat, parent, segs)
@@ -214,6 +216,9 @@ def cylinder(name, center, r, depth, axis, mat, parent=None, segs=40, bevel=0.0)
 
 def cut(target, cutter_obj):
     """Apply an exact difference and discard the temporary cutter."""
+    if target is None:
+        bpy.data.objects.remove(cutter_obj)
+        return
     mod = target.modifiers.new('cut', 'BOOLEAN')
     mod.operation = 'DIFFERENCE'
     mod.solver = 'EXACT'
@@ -312,7 +317,8 @@ def build_vehicle(level):
         sill=box('rocker',(-.38,s*1.012,.63),(4.14,.034,.10),'white',STATIC,.025,3)
         for x in [-1.63,1.65]:cut(sill,raw_cyl('rocker_cut',(x,0,.46),.59,2.4,'y',64))
         for x in [-1.63,1.65]:
-            ts=[PI*i/40 for i in range(41)]
+            arc_segments=40 if LEVEL==0 else (24 if LEVEL==1 else 8)
+            ts=[PI*i/arc_segments for i in range(arc_segments+1)]
             pts=[(x+.625*math.cos(t),.46+.625*math.sin(t)) for t in ts]+[(x+.574*math.cos(t),.46+.574*math.sin(t)) for t in reversed(ts)]
             plate('arch_molding',pts,s,.033,'black',STATIC,y_skin=1.002,bevel=.010)
             box('mudflap',(x-.49,s*.95,.41),(.05,.20,.40),'black',STATIC,.009)
@@ -392,7 +398,7 @@ def build_vehicle(level):
         box('blank_plate',(face+math.copysign(.02,x),0,.71),(.012,.42,.15),'black',STATIC,.009)
         if x>0:
             for y in [-.72,.72]:
-                cut(bumper,raw_box('fog_recess',(face,y,.66),(.16,.25,.15)))
+                if LEVEL<2:cut(bumper,raw_box('fog_recess',(face,y,.66),(.16,.25,.15)))
                 box('fog_lens',(face-.057,y,.66),(.018,.18,.082),'head',STATIC,.010)
             for y in [-.43,.43]:box('lower_intake',(face+.006,y,.77),(.017,.18,.17),'black',STATIC,.008)
     group('lightsFront',parent=STATIC);group('lightsBrake',parent=STATIC)
@@ -420,7 +426,7 @@ def build_vehicle(level):
         cylinder('axle',(x,0,.468),.05,1.90,'y','black',STATIC,24)
         for s,lr in [(-1,'L'),(1,'R')]:
             name=moving_group('wheel'+ax+lr,(x,s*.96,.468));c=(x,s*.96,.468);axis='-y' if s<0 else 'y'
-            lathe('tyre',TY if LEVEL<2 else [(.25,-.15),(.43,-.15),(.468,-.08),(.468,.08),(.43,.15),(.25,.15)],c,axis,'black',name,80)
+            lathe('tyre',TY if LEVEL<2 else [(.001,-.15),(.468,-.15),(.468,.15),(.001,.15)],c,axis,'black',name,80)
             rim=lathe('steel_rim',RIM if LEVEL<2 else [(.001,.085),(.28,.085),(.28,.16),(.001,.16)],c,axis,'chrome',name,80)
             for k in range(12 if LEVEL==0 else 0):
                 t=2*PI*k/12
@@ -495,7 +501,7 @@ def build_vehicle(level):
     print('BUILD OK',json.dumps(report))
     return CAR,meshes,report
 
-CAR,meshes,report=build_vehicle(0)
+CAR,meshes,report=build_vehicle(int(arg('--lod',0)))
 (HERE/'build-stats.json').write_text(json.dumps(report,indent=2)+'\n')
 if arg('--glb'):
     scene.render.engine='CYCLES';scene.cycles.samples=32;scene.cycles.seed=0;scene.cycles.device='CPU'
@@ -513,21 +519,25 @@ if arg('--glb'):
     export_glb(arg('--glb'))
     hero_collection,hero_meshes,hero_root=CAR,meshes,root
     saved_names={o:o.name for o in hero_collection.objects}
-    for o,name in saved_names.items():o.name='hero_archive_'+name
+    for o,name in saved_names.items():
+        o.name='hero_archive_'+name;o.hide_render=True
     lod_stats={}
-    for level in [1,2]:
+    for level in ([1,2] if arg('--lod') is None else []):
         CAR,meshes,lod_report=build_vehicle(level)
+        bpy.ops.object.select_all(action='DESELECT')
         for o in meshes:
-            # Per-face neutral occlusion for distant geometry; full AO remains on LOD0.
             a=o.data.color_attributes.new(name='ao',type='BYTE_COLOR',domain='CORNER')
-            for c in a.data:c.color=(1,1,1,1)
+            o.data.color_attributes.active_color=a;o.select_set(True)
+        bpy.context.view_layer.objects.active=meshes[0]
+        bpy.ops.object.bake(type='AO')
         export_glb(HERE/f'model.lod{level}.glb')
         lod_stats[str(level)]={'triangles':lod_report['triangles'],'draw_calls':lod_report['draw_calls']}
         for o in list(CAR.objects):bpy.data.objects.remove(o,do_unlink=True)
         bpy.data.collections.remove(CAR)
-    for o,name in saved_names.items():o.name=name
+    for o,name in saved_names.items():
+        o.name=name;o.hide_render=False
     CAR,meshes,root=hero_collection,hero_meshes,hero_root;LEVEL=0
-    (HERE/'lod-stats.json').write_text(json.dumps(lod_stats,indent=2)+'\n')
+    if lod_stats:(HERE/'lod-stats.json').write_text(json.dumps(lod_stats,indent=2)+'\n')
 
 def stage(view):
     world=bpy.data.worlds.new('Studio');scene.world=world;world.use_nodes=True

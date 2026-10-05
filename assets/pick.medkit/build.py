@@ -1,9 +1,9 @@
-"""Medical courier cooler; metres, +X front, Z up. No textures.
+"""First-aid medkit pickup; metres, +X front, Z up. No textures.
 Raised markings clear their support by >= 3 mm. Lid and handle pivots are joints.
 """
 import argparse, json, math, sys
 from pathlib import Path
-import bpy
+import bpy, bmesh
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 HERE=Path(__file__).resolve().parent
@@ -27,10 +27,8 @@ def empty(name,loc=(0,0,0),parent=None):
  o=bpy.data.objects.new(name,None);scene.collection.objects.link(o);o.location=loc;o.parent=parent;return o
 root=empty('root');root['asset_id']='pick.medkit'
 root['ss_physics']={'class':'light','mass':2,'friction':.65,'restitution':.12,'centerOfMass':[0,.30,0],'pushable':True,'kickable':True,'flammable':False}
-body=empty('body',parent=root);lid=empty('lid',(-.085,0,.07),root)
+body=empty('body',parent=root);lid=empty('lid',(-.112,0,.108),root)
 handle=empty('handle',(0,0,.60),root)
-# Keep world placement while establishing local joint transforms.
-handle.location=(0,0,.60)
 def finish(o,name,mat,parent=body,bevel=0):
  o.name=name;o.data.materials.append(mat)
  bpy.context.view_layer.objects.active=o
@@ -59,7 +57,7 @@ box('front shell',(.063,0,.285),(.094,.70,.55),red,.048,lid)
 for x,group in [(-.103,body),(.116,lid)]:
  for y in [-.305,.305]:
   for z in [.075,.285,.490]:
-   box('segmented corner guard',(x,y,z),(.026,.095,.135),red,.024,group)
+   box('segmented corner guard',(x,y,z),(.040,.105,.150),red,.024,group)
  for y in [-.23,.23]:
   for z in [.040,.530]:
    box('end corner wing',(x,y,z),(.029,.17,.080),red,.016,group)
@@ -82,7 +80,7 @@ for y in [-.132,.132]:
 box('orange carry grip',(0,0,.698),(.066,.264,.065),orange,.027,handle)
 # A single extruded cross avoids overlapping coplanar centre faces.
 outline=[(-.055,-.15),(.055,-.15),(.055,-.055),(.15,-.055),(.15,.055),(.055,.055),(.055,.15),(-.055,.15),(-.055,.055),(-.15,.055),(-.15,-.055),(-.055,-.055)]
-verts=[(x,y,z+.285) for x in [.113,.132] for y,z in outline]
+verts=[(x,y*1.10,z*1.10+.285) for x in [.113,.132] for y,z in outline]
 n=len(outline);faces=[tuple(range(n-1,-1,-1)),tuple(range(n,2*n))]+[(i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n)]
 mesh=bpy.data.meshes.new('cross');mesh.from_pydata(verts,[],faces);mesh.update()
 o=bpy.data.objects.new('raised medical cross',mesh);scene.collection.objects.link(o);finish(o,o.name,white,lid,.004)
@@ -98,6 +96,15 @@ for group in [body,lid,handle]:
 col=empty('col:body',(0,0,.365),root);col['collider']='cuboid';col['shape']='cuboid';col['size']=[.25,.75,.73]
 scene.unit_settings.system='METRIC'
 meshes=[o for o in scene.objects if o.type=='MESH']
+# Clamped bevels can produce coincident vertices on thin guards.
+for o in meshes:
+ bm=bmesh.new();bm.from_mesh(o.data)
+ bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.000001)
+ bmesh.ops.dissolve_degenerate(bm,edges=list(bm.edges),dist=.000001)
+ bmesh.ops.triangulate(bm,faces=list(bm.faces))
+ collapsed=[f for f in bm.faces if f.calc_area()<1e-12]
+ if collapsed:bmesh.ops.delete(bm,geom=collapsed,context='FACES_ONLY')
+ bm.to_mesh(o.data);bm.free();o.data.update()
 # Deterministic 32-ray vertex ambient occlusion, baked in world space.
 bpy.context.view_layer.update()
 verts=[];faces=[]
@@ -118,7 +125,7 @@ for o in meshes:
   value=1-.45*hits/32;values.extend((value,value,value,1))
  colors.data.foreach_set('color',values)
 triangles=sum(len(p.vertices)-2 for o in meshes for p in o.data.polygons)
-report={'id':'pick.medkit','tier':'Side','triangles':triangles,'draw_calls':sum(len(o.data.materials) for o in meshes),'materials':[m.name for m in [white,red,orange,dark,steel]],'nodes_ok':all(bpy.data.objects.get(n) is not None for n in ('root','body','lid','handle','col:body')),'within_budget':6000<=triangles<=12000 and len(meshes)<=30,'rounds':3,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
+report={'id':'pick.medkit','tier':'Side','triangles':triangles,'draw_calls':sum(len(o.data.materials) for o in meshes),'materials':[m.name for m in [white,red,orange,dark,steel]],'nodes_ok':all(bpy.data.objects.get(n) is not None for n in ('root','body','lid','handle','col:body')),'within_budget':6000<=triangles<=12000 and len(meshes)<=30,'rounds':4,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
 (HERE/'build-stats.json').write_text(json.dumps(report,indent=2))
 if a.glb:
  bpy.ops.object.select_all(action='SELECT');bpy.ops.export_scene.gltf(filepath=a.glb,export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_cameras=False,export_lights=False)
@@ -128,7 +135,7 @@ if a.render:
  scene.render.engine='CYCLES';scene.cycles.samples=a.samples;scene.world.use_nodes=True;scene.world.node_tree.nodes['Background'].inputs[0].default_value=(.045,.038,.055,1);scene.world.node_tree.nodes['Background'].inputs[1].default_value=.35
  def area(loc,power,color,size):
   bpy.ops.object.light_add(type='AREA',location=loc);o=bpy.context.object;o.data.energy=power;o.data.color=color;o.data.size=size;o.rotation_euler=(Vector((0,0,.4))-o.location).to_track_quat('-Z','Y').to_euler()
- area((2,-3,4),180,(1,.79,.59),3);area((-2,1,3),120,(.63,.69,1),3)
+ area((2,-3,4),420,(1,.79,.59),3);area((-2,1,3),180,(.63,.69,1),3)
  bpy.ops.object.camera_add();cam=bpy.context.object;target=Vector((0,0,.35));az=math.radians(18);elev=math.radians(16)
  if a.view=='game':az=math.radians(45);elev=math.radians(54)
  elif a.view=='front':az=0
