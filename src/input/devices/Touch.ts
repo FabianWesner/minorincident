@@ -2,6 +2,7 @@
 // Source: Inputs/InteractiveButtons.js / Inputs/Pointer.js, commit 41046b5.
 import { Nipple } from './Nipple';
 import type { Vec2 } from '../InputFrame';
+import { node, text } from '../../ui/dom';
 
 type TouchAction = 'left' | 'right' | 'selector' | 'pause' | 'brake';
 interface Contact { action: TouchAction; x: number; y: number; dx: number; dy: number }
@@ -13,6 +14,8 @@ export class Touch {
   aiming = false;
   get holdingLeft(): boolean { for (const c of this.contacts.values()) if (c.action === 'left') return true; return false; }
   get braking(): boolean { for (const c of this.contacts.values()) if (c.action === 'brake') return true; return false; }
+  private readonly slots = new Map<'left' | 'right', { button: HTMLButtonElement; icon: HTMLImageElement; hint: HTMLSpanElement }>();
+  private driving = false;
   private stickId: number | null = null;
   private readonly contacts = new Map<number, Contact>();
   constructor(private readonly canvas: HTMLElement, private readonly activity: () => void, private readonly fire: (action: TouchAction, direction: Vec2 | null) => void) {
@@ -23,14 +26,32 @@ export class Touch {
       button.textContent = action === 'selector' ? 'NEXT' : action.toUpperCase(); button.setAttribute('aria-label', `Touch ${action}`);
       button.style.cssText = 'height:64px;color:white;background:#182333;border:2px solid white;border-radius:12px;touch-action:none;user-select:none';
       if (action === 'brake') button.hidden = true;
+      if (action === 'left' || action === 'right') {
+        const icon = node('img', `touch-icon-${action}`), hint = node('span', `touch-hint-${action}`, action[0].toUpperCase());
+        icon.alt = ''; button.replaceChildren(icon, hint);
+        this.slots.set(action, { button, icon, hint });
+      }
       this.element.append(button);
     }
   }
   /** Driving reuses LEFT/RIGHT and reveals its dedicated hold-to-brake control. */
   setDriving(on: boolean): void {
     this.element.querySelector<HTMLButtonElement>('[data-touch-action=brake]')!.hidden = !on;
-    this.element.querySelector<HTMLButtonElement>('[data-touch-action=left]')!.textContent = on ? 'HORN/BOOST' : 'LEFT';
-    this.element.querySelector<HTMLButtonElement>('[data-touch-action=right]')!.textContent = on ? 'EXIT' : 'RIGHT';
+    this.driving = on;
+    for (const [side, slot] of this.slots) {
+      text(slot.hint, on ? side === 'left' ? 'HORN' : 'EXIT' : side[0].toUpperCase());
+      slot.icon.hidden = on;
+      slot.button.setAttribute('aria-label', on ? side === 'left' ? 'Horn / boost' : 'Exit vehicle' : `Touch ${side}`);
+    }
+  }
+  /** E14 presents the actions themselves as weapon slots, without changing release-to-fire. */
+  setWeapon(side: 'left' | 'right', iconUrl: string, label: string, progress: number, selected: boolean, ammo: number, charges: number): void {
+    const slot = this.slots.get(side)!;
+    if (slot.icon.getAttribute('src') !== iconUrl) slot.icon.src = iconUrl;
+    slot.button.style.setProperty('--progress', String(progress));
+    slot.button.classList.toggle('is-selected', selected);
+    slot.button.dataset.ammo = String(ammo); slot.button.dataset.charges = String(charges);
+    if (!this.driving) slot.button.setAttribute('aria-label', `${side} · ${label}${selected ? ' selected' : ''}`);
   }
   init(): void {
     this.canvas.style.touchAction = 'none';
