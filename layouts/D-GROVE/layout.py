@@ -272,15 +272,22 @@ kdx, kdy, kdz = dims(clinic)
 ANNEX_FRONT = -13.5
 ax_, az_ = 66.0, ANNEX_FRONT - kdx / 2
 g.place(clinic, ax_, az_, FACE_YAW['S'])
-FENCE_Z = -8.5
+FENCE_Z = -9.0
 if g.placeholder(clinic):
     g.shell('annex', ax_, az_, 'S', kdx, kdz, [('front', 0, 2.4), ('left', kdx / 2 - 3.5, 2.0)])
-    # compound fence: only for the placeholder box (the real model brings its own fence + sliding gate)
-    g.fence('picket', 56, FENCE_Z, 78, FENCE_Z, gaps=[(60.5, 3.0)])
-    g.fence('privacy', 56, FENCE_Z, 56, az_ - kdx / 2 - .2)
-    g.fence('privacy', 78, FENCE_Z, 78, az_ - kdx / 2 - .2)
-    g.fence('privacy', 56, az_ - kdx / 2 - .2, 78, az_ - kdx / 2 - .2)
-anchors['lab-gate'] = (60.5, FENCE_Z)
+# security compound around the annex: low fence + gate gap at the front, tall fences on the sides and back, paved forecourt
+CX0, CX1, CZ0 = 56.5, 75.5, -26.5
+g.fence('picket', CX0, FENCE_Z, CX1, FENCE_Z, gaps=[(ax_, 3.0)], scale_y=1.0)
+g.fence('privacy', CX0, CZ0, CX0, FENCE_Z - .2)
+g.fence('privacy', CX1, CZ0, CX1, FENCE_Z - .2)
+g.fence('privacy', CX0, CZ0, CX1, CZ0)
+g.path(ax_ - 3.5, ANNEX_FRONT + .1, ax_ + 3.5, FENCE_Z, 'sidewalk')
+g.path(ax_ - 1.4, FENCE_Z, ax_ + 1.4, -4.5, 'sidewalk')
+for hx_c in (CX0 + 2.0, CX1 - 2.0):
+    g.hedge(hx_c - 1.2, FENCE_Z + 1.0, hx_c + 1.2, FENCE_Z + 1.0, scale=.9)
+for tx_, tz_ in ((CX0 + 2.5, -24.0), (CX1 - 2.5, -24.0), (CX0 + 2.5, -18.0), (CX1 - 2.5, -18.0)):
+    g.place('prop.street-tree-blossom' if tx_ < 66 else 'prop.street-tree', tx_, tz_, 0, .8, soft=True)
+anchors['lab-gate'] = (ax_, FENCE_Z)
 anchors['lab-door'] = (ax_, ANNEX_FRONT + 1.2)
 anchors['lab-exit-front'] = (ax_, ANNEX_FRONT + .8)
 anchors['lab-exit-side'] = (ax_ + kdz / 2 + 1.5, az_ + kdx / 2 - 3.5)
@@ -365,7 +372,7 @@ fs = 'bld.fire-station'
 fdx, fdy, fdz = dims(fs)
 FS_X = -73.2
 FS_Z = SFRONT + fdx / 2 + 2.5          # apron margin: the trigger sits outside the visual footprint
-g.place(fs, FS_X, FS_Z, FACE_YAW['N'])
+FS_PID = g.place(fs, FS_X, FS_Z, FACE_YAW['N'])
 # model local +X is the apron/door side: door and trigger sit on the apron in front of the bay
 fx, fz = rot(FACE_YAW['N'], 3.9, 0)
 anchors['fire-bay-door'] = (FS_X + fx, FS_Z + fz)
@@ -378,7 +385,7 @@ g.place('prop.fire-hydrant', -68.2, 36.2, 0, .8, soft=True)
 _fx0, _fx1 = FS_X - 6.1, FS_X + 6.1
 _fz0, _fz1 = FS_Z - 3.1, FS_Z + 5.7
 l.data['acousticZones'].append(dict(id='fire-station-3', preset='interior-large', polygon=[[_fx0, _fz0], [_fx1, _fz0], [_fx1, _fz1], [_fx0, _fz1], [_fx0, _fz0]]))
-l.data['buildings'].append(dict(id='fire-station-3', assetId=fs, aabb=dict(min=[_fx0, 0, _fz0], max=[_fx1, fdy, _fz1]), label='Fire Station 3'))
+l.data['buildings'].append(dict(id=FS_PID, assetId=fs, aabb=dict(min=[_fx0, 0, _fz0], max=[_fx1, fdy, _fz1]), label='Fire Station 3'))
 
 # ------------------------------------------------------------------------------------------------ perimeter
 PN, PS, PW, PE = -50.4, 49.9, -83.6, 83.6
@@ -530,7 +537,7 @@ for name, (x, z) in anchors.items():
 l.data['anchors'] = {k: v for k, v in l.data['anchors'].items()}
 
 # named gameplay polygons
-l.zone('lab-nobike-zone', [(56, -29.8), (78, -29.8), (78, FENCE_Z), (56, FENCE_Z)])
+l.zone('lab-nobike-zone', [(CX0, CZ0), (CX1, CZ0), (CX1, FENCE_Z), (CX0, FENCE_Z)])
 l.zone('garage-nobike-zone', [(gx - 3.4, GARAGE_FRONT - 1.4), (gx + 3.4, GARAGE_FRONT - 1.4), (gx + 3.4, GARAGE_FRONT + gdx + .4), (gx - 3.4, GARAGE_FRONT + gdx + .4)])
 fx0, fz0 = anchors['fire-bay-door']
 l.zone('fire-nobike-zone', [(FS_X - 6.2, SFRONT), (FS_X + 6.2, SFRONT), (FS_X + 6.2, FS_Z + fdx / 2 + .5), (FS_X - 6.2, FS_Z + fdx / 2 + .5)])
