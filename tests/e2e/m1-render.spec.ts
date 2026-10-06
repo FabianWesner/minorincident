@@ -104,7 +104,7 @@ test('M1-28 @E19 corpses behind and in front of the survivor preserve depth thro
   await page.evaluate(() => window.__SS__!.settings.set({ idPass: false }));
   const samples = [];
   const solid = new Map<string, PNG>();
-  for (const age of [180, 1800, 1860, 1919]) {
+  for (const age of [180, 360, 450, 539]) {
     await page.evaluate(async ({ id, age }) => { const a = window.__SS__!; a.teleport(id, { x: 20, z: 20 }); await a.step(Math.max(0, a.getEntity(id)!.infected!.deadAt + age - a.tick())); }, { id, age });
     const ageReference = await shot(page, `depth-reference-${age}`);
     for (const [side, offset] of [['behind', -.65], ['front', .65]] as const) {
@@ -127,7 +127,7 @@ test('M1-28 @E19 corpses behind and in front of the survivor preserve depth thro
       samples.push({ age, side, changed, upperChanged, pixels, overlap, mixed, mixedRatio: mixed / Math.max(1, overlap) });
       writeFileSync(`${output}/depth-metrics.json`, JSON.stringify(samples, null, 2));
       expect(upperChanged / pixels, 'ground corpse cannot paint over the upper body').toBeLessThan(.005);
-      if (age === 1860 && side === 'front') expect(mixed / Math.max(1, overlap), 'fade samples must preserve opaque depth, not blend a corpse through the survivor').toBeLessThan(.15);
+      if (age === 450 && side === 'front') expect(mixed / Math.max(1, overlap), 'fade samples must preserve opaque depth, not blend a corpse through the survivor').toBeLessThan(.15);
     }
   }
   writeFileSync(`${output}/depth-metrics.json`, JSON.stringify(samples, null, 2));

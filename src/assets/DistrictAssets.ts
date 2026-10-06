@@ -10,6 +10,7 @@ import { worldAssets } from "./worldDefinitions";
 import { AssetRegistry } from "./registry";
 import { atLeast } from "./types";
 import type { AssetQuality } from './types';
+import { dinerSign } from '../render/DinerSign';
 import { staticBatch } from './staticBatch';
 // E10's semantic building IDs predate the accepted production inventory.
 const productionIds: Record<string, string> = {
@@ -23,6 +24,7 @@ export class DistrictAssets {
   private readonly cache = new Map<string, Promise<Group>>();
   private readonly geometries = new Set<BufferGeometry>();
   private readonly batchMaterials = new Set<Material>();
+  private readonly signTextures: import("three/webgpu").Texture[] = [];
   private readonly assets: AssetRegistry;
   private readonly ktx?: KTX2Loader;
   constructor(private readonly materials: Materials, renderer?: WebGPURenderer) {
@@ -95,6 +97,9 @@ export class DistrictAssets {
           if (turned > straight) asset.rotation.y = Math.PI / 2;
         }
         const root = this.remember(staticBatch(asset, true, this.materials, ['prop.tree', 'prop.hedge'].includes(id)));
+        if (id === 'bld.joes-diner') {
+          const sign = dinerSign(); root.add(sign.root); this.geometries.add(sign.geometry); this.signTextures.push(sign.texture);
+        }
         root.traverse(node => { if (node instanceof Mesh) this.batchMaterials.add(node.material as Material); });
         return root;
       }));
@@ -123,6 +128,7 @@ export class DistrictAssets {
     for (const geometry of this.geometries) geometry.dispose();
     this.geometries.clear();
     for (const material of this.batchMaterials) material.dispose(); this.batchMaterials.clear();
+    for (const texture of this.signTextures) texture.dispose(); this.signTextures.length = 0;
     this.cache.clear();
     void this.assets.dispose();
     this.ktx?.dispose();
