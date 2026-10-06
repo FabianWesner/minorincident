@@ -8,10 +8,9 @@ const output = `test-results/epics/${target}`;
 mkdirSync(output, { recursive: true });
 const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
-  // Rebuilding dist while another verification previews it can cause transient 404s.
-  ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build'],
-  // Timing fixtures must not compete with other Vitest workers on the shared Mac.
-  [...(target === 'E18' ? ['sh', 'tools/e2e-lock.sh'] : []), 'npx', 'vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
+  // Each worktree builds its own dist; reserve browser slots only for browser runs.
+  ['npm', 'run', 'build'],
+  ['npx', 'vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
   ...(target === 'E10'
     ? [
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E10-AC06', '--workers=2'],
