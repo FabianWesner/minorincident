@@ -157,7 +157,9 @@ export class GameView implements Lifecycle {
     if (import.meta.env.DEV && this.params.has('debug')) {
       this.wireframe = new PhysicsWireframe(this.world.physics); this.scene.add(this.wireframe.lines);
     }
-    await this.renderer.compileAsync(this.scene, this.camera);
+    // Native soft-particle depth samplers must compile with the actual MSAA target
+    // bound. The first update below warms those programs in their render context.
+    if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
     this.idPass = this.params.get('idpass') === '1'; this.update(1);
   }
   /** Real render seconds, deliberately independent of sim ticks/time scale. */
