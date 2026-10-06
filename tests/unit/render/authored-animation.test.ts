@@ -12,6 +12,7 @@ import { createSurvivorPlaceholder } from '../../../src/render/characters/placeh
 import type { SurvivorState } from '../../../src/data/survivor';
 import { createCorgiPlaceholder } from '../../../src/render/npc/placeholders';
 import { QuadrupedAnimator } from '../../../src/render/characters/QuadrupedAnimator';
+import manifest from '../../../src/assets/manifest.json';
 
 async function model(path: string) { const file = readFileSync(path); return new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength), ''); }
 
@@ -92,9 +93,16 @@ test('M1-04 @E04 corgi trots on diagonal pairs and settles into an authored sit'
 });
 
 test.each(['source', 'production'])('M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs (%s)', async (delivery) => {
-  for (const id of readdirSync('assets').filter(id => id.startsWith('char.survivor-') || id.startsWith('npc.'))) {
-    const { scene } = await model(delivery === 'source' ? `assets/${id}/model.glb` : `public/assets/models/${id}.glb`);
-    if (!scene.getObjectByName('shinL')) continue;
+  // Catalog aliases share files; some entries only have a production model.
+  // Avoid local generated directories, while still failing on missing declared files.
+  const paths = new Set(manifest
+    .filter(asset => (asset.id.startsWith('char.survivor-') || asset.id.startsWith('npc.')) && asset.requiredNodes?.some(node => node === 'shinL'))
+    .map(asset => delivery === 'source' ? asset.sourceGlb : asset.glb)
+    .filter((path): path is string => typeof path === 'string'));
+  expect(paths.size).toBeGreaterThan(0);
+  for (const id of paths) {
+    const { scene } = await model(id);
+    expect(scene.getObjectByName('shinL'), id).toBeDefined();
     const height = new Box3().setFromObject(scene).getSize(new Vector3()).y;
     for (const name of ['walk','run','npc-walk','npc-walk-relaxed']) {
       const duration = authoredClips.get(name)!.duration, stance = name === 'run' ? .5 : .6;

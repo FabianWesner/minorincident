@@ -2,37 +2,37 @@
   {
     "trigger": "visibilitychange",
     "muted": false,
-    "suspendMs": 0.5999999046325684,
-    "positionDrift": 0.0026666666666666505
+    "suspendMs": 0.3999999761581421,
+    "positionDrift": 0
   },
   {
     "trigger": "visibilitychange",
     "muted": true,
-    "suspendMs": 0,
+    "suspendMs": 0.10000002384185791,
     "positionDrift": 0
   },
   {
     "trigger": "blur",
-    "muted": false,
-    "suspendMs": 0.19999992847442627,
-    "positionDrift": 0
-  },
-  {
-    "trigger": "blur",
-    "muted": true,
-    "suspendMs": 0.19999992847442627,
-    "positionDrift": 0
-  },
-  {
-    "trigger": "pagehide",
     "muted": false,
     "suspendMs": 0.2999999523162842,
     "positionDrift": 0
   },
   {
-    "trigger": "pagehide",
+    "trigger": "blur",
     "muted": true,
     "suspendMs": 0.10000002384185791,
+    "positionDrift": 0
+  },
+  {
+    "trigger": "pagehide",
+    "muted": false,
+    "suspendMs": 0.19999992847442627,
+    "positionDrift": 0
+  },
+  {
+    "trigger": "pagehide",
+    "muted": true,
+    "suspendMs": 0.20000004768371582,
     "positionDrift": 0
   }
 ]

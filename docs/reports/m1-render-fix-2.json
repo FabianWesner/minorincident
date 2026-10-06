@@ -1,0 +1,106 @@
+{
+  "job": "m1-render-fix-2",
+  "main_merged_once": "d883e553227fecba878172fbaaa25edb247bfdca",
+  "upstream_grade_merge": "77d2240",
+  "resolved": {
+    "src/render/Lighting.ts": "Retained incoming grade, live LookUniforms, radial fog, fitted shadow bounds and stable weighted PCF with depth-array support; no diff against merged main.",
+    "src/render/PaletteMaterial.ts": "Retained incoming unified shading, doubled palette coordinates, live token bindings and single radial fog pass; replaced fragment-hashed blood with the existing three surface splats.",
+    "src/render/CrowdView.ts": "Retained incoming contact shadows and normalized emissive shading; retained opaque depth test/write and coherent Bayer corpse fade, without fractional output alpha.",
+    "tools/e2e-lock.sh": "Preserved orchestrator update: two concurrent browser-only slots, identical to current main. Build/typecheck/lint/unit run without the lock."
+  },
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "test_unit": {
+      "status": "pass after isolated retry",
+      "unique_tests": 175,
+      "initial_run": {
+        "passed": 172,
+        "timed_out": 3,
+        "seconds": 191.03
+      },
+      "retry": {
+        "files": 3,
+        "tests_passed": 6,
+        "workers": 1,
+        "seconds": 145.19
+      },
+      "timeouts_changed": false
+    },
+    "production_build": "pass",
+    "render_regressions": {
+      "passed": 2,
+      "failed": 0,
+      "thresholds_unchanged": true
+    },
+    "look_panel_regressions": {
+      "passed": 2,
+      "failed": 0,
+      "checks": [
+        "production panel without test API",
+        "live pixels",
+        "export and reset",
+        "quality and level rebuilds"
+      ]
+    },
+    "test_smoke": {
+      "status": "pass",
+      "vitest_tests": 3,
+      "browser_tests": 22,
+      "browser_stats": {
+        "startTime": "2026-10-06T17:45:42.318Z",
+        "duration": 82776.799,
+        "expected": 22,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    "focused_browser_stats": {
+      "startTime": "2026-10-06T17:43:27.171Z",
+      "duration": 109746.549,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "evidence_dir": "test-results/m1-render-fix-2",
+  "prior_captures": "test-results/m1-render-fix/before-grade",
+  "pixel_evidence": {
+    "noise": {
+      "blood_pixels": 330,
+      "survivor_pixels": 11911,
+      "full_ratio": 0.009570984803962724,
+      "gore_off_ratio": 0.009235160775753506,
+      "blood_excess": 0.00033582402820921814,
+      "kills": 4,
+      "decals": 125,
+      "wheel_zoom": 0.9277434863285531
+    },
+    "depth": {
+      "half_fade_front": {
+        "age": 1860,
+        "side": "front",
+        "changed": 6071,
+        "upperChanged": 0,
+        "pixels": 72155,
+        "overlap": 8739,
+        "mixed": 13,
+        "mixedRatio": 0.001487584391806843
+      },
+      "final_fade_changed_pixels": {
+        "behind": 0,
+        "front": 0
+      }
+    },
+    "screenshots": [
+      "test-results/m1-render-fix-2/diner-combat.png",
+      "test-results/m1-render-fix-2/depth-front-1860-5.png"
+    ],
+    "browser": "headless Chromium / ANGLE Metal",
+    "port": 3346
+  },
+  "upstream_lock_commit": "4cb1b12 (orchestrator copied the same script into this worktree after the main merge)",
+  "done": true
+}
