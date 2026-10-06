@@ -21,7 +21,7 @@ const families: {family: UpgradeFamily; title: string; description: string; modi
 ];
 const definitions: UpgradeDef[] = [];
 for (const f of families) for(let tier=1;tier<=5;tier++) definitions.push({
-  ...f,id:`upgrade.${f.family}.${tier}`,tier,prerequisites:tier>1?[`upgrade.${f.family}.${tier-1}`]:[],
+  ...f,id:`upgrade.${f.family}.${tier}`,tier,prerequisites:tier>1?[`upgrade.${f.family}.${tier-1}`]:f.family==='vehicle'?['level.L3']:[],
   actions:f.actions??[],visualTags:[f.family],...(f.family==='perk'?{weapon:'weapon.bat'}:{}),
 });
 const specials=['corgi-lure','ground-slam','shield-bubble','adrenaline','turret'];
@@ -29,5 +29,5 @@ for(const [i,name] of specials.entries()) definitions.push({id:`upgrade.specials
 definitions.push({id:'upgrade.nail-bat-bleed',family:'perk',tier:1,title:'Nail bat bleeds',description:'Nail bat hits cause 5 damage/s for 3 seconds',prerequisites:['weapon.nail-bat'],modifiers:{},actions:['weapon.nail-bat'],weapon:'weapon.nail-bat',visualTags:['bleed']});
 export const upgrades: Readonly<Record<string,UpgradeDef>> = Object.fromEntries(definitions.map(d=>[d.id,d]));
 for (const d of definitions) {
-  if(!d.id||!d.title||!Number.isInteger(d.tier)||d.tier<1||d.prerequisites.some(p=>!upgrades[p]&&!catalog[p])||d.actions.some(a=>!catalog[a])||Object.values(d.modifiers).some(n=>!Number.isFinite(n)||n<0)) throw new Error(`Invalid upgrade: ${d.id}`);
+  if(!d.id||!d.title||!Number.isInteger(d.tier)||d.tier<1||d.prerequisites.some(p=>!upgrades[p]&&!catalog[p]&&!/^level\.L[1-6]$/.test(p))||d.actions.some(a=>!catalog[a])||Object.values(d.modifiers).some(n=>!Number.isFinite(n)||n<0)) throw new Error(`Invalid upgrade: ${d.id}`);
 }
