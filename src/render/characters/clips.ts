@@ -7,8 +7,15 @@ import type { CharacterRig } from './rig';
 export const authoredClips = new Map(library.map(clip => [clip.name, clip]));
 export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'corgi-walk': .55, 'corgi-trot': .8 };
 const worldScale = new Vector3(), worldOrigin = new Vector3();
-/** Optimized character GLBs scale the shared hierarchy to their catalog height. */
-export function strideScale(root: Object3D): number { return root.getWorldScale(worldScale).y; }
+/** Library humanoid rest leg (leg->shin->foot), metres; strides are authored for it. */
+const libraryLeg = .516;
+/** Optimized character GLBs scale the shared hierarchy to their catalog height; humanoids
+ * with shorter (chibi) legs also take proportionally shorter strides so feet stay planted. */
+export function strideScale(root: Object3D): number {
+  const shin = root.getObjectByName('shinL'), foot = root.getObjectByName('footL');
+  const leg = shin && foot && !root.getObjectByName('legFL') ? -(shin.position.y + foot.position.y) : libraryLeg;
+  return root.getWorldScale(worldScale).y * (leg > .2 && leg < .516 ? leg / libraryLeg : 1);
+}
 const groundClips = /^(die|death-|knockdown|flung|get-up|crawl)/;
 const upperBody = /^(torso|head|arm|foreArm|hand)/;
 
