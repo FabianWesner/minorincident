@@ -134,6 +134,8 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       if (((prefix === 'hazard' && (hazardKinds as readonly string[]).includes(kind)) || (prefix === 'prop' && (destructibleKinds as readonly string[]).includes(kind))) && game.world.hazards) return game.world.hazards.spawn(kind as HazardKind | DestructibleKind, pos, opts as HazardOptions);
       if (prefix === 'pickup' && (pickupKinds as readonly string[]).includes(kind) && game.world.pickups) return game.world.pickups.spawn(kind as PickupKind, pos, (opts as { item?: string } | undefined)?.item);
       if (game.world.combat && (id.startsWith('weapon.') || id.startsWith('ability.'))) return game.world.combat.pickups.spawn(id, pos);
+      // Patient Zero is a mission combat actor, outside the pooled E07 archetype catalog.
+      if (id === 'infected.patient-zero' && game.world.combat) return game.world.spawnDummy(id, pos, opts);
       if (game.world.infected) return game.world.infected.spawn(id, pos, opts);
       if (game.world.combat) return game.world.spawnDummy(id, pos, opts);
       throw new Error('Load an infected or combat scenario before spawning');
