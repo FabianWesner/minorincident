@@ -24,8 +24,9 @@ export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGri
   if (e.companion) Object.assign(e.companion.velocity ??= { x: 0, z: 0 }, { x: actualX, z: actualZ });
 }
 function actor(e: EntitySnapshot): boolean { return !!(e.infected || e.civilian || e.companion || e.escort); }
+// Corgi hiding still follows at the survivor's heels; it must retain its response.
 function forced(e: EntitySnapshot, tick: number): boolean {
-  return !!(e.hidden || e.health.current <= 0 || e.attachedTo !== undefined || e.companion?.state === 'hide' || (e.infectionRise && tick < e.infectionRise.until) || e.infected?.hidden || e.infected?.perched || (e.infected && e.infected.grabUntil > tick) || (e.combat && e.combat.staggerUntil > tick) || ['grabbed','down','rising','finished','infected'].includes(e.civilian?.state ?? '') || (e.civilian && e.civilian.knockedUntil > tick) || ['downed','dead'].includes(e.escort?.state ?? ''));
+  return !!(e.hidden || e.health.current <= 0 || e.attachedTo !== undefined || (e.infectionRise && tick < e.infectionRise.until) || e.infected?.hidden || e.infected?.perched || (e.infected && e.infected.grabUntil > tick) || (e.combat && e.combat.staggerUntil > tick) || ['grabbed','down','rising','finished','infected'].includes(e.civilian?.state ?? '') || (e.civilian && e.civilian.knockedUntil > tick) || ['downed','dead'].includes(e.escort?.state ?? ''));
 }
 /** Runs once per world. Brakes actors whose behaviour supplies no movement this
  * tick, then publishes post-separation/grounding displacement for every figure. */
