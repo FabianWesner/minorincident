@@ -2,7 +2,7 @@
   {
     "trigger": "visibilitychange",
     "muted": false,
-    "suspendMs": 7,
+    "suspendMs": 6,
     "positionDrift": 0
   },
   {
@@ -14,7 +14,7 @@
   {
     "trigger": "blur",
     "muted": false,
-    "suspendMs": 4,
+    "suspendMs": 3,
     "positionDrift": 0
   },
   {
@@ -26,13 +26,13 @@
   {
     "trigger": "pagehide",
     "muted": false,
-    "suspendMs": 5,
-    "positionDrift": 0
+    "suspendMs": 6,
+    "positionDrift": 0.002666666666666595
   },
   {
     "trigger": "pagehide",
     "muted": true,
-    "suspendMs": 0,
+    "suspendMs": 2,
     "positionDrift": 0
   }
 ]

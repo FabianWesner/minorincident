@@ -33,7 +33,7 @@ export type LoadRun = {
   requests: number; bytes: number; bootBytes: number; levelBytes: number; criticalBytes: number; criticalRequests: number; backgroundBytes: number; byKind: Record<string, { requests: number; bytes: number }>;
   levelByKind: Record<string, { requests: number; bytes: number }>;
   longTasks: { count: number; totalMs: number; maxMs: number; over50AfterStart: number; top: { start: number; ms: number }[] };
-  measures: { name: string; ms: number }[]; backend: string; errors: string[]; loadAverage: number; playerMoved?: boolean;
+  measures: { name: string; ms: number; at: number }[]; backend: string; errors: string[]; loadAverage: number; playerMoved?: boolean;
   slowest: { url: string; kind: string; bytes: number; ms: number }[];
   files: { url: string; bytes: number; phase: string }[];
 };
@@ -76,7 +76,7 @@ export async function measureOnce(page: Page, cdp: CDPSession, base: string, pro
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
     const w = window as unknown as { __lt: { start: number; ms: number }[]; __start: number };
     const paint = performance.getEntriesByType('paint').find(e => e.name === 'first-contentful-paint') ?? performance.getEntriesByType('paint')[0];
-    return { playable: performance.now(), start: w.__start, firstPaint: paint?.startTime ?? -1, lt: w.__lt, measures: performance.getEntriesByType('measure').map(m => ({ name: m.name, ms: Math.round(m.duration) })) };
+    return { playable: performance.now(), start: w.__start, firstPaint: paint?.startTime ?? -1, lt: w.__lt, measures: performance.getEntriesByType('measure').map(m => ({ name: m.name, ms: Math.round(m.duration), at: Math.round(m.startTime - w.__start) })) };
   });
   // Let background streaming settle before the next run reuses the context.
   await page.waitForTimeout(Number(process.env.LOAD_SETTLE_MS ?? 1500));
@@ -123,5 +123,5 @@ if (process.argv[1]?.endsWith('load-measure.ts')) {
   await browser.close();
   const json = JSON.stringify({ base, at: new Date().toISOString(), runs: all }, null, 2);
   if (out) writeFileSync(out, json); else console.log(json);
-  for (const r of all) console.log(`${r.profile.padEnd(8)} ${r.cache.padEnd(5)} FCP ${r.firstPaintMs} title ${r.titleMs} start->playable ${r.startToPlayableMs} ms | ${r.requests} req ${(r.bytes / 1e6).toFixed(2)} MB (boot ${(r.bootBytes / 1e6).toFixed(2)}, level ${(r.levelBytes / 1e6).toFixed(2)}, critical ${(r.criticalBytes / 1e6).toFixed(2)} in ${r.criticalRequests} req, background ${(r.backgroundBytes / 1e6).toFixed(2)}) | long tasks ${r.longTasks.count} / ${r.longTasks.totalMs} ms, max ${r.longTasks.maxMs} | load ${r.loadAverage.toFixed(1)}\n   ${r.measures.map(m => `${m.name}=${m.ms}`).join(' ')}${r.errors.length ? `\n   errors: ${r.errors.slice(0, 5).join(' | ')}` : ''}`);
+  for (const r of all) console.log(`${r.profile.padEnd(8)} ${r.cache.padEnd(5)} FCP ${r.firstPaintMs} title ${r.titleMs} start->playable ${r.startToPlayableMs} ms | ${r.requests} req ${(r.bytes / 1e6).toFixed(2)} MB (boot ${(r.bootBytes / 1e6).toFixed(2)}, level ${(r.levelBytes / 1e6).toFixed(2)}, critical ${(r.criticalBytes / 1e6).toFixed(2)} in ${r.criticalRequests} req, background ${(r.backgroundBytes / 1e6).toFixed(2)}) | long tasks ${r.longTasks.count} / ${r.longTasks.totalMs} ms, max ${r.longTasks.maxMs} | load ${r.loadAverage.toFixed(1)}\n   ${r.measures.filter(m => m.at >= 0).map(m => `${m.name}=${m.ms}@${m.at}`).join(' ')}${r.errors.length ? `\n   errors: ${r.errors.slice(0, 5).join(' | ')}` : ''}`);
 }

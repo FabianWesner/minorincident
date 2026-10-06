@@ -60,7 +60,6 @@ export class GameView implements Lifecycle {
   private readonly preparedDistrictViews = new Map<SimWorld['districts'], DistrictView>();
   private pendingPreparation: { shared: NonNullable<GameView['districtResources']>; instanceCapacity?: number } | null = null;
   private preparation: Promise<void> | null = null;
-  private decayPrepared: Promise<void> | null = null;
   private generation = 0;
   private npcs: NpcView | null = null;
   private interactions: InteractionView | null = null;
@@ -147,13 +146,20 @@ export class GameView implements Lifecycle {
       const t=performance.now();
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low', instanceCapacity);
       this.character=new CharacterView();
-      await Promise.all([this.districts.load(1), this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low')]);
+      // L1 objective transitions swap to prepared decay variants without a hitch (M1-22): they load
+      // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
+      const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
+      await Promise.all([this.districts.load(1), this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low'), ...variants.map(variant => variant.load(1))]);
       loadMeasure('view:districts+character',t);
       if (this.world.scenario === 'L1') {
-        // Close-view LOD0 prototypes and hidden decay variants stream after the level is playable
-        // (startBackgroundPreparation); only what the start camera needs blocks the loading screen.
         this.preparedDistrictViews.set(this.world.districts, this.districts);
-        this.pendingPreparation = { shared, instanceCapacity };
+        for (const variant of variants) { variant.visible = false; this.preparedDistrictViews.set(variant.world, variant); this.scene.add(variant); }
+        // Close-view LOD0 prototypes (high tier only; the low tier never draws them). WebGPU streams
+        // them after the level is playable (startPreparation; measured hitch-free). On WebGL, ANGLE
+        // specializes each new batch on its first draw (~100 ms frames measured), so they stay in
+        // the loading screen and its warm-up, as before.
+        if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare())); loadMeasure('view:hero-lod0', p); }
+        else if (this.quality === 'high') this.pendingPreparation = { shared, instanceCapacity };
       }
       this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
       this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
@@ -241,51 +247,38 @@ export class GameView implements Lifecycle {
     this.idPass = this.params.get('idpass') === '1'; this.update(1);
     this.startPreparation();
   }
-  /** Deferred L1 work: hidden decay variants first (objective transitions swap to them), then the
-   * close-view LOD0 prototypes of the whole route. Runs after the first playable frames with the
-   * load gate pacing parse/batch steps to one per frame; GPU programs compile asynchronously. */
+  /** Deferred L1 work: the route's close-view LOD0 prototypes (high tier only; the low tier never
+   * draws them), nearest first, after the first playable frames. The load gate slices GLB parsing
+   * and static batching to one short step per frame, so streaming stays within the frame budget. */
   private startPreparation(): void {
     const pending = this.pendingPreparation, current = this.districts, generation = this.generation;
     this.pendingPreparation = null;
-    if (!pending || !current || !this.materials) return;
-    const materials = this.materials, stale = () => generation !== this.generation;
+    if (!pending || !current) return;
+    const stale = () => generation !== this.generation || this.quality !== 'high';
     const frame = () => new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
-    let decayDone!: () => void;
-    this.decayPrepared = new Promise<void>(resolve => { decayDone = resolve; });
     this.preparation = (async () => {
       await frame(); await frame();
-      if (stale()) return;
+      if (generation !== this.generation) return;
       loadGate.setPaced(true);
+      for (const view of this.preparedDistrictViews.values()) view.warmHero = batch => this.warmHidden(batch);
       const start = performance.now();
-      for (const prepared of this.world.preparedDistricts.values()) {
-        if (prepared === current.world || this.preparedDistrictViews.has(prepared)) continue;
-        const district = new DistrictView(prepared, materials, pending.shared.registry, pending.shared.phase, pending.shared.grassMaterial, this.quality === 'low', pending.instanceCapacity);
-        await district.load(1);
-        if (stale()) { district.dispose(); return; }
-        district.visible = false; this.preparedDistrictViews.set(prepared, district); this.scene.add(district);
-        await this.compileHidden(district);
-        if (stale()) return;
-      }
-      loadMeasure('view:background-decay-variants', start); decayDone();
-      // Close-view LOD0 only exists on the high tier; nearest first, a few downloads at a time.
-      if (this.quality === 'high') await current.prepare(this.view.cameraTarget, () => stale() || this.quality !== 'high');
+      // The decay variants follow: their swap at an objective transition then finds LOD0 batches ready.
+      if (this.quality === 'high') for (const view of [current, ...[...this.preparedDistrictViews.values()].filter(view => view !== current)]) { await view.prepare(this.view.cameraTarget, stale); if (stale()) break; }
       if (!stale()) loadMeasure('view:background-preparation', start);
-    })().catch(error => { if (!stale()) console.error(error); }).finally(() => decayDone());
+    })().catch(error => { if (generation === this.generation) console.error(error); });
   }
-  /** Compile a hidden subtree's GPU programs without showing it: three collects the render list
-   * synchronously, then builds nodes/pipelines asynchronously, yielding between objects. */
-  private async compileHidden(root: import('three/webgpu').Object3D): Promise<void> {
-    const saved: [import('three/webgpu').Object3D, boolean, boolean][] = [];
-    root.traverse(object => { saved.push([object, object.visible, object.frustumCulled]); object.visible = true; object.frustumCulled = false; });
+  /** Build a detached batch's render objects (programs, pipelines, vertex buffers) without drawing it:
+   * three collects the render list synchronously, then compiles and uploads asynchronously, yielding
+   * between objects. The batch joins the scene afterwards. */
+  private async warmHidden(batch: import('three/webgpu').Object3D): Promise<void> {
+    const parent = this.districts ?? this.scene, saved: [import('three/webgpu').Object3D, boolean][] = [];
+    batch.traverse(object => { saved.push([object, object.frustumCulled]); object.frustumCulled = false; });
+    parent.add(batch); batch.updateMatrixWorld(true);
     let compiling: Promise<void>;
-    try { compiling = this.renderer.compileAsync(root, this.camera, this.scene); }
-    finally { for (const [object, visible, culled] of saved) { object.visible = visible; object.frustumCulled = culled; } }
+    try { compiling = this.renderer.compileAsync(batch, this.camera, this.scene); }
+    finally { parent.remove(batch); for (const [object, culled] of saved) object.frustumCulled = culled; }
     await compiling;
   }
-  /** Resolves when the deferred decay variants exist (or preparation was abandoned). */
-  async preparationReady(): Promise<void> { await this.decayPrepared; }
-  /** Resolves when all deferred preparation, including route-wide LOD0 prototypes, has finished. */
-  async backgroundReady(): Promise<void> { await this.preparation; }
   /** A prepared decay swap retains characters, crowd pools, GPU programs, camera and audio. */
   switchPreparedDistrict(): boolean {
     const next = this.preparedDistrictViews.get(this.world.districts);
@@ -484,7 +477,7 @@ export class GameView implements Lifecycle {
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
   reset(): void {
-    this.generation++; this.pendingPreparation = null; this.preparation = null; this.decayPrepared = null; loadGate.setPaced(false);
+    this.generation++; this.pendingPreparation = null; this.preparation = null; loadGate.setPaced(false);
     this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;
     if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }
     if (this.vfx) { this.scene.remove(this.vfx); this.vfx.dispose(); this.vfx = null; }

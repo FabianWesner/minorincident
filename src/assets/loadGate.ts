@@ -5,7 +5,7 @@ import type { GLTF, GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
  * at most one step per rendered frame, run after that frame, so background streaming never
  * stacks several parses into one long frame (M1-22). While a loading screen is up it is open. */
 export class LoadGate {
-  private paced = false;
+  paced = false;
   private scheduled = false;
   private readonly waiting: (() => void)[] = [];
   setPaced(paced: boolean): void {
