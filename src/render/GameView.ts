@@ -348,6 +348,7 @@ export class GameView implements Lifecycle {
     }
     this.meshes.length = 0; this.cube = null;
     if (this.wireframe) { this.scene.remove(this.wireframe.lines); this.wireframe.dispose(); this.wireframe = null; }
+    this.renderer.releaseLevelCaches();
   }
   /** Newly spawned E11 objects are loaded before screenshot/shader readiness resolves. */
   async synchronizeInteractions(): Promise<void> { await this.interactions?.synchronize(); }
