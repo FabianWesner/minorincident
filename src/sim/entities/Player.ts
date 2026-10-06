@@ -23,6 +23,9 @@ export class Player {
   }
   prePhysics(input: InputFrame, tick: number, enabled = true): void {
     const state = this.entity.survivor!, health = this.entity.health;
+    // Finite level floors have edges. Use the normal death/checkpoint lifecycle
+    // when the survivor leaves the ground, rather than falling indefinitely.
+    if (state.diedAt === null && this.entity.transform.y < survivor.fallDeathY) this.damage(health.max, tick);
     if (state.diedAt !== null && tick - state.diedAt >= survivor.respawnTicks) {
       Object.assign(this.entity.transform, state.checkpoint);
       this.physics.playerBody!.setTranslation(this.entity.transform, true);
