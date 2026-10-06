@@ -267,8 +267,9 @@ export class GameView implements Lifecycle {
         if (stale()) return;
       }
       loadMeasure('view:background-decay-variants', start); decayDone();
-      for (const view of this.preparedDistrictViews.values()) { await view.prepare(); if (stale()) return; }
-      loadMeasure('view:background-preparation', start);
+      // Close-view LOD0 only exists on the high tier; nearest first, a few downloads at a time.
+      if (this.quality === 'high') await current.prepare(this.view.cameraTarget, () => stale() || this.quality !== 'high');
+      if (!stale()) loadMeasure('view:background-preparation', start);
     })().catch(error => { if (!stale()) console.error(error); }).finally(() => decayDone());
   }
   /** Compile a hidden subtree's GPU programs without showing it: three collects the render list

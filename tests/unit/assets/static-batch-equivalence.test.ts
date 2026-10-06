@@ -18,7 +18,6 @@ async function load(url: string) {
 /** The pre-optimization loop (commit 84e7fca), returning the per-bucket source geometries. */
 function reference(source: Object3D, lit: boolean, materials?: Materials): Map<boolean, BufferGeometry[]> {
   source.updateMatrixWorld(true);
-  const world = source.userData.paletteWorld !== false;
   const buckets = new Map<boolean, BufferGeometry[]>();
   source.traverse(node => {
     if (!(node instanceof Mesh) || node.userData.foliageProxy) return;

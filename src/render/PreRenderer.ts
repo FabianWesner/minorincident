@@ -41,10 +41,12 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     performance.measure('L1 shader compilation', { start, end: performance.now() });
     const draw = performance.now(); render();
     await renderer.finishWarmUp();
+    performance.measure('L1 warm-up draw', { start: draw, end: performance.now() }); let phase = performance.now();
     // Three switches from drawArrays/Elements to their instanced variants only above
     // one instance. ANGLE Metal specializes both driver pipelines on their first draw.
     for (const { object, matrices } of saved) if (object instanceof InstancedMesh) object.count = matrices!.length;
     render(); await renderer.finishWarmUp();
+    performance.measure('L1 warm-up instanced draw', { start: phase, end: performance.now() }); phase = performance.now();
     // Opaque district geometry can cover the animated batches in the tiny target.
     // Draw each one alone so ANGLE executes its fragment pipeline, rather than
     // postponing native specialization until the first infected becomes visible.
@@ -57,6 +59,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
         mesh.visible = false;
       }
     }
+    performance.measure('L1 warm-up solo draws', { start: phase, end: performance.now() });
     performance.measure('L1 driver warm-up', { start: draw, end: performance.now() });
   } finally {
     for (const { object, visible, culled, count, matrices } of saved) {

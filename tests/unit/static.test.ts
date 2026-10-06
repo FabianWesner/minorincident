@@ -15,7 +15,8 @@ test('T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warni
   expect(readdirSync('dist', { recursive: true }).filter((path) => String(path).endsWith('.html')).sort()).toEqual(['index.html', 'perf-device.html', 'preview/index.html']);
   // API remains an opt-in chunk, outside the default entry and eager dependency graph.
   const html = readFileSync('dist/index.html', 'utf8');
-  const eagerScripts = [...html.matchAll(/(?:src|href)="(\/assets\/[^\"]+\.js)"/g)].map((match) => match[1]);
+  // Hashed bundles live under /build/ (immutable CDN caching, see public/_headers).
+  const eagerScripts = [...html.matchAll(/(?:src|href)="(\/build\/[^\"]+\.js)"/g)].map((match) => match[1]);
   expect(eagerScripts.length).toBeGreaterThan(0);
   for (const path of eagerScripts) {
     expect(basename(path)).not.toMatch(/testApi|Debug/);
