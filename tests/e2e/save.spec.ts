@@ -37,7 +37,7 @@ test('@E13 @E14 full menus start a saved campaign, restore settings and hand res
 });
 async function photo(page:import('@playwright/test').Page,name:string){mkdirSync(dir,{recursive:true});await page.evaluate(()=>window.__SS__!.screenshotReady());await page.screenshot({path:`${dir}/${name}.png`});}
 test('T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly',async({page})=>{
-  test.setTimeout(180_000);await boot(page);
+  test.setTimeout(180_000);await page.goto(`${testUrl}&debug`);await page.waitForFunction(()=>!!window.__SS__);await page.evaluate(()=>window.__SS__!.ready);
   const save=preset('L5-default');save.character='male';save.settings={cameraShake:false,gore:'Reduced',aimAssist:'High',muted:true};
   await page.evaluate(async save=>{const a=window.__SS__!;await a.loadScenario('combat-arena');a.campaign.restore(save);a.settings.set(save.settings);a.campaign.save();},save);
   await page.locator('[data-audio-controls] summary').click();await page.getByRole('checkbox',{name:'Mono audio',exact:true}).check();save.settings.mono=true;
