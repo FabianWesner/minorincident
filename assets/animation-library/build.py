@@ -57,8 +57,8 @@ def p(**kw):
     return kw
 def z(angle):
     return (0, 0, angle)
-def hip(x=0, y=0, roll=0, twist=0, lean=0):
-    return (roll, twist, lean, x, y, 0)
+def hip(x=0, y=0, roll=0, twist=0, lean=0, sway=0):
+    return (roll, twist, lean, x, y, sway)
 def action(name, duration, poses, contract=humans):
     for node_name in contract:
         obj = nodes[node_name]
@@ -99,8 +99,8 @@ action('idle', 4, [(0,p(hip=hip(y=-.006),foreArmL=z(12),foreArmR=z(14))),
     (.75,p(hip=hip(y=.002,roll=-1),torso=(0,-1,-1),head=(0,2,1),foreArmL=z(14),foreArmR=z(12))),
     (1,p(hip=hip(y=-.006),foreArmL=z(12),foreArmR=z(14)))])
 
-# Key foot targets describe a 0.9 m stride. Solve the two-joint knee at the authored
-# contact/passing points so the sole stays on the floor through the stance.
+# Library leg keys establish the silhouette. Retargeting bakes rig-specific
+# support tracks using actual limb lengths, pelvis rotation and runtime strides.
 def leg_pose(x, lift, pelvis_y):
     a,b=.233,.283
     dy=.142+lift-(.658+pelvis_y)
@@ -109,13 +109,14 @@ def leg_pose(x, lift, pelvis_y):
     thigh=math.atan2(x,-dy)+math.acos(max(-1,min(1,(a*a+d*d-b*b)/(2*a*d))))
     return math.degrees(thigh),math.degrees(knee)
 def gait(name,duration,stride,run=False,infected=False):
-    # stance occupies half a cycle; the rear foot lifts through passing, then reaches.
-    targets=[(.225,0),(.11,0),(-.01,0),(-.12,0),(-.225,.015),(-.14,.12),(.015,.16),(.19,.10),(.225,0)]
-    heights=[-.064,-.038,-.027,-.045,-.064,-.038,-.027,-.045,-.064]
+    # Contact -> down -> passing -> up: load follows contact, with modest lift.
+    # Retargeted walks use 60% stance; runs use 50% (no exaggerated flight).
+    targets=[(.225,0),(.11,0),(-.01,0),(-.12,0),(-.225,.015),(-.14,.045),(.015,.06),(.19,.035),(.225,0)]
+    heights=[-.055,-.075,-.06,-.047,-.055,-.075,-.06,-.047,-.055]
     poses=[]
     for i in range(9):
-        y=([-.135,-.08,-.015,-.065,-.135,-.08,-.015,-.065,-.135][i] if run else heights[i])
-        pose=p(hip=hip(y=y,roll=[0,-2,-3,-2,0,2,3,2,0][i],twist=[-4,-2,0,2,4,2,0,-2,-4][i]),
+        y=([-.085,-.11,-.08,-.065,-.085,-.11,-.08,-.065,-.085][i] if run else heights[i])
+        pose=p(hip=hip(y=y,roll=[0,-2,-3,-2,0,2,3,2,0][i],twist=[-4,-2,0,2,4,2,0,-2,-4][i],sway=[0,-.012,-.018,-.012,0,.012,.018,.012,0][i]),
             torso=(0,[6,3,0,-3,-6,-3,0,3,6][i],-9 if run else -2),head=(0,0,9 if run else 2))
         for side,index in [('L',i),('R',(i+4)%8)]:
             x,lift=targets[index]
