@@ -1,0 +1,71 @@
+{
+  "bloom": {
+    "fps": 5,
+    "frameMs": 200,
+    "simMs": 0,
+    "drawCalls": 176,
+    "triangles": 62427,
+    "geometries": 90,
+    "textures": 15,
+    "entities": 1,
+    "backend": "webgpu",
+    "loadTiming": null,
+    "quality": {
+      "setting": "low",
+      "tier": "low",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 33.333333333333336,
+        "infected": 100,
+        "drawCalls": 300,
+        "triangles": 500000,
+        "simMs": 6,
+        "heapMB": 250,
+        "pixelRatio": 1.5,
+        "shadowSize": 1024,
+        "bloomMips": 2,
+        "cullDistance": 45
+      }
+    },
+    "renderedFrames": 8,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 24797935
+  },
+  "crowd": {
+    "fps": 120.48192771084074,
+    "frameMs": 8.300000000000182,
+    "simMs": 0,
+    "drawCalls": 43,
+    "triangles": 68047,
+    "geometries": 45,
+    "textures": 23,
+    "entities": 101,
+    "backend": "webgpu",
+    "loadTiming": null,
+    "quality": {
+      "setting": "low",
+      "tier": "low",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 33.333333333333336,
+        "infected": 100,
+        "drawCalls": 300,
+        "triangles": 500000,
+        "simMs": 6,
+        "heapMB": 250,
+        "pixelRatio": 1.5,
+        "shadowSize": 1024,
+        "bloomMips": 2,
+        "cullDistance": 45
+      }
+    },
+    "renderedFrames": 12,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 68239887
+  },
+  "count": 100
+}

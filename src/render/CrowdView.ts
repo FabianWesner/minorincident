@@ -1,17 +1,27 @@
+import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
-import { BoxGeometry, CircleGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, type BufferGeometry } from 'three/webgpu';
+import { BoxGeometry, BufferGeometry, CircleGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3 } from 'three/webgpu';
 import { attribute, instancedBufferAttribute, mat4, normalGeometry, positionGeometry, mix, vec4, float } from 'three/tsl';
 import { clipTexture, crowdMatrix, crowdPosition } from '../assets/crowd';
 import { AssetRegistry } from '../assets/registry';
+import manifest from '../assets/manifest.json';
 import { infectedDefinitions } from '../data/infected';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { createInfectedPlaceholder } from './characters/infectedPlaceholder';
+import type { View } from './View';
 import { bakeInfected, framesPerClip, infectedClips } from './characters/bakeInfected';
-interface Batch { mesh: InstancedMesh; state: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean }
+interface Batch { mesh: InstancedMesh; state: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
 const variantShirts: Record<string, Color> = { 'inf.jogger': new Color('#3178ac'), 'inf.cashier': new Color('#e5d9b9'), 'inf.delivery-driver': new Color('#d4ad32'), 'inf.suburban-mom': new Color('#79865b'), 'inf.bbq-dad': new Color('#a86645'), 'inf.bathrobe-neighbor': new Color('#ac7a91') };
 /** One instanced, rigid-part GPU batch per archetype. Scene graph size never grows with infected population. */
 export class CrowdView extends Group {
   private readonly registry: AssetRegistry;
+  private readonly definitions = new Map<string, { id: string; asset: string; windup: number }>();
+  private readonly pending = new Map<string, Promise<void>>();
+  private readonly heroSlots = new Map<string, InstancedMesh>();
+  private readonly frustum = new Frustum();
+  private readonly projection = new Matrix4();
+  private readonly bounds = new Sphere(new Vector3(), 1);
+  private disposed = false;
   private readonly batches = new Map<string, Batch>();
   private readonly transform = new Matrix4();
   private readonly telegraphs: InstancedMesh[] = [];
@@ -19,8 +29,10 @@ export class CrowdView extends Group {
   private readonly feedback = new Map<number, { mask: number; strength: number }>();
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
   private goreEnabled = true;
+  private cullDistance = 60;
+  setQuality(tier: QualityTier): void { this.cullDistance = qualityBudgets[tier].cullDistance; this.low = tier === 'low'; }
   private readonly logs: { id: string; reason: string }[] = [];
-  constructor(private readonly world: SimWorld) {
+  constructor(private readonly world: SimWorld, private low = false) {
     super(); this.name = 'infected-crowd';
     this.caps.frustumCulled = false; this.caps.count = 0; this.add(this.caps);
     this.registry = new AssetRegistry((event) => this.logs.push(event));
@@ -31,11 +43,25 @@ export class CrowdView extends Group {
     this.shadows = new InstancedMesh(shadow, new MeshBasicNodeMaterial({ color: '#5d446d', transparent: true, opacity: 0.25, depthWrite: false }), 350); this.shadows.frustumCulled = false; this.shadows.count = 0; this.add(this.shadows);
   }
   async init(): Promise<void> {
-    for (const def of infectedDefinitions) {
-      const role = def.id.slice(9), asset = def.asset;
-      const loaded = await this.registry.loadAsset(asset, 'low') as Group;
+    const variants = manifest.filter(a => a.status === 'integrated' && a.category === 'infected' && !infectedDefinitions.some(d => d.asset === a.id) && a.id !== 'inf.corpse-poses');
+    const definitions = [...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
+    for (const def of definitions) {
+      this.definitions.set(def.id, def);
+      if (!this.low) {
+        const mesh = new InstancedMesh(new BufferGeometry(), new MeshLambertNodeMaterial(), 350);
+        mesh.count = 0; mesh.visible = false; this.heroSlots.set(def.id, mesh); this.add(mesh);
+      }
+    }
+    const lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2'];
+    await Promise.all(definitions.flatMap(def => lods.map(lod => this.loadBatch(def, lod))));
+    this.update();
+  }
+  private async loadBatch(def: { id: string; asset: string; windup: number }, lod: 'lod0' | 'lod1' | 'lod2'): Promise<void> {
+      const role = def.id.startsWith('infected.') ? def.id.slice(9) : 'runner', asset = def.asset;
+      const loaded = await this.registry.loadAsset(asset, lod) as Group;
+      if (this.disposed) return;
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
-      const baked = bakeInfected(model), texture = clipTexture(baked.clip), capacity = role === 'crow' ? 800 : 350;
+      const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback), texture = clipTexture(baked.clip), capacity = role === 'crow' ? 800 : 350;
       const tint = new InstancedBufferAttribute(new Float32Array(capacity * 3), 3);
       // Pack frame, detached leg, gore mask and flash into one slot: WebGL2 guarantees 16 attributes.
       const state = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
@@ -52,7 +78,9 @@ export class CrowdView extends Group {
         const detached = feedbackState.z.div(2 ** index).floor().mod(2);
         visible = hidden.select(visible.mul(detached.oneMinus()), visible);
       });
-      const mesh = new InstancedMesh(baked.geometry as BufferGeometry, material, capacity); mesh.name = def.id; mesh.frustumCulled = false; mesh.count = 0;
+      const slot = lod === 'lod0' ? this.heroSlots.get(def.id) : undefined;
+      const mesh = slot ?? new InstancedMesh(baked.geometry, material, capacity);
+      if (slot) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.geometry = baked.geometry; mesh.material = material; this.heroSlots.delete(def.id); } mesh.name = def.id; mesh.frustumCulled = false; mesh.count = 0;
       // E17's explicit instance * part order: positionNode runs after default instancing.
       const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1);
       mesh.onBeforeRender = () => { matrices.version = mesh.instanceMatrix.version; };
@@ -60,20 +88,54 @@ export class CrowdView extends Group {
       const instance = mat4(column(0), column(4), column(8), column(12));
       material.positionNode = crowdPosition(instance, texture, part, feedbackState.x, positionGeometry.mul(visible));
       material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.normalize();
-      this.batches.set(def.id, { mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
+      this.batches.set(`${def.id}:${lod}`, { lod, role: def.id, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
-    }
-    this.update();
   }
-  update(): void {
+  async ready(): Promise<void> { await Promise.all(this.pending.values()); }
+  update(view?: View): void {
     for (const batch of this.batches.values()) batch.count = 0;
     for (const mesh of this.telegraphs) mesh.count = 0; this.shadows.count = 0; this.caps.count = 0;
-    for (const [id, feedback] of this.feedback) { const e = this.world.entities.get(id); if (!e?.infected || e.infected.hidden) this.feedback.delete(id); else if (e.health.current > 0) feedback.mask = 0; }
+    for (const [id, feedback] of this.feedback) { const e = this.world.entities.get(id); if (!e?.combat || e.hidden || e.infected?.hidden) this.feedback.delete(id); else if (e.health.current > 0) feedback.mask = 0; }
     const player = this.world.entities.get(1)!;
-    for (const e of this.world.infected!.active) {
-      const b = e.infected!, batch = this.batches.get(e.archetype)!;
-      const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
-      if (b.hidden || distance > 60) continue;
+    const focus = view?.cameraTarget ?? player.transform;
+    if (view) this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
+    const heroes = new Set<number>();
+    if (!this.low) {
+      const nearest = [...this.world.entities.iterate()].filter(e => e.faction === 'infected' && e.combat && e.health.current > 0 && !e.hidden && !e.infected?.hidden && e.archetype !== 'infected.crow')
+        .map(e => ({ e, distance: Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z) }))
+        .filter(({ e, distance }) => {
+          if (distance > 12) return false;
+          if (!view) return true;
+          const variant = e.infected?.variant, key = variant && this.definitions.has(variant) ? variant : this.definitions.has(e.archetype) ? e.archetype : 'infected.runner';
+          const dimensions = this.registry.definition(this.definitions.get(key)!.asset).dimensions;
+          this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);
+          this.bounds.radius = Math.hypot(dimensions.x, dimensions.y, dimensions.z) / 2;
+          return this.frustum.intersectsSphere(this.bounds);
+        }).sort((a, b) => a.distance - b.distance).slice(0, 8);
+      for (const { e } of nearest) heroes.add(e.id);
+    }
+    for (const e of this.world.entities.iterate()) {
+      if (e.id === 1 || e.faction !== 'infected' || !e.combat) continue;
+      const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
+      if (e.hidden || e.infected?.hidden || distance > this.cullDistance) continue;
+      const availableLod = this.low ? 'lod2' : 'lod1';
+      const role = this.batches.has(`${e.archetype}:${availableLod}`) ? e.archetype : 'infected.runner';
+      const variant = e.infected?.variant;
+      const key = variant && this.batches.has(`${variant}:${availableLod}`) ? variant : role;
+      const def = this.definitions.get(key)!;
+      const dimensions = this.registry.definition(def.asset).dimensions;
+      this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);
+      this.bounds.radius = Math.hypot(dimensions.x, dimensions.y, dimensions.z) / 2;
+      if (view && !this.frustum.intersectsSphere(this.bounds)) continue;
+      let lod = this.low || distance > 30 ? 'lod2' : 'lod1';
+      if (heroes.has(e.id)) {
+        if (this.batches.has(`${key}:lod0`)) lod = 'lod0';
+        else if (!this.pending.has(key)) {
+          this.pending.set(key, this.loadBatch(def, 'lod0').finally(() => this.pending.delete(key)));
+        }
+      }
+      const batch = this.batches.get(`${key}:${lod}`)!;
+      const b = e.infected ?? { state: e.health.current <= 0 ? 'dead' : e.combat.attacking ? 'attack' : 'idle', until: 0, deadAt: 0, legLost: false, special: '', detached: false, variant: '', birdAlive: [], birdPositions: [], dx: 0, dz: 0 };
       const feedback = this.feedback.get(e.id);
       const tick = distance > 35 ? Math.floor(this.world.tick / 2) * 2 : this.world.tick;
       let clip: typeof infectedClips[number] = b.state === 'dead' ? 'die' : b.legLost || e.archetype === 'infected.crawler' ? 'crawl' : b.state === 'attack' ? this.world.tick < b.until ? 'windup' : 'swing' : b.state === 'stagger' ? 'hurt' : (b.state === 'chase' || b.state === 'migration' || b.state === 'scatter' || b.state === 'wander') ? 'run' : 'idle';
@@ -92,17 +154,18 @@ export class CrowdView extends Group {
         const mesh = this.telegraphs[b.special === 'charge' || b.special === 'pin' || b.special === 'pounce' ? 1 : 0]; if (b.special === 'explode') this.transform.makeScale(3.75, 1, 3.75); else this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); this.transform.setPosition(e.transform.x, 0.06, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
       }
     }
-    for (const batch of this.batches.values()) { batch.mesh.count = batch.count; if (batch.count) { batch.mesh.instanceMatrix.needsUpdate = true; batch.state.needsUpdate = true; batch.tint.needsUpdate = true; } }
-    for (const mesh of this.telegraphs) if (mesh.count) mesh.instanceMatrix.needsUpdate = true;
+    for (const batch of this.batches.values()) { batch.mesh.count = batch.count; batch.mesh.visible = batch.count > 0; if (batch.count) { batch.mesh.instanceMatrix.needsUpdate = true; batch.state.needsUpdate = true; batch.tint.needsUpdate = true; } }
+    for (const mesh of this.telegraphs) { mesh.visible = mesh.count > 0; if (mesh.count) mesh.instanceMatrix.needsUpdate = true; }
+    this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0;
     if (this.caps.count) this.caps.instanceMatrix.needsUpdate = true;
     if (this.shadows.count) this.shadows.instanceMatrix.needsUpdate = true;
   }
   flash(id: number, strength: number): void {
-    const e = this.world.entities.get(id); if (!e?.infected) return;
+    const e = this.world.entities.get(id); if (!e?.combat || e.faction !== 'infected') return;
     const feedback = this.feedback.get(id) ?? { mask: 0, strength: 0 }; feedback.strength = strength; this.feedback.set(id, feedback);
   }
   private limbPosition(id: number, limb: number) {
-    const e = this.world.entities.get(id); if (!e?.infected) return;
+    const e = this.world.entities.get(id); if (!e?.combat || e.faction !== 'infected') return;
     const z = limb < 2 ? (limb === 0 ? -.3 : .3) : limb < 4 ? (limb === 2 ? -.12 : .12) : 0;
     return { x: e.transform.x + Math.sin(e.transform.yaw) * z, y: e.transform.y - .7 + (limb < 2 ? .65 : limb < 4 ? .25 : 1.15), z: e.transform.z + Math.cos(e.transform.yaw) * z };
   }
@@ -116,9 +179,12 @@ export class CrowdView extends Group {
   getState() {
     let instances = 0, draws = 0, objects = 0, nonInstanced = 0;
     this.traverse((node) => { if (node !== this) objects++; if (node instanceof InstancedMesh) { instances += node.count; if (node.count) draws++; } else if (node instanceof Mesh) nonInstanced++; });
-    return { instances, meshDrawCalls: draws, objects, nonInstancedMeshes: nonInstanced, caps: this.caps.count, flashes: [...this.feedback.values()].filter(f => f.strength > 0).length, batches: [...this.batches].map(([id, b]) => ({ id, instances: b.count, source: b.placeholders ? 'placeholder' : 'glb' })), assets: this.logs };
+    return { instances, meshDrawCalls: draws, objects, nonInstancedMeshes: nonInstanced, caps: this.caps.count, flashes: [...this.feedback.values()].filter(f => f.strength > 0).length, batches: [...this.batches.values()].map((b) => ({ id: b.role, lod: b.lod, instances: b.count, source: b.placeholders ? 'placeholder' : 'glb' })).concat([...this.heroSlots.keys()].map(id => ({ id, lod: 'lod0', instances: 0, source: 'pending' }))), assets: this.logs };
   }
   dispose(): void {
+    this.disposed = true;
+    for (const mesh of this.heroSlots.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); }
+    this.heroSlots.clear();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); (batch.mesh.material as MeshLambertNodeMaterial).dispose(); batch.mesh.dispose(); batch.texture.dispose(); }
     for (const mesh of [...this.telegraphs, this.shadows, this.caps]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
     this.batches.clear(); this.clear(); void this.registry.dispose();

@@ -1,6 +1,8 @@
 // Adapted from Bruno Simon folio-2025 Confetti.js, Leaves.js, Trails.js and Noises.js (MIT, 41046b5).
-import { Color, DoubleSide, DynamicDrawUsage, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, type Node, DepthTexture, ViewportDepthTextureNode, type Texture } from 'three/webgpu';
-import { attribute, cameraWorldMatrix, cos, float, Fn, mix, positionGeometry, sin, uniform, uv, vec3, vec4, linearDepth } from 'three/tsl';
+import { Color, DoubleSide, DynamicDrawUsage, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, type Node, DepthTexture, ViewportDepthTextureNode, TextureLoader, SRGBColorSpace, type Texture } from 'three/webgpu';
+import manifest from '../../assets/manifest.json';
+import type { AssetDef } from '../../assets/types';
+import { texture, attribute, cameraWorldMatrix, cos, float, Fn, mix, positionGeometry, sin, uniform, uv, vec3, vec4, linearDepth } from 'three/tsl';
 
 /** Track every canvas/render-target depth copy, including compiler-created node clones. */
 class OwnedDepth extends ViewportDepthTextureNode {
@@ -29,10 +31,16 @@ export class FxPool {
   private readonly expires: Float64Array;
   private readonly tint = new Color();
   private readonly depthNode: OwnedDepth | null;
+  private readonly bloodTextures: Texture[];
   private cursor = 0;
   budget: number;
-  constructor(readonly cap: number, readonly mode: 'particle' | 'ground', lightSample?: Node<'vec3'>) {
+  constructor(readonly cap: number, readonly mode: 'particle' | 'ground', lightSample?: Node<'vec3'>, bloodDecals = false) {
     this.budget = cap;
+    this.bloodTextures = bloodDecals && typeof document !== 'undefined' ? ['splats', 'pool', 'trail'].map(kind => {
+      const def = (manifest as AssetDef[]).find(asset => asset.id === `decal.blood-${kind}`)!;
+      const map = new TextureLoader().load('/' + def.decalTexture!.replace(/^public\//, ''));
+      map.colorSpace = SRGBColorSpace; return map;
+    }) : [];
     this.depthNode = mode === 'particle' ? new OwnedDepth() : null;
     const geometry = new PlaneGeometry(1, 1);
     this.origin = new InstancedBufferAttribute(new Float32Array(cap * 4), 4).setUsage(DynamicDrawUsage);
@@ -63,6 +71,7 @@ export class FxPool {
       // Bruno's sine/dot hash, animated analytically: no flipbook or per-emission textures.
       const noise = sin(p.x.mul(127.1).add(p.y.mul(311.7)).add(mode === 'particle' ? age.mul(2) : 0)).mul(43758.5453).fract();
       let mask;
+      let color: Node<'vec3'> = attribute('fxColor', 'vec3');
       if (mode === 'particle') {
         const edge = float(1).sub(r).max(0).pow(1.5);
         const depth = linearDepth(this.depthNode!).sub(linearDepth()).mul(150).clamp(0, 1);
@@ -76,10 +85,16 @@ export class FxPool {
         // Shape is a discrete instance value; round after interpolation to avoid equality speckle.
         const shape = style.y.add(0.5).floor();
         mask = shape.equal(1).select(ring, shape.equal(2).select(lane, shape.equal(3).select(chevron, shape.equal(4).select(cross, splat))));
+        if (this.bloodTextures.length) {
+          const [splats, pool, trail] = this.bloodTextures.map(map => texture(map));
+          const blood = shape.equal(6).select(pool, shape.equal(7).select(trail, splats));
+          const isBlood = shape.greaterThanEqual(5);
+          mask = isBlood.select(blood.a, mask); color = isBlood.select(blood.rgb, color);
+        }
       }
       const fade = float(1).sub(progress).min(1).mul(alive);
       const lit = lightSample ?? vec3(1);
-      return vec4(attribute('fxColor', 'vec3').mul(lit), mask.mul(fade));
+      return vec4(color.mul(lit), mask.mul(fade));
     })();
     // Empty particle draws still copy viewport depth; omit them until an effect spawns.
     this.mesh = new InstancedMesh(geometry, material, cap); this.mesh.frustumCulled = false; this.mesh.visible = false;
@@ -111,5 +126,6 @@ export class FxPool {
   reset(now = 0): void { this.expires.fill(0); this.motion.array.fill(0); this.motion.needsUpdate = true; this.cursor = 0; this.clock.value = now; this.mesh.visible = false; }
   dispose(): void {
     this.depthNode?.dispose();
+    for (const texture of this.bloodTextures) texture.dispose();
     this.mesh.dispose(); this.mesh.geometry.dispose(); (this.mesh.material as MeshBasicNodeMaterial).dispose(); }
 }

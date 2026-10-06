@@ -6,9 +6,10 @@ export interface CameraPose { position: [number, number, number]; target: [numbe
 export class View {
   readonly camera = new PerspectiveCamera(25, 16 / 9, 0.1, 600);
   readonly focus = new Vector3();
+  readonly cameraTarget = new Vector3();
   readonly azimuth = Math.PI / 4;
   readonly polar = Math.PI * 0.30;
-  radius = 35;
+  radius = 19;
   driving = false;
   cameraShake = true;
   spot: string | null = null;
@@ -19,11 +20,10 @@ export class View {
   private blendTarget = 0;
   private shakeStrength = 0;
   private shakeTime = 0;
-  /** Bruno's aspect adaptation, with a conservative frustum bound for a 12 m ground circle. */
+  /** Close isometric combat framing; portrait retains at least nine metres of ground width. */
   resize(width: number, height: number): void {
     this.camera.aspect = width / height;
-    const tanV = Math.tan(this.camera.fov * Math.PI / 360);
-    this.radius = this.camera.aspect >= 1 ? 35 : Math.max(35, 12 + 12 / (tanV * this.camera.aspect), 12 + 12 * Math.cos(this.polar) / tanV);
+    this.radius = width >= height ? 19 : Math.max(19 * height / width, 9 / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
     this.camera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z }, 0);
   }
   reset(player: { x: number; z: number }): void {
@@ -50,10 +50,12 @@ export class View {
     this.focus.x += (player.x - this.focus.x) * (1 - Math.exp(-10 * seconds));
     this.focus.z += (player.z - this.focus.z) * (1 - Math.exp(-10 * seconds));
     this.offset.setFromSphericalCoords(this.radius * (this.driving ? 1.15 : 1), this.polar, this.azimuth);
+    this.cameraTarget.copy(this.focus);
     this.camera.position.copy(this.focus).add(this.offset); this.camera.lookAt(this.focus);
     this.blend += Math.sign(this.blendTarget - this.blend) * Math.min(Math.abs(this.blendTarget - this.blend), seconds);
     if (this.blend > 0) {
       const t = this.blend * this.blend * (3 - 2 * this.blend);
+      this.cameraTarget.lerp(this.target, t);
       this.camera.position.lerp(this.cinematicCamera.position, t); this.camera.quaternion.slerp(this.cinematicCamera.quaternion, t);
     }
     if (!this.cameraShake) this.shakeStrength = 0;
@@ -63,6 +65,6 @@ export class View {
     this.camera.position.add(this.offset); this.camera.updateMatrixWorld();
   }
   getState() {
-    return { fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * (this.driving ? 1.15 : 1), focus: this.focus.toArray(), position: this.camera.position.toArray(), spot: this.spot };
+    return { fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * (this.driving ? 1.15 : 1), focus: this.focus.toArray(), target: this.cameraTarget.toArray(), position: this.camera.position.toArray(), spot: this.spot };
   }
 }

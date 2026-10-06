@@ -31,6 +31,13 @@ export class Materials {
     if (!material) { material = new PaletteMaterial('picketWhite', this.texture, this.lighting, 0, color.clone()); material.name = name; this.cache.set(key, material); }
     return material;
   }
+  /** Rigid character parts share their authored vertex swatches and blood mask. */
+  fromVertexColors(name: string): PaletteMaterial {
+    const key = `vertices:${name}`;
+    let material = this.cache.get(key);
+    if (!material) { material = new PaletteMaterial('picketWhite', this.texture, this.lighting, 0, undefined, true); material.name = name; this.cache.set(key, material); }
+    return material;
+  }
   unique(token: PaletteToken, emissive = 0, transparent = false): PaletteMaterial {
     const material = new PaletteMaterial(token, this.texture, this.lighting, emissive);
     material.transparent = transparent; this.owned.push(material); return material;

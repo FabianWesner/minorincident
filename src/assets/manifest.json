@@ -2,7 +2,7 @@
   {
     "id": "char.survivor-male",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/char.survivor-male/build.py",
     "glb": "public/assets/models/char.survivor-male.glb",
@@ -74,7 +74,7 @@
   {
     "id": "char.survivor-female",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/char.survivor-female/build.py",
     "glb": "public/assets/models/char.survivor-female.glb",
@@ -146,7 +146,7 @@
   {
     "id": "char.corgi",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/char.corgi/build.py",
     "glb": "public/assets/models/char.corgi.glb",
@@ -314,7 +314,7 @@
   {
     "id": "inf.common-worker",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.common-worker/build.py",
     "glb": "public/assets/models/inf.common-worker.glb",
@@ -389,7 +389,7 @@
   {
     "id": "inf.jogger",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.jogger/build.py",
     "glb": "public/assets/models/inf.jogger.glb",
@@ -464,7 +464,7 @@
   {
     "id": "inf.baseball-cap",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.baseball-cap/build.py",
     "glb": "public/assets/models/inf.baseball-cap.glb",
@@ -539,7 +539,7 @@
   {
     "id": "inf.suburban-mom",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.suburban-mom/build.py",
     "glb": "public/assets/models/inf.suburban-mom.glb",
@@ -614,7 +614,7 @@
   {
     "id": "inf.delivery-driver",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.delivery-driver/build.py",
     "glb": "public/assets/models/inf.delivery-driver.glb",
@@ -689,7 +689,7 @@
   {
     "id": "inf.skater",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.skater.glb",
     "dimensions": {
@@ -763,7 +763,7 @@
   {
     "id": "inf.college-student",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.college-student/build.py",
     "glb": "public/assets/models/inf.college-student.glb",
@@ -838,7 +838,7 @@
   {
     "id": "inf.bbq-dad",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.bbq-dad.glb",
     "dimensions": {
@@ -913,7 +913,7 @@
   {
     "id": "inf.cashier",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.cashier.glb",
     "dimensions": {
@@ -988,7 +988,7 @@
   {
     "id": "inf.bathrobe-neighbor",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.bathrobe-neighbor.glb",
     "dimensions": {
@@ -1062,7 +1062,7 @@
   {
     "id": "inf.construction-worker",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.construction-worker.glb",
     "dimensions": {
@@ -1174,7 +1174,8 @@
       "stump_foreArmL",
       "stump_foreArmR",
       "stump_legL",
-      "stump_legR"
+      "stump_legR",
+      "backpackSocket"
     ],
     "animatedNodes": [
       "hip",
@@ -1206,7 +1207,7 @@
   {
     "id": "inf.corpse-poses",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.corpse-poses.glb",
     "dimensions": {
@@ -1399,7 +1400,7 @@
   {
     "id": "inf.riot-cop",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.riot-cop.glb",
     "dimensions": {
@@ -1473,7 +1474,7 @@
   {
     "id": "inf.hazmat",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.hazmat.glb",
     "dimensions": {
@@ -1547,7 +1548,7 @@
   {
     "id": "inf.firefighter",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.firefighter.glb",
     "dimensions": {
@@ -1621,7 +1622,7 @@
   {
     "id": "inf.bloated",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.bloated.glb",
     "dimensions": {
@@ -1695,7 +1696,7 @@
   {
     "id": "inf.screamer",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.screamer.glb",
     "dimensions": {
@@ -1769,7 +1770,7 @@
   {
     "id": "inf.sprinter",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.sprinter.glb",
     "dimensions": {
@@ -1843,7 +1844,7 @@
   {
     "id": "inf.armored-football",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.armored-football.glb",
     "dimensions": {
@@ -1917,7 +1918,7 @@
   {
     "id": "inf.butcher",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.butcher.glb",
     "dimensions": {
@@ -1991,7 +1992,7 @@
   {
     "id": "inf.nurse",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.nurse.glb",
     "dimensions": {
@@ -2065,7 +2066,7 @@
   {
     "id": "inf.brute",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.brute/build.py",
     "glb": "public/assets/models/inf.brute.glb",
@@ -2139,7 +2140,7 @@
   {
     "id": "wpn.baseball-bat",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.baseball-bat.glb",
     "dimensions": {
@@ -2176,7 +2177,7 @@
   {
     "id": "wpn.nail-bat",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.nail-bat.glb",
     "dimensions": {
@@ -2207,12 +2208,15 @@
     "decayVariants": [],
     "sourceGlb": "assets/wpn.nail-bat/model.glb",
     "sourceForward": "+X",
-    "actionCategory": "melee"
+    "actionCategory": "melee",
+    "lods": {
+      "lod1": "public/assets/models/wpn.nail-bat.lod1.glb"
+    }
   },
   {
     "id": "wpn.crowbar",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.crowbar.glb",
     "dimensions": {
@@ -2244,12 +2248,15 @@
     "sourceGlb": "assets/wpn.crowbar/model.glb",
     "script": "assets/wpn.crowbar/build.py",
     "sourceForward": "+X",
-    "actionCategory": "melee"
+    "actionCategory": "melee",
+    "lods": {
+      "lod1": "public/assets/models/wpn.crowbar.lod1.glb"
+    }
   },
   {
     "id": "wpn.machete",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.machete.glb",
     "dimensions": {
@@ -2281,7 +2288,10 @@
     "sourceGlb": "assets/wpn.machete/model.glb",
     "script": "assets/wpn.machete/build.py",
     "sourceForward": "+X",
-    "actionCategory": "melee"
+    "actionCategory": "melee",
+    "lods": {
+      "lod1": "public/assets/models/wpn.machete.lod1.glb"
+    }
   },
   {
     "id": "wpn.shovel",
@@ -2315,7 +2325,10 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "actionCategory": "melee"
+    "actionCategory": "melee",
+    "lods": {
+      "lod1": "public/assets/models/wpn.shovel.lod1.glb"
+    }
   },
   {
     "id": "wpn.police-baton",
@@ -2349,12 +2362,15 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "actionCategory": "melee"
+    "actionCategory": "melee",
+    "lods": {
+      "lod1": "public/assets/models/wpn.police-baton.lod1.glb"
+    }
   },
   {
     "id": "wpn.pistol",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.pistol.glb",
     "dimensions": {
@@ -2385,12 +2401,15 @@
     "decayVariants": [],
     "sourceGlb": "assets/wpn.pistol/model.glb",
     "sourceForward": "+X",
-    "actionCategory": "ranged"
+    "actionCategory": "ranged",
+    "lods": {
+      "lod1": "public/assets/models/wpn.pistol.lod1.glb"
+    }
   },
   {
     "id": "wpn.shotgun",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.shotgun.glb",
     "dimensions": {
@@ -2421,12 +2440,15 @@
     "decayVariants": [],
     "sourceGlb": "assets/wpn.shotgun/model.glb",
     "sourceForward": "+X",
-    "actionCategory": "ranged"
+    "actionCategory": "ranged",
+    "lods": {
+      "lod1": "public/assets/models/wpn.shotgun.lod1.glb"
+    }
   },
   {
     "id": "wpn.nail-gun",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.nail-gun.glb",
     "dimensions": {
@@ -2457,12 +2479,15 @@
     "decayVariants": [],
     "sourceGlb": "assets/wpn.nail-gun/model.glb",
     "sourceForward": "+X",
-    "actionCategory": "ranged"
+    "actionCategory": "ranged",
+    "lods": {
+      "lod1": "public/assets/models/wpn.nail-gun.lod1.glb"
+    }
   },
   {
     "id": "thr.molotov",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/thr.molotov.glb",
     "dimensions": {
@@ -2491,12 +2516,15 @@
     "decayVariants": [],
     "sourceGlb": "assets/thr.molotov/model.glb",
     "sourceForward": "+X",
-    "actionCategory": "throwable"
+    "actionCategory": "throwable",
+    "lods": {
+      "lod1": "public/assets/models/thr.molotov.lod1.glb"
+    }
   },
   {
     "id": "thr.pipe-bomb",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/thr.pipe-bomb.glb",
     "dimensions": {
@@ -2525,7 +2553,10 @@
     "decayVariants": [],
     "sourceGlb": "assets/thr.pipe-bomb/model.glb",
     "sourceForward": "+X",
-    "actionCategory": "throwable"
+    "actionCategory": "throwable",
+    "lods": {
+      "lod1": "public/assets/models/thr.pipe-bomb.lod1.glb"
+    }
   },
   {
     "id": "thr.firecracker-lure",
@@ -2557,12 +2588,15 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "actionCategory": "throwable"
+    "actionCategory": "throwable",
+    "lods": {
+      "lod1": "public/assets/models/thr.firecracker-lure.lod1.glb"
+    }
   },
   {
     "id": "pick.medkit",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/pick.medkit.glb",
     "dimensions": {
@@ -2589,12 +2623,15 @@
     "decayVariants": [],
     "sourceGlb": "assets/pick.medkit/model.glb",
     "script": "assets/pick.medkit/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/pick.medkit.lod1.glb"
+    }
   },
   {
     "id": "pick.soda",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/pick.soda.glb",
     "dimensions": {
@@ -2626,7 +2663,7 @@
   {
     "id": "pick.energy-drink",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/pick.energy-drink.glb",
     "dimensions": {
@@ -2657,7 +2694,7 @@
   {
     "id": "pick.bandages",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/pick.bandages.glb",
     "dimensions": {
@@ -2683,7 +2720,10 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/pick.bandages/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/pick.bandages.lod1.glb"
+    }
   },
   {
     "id": "pick.pistol-ammo",
@@ -3079,7 +3119,10 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body",
+      "wheelFL",
+      "wheelFR"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -3090,18 +3133,18 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "sourceGlb": "assets/prop.shopping-cart/model.glb",
-    "script": "assets/prop.shopping-cart/build.py",
-    "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/prop.shopping-cart.lod1.glb",
       "lod2": "public/assets/models/prop.shopping-cart.lod2.glb"
-    }
+    },
+    "sourceGlb": "assets/prop.shopping-cart/model.glb",
+    "script": "assets/prop.shopping-cart/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "prop.folding-chair",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.folding-chair.glb",
     "dimensions": {
@@ -3127,7 +3170,11 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.folding-chair/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.folding-chair.lod1.glb",
+      "lod2": "public/assets/models/prop.folding-chair.lod2.glb"
+    }
   },
   {
     "id": "veh.fire-engine",
@@ -3188,7 +3235,7 @@
   {
     "id": "veh.sedan-red",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/veh.sedan-red/build.py",
     "glb": "public/assets/models/veh.sedan-red.glb",
@@ -3244,7 +3291,7 @@
   {
     "id": "veh.sedan-blue",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/veh.sedan-blue/build.py",
     "glb": "public/assets/models/veh.sedan-blue.glb",
@@ -3296,7 +3343,7 @@
   {
     "id": "veh.sedan-white",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/veh.sedan-white/build.py",
     "glb": "public/assets/models/veh.sedan-white.glb",
@@ -3348,7 +3395,7 @@
   {
     "id": "veh.school-bus",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/veh.school-bus/build.py",
     "glb": "public/assets/models/veh.school-bus.glb",
@@ -3401,7 +3448,7 @@
   {
     "id": "veh.suv-dark",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/veh.suv-dark.glb",
     "dimensions": {
@@ -3453,7 +3500,7 @@
   {
     "id": "veh.pickup-red",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/veh.pickup-red/build.py",
     "glb": "public/assets/models/veh.pickup-red.glb",
@@ -3526,7 +3573,10 @@
       "wheelRL",
       "wheelRR",
       "lightsFront",
-      "lightsBrake"
+      "lightsBrake",
+      "driverSeat",
+      "exitL",
+      "exitR"
     ],
     "animatedNodes": [
       "wheelFL",
@@ -3546,13 +3596,13 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/veh.pickup-white/model.glb",
-    "script": "assets/veh.pickup-white/build.py",
-    "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/veh.pickup-white.lod1.glb",
       "lod2": "public/assets/models/veh.pickup-white.lod2.glb"
-    }
+    },
+    "sourceGlb": "assets/veh.pickup-white/model.glb",
+    "script": "assets/veh.pickup-white/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "veh.sedan-green",
@@ -3578,7 +3628,10 @@
       "wheelRL",
       "wheelRR",
       "lightsFront",
-      "lightsBrake"
+      "lightsBrake",
+      "driverSeat",
+      "exitL",
+      "exitR"
     ],
     "animatedNodes": [
       "wheelFL",
@@ -3598,13 +3651,13 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/veh.sedan-green/model.glb",
-    "script": "assets/veh.sedan-green/build.py",
-    "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/veh.sedan-green.lod1.glb",
       "lod2": "public/assets/models/veh.sedan-green.lod2.glb"
-    }
+    },
+    "sourceGlb": "assets/veh.sedan-green/model.glb",
+    "script": "assets/veh.sedan-green/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "veh.suv-green",
@@ -3630,7 +3683,10 @@
       "wheelRL",
       "wheelRR",
       "lightsFront",
-      "lightsBrake"
+      "lightsBrake",
+      "driverSeat",
+      "exitL",
+      "exitR"
     ],
     "animatedNodes": [
       "wheelFL",
@@ -3650,18 +3706,18 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/veh.suv-green/model.glb",
-    "script": "assets/veh.suv-green/build.py",
-    "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/veh.suv-green.lod1.glb",
       "lod2": "public/assets/models/veh.suv-green.lod2.glb"
-    }
+    },
+    "sourceGlb": "assets/veh.suv-green/model.glb",
+    "script": "assets/veh.suv-green/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "veh.police-sedan",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/veh.police-sedan/build.py",
     "glb": "public/assets/models/veh.police-sedan.glb",
@@ -3753,12 +3809,16 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/veh.police-suv.lod1.glb",
+      "lod2": "public/assets/models/veh.police-suv.lod2.glb"
+    }
   },
   {
     "id": "veh.ambulance",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/veh.ambulance/build.py",
     "glb": "public/assets/models/veh.ambulance.glb",
@@ -3850,7 +3910,11 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/veh.jeep-red.lod1.glb",
+      "lod2": "public/assets/models/veh.jeep-red.lod2.glb"
+    }
   },
   {
     "id": "prop.stop-here-sign-trailer",
@@ -3879,12 +3943,16 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/prop.stop-here-sign-trailer.lod1.glb",
+      "lod2": "public/assets/models/prop.stop-here-sign-trailer.lod2.glb"
+    }
   },
   {
     "id": "bld.house-a",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.house-a.glb",
     "dimensions": {
@@ -3938,7 +4006,13 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body",
+      "door_entry",
+      "door_garage",
+      "interior",
+      "dormer_roof",
+      "roof"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -3959,9 +4033,6 @@
     "world": {
       "token": "backpackTeal",
       "solid": true
-    },
-    "generatedLodRatios": {
-      "lod2": 0.03
     }
   },
   {
@@ -3982,7 +4053,11 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "door_back",
+      "door_grill_lid",
+      "interior",
+      "roof"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -4002,15 +4077,12 @@
     "world": {
       "token": "brick",
       "solid": true
-    },
-    "generatedLodRatios": {
-      "lod2": 0.03
     }
   },
   {
     "id": "bld.safe-house",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.safe-house.glb",
     "dimensions": {
@@ -4045,7 +4117,7 @@
   {
     "id": "kit.porch-stairs",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/kit.porch-stairs.glb",
     "dimensions": {
@@ -4072,12 +4144,16 @@
     "decayVariants": [],
     "sourceGlb": "assets/kit.porch-stairs/model.glb",
     "script": "assets/kit.porch-stairs/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/kit.porch-stairs.lod1.glb",
+      "lod2": "public/assets/models/kit.porch-stairs.lod2.glb"
+    }
   },
   {
     "id": "bld.shed",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.shed.glb",
     "dimensions": {
@@ -4126,7 +4202,11 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "door_front",
+      "door_service",
+      "interior",
+      "roof"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -4147,15 +4227,12 @@
     "world": {
       "token": "survivorRed",
       "solid": true
-    },
-    "generatedLodRatios": {
-      "lod2": 0.03
     }
   },
   {
     "id": "bld.gas-station",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.gas-station.glb",
     "dimensions": {
@@ -4225,18 +4302,18 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/bld.maple-hardware/model.glb",
-    "script": "assets/bld.maple-hardware/build.py",
-    "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/bld.maple-hardware.lod1.glb",
       "lod2": "public/assets/models/bld.maple-hardware.lod2.glb"
-    }
+    },
+    "sourceGlb": "assets/bld.maple-hardware/model.glb",
+    "script": "assets/bld.maple-hardware/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "bld.mainstreet-brick",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.mainstreet-brick.glb",
     "dimensions": {
@@ -4292,7 +4369,9 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "interior",
+      "roof"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -4312,7 +4391,7 @@
   {
     "id": "int.diner",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/int.diner.glb",
     "dimensions": {
@@ -4351,7 +4430,7 @@
   {
     "id": "bld.school-elementary",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.school-elementary.glb",
     "dimensions": {
@@ -4387,7 +4466,7 @@
   {
     "id": "int.gym-cafeteria",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/int.gym-cafeteria.glb",
     "dimensions": {
@@ -4422,7 +4501,7 @@
   {
     "id": "kit.playground",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/kit.playground.glb",
     "dimensions": {
@@ -4449,12 +4528,16 @@
     "decayVariants": [],
     "sourceGlb": "assets/kit.playground/model.glb",
     "sourceForward": "+X",
-    "script": "assets/kit.playground/build.py"
+    "script": "assets/kit.playground/build.py",
+    "lods": {
+      "lod1": "public/assets/models/kit.playground.lod1.glb",
+      "lod2": "public/assets/models/kit.playground.lod2.glb"
+    }
   },
   {
     "id": "int.supermarket",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/int.supermarket.glb",
     "dimensions": {
@@ -4514,7 +4597,11 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/int.mini-mall.lod1.glb",
+      "lod2": "public/assets/models/int.mini-mall.lod2.glb"
+    }
   },
   {
     "id": "int.food-court",
@@ -4543,12 +4630,16 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/int.food-court.lod1.glb",
+      "lod2": "public/assets/models/int.food-court.lod2.glb"
+    }
   },
   {
     "id": "int.pharmacy-clinic",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/int.pharmacy-clinic.glb",
     "dimensions": {
@@ -4584,7 +4675,7 @@
   {
     "id": "bld.fire-station",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.fire-station.glb",
     "dimensions": {
@@ -4623,7 +4714,7 @@
   {
     "id": "bld.hospital-exterior",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.hospital-exterior.glb",
     "dimensions": {
@@ -4658,7 +4749,7 @@
   {
     "id": "kit.police-checkpoint",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/kit.police-checkpoint.glb",
     "dimensions": {
@@ -4685,7 +4776,11 @@
     "decayVariants": [],
     "sourceGlb": "assets/kit.police-checkpoint/model.glb",
     "sourceForward": "+X",
-    "script": "assets/kit.police-checkpoint/build.py"
+    "script": "assets/kit.police-checkpoint/build.py",
+    "lods": {
+      "lod1": "public/assets/models/kit.police-checkpoint.lod1.glb",
+      "lod2": "public/assets/models/kit.police-checkpoint.lod2.glb"
+    }
   },
   {
     "id": "kit.evac-camp",
@@ -4714,12 +4809,16 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/kit.evac-camp.lod1.glb",
+      "lod2": "public/assets/models/kit.evac-camp.lod2.glb"
+    }
   },
   {
     "id": "bld.gazebo",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.gazebo.glb",
     "dimensions": {
@@ -4758,7 +4857,7 @@
   {
     "id": "bld.restroom-block",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.restroom-block.glb",
     "dimensions": {
@@ -4797,7 +4896,7 @@
   {
     "id": "bld.dugout",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.dugout.glb",
     "dimensions": {
@@ -4832,7 +4931,7 @@
   {
     "id": "kit.bleachers",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/kit.bleachers.glb",
     "dimensions": {
@@ -4891,12 +4990,16 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/prop.scoreboard.lod1.glb",
+      "lod2": "public/assets/models/prop.scoreboard.lod2.glb"
+    }
   },
   {
     "id": "kit.creek-bridge-wood",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/kit.creek-bridge-wood.glb",
     "dimensions": {
@@ -4958,17 +5061,21 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/kit.campground.lod1.glb",
+      "lod2": "public/assets/models/kit.campground.lod2.glb"
+    }
   },
   {
     "id": "decal.blood-splats",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
-    "glb": "public/assets/models/decal.blood-splats.glb",
+    "glb": "",
     "dimensions": {
       "x": 1,
-      "y": 1,
+      "y": 0.015,
       "z": 1,
       "tolerance": 0.1
     },
@@ -4987,7 +5094,8 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "decalTexture": "public/assets/decals/blood-splats.png"
   },
   {
     "id": "decal.footprints",
@@ -5256,7 +5364,10 @@
       "shinL",
       "shinR",
       "footL",
-      "footR"
+      "footR",
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
     ],
     "animatedNodes": [
       "hip",
@@ -5327,7 +5438,10 @@
       "shinL",
       "shinR",
       "footL",
-      "footR"
+      "footR",
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
     ],
     "animatedNodes": [
       "hip",
@@ -5369,7 +5483,7 @@
   {
     "id": "npc.civilian-kid",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.civilian-kid.glb",
     "dimensions": {
@@ -5440,7 +5554,7 @@
   {
     "id": "npc.civilian-elderly",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.civilian-elderly.glb",
     "dimensions": {
@@ -5512,7 +5626,7 @@
   {
     "id": "npc.patient-zero-courier",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.patient-zero-courier.glb",
     "dimensions": {
@@ -5584,7 +5698,7 @@
   {
     "id": "prop.medical-cooler",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.medical-cooler.glb",
     "dimensions": {
@@ -5611,12 +5725,16 @@
     "decayVariants": [],
     "sourceGlb": "assets/prop.medical-cooler/model.glb",
     "script": "assets/prop.medical-cooler/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.medical-cooler.lod1.glb",
+      "lod2": "public/assets/models/prop.medical-cooler.lod2.glb"
+    }
   },
   {
     "id": "veh.courier-van",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/veh.courier-van.glb",
     "dimensions": {
@@ -5668,7 +5786,7 @@
   {
     "id": "npc.brother",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.brother.glb",
     "dimensions": {
@@ -5739,7 +5857,7 @@
   {
     "id": "npc.mrs-alvarez",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.mrs-alvarez.glb",
     "dimensions": {
@@ -5811,7 +5929,7 @@
   {
     "id": "npc.police-officer",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.police-officer.glb",
     "dimensions": {
@@ -5942,12 +6060,16 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/npc.paramedic.lod1.glb",
+      "lod2": "public/assets/models/npc.paramedic.lod2.glb"
+    }
   },
   {
     "id": "npc.firefighter-alive",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.firefighter-alive.glb",
     "dimensions": {
@@ -6019,7 +6141,7 @@
   {
     "id": "npc.national-guard",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.national-guard.glb",
     "dimensions": {
@@ -6091,7 +6213,7 @@
   {
     "id": "npc.survivor-group",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.survivor-group.glb",
     "dimensions": {
@@ -6269,7 +6391,7 @@
   {
     "id": "npc.helicopter-pilot",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.helicopter-pilot.glb",
     "dimensions": {
@@ -6341,7 +6463,7 @@
   {
     "id": "wpn.knife",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.knife.glb",
     "dimensions": {
@@ -6373,12 +6495,15 @@
     "actionCategory": "melee",
     "sourceGlb": "assets/wpn.knife/model.glb",
     "script": "assets/wpn.knife/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/wpn.knife.lod1.glb"
+    }
   },
   {
     "id": "wpn.fire-axe",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.fire-axe.glb",
     "dimensions": {
@@ -6410,7 +6535,10 @@
     "actionCategory": "melee",
     "sourceGlb": "assets/wpn.fire-axe/model.glb",
     "script": "assets/wpn.fire-axe/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/wpn.fire-axe.lod1.glb"
+    }
   },
   {
     "id": "wpn.katana",
@@ -6444,12 +6572,15 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "actionCategory": "melee"
+    "actionCategory": "melee",
+    "lods": {
+      "lod1": "public/assets/models/wpn.katana.lod1.glb"
+    }
   },
   {
     "id": "wpn.smg",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.smg.glb",
     "dimensions": {
@@ -6481,12 +6612,15 @@
     "sourceGlb": "assets/wpn.smg/model.glb",
     "script": "assets/wpn.smg/build.py",
     "sourceForward": "+X",
-    "actionCategory": "ranged"
+    "actionCategory": "ranged",
+    "lods": {
+      "lod1": "public/assets/models/wpn.smg.lod1.glb"
+    }
   },
   {
     "id": "wpn.hunting-rifle",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.hunting-rifle.glb",
     "dimensions": {
@@ -6518,12 +6652,15 @@
     "sourceGlb": "assets/wpn.hunting-rifle/model.glb",
     "script": "assets/wpn.hunting-rifle/build.py",
     "sourceForward": "+X",
-    "actionCategory": "ranged"
+    "actionCategory": "ranged",
+    "lods": {
+      "lod1": "public/assets/models/wpn.hunting-rifle.lod1.glb"
+    }
   },
   {
     "id": "wpn.assault-rifle",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.assault-rifle.glb",
     "dimensions": {
@@ -6555,7 +6692,10 @@
     "actionCategory": "ranged",
     "sourceGlb": "assets/wpn.assault-rifle/model.glb",
     "script": "assets/wpn.assault-rifle/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/wpn.assault-rifle.lod1.glb"
+    }
   },
   {
     "id": "wpn.machine-gun",
@@ -6589,12 +6729,15 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "actionCategory": "ranged"
+    "actionCategory": "ranged",
+    "lods": {
+      "lod1": "public/assets/models/wpn.machine-gun.lod1.glb"
+    }
   },
   {
     "id": "wpn.rocket-launcher",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/wpn.rocket-launcher.glb",
     "dimensions": {
@@ -6626,7 +6769,10 @@
     "actionCategory": "ranged",
     "sourceGlb": "assets/wpn.rocket-launcher/model.glb",
     "script": "assets/wpn.rocket-launcher/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/wpn.rocket-launcher.lod1.glb"
+    }
   },
   {
     "id": "proj.rocket",
@@ -6660,7 +6806,7 @@
   {
     "id": "thr.frag-grenade",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/thr.frag-grenade.glb",
     "dimensions": {
@@ -6690,12 +6836,15 @@
     "sourceGlb": "assets/thr.frag-grenade/model.glb",
     "script": "assets/thr.frag-grenade/build.py",
     "sourceForward": "+X",
-    "actionCategory": "throwable"
+    "actionCategory": "throwable",
+    "lods": {
+      "lod1": "public/assets/models/thr.frag-grenade.lod1.glb"
+    }
   },
   {
     "id": "thr.flashbang",
     "category": "weapon",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/thr.flashbang.glb",
     "dimensions": {
@@ -6725,7 +6874,10 @@
     "actionCategory": "throwable",
     "sourceGlb": "assets/thr.flashbang/model.glb",
     "script": "assets/thr.flashbang/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/thr.flashbang.lod1.glb"
+    }
   },
   {
     "id": "abl.shield-bubble",
@@ -6817,7 +6969,7 @@
   {
     "id": "veh.military-truck",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/veh.military-truck.glb",
     "dimensions": {
@@ -6869,7 +7021,7 @@
   {
     "id": "veh.box-truck",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/veh.box-truck.glb",
     "dimensions": {
@@ -6921,7 +7073,7 @@
   {
     "id": "veh.semi-trailer",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/veh.semi-trailer.glb",
     "dimensions": {
@@ -6973,7 +7125,7 @@
   {
     "id": "veh.helicopter",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/veh.helicopter.glb",
     "dimensions": {
@@ -7064,12 +7216,16 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/veh.train-freight.lod1.glb",
+      "lod2": "public/assets/models/veh.train-freight.lod2.glb"
+    }
   },
   {
     "id": "bld.river-bridge",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.river-bridge.glb",
     "dimensions": {
@@ -7104,7 +7260,7 @@
   {
     "id": "kit.river-terrain",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/kit.river-terrain.glb",
     "dimensions": {
@@ -7163,12 +7319,16 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/kit.rail-crossing.lod1.glb",
+      "lod2": "public/assets/models/kit.rail-crossing.lod2.glb"
+    }
   },
   {
     "id": "bld.tunnel-portal",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.tunnel-portal.glb",
     "dimensions": {
@@ -7204,7 +7364,7 @@
   {
     "id": "bld.power-substation",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.power-substation.glb",
     "dimensions": {
@@ -7243,7 +7403,7 @@
   {
     "id": "kit.highway-onramp",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/kit.highway-onramp.glb",
     "dimensions": {
@@ -7278,7 +7438,7 @@
   {
     "id": "bld.helipad",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.helipad.glb",
     "dimensions": {
@@ -7314,7 +7474,7 @@
   {
     "id": "bld.civic-center",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.civic-center.glb",
     "dimensions": {
@@ -7751,7 +7911,11 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/prop.light-tower-trailer.lod1.glb",
+      "lod2": "public/assets/models/prop.light-tower-trailer.lod2.glb"
+    }
   },
   {
     "id": "prop.plank-stack",
@@ -7770,7 +7934,8 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -7781,13 +7946,13 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "sourceGlb": "assets/prop.plank-stack/model.glb",
-    "script": "assets/prop.plank-stack/build.py",
-    "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/prop.plank-stack.lod1.glb",
       "lod2": "public/assets/models/prop.plank-stack.lod2.glb"
-    }
+    },
+    "sourceGlb": "assets/prop.plank-stack/model.glb",
+    "script": "assets/prop.plank-stack/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "prop.sandbag-pallet",
@@ -7816,12 +7981,16 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/prop.sandbag-pallet.lod1.glb",
+      "lod2": "public/assets/models/prop.sandbag-pallet.lod2.glb"
+    }
   },
   {
     "id": "prop.dumpster",
     "category": "prop",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.dumpster.glb",
     "dimensions": {
@@ -7861,7 +8030,11 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.dumpster/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.dumpster.lod1.glb",
+      "lod2": "public/assets/models/prop.dumpster.lod2.glb"
+    }
   },
   {
     "id": "prop.sofa",
@@ -7880,7 +8053,8 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -7891,13 +8065,13 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "sourceGlb": "assets/prop.sofa/model.glb",
-    "script": "assets/prop.sofa/build.py",
-    "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/prop.sofa.lod1.glb",
       "lod2": "public/assets/models/prop.sofa.lod2.glb"
-    }
+    },
+    "sourceGlb": "assets/prop.sofa/model.glb",
+    "script": "assets/prop.sofa/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "prop.pallet",
@@ -7916,7 +8090,8 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -7927,13 +8102,13 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "sourceGlb": "assets/prop.pallet/model.glb",
-    "script": "assets/prop.pallet/build.py",
-    "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/prop.pallet.lod1.glb",
       "lod2": "public/assets/models/prop.pallet.lod2.glb"
-    }
+    },
+    "sourceGlb": "assets/prop.pallet/model.glb",
+    "script": "assets/prop.pallet/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "prop.vending-cart",
@@ -7962,12 +8137,16 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/prop.vending-cart.lod1.glb",
+      "lod2": "public/assets/models/prop.vending-cart.lod2.glb"
+    }
   },
   {
     "id": "prop.fire-extinguisher",
     "category": "prop",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.fire-extinguisher.glb",
     "dimensions": {
@@ -7993,7 +8172,11 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/prop.fire-extinguisher/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.fire-extinguisher.lod1.glb",
+      "lod2": "public/assets/models/prop.fire-extinguisher.lod2.glb"
+    }
   },
   {
     "id": "thr.smoke-grenade",
@@ -8025,7 +8208,10 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "actionCategory": "throwable"
+    "actionCategory": "throwable",
+    "lods": {
+      "lod1": "public/assets/models/thr.smoke-grenade.lod1.glb"
+    }
   },
   {
     "id": "prop.tear-gas-canister",
@@ -8054,7 +8240,11 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/prop.tear-gas-canister.lod1.glb",
+      "lod2": "public/assets/models/prop.tear-gas-canister.lod2.glb"
+    }
   },
   {
     "id": "debris.wood-small",
@@ -8215,12 +8405,16 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/veh.fuel-truck.lod1.glb",
+      "lod2": "public/assets/models/veh.fuel-truck.lod2.glb"
+    }
   },
   {
     "id": "inf.dog-retriever",
     "category": "infected",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.dog-retriever.glb",
     "dimensions": {
@@ -8296,7 +8490,7 @@
   {
     "id": "inf.dog-dachshund",
     "category": "infected",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.dog-dachshund.glb",
     "dimensions": {
@@ -8372,7 +8566,7 @@
   {
     "id": "inf.dog-k9",
     "category": "infected",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.dog-k9.glb",
     "dimensions": {
@@ -8448,7 +8642,7 @@
   {
     "id": "inf.cat-tabby",
     "category": "infected",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.cat-tabby.glb",
     "dimensions": {
@@ -8524,7 +8718,7 @@
   {
     "id": "inf.cat-black",
     "category": "infected",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.cat-black.glb",
     "dimensions": {
@@ -8600,7 +8794,7 @@
   {
     "id": "inf.crow",
     "category": "infected",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.crow.glb",
     "dimensions": {
@@ -8706,7 +8900,7 @@
   {
     "id": "inf.lion",
     "category": "infected",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.lion.glb",
     "dimensions": {
@@ -8782,7 +8976,7 @@
   {
     "id": "inf.gorilla",
     "category": "infected",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.gorilla.glb",
     "dimensions": {
@@ -8860,7 +9054,7 @@
   {
     "id": "inf.flamingo",
     "category": "infected",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/inf.flamingo.glb",
     "dimensions": {
@@ -9053,12 +9247,12 @@
   {
     "id": "decal.blood-pool",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
-    "glb": "public/assets/models/decal.blood-pool.glb",
+    "glb": "",
     "dimensions": {
       "x": 1,
-      "y": 1,
+      "y": 0.015,
       "z": 1,
       "tolerance": 0.1
     },
@@ -9077,17 +9271,18 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "decalTexture": "public/assets/decals/blood-pool.png"
   },
   {
     "id": "decal.blood-trail",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
-    "glb": "public/assets/models/decal.blood-trail.glb",
+    "glb": "",
     "dimensions": {
       "x": 1,
-      "y": 1,
+      "y": 0.015,
       "z": 1,
       "tolerance": 0.1
     },
@@ -9106,7 +9301,8 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "decalTexture": "public/assets/decals/blood-trail.png"
   },
   {
     "id": "decal.arterial-spray",
@@ -9140,7 +9336,7 @@
   {
     "id": "prop.gas-pump",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "script": "assets/prop.gas-pump/build.py",
     "glb": "public/assets/models/prop.gas-pump.glb",
@@ -9171,12 +9367,16 @@
     "world": {
       "token": "survivorRed",
       "solid": true
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.gas-pump.lod1.glb",
+      "lod2": "public/assets/models/prop.gas-pump.lod2.glb"
     }
   },
   {
     "id": "prop.jukebox",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "script": "assets/prop.jukebox/build.py",
     "glb": "public/assets/models/prop.jukebox.glb",
@@ -9203,12 +9403,16 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.jukebox.lod1.glb",
+      "lod2": "public/assets/models/prop.jukebox.lod2.glb"
+    }
   },
   {
     "id": "prop.light-tower",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "script": "assets/prop.light-tower/build.py",
     "glb": "public/assets/models/prop.light-tower.glb",
@@ -9235,12 +9439,16 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.light-tower.lod1.glb",
+      "lod2": "public/assets/models/prop.light-tower.lod2.glb"
+    }
   },
   {
     "id": "prop.porta-potty",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "script": "assets/prop.porta-potty/build.py",
     "glb": "public/assets/models/prop.porta-potty.glb",
@@ -9267,12 +9475,16 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.porta-potty.lod1.glb",
+      "lod2": "public/assets/models/prop.porta-potty.lod2.glb"
+    }
   },
   {
     "id": "prop.vending-machine",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "script": "assets/prop.vending-machine/build.py",
     "glb": "public/assets/models/prop.vending-machine.glb",
@@ -9299,7 +9511,11 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.vending-machine.lod1.glb",
+      "lod2": "public/assets/models/prop.vending-machine.lod2.glb"
+    }
   },
   {
     "id": "npc.civilian-man-a",
@@ -9333,7 +9549,10 @@
       "shinL",
       "shinR",
       "footL",
-      "footR"
+      "footR",
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
     ],
     "animatedNodes": [
       "hip",
@@ -9376,7 +9595,7 @@
   {
     "id": "npc.civilian-man-b",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.civilian-man-b.glb",
     "dimensions": {
@@ -9477,7 +9696,10 @@
       "shinL",
       "shinR",
       "footL",
-      "footR"
+      "footR",
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
     ],
     "animatedNodes": [
       "hip",
@@ -9520,7 +9742,7 @@
   {
     "id": "npc.civilian-woman-b",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.civilian-woman-b.glb",
     "dimensions": {
@@ -9592,7 +9814,7 @@
   {
     "id": "prop.barricade",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.barricade.glb",
     "dimensions": {
@@ -9619,12 +9841,16 @@
     "decayVariants": [],
     "sourceGlb": "assets/prop.barricade/model.glb",
     "script": "assets/prop.barricade/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.barricade.lod1.glb",
+      "lod2": "public/assets/models/prop.barricade.lod2.glb"
+    }
   },
   {
     "id": "prop.bench",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.bench.glb",
     "dimensions": {
@@ -9651,12 +9877,16 @@
     "decayVariants": [],
     "sourceGlb": "assets/prop.bench/model.glb",
     "script": "assets/prop.bench/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.bench.lod1.glb",
+      "lod2": "public/assets/models/prop.bench.lod2.glb"
+    }
   },
   {
     "id": "prop.fire-hydrant",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.fire-hydrant.glb",
     "dimensions": {
@@ -9683,7 +9913,11 @@
     "decayVariants": [],
     "sourceGlb": "assets/prop.fire-hydrant/model.glb",
     "script": "assets/prop.fire-hydrant/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.fire-hydrant.lod1.glb",
+      "lod2": "public/assets/models/prop.fire-hydrant.lod2.glb"
+    }
   },
   {
     "id": "prop.hedge",
@@ -9702,7 +9936,8 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -9728,7 +9963,7 @@
   {
     "id": "prop.mailbox-blue",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.mailbox-blue.glb",
     "dimensions": {
@@ -9755,12 +9990,16 @@
     "decayVariants": [],
     "sourceGlb": "assets/prop.mailbox-blue/model.glb",
     "script": "assets/prop.mailbox-blue/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.mailbox-blue.lod1.glb",
+      "lod2": "public/assets/models/prop.mailbox-blue.lod2.glb"
+    }
   },
   {
     "id": "prop.picket-fence",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.picket-fence.glb",
     "dimensions": {
@@ -9791,12 +10030,16 @@
     "world": {
       "token": "picketWhite",
       "solid": false
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.picket-fence.lod1.glb",
+      "lod2": "public/assets/models/prop.picket-fence.lod2.glb"
     }
   },
   {
     "id": "prop.street-lamp",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.street-lamp.glb",
     "dimensions": {
@@ -9827,12 +10070,16 @@
     "world": {
       "token": "uiDark",
       "solid": false
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.street-lamp.lod1.glb",
+      "lod2": "public/assets/models/prop.street-lamp.lod2.glb"
     }
   },
   {
     "id": "prop.street-sign",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.street-sign.glb",
     "dimensions": {
@@ -9859,12 +10106,16 @@
     "decayVariants": [],
     "sourceGlb": "assets/prop.street-sign/model.glb",
     "script": "assets/prop.street-sign/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.street-sign.lod1.glb",
+      "lod2": "public/assets/models/prop.street-sign.lod2.glb"
+    }
   },
   {
     "id": "prop.traffic-cone",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.traffic-cone.glb",
     "dimensions": {
@@ -9895,12 +10146,16 @@
     "world": {
       "token": "schoolBusYellow",
       "solid": false
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.traffic-cone.lod1.glb",
+      "lod2": "public/assets/models/prop.traffic-cone.lod2.glb"
     }
   },
   {
     "id": "prop.trash-bin",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.trash-bin.glb",
     "dimensions": {
@@ -9927,12 +10182,16 @@
     "decayVariants": [],
     "sourceGlb": "assets/prop.trash-bin/model.glb",
     "script": "assets/prop.trash-bin/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.trash-bin.lod1.glb",
+      "lod2": "public/assets/models/prop.trash-bin.lod2.glb"
+    }
   },
   {
     "id": "prop.utility-pole",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.utility-pole.glb",
     "dimensions": {
@@ -9959,12 +10218,16 @@
     "decayVariants": [],
     "sourceGlb": "assets/prop.utility-pole/model.glb",
     "script": "assets/prop.utility-pole/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.utility-pole.lod1.glb",
+      "lod2": "public/assets/models/prop.utility-pole.lod2.glb"
+    }
   },
   {
     "id": "inf.teen-skater",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.teen-skater/build.py",
     "glb": "public/assets/models/inf.teen-skater.glb",
@@ -10052,7 +10315,8 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -10096,7 +10360,10 @@
       "wheelRL",
       "wheelRR",
       "lightsFront",
-      "lightsBrake"
+      "lightsBrake",
+      "driverSeat",
+      "exitL",
+      "exitR"
     ],
     "animatedNodes": [
       "wheelFL",
@@ -10461,7 +10728,9 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "interior",
+      "roof"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -10527,7 +10796,8 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
     "sockets": [],
