@@ -14,7 +14,7 @@ export class Escorts {
   }
   /** Campaign scripts can attach to their existing actor IDs without respawning them. */
   attach(e: EntitySnapshot, child = e.archetype === 'npc.brother' || e.archetype === 'escort.brother'): void {
-    e.escort = { state: 'follow', order: 'follow', child, gore: false, downedAt: 0, progress: 0, latched: false, path: [], pathIndex: 0, goal: -1, cover: null, attackAt: 0 };
+    e.escort = { state: 'follow', order: 'follow', child, gore: false, failed: false, downedAt: 0, progress: 0, latched: false, path: [], pathIndex: 0, goal: -1, cover: null, attackAt: 0 };
   }
   down(e: EntitySnapshot): void {
     const c = e.escort!; if (c.state === 'downed' || c.state === 'dead') return;
@@ -30,10 +30,11 @@ export class Escorts {
       const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
       const near = distance <= 1.5 && stopped && player.health.current > 0 && ai.nav.visible(e.transform, player.transform, .1);
       if (c.state === 'downed') {
+        if (c.failed) continue;
         c.progress = near ? c.progress + 1 : 0;
         if (c.progress >= npcs.reviveTicks) { e.health.current = e.health.max / 2; c.state = c.order; c.progress = 0; c.latched = true; this.world.events.emit({ type: 'escort.revived', tick, id: e.id }); }
         else if (tick - c.downedAt >= npcs.downedTicks) {
-          c.state = 'dead'; this.world.events.emit({ type: 'mission.failed', tick, reason: 'escort-died' });
+          c.failed = true; if (!c.child) c.state = 'dead'; this.world.events.emit({ type: 'mission.failed', tick, reason: 'escort-died' });
         }
         continue;
       }
