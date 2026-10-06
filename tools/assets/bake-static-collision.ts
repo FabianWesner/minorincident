@@ -76,14 +76,7 @@ export async function bakeStaticCollision(path: string): Promise<Aabb[]> {
   // are neither walkable supports nor thousands of tiny Rapier contacts.
   const supports = ground.filter(a => (a.max[0] - a.min[0]) * (a.max[2] - a.min[2]) >= .15 && !boxes.some(b => b.min[0] <= a.min[0] && b.max[0] >= a.max[0] && b.min[2] <= a.min[2] && b.max[2] >= a.max[2]));
   // Remove contained component boxes (windows/trim in wall bodies).
-  const result = supports.concat(boxes.filter((box, i) => !boxes.some((other, j) => j !== i && other.min.every((v, a) => v <= box.min[a]) && other.max.every((v, a) => v >= box.max[a]) && (j < i || other.min.some((v, a) => v < box.min[a]) || other.max.some((v, a) => v > box.max[a])))));
-  // A dense hedge is one solid obstacle; leaf lobes must not become walkable steps
-  // or leave tiny routing gaps that a survivor capsule cannot traverse.
-  if (path.endsWith('/prop.hedge.glb') && result.length) return [{
-    min: [0, 1, 2].map(axis => Math.min(...result.map(box => box.min[axis]))) as Aabb['min'],
-    max: [0, 1, 2].map(axis => Math.max(...result.map(box => box.max[axis]))) as Aabb['max'],
-  }];
-  return result;
+  return supports.concat(boxes.filter((box, i) => !boxes.some((other, j) => j !== i && other.min.every((v, a) => v <= box.min[a]) && other.max.every((v, a) => v >= box.max[a]) && (j < i || other.min.some((v, a) => v < box.min[a]) || other.max.some((v, a) => v > box.max[a])))));
 
 }
 
