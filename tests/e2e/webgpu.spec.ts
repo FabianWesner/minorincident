@@ -1,6 +1,8 @@
 import { expect, test, testUrl } from './fixtures';
 import { mkdirSync, writeFileSync } from 'node:fs';
 
+test.skip(process.platform === 'darwin', 'Headless WebGPU is unavailable on macOS; verified manually.');
+
 /** Opt-in WebGPU proofs; SwiftShader WebGL goldens never run through these projects. */
 test('T-E02-01b @E02 @E02-AC01 an available native GPU selects WebGPU and renders lookdev', async ({ page }) => {
   await page.goto(testUrl.replace('&renderer=webgl', ''));

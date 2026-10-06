@@ -45,7 +45,8 @@ export class Quality {
     const count = Math.min(this.count, this.samples.length);
     this.sorted.set(this.samples.subarray(0, count));
     const window = this.sorted.subarray(0, count); window.sort();
-    this.p90Ms = window[Math.ceil(count * .9) - 1];
+    // Remove Float32 sampling noise so an exact 16.7 ms cadence is not considered over budget.
+    this.p90Ms = Math.round(window[Math.ceil(count * .9) - 1] * 1e4) / 1e4;
     this.slowSeconds = this.setting === 'auto' && this.tier === 'high' && this.p90Ms > qualityBudgets.high.frameMs ? this.slowSeconds + this.elapsed : 0;
     this.elapsed = this.count = 0;
     if (this.setting === 'auto' && this.tier === 'high' && this.slowSeconds >= 5 && !cinematic) this.change('low');
