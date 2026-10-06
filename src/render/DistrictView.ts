@@ -292,7 +292,7 @@ export class DistrictView extends Group {
         this.bounds.center.set(x, ref.position.y + height / 2, z); this.bounds.radius = radius;
         if (!this.frustum.intersectsSphere(this.bounds)) continue;
         const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
-        (distance > (this.low ? 24 : 30) ? far : !this.low && distance <= 12 ? hero : near).references.push(ref);
+        (distance > (this.low ? 20 : 30) ? far : !this.low && distance <= 12 ? hero : near).references.push(ref);
       }
       for (const batch of [hero, near, far]) {
         batch.visible = batch.references.length > 0;
