@@ -166,3 +166,18 @@ for (const [width,height] of [[1600,900],[390,844]]) for (const zoom of [-10,10]
     expect(point.z).toBeLessThanOrEqual(m.def.anchors.hardware.z-12);
   }
 });
+
+test('@E19 M1-22 prepared decay survives restart and matches live collision/navigation', async () => {
+  const m = await start(), morning = world.districts!;
+  world.preparedDistricts.set(0, morning); world.prepareTier(0); world.prepareTier(1);
+  const incident = world.preparedDistricts.get(1)!;
+  const colliders = world.physics.colliderCount;
+  m.completeObjective('breakfast');
+  expect(world.districts).toBe(incident); expect(world.physics.colliderCount).toBeGreaterThan(colliders);
+  const prepared = world.infected!.nav.blocked.slice(); world.infected!.nav.rebake();
+  expect(world.infected!.nav.blocked).toEqual(prepared);
+  m.completeObjective('escape'); m.completeObjective('melee'); m.completeObjective('store-fight'); m.restartSlice();
+  expect(world.districts).toBe(morning); expect(world.physics.colliderCount).toBe(colliders);
+  expect(world.entities.get(1)!.weapons).toBeUndefined();
+  world.reset(); expect(world.preparedDistricts.size).toBe(0); expect(world.preparedNpcNavigation.size).toBe(0);
+});

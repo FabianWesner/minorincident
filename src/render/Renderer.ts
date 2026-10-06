@@ -24,6 +24,22 @@ export class Renderer extends WebGPURenderer {
       };
     };
   }
+  /** Use Three's vertex-attribute instancing path, which shares shaders across
+   * district placement counts instead of embedding matrix array lengths in GLSL. */
+  attributeInstanceCapacity(): number {
+    const backend = this.backend as unknown as { capabilities: { getUniformBufferLimit(): number } };
+    return Math.floor(backend.capabilities.getUniformBufferLimit() / 64) + 1;
+  }
+  /** Finish the loading draw before gameplay can encounter deferred driver work. */
+  async finishWarmUp(): Promise<void> {
+    if (this.selectedBackend === 'webgl') {
+      const backend = this.backend as unknown as { utils: { _clientWaitAsync(): Promise<void> } };
+      await backend.utils._clientWaitAsync();
+    }
+    // PassNode and ShadowNode cache work per animation frame. A fence can already
+    // be signaled: still let Three advance its frame before the next warm-up draw.
+    await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+  }
   /** Three 0.186 retains shared shader bindings by render context, and WebGL VAOs.
    * Level unload retires all render objects before dropping these renderer-owned caches. */
   releaseLevelCaches(): void {

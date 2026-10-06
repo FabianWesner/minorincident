@@ -39,7 +39,7 @@ copyright 2025 Bruno Simon):
 | `InstancedGroup.js` (41046b5) | `src/render/InstancedGroup.ts` — shared mesh batches and dirty placement updates |
 | `InstancedGroup.js` (41046b5) | `src/render/CrowdView.ts` — infected rigid-part GPU batches, extended through E17 crowd helpers |
 | `Zones.js` (41046b5) | `src/sim/ai/InfectedSystem.ts` — perception enter/alert transitions without singleton dependencies |
-| `PreRenderer.js` (41046b5) | `src/render/GameView.ts`, `src/Game.ts` — shader warm-up before screenshotReady (compileAsync plus two rendered frames) |
+| `PreRenderer.js` (41046b5) | `src/render/PreRenderer.ts`, `src/render/GameView.ts`, `src/Game.ts` — hidden-variant shader warm-up at level load (compileAsync and a 32px render in the gameplay pass) |
 
 | `Physics/PhysicsVehicle.js` (41046b5) | `src/sim/vehicles/VehicleBody.ts` — fixed-step four-wheel raycast suspension, engine taper, low centre of mass and bounded stuck history |
 | `World/VisualVehicle.js` (41046b5) | `src/render/VehicleView.ts` — authoritative wheel pivots/suspension, brake lamps and emergency lamp animation |
