@@ -19,7 +19,9 @@ class Humans implements HumanTargetQuery {
 }
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
-async function l1World(seed: number, humans: HumanTargetQuery | undefined = new Humans()) {
+/** `real`: use the game's default human query (the survivor and real civilians) instead of scripted humans. */
+async function l1World(seed: number, real = false) {
+  const humans: HumanTargetQuery | undefined = real ? undefined : new Humans();
   const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario('horde-arena', seed);
   const perception = w.infected!.configureL1v2(humans);
   return { w, ai: w.infected!, perception, humans: humans as Humans };
@@ -77,7 +79,7 @@ describe('L1 v2 infected perception', () => {
       w.dispose(); worlds.length = 0;
     }
     // No hearing: the real survivor makes footsteps/attack/bicycle noise right behind an infected facing away.
-    const { w, ai } = await l1World(3, undefined);
+    const { w, ai } = await l1World(3, true);
     const e = zombie(w, 0, 18, 0); e.transform.yaw = Math.PI / 2; // faces -Z, the survivor stands at the origin behind it
     const alerted = () => w.events.events().filter((ev) => ev.type === 'ai.alerted' && ev.targetId === e.id);
     for (let i = 0; i < 120; i++) {
@@ -203,6 +205,35 @@ describe('L1 v2 infected perception', () => {
       w.dispose(); worlds.length = 0;
     }
   });
+
+  test('T-E19-10c @E19 @E19-AC10 real survivor input: break line of sight behind a house, the chaser searches (no hearing, no omniscience)', async () => {
+    let searched = 0, reacquiredBySight = 0;
+    for (const seed of seeds.slice(0, 8)) {
+      const { w, ai, perception } = await l1World(seed, true);
+      // A house north-east of the survivor: physics, navigation and sight all respect it.
+      w.physics.addStatic({ min: [3, 0, -16], max: [13, 3, -6] }, [0, 0]); wall(w, 910, 8, -11, 5, 5);
+      const e = zombie(w, -13, 0, 0);
+      const player = w.entities.get(1)!;
+      // Run east, then cut north behind the house (keyboard-equivalent move intents, no teleports).
+      const run = (x: number, z: number, ticks: number) => { w.setInput({ move: { x, z } }); for (let i = 0; i < ticks; i++) w.update(); };
+      for (let i = 0; i < 240 && brain(e).mode !== 'chase'; i++) run(0, 0, 1);
+      expect(brain(e).mode).toBe('chase');
+      run(1, 0, 75); run(0, -1, 100); run(1, 0, 40); run(0, 0, 1);
+      let sawSearch = false, chaseAgain = -1;
+      for (let i = 0; i < 18 * 60; i++) {
+        const before = brain(e).mode;
+        w.update();
+        if (brain(e).mode === 'search') sawSearch = true;
+        if (sawSearch && before !== 'chase' && brain(e).mode === 'chase') { chaseAgain = w.tick; expect(perception.sees(e, player.transform) || perception.tracks(e, player.transform)).toBe(true); break; }
+      }
+      if (sawSearch) searched++;
+      if (chaseAgain > 0) reacquiredBySight++;
+      expect(ai.active).toHaveLength(1);
+      w.dispose(); worlds.length = 0;
+    }
+    console.info(`[AC10c] lost sight -> search on ${searched}/8 seeds; found again by sight on ${reacquiredBySight}`);
+    expect(searched).toBeGreaterThanOrEqual(6);
+  }, 120_000);
 
   test('T-E19-11 @E19 @E19-AC11 car alarm attracts non-chasing infected within 30 m; 20 s, then search and wander', async () => {
     for (const seed of seeds) {
