@@ -1,3 +1,4 @@
+import { lookViewpoints } from '../data/lookViewpoints';
 import { NpcView } from './npc/NpcView';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 import { CrowdView } from './CrowdView';
@@ -67,6 +68,8 @@ export class GameView implements Lifecycle {
   private districtResources:{lighting:Lighting;materials:Materials;registry:DistrictAssets;phase:ReturnType<typeof windPhase>;grassMaterial:ReturnType<typeof Grass.material>}|null=null;
   private districts:DistrictView|null=null;
   private windowMask=false;
+  private foliageMask: boolean | 'crowns'=false;
+  private readonly foliageMasks = new Map<Material, MeshBasicNodeMaterial>();
   private lookdev: Lookdev | null = null;
   private postFx: PostFx | null = null;
   private dofEnabled = false;
@@ -208,6 +211,8 @@ export class GameView implements Lifecycle {
   }
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
+    const reviewSpot = lookViewpoints.find(spot => spot.id === name);
+    if (reviewSpot) { this.view.reset(reviewSpot); this.update(1); return; }
     if (name === 'hud-golden') {
       const player = this.world.entities.get(1)!.transform;
       this.view.preset(name, { position: [player.x + 15, 18, player.z + 15], target: [player.x, .4, player.z] }); this.update(1); return;
@@ -238,7 +243,7 @@ export class GameView implements Lifecycle {
     this.view.preset(name, pose); this.update(1);
   }
   /** Render settings only; persistence and gameplay accessibility remain owned by E14. */
-  settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean; windowMask?: boolean } & VfxSettings): void {
+  settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean; windowMask?: boolean; foliageMask?: boolean | 'crowns'; foliageReveal?: boolean } & VfxSettings): void {
     this.vfx?.set(patch);
     if (patch.gore !== undefined || patch.vfx !== undefined) this.crowd?.setGoreEnabled(this.vfx?.snapshot().enabled === true && this.vfx.snapshot().gore === 'Full');
     if (patch.colorblind !== undefined) this.vfxSettings.colorblind = patch.colorblind;
@@ -252,6 +257,8 @@ export class GameView implements Lifecycle {
     if (patch.timeOfDay !== undefined) this.lighting?.set(patch.timeOfDay);
     if (patch.occludersVisible !== undefined) this.occlusion.visible = patch.occludersVisible;
     if(patch.windowMask!==undefined)this.windowMask=patch.windowMask;
+    if(patch.foliageMask!==undefined)this.foliageMask=patch.foliageMask;
+    if(patch.foliageReveal!==undefined)this.districts?.setFoliageReveal(patch.foliageReveal);
     if (patch.idPass !== undefined) this.idPass = patch.idPass;
     this.update(1);
   }
@@ -319,10 +326,28 @@ export class GameView implements Lifecycle {
     this.flashOverlay.style.opacity = String(this.vfx?.flash ?? 0);
     this.lighting?.update(this.view); this.districts?.updateLods(this.view);
     this.districts?.cull(this.view, this.quality);
+    const locked = this.world.controls.snapshot()?.attack;
+    const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
+    this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;
-    if(this.windowMask&&this.districts){
+    if(this.foliageMask) {
+      const background=this.scene.background, fog=this.scene.fog, shadow=this.renderer.shadowMap.enabled;
+      this.scene.background=new Color(0); this.scene.fog=null; this.renderer.shadowMap.enabled=false;
+      this.scene.traverse(child => {
+        if (!(child instanceof Mesh)) return;
+        this.savedMaterials.set(child, child.material);
+        const source = child.material as PaletteMaterial;
+        if ((child.name === 'grass-gpu-wind' && this.foliageMask !== 'crowns') || source.name === 'pal_leaf-card-crown') {
+          if (!this.foliageMasks.has(source)) this.foliageMasks.set(source, new MeshBasicNodeMaterial({ color: '#ffffff', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode }));
+          child.material=this.foliageMasks.get(source)!;
+        } else child.material=this.idBackground;
+      });
+      this.renderer.render(this.scene,this.camera);
+      for (const [mesh, material] of this.savedMaterials) mesh.material=material;
+      this.savedMaterials.clear(); this.scene.background=background;this.scene.fog=fog;this.renderer.shadowMap.enabled=shadow;
+    } else if(this.windowMask&&this.districts){
       const background=this.scene.background,fog=this.scene.fog,shadow=this.renderer.shadowMap.enabled;
       this.scene.background=new Color(0);this.scene.fog=null;this.renderer.shadowMap.enabled=false;this.districts.mask(true);const heroVisible=this.character?.visible;if(this.character)this.character.visible=false;this.renderer.render(this.scene,this.camera);if(this.character)this.character.visible=heroVisible!;this.districts.mask(false);this.scene.background=background;this.scene.fog=fog;this.renderer.shadowMap.enabled=shadow;
     } else if (this.idPass && (this.lookdev || this.character)) {
@@ -350,7 +375,8 @@ export class GameView implements Lifecycle {
     if (this.interactions) { this.scene.remove(this.interactions); this.interactions.dispose(); this.interactions = null; }
     if (this.entityAssets) { this.scene.remove(this.entityAssets); this.entityAssets.dispose(); this.entityAssets = null; }
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
-    this.windowMask=false;
+    this.windowMask=false; this.foliageMask=false;
+    for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();
     this.postFx?.dispose();this.postFx = null; this.dofEnabled = false;
     if(this.districts){this.scene.remove(this.districts);this.districts.dispose();this.districts=null;}
     this.frozenStarted = -1; this.frozenPose = null;

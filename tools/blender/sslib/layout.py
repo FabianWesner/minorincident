@@ -104,6 +104,12 @@ class Layout:
         p=dict(id=id,assetId=asset,position=pos,yaw=yaw,scale=list(scale),minTier=tier,maxTier=5,allowRoad=allowed,visualAabb=aabb,lightGroup=f'block-{len(self.data["placements"])%4}')
         self.data['placements'].append(p)
         o=empty('inst:'+asset+':'+str(len(self.data['placements'])),pos,yaw,scale); o['assetId']=asset; o['lightGroup']=p['lightGroup']; o['minTier']=tier; o['maxTier']=5; self.empties.append(o)
+        for i,crown in enumerate(m.get('foliage',{}).get('crowns',[])):
+            cx,cy,cz=[crown['position'][a]*scale[a] for a in range(3)]
+            cp=[pos[0]+cx*math.cos(yaw)+cz*math.sin(yaw),pos[1]+cy,pos[2]-cx*math.sin(yaw)+cz*math.cos(yaw)]
+            radii=tuple(crown['radius'][a]*scale[a] for a in range(3))
+            marker=empty('crown:'+id+':'+str(i),cp,scale=radii)
+            marker['foliageColors']=m['foliage']['colors'];marker['minTier']=tier;marker['maxTier']=5;self.empties.append(marker)
         if m['world']['solid']: self.data['colliders'].append(dict(id=id,aabb=aabb,minTier=tier,maxTier=5))
         return id
     def building(self,asset,x,z,door,title):
@@ -113,7 +119,8 @@ class Layout:
         width=aabb['max'][0]-aabb['min'][0]; height=aabb['max'][1]
         front=aabb['max'][2]
         for side in [-1,1]:
-            for dz in [-2,0,2]: self.place('prop.tree',[x+side*(width*.65),0,z+dz])
+            self.place('prop.tree',[x+side*(width*.65),0,z])
+            for dz in [-2,2]: self.place('prop.garden-bush-small',[x+side*(width*.65),0,z+dz])
             self.place('prop.hedge',[x+side*(width*.34),0,front+.55])
             for j in range(8): self.place('prop.flower',[x+side*(width*.32)+j*.25-.9,0,front+1.2])
         self.data['lawns'].append(dict(min=[x-width*.5,front+1.5],max=[x+width*.5,front+2.7]))

@@ -27,7 +27,11 @@ export class Grass extends Mesh {
       tips.push(0, 0, 1);
     };
     // Keep grass out of solid footprints and pedestrian paths.
-    const valid = (x: number, z: number) => !layout.placements.some(p => p.assetId !== 'prop.flower' && x > p.visualAabb.min[0] - .1 && x < p.visualAabb.max[0] + .1 && z > p.visualAabb.min[2] - .1 && z < p.visualAabb.max[2] + .1)
+    const valid = (x: number, z: number) => !layout.placements.some(p => {
+      if (p.assetId === 'prop.flower') return false;
+      if (p.assetId.includes('tree')) return Math.abs(x - p.position[0]) < .35 && Math.abs(z - p.position[2]) < .35;
+      return x > p.visualAabb.min[0] - .1 && x < p.visualAabb.max[0] + .1 && z > p.visualAabb.min[2] - .1 && z < p.visualAabb.max[2] + .1;
+    })
       && !layout.surfaces.some(s => (s.surface === 'tile' || s.surface === 'asphalt') && x > Math.min(...s.polygon.map(p => p[0])) && x < Math.max(...s.polygon.map(p => p[0])) && z > Math.min(...s.polygon.map(p => p[1])) && z < Math.max(...s.polygon.map(p => p[1])));
     let sparseCount = 0;
     for (const density of [5, 23]) {

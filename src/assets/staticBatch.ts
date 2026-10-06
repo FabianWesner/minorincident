@@ -9,8 +9,8 @@ export function staticBatch(source: Object3D, lit: boolean, materials?: Material
   source.updateMatrixWorld(true);
   const buckets = new Map<boolean, BufferGeometry[]>();
   source.traverse(node => {
-    if (!(node instanceof Mesh)) return;
-    for (let parent: Object3D | null = node; parent; parent = parent.parent) if (!parent.visible) return;
+    if (!(node instanceof Mesh) || node.userData.foliageProxy) return;
+    for (let parent: Object3D | null = node; parent; parent = parent.parent) if (!parent.visible || parent.userData.foliageProxy) return;
     const material = (Array.isArray(node.material) ? node.material[0] : node.material) as Material & { color: import('three').Color; vertexColors: boolean };
     const emissive = material.name.startsWith('emi_');
     const geometry = new BufferGeometry();
