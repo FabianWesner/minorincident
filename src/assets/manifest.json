@@ -4308,7 +4308,11 @@
     },
     "sourceGlb": "assets/bld.maple-hardware/model.glb",
     "script": "assets/bld.maple-hardware/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
   },
   {
     "id": "bld.mainstreet-brick",

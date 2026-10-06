@@ -9,7 +9,7 @@ L1 enables the existing infected system against town colliders, with a living
 cap of 15. A healthy delivery driver turns into the named runner, with three additional
 runners chasing at the diner. The slice uses one corgi and collision-safe nearby
 civilian routines from E08; crowd rendering binds the real male/female models. Crossing the hardware entrance retires that chase and captures the
-`melee` checkpoint. The display offers a temporary bat/crowbar/machete choice;
+`melee` checkpoint. D-MAIN places the real Maple Hardware model and derives the display anchor from its bounds. The display offers a temporary bat/crowbar/machete choice;
 standing in its ring for three seconds, F/E, middle-click, or touch ACTION equips
 that weapon in LEFT and kick in RIGHT. Then four runners and a crawler activate.
 The choice is not a permanent progression unlock.
