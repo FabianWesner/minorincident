@@ -133,9 +133,9 @@ test('T-E03-upward-aim @E03 @E03-AC07 a held upward drag aims rather than switch
 
 
 test('@E03-AC03 @E02-AC03 M1-05 two-finger pinch zooms without movement or weapon actions', async ({page,context}) => {
-  const cdp=await context.newCDPSession(page),width=page.viewportSize()!.width;
+  const cdp=await context.newCDPSession(page),{ width, height }=page.viewportSize()!;
   const before=await page.evaluate(()=>window.__SS__!.getState().render.camera.radius);
-  const fingers=[{id:11,x:width*.35,y:400},{id:12,x:width*.65,y:400}];
+  const fingers=[{id:11,x:width*.35,y:height*.5},{id:12,x:width*.65,y:height*.5}];
   await touch(cdp,'touchStart',fingers);
   await touch(cdp,'touchMove',[{...fingers[0],x:width*.2},{...fingers[1],x:width*.8}]);
   const frame=await tick(page,60);

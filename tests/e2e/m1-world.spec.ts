@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 import { menuStart, menuUrl } from './ui-helpers';
+// L1 v2 replaced the diner/hardware story these checks assume; the L1 v2 playthrough is tests/e2e/levels/L1.spec.ts.
+test.beforeEach(() => { test.fixme(true, 'old L1 diner flow retired (L1 v2)'); });
 
 for (const mode of ['desktop', 'iphone-portrait'] as const) test.describe(mode, () => {
   test.use({ viewport: mode === 'desktop' ? { width: 1600, height: 900 } : { width: 390, height: 844 }, hasTouch: mode !== 'desktop', isMobile: mode !== 'desktop' });
@@ -42,7 +44,7 @@ for (const mode of ['desktop', 'iphone-portrait'] as const) test.describe(mode, 
     if (mode === 'desktop') {
       // A single genuine ground click must route around the visible hedge.
       const point = await page.evaluate(() => window.__SS__!.input.project({ x: -15, z: -6.3 }));
-      await page.mouse.click(point.x, point.y); await step(240);
+      await page.mouse.click(point.x, point.y); await step(360);
       const p = await page.evaluate(() => window.__SS__!.getState().player!.transform); expect(Math.hypot(p.x + 15, p.z + 6.3)).toBeLessThan(.2);
     } else {
       // Direct joystick input collides instead of passing through the hedge.

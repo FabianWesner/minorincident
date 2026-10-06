@@ -26,6 +26,7 @@ export class Pointer {
     this.change(`Mouse${event.button}`, false);
   };
   private readonly cancel = (event: PointerEvent): void => { if (event.pointerType === 'mouse') this.release(); };
+  isHeld(button: number): boolean { return this.pressed.has(button); }
   release(): void { for (const button of this.pressed) this.change(`Mouse${button}`, false); this.pressed.clear(); this.valid = false; }
   dispose(): void {
     this.release(); this.element.removeEventListener('pointermove', this.move); this.element.removeEventListener('pointerdown', this.move); this.element.removeEventListener('mousedown', this.down);

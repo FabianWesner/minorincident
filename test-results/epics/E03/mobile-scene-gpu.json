@@ -1,0 +1,58 @@
+{
+  "project": "chromium",
+  "viewport": "390x844 iPhone emulation",
+  "headless": true,
+  "backend": "ANGLE Metal",
+  "triangleBudget": 500000,
+  "views": [
+    {
+      "name": "01-porch",
+      "triangles": 325641,
+      "drawCalls": 234,
+      "medianFps": 312.49999999992895,
+      "heapBytes": 144663100
+    },
+    {
+      "name": "02-crescent",
+      "triangles": 394621,
+      "drawCalls": 242,
+      "medianFps": 285.7142857142857,
+      "heapBytes": 145435328
+    },
+    {
+      "name": "03-connection",
+      "triangles": 408015,
+      "drawCalls": 215,
+      "medianFps": 294.1176470586976,
+      "heapBytes": 145782144
+    },
+    {
+      "name": "04-diner",
+      "triangles": 337995,
+      "drawCalls": 223,
+      "medianFps": 263.15789473714443,
+      "heapBytes": 146343792
+    },
+    {
+      "name": "05-main",
+      "triangles": 360127,
+      "drawCalls": 250,
+      "medianFps": 238.0952380954031,
+      "heapBytes": 146941736
+    },
+    {
+      "name": "06-hardware",
+      "triangles": 265696,
+      "drawCalls": 189,
+      "medianFps": 294.1176470586976,
+      "heapBytes": 147203552
+    },
+    {
+      "name": "07-shop",
+      "triangles": 335529,
+      "drawCalls": 177,
+      "medianFps": 303.0303030307039,
+      "heapBytes": 147636708
+    }
+  ]
+}

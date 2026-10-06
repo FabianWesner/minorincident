@@ -8,7 +8,7 @@ import { node, text } from './dom';
 export const onboardingKey = 'minor-incident.onboarding.v1';
 const lessons = ['move', 'evade', 'interact', 'pickup', 'attack', 'selector', 'second-side', 'vehicle'] as const;
 type Lesson = typeof lessons[number];
-const descriptions: Record<Lesson, string> = { move: 'Move toward your objective', evade: 'Keep moving to evade infected', interact: 'Stand in the ring to interact', pickup: 'Walk over the weapon to pick it up', attack: 'Use your left action', selector: 'Cycle the selected rack', 'second-side': 'Use your other side', vehicle: 'Stand by the door to enter' };
+const descriptions: Record<Lesson, string> = { move: 'Move toward your objective', evade: 'Keep moving to evade infected', interact: 'Stand in the ring to interact', pickup: 'Walk over the weapon to pick it up', attack: 'Attack with your active weapon', selector: 'Cycle the selected rack', 'second-side': 'Try another carried action', vehicle: 'Stand by the door to enter' };
 export class Onboarding {
   readonly element = node('div', 'onboarding-prompt');
   private readonly seen = new Set<Lesson>();
@@ -34,7 +34,7 @@ export class Onboarding {
     if (event.type === 'interact.completed') this.completed.add('interact');
     if (event.type === 'pickup.collected') this.completed.add('pickup');
     if (event.type === 'combat.attack' && event.sourceId === 1) { this.completed.add('attack'); if (event.side === 'RIGHT') this.completed.add('second-side'); }
-    if (event.type === 'loadout.switched') this.completed.add('selector');
+    if (event.type === 'loadout.switched') { this.completed.add('selector'); this.completed.add('second-side'); }
     if (event.type === 'vehicle.entered') this.completed.add('vehicle');
   };
   observe(frame: InputFrame): void {
@@ -44,7 +44,7 @@ export class Onboarding {
   }
   private glyph(lesson: Lesson, scheme: Scheme): string {
     if (scheme === 'touch') return lesson === 'move' || lesson === 'evade' ? '◉ Stick' : ['attack', 'second-side'].includes(lesson) ? lesson === 'attack' ? '☝ LEFT' : '☝ RIGHT' : lesson === 'selector' ? 'Swipe up LEFT / RIGHT' : 'ACTION / Stand';
-    if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? scheme === 'mouse-only' ? 'Click to move' : 'WASD / Click to move' : lesson === 'attack' ? 'LMB on infected to attack' : lesson === 'second-side' ? 'RMB on infected to attack' : lesson === 'selector' ? 'Q / click slot' : 'Stand / F / MMB';
+    if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? scheme === 'mouse-only' ? 'Click to move' : 'WASD / Click to move' : lesson === 'attack' ? 'LMB attack · Shift+LMB in place' : lesson === 'second-side' ? 'RMB cycle · LMB attack' : lesson === 'selector' ? 'RMB / Q · switch weapons' : 'Stand / F / MMB';
     return lesson === 'move' || lesson === 'evade' ? this.bindings.keyLabel('moveUp') + this.bindings.keyLabel('moveLeft') + this.bindings.keyLabel('moveDown') + this.bindings.keyLabel('moveRight') : this.bindings.keyLabel(lesson === 'attack' ? 'left' : lesson === 'second-side' ? 'right' : lesson === 'selector' ? 'selector' : 'interact');
   }
   update(scheme: Scheme, playing: boolean): void {

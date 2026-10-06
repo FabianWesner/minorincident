@@ -117,7 +117,7 @@ export interface DuelReport { seed: number; count: number; weapon: 'unarmed' | '
 export async function runDuel(opts: { seed: number; count: number; weapon: 'unarmed' | 'bat'; skill: 'newbie' | 'standing'; maxSeconds?: number }): Promise<DuelReport> {
   const { world } = await loadL1(opts.seed);
   const rng = new Rng(opts.seed, 'duel'), ai = world.infected!, player = world.entities.get(1)!;
-  world.combat!.setLoadout([opts.weapon === 'bat' ? 'weapon.bat' : 'weapon.fists'], ['weapon.kick']);
+  world.combat!.setLoadout([opts.weapon === 'bat' ? 'weapon.bat' : 'weapon.fists'], ['weapon.fists']);
   const ids: number[] = [];
   for (let i = 0; i < opts.count; i++) {
     const angle = (i / opts.count) * Math.PI * 2 + rng.next() * .5;

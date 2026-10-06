@@ -15,7 +15,7 @@ for (const scene of ['hud', 'live'] as const) for (const viewport of sizes) {
       // Use the deployed entry point, without test mode or injected level/input state.
       await page.goto('/');
       for (const id of ['start-game', 'character-female', 'level-L1', 'mission-button']) await page.getByTestId(id).tap();
-      await expect(page.getByTestId('objective-tracker')).toContainText("Go to Joe’s Diner for breakfast");
+      await expect(page.getByTestId('objective-tracker')).toContainText('Pick up the package at the courier depot');
       await expect(page.getByTestId('corgi-badge')).toBeVisible();
     }
     await expect(page.getByTestId('hud')).toBeVisible();
