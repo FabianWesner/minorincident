@@ -597,9 +597,9 @@ for name in ['head','armL','armR','foreArmL','foreArmR','legL','legR']:
 # Keep joint empties, the continuous scalp/hat and readable eye colours.
 if args.lod2:
     for detail in list(asset.objects):
-        if detail.type != 'MESH': continue
+        if detail.type != 'MESH' or detail.name.startswith('stump_'): continue
         dims=detail.dimensions
-        if dims.x*dims.y*dims.z < .00003 and not any(word in detail.name.lower() for word in ('scalp','cap_crown','cap_white_panel','eye','iris','pupil')):
+        if dims.x*dims.y*dims.z < .00085 and not any(word in detail.name.lower() for word in ('scalp','cap_crown','cap_white_panel','cap_curved_brim','hair_mass','eye','iris','pupil')):
             bpy.data.objects.remove(detail, do_unlink=True)
 
 for name, parent in G.items():

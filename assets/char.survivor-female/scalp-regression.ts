@@ -15,9 +15,9 @@ for(const id of ['char.survivor-female','char.survivor-male','npc.civilian-man-a
  const skin=triangles.filter(t=>/skin/i.test(t.name));assert.ok(skin.length, `${id}${lod}: head skin geometry missing`);
  const points=skin.flatMap(t=>t.v);const maxY=Math.max(...points.map(v=>v.y));const crown=points.filter(v=>v.y>maxY-.025);const cx=crown.reduce((s,v)=>s+v.x,0)/crown.length,cz=crown.reduce((s,v)=>s+v.z,0)/crown.length;
  let exposed=0,total=0;const names=new Set<string>();
- for(const dx of [-.05,0,.05])for(const dz of [-.05,0,.05]) {const origin=new Vector3(cx+dx,maxY+1,cz+dz);const ray=new Ray(origin,new Vector3(0,-1,0));let dist=Infinity,name='';for(const t of triangles){const hit=ray.intersectTriangle(t.v[0],t.v[1],t.v[2],true,new Vector3());if(hit&&hit.distanceTo(origin)<dist){dist=hit.distanceTo(origin);name=t.name;}}if(name){total++;names.add(name);if(/skin/i.test(name))exposed++;}}
- assert.equal(total,9,`${id}${lod}: crown ray missed head`);
+ for(const rear of [false,true])for(const dx of [-.05,0,.05])for(const dz of [-.05,0,.05]) {const target=new Vector3(cx+dx,maxY-.025,cz+dz);const offset=new Vector3(rear?-.7:0,1,0);const origin=target.clone().add(offset);const ray=new Ray(origin,offset.clone().negate().normalize());let dist=Infinity,name='';for(const t of triangles){const hit=ray.intersectTriangle(t.v[0],t.v[1],t.v[2],true,new Vector3());if(hit&&hit.distanceTo(origin)<dist){dist=hit.distanceTo(origin);name=t.name;}}if(name){total++;names.add(name);if(/skin/i.test(name))exposed++;}}
+ assert.equal(total,18,`${id}${lod}: crown ray missed head`);
  assert.equal(exposed,0,`${id}${lod}: exposed crown (${Array.from(names)})`);
- console.log(`${id}${lod}: crown covered`);
+ console.log(`${id}${lod}: crown and rear covered`);
  }
 }

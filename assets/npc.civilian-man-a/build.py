@@ -333,13 +333,14 @@ tube('lower lip',[(.126,-.012,1.119),(.130,0,1.118),(.125,.014,1.120)],.002,'ski
 
 # Open-faced scalp cap with thick layered crown, nape and swept fringe.
 vs=[]; fs=[]; segments=32; rows=9
+cap_clearance = .024 if '--lod2' in ARGS else 0
 for k in range(rows):
     t=k/(rows-1)
     for j in range(segments):
         a=2*math.pi*j/segments
         edge=.96+1.12*(1-math.cos(a))/2
         ph=.025+(edge-.025)*t
-        vs.append((-.024+.148*math.sin(ph)*math.cos(a),.162*math.sin(ph)*math.sin(a),1.199+.166*math.cos(ph)))
+        vs.append((-.024+(.148+cap_clearance)*math.sin(ph)*math.cos(a),(.162+cap_clearance)*math.sin(ph)*math.sin(a),1.199+(.166+cap_clearance)*math.cos(ph)))
 for k in range(rows-1):
     for j in range(segments): fs.append((k*segments+j,k*segments+(j+1)%segments,(k+1)*segments+(j+1)%segments,(k+1)*segments+j))
 fs.append(tuple(reversed(range(segments))))
@@ -438,7 +439,7 @@ for o in list(asset.objects):
 # Keep joint empties, the continuous scalp/hat and readable eye colours.
 if '--lod2' in ARGS:
     for detail in list(asset.objects):
-        if detail.type != 'MESH': continue
+        if detail.type != 'MESH' or detail.name.startswith('stump_'): continue
         dims=detail.dimensions
         if dims.x*dims.y*dims.z < .00003 and not any(word in detail.name.lower() for word in ('scalp','cap_crown','cap_white_panel','eye','iris','pupil')):
             bpy.data.objects.remove(detail, do_unlink=True)
