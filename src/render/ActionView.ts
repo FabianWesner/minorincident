@@ -6,6 +6,7 @@ import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
 import type { CharacterView } from './characters/CharacterView';
 import type { Side } from '../data/actions/schema';
+import type { PaletteMaterial } from './PaletteMaterial';
 
 interface LoadedActionAsset { model: Object3D; source: 'glb' | 'placeholder'; reason: string | null }
 const sides = ['LEFT', 'RIGHT'] as const;
@@ -17,6 +18,7 @@ export class ActionView extends Group {
   private readonly registry: AssetRegistry;
   private readonly placeholders: PlaceholderLog[] = [];
   private readonly assets = new Map<string, LoadedActionAsset>();
+  private readonly bloodMaterials: PaletteMaterial[] = [];
   private readonly held: Partial<Record<Side, { id: string; model: Object3D }>> = {};
   private readonly pickups = new Map<number, Object3D>();
   private readonly geometry = new BufferGeometry();
@@ -44,7 +46,12 @@ export class ActionView extends Group {
       const model = await this.registry.loadAsset(def.viewAssetId);
       model.traverse((node) => {
         if (!(node instanceof Mesh)) return;
-        const remap = (source: Material): Material => { const material = this.materials.fromColor(source.name, (source as import('three').MeshStandardMaterial).color); material.userData.sharedPalette = true; return material; };
+        const remap = (source: Material): Material => {
+          const material = this.materials.fromColor(`action:${def.viewAssetId}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
+          material.userData.sharedPalette = true;
+          if (!this.bloodMaterials.includes(material)) this.bloodMaterials.push(material);
+          return material;
+        };
         node.material = Array.isArray(node.material) ? node.material.map(remap) : remap(node.material); node.castShadow = node.receiveShadow = true;
       });
       const grip = model.getObjectByName('grip')!; model.updateMatrixWorld(true); grip.getWorldPosition(this.gripPosition); model.position.sub(this.gripPosition);
@@ -99,6 +106,7 @@ export class ActionView extends Group {
     }
     for (const [id, model] of this.pickups) if (!this.world.entities.get(id)) { model.removeFromParent(); this.pickups.delete(id); }
   }
+  setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; }
   getState() {
     this.character.updateMatrixWorld(true);
     const attachments = (['LEFT', 'RIGHT'] as const).map((side) => {
@@ -107,7 +115,7 @@ export class ActionView extends Group {
       const def = held && action(held.id), asset = def && this.assets.get(def.viewAssetId);
       return { side, actionId: held?.id, iconUrl: def ? actionIconUrl(def.iconId) : null, socket: nodes.socket.name, handDistance: this.socketPosition.distanceTo(this.handPosition), gripDistance: this.gripPosition.distanceTo(this.socketPosition), attached: held?.model.parent === nodes.socket, source: asset?.source, sockets: def ? ['grip', def.category === 'ranged' ? 'muzzle' : 'tip'].filter((name) => held?.model.getObjectByName(name)) : [] };
     });
-    return { indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, maxHeight: this.maxHeight, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
+    return { bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, maxHeight: this.maxHeight, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
   }
   dispose(): void { for (const held of Object.values(this.held)) held.model.removeFromParent(); void this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.pickups.clear(); this.clear(); }
 }

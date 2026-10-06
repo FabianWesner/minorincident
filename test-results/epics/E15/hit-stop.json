@@ -1,0 +1,110 @@
+{
+  "states": {
+    "tick": 60,
+    "sameTick": 60,
+    "start": {
+      "enabled": true,
+      "gore": "Full",
+      "quality": "high",
+      "flashReduction": false,
+      "time": 0,
+      "particles": 60,
+      "particleCap": 2048,
+      "decals": 2,
+      "decalCap": 600,
+      "gibs": 0,
+      "gibCap": 80,
+      "telegraphs": [],
+      "hitStop": {
+        "active": true,
+        "until": 0.05,
+        "started": 0,
+        "suppressed": 0
+      },
+      "flash": 0,
+      "coverage": 0.025,
+      "detached": 0,
+      "dismemberedKills": 0,
+      "kills": 1,
+      "explosionRadius": 0
+    },
+    "before": {
+      "enabled": true,
+      "gore": "Full",
+      "quality": "high",
+      "flashReduction": false,
+      "time": 0.039,
+      "particles": 60,
+      "particleCap": 2048,
+      "decals": 2,
+      "decalCap": 600,
+      "gibs": 0,
+      "gibCap": 80,
+      "telegraphs": [],
+      "hitStop": {
+        "active": true,
+        "until": 0.05,
+        "started": 0,
+        "suppressed": 0
+      },
+      "flash": 0,
+      "coverage": 0.025,
+      "detached": 0,
+      "dismemberedKills": 0,
+      "kills": 1,
+      "explosionRadius": 0
+    },
+    "after": {
+      "enabled": true,
+      "gore": "Full",
+      "quality": "high",
+      "flashReduction": false,
+      "time": 0.05,
+      "particles": 60,
+      "particleCap": 2048,
+      "decals": 2,
+      "decalCap": 600,
+      "gibs": 0,
+      "gibCap": 80,
+      "telegraphs": [],
+      "hitStop": {
+        "active": false,
+        "until": 0.05,
+        "started": 0,
+        "suppressed": 0
+      },
+      "flash": 0,
+      "coverage": 0.025,
+      "detached": 0,
+      "dismemberedKills": 0,
+      "kills": 1,
+      "explosionRadius": 0
+    }
+  },
+  "crowd": {
+    "enabled": true,
+    "gore": "Full",
+    "quality": "high",
+    "flashReduction": false,
+    "time": 0,
+    "particles": 576,
+    "particleCap": 2048,
+    "decals": 16,
+    "decalCap": 600,
+    "gibs": 0,
+    "gibCap": 80,
+    "telegraphs": [],
+    "hitStop": {
+      "active": false,
+      "until": 0,
+      "started": 0,
+      "suppressed": 1
+    },
+    "flash": 0,
+    "coverage": 0,
+    "detached": 40,
+    "dismemberedKills": 8,
+    "kills": 8,
+    "explosionRadius": 0
+  }
+}

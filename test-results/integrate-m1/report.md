@@ -1,6 +1,6 @@
 # M1 integration
 
-Merged lane order: E12, then E11, E09 and E15 (remaining lanes pending). Shared hubs retain additive systems, lifecycle hooks and event/API contracts.
+Merged lane order: E12, then E11, E09 and E15. Shared hubs retain additive systems, lifecycle hooks and event/API contracts.
 
 ## E12
 
@@ -21,3 +21,11 @@ Existing E11 world.blocker.changed and noiseTarget hooks now feed E07's actual A
 Combined vehicle input routing, fixed physics phases, driver bot, rendering/readiness and damage causes with mission, interaction and infected systems. Scenario loader and API/harness retain all delivered controls. Manifest union stays at 275; retained canonical build/source fields and equivalent measured dimensions. Conflicting pilot LOD rebuilt again from canonical source with the merged optimizer.
 
 E11 car-alarm noise now uses the common noise payload (plus its 10 s duration). Vehicle impacts on E11 light props use their authoritative damage/nav/debris lifecycle; native vehicle obstacles publish the shared blocker-change event. Attached E07 infected suspend their chase brain and pooled records clear attachment fields. E12 checkpoint/tier transitions rebind real vehicles, obstacle records and native handles, including pending explosion/recovery timer offsets. New regressions cover fence smashing/nav restoration, attachment anchoring and checkpoint vehicle/body ownership.
+
+## E15
+
+Combined render-clock hit stop, flash overlay, VFX settings/pools, spawn feedback and typed event probes with mission UI/markers, interactions, crowd batches, real vehicle models and lifecycle disposal. Both E07 windup payloads and E15 authored geometry payloads remain accepted; real AI windups are adapted and retired on completion/interruption, including the three-metre Bloated blast. Hazard explosions, ignitions/electricity, pickups and real vehicle ramming now drive the corresponding pooled feedback without simulation writes or RNG consumption.
+
+Crowd hit pulses and five-part gore use per-instance shader attributes and a shared instanced stump-cap mesh, preserving E07's batching. Real E09 vehicles keep wheel/lamp/smoke/fire behavior and take blood masks on their existing per-car palette materials; the E15 isolated vehicle probe remains available for fixture IDs. New Node/browser regressions exercise these integrations and verify render stepping/settings preserve simulation hashes. Environment entities remain excluded from combat placeholder rendering, removed/restored entities retain lifecycle cleanup, and unique feedback materials are disposed.
+
+Manifest union remains 275 IDs. E15's unrelated spec checklist-link edit is excluded as requested; only epic status is changed after verification.

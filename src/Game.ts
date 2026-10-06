@@ -43,6 +43,7 @@ export class Game {
       this.frameMs = seconds * 1000;
       if (!this.loading && this.renderedDistricts !== this.world.districts) this.refreshView();
       if (!this.loading) {
+        if (!this.clock.paused) this.view.frame(seconds);
         const start = performance.now();
         this.clock.advance(seconds, () => this.simTick());
         this.simMs = performance.now() - start;

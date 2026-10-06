@@ -2,9 +2,10 @@
   "merged": [
     "E12",
     "E11",
-    "E09"
+    "E09",
+    "E15"
   ],
-  "pending": "E15",
+  "pending": "final-main-and-regression",
   "manifest_union": 275,
   "asset_registrations": [
     "bld.helipad",
@@ -57,5 +58,18 @@
     "sim_before_final_attachment_guard": 238,
     "verify": 0,
     "extra_regressions": 3
+  },
+  "E15": {
+    "state": "passed",
+    "manifest_union": 275,
+    "unit": 83,
+    "typecheck": 0,
+    "lint": 0,
+    "extra_node_regressions": 4,
+    "extra_browser_regressions": 2,
+    "verify": 0,
+    "browser": 25,
+    "tagged_node": 14,
+    "integrated_browser_and_harness": 7
   }
 }

@@ -1,0 +1,16 @@
+
+> test:e2e
+> sh tools/e2e-lock.sh playwright test --project=chromium tests/e2e/integration-m1.spec.ts tests/e2e/harness.spec.ts --workers=2
+
+
+Running 7 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/harness.spec.ts:12:1 › T-E01-04b @E01 @E01-AC04 browser and Node match after 3600 scripted ticks (7.3s)
+  ✓  2 [chromium] › tests/e2e/harness.spec.ts:30:1 › T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, delivered methods and remaining epic stubs (10.0s)
+  ✓  3 [chromium] › tests/e2e/harness.spec.ts:75:1 › T-E01-06 @E01 @E01-AC06 pause + exact step and 10x sim time within 2% (10.8s)
+  ✓  5 [chromium] › tests/e2e/harness.spec.ts:114:1 › T-E01-10 @E01 @E01-AC10 guard detects errors and uncaught exceptions (979ms)
+  ✓  6 [chromium] › tests/e2e/integration-m1.spec.ts:4:1 › M1 E07/E15 @E07 @E15 real crowd explosion detaches instanced limbs and settings preserve the sim (9.9s)
+  ✓  4 [chromium] › tests/e2e/harness.spec.ts:94:1 › T-E01-07 @E01 @E01-AC07 load/unload x20 returns all resources to baseline (21.2s)
+  ✓  7 [chromium] › tests/e2e/integration-m1.spec.ts:21:1 › M1 E09/E15 @E09 @E15 real integrated vehicle takes feedback on its existing model and obeys Off (8.3s)
+
+  7 passed (38.3s)

@@ -3,10 +3,13 @@ import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, SphereGeometry, TorusG
 import { AssetRegistry } from '../assets/registry';
 import { atLeast } from '../assets/types';
 import { vehiclePlaceholder } from '../assets/vehiclePlaceholder';
+import { palette, type PaletteToken } from '../data/palette';
+import { PaletteMaterial } from './PaletteMaterial';
+import type { VehicleFeedbackEvent } from './vfx/VehicleFeedback';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
 import { lerp } from '../core/maths';
-interface Record { parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh }
+interface Record { parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: PaletteMaterial[]; blood: number }
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
 export class VehicleView extends Group {
   private readonly registry = new AssetRegistry(() => {});
@@ -17,6 +20,8 @@ export class VehicleView extends Group {
   private readonly puffGeometry = new SphereGeometry(.3, 8, 6);
   private readonly smokeMaterial = new MeshBasicNodeMaterial({ color: '#696073', transparent: true, opacity: .6 });
   private readonly fireMaterial = new MeshBasicNodeMaterial({ color: '#ff7d22' });
+  private bloodEnabled = true;
+  private readonly feedbackEvents = new Map<number, VehicleFeedbackEvent>();
   private disposed = false;
   private readonly pending = new Map<number, Promise<void>>();
   constructor(private readonly world: SimWorld, private readonly materials: Materials) { super(); this.fireMaterial.color.multiplyScalar(3); }
@@ -25,6 +30,12 @@ export class VehicleView extends Group {
     const car = this.world.vehicles!.cars.get(id)!, def = car.physics.def;
     const model = atLeast(this.registry.definition(def.asset).status, 'integrated') ? await this.registry.loadAsset(def.asset) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
     if (this.disposed) return;
+    const paint: PaletteMaterial[] = [], copies = new Map<import('three').Material, PaletteMaterial>();
+    model.traverse(node => { if (!(node instanceof Mesh)) return; const convert = (material: import('three').Material) => {
+      const token = material.name.replace(/^pal_/, '') as PaletteToken;
+      if (!(material instanceof PaletteMaterial) && (!material.name.startsWith('pal_') || !Object.hasOwn(palette, token))) return material;
+      let copy = copies.get(material); if (!copy) { copy = this.materials.unique(material instanceof PaletteMaterial ? material.token : token); copies.set(material, copy); paint.push(copy); } return copy;
+    }; node.material = Array.isArray(node.material) ? node.material.map(convert) : convert(node.material); });
     const parent = new Group(); parent.add(model); this.add(parent); model.position.y = -(def.suspension + def.wheelRadius + .15);
     const wheels = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR'].map(name => { const node = model.getObjectByName(name)!; node.rotation.order = 'YXZ'; return { node, y: node.position.y, steer: node.rotation.y, spin: node.rotation.z }; });
     const lamp = (name: string, color: string) => {
@@ -36,7 +47,8 @@ export class VehicleView extends Group {
     const smoke = new Group(); parent.add(smoke);
     for (let i = 0; i < 5; i++) { const mesh = new Mesh(this.puffGeometry, this.smokeMaterial); mesh.position.set(def.length * .3, 1 + i * .32, (i % 2 ? 1 : -1) * .12); mesh.scale.setScalar(1 + i * .25); smoke.add(mesh); }
     const fire = new Mesh(this.puffGeometry, this.fireMaterial); fire.position.set(def.length * .3, .9, 0); fire.scale.set(1.8, 2.8, 1.3); parent.add(fire);
-    this.records.set(id, { parent, model, wheels, brake, sirens, smoke, fire, door });
+    this.records.set(id, { parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0 });
+    const feedback = this.feedbackEvents.get(id); if (feedback) this.feedback(feedback, this.bloodEnabled);
   }
   update(alpha: number): void {
     for (const [id, car] of this.world.vehicles!.cars) {
@@ -63,12 +75,18 @@ export class VehicleView extends Group {
       mesh.visible = d.expires > this.world.tick; if (mesh.visible) { mesh.position.copy(d.body.translation()); mesh.quaternion.copy(d.body.rotation()); }
     }
   }
+  feedback(event: VehicleFeedbackEvent, enabled: boolean): void {
+    this.feedbackEvents.set(event.id, { ...event, position: { ...event.position } }); this.bloodEnabled = enabled;
+    const record = this.records.get(event.id); if (!record) return;
+    record.blood = event.blood; for (const material of record.paint) material.bloodCoverage.value = enabled ? event.blood : 0;
+  }
+  setBloodEnabled(enabled: boolean): void { this.bloodEnabled = enabled; for (const record of this.records.values()) for (const material of record.paint) material.bloodCoverage.value = enabled ? record.blood : 0; }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
-  snapshot() { return [...this.records].map(([id, r]) => ({ id, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder })); }
+  snapshot() { return [...this.records].map(([id, r]) => ({ id, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder })); }
   dispose(): void {
     this.disposed = true;
     const geometries = new Set<import('three').BufferGeometry>(), materials = new Set<MeshBasicNodeMaterial>();
-    for (const r of this.records.values()) { geometries.add(r.door.geometry); materials.add(r.brake); for (const s of r.sirens) materials.add(s); if (r.model.userData.placeholder) r.model.traverse(node => { if (node instanceof Mesh) { geometries.add(node.geometry); const m = node.material; if (!Array.isArray(m) && m instanceof MeshBasicNodeMaterial) materials.add(m); } }); }
+    for (const r of this.records.values()) { for (const material of r.paint) material.dispose(); geometries.add(r.door.geometry); materials.add(r.brake); for (const s of r.sirens) materials.add(s); if (r.model.userData.placeholder) r.model.traverse(node => { if (node instanceof Mesh) { geometries.add(node.geometry); const m = node.material; if (!Array.isArray(m) && m instanceof MeshBasicNodeMaterial) materials.add(m); } }); }
     for (const g of geometries) g.dispose(); for (const m of materials) m.dispose();
     this.registry.dispose(); this.propGeometry.dispose(); this.puffGeometry.dispose(); this.smokeMaterial.dispose(); this.fireMaterial.dispose(); this.records.clear(); this.props.clear(); this.debris.length = 0; this.clear();
   }
