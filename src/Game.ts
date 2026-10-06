@@ -217,7 +217,8 @@ export class Game {
   simulateFrameCost(ms: number): void { if (!Number.isFinite(ms) || ms < 0) throw new RangeError('Invalid frame cost'); this.simulatedFrameMs = ms; }
   setQuality(setting: QualitySetting): void { this.quality.set(setting); }
   private applyQuality(): void {
-    this.view.setQuality(this.quality.tier); this.audio.graph.setTier(this.quality.tier); this.world.npcs?.setQuality(this.quality.tier);
+    this.view.setQuality(this.quality.tier); this.audio.graph.setTier(this.quality.tier);
+    if (this.world.districts) this.world.npcs?.setQuality(this.quality.tier);
     if (this.world.infected) this.world.infected.director.setTier(this.quality.tier);
   }
   private readonly visibility = (): void => { if (document.hidden) { this.clock.pause(); this.input.clear(); this.world.clearInput(); this.ticker.reset(); } };
