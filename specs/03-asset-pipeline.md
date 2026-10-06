@@ -167,15 +167,17 @@ Static world geometry is authored like assets: `layouts/<district>/layout.py` is
 | weapon | `grip, muzzle` (ranged), or `grip, tip` (melee), or `grip` (throwable) |
 | building | `root`, optional `door_*`, `window_*` (emissive), `roof` (hidden when the player is inside), `interior` |
 
-**Detail tiers (decision 2026-10-05, from the three-round Blender shootout in `experiment/`):**
+**Detail and camera (decision 2026-10-06, product owner).** The game camera is close, like `initial-drafts/sunset-grove-combat-gameplay-mockup.png` (survivor ≈ 1/5 of the viewport height, E02-AC02), so the detailed Blender builds are the right LOD0 and are **not** re-made. Because the close camera shows only a small part of the town at once, performance comes from the LOD chain, culling and streaming, not from cheaper hero meshes.
 
 | Tier | Used for | LOD0 budget | Look |
 | --- | --- | --- | --- |
-| **Hero** | everything the player sees up close and often: survivors, corgi, NPCs, infected, vehicles, buildings | survivor/NPC ≤ 60k, infected ≤ 40k, vehicle ≤ 80k, building ≤ 100k triangles; animals (appear in groups): crow ≤ 3k, cats/small dogs ≤ 8k, flamingo ≤ 10k, large dogs ≤ 12k, gorilla/lion ≤ 25k; mostly flat structures (helipad, pads, decks) ≤ 20k; barricade materials used in quantity (pallets, planks, sandbags) ≤ 3k; pickups ≤ 2.5k | rich, finished, soft-bevelled forms, many purposeful parts ("round 1") |
-| **Side** | props and street furniture (vending machine, bench, hydrant, weapons, pickups) | 6–12k (weapons ≤ 6k) | chunky but detailed: insets, frames, multi-part wheels, glowing strips ("round 3") |
-| **Distant** | objects the player never approaches in regular play (skyline, far terrain dressing) | 1–4k | chunky low-poly, flat palette ("round 2") |
+| **Hero** | survivors, corgi, NPCs, infected, vehicles, buildings | survivor/NPC ≤ 60k, infected ≤ 40k, vehicle ≤ 80k, building ≤ 100k triangles; animals: crow ≤ 3k, cats/small dogs ≤ 8k, flamingo ≤ 10k, large dogs ≤ 12k, gorilla/lion ≤ 25k; flat structures ≤ 20k; barricade materials ≤ 3k; pickups ≤ 2.5k | rich, finished, soft-bevelled ("round 1") |
+| **Side** | props, street furniture, weapons, pickups | 6–12k (weapons ≤ 6k) | chunky but detailed ("round 3") |
+| **Distant** | never approached (skyline, far dressing) | 1–4k | chunky low-poly ("round 2") |
 
-Hero assets ship an **LOD chain**: LOD0 (hero), LOD1 ≈ side-tier density (≈ 10–15% of LOD0), LOD2 ≈ distant-tier density; the runtime picks by screen size, and crowds (infected hordes) render LOD1/LOD2 or the crowd bake beyond ~12 m. Draw calls per asset after joining: hero ≤ 40, side ≤ 30, distant ≤ 12 (animated nodes excluded). Measured reference (25 copies, game camera, M1 Max): hero ≈ 8–15 ms, side ≈ 1.5–2.5 ms, distant ≈ 1.5 ms per frame on WebGPU — so LODs are mandatory for anything that appears more than a handful of times.
+**Every** hero and side asset ships an LOD chain: LOD1 ≈ 10–15% of LOD0, LOD2 ≈ 3% (or the crowd bake for infected). Runtime rules: LOD0 only within ~12 m of the camera target (what fills the close view), LOD1 to ~30 m, LOD2 beyond; crowds of infected use LOD1/LOD2 or the crowd bake except the nearest ~8; frustum culling; districts stream in and out. Draw calls per asset after joining: hero ≤ 40, side ≤ 30, distant ≤ 12 (animated nodes excluded).
+
+**Delivery budgets (load time).** Shipped GLBs are meshopt-compressed and quantized, textures KTX2/WebP ≤ 1024 px (≤ 512 px for side assets). Per file: hero ≤ 1.5 MB (LOD0), side ≤ 300 KB, LOD1 ≤ 25% of its LOD0. A level's initial download (start district) ≤ 25 MB, the rest streams; time to first playable frame on the desktop reference ≤ 5 s on a 50 Mbit/s connection. Measured reference (25 copies, M1 Max, WebGPU): hero ≈ 8–15 ms, side ≈ 1.5–2.5 ms, distant ≈ 1.5 ms per frame — hence LODs are mandatory for anything that appears more than a handful of times.
 
 ## 8. Placeholders
 
