@@ -1,0 +1,197 @@
+{
+  "epic": "E13",
+  "runtimeCommit": "9efce0a2a372296c4703ed725f5a426817b3b288",
+  "acceptance": {
+    "E13-AC01": [
+      {
+        "title": "campaign T-E13-01 @E13 @E13-AC01 1000 seeds give three distinct prerequisite-valid reproducible offers",
+        "file": "tests/unit/progression/campaign.test.ts"
+      },
+      {
+        "title": "campaign @E13 @E13-AC01 used weapon weights bias offers without changing the save-seeded choice",
+        "file": "tests/unit/progression/campaign.test.ts"
+      }
+    ],
+    "E13-AC02": [
+      {
+        "title": "T-E13-02 @E13 @E13-AC02 melee damage is exactly +20% and every firearm magazine grows by two, including reload",
+        "file": "tests/sim/progression.test.ts"
+      },
+      {
+        "title": "@E13 @E13-AC02 nail-bat bleeding uses its action hook and Hazmat poison immunity does not block it",
+        "file": "tests/sim/progression.test.ts"
+      }
+    ],
+    "E13-AC03": [
+      {
+        "title": "campaign T-E13-03 @E13 @E13-AC03 all 243 seeded choice paths increase power L1 to L6",
+        "file": "tests/unit/progression/campaign.test.ts"
+      }
+    ],
+    "E13-AC04": [
+      {
+        "title": "T-E13-04-sim @E13 @E13-AC04 pickups replace full campaign racks instead of exceeding level capacity",
+        "file": "tests/sim/progression.test.ts"
+      },
+      {
+        "title": "campaign T-E13-04 @E13 @E13-AC04 rack sizes and overfill/unknown/duplicate rejections",
+        "file": "tests/unit/progression/campaign.test.ts"
+      },
+      {
+        "title": "T-E13-09-mouse @E13 @E13-AC09 @E13-AC04 result unlock cards rack briefing level via mouse only",
+        "file": "e2e/save.spec.ts"
+      },
+      {
+        "title": "T-E13-09-keyboard @E13 @E13-AC09 @E13-AC04 result unlock cards rack briefing level via keyboard only",
+        "file": "e2e/save.spec.ts"
+      },
+      {
+        "title": "T-E13-09-touch @E13 @E13-AC09 @E13-AC04 result unlock cards rack briefing level via touch only",
+        "file": "e2e/save.spec.ts"
+      }
+    ],
+    "E13-AC05": [
+      {
+        "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+        "file": "e2e/save.spec.ts"
+      }
+    ],
+    "E13-AC06": [
+      {
+        "title": "campaign T-E13-06 @E13 @E13-AC06 corrupt/unknown saves fail safely and v0 migrates exactly",
+        "file": "tests/unit/progression/campaign.test.ts"
+      },
+      {
+        "title": "T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing",
+        "file": "e2e/save.spec.ts"
+      }
+    ],
+    "E13-AC07": [
+      {
+        "title": "T-E13-07-sim @E13 @E13-AC07 L5 default equips its expected upgraded loadout in sim",
+        "file": "tests/sim/progression.test.ts"
+      },
+      {
+        "title": "campaign T-E13-07-unit @E13 @E13-AC07 L2 through L6 presets are valid reproducible complete saves",
+        "file": "tests/unit/progression/campaign.test.ts"
+      },
+      {
+        "title": "T-E13-07-browser @E13 @E13-AC07 loadLevel L5 with named preset starts its expected valid loadout",
+        "file": "e2e/save.spec.ts"
+      }
+    ],
+    "E13-AC08": [
+      {
+        "title": "T-E13-08-sim @E13 @E13-AC08 default progression applies all five gear tiers",
+        "file": "tests/sim/progression.test.ts"
+      },
+      {
+        "title": "campaign T-E13-08-unit @E13 @E13-AC08 default path ends L1 through L5 in gear tiers zero through four",
+        "file": "tests/unit/progression/campaign.test.ts"
+      },
+      {
+        "title": "T-E13-08-visual @E13 @E13-AC08 @visual default campaign gear is visible on the avatar across five tiers",
+        "file": "visual/progression.spec.ts"
+      }
+    ],
+    "E13-AC09": [
+      {
+        "title": "T-E13-09-mouse @E13 @E13-AC09 @E13-AC04 result unlock cards rack briefing level via mouse only",
+        "file": "e2e/save.spec.ts"
+      },
+      {
+        "title": "T-E13-09-keyboard @E13 @E13-AC09 @E13-AC04 result unlock cards rack briefing level via keyboard only",
+        "file": "e2e/save.spec.ts"
+      },
+      {
+        "title": "T-E13-09-touch @E13 @E13-AC09 @E13-AC04 result unlock cards rack briefing level via touch only",
+        "file": "e2e/save.spec.ts"
+      }
+    ]
+  },
+  "checks": {
+    "typecheck": 0,
+    "lint": 0,
+    "build": 0,
+    "test:unit": 0,
+    "test:smoke": 0,
+    "verify -- E13": 0
+  },
+  "counts": {
+    "unit": 106,
+    "verifyHeadless": 19,
+    "verifyBrowser": {
+      "startTime": "2026-10-06T04:11:12.087Z",
+      "duration": 248220.17799999999,
+      "expected": 29,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "smokeHeadless": 3,
+    "smokeBrowser": {
+      "startTime": "2026-10-06T04:15:20.850Z",
+      "duration": 68348.975,
+      "expected": 20,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "performance": {
+    "sim": {
+      "ticks": 600,
+      "simMsP50": 0.03333300000008421,
+      "simMsP95": 0.1479589999999007,
+      "powerScores": [
+        210,
+        350,
+        440,
+        610,
+        665
+      ],
+      "counters": {
+        "entities": 1,
+        "bodies": 2,
+        "colliders": 6,
+        "listeners": 10
+      }
+    },
+    "gear": {
+      "metrics": [
+        {
+          "tier": 1,
+          "differingPixels": 1128
+        },
+        {
+          "tier": 2,
+          "differingPixels": 5388
+        },
+        {
+          "tier": 3,
+          "differingPixels": 8277
+        },
+        {
+          "tier": 4,
+          "differingPixels": 10519
+        }
+      ],
+      "characterPixels": 39230,
+      "gearDifferenceRatio": 0.25692072393576343,
+      "perf": {
+        "fps": 59.88023952095548,
+        "frameMs": 16.700000000000728,
+        "simMs": 0,
+        "drawCalls": 61,
+        "triangles": 8847,
+        "geometries": 66,
+        "textures": 5,
+        "entities": 1,
+        "backend": "webgl",
+        "loadTiming": null
+      }
+    }
+  },
+  "visualReview": "PASS",
+  "warnings": []
+}

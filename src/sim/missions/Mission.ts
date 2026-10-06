@@ -37,7 +37,7 @@ export class Mission {
     world.mission = this.state; this.rebuildGates();
     for (const step of def.steps) {this.registerZones(step.complete); for(const fail of step.fail)this.registerZones(fail.trigger);}
     this.stops.push(world.events.on('sim.tick', () => this.update(), SimPhase.missions));
-    for (const type of ['combat.kill', 'player.damaged', 'player.died', 'player.respawned', 'mission.signal'] as const) this.stops.push(world.events.on(type, event => this.event(event), SimPhase.missions));
+    for (const type of ['combat.kill', 'player.damaged', 'player.died', 'player.respawned', 'mission.signal', 'mission.failed'] as const) this.stops.push(world.events.on(type, event => this.event(event), SimPhase.missions));
     this.emit({ type: 'mission.briefing', id: def.id, text: def.briefing });
   }
   private emit(event: Unticked<import('./events').MissionEvent>): void {
@@ -65,7 +65,7 @@ export class Mission {
       case 'interact': return !!step && this.inside(t.anchor) && (this.world.inputFrame.interact || step.interaction >= Math.ceil(t.seconds * 60));
       case 'kills': return t.actors.filter(id => this.deadBosses.has(id) || step?.kills.includes(this.state.actors[id])).length >= (t.count ?? t.actors.length);
       case 'timer': return !!step && this.world.tick - step.started >= Math.ceil(t.seconds * 60);
-      case 'dead': return this.entity(t.actor)?.health.current === 0;
+      case 'dead': { const e = this.entity(t.actor); return e?.escort ? e.escort.state === 'dead' : e?.health.current === 0; }
       case 'escort': return !!this.entity(t.actor) && this.entity(t.actor)!.health.current > 0 && this.inside(t.anchor, this.entity(t.actor) ?? null);
       case 'drive': return this.state.states[`driving:${t.actor}`] === true && this.inside(t.anchor, this.entity(t.actor) ?? null);
       case 'items': return t.ids.every(id => this.state.items.includes(id));
@@ -140,6 +140,7 @@ export class Mission {
   private event(event: GameEvent): void {
     if (event.type === 'player.respawned') { if (this.state.phase === 'playing') this.restore(this.state.checkpoint ?? 'start'); return; }
     if (this.state.phase !== 'playing') return;
+    if (event.type === 'mission.failed') { this.state.failure = event.reason; this.state.phase = 'retry'; return; }
     if (event.type === 'player.damaged') this.state.stats.damage += event.amount;
     if (event.type === 'player.died') this.state.stats.deaths++;
     if (event.type === 'combat.kill') {
@@ -155,6 +156,8 @@ export class Mission {
       if (actor) for (const [id, entity] of Object.entries(this.state.actors)) if (entity === actor) step.events[`${type}:${id}`] = (step.events[`${type}:${id}`] ?? 0) + 1;
     }
   }
+  /** Adult rescues count in the result and can drive an optional event objective. */
+  civilianSaved(id: number): void { if (!this.rescued.has(id)) { this.rescued.add(id); this.state.stats.rescued++; this.signal('civilian.saved'); } }
   private rescue(id: number): void {
     if (this.rescued.has(id)) return; this.rescued.add(id); this.state.stats.rescued++;
     this.emit({ type: 'escort.rescued', id });
@@ -169,7 +172,9 @@ export class Mission {
     for (const id of actors) {
       if (this.state.actors[id] || this.deadBosses.has(id)) continue;
       const def = this.def.actors[id], anchor = this.def.anchors[def.anchor];
-      const entity = this.world.entities.create({ kind: def.kind, archetype: def.archetype, faction: def.faction, transform: { x: anchor.x, z: anchor.z, y: 0.7, yaw: 0 }, health: { current: def.hp, max: def.hp }, combat: { radius: 0.4, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
+      const convoy = def.archetype === 'defend.convoy' && this.world.npcs ? this.world.npcs.traffic.convoy(['res', 'fuel', 'checkpoint', 'bridge'].map(key => this.def.anchors[key])) : null;
+      const entity = convoy ? this.world.entities.get(convoy[0])! : this.world.entities.create({ kind: def.kind, archetype: def.archetype, faction: def.faction, transform: { x: anchor.x, z: anchor.z, y: 0.7, yaw: 0 }, health: { current: def.hp, max: def.hp }, combat: { radius: 0.4, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
+      if (entity.kind === 'escort') this.world.npcs?.escorts.attach(entity);
       this.state.actors[id] = entity.id; this.world.spatial.set(entity.id, anchor.x, anchor.z);
     }
     this.emit({ type: 'mission.spawned', id: group });
@@ -249,6 +254,7 @@ export class Mission {
     }
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(entityId)) step.kills.push(entityId);
     if (this.state.tier !== null) this.world.setTier(this.state.tier as 0|1|2|3|4|5);
+    this.world.npcs?.restore(delta);
     this.world.vehicles?.rebuild();
     this.world.hazards?.debris.reset(); this.world.interactables?.rebuildBlockers();
     for(const [gate,handle]of this.gateHandles)this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[gate]);

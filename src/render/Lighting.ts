@@ -39,7 +39,8 @@ export class Lighting {
     // Portrait framing pulls the camera back to retain the playable circle.
     // Fog must follow that offset so it still starts beyond the nearby action.
     const p = timeOfDay[this.preset];
-    const fogOffset = Math.max(0, view.camera.position.distanceTo(view.focus) - 35);
+    // Use the follow framing radius: authored cinematic positions must retain distance fog.
+    const fogOffset = Math.max(0, view.radius * (view.driving ? 1.15 : 1) - 35);
     this.fogNear.value = p.fogNear + fogOffset; this.fogFar.value = p.fogFar + fogOffset;
     if (this.scene.fog instanceof Fog) { this.scene.fog.near = this.fogNear.value; this.scene.fog.far = this.fogFar.value; }
     // Bound the view's ground-plane corners, then enclose that area in the light's orthographic frustum.

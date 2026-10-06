@@ -1,0 +1,44 @@
+{
+  "commands": {
+    "typecheck": 0,
+    "lint": 0,
+    "build": 0,
+    "test:unit": 0,
+    "test:smoke": 0,
+    "verify -- E08": 0
+  },
+  "unitPassed": 98,
+  "epicAndSmokeVitestPassed": 30,
+  "verifyBrowserPassed": 24,
+  "smokeVitestPassed": 3,
+  "smokeBrowserPassed": 19,
+  "campaignSignOff": "deferred to E19\u2013E24 per orchestrator decision",
+  "deferredCriteria": [
+    "E08-AC11",
+    "E08-AC15",
+    "E08-AC17"
+  ],
+  "epicSignOff": "done",
+  "finishTraceabilityPassed": 2,
+  "deferredAcceptanceItems": {
+    "E08-AC11": [
+      "E19-AC14",
+      "E20-AC13",
+      "E21-AC10",
+      "E22-AC12",
+      "E23-AC12",
+      "E24-AC12"
+    ],
+    "E08-AC15": [
+      "E20-AC14"
+    ],
+    "E08-AC17": [
+      "E19-AC15",
+      "E20-AC15",
+      "E21-AC11",
+      "E22-AC13",
+      "E23-AC13",
+      "E24-AC13"
+    ]
+  }
+}
