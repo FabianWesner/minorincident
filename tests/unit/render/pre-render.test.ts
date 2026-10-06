@@ -21,7 +21,7 @@ test('@E19 pre-render warms repeated vertex layouts once while retaining distinc
   const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
   const meshes = Array.from({ length: 3 }, () => new InstancedMesh(geometry, material, 2));
   meshes[0].visible = false; meshes[2].receiveShadow = true; scene.add(...meshes);
-  const renderer = { selectedBackend: 'webgl', getSize: (target: Vector2) => target.set(100, 100), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), compileAsync: vi.fn(async () => { expect(meshes.map(m => m.visible)).toEqual([true, false, true]); }) } as unknown as Renderer;
+  const renderer = { selectedBackend: 'webgl', getSize: (target: Vector2) => target.set(100, 100), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), compileAsync: vi.fn(async () => { expect(meshes.map(m => m.visible)).toEqual([true, true, true]); }) } as unknown as Renderer;
   await preRender(renderer, scene, new PerspectiveCamera(), () => { expect(meshes.map(m => m.visible)).toEqual([true, false, true]); });
   expect(meshes.map(m => m.visible)).toEqual([false, true, true]); expect(meshes.map(m => m.count)).toEqual([2, 2, 2]);
   meshes.forEach(mesh => mesh.dispose()); geometry.dispose(); material.dispose();

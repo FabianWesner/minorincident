@@ -9,7 +9,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
   scene.updateMatrixWorld(true);
   const focus = camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(camera.position);
   const size = renderer.getSize(new Vector2());
-  const variants = new Set<string>();
+  const variants = new Set<string>(), repeated: Object3D[] = [];
   try {
     scene.traverse(object => {
       if (object.userData.preventPreRender) return;
@@ -18,14 +18,14 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
       object.visible = true;
       if (object instanceof Mesh && object.children.length === 0) {
         // Repeated district props share material graphs and vertex layouts. Warming
-        // every copy needlessly builds thousands of identical render objects.
+        // every copy needlessly repeats their driver warm-up draws.
         const materials = Array.isArray(object.material) ? object.material : [object.material];
         const attributes = Object.entries(object.geometry.attributes as Record<string, BufferAttribute | InterleavedBufferAttribute>).map(([name, a]) => {
           const data = a instanceof InterleavedBufferAttribute ? a.data : a;
           return `${name}:${data.array.constructor.name}:${a.itemSize}:${a.normalized}:${'stride' in data ? data.stride : a.itemSize}:${'offset' in a ? a.offset : 0}`;
         }).sort().join(',');
         const key = `${materials.map(m => m.uuid).join(',')}:${object instanceof InstancedMesh}:${object.castShadow}:${object.receiveShadow}:${attributes}`;
-        if (variants.has(key)) object.visible = false; else variants.add(key);
+        if (variants.has(key)) repeated.push(object); else variants.add(key);
       }
       if (object instanceof Mesh || object instanceof Sprite) object.frustumCulled = false;
       if (object instanceof InstancedMesh) {
@@ -41,6 +41,9 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     const start = performance.now();
     if (renderer.selectedBackend === 'webgl') await compile();
     performance.measure('L1 shader compilation', { start, end: performance.now() });
+    // Program/binding setup is cached per render object, even when driver pipelines
+    // share a material and vertex layout. Compile every object; deduplicate only draws.
+    for (const object of repeated) object.visible = false;
     const draw = performance.now(); render();
     await renderer.finishWarmUp();
     // Three switches from drawArrays/Elements to their instanced variants only above

@@ -9,12 +9,19 @@ const phase = process.env.HITCH_PHASE ?? 'after';
 test.describe.configure({ mode: 'serial' });
 test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
 interface Frame { ms: number; tick: number; objectives: string[]; phase: string }
+interface GlCall { call: string; ms: number; tick: number; stack: string }
 interface Recording { frames: Frame[]; stopped: boolean; previous: number }
-declare global { interface Window { hitchRecording?: Recording } }
+declare global { interface Window { hitchRecording?: Recording; hitchGlCalls?: GlCall[] } }
 for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
   test.use(mode === 'mobile' ? { userAgent: devices['Pixel 7'].userAgent, isMobile: true, hasTouch: true, viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } : {});
   test(`@E19 @perf M1-22 L1 transition frame budget ${mode}`, async ({ page, context }) => {
     test.setTimeout(240_000); mkdirSync(output, { recursive: true });
+    await page.addInitScript(() => {
+      window.hitchGlCalls = [];
+      const prototype = WebGL2RenderingContext.prototype, get = prototype.getProgramParameter, link = prototype.linkProgram;
+      prototype.getProgramParameter = function(program, parameter) { const start = performance.now(), result = get.call(this, program, parameter), ms = performance.now() - start; if (ms > 5 && window.hitchRecording && !window.hitchRecording.stopped) window.hitchGlCalls!.push({ call: 'getProgramParameter', ms, tick: window.__SS__!.tick(), stack: new Error().stack ?? '' }); return result; };
+      prototype.linkProgram = function(program) { const start = performance.now(); link.call(this, program); if (window.hitchRecording && !window.hitchRecording.stopped) window.hitchGlCalls!.push({ call: 'linkProgram', ms: performance.now() - start, tick: window.__SS__!.tick(), stack: new Error().stack ?? '' }); };
+    });
     await menuStart(page); await page.evaluate(() => { window.__SS__!.pause(); window.__SS__!.cheats.god(true); });
     // Real ground clicks walk the approach; paused setup does not enter the transition under test.
     const walk = async (x: number, z: number) => {
@@ -27,7 +34,7 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
       throw new Error(`Walk failed ${x},${z}`);
     };
     const cdp = await context.newCDPSession(page);
-    const samples: Record<string, { max: number; frames: Frame[] }> = {};
+    const samples: Record<string, { max: number; frames: Frame[]; glCalls?: GlCall[] }> = {};
     const measure = async (label: string, action: () => Promise<unknown>, duration: number) => {
       console.log(`${phase} ${mode} measuring ${label}`);
       if (process.env.HITCH_CPU_PROFILE === '1' && label === 'diner') { await cdp.send('Profiler.enable'); await cdp.send('Profiler.start'); }
@@ -41,7 +48,7 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
       await action(); await page.waitForTimeout(duration);
       const frames = await page.evaluate(() => { const h = window.hitchRecording!; h.stopped = true; window.__SS__!.pause(); return h.frames; });
       if (process.env.HITCH_CPU_PROFILE === '1' && label === 'diner') { const profile = await cdp.send('Profiler.stop'); writeFileSync(`${output}/${phase}-${mode}-cpu-profile.json`, JSON.stringify(profile)); }
-      samples[label] = { max: Math.max(...frames.map(f => f.ms)), frames };
+      samples[label] = { max: Math.max(...frames.map(f => f.ms)), frames, glCalls: await page.evaluate(() => window.hitchGlCalls!.splice(0)) };
       writeFileSync(`${output}/${phase}-${mode}-samples.json`, JSON.stringify(samples, null, 2));
       console.log(`${phase} ${mode} ${label} max=${samples[label].max.toFixed(1)}ms`);
       const completed = new Promise<{ stream: string }>((resolve, reject) => { const timeout = setTimeout(() => reject(new Error('Chrome trace did not finish')), 15_000); cdp.once('Tracing.tracingComplete', event => { clearTimeout(timeout); resolve({ stream: event.stream! }); }); });
