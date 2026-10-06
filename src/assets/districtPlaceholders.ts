@@ -114,6 +114,8 @@ export function placeholder(
           [x * 0.47, y * 0.45, zz],
           lit ? 1 : 0,
         );
+  } else if (def.foliage) {
+    add("foliage", new SphereGeometry(.5, 16, 10).scale(x,y,z), [0,y/2,0]);
   } else if (def.id === "prop.tree") {
     add("woodWarm", new CylinderGeometry(0.15, 0.3, y * 0.55, 8), [
       0,

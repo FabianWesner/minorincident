@@ -1,0 +1,76 @@
+{
+  "id": "prop.package-courier",
+  "tier": "side",
+  "triangles": {
+    "lod0": 9857,
+    "lod1": 1223,
+    "lod2": 301
+  },
+  "draw_calls": 20,
+  "materials": [
+    "pal_backpackTeal",
+    "pal_brass",
+    "pal_canvasTan",
+    "pal_corgiOrangeLight",
+    "pal_denim",
+    "pal_leatherShadow",
+    "pal_orange",
+    "pal_picketWhite",
+    "pal_policeBlue",
+    "pal_survivorRed",
+    "pal_tealDark",
+    "pal_uiDark",
+    "pal_woodWarm"
+  ],
+  "nodes_ok": true,
+  "within_budget": true,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "rounds": 3,
+  "gaps": [
+    "WebGPU requires manual validation per repository guidance.",
+    "Standalone preview needs MeshoptDecoder; WebGL2 review used decoded delivery geometry."
+  ],
+  "file_bytes": {
+    "lod0": 183448,
+    "lod1": 55284,
+    "lod2": 35784
+  },
+  "audit": {
+    "model.glb": {
+      "geometry_sha256": "54adc75b00402ace0c1d041a8c6c304c0c869c1f8d4e24f2232daba4ffeb25e2",
+      "finite": true,
+      "single_sided": true,
+      "colliders": [
+        "col:parcel",
+        "col:scanner"
+      ],
+      "compressed": true,
+      "textures": 0
+    },
+    "model.lod1.glb": {
+      "geometry_sha256": "6308df36fb8b30f433d432f937336de06b1cf82fc32cdc8a98fe6ebc57ddc025",
+      "finite": true,
+      "single_sided": true,
+      "colliders": [
+        "col:parcel",
+        "col:scanner"
+      ],
+      "compressed": true,
+      "textures": 0
+    },
+    "model.lod2.glb": {
+      "geometry_sha256": "1f0c9cabd1b2ec9bd6ca11a0966bf19e762098cf1304c7d9236ea2ad53dc1c46",
+      "finite": true,
+      "single_sided": true,
+      "colliders": [
+        "col:parcel",
+        "col:scanner"
+      ],
+      "compressed": true,
+      "textures": 0
+    }
+  },
+  "matches_reference": true,
+  "deterministic_rebuild": true
+}
