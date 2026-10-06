@@ -202,6 +202,60 @@
       "maximumTrailVertices": 54,
       "maximumParticles": 174,
       "hudIconVerified": true
+    },
+    {
+      "mode": "portrait",
+      "weapon": "bat",
+      "realInput": true,
+      "side": "LEFT",
+      "socket": "weaponSocketR",
+      "source": "glb",
+      "gripDistance": 0,
+      "hits": 8,
+      "combos": [
+        0,
+        1,
+        2
+      ],
+      "maximumTrailVertices": 54,
+      "maximumParticles": 62,
+      "hudIconVerified": true
+    },
+    {
+      "mode": "portrait",
+      "weapon": "crowbar",
+      "realInput": true,
+      "side": "LEFT",
+      "socket": "weaponSocketR",
+      "source": "glb",
+      "gripDistance": 0,
+      "hits": 7,
+      "combos": [
+        0,
+        1,
+        2
+      ],
+      "maximumTrailVertices": 54,
+      "maximumParticles": 64,
+      "hudIconVerified": true
+    },
+    {
+      "mode": "portrait",
+      "weapon": "machete",
+      "realInput": true,
+      "side": "LEFT",
+      "socket": "weaponSocketR",
+      "source": "glb",
+      "gripDistance": 0,
+      "hits": 8,
+      "combos": [
+        0,
+        1,
+        2
+      ],
+      "maximumTrailVertices": 54,
+      "maximumParticles": 62,
+      "hudIconVerified": true
     }
   ],
   "impactRenderProbe": {
@@ -227,7 +281,8 @@
       "Made directional blood visible at the game camera",
       "Held interpolation constant during hit-stop"
     ],
-    "temporaryCapturesDeleted": false
+    "temporaryCapturesDeleted": true,
+    "reviewMethod": "Reviewed desktop and portrait gameplay recordings, then strike screenshots from the final glTF export at the game camera."
   },
   "scope": {
     "M1-02": "fixed",
@@ -238,9 +293,5 @@
     "M1-12": "fixed",
     "M1-13": "fixed",
     "specsChanged": false
-  },
-  "heavyWorkHold": {
-    "active": true,
-    "queued": "Optional latest-export desktop and portrait recording refresh; prior recordings and latest screenshots already reviewed"
   }
 }
