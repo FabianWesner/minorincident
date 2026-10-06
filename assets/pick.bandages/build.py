@@ -4,8 +4,10 @@ from pathlib import Path
 import bpy
 from mathutils import Vector
 HERE=Path(__file__).resolve().parent
-p=argparse.ArgumentParser();p.add_argument('--render');p.add_argument('--glb');p.add_argument('--view',default='ref');p.add_argument('--samples',type=int,default=24);p.add_argument('--width',type=int,default=960);p.add_argument('--height',type=int,default=540)
+p=argparse.ArgumentParser();p.add_argument('--lod',type=int,choices=[0,1,2],default=0);p.add_argument('--render');p.add_argument('--glb');p.add_argument('--view',default='ref');p.add_argument('--samples',type=int,default=24);p.add_argument('--width',type=int,default=960);p.add_argument('--height',type=int,default=540)
 a=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+segments=[20,12,8][a.lod]
+corner_steps=2 if a.lod==0 else 1
 bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
 def material(token,color):
     m=bpy.data.materials.new('pal_'+token);m.use_nodes=True
@@ -21,61 +23,57 @@ def box(name,loc,size,m,b=.018):
     # Rounded rectangular outline with a small top/bottom chamfer.
     sx,sy,sz=size;radius=min(b,sx/3,sy/3);outline=[]
     for cx,cy,angle in [(sx/2-radius,sy/2-radius,0),(-sx/2+radius,sy/2-radius,90),(-sx/2+radius,-sy/2+radius,180),(sx/2-radius,-sy/2+radius,270)]:
-        for j in range(4):
-            t=math.radians(angle+j*90/3);outline.append((cx+radius*math.cos(t),cy+radius*math.sin(t)))
+        for j in range(corner_steps+1):
+            t=math.radians(angle+j*90/corner_steps);outline.append((cx+radius*math.cos(t),cy+radius*math.sin(t)))
     chamfer=min(.003,sz/4);n=len(outline)
-    v=[(loc[0]+x*scale,loc[1]+y*scale,loc[2]+z) for z,scale in [(-sz/2,.97),(-sz/2+chamfer,1),(sz/2-chamfer,1),(sz/2,.97)] for x,y in outline]
-    f=[tuple(reversed(range(n))),tuple(range(3*n,4*n))]+[(k*n+i,k*n+(i+1)%n,(k+1)*n+(i+1)%n,(k+1)*n+i) for k in range(3) for i in range(n)]
+    v=[(loc[0]+x*scale,loc[1]+y*scale,loc[2]+z) for z,scale in [(-sz/2,1),(sz/2-chamfer,1),(sz/2,.97)] for x,y in outline]
+    f=[tuple(reversed(range(n))),tuple(range(2*n,3*n))]+[(k*n+i,k*n+(i+1)%n,(k+1)*n+(i+1)%n,(k+1)*n+i) for k in range(2) for i in range(n)]
     return mesh(name,v,f,m)
-def annulus(name,profile,m,center=(0,.17,.36),n=64):
+def annulus(name,profile,m,center=(0,.17,.36),n=None):
     # Closed cross-section spun about the roll's Y axis.
+    n=n or segments
     v=[(center[0]+r*math.cos(t*2*math.pi/n),center[1]+y,center[2]+r*math.sin(t*2*math.pi/n)) for r,y in profile for t in range(n)]
     f=[(k*n+i,k*n+(i+1)%n,((k+1)%len(profile))*n+(i+1)%n,((k+1)%len(profile))*n+i) for k in range(len(profile)) for i in range(n)]
     return mesh(name,v,f,m)
 # Large horizontal roll, visible open end toward -Y; shoulder bevel and middle wrap.
 annulus('roll',[(.079,-.255),(.079,.255),(.263,.255),(.278,.242),(.282,.227),(.282,-.227),(.278,-.242),(.263,-.255)],cloth)
-annulus('cardboard_core',[(.063,-.26),(.063,.26),(.079,.26),(.084,.251),(.084,-.251),(.079,-.26)],core, n=64)
-annulus('core_lip',[(.064,-.265),(.064,-.257),(.086,-.257),(.086,-.265)],edge,n=64)
-# Seven concentric winding ridges on each end, actual recessed valleys between.
+annulus('cardboard_core',[(.063,-.26),(.063,.26),(.079,.26),(.084,.251),(.084,-.251),(.079,-.26)],core, n=min(segments,16))
+annulus('core_lip',[(.064,-.265),(.064,-.257),(.086,-.257),(.086,-.265)],edge,n=segments)
+# Two broad winding ridges retain the open-roll cue without fine wound layers.
 for side in [-1,1]:
-    for i in range(7):
-        r=.091+i*.024
+    for r in ([.118,.204] if a.lod==0 else [.17]):
         y=side*.256
-        winding=annulus('wound_edge',[(r,y-side*.002),(r+.004,y+side*.004),(r+.017,y+side*.004),(r+.021,y-side*.002)],cloth,n=24)
+        winding=annulus('wound_edge',[(r,y-side*.003),(r+.005,y+side*.004),(r+.016,y+side*.004),(r+.021,y-side*.003)],cloth,n=min(segments,16))
         winding.data.materials.append(groove)
         for face in winding.data.polygons:
-            if face.index//24==3:face.material_index=1
+            if face.index//min(segments,16)==3:face.material_index=1
 annulus('center_wrap',[(.279,-.115),(.288,-.115),(.293,-.106),(.293,.106),(.288,.115),(.279,.115)],pad)
-# Perforated panels are thick rounded solids; boolean holes stop at the cloth backing.
-def holes(o,points,r=.009):
-    for x,y,z in points:
-        bpy.ops.mesh.primitive_cylinder_add(vertices=12,radius=r,depth=.026,location=(x,y,z));cut=bpy.context.object
-        bpy.context.view_layer.objects.active=o;mod=o.modifiers.new('perforation','BOOLEAN');mod.operation='DIFFERENCE';mod.object=cut;bpy.ops.object.modifier_apply(modifier=mod.name);bpy.data.objects.remove(cut,do_unlink=True)
-    # Boolean cut edges stay sharp at pickup scale.
-# Front strip: three folded panels, raised faces, narrow cream fold borders.
+# A few six-sided markings stand 4 mm clear of the cloth, with no coplanar faces.
+def mark(name,pos,normal):
+    direction=Vector(normal);u=direction.cross(Vector((0,1,0))).normalized()
+    if u.length==0:u=Vector((1,0,0))
+    v=direction.cross(u);c=Vector(pos)+direction*.004
+    mesh(name,[tuple(c+.008*(u*math.cos(i*math.tau/6)+v*math.sin(i*math.tau/6))) for i in range(6)],[tuple(range(6))],groove)
+# Three chunky folded panels retain the stepped foreground silhouette.
 for j,y in enumerate([-.48,-.265,-.05]):
     z=.042+j*.036
-    for k in range(3):box('cloth_layer',(-.12,y,z-.014+k*.010),(.31,.225,.012),cloth if k!=1 else groove,.025)
-    box('cream_border',(-.12,y,z+.024),(.315,.225,.024),edge,.027)
-    top=z+.040
-    o=box('dressing_face',(-.12,y,top),(.293,.209,.014),cloth if j==1 else pad,.024)
-    points=[(-.12+dx,y+dy,top+.008) for dx,dy in [(-.065,-.05),(.065,-.05),(0,0),(-.065,.05),(.065,.05)]]
-    holes(o,points)
-# Secondary folded strip behind the foreground strip.
-for j,x in enumerate([.17,.36]):
-    box('folded_gauze',(x,-.03,.083),(.22,.275,.13),cloth,.036)
-    box('fold_rim',(x,-.03,.152),(.22,.272,.021),edge,.03)
-    o=box('folded_face',(x,-.03,.166),(.198,.251,.015),pad,.026)
-    holes(o,[(x+dx,-.03+dy,.175) for dx,dy in [(-.045,-.075),(.045,-.075),(0,0),(-.045,.075),(.045,.075)]])
-# Roll perforations: dark recess cups surrounded by bevel rims, 4mm below a raised rim.
-for y in [-.18,-.07,.04,.18]:
-    for t in [.45,1.0,1.65,2.2]:
-        r=.293 if abs(y)<.115 else .283
-        direction=Vector((math.cos(t),0,math.sin(t)));pos=Vector((0,.17+y,.36))+direction*(r+.006)
-        bpy.ops.mesh.primitive_torus_add(major_segments=12,minor_segments=3,major_radius=.009,minor_radius=.002,location=pos)
-        o=bpy.context.object;o.name='perforation_lip';o.rotation_euler=direction.to_track_quat('Z','Y').to_euler();o.data.materials.append(cloth)
-        bpy.ops.mesh.primitive_cylinder_add(vertices=16,radius=.008,depth=.002,location=pos-direction*.002)
-        o=bpy.context.object;o.name='perforation_recess';o.rotation_euler=direction.to_track_quat('Z','Y').to_euler();o.data.materials.append(groove)
+    box('cloth_layer',(-.12,y,z+.005),(.31,.225,.054),cloth,.025)
+    box('dressing_face',(-.12,y,z+.040),(.315,.225,.022),edge,.027)
+    box('dressing_color',(-.12,y,z+.049),(.293,.209,.014),cloth if j==1 else pad,.024)
+    if a.lod==0:
+        for dx,dy in [(-.065,-.05),(0,0),(.065,.05)]:mark('perforation',(-.12+dx,y+dy,z+.056),(0,0,1))
+# Secondary folded bundle: one body with two broad face panels.
+box('folded_gauze',(.265,-.03,.083),(.41,.275,.13),cloth,.036)
+for x in [.17,.36]:
+    box('folded_face',(x,-.03,.158),(.22,.272,.021),edge,.03)
+    box('folded_color',(x,-.03,.172),(.198,.251,.015),pad,.026)
+    if a.lod==0:
+        for dy in [-.075,0,.075]:mark('perforation',(x,-.03+dy,.1795),(0,0,1))
+if a.lod==0:
+    for y in [-.07,.04]:
+        for t in [.8,1.6]:
+            direction=Vector((math.cos(t),0,math.sin(t)))
+            mark('roll_perforation',Vector((0,.17+y,.36))+direction*.293,direction)
 root=bpy.data.objects.new('root',None);bpy.context.collection.objects.link(root);root['asset_id']='pick.bandages'
 parts=[o for o in bpy.context.scene.objects if o.type=='MESH']
 for m in [cloth,edge,pad,groove,core]:
@@ -100,8 +98,8 @@ for o in meshes:
     attr=o.data.color_attributes.new(name='ao',type='BYTE_COLOR',domain='CORNER');o.data.color_attributes.active_color=attr
     bpy.ops.object.select_all(action='DESELECT');o.select_set(True);bpy.context.view_layer.objects.active=o;bpy.ops.object.bake(type='AO')
 triangles=sum(len(p.vertices)-2 for o in meshes for p in o.data.polygons)
-report=dict(id='pick.bandages',tier='Side',triangles=triangles,draw_calls=len(meshes),materials=[m.name for m in [cloth,edge,pad,groove,core]],nodes_ok=True,within_budget=triangles<=12000 and len(meshes)<=30)
-(HERE/'geometry.json').write_text(json.dumps(report,indent=2))
+report=dict(id='pick.bandages',tier='Side',triangles=triangles,draw_calls=len(meshes),materials=[m.name for m in [cloth,edge,pad,groove,core]],nodes_ok=True,within_budget=triangles<=2500 and len(meshes)<=6)
+(HERE/('geometry.json' if a.lod==0 else f'geometry.lod{a.lod}.json')).write_text(json.dumps(report,indent=2))
 if a.glb:
     bpy.ops.object.select_all(action='SELECT');bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_extras=True,export_yup=True)
 if a.render:
@@ -115,4 +113,8 @@ if a.render:
     bpy.ops.object.camera_add(location=views[a.view]);o=bpy.context.object;aim(o);o.data.type='ORTHO';o.data.ortho_scale=2.25 if a.view=='game' else 1.98;scene.camera=o
     scene.view_settings.view_transform='AgX';scene.render.resolution_x=a.width;scene.render.resolution_y=a.height;scene.render.resolution_percentage=100
     scene.render.filepath=str(Path(a.render).resolve());bpy.ops.render.render(write_still=True)
+    if Path(a.render).name=='hero.png':
+        scene.camera.location=views['game'];aim(scene.camera);scene.camera.data.ortho_scale=2.25
+        scene.cycles.samples=24;scene.render.resolution_x=960;scene.render.resolution_y=540
+        scene.render.filepath=str(HERE/'renders/game.png');bpy.ops.render.render(write_still=True)
 print('OK',json.dumps(report))
