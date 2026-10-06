@@ -38,4 +38,14 @@ describe('lookdev export patch', () => {
     look.reset(); expect(look.nodes.sun).toBe(node); expect(node.value.getHexString()).toBe(worldLook.sun.slice(1));
     expect(look.export()).toEqual({ version: 1, worldLook: {}, palette: {} });
   });
+  it('exports effective flat fog endpoints while preserving an explicitly edited endpoint', () => {
+    const look = new LookUniforms();
+    look.set({ version: 1, worldLook: { fog: '#123456' }, palette: {} });
+    expect(look.export().worldLook).toEqual({ fog: '#123456', fogA: '#123456', fogB: '#123456' });
+    look.set({ version: 1, worldLook: { fogA: '#654321', fog: '#abcdef' }, palette: {} });
+    const patch = look.export();
+    expect(patch.worldLook).toEqual({ fog: '#abcdef', fogA: '#654321', fogB: '#abcdef' });
+    const rebuilt = new LookUniforms(); rebuilt.set(JSON.parse(JSON.stringify(patch)));
+    expect(rebuilt.export()).toEqual(patch);
+  });
 });
