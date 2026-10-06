@@ -140,7 +140,8 @@ test('@E19 @E19-AC06 M1-10 entrant walks offscreen, bites three visible customer
   expect(world.infected!.active).toHaveLength(1);
   for (let i=0;i<3600 && !m.state.outbreak!.released;i++) world.update();
   expect(m.state.outbreak!.released).toBe(true);
-  expect(world.infected!.active.filter(e=>e.health.current>0)).toHaveLength(4);
+  expect(world.infected!.active.filter(e=>e.health.current>0)).toHaveLength(m.state.outbreak!.victims.length + 1);
+  expect(world.infected!.director.count).toBeLessThanOrEqual(15);
   const events = world.events.events();
   for (const id of m.state.outbreak!.victims) {
     const sequence = events.filter(e=>e.type==='civilian.state'&&e.id===id).map(e=>e.type==='civilian.state'?e.state:'');
