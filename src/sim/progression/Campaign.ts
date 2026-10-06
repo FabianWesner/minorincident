@@ -12,10 +12,11 @@ export interface CampaignSave {
   pending?:{level:Level; cards:string[]; phase:'unlock'|'cards'|'racks'; weaponChosen:boolean};
 }
 export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
-  1:[],2:['weapon.pistol','weapon.shotgun','weapon.molotov'],3:['weapon.smg','weapon.hunting-rifle'],
+  1:[],2:['weapon.molotov'],3:[],
   4:['weapon.machine-gun','weapon.rocket-launcher','weapon.pipe-bomb'],5:[],6:[],
 };
 export const meleeChoices=['weapon.bat','weapon.crowbar','weapon.machete'] as const;
+export const weaponChoices:Partial<Record<Level,readonly string[]>>={1:meleeChoices,2:['weapon.pistol','weapon.shotgun'],3:['weapon.smg','weapon.hunting-rifle']};
 export function newCampaign(character:SurvivorVariant='female',seed=1):CampaignSave {
   if(!Number.isSafeInteger(seed)||!['female','male'].includes(character))throw new RangeError('Invalid campaign');
   return {version:1,seed,character,unlockedLevel:1,completedLevels:0,ownedActions:['weapon.fists','weapon.kick'],upgrades:[],racks:{LEFT:['weapon.fists'],RIGHT:['weapon.kick']},settings:{},usage:{}};
@@ -50,17 +51,17 @@ export function powerScore(save:CampaignSave):number {
     save.ownedActions.reduce((n,id)=>n+(catalog[id].category==='ability'?60:(catalog[id].tier+1)*20),0)+save.upgrades.filter(id=>upgrades[id].family==='perk').length*20);
 }
 export function gearTier(save:CampaignSave):GearTier {
-  const score=powerScore(save);return (score<240?0:score<450?1:score<600?2:score<720?3:4);
+  const score=powerScore(save);return (score<240?0:score<400?1:score<550?2:score<640?3:4);
 }
 export function beginRewards(save:CampaignSave,level:Level):void {
   if(save.pending||level!==save.completedLevels+1||level>5)throw new Error('Rewards unavailable');
   for(const id of fixedUnlocks[level])if(!save.ownedActions.includes(id))save.ownedActions.push(id);
   save.unlockedLevel=Math.max(save.unlockedLevel,level+1) as Level;
-  save.pending={level,cards:[],phase:'unlock',weaponChosen:level!==1};
+  save.pending={level,cards:[],phase:'unlock',weaponChosen:!weaponChoices[level]};
 }
 export function chooseWeapon(save:CampaignSave,id:string):void {
-  if(save.pending?.level!==1||save.pending.phase!=='unlock'||save.pending.weaponChosen||!meleeChoices.includes(id as typeof meleeChoices[number]))throw new Error('Invalid permanent weapon');
-  if(!save.ownedActions.includes(id))save.ownedActions.push(id);save.racks.LEFT=[id];save.pending.weaponChosen=true;
+  if(!save.pending||save.pending.phase!=='unlock'||save.pending.weaponChosen||!weaponChoices[save.pending.level]?.includes(id))throw new Error('Invalid permanent weapon');
+  if(!save.ownedActions.includes(id))save.ownedActions.push(id);save.racks[save.pending.level===1?'LEFT':'RIGHT']=[id];save.pending.weaponChosen=true;
 }
 export function revealCards(save:CampaignSave):void {
   if(!save.pending||save.pending.phase!=='unlock'||!save.pending.weaponChosen)throw new Error('Choose a weapon first');
@@ -80,7 +81,7 @@ export function preset(name:ProgressionPreset):CampaignSave {
   if(!/^L[2-6]-default$/.test(name))throw new Error('Unknown progression preset');
   const target=Number(name[1]),save=newCampaign();
   for(let level=1;level<target;level++){
-    beginRewards(save,level as Level);if(level===1)chooseWeapon(save,'weapon.bat');revealCards(save);pickUpgrades(save,save.pending!.cards.slice(0,2));
+    beginRewards(save,level as Level);const choices=weaponChoices[level as Level];if(choices)chooseWeapon(save,choices[0]);revealCards(save);pickUpgrades(save,save.pending!.cards.slice(0,2));
     const size=rackSize(save.unlockedLevel),melee=save.ownedActions.filter(id=>catalog[id].category==='melee').reverse(),ranged=save.ownedActions.filter(id=>catalog[id].category!=='melee').reverse();
     finishRewards(save,{LEFT:melee.slice(0,size),RIGHT:(ranged.length?ranged:['weapon.kick']).slice(0,size)});
   }return save;
