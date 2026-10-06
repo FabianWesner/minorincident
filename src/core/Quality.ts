@@ -38,7 +38,7 @@ export class Quality {
   }
   private resetSamples(): void { this.elapsed = this.slowSeconds = this.count = this.p90Ms = 0; }
   observe(frameMs: number, seconds: number, cinematic = false): void {
-    if (this.setting !== 'auto' || this.tier === 'low' || !Number.isFinite(frameMs) || frameMs <= 0 || !Number.isFinite(seconds) || seconds <= 0) return;
+    if (!Number.isFinite(frameMs) || frameMs <= 0 || !Number.isFinite(seconds) || seconds <= 0) return;
     this.samples[this.count++ % this.samples.length] = frameMs;
     this.elapsed += seconds;
     if (this.elapsed < 1) return;
@@ -46,9 +46,9 @@ export class Quality {
     this.sorted.set(this.samples.subarray(0, count));
     const window = this.sorted.subarray(0, count); window.sort();
     this.p90Ms = window[Math.ceil(count * .9) - 1];
-    this.slowSeconds = this.p90Ms > qualityBudgets.high.frameMs ? this.slowSeconds + this.elapsed : 0;
+    this.slowSeconds = this.setting === 'auto' && this.tier === 'high' && this.p90Ms > qualityBudgets.high.frameMs ? this.slowSeconds + this.elapsed : 0;
     this.elapsed = this.count = 0;
-    if (this.slowSeconds >= 5 && !cinematic) this.change('low');
+    if (this.setting === 'auto' && this.tier === 'high' && this.slowSeconds >= 5 && !cinematic) this.change('low');
   }
   snapshot() { return { setting: this.setting, tier: this.tier, p90Ms: this.p90Ms, slowSeconds: this.slowSeconds, budgets: qualityBudgets[this.tier] }; }
   dispose(): void { this.listeners.clear(); }

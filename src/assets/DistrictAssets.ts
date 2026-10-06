@@ -13,7 +13,7 @@ export class DistrictAssets {
   private readonly cache = new Map<string, Promise<Group>>();
   private readonly geometries = new Set<BufferGeometry>();
   private readonly assets = new AssetRegistry((event) => console.info(JSON.stringify(event)));
-  constructor(private readonly materials: Materials) {}
+  constructor(private readonly materials: Materials, private readonly quality: 'high' | 'low' = 'high') {}
   private remember(root: Group): Group {
     root.traverse((o) => {
       if (o instanceof Mesh) this.geometries.add(o.geometry);
@@ -63,7 +63,7 @@ export class DistrictAssets {
     if (!def) throw new Error(`Unknown asset: ${id}`);
     if (atLeast(def.status, "integrated")) {
       const key = `${id}:${lit}`;
-      if (!this.cache.has(key)) this.cache.set(key, this.assets.loadAsset(id).then((asset) => {
+      if (!this.cache.has(key)) this.cache.set(key, this.assets.loadAsset(id, this.quality).then((asset) => {
         const root = new Group(); root.add(asset); return root;
       }));
       return this.cache.get(key)!;

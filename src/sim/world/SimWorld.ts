@@ -1,3 +1,4 @@
+import { populateHorde } from '../../../tests/fixtures/scenarios/performance';
 import { InfectedSystem } from '../ai/InfectedSystem';
 import { Mission } from '../missions/Mission';
 import type { MissionDef } from '../missions/types';
@@ -105,6 +106,9 @@ export class SimWorld implements Lifecycle {
       this.spatial.set(1, p.x, p.z);
     }, SimPhase.cleanup);
     installVfxScenario(this);
+    if (name === 'perf-horde-200' || name === 'perf-horde-100') {
+      this.infected!.director.tier = name === 'perf-horde-100' ? 'low' : 'high'; populateHorde(this, name === 'perf-horde-100' ? 100 : 200);
+    }
     this.events.emit({ tick: 0, type: 'scenario.loaded', name, seed });
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */

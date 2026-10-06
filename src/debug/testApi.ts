@@ -13,10 +13,10 @@ import { hazardKinds, destructibleKinds, type HazardKind, type DestructibleKind,
 import { pickupKinds, type PickupKind } from '../sim/interact/Pickups';
 
 export type ProgressionPreset = Record<string, unknown>;
-export type Settings = Parameters<Game['view']['settings']>[0] & Partial<import('../audio/AudioService').AudioSettings> & { aimAssist?: import('../sim/combat/AimAssist').AimAssistSetting };
+export type Settings = Omit<Parameters<Game['view']['settings']>[0], 'quality'> & { quality?: import('../core/Quality').QualitySetting } & Partial<import('../audio/AudioService').AudioSettings> & { aimAssist?: import('../sim/combat/AimAssist').AimAssistSetting };
 export interface BotStatus { running: boolean; policy: string | null }
 
-/** Version 1.8: crowds, vehicles, interactions, missions, VFX and E16 audio probes. */
+/** Version 1.9: E18 quality, frame-cost and performance probes plus crowds, vehicles, interactions, missions, VFX and E16 audio probes. */
 type WithoutTick<T> = T extends GameEvent ? Omit<T, 'tick'> : never;
 export interface SSTestApi {
   version: string;
@@ -75,6 +75,8 @@ export interface SSTestApi {
     l1Bot():Promise<Awaited<ReturnType<typeof runAudioL1Bot>>>;
     interrupt():Promise<void>;
   };
+  /** E18 synthetic GPU cost in milliseconds; zero clears it. */
+  debug: { simulateFrameCost(ms: number): void };
   perf(): ReturnType<Game['perf']>;
   screenshotReady(): Promise<void>;
 }
@@ -88,7 +90,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
-    version: '1.8.0', ready, missions: missionControls(game.world),
+    version: '1.9.0', ready, missions: missionControls(game.world),
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
     loadLevel: (id, opts) => {
@@ -142,7 +144,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) e.health.current = 0; }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
     bot: { start: (policy) => { if (policy !== 'driver' || game.world.scenario !== 'drive-course') pending('E19', 'bot.start'); game.driver = new Driver(game.world); }, stop: () => { game.driver = null; }, status: () => ({ running: !!game.driver && !game.driver.finished, policy: game.driver ? 'driver' : null }) },
     camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose) => game.view.view.cinematic(pose) },
-    settings: { set: (patch) => { if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.audio.set(patch); game.view.settings(patch); } },
+    settings: { set: (patch) => { if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } const { quality, ...render } = patch; if (quality !== undefined) game.setQuality(quality); game.audio.set(render); game.view.settings(render); } },
     vfx: {
       stepRender: (seconds) => game.view.frame(seconds),
       emit: (event) => { game.world.events.emit({ ...event, tick: game.world.tick } as GameEvent); game.view.update(1); },
@@ -174,6 +176,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
         await new Promise<void>(resolve=>setTimeout(resolve,50));
       },
     },
+    debug: { simulateFrameCost: ms => game.simulateFrameCost(ms) },
     perf: () => game.perf(), screenshotReady: () => game.screenshotReady(),
   };
   window.__SS__ = api; return api;
