@@ -56,7 +56,7 @@ export class CrowdView extends Group {
   async init(): Promise<void> {
     const variants = manifest.filter(a => a.status === 'integrated' && a.category === 'infected' && !infectedDefinitions.some(d => d.asset === a.id) && a.id !== 'inf.corpse-poses');
     const allDefinitions = [...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
-    const l1Roles = new Set<string>([...Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype), ...civilianRoles.map(role => role.variant)]);
+    const l1Roles = new Set<string>(['infected.runner', ...Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype), ...civilianRoles.map(role => role.variant)]);
     const definitions = this.world.scenario === 'L1' ? allDefinitions.filter(def => l1Roles.has(def.id)) : allDefinitions;
     for (const def of definitions) {
       this.definitions.set(def.id, def);
