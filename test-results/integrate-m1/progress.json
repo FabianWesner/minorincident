@@ -5,7 +5,7 @@
     "E09",
     "E15"
   ],
-  "pending": "commit final main merge and mergeability evidence",
+  "pending": null,
   "manifest_union": 275,
   "asset_registrations": [
     "bld.helipad",
@@ -663,7 +663,8 @@
       "38eca44",
       "7def6c7"
     ],
-    "late_registrations_or_exports": false
+    "late_registrations_or_exports": false,
+    "merge_commit": "6a3945960f497e3c788e7f4ce2e7241664410cfd"
   },
   "empty_pool_render_fix": {
     "file": "src/render/vfx/FxPool.ts",
@@ -672,5 +673,35 @@
     "music_check_passed": true,
     "post_main_E15_verify": 0,
     "native_E06_passed": 1
+  },
+  "done": true,
+  "mergeability": {
+    "integration_head": "6a3945960f497e3c788e7f4ce2e7241664410cfd",
+    "main_head": "7def6c7f52b862009112257d9a1a37d2519f34bd",
+    "clean_merge": true,
+    "exit_code": 0,
+    "output": "2593e2b74d812bc2f3d7d7a8956b092c4db7ec65",
+    "stderr": "",
+    "ancestor_checks": {
+      "lane/e12-epic": true,
+      "lane/e11-epic": true,
+      "lane/e09-epic": true,
+      "lane/e15-epic": true,
+      "09945b75eb671c8ede6ef20e87b4b1745e5bb90b": true
+    },
+    "actual_final_main_merge": "09945b75eb671c8ede6ef20e87b4b1745e5bb90b",
+    "later_source_only_main_not_merged": true,
+    "worktree_clean_before_audit": true
+  },
+  "commits": {
+    "E12": "2a44e3f",
+    "E11": "8738dbd",
+    "E09": "686e4c2",
+    "E15": "6c0b626",
+    "environment_feedback_fix": "67246b0",
+    "late_registration_scope_fix": "ea63794",
+    "native_compile_fix": "61141f4",
+    "pre_main_evidence": "4e1e179",
+    "main_E16_merge": "6a3945960f497e3c788e7f4ce2e7241664410cfd"
   }
 }

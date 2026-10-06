@@ -1,8 +1,18 @@
 {
-  "main_checked": "8b20db5d638e61aba6c57bb0fa44955730cbd3d0",
-  "branch": "ea63794296f67e74b6c0c961e44cbc23f4d47be5",
+  "integration_head": "6a3945960f497e3c788e7f4ce2e7241664410cfd",
+  "main_head": "7def6c7f52b862009112257d9a1a37d2519f34bd",
   "clean_merge": true,
   "exit_code": 0,
-  "main_merge_performed": false,
-  "reason": "read-only mergeability check; later asset registration is centrally reconciled"
+  "output": "2593e2b74d812bc2f3d7d7a8956b092c4db7ec65",
+  "stderr": "",
+  "ancestor_checks": {
+    "lane/e12-epic": true,
+    "lane/e11-epic": true,
+    "lane/e09-epic": true,
+    "lane/e15-epic": true,
+    "09945b75eb671c8ede6ef20e87b4b1745e5bb90b": true
+  },
+  "actual_final_main_merge": "09945b75eb671c8ede6ef20e87b4b1745e5bb90b",
+  "later_source_only_main_not_merged": true,
+  "worktree_clean_before_audit": true
 }
