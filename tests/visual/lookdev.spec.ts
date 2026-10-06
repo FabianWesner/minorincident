@@ -97,7 +97,8 @@ test('T-E02-11 @E02 @E02-AC11 overview, street and shadow-probe match reviewed g
   await lookdev(page);
   for (const spot of ['overview', 'street', 'shadow-probe']) {
     await page.evaluate((name) => window.__SS__!.camera.preset(name), spot); await page.evaluate(() => window.__SS__!.screenshotReady());
-    const png = await page.screenshot({ path: `${output}/${spot}.png` });
+    // Reviewed lookdev goldens contain only the scene, without input/audio debug panels.
+    const png = await page.locator('canvas').screenshot({ path: `${output}/${spot}.png`, style: 'body > details, [data-input-hint] { visibility: hidden !important; }' });
     expect(png).toMatchSnapshot(`${spot}.png`, { threshold: 0.1, maxDiffPixelRatio: 0.015 });
   }
 });

@@ -80,8 +80,10 @@ test('T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, delivered methods and
 });
 
 test('T-E01-06 @E01 @E01-AC06 pause + exact step and 10x sim time within 2%', async ({ page }) => {
-  await page.clock.install(); await page.clock.pauseAt(new Date());
   await boot(page);
+  // Compile with live RAF before freezing time; then reset the exact-step origin.
+  await page.evaluate(async () => { const api = window.__SS__!; await api.loadScenario('empty'); api.pause(); });
+  await page.clock.install(); await page.clock.pauseAt(new Date());
   await page.evaluate(async () => { const api = window.__SS__!; await api.step(17); await api.step(23); });
   expect(await page.evaluate(() => window.__SS__!.tick())).toBe(40);
   await page.clock.runFor(1000);
