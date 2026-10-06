@@ -43,6 +43,8 @@ export interface L1Brain {
   episodes: number;
   distractionId: number;
   biteTargetId: number;
+  /** Steering cache: the goal was in clear straight view at `directTick` (goal position directX/Z). */
+  direct: boolean; directTick: number; directX: number; directZ: number;
 }
 export function searchPlan(): SearchPlan {
   return { startTick: 0, until: 0, originX: 0, originZ: 0, probes: [], doubleBackAt: -1, next: -1, visited: 0, doubledBack: false, legTicks: 0 };
