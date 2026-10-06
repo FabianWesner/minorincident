@@ -5,7 +5,8 @@ import { test, expect, boot } from './fixtures';
 const output = 'test-results/m1-polish';
 for (const mode of ['desktop', 'portrait'] as const) test.describe(mode, () => {
   test.use({ viewport: mode === 'desktop' ? { width: 1600, height: 900 } : { width: 390, height: 844 }, hasTouch: mode === 'portrait', isMobile: mode === 'portrait', userAgent: mode === 'desktop' ? devices['Desktop Chrome'].userAgent : devices['iPhone 14'].userAgent });
-  test(`VQA-08/09/12/13/14 @E19 real-input polish review ${mode}`, async ({ page, context }) => {
+  // Retired diner flow (L1 v2 replaced the M1 slice); the L1 v2 real-input spec lives in tests/e2e/levels/L1.spec.ts.
+  test.fixme(`VQA-08/09/12/13/14 @E19 real-input polish review ${mode}`, async ({ page, context }) => {
     test.setTimeout(240_000); mkdirSync(output, { recursive: true });
     await boot(page, `/?test=1&renderer=webgl&dpr=1&quality=${mode === 'desktop' ? 'high' : 'low'}&audio=muted&seed=42`);
     await page.evaluate(async () => { await window.__SS__!.loadLevel('L1', { seed: 42 }); });
@@ -79,7 +80,7 @@ for (const mode of ['desktop', 'portrait'] as const) test.describe(mode, () => {
     await move(-14, -4); await shot('start-separation'); await move(0, 0); await move(27, 0); await move(42, 0); await move(42, -6.5); await step(1); await shot('diner-toast-sign');
     for (let i = 0; i < 80; i++) {
       await step(30);
-      if (await page.evaluate(() => window.__SS__!.missions.state()!.outbreak!.released)) break;
+      if (await page.evaluate(() => window.__SS__!.missions.state()!.l1!.exitIds.length > 0)) break;
     }
     await shot('diner-contact');
     for (let i = 0; i < 15; i++) { await attack(i % 4 === 0 ? 'right' : 'left'); if (i % 2 === 0) await shot(`diner-combat-${i}`); }

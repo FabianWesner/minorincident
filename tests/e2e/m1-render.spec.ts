@@ -33,14 +33,15 @@ function noise(p: PNG, mask: PNG): { pixels: number; spikes: number; ratio: numb
   return { pixels, spikes, ratio: spikes / pixels };
 }
 
-test('M1-27 @E19 real diner combat and wheel zoom keep survivor colour blocks free of speckle', async ({ page }) => {
+// Retired diner flow (L1 v2 replaced the M1 slice).
+test.fixme('M1-27 @E19 real diner combat and wheel zoom keep survivor colour blocks free of speckle', async ({ page }) => {
   test.setTimeout(180_000); await menuStart(page);
   await page.evaluate(async () => {
     const a = window.__SS__!; a.pause(); a.cheats.god(true); a.settings.set({ cameraShake: false, quality: 'high' });
     a.teleport('player', { x: 42, z: -6.5 }); await a.step(1);
   });
   // Setup shortcuts the walk; the authored diner outbreak and every attack are real.
-  for (let i = 0; i < 130 && !await page.evaluate(() => window.__SS__!.missions.state()!.outbreak!.released); i++) {
+  for (let i = 0; i < 130 && !await page.evaluate(() => window.__SS__!.missions.state()!.l1!.exitIds.length > 0); i++) {
     await page.evaluate(() => window.__SS__!.step(30));
   }
   // Independent brains may engage the nearby survivor before all victims turn.

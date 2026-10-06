@@ -38,10 +38,18 @@ for (const id of districtIds)
     timeOfDay: "L1",
     districts: [{ id, origin: [0, 0] }],
   };
-/** L1 v2 (D-GROVE alone, centred on the origin). The campaign `L1` composition stays on the old districts until lane E switches. */
+/** L1 v2: D-GROVE alone, centred on the origin. `L1` is the campaign level id (NPC/combat install keys on it), `D-GROVE` the isolated probe. */
 compositions[groveDistrictId] = {
   id: groveDistrictId,
   tier: 0,
   timeOfDay: "L1",
   districts: [{ id: groveDistrictId, origin: [0, 0] }],
+};
+compositions.L1 = { ...compositions[groveDistrictId], id: "L1" };
+/** The retired M1 map (diner, hardware store, gas forecourt): kept only for its geometry/physics regression suites. */
+compositions["L1-M1"] = {
+  id: "L1",
+  tier: 0,
+  timeOfDay: "L1",
+  districts: ["D-RES", "D-MAIN", "D-SHOP"].map((id) => ({ id: id as DistrictId, origin: districtOrigins[id as DistrictId] })),
 };

@@ -19,8 +19,6 @@ export class MissionUI {
   private readonly heading = document.createElement('h1');
   private readonly detail = document.createElement('p');
   private readonly button = document.createElement('button');
-  private readonly choices = document.createElement('div');
-  private readonly choiceHint = document.createElement('span');
   private readonly result = document.createElement('dl');
   private readonly rows = new Map<keyof MissionResult, HTMLElement>();
   private readonly pins = new Map<string, HTMLSpanElement>();
@@ -38,34 +36,21 @@ export class MissionUI {
     this.map.className = 'mission-minimap'; this.map.setAttribute('aria-label','Objective minimap');
     this.panel.className = 'mission-panel'; this.panel.setAttribute('aria-label','Mission');
     this.button.type = 'button'; this.button.addEventListener('click',this.accept);
-    for (const [key,label] of [['time','Time (seconds)'],['kills','Kills'],['damage','Damage taken'],['deaths','Deaths'],['rescued','Rescued'],['optionalObjectives','Optional objectives']] as const) {
+    for (const [key,label] of [['time','Time (seconds)'],['kills','Kills'],['damage','Damage taken'],['deaths','Deaths'],['rescued','Rescued'],['optionalObjectives','Optional objectives'],['delivered','Delivery'],['infected','Infected now'],['turned','Pedestrians turned'],['escaped','Pedestrians escaped']] as const) {
       const title=document.createElement('dt'), value=document.createElement('dd'); title.textContent=label; title.dataset.testid=`result-label-${key}`; value.dataset.testid=`result-${key}`; value.dataset.stat=key; this.result.append(title,value); this.rows.set(key,value);
     }
-    this.choices.className='slice-choices'; this.choices.dataset.testid='weapon-display';
-    for (const name of ['bat','crowbar','machete']) {
-      const button=document.createElement('button'); button.type='button';button.textContent=name;button.dataset.testid=`choose-${name}`;
-      button.addEventListener('click',()=>{this.world.missions?.chooseMelee(`weapon.${name}`);button.blur();});this.choices.append(button);
-    }
-    this.choices.append(this.choiceHint);
-    this.root.append(this.choices);
     this.panel.append(this.heading,this.detail,this.result,this.button);
     this.root.append(this.tracker,this.map,this.marker,this.subtitle,this.toast,this.panel); document.querySelector('#game')!.append(this.root);
   }
   private readonly accept = (): void => {
     const mission=this.world.missions;if(!mission)return;
-    if(mission.state.phase==='briefing')mission.begin();else if(mission.state.phase==='retry')mission.restore();else if(mission.state.phase==='result') { if(mission.def.slice)mission.restartSlice();else mission.continue(); }
+    if(mission.state.phase==='briefing')mission.begin();else if(mission.state.phase==='retry')mission.restore();else if(mission.state.phase==='result') { mission.continue(); }
     this.onChange();
   };
   private text(element: HTMLElement, value: string): void { if(element.textContent!==value)element.textContent=value; }
   update(camera: PerspectiveCamera, width: number, height: number): void {
     const mission=this.world.missions;if(this.displayedMission!==mission){this.reset();this.displayedMission=mission;}this.root.hidden=!mission;if(!mission)return;
     const state=mission.state,playing=state.phase==='playing';
-    const hardware=mission.def.anchors.hardware,p=this.world.entities.get(1);
-    this.choices.hidden=!mission.def.slice||!playing||state.steps.melee?.status!=='active'||!p||p.health.current<=0||Math.hypot(p.transform.x-hardware.x,p.transform.z-hardware.z)>5;
-    if(!this.choices.hidden){
-      for(const button of this.choices.querySelectorAll('button'))button.setAttribute('aria-pressed',String(`weapon.${button.textContent}`===mission.meleeChoice));
-      this.text(this.choiceHint, `Selected ${mission.meleeChoice.slice(7)} · Stand at display / ${document.body.classList.contains('touch-ui') ? 'ACTION' : 'F / middle-click'}`);
-    }
     const cinematic=state.cinematic ? mission.def.cinematics[state.cinematic.id] : null;
     this.root.classList.toggle('is-cinematic',!!cinematic);
     this.subtitle.hidden=!cinematic&&(!state.subtitle||!playing);
@@ -74,14 +59,18 @@ export class MissionUI {
     this.panel.hidden=playing||!!cinematic;
     if (this.panel.hidden && this.panel.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();
     this.tracker.hidden=this.map.hidden=!playing;
-    this.result.hidden=state.phase!=='result'||!!mission.def.slice;
+    this.result.hidden=state.phase!=='result';
     if(this.phase!==state.phase){
       this.phase=state.phase;
-      const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${state.checkpoint??'level start'}.`,'Retry'],result:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
-      const [title,detail,button]=mission.def.slice&&state.phase==='result' ? ['Milestone 1 complete — thanks for playing','You survived the first incident.','Restart'] : labels[state.phase];this.text(this.heading,title);this.text(this.detail,detail);this.text(this.button,button);this.button.hidden=!button;
+      const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${state.checkpoint??'level start'}.`,'Retry'],result:mission.def.l1?['Delivery complete. Outbreak: not contained.','The fire station shutter holds, for now.','Continue']:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
+      const [title,detail,button]=labels[state.phase];this.text(this.heading,title);this.text(this.detail,detail);this.text(this.button,button);this.button.hidden=!button;
       if(!this.panel.hidden&&!this.button.hidden)this.button.focus({preventScroll:true});
     }
-    if(state.result)for(const [key,element]of this.rows){const value=state.result[key];this.text(element,Array.isArray(value)?value.join(', ')||'None':String(Math.round(value*100)/100));}
+    if(state.result)for(const [key,element]of this.rows){
+      const value=state.result[key],row=element.previousElementSibling as HTMLElement;
+      row.hidden=element.hidden=value===undefined;
+      this.text(element,value===undefined?'':Array.isArray(value)?value.join(', ')||'None':typeof value==='boolean'?value?'✓':'—':String(Math.round(value*100)/100));
+    }
     const objective=mission.def.steps.find(s=>state.steps[s.id].status==='active');
     const anchor=state.marker?mission.def.anchors[state.marker]:undefined,player=this.world.entities.get(1);
     this.marker.hidden=!playing||!anchor||!player;
