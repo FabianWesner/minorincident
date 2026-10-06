@@ -1,0 +1,816 @@
+{
+  "date": "2026-10-06T20:18:01.608Z",
+  "reports": {
+    "desktop-200-current": {
+      "deterministic": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 307.65044981626414,
+            "jerkPeakMps3": 3240.0741577148438,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 708.2760967932667,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1214.1875945027416,
+            "jerkPeakMps3": 12218.805178903554,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 1.566618968431999,
+        "heroAnkleSamples": 190,
+        "heroTransitionLandmarkPeakM": 0.02073956514503227,
+        "npcAnkleStanceDriftP95Mps": [
+          0.001358603547916974,
+          0.35698670616268546
+        ],
+        "npcAnkleSamples": [
+          277,
+          260
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.10008674180101805,
+          0.1508361092666355
+        ],
+        "updateMsP50": 0.10000002384185791,
+        "updateMsP95": 0.20000004768371582,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 1077213,
+        "candidate": "stage1",
+        "animationTextureBytes": 671232,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "realtime": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 317.85612249644925,
+            "jerkPeakMps3": 3240.0741577148438,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615514
+          },
+          "civilian": {
+            "jerkRmsMps3": 719.8843280577332,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1234.087419527542,
+            "jerkPeakMps3": 12218.805178903554,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 1.566618968431999,
+        "heroAnkleSamples": 245,
+        "heroTransitionLandmarkPeakM": 0.023774081875586377,
+        "npcAnkleStanceDriftP95Mps": [
+          0.0013589972741292313,
+          0.34224149367728085
+        ],
+        "npcAnkleSamples": [
+          327,
+          338
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.10008674180101805,
+          0.15774301199488883
+        ],
+        "updateMsP50": 0.10000002384185791,
+        "updateMsP95": 0.30000007152557373,
+        "renderSubmitMsP50": 0.6999999284744263,
+        "renderSubmitMsP95": 0.8999999761581421,
+        "frameMsP95": 16.700000000000728,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 1077213,
+        "candidate": "stage1",
+        "animationTextureBytes": 671232,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "gpuSamplesMs": [
+        7.495583,
+        5.395956999999999,
+        2.797291,
+        1.86775,
+        2.489707,
+        2.708082,
+        3.45229,
+        3.86179,
+        6.093875,
+        6.2008730000000005,
+        4.6891240000000005,
+        6.3141240000000005,
+        3.7343330000000003,
+        3.056583,
+        3.58604,
+        2.901748,
+        4.508291,
+        5.449498999999999,
+        5.839749,
+        3.293707,
+        3.3658319999999997,
+        3.5807909999999996,
+        4.934874000000001,
+        4.976249,
+        5.462874,
+        5.275373999999999,
+        3.44404,
+        3.502665,
+        3.383249,
+        4.5475829999999995,
+        5.148332,
+        5.816041,
+        2.840541,
+        3.643957,
+        3.543208,
+        4.108208,
+        6.164999,
+        6.178458,
+        6.153666,
+        6.346498
+      ],
+      "emulation": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36"
+    },
+    "desktop-200-prototype": {
+      "deterministic": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 35.868146315156935,
+            "jerkPeakMps3": 296.0158170741357,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.000000000000384
+          },
+          "civilian": {
+            "jerkRmsMps3": 7.850336379052821,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.000000000001876
+          },
+          "infected": {
+            "jerkRmsMps3": 10.859370936052464,
+            "jerkPeakMps3": 48.0000000001152,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000033
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 1.227974980054693,
+        "heroAnkleSamples": 104,
+        "heroTransitionLandmarkPeakM": 0.020838176712902803,
+        "npcAnkleStanceDriftP95Mps": [
+          0.23857265759893037,
+          2.0873417822497227
+        ],
+        "npcAnkleSamples": [
+          198,
+          201
+        ],
+        "npcTransitionHeadPopPeakM": [
+          1.5395421044191135e-7,
+          1.1255705979777051e-7
+        ],
+        "updateMsP50": 0.10000002384185791,
+        "updateMsP95": 0.20000004768371582,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 1077213,
+        "candidate": "stage1",
+        "animationTextureBytes": 914432,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "realtime": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 31.429438720563994,
+            "jerkPeakMps3": 296.0158170741357,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.000000000001902
+          },
+          "civilian": {
+            "jerkRmsMps3": 8.06672492597586,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000193
+          },
+          "infected": {
+            "jerkRmsMps3": 11.358782365309759,
+            "jerkPeakMps3": 48.0000000001152,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000193
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 1.4118190061263827,
+        "heroAnkleSamples": 137,
+        "heroTransitionLandmarkPeakM": 0.020838176712902803,
+        "npcAnkleStanceDriftP95Mps": [
+          0.23857265759893037,
+          2.155282378747356
+        ],
+        "npcAnkleSamples": [
+          226,
+          263
+        ],
+        "npcTransitionHeadPopPeakM": [
+          1.5395421044191135e-7,
+          1.1255705979777051e-7
+        ],
+        "updateMsP50": 0.10000002384185791,
+        "updateMsP95": 0.3999999761581421,
+        "renderSubmitMsP50": 0.7000000476837158,
+        "renderSubmitMsP95": 0.8999999761581421,
+        "frameMsP95": 16.799999999999727,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 1077213,
+        "candidate": "stage1",
+        "animationTextureBytes": 914432,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "gpuSamplesMs": [
+        8.772332,
+        3.488124,
+        3.1928739999999998,
+        3.439958,
+        4.2752490000000005,
+        4.6403739999999996,
+        6.7096659999999995,
+        6.220124,
+        3.327541,
+        3.6436650000000004,
+        4.028791,
+        5.317749,
+        5.990374,
+        6.8490400000000005,
+        6.620249,
+        6.8606240000000005,
+        5.667749,
+        6.444374,
+        6.336791000000001,
+        6.216083,
+        6.371708,
+        4.281083,
+        2.9959569999999998,
+        3.3752489999999997,
+        3.896623,
+        5.259541,
+        5.028124999999999,
+        6.563666,
+        3.365666,
+        2.627332,
+        3.3837900000000003,
+        5.305958,
+        6.509333,
+        4.37379,
+        2.942832,
+        3.8425830000000003,
+        3.919665,
+        5.878625,
+        6.328832,
+        3.8640820000000002
+      ],
+      "emulation": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36"
+    },
+    "stage1-capture-boxes": [
+      [
+        [
+          {
+            "x": 58,
+            "y": 477,
+            "width": 55,
+            "height": 110
+          },
+          {
+            "x": 299,
+            "y": 395,
+            "width": 76,
+            "height": 115
+          },
+          {
+            "x": 632,
+            "y": 278,
+            "width": 101,
+            "height": 137
+          }
+        ],
+        [
+          {
+            "x": 762,
+            "y": 481,
+            "width": 72,
+            "height": 115
+          },
+          {
+            "x": 1036,
+            "y": 391,
+            "width": 58,
+            "height": 117
+          },
+          {
+            "x": 1344,
+            "y": 276,
+            "width": 109,
+            "height": 136
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "x": 238,
+            "y": 454,
+            "width": 76,
+            "height": 108
+          },
+          {
+            "x": 142,
+            "y": 415,
+            "width": 91,
+            "height": 124
+          },
+          {
+            "x": 578,
+            "y": 312,
+            "width": 96,
+            "height": 106
+          }
+        ],
+        [
+          {
+            "x": 940,
+            "y": 432,
+            "width": 76,
+            "height": 107
+          },
+          {
+            "x": 885,
+            "y": 435,
+            "width": 68,
+            "height": 115
+          },
+          {
+            "x": 1324,
+            "y": 308,
+            "width": 84,
+            "height": 121
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "x": 319,
+            "y": 549,
+            "width": 79,
+            "height": 113
+          },
+          {
+            "x": 82,
+            "y": 329,
+            "width": 81,
+            "height": 120
+          },
+          {
+            "x": 568,
+            "y": 301,
+            "width": 94,
+            "height": 93
+          }
+        ],
+        [
+          {
+            "x": 1059,
+            "y": 525,
+            "width": 83,
+            "height": 111
+          },
+          {
+            "x": 786,
+            "y": 353,
+            "width": 91,
+            "height": 125
+          },
+          {
+            "x": 1283,
+            "y": 304,
+            "width": 91,
+            "height": 101
+          }
+        ]
+      ]
+    ],
+    "stage1": {
+      "current": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 334.34843465351,
+            "jerkPeakMps3": 3240.0741577148438,
+            "turnPeakDegPerFrame": 12.000000000000005,
+            "angularAccelerationPeakRadps2": 753.9822368615503
+          },
+          "civilian": {
+            "jerkRmsMps3": 685.538050442609,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432
+          },
+          "infected": {
+            "jerkRmsMps3": 1175.2080864730424,
+            "jerkPeakMps3": 12218.805178903547,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 1.4782842540746584,
+        "heroAnkleSamples": 83,
+        "heroTransitionLandmarkPeakM": 0.02073956514503227,
+        "npcAnkleStanceDriftP95Mps": [
+          0.001351085842260803,
+          0.23816414082573345
+        ],
+        "npcAnkleSamples": [
+          143,
+          126
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.10008674180101805,
+          0.1507930713169998
+        ],
+        "updateMsP50": 0,
+        "updateMsP95": 0.10000002384185791,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 14752,
+        "candidate": "stage1",
+        "animationTextureBytes": 671232,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      },
+      "prototype": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 15.03000736830497,
+            "jerkPeakMps3": 123.80646937822935,
+            "turnPeakDegPerFrame": 1.7553633153941357,
+            "angularAccelerationPeakRadps2": 6.240531499928695
+          },
+          "civilian": {
+            "jerkRmsMps3": 7.679451253924172,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 3.7980646932601445,
+            "angularAccelerationPeakRadps2": 12.00000000000033
+          },
+          "infected": {
+            "jerkRmsMps3": 10.92632184526716,
+            "jerkPeakMps3": 48.0000000000844,
+            "turnPeakDegPerFrame": 2.96767433757426,
+            "angularAccelerationPeakRadps2": 12.000000000000037
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 1.227974980054693,
+        "heroAnkleSamples": 56,
+        "heroTransitionLandmarkPeakM": 0.020838176712902803,
+        "npcAnkleStanceDriftP95Mps": [
+          0.35336317674405643,
+          2.5607136855460197
+        ],
+        "npcAnkleSamples": [
+          128,
+          125
+        ],
+        "npcTransitionHeadPopPeakM": [
+          5.32092103911395e-8,
+          1.1255705979777051e-7
+        ],
+        "updateMsP50": 0,
+        "updateMsP95": 0.10000002384185791,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 14752,
+        "candidate": "stage1",
+        "animationTextureBytes": 732032,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      }
+    },
+    "pixel7-200-current": {
+      "deterministic": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 307.65044981626414,
+            "jerkPeakMps3": 3240.0741577148438,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 708.2760967932667,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1214.1875945027416,
+            "jerkPeakMps3": 12218.805178903554,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 1.566618968431999,
+        "heroAnkleSamples": 190,
+        "heroTransitionLandmarkPeakM": 0.02073956514503227,
+        "npcAnkleStanceDriftP95Mps": [
+          0.001358603547916974,
+          0.35698670616268546
+        ],
+        "npcAnkleSamples": [
+          277,
+          260
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.10008674180101805,
+          0.1508361092666355
+        ],
+        "updateMsP50": 0.5,
+        "updateMsP95": 1.100000023841858,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 5,
+        "triangles": 1074571,
+        "candidate": "stage1",
+        "animationTextureBytes": 671232,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "realtime": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 318.0158090789737,
+            "jerkPeakMps3": 3240.0741577148438,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615514
+          },
+          "civilian": {
+            "jerkRmsMps3": 720.2459881298105,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1234.7074082225313,
+            "jerkPeakMps3": 12218.805178903554,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 1.566618968431999,
+        "heroAnkleSamples": 244,
+        "heroTransitionLandmarkPeakM": 0.023774081875586377,
+        "npcAnkleStanceDriftP95Mps": [
+          0.0013589972741292313,
+          0.34224149367728085
+        ],
+        "npcAnkleSamples": [
+          326,
+          338
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.10008674180101805,
+          0.15774301199488883
+        ],
+        "updateMsP50": 0.7000000476837158,
+        "updateMsP95": 1.5,
+        "renderSubmitMsP50": 2.8000000715255737,
+        "renderSubmitMsP95": 4,
+        "frameMsP95": 16.700000000000728,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 1077213,
+        "candidate": "stage1",
+        "animationTextureBytes": 671232,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "gpuSamplesMs": [
+        2.418957,
+        2.114874,
+        2.61604,
+        3.736249,
+        4.588999,
+        5.461165,
+        4.434499000000001,
+        2.48429,
+        2.905874,
+        3.955165,
+        4.677374,
+        4.662833,
+        4.603875,
+        4.717374,
+        4.588957,
+        4.589625,
+        4.535332,
+        4.635207,
+        2.473957,
+        2.3995,
+        3.455999,
+        3.705583,
+        4.582832,
+        4.619956999999999,
+        4.584791,
+        4.761999,
+        4.594123,
+        4.617708,
+        4.588874,
+        4.754416,
+        4.707915,
+        4.635541,
+        4.637415,
+        4.786748,
+        4.591208,
+        4.633458,
+        4.534915,
+        4.6121229999999995,
+        4.57329,
+        2.071458
+      ],
+      "emulation": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Mobile Safari/537.36"
+    },
+    "pixel7-200-prototype": {
+      "deterministic": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 35.868146315156935,
+            "jerkPeakMps3": 296.0158170741357,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.000000000000384
+          },
+          "civilian": {
+            "jerkRmsMps3": 7.850336379052821,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.000000000001876
+          },
+          "infected": {
+            "jerkRmsMps3": 10.859370936052464,
+            "jerkPeakMps3": 48.0000000001152,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000033
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 1.227974980054693,
+        "heroAnkleSamples": 104,
+        "heroTransitionLandmarkPeakM": 0.020838176712902803,
+        "npcAnkleStanceDriftP95Mps": [
+          0.23857265759893037,
+          2.0873417822497227
+        ],
+        "npcAnkleSamples": [
+          198,
+          201
+        ],
+        "npcTransitionHeadPopPeakM": [
+          1.5395421044191135e-7,
+          1.1255705979777051e-7
+        ],
+        "updateMsP50": 0.6999999284744263,
+        "updateMsP95": 1.2999999523162842,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 5,
+        "triangles": 1074571,
+        "candidate": "stage1",
+        "animationTextureBytes": 914432,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "realtime": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 31.429438720563994,
+            "jerkPeakMps3": 296.0158170741357,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.000000000001902
+          },
+          "civilian": {
+            "jerkRmsMps3": 8.06672492597586,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000193
+          },
+          "infected": {
+            "jerkRmsMps3": 11.358782365309759,
+            "jerkPeakMps3": 48.0000000001152,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000193
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 1.4118190061263827,
+        "heroAnkleSamples": 137,
+        "heroTransitionLandmarkPeakM": 0.020838176712902803,
+        "npcAnkleStanceDriftP95Mps": [
+          0.23857265759893037,
+          2.155282378747356
+        ],
+        "npcAnkleSamples": [
+          226,
+          263
+        ],
+        "npcTransitionHeadPopPeakM": [
+          1.5395421044191135e-7,
+          1.1255705979777051e-7
+        ],
+        "updateMsP50": 0.7999999523162842,
+        "updateMsP95": 1.5,
+        "renderSubmitMsP50": 2.5,
+        "renderSubmitMsP95": 4.099999904632568,
+        "frameMsP95": 16.799999999999272,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 1077213,
+        "candidate": "stage1",
+        "animationTextureBytes": 914432,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "gpuSamplesMs": [
+        6.999291,
+        1.745541,
+        2.860957,
+        3.747165,
+        4.583416,
+        4.731374000000001,
+        3.7626250000000003,
+        2.2128319999999997,
+        3.020124,
+        4.184915,
+        5.441832,
+        5.076374,
+        4.984875,
+        2.849958,
+        4.057541,
+        4.006957,
+        5.147041,
+        4.15829,
+        3.704457,
+        3.636041,
+        2.463082,
+        2.920458,
+        3.74925,
+        4.665248,
+        2.409207,
+        2.923249,
+        3.6738329999999997,
+        4.561749,
+        4.60154,
+        4.4844990000000005,
+        4.76004,
+        4.720083,
+        4.1806659999999995,
+        2.293374,
+        2.8475409999999997,
+        3.650083,
+        3.3724570000000003,
+        3.974999,
+        3.8127500000000003,
+        2.499374
+      ],
+      "emulation": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Mobile Safari/537.36"
+    }
+  },
+  "errors": []
+}

@@ -7,7 +7,8 @@ export interface PriorityVoice {
 export class VoiceLimiter {
     readonly voices = new Map<number, PriorityVoice>();
     limit: number;
-    constructor(tier: 'high' | 'low') { this.limit = tier === 'high' ? 32 : 16; }
+    constructor(tier: 'high' | 'low', private readonly reserved = 0) { this.limit = tier === 'high' ? 32 : 16; }
+    private get capacity(): number { return this.limit - this.reserved; }
     private lowest(): PriorityVoice | undefined {
         let victim: PriorityVoice | undefined;
         for (const voice of this.voices.values())
@@ -15,9 +16,9 @@ export class VoiceLimiter {
                 victim = voice;
         return victim;
     }
-    canAdd(priority: number): boolean { return this.voices.size < this.limit || priority > this.lowest()!.priority; }
+    canAdd(priority: number): boolean { return this.voices.size < this.capacity || priority > this.lowest()!.priority; }
     add(voice: PriorityVoice, time?: number): boolean {
-        if (this.voices.size >= this.limit) {
+        if (this.voices.size >= this.capacity) {
             const victim = this.lowest()!;
             if (voice.priority <= victim.priority) {
                 voice.stop();
@@ -32,7 +33,7 @@ export class VoiceLimiter {
     remove(id: number): void { this.voices.delete(id); }
     setTier(tier: 'high' | 'low'): void {
         this.limit = tier === 'high' ? 32 : 16;
-        while (this.voices.size > this.limit) {
+        while (this.voices.size > this.capacity) {
             const v = this.lowest()!;
             this.remove(v.id);
             v.stop();

@@ -3,6 +3,8 @@ import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { audioCues, audioCategories, audioFile, eventCues, telegraphCues } from '../../../src/data/audioCues';
 import { infectedDefinitions } from '../../../src/data/infected';
+import imports from '../../../assets/audio/imports.json';
+import { audioCredits } from '../../../src/data/audioCredits';
 test('T-E16-01a @E16 @E16-AC01 every sim event and archetype resolves to a real sprite cue', () => {
     const source = readFileSync('src/sim/world/types.ts', 'utf8') + readFileSync('src/data/audioEvents.ts', 'utf8');
     const types = [...source.matchAll(/type:\s*((?:'[^']+'\s*\|\s*)*'[^']+')/g)].flatMap(m => [...m[1].matchAll(/'([^']+)'/g)].map(t => t[1]));
@@ -43,7 +45,7 @@ test('T-E16-20 @E16 @E16-AC20 every audio file has an allowed license/hash and n
     for (const file of files) {
         const line = licenses.split('\n').find(l => l.startsWith(`| ${file} |`));
         expect(line, file).toBeDefined();
-        expect(line).toMatch(/self-made \(MIT\)/);
+        expect(line).toMatch(/self-made \(MIT\)|CC0|CC-BY (3\.0|4\.0)/);
         expect(line).toContain(hash(`${root}/${file}`));
         localHashes.add(hash(`${root}/${file}`));
         expect(file).toMatch(/\.(webm|m4a)$/);
@@ -56,4 +58,20 @@ test('T-E16-20 @E16 @E16-AC20 every audio file has an allowed license/hash and n
             if (entry.isFile() && !entry.parentPath.includes('/musics') && /\.(mp3|wav|ogg|m4a|webm)$/i.test(entry.name))
                 expect(localHashes.has(hash(`${entry.parentPath}/${entry.name}`)), entry.name).toBe(false);
     expect(readFileSync('THIRD_PARTY_NOTICES.md', 'utf8')).toContain('src/audio/synthesis.ts');
+    expect(readFileSync('assets/audio/LICENSES.md', 'utf8')).toBe(licenses);
+    for (const [id, source] of Object.entries(imports.sources)) {
+        expect(['CC0', 'CC-BY 3.0', 'CC-BY 4.0'], id).toContain(source.license);
+        expect(source.url).toMatch(/^https:\/\//);
+        expect(source.licenseUrl).toMatch(/^https:\/\/creativecommons\.org\/(licenses\/by\/(3\.0|4\.0)|publicdomain\/zero\/1\.0)\/$/);
+        expect(source.sha256).toMatch(/^[a-f0-9]{64}$/);
+        if (source.license.startsWith('CC-BY')) {
+            expect(audioCredits.some(c => c.author === source.author && c.url === source.url), id).toBe(true);
+            expect(readFileSync('THIRD_PARTY_NOTICES.md', 'utf8')).toContain(source.author);
+        }
+    }
+    for (const [id, recipe] of Object.entries(imports.cues)) {
+        expect(audioCues[id], id).toBeDefined();
+        expect(imports.sources[recipe.source as keyof typeof imports.sources], id).toBeDefined();
+        expect(licenses).toContain(`| ${id} |`);
+    }
 });

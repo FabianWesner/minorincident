@@ -21,4 +21,4 @@ test('T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warni
     expect(basename(path)).not.toMatch(/testApi|Debug/);
     expect(readFileSync(`dist${path}`, 'utf8')).not.toContain('__SS__');
   }
-}, 60_000);
+}, 180_000); // Includes three builds/checks on the shared development Mac.

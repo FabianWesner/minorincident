@@ -12398,6 +12398,10 @@
     "status": "placeholder",
     "tier": "hero",
     "glb": "public/assets/models/veh.courier-bike.glb",
+    "lods": {
+      "lod1": "public/assets/models/veh.courier-bike.lod1.glb",
+      "lod2": "public/assets/models/veh.courier-bike.lod2.glb"
+    },
     "dimensions": {
       "x": 1.6,
       "y": 1.3,
@@ -12995,29 +12999,29 @@
   {
     "id": "prop.yard-gate",
     "category": "prop",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.yard-gate.glb",
     "dimensions": {
       "x": 0.12,
       "y": 1.4,
-      "z": 1.3,
-      "tolerance": 0.1
+      "z": 1.76,
+      "tolerance": 0.3
     },
     "forward": "+X",
-    "frontNodes": [
-      "front"
-    ],
+    "frontNodes": [],
     "requiredNodes": [
       "root",
       "gate",
-      "post_a",
-      "post_b"
+      "hingeSocket"
     ],
     "animatedNodes": [
       "gate"
     ],
-    "sockets": [],
+    "sockets": [
+      "hingeSocket",
+      "latchSocket"
+    ],
     "budget": {
       "triangles": 12000,
       "materials": 12,
@@ -13028,6 +13032,11 @@
     "world": {
       "token": "woodWarm",
       "solid": true
+    },
+    "sourceGlb": "assets/prop.yard-gate/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.yard-gate.lod1.glb",
+      "lod2": "public/assets/models/prop.yard-gate.lod2.glb"
     }
   },
   {
@@ -13233,14 +13242,14 @@
   {
     "id": "kit.car-wash",
     "category": "building",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/kit.car-wash.glb",
     "dimensions": {
       "x": 5,
-      "y": 4,
-      "z": 10,
-      "tolerance": 0.1
+      "y": 4.584,
+      "z": 5.9,
+      "tolerance": 0.3
     },
     "forward": "+X",
     "frontNodes": [
@@ -13248,15 +13257,14 @@
     ],
     "requiredNodes": [
       "root",
+      "curtain",
       "brush_a",
       "brush_b",
       "brush_c",
-      "kiosk",
-      "start_button",
-      "curtain",
-      "vfx_foam"
+      "start_button"
     ],
     "animatedNodes": [
+      "curtain",
       "brush_a",
       "brush_b",
       "brush_c"
@@ -13272,6 +13280,11 @@
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "sourceGlb": "assets/kit.car-wash/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.car-wash.lod1.glb",
+      "lod2": "public/assets/models/kit.car-wash.lod2.glb"
     }
   },
   {
