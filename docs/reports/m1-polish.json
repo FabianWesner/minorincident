@@ -1,0 +1,503 @@
+{
+  "job": "m1-polish",
+  "findings": {
+    "VQA-08": "fixed",
+    "VQA-09": "fixed",
+    "VQA-12": "fixed",
+    "VQA-13": "fixed",
+    "VQA-14": "fixed"
+  },
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "test:unit": {
+      "status": "pass",
+      "files": 57,
+      "tests": 174
+    },
+    "test:smoke": {
+      "status": "pass",
+      "unitSimTests": 3,
+      "browserTests": 22
+    },
+    "verify E19": {
+      "status": "pass",
+      "unitSimTests": 79,
+      "browserTests": 49,
+      "checks": [
+        {
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "lint"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npx",
+            "vitest",
+            "run",
+            "-t",
+            "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--maxWorkers=1",
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile=test-results/epics/E19/vitest.json"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/e2e-lock.sh",
+            "npx",
+            "playwright",
+            "test",
+            "--grep",
+            "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+          ],
+          "exitCode": 0
+        }
+      ]
+    },
+    "targetedFinalFixes": {
+      "status": "pass",
+      "browserTests": 4
+    }
+  },
+  "review": {
+    "headless": true,
+    "realInput": true,
+    "desktop": {
+      "viewport": [
+        1600,
+        900
+      ],
+      "quality": "high"
+    },
+    "portrait": {
+      "viewport": [
+        390,
+        844
+      ],
+      "quality": "low"
+    },
+    "positions": [
+      [
+        -14,
+        -4
+      ],
+      [
+        42,
+        -6.5
+      ],
+      [
+        56,
+        0
+      ],
+      [
+        70,
+        -7
+      ],
+      [
+        75,
+        -4
+      ]
+    ]
+  },
+  "measurements": {
+    "desktop": [
+      {
+        "label": "start-separation",
+        "player": {
+          "x": -14,
+          "y": 0.7049999833106995,
+          "z": -4.078527450561523,
+          "yaw": 4.712388602916026
+        },
+        "kills": 0,
+        "tracker": "Go to Joe's Diner for breakfast · 56 m",
+        "actionOverlap": false,
+        "nearest": [],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "label": "diner-toast-sign",
+        "player": {
+          "x": 41.99880599975586,
+          "y": 0.7049999833106995,
+          "z": -6.408504962921143,
+          "yaw": 7.840938383704583
+        },
+        "kills": 0,
+        "tracker": "Run! Find something better at the hardware store · 28 m",
+        "actionOverlap": false,
+        "nearest": [
+          10.656921676679438
+        ],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "label": "tracker-V5",
+        "player": {
+          "x": 55.87567138671875,
+          "y": 0.7049999833106995,
+          "z": -0.001138418447226286,
+          "yaw": 6.2740291337314
+        },
+        "kills": 1,
+        "tracker": "Run! Find something better at the hardware store · 16 m",
+        "actionOverlap": false,
+        "nearest": [
+          17.32672205751069
+        ],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "label": "hardware-toast",
+        "player": {
+          "x": 70.07955169677734,
+          "y": 0.7049972414970398,
+          "z": -6.5995941162109375,
+          "yaw": 8.050104866689043
+        },
+        "kills": 1,
+        "tracker": "Choose bat, crowbar or machete at the display · 1 m",
+        "actionOverlap": false,
+        "nearest": [],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "label": "hardware-contact",
+        "player": {
+          "x": 74.75133514404297,
+          "y": 0.7051286101341248,
+          "z": -3.420254707336426,
+          "yaw": 14.137166941154069
+        },
+        "kills": 1,
+        "tracker": "Clear the store — LEFT weapon, RIGHT kick · 6 m",
+        "actionOverlap": false,
+        "nearest": [
+          7.358409099946555,
+          7.1668945210159185,
+          9.173735972508556,
+          7.872137388977351,
+          13.894674990165218
+        ],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "label": "hardware-combat-12",
+        "player": {
+          "x": 74.7514877319336,
+          "y": 0.7050971388816833,
+          "z": -3.5698368549346924,
+          "yaw": 0.059077575531922416
+        },
+        "kills": 5,
+        "tracker": "Clear the store — LEFT weapon, RIGHT kick · 6 m",
+        "actionOverlap": false,
+        "nearest": [
+          2.3446338361272265
+        ],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "label": "hardware-corpses",
+        "player": {
+          "x": 74.7514877319336,
+          "y": 0.7049971222877502,
+          "z": -3.5698349475860596,
+          "yaw": 0.059076354259420316
+        },
+        "kills": 6,
+        "tracker": "Clear the store — LEFT weapon, RIGHT kick · 6 m",
+        "actionOverlap": false,
+        "nearest": [],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      }
+    ],
+    "portrait": [
+      {
+        "label": "start-separation",
+        "player": {
+          "x": -14.001200675964355,
+          "y": 0.7049993276596069,
+          "z": -4.294995307922363,
+          "yaw": 4.7149057091054765
+        },
+        "kills": 0,
+        "tracker": "Go to Joe's Diner for breakfast · 56 m",
+        "actionOverlap": false,
+        "nearest": [],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "label": "diner-toast-sign",
+        "player": {
+          "x": 42.00034713745117,
+          "y": 0.7051136493682861,
+          "z": -6.142431735992432,
+          "yaw": 7.855011177040259
+        },
+        "kills": 0,
+        "tracker": "Run! Find something better at the hardware store · 28 m",
+        "actionOverlap": false,
+        "nearest": [
+          5.1169068121402
+        ],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "label": "tracker-V5",
+        "player": {
+          "x": 55.62531280517578,
+          "y": 0.7049978375434875,
+          "z": -0.001684025046415627,
+          "yaw": 6.278906897569824
+        },
+        "kills": 2,
+        "tracker": "Run! Find something better at the hardware store · 16 m",
+        "actionOverlap": false,
+        "nearest": [],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "label": "hardware-toast",
+        "player": {
+          "x": 70.04554748535156,
+          "y": 0.7049999833106995,
+          "z": -6.666119575500488,
+          "yaw": 7.989618271160532
+        },
+        "kills": 2,
+        "tracker": "Choose bat, crowbar or machete at the display · 1 m",
+        "actionOverlap": false,
+        "nearest": [],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "label": "hardware-contact",
+        "player": {
+          "x": 74.99668884277344,
+          "y": 0.7049999833106995,
+          "z": -3.5136001110076904,
+          "yaw": 7.847469530026498
+        },
+        "kills": 2,
+        "tracker": "Clear the store — LEFT weapon, RIGHT kick · 6 m",
+        "actionOverlap": false,
+        "nearest": [
+          7.479393519835902,
+          7.325550476123308,
+          9.813880586865963,
+          8.070964605920574,
+          14.031433556242693
+        ],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "label": "hardware-corpses",
+        "player": {
+          "x": 74.99713134765625,
+          "y": 0.7050885558128357,
+          "z": -3.5812883377075195,
+          "yaw": 0.12416169935036597
+        },
+        "kills": 6,
+        "tracker": "Clear the store — LEFT weapon, RIGHT kick · 6 m",
+        "actionOverlap": false,
+        "nearest": [
+          2.665332750860085
+        ],
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      }
+    ],
+    "corpseDepth": [
+      {
+        "age": 180,
+        "side": "behind",
+        "changed": 0,
+        "upperChanged": 0,
+        "pixels": 72386,
+        "overlap": 0,
+        "mixed": 0,
+        "mixedRatio": 0
+      },
+      {
+        "age": 180,
+        "side": "front",
+        "changed": 7878,
+        "upperChanged": 0,
+        "pixels": 72386,
+        "overlap": 5948,
+        "mixed": 0,
+        "mixedRatio": 0
+      },
+      {
+        "age": 360,
+        "side": "behind",
+        "changed": 30,
+        "upperChanged": 13,
+        "pixels": 72386,
+        "overlap": 0,
+        "mixed": 0,
+        "mixedRatio": 0
+      },
+      {
+        "age": 360,
+        "side": "front",
+        "changed": 7885,
+        "upperChanged": 0,
+        "pixels": 72386,
+        "overlap": 5948,
+        "mixed": 0,
+        "mixedRatio": 0
+      },
+      {
+        "age": 450,
+        "side": "behind",
+        "changed": 50,
+        "upperChanged": 9,
+        "pixels": 72386,
+        "overlap": 0,
+        "mixed": 0,
+        "mixedRatio": 0
+      },
+      {
+        "age": 450,
+        "side": "front",
+        "changed": 3922,
+        "upperChanged": 0,
+        "pixels": 72386,
+        "overlap": 5948,
+        "mixed": 0,
+        "mixedRatio": 0
+      },
+      {
+        "age": 539,
+        "side": "behind",
+        "changed": 0,
+        "upperChanged": 0,
+        "pixels": 72386,
+        "overlap": 0,
+        "mixed": 0,
+        "mixedRatio": 0
+      },
+      {
+        "age": 539,
+        "side": "front",
+        "changed": 0,
+        "upperChanged": 0,
+        "pixels": 72386,
+        "overlap": 5948,
+        "mixed": 0,
+        "mixedRatio": 0
+      }
+    ],
+    "lowPortraitScenery": [
+      {
+        "spot": {
+          "name": "01-porch",
+          "x": -14,
+          "z": -7
+        },
+        "triangles": 336051,
+        "drawCalls": 236,
+        "medianFps": 227.27272727274607,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "spot": {
+          "name": "02-crescent",
+          "x": 0,
+          "z": 0
+        },
+        "triangles": 394621,
+        "drawCalls": 242,
+        "medianFps": 263.1578947368925,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "spot": {
+          "name": "03-connection",
+          "x": 27,
+          "z": 0
+        },
+        "triangles": 408015,
+        "drawCalls": 215,
+        "medianFps": 285.7142857142857,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "spot": {
+          "name": "04-diner",
+          "x": 42,
+          "z": -6.5
+        },
+        "triangles": 328751,
+        "drawCalls": 225,
+        "medianFps": 277.77777777789004,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "spot": {
+          "name": "05-main",
+          "x": 56,
+          "z": 0
+        },
+        "triangles": 357966,
+        "drawCalls": 256,
+        "medianFps": 208.33333333336492,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "spot": {
+          "name": "06-hardware",
+          "x": 70,
+          "z": -7
+        },
+        "triangles": 283800,
+        "drawCalls": 196,
+        "medianFps": 303.03030303036985,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "spot": {
+          "name": "07-shop",
+          "x": 70,
+          "z": 47
+        },
+        "triangles": 335529,
+        "drawCalls": 177,
+        "medianFps": 285.7142857142857,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      }
+    ]
+  },
+  "capturesDeleted": true,
+  "integrationCommits": [
+    "bc25932",
+    "08bade9",
+    "6b2e233"
+  ],
+  "deletedCaptureAndRecordingFiles": 245
+}

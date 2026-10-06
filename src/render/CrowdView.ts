@@ -9,6 +9,7 @@ import { AssetRegistry } from '../assets/registry';
 import manifest from '../assets/manifest.json';
 import { civilianRoles } from '../data/npcs';
 import { infectedDefinitions } from '../data/infected';
+import type { EntitySnapshot } from '../sim/world/types';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { createInfectedPlaceholder } from './characters/infectedPlaceholder';
 import type { View } from './View';
@@ -30,6 +31,7 @@ export class CrowdView extends Group {
   private readonly batches = new Map<string, Batch>();
   private readonly transform = new Matrix4();
   private readonly motion = new MotionPhase();
+  private readonly corpses = new Map<number, { x: number; z: number; sourceX: number; sourceZ: number; deadAt: number }>();
   private readonly telegraphs: InstancedMesh[] = [];
   private readonly shadows: InstancedMesh;
   private readonly feedback = new Map<number, { mask: number; strength: number }>();
@@ -112,6 +114,7 @@ export class CrowdView extends Group {
   }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   update(view?: View): void {
+    for (const [id, pose] of this.corpses) if (!this.world.entities.get(id)?.infected || this.world.entities.get(id)!.health.current > 0 || this.world.tick - pose.deadAt > 540) this.corpses.delete(id);
     for (const batch of this.batches.values()) batch.count = 0;
     for (const mesh of this.telegraphs) mesh.count = 0; this.shadows.count = 0; this.caps.count = 0;
     for (const [id, feedback] of this.feedback) { const e = this.world.entities.get(id); if (!e?.combat || e.hidden || e.infected?.hidden) this.feedback.delete(id); else if (e.health.current > 0) feedback.mask = 0; }
@@ -120,7 +123,7 @@ export class CrowdView extends Group {
     if (view) this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     const heroes = new Set<number>();
     if (!this.low) {
-      const nearest = [...this.world.entities.iterate()].filter(e => e.faction === 'infected' && e.combat && e.health.current > 0 && !e.hidden && !e.infected?.hidden && e.archetype !== 'infected.crow')
+      const nearest = [...this.world.entities.iterate()].filter(e => e.faction === 'infected' && e.combat && (e.health.current > 0 || this.world.tick - (e.infected?.deadAt ?? 0) < 540) && !e.hidden && !e.infected?.hidden && e.archetype !== 'infected.crow')
         .map(e => ({ e, distance: Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z) }))
         .filter(({ e, distance }) => {
           if (distance > 12) return false;
@@ -136,7 +139,7 @@ export class CrowdView extends Group {
     for (const e of this.world.entities.iterate()) {
       if (e.id === 1 || e.faction !== 'infected' || !e.combat) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
-      if (e.hidden || e.infected?.hidden || distance > this.cullDistance || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > 1920) continue;
+      if (e.hidden || e.infected?.hidden || distance > this.cullDistance || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > 540) continue;
       const availableLod = this.low ? 'lod2' : 'lod1';
       const role = this.batches.has(`${e.archetype}:${availableLod}`) ? e.archetype : 'infected.runner';
       const variant = e.infected?.variant;
@@ -159,7 +162,7 @@ export class CrowdView extends Group {
       const tick = distance > 35 ? Math.floor(this.world.tick / 2) * 2 : this.world.tick;
       const motion = this.motion.sample(e.id, tick, e.transform.x, e.transform.z), reaction = e.combat.reaction;
       const age = reaction ? (this.world.tick - reaction.started) / 60 : Infinity;
-      const death = (['death-back', 'death-side', 'death-crumple'] as const)[(reaction?.index ?? e.id) % 3];
+      const death = e.archetype === 'infected.crawler' ? 'death-side' : 'death-back';
       let clip: typeof infectedClips[number] = b.state === 'dead' ? death : b.legLost || e.archetype === 'infected.crawler' ? 'crawl' : b.state === 'attack' ? this.world.tick < b.until ? 'windup' : 'swing' : motion.speed > 2 ? 'infected-run' : motion.speed > .06 ? 'shamble' : 'idle';
       if (reaction && age < (reaction.heavy ? 1.34 : .43) && b.state !== 'dead') clip = reaction.heavy ? age < .48 ? reaction.index % 2 ? 'knockdown' : 'flung' : age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
       if (e.infectionRise) clip = 'infection-rise';
@@ -168,8 +171,10 @@ export class CrowdView extends Group {
       const phase = e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? Math.min(1, (this.world.tick - b.deadAt) / 60 / duration) : clip === 'windup' ? Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : duration)) : strides[clip] ? motion.distance / (strides[clip] * batch.strideScale) % 1 : (tick / 60 + e.id * .137) / duration % 1;
       const frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1), tint = variantShirts[b.variant] ?? batch.shirt;
       const flight = reaction ? Math.max(0, 1 - age / .28) : 0;
-      const x = e.transform.x + (reaction ? (reaction.from.x - reaction.to.x) * flight * flight : 0), z = e.transform.z + (reaction ? (reaction.from.z - reaction.to.z) * flight * flight : 0);
-      const fade = b.state === 'dead' ? Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 1800) / 120)) : 0;
+      const resting = b.state === 'dead' ? this.corpsePosition(e) : e.transform;
+      const settle = b.state === 'dead' ? Math.min(1, (this.world.tick - b.deadAt) / 60) : 0;
+      const x = e.transform.x + (resting.x - e.transform.x) * settle + (reaction ? (reaction.from.x - reaction.to.x) * flight * flight : 0), z = e.transform.z + (resting.z - e.transform.z) * settle + (reaction ? (reaction.from.z - reaction.to.z) * flight * flight : 0);
+      const fade = b.state === 'dead' ? Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 360) / 180)) : 0;
       if (e.archetype === 'infected.crow') {
         for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.state.setXYZW(batch.count++, frame, 0, 0, feedback?.strength ?? 0); }
       } else {
@@ -187,6 +192,20 @@ export class CrowdView extends Group {
     this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0;
     if (this.caps.count) this.caps.instanceMatrix.needsUpdate = true;
     if (this.shadows.count) this.shadows.instanceMatrix.needsUpdate = true;
+  }
+  /** Keep settled bodies on clear ground, giving each a readable footprint.
+   * This is presentation only; damage and revive continue to use sim transforms. */
+  private corpsePosition(e: EntitySnapshot) {
+    const deadAt = e.infected!.deadAt, previous = this.corpses.get(e.id);
+    if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z) return previous;
+    const pose = { x: e.transform.x, z: e.transform.z, sourceX: e.transform.x, sourceZ: e.transform.z, deadAt };
+    const clear = (x: number, z: number) => this.world.infected?.nav.clear(x, z, .6) && [...this.corpses].every(([id, p]) => id === e.id || Math.hypot(x - p.x, z - p.z) >= 1.25);
+    if (!clear(pose.x, pose.z)) search: for (const radius of [.7, 1.4, 2.1]) for (let i = 0; i < 8; i++) {
+      const angle = e.transform.yaw + Math.PI / 2 + i * Math.PI / 4;
+      const x = e.transform.x + Math.cos(angle) * radius, z = e.transform.z + Math.sin(angle) * radius;
+      if (clear(x, z) && this.world.infected!.nav.visible(e.transform, { x, z }, .35)) { pose.x = x; pose.z = z; break search; }
+    }
+    this.corpses.set(e.id, pose); return pose;
   }
   flash(id: number, strength: number): void {
     const e = this.world.entities.get(id); if (!e?.combat || e.faction !== 'infected') return;
@@ -215,6 +234,6 @@ export class CrowdView extends Group {
     this.heroSlots.clear();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); (batch.mesh.material as MeshLambertNodeMaterial).dispose(); batch.mesh.dispose(); batch.texture.dispose(); }
     for (const mesh of [...this.telegraphs, this.shadows, this.caps]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
-    this.batches.clear(); this.clear(); void this.registry.dispose();
+    this.batches.clear(); this.corpses.clear(); this.clear(); void this.registry.dispose();
   }
 }

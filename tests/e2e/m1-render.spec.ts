@@ -43,6 +43,10 @@ test('M1-27 @E19 real diner combat and wheel zoom keep survivor colour blocks fr
   for (let i = 0; i < 130 && !await page.evaluate(() => window.__SS__!.missions.state()!.outbreak!.released); i++) {
     await page.evaluate(() => window.__SS__!.step(30));
   }
+  // Independent brains may engage the nearby survivor before all victims turn.
+  // Verify kills against this encounter while retaining the blood/surface assertions.
+  const encounter = await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0).length);
+  expect(encounter).toBeGreaterThan(0);
   await page.mouse.wheel(0, -500); await page.evaluate(() => window.__SS__!.step(30));
   for (let turn = 0; turn < 100; turn++) {
     const target = await page.evaluate(() => {
@@ -56,7 +60,7 @@ test('M1-27 @E19 real diner combat and wheel zoom keep survivor colour blocks fr
   }
   await page.evaluate(async () => { const a = window.__SS__!; await a.step(90); a.vfx.stepRender(1); a.vfx.stepRender(.5); });
   const state = await page.evaluate(() => window.__SS__!.getState());
-  expect(state.render.vfx!.kills).toBeGreaterThanOrEqual(4);
+  expect(state.render.vfx!.kills).toBeGreaterThanOrEqual(encounter);
   expect(state.render.vfx!.decals).toBeGreaterThan(0);
   expect(state.render.character!.bloodCoverage).toBeGreaterThan(0);
   expect(state.render.camera.zoom).toBeLessThan(1);
@@ -104,7 +108,7 @@ test('M1-28 @E19 corpses behind and in front of the survivor preserve depth thro
   await page.evaluate(() => window.__SS__!.settings.set({ idPass: false }));
   const samples = [];
   const solid = new Map<string, PNG>();
-  for (const age of [180, 1800, 1860, 1919]) {
+  for (const age of [180, 360, 450, 539]) {
     await page.evaluate(async ({ id, age }) => { const a = window.__SS__!; a.teleport(id, { x: 20, z: 20 }); await a.step(Math.max(0, a.getEntity(id)!.infected!.deadAt + age - a.tick())); }, { id, age });
     const ageReference = await shot(page, `depth-reference-${age}`);
     for (const [side, offset] of [['behind', -.65], ['front', .65]] as const) {
@@ -127,7 +131,7 @@ test('M1-28 @E19 corpses behind and in front of the survivor preserve depth thro
       samples.push({ age, side, changed, upperChanged, pixels, overlap, mixed, mixedRatio: mixed / Math.max(1, overlap) });
       writeFileSync(`${output}/depth-metrics.json`, JSON.stringify(samples, null, 2));
       expect(upperChanged / pixels, 'ground corpse cannot paint over the upper body').toBeLessThan(.005);
-      if (age === 1860 && side === 'front') expect(mixed / Math.max(1, overlap), 'fade samples must preserve opaque depth, not blend a corpse through the survivor').toBeLessThan(.15);
+      if (age === 450 && side === 'front') expect(mixed / Math.max(1, overlap), 'fade samples must preserve opaque depth, not blend a corpse through the survivor').toBeLessThan(.15);
     }
   }
   writeFileSync(`${output}/depth-metrics.json`, JSON.stringify(samples, null, 2));

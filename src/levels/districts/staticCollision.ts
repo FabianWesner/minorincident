@@ -11,6 +11,9 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
   // Keep them while replacing only placement footprints with GLB geometry.
   const authored = fallback.filter(c => !placementIds.has(c.id));
   return authored.concat(placements.flatMap(p => {
+    // Low flower strips reuse the hedge mesh, but never its walking obstacle
+    // or a stale district footprint from an earlier export.
+    if (p.assetId === 'prop.flower') return [];
     const shape = sources[p.assetId];
     if (!shape) return fallback.filter(c => c.id === p.id);
     return shape.boxes.map((box, index) => {
