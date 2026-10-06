@@ -14,7 +14,7 @@ for (const tier of ['high', 'low'] as const) test(`T-E08-11-${tier} @E08 @E08-AC
     w.npcs!.setQuality(tier);
     for (const e of w.entities.iterate()) if (e.civilian) expect(w.districts!.nav.walkable([e.transform.x, e.transform.z])).toBe(true);
     const expected = npcs.density[level - 1] * (tier === 'low' ? .6 : 1), bot = new NpcPatrol(w), times: number[] = [];
-    const corgi = [...w.entities.iterate()].find(e => e.companion)!; 
+    const corgi = [...w.entities.iterate()].find(e => e.companion)!;
     let total = 0, distance = 0, attacks = 0; const infectionEvents: GameEvent[] = [];
     const stop = w.events.on('civilian.state', e => { if ('id' in e && e.id === corgi.id) infectionEvents.push(e); });
     const stopAttack = w.events.on('combat.attack', () => { attacks++; });

@@ -1,0 +1,246 @@
+[
+  {
+    "id": "E08-AC01",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "T-E08-01 @E08 @E08-AC01 W0 civ-street 30 routines never stuck over five minutes",
+        "file": "tests/sim/npc/civilians.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC02",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "T-E08-02 @E08 @E08-AC02 attack panic within .5s moves away over 3s",
+        "file": "tests/sim/npc/civilians.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC03",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "T-E08-03 @E08 @E08-AC03 50 seeded cycles retain clothes/body position and exact tick timings/eyes",
+        "file": "tests/sim/npc/civilians.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC04",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "T-E08-04 @E08 @E08-AC04 three-minute combat bot: corgi close 95% and no player obstruction",
+        "file": "tests/sim/npc/followers.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC05",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "T-E08-05 @E08 @E08-AC05 approaching offscreen threat within 18m barks with unit direction",
+        "file": "tests/sim/npc/followers.test.ts",
+        "runner": "vitest"
+      },
+      {
+        "title": "T-E08-05-browser @E08 @E08-AC05 bark from real camera frustum is directional and reaches HUD",
+        "file": "e2e/npc.spec.ts",
+        "runner": "playwright"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC06",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "T-E08-06 @E08 @E08-AC06 escort navigates maze behind moving player with no wall crossing",
+        "file": "tests/sim/npc/followers.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC07",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "T-E08-07 @E08 @E08-AC07 2s stand revives 50%; unattended 20s down fails mission",
+        "file": "tests/sim/npc/followers.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC08",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "T-E08-08 @E08 @E08-AC08 stand interaction toggles escort follow/wait with visible overhead icons",
+        "file": "e2e/npc.spec.ts",
+        "runner": "playwright"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC09",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "T-E08-09 @E08 @E08-AC09 braking cars stop for player/civilian and cannot overlap crossing walkers",
+        "file": "tests/sim/npc/traffic.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC10",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "T-E08-10 @E08 @E08-AC10 corgi fallback has complete required joints/socket, +X and recognizable low proportions",
+        "file": "tests/unit/render/npc.test.ts",
+        "runner": "vitest"
+      },
+      {
+        "title": "T-E08-10-browser @E08 @E08-AC10 placeholder corgi turntable and runtime node contract",
+        "file": "e2e/npc.spec.ts",
+        "runner": "playwright"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC11",
+    "taggedTestsPass": true,
+    "signOff": "partial",
+    "tests": [
+      {
+        "title": "T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L6 first three-minute objective-patrol runs: density and immunity",
+        "file": "tests/sim/npc/campaign.test.ts",
+        "runner": "vitest"
+      },
+      {
+        "title": "T-E08-11-low @E08 @E08-AC11 @E08-AC17 L1-L6 first three-minute objective-patrol runs: density and immunity",
+        "file": "tests/sim/npc/campaign.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC12",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "T-E08-12 @E08 @E08-AC12 kill/knockback rescue only during grab",
+        "file": "tests/sim/npc/civilians.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC13",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "@E08 @E08-AC13 melee and shots both finish the vulnerable rising body",
+        "file": "tests/sim/npc/civilians.test.ts",
+        "runner": "vitest"
+      },
+      {
+        "title": "T-E08-13 @E08 @E08-AC13 finishing eyes only; 100 real crowd shots pass through living people",
+        "file": "tests/sim/npc/civilians.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC14",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "T-E08-14 @E08 @E08-AC14 full cap postpones rising; mass turning never exceeds L1 cap/chain",
+        "file": "tests/sim/npc/civilians.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC15",
+    "taggedTestsPass": true,
+    "signOff": "partial",
+    "tests": [
+      {
+        "title": "T-E08-15 @E08 @E08-AC15 protected kids/brother never bitten, targeted or gored in full L2 duration",
+        "file": "tests/sim/npc/followers.test.ts",
+        "runner": "vitest"
+      },
+      {
+        "title": "@E08 @E08-AC15 unattended brother fails mission while remaining downed, never dead or bitten",
+        "file": "tests/sim/npc/followers.test.ts",
+        "runner": "vitest"
+      },
+      {
+        "title": "@E08 @E08-AC15 ten-minute actual L2 composition patrol keeps the scripted brother out of infection and gore",
+        "file": "tests/sim/npc/integration.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC16",
+    "taggedTestsPass": true,
+    "signOff": "pass",
+    "tests": [
+      {
+        "title": "T-E08-16 @E08 @E08-AC16 five down/veins/eyes/rising frames show civilian turning",
+        "file": "e2e/npc.spec.ts",
+        "runner": "playwright"
+      }
+    ]
+  },
+  {
+    "id": "E08-AC17",
+    "taggedTestsPass": true,
+    "signOff": "partial",
+    "tests": [
+      {
+        "title": "T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L6 first three-minute objective-patrol runs: density and immunity",
+        "file": "tests/sim/npc/campaign.test.ts",
+        "runner": "vitest"
+      },
+      {
+        "title": "T-E08-11-low @E08 @E08-AC11 @E08-AC17 L1-L6 first three-minute objective-patrol runs: density and immunity",
+        "file": "tests/sim/npc/campaign.test.ts",
+        "runner": "vitest"
+      },
+      {
+        "title": "T-E08-17 @E08 @E08-AC17 100 seeds use data pet probability and 2\u20134s down before dog rise",
+        "file": "tests/sim/npc/campaign.test.ts",
+        "runner": "vitest"
+      }
+    ]
+  }
+]

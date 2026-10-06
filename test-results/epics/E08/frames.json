@@ -1,0 +1,377 @@
+[
+  {
+    "name": "down",
+    "tick": 159,
+    "entity": {
+      "kind": "civilian",
+      "archetype": "npc.cashier",
+      "faction": "civilian",
+      "transform": {
+        "x": 4.339099863197412,
+        "z": 0.19827004104078425,
+        "y": 0.7,
+        "yaw": -2.8501358591119152
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "down",
+        "ambient": false,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "variant": "inf.cashier",
+        "routine": "shop",
+        "waypoints": [
+          {
+            "x": 5,
+            "z": 0
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 0,
+        "entered": 159,
+        "until": 601,
+        "downTicks": 442,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 3,
+        "threat": {
+          "x": 5,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 2
+    },
+    "perf": {
+      "fps": 59.88023952095874,
+      "frameMs": 16.699999999999818,
+      "simMs": 0,
+      "drawCalls": 29,
+      "triangles": 10191,
+      "geometries": 86,
+      "textures": 24,
+      "entities": 3,
+      "backend": "webgl",
+      "loadTiming": null
+    }
+  },
+  {
+    "name": "veins",
+    "tick": 480,
+    "entity": {
+      "kind": "civilian",
+      "archetype": "npc.cashier",
+      "faction": "civilian",
+      "transform": {
+        "x": 4.339099863197412,
+        "z": 0.19827004104078425,
+        "y": 0.7,
+        "yaw": -2.8501358591119152
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "down",
+        "ambient": false,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "variant": "inf.cashier",
+        "routine": "shop",
+        "waypoints": [
+          {
+            "x": 5,
+            "z": 0
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 0,
+        "entered": 159,
+        "until": 601,
+        "downTicks": 442,
+        "eyesGlow": false,
+        "veins": 0.7262443438914027,
+        "attacker": 3,
+        "threat": {
+          "x": 5,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 2
+    },
+    "perf": {
+      "fps": 59.88023952095874,
+      "frameMs": 16.699999999999818,
+      "simMs": 0,
+      "drawCalls": 29,
+      "triangles": 10191,
+      "geometries": 86,
+      "textures": 24,
+      "entities": 3,
+      "backend": "webgl",
+      "loadTiming": null
+    }
+  },
+  {
+    "name": "eyes",
+    "tick": 541,
+    "entity": {
+      "kind": "civilian",
+      "archetype": "npc.cashier",
+      "faction": "civilian",
+      "transform": {
+        "x": 4.339099863197412,
+        "z": 0.19827004104078425,
+        "y": 0.7,
+        "yaw": -2.8501358591119152
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "down",
+        "ambient": false,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "variant": "inf.cashier",
+        "routine": "shop",
+        "waypoints": [
+          {
+            "x": 5,
+            "z": 0
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 0,
+        "entered": 159,
+        "until": 601,
+        "downTicks": 442,
+        "eyesGlow": true,
+        "veins": 0.8642533936651584,
+        "attacker": 3,
+        "threat": {
+          "x": 5,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 2
+    },
+    "perf": {
+      "fps": 60.24096385542037,
+      "frameMs": 16.600000000000364,
+      "simMs": 0,
+      "drawCalls": 29,
+      "triangles": 10191,
+      "geometries": 86,
+      "textures": 24,
+      "entities": 3,
+      "backend": "webgl",
+      "loadTiming": null
+    }
+  },
+  {
+    "name": "rising",
+    "tick": 637,
+    "entity": {
+      "kind": "civilian",
+      "archetype": "npc.cashier",
+      "faction": "civilian",
+      "transform": {
+        "x": 4.339099863197412,
+        "z": 0.19827004104078425,
+        "y": 0.7,
+        "yaw": -2.8501358591119152
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "rising",
+        "ambient": false,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "variant": "inf.cashier",
+        "routine": "shop",
+        "waypoints": [
+          {
+            "x": 5,
+            "z": 0
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 0,
+        "entered": 601,
+        "until": 673,
+        "downTicks": 442,
+        "eyesGlow": true,
+        "veins": 1,
+        "attacker": 3,
+        "threat": {
+          "x": 5,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 2
+    },
+    "perf": {
+      "fps": 59.52380952380888,
+      "frameMs": 16.800000000000182,
+      "simMs": 0,
+      "drawCalls": 29,
+      "triangles": 10191,
+      "geometries": 86,
+      "textures": 24,
+      "entities": 3,
+      "backend": "webgl",
+      "loadTiming": null
+    }
+  },
+  {
+    "name": "upright",
+    "tick": 672,
+    "entity": {
+      "kind": "civilian",
+      "archetype": "npc.cashier",
+      "faction": "civilian",
+      "transform": {
+        "x": 4.339099863197412,
+        "z": 0.19827004104078425,
+        "y": 0.7,
+        "yaw": -2.8501358591119152
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "rising",
+        "ambient": false,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "variant": "inf.cashier",
+        "routine": "shop",
+        "waypoints": [
+          {
+            "x": 5,
+            "z": 0
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 0,
+        "entered": 601,
+        "until": 673,
+        "downTicks": 442,
+        "eyesGlow": true,
+        "veins": 1,
+        "attacker": 3,
+        "threat": {
+          "x": 5,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 2
+    },
+    "perf": {
+      "fps": 59.52380952380888,
+      "frameMs": 16.800000000000182,
+      "simMs": 0,
+      "drawCalls": 29,
+      "triangles": 10191,
+      "geometries": 86,
+      "textures": 24,
+      "entities": 3,
+      "backend": "webgl",
+      "loadTiming": null
+    }
+  }
+]
