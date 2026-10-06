@@ -110,7 +110,7 @@ export class Civilians {
       }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
       // Systemic grabs share E07's archetype chance; retry at 2 Hz, not every tick.
-      if (!c.pet && tick % 30 === e.id % 30 && grabStates.has(c.state)) {
+      if ((!c.pet || !c.owner) && tick % 30 === e.id % 30 && grabStates.has(c.state)) {
         for (const infected of ai.active) if (infected.health.current > 0 && Math.hypot(infected.transform.x - e.transform.x, infected.transform.z - e.transform.z) <= 1.2 && this.grab(e.id, infected.id)) break;
       }
     }

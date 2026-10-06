@@ -16,9 +16,18 @@ test('T-E08-03 @E08 @E08-AC03 50 seeded cycles retain clothes/body position and 
     step(w, npcs.eyesTicks); expect(e.civilian!.state).toBe('rising'); const p = { x: e.transform.x, z: e.transform.z };
     step(w, 71); expect(e.civilian!.state).toBe('rising'); step(w, 1); expect(e.civilian!.state).toBe('infected');
     const event = w.events.events().find(e => e.type === 'civilian.turned'); expect(event).toMatchObject({ variant: 'inf.cashier', position: p });
+    if (event?.type === 'civilian.turned') expect(w.entities.get(event.infectedId)).toMatchObject({ infected: { variant: 'inf.cashier' }, transform: p });
     const states = w.events.events().filter(e => e.type === 'civilian.state').map(e => e.type === 'civilian.state' ? e.state : ''); expect(states).toEqual(['grabbed', 'bitten', 'down', 'rising', 'infected']); w.dispose();
   }
   expect(timings.size).toBeGreaterThan(30);
+});
+test('@E08 @E08-AC13 melee and shots both finish the vulnerable rising body', async () => {
+  for (const type of ['melee', 'bullet'] as const) {
+    const w = await world(), { e, attacker } = pair(w); w.npcs!.civilians.grab(e.id, attacker.id, true);
+    while (e.civilian!.state !== 'rising') step(w, 1);
+    expect(w.combat!.query.melee(1, e.transform, { x: 1, z: 0 }, 3, 360, 4)).toContain(e);
+    hit(w, e.id, type); step(w, 1000); expect(e.civilian!.state).toBe('finished'); expect(w.events.events().some(event => event.type === 'civilian.turned')).toBe(false); w.dispose();
+  }
 });
 test('T-E08-02 @E08 @E08-AC02 attack panic within .5s moves away over 3s', async () => {
   const w = await world(), id = w.npcs!.civilians.spawn('jogger', { x: 10, z: 0 }); const sourceId = w.infected!.spawn('infected.runner', { x: 2, z: 0 });
