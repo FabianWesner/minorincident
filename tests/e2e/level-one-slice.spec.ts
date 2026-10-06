@@ -1,3 +1,4 @@
+import { devices } from '@playwright/test';
 import { PNG } from 'pngjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
@@ -6,7 +7,7 @@ const output='test-results/epics/E19';
 // Native headless GPU headroom, without rounding a 60 Hz vsync ceiling into a pass.
 test.use({headless:true,launchOptions:{args:['--use-angle=metal','--enable-gpu','--ignore-gpu-blocklist','--disable-frame-rate-limit','--disable-gpu-vsync']}});
 for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode,()=>{
-  test.use({hasTouch:mode!=='desktop',isMobile:mode!=='desktop',viewport:mode==='desktop'?{width:1600,height:900}:mode==='portrait'?{width:390,height:844}:{width:844,height:390}});
+  test.use({userAgent:mode==='desktop'?devices['Desktop Chrome'].userAgent:devices['iPhone 14'].userAgent,hasTouch:mode!=='desktop',isMobile:mode!=='desktop',viewport:mode==='desktop'?{width:1600,height:900}:mode==='portrait'?{width:390,height:844}:{width:844,height:390}});
   test(`@E19 slice real-input start to end ${mode}`,async({page,context})=>{
     test.setTimeout(240_000);page.setDefaultTimeout(60_000);mkdirSync(output,{recursive:true});
     if(mode==='desktop')await menuStart(page);
@@ -63,7 +64,11 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
       throw new Error(`Could not walk to ${x},${z}: ${JSON.stringify(await page.evaluate(()=>window.__SS__!.getState().player!.transform))}`);
     };
     expect(await page.evaluate(()=>window.__SS__!.getState().districts!.districts.map(d=>d.id))).toEqual(['D-RES','D-MAIN','D-SHOP']);
-    await shot('morning');expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons)).toBeUndefined();
+    await shot('morning');
+    const labels=await page.evaluate(()=>window.__SS__!.getState().render.districts!.labels);
+    expect(labels.every(l=>l.width<=1.8&&l.height<=.36)).toBe(true);
+    await step(180);await expect(page.getByTestId('mission-toast')).toHaveJSProperty('hidden',true);await expect(page.getByTestId('onboarding-prompt')).toBeHidden();expect(await page.evaluate(()=>window.__SS__!.getState().render.districts!.labels.some(l=>l.visible&&l.text==='Your House'))).toBe(false);
+    expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons)).toBeUndefined();
     await expect(page.locator('[data-audio-controls]')).toBeHidden();for(const panel of await page.locator('body>details').all())await expect(panel).toBeHidden();
     expect(await page.evaluate(()=>window.__SS__!.query({kind:'companion'}))).toHaveLength(1);
     await page.evaluate(()=>window.__SS__!.settings.set({idPass:true}));await page.evaluate(()=>window.__SS__!.screenshotReady());
@@ -79,10 +84,19 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
 
     await move(-14,-4);await move(0,0);await move(42,0);await shot('before-incident');await move(42,-6.5);await step(1);
     expect(await page.evaluate(()=>window.__SS__!.getState().mission!.completedObjectives)).toContain('breakfast');
-    expect(await page.evaluate(()=>window.__SS__!.query({kind:'infected'}).filter(e=>e.health.current>0))).toHaveLength(1);await shot('entrant');
-    for(let i=0;i<120 && !await page.evaluate(()=>window.__SS__!.missions.state()!.outbreak!.released);i++)await step(30);
+    expect(await page.evaluate(()=>window.__SS__!.query({kind:'infected'}).filter(e=>e.health.current>0))).toHaveLength(1);
+    await expect(page.getByTestId('mission-toast')).toHaveJSProperty('hidden',false);await expect(page.getByTestId('mission-toast')).toContainText('Find something better');
+    await expect(page.locator('body')).not.toContainText('nothing to fight with');await shot('entrant');
+    const stages=new Set<string>();
+    for(let i=0;i<120 && !await page.evaluate(()=>window.__SS__!.missions.state()!.outbreak!.released);i++){
+      await step(30);
+      const stage=await page.evaluate(()=>{const a=window.__SS__!,id=a.missions.state()!.outbreak!.victims[0];return a.getEntity(id)!.civilian!.state;});
+      if(['grabbed','bitten','down','rising'].includes(stage)&&!stages.has(stage)){stages.add(stage);await shot(`turn-${stage}`);}
+    }
+    expect([...stages]).toEqual(expect.arrayContaining(['grabbed','bitten','down','rising']));
     expect(await page.evaluate(()=>window.__SS__!.query({kind:'infected'}).filter(e=>e.health.current>0))).toHaveLength(4);
-    expect(await page.evaluate(()=>window.__SS__!.events().filter(e=>e.type==='civilian.turned').length)).toBeGreaterThanOrEqual(3);await shot('incident');
+    expect(await page.evaluate(()=>window.__SS__!.events().filter(e=>e.type==='civilian.turned').length)).toBeGreaterThanOrEqual(3);
+    await expect(page.getByTestId('mission-toast')).toHaveJSProperty('hidden',true);await expect(page.getByTestId('mission-subtitle')).toBeHidden();await shot('incident');
     expect(await page.evaluate(()=>window.__SS__!.missions.state()!.checkpoint)).toBe('escape');
     if(mode==='desktop'){
       const started=await page.evaluate(()=>window.__SS__!.getState().tick);
@@ -101,6 +115,7 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
       expect(hits.some(e=>e.type==='combat.kill'&&e.actionId==='weapon.fists')).toBe(true);
       expect(await page.evaluate(()=>window.__SS__!.getState().tick)-started).toBeLessThan(11*60);
       await shot('fists');
+      await expect(page.getByTestId('damage-direction')).toBeHidden();
     }
     await move(42,0);await move(70,0);await move(70,-7);await step(1);
     expect(await page.evaluate(()=>window.__SS__!.missions.state()!.checkpoint)).toBe('melee');

@@ -222,7 +222,7 @@ export class Mission {
       case 'migration': this.spawn(action.group); this.emit({ type: 'migration.started', id: action.group, to: this.def.anchors[action.to] }); break;
       case 'tier': this.state.tier = action.tier; this.world.setTier(action.tier); this.emit({ type: 'world.tier-requested', tier: action.tier }); break;
       case 'gate': this.state.gates[action.id] = action.open; this.world.physics.world!.getCollider(this.gateHandles.get(action.id)!).setEnabled(!action.open); this.emit({ type: 'gate.changed', id: action.id, open: action.open }); break;
-      case 'radio': this.state.subtitle = { id: action.id, text: dialogue[action.id], until: this.world.tick + 180 }; this.emit({ type: 'dialogue.line', id: action.id, text: dialogue[action.id] }); break;
+      case 'radio': this.state.subtitle = { id: action.id, text: dialogue[action.id], until: this.world.tick + (this.def.id === 'L1' ? 180 : 300) }; this.emit({ type: 'dialogue.line', id: action.id, text: dialogue[action.id] }); break;
       case 'cinematic': if (this.state.cinematic) throw new Error('Overlapping cinematics'); this.state.cinematic = { id: action.id, elapsed: 0, resume:this.state.phase==='retry'?'retry':'playing' }; this.state.phase = 'cinematic'; this.emit({ type: 'cinematic.started', id: action.id }); break;
       case 'timeOfDay': this.state.timeOfDay = action.value; break;
       case 'grant': this.collect(action.item); break;

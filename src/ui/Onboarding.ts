@@ -81,7 +81,7 @@ export class Onboarding {
         break;
       }
     }
-    this.element.hidden = !this.current || this.world.tick - this.startTick >= 180;
+    this.element.hidden = !this.current || (!!this.world.missions?.def.slice && this.world.tick - this.startTick >= 180);
     if (!this.current) return;
     this.element.dataset.action = this.current; this.element.dataset.scheme = scheme;
     text(this.element, `${this.glyph(this.current, scheme)} · ${descriptions[this.current]}`);

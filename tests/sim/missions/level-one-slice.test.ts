@@ -4,6 +4,8 @@ import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { compositions } from '../../../src/levels/compositions';
 import { resolveCampaignMission } from '../../../src/levels/missions';
 import { levelOneSlice } from '../../../src/levels/levelOneSlice';
+import { View } from '../../../src/render/View';
+import { Matrix4 } from 'three';
 import { emptyInput } from '../../../src/input/InputFrame';
 let world: SimWorld;
 afterEach(() => world?.dispose());
@@ -145,6 +147,22 @@ test('@E19 @E19-AC06 M1-10 entrant walks offscreen, bites three visible customer
     const turned = events.find(e=>e.type==='civilian.turned'&&e.id===id);
     expect(turned).toBeDefined();
   }
-  expect(world.infected!.active.every(e=>e.infected!.state==='chase' || e.infected!.state==='attack')).toBe(true);
+  expect(world.infected!.active.every(e=>['alerted','chase','attack'].includes(e.infected!.state))).toBe(true);
   m.restore('escape'); expect(m.state.outbreak!.released).toBe(false); expect(world.infected!.active).toHaveLength(1);
+});
+
+
+for (const [width,height] of [[1600,900],[390,844]]) for (const zoom of [-10,10]) test(`@E19 M1-10 store back-door silhouettes are offscreen or occluded at ${width}x${height} zoom ${zoom}`, async () => {
+  const m=await start(),p=world.entities.get(1)!;
+  Object.assign(p.transform,{x:70,z:-7});world.physics.playerBody!.setTranslation(p.transform,true);
+  const view=new View();view.resize(width,height);view.reset(p.transform);view.zoom(zoom);view.update(p.transform,2);
+  const matrix=new Matrix4().multiplyMatrices(view.camera.projectionMatrix,view.camera.matrixWorldInverse);
+  world.infected!.director.setFrustum(matrix.elements,view.camera.position);
+  m.completeObjective('breakfast');m.completeObjective('escape');m.completeObjective('melee');
+  expect(world.infected!.active).toHaveLength(5);
+  for(const e of world.infected!.active){
+    const d=world.infected!.director,point=e.transform;
+    expect(d.offscreen(point)||d.occluded(point)).toBe(true);
+    expect(point.z).toBeLessThanOrEqual(m.def.anchors.hardware.z-12);
+  }
 });

@@ -147,7 +147,7 @@ export class DistrictView extends Group {
         root.add(grass);
         for (const b of d.layout.buildings) {
           const p = d.layout.placements.find((p) => p.id === b.id)!;
-          this.tag(root, b.label, [p.position[0], b.aabb.max[1] + .6, p.position[2]]);
+          this.tag(root, b.label, [p.position[0], 2.8, b.aabb.max[2] + .6]);
         }
         for (const spot of d.gameplay.photoSpots) {
           const p = resolvePosition(spot.target, d.layout),
@@ -221,7 +221,7 @@ export class DistrictView extends Group {
     ctx.fillStyle = '#ffc773'; ctx.font = 'bold 28px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, 160, 32, 300);
     const texture = new CanvasTexture(canvas); this.textures.push(texture);
     const material = new SpriteMaterial({ map: texture, transparent: true, depthWrite: false }); this.ownedMaterials.push(material);
-    const sprite = new Sprite(material); sprite.position.fromArray(p); sprite.scale.set(1.8, .36, 1); sprite.visible = false; root.add(sprite);
+    const sprite = new Sprite(material); sprite.name = text; sprite.position.fromArray(p); sprite.scale.set(1.8, .36, 1); sprite.visible = false; root.add(sprite);
     this.tags.push({ sprite, entered: null, done: false });
   }
   /** Cull whole off-camera district slabs on low; Three still frustum-culls their individual batches. */
@@ -311,6 +311,7 @@ export class DistrictView extends Group {
   }
   getState() {
     return {
+      labels: this.tags.map(({ sprite }) => ({ text: sprite.name, visible: sprite.visible, opacity: sprite.material.opacity, width: sprite.scale.x, height: sprite.scale.y })),
       districts: this.world.districts.map((d) => d.id),
       batches: this.batches.map((b) => ({
         assetId: b.name.slice(5),

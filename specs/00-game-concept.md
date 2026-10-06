@@ -73,7 +73,7 @@ Classic action-RPG controls (product owner decision, 2026-10-06). The survivor o
 
 Aim: with a mouse the cursor aims; with keyboard only, attacks target the nearest infected in the facing direction (aim assist); on touch, aim assist unless the player drags from an action button. Pause is `Esc`, `P` or the small on-screen pause button (not one of the three mobile buttons).
 
-Gamepad support is **not in v1** (Q17). All keys can be rebound. Click and scroll are mirrored to keys for players with a weak mouse. Pause is `Esc`, `P`, or the on-screen pause button.
+Gamepad support is **not in v1** (Q17). Action keys can be rebound; 1/2/3 and Shift remain reserved for rack selection. Mouse attacks and weapon selection have keyboard alternatives for players with a weak mouse. Pause is `Esc`, `P`, or the on-screen pause button.
 
 ## 6. Combat
 
