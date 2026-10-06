@@ -13,7 +13,7 @@ test('T-E08-05-browser @E08 @E08-AC05 bark from real camera frustum is direction
   expect(await page.evaluate(() => window.__SS__!.events().some(e => e.type === 'corgi.bark' && e.direction.x < 0))).toBe(true); await expect(page.locator('[data-corgi-warning]')).toBeVisible(); await page.screenshot({ path: `${output}/corgi-warning.png` });
 });
 test('T-E08-10-browser @E08 @E08-AC10 placeholder corgi turntable and runtime node contract', async ({ page }) => {
-  await boot(page); await page.evaluate(async () => { const api = window.__SS__!; await api.loadScenario('civ-street'); api.pause(); api.camera.preset('corgi'); await api.screenshotReady(); });
+  await boot(page); await page.evaluate(async () => { const api = window.__SS__!; await api.loadScenario('civ-street'); api.pause(); api.teleport('player', { x: 15, z: 15 }); api.camera.preset('corgi'); await api.screenshotReady(); });
   expect(await page.evaluate(() => window.__SS__!.getState().render.npcs!.heroes.find(h => h.id === window.__SS__!.query({ kind: 'companion' })[0].id)!.nodes)).toEqual(expect.arrayContaining(['root', 'body', 'head', 'tail', 'legFL', 'legFR', 'legBL', 'legBR', 'packSocket']));
   for (const [name, position] of Object.entries({ front: [6, 2.5, 2], back: [-6, 2.5, 2], left: [0, 2.5, -4], right: [0, 2.5, 8] })) {
     await page.evaluate(async position => { const api = window.__SS__!; api.camera.cinematic({ position: position as [number, number, number], target: [0, .35, 2] }); api.vfx.stepRender(1); await api.screenshotReady(); }, position);
