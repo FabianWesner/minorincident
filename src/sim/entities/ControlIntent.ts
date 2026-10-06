@@ -74,11 +74,26 @@ export class ControlIntent {
   }
   private walk(frame: InputFrame, target: Vec2, remaining: number): void {
     const p = this.world.entities.get(1)!.transform, nav = this.world.infected?.nav;
-    if (nav && !nav.steer(p, target, this.route, survivor.radius + .02, this.waypoint)) { frame.move.x = frame.move.z = 0; return; }
+    if (nav && !nav.steer(p, target, this.route, survivor.radius + .02, this.waypoint)) {
+      // Grid paths omit their starting cell; reconnect from its safe center.
+      const cell = nav.nearestCell(p.x, p.z);
+      if (cell < 0) { frame.move.x = frame.move.z = 0; return; }
+      this.waypoint.x = nav.x(cell); this.waypoint.z = nav.z(cell);
+    }
     const destination = nav ? this.waypoint : target, dx = destination.x - p.x, dz = destination.z - p.z, distance = Math.hypot(dx, dz);
     if (distance < .02) { frame.move.x = frame.move.z = 0; return; }
     // Slow near arrival; the controller remains responsible for acceleration and collision.
     const speed = Math.min(1, remaining / .5, remaining / (survivor.speed / 60));
     frame.move.x = dx / distance * speed; frame.move.z = dz / distance * speed;
+    // Match the grid's corner clearance before Rapier performs the actual sweep.
+    if (nav) {
+      const next = { x: p.x, z: p.z }, step = survivor.speed / 60;
+      nav.move(next, frame.move.x * step, frame.move.z * step, survivor.radius + .02);
+      frame.move.x = (next.x - p.x) / step; frame.move.z = (next.z - p.z) / step;
+    }
+    // Keep acceleration along the routed step instead of coasting sideways into a corner.
+    const velocity = this.world.player!.locomotion.velocity, length = Math.hypot(frame.move.x, frame.move.z);
+    const forward = length ? Math.max(0, (velocity.x * frame.move.x + velocity.z * frame.move.z) / length) : 0;
+    velocity.x = length ? frame.move.x / length * forward : 0; velocity.z = length ? frame.move.z / length * forward : 0;
   }
 }
