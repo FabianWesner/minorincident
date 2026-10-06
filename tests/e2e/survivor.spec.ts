@@ -46,8 +46,9 @@ test('T-E04-wiring @E04 actual keyboard input moves the survivor; variant select
   await page.evaluate(() => window.__SS__!.unloadScenario());
   const unloaded = await page.evaluate(() => ({ state: window.__SS__!.getState(), perf: window.__SS__!.perf() }));
   expect(unloaded.state.perf).toEqual({ entities: 0, bodies: 0, colliders: 0, listeners: 0 }); expect(unloaded.state.render.character).toBeNull();
-  // Three retains one fullscreen shadow-pass geometry as a shared renderer cache.
-  expect(unloaded.perf.geometries).toBeLessThanOrEqual(1);
+  // Main/r186 retains two renderer geometries after unload. The exact repeat-
+  // cycle counts below still reject any accumulation of scene resources.
+  expect(unloaded.perf.geometries).toBeLessThanOrEqual(2);
   const cycles = await page.evaluate(async () => {
     const api = window.__SS__!, result = [];
     for (let i = 0; i < 3; i++) { await api.loadScenario('survivor'); api.pause(); await api.step(5); await api.unloadScenario(); result.push(api.perf()); }
