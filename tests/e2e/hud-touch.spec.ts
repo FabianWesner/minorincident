@@ -8,7 +8,7 @@ test('T-E14-05 @E14 @E14-AC05 portrait/landscape touch targets are 56px and clea
   for (const viewport of [{ width: 390, height: 844 }, { width: 844, height: 390 }]) {
     await page.setViewportSize(viewport);
     // Mobile Chromium commits orientation changes on the next compositor frame.
-    await expect.poll(() => page.evaluate(() => ({ width: innerWidth, height: innerHeight }))).toEqual(viewport);
+    await expect.poll(() => page.evaluate(() => ({ width: innerWidth, height: innerHeight })), { timeout: 20_000 }).toEqual(viewport);
     await expect(page.getByTestId('touch-controls')).toBeVisible();
     const boxes = await page.evaluate(() => {
       const rect = (element: Element) => { const r = element.getBoundingClientRect(); return { id: (element as HTMLElement).dataset.testid, x: r.x, y: r.y, width: r.width, height: r.height }; };

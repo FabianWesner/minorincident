@@ -8,6 +8,7 @@ const dir = 'test-results/mobile-hud';
 
 for (const scene of ['hud', 'live'] as const) for (const viewport of sizes) {
   test(`@E14 @E14-AC05 @mobile mobile HUD ${scene} ${viewport.width}x${viewport.height}`, async ({ page }, info) => {
+    test.setTimeout(90_000); // Production level loading plus two SwiftShader viewport rebuilds.
     await page.setViewportSize(viewport);
     if (scene === 'hud') await hudStart(page);
     else {
@@ -65,9 +66,9 @@ for (const scene of ['hud', 'live'] as const) for (const viewport of sizes) {
     // Also rotate an already loaded scene: a stale canvas width must not enlarge the layout viewport.
     const rotated = { width: viewport.height, height: viewport.width };
     await page.setViewportSize(rotated);
-    await expect.poll(() => page.evaluate(() => ({ width: innerWidth, height: innerHeight }))).toEqual(rotated);
+    await expect.poll(() => page.evaluate(() => ({ width: innerWidth, height: innerHeight })), { timeout: 20_000 }).toEqual(rotated);
     await page.setViewportSize(viewport);
-    await expect.poll(() => page.evaluate(() => ({ width: innerWidth, height: innerHeight }))).toEqual(viewport);
+    await expect.poll(() => page.evaluate(() => ({ width: innerWidth, height: innerHeight })), { timeout: 20_000 }).toEqual(viewport);
     await page.getByTestId('pause-button').tap(); await expect(page.getByTestId('menu-pause')).toBeVisible();
   });
 }
