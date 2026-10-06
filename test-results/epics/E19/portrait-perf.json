@@ -1,67 +1,23 @@
 {
   "incident": {
-    "medianFps": 333.3333333333333,
+    "medianFps": 400,
     "unthrottled": true,
     "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
     "counters": {
-      "fps": 333.3333333333333,
-      "frameMs": 3,
+      "fps": 312.5000000000178,
+      "frameMs": 3.199999999999818,
       "simMs": 0,
-      "uiMs": 0.19999992847442627,
-      "drawCalls": 109,
-      "triangles": 120096,
-      "geometries": 65,
-      "textures": 26,
+      "uiMs": 0.10000002384185791,
+      "drawCalls": 103,
+      "triangles": 112326,
+      "geometries": 61,
+      "textures": 22,
       "entities": 11,
       "backend": "webgl",
       "loadTiming": {
-        "dataMs": 17.100000023841858,
-        "simMs": 74.5,
-        "viewMs": 5571.399999976158
-      },
-      "quality": {
-        "setting": "auto",
-        "tier": "low",
-        "p90Ms": 2777.1001,
-        "slowSeconds": 0,
-        "budgets": {
-          "frameMs": 33.333333333333336,
-          "infected": 100,
-          "drawCalls": 300,
-          "triangles": 500000,
-          "simMs": 6,
-          "heapMB": 250,
-          "pixelRatio": 1.5,
-          "shadowSize": 1024,
-          "bloomMips": 2,
-          "cullDistance": 45
-        }
-      },
-      "renderedFrames": 187,
-      "contextLost": false,
-      "paused": true,
-      "heapBytes": 386000000
-    }
-  },
-  "store": {
-    "medianFps": 526.3157894732811,
-    "unthrottled": true,
-    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
-    "counters": {
-      "fps": 454.5454545453042,
-      "frameMs": 2.2000000000007276,
-      "simMs": 0.2999999523162842,
-      "uiMs": 0.10000002384185791,
-      "drawCalls": 103,
-      "triangles": 184791,
-      "geometries": 64,
-      "textures": 21,
-      "entities": 12,
-      "backend": "webgl",
-      "loadTiming": {
-        "dataMs": 0.10000002384185791,
-        "simMs": 34.10000002384186,
-        "viewMs": 5946.899999976158
+        "dataMs": 15.399999976158142,
+        "simMs": 76.10000002384186,
+        "viewMs": 3012.2000000476837
       },
       "quality": {
         "setting": "auto",
@@ -81,10 +37,54 @@
           "cullDistance": 45
         }
       },
-      "renderedFrames": 316,
+      "renderedFrames": 194,
       "contextLost": false,
       "paused": true,
-      "heapBytes": 386000000
+      "heapBytes": 521000000
+    }
+  },
+  "store": {
+    "medianFps": 476.1904761908062,
+    "unthrottled": true,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+    "counters": {
+      "fps": 476.1904761899812,
+      "frameMs": 2.100000000002183,
+      "simMs": 0,
+      "uiMs": 0.10000002384185791,
+      "drawCalls": 101,
+      "triangles": 184631,
+      "geometries": 63,
+      "textures": 21,
+      "entities": 12,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 0,
+        "simMs": 28.59999990463257,
+        "viewMs": 8456.400000095367
+      },
+      "quality": {
+        "setting": "auto",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 323,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 521000000
     }
   }
 }
