@@ -55,6 +55,7 @@ export type GameEvent = import('../npc/types').NpcEvent
   | { tick: number; type: 'infected.revived' | 'infected.leg-lost'; sourceId: number; targetId: number }
 
   | import('../missions/events').MissionEvent
+  | import('../outbreak/types').OutbreakEvent
   | { tick: number; type: 'world.blocker.changed'; id: number; blocked: boolean; wall: import('../combat/HitQuery').CoverWall }
   | { tick: number; type: 'pickup.collected'; id: number; kind: import('../interact/Pickups').PickupKind; item: string | null }
   | { tick: number; type: 'hazard.armed'; id: number; fuseAt: number }

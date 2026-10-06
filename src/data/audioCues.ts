@@ -166,6 +166,9 @@ export const eventCues = {
     'vfx.effect': 'ui.tick',
     'world.blocker.changed': 'ui.tick',
     'world.tier-requested': 'ui.tick',
+    // L1 v2 outbreak/accident events (L0 scaffold): silent until lane H assigns cues.
+    'outbreak.bite': 'ui.tick', 'outbreak.distraction': 'ui.tick', 'outbreak.civilian-escaped': 'ui.tick', 'outbreak.infection': 'ui.tick',
+    'l1.flicker': 'ui.tick', 'l1.blast': 'ui.tick', 'l1.ringing': 'ui.tick', 'l1.smoke': 'ui.tick', 'l1.screams': 'ui.tick', 'l1.infectedExit': 'ui.tick',
 } satisfies Record<GameEvent['type'], string>;
 export const audioCategories = [...offsets.keys()];
 export function audioFile(category: string, format: 'webm' | 'm4a'): string { return `/assets/audio/${category}.${format}`; }
