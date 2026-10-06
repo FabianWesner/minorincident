@@ -14,12 +14,15 @@ test('S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserv
     const rows = [];
     for (const trigger of ['visibilitychange', 'blur', 'pagehide'] as const)
         for (const muted of [false, true]) {
-            await page.evaluate(muted => { const a = window.__SS__!; a.settings.set({ muted }); a.resume(); a.audio.clearLog(); }, muted);
+            await page.evaluate(muted => { const a = window.__SS__!; a.settings.set({ muted }); a.resume(); }, muted);
             if (!muted)
                 await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().state)).toBe('running');
             await page.keyboard.down('KeyW');
             const before = await page.evaluate(async (trigger) => {
-                const a = window.__SS__!, time = performance.now();
+                const a = window.__SS__!;
+                // Observe only the background window, without a foreground RAF between reset and event.
+                a.audio.clearLog();
+                const time = performance.now();
                 if (trigger === 'visibilitychange') {
                     Object.defineProperty(document, 'hidden', { configurable: true, get: () => true });
                     document.dispatchEvent(new Event('visibilitychange'));
