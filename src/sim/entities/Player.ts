@@ -16,6 +16,7 @@ export class Player {
   private actionUntil = 0;
   constructor(readonly entity: EntitySnapshot, private readonly physics: Physics, private readonly events: EventBus<GameEvent>) {
     this.locomotion = new KinematicController(physics);
+    entity.locomotion = this.locomotion.response;
     entity.survivor = { variant: 'female', gearTier: 0, animation: 'idle', animationTick: 0, velocity: this.locomotion.velocity, grounded: false, invulnerableUntil: 0, checkpoint: { ...entity.transform }, diedAt: null };
   }
   private animate(state: AnimationState, tick: number): void {
@@ -67,6 +68,7 @@ export class Player {
     const state=this.entity.survivor!;
     this.entity.health.current=this.entity.health.max; state.diedAt=null; state.invulnerableUntil=tick;
     this.lastDamage=-Infinity; this.action=null; delete state.attack; this.locomotion.reset(); state.velocity=this.locomotion.velocity;
+    this.entity.locomotion = this.locomotion.response;
     this.animate('idle',tick);
   }
   setCheckpoint(position: { x: number; y: number; z: number }): void {
