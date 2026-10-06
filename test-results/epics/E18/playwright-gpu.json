@@ -1,0 +1,252 @@
+{
+  "config": {
+    "argv": [
+      "/Users/fabianwesner/Library/Application Support/Herd/config/nvm/versions/node/v22.22.2/bin/node",
+      "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/e18-desktop.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/playwright.config.ts",
+    "rootDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3330 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3330",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/e18-desktop.spec.ts",
+      "file": "perf/e18-desktop.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E18-09 @E18-AC09 @perf local native-GPU Chrome high horde p95 frame <=16.7ms",
+          "ok": true,
+          "tags": [
+            "E18-AC09",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7341,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T05:25:20.297Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7c075c58ab864332a98e-16b275e41529c9e108f8",
+          "file": "perf/e18-desktop.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "E18 @E18 WebGPU low tier parity compiles two-mip bloom and capped crowds",
+          "ok": true,
+          "tags": [
+            "E18"
+          ],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1550,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T05:25:28.336Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7c075c58ab864332a98e-cddcf7d99e37be73b3f3",
+          "file": "perf/e18-desktop.spec.ts",
+          "line": 32,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-06T05:25:19.021Z",
+    "duration": 12392.476999999999,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

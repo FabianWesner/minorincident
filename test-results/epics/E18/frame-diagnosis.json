@@ -1,0 +1,84 @@
+[
+  {
+    "scenario": "empty",
+    "intervalP50": 16.699999999999818,
+    "intervalP95": 18.300000000000182,
+    "workP50": 0.3999999761581421,
+    "workP95": 0.5,
+    "perf": {
+      "fps": 62.89308176100773,
+      "frameMs": 15.899999999999636,
+      "simMs": 0,
+      "drawCalls": 3,
+      "triangles": 15,
+      "geometries": 3,
+      "textures": 2,
+      "entities": 1,
+      "backend": "webgpu",
+      "loadTiming": null,
+      "quality": {
+        "setting": "high",
+        "tier": "high",
+        "p90Ms": 18.200000762939453,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 16.7,
+          "infected": 200,
+          "drawCalls": 600,
+          "triangles": 1500000,
+          "simMs": 4,
+          "heapMB": 400,
+          "pixelRatio": 2,
+          "shadowSize": 2048,
+          "bloomMips": 5,
+          "cullDistance": 60
+        }
+      },
+      "renderedFrames": 486,
+      "contextLost": false,
+      "paused": false,
+      "heapBytes": 20693459
+    }
+  },
+  {
+    "scenario": "perf-horde-200",
+    "intervalP50": 16.69999999999891,
+    "intervalP95": 18.299999999999272,
+    "workP50": 2,
+    "workP95": 2.6999999284744263,
+    "perf": {
+      "fps": 59.88023952095548,
+      "frameMs": 16.700000000000728,
+      "simMs": 1.7999999523162842,
+      "drawCalls": 46,
+      "triangles": 138919,
+      "geometries": 46,
+      "textures": 23,
+      "entities": 201,
+      "backend": "webgpu",
+      "loadTiming": null,
+      "quality": {
+        "setting": "high",
+        "tier": "high",
+        "p90Ms": 18.200000762939453,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 16.7,
+          "infected": 200,
+          "drawCalls": 600,
+          "triangles": 1500000,
+          "simMs": 4,
+          "heapMB": 400,
+          "pixelRatio": 2,
+          "shadowSize": 2048,
+          "bloomMips": 5,
+          "cullDistance": 60
+        }
+      },
+      "renderedFrames": 968,
+      "contextLost": false,
+      "paused": false,
+      "heapBytes": 81673908
+    }
+  }
+]
