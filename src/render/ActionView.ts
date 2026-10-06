@@ -55,9 +55,32 @@ export class ActionView extends Group {
     this.trailGeometry.setAttribute('position', new BufferAttribute(this.trailPositions, 3)); this.trailGeometry.setDrawRange(0, 0); this.trail.frustumCulled = false; this.trail.renderOrder = 3; this.add(this.trail);
     for (let i = 0; i < 32; i++) { const mesh = new Mesh(this.projectileGeometry, this.projectileMaterial); mesh.visible = false; this.projectiles.push(mesh); this.add(mesh); }
   }
+  private readonly loading = new Map<string, Promise<void>>();
+  /** Background loads of weapons not needed for the first playable frame (E19 load budget). */
+  rest: Promise<void> = Promise.resolve();
+  /** Loads the carried actions, pickups on the ground and the L1 essentials in parallel; every other
+   * weapon model streams in afterwards (or on first equip/pickup) instead of blocking the start. */
   async init(): Promise<void> {
-    for (const def of Object.values(catalog)) if (!this.assets.has(def.viewAssetId)) {
-      const model = await this.registry.loadAsset(def.viewAssetId);
+    const loadout = this.world.combat?.runner.loadout, needed = new Set(['weapon.fists', 'weapon.kick', 'weapon.bat']);
+    if (loadout) for (const side of sides) for (const slot of loadout.state[side].rack) needed.add(slot.id);
+    for (const entity of this.world.entities.iterate()) if (entity.pickup && 'actionId' in entity.pickup) needed.add(entity.pickup.actionId);
+    const defs = Object.values(catalog);
+    await Promise.all(defs.filter(def => needed.has(def.id)).map(def => this.load(def)));
+    this.rest = Promise.all(defs.filter(def => !needed.has(def.id)).map(def => this.load(def))).then(() => {});
+  }
+  private load(def: (typeof catalog)[string]): Promise<void> {
+    let pending = this.loading.get(def.viewAssetId);
+    if (!pending) { pending = this.registry.loadAsset(def.viewAssetId).then(model => this.register(def, model)); this.loading.set(def.viewAssetId, pending); }
+    return pending;
+  }
+  /** Model for an action, or null while it is still streaming in (the load is started on demand). */
+  private model(def: (typeof catalog)[string]): Object3D | null {
+    const asset = this.assets.get(def.viewAssetId); if (asset) return asset.model;
+    void this.load(def); return null;
+  }
+  private register(def: (typeof catalog)[string], model: Object3D): void {
+    if (this.assets.has(def.viewAssetId)) return;
+    {
       model.traverse((node) => {
         if (!(node instanceof Mesh)) return;
         const remap = (source: Material): Material => {
@@ -97,7 +120,7 @@ export class ActionView extends Group {
     const loadout = combat.runner.loadout;
     for (const side of sides) {
       const def = action(loadout.current(side).id); let held = this.held[side];
-      if (held?.id !== def.id) { held?.model.removeFromParent(); held = { id: def.id, model: this.assets.get(def.viewAssetId)!.model.clone(true) }; this.held[side] = held; }
+      if (held?.id !== def.id) { const model = this.model(def); if (!model) continue; held?.model.removeFromParent(); held = { id: def.id, model: model.clone(true) }; this.held[side] = held; }
       const socket = this.character.socket(handSide[side]).socket; if (held.model.parent !== socket) socket.add(held.model);
       held.model.visible = !['weapon.fists', 'weapon.kick'].includes(def.id);
     }
@@ -125,7 +148,7 @@ export class ActionView extends Group {
     this.geometry.setDrawRange(0, this.offset / 3); this.geometry.getAttribute('position').needsUpdate = true;
     for (let i = 0; i < this.projectiles.length; i++) { const p = combat.projectiles[i], mesh = this.projectiles[i]; mesh.visible = !!p; if (p) mesh.position.set(p.x, p.y, p.z); }
     for (const entity of this.world.entities.iterate()) if (entity.pickup && 'actionId' in entity.pickup) {
-      let model = this.pickups.get(entity.id); if (!model) { model = this.assets.get(action(entity.pickup.actionId).viewAssetId)!.model.clone(true); this.pickups.set(entity.id, model); this.add(model); }
+      let model = this.pickups.get(entity.id); if (!model) { const source = this.model(action(entity.pickup.actionId)); if (!source) continue; model = source.clone(true); this.pickups.set(entity.id, model); this.add(model); }
       model.position.set(entity.transform.x, 0.25, entity.transform.z); model.rotation.z = 0.2;
     }
     for (const [id, model] of this.pickups) if (!this.world.entities.get(id)) { model.removeFromParent(); this.pickups.delete(id); }
