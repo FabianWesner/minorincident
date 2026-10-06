@@ -176,6 +176,10 @@ export class GameView implements Lifecycle {
   }
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
+    if (name === 'hud-golden') {
+      const player = this.world.entities.get(1)!.transform;
+      this.view.preset(name, { position: [player.x + 15, 18, player.z + 15], target: [player.x, .4, player.z] }); this.update(1); return;
+    }
     if (name === 'horde-readability' && this.crowd) { this.view.preset(name, { position: [15, 15, 19], target: [0, 0.5, -1] }); this.update(1); return; }
     if (name === 'interact-ui' && this.world.interactables) {
       const p = this.world.entities.get(1)!.transform;
@@ -203,6 +207,7 @@ export class GameView implements Lifecycle {
   settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean; windowMask?: boolean } & VfxSettings): void {
     this.vfx?.set(patch);
     if (patch.gore !== undefined || patch.vfx !== undefined) this.crowd?.setGoreEnabled(this.vfx?.snapshot().enabled === true && this.vfx.snapshot().gore === 'Full');
+    if (patch.colorblind !== undefined) this.vfxSettings.colorblind = patch.colorblind;
     if (patch.vfx !== undefined) this.vfxSettings.vfx = patch.vfx;
     if (patch.gore !== undefined) this.vfxSettings.gore = patch.gore;
     if (patch.flashReduction !== undefined) this.vfxSettings.flashReduction = patch.flashReduction;

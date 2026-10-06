@@ -16,10 +16,10 @@ export class Touch {
   private stickId: number | null = null;
   private readonly contacts = new Map<number, Contact>();
   constructor(private readonly canvas: HTMLElement, private readonly activity: () => void, private readonly fire: (action: TouchAction, direction: Vec2 | null) => void) {
-    this.element.dataset.touchControls = '';
+    this.element.dataset.touchControls = ''; this.element.dataset.testid = 'touch-controls';
     this.element.style.cssText = 'position:fixed;bottom:16px;right:16px;display:grid;grid-template-columns:64px 64px;gap:8px;touch-action:none';
     for (const action of ['selector', 'pause', 'left', 'right', 'brake'] as const) {
-      const button = document.createElement('button'); button.dataset.touchAction = action;
+      const button = document.createElement('button'); button.dataset.touchAction = action; button.dataset.testid = `touch-${action}`;
       button.textContent = action === 'selector' ? 'NEXT' : action.toUpperCase(); button.setAttribute('aria-label', `Touch ${action}`);
       button.style.cssText = 'height:64px;color:white;background:#182333;border:2px solid white;border-radius:12px;touch-action:none;user-select:none';
       if (action === 'brake') button.hidden = true;
