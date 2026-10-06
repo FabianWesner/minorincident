@@ -27,6 +27,6 @@ export function applyCampaign(world:SimWorld,save:CampaignSave):void {
   player.entity.health.max=100+m.health;player.entity.health.current=player.entity.health.max;
   player.progressionSpeed=(4.5+m.speed)/4.5;player.select(save.character,gearTier(save));
   if(world.vehicles){world.vehicles.progressionArmor=m.ramArmor;world.vehicles.progressionBoost=1+m.boost;}
-  if(world.combat){const level=/^L([1-6])$/.exec(world.scenario??'');const size=rackSize(level?Number(level[1]):save.unlockedLevel);world.combat.rackCapacity=size;world.combat.actionDefinitions=modifiedActions(save);world.combat.setLoadout(save.racks.LEFT.slice(0,size),save.racks.RIGHT.slice(0,size));}
+  if(world.combat){const level=/^L([1-6])$/.exec(world.scenario??'');const size=rackSize(level?Number(level[1]):save.unlockedLevel);world.combat.rackCapacity=size;world.combat.actionDefinitions=modifiedActions(save);world.combat.setLoadout(save.racks.LEFT.slice(0,size),save.racks.RIGHT.slice(0,size));if(save.settings.aimAssist)world.combat.assist.setting=save.settings.aimAssist;}
 }
 export function actionResolver(defs:Record<string,ActionDef>|null):(id:string)=>ActionDef {return id=>defs?.[id]??action(id);}
