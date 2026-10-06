@@ -15,14 +15,14 @@ the product owner should audition the WAV previews before judging emotional fit.
 | --- | --- | --- | --- |
 | Blinding Lights | Zander Noriega | [OGA](https://opengameart.org/content/blinding-lights), [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) | Primary tension/combat: cinematic post-rock, guitars, mallets, drums and an emotional build. |
 | Running free | bbatv1 | [PEACE is king here](https://opengameart.org/content/peace-is-king-here), CC-BY 3.0 | Morning: gentle post-rock guitar. |
-| Oscillator | bbatv1 | Same album/page, CC-BY 3.0 | Tension alternative: repetitive motion in the same guitar palette. |
-| That feeling you give me. | bbatv1 | Same album/page, CC-BY 3.0 | Calm alternative: warm instrumental contrast to the outbreak. |
-| a long night, | bbatv1 | Same album/page, CC-BY 3.0 | Night/aftermath: longer reflective post-rock arc. |
-| why? | bbatv1 | Same album/page, CC-BY 3.0 | Aftermath alternative: restrained and reflective. |
-| keep you heart close to your chest. | bbatv1 | Same album/page, CC-BY 3.0 | Morning/aftermath: emotive instrumental continuity. |
-| Nice To | bbatv1 | Same album/page, CC-BY 3.0 | Calm alternative from a coherent album. |
-| isn't the rain nice today? | bbatv1 | Same album/page, CC-BY 3.0 | Quiet exploration/aftermath. |
-| comfort in uncertainty | bbatv1 | Same album/page, CC-BY 3.0 | Primary aftermath: gentler guitar resolution. |
+| Oscillator | bbatv1 | [PEACE is king here](https://opengameart.org/content/peace-is-king-here), [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) | Tension alternative: repetitive motion in the same guitar palette. |
+| That feeling you give me. | bbatv1 | [PEACE is king here](https://opengameart.org/content/peace-is-king-here), [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) | Calm alternative: warm instrumental contrast to the outbreak. |
+| a long night, | bbatv1 | [PEACE is king here](https://opengameart.org/content/peace-is-king-here), [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) | Night/aftermath: longer reflective post-rock arc. |
+| why? | bbatv1 | [PEACE is king here](https://opengameart.org/content/peace-is-king-here), [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) | Aftermath alternative: restrained and reflective. |
+| keep you heart close to your chest. | bbatv1 | [PEACE is king here](https://opengameart.org/content/peace-is-king-here), [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) | Morning/aftermath: emotive instrumental continuity. |
+| Nice To | bbatv1 | [PEACE is king here](https://opengameart.org/content/peace-is-king-here), [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) | Calm alternative from a coherent album. |
+| isn't the rain nice today? | bbatv1 | [PEACE is king here](https://opengameart.org/content/peace-is-king-here), [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) | Quiet exploration/aftermath. |
+| comfort in uncertainty | bbatv1 | [PEACE is king here](https://opengameart.org/content/peace-is-king-here), [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) | Primary aftermath: gentler guitar resolution. |
 | The Complex | Kevin MacLeod | [Incompetech track](https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1300025), [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/) | Backup combat: accumulating electronic/percussion pressure; less guitar-focused. |
 | Pressure | yd | [OGA](https://opengameart.org/content/pressure), CC0 | Backup rising tension: dark background composition. |
 
@@ -103,11 +103,12 @@ the ledger names each encoded file and every recorded sprite slice. Original
 archive notices are preserved, including older MIT notices in the qubodup
 packs alongside their current OGA CC0 grant.
 
-Validation in progress: E16 headless verification/capture on port 3351 waits on
-the machine-wide E2E lock. Typecheck, lint and audio units pass. Full unit suite:
-168 pass, three authored-animation tests fail identically in an isolated archive
-of main 202ffc2 (baseline reproduction stored in /tmp/audio-1-baseline-result.json).
-No animation code or criteria are changed by this lane.
+Validation: typecheck, lint, build and all 17 audio unit tests pass. A full unit
+run under shared-machine load passed 166 tests and failed six: three animation
+assertions reproduced with exactly the same values in an isolated archive of
+merged main 202ffc2, plus three static/asset timeouts. All affected static/asset
+files passed their serial rerun (6/6). No animation code or criteria were changed.
+The baseline and rerun are recorded in `test-results/epics/E16/audio-unit-baseline.json`.
 
 ## Mix decisions and source measurements
 
@@ -138,3 +139,42 @@ rapid transitions may briefly overlap all four states. Sprite voices therefore
 cap at 28 high / 12 low, and total live counters include media voices, preserving
 the E16 total of 32 high / 16 low. Offline renders have no media decks and retain
 their full sprite budget. Priority culling remains lowest/oldest first.
+
+Cached streaming decks now survive level/scenario resets, seek to zero and mute
+without removing `src` or forcing media network aborts; disposal disconnects the
+nodes. The offline 60-second fixture decodes the exact shipped stereo combat
+recording into the same bus at the live 0.5 deck trim, with live 0.18 accent gains.
+This replaces the fixture's obsolete full-gain placeholder layering; acceptance
+loudness/peak/dialogue thresholds and the strict browser error guard are unchanged.
+
+The live capture explicitly resumes the deterministic test simulation and asserts
+that ticks advance. It uses god mode, diner-anchor placement and the authored
+hardware checkpoint for encounter setup, then real mission/AI/transformation and
+mouse combat events. These are focused encounter playthroughs, not a claim of an
+unmodified full L1 walk. PCM is tapped after the production mix while OS output
+receives silence; 100 ms silence windows, FFmpeg R128, true peak, cue/variant and
+stream transition logs are exported. A human must audition emotional fit.
+
+A final full unit run under heavy shared-machine load had 166 passes and six
+failures: the same three animation assertions plus three static/asset timeouts.
+Serial rerun of all affected static/asset files passed 6/6 without changing
+thresholds or source. The three animation failures remain independently verified
+on merged main; audio units now pass 17/17.
+
+The final SFX bus is trimmed −2 dB and the voice bus −1.5 dB. The 60-second
+production-graph fixture measures −14.0 LUFS / −1.6 dBTP, with dialogue dominance
+13.11–16.31 dB. Final live previews measure morning −17.5 LUFS / −7.0 dBTP,
+diner −14.1 / −1.9, and store −15.6 / −1.8. All three have zero clipped samples
+and no measured 100 ms silence gaps; this is a signal proxy, not human audition.
+
+Acoustic tier refreshes now preserve the incident score, pending fades and cue
+history. Streams begin only in actual L1–L6 missions. Lazily created decks retain
+their source/cache across resets and buffer across immediate pauses, preventing
+Chromium from canceling its initial music request at the mission/pause menu.
+
+Final verification: `E2E_PORT=3351 npm run verify -- E16` exit 0 (20 Node,
+69 headless browser tests). Separate `test:smoke` exit 0 (3 Node, 22 browser).
+Typecheck, lint and build pass. Full unit baseline exception remains as described
+above; no thresholds or console allowlist were relaxed. Current report and
+compact case/PCM evidence: `test-results/epics/E16/report.md`,
+`audio-upgrade-validation.json`, `audio-preview-measurements.json`.
