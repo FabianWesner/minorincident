@@ -93,7 +93,7 @@ export class InfectedSystem {
     if (this.director.count + weight > this.director.cap) throw new Error('Infected concurrency cap reached');
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || !this.nav.clear(position.x, position.z, def.radius)) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
-    delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden;
+    delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
@@ -125,6 +125,7 @@ export class InfectedSystem {
     for (const e of this.active) {
       if (this.world.npcs?.civilians.holds(e.id)) { e.combat!.attacking = false; continue; }
       const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }
+      if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; continue; }
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
       const lure = e.noiseTarget && this.world.tick < e.noiseTarget.until ? this.world.entities.get(e.noiseTarget.id) : undefined;
       if (lure && b.state !== 'migration' && !Status.stunned(e, this.world.tick)) {
