@@ -7,7 +7,7 @@ export const gameplay: DistrictGameplay = {
   id: "D-GROVE",
   playerStart: anchor("player-start"),
   spawns: [anchor("player-start")],
-  spawnVolumes: [{ center: anchor("player-start"), radius: 2 }],
+  spawnVolumes: [{ center: anchor("player-start"), radius: 1 }],
   triggers: [
     { id: "lab-forecourt", position: anchor("lab-gate"), radius: 4 },
     { id: "fire-bay", position: anchor("fire-bay-trigger"), radius: 2 },

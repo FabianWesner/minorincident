@@ -207,11 +207,9 @@ if g.placeholder(cafe):
 anchors['cafe-patio'] = (CAFE_FRONT_X + 1.0, cafe_z)
 anchors['bike-start'] = (-72.4, 3.8)
 g.place('prop.bike-rack', -72.4, 5.5, PI / 2)
-anchors['player-start'] = (-67.6, 9.0)
+anchors['player-start'] = (-66.4, 9.0)
 doors.append((CAFE_FRONT_X + 1.0, cafe_z))
 # patio dressing on the sidewalk side: planters, a bench facing the street, bin
-planter(-68.1, CAFE_Z0 + 1.2)
-planter(-68.1, cafe_z + 3.4) if cdz > 8 else None
 g.place('prop.trash-bin', -68.0, CAFE_Z0 + cdz - 1.0, FACE_YAW['E'], .55, soft=True)
 
 # --- Maple Green (north-west pocket park) with the bus stop
@@ -320,8 +318,8 @@ gx, gz_ = 22.8, GARAGE_FRONT + gdx / 2
 g.place(garage, gx, gz_, FACE_YAW['N'])
 if g.placeholder(garage):
     g.shell('garage', gx, gz_, 'N', gdx, gdz, [('front', 0, 2.6)])
-anchors['garage-door'] = (gx, GARAGE_FRONT - 1.2)
-anchors['garage-bat'] = (gx, GARAGE_FRONT + 1.5)
+anchors['garage-door'] = (gx, GARAGE_FRONT - 1.9)
+anchors['garage-bat'] = (gx, GARAGE_FRONT - .9)   # open apron in front of the half-open door (real collision shell is closed)
 g.path(gx - 1.5, SFRONT, gx + 1.5, GARAGE_FRONT, 'uiDark')
 hd = HOUSE['d']
 henderson = kind('d')
@@ -366,12 +364,12 @@ g.hedge(-46.0, 46.2, -35.0, 46.2, scale=1.15)
 fs = 'bld.fire-station'
 fdx, fdy, fdz = dims(fs)
 FS_X = -73.2
-FS_Z = SFRONT + fdx / 2
+FS_Z = SFRONT + fdx / 2 + 2.5          # apron margin: the trigger sits outside the visual footprint
 g.place(fs, FS_X, FS_Z, FACE_YAW['N'])
 # model local +X is the apron/door side: door and trigger sit on the apron in front of the bay
 fx, fz = rot(FACE_YAW['N'], 3.9, 0)
 anchors['fire-bay-door'] = (FS_X + fx, FS_Z + fz)
-fx, fz = rot(FACE_YAW['N'], 4.9, 0)
+fx, fz = rot(FACE_YAW['N'], 6.6, 0)
 anchors['fire-bay-trigger'] = (FS_X + fx, FS_Z + fz)
 doors.append(anchors['fire-bay-trigger'])
 g.place('prop.fire-hydrant', -68.2, 36.2, 0, .8, soft=True)
@@ -518,7 +516,7 @@ anchors['edge-in-4'] = (78.5, Z0)
 anchors['edge-in-5'] = (X3, 48.5)
 anchors['edge-in-6'] = (X2, 48.5)
 anchors['elm-horde-entry'] = (X4, 47.0)
-anchors['photo-l1-morning'] = (-67.8, 9.0)
+anchors['photo-l1-morning'] = (-66.6, 9.0)
 anchors['photo-l1-pickup'] = (depot_x, SHOP_FRONT + 3.5)
 anchors['photo-l1-facility'] = (60.0, -6.0)
 anchors['photo-l1-accident'] = (ax_, ANNEX_FRONT + 3.5)
@@ -535,7 +533,7 @@ l.data['anchors'] = {k: v for k, v in l.data['anchors'].items()}
 l.zone('lab-nobike-zone', [(56, -29.8), (78, -29.8), (78, FENCE_Z), (56, FENCE_Z)])
 l.zone('garage-nobike-zone', [(gx - 3.4, GARAGE_FRONT - 1.4), (gx + 3.4, GARAGE_FRONT - 1.4), (gx + 3.4, GARAGE_FRONT + gdx + .4), (gx - 3.4, GARAGE_FRONT + gdx + .4)])
 fx0, fz0 = anchors['fire-bay-door']
-l.zone('fire-nobike-zone', [(FS_X - 6.2, SFRONT), (FS_X + 6.2, SFRONT), (FS_X + 6.2, SFRONT + fdx + .5), (FS_X - 6.2, SFRONT + fdx + .5)])
+l.zone('fire-nobike-zone', [(FS_X - 6.2, SFRONT), (FS_X + 6.2, SFRONT), (FS_X + 6.2, FS_Z + fdx / 2 + .5), (FS_X - 6.2, FS_Z + fdx / 2 + .5)])
 l.zone('carwash-bay', [(CW_X - 2.5, CW_Z - 5), (CW_X + 2.5, CW_Z - 5), (CW_X + 2.5, CW_Z + 5), (CW_X - 2.5, CW_Z + 5)])
 
 # Plausibility problems (overlaps) are written next to the build cache and fail the build in tests/unit/layouts/d-grove.test.ts
