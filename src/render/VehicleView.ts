@@ -1,15 +1,15 @@
 // Adapted from Bruno Simon folio-2025 VisualVehicle.js (MIT, 41046b5): wheel pivots/suspension and lamps.
-import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, SphereGeometry, TorusGeometry, type Object3D } from 'three/webgpu';
+import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, SphereGeometry, TorusGeometry, type Object3D } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
 import { atLeast } from '../assets/types';
 import { vehiclePlaceholder } from '../assets/vehiclePlaceholder';
-import { palette, type PaletteToken } from '../data/palette';
+import { color, mix, positionGeometry, sin, uniform } from 'three/tsl';
 import { PaletteMaterial } from './PaletteMaterial';
 import type { VehicleFeedbackEvent } from './vfx/VehicleFeedback';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
 import { lerp } from '../core/maths';
-interface Record { parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: PaletteMaterial[]; blood: number }
+interface Record { parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number }
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
 export class VehicleView extends Group {
   private readonly registry = new AssetRegistry(() => {});
@@ -30,11 +30,21 @@ export class VehicleView extends Group {
     const car = this.world.vehicles!.cars.get(id)!, def = car.physics.def;
     const model = atLeast(this.registry.definition(def.asset).status, 'integrated') ? await this.registry.loadAsset(def.asset) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
     if (this.disposed) return;
-    const paint: PaletteMaterial[] = [], copies = new Map<import('three').Material, PaletteMaterial>();
+    const paint: Record['paint'] = [], copies = new Map<import('three').Material, Record['paint'][number]>();
     model.traverse(node => { if (!(node instanceof Mesh)) return; const convert = (material: import('three').Material) => {
-      const token = material.name.replace(/^pal_/, '') as PaletteToken;
-      if (!(material instanceof PaletteMaterial) && (!material.name.startsWith('pal_') || !Object.hasOwn(palette, token))) return material;
-      let copy = copies.get(material); if (!copy) { copy = this.materials.unique(material instanceof PaletteMaterial ? material.token : token); copies.set(material, copy); paint.push(copy); } return copy;
+      if (!(material instanceof PaletteMaterial) && !(material instanceof MeshLambertNodeMaterial)) return material;
+      let copy = copies.get(material);
+      if (!copy) {
+        if (material instanceof PaletteMaterial) copy = this.materials.unique(material.token);
+        else {
+          const owned = Object.assign(material.clone(), { bloodCoverage: uniform(0) });
+          const grain = sin(positionGeometry.x.mul(127.1).add(positionGeometry.y.mul(311.7)).add(positionGeometry.z.mul(74.7))).mul(43758.5453).fract();
+          // Retain imported color, vertex colors and lighting while adding the surface mask.
+          owned.colorNode = mix(uniform(owned.color), color('#b3121f'), grain.lessThan(owned.bloodCoverage).select(1, 0)); copy = owned;
+        }
+        copies.set(material, copy); paint.push(copy);
+      }
+      return copy;
     }; node.material = Array.isArray(node.material) ? node.material.map(convert) : convert(node.material); });
     const parent = new Group(); parent.add(model); this.add(parent); model.position.y = -(def.suspension + def.wheelRadius + .15);
     const wheels = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR'].map(name => { const node = model.getObjectByName(name)!; node.rotation.order = 'YXZ'; return { node, y: node.position.y, steer: node.rotation.y, spin: node.rotation.z }; });
