@@ -11,7 +11,7 @@ test('T-E05-13 @E05 @E05-AC13 real cursor LMB RMB wheel matches sim side/rack st
   // Sample browser logical frames from real devices, then replay them through the headless sim.
   async function sample(): Promise<void> {
     const state = await page.evaluate(async () => { const a = window.__SS__!; await a.step(1); return a.getState(); });
-    world.setInput(state.input.frame); world.update();
+    world.applyInput(state.input.frame, state.input.scheme); world.update();
     const browser = state.player!.weapons!, sim = world.getState().player!.weapons!;
     expect(browser).toEqual(sim); states.push({ tick: state.tick, frame: state.input.frame, browser, sim });
   }

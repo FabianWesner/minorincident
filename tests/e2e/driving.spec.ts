@@ -1,27 +1,23 @@
 import { boot, expect, test } from './fixtures';
-test('T-E09-08 @E09-AC08 real mouse aims ahead-left to accelerate/turn and dead ring brakes', async ({ page }) => {
+test('T-E09-08 @E09-AC08 held LMB drives ahead-left and release brakes with distant cursor', async ({ page }) => {
   await boot(page);
   await page.evaluate(async () => { const api = window.__SS__!; await api.loadScenario('drive-course'); api.pause(); await api.step(36); });
   const start = await page.evaluate(() => window.__SS__!.getEntity(2)!);
   const cursor = await page.evaluate(p => window.__SS__!.input.project({ x: p.x + 10, z: p.z + 4 }), start.transform);
-  await page.mouse.move(cursor.x, cursor.y);
+  await page.mouse.move(cursor.x, cursor.y); await page.mouse.down();
   await page.evaluate(async () => { await window.__SS__!.step(60); });
   const state = await page.evaluate(() => window.__SS__!.getState());
   expect(state.input.scheme).toBe('mouse-only'); expect(state.entities.find(e => e.id === 2)!.vehicle!.speed).toBeGreaterThan(2);
   expect(state.entities.find(e => e.id === 2)!.transform.yaw).toBeLessThan(-.05);
   expect(state.player!.hidden).toBe(true); expect(state.render.camera.radius).toBeCloseTo(35 * 1.15);
-  // Keep the physical pointer in the moving vehicle's dead ring while it decelerates.
-  for (let i = 0; i < 30; i++) {
-    const center = await page.evaluate(() => window.__SS__!.input.project(window.__SS__!.getEntity(2)!.transform));
-    await page.mouse.move(center.x, center.y); await page.evaluate(async () => { await window.__SS__!.step(4); });
-  }
+  await page.mouse.up(); await page.evaluate(() => window.__SS__!.step(120));
   expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.speed)).toBeLessThan(.1);
 });
-test('S-07 @smoke @E09 vehicle enter, driver travels 50m, real right-click exit', async ({ page }) => {
+test('S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit', async ({ page }) => {
   await boot(page);
   await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('drive-course'); a.pause(); a.bot.start('driver'); await a.step(480); a.bot.stop(); });
   const before = await page.evaluate(() => window.__SS__!.getState()); expect(before.player!.hidden).toBe(true); expect(before.player!.transform.x).toBeGreaterThan(50);
-  await page.mouse.click(800, 450, { button: 'right' }); await page.evaluate(async () => { await window.__SS__!.step(1); });
+  await page.mouse.click(800, 450, { button: 'middle' }); await page.evaluate(async () => { await window.__SS__!.step(1); });
   const after = await page.evaluate(() => window.__SS__!.getState()); expect(after.player!.hidden).toBe(false); expect(after.entities.find(e => e.id === 2)!.vehicle!.driver).toBeNull();
   const car = after.entities.find(e => e.id === 2)!; expect(Math.hypot(car.transform.x - after.player!.transform.x, car.transform.z - after.player!.transform.z)).toBeLessThanOrEqual(2.5);
 });
@@ -32,7 +28,7 @@ test('T-E09-controls @E09 keyboard WASD uses local driving axes', async ({ page 
   await page.keyboard.up('KeyW'); await page.keyboard.up('KeyA');
 });
 
-test('T-E09-touch @E09 touch stick accelerates, LEFT holds boost and brake stops without exiting', async ({ page, context }) => {
+test('T-E09-touch @E09 touch stick accelerates, LEFT holds boost, releasing stick brakes, ACTION exits', async ({ page, context }) => {
   await page.setViewportSize({ width: 390, height: 844 }); await boot(page);
   await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('drive-course'); a.pause(); await a.step(36); });
   const cdp = await context.newCDPSession(page);
@@ -48,11 +44,11 @@ test('T-E09-touch @E09 touch stick accelerates, LEFT holds boost and brake stops
   await page.evaluate(async () => { await window.__SS__!.step(6); });
   expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.boosting)).toBe(true);
   await touch('touchEnd', []);
-  const box = await page.locator('[data-touch-action=brake]').boundingBox(); expect(box).not.toBeNull();
-  await touch('touchStart', [{ id: 2, x: box!.x + box!.width / 2, y: box!.y + box!.height / 2 }]);
-  await page.evaluate(async () => { await window.__SS__!.step(120); });
+  await page.evaluate(() => window.__SS__!.step(120));
   const car = await page.evaluate(() => window.__SS__!.getEntity(2)!); expect(car.vehicle!.speed).toBeLessThan(.1); expect(car.vehicle!.driver).toBe(1); expect(car.vehicle!.boosting).toBe(false);
-  await touch('touchEnd', []);
+  const box = await page.locator('[data-touch-action=interact]').boundingBox(); expect(box).not.toBeNull();
+  await touch('touchStart', [{ id: 2, x: box!.x + box!.width / 2, y: box!.y + box!.height / 2 }]); await touch('touchEnd', []);
+  await page.evaluate(() => window.__SS__!.step(1)); expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.driver)).toBeNull();
 });
 test('T-E09-asset @E09-AC01 dynamically spawned integrated fire engine renders and unloads its native resources', async ({ page }) => {
   await boot(page);

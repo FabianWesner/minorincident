@@ -14,6 +14,7 @@ export class Loadout {
     this.state = { selectedSide: 'LEFT', LEFT: side(left), RIGHT: side(right) };
   }
   input(frame: InputFrame, tick: number): void {
+    if (frame.selectorSide) this.state.selectedSide = frame.selectorSide;
     if (frame.left.down) this.state.selectedSide = 'LEFT';
     if (frame.right.down) this.state.selectedSide = 'RIGHT';
     const side = this.state[this.state.selectedSide], aim = frame.aim;

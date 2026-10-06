@@ -10,7 +10,7 @@ E04, E05, E10 / E21–E24.
 **In:**
 - Rapier raycast vehicle controller per `VehicleDef` (mass, wheelbase, engine force, top speed, steering, suspension, HP, ramStrength).
 - Enter and exit via stand-to-interact (0.6 s) at the driver door; exit auto-places the player on a free side.
-- Controls per scheme: mouse-only steer to cursor with throttle by distance; keyboard WASD; touch stick and brake; LEFT = horn/boost, RIGHT = exit.
+- Controls per scheme: mouse-only hold LMB to steer toward cursor with throttle by distance, release to brake; keyboard WASD; touch stick (release to brake); middle-click / F / E / ACTION = exit; keyboard/touch LEFT = horn/boost.
 - Run-over damage (speed-based); infected grabbing at under 3 m/s with a shake-off.
 - Light obstacle smashing (break into debris physics bodies, pooled); heavy obstacles stop the car.
 - Vehicle damage states (smoke < 40%, fire < 15%, explode at 0 after 3 s, kicking the player out).
@@ -42,7 +42,7 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E09-AC05 | Light obstacles (fence segment, cone, barricade, trash can, mailbox) break on impact ≥ 5 m/s and slow the car by ≤ 25%; heavy obstacles (jersey barrier, wall, truck) stop the car and deal crash damage | sim |
 | E09-AC06 | Damage states: HP < 40% emits `vehicle.smoking`; < 15% `vehicle.burning`; 0 → exploding after 3 s, which ejects the player and deals splash | sim |
 | E09-AC07 | Grab: at speed < 3 m/s infected within 1.5 m attach (max 4); accelerating above 8 m/s or hard steering shakes them off | sim |
-| E09-AC08 | Mouse-only driving: with the cursor held 10 m ahead-left, the car turns left and accelerates; the cursor inside the dead ring brakes to a stop | e2e |
+| E09-AC08 | Mouse-only driving: holding LMB with the cursor 10 m ahead-left turns and accelerates; releasing LMB brakes to a stop even with the cursor far away; middle-click / F / ACTION exits | e2e |
 | E09-AC09 | Bot drive test: the vehicle bot drives a 600 m course in `drive-course` through traffic cones within 90 s without getting stuck (stuck detection: < 0.5 m travel in 3 s → reverse recovery) | sim |
 | E09-AC10 | Visuals: wheels rotate with speed, front wheels steer, brake lights light when braking, sirens flash on emergency vehicles (screenshot pair, light pixels differ) | visual |
 | E09-AC11 | Determinism: a 30 s scripted drive gives the same final transform (±1e-4 m) across 3 runs in Node | sim |

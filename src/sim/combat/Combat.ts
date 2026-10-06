@@ -58,6 +58,7 @@ export class Combat {
   }
   private readonly switched = (side: 'LEFT' | 'RIGHT', actionId: string): void => { this.world.events.emit({ type: 'loadout.switched', tick: this.world.tick, sourceId: 1, side, actionId }); };
   private readonly started = (attack: Attack): void => {
+    this.world.controls.attacked(attack.side);
     const source = this.world.entities.get(attack.sourceId)!;
     if (attack.def.category === 'ranged') {
       this.assist.apply(source.id, source.transform, attack.aim, attack.def.range);

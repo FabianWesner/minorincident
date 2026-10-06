@@ -38,7 +38,12 @@ test('T-E14-touch-slots @E14 @E14-AC01 @E14-AC02 touch actions show equipped ico
   await expect(page.getByTestId('touch-left')).not.toHaveClass(/is-selected/);
   await expect(page.getByTestId('touch-right')).toHaveAttribute('data-charges', await page.getByTestId('stats-RIGHT').getAttribute('data-charges') ?? '');
   expect(await page.getByTestId('touch-right').evaluate(e => Number((e as HTMLElement).style.getPropertyValue('--progress')))).toBeLessThan(1);
-  await page.getByTestId('touch-selector').tap();
+  const box = await page.getByTestId('touch-right').boundingBox(), cdp = await page.context().newCDPSession(page);
+  const x = box!.x + box!.width / 2, y = box!.y + box!.height / 2;
+  for (const [type, points] of [['touchStart', [{ x, y }]], ['touchMove', [{ x, y: y - 60 }]], ['touchEnd', []]] as const) {
+    await cdp.send('Input.dispatchTouchEvent', { type, touchPoints: [...points] });
+    await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
+  }
   await page.evaluate(async () => { await window.__SS__!.step(1); });
   await expect(page.getByTestId('touch-icon-right')).toHaveAttribute('src', (await page.getByTestId('icon-RIGHT').getAttribute('src'))!);
   expect(await page.getByTestId('touch-icon-right').getAttribute('src')).not.toBe(icon);

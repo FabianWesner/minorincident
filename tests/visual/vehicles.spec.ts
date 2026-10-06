@@ -10,7 +10,7 @@ test('T-E09-10 @E09-AC10 wheel spin/steer, brake lamps and alternating siren pix
   const brakePoint = async () => page.evaluate(() => { const a = window.__SS__!, p = a.getEntity(3)!.transform; return a.camera.project(p.x - Math.cos(p.yaw) * 2.1, p.y - .79 + .8, p.z + Math.sin(p.yaw) * 2.1); });
   const firstBrake = await brakePoint();
   const on = await capture('brake-siren-right');
-  await page.evaluate(async () => { const a = window.__SS__!; a.input.set({ aimPoint: { x: 10, z: 16 } }); await a.step(30); });
+  await page.evaluate(async () => { const a = window.__SS__!; a.input.set({ aimPoint: { x: 10, z: 16 }, left: { down: true, held: true, up: false } }); await a.step(30); });
   const second = await page.evaluate(() => window.__SS__!.getState().render.vehicles.find(v => v.id === 3)!);
   expect(Math.abs(second.wheels[0].spin - first.wheels[0].spin)).toBeGreaterThan(.5);
   expect(Math.abs(second.wheels[0].steer)).toBeGreaterThan(.05); expect(second.wheels[2].steer).toBe(0); expect(first.brake).toBeGreaterThan(second.brake * 10);
