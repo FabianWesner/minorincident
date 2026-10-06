@@ -1,7 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect } from '../e2e/fixtures';
 // Shared Mac policy: headless Chrome with native Metal WebGL2, under the machine-wide lock.
-test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
+// Disable vsync so RAF intervals measure GPU headroom instead of the 60 Hz refresh ceiling.
+test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync'] } });
 test('T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms', async ({ page }) => {
   test.setTimeout(90_000);
   await page.goto('/?test=1&renderer=webgl&quality=high&audio=muted&dpr=1'); await page.waitForFunction(() => Boolean(window.__SS__));
@@ -10,10 +11,11 @@ test('T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 f
     const adapter = await (navigator as Navigator & { gpu?: { requestAdapter(): Promise<{ info?: { vendor: string; architecture: string; device: string; description: string } } | null> } }).gpu?.requestAdapter();
     const gl = document.querySelector('canvas')!.getContext('webgl2')!, extension = gl.getExtension('WEBGL_debug_renderer_info');
     const gpu = extension ? gl.getParameter(extension.UNMASKED_RENDERER_WEBGL) as string : null;
-    const frameMs: number[] = []; let previous = 0; const startTick = a.tick(), startFrame = a.perf().renderedFrames;
-    for (let i = 0; i < 720; i++) { const now = await new Promise<number>(resolve => requestAnimationFrame(resolve)); if (i >= 120 && previous > 0) frameMs.push(now - previous); previous = now; }
+    // Retain the original twelve-second simulation window when rendering faster than 60 Hz.
+    const frameMs: number[] = []; let previous = 0; const measurementStart = performance.now(); const startTick = a.tick(), startFrame = a.perf().renderedFrames;
+    for (let i = 0; i < 720 || performance.now() - measurementStart < 12_000; i++) { const now = await new Promise<number>(resolve => requestAnimationFrame(resolve)); if (i >= 120 && previous > 0) frameMs.push(now - previous); previous = now; }
     const sorted = [...frameMs].sort((a, b) => a - b);
-    return { gpu, ticks: a.tick() - startTick, renderedFrames: a.perf().renderedFrames - startFrame, frameMs, frameMsP50: sorted[Math.ceil(sorted.length * .5) - 1], frameMsP95: sorted[Math.ceil(sorted.length * .95) - 1], perf: a.perf(), count: a.getState().ai!.count, adapter: adapter?.info ? { vendor: adapter.info.vendor, architecture: adapter.info.architecture, device: adapter.info.device, description: adapter.info.description } : null, userAgent: navigator.userAgent, recordedAt: new Date().toISOString() };
+    return { gpu, unthrottled: true, durationMs: performance.now() - measurementStart, ticks: a.tick() - startTick, renderedFrames: a.perf().renderedFrames - startFrame, frameMs, frameMsP50: sorted[Math.ceil(sorted.length * .5) - 1], frameMsP95: sorted[Math.ceil(sorted.length * .95) - 1], perf: a.perf(), count: a.getState().ai!.count, adapter: adapter?.info ? { vendor: adapter.info.vendor, architecture: adapter.info.architecture, device: adapter.info.device, description: adapter.info.description } : null, userAgent: navigator.userAgent, recordedAt: new Date().toISOString() };
   });
   const windowInfo = { headless: true };
   const screenInfo = await page.evaluate(() => ({ x: screenX, y: screenY, width: screen.width, height: screen.height, viewportWidth: innerWidth, viewportHeight: innerHeight }));
