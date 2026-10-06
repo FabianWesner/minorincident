@@ -184,7 +184,7 @@ export class InputSystem implements Lifecycle {
   }
   /** Logical injection persists until clear(), preserving the E01 harness contract. */
   inject(patch: Partial<InputFrame>): void { this.injected = { ...(this.injected ?? emptyInput()), ...structuredClone(patch) }; }
-  clear(): void { this.injected = null; this.reset(); }
+  clear(): void { this.injected = null; this.reset(true); }
   private readonly visibility = (): void => { if (document.hidden) this.release(); };
   readonly release = (): void => {
     this.releasing = true; this.keyboard.release(); this.pointer.release(); this.releasing = false;
@@ -192,7 +192,7 @@ export class InputSystem implements Lifecycle {
     this.selectors.length = 0; this.interact = false; this.pause = false;
   };
   update(): void { /* Input is sampled in the fixed input phase, not the render update. */ }
-  reset(): void { this.setDriving(false); this.release(); this.left.reset(); this.right.reset(); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.setScheme(navigator.maxTouchPoints > 0 ? 'touch' : 'mouse-only'); this.frameNeutral(); }
+  reset(preserveRelease = false): void { this.setDriving(false); this.release(); this.left.reset(preserveRelease); this.right.reset(preserveRelease); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.setScheme(navigator.maxTouchPoints > 0 ? 'touch' : 'mouse-only'); this.frameNeutral(); }
   dispose(): void {
     this.reset(); this.keyboard.dispose(); this.pointer.dispose(); this.wheel.dispose(); this.touch.dispose();
     window.removeEventListener('blur', this.release); window.removeEventListener('pagehide', this.release); document.removeEventListener('visibilitychange', this.visibility);
