@@ -162,6 +162,17 @@ test.each([
   actionCalls.mockRestore();
 });
 
+test('@E03-AC20 seven authored unarmed silhouettes have sequenced anticipation, strike and follow-through', () => {
+  const names = ['jab','cross','front-kick','roundhouse-kick','uppercut','knee','spinning-backfist'];
+  const tracks = names.map(name => authoredClips.get(`unarmed-${name}`)!);
+  expect(new Set(tracks.map(clip => JSON.stringify(clip.tracks))).size).toBe(7);
+  for (const clip of tracks) {
+    expect(clip.tracks.some(track => track.node === 'hip' && track.path === 'rotation')).toBe(true);
+    expect(clip.tracks.some(track => track.node === 'torso' && track.path === 'rotation')).toBe(true);
+    expect(clip.tracks.some(track => /^(arm|leg)/.test(track.node) && track.path === 'rotation')).toBe(true);
+  }
+});
+
 test('M1-23 @E19 infection collapse and rise share a low pose, then rise into infected posture', async () => {
   const { scene } = await model('assets/npc.civilian-woman-a/model.glb');
   sampleClip(scene, 'infection-collapse', authoredClips.get('infection-collapse')!.duration);
