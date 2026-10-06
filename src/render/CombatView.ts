@@ -25,6 +25,7 @@ export class CombatView extends Group {
         if (entity.combat.shield) { const shield = new Mesh(this.bodyGeometry, this.materials.get('uiDark')); shield.scale.set(0.15, 1.3, 1.2); shield.position.set(0.3, 0.7, 0); dummy.add(shield); }
         this.dummies.set(entity.id, dummy); this.add(dummy);
       }
+      dummy.visible = !entity.hidden;
       dummy.position.set(entity.transform.x, 0, entity.transform.z); dummy.rotation.y = entity.transform.yaw;
       dummy.rotation.z = entity.health.current > 0 ? 0 : Math.PI / 2;
     }

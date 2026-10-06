@@ -25,6 +25,8 @@ export class InputSystem implements Lifecycle {
   private touchFire: 'touch' | 'assist' | null = null;
   readonly frame = emptyInput();
   scheme: Scheme = 'mouse-only';
+  private drivingContext = false;
+  setDriving(on: boolean): void { if (on !== this.drivingContext) { this.drivingContext = on; this.touch.setDriving(on); } }
   private readonly left = new Buttons();
   private readonly right = new Buttons();
   private readonly active = new Set<Action>();
@@ -132,12 +134,14 @@ export class InputSystem implements Lifecycle {
   private screenAngle(x: number, y: number): number { this.screenVector(x, y, this.screen); return Math.atan2(this.screen.z, this.screen.x); }
   /** Frame and math scratch objects are reused; no device polling or scene-mesh raycasts. */
   private readonly cursorPoint = { x: 0, z: 0 };
+  private readonly driving = { throttle: 0, steer: 0 };
   sample(player: Vec2, dt = 1 / 60): InputFrame {
     if (this.recorder.playing) return this.recorder.next() ?? this.frameNeutral();
     if (this.injected) { this.recorder.capture(this.injected); return this.injected; }
     const frame = this.frame;
     frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint;
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
+    this.driving.throttle = y ? -y : 0; this.driving.steer = x; frame.drive = this.driving; frame.brake = this.touch.braking;
     if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') {
       this.screenVector(x, y, frame.move); const length = Math.hypot(frame.move.x, frame.move.z);
       if (length > 1) { frame.move.x /= length; frame.move.z /= length; }
@@ -169,11 +173,12 @@ export class InputSystem implements Lifecycle {
       frame.aim = this.aim; frame.aimSource = this.touchFire ?? 'touch'; this.touchFire = null;
     }
     frame.left = this.left.sample(); frame.right = this.right.sample();
+    if (this.drivingContext && this.scheme === 'touch' && this.touch.holdingLeft) frame.left.held = true;
     frame.selector = this.selectors.shift() ?? 0; frame.interact = this.interact; frame.pause = this.pause;
     this.interact = false; this.pause = false; this.recorder.capture(frame); return frame;
   }
   private frameNeutral(): InputFrame {
-    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint;
+    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.drive; delete frame.brake;
     frame.left.down = frame.left.held = frame.left.up = false; frame.right.down = frame.right.held = frame.right.up = false;
     frame.selector = 0; frame.interact = false; frame.pause = false; return frame;
   }
@@ -187,7 +192,7 @@ export class InputSystem implements Lifecycle {
     this.selectors.length = 0; this.interact = false; this.pause = false;
   };
   update(): void { /* Input is sampled in the fixed input phase, not the render update. */ }
-  reset(): void { this.release(); this.left.reset(); this.right.reset(); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.setScheme(navigator.maxTouchPoints > 0 ? 'touch' : 'mouse-only'); this.frameNeutral(); }
+  reset(): void { this.setDriving(false); this.release(); this.left.reset(); this.right.reset(); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.setScheme(navigator.maxTouchPoints > 0 ? 'touch' : 'mouse-only'); this.frameNeutral(); }
   dispose(): void {
     this.reset(); this.keyboard.dispose(); this.pointer.dispose(); this.wheel.dispose(); this.touch.dispose();
     window.removeEventListener('blur', this.release); window.removeEventListener('pagehide', this.release); document.removeEventListener('visibilitychange', this.visibility);

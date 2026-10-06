@@ -1,9 +1,10 @@
 {
   "merged": [
     "E12",
-    "E11"
+    "E11",
+    "E09"
   ],
-  "pending": "E09",
+  "pending": "E15",
   "manifest_union": 275,
   "asset_registrations": [
     "bld.helipad",
@@ -49,5 +50,12 @@
       "E07 dynamic blockers/alarm/35-damage Bloated",
       "E12 tier/checkpoint restores E11 blockers/debris"
     ]
+  },
+  "E09": {
+    "manifest_union": 275,
+    "unit": 72,
+    "sim_before_final_attachment_guard": 238,
+    "verify": 0,
+    "extra_regressions": 3
   }
 }

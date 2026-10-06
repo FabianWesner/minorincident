@@ -1,4 +1,5 @@
 import { missionControls } from '../sim/missions/controls';
+import { Driver } from './bot/Driver';
 import type { ActionState, GearTier, SurvivorVariant } from '../data/survivor';
 import { Vector3 } from 'three';
 import type { Action, BindingMap } from '../data/bindings';
@@ -13,7 +14,7 @@ export type ProgressionPreset = Record<string, unknown>;
 export type Settings = Parameters<Game['view']['settings']>[0] & { aimAssist?: import('../sim/combat/AimAssist').AimAssistSetting };
 export interface BotStatus { running: boolean; policy: string | null }
 
-/** Version 1.6: E07 crowds, E11 interactions and E12 mission controls. */
+/** Version 1.7: E07 crowds, E09 vehicles, E11 interactions and E12 missions. */
 export interface SSTestApi {
   version: string;
   /** E12 mission controls share the headless sim entry points; state is copied. */
@@ -41,7 +42,7 @@ export interface SSTestApi {
     /** Begin at scenario tick zero so seed + frames are sufficient for replay. */
     record(): void; stopRecording(): Recording; replay(data: Recording): Promise<void>;
   };
-  /** E06: action IDs spawn walk-over pickups; infected options include reactive hearing fixtures. */
+  /** E06 action IDs spawn pickups; E09 vehicle.* IDs spawn drivable vehicles. Infected options include hearing fixtures. */
   spawn(defId: string, pos: { x: number; z: number }, opts?: object): number;
   /** E11 authoring/debug hooks. Spawn opts are DeviceOptions/HazardOptions or {item:string}. */
   interact: { giveItem(id: string): void; refuel(id: number, seconds: number): void; barricade(id: number, on: boolean): void; hit(id: number, amount: number, type: import('../sim/combat/Damage').DamageEvent['type']): number };
@@ -50,7 +51,7 @@ export interface SSTestApi {
   survivor: { select(variant: SurvivorVariant, tier?: GearTier): void; damage(amount: number): number; act(action: ActionState): void; checkpoint(pos: { x: number; y: number; z: number }): void };
   setLoadout(left: string[], right: string[]): void;
   cheats: { god(on: boolean): void; infiniteCharges(on: boolean): void; killAll(): void; completeObjective(id?: string): void };
-  bot: { start(policy?: 'complete' | 'newbie' | 'idle' | 'aggressive'): void; stop(): void; status(): BotStatus };
+  bot: { start(policy?: 'complete' | 'newbie' | 'idle' | 'aggressive' | 'driver'): void; stop(): void; status(): BotStatus };
   /** E02: scenario photo spots, follow, bounded shake, cinematic blend, and NDC world projection. */
   camera: { preset(name: string): void; follow(): void; shake(intensity: number): void; project(x: number, y: number, z: number): number[]; cinematic(pose: import('../render/View').CameraPose): void };
   /** E02 presentation patch: cameraShake, bloom, cheapDof, timeOfDay; idPass/occludersVisible are test probes. */
@@ -68,7 +69,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
-    version: '1.6.0', ready, missions: missionControls(game.world),
+    version: '1.7.0', ready, missions: missionControls(game.world),
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
     loadLevel: (id, opts) => {
@@ -97,6 +98,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       replay: async (data) => { await game.loadScenario(data.level, data.seed); game.clock.pause(); game.input.recorder.play(data); },
     },
     spawn: (id, pos, opts) => {
+      if (id.startsWith('vehicle.')) { if (!game.world.vehicles) throw new Error('Load a survivor scenario'); const entityId = game.world.vehicles.spawn(id, pos); game.view.update(1); return entityId; }
       const [prefix, kind] = id.split('.');
       if (prefix === 'device' && (deviceKinds as readonly string[]).includes(kind) && game.world.interactables) return game.world.interactables.spawn(kind as DeviceKind, pos, opts as DeviceOptions);
       if (((prefix === 'hazard' && (hazardKinds as readonly string[]).includes(kind)) || (prefix === 'prop' && (destructibleKinds as readonly string[]).includes(kind))) && game.world.hazards) return game.world.hazards.spawn(kind as HazardKind | DestructibleKind, pos, opts as HazardOptions);
@@ -119,7 +121,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     },
     setLoadout: (left, right) => { if (!game.world.combat) throw new Error('Load combat-arena before setting loadout'); game.world.combat.setLoadout(left, right); },
     cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) e.health.current = 0; }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
-    bot: { start: () => pending('E19', 'bot.start'), stop: () => pending('E19', 'bot.stop'), status: () => pending('E19', 'bot.status') },
+    bot: { start: (policy) => { if (policy !== 'driver' || game.world.scenario !== 'drive-course') pending('E19', 'bot.start'); game.driver = new Driver(game.world); }, stop: () => { game.driver = null; }, status: () => ({ running: !!game.driver && !game.driver.finished, policy: game.driver ? 'driver' : null }) },
     camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose) => game.view.view.cinematic(pose) },
     settings: { set: (patch) => { if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.view.settings(patch); } },
     perf: () => game.perf(), screenshotReady: () => game.screenshotReady(),
