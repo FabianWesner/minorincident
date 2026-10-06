@@ -98,3 +98,52 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
  .menu-title{margin-left:6vw;width:460px}.menu-title h1{font-style:italic;font-weight:1000;max-width:380px;font-size:64px;line-height:.95;margin-bottom:20px;text-align:left}
  .menu-title [data-testid=detail-title]{position:fixed;left:6vw;right:6vw;bottom:max(20px,env(safe-area-inset-bottom));text-align:left;font-size:calc(14px * var(--text-scale));letter-spacing:2px}
 }
+
+/* Touch layout uses the action buttons as slots; desktop panels keep their layout. */
+.hud-corgi-badge{display:none}
+.hud-objective-detail{pointer-events:auto;color:var(--ui-ink);width:min(420px,calc(100vw - 48px));padding:20px;font-size:calc(16px * var(--text-scale))}
+.hud-objective-detail::backdrop{background:#10182488}
+.touch-ui{--hud-top:max(12px,env(safe-area-inset-top));--hud-left:max(12px,env(safe-area-inset-left));--hud-right:max(12px,env(safe-area-inset-right));--hud-bottom:max(12px,env(safe-area-inset-bottom));--hud-map-size:min(96px,28vmin)}
+.touch-ui .hud-slots,.touch-ui .hud-companion,.full-ui [data-touch-action=pause]{display:none!important}
+.touch-ui .hud-vitals{top:var(--hud-top);left:var(--hud-left);width:min(172px,45vw);height:56px;grid-template-columns:40px 1fr;padding:5px;gap:5px;border-radius:12px}
+.touch-ui .hud-vitals .hud-portrait{width:40px;height:40px;font-size:22px;border-width:2px;grid-row:auto}
+.touch-ui .hud-bars{gap:3px}
+.touch-ui .hud-bar{height:18px;border-width:1px;border-radius:5px}
+.touch-ui .hud-bar-label{line-height:16px;font-size:calc(9px * var(--text-scale))}
+.touch-ui .hud-corgi-badge{display:grid;place-items:center;position:absolute;left:29px;bottom:0;width:22px;height:22px;font-size:15px;border:1px solid #f8bf70;border-radius:50%;background:#182333}
+.touch-ui .hud-corgi-badge[data-state=following]{border-color:#64dccc}
+.touch-ui .hud-map{top:var(--hud-top);right:var(--hud-right);width:var(--hud-map-size);height:var(--hud-map-size);border-width:2px;pointer-events:auto;cursor:pointer;touch-action:manipulation}
+.touch-ui .hud-map-n{top:0;font-size:10px}
+.touch-ui .hud-map.is-collapsed{width:56px;height:56px}
+.touch-ui .hud-map.is-collapsed .hud-pin{display:none}
+.touch-ui .hud-map.is-collapsed .hud-map-n{top:50%;transform:translate(-50%,-50%)}
+.touch-ui .hud-pin-threat{width:7px;height:7px}
+.touch-ui .hud-pin-player{width:12px;height:14px}
+.touch-ui .hud-pin-home{font-size:18px;width:20px;height:20px}
+.touch-ui .hud-pin-objective{width:10px;height:10px}
+.touch-ui .hud-tracker{top:calc(var(--hud-top) + 60px);left:var(--hud-left);right:auto;width:min(260px,calc(100vw - var(--hud-left) - var(--hud-right) - var(--hud-map-size) - 12px));max-width:none;height:56px;display:flex;align-items:center;padding:5px 8px;line-height:1.3;font-size:calc(11px * var(--text-scale));border-left-width:3px;border-radius:10px;pointer-events:auto;cursor:pointer;touch-action:manipulation}
+.touch-ui [data-testid=objective-text]{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.full-ui.touch-ui[data-ui-screen] [data-testid=pause-button]{top:calc(var(--hud-top) + var(--hud-map-size) + 8px);right:var(--hud-right);left:auto;transform:none;width:56px;height:56px;min-width:56px;min-height:56px;padding:0;font-size:20px;border-radius:50%;background:#182333cc}
+.touch-ui [data-testid=pause-label]{display:none}
+.full-ui.touch-ui [data-touch-controls]{display:block!important;width:152px;height:144px;grid-template-columns:none!important;bottom:var(--hud-bottom)!important;right:var(--hud-right)!important;pointer-events:none}
+.full-ui.touch-ui [data-touch-controls][hidden]{display:none!important}
+.full-ui.touch-ui [data-touch-action]{position:absolute;pointer-events:auto;min-width:56px;min-height:56px;padding:4px;width:64px;height:64px!important;border-radius:50%!important;background:#182333c9!important;box-shadow:0 2px 4px #10182488}
+.full-ui.touch-ui [data-touch-action]::before{content:none}
+.full-ui.touch-ui [data-touch-action=left]{right:76px;bottom:0}
+.full-ui.touch-ui [data-touch-action=right]{right:0;bottom:76px}
+.full-ui.touch-ui [data-touch-action=selector]{right:0;bottom:0;width:56px;height:56px!important;font-size:10px}
+.full-ui.touch-ui [data-touch-action=selector]::before{content:'↻';display:block;font-size:18px;line-height:20px}
+.full-ui.touch-ui [data-touch-action=brake]{right:76px;bottom:76px;width:56px;height:56px!important;font-size:10px}
+.full-ui.touch-ui [data-touch-action=left],.full-ui.touch-ui [data-touch-action=right]{background:radial-gradient(circle closest-side,#182333eb 87%,transparent 89%),conic-gradient(#64dccc calc(var(--progress,1) * 1turn),#5c6677 0)!important;border-color:#77869a!important}
+.full-ui.touch-ui [data-touch-action].is-selected{border-color:#ffcd79!important;box-shadow:0 0 0 2px #ffd47966,0 2px 4px #10182488}
+[data-touch-action] img{width:32px;height:32px;pointer-events:none}
+[data-touch-action] span{display:block;font-size:10px;line-height:10px;pointer-events:none}
+.touch-ui .hud-stick-zone{display:block;bottom:var(--hud-bottom);left:var(--hud-left);width:96px;height:96px;border:1px solid #dfcba644;background:#18233320}
+.touch-ui [data-touch-stick]{z-index:27;border-color:#dfcba688!important;background:#18233340!important}
+.touch-ui [data-touch-stick]::after{content:'';position:absolute;left:calc(50% + var(--stick-x,0px));top:calc(50% + var(--stick-y,0px));transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:#fff0d499;border:2px solid #fff0d4}
+.touch-ui .onboarding{top:calc(var(--hud-top) + 120px);left:var(--hud-left);transform:none;max-width:min(260px,calc(100vw - var(--hud-left) - var(--hud-right) - var(--hud-map-size) - 12px));width:max-content;padding:5px 8px;font-size:calc(10px * var(--text-scale));text-align:left;border-width:1px;border-radius:8px}
+.touch-ui .mission-subtitle{bottom:calc(var(--hud-bottom) + 156px);font-size:calc(12px * var(--text-scale));max-width:60%;width:auto;padding:6px 10px}
+.touch-ui .hud-interaction,.touch-ui .hud-bark{font-size:11px;padding:7px;border-width:2px}
+.touch-ui .mission-marker{font-size:24px}
+.touch-ui .hud [role=button]:focus-visible{outline:3px solid #72ead8;outline-offset:3px}
+.touch-ui:has([data-touch-stick]:not([hidden])) .hud-stick-zone{visibility:hidden}
