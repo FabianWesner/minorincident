@@ -1,0 +1,17 @@
+# kit.car-wash — production review
+
+Reference and game-camera comparison passed for the main design: blue ribbed barrel vault, white tiled supports with teal bands, yellow fascia, Sunny Suds sign with smiling sun/bubbles, striped pink/yellow/teal/blue brushes, blue START kiosk/red button, yellow bollards, wet wash floor with guides/grate, external blue/white foam curtain. Hero and elevated game views are fully framed. Palette-only, no textures. Small foam shapes and signage are intentionally simpler than the cleaned image.
+
+Review revisions: filled entrance arch face; added side wall tiling; moved front brushes for doorway readability and shaped their rows into overlapping cloth skirts; corrected curtain colors/placement; moved the camera to the reference side; removed sign bubbles crossing the sun face; reduced tiny bevel/lettering/curtain geometry to the 12k side budget; widened the foundation so the kiosk rests on the tile; lifted floor joints clear of the wet slab to prevent coplanar flicker.
+
+LOD0: 11,059 triangles, static assembly draws 21. LOD1: 1,614 (14.6%), static draws 15. LOD2: 414 (3.7%), static draws 7. Moving brush/curtain/button groups are excluded from static draw budget. Authored LOD geometry retains complete surfaces and named pivots rather than decimating thin strips into holes. LOD2 deliberately drops small bands, bollards and support rods while preserving the roof, colored brushes, payment button and curtain silhouette.
+
+Required nodes: root, brush_a, brush_b, brush_c, kiosk, start_button, curtain, vfx_foam; front marker, roof and interior also provided. Brush origins are at the upper drive shafts; local Z rotation. Curtain pivot is its overhead rail; local X swing. Button is independently parented to kiosk for local X depression. An exploratory pose render rotated the brushes and swung the curtain without detached children. Only final hero/game renders are retained.
+
+All materials enable backface culling. Final Blender review renders use Eevee, hero 1600×900/96 samples and game 960×540/24 samples. AO is deterministic CPU Cycles baking, softened for warm toy colors. Geometry generation is deterministic and has no random inputs. Rebuild commands are in notes.md. In-place shared meshopt/quantization optimization and structural results are in report.json; browser results are in browser-report.json.
+
+Integration caveat: placeholder dimensions (5 × 4 × 10 m) do not describe the sheet proportions. Delivered measured bounds are recorded in report.json; integrator must update those dimensions and flip status. No manifest or public runtime file edited. WebGPU requires manual verification under repository guidance.
+
+Repeat build verification: LOD0 and LOD1 optimized geometry hashes matched exactly across two consecutive builds. Final LOD2 adjustment preserves the pink top band with unchanged triangle count. Delivery sizes: LOD0 209,996 B, LOD1 44,048 B, LOD2 21,908 B.
+
+Final headless Chromium WebGL2 (ANGLE Metal): all three meshopt-compressed GLBs loaded, reported the expected triangle counts and sizes, and emitted zero warnings/errors. LOD captures inspected: full roof/brush/kiosk/curtain silhouette retained, coarse surfaces intact. Generic preview decoder was injected only into the test page; no preview files modified. Test captures removed; final hero.png and game.png retained. Verdict: asset production complete, reference match accepted; integration bounds and manual WebGPU remain with the integrator.

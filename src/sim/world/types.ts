@@ -6,6 +6,7 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 export interface EntitySnapshot {
   id: number;
   /** Actual fixed-step motion, including collision/avoidance, for NPC locomotion clips. */
+  locomotion?: import('../locomotion/MotionResponse').MotionResponse;
   motion?: { velocity: { x: number; z: number }; speed: number; moving: boolean; distance: number };
   civilian?: import('../npc/types').Civilian;
   companion?: import('../npc/types').Companion;
@@ -29,6 +30,11 @@ export interface EntitySnapshot {
   /** Retaliation HP cost for vehicle ramming; supplied by infected definitions. */
   ramDamage?: number;
   vehicle?: import('../vehicles/Vehicles').VehicleState;
+  /** L1 v2: the courier bicycle (entity) and the id of the bicycle the player is riding (player entity). */
+  bicycle?: import('../vehicles/Bicycle').BicycleState;
+  riding?: number;
+  /** L1 v2 interactive toys (dumpster, car alarm, car wash); gates use `interactable`. */
+  toy?: import('../interact/Toys').ToyState;
   survivor?: SurvivorState;
   weapons?: import('../combat/Loadout').LoadoutState;
   combat?: { radius: number; armor: number; shield: boolean; staggerUntil: number; attacking: boolean; damageMultiplier: number; statuses: import('../combat/Status').StatusState[];
@@ -75,7 +81,7 @@ export type GameEvent = import('../npc/types').NpcEvent
   | { tick: number; type: 'telegraph'; sourceId?: never; attackId: number; kind: TelegraphKind; position: { x: number; z: number }; radius: number; angle: number }
   | { tick: number; type: 'attack.resolved'; attackId: number }
   | { tick: number; type: 'vfx.effect'; kind: EffectKind; position: { x: number; z: number }; radius: number }
-  | { tick: number; type: 'ai.alerted'; sourceId: number; targetId: number; cause: 'noise'; position: Transform }
+  | { tick: number; type: 'ai.alerted'; sourceId: number; targetId: number; cause: 'noise' | 'sight'; position: Transform }
   | { tick: number; type: 'combat.effect'; sourceId: number; actionId: string; kind: import('../../data/actions/schema').ActionEffect['kind']; position: { x: number; y: number; z: number }; radius: number; expires: number }
   | { tick: number; type: 'pickup.collected'; sourceId: number; pickupId: number; side: import('../../data/actions/schema').Side; actionId: string; replaced: string | null }
   | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; combo?: number; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number } }
