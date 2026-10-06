@@ -192,7 +192,9 @@ export class Outbreak {
     }
   }
   private sees(a: Vec2, b: Vec2, ignoreId: number): boolean {
-    if (this.blockers && !this.blockers.clear(a, b)) return false;
+    // Gates, fences and the car-wash curtain (lane C/F registry) block pedestrian sight too.
+    const los = this.blockers ?? this.world.infected?.l1?.los;
+    if (los && !los.clear(a, b)) return false;
     return this.world.combat?.query.visible(a, b, ignoreId) ?? true;
   }
 
