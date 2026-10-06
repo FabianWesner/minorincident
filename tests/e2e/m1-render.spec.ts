@@ -43,6 +43,15 @@ test('M1-27 @E19 real diner combat and wheel zoom keep survivor colour blocks fr
   for (let i = 0; i < 130 && !await page.evaluate(() => window.__SS__!.missions.state()!.outbreak!.released); i++) {
     await page.evaluate(() => window.__SS__!.step(30));
   }
+  // Tier rebuild restores campaign equipment; equip after that handoff so
+  // this surface fixture can strike over diner obstacles through real input.
+  await page.evaluate(() => {
+    const a = window.__SS__!;
+    a.setLoadout(['weapon.machete'], ['weapon.kick']);
+    // Systemic customers can flee or be rescued instead of turning. Keep four
+    // ordinary attackers as a fixed surface-stress fixture, without forcing bites.
+    for (const [x, z] of [[42, -5], [42, -4], [43, -5], [43, -4]]) a.spawn('infected.runner', { x, z });
+  });
   await page.mouse.wheel(0, -500); await page.evaluate(() => window.__SS__!.step(30));
   for (let turn = 0; turn < 100; turn++) {
     const target = await page.evaluate(() => {
