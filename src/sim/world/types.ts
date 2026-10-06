@@ -76,7 +76,7 @@ export type GameEvent = import('../npc/types').NpcEvent
   | { tick: number; type: 'telegraph'; sourceId?: never; attackId: number; kind: TelegraphKind; position: { x: number; z: number }; radius: number; angle: number }
   | { tick: number; type: 'attack.resolved'; attackId: number }
   | { tick: number; type: 'vfx.effect'; kind: EffectKind; position: { x: number; z: number }; radius: number }
-  | { tick: number; type: 'ai.alerted'; sourceId: number; targetId: number; cause: 'noise'; position: Transform }
+  | { tick: number; type: 'ai.alerted'; sourceId: number; targetId: number; cause: 'noise' | 'sight'; position: Transform }
   | { tick: number; type: 'combat.effect'; sourceId: number; actionId: string; kind: import('../../data/actions/schema').ActionEffect['kind']; position: { x: number; y: number; z: number }; radius: number; expires: number }
   | { tick: number; type: 'pickup.collected'; sourceId: number; pickupId: number; side: import('../../data/actions/schema').Side; actionId: string; replaced: string | null }
   | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; combo?: number; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number } }
