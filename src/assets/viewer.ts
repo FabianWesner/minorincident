@@ -10,6 +10,7 @@ import type { AssetDef } from './types';
 export interface AssetViewerApi {
   ready: Promise<void>;
   view(index: number): Promise<void>;
+  visibility(name: string, visible: boolean): Promise<void>;
   deliveryView?(quality: 'high' | 'lod1' | 'lod2', distance: number): Promise<void>;
   info(): { placeholder: boolean; drawCalls: number; triangles: number; nodes: string[]; events: PlaceholderLog[] };
   goreProbe?(limb: string): Promise<{ hiddenBefore: boolean; visibleAfter: boolean; capTriangles: number; jointError: number }>;
@@ -93,7 +94,11 @@ export async function assetViewer(): Promise<void> {
     await renderer.compileAsync(scene, camera); render(); render();
   }
   const ready = load();
-  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, deliveryView, info: () => {
+  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, deliveryView, visibility: async (name, visible) => {
+    const node = object.getObjectByName(name);
+    if (!node) throw new Error(`Missing asset node ${name}`);
+    node.visible = visible; await view(4);
+  }, info: () => {
     const nodes: string[] = []; object.traverse((node) => { if (node.name) nodes.push(node.name); });
     return { placeholder: !!object.userData.placeholder, drawCalls: renderer.info.render.drawCalls, triangles: renderer.info.render.triangles, nodes, events };
   }, goreProbe: async (name) => {

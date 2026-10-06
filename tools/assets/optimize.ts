@@ -400,7 +400,9 @@ export async function optimizeExports(def: AssetDef): Promise<void> {
   const source = def.sourceGlb ?? def.glb;
   await optimizeAsset(source, def.glb, def);
   if (def.tier === 'hero' || def.lods) for (const [lod, ratio] of [['lod1', .12], ['lod2', .03]] as const) {
-    const supplied = `assets/${def.id}/model.${lod}.glb`, output = def.lods?.[lod];
+    // Aliases use the canonical model's supplied tiers, with their own normalization.
+    const canonical = `${dirname(source)}/model.${lod}.glb`;
+    const supplied = existsSync(canonical) ? canonical : `assets/${def.id}/model.${lod}.glb`, output = def.lods?.[lod];
     if (!output) throw new Error(`${def.id}: missing manifest ${lod} path`);
     const generatedRatio = def.generatedLodRatios?.[lod];
     const handMade = generatedRatio === undefined && existsSync(supplied);

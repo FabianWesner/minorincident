@@ -1,4 +1,5 @@
 import { readFileSync, existsSync, statSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
+import { PNG } from 'pngjs';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { getBounds } from '@gltf-transform/functions';
@@ -150,6 +151,25 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
   for (const def of manifest) {
     const sourcePath = def.sourceGlb ?? (existsSync(`assets/${def.id}/model.glb`) ? `assets/${def.id}/model.glb` : undefined);
     if (!atLeast(def.status, 'modeled') && !(production && sourcePath)) continue;
+    if (def.decalTexture) {
+      const errors: string[] = [];
+      let bytes = Buffer.alloc(0);
+      try {
+        bytes = readFileSync(def.decalTexture);
+        const png = PNG.sync.read(bytes);
+        if (png.width > 256 || png.height > 256) errors.push('decal: exceeds 256px');
+        let transparent = false, painted = false;
+        for (let i = 3; i < png.data.length; i += 4) { transparent ||= png.data[i] === 0; painted ||= png.data[i] > 0; }
+        if (!transparent || !painted) errors.push('decal: expected painted and transparent pixels');
+      } catch (error) { errors.push(`decal: ${String(error)}`); }
+      results.push({ id: def.id, errors, triangles: 2, materials: 1, drawCalls: 1, fileKB: bytes.length / 1024, dimensions: [def.dimensions.x, def.dimensions.y, def.dimensions.z], hash: createHash('sha256').update(bytes).digest('hex') });
+      continue;
+    }
+    // HUD icons and rendered portraits ship as images, with no model contract.
+    if (def.category === 'ui' && def.icon && !def.glb) {
+      if (!existsSync(def.icon)) results.push({ id: def.id, errors: [`missing image ${def.icon}`], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' });
+      continue;
+    }
     const source = sourcePath && existsSync(sourcePath) ? await io.read(sourcePath) : undefined;
     const paths = [def.glb, def.lods?.lod1, def.lods?.lod2];
     let base: Validation | undefined;
@@ -191,14 +211,18 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
   return results;
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const results = await validateAssets(JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')));
+  const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
+  const idsIndex = process.argv.indexOf('--ids');
+  const ids = idsIndex >= 0 ? new Set(process.argv[idsIndex + 1]?.split(',')) : undefined;
+  if (ids && (!process.argv[idsIndex + 1] || [...ids].some(id => !definitions.some(def => def.id === id)))) throw new Error('Unknown or missing --ids selection');
+  const results = await validateAssets(ids ? definitions.filter(def => ids.has(def.id)) : definitions);
   mkdirSync('test-results/epics/E17', { recursive: true });
-  for (const directory of ['public/assets/models', 'public/assets/layouts']) for (const file of readdirSync(directory).filter(file => file.endsWith('.glb'))) {
+  if (!ids) for (const directory of ['public/assets/models', 'public/assets/layouts']) for (const file of readdirSync(directory).filter(file => file.endsWith('.glb'))) {
     const path = `${directory}/${file}`, bytes = readFileSync(path);
     const json = JSON.parse(bytes.subarray(20, 20 + bytes.readUInt32LE(12)).toString()) as { extensionsRequired?: string[] };
     if (!['EXT_meshopt_compression', 'KHR_mesh_quantization'].every(extension => json.extensionsRequired?.includes(extension))) results.push({ id: path, errors: ['delivery: missing meshopt/quantization'], triangles: 0, materials: 0, drawCalls: 0, fileKB: bytes.length / 1024, dimensions: [], hash: '' });
   }
-  writeFileSync(`test-results/epics/E17/validate${process.argv.includes('--production') ? '-production' : ''}.json`, JSON.stringify(results, null, 2));
+  writeFileSync(`test-results/epics/E17/validate${ids ? '-selected' : process.argv.includes('--production') ? '-production' : ''}.json`, JSON.stringify(results, null, 2));
   console.log(JSON.stringify(results.map(({ id, errors, triangles }) => ({ id, errors, triangles })), null, 2));
   if (results.some((r) => r.errors.length)) process.exitCode = 1;
 }
