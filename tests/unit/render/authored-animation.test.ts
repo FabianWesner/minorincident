@@ -141,7 +141,7 @@ test('M1-25 @E04 walk to run preserves support phase through the crossfade', () 
   const phase = walk.time / walk.getClip().duration;
   parent.position.x += 4.5 / 60; animator.update(pose,61);
   expect(animator.clip).toBe('run');
-  expect(run.time / run.getClip().duration).toBeCloseTo((phase + 4.5 / 60 / strides.run) % 1, 6);
+  expect(run.time / run.getClip().duration).toBeCloseTo((phase + 4.5 / 60 / (strides.run * strideScale(root))) % 1, 6);
   expect(walk.time / walk.getClip().duration).toBeCloseTo(run.time / run.getClip().duration, 6);
   actionCalls.mockRestore();
 });
