@@ -22,7 +22,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     const mission = () => page.evaluate(() => window.__SS__!.missions.state()!);
     const player = () => page.evaluate(() => window.__SS__!.getState().player!);
     const snap = async (name: string) => {
-      await page.evaluate(n => window.__SS__!.camera.preset(n), name); await page.evaluate(() => window.__SS__!.screenshotReady());
+      await page.evaluate(n => window.__SS__!.camera.preset('D-GROVE/W0/' + n), name); await page.evaluate(() => window.__SS__!.screenshotReady());
       await page.screenshot({ path: `${output}/${name}.png` }); await page.evaluate(() => window.__SS__!.camera.follow()); await step(1);
     };
     /** Click-to-move toward a world point: real mouse clicks on the ground, the game paths around obstacles. */

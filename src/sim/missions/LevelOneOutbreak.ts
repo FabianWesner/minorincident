@@ -9,7 +9,7 @@ import type { EntitySnapshot } from '../world/types';
 const TICKS = 60;
 /** Story-only numbers; spec section 3 beats 4 to 6. Everything systemic lives in the C/D lanes. */
 const story = {
-  techWalkMs: 1.6, takeBoxS: 1.5, standoffM: 1.4, awayFromLabM: 30, exitRunS: 4, exitSearchM: 4,
+  techWalkMs: 1.6, takeBoxS: 1.5, standoffM: 1.4, awayFromLabM: 30, exitSearchS: 12, exitSearchM: 4,
   /** Accident sequence anchors (sim lookups) and the exits: [anchor, heading in degrees, 0 = +X east, 90 = +Z south]. */
   anchors: { 'l1.flicker': 'lab-smoke-window', 'l1.blast': 'lab-exit-window', 'l1.ringing': 'lab-door', 'l1.smoke': 'lab-smoke-vent', 'l1.screams': 'lab-door', 'l1.infectedExit': 'lab-exit-front' } as Record<L1AccidentEventName, string>,
   exits: [['lab-exit-front', 125], ['lab-exit-front', 55], ['lab-exit-side', 350], ['lab-exit-window', 180], ['lab-exit-window', 235]] as [string, number][],
@@ -182,10 +182,11 @@ export class LevelOneOutbreak {
         const id = i === 0 ? this.infectTechnician(at) : this.spawnInfected(at, story.variants[i]);
         if (id === 0) continue;
         l1.exitIds.push(id); l1.exitHeadingsDeg.push(heading);
-        const run: L1State['runs'][number] = { id, dx: Math.cos(rad), dz: Math.sin(rad), speed, until: tick + Math.round(story.exitRunS * TICKS) };
-        // The technician is still inside: he runs out through the front door first.
-        if (i === 0) { const e = world.entities.get(id)!; run.via = { x: at.x, z: at.z }; run.until += Math.round(Math.hypot(at.x - e.transform.x, at.z - e.transform.z) / speed * TICKS); }
-        l1.runs.push(run);
+        const target = this.farPoint(at, rad);
+        if (i === 0) {
+          // The technician is still inside: scripted indoor leg to the front door, then the real infected AI is rushed outward.
+          l1.runs.push({ id, dx: target.x, dz: target.z, speed, until: tick + 60 * TICKS, via: { x: at.x, z: at.z } });
+        } else ai.rush(id, target, tick + story.exitSearchS * TICKS);
       }
     }
     world.combat?.setLoadout(['weapon.fists'], ['weapon.kick']);
@@ -196,7 +197,7 @@ export class LevelOneOutbreak {
     const ai = this.mission.world.infected!;
     for (let r = 0; r <= story.exitSearchM; r += .5) for (let k = 0; k < 8; k++) {
       const p = { x: at.x + Math.cos(k * Math.PI / 4) * r, z: at.z + Math.sin(k * Math.PI / 4) * r };
-      if (ai.nav.clear(p.x, p.z, .45) && !ai.active.some(o => o.health.current > 0 && Math.hypot(o.transform.x - p.x, o.transform.z - p.z) < .9)) return ai.spawn('infected.runner', p, { state: 'migration', variant });
+      if (ai.nav.clear(p.x, p.z, .45) && !ai.active.some(o => o.health.current > 0 && Math.hypot(o.transform.x - p.x, o.transform.z - p.z) < .9)) return ai.spawn('infected.runner', p, { variant });
     }
     return 0;
   }
@@ -205,7 +206,7 @@ export class LevelOneOutbreak {
     const { world } = this.mission, l1 = this.l1, e = world.entities.get(l1.techId), ai = world.infected!;
     if (!e) return this.spawnInfected(at, story.variants[0]);
     const seam = l1Seams(world).outbreak;
-    if (seam?.infect?.(e.id, { tier: 'average', instant: true })) { if (e.infected) e.infected.state = 'migration'; return e.id; }
+    if (seam?.infect?.(e.id, { tier: 'average', instant: true })) return e.id;
     const donor = ai.pool.pop();
     if (!donor) return this.spawnInfected(at, story.variants[0]);
     // Fallback in place: adopt a pooled brain, keep the entity object (id, transform, look).
@@ -214,33 +215,29 @@ export class LevelOneOutbreak {
     e.health = { current: 40, max: 40 };
     e.infected = donor.infected; e.combat = donor.combat;
     Object.assign(e.combat!, { radius: .35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1 }); e.combat!.statuses.length = 0;
-    Object.assign(e.infected!, { state: 'migration', variant: story.variants[0], speed: 5.1, pathGrid: -1, goal: -1, pathIndex: 0, until: 0, cooldown: 0, targetId: 0, hidden: false, grabHits: 0, grabUntil: 0, special: '', deadAt: -1 }); e.infected!.path.length = 0;
+    Object.assign(e.infected!, { state: 'wander', variant: story.variants[0], speed: 5.1, pathGrid: -1, goal: -1, pathIndex: 0, until: 0, cooldown: 0, targetId: 0, hidden: false, grabHits: 0, grabUntil: 0, special: '', deadAt: -1 }); e.infected!.path.length = 0;
     delete e.hidden;
     world.spatial.set(e.id, e.transform.x, e.transform.z);
     ai.active.push(e);
+    // Give the in-place entity the L1 brain (perception, search, tier speed) like every spawned infected.
+    if (ai.l1) { ai['initL1'](e, 'average'); e.infected!.l1!.pauseUntil = world.tick + 60 * TICKS; }
     return e.id;
   }
 
-  /** Scripted first seconds of the exit; afterwards the generic infected brain (wander/vision) owns them. */
+  /** A point 20 m from the exit along a heading, snapped to clear ground. */
+  private farPoint(at: { x: number; z: number }, rad: number): { x: number; z: number } {
+    const nav = this.mission.world.infected!.nav, x = at.x + Math.cos(rad) * 20, z = at.z + Math.sin(rad) * 20, cell = nav.nearestCell(x, z);
+    return cell >= 0 ? { x: nav.x(cell), z: nav.z(cell) } : { x, z };
+  }
+  /** Technician indoor leg only (interior is not walkable nav); at the door the infected AI takes over via `rush`. */
   private run(tick: number): void {
     const { world } = this.mission, l1 = this.l1, ai = world.infected!;
     for (let i = l1.runs.length - 1; i >= 0; i--) {
       const run = l1.runs[i], e = world.entities.get(run.id);
-      if (!e?.infected || e.health.current <= 0) { l1.runs.splice(i, 1); continue; }
-      if (tick >= run.until) {
-        l1.runs.splice(i, 1);
-        if (e.infected.state === 'migration') { e.infected.state = 'wander'; e.infected.dx = run.dx; e.infected.dz = run.dz; e.infected.until = tick + 240; }
-        continue;
-      }
-      if (e.combat!.staggerUntil > tick) continue;
-      let dx = run.dx, dz = run.dz;
-      if (run.via) {
-        // Indoor leg: scripted straight line (interior nav is not walkable for the player, so no collision here).
-        const vx = run.via.x - e.transform.x, vz = run.via.z - e.transform.z, d = Math.hypot(vx, vz);
-        if (d < .6) delete run.via; else { dx = vx / d; dz = vz / d; e.transform.x += dx * run.speed / TICKS; e.transform.z += dz * run.speed / TICKS; }
-      }
-      if (!run.via) ai.nav.move(e.transform, dx * run.speed / TICKS, dz * run.speed / TICKS, e.combat!.radius);
-      e.transform.yaw = -Math.atan2(dz, dx);
+      if (!e?.infected || e.health.current <= 0 || !run.via) { l1.runs.splice(i, 1); continue; }
+      const vx = run.via.x - e.transform.x, vz = run.via.z - e.transform.z, d = Math.hypot(vx, vz);
+      if (d < .6 || tick >= run.until) { l1.runs.splice(i, 1); ai.rush(e.id, { x: run.dx, z: run.dz }, tick + story.exitSearchS * TICKS); continue; }
+      e.transform.x += vx / d * run.speed / TICKS; e.transform.z += vz / d * run.speed / TICKS; e.transform.yaw = -Math.atan2(vz, vx);
       world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
   }
