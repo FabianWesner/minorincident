@@ -3,7 +3,8 @@ import { compositions } from '../levels/compositions';
 import type { DistrictLayout } from '../levels/districts/types';
 import { assetUrl } from './assetUrl';
 import { districtAssetUrls } from './DistrictAssets';
-import type { AssetDef } from './types';
+import { atLeast, type AssetDef } from './types';
+import { catalog } from '../data/actions/catalog';
 
 const definitions = new Map((manifest as AssetDef[]).map(def => [def.id, def]));
 const definition = (id: string): AssetDef => { const def = definitions.get(id); if (!def) throw new Error(`Unknown asset ID ${id}`); return def; };
@@ -24,6 +25,8 @@ export async function prefetchLevel(level: string, concurrency = 4): Promise<voi
       if (placement.minTier > composition.tier || placement.maxTier < composition.tier) continue;
       try { for (const url of districtAssetUrls(placement.assetId, definition)) urls.add(url); } catch { /* unknown ids surface in the real load */ }
     }
+    // Weapon/action view models load one after another in ActionView: warm them too.
+    for (const def of Object.values(catalog)) { const asset = definitions.get(def.viewAssetId); if (asset?.glb && atLeast(asset.status, 'integrated')) urls.add('/' + asset.glb.replace(/^public\//, '')); }
     const queue = [...urls];
     await Promise.all(Array.from({ length: concurrency }, async () => {
       for (let url = queue.shift(); url; url = queue.shift()) { try { await (await get(url)).arrayBuffer(); } catch { /* best effort */ } }

@@ -46,23 +46,23 @@ async function throttle(cdp: CDPSession, profile: ProfileName): Promise<void> {
   await cdp.send('Network.emulateNetworkConditions', { offline: false, latency: p.latency, downloadThroughput: p.down, uploadThroughput: p.up });
 }
 
-const init = () => {
-  const w = window as unknown as { __lt: { start: number; ms: number }[] };
-  w.__lt = [];
-  new PerformanceObserver(list => { for (const e of list.getEntries()) w.__lt.push({ start: e.startTime, ms: e.duration }); }).observe({ type: 'longtask', buffered: true });
+// Plain JS source (not a serialized TS function: tsx/esbuild may inject helpers such as __name).
+const init = `(() => {
+  window.__lt = [];
+  new PerformanceObserver(list => { for (const e of list.getEntries()) window.__lt.push({ start: e.startTime, ms: e.duration }); }).observe({ type: 'longtask', buffered: true });
   // In-page phase marks (Playwright polling lags a busy main thread): title shown, first playable frame.
-  const marks = window as unknown as { __title?: number; __playable?: number };
+  // The boot scenario also passes through the 'game' screen before the title: only after Start counts.
   const watch = () => {
-    if (marks.__title === undefined && document.querySelector('[data-menu-screen=title]:not([hidden])')) marks.__title = performance.now();
-    if (marks.__playable === undefined && document.body?.dataset.uiScreen === 'game') { requestAnimationFrame(() => requestAnimationFrame(() => { marks.__playable ??= performance.now(); })); }
-    if (marks.__playable === undefined) requestAnimationFrame(watch);
+    if (window.__title === undefined && document.querySelector('[data-menu-screen=title]:not([hidden])')) window.__title = performance.now();
+    if (window.__playable === undefined && window.__start !== undefined && document.body && document.body.dataset.uiScreen === 'game') requestAnimationFrame(() => requestAnimationFrame(() => { if (window.__playable === undefined) window.__playable = performance.now(); }));
+    if (window.__playable === undefined) requestAnimationFrame(watch);
   };
   requestAnimationFrame(watch);
   addEventListener('click', event => {
-    const id = (event.target as HTMLElement | null)?.closest?.('[data-testid]')?.getAttribute('data-testid');
-    if (id === 'level-L1') (window as unknown as { __start: number }).__start = performance.now();
+    const target = event.target && event.target.closest ? event.target.closest('[data-testid]') : null;
+    if (target && target.getAttribute('data-testid') === 'level-L1') window.__start = performance.now();
   }, true);
-};
+})();`;
 
 export async function measureOnce(page: Page, cdp: CDPSession, base: string, profile: ProfileName, cache: 'cold' | 'warm'): Promise<LoadRun> {
   const reqs = new Map<string, Req>(); let phase: Req['phase'] = 'boot'; const errors: string[] = [];
@@ -112,7 +112,7 @@ export async function measureOnce(page: Page, cdp: CDPSession, base: string, pro
 export async function measure(browser: Browser, base: string, profile: ProfileName, caches: ('cold' | 'warm')[] = ['cold', 'warm']): Promise<LoadRun[]> {
   const device = profile === 'phone' ? { viewport: { width: 412, height: 915 }, isMobile: true, hasTouch: true, deviceScaleFactor: 1 } : { viewport: { width: 1600, height: 900 } };
   const context = await browser.newContext({ ...device, ignoreHTTPSErrors: !process.env.LOAD_SPKI });
-  await context.addInitScript(init);
+  await context.addInitScript({ content: init });
   const runs: LoadRun[] = [];
   for (const cache of caches) {
     const page = await context.newPage(); const cdp = await context.newCDPSession(page);
