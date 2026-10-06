@@ -18,7 +18,7 @@ export interface EntitySnapshot {
   health: { current: number; max: number };
   faction: string;
 }
-export type GameEvent =
+export type GameEvent = import('../../data/audioEvents').AudioSystemEvent
   | { tick: number; type: 'civilian.grabbed'; sourceId: number; targetId: number; variant: string; rescueUntil: number }
   | { tick: number; type: 'infected.prop-thrown'; sourceId: number; propId: number; attackId: number }
   | { tick: number; type: 'telegraph'; sourceId: number; attackId: number; special: string; duration: number }

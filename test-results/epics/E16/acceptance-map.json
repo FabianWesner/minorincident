@@ -1,0 +1,338 @@
+{
+  "E16-AC01": [
+    {
+      "title": "T-E16-01a @E16 @E16-AC01 every sim event and archetype resolves to a real sprite cue",
+      "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests/unit/audio/assets.test.ts",
+      "layer": "unit"
+    },
+    {
+      "title": "T-E16-01b @E16 @E16-AC01 every production cue decodes in both native Opus and AAC",
+      "file": "e2e/audio/runtime.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    },
+    {
+      "title": "T-E16-01c @E16 @E16-AC01 full L1 composition coverage bot logs zero missing cues with graph active/output muted",
+      "file": "e2e/audio/runtime.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC02": [
+    {
+      "title": "T-E16-02 @E16 @E16-AC02 a pistol emits one 25m noise heard by AI and audio subscriber",
+      "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests/unit/audio/noise.test.ts",
+      "layer": "unit"
+    },
+    {
+      "title": "T-E16-02b @E16 @E16-AC02 production audio consumes the same pistol noise as AI exactly once",
+      "file": "e2e/audio/runtime.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC03": [
+    {
+      "title": "T-E16-03 @E16 @E16-AC03 real archetype events play before damage, offscreen gain is +3dB and protected",
+      "file": "e2e/audio/runtime.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC04": [
+    {
+      "title": "T-E16-04 @E16 @E16-AC04 storm culls lowest priorities first and never exceeds either cap",
+      "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests/unit/audio/policies.test.ts",
+      "layer": "unit"
+    },
+    {
+      "title": "T-E16-perf @E16 @E16-AC04 @E16-AC05 @perf 150 infected with native audio stay within sim/voice budgets",
+      "file": "e2e/audio/runtime.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC05": [
+    {
+      "title": "T-E16-05 @E16 @E16-AC05 150 infected yield 3\u20136 true centroids, four close vocals, monotone gain",
+      "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests/unit/audio/policies.test.ts",
+      "layer": "unit"
+    },
+    {
+      "title": "T-E16-05b @E16 @E16-AC05 150-infected crowd plays only clusters plus four nearby vocals",
+      "file": "e2e/audio/runtime.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    },
+    {
+      "title": "T-E16-perf @E16 @E16-AC04 @E16-AC05 @perf 150 infected with native audio stay within sim/voice budgets",
+      "file": "e2e/audio/runtime.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC06": [
+    {
+      "title": "T-E16-06 @E16 @E16-AC06 native convolution gives ordered measured RT60 within preset bands",
+      "file": "e2e/audio/offline.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC07": [
+    {
+      "title": "T-E16-07b @E16 @E16-AC07 segment occlusion counts buildings, capped at two",
+      "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests/unit/audio/acoustics.test.ts",
+      "layer": "unit"
+    },
+    {
+      "title": "T-E16-07 @E16 @E16-AC07 one building reduces measured centroid \u226530% and level 4\u20138dB",
+      "file": "e2e/audio/offline.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC08": [
+    {
+      "title": "T-E16-08b @E16 @E16-AC08 radial Doppler ignores lateral velocity and includes listener velocity",
+      "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests/unit/audio/acoustics.test.ts",
+      "layer": "unit"
+    },
+    {
+      "title": "T-E16-08 @E16 @E16-AC08 15m/s pass-by has a measured 6\u201312% pitch drop",
+      "file": "e2e/audio/offline.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC09": [
+    {
+      "title": "T-E16-09b @E16 @E16-AC09 authored polygons select surfaces with asphalt fallback",
+      "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests/unit/audio/acoustics.test.ts",
+      "layer": "unit"
+    },
+    {
+      "title": "T-E16-09 @E16 @E16-AC09 sim walking reads asphalt\u2192grass\u2192wood\u2192glass from the surface map",
+      "file": "e2e/audio/runtime.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC10": [
+    {
+      "title": "T-E16-10 @E16 @E16-AC10 music goes base-only after 10 quiet seconds and drive by the next bar",
+      "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests/unit/audio/policies.test.ts",
+      "layer": "unit"
+    },
+    {
+      "title": "T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; offline schedules stay on grid",
+      "file": "e2e/audio/runtime.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC11": [
+    {
+      "title": "T-E16-11 @E16 @E16-AC11 each twist gives one second below \u221250dBFS then a stinger; L6 dawn reprise",
+      "file": "e2e/audio/offline.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC12": [
+    {
+      "title": "T-E16-12 @E16 @E16-AC12 positional jukebox/jingle variants and radio lowpass/emergency duck",
+      "file": "e2e/audio/runtime.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC13": [
+    {
+      "title": "T-E16-13 @E16 @E16-AC13 all tiers have beds, with repeatable seeded one-shot timing",
+      "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests/unit/audio/policies.test.ts",
+      "layer": "unit"
+    },
+    {
+      "title": "T-E16-13b @E16 @E16-AC13 burnt W5 streets measure at least 10dB quieter than W2",
+      "file": "e2e/audio/offline.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC14": [
+    {
+      "title": "T-E16-14a @E16 @E16-AC14 measured radio and mega duck envelopes respect protected buses",
+      "file": "e2e/audio/offline.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    },
+    {
+      "title": "T-E16-14b @E16 @E16-AC14 tinnitus only within 4m and respects its setting; overlaps compose ducks",
+      "file": "e2e/audio/runtime.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC15": [
+    {
+      "title": "T-E16-15 @E16 @E16-AC15 light-lab, prop-yard and blast-lab use real bus event\u2192cue adapters",
+      "file": "e2e/audio/runtime.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC16": [
+    {
+      "title": "T-E16-16 @E16 @E16-AC16 60s production graph mix meets EBU R128 loudness, true peak and dialogue dominance",
+      "file": "e2e/audio/offline.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    }
+  ],
+  "E16-AC17": [
+    {
+      "title": "T-E16-17b @E16 @E16-AC17 mono sums both channels to equal output",
+      "file": "e2e/audio/offline.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    },
+    {
+      "title": "T-E16-17a @E16 @E16-AC17 captions show important direction cues and noise rings obey settings",
+      "file": "e2e/audio/runtime.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    },
+    {
+      "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    },
+    {
+      "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "pixel-7"
+    },
+    {
+      "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "pixel-7-landscape"
+    },
+    {
+      "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "iphone-14"
+    },
+    {
+      "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "iphone-14-landscape"
+    },
+    {
+      "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "webkit"
+    }
+  ],
+  "E16-AC18": [
+    {
+      "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    },
+    {
+      "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "pixel-7"
+    },
+    {
+      "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "pixel-7-landscape"
+    },
+    {
+      "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "iphone-14"
+    },
+    {
+      "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "iphone-14-landscape"
+    },
+    {
+      "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "webkit"
+    }
+  ],
+  "E16-AC19": [
+    {
+      "title": "T-E16-19 @E16 @E16-AC19 L1 assets fit 4MB, SFX are sprite packed, and every file has Opus/AAC",
+      "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests/unit/audio/assets.test.ts",
+      "layer": "unit"
+    },
+    {
+      "title": "T-E16-19b @E16 @E16-AC19 failed Opus decode falls back to AAC and caches the decoded sprite",
+      "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests/unit/audio/registry.test.ts",
+      "layer": "unit"
+    }
+  ],
+  "E16-AC20": [
+    {
+      "title": "T-E16-20 @E16 @E16-AC20 every audio file has an allowed license/hash and no Bruno SFX match",
+      "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests/unit/audio/assets.test.ts",
+      "layer": "unit"
+    }
+  ],
+  "E16-AC21": [
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "chromium"
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "pixel-7"
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "pixel-7-landscape"
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "iphone-14"
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "iphone-14-landscape"
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "file": "e2e/audio/smoke.spec.ts",
+      "layer": "browser",
+      "project": "webkit"
+    }
+  ]
+}

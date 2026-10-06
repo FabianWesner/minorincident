@@ -1,3 +1,4 @@
+import { eventCues } from '../../src/data/audioCues';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { stateHash } from '../../src/sim/world/stateHash';
@@ -22,7 +23,11 @@ test('T-E01-04b @E01 @E01-AC04 browser and Node match after 3600 scripted ticks'
     }, script);
     expect(stateHash(browserState)).toBe(stateHash(world.getState()));
     const { render, ...simState } = browserState;
-    expect(render.backend).toBe('webgl'); expect(simState).toEqual(world.getState());
+    expect(render.backend).toBe('webgl');
+    const nodeState = world.getState();
+    // Browser-only audio listeners are host telemetry, not deterministic gameplay state.
+    expect(simState.perf.listeners).toBe(nodeState.perf.listeners + Object.keys(eventCues).length);
+    expect({ ...simState, perf: { ...simState.perf, listeners: nodeState.perf.listeners } }).toEqual(nodeState);
     artifact('determinism', { ticks: 3600, seed: 1, nodeHash: stateHash(world.getState()), browserHash: stateHash(browserState) });
   } finally { world.dispose(); }
 });
@@ -51,7 +56,7 @@ test('T-E01-05 @E01 @E01-AC05 API query gate, semver, delivered methods and rema
     return { version: api.version, keys: Object.keys(api).sort(), errors, entity, missing, nearby, events: api.events(0), perf: api.perf() };
   });
   expect(surface.version).toMatch(/^\d+\.\d+\.\d+$/);
-  expect(surface.keys).toEqual(['version', 'ready', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'perf', 'screenshotReady'].sort());
+  expect(surface.keys).toEqual(['version', 'ready', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'audio', 'perf', 'screenshotReady'].sort());
   expect(surface.errors.spawn).toBe('Load an infected or combat scenario before spawning');
   expect(surface.errors['cheats.killAll']).toBe('NO ERROR');
   const epics: Record<string, string> = { 'cheats.completeObjective': 'E12', 'bot.start': 'E19', 'bot.stop': 'E19', 'bot.status': 'E19' };

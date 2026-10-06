@@ -1,0 +1,18 @@
+{
+  "unit": {
+    "command": "npm run test:unit",
+    "exitCode": 1,
+    "passed": 79,
+    "failed": 1,
+    "failure": "T-E17-sources: bld.helipad sourceGlb is missing",
+    "disposition": "Orchestrator explicitly reserved unrelated asset registration/export for central reconciliation."
+  },
+  "audioAndSim": {
+    "command": "npx vitest run tests/unit/audio tests/sim --maxWorkers=1",
+    "exitCode": 0,
+    "files": 18,
+    "passed": 155,
+    "failed": 0,
+    "seconds": 18.83
+  }
+}

@@ -9,8 +9,8 @@ function role(name: string, hp: number, speed: number, special = 'lunge', radius
 }
 export const humanInfected: readonly InfectedDef[] = [
   role('runner', 40, 4.2), role('crawler', 25, 2, 'grab'), role('brute', 300, 3, 'charge', 0.6, 0.8),
-  role('screamer', 60, 3.5, 'scream'), role('sprinter', 30, 6.5), role('riot', 150, 3.2, 'shield'),
-  role('bloated', 120, 2.5, 'explode', 0.5), role('firefighter', 140, 3.8, 'fire-immune'),
+  role('screamer', 60, 3.5, 'scream', 0.35, 0.8), role('sprinter', 30, 6.5), role('riot', 150, 3.2, 'shield'),
+  role('bloated', 120, 2.5, 'explode', 0.5, 1), role('firefighter', 140, 3.8, 'fire-immune'),
   role('hazmat', 120, 3.2, 'aura'), role('armored', 400, 4.5, 'armor', 0.5),
   role('butcher', 900, 4, 'combo-grab', 0.6), role('nurse', 70, 5, 'revive'),
 ];
