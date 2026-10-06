@@ -105,6 +105,7 @@ export class GameView implements Lifecycle {
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial);await this.districts.load(1);
       this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera);
 
+      if (this.world.infected) { this.crowd = new CrowdView(this.world); await this.crowd.init(); this.scene.add(this.crowd); }
       this.character=new CharacterView();await this.character.init(this.materials, Boolean(this.world.combat));this.scene.add(this.character);
     } else if (this.world.player) {
       this.renderer.shadowMap.enabled = true;

@@ -20,7 +20,8 @@ export class ControlIntent {
     if (!this.moveTarget && !this.attack && !raw.pointerGround && raw.aimSource !== 'assist') return raw;
     const frame: InputFrame = { ...raw, move: { ...raw.move }, left: { ...raw.left }, right: { ...raw.right } };
     if (raw.pointerGround) frame.left = { down: false, held: false, up: raw.left.up };
-    const combat = this.world.combat, attack = this.attack;
+    const combat = player.weapons ? this.world.combat : null, attack = this.attack;
+    if (!combat) this.attack = null;
     if (attack && combat) {
       const target = this.world.entities.get(attack.id), button = attack.side === 'LEFT' ? frame.left : frame.right;
       // One click approaches and attacks once; holding repeats until released or retargeted.

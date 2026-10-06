@@ -44,15 +44,23 @@ export class Onboarding {
   }
   private glyph(lesson: Lesson, scheme: Scheme): string {
     if (scheme === 'touch') return lesson === 'move' || lesson === 'evade' ? '◉ Stick' : ['attack', 'second-side'].includes(lesson) ? lesson === 'attack' ? '☝ LEFT' : '☝ RIGHT' : lesson === 'selector' ? 'Swipe up LEFT / RIGHT' : 'ACTION / Stand';
-    if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? scheme === 'mouse-only' ? 'Click to move' : 'WASD / Click to move' : lesson === 'attack' ? 'LMB on infected to attack' : lesson === 'second-side' ? 'RMB on infected to attack' : lesson === 'selector' ? 'Wheel' : 'Stand / MMB';
+    if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? scheme === 'mouse-only' ? 'Click to move' : 'WASD / Click to move' : lesson === 'attack' ? 'LMB on infected to attack' : lesson === 'second-side' ? 'RMB on infected to attack' : lesson === 'selector' ? 'Wheel' : 'Stand / F / MMB';
     return lesson === 'move' || lesson === 'evade' ? this.bindings.keyLabel('moveUp') + this.bindings.keyLabel('moveLeft') + this.bindings.keyLabel('moveDown') + this.bindings.keyLabel('moveRight') : this.bindings.keyLabel(lesson === 'attack' ? 'left' : lesson === 'second-side' ? 'right' : lesson === 'selector' ? 'selector' : 'interact');
   }
   update(scheme: Scheme, playing: boolean): void {
     const level = this.world.missions?.def.id ?? this.world.scenario;
     if (!playing || !level || !/^L[1-6]$/.test(level)) { this.element.hidden = true; return; }
+    if (this.world.missions?.def.slice) {
+      const mission=this.world.missions, player=this.world.entities.get(1)!;
+      if(player.health.current<=0){this.element.hidden=false;this.element.dataset.action='respawn';text(this.element,`You died · Returning to ${mission.state.checkpoint ? 'the hardware checkpoint' : 'the morning'}…`);return;}
+      const frame=this.world.inputFrame;
+      if(!player.weapons&&(frame.left.down||frame.left.held||frame.right.down||frame.right.held)&&!frame.pointerGround){this.element.hidden=false;text(this.element,'You have nothing to fight with! Keep moving.');return;}
+      if(mission.state.steps.melee.status==='completed') { this.completed.add('pickup');this.completed.add('interact'); }
+      if(this.current==='evade'&&mission.state.steps.escape.status==='completed')this.completed.add('evade');
+    }
     if (this.current && this.completed.has(this.current)) { this.current = null; this.startTick = this.world.tick; }
     if (!this.current) {
-      const first = level === 'L1' ? 0 : level === 'L2' ? 5 : 7, last = level === 'L1' ? 5 : level === 'L2' ? 7 : 8;
+      const first = level === 'L1' ? 0 : level === 'L2' ? 5 : 7, last = level === 'L1' ? this.world.missions?.def.slice ? 7 : 5 : level === 'L2' ? 7 : 8;
       for (let i = first; i < last; i++) {
         const lesson = lessons[i]; if (this.seen.has(lesson) || this.completed.has(lesson)) continue;
         const player = this.world.entities.get(1)!;
@@ -65,6 +73,8 @@ export class Onboarding {
           let nearby = false; for (const entity of this.world.entities.iterate()) if (entity.pickup && Math.hypot(entity.transform.x - player.transform.x, entity.transform.z - player.transform.z) < 8) { nearby = true; break; }
           if (!nearby) break;
         }
+        if (this.world.missions?.def.slice && lesson === 'selector') { this.completed.add('selector'); continue; }
+        if (this.world.missions?.def.slice && ['attack','second-side'].includes(lesson) && !player.weapons) break;
         if (lesson === 'vehicle' && this.world.vehicles?.cars.size === 0) break;
         this.current = lesson; this.seen.add(lesson); this.startTick = this.world.tick;
         try { this.storage?.setItem(onboardingKey, JSON.stringify([...this.seen])); } catch { /* Once per session when storage is disabled. */ }

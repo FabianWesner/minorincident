@@ -130,6 +130,18 @@ export class SimWorld implements Lifecycle {
       for(const fire of this.districts!.fires)if((player.transform.x-fire.x)**2+(player.transform.z-fire.z)**2<=fire.radius**2)this.player!.damage(fire.damagePerSecond,this.tick);
     },SimPhase.combat);
   }
+  /** Scripted encounters use the loaded town colliders, never the fixture arena grid. */
+  enableInfected(): void {
+    if (this.infected || !this.districts) return;
+    const { min, max } = this.districts.nav;
+    const walls = this.districts.districts.flatMap(d => d.decay.colliders.map(c => c.aabb).concat(d.blockers).map(a => ({
+      y: (a.min[1]+a.max[1])/2, halfY: (a.max[1]-a.min[1])/2, x: (a.min[0]+a.max[0])/2+d.origin[0], z: (a.min[2]+a.max[2])/2+d.origin[1], halfX: (a.max[0]-a.min[0])/2, halfZ: (a.max[2]-a.min[2])/2,
+    })));
+    if (this.combat) (this.combat.query.walls as import('../combat/HitQuery').CoverWall[]).push(...walls);
+    this.infected = new InfectedSystem(this, { name:'L1', infected:true, ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}}, player:this.entities.get(1)!.transform, walls });
+    this.infected.director.levelCap = 15;
+    this.events.on('sim.tick', () => this.infected!.update(), SimPhase.ai);
+  }
   /** Mission script integration: rebuild decay collision/nav once on a tier change. */
   setTier(tier: 0|1|2|3|4|5): void {
     const previous = this.districts; if (!previous || previous.composition.tier === tier) return;
