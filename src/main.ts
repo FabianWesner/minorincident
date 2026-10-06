@@ -2,6 +2,10 @@
 import { Game } from './Game';
 
 const params = new URLSearchParams(location.search);
+if (params.has('motionlab')) {
+  const { startMotionLab } = await import('./debug/motionlab/MotionLab');
+  await startMotionLab(params);
+} else {
 const game = new Game(params);
 const ready = game.init();
 try {
@@ -21,4 +25,5 @@ try {
   game.dispose();
   document.querySelector('#game')!.textContent = 'Minor Incident could not start. Please use a browser with WebGL2 support.';
   console.error(error);
+}
 }
