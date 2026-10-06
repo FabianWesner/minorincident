@@ -33,6 +33,7 @@ export class Bindings {
   /** Replaces this action's keyboard alternatives, retaining its fixed mouse mirror. */
   rebind(action: Action, code: string): { ok: boolean; message: string } {
     if (!Object.hasOwn(defaultBindings, action) || !validCode(code) || code.startsWith('Mouse')) return { ok: false, message: 'Choose a valid keyboard code.' };
+    if (/^(Digit[123]|ShiftLeft|ShiftRight)$/.test(code)) return { ok: false, message: `${code} is reserved for rack selection.` };
     const conflict = this.action(code);
     if (conflict && conflict !== action) return { ok: false, message: `${code} is already bound to ${conflict}.` };
     const next = structuredClone(this.map);

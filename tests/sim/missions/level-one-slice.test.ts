@@ -4,6 +4,8 @@ import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { compositions } from '../../../src/levels/compositions';
 import { resolveCampaignMission } from '../../../src/levels/missions';
 import { levelOneSlice } from '../../../src/levels/levelOneSlice';
+import { View } from '../../../src/render/View';
+import { Matrix4 } from 'three';
 import { emptyInput } from '../../../src/input/InputFrame';
 let world: SimWorld;
 afterEach(() => world?.dispose());
@@ -16,10 +18,10 @@ test('@E19 @E19-AC01 slice graph ends at store combat, without the deferred fina
   const m=await start();while(m.state.phase==='playing')m.completeObjective();
   expect(m.state.phase).toBe('result');expect(m.state.completedObjectives).toEqual(['breakfast','escape','melee','store-fight']);
 });
-test('@E19 @E19-AC04 morning has no attacks; diner spawns real chasing AI and caps population',async()=>{
+test('@E19 @E19-AC04 morning has no attacks; diner stages one entrant before real chasing AI and caps population',async()=>{
   const m=await start();world.setInput({left:{down:true,held:true,up:false},right:{down:true,held:true,up:false}});
   for(let i=0;i<60;i++)world.update();expect(world.entities.get(1)!.weapons).toBeUndefined();expect(world.events.events().some(e=>e.type==='combat.attack')).toBe(false);
-  world.clearInput();m.completeObjective('breakfast');expect(world.infected!.active).toHaveLength(4);expect(world.infected!.active.every(e=>e.infected!.state==='chase')).toBe(true);
+  world.clearInput();m.completeObjective('breakfast');expect(world.infected!.active).toHaveLength(1);expect(world.infected!.active[0].infected!.state).toBe('migration');
   const before={...world.infected!.active[0].transform};for(let i=0;i<60;i++)world.update();expect(world.infected!.active[0].transform).not.toEqual(before);expect(world.infected!.director.levelCap).toBe(15);
 });
 for(const weapon of ['bat','crowbar','machete'])test(`@E19 slice ${weapon} pickup retained after death, brains restore and restart is unarmed`,async()=>{
@@ -78,7 +80,7 @@ test('@E19 incident checkpoint restores escape, fists and live runners after dea
   expect(m.state.steps.escape.status).toBe('active');
   expect(m.state.steps.melee.status).toBe('pending');
   expect(world.entities.get(1)!.weapons!.LEFT.rack[0].id).toBe('weapon.fists');
-  expect(world.infected!.active.filter(e => e.health.current > 0)).toHaveLength(4);
+  expect(world.infected!.active.filter(e => e.health.current > 0)).toHaveLength(1);
   expect(world.infected!.active.every(e => e.combat!.damageMultiplier === .2)).toBe(true);
 });
 
@@ -89,7 +91,7 @@ test('@E19 four incident runners cannot kill an idle unarmed survivor within 25 
   for (let i = 0; i < 1500; i++) world.update();
   expect(m.state.stats.deaths).toBe(0); expect(p.health.current).toBeGreaterThan(0);
   const damage = world.events.events().filter(e => e.type === 'player.damaged');
-  expect(damage.length).toBeGreaterThan(10);
+  expect(damage.length).toBeGreaterThan(0);
   expect(damage.every(e => e.type === 'player.damaged' && e.amount === 2)).toBe(true);
 });
 
@@ -97,7 +99,7 @@ for (const side of ['LEFT', 'RIGHT'] as const) test(`@E19 incident ${side} unarm
   const m = await start(); const p = world.entities.get(1)!;
   Object.assign(p.transform, {x:42, z:-6.5}); world.physics.playerBody!.setTranslation(p.transform, true);
   m.completeObjective('breakfast');
-  for (let i = 0; i < 660 && m.state.stats.kills === 0; i++) {
+  for (let i = 0; i < 2000 && m.state.stats.kills === 0; i++) {
     const target = world.infected!.active.filter(e => e.health.current > 0).sort((a,b) => Math.hypot(a.transform.x-p.transform.x,a.transform.z-p.transform.z)-Math.hypot(b.transform.x-p.transform.x,b.transform.z-p.transform.z))[0];
     world.setInput({attackTarget:{id:target.id,side}, [side === 'LEFT' ? 'left' : 'right']:{down:false,held:true,up:false}}); world.update();
   }
@@ -122,5 +124,45 @@ test('@E19 loaded ground edges stop direct movement at both outer and missing-di
     const clamped = world.districts!.nav.clamp(target); expect(world.districts!.nav.walkable(clamped)).toBe(true);
     world.clearInput(); world.setInput({moveTarget:{x:target[0],z:target[1]}}); world.update();
     expect(world.controls.moveTarget).toEqual({x:clamped[0],z:clamped[1]});
+  }
+});
+
+
+test('@E19 @E19-AC06 M1-10 entrant walks offscreen, bites three visible customers, then chases; checkpoint keeps staging', async () => {
+  const m = await start(); const p = world.entities.get(1)!;
+  Object.assign(p.transform, {x:42,z:-6.5}); world.physics.playerBody!.setTranslation(p.transform,true);
+  m.completeObjective('breakfast');
+  const entrant = world.infected!.active[0];
+  expect(world.infected!.director.visible(entrant.transform)).toBe(false);
+  expect(m.state.outbreak!.victims).toHaveLength(3);
+  expect(world.infected!.active).toHaveLength(1);
+  for (let i=0;i<3600 && !m.state.outbreak!.released;i++) world.update();
+  expect(m.state.outbreak!.released).toBe(true);
+  expect(world.infected!.active.filter(e=>e.health.current>0)).toHaveLength(4);
+  const events = world.events.events();
+  for (const id of m.state.outbreak!.victims) {
+    const sequence = events.filter(e=>e.type==='civilian.state'&&e.id===id).map(e=>e.type==='civilian.state'?e.state:'');
+    expect(sequence).toEqual(expect.arrayContaining(['grabbed','bitten','down','rising','infected']));
+    expect(events.some(e=>e.type==='civilian.eyes'&&e.id===id)).toBe(true);
+    const turned = events.find(e=>e.type==='civilian.turned'&&e.id===id);
+    expect(turned).toBeDefined();
+  }
+  expect(world.infected!.active.every(e=>['alerted','chase','attack'].includes(e.infected!.state))).toBe(true);
+  m.restore('escape'); expect(m.state.outbreak!.released).toBe(false); expect(world.infected!.active).toHaveLength(1);
+});
+
+
+for (const [width,height] of [[1600,900],[390,844]]) for (const zoom of [-10,10]) test(`@E19 M1-10 store back-door silhouettes are offscreen or occluded at ${width}x${height} zoom ${zoom}`, async () => {
+  const m=await start(),p=world.entities.get(1)!;
+  Object.assign(p.transform,{x:70,z:-7});world.physics.playerBody!.setTranslation(p.transform,true);
+  const view=new View();view.resize(width,height);view.reset(p.transform);view.zoom(zoom);view.update(p.transform,2);
+  const matrix=new Matrix4().multiplyMatrices(view.camera.projectionMatrix,view.camera.matrixWorldInverse);
+  world.infected!.director.setFrustum(matrix.elements,view.camera.position);
+  m.completeObjective('breakfast');m.completeObjective('escape');m.completeObjective('melee');
+  expect(world.infected!.active).toHaveLength(5);
+  for(const e of world.infected!.active){
+    const d=world.infected!.director,point=e.transform;
+    expect(d.offscreen(point)||d.occluded(point)).toBe(true);
+    expect(point.z).toBeLessThanOrEqual(m.def.anchors.hardware.z-12);
   }
 });

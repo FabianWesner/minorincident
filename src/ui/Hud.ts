@@ -83,6 +83,10 @@ export class Hud {
   private card(side: 'LEFT' | 'RIGHT') {
     const root = node('div', `slot-${side}`), icon = node('img', `icon-${side}`), title = node('span', `side-${side}`, side);
     const name = node('div', `action-${side}`), stats = node('div', `stats-${side}`), ring = node('div', `reload-${side}`), rack = node('div', `rack-${side}`);
+    root.setAttribute('role', 'button'); root.tabIndex = 0; root.setAttribute('aria-label', `Cycle ${side} weapon`);
+    root.addEventListener('click', () => this.game.input.cycle(side));
+    root.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); this.game.input.cycle(side); } });
+    root.title = `${side === 'LEFT' ? '1/2/3' : 'Shift+1/2/3'} · click to cycle`;
     root.className = 'hud-slot hud-panel'; title.className = 'hud-slot-title'; name.className = 'hud-slot-name'; stats.className = 'hud-slot-stats'; ring.className = 'hud-progress'; rack.className = 'hud-rack';
     icon.alt = ''; root.append(icon, title, stats, name, ring, rack);
     const strips = [];
@@ -183,7 +187,7 @@ export class Hud {
     const id = world.interactables?.activeId, device = id != null ? world.entities.get(id)?.interactable : null;
     this.interaction.hidden = !device;
     if (device) { this.interaction.style.background = `conic-gradient(#64dccc ${device.progress * 360}deg,#182333 0)`; text(this.interaction, device.hint || `${device.label} · ${Math.round(device.progress * 100)}%`); this.interaction.dataset.progress = String(device.progress); }
-    this.damage.hidden = world.tick > this.damagedUntil; this.bark.hidden = world.tick > this.barkUntil;
+    this.damage.hidden = !!mission?.def.slice || world.tick > this.damagedUntil; this.bark.hidden = world.tick > this.barkUntil;
     this.onboarding.update(this.game.input.scheme, visible);
   }
   dispose(): void { this.clear(); this.onboarding.dispose(); this.root.remove(); }

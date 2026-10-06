@@ -293,5 +293,42 @@
     "M1-12": "fixed",
     "M1-13": "fixed",
     "specsChanged": false
+  },
+  "integration": {
+    "mainCommit": "9862245cd676c48def540adf0256a15217102f9c",
+    "resolved": [
+      "ActionView: trails and subtle target marker state",
+      "CrowdView: authored clip/stride sampling with shared palette shading, view-space normals and packed corpse alpha",
+      "CivilianCrowd: five model silhouettes, sim motion/idle hysteresis, authored walking/death/get-up and raised ground",
+      "NpcView: authored quadruped/humanoid animation reads actual sim motion and terrain height",
+      "Materials/PaletteMaterial: optional per-instance opacity reaches the custom output alpha"
+    ],
+    "validation": {
+      "typecheck": "passed",
+      "lint": "passed",
+      "fullVitest": {
+        "passed": 450,
+        "failed": 1,
+        "filesPassed": 91,
+        "filesFailed": 1
+      },
+      "focusedRegression": {
+        "passed": 17,
+        "files": 5
+      },
+      "baselineFailure": {
+        "test": "tests/sim/m1-world.test.ts:92 M1-07 click navigation string-pulls",
+        "endpointErrorMeters": 4.076958438837988,
+        "requiredMaximumMeters": 0.15,
+        "reproducedOnIsolatedMain": true
+      }
+    },
+    "pendingHeavyChecks": [
+      "Browser smoke and verify -- E19 on integrated main",
+      "Desktop/portrait real input and visual review of the combined shader/animation path",
+      "E18 unthrottled native-GPU horde frame budgets"
+    ],
+    "blenderExportRequired": false,
+    "heavyWorkPerformed": false
   }
 }

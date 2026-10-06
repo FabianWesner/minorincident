@@ -5,6 +5,8 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 /** Plain components only; physics handles and render objects are never serialized. */
 export interface EntitySnapshot {
   id: number;
+  /** Actual fixed-step motion, including collision/avoidance, for NPC locomotion clips. */
+  motion?: { velocity: { x: number; z: number }; speed: number; moving: boolean; distance: number };
   civilian?: import('../npc/types').Civilian;
   companion?: import('../npc/types').Companion;
   escort?: import('../npc/types').Escort;

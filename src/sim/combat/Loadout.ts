@@ -23,6 +23,13 @@ export class Loadout {
       if (frame.aimPoint) { side.aimPoint ??= { x: 0, z: 0 }; side.aimPoint.x = frame.aimPoint.x; side.aimPoint.z = frame.aimPoint.z; }
       else side.aimPoint = null;
     }
+    if (frame.selectedSlot) {
+      const choice = frame.selectedSlot, rack = this.state[choice.side];
+      if (Number.isInteger(choice.index) && choice.index >= 0 && choice.index < rack.rack.length && tick >= rack.swapUntil) {
+        this.state.selectedSide = choice.side;
+        if (rack.index !== choice.index) { rack.index = choice.index; rack.swapUntil = tick + 15; }
+      }
+    }
     if (frame.selector && tick >= side.swapUntil) {
       side.index = (side.index + frame.selector + side.rack.length) % side.rack.length; side.swapUntil = tick + 15;
     }

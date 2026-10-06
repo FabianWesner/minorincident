@@ -44,6 +44,7 @@ export class ActionView extends Group {
   private trailVertices = 0;
   private offset = 0;
   private maxHeight = 0;
+  private targetMarkerId: number | null = null;
   private selected: Side = 'LEFT';
   private shape = 'cone';
   private landing = { x: 0, z: 0 };
@@ -85,6 +86,7 @@ export class ActionView extends Group {
     for (let i = 0; i < 48; i++) { const a = from + angle * i / 48, b = from + angle * (i + 1) / 48; this.segment(x + Math.cos(a) * radius, 0.04, z + Math.sin(a) * radius, x + Math.cos(b) * radius, 0.04, z + Math.sin(b) * radius); }
   }
   update(): void {
+    this.targetMarkerId = null;
     const combat = this.world.combat, player = this.world.entities.get(1); if (!combat || !player) return;
     if (!player.weapons) {
       for (const held of Object.values(this.held)) held.model.removeFromParent();
@@ -113,6 +115,9 @@ export class ActionView extends Group {
       for (let i = 0; i < 32; i++) { const a = i / 32, b = (i + 1) / 32; this.segment(origin.x + dx * scale * a, (0.7 + gravityHeight * a) * (1 - a), origin.z + dz * scale * a, origin.x + dx * scale * b, (0.7 + gravityHeight * b) * (1 - b), origin.z + dz * scale * b); }
       this.circle(this.landing.x, this.landing.z, def.splash?.radius ?? def.effect?.radius ?? 1);
     } else this.circle(origin.x, origin.z, def.range);
+    const command = this.world.controls.snapshot()?.attack;
+    const target = command ? this.world.entities.get(command.id) : null;
+    if (target?.faction === 'infected' && target.health.current > 0 && !target.hidden && !target.infected?.hidden) { this.targetMarkerId = target.id; this.circle(target.transform.x, target.transform.z, .5); }
     // Persistent zone silhouettes; hot fire, smoke, lure and shield share their authored radius.
     for (const zone of combat.effects.zones) this.circle(zone.x, zone.z, zone.radius);
     this.geometry.setDrawRange(0, this.offset / 3); this.geometry.getAttribute('position').needsUpdate = true;
@@ -156,7 +161,7 @@ export class ActionView extends Group {
       const def = held && action(held.id), asset = def && this.assets.get(def.viewAssetId);
       return { side, actionId: held?.id, iconUrl: def ? actionIconUrl(def.iconId) : null, socket: nodes.socket.name, handDistance: this.socketPosition.distanceTo(this.handPosition), gripDistance: this.gripPosition.distanceTo(this.socketPosition), attached: held?.model.parent === nodes.socket, source: asset?.source, sockets: def ? ['grip', def.category === 'ranged' ? 'muzzle' : 'tip'].filter((name) => held?.model.getObjectByName(name)) : [] };
     });
-    return { trailVertices: this.trailVertices, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, maxHeight: this.maxHeight, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
+    return { targetMarker: this.targetMarkerId === null ? null : { id: this.targetMarkerId, radius: .5 }, trailVertices: this.trailVertices, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, maxHeight: this.maxHeight, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
   }
   dispose(): void { for (const held of Object.values(this.held)) held.model.removeFromParent(); void this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.trailGeometry.dispose(); this.trailMaterial.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.pickups.clear(); this.clear(); }
 }
