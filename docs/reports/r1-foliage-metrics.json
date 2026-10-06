@@ -1,0 +1,693 @@
+{
+  "schema": 1,
+  "baselineCommit": "e6ed97035ef0e66281fd2ede94dc11fec26a3f18",
+  "renderer": "WebGL2 / ANGLE Metal",
+  "devicePixelRatio": 1,
+  "portraitIsEmulation": true,
+  "tiers": {
+    "high": {
+      "viewport": [
+        1600,
+        900
+      ],
+      "viewpoints": [
+        {
+          "id": "V1",
+          "x": -14,
+          "z": -7,
+          "cardsPerCrown": 80,
+          "crowns": 263,
+          "visible": 22,
+          "holeRadius": 0.17105263157894737,
+          "foliageGrassPixels": 0.25124444444444444,
+          "canopyPixels": 0.2193875,
+          "submittedCardScreenArea": 5.113740157493333,
+          "cardOverdrawUpperBound": 23.30916828667692,
+          "survivors": [
+            {
+              "variant": "female",
+              "visible": {
+                "height": 0.19666666666666666,
+                "pixels": 7550
+              },
+              "unobstructed": {
+                "height": 0.19666666666666666,
+                "pixels": 7550
+              }
+            },
+            {
+              "variant": "male",
+              "visible": {
+                "height": 0.2088888888888889,
+                "pixels": 9411
+              },
+              "unobstructed": {
+                "height": 0.2088888888888889,
+                "pixels": 9411
+              }
+            }
+          ]
+        },
+        {
+          "id": "V2",
+          "x": 0,
+          "z": 0,
+          "cardsPerCrown": 80,
+          "crowns": 263,
+          "visible": 18,
+          "holeRadius": 0.17105263157894737,
+          "foliageGrassPixels": 0.37210902777777777,
+          "canopyPixels": 0.3421652777777778,
+          "submittedCardScreenArea": 6.179701950639472,
+          "cardOverdrawUpperBound": 18.060575844440105,
+          "survivors": []
+        },
+        {
+          "id": "V3",
+          "x": 27,
+          "z": 0,
+          "cardsPerCrown": 80,
+          "crowns": 263,
+          "visible": 5,
+          "holeRadius": 0.17105263157894737,
+          "foliageGrassPixels": 0.24842638888888888,
+          "canopyPixels": 0.20848263888888888,
+          "submittedCardScreenArea": 3.7729614554257416,
+          "cardOverdrawUpperBound": 18.09724529358316,
+          "survivors": []
+        },
+        {
+          "id": "V4",
+          "x": 42,
+          "z": -6.5,
+          "cardsPerCrown": 80,
+          "crowns": 263,
+          "visible": 21,
+          "holeRadius": 0.17105263157894737,
+          "foliageGrassPixels": 0.3635215277777778,
+          "canopyPixels": 0.3300604166666667,
+          "submittedCardScreenArea": 9.542533346114524,
+          "cardOverdrawUpperBound": 28.91147457936976,
+          "survivors": []
+        },
+        {
+          "id": "V5",
+          "x": 56,
+          "z": 0,
+          "cardsPerCrown": 80,
+          "crowns": 263,
+          "visible": 7,
+          "holeRadius": 0.17105263157894737,
+          "foliageGrassPixels": 0.32101875,
+          "canopyPixels": 0.2939027777777778,
+          "submittedCardScreenArea": 8.240284320884134,
+          "cardOverdrawUpperBound": 28.03744960557902,
+          "survivors": []
+        },
+        {
+          "id": "V6",
+          "x": 70,
+          "z": -7,
+          "cardsPerCrown": 80,
+          "crowns": 263,
+          "visible": 20,
+          "holeRadius": 0.17105263157894737,
+          "foliageGrassPixels": 0.25590277777777776,
+          "canopyPixels": 0.2344277777777778,
+          "submittedCardScreenArea": 5.678193269727447,
+          "cardOverdrawUpperBound": 24.221503627057384,
+          "survivors": []
+        }
+      ],
+      "combatReveal": {
+        "foliage": {
+          "submittedCardScreenArea": 6.805358792834701,
+          "crowns": 263,
+          "visible": 18,
+          "cardsPerCrown": 80,
+          "playerHole": [
+            0.5103091633311545,
+            0.7179816561604375
+          ],
+          "targetHole": [
+            0.547672597546341,
+            0.5699453680034302
+          ],
+          "holeRadius": 0.17105263157894737
+        },
+        "player": {
+          "x": 3.4952940940856934,
+          "y": 0.7051038146018982,
+          "z": 3.2911765575408936,
+          "yaw": 0.5300314987881829,
+          "id": "V6"
+        },
+        "target": {
+          "x": 2.7,
+          "y": 0.7,
+          "z": 1.8,
+          "yaw": 0
+        },
+        "blocked": 0.3785291666666667,
+        "revealed": 0.32620625,
+        "removedFrameFraction": 0.05232291666666672
+      },
+      "stress200": {
+        "low": false,
+        "spot": "V5",
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+        "durationMs": 12013.399999976158,
+        "ticks": 720,
+        "samples": 1254,
+        "count": 200,
+        "fps": 77.5193798449525,
+        "frameMs": 12.900000000001455,
+        "simMs": 7.600000023841858,
+        "uiMs": 0,
+        "drawCalls": 274,
+        "triangles": 2042133,
+        "geometries": 155,
+        "textures": 31,
+        "entities": 210,
+        "backend": "webgl",
+        "loadTiming": {
+          "dataMs": 0,
+          "simMs": 68.89999997615814,
+          "viewMs": 8826.899999976158
+        },
+        "quality": {
+          "setting": "high",
+          "tier": "high",
+          "p90Ms": 13.2,
+          "slowSeconds": 0,
+          "budgets": {
+            "frameMs": 16.7,
+            "infected": 200,
+            "drawCalls": 600,
+            "triangles": 1500000,
+            "simMs": 4,
+            "heapMB": 400,
+            "pixelRatio": 2,
+            "shadowSize": 2048,
+            "bloomMips": 5,
+            "cullDistance": 60
+          }
+        },
+        "renderedFrames": 1783,
+        "contextLost": false,
+        "paused": false,
+        "heapBytes": 644666729,
+        "frameMsP50": 12,
+        "frameMsP95": 13.30000000000291,
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.85,
+            1.35
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "focus": [
+            55.97127671317995,
+            0,
+            -0.008065242277653269
+          ],
+          "target": [
+            56,
+            0,
+            0
+          ],
+          "position": [
+            66.869166653536,
+            11.16791979355699,
+            10.869166653536004
+          ],
+          "spot": "V5"
+        },
+        "player": {
+          "x": 55.97028732299805,
+          "y": 0.70505690574646,
+          "z": -0.015148673206567764,
+          "yaw": 0.3205919885488634
+        },
+        "crowd": {
+          "instances": 416,
+          "meshDrawCalls": 4,
+          "objects": 103,
+          "nonInstancedMeshes": 0,
+          "caps": 0,
+          "flashes": 0,
+          "batches": [
+            {
+              "id": "infected.runner",
+              "lod": "lod1",
+              "instances": 192,
+              "source": "glb"
+            },
+            {
+              "id": "infected.runner",
+              "lod": "lod0",
+              "instances": 8,
+              "source": "glb"
+            }
+          ],
+          "assets": []
+        },
+        "foliage": {
+          "submittedCardScreenArea": 8.240284320884154,
+          "crowns": 263,
+          "visible": 7,
+          "cardsPerCrown": 80,
+          "playerHole": [
+            0.49928789469788876,
+            0.38283518117807497
+          ],
+          "targetHole": [
+            -10,
+            -10
+          ],
+          "holeRadius": 0.17105263157894737
+        },
+        "mainViewCardTriangles": 1120
+      }
+    },
+    "low": {
+      "viewport": [
+        390,
+        844
+      ],
+      "viewpoints": [
+        {
+          "id": "V1",
+          "x": -14,
+          "z": -7,
+          "cardsPerCrown": 40,
+          "crowns": 263,
+          "visible": 20,
+          "holeRadius": 0.11890571466652264,
+          "foliageGrassPixels": 0.25362437720257625,
+          "canopyPixels": 0.25081115566897555,
+          "submittedCardScreenArea": 3.1542012535897985,
+          "cardOverdrawUpperBound": 12.576000637518542,
+          "survivors": [
+            {
+              "variant": "female",
+              "visible": {
+                "height": 0.13507109004739337,
+                "pixels": 2830
+              },
+              "unobstructed": {
+                "height": 0.13507109004739337,
+                "pixels": 2830
+              }
+            },
+            {
+              "variant": "male",
+              "visible": {
+                "height": 0.14099526066350712,
+                "pixels": 3470
+              },
+              "unobstructed": {
+                "height": 0.14099526066350712,
+                "pixels": 3470
+              }
+            }
+          ]
+        },
+        {
+          "id": "V2",
+          "x": 0,
+          "z": 0,
+          "cardsPerCrown": 40,
+          "crowns": 263,
+          "visible": 25,
+          "holeRadius": 0.11890571466652264,
+          "foliageGrassPixels": 0.4261605298335156,
+          "canopyPixels": 0.4221138655972779,
+          "submittedCardScreenArea": 3.5314289222678723,
+          "cardOverdrawUpperBound": 8.366057621137394,
+          "survivors": []
+        },
+        {
+          "id": "V3",
+          "x": 27,
+          "z": 0,
+          "cardsPerCrown": 40,
+          "crowns": 263,
+          "visible": 16,
+          "holeRadius": 0.11890571466652264,
+          "foliageGrassPixels": 0.4236419978126139,
+          "canopyPixels": 0.41937659496901203,
+          "submittedCardScreenArea": 5.031799801293853,
+          "cardOverdrawUpperBound": 11.998284743729334,
+          "survivors": []
+        },
+        {
+          "id": "V4",
+          "x": 42,
+          "z": -6.5,
+          "cardsPerCrown": 40,
+          "crowns": 263,
+          "visible": 20,
+          "holeRadius": 0.11890571466652264,
+          "foliageGrassPixels": 0.25885283752582333,
+          "canopyPixels": 0.2550765585125775,
+          "submittedCardScreenArea": 3.0601791339155207,
+          "cardOverdrawUpperBound": 11.99710060289459,
+          "survivors": []
+        },
+        {
+          "id": "V5",
+          "x": 56,
+          "z": 0,
+          "cardsPerCrown": 40,
+          "crowns": 263,
+          "visible": 13,
+          "holeRadius": 0.11890571466652264,
+          "foliageGrassPixels": 0.4139901567626686,
+          "canopyPixels": 0.4052254222870337,
+          "submittedCardScreenArea": 5.694462380668492,
+          "cardOverdrawUpperBound": 14.052579299022677,
+          "survivors": []
+        },
+        {
+          "id": "V6",
+          "x": 70,
+          "z": -7,
+          "cardsPerCrown": 40,
+          "crowns": 263,
+          "visible": 17,
+          "holeRadius": 0.11890571466652264,
+          "foliageGrassPixels": 0.24684955644671283,
+          "canopyPixels": 0.24308239154210717,
+          "submittedCardScreenArea": 3.354772684411197,
+          "cardOverdrawUpperBound": 13.800969552457596,
+          "survivors": []
+        }
+      ],
+      "combatReveal": {
+        "foliage": {
+          "submittedCardScreenArea": 3.3311272134502543,
+          "crowns": 263,
+          "visible": 23,
+          "cardsPerCrown": 40,
+          "playerHole": [
+            0.5198563028957135,
+            0.5916612604352434
+          ],
+          "targetHole": [
+            0.5956523831036168,
+            0.5197410095866378
+          ],
+          "holeRadius": 0.11890571466652264
+        },
+        "player": {
+          "x": 3.4952940940856934,
+          "y": 0.7051038146018982,
+          "z": 3.2911765575408936,
+          "yaw": 0.5300314987881829,
+          "id": "V6"
+        },
+        "target": {
+          "x": 2.7,
+          "y": 0.7,
+          "z": 1.8,
+          "yaw": 0
+        },
+        "blocked": 0.39685259448292626,
+        "revealed": 0.31852898286547576,
+        "removedFrameFraction": 0.0783236116174505
+      },
+      "stress200": {
+        "low": true,
+        "spot": "V5",
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+        "durationMs": 12010.099999904633,
+        "ticks": 720,
+        "samples": 2033,
+        "count": 200,
+        "fps": 303.0303030300358,
+        "frameMs": 3.3000000000029104,
+        "simMs": 0,
+        "uiMs": 0,
+        "drawCalls": 266,
+        "triangles": 1145238,
+        "geometries": 167,
+        "textures": 27,
+        "entities": 210,
+        "backend": "webgl",
+        "loadTiming": {
+          "dataMs": 0.10000002384185791,
+          "simMs": 67.89999997615814,
+          "viewMs": 5502.100000023842
+        },
+        "quality": {
+          "setting": "low",
+          "tier": "low",
+          "p90Ms": 11.2,
+          "slowSeconds": 0,
+          "budgets": {
+            "frameMs": 33.333333333333336,
+            "infected": 100,
+            "drawCalls": 300,
+            "triangles": 500000,
+            "simMs": 6,
+            "heapMB": 250,
+            "pixelRatio": 1.5,
+            "shadowSize": 1024,
+            "bloomMips": 2,
+            "cullDistance": 45
+          }
+        },
+        "renderedFrames": 2729,
+        "contextLost": false,
+        "paused": false,
+        "heapBytes": 568993881,
+        "frameMsP50": 3.400000000001455,
+        "frameMsP95": 11.299999999999272,
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.85,
+            1.35
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 34.16572543543005,
+          "focus": [
+            55.97170986382435,
+            0,
+            -0.010048157900640002
+          ],
+          "target": [
+            56,
+            0,
+            0
+          ],
+          "position": [
+            75.54489282087596,
+            20.082109544819616,
+            19.54489282087595
+          ],
+          "spot": "V5"
+        },
+        "player": {
+          "x": 55.974098205566406,
+          "y": 0.705040693283081,
+          "z": -0.020981721580028534,
+          "yaw": 0.3205919885488634
+        },
+        "crowd": {
+          "instances": 370,
+          "meshDrawCalls": 3,
+          "objects": 70,
+          "nonInstancedMeshes": 0,
+          "caps": 0,
+          "flashes": 0,
+          "batches": [
+            {
+              "id": "infected.runner",
+              "lod": "lod2",
+              "instances": 178,
+              "source": "glb"
+            }
+          ],
+          "assets": []
+        },
+        "foliage": {
+          "submittedCardScreenArea": 5.694462380668492,
+          "crowns": 263,
+          "visible": 13,
+          "cardsPerCrown": 40,
+          "playerHole": [
+            0.4994907593202689,
+            0.4197461328519846
+          ],
+          "targetHole": [
+            -10,
+            -10
+          ],
+          "holeRadius": 0.11890571466652264
+        },
+        "mainViewCardTriangles": 1040
+      }
+    }
+  },
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "unit": {
+      "passed": 153,
+      "files": 57
+    },
+    "targetedLayoutCollisionSimulation": {
+      "passed": 37
+    },
+    "smoke": {
+      "browserPassed": 22,
+      "nodePassed": 3
+    },
+    "E19": {
+      "stats": {
+        "startTime": "2026-10-06T16:39:15.930Z",
+        "duration": 453966.168,
+        "expected": 31,
+        "skipped": 0,
+        "unexpected": 10,
+        "flaky": 0
+      },
+      "failures": [
+        {
+          "title": "@E19 @M1-14 L1 close-camera surfaces, dressing, ambient motion and GPU budget",
+          "file": "e2e/l1-look.spec.ts",
+          "line": 18,
+          "errors": [
+            "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 500000\nReceived:    531592\n\n  52 |       expect(data.medianFps, data.spot.name).toBeGreaterThanOrEqual(mobile ? 30 : 60);\n  53 |       expect(data.perf.drawCalls).toBeLessThanOrEqual(mobile ? 300 : 600);\n> 54 |       expect(data.perf.triangles).toBeLessThanOrEqual(mobile ? 500_000 : 1_500_000);\n     |                                   ^\n  55 |       expect(data.collectedHeapBytes).toBeLessThanOrEqual(mobile ? 250_000_000 : 400_000_000);\n  56 |     }\n  57 |     // Real input remains connected with the richer ground/scene.\n    at <worktree>/tests/e2e/l1-look.spec.ts:54:35"
+          ],
+          "classification": "baseline"
+        },
+        {
+          "title": "@E19 slice real-input start to end desktop",
+          "file": "e2e/level-one-slice.spec.ts",
+          "line": 11,
+          "errors": [
+            "Error: expect(received).toBeGreaterThanOrEqual(expected)\n\nExpected: >= 0.18181818181818182\nReceived:    0.16\n\n  75 |     const mask=PNG.sync.read(await page.screenshot());let top=mask.height,bottom=-1;\n  76 |     for(let y=0;y<mask.height;y++)for(let x=0;x<mask.width;x++){const i=(y*mask.width+x)*4;if(mask.data[i]>240&&mask.data[i+1]<20&&mask.data[i+2]>240){top=Math.min(top,y);bottom=Math.max(bottom,y);}}\n> 77 |     const playerHeight=(bottom-top+1)/mask.height;expect(playerHeight).toBeGreaterThanOrEqual(mode==='portrait'?.12:1/5.5);\n     |                                                                        ^\n  78 |     writeFileSync(`${output}/${mode}-pixels.json`,JSON.stringify({playerHeight,playerPixels:bottom-top+1,viewport:page.viewportSize(),companionCount:1},null,2));\n  79 |     await page.evaluate(()=>window.__SS__!.settings.set({idPass:false}));await page.evaluate(()=>window.__SS__!.screenshotReady());\n  80 |     const project=await page.evaluate(()=>window.__SS__!.input.project(window.__SS__!.getState().player!.transform));\n    at <worktree>/tests/e2e/level-one-slice.spec.ts:77:72"
+          ],
+          "classification": "corrected: desktop playthrough rerun passed"
+        },
+        {
+          "title": "M1-03 M1-11 M1-12 M1-13 @E19 desktop chooses and fights with bat through real input",
+          "file": "e2e/m1-animation.spec.ts",
+          "line": 9,
+          "errors": [
+            "Error: expect(received).toBeGreaterThan(expected)\n\nExpected: > 0\nReceived:   0\n\n  44 |     }\n  45 |     const events=await page.evaluate(()=>window.__SS__!.events()),hits=events.filter(e=>e.type==='combat.hit'&&e.actionId===`weapon.${weapon}`);\n> 46 |     expect(hits.length).toBeGreaterThan(0);expect(maximumTrail).toBeGreaterThan(0);expect(maximumParticles).toBeGreaterThan(0);\n     |                         ^\n  47 |     expect(await page.evaluate(()=>window.__SS__!.getState().render.character!.missingClips)).toBe(0);\n  48 |     const state=await page.evaluate(()=>window.__SS__!.getState());\n  49 |     writeFileSync(`${output}/${mode}-${weapon}.json`,JSON.stringify({held,maximumTrail,maximumParticles,hits,attacks:events.filter(e=>e.type==='combat.attack'),render:state.render,stats:state.mission},null,2));\n    at <worktree>/tests/e2e/m1-animation.spec.ts:46:25"
+          ],
+          "classification": "baseline"
+        },
+        {
+          "title": "M1-03 M1-11 M1-12 M1-13 @E19 desktop chooses and fights with crowbar through real input",
+          "file": "e2e/m1-animation.spec.ts",
+          "line": 9,
+          "errors": [
+            "Error: expect(received).toBeGreaterThan(expected)\n\nExpected: > 0\nReceived:   0\n\n  44 |     }\n  45 |     const events=await page.evaluate(()=>window.__SS__!.events()),hits=events.filter(e=>e.type==='combat.hit'&&e.actionId===`weapon.${weapon}`);\n> 46 |     expect(hits.length).toBeGreaterThan(0);expect(maximumTrail).toBeGreaterThan(0);expect(maximumParticles).toBeGreaterThan(0);\n     |                         ^\n  47 |     expect(await page.evaluate(()=>window.__SS__!.getState().render.character!.missingClips)).toBe(0);\n  48 |     const state=await page.evaluate(()=>window.__SS__!.getState());\n  49 |     writeFileSync(`${output}/${mode}-${weapon}.json`,JSON.stringify({held,maximumTrail,maximumParticles,hits,attacks:events.filter(e=>e.type==='combat.attack'),render:state.render,stats:state.mission},null,2));\n    at <worktree>/tests/e2e/m1-animation.spec.ts:46:25"
+          ],
+          "classification": "baseline"
+        },
+        {
+          "title": "M1-03 M1-11 M1-12 M1-13 @E19 desktop chooses and fights with machete through real input",
+          "file": "e2e/m1-animation.spec.ts",
+          "line": 9,
+          "errors": [
+            "Error: expect(received).toBeGreaterThan(expected)\n\nExpected: > 0\nReceived:   0\n\n  44 |     }\n  45 |     const events=await page.evaluate(()=>window.__SS__!.events()),hits=events.filter(e=>e.type==='combat.hit'&&e.actionId===`weapon.${weapon}`);\n> 46 |     expect(hits.length).toBeGreaterThan(0);expect(maximumTrail).toBeGreaterThan(0);expect(maximumParticles).toBeGreaterThan(0);\n     |                         ^\n  47 |     expect(await page.evaluate(()=>window.__SS__!.getState().render.character!.missingClips)).toBe(0);\n  48 |     const state=await page.evaluate(()=>window.__SS__!.getState());\n  49 |     writeFileSync(`${output}/${mode}-${weapon}.json`,JSON.stringify({held,maximumTrail,maximumParticles,hits,attacks:events.filter(e=>e.type==='combat.attack'),render:state.render,stats:state.mission},null,2));\n    at <worktree>/tests/e2e/m1-animation.spec.ts:46:25"
+          ],
+          "classification": "baseline"
+        },
+        {
+          "title": "M1-03 M1-11 M1-12 M1-13 @E19 iphone chooses and fights with bat through real input",
+          "file": "e2e/m1-animation.spec.ts",
+          "line": 9,
+          "errors": [
+            "Error: expect(received).toBeGreaterThan(expected)\n\nExpected: > 0\nReceived:   0\n\n  44 |     }\n  45 |     const events=await page.evaluate(()=>window.__SS__!.events()),hits=events.filter(e=>e.type==='combat.hit'&&e.actionId===`weapon.${weapon}`);\n> 46 |     expect(hits.length).toBeGreaterThan(0);expect(maximumTrail).toBeGreaterThan(0);expect(maximumParticles).toBeGreaterThan(0);\n     |                         ^\n  47 |     expect(await page.evaluate(()=>window.__SS__!.getState().render.character!.missingClips)).toBe(0);\n  48 |     const state=await page.evaluate(()=>window.__SS__!.getState());\n  49 |     writeFileSync(`${output}/${mode}-${weapon}.json`,JSON.stringify({held,maximumTrail,maximumParticles,hits,attacks:events.filter(e=>e.type==='combat.attack'),render:state.render,stats:state.mission},null,2));\n    at <worktree>/tests/e2e/m1-animation.spec.ts:46:25"
+          ],
+          "classification": "unverified"
+        },
+        {
+          "title": "M1-03 M1-11 M1-12 M1-13 @E19 iphone chooses and fights with crowbar through real input",
+          "file": "e2e/m1-animation.spec.ts",
+          "line": 9,
+          "errors": [
+            "Error: expect(received).toBeGreaterThan(expected)\n\nExpected: > 0\nReceived:   0\n\n  44 |     }\n  45 |     const events=await page.evaluate(()=>window.__SS__!.events()),hits=events.filter(e=>e.type==='combat.hit'&&e.actionId===`weapon.${weapon}`);\n> 46 |     expect(hits.length).toBeGreaterThan(0);expect(maximumTrail).toBeGreaterThan(0);expect(maximumParticles).toBeGreaterThan(0);\n     |                         ^\n  47 |     expect(await page.evaluate(()=>window.__SS__!.getState().render.character!.missingClips)).toBe(0);\n  48 |     const state=await page.evaluate(()=>window.__SS__!.getState());\n  49 |     writeFileSync(`${output}/${mode}-${weapon}.json`,JSON.stringify({held,maximumTrail,maximumParticles,hits,attacks:events.filter(e=>e.type==='combat.attack'),render:state.render,stats:state.mission},null,2));\n    at <worktree>/tests/e2e/m1-animation.spec.ts:46:25"
+          ],
+          "classification": "unverified"
+        },
+        {
+          "title": "M1-03 M1-11 M1-12 M1-13 @E19 iphone chooses and fights with machete through real input",
+          "file": "e2e/m1-animation.spec.ts",
+          "line": 9,
+          "errors": [
+            "Error: expect(received).toBeGreaterThan(expected)\n\nExpected: > 0\nReceived:   0\n\n  44 |     }\n  45 |     const events=await page.evaluate(()=>window.__SS__!.events()),hits=events.filter(e=>e.type==='combat.hit'&&e.actionId===`weapon.${weapon}`);\n> 46 |     expect(hits.length).toBeGreaterThan(0);expect(maximumTrail).toBeGreaterThan(0);expect(maximumParticles).toBeGreaterThan(0);\n     |                         ^\n  47 |     expect(await page.evaluate(()=>window.__SS__!.getState().render.character!.missingClips)).toBe(0);\n  48 |     const state=await page.evaluate(()=>window.__SS__!.getState());\n  49 |     writeFileSync(`${output}/${mode}-${weapon}.json`,JSON.stringify({held,maximumTrail,maximumParticles,hits,attacks:events.filter(e=>e.type==='combat.attack'),render:state.render,stats:state.mission},null,2));\n    at <worktree>/tests/e2e/m1-animation.spec.ts:46:25"
+          ],
+          "classification": "unverified"
+        },
+        {
+          "title": "@E19 M1-world real-input hedge collision, forecourt access and resting companion desktop",
+          "file": "e2e/m1-world.spec.ts",
+          "line": 7,
+          "errors": [
+            "Error: Movement stalled to -19,-4.5: {\"x\":-20.251850128173828,\"y\":0.7050995826721191,\"z\":-4.677694320678711,\"yaw\":-4.737991206426441}\n\n  34 |       }\n  35 |       await photograph('stalled');\n> 36 |       throw new Error(`Movement stalled to ${x},${z}: ${JSON.stringify(await page.evaluate(() => window.__SS__!.getState().player!.transform))}`);\n     |             ^\n  37 |     };\n  38 |     await photograph('morning');\n  39 |     await move(-14, -4); await move(-19, -4.5); await move(-19, -6.3);\n    at move (<worktree>/tests/e2e/m1-world.spec.ts:36:13)\n    at <worktree>/tests/e2e/m1-world.spec.ts:39:26"
+          ],
+          "classification": "baseline"
+        },
+        {
+          "title": "@E19 M1-world real-input hedge collision, forecourt access and resting companion iphone-portrait",
+          "file": "e2e/m1-world.spec.ts",
+          "line": 7,
+          "errors": [
+            "Error: Movement stalled to -19,-4.5: {\"x\":-16.789899826049805,\"y\":0.7050994038581848,\"z\":-4.499978065490723,\"yaw\":-3.1416086221912063}\n\n  34 |       }\n  35 |       await photograph('stalled');\n> 36 |       throw new Error(`Movement stalled to ${x},${z}: ${JSON.stringify(await page.evaluate(() => window.__SS__!.getState().player!.transform))}`);\n     |             ^\n  37 |     };\n  38 |     await photograph('morning');\n  39 |     await move(-14, -4); await move(-19, -4.5); await move(-19, -6.3);\n    at move (<worktree>/tests/e2e/m1-world.spec.ts:36:13)\n    at <worktree>/tests/e2e/m1-world.spec.ts:39:26"
+          ],
+          "classification": "baseline"
+        }
+      ]
+    },
+    "desktopPlaythroughRerun": "pass",
+    "dedicatedVisual": {
+      "status": "fail",
+      "passed": 0,
+      "failed": 2,
+      "remainingFailures": "desktop and portrait whole-scene triangle limits only; all own foliage assertions passed"
+    }
+  },
+  "crowdRawTriangles": {
+    "asset": "inf.common-worker",
+    "lod0": 36134,
+    "lod1": 5034,
+    "lod2": 4308
+  },
+  "acceptance": {
+    "foliageScope": "pass",
+    "overall": "incomplete: shared triangle limits and unverified E19 mobile weapon probes",
+    "viewpointsReviewed": [
+      "V1",
+      "V2",
+      "V3",
+      "V4",
+      "V5",
+      "V6"
+    ],
+    "references": "six r0 side-by-side sheets against local mockup and Bruno PO capture",
+    "originalSdf": true,
+    "cardsPerCrown": {
+      "high": 80,
+      "low": 40
+    },
+    "collisionCache": "pass",
+    "screenshotsDeletedAfterReview": true,
+    "overdrawMethod": "projected undeformed card-quad area; depth-blind, includes SDF-discarded pixels; not a hardware fragment counter"
+  }
+}

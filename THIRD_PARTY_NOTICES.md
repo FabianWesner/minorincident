@@ -49,6 +49,8 @@ copyright 2025 Bruno Simon):
 
 All folio-2025 adaptations above reference commit `41046b5`.
 
+Foliage: `src/render/Foliage.ts` adapts `World/Foliage.js`, `World/Bushes.js` and `World/Trees.js`: instanced leaf cards, bent spherical normals, two-colour crowns and screen-space reveal. All trunk models and the procedural leaf-cluster SDF are original; no Bruno foliage textures or branded art are distributed.
+
 ## Bruno Simon MIT license
 
 Copyright (c) 2025 Bruno Simon

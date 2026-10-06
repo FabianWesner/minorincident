@@ -97,7 +97,7 @@ export class DistrictAssets {
           const fit = Math.max(straight, turned); asset.scale.set(fit, 1, fit);
           if (turned > straight) asset.rotation.y = Math.PI / 2;
         }
-        const root = this.remember(staticBatch(asset, true, this.materials, ['prop.tree', 'prop.hedge'].includes(id)));
+        const root = this.remember(staticBatch(asset, true, this.materials));
         if (id === 'bld.joes-diner') {
           const sign = dinerSign(); root.add(sign.root); this.geometries.add(sign.geometry); this.signTextures.push(sign.texture);
         }
