@@ -7,7 +7,7 @@ test('T-E03-bindings @E03 @E03-AC09 each logical action can be rebound and persi
   const storage = { getItem: (key: string) => entries.get(key) ?? null, setItem: (key: string, value: string) => { entries.set(key, value); } };
   const bindings = new Bindings(storage);
   for (const [index, action] of (Object.keys(defaultBindings) as Action[]).entries()) {
-    const code = index < 12 ? `F${index + 1}` : 'KeyZ';
+    const code = index < 12 ? `F${index + 1}` : ['KeyZ', 'KeyX'][index - 12];
     expect(bindings.rebind(action, code).ok).toBe(true);
     expect(new Bindings(storage).action(code)).toBe(action);
   }
@@ -23,4 +23,10 @@ test('T-E03-storage @E03 storage errors leave the existing bindings usable', () 
   expect(bindings.get()).toEqual(defaultBindings);
   expect(bindings.rebind('left', 'KeyZ')).toEqual({ ok: false, message: 'Bindings could not be saved.' });
   expect(bindings.action('KeyJ')).toBe('left'); expect(bindings.action('KeyZ')).toBeNull();
+});
+
+test('@E03-AC02 saved old mouse mirror migrates RMB from attack to cycle', () => {
+  const old = { ...defaultBindings, right: ['Mouse2', 'KeyK'], selector: ['KeyQ', 'KeyL'] };
+  const bindings = new Bindings({ getItem: () => JSON.stringify({ version: 1, bindings: old }), setItem() {} });
+  expect(bindings.action('Mouse2')).toBe('selector'); expect(bindings.action('KeyK')).toBe('right');
 });

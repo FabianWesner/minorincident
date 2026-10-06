@@ -1,0 +1,79 @@
+{
+  "asset": "bld.clinic-annex",
+  "id": "bld.clinic-annex",
+  "category": "building",
+  "tier": "hero",
+  "status": "modeled",
+  "triangles": {
+    "lod0": 93153,
+    "lod1": 12872,
+    "lod2": 3627
+  },
+  "draw_calls": {
+    "lod0": 39,
+    "lod1": 35,
+    "lod2": 22
+  },
+  "matches_reference": true,
+  "nodes_ok": true,
+  "missing_nodes": [],
+  "within_budget": true,
+  "deterministic": true,
+  "rounds": 4,
+  "webgl2_ok": true,
+  "webgpu_ok": null,
+  "webgpu_status": "manual-not-run-per-repository-guidance",
+  "materials": [
+    "pal_backpackTeal",
+    "pal_brass",
+    "pal_cardiganRose",
+    "pal_foliage",
+    "pal_foliageDark",
+    "pal_foliageLight",
+    "pal_picketWhite",
+    "pal_schoolBusYellow",
+    "pal_sidewalk",
+    "pal_silver",
+    "pal_survivorRed",
+    "pal_tealDark",
+    "pal_uiDark",
+    "pal_woodWarm",
+    "emi_tealLight",
+    "emi_windowGlow",
+    "pal_asphalt",
+    "emi_picketWhite"
+  ],
+  "dimensions": [
+    7.886522871139636,
+    5.214961357409493,
+    9.699999809265137
+  ],
+  "gaps": [
+    "Fine weathering, weed shapes and flower density are simplified.",
+    "Glazing is opaque/emissive; distant tiers omit unreadable lettering and petals.",
+    "Registration/integration and manual WebGPU check remain with central reconciliation."
+  ],
+  "checks": {
+    "typecheck": {
+      "command": "npm run typecheck",
+      "passed": true
+    },
+    "lint": {
+      "command": "npm run lint",
+      "passed": true
+    },
+    "unit": {
+      "command": "npm run test:unit -- --maxWorkers=4",
+      "passed": false,
+      "testsPassed": 184,
+      "testsFailed": 2,
+      "failures": [
+        "T-E16-20: tests/unit/audio/assets.test.ts:56 reads undefined Dirent.parentPath.includes",
+        "T-E17-02b: full production output validation timed out at 120000 ms on the shared machine"
+      ]
+    },
+    "epicVerify": "Not run: task is a standalone unregistered asset; npm run verify writes outside the authorized asset folder and rebuilds/tests unrelated production outputs.",
+    "webgpu": "Manual check not performed, per repository guidance. Automated browser checks use headless WebGL2 with --use-angle=metal."
+  },
+  "self_contained_build_verified": true
+}

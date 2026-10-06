@@ -2,6 +2,10 @@ import { expect, test } from 'vitest';
 import { arena, dummy, equip, fire, health, step } from './helpers';
 import { action } from '../../../src/data/actions/fixtures';
 import { Status } from '../../../src/sim/combat/Status';
+import { action as rosterAction } from '../../../src/data/actions/catalog';
+import { comboDefinition } from '../../../src/data/meleeCombos';
+/** The roster bat's opening beat (E19 §5.6 forehand: 22 damage, 2.6 m knockback). */
+const forehand = () => comboDefinition(rosterAction('weapon.bat'), 0);
 
 test('T-E05-01 @E05 @E05-AC01 MG, rotate, grenade, rotate retain independent side aims', async () => {
   const w = await arena(); equip(w, ['weapon.machine-gun']);
@@ -37,7 +41,7 @@ test('T-E05-03 @E05 @E05-AC03 bat arc/range/maxTargets boundaries, once per swin
   const outside = [dummy(w, 1.91), dummy(w, Math.cos(51 * Math.PI / 180), Math.sin(51 * Math.PI / 180)), dummy(w, -1)];
   const capped = dummy(w, 1.1);
   fire(w); step(w, 29);
-  for (const id of inside) expect(health(w, id)).toBe(75);
+  for (const id of inside) expect(health(w, id)).toBe(100 - forehand().damage);
   for (const id of [...outside, capped]) expect(health(w, id)).toBe(100);
   const hits = w.events.events().filter((e) => e.type === 'combat.hit'); expect(hits).toHaveLength(3);
   for (const id of inside) expect(hits.filter((e) => e.type === 'combat.hit' && e.targetId === id)).toHaveLength(1);
@@ -86,9 +90,10 @@ test('T-E05-07 @E05 @E05-AC07 authored displacement along hit direction; stagger
   const w = await arena(); equip(w); const id = dummy(w, 1), target = w.entities.get(id)!;
   target.combat!.attacking = true;
   fire(w); step(w, 6);
-  expect(target.transform.x - 1).toBeCloseTo(action('weapon.bat').knockback); expect(target.transform.z).toBeCloseTo(0, 6);
-  expect(target.combat!.attacking).toBe(false); expect(target.combat!.staggerUntil).toBe(25);
-  expect(Status.stunned(target, 24)).toBe(true); expect(Status.stunned(target, 25)).toBe(false);
+  expect(target.transform.x - 1).toBeCloseTo(forehand().knockback); expect(target.transform.z).toBeCloseTo(0, 6);
+  const until = target.combat!.staggerUntil;
+  expect(target.combat!.attacking).toBe(false); expect(until).toBeGreaterThanOrEqual(1 + Math.ceil(forehand().windup * 60) + Math.ceil(forehand().stagger * 60));
+  expect(Status.stunned(target, until - 1)).toBe(true); expect(Status.stunned(target, until)).toBe(false);
 });
 
 test('T-E05-08 @E05 @E05-AC08 front shield ±60°, rear full bullets and explosives ignore shield', async () => {

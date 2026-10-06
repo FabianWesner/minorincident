@@ -1,0 +1,276 @@
+{
+  "id": "bld.courier-depot",
+  "tier": "Hero",
+  "lods": {
+    "lod0": {
+      "triangles": 95174,
+      "draw_calls": 41,
+      "materials": [
+        "emi_windowGlow",
+        "keep_glass",
+        "pal_asphalt",
+        "pal_brass",
+        "pal_canvasTan",
+        "pal_corgiOrange",
+        "pal_foliage",
+        "pal_foliageDark",
+        "pal_grass",
+        "pal_leatherShadow",
+        "pal_picketWhite",
+        "pal_polo",
+        "pal_poloDark",
+        "pal_schoolBusYellow",
+        "pal_sidewalk",
+        "pal_silver",
+        "pal_survivorRed",
+        "pal_uiDark",
+        "pal_woodWarm"
+      ],
+      "geometry_hash": "8e4e81d11b69105b3378e7a91dd593ca9b468fc7becbfde3da9a211bbb53dbaa",
+      "bounds_blender": [
+        [
+          -1.9250000715255737,
+          2.625
+        ],
+        [
+          -2.7659823894500732,
+          2.5
+        ],
+        [
+          0,
+          4.309999942779541
+        ]
+      ],
+      "nodes_ok": true,
+      "missing_nodes": []
+    },
+    "lod1": {
+      "triangles": 11870,
+      "draw_calls": 37,
+      "materials": [
+        "emi_windowGlow",
+        "keep_glass",
+        "pal_asphalt",
+        "pal_brass",
+        "pal_canvasTan",
+        "pal_corgiOrange",
+        "pal_foliageDark",
+        "pal_grass",
+        "pal_leatherShadow",
+        "pal_picketWhite",
+        "pal_polo",
+        "pal_poloDark",
+        "pal_schoolBusYellow",
+        "pal_sidewalk",
+        "pal_silver",
+        "pal_survivorRed",
+        "pal_uiDark",
+        "pal_woodWarm"
+      ],
+      "geometry_hash": "1d0f81df3df6aff58226b1ab3be823fc1fbf06dda62fe13e458a4193d0d3ac38",
+      "bounds_blender": [
+        [
+          -1.9250000715255737,
+          2.625
+        ],
+        [
+          -2.7700002193450928,
+          2.5
+        ],
+        [
+          0,
+          4.309999942779541
+        ]
+      ],
+      "nodes_ok": true,
+      "missing_nodes": []
+    },
+    "lod2": {
+      "triangles": 2052,
+      "draw_calls": 25,
+      "materials": [
+        "emi_windowGlow",
+        "keep_glass",
+        "pal_asphalt",
+        "pal_canvasTan",
+        "pal_foliageDark",
+        "pal_grass",
+        "pal_leatherShadow",
+        "pal_picketWhite",
+        "pal_polo",
+        "pal_poloDark",
+        "pal_schoolBusYellow",
+        "pal_sidewalk",
+        "pal_silver",
+        "pal_survivorRed",
+        "pal_uiDark",
+        "pal_woodWarm"
+      ],
+      "geometry_hash": "c9a040ed5a739bed90eeb7689a1395b59fa0d2b88dc80c6eb5c3f6407f924ab9",
+      "bounds_blender": [
+        [
+          -1.9250000715255737,
+          2.625
+        ],
+        [
+          -2.7700002193450928,
+          2.5
+        ],
+        [
+          0,
+          4.309999942779541
+        ]
+      ],
+      "nodes_ok": true,
+      "missing_nodes": []
+    }
+  },
+  "renderer": "Eevee",
+  "backface_culling": true,
+  "script_hash": "3b291c1e416876f0e0e9544d3017fd962b26c75e49aa5d1542d223af1b2bbd15",
+  "webgpu_ok": null,
+  "webgl2_ok": true,
+  "deterministic_rebuild": true,
+  "draw_calls": [
+    {
+      "static": 36,
+      "animated": 5,
+      "total": 41
+    },
+    {
+      "static": 33,
+      "animated": 4,
+      "total": 37
+    },
+    {
+      "static": 23,
+      "animated": 2,
+      "total": 25
+    }
+  ],
+  "delivery": [
+    {
+      "id": "bld.courier-depot",
+      "errors": [],
+      "triangles": 94686,
+      "materials": 19,
+      "drawCalls": 41,
+      "fileKB": 704.6953125,
+      "dimensions": [
+        4.550019635917553,
+        4.309925406555503,
+        5.265982389450073
+      ],
+      "hash": "0576b4af2e42485f7584e5e273a5b6c2a8757dc47d9e999f19791ba5a3070e95"
+    },
+    {
+      "id": "bld.courier-depot",
+      "errors": [],
+      "triangles": 11870,
+      "materials": 18,
+      "drawCalls": 37,
+      "fileKB": 119.0625,
+      "dimensions": [
+        4.549952885685985,
+        4.309993002628405,
+        5.270000219345093
+      ],
+      "hash": "89851f9345f97b8a8b850bd8efec51004585a5f14300be57157b63d2689d4800"
+    },
+    {
+      "id": "bld.courier-depot",
+      "errors": [],
+      "triangles": 2052,
+      "materials": 16,
+      "drawCalls": 25,
+      "fileKB": 37.44140625,
+      "dimensions": [
+        4.549952885685985,
+        4.309993002628405,
+        5.270000219345093
+      ],
+      "hash": "9b47fba0163f0102094473b9bb47ec817092b1b3d569941ac5471eff2d09c82e"
+    }
+  ],
+  "lod_ratios": {
+    "lod1": 0.12536172190186512,
+    "lod2": 0.021671630441670364
+  },
+  "delivery_ok": true,
+  "webgl2_checks": [
+    {
+      "level": 0,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 41,
+        "triangles": 94686,
+        "size": [
+          4.55,
+          4.31,
+          5.266
+        ]
+      },
+      "errors": []
+    },
+    {
+      "level": 1,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 37,
+        "triangles": 11870,
+        "size": [
+          4.55,
+          4.31,
+          5.27
+        ]
+      },
+      "errors": []
+    },
+    {
+      "level": 2,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 25,
+        "triangles": 2052,
+        "size": [
+          4.55,
+          4.31,
+          5.27
+        ]
+      },
+      "errors": []
+    }
+  ],
+  "preview_decoder_injection": "Production MeshoptDecoder wired in served preview response by task-local capture.mjs; preview files unchanged.",
+  "webgpu_note": "Manual WebGPU review pending, per repository headless-browser guidance.",
+  "determinism_audit": {
+    "max_vertex_delta": 0.0,
+    "matrices_equal": true,
+    "original_cached_order_mismatch": [
+      "body_pal_picketWhite",
+      "body_pal_schoolBusYellow",
+      "body_pal_grass",
+      "body_pal_foliage"
+    ]
+  },
+  "triangles": {
+    "lod0": 94686,
+    "lod1": 11870,
+    "lod2": 2052
+  },
+  "rounds": 3,
+  "matches_reference": true,
+  "done": true,
+  "visual_review": "PASS",
+  "review": "review.md",
+  "integration": "Manifest/public registration untouched; manual WebGPU check pending per AGENTS.md.",
+  "renders": [
+    "comparison.png",
+    "game.png",
+    "hero.png",
+    "night.png",
+    "pose-test.png",
+    "turnaround.png",
+    "webgl2-lods.png"
+  ]
+}

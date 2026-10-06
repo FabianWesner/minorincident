@@ -33,7 +33,7 @@ export type ScriptAction =
   | { kind: 'state'; key: string; value: boolean };
 export interface ObjectiveDef {
   id: string; type: ObjectiveType; text: string; anchor: string;
-  start: Extract<Trigger, { kind: 'start' | 'objectives' }>;
+  start: Extract<Trigger, { kind: 'start' | 'objectives' | 'state' }>;
   complete: Trigger; fail: { trigger: Trigger; reason: FailReason }[];
   timer?: number; optional?: boolean;
   /** Alternative paths share a choice ID; completing one cancels its siblings. */
@@ -49,18 +49,33 @@ export interface CinematicDef {
   actions: ScriptAction[];
 }
 export interface MissionDef {
-  slice?: boolean;
+  /** L1 v2 story controller (technician, accident sequence, infected exits); see LevelOneOutbreak. */
+  l1?: boolean;
   id: string; briefing: string; anchors: Record<string, Anchor>; actors: Record<string, ActorDef>;
   groups: Record<string, string[]>; gates: Record<string, { anchor: string; open: boolean }>;
   items: string[]; states: string[]; counters: string[]; checkpoints: string[];
   cinematics: Record<string, CinematicDef>; steps: ObjectiveDef[];
   finish: string[]; onStart: ScriptAction[]; onComplete: ScriptAction[];
 }
-export interface MissionResult { time: number; kills: number; damage: number; deaths: number; rescued: number; optionalObjectives: string[] }
+export interface MissionResult {
+  time: number; kills: number; damage: number; deaths: number; rescued: number; optionalObjectives: string[];
+  /** L1 v2 result screen: the job is done, and the outbreak is not contained. */
+  delivered?: boolean; infected?: number; turned?: number; escaped?: number;
+}
+/** Serializable L1 v2 story state; lives in MissionState so checkpoints snapshot it (ticks are shifted on restore). */
+export interface L1State {
+  phase: 'morning' | 'handover' | 'calm' | 'accident' | 'spread';
+  carrying: boolean; delivered: boolean; away: boolean;
+  techId: number;
+  /** Handover and accident timeline in sim ticks; 0 = not scheduled. */
+  hx: number; hz: number; handoverAt: number; deliveredAt: number; flickerAt: number; exitAt: number; warned: boolean; fired: number;
+  exitIds: number[]; exitHeadingsDeg: number[]; runs: { id: number; dx: number; dz: number; speed: number; until: number; via?: { x: number; z: number } }[];
+  turnedIds: number[]; escapedIds: number[];
+}
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number }
 export interface MissionState {
-  /** M1 infection staging; snapshot restores victims and staging completion; brains act independently. */
-  outbreak?: { victims: number[]; released: boolean };
+  /** L1 v2 story state (technician, accident timeline, infected exits, result counters). */
+  l1?: L1State;
   id: string; phase: 'briefing' | 'playing' | 'cinematic' | 'retry' | 'result' | 'progression';
   volumes: boolean[]; killedBosses: string[];
   completedObjectives: string[]; steps: Record<string, StepState>; actors: Record<string, number>;
@@ -70,4 +85,8 @@ export interface MissionState {
   cinematic: { id: string; elapsed: number; resume: 'playing' | 'retry' } | null; failure: FailReason | null;
   stats: MissionResult; result: MissionResult | null;
 }
-export interface MissionCheckpoint { tick: number; state: MissionState; entities: EntitySnapshot[] }
+export interface MissionCheckpoint {
+  tick: number; state: MissionState; entities: EntitySnapshot[];
+  /** Snapshots of the optional L1 toy systems (bicycle, yard gates, dumpsters, outbreak overlay). */
+  seams?: Record<string, unknown>;
+}

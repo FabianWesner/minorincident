@@ -29,6 +29,8 @@ export class Hud {
   private readonly vignette = node('div', 'low-health-vignette');
   private readonly damage = node('div', 'damage-direction', '▼');
   private readonly bark = node('div', 'corgi-bark', 'Woof!');
+  private readonly civilianBark = node('div', 'civilian-bark', 'Hey!');
+  private civilianBarkUntil = -1;
   private readonly interaction = node('div', 'interaction-ring');
   private readonly stops: (() => void)[] = [];
   private damagedUntil = -1;
@@ -36,6 +38,7 @@ export class Hud {
   private loadedScenario: string | null = null;
   constructor(private readonly game: Game) {
     this.onboarding = new Onboarding(game.world, game.input.bindings);
+    this.civilianBark.className = 'hud-panel'; this.civilianBark.style.cssText = 'position:absolute;pointer-events:none'; this.civilianBark.hidden = true; this.root.append(this.civilianBark);
     this.root.className = 'hud'; this.root.hidden = true;
     const vitals = node('div', 'vitals'); vitals.className = 'hud-vitals hud-panel';
     this.portrait.className = 'hud-portrait'; this.portrait.setAttribute('aria-label', 'Survivor portrait');
@@ -98,14 +101,18 @@ export class Hud {
   clear(): void { for (const stop of this.stops) stop(); this.stops.length = 0; this.onboarding.clear(); this.detail.close(); this.root.hidden = true; }
   loaded(): void {
     this.clear();
-    this.damagedUntil = this.barkUntil = -1;
+    this.damagedUntil = this.barkUntil = this.civilianBarkUntil = -1;
     this.loadedScenario = this.game.world.scenario;
     if (!this.loadedScenario) return;
     this.onboarding.reset();
-    for (const type of ['combat.hit', 'corgi.sound'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
+    for (const type of ['combat.hit', 'corgi.sound', 'civilian.bark'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
   }
   private readonly event = (event: GameEvent): void => {
-    if (event.type === 'combat.hit' && event.targetId === 1) {
+    if (event.type === 'civilian.bark') {
+      const p = this.game.view.project(event.position.x, 1.8, event.position.z);
+      this.civilianBark.style.left = `${(p[0] + 1) * 50}%`; this.civilianBark.style.top = `${(1 - p[1]) * 50}%`;
+      this.civilianBarkUntil = this.game.world.tick + 72;
+    } else if (event.type === 'combat.hit' && event.targetId === 1) {
       this.damagedUntil = this.game.world.tick + 60;
       const source = this.game.world.entities.get(event.sourceId), player = this.game.world.entities.get(1);
       if (source && player) {
@@ -163,18 +170,30 @@ export class Hud {
     const home = mission?.def.anchors.home ?? player.survivor?.checkpoint;
     this.homePin.hidden = !home; if (home) this.place(this.homePin, home.x, home.z, px, pz, true);
     const objective = mission?.def.steps.find(step => mission.state.steps[step.id].status === 'active');
-    this.tracker.hidden = !objective; if (objective) text(this.trackerText, `${objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
+    // L1 v2 beat 5: after the hand-over the panel shows the completed tick and no new objective.
+    const done = !objective && mission?.def.l1 ? [...mission.def.steps].reverse().find(step => mission.state.steps[step.id].status === 'completed') : undefined;
+    this.tracker.hidden = !objective && !done; if (done) text(this.trackerText, `✓ ${done.text}`);
+    if (objective) text(this.trackerText, `${objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
     for (let i = 0; i < sides.length; i++) {
-      const side = sides[i], card = this.slots[i], state = player.weapons?.[side]; card.root.hidden = !state && !mission?.def.slice;
+      const side = sides[i], card = this.slots[i], state = player.weapons?.[side]; card.root.hidden = !state && !mission?.def.l1;
       if (!state) { text(card.name, side === 'LEFT' ? 'Unarmed' : 'Locked'); text(card.stats, 'Find a weapon'); card.icon.hidden=false;card.icon.src=actionIconUrl(side==='LEFT'?'icon.fists':'icon.kick');card.actionId=''; card.ring.hidden=true; for(const strip of card.strips)strip.hidden=true;this.game.input.touch.setEmpty(side==='LEFT'?'left':'right');continue; }
       card.icon.hidden=card.ring.hidden=false;
       const slot = state.rack[state.index], def = action(slot.id);
       card.root.classList.toggle('is-selected', player.weapons!.selectedSide === side);
       card.root.setAttribute('aria-label', `${side}${player.weapons!.selectedSide === side ? ' selected' : ''}`);
-      if (card.actionId !== slot.id) { card.actionId = slot.id; card.icon.src = actionIconUrl(def.iconId); text(card.name, slot.id.split('.')[1].replaceAll('-', ' ')); }
       const key = this.game.input.scheme === 'touch' ? '☝' : this.game.input.scheme === 'keyboard' ? this.game.input.bindings.keyLabel(side === 'LEFT' ? 'left' : 'right') : side === 'LEFT' ? 'LMB' : 'RMB';
-      text(card.title, `${side} · ${key}`);
+      const mouse = this.game.input.scheme.startsWith('mouse');
+      const loadout = world.combat?.runner.loadout, entries = loadout?.activeEntries() ?? [];
+      const active = entries.findIndex(e => e.side === player.weapons!.selectedSide && e.index === player.weapons![e.side].index);
+      const next = entries[(active + 1) % entries.length];
+      const label = (id: string) => ['weapon.fists', 'weapon.kick'].includes(id) ? 'unarmed' : id.split('.')[1].replaceAll('-', ' ');
+      text(card.title, mouse ? side === player.weapons!.selectedSide ? 'ACTIVE · LMB' : 'RMB · NEXT' : `${side} · ${key}`);
+      const preview = mouse && side !== player.weapons!.selectedSide;
+      const displayId = preview && next ? next.id : slot.id;
+      if (card.actionId !== displayId) { card.actionId = displayId; card.icon.src = actionIconUrl(action(displayId).iconId); text(card.name, label(displayId)); }
+      card.ring.hidden = preview;
       text(card.stats, def.magazine ? `${slot.magazine} / ${def.magazine}` : def.charges ? `${slot.charges} charges` : def.cooldown ? `${Math.max(0, (slot.readyAt - world.tick) / 60).toFixed(1)}s` : 'Ready');
+      if (preview) text(card.stats, 'RMB to equip');
       card.stats.dataset.ammo = String(slot.magazine); card.stats.dataset.charges = String(slot.charges);
       const until = slot.reloadUntil || slot.nextCharge || slot.readyAt;
       const duration = (slot.reloadUntil ? def.reloadTime : slot.nextCharge ? def.recharge : Math.max(def.cooldown, def.windup + def.active + def.recovery)) * 60;
@@ -187,7 +206,8 @@ export class Hud {
     const id = world.interactables?.activeId, device = id != null ? world.entities.get(id)?.interactable : null;
     this.interaction.hidden = !device;
     if (device) { this.interaction.style.background = `conic-gradient(#64dccc ${device.progress * 360}deg,#182333 0)`; text(this.interaction, device.hint || `${device.label} · ${Math.round(device.progress * 100)}%`); this.interaction.dataset.progress = String(device.progress); }
-    this.damage.hidden = !!mission?.def.slice || world.tick > this.damagedUntil; this.bark.hidden = world.tick > this.barkUntil;
+    this.damage.hidden = world.tick > this.damagedUntil; this.bark.hidden = world.tick > this.barkUntil;
+    this.civilianBark.hidden = world.tick > this.civilianBarkUntil;
     this.onboarding.update(this.game.input.scheme, visible);
   }
   dispose(): void { this.clear(); this.onboarding.dispose(); this.root.remove(); }

@@ -41,6 +41,7 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
         time: number;
     }[] = [];
     let maxVoices = 0;
+    let scoreVoices = 0;
     await registry.prepare(request.level ?? 'L1');
     // Offline renders schedule all sources before startRendering; retire finished handles against the
     // scheduled time so the same limiter models simultaneous voices rather than all events in 60s.
@@ -50,7 +51,7 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
         const voice = graph.play(cue, buffer, { ...options, time });
         if (voice) {
             events.push({ cue: id, time });
-            maxVoices = Math.max(maxVoices, graph.active.size);
+            maxVoices = Math.max(maxVoices, graph.active.size + scoreVoices);
         }
         return voice;
     };
@@ -114,8 +115,23 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
     }
     if (request.scenario === 'audio-mix') {
         // 60s deterministic combat + dialogue + explosion, including the same gain/ducking envelopes as live.
-        for (const layer of ['base', 'pulse', 'drive'])
-            play(`music.L1.${layer}`, 0, { loop: true });
+        // Offline contexts cannot stream MediaElements. Decode the exact shipped stereo
+        // recording and feed the same bus with the live deck trim and accent gain.
+        let recording: AudioBuffer | undefined;
+        for (const format of ['webm', 'm4a']) {
+            try {
+                const response = await fetch(`/assets/audio/score-combat.${format}`);
+                if (!response.ok) throw new Error(`Score request failed: ${response.status}`);
+                recording = await context.decodeAudioData(await response.arrayBuffer());
+                break;
+            } catch { /* Match the production codec fallback. */ }
+        }
+        if (!recording) throw new Error('Offline score could not decode either codec');
+        const score = context.createBufferSource(), trim = context.createGain();
+        score.buffer = recording; score.loop = true; trim.gain.value = 0.5;
+        score.connect(trim).connect(graph.buses.music); score.start(0); scoreVoices = 1;
+        for (const layer of ['pulse', 'drive'])
+            play(`music.L1.${layer}`, 0, { loop: true, gain: 0.18 });
         for (const bed of ambienceTiers[2].beds)
             play(`bed.${bed}`, 0, { loop: true, gain: 0.6 });
         const sequence: {

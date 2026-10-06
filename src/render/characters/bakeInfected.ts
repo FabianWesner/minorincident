@@ -5,10 +5,12 @@ import { characterNodes } from '../../data/survivor';
 import { authoredClips, sampleClip, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import type { CrowdClip } from '../../assets/crowd';
-export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple', 'infection-stagger', 'infection-collapse', 'infection-rise'] as const;
+export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple', 'infection-stagger', 'infection-collapse', 'infection-rise',
+  'infected-frail', 'infected-lurch', 'infected-sprint', 'infected-idle', 'infected-search', 'civ-startle', 'civ-flee', 'civ-grabbed'] as const;
+export const civilianClips = [...infectedClips, 'npc-sit', 'npc-sit-down', 'npc-stand-up', 'npc-gesture', 'npc-look-around', 'npc-water', 'npc-carry', 'npc-cane'] as const;
 export const framesPerClip = 24;
 /** Bake once at level load: merged color geometry, part indices and the shared authored glTF rigid-part actions. */
-export function bakeInfected(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false) {
+export function bakeInfected(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips) {
   const rig = {} as CharacterRig;
   for (const name of characterNodes) {
     let node = root.getObjectByName(name);
@@ -18,14 +20,15 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
   const parts: Object3D[] = characterNodes.map((name) => rig[name]);
   for (const name of animatedNodes) { const node = root.getObjectByName(name); if (node && !parts.includes(node)) parts.push(node); }
   const rest = parts.map((part) => ({ position: part.position.clone(), rotation: part.rotation.clone() }));
-  const matrices: number[] = [];
-  for (const clip of infectedClips) for (let frame = 0; frame < framesPerClip; frame++) {
+  const matrices = new Float32Array(clipNames.length * framesPerClip * parts.length * 16);
+  let matrixOffset = 0;
+  for (const clip of clipNames) for (let frame = 0; frame < framesPerClip; frame++) {
     for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
     const t = frame / (framesPerClip - 1);
     const animal = !!root.getObjectByName('body');
-    const name = animal ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : clip === 'idle' ? 'corgi-idle' : root.getObjectByName('wingL') ? 'infected-flight' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
+    const name = animal ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : root.getObjectByName('wingL') ? 'infected-flight' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
     sampleClip(root, name, t * authoredClips.get(name)!.duration);
-    root.updateMatrixWorld(true); for (const part of parts) matrices.push(...part.matrixWorld.elements);
+    root.updateMatrixWorld(true); for (const part of parts) { part.matrixWorld.toArray(matrices, matrixOffset); matrixOffset += 16; }
   }
   for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
   root.updateMatrixWorld(true);
@@ -78,6 +81,6 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     geometry.setAttribute(names[a], new InterleavedBufferAttribute(data, attribute.itemSize, offset));
     offset += attribute.itemSize;
   }
-  const clip: CrowdClip = { parts: parts.map(part => part.name), frames: framesPerClip * infectedClips.length, duration: infectedClips.length, matrices };
+  const clip: CrowdClip = { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
   return { geometry, clip, shirtColor, strideScale: strideScale(root) };
 }

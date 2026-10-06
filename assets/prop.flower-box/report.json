@@ -1,0 +1,69 @@
+{
+  "id": "prop.flower-box",
+  "triangles": {
+    "lod0": 6100,
+    "lod1": 724,
+    "lod2": 174
+  },
+  "dimensions_blender": [
+    0.5617841482162476,
+    1.2640585899353027,
+    0.46960675716400146
+  ],
+  "draw_calls": 9,
+  "materials": [
+    "pal_woodWarm",
+    "pal_uiDark",
+    "pal_hairChestnut",
+    "pal_foliageDark",
+    "pal_foliage",
+    "pal_grass",
+    "pal_schoolBusYellow",
+    "pal_flamingoPink",
+    "pal_picketWhite"
+  ],
+  "nodes": [
+    "root",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 4,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 125244,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 32364,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 18844,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.11868852459016394,
+    "lod2": 0.028524590163934428
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.flower-box",
+    "geometry_hash": "150bc6e1e6c007ee76b1eb2818fcb1ed62ec38e18a84b532e53fff5764d6d9b7",
+    "second_geometry_hash": "150bc6e1e6c007ee76b1eb2818fcb1ed62ec38e18a84b532e53fff5764d6d9b7",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
+}

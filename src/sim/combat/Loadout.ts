@@ -13,6 +13,23 @@ export class Loadout {
     const side = (rack: string[]): SideState => ({ rack: rack.map(id=>slot(id,this.definition)), index: 0, aim: { x: 1, z: 0 }, aimPoint: null, swapUntil: 0 });
     this.state = { selectedSide: 'LEFT', LEFT: side(left), RIGHT: side(right) };
   }
+  /** Ordered carried actions for mouse selection; kick is part of unarmed, not a slot. */
+  activeEntries(): { side: Side; index: number; id: string }[] {
+    const seen = new Set<string>();
+    return (['LEFT', 'RIGHT'] as const).flatMap(side => this.state[side].rack.flatMap((slot, index) => {
+      const id = slot.id === 'weapon.kick' ? 'weapon.fists' : slot.id;
+      if (seen.has(id)) return [];
+      seen.add(id); return [{ side, index, id }];
+    })).sort((a, b) => Number(b.id === 'weapon.fists') - Number(a.id === 'weapon.fists'));
+  }
+  cycleActive(direction: number, tick: number): void {
+    const entries = this.activeEntries(), side = this.state.selectedSide, state = this.state[side];
+    if (!entries.length) return;
+    const current = entries.findIndex(e => e.side === side && e.index === state.index);
+    const next = entries[(current + direction + entries.length) % entries.length];
+    if (next.side === side && next.index === state.index) return;
+    this.state.selectedSide = next.side; this.state[next.side].index = next.index; this.state[next.side].swapUntil = tick + 15;
+  }
   input(frame: InputFrame, tick: number): void {
     if (frame.selectorSide) this.state.selectedSide = frame.selectorSide;
     if (frame.left.down) this.state.selectedSide = 'LEFT';
@@ -23,14 +40,16 @@ export class Loadout {
       if (frame.aimPoint) { side.aimPoint ??= { x: 0, z: 0 }; side.aimPoint.x = frame.aimPoint.x; side.aimPoint.z = frame.aimPoint.z; }
       else side.aimPoint = null;
     }
-    if (frame.selectedSlot) {
-      const choice = frame.selectedSlot, rack = this.state[choice.side];
+    const choice = frame.selectedSlot ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? this.activeEntries()[frame.selectedActiveSlot] : undefined);
+    if (choice) {
+      const rack = this.state[choice.side];
       if (Number.isInteger(choice.index) && choice.index >= 0 && choice.index < rack.rack.length && tick >= rack.swapUntil) {
         this.state.selectedSide = choice.side;
         if (rack.index !== choice.index) { rack.index = choice.index; rack.swapUntil = tick + 15; }
       }
     }
-    if (frame.selector && tick >= side.swapUntil) {
+    if (frame.selectorActive && frame.selector) this.cycleActive(frame.selector, tick);
+    else if (frame.selector && tick >= side.swapUntil) {
       side.index = (side.index + frame.selector + side.rack.length) % side.rack.length; side.swapUntil = tick + 15;
     }
   }

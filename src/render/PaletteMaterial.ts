@@ -28,7 +28,12 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // A few soft-edged splats in part-local space follow the animated surface.
       // A fragment hash here turned even one kill into pixel noise on skin/hair.
       const radius = this.bloodCoverage.clamp(0, 1).sqrt().mul(.09).add(.02);
-      const splat = (y: number, z: number, size: number) => positionGeometry.yz.sub(vec2(y, z)).mul(vec2(1, 1.3)).length().smoothstep(radius.mul(size), radius.mul(size).add(.006)).oneMinus();
+      const splat = (y: number, z: number, size: number) => {
+        const distance = positionGeometry.yz.sub(vec2(y, z)).mul(vec2(1, 1.3)).length();
+        // Keep the edge at least one pixel wide as the figure turns or zooms.
+        const edge = distance.fwidth().mul(1.5).max(.006);
+        return distance.smoothstep(radius.mul(size), radius.mul(size).add(edge)).oneMinus();
+      };
       const blood = max(max(splat(.07, .09, 1), splat(-.1, -.06, .7)), splat(-.16, .15, .5)).mul(this.bloodCoverage.greaterThan(0).select(1, 0));
       const surface = mix(base, color('#b3121f'), blood);
       const albedo = mix(surface, lighting.bounce, bounce);

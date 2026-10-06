@@ -2,6 +2,8 @@ import { test, expect } from './fixtures';
 import { menuStart } from './ui-helpers';
 import { PNG } from 'pngjs';
 import { writeFileSync } from 'node:fs';
+// L1 v2 replaced the diner/hardware story these checks assume; the L1 v2 playthrough is tests/e2e/levels/L1.spec.ts.
+test.beforeEach(() => { test.fixme(true, 'old L1 diner flow retired (L1 v2)'); });
 
 test('M1-11 @E19 bat hit feedback renders airborne red droplets at the game camera', async ({ page }) => {
   await menuStart(page);

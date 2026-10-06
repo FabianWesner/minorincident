@@ -1,0 +1,556 @@
+{
+  "E04": {
+    "checks": {
+      "target": "E04",
+      "epics": [
+        "E04"
+      ],
+      "pattern": "@(?:E04)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+      "checks": [
+        {
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "lint"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npx",
+            "vitest",
+            "run",
+            "-t",
+            "@(?:E04)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--maxWorkers=1",
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile=test-results/epics/E04/vitest.json"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/e2e-lock.sh",
+            "npx",
+            "playwright",
+            "test",
+            "--grep",
+            "@(?:E04)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+          ],
+          "exitCode": 0
+        }
+      ]
+    },
+    "browser_stats": {
+      "expected": 27,
+      "unexpected": 0,
+      "log": "/private/tmp/motion-stage1-e04-final.log"
+    }
+  },
+  "E18_node": {
+    "100": {
+      "scenario": "perf-horde-100",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 600,
+      "minInfected": 100,
+      "cap": 100,
+      "simMsP50": 0.6639580000000933,
+      "simMsP95": 1.032875000000331,
+      "simMsMax": 1.654457999999977
+    },
+    "200": {
+      "scenario": "perf-horde-200",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 600,
+      "minInfected": 200,
+      "cap": 200,
+      "simMsP50": 1.8521670000000086,
+      "simMsP95": 2.586958000000095,
+      "simMsMax": 4.847999999999956
+    }
+  },
+  "corgi": {
+    "ticks": 10800,
+    "within6mRatio": 1,
+    "maxBlockedTicks": 0,
+    "hp": 100,
+    "playerHp": 100
+  },
+  "production_render": {
+    "corpse_depth_and_desktop_world": "2 passed",
+    "diner_surface": {
+      "bloodPixels": 1172,
+      "fullNoise": {
+        "pixels": 11361,
+        "spikes": 165,
+        "ratio": 0.014523369421705836
+      },
+      "cleanNoise": {
+        "pixels": 11361,
+        "spikes": 158,
+        "ratio": 0.013907226476542557
+      },
+      "excess": 0.0006161429451632793,
+      "zoom": 0.9277434863285531,
+      "coverage": 0.1,
+      "fx": {
+        "enabled": true,
+        "colorblind": false,
+        "gore": "Full",
+        "quality": "high",
+        "flashReduction": false,
+        "time": 61.5000000000001,
+        "lastSpray": {
+          "actionId": "weapon.machete",
+          "direction": {
+            "x": 0.04856263744711313,
+            "z": 0.9988201390862022
+          },
+          "droplets": 44,
+          "chunks": 4,
+          "gravity": 9.81
+        },
+        "surfaceSplats": 0,
+        "pendingSplats": 0,
+        "particles": 0,
+        "particleCap": 2048,
+        "decals": 206,
+        "decalCap": 600,
+        "gibs": 0,
+        "gibCap": 80,
+        "telegraphs": [],
+        "hitStop": {
+          "active": false,
+          "until": 20.450000000000006,
+          "started": 20.400000000000006,
+          "suppressed": 0
+        },
+        "flash": 0,
+        "coverage": 0.1,
+        "detached": 0,
+        "dismemberedKills": 0,
+        "kills": 4,
+        "explosionRadius": 0
+      }
+    }
+  },
+  "unit": {
+    "files": 61,
+    "tests": 183,
+    "log": "/private/tmp/motion-stage1-unit-final.log"
+  },
+  "E19_initial": {
+    "checks": {
+      "target": "E19",
+      "epics": [
+        "E19"
+      ],
+      "pattern": "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+      "checks": [
+        {
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "lint"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npx",
+            "vitest",
+            "run",
+            "-t",
+            "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--maxWorkers=1",
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile=test-results/epics/E19/vitest.json"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/e2e-lock.sh",
+            "npx",
+            "playwright",
+            "test",
+            "--grep",
+            "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+          ],
+          "exitCode": 1
+        }
+      ]
+    },
+    "browser": {
+      "passed": 41,
+      "failed": 10,
+      "note": "Before contact-hold and fixture repairs; known mobile triangle test remains strict."
+    }
+  },
+  "smoke": {
+    "unit_passed": 5,
+    "browser_passed": 22,
+    "log": "/private/tmp/motion-stage1-smoke-final.log"
+  },
+  "E18_native_gpu": {
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+    "unthrottled": true,
+    "durationMs": 12004.399999976158,
+    "ticks": 724,
+    "renderedFrames": 3187,
+    "frameMsP50": 2.5,
+    "frameMsP95": 10.5,
+    "perf": {
+      "fps": 312.49999999992895,
+      "frameMs": 3.2000000000007276,
+      "simMs": 2.799999952316284,
+      "uiMs": 0,
+      "drawCalls": 59,
+      "triangles": 1254153,
+      "geometries": 85,
+      "textures": 17,
+      "entities": 201,
+      "backend": "webgl",
+      "loadTiming": null,
+      "quality": {
+        "setting": "high",
+        "tier": "high",
+        "p90Ms": 7.9,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 16.7,
+          "infected": 200,
+          "drawCalls": 600,
+          "triangles": 1500000,
+          "simMs": 4,
+          "heapMB": 400,
+          "pixelRatio": 2,
+          "shadowSize": 2048,
+          "bloomMips": 5,
+          "cullDistance": 60
+        }
+      },
+      "renderedFrames": 5031,
+      "contextLost": false,
+      "paused": false,
+      "heapBytes": 513289915
+    },
+    "count": 200,
+    "adapter": {
+      "vendor": "apple",
+      "architecture": "metal-3",
+      "device": "",
+      "description": ""
+    },
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+    "recordedAt": "2026-10-06T20:34:31.015Z",
+    "window": {
+      "headless": true
+    },
+    "screen": {
+      "x": 22,
+      "y": 22,
+      "width": 1600,
+      "height": 900,
+      "viewportWidth": 1600,
+      "viewportHeight": 900
+    },
+    "frame_sample_count": 3067,
+    "source_commit": "2342bd5"
+  },
+  "contact_hold": {
+    "slice_sim_tests_passed": 20,
+    "newborn_grab_source": 84,
+    "newborn_victim": 82,
+    "newborn_grab_tick": 2125,
+    "newborn_turn_tick": 2377
+  },
+  "E19_full_repaired": {
+    "source_commit": "6e5a6f4",
+    "checks": {
+      "target": "E19",
+      "epics": [
+        "E19"
+      ],
+      "pattern": "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+      "checks": [
+        {
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "lint"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npx",
+            "vitest",
+            "run",
+            "-t",
+            "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--maxWorkers=1",
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile=test-results/epics/E19/vitest.json"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/e2e-lock.sh",
+            "npx",
+            "playwright",
+            "test",
+            "--grep",
+            "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+          ],
+          "exitCode": 1
+        }
+      ]
+    },
+    "browser_stats": {
+      "startTime": "2026-10-06T20:19:26.884Z",
+      "duration": 757088.7579999999,
+      "expected": 49,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "failures": [
+      "Known portrait-low triangle budget",
+      "Desktop outbreak chain before prey-claim correction"
+    ],
+    "log": "/private/tmp/motion-stage1-e19-repaired.log"
+  },
+  "claims_sim": {
+    "source_commit": "2342bd5",
+    "tests_passed": 20,
+    "log": "/private/tmp/motion-stage1-claims-unit-final.log"
+  },
+  "final_static": {
+    "source_commit": "2342bd5",
+    "typecheck": true,
+    "lint": true,
+    "build": true
+  },
+  "outbreak_final": {
+    "source_commit": "2342bd5",
+    "browser_stats": {
+      "startTime": "2026-10-06T20:32:31.981Z",
+      "duration": 48328.827,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "modes": {
+      "desktop": {
+        "mode": "desktop",
+        "realInput": true,
+        "headless": true,
+        "actedDuringChain": true,
+        "peak": 4,
+        "deaths": 0,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+        "events": [
+          {
+            "type": "civilian.grabbed",
+            "tick": 1429,
+            "sourceId": 83,
+            "targetId": 80,
+            "variant": "inf.cashier",
+            "rescueUntil": 1519
+          },
+          {
+            "type": "civilian.grabbed",
+            "tick": 1655,
+            "sourceId": 83,
+            "targetId": 81,
+            "variant": "inf.suburban-mom",
+            "rescueUntil": 1745
+          },
+          {
+            "type": "civilian.turned",
+            "tick": 1684,
+            "id": 80,
+            "infectedId": 84,
+            "variant": "inf.cashier",
+            "position": {
+              "x": 40.62077738286717,
+              "z": -5.693770188983325
+            }
+          },
+          {
+            "type": "civilian.turned",
+            "tick": 1917,
+            "id": 81,
+            "infectedId": 85,
+            "variant": "inf.suburban-mom",
+            "position": {
+              "x": 49.81711107962794,
+              "z": -5.448795393075194
+            }
+          },
+          {
+            "type": "civilian.grabbed",
+            "tick": 1930,
+            "sourceId": 84,
+            "targetId": 82,
+            "variant": "inf.bbq-dad",
+            "rescueUntil": 2020
+          },
+          {
+            "type": "civilian.turned",
+            "tick": 2178,
+            "id": 82,
+            "infectedId": 86,
+            "variant": "inf.bbq-dad",
+            "position": {
+              "x": 59.7662172679881,
+              "z": -2.2469258896068083
+            }
+          }
+        ]
+      },
+      "portrait": {
+        "mode": "portrait",
+        "realInput": true,
+        "headless": true,
+        "actedDuringChain": true,
+        "peak": 4,
+        "deaths": 0,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+        "events": [
+          {
+            "type": "civilian.grabbed",
+            "tick": 1128,
+            "sourceId": 125,
+            "targetId": 122,
+            "variant": "inf.cashier",
+            "rescueUntil": 1218
+          },
+          {
+            "type": "civilian.turned",
+            "tick": 1390,
+            "id": 122,
+            "infectedId": 126,
+            "variant": "inf.cashier",
+            "position": {
+              "x": 40.357886080356074,
+              "z": -5.796287738285416
+            }
+          },
+          {
+            "type": "civilian.grabbed",
+            "tick": 1590,
+            "sourceId": 125,
+            "targetId": 123,
+            "variant": "inf.suburban-mom",
+            "rescueUntil": 1680
+          },
+          {
+            "type": "civilian.turned",
+            "tick": 1846,
+            "id": 123,
+            "infectedId": 127,
+            "variant": "inf.suburban-mom",
+            "position": {
+              "x": 60.397068772900695,
+              "z": -5.055757843369028
+            }
+          },
+          {
+            "type": "civilian.grabbed",
+            "tick": 1967,
+            "sourceId": 126,
+            "targetId": 124,
+            "variant": "inf.bbq-dad",
+            "rescueUntil": 2057
+          },
+          {
+            "type": "civilian.turned",
+            "tick": 2221,
+            "id": 124,
+            "infectedId": 128,
+            "variant": "inf.bbq-dad",
+            "position": {
+              "x": 50.27328616060883,
+              "z": 9.0296297065896
+            }
+          }
+        ]
+      }
+    }
+  },
+  "remaining_gate": {
+    "epic": "E19",
+    "test": "l1-grade portrait low triangle budget",
+    "actual_triangles": 690997,
+    "budget_triangles": 500000,
+    "known_before_stage1": true,
+    "threshold_changed": false
+  },
+  "artifacts": {
+    "retained_sheets": [
+      "mesh2motion-comparison.png",
+      "stage1-comparison.png"
+    ],
+    "scratch_directory": "/private/tmp/claude-501/-Users-fabianwesner-Workspace-suburban-survivors/88be267a-0002-4cac-aeec-a7e79e9db694/scratchpad/motion-lab/"
+  }
+}

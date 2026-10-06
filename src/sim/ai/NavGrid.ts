@@ -39,23 +39,32 @@ export class NavGrid {
   }
   /** Player clearance is smaller than AI clearance. Route to the nearest walkable
    * cell when the player hugs a collider, then use direct movement once visible. */
-  nearestCell(x: number, z: number): number {
-    const cell=this.cell(x,z);if(cell<0||!this.blocked[cell])return cell;
+  nearestCell(x: number, z: number, radius?: number): number {
+    const reachable = (cell: number) => radius === undefined || this.visible({ x, z }, { x: this.x(cell), z: this.z(cell) }, radius);
+    const cell=this.cell(x,z);if(cell<0||!this.blocked[cell] && reachable(cell))return cell;
     let nearest=-1,distance=Infinity;
     for(let dz=-6;dz<=6;dz++)for(let dx=-6;dx<=6;dx++){
-      const candidate=this.cell(x+dx*this.cellSize,z+dz*this.cellSize);if(candidate<0||this.blocked[candidate])continue;
+      const candidate=this.cell(x+dx*this.cellSize,z+dz*this.cellSize);if(candidate<0||this.blocked[candidate]||!reachable(candidate))continue;
       const d=(this.x(candidate)-x)**2+(this.z(candidate)-z)**2;if(d<distance){nearest=candidate;distance=d;}
     }
     return nearest;
   }
   x(cell: number): number { return (cell % this.width + 0.5) * this.cellSize - this.ground.width / 2 + this.center.x; }
   z(cell: number): number { return (Math.floor(cell / this.width) + 0.5) * this.cellSize - this.ground.depth / 2 + this.center.z; }
-  clear(x: number, z: number, radius = 0): boolean {
+  clear(x: number, z: number, radius = 0, rounded = false): boolean {
     if (this.mask && !this.mask(x, z)) return false;
     if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
-    for (const w of this.buckets.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) if (Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
-    for (const w of this.blockers.values()) if (Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
+    for (const w of this.buckets.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
+    for (const w of this.blockers.values()) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
     return true;
+  }
+  private intersects(w: Wall, x: number, z: number, radius: number): boolean {
+    const dx = Math.abs(x - w.x), dz = Math.abs(z - w.z);
+    if (dx >= w.halfX + radius || dz >= w.halfZ + radius) return false;
+    // Match the circular capsule footprint at box corners, rather than a square
+    // dilation that can declare a valid Rapier position trapped inside a wall.
+    const outsideX = Math.max(0, dx - w.halfX), outsideZ = Math.max(0, dz - w.halfZ);
+    return radius === 0 || outsideX * outsideX + outsideZ * outsideZ < radius * radius;
   }
   private indexWalls(): void {
     this.buckets.clear();
@@ -176,12 +185,29 @@ export class NavGrid {
   /** Shared string-pulled route: skip all visible waypoints, so actors do not zig-zag on the grid. */
   steer(position: { x: number; z: number }, target: { x: number; z: number }, route: { path: number[]; goal: number; pathIndex: number }, radius: number, waypoint: { x: number; z: number }, budget = 1600): boolean {
     if (this.visible(position, target, radius)) { route.path.length = 0; route.goal = -1; Object.assign(waypoint, target); return true; }
-    const to = this.nearestCell(target.x, target.z);
+    const to = this.nearestCell(target.x, target.z, radius);
     if (to !== route.goal || route.pathIndex >= route.path.length) {
-      if (!this.path(this.nearestCell(position.x, position.z), to, route.path, budget)) return false;
+      let from = this.nearestCell(position.x, position.z, radius);
+      // A closest cell across a collider corner is not a reachable starting point.
+      if (from >= 0 && !this.visible(position, { x: this.x(from), z: this.z(from) }, radius)) {
+        let distance = Infinity; from = -1;
+        for (let dz = -3; dz <= 3; dz++) for (let dx = -3; dx <= 3; dx++) {
+          const cell = this.cell(position.x + dx * this.cellSize, position.z + dz * this.cellSize);
+          if (cell < 0 || this.blocked[cell]) continue;
+          const point = { x: this.x(cell), z: this.z(cell) }, d = (point.x - position.x) ** 2 + (point.z - position.z) ** 2;
+          if (d < distance && this.visible(position, point, radius)) { from = cell; distance = d; }
+        }
+      }
+      if (!this.path(from, to, route.path, budget)) return false;
+      // Align with that visible start before rounding the first corner.
+      if (from >= 0) route.path.unshift(from);
       route.goal = to; route.pathIndex = 0;
     }
-    while (route.pathIndex < route.path.length && Math.hypot(position.x - this.x(route.path[route.pathIndex]), position.z - this.z(route.path[route.pathIndex])) < .12) route.pathIndex++;
+    while (route.pathIndex < route.path.length && Math.hypot(position.x - this.x(route.path[route.pathIndex]), position.z - this.z(route.path[route.pathIndex])) < .12) {
+      const next = route.path[route.pathIndex + 1];
+      if (next !== undefined && !this.visible(position, { x: this.x(next), z: this.z(next) }, radius)) break;
+      route.pathIndex++;
+    }
     for (let i = route.path.length - 1; i >= route.pathIndex; i--) {
       waypoint.x = this.x(route.path[i]); waypoint.z = this.z(route.path[i]);
       if (this.visible(position, waypoint, radius)) { route.pathIndex = i; return true; }

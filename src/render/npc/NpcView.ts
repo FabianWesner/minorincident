@@ -7,9 +7,10 @@ import { disposeCharacter } from '../characters/rig';
 import { createCivilianPlaceholder, createCorgiPlaceholder } from './placeholders';
 import { CivilianCrowd } from './CivilianCrowd';
 import { QuadrupedAnimator } from '../characters/QuadrupedAnimator';
+import { MotionPresentation } from '../characters/MotionPresentation';
 import { MotionPhase } from '../characters/MotionPhase';
-import { sampleClip, authoredClips, strides, strideScale } from '../characters/clips';
-interface Hero { animator: QuadrupedAnimator | null; root: Group; legs: Object3D[]; head: Object3D | undefined; tail: Object3D | undefined; badge: HTMLElement | null; source: string; moving: boolean; tick: number; x: number; z: number }
+import { NpcAnimator } from '../characters/NpcAnimator';
+interface Hero { humanAnimator?: NpcAnimator; animator: QuadrupedAnimator | null; root: Group; legs: Object3D[]; head: Object3D | undefined; tail: Object3D | undefined; badge: HTMLElement | null; source: string; moving: boolean; tick: number; x: number; z: number }
 /** NPC presentation owns its resources and HUD; sim state is consumed but never modified. */
 export class NpcView extends Group {
   private readonly civilians: CivilianCrowd;
@@ -21,6 +22,7 @@ export class NpcView extends Group {
   private readonly placeholders: Group[] = [];
   private readonly cars: InstancedMesh;
   private readonly transform = new Matrix4();
+  private readonly presentation = new MotionPresentation();
   private readonly motion = new MotionPhase();
   private readonly point = new Vector3();
   private readonly bark = document.createElement('div');
@@ -47,8 +49,8 @@ export class NpcView extends Group {
       const old = node.material; node.material = Array.isArray(old) ? old.map(remap) : remap(old); if (root === this.human || this.dogSource === 'placeholder') for (const m of Array.isArray(old) ? old : [old]) m.dispose(); node.castShadow = node.receiveShadow = true;
     });
   }
-  update(camera: Camera): void {
-    this.civilians.update(); let cars = 0;
+  update(camera: Camera, alpha = 1): void {
+    this.civilians.update(alpha); let cars = 0;
     for (const [id, hero] of this.heroes) if (!this.world.entities.get(id)) { this.remove(hero.root); hero.badge?.remove(); this.heroes.delete(id); }
     for (const e of this.world.entities.iterate()) {
       if (e.traffic || e.convoy) { this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(e.transform.x, .6, e.transform.z); this.cars.setMatrixAt(cars++, this.transform); continue; }
@@ -59,19 +61,18 @@ export class NpcView extends Group {
         const legs = ['legFL', 'legFR', 'legBL', 'legBR', 'legL', 'legR'].map(name => root.getObjectByName(name)).filter((n): n is Object3D => !!n);
         const badge = e.escort ? document.createElement('div') : null;
         if (badge) { badge.dataset.escortId = String(e.id); badge.style.cssText = 'position:fixed;pointer-events:none;transform:translate(-50%,-100%);background:#292537;color:#fff0cc;border:2px solid #d8bd74;border-radius:50%;padding:5px 9px;font:700 18px system-ui;z-index:6'; document.querySelector('#game')!.appendChild(badge); }
-        hero = { animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort ? 'placeholder' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
+        hero = { humanAnimator: e.escort ? new NpcAnimator(root) : undefined, animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort ? 'placeholder' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
       }
       if (hero.tick !== this.world.tick) { hero.moving = e.motion?.moving ?? Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
-      hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(e.transform.x, e.transform.y - (e.escort ? .7 : .3), e.transform.z); hero.root.rotation.set(0, e.transform.yaw, 0);
+      const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
+      hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(presented.x, presented.y - (e.escort ? .7 : .3), presented.z); hero.root.rotation.set(0, presented.yaw, 0);
       if (e.escort?.child) hero.root.scale.setScalar(.7);
       const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
       if (down && hero.animator) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
-      if (hero.animator) hero.animator.update(this.world.tick / 60, motion.speed, motion.distance);
-      else {
-        const clip = down ? 'death-side' : motion.speed > 2.5 ? 'run' : motion.speed > .06 ? 'npc-walk' : 'idle';
-        sampleClip(hero.root, clip, down ? authoredClips.get(clip)!.duration : strides[clip] ? motion.distance / (strides[clip] * strideScale(hero.root)) % 1 * authoredClips.get(clip)!.duration : this.world.tick / 60 % authoredClips.get(clip)!.duration);
-      }
+      const time = Math.max(0, this.world.tick + alpha - 1) / 60, distance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
+      if (hero.animator) hero.animator.update(time, motion.speed, distance);
+      else hero.humanAnimator!.update(time, motion.speed, distance, down);
       if (hero.badge && e.escort) {
         this.point.set(e.transform.x, e.escort.child ? 1.25 : 1.8, e.transform.z).project(camera);
         hero.badge.style.left = `${(this.point.x + 1) / 2 * innerWidth}px`; hero.badge.style.top = `${(1 - this.point.y) / 2 * innerHeight}px`; hero.badge.style.display = Math.abs(this.point.x) <= 1 && Math.abs(this.point.y) <= 1 ? '' : 'none';

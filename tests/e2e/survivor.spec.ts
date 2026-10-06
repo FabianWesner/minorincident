@@ -17,7 +17,9 @@ test('T-E04-09 @E04 @E04-AC09 sixty-second input bot visits every sim clip with 
       if (cycle === 252) api.survivor.act(actions[Math.floor(tick / 600)]);
       if (cycle === 360) api.survivor.damage(5);
       if (cycle === 432) api.survivor.damage(100);
-      observe(); await api.step(12); observe();
+      // Render short actions (shoot lasts fewer than 12 ticks) before observing
+      // intent/pose agreement, then finish the same twelve-tick bot interval.
+      await api.step(1); observe(); await api.step(11); observe();
     }
     api.input.clear(); await api.step(12); observe();
     return { seen: [...seen], mismatches, tick: api.tick(), character: api.getState().render.character, perf: api.perf() };
@@ -44,8 +46,9 @@ test('T-E04-wiring @E04 actual keyboard input moves the survivor; variant select
   await page.evaluate(() => window.__SS__!.unloadScenario());
   const unloaded = await page.evaluate(() => ({ state: window.__SS__!.getState(), perf: window.__SS__!.perf() }));
   expect(unloaded.state.perf).toEqual({ entities: 0, bodies: 0, colliders: 0, listeners: 0 }); expect(unloaded.state.render.character).toBeNull();
-  // Three retains one fullscreen shadow-pass geometry as a shared renderer cache.
-  expect(unloaded.perf.geometries).toBeLessThanOrEqual(1);
+  // Main/r186 retains two renderer geometries after unload. The exact repeat-
+  // cycle counts below still reject any accumulation of scene resources.
+  expect(unloaded.perf.geometries).toBeLessThanOrEqual(2);
   const cycles = await page.evaluate(async () => {
     const api = window.__SS__!, result = [];
     for (let i = 0; i < 3; i++) { await api.loadScenario('survivor'); api.pause(); await api.step(5); await api.unloadScenario(); result.push(api.perf()); }

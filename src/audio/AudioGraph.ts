@@ -63,8 +63,8 @@ export class AudioGraph {
     private readonly impulses = new Map<ReverbPreset, AudioBuffer>();
     private radioUntil = 0;
     private megaUntil = 0;
-    constructor(readonly context: BaseAudioContext, public tier: 'high' | 'low' = 'high', mutedOutput = false) {
-        this.limiter = new VoiceLimiter(tier);
+    constructor(readonly context: BaseAudioContext, public tier: 'high' | 'low' = 'high', mutedOutput = false, reservedVoices = 0) {
+        this.limiter = new VoiceLimiter(tier, reservedVoices);
         this.master = context.createGain();
         this.master.gain.value = 2;
         this.output = context.createGain();
@@ -98,8 +98,10 @@ export class AudioGraph {
         merge.connect(this.mono).connect(this.output);
         this.output.connect(context.destination);
         this.sfx = context.createGain();
+        this.sfx.gain.value = dbGain(-2);
         this.sfx.connect(this.master);
         this.voice = context.createGain();
+        this.voice.gain.value = dbGain(-1.5);
         this.voice.connect(this.master);
         this.musicGate = context.createGain();
         this.musicGate.connect(this.master);
@@ -314,7 +316,7 @@ export class AudioGraph {
     }
     /** Cut the score for a full second, then reopen it for the twist stinger. */
     twist(time = this.context.currentTime): number { this.musicGate.gain.cancelScheduledValues(time); this.musicGate.gain.setValueAtTime(0, time); this.musicGate.gain.setValueAtTime(1, time + 1.05); return time + 1.05; }
-    tinnitus(time = this.context.currentTime): void { const f = this.tinnitusFilter.frequency; f.cancelScheduledValues(time); f.setValueAtTime(1200, time); f.setValueAtTime(1200, time + 1.5); f.exponentialRampToValueAtTime(20000, time + 2.5); }
+    tinnitus(time = this.context.currentTime, strong = true): void { const f = this.tinnitusFilter.frequency, hold = strong ? 1.5 : 1.2, ramp = strong ? 1 : 0.6; f.cancelScheduledValues(time); f.setValueAtTime(strong ? 1200 : 1800, time); f.setValueAtTime(strong ? 1200 : 1800, time + hold); f.exponentialRampToValueAtTime(20000, time + hold + ramp); }
     reset(): void {
         this.limiter.clear();
         this.lowHp = false;

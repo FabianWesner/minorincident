@@ -146,6 +146,7 @@ export class DistrictView extends Group {
             reference.quaternion,
             reference.scale,
           );
+          if (typeof o.userData.tint === 'string') reference.userData.tint = o.userData.tint;
           if (!references.has(key)) references.set(key, []);
           references.get(key)!.push(reference);
         });

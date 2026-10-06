@@ -96,7 +96,7 @@ test.each(['source', 'production'])('M1-25 @E04 grounded locomotion retains supp
   // Catalog aliases share files; some entries only have a production model.
   // Avoid local generated directories, while still failing on missing declared files.
   const paths = new Set(manifest
-    .filter(asset => (asset.id.startsWith('char.survivor-') || asset.id.startsWith('npc.')) && asset.requiredNodes?.some(node => node === 'shinL'))
+    .filter(asset => (asset.id.startsWith('char.survivor-') || asset.id.startsWith('npc.')) && asset.status !== 'placeholder' && asset.requiredNodes?.some(node => node === 'shinL'))
     .map(asset => delivery === 'source' ? asset.sourceGlb : asset.glb)
     .filter((path): path is string => typeof path === 'string'));
   expect(paths.size).toBeGreaterThan(0);
@@ -160,6 +160,17 @@ test.each([
   expect(run.time / run.getClip().duration).toBeCloseTo((phase + 4.5 / 60 / (strides.run * strideScale(rig.root))) % 1, 6);
   expect(walk.time / walk.getClip().duration).toBeCloseTo(run.time / run.getClip().duration, 6);
   actionCalls.mockRestore();
+});
+
+test('@E03-AC20 seven authored unarmed silhouettes have sequenced anticipation, strike and follow-through', () => {
+  const names = ['jab','cross','front-kick','roundhouse-kick','uppercut','knee','spinning-backfist'];
+  const tracks = names.map(name => authoredClips.get(`unarmed-${name}`)!);
+  expect(new Set(tracks.map(clip => JSON.stringify(clip.tracks))).size).toBe(7);
+  for (const clip of tracks) {
+    expect(clip.tracks.some(track => track.node === 'hip' && track.path === 'rotation')).toBe(true);
+    expect(clip.tracks.some(track => track.node === 'torso' && track.path === 'rotation')).toBe(true);
+    expect(clip.tracks.some(track => /^(arm|leg)/.test(track.node) && track.path === 'rotation')).toBe(true);
+  }
 });
 
 test('M1-23 @E19 infection collapse and rise share a low pose, then rise into infected posture', async () => {
