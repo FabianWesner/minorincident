@@ -89,7 +89,7 @@ export class MissionUI {
       const distance=Math.hypot(anchor.x-player.transform.x,anchor.z-player.transform.z);
       this.text(this.tracker,`${objective.text} · ${Math.round(distance)} m`);this.tracker.dataset.objective=objective.id;this.tracker.dataset.distance=String(distance);
       if(this.active!==objective.id){this.active=objective.id;this.text(this.toast,`New objective: ${objective.text}`);}
-      this.toast.hidden=this.world.tick-state.steps[objective.id].started>180;
+      this.toast.hidden=this.world.tick-state.steps[objective.id].started>=180;
       this.point.set(anchor.x,1.8,anchor.z).project(camera);
       const margin=42,cx=width/2,cy=height/2;
       let dx=this.point.x*cx,dy=-this.point.y*cy;

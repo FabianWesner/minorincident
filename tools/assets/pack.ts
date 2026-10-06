@@ -6,6 +6,7 @@ import { assetIO } from './io';
 import { optimizeAsset } from './optimize';
 import { requiredLods, triangleCount } from './delivery';
 import { packStatic } from './pack-static';
+import { writeStaticCollision } from './bake-static-collision';
 
 /** Pack existing detailed exports without invoking or changing their Blender builds. */
 export async function packAsset(def: AssetDef, regenerate = false): Promise<number> {
@@ -51,6 +52,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     for (const file of readdirSync('public/assets/layouts').filter(file => file.endsWith('.glb'))) await packStatic(`public/assets/layouts/${file}`);
     for (const file of readdirSync('public/assets/models').filter(file => file.endsWith('.crowd.glb'))) await packStatic(`public/assets/models/${file}`);
   }
+  if (selected.some(def => def.world || def.id.startsWith('prop.') || def.id.startsWith('veh.') || def.id === 'int.pharmacy-clinic')) await writeStaticCollision();
   const basis = 'node_modules/three/examples/jsm/libs/basis';
   mkdirSync('public/assets/basis', { recursive: true });
   for (const file of ['basis_transcoder.js', 'basis_transcoder.wasm']) copyFileSync(`${basis}/${file}`, `public/assets/basis/${file}`);

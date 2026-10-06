@@ -1,0 +1,55 @@
+{
+  "sourceCommit": "6f22350",
+  "baseMain": "960c215",
+  "mainMerges": 1,
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run test:unit",
+      "exitCode": 0,
+      "testsPassed": 138,
+      "filesPassed": 53
+    },
+    {
+      "command": "E2E_PORT=3323 npm run test:smoke",
+      "exitCode": 0,
+      "simTestsPassed": 3,
+      "browserTestsPassed": 22
+    },
+    {
+      "command": "E2E_PORT=3323 npm run verify -- E19",
+      "exitCode": 0,
+      "simTestsPassed": 25,
+      "browserTestsPassed": 32
+    }
+  ],
+  "browser": {
+    "headless": true,
+    "workers": 2,
+    "serializedBy": "tools/e2e-lock.sh",
+    "chromiumFlags": [
+      "--use-angle=metal",
+      "--enable-gpu",
+      "--ignore-gpu-blocklist"
+    ]
+  },
+  "regressions": [
+    "all current solid L1 prop families plus hydrant and bus stop a real Rapier survivor capsule",
+    "click path around hedge",
+    "direct input collision with hedge",
+    "forecourt access including gentle joystick curb entry",
+    "five sidewalk civilian model variants with actual moving/idle state",
+    "stable corgi idle after turns/stops",
+    "survivor/companion/civilian/infected separation",
+    "current GLB hashes and moved placement transforms",
+    "desktop and portrait real-input forecourt and resting companion",
+    "desktop/portrait/landscape full slice and native GPU gates"
+  ]
+}

@@ -28,8 +28,8 @@ export class NpcView extends Group {
   private threatId = -1;
   private readonly off: () => void;
   constructor(readonly world: SimWorld, readonly materials: Materials) {
-    super(); this.name = 'npcs'; this.civilians = new CivilianCrowd(world); this.add(this.civilians);
-    this.cars = new InstancedMesh(new BoxGeometry(4, 1.2, 1.6), new MeshLambertNodeMaterial({ color: '#bd4448' }), 32); this.cars.count = 0; this.cars.castShadow = this.cars.receiveShadow = true; this.cars.frustumCulled = false; this.add(this.cars);
+    super(); this.name = 'npcs'; this.civilians = new CivilianCrowd(world, materials); this.add(this.civilians);
+    this.cars = new InstancedMesh(new BoxGeometry(4, 1.2, 1.6), materials.unique('survivorRed'), 32); this.cars.count = 0; this.cars.castShadow = this.cars.receiveShadow = true; this.cars.frustumCulled = false; this.add(this.cars);
     this.bark.setAttribute('role', 'status'); this.bark.setAttribute('data-corgi-warning', ''); this.bark.style.cssText = 'position:fixed;display:none;pointer-events:none;color:#ffcd63;background:#292537;border:2px solid #ffcd63;border-radius:14px;padding:8px;font:700 16px system-ui;z-index:7'; document.querySelector('#game')!.appendChild(this.bark);
     this.off = world.events.on('corgi.bark', event => { if (event.type === 'corgi.bark') { this.barkUntil = event.tick + 180; this.threatId = event.threatId; this.bark.dataset.direction = `${event.direction.x},${event.direction.z}`; } });
   }
@@ -61,12 +61,12 @@ export class NpcView extends Group {
         if (badge) { badge.dataset.escortId = String(e.id); badge.style.cssText = 'position:fixed;pointer-events:none;transform:translate(-50%,-100%);background:#292537;color:#fff0cc;border:2px solid #d8bd74;border-radius:50%;padding:5px 9px;font:700 18px system-ui;z-index:6'; document.querySelector('#game')!.appendChild(badge); }
         hero = { animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort ? 'placeholder' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
       }
-      if (hero.tick !== this.world.tick) { hero.moving = Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
-      hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(e.transform.x, 0, e.transform.z); hero.root.rotation.set(0, e.transform.yaw, 0);
+      if (hero.tick !== this.world.tick) { hero.moving = e.motion?.moving ?? Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
+      hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(e.transform.x, e.transform.y - (e.escort ? .7 : .3), e.transform.z); hero.root.rotation.set(0, e.transform.yaw, 0);
       if (e.escort?.child) hero.root.scale.setScalar(.7);
       const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
       if (down && hero.animator) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
-      const motion = this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
+      const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
       if (hero.animator) hero.animator.update(this.world.tick / 60, motion.speed, motion.distance);
       else {
         const clip = down ? 'death-side' : motion.speed > 2.5 ? 'run' : motion.speed > .06 ? 'npc-walk' : 'idle';

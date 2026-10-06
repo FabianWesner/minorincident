@@ -1,0 +1,195 @@
+{
+  "lane": "m1-level",
+  "base": "960c215",
+  "wip": "45079a0",
+  "mainMergedOnce": true,
+  "issues": {
+    "M1-05": "fixed",
+    "M1-09": "fixed",
+    "M1-10": "fixed (mission staging, state hooks and spawn rules)"
+  },
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E19/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "unit": {
+    "command": "npm run test:unit -- --maxWorkers=2",
+    "passed": 138,
+    "files": 53
+  },
+  "inputBrowser": {
+    "passed": 30,
+    "coverage": [
+      "wheel zoom",
+      "number/Shift rack slots",
+      "Q/HUD cycling",
+      "pinch without movement/attack",
+      "current-target ring",
+      "saved rebinding"
+    ]
+  },
+  "directorRegression": {
+    "passed": 2
+  },
+  "smoke": {
+    "command": "E2E_PORT=3345 npm run test:smoke",
+    "simulationPassed": 3,
+    "browserPassed": 22
+  },
+  "E19": {
+    "simulationPassed": 20,
+    "sliceSimulationPassed": 17,
+    "browserPassed": 30,
+    "browserFailed": 0,
+    "completeSeeds": 20,
+    "evadeOnlySeeds": 20
+  },
+  "realInputRoutes": {
+    "desktop": {
+      "time": 65.76666666666667,
+      "kills": 6,
+      "damage": 48,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "portrait": {
+      "time": 60.71666666666667,
+      "kills": 5,
+      "damage": 48,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "landscape": {
+      "time": 66.53333333333333,
+      "kills": 5,
+      "damage": 40,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    }
+  },
+  "gpuMedianFps": {
+    "desktop": {
+      "incident": 400,
+      "store": 416.67
+    },
+    "portrait": {
+      "incident": 526.32,
+      "store": 555.56
+    },
+    "landscape": {
+      "incident": 500,
+      "store": 555.56
+    }
+  },
+  "idleSurvival": {
+    "idleSurvival_s": 86.6,
+    "checkpoint": "escape",
+    "deaths": 1
+  },
+  "visualReview": {
+    "desktop": [
+      1600,
+      900
+    ],
+    "iPhonePortrait": [
+      390,
+      844
+    ],
+    "touch": "emulated iPhone 14 Chromium",
+    "headless": true,
+    "workers": 2,
+    "lock": "tools/e2e-lock.sh",
+    "flags": [
+      "--use-angle=metal",
+      "--enable-gpu",
+      "--ignore-gpu-blocklist"
+    ],
+    "inspected": [
+      "morning small tag",
+      "entrant",
+      "grab/bite",
+      "collapse",
+      "rise/red eyes",
+      "assembled group",
+      "fists",
+      "hardware/store",
+      "completion"
+    ],
+    "generatedE19CapturesDeleted": 40,
+    "extraGeneratedCapturesRemoved": [
+      "test-results/epics/E03/aim-chromium.png",
+      "test-results/epics/E03/stick-chromium.png",
+      "test-results/epics/E03/desktop.png",
+      "test-results/epics/E01/empty-pixel-7.png",
+      "test-results/epics/E01/empty-chromium.png",
+      "test-results/epics/E01/empty-iphone-14-landscape.png",
+      "test-results/epics/E01/empty-webkit.png",
+      "test-results/epics/E01/empty-iphone-14.png",
+      "test-results/epics/E01/empty-pixel-7-landscape.png",
+      "test-results/epics/E13/continue-L5.png"
+    ]
+  },
+  "integrationReview": [
+    "m1-anim civilian clips consume existing grabbed/bitten/down/rising hooks; final integrated animation review remains required",
+    "baseline bite crowding/model overlap and white/cyan hit flashes belong to animation/world lanes; orchestrator notified",
+    "ActionView edits overlap animation lane and need merge review"
+  ],
+  "specNotes": [
+    "M1-05 orchestrator decision recorded in concept/E02/E03",
+    "M1-10 chain and hidden entrances recorded in E19",
+    "Wrong E19-AC04 corrected to existing incident fists/kick behavior; explanation in report.md"
+  ]
+}

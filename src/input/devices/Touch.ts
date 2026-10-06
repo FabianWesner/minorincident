@@ -18,9 +18,12 @@ export class Touch {
   setInteractable(on: boolean): void { this.element.querySelector<HTMLButtonElement>('[data-touch-action=interact]')!.disabled = !on; }
   private readonly slots = new Map<'left' | 'right', { button: HTMLButtonElement; icon: HTMLImageElement; hint: HTMLSpanElement }>();
   private driving = false;
+  private readonly groundContacts = new Map<number, { x: number; y: number }>();
+  private pinchDistance = 0;
+  private pinching = false;
   private stickId: number | null = null;
   private readonly contacts = new Map<number, Contact>();
-  constructor(private readonly canvas: HTMLElement, private readonly activity: () => void, private readonly fire: (action: TouchAction, direction: Vec2 | null, side?: 'LEFT' | 'RIGHT') => void) {
+  constructor(private readonly canvas: HTMLElement, private readonly activity: () => void, private readonly fire: (action: TouchAction, direction: Vec2 | null, side?: 'LEFT' | 'RIGHT') => void, private readonly zoom: (delta: number) => void = () => {}) {
     this.element.dataset.touchControls = ''; this.element.dataset.testid = 'touch-controls';
     this.element.style.cssText = 'position:fixed;bottom:16px;right:16px;display:grid;grid-template-columns:64px 64px;gap:8px;touch-action:none';
     for (const action of ['left', 'right', 'interact', 'pause'] as const) {
@@ -74,10 +77,18 @@ export class Touch {
     this.activity(); event.preventDefault();
     const action = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-touch-action]')?.dataset.touchAction as TouchAction | undefined;
     if (action && !(event.target as HTMLElement).closest<HTMLButtonElement>('button')?.disabled) this.contacts.set(event.pointerId, { action, x: event.clientX, y: event.clientY, dx: 0, dy: 0, started: performance.now() });
-    else if (event.clientX < innerWidth / 2 && this.stickId === null) { this.stickId = event.pointerId; this.stick.start(event.clientX, event.clientY); }
+    else if (event.target === this.canvas) {
+      this.groundContacts.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (this.groundContacts.size === 2) { this.pinching = true; this.stick.release(); this.stickId = null; this.pinchDistance = this.distance(); }
+      else if (!this.pinching && event.clientX < innerWidth / 2 && this.stickId === null) { this.stickId = event.pointerId; this.stick.start(event.clientX, event.clientY); }
+    }
   };
   private readonly move = (event: PointerEvent): void => {
     if (event.pointerType !== 'touch') return;
+    if (this.groundContacts.has(event.pointerId)) {
+      this.groundContacts.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (this.pinching) { const distance = this.distance(); if (distance > 0 && this.pinchDistance > 0) this.zoom(Math.log(this.pinchDistance / distance)); this.pinchDistance = distance; event.preventDefault(); return; }
+    }
     if (event.pointerId === this.stickId) { this.activity(); event.preventDefault(); this.stick.drag(event.clientX, event.clientY); }
     const contact = this.contacts.get(event.pointerId);
     if (contact) {
@@ -89,7 +100,10 @@ export class Touch {
   };
   private readonly up = (event: PointerEvent): void => { this.end(event, true); };
   private readonly cancel = (event: PointerEvent): void => { this.end(event, false); };
+  private distance(): number { const points = [...this.groundContacts.values()]; return points.length === 2 ? Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y) : 0; }
   private end(event: PointerEvent, fire: boolean): void {
+    this.groundContacts.delete(event.pointerId);
+    if (!this.groundContacts.size) { this.pinching = false; this.pinchDistance = 0; }
     if (event.pointerId === this.stickId) { this.stick.release(); this.stickId = null; }
     const contact = this.contacts.get(event.pointerId);
     if (!contact) return;
@@ -101,7 +115,7 @@ export class Touch {
       else this.fire(contact.action, distance >= 8 ? this.aim : null);
     }
   }
-  release(): void { this.stickId = null; this.stick.release(); this.contacts.clear(); this.aiming = false; }
+  release(): void { this.groundContacts.clear(); this.pinching = false; this.pinchDistance = 0; this.stickId = null; this.stick.release(); this.contacts.clear(); this.aiming = false; }
   dispose(): void {
     this.release(); this.canvas.removeEventListener('pointerdown', this.down); this.element.removeEventListener('pointerdown', this.down); this.pauseElement.removeEventListener('pointerdown', this.down);
     window.removeEventListener('pointermove', this.move); window.removeEventListener('pointerup', this.up); window.removeEventListener('pointercancel', this.cancel);

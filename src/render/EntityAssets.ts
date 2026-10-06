@@ -2,6 +2,7 @@ import { Group, Mesh, type Object3D, type BufferGeometry, type Material } from '
 import { AssetRegistry } from '../assets/registry';
 import { staticBatch } from '../assets/staticBatch';
 import manifest from '../assets/manifest.json';
+import type { Materials } from './Materials';
 import type { View } from './View';
 import type { AssetQuality } from '../assets/types';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -28,7 +29,7 @@ export class EntityAssets extends Group {
   private readonly pending = new Map<number, Promise<void>>();
   private companion?: Object3D;
   private disposed = false;
-  constructor(private readonly world: SimWorld, private readonly low = false) { super(); }
+  constructor(private readonly world: SimWorld, private readonly low = false, private readonly shading?: Materials) { super(); }
   async init(view: View): Promise<void> {
     this.view = view;
     if (!this.world.npcs) { this.companion = await this.registry.loadAsset('char.corgi', this.low ? 'lod1' : 'high'); this.add(this.companion); }
@@ -41,7 +42,7 @@ export class EntityAssets extends Group {
       if (this.disposed) return source as Group;
       // Authored mission actors currently move as rigid objects; preserve their
       // production swatches with two draws instead of one draw per Blender part.
-      const model = staticBatch(source, true); model.userData = { ...source.userData };
+      const model = staticBatch(source, true, this.shading); model.userData = { ...source.userData };
       model.traverse(node => { if (node instanceof Mesh) { this.geometries.add(node.geometry); this.materials.add(node.material as Material); } });
       return model;
     }));
