@@ -293,7 +293,7 @@ export class DistrictView extends Group {
         if (!this.frustum.intersectsSphere(this.bounds)) continue;
         const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
         // Low-tier scenery reaches LOD2 sooner to retain its triangle budget.
-        (distance > (this.low ? 24 : 30) ? far : !this.low && distance <= 12 ? hero : near).references.push(ref);
+        (distance > (this.low ? 18 : 30) ? far : !this.low && distance <= 12 ? hero : near).references.push(ref);
       }
       for (const batch of [hero, near, far]) {
         batch.visible = batch.references.length > 0;
