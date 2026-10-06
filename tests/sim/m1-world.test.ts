@@ -139,3 +139,13 @@ test('@E19 grid route budgets resume and straight visible sections have no zig-z
   expect(Math.abs(waypoint.z)).toBeGreaterThan(3); expect(route.pathIndex).toBeGreaterThan(2);
   expect(nav.visible({ x: -4, z: 0 }, waypoint, .35)).toBe(true);
 });
+
+test('@E19 M1-07 visibility sweeps thin corners between samples and allows only outward escapes', () => {
+  const nav = new NavGrid({ width: 20, depth: 20 }, [{ x: .1, y: 1, z: 0, halfX: .03, halfY: 1, halfZ: .03 }], 0);
+  expect(nav.visible({ x: 0, z: 0 }, { x: .2, z: 0 }, 0)).toBe(false);
+  nav.setBlocker(1, { x: 2, y: 1, z: 0, halfX: .5, halfY: 1, halfZ: .5 }, true);
+  const corner = { x: 1.2, z: -.8 };
+  expect(nav.clear(corner.x, corner.z, .35)).toBe(false);
+  expect(nav.visible(corner, { x: 1, z: -1 }, .35)).toBe(true);
+  expect(nav.visible(corner, { x: 3, z: 0 }, .35)).toBe(false);
+});

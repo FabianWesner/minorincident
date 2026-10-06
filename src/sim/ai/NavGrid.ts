@@ -80,7 +80,35 @@ export class NavGrid {
   visible(from: { x: number; z: number }, to: { x: number; z: number }, radius: number): boolean {
     if (!this.mask && !this.walls.length && !this.blockers.size) return this.clear(to.x, to.z, radius);
     const dx = to.x - from.x, dz = to.z - from.z, steps = Math.ceil(Math.hypot(dx, dz) / 0.2);
-    for (let i = 0; i <= steps; i++) if (!this.clear(from.x + dx * i / Math.max(1, steps), from.z + dz * i / Math.max(1, steps), radius)) return false;
+    if (!this.clear(to.x, to.z, radius)) return false;
+    const walls = new Set(this.blockers.values());
+    for (let i = 0; i <= steps; i++) {
+      const x = from.x + dx * i / Math.max(1, steps), z = from.z + dz * i / Math.max(1, steps);
+      if (this.mask && !this.mask(x, z)) return false;
+      if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
+      for (const wall of this.buckets.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) walls.add(wall);
+    }
+    // Sampled clearance alone can skip a corner between two samples. A pulled
+    // waypoint must clear the entire segment, including narrow foliage boxes.
+    for (const wall of walls) {
+      const minX = wall.x - wall.halfX - radius, maxX = wall.x + wall.halfX + radius;
+      const minZ = wall.z - wall.halfZ - radius, maxZ = wall.z + wall.halfZ + radius;
+      // Rapier's rounded capsule can rest inside a conservative expanded box
+      // corner. Permit an outward escape, never a route through the solid.
+      if (from.x > minX && from.x < maxX && from.z > minZ && from.z < maxZ &&
+        ((from.x <= wall.x && to.x <= minX) || (from.x >= wall.x && to.x >= maxX) ||
+         (from.z <= wall.z && to.z <= minZ) || (from.z >= wall.z && to.z >= maxZ))) continue;
+      let enter = 0, leave = 1;
+      for (const [start, delta, center, half] of [[from.x, dx, wall.x, wall.halfX], [from.z, dz, wall.z, wall.halfZ]]) {
+        const min = center - half - radius, max = center + half + radius;
+        if (delta === 0) { if (start <= min || start >= max) { leave = -1; break; } }
+        else {
+          const a = (min - start) / delta, b = (max - start) / delta;
+          enter = Math.max(enter, Math.min(a, b)); leave = Math.min(leave, Math.max(a, b));
+        }
+      }
+      if (enter < leave) return false;
+    }
     return true;
   }
   /** Sweeps movement in subcell increments; axis fallback slides around collider corners. */
