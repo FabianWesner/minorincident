@@ -10,6 +10,11 @@ export class Bindings {
       const text = storage?.getItem(bindingStorageKey);
       if (text) {
         const saved = JSON.parse(text);
+        // Maps saved before Walk existed gain its defaults where those keys are still free.
+        if (saved?.bindings && typeof saved.bindings === 'object' && !saved.bindings.walk) {
+          const used = new Set(Object.values(saved.bindings as Record<string, unknown>).flat());
+          saved.bindings.walk = defaultBindings.walk.filter(code => !used.has(code));
+        }
         if (saved.version === 1 && this.valid(saved.bindings)) {
           this.map = saved.bindings;
           for (const name of Object.keys(this.map) as Action[]) this.map[name] = this.map[name].filter(code => code !== 'Mouse2');

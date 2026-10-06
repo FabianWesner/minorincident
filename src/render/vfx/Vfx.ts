@@ -173,7 +173,7 @@ export class Vfx extends Group {
         if (explosive) for (let i = 0; i < 3; i++) this.gibs.spawn(this.time, event.position.x, 0.7, event.position.z, this.rng);
         this.burst(event.position.x, 1, event.position.z, 0xb3121f, 24, 0.18, 1.2);
       }
-    } else if (event.type === 'combat.hit-stop') this.hitStop.hit(this.time);
+    } else if (event.type === 'combat.hit-stop') this.hitStop.hit(this.time, event.durationMs / 1000);
     else if (event.type === 'combat.attack') {
       const def = actions[event.actionId];
       if (def?.category === 'ranged') {

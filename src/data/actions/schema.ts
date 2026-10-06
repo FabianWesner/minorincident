@@ -5,6 +5,8 @@ export interface ActionEffect { kind: 'fire' | 'lure' | 'smoke' | 'shield' | 'ad
 export interface ActionDef {
   /** Catalog effects persist in sim ticks; fixture actions may omit these extensions. */
   effect?: ActionEffect | null; pellets?: number; distanceFalloff?: { start: number; end: number; minimum: number } | null;
+  /** Render-only impact freeze for a connecting melee hit; absent = 50 ms. */
+  hitStopMs?: number;
   id: string; category: 'melee' | 'ranged' | 'throwable' | 'ability'; sideAgnostic: true;
   damage: number; range: number; arc: number; spread: number; maxTargets: number;
   windup: number; active: number; recovery: number; cooldown: number; fireRate: number;

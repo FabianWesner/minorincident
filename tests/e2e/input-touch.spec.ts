@@ -24,8 +24,11 @@ test('T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases wit
   const start = { id: 1, x: width / 4, y: page.viewportSize()!.height / 2 };
   await touch(cdp, 'touchStart', [start]); await expect(page.locator('[data-touch-stick]')).toBeVisible();
   expect((await tick(page)).move).toEqual({ x: 0, z: 0 });
-  await touch(cdp, 'touchMove', [{ ...start, x: start.x + 30 }]);
-  const half = await tick(page); expect(Math.hypot(half.move.x, half.move.z)).toBeCloseTo(0.5, 2);
+  // E19 §5.5: below half deflection the survivor walks, beyond it runs (direction stays unit length).
+  await touch(cdp, 'touchMove', [{ ...start, x: start.x + 18 }]);
+  const light = await tick(page); expect(Math.hypot(light.move.x, light.move.z)).toBeCloseTo(1, 2); expect(light.walk).toBe(true);
+  await touch(cdp, 'touchMove', [{ ...start, x: start.x + 36 }]);
+  const half = await tick(page); expect(Math.hypot(half.move.x, half.move.z)).toBeCloseTo(1, 2); expect(half.walk).toBeUndefined();
   await touch(cdp, 'touchMove', [{ ...start, x: start.x + 60 }]);
   const full = await tick(page); expect(Math.hypot(full.move.x, full.move.z)).toBeCloseTo(1, 2);
   await page.evaluate(() => window.__SS__!.screenshotReady());

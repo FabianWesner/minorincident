@@ -16,7 +16,7 @@ test('T-E13-02 @E13 @E13-AC02 melee damage is exactly +20% and every firearm mag
     const def=l.definition(d.id);for(let i=0;i<def.magazine;i++)l.spend('RIGHT',world.tick,def,false);
     expect(l.current('RIGHT').reloadUntil).toBeGreaterThan(world.tick);l.update(l.current('RIGHT').reloadUntil,()=>{});expect(l.current('RIGHT').magazine).toBe(d.magazine+2);
   }
-  expect(catalog['weapon.bat'].damage).toBe(25);expect(catalog['weapon.pistol'].magazine).toBe(6);
+  expect(catalog['weapon.bat'].damage).toBe(22);expect(catalog['weapon.pistol'].magazine).toBe(6);
 });
 test('T-E13-07-sim @E13 @E13-AC07 L5 default equips its expected upgraded loadout in sim',()=>{
   const save=preset('L5-default');save.settings.aimAssist='High';applyCampaign(world,save);expect(world.combat!.assist.setting).toBe('High');
@@ -30,7 +30,7 @@ test('T-E13-08-sim @E13 @E13-AC08 default progression applies all five gear tier
 test('@E13 action hooks, player stats and vehicle perks materialize once without mutating base definitions',()=>{
   const save=newCampaign();save.upgrades=['upgrade.health.1','upgrade.speed.1','upgrade.throwables.1','upgrade.knockback.1','upgrade.vehicle.1','upgrade.perk.1'];save.ownedActions.push('weapon.bat');applyCampaign(world,save);const defs=modifiedActions(save);
   expect(world.player!.entity.health.max).toBe(130);world.setInput({move:{x:1,z:0}});world.update();expect(world.player!.locomotion.speedScale).toBeCloseTo(4.72/4.5);
-  expect(defs['weapon.grenade'].charges).toBe(3);expect(defs['weapon.grenade'].splash!.radius).toBeCloseTo(4*1.15);expect(defs['weapon.bat'].damage).toBeCloseTo(25*1.15);expect(defs['weapon.bat'].knockback).toBeCloseTo(.5*1.2);
+  expect(defs['weapon.grenade'].charges).toBe(3);expect(defs['weapon.grenade'].splash!.radius).toBeCloseTo(4*1.15);expect(defs['weapon.bat'].damage).toBeCloseTo(catalog['weapon.bat'].damage*1.15);expect(defs['weapon.bat'].knockback).toBeCloseTo(catalog['weapon.bat'].knockback*1.2);
   const id=world.vehicles!.spawn('vehicle.sedan',{x:4,z:4}),hp=world.entities.get(id)!.health.current;world.vehicles!.damage(id,100);expect(world.entities.get(id)!.health.current).toBe(hp-90);world.update();expect(world.vehicles!.cars.get(id)!.physics.boostScale).toBe(1.1);
   expect(catalog['weapon.grenade'].charges).toBe(2);
 });

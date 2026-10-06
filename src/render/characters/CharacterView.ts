@@ -9,7 +9,7 @@ import { batchRigidParts } from './batchRigidParts';
 import type { GearTier, SurvivorState, SurvivorVariant } from '../../data/survivor';
 import type { Materials } from '../Materials';
 import type { PaletteMaterial } from '../PaletteMaterial';
-import { KeyframeAnimator } from './KeyframeAnimator';
+import { KeyframeAnimator, type RidePose } from './KeyframeAnimator';
 import { disposeCharacter, loadCharacter } from './rig';
 
 type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { animator: KeyframeAnimator; gear: Group[]; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
@@ -80,12 +80,12 @@ export class CharacterView extends Group {
       this.characters.set(variant, { ...character, animator: new KeyframeAnimator(character.rig), gear, sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
   }
-  update(pose: SurvivorState, tick: number, alpha: number): void {
+  update(pose: SurvivorState, tick: number, alpha: number, ride?: RidePose): void {
     this.variant = pose.variant; this.tier = pose.gearTier;
     for (const [variant, character] of this.characters) {
       character.model.visible = variant === pose.variant;
       for (const gear of character.gear) gear.visible = gear.userData.tier <= pose.gearTier;
-      if (character.model.visible) character.animator.update(pose, tick, alpha, this.turn);
+      if (character.model.visible) character.animator.update(pose, tick, alpha, this.turn, ride);
     }
   }
   setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; }

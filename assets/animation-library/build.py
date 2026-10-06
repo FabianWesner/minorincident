@@ -181,7 +181,7 @@ for name,sign in [('turn-left',1),('turn-right',-1)]:
 
 # Every strike lands at 20% of its duration (the catalog's active tick). Backhands
 # reverse shoulder/hip torque; finishers use an overhead plane and a deep knee load.
-for weapon in ['fists','bat','crowbar','machete']:
+for weapon in ['fists','crowbar','machete']:  # bat: authored chain below (E19 lane G)
     for combo in range(3):
         sign=1 if combo!=1 else -1
         blade=weapon=='machete'; hook=weapon=='crowbar'; fists=weapon=='fists'
@@ -201,6 +201,161 @@ for weapon in ['fists','bat','crowbar','machete']:
             strike[arm]=(sign*28,sign*72,88 if combo<2 else 125)
         follow={**guard,'hip':hip(x=.09,y=-.025,twist=sign*16),'torso':(0,sign*50,-9),arm:(sign*12,sign*90,48 if overhead else 110),fore:z(22),'head':(0,-sign*22,6), 'legL':z(14),'shinL':z(-20)}
         action(weapon+'-'+str(combo+1),1,[(0,guard),(.10,wind),(.20,strike),(.36,follow),(.68,{**guard,'torso':(0,sign*8,-2)}),(1,guard)])
+# ---- E19 L1 v2 (lane G). Kept before the shared clips below: the last NLA strip per
+# node must start at rest, because the export samples frame 1 as each node's rest TRS.
+# ---- E19 L1 v2 (lane G): infected speed tiers, search, courier, civilians, corgi warnings ----
+def ik_leg(dx, dy):
+    """Thigh/knee degrees placing the ankle at (dx forward, dy up) from the hip joint."""
+    a,b=.233,.283
+    d=min(a+b-.001,max(.05,math.hypot(dx,dy)))
+    knee=-(math.pi-math.acos(max(-1,min(1,(a*a+b*b-d*d)/(2*a*b)))))
+    thigh=math.atan2(dx,-dy)+math.acos(max(-1,min(1,(a*a+d*d-b*b)/(2*a*d))))
+    return math.degrees(thigh),math.degrees(knee)
+def wave(values,i):
+    return values[i%8]
+# Speed reads from the silhouette (E19 §5.4): the frail tier chops a short stiff
+# shuffle under a hunched back; the average tier lurches side to side with arms
+# reaching; the athletic tier runs long and low with pumping arms. Legs are
+# re-planted at retarget time (clips.ts plantLocomotion); these keys own the
+# pelvis load, torso lean/roll, head and arms.
+def infected_gait(name,duration,lean,bob,roll,twist,sway,head,arms):
+    poses=[]
+    for i in range(9):
+        k=i%8
+        pose=p(hip=hip(y=bob[k],roll=roll[k],twist=twist[k],sway=sway[k],lean=lean[0]),
+               torso=(roll[k]*lean[2],-twist[k]*1.4,lean[1]),head=head(k))
+        for side,index in [('L',k),('R',(k+4)%8)]:
+            thigh,knee=ik_leg([.2,.1,0,-.1,-.2,-.12,.02,.16][index]*.9,-.6+[0,0,0,0,.02,.06,.07,.03][index])
+            pose['leg'+side]=z(thigh); pose['shin'+side]=z(knee)
+        pose.update(arms(k))
+        poses.append((i/8,pose))
+    action(name,duration,poses)
+# frail: short, quick, stiff; limping roll; head craned forward from a hunched back.
+infected_gait('infected-frail',.5,(-6,-30,.3),[-.085,-.1,-.09,-.075,-.08,-.095,-.088,-.078],
+    [0,-5,-4,-1,1,3,2,0],[-3,-1,0,1,3,1,0,-1],[0,-.015,-.02,-.012,0,.012,.018,.01],
+    lambda k:(wave([4,6,3,-2,-4,-1,2,5],k),-6,30+wave([0,2,3,2,0,-2,-3,-2],k)),
+    lambda k:{'armL':(-10,0,28+wave([0,2,4,2,0,-2,-4,-2],k)),'foreArmL':z(52),'armR':(8,0,18-wave([0,2,4,2,0,-2,-4,-2],k)),'foreArmR':z(40),'handL':z(-25),'handR':z(-20)})
+# average: the lurch. Large pelvis roll and sway, torso falling over the support
+# leg, head lolling a beat late, both arms reaching for the target.
+infected_gait('infected-lurch',.64,(-4,-20,.9),[-.07,-.11,-.085,-.06,-.07,-.11,-.085,-.06],
+    [0,-8,-10,-6,0,8,10,6],[-9,-5,0,5,9,5,0,-5],[0,-.028,-.035,-.02,0,.028,.035,.02],
+    lambda k:(wave([-10,-14,-8,0,10,14,8,0],k),-6,16),
+    lambda k:{'armL':(-14,0,66+wave([0,6,10,6,0,-6,-10,-6],k)),'foreArmL':z(18),'armR':(10,0,58-wave([0,6,10,6,0,-6,-10,-6],k)),'foreArmR':z(26),'handL':z(-15),'handR':z(-10)})
+# athletic: long low sprint, aggressive lean, arms pumping hard, head driving forward.
+infected_gait('infected-sprint',.48,(-10,-26,.2),[-.1,-.13,-.085,-.05,-.1,-.13,-.085,-.05],
+    [0,-3,-4,-2,0,3,4,2],[-8,-4,0,4,8,4,0,-4],[0,-.01,-.014,-.008,0,.01,.014,.008],
+    lambda k:(wave([2,0,-2,0,2,0,-2,0],k),wave([4,2,0,-2,-4,-2,0,2],k),24),
+    lambda k:{'armL':(0,0,-wave([-55,-30,0,30,55,30,0,-30],k)),'foreArmL':z(80+wave([0,10,20,10,0,-10,-20,-10],k)*.5),
+              'armR':(0,0,wave([-55,-30,0,30,55,30,0,-30],k)),'foreArmR':z(80-wave([0,10,20,10,0,-10,-20,-10],k)*.5),'handL':z(-30),'handR':z(-30)})
+# Spooky stand: hunched sway, slow breathing, sudden head twitches (two-frame keys).
+hunch=p(hip=hip(y=-.05,roll=4),torso=(5,6,-20),head=(-8,-10,14),armL=(-12,0,30),foreArmL=z(30),armR=(10,0,20),foreArmR=z(36),handL=z(-25),handR=z(-20),legL=z(6),shinL=z(-14),legR=z(-4),shinR=z(-12))
+def twitch(pose,**kw):
+    return {**pose,**kw}
+action('infected-idle',3.2,[(0,hunch),(.2,twitch(hunch,torso=(2,0,-18),head=(-4,4,10))),
+    (.38,twitch(hunch,torso=(2,0,-18),head=(-4,4,10))),(.4,twitch(hunch,torso=(2,0,-18),head=(18,10,6))),
+    (.5,twitch(hunch,torso=(2,-4,-21),head=(16,12,8))),(.7,twitch(hunch,hip=hip(y=-.055,roll=-3),torso=(-3,-6,-22),head=(-6,-14,14))),
+    (.82,twitch(hunch,hip=hip(y=-.055,roll=-3),torso=(-3,-6,-22),head=(-6,-14,14))),(.835,twitch(hunch,hip=hip(y=-.055,roll=-3),torso=(-3,-6,-22),head=(-20,-30,4),armL=(-12,0,38))),
+    (.92,twitch(hunch,head=(-12,-18,10))),(1,hunch)])
+# Search: stop, crane, sweep left, hold, snap right, sniff upward, double-take.
+look=lambda yaw,pitch=10,chest=.5:{'hip':hip(y=-.045,twist=yaw*.15),'torso':(4,yaw*chest,-16),'head':(-4,yaw*(1-chest)*1.3,pitch)}
+action('infected-search',2.6,[(0,{**hunch,**look(0)}),(.12,{**hunch,**look(42)}),(.3,{**hunch,**look(48,6)}),
+    (.36,{**hunch,**look(-20)}),(.42,{**hunch,**look(-52,8)}),(.58,{**hunch,**look(-50,6)}),
+    (.66,{**hunch,**look(-10,28,.3),'armL':(-12,0,40)}),(.74,{**hunch,**look(-6,26,.3)}),(.78,{**hunch,**look(30,4)}),
+    (.84,{**hunch,**look(22,8)}),(1,{**hunch,**look(0)})])
+
+# Courier on the cargo bicycle: seated, leaning on the bars, pedalling a crank
+# circle (ankles on a 0.1 m circle ahead of/below the hip, cranks opposite).
+seat=p(hip=hip(y=-.04,lean=-6),torso=(0,0,-18),head=(0,0,16),armL=(-8,0,62),foreArmL=z(28),armR=(8,0,62),foreArmR=z(28),handL=z(-18),handR=z(-18))
+poses=[]
+for i in range(9):
+    angle=i/8*math.tau
+    pose=dict(seat)
+    for side,offset in [('L',0),('R',math.pi)]:
+        cx,cy=.16+.09*math.cos(angle+offset),-.4+.09*math.sin(angle+offset)
+        thigh,knee=ik_leg(cx,cy)
+        pose['leg'+side]=z(thigh); pose['shin'+side]=z(knee); pose['foot'+side]=z(-thigh-knee-8+6*math.sin(angle+offset))
+    pose['hip']=hip(y=-.04+.006*math.cos(2*angle),roll=1.5*math.sin(angle),lean=-6)
+    poses.append((i/8,pose))
+action('ride',.6,poses)
+ride0=poses[0][1]
+action('mount',.4,[(0,p()),(.35,p(hip=hip(y=-.03,roll=-10),torso=(-6,0,-6),legR=(-38,0,30),shinR=z(-60),armL=z(40),armR=z(45))),(.7,{**ride0,'legR':(-12,0,60),'hip':hip(y=-.02,roll=-4)}),(1,ride0)])
+action('dismount',.4,[(0,ride0),(.3,{**ride0,'legR':(-35,0,40),'shinR':z(-55),'hip':hip(y=-.01,roll=-8)}),(.7,p(hip=hip(y=-.035),legR=z(-6),shinR=z(-18),armL=z(18),armR=z(20))),(1,p())])
+# Parcel: elbows in, forearms level, box against the chest; hand-over extends it,
+# with a small bow and a nod, then returns empty-handed.
+carry=p(armL=z(26),foreArmL=z(88),armR=z(26),foreArmR=z(88),handL=z(-12),handR=z(-12),torso=z(3))
+action('carry',.5,[(0,carry),(1,carry)])
+offer=p(hip=hip(y=-.03),torso=z(-14),head=z(-6),armL=z(72),foreArmL=z(28),armR=z(72),foreArmR=z(28),handL=z(-20),handR=z(-20))
+action('hand-over',1,[(0,carry),(.2,{**carry,'torso':z(6),'hip':hip(y=-.01)}),(.42,offer),(.6,{**offer,'head':z(-14)}),(.78,p(torso=z(-4),head=z(4),armL=z(12),armR=z(14),foreArmL=z(20),foreArmR=z(22))),(1,p())])
+# Garage bat pickup: lift, twirl the grip a full turn, settle it on the shoulder.
+action('equip',.9,[(0,p()),(.15,p(hip=hip(y=-.03),armR=(0,0,70),foreArmR=z(40),torso=(0,-10,-4))),
+    (.3,p(armR=(0,0,88),foreArmR=z(30),handR=(0,-120,0),torso=(0,-6,-2))),(.42,p(armR=(0,0,92),foreArmR=z(28),handR=(0,-240,0))),
+    (.55,p(armR=(0,0,86),foreArmR=z(34),handR=(0,-358,0),head=(0,-10,4))),(.75,p(armR=(0,-20,40),foreArmR=z(125),handR=(0,-360,-20),torso=(0,8,1),head=z(6))),(1,p(handR=(0,-360,0)))])
+
+# Civilians: startle hop back with guarding arms; panic flight with flailing arms
+# and over-the-shoulder looks; grabbed struggle pushing an attacker away.
+action('civ-startle',.6,[(0,p()),(.12,p(hip=hip(x=-.03,y=.025),torso=(0,0,16),head=z(12),armL=(-20,0,70),foreArmL=z(115),armR=(20,0,72),foreArmR=z(118),legR=z(-18),shinR=z(-20))),
+    (.3,p(hip=hip(x=-.06,y=-.05),torso=(0,0,10),head=z(4),armL=(-25,0,62),foreArmL=z(110),armR=(25,0,64),foreArmR=z(112),legR=z(-26),shinR=z(-35),legL=z(10),shinL=z(-30))),
+    (.65,p(hip=hip(x=-.05,y=-.03),torso=(0,-10,4),head=(0,-12,2),armL=(-15,0,45),foreArmL=z(95),armR=(15,0,40),foreArmR=z(90),legR=z(-18),shinR=z(-24))),(1,p(hip=hip(x=-.04,y=-.02),armL=z(25),foreArmL=z(60),armR=z(25),foreArmR=z(55),legR=z(-14),shinR=z(-18)))])
+poses=[]
+for i in range(9):
+    k=i%8
+    pose=p(hip=hip(y=wave([-.08,-.11,-.08,-.06,-.08,-.11,-.08,-.06],k),roll=wave([0,-3,-4,-2,0,3,4,2],k),twist=wave([-6,-3,0,3,6,3,0,-3],k)),
+           torso=(0,wave([8,4,0,-4,-8,-4,0,4],k),-12),head=(0,wave([0,0,0,0,0,30,40,20],k),10))
+    for side,index in [('L',k),('R',(k+4)%8)]:
+        thigh,knee=ik_leg([.22,.11,0,-.11,-.22,-.13,.02,.17][index],-.6+[0,0,0,0,.02,.07,.08,.03][index])
+        pose['leg'+side]=z(thigh); pose['shin'+side]=z(knee)
+        pose['arm'+side]=((-1 if side=='L' else 1)*-25,0,wave([110,80,40,10,30,70,100,120],index))
+        pose['foreArm'+side]=z(wave([30,50,70,40,30,25,20,25],index))
+    poses.append((i/8,pose))
+action('civ-flee',.62,poses)
+action('civ-grabbed',.8,[(0,p(hip=hip(y=-.06,twist=-12),torso=(0,-22,12),head=(0,30,6),armL=(-10,0,82),foreArmL=z(25),armR=(10,0,70),foreArmR=z(45),legL=z(-10),shinL=z(-25),legR=z(18),shinR=z(-30))),
+    (.25,p(hip=hip(y=-.05,twist=10),torso=(6,18,14),head=(0,-26,2),armL=(-10,0,60),foreArmL=z(60),armR=(10,0,88),foreArmR=z(18),legL=z(-14),shinL=z(-30),legR=z(16),shinR=z(-24))),
+    (.5,p(hip=hip(y=-.07,twist=-14),torso=(-6,-24,16),head=(10,32,0),armL=(-10,0,85),foreArmL=z(20),armR=(10,0,66),foreArmR=z(50),legL=z(-10),shinL=z(-28),legR=z(20),shinR=z(-34))),
+    (.75,p(hip=hip(y=-.05,twist=8),torso=(4,16,12),head=(0,-24,4),armL=(-10,0,64),foreArmL=z(55),armR=(10,0,86),foreArmR=z(22),legL=z(-12),shinL=z(-26),legR=z(15),shinR=z(-26))),
+    (1,p(hip=hip(y=-.06,twist=-12),torso=(0,-22,12),head=(0,30,6),armL=(-10,0,82),foreArmL=z(25),armR=(10,0,70),foreArmR=z(45),legL=z(-10),shinL=z(-25),legR=z(18),shinR=z(-30)))])
+
+# Corgi warnings (E19 §5.8): stiffen (freeze low, nose and tail straight), growl
+# (head low, lips/body tremor), bark (front-paw push, head snaps up), nervous
+# (tail tucked, glances), and a rotary gallop beside the bicycle.
+stiff=p(body=(0,0,-4,0,-.03,0),head=z(4),tail=(0,0,-8),legFL=z(-8),legFR=z(-8),legBL=z(10),legBR=z(10))
+action('corgi-stiffen',.5,[(0,p()),(.3,{**stiff,'head':z(8)}),(1,stiff)],dogs)
+growl=p(body=(0,0,-7,.02,-.06,0),head=z(-14),tail=(0,0,-2),legFL=z(-14),legFR=z(-14),legBL=z(14),legBR=z(14))
+action('corgi-growl',.4,[(0,growl),(.25,{**growl,'body':(0,0,-7.5,.02,-.066,0),'head':(0,1.5,-15)}),(.5,growl),(.75,{**growl,'body':(0,0,-6.5,.02,-.056,0),'head':(0,-1.5,-13)}),(1,growl)],dogs)
+action('corgi-bark',.5,[(0,stiff),(.15,{**stiff,'body':(0,0,-8,-.02,-.06,0),'head':z(-10)}),(.3,{**stiff,'body':(0,0,9,.03,.02,0),'head':z(26),'legFL':z(14),'legFR':z(10)}),
+    (.45,{**stiff,'body':(0,0,2,.01,-.01,0),'head':z(12)}),(.62,{**stiff,'body':(0,0,7,.02,.01,0),'head':z(22)}),(1,stiff)],dogs)
+nervous=p(body=(0,0,-3,0,-.04,0),head=z(-6),tail=(0,0,38),legBL=z(6),legBR=z(6))
+action('corgi-nervous',2,[(0,nervous),(.18,{**nervous,'head':(0,35,-2)}),(.3,{**nervous,'head':(0,35,-2)}),(.45,nervous),(.6,{**nervous,'head':(0,-30,0)}),(.7,{**nervous,'head':(0,-30,0)}),(.85,{**nervous,'head':(0,0,-10)}),(1,nervous)],dogs)
+poses=[]
+for i in range(9):
+    k=i%8
+    pose=p(body=(0,0,wave([6,2,-4,-7,-4,0,4,7],k),0,wave([.02,0,-.02,-.03,-.01,.01,.03,.03],k),0),head=z(wave([-4,-2,2,4,2,0,-2,-4],k)),tail=(0,wave([5,-5,5,-5,5,-5,5,-5],k),-10))
+    pose['legFL']=z(wave([45,20,-15,-40,-35,-5,25,45],k)); pose['legFR']=z(wave([35,45,10,-25,-40,-25,10,35],k))
+    pose['legBL']=z(wave([-40,-20,15,40,35,10,-20,-35],k)); pose['legBR']=z(wave([-30,-40,-5,30,40,25,-5,-30],k))
+    poses.append((i/8,pose))
+action('corgi-gallop',.32,poses,dogs)
+
+# Bat chain (E19 §5.6 feel): coil with the pelvis leading, a held anticipation,
+# a 1-2 frame strike with a lunge step, overshoot and a slower settle. Contact is
+# at 20 % (KeyframeAnimator maps the sim active tick there). Two-handed grip.
+bat_guard=p(hip=hip(y=-.03),torso=(0,-6,-4),armR=(0,-20,34),foreArmR=z(72),armL=(0,-35,40),foreArmL=z(70),legL=z(8),shinL=z(-14),legR=z(-6),shinR=z(-12))
+def bat(name,keys):
+    action(name,1,[(0,bat_guard)]+[(t,{**bat_guard,**pose}) for t,pose in keys]+[(1,bat_guard)])
+bat('bat-1',[(.12,p(hip=hip(y=-.05,twist=-22),torso=(0,-48,8),head=(0,30,-4),armR=(-20,-40,62),foreArmR=z(96),armL=(20,-62,56),foreArmL=z(72),legR=z(-12),shinR=z(-32),legL=z(10),shinL=z(-16))),
+    (.17,p(hip=hip(y=-.055,twist=-25),torso=(0,-54,9),head=(0,33,-4),armR=(-22,-46,64),foreArmR=z(100),armL=(22,-66,58),foreArmL=z(74),legR=z(-13),shinR=z(-34),legL=z(10),shinL=z(-16))),
+    (.2,p(hip=hip(x=.12,y=-.04,twist=16),torso=(0,30,-12),head=(0,-14,8),armR=(10,40,90),foreArmR=z(8),handR=z(-92),armL=(-10,30,86),foreArmL=z(14),legL=z(28),shinL=z(-22),legR=z(-22),shinR=z(-10),footR=z(15))),
+    (.3,p(hip=hip(x=.13,y=-.04,twist=28),torso=(0,62,-8),head=(0,-25,6),armR=(20,95,84),foreArmR=z(25),handR=z(-100),armL=(-15,82,70),foreArmL=z(30),legL=z(26),shinL=z(-22),legR=z(-22),shinR=z(-12),footR=z(15))),
+    (.55,p(hip=hip(x=.06,y=-.035,twist=12),torso=(0,30,-4),head=(0,-10,2),armR=(10,40,58),foreArmR=z(55),handR=z(-45),armL=(-8,20,52),foreArmL=z(55),legL=z(16),shinL=z(-18)))])
+bat('bat-2',[(.1,p(hip=hip(y=-.045,twist=20),torso=(0,56,6),head=(0,-28,-3),armR=(15,88,72),foreArmR=z(62),armL=(-10,70,64),foreArmL=z(60),legL=z(8),shinL=z(-26))),
+    (.16,p(hip=hip(y=-.05,twist=23),torso=(0,60,7),head=(0,-30,-3),armR=(16,92,74),foreArmR=z(66),armL=(-10,74,66),foreArmL=z(62),legL=z(8),shinL=z(-28))),
+    (.2,p(hip=hip(x=.1,y=-.04,twist=-14),torso=(0,-30,-12),head=(0,14,8),armR=(-10,-45,88),foreArmR=z(10),handR=z(-92),armL=(10,-40,82),foreArmL=z(14),legR=z(24),shinR=z(-20),legL=z(-18),shinL=z(-10))),
+    (.32,p(hip=hip(x=.11,y=-.04,twist=-24),torso=(0,-58,-6),head=(0,24,5),armR=(-15,-90,80),foreArmR=z(26),handR=z(-98),armL=(12,-80,72),foreArmL=z(28),legR=z(22),shinR=z(-20),legL=z(-18),shinL=z(-10))),
+    (.58,p(hip=hip(x=.05,y=-.035,twist=-10),torso=(0,-24,-4),armR=(-5,-30,50),foreArmR=z(60),handR=z(-40),legR=z(12),shinR=z(-16)))])
+bat('bat-3',[(.12,p(hip=hip(y=-.08),torso=(0,-10,22),head=z(-8),armR=(0,-10,162),foreArmR=z(62),armL=(0,10,158),foreArmL=z(62),legL=z(20),shinL=z(-42),legR=z(14),shinR=z(-40))),
+    (.18,p(hip=hip(y=-.09),torso=(0,-12,26),head=z(-10),armR=(0,-10,168),foreArmR=z(66),armL=(0,10,164),foreArmL=z(66),legL=z(22),shinL=z(-46),legR=z(15),shinR=z(-44))),
+    (.2,p(hip=hip(x=.14,y=-.11),torso=(0,8,-38),head=z(18),armR=(0,10,62),foreArmR=z(5),armL=(0,-10,58),foreArmL=z(8),legL=z(35),shinL=z(-50),legR=z(-25),shinR=z(-20),footR=z(18))),
+    (.3,p(hip=hip(x=.15,y=-.125),torso=(0,10,-44),head=z(22),armR=(0,10,36),foreArmR=z(4),armL=(0,-10,34),foreArmL=z(6),legL=z(36),shinL=z(-54),legR=z(-26),shinR=z(-22),footR=z(18))),
+    (.44,p(hip=hip(x=.15,y=-.12),torso=(0,8,-42),head=z(16),armR=(0,10,38),foreArmR=z(6),armL=(0,-10,36),foreArmL=z(8),legL=z(35),shinL=z(-52),legR=z(-26),shinR=z(-22))),
+    (.7,p(hip=hip(x=.06,y=-.06),torso=(0,0,-14),armR=(0,-10,50),foreArmR=z(50),legL=z(18),shinL=z(-26)))])
 # Unified unarmed style: .4s game timing, 50ms hand/foot strike (phase .075 -> .20),
 # pelvis leads chest, then distal joints. Distinct silhouettes, quiet planted support.
 # Seven beats; the spinning backfist is the occasional flashy finish, equal damage.
@@ -279,6 +434,7 @@ action('corgi-sit',.4,[(0,p()),(.5,{**sit,'body':(0,0,12,0,-.08,0)}),(1,sit)],do
 
 action('infected-flight',.35,[(0,p()),(.25,p(wingL=(35,0,0),wingR=(-35,0,0))),(.5,p()),(.75,p(wingL=(-45,0,0),wingR=(45,0,0))),(1,p())],['body','head','wingL','wingR'])
 action('animal-death',.6,[(0,p()),(.35,p(body=(0,0,35,0,-.08,0),head=z(-15))),(.75,p(body=(0,0,85,0,-.24,0),head=z(-25),legFL=z(25),legFR=z(-15),legBL=z(35),legBR=z(15))),(1,p(body=(0,0,90,0,-.24,0),head=z(-25),legFL=z(25),legFR=z(-15),legBL=z(35),legBR=z(15)))],dogs+['wingL','wingR'])
+
 
 scene.frame_start=1
 scene.frame_end=241

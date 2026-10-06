@@ -31,6 +31,8 @@ export interface InputFrame {
   /** Resolved click navigation requests the bounded locomotion response. */
   navigation?: boolean;
   move: Vec2;
+  /** Hold-to-walk modifier (keyboard C/Alt, Alt+click, light touch stick); running is the default. */
+  walk?: boolean;
   aim: Vec2 | null;
   /** Optional world-ground landing point; direction-only devices throw to max range. */
   aimPoint?: Vec2 | null;
