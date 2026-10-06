@@ -1,4 +1,4 @@
-import { AdditiveAnimationBlendMode, AnimationMixer, LoopOnce, LoopRepeat, type AnimationAction, type Object3D } from 'three';
+import { AdditiveAnimationBlendMode, AnimationMixer, LoopOnce, LoopRepeat, Vector3, type AnimationAction, type Object3D } from 'three';
 import type { AnimationState, SurvivorState } from '../../data/survivor';
 import { authoredClips, retargetClip, settleGroundPose, strides, strideScale } from './clips';
 import type { CharacterRig } from './rig';
@@ -13,6 +13,9 @@ export class KeyframeAnimator {
   private attackTick = -1;
   private lastTime = 0;
   private moving = false;
+  private phase = 0;
+  private readonly worldPosition = new Vector3();
+  private lastPosition: { x: number; z: number } | undefined;
   private transitionUntil = 0;
   private secondary = 0;
   private secondaryVelocity = 0;
@@ -41,8 +44,16 @@ export class KeyframeAnimator {
   }
   update(pose: SurvivorState, tick: number, alpha = 1, turn = 0): void {
     const time = (tick + alpha - 1) / 60, dt = Math.max(0, time - this.lastTime); this.lastTime = time;
+    if (dt === 0 && this.base) return;
     this.state = pose.animation;
-    const speed = pose.animation === 'idle' ? 0 : Math.hypot(pose.velocity.x, pose.velocity.z);
+    // The view parent follows the collision-resolved, interpolated sim position.
+    const position = this.rig.root.parent ? this.rig.root.getWorldPosition(this.worldPosition) : undefined;
+    let traveled: number | undefined;
+    if (position) {
+      if (this.lastPosition && dt > 0) traveled = Math.hypot(position.x - this.lastPosition.x, position.z - this.lastPosition.z);
+      this.lastPosition = { x: position.x, z: position.z };
+    }
+    const speed = pose.animation === 'idle' ? 0 : traveled !== undefined && dt > 0 ? (traveled > 3 ? 0 : traveled / dt) : Math.hypot(pose.velocity.x, pose.velocity.z);
     let name = speed > 2.5 ? 'run' : speed > (this.moving ? .06 : .16) ? 'walk' : 'idle';
     const moving = name !== 'idle';
     if (moving !== this.moving) { this.moving = moving; this.transitionUntil = time + (moving ? .18 : .22); name = moving ? 'start' : 'stop'; }
@@ -62,7 +73,13 @@ export class KeyframeAnimator {
       if (previous && previous !== this.base) previous.crossFadeTo(this.base, .14, false);
       this.clip = name;
     }
-    if (strides[name] && this.base) this.base.setEffectiveTimeScale(speed * this.base.getClip().duration / (strides[name] * strideScale(this.rig.root)));
+    if (strides[name] && this.base) {
+      this.phase = (this.phase + speed * dt / (strides[name] * strideScale(this.rig.root))) % 1;
+      // Keep the outgoing gait on the same support phase throughout crossfade.
+      for (const [clip, action] of this.actions) if (strides[clip]) {
+        action.time = this.phase * action.getClip().duration; action.setEffectiveTimeScale(0);
+      }
+    }
     if (strike && combat && this.base && !upper) this.base.setEffectiveTimeScale(this.base.getClip().duration * 60 / Math.max(1, combat.endsAt - combat.started));
     if (upper && strike && this.attackTick !== pose.animationTick) {
       this.overlay?.fadeOut(.12); this.overlay = this.play(`${strike}:upper`, false).fadeIn(.1);
@@ -70,6 +87,7 @@ export class KeyframeAnimator {
     } else if (!upper && this.overlay) { this.overlay.fadeOut(.12); this.overlay = undefined; }
     this.attackTick = strike ? pose.animationTick : -1;
     this.mixer.update(dt);
+    for (const node of Object.values(this.rig)) node.quaternion.normalize();
     if (pose.animation === 'die') settleGroundPose(this.rig.root);
     const target = this.rig.torso.rotation.z * -.3;
     const springDt = Math.min(.03, dt);

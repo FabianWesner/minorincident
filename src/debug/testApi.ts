@@ -84,6 +84,7 @@ export interface SSTestApi {
     l1Bot():Promise<Awaited<ReturnType<typeof runAudioL1Bot>>>;
     interrupt():Promise<void>;
   };
+  look: { get(): { worldLook: import('../data/worldLook').WorldLook; palette: Record<import('../data/palette').PaletteToken, string> }; set(patch: import('../data/lookPatch').LookPatch): void; export(): import('../data/lookPatch').LookPatch; reset(): void };
   /** E18 synthetic GPU cost in milliseconds; zero clears it. */
   /** Render-only stress probe retains the fixture population when testing low-tier drawing. */
   debug: { simulateFrameCost(ms: number): void; renderQuality(tier: 'high' | 'low'): void };
@@ -100,6 +101,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
+    look: { get: () => structuredClone({ worldLook: game.view.look.values, palette: game.view.look.palette }), set: patch => game.view.setLook(patch), export: () => game.view.look.export(), reset: () => game.view.resetLook() },
     version: '1.10.0', ready, npcs: { civilian: (role, pos, opts) => game.world.npcs!.civilians.spawn(role, pos, opts), escort: (pos, child) => game.world.npcs!.escorts.spawn(pos, child), grab: (id, attacker) => game.world.npcs!.civilians.grab(id, attacker, true), courage: amount => { for (const e of game.world.entities.iterate()) if (e.companion) game.world.npcs!.companion.hit(e, amount); }, quality: tier => game.world.npcs!.setQuality(tier) }, missions: { ...missionControls(game.world), load: (def) => { game.ui.reset(); missionControls(game.world).load(def); game.ui.loaded(); } },
     campaign: {state:()=>structuredClone(game.campaign),menu:()=>game.campaignUI.showMenu(game.saves.load()),save:()=>game.saveCampaign(),restore:save=>{if(!validateSave(save))throw new Error('Invalid campaign');game.campaign=structuredClone(save);game.applyCampaign();}},
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),

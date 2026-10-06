@@ -1,9 +1,9 @@
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
 import { DataTexture, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node } from 'three/webgpu';
-import { attribute, positionGeometry, positionLocal, sin, uniform, vec2, vec3, texture, luminance, varying } from 'three/tsl';
+import { attribute, color, mix, positionGeometry, positionLocal, sin, uniform, vec2, vec3, texture, luminance, varying } from 'three/tsl';
 import { palette, paletteTokens, type PaletteToken } from '../data/palette';
 import { surfaceDetail } from './SurfaceDetail';
-import { worldPalette } from '../data/worldLook';
+import { worldPalette, worldPaletteKeys } from '../data/worldLook';
 import { PaletteMaterial } from './PaletteMaterial';
 import type { Lighting } from './Lighting';
 
@@ -25,6 +25,18 @@ export class Materials {
     this.texture = new DataTexture(data, paletteTokens.length * 2, 1, RGBAFormat, UnsignedByteType);
     this.texture.colorSpace = SRGBColorSpace; this.texture.minFilter = this.texture.magFilter = NearestFilter; this.texture.needsUpdate = true;
   }
+  get look() { return this.lighting.look; }
+  applyLook(): void {
+    const data = this.texture.image.data as Uint8Array;
+    let changed = false;
+    for (const sheet of [0, 1]) paletteTokens.forEach((token, i) => {
+      const key = worldPaletteKeys[token as keyof typeof worldPaletteKeys];
+      const value = sheet && key && (this.look.has(key) || this.look.palette[token] === palette[token]) ? this.look.values[key] : this.look.palette[token];
+      const hex = Number.parseInt(value.slice(1), 16), rgb = [hex >> 16, hex >> 8 & 255, hex & 255];
+      rgb.forEach((value, channel) => { const offset = (i + sheet * paletteTokens.length) * 4 + channel; if (data[offset] !== value) { data[offset] = value; changed = true; } });
+    });
+    if (changed) this.texture.needsUpdate = true;
+  }
   /** All world batches sample the second half of this single sheet; figures retain identity colors. */
   sample(index: Node<'float'>): Node<'vec3'> {
     const offset = index.lessThan(0).select(paletteTokens.length, this.lighting.worldPaletteEnabled.mul(paletteTokens.length));
@@ -35,7 +47,7 @@ export class Materials {
     let material = this.cache.get(key);
     if (!material) {
       const swatch = this.sample(uniform(paletteTokens.indexOf(token)));
-      const base = vertexColors ? swatch.mul(attribute('color', 'vec3')) : surfaceDetail(token, swatch);
+      const base = vertexColors ? swatch.mul(attribute('color', 'vec3')) : surfaceDetail(token, swatch, this.look.nodes);
       material = new PaletteMaterial(token, this.texture, this.lighting, 0, undefined, false, { base, glow: emissive ? base.div(luminance(base).max(.001)).mul(emissive) : undefined });
       material.color.set(palette[token]); material.vertexColors = vertexColors;
       material.name = `${emissive ? 'emi' : 'pal'}_${token}`; material.userData.emissiveStrength = emissive; this.cache.set(key, material);
@@ -93,8 +105,10 @@ export class Materials {
     const key = `wind-foliage:${world}`;
     let material = this.cache.get(key);
     if (!material) {
-      material = this.shaded(world ? varying(this.sample(attribute('_palette', 'float')), 'worldPaletteColor') : attribute('color', 'vec3'));
-      const weight = positionGeometry.y.smoothstep(.25, 1.7).mul(.055);
+      const ramp = positionGeometry.y.smoothstep(.25, 1.7);
+      const tint = mix(this.look.nodes.foliageDark.rgb.div(color('#4a7533').rgb), this.look.nodes.foliageLight.rgb.div(color('#98b94f').rgb), ramp).mul(this.look.nodes.foliage.rgb.div(color('#789c4c').rgb));
+      material = this.shaded(world ? varying(this.sample(attribute('_palette', 'float')), 'worldPaletteColor') : attribute('color', 'vec3').mul(tint));
+      const weight = positionGeometry.y.smoothstep(.25, 1.7).mul(.055).mul(this.look.nodes.windStrength);
       const gust = sin(positionLocal.x.mul(.7).add(positionLocal.z.mul(.4)).add(this.wind.mul(1.2)));
       material.positionNode = positionLocal.add(vec3(gust.mul(weight), 0, gust.mul(weight).mul(.6)));
       material.name = 'pal_wind-foliage'; this.cache.set(key, material);
