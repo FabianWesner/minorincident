@@ -15,3 +15,25 @@ export const civilianRoles = [
   { role: 'delivery-driver', routine: 'carry-belongings', variant: 'inf.delivery-driver', color: '#d4ad32' },
   { role: 'bathrobe-neighbor', routine: 'chat', variant: 'inf.bathrobe-neighbor', color: '#ac7a91' },
 ] as const;
+/**
+ * L1 v2 pedestrians (specs/epic-19 section 5.1). Shirt tints combine with the five civilian silhouettes so that no two
+ * neighbours share a model+tint pair; hand props drop on startle or bite, accessories stay through infection (5.7).
+ */
+export const l1Pedestrians = {
+  models: ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'],
+  shirts: ['#3178ac', '#e5d9b9', '#a86645', '#79865b', '#d4ad32', '#ac7a91', '#c4473d', '#4f8f8a', '#6d5aa8', '#e08a3c', '#2f4858', '#9bb7d4'],
+  accessories: ['none', 'cap', 'glasses', 'backpack', 'scarf'],
+  handProps: ['coffee', 'bag', 'phone', 'cane', 'watering-can'],
+  /** Seconds between top-up walkers entering from an edge while the director tops up (section 5.9). */
+  topUpEveryS: 2,
+  /** Refuge or edge counts as reached within this radius (escaped). */
+  refugeReachM: 1.2,
+  /** Seconds spent opening a refuge door (houses, shops) before being safe inside; edges are instant. */
+  doorOpenS: 1.0,
+  /** Bite reach of an infected that is not already holding someone. */
+  grabReachM: 1.0,
+  /** A grabbing infected farther than this from its victim has been knocked away (rescue). */
+  grabBreakM: 1.8,
+  /** Share of non-elderly, non-jogger adults that rise athletic ("young adults"). */
+  athleticShare: 0.25,
+} as const;

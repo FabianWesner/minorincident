@@ -145,19 +145,20 @@ describe('L1 v2 mission', () => {
 
   test('T-E19-checkpoint @E19 checkpoints restore the outbreak, bicycle and toys after death', async () => {
     const { world: w, mission } = await load(4);
-    // Mocks of the F (bicycle, toys) and D (outbreak overlay) seams: plain serializable state.
-    const mocks = { bicycle: { at: [5, 5], riding: false }, toys: { gates: [true, false, true] }, outbreak: { phases: { a: 1 } } };
+    // Mocks of the optional F seams (bicycle, toys); the outbreak layer is the real lane D one.
+    const mocks = { bicycle: { at: [5, 5], riding: false }, toys: { gates: [true, false, true] } };
     for (const [name, state] of Object.entries(mocks)) (w as unknown as Record<string, unknown>)[name] = { snapshot: () => state, restore: (s: unknown) => { Object.assign(state, structuredClone(s)); } };
     runL1(w, mission, 'complete', { seed: 4, stopWhen: m => m.state.checkpoint === 'accident' });
     expect(mission.state.checkpoint).toBe('accident');
     const alive = w.infected!.active.filter(e => e.health.current > 0).map(e => e.id).sort();
     expect(alive).toHaveLength(5);
     const techId = mission.state.l1!.techId;
-    mocks.bicycle.at = [99, 99]; mocks.toys.gates = [false, false, false]; mocks.outbreak.phases = { a: 7 };
+    mocks.bicycle.at = [99, 99]; mocks.toys.gates = [false, false, false];
+    const stats = w.npcs!.civilians.outbreak!.stats; stats.turned = 7;
     w.player!.damage(1000, w.tick);
     for (let i = 0; i < 400; i++) w.update();
     expect(mission.state.checkpoint).toBe('accident');
-    expect(mocks.bicycle.at).toEqual([5, 5]); expect(mocks.toys.gates).toEqual([true, false, true]); expect(mocks.outbreak.phases).toEqual({ a: 1 });
+    expect(mocks.bicycle.at).toEqual([5, 5]); expect(mocks.toys.gates).toEqual([true, false, true]); expect(w.npcs!.civilians.outbreak!.stats.turned).toBe(0);
     expect(w.infected!.active.filter(e => e.health.current > 0).map(e => e.id).sort()).toEqual(alive);
     expect(w.entities.get(techId)?.infected).toBeDefined();
     expect(mission.state.steps.escape.status).toBe('active'); expect(mission.state.steps.pickup.status).toBe('completed');
