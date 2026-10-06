@@ -88,3 +88,22 @@ test('M1-04 @E04 corgi trots on diagonal pairs and settles into an authored sit'
   animator.update(1,0,.2);expect(animator.clip).toBe('corgi-idle');
   animator.update(6,0,.2);expect(animator.clip).toBe('corgi-sit');expect(body.position.y).toBeLessThan(rest-.08);
 });
+
+
+test('M1-23 @E19 infection collapse and rise share a low pose, then rise into infected posture', async () => {
+  const { scene } = await model('assets/npc.civilian-woman-a/model.glb');
+  sampleClip(scene, 'infection-collapse', authoredClips.get('infection-collapse')!.duration);
+  const low = new Box3().setFromObject(scene), head = scene.getObjectByName('head')!.getWorldPosition(new Vector3());
+  sampleClip(scene, 'infection-rise', 0);
+  expect(scene.getObjectByName('head')!.getWorldPosition(new Vector3()).distanceTo(head)).toBeLessThan(.01);
+  expect(low.max.y).toBeLessThan(1);
+  sampleClip(scene, 'infection-rise', authoredClips.get('infection-rise')!.duration);
+  const upright = new Box3().setFromObject(scene);
+  expect(upright.max.y - upright.min.y).toBeGreaterThan(low.max.y - low.min.y + .35);
+  expect(scene.getObjectByName('torso')!.rotation.z).toBeLessThan(-.15);
+  for (const name of ['infection-stagger','infection-collapse','infection-rise']) expect(infectedClips).toContain(name);
+  const baked = bakeInfected(scene), eyes = baked.geometry.getAttribute('_emissive'), skin = baked.geometry.getAttribute('_shirt');
+  expect(Array.from({ length: eyes.count }, (_, i) => eyes.getX(i)).filter(v => v > 0).length).toBeGreaterThan(0);
+  expect(Array.from({ length: skin.count }, (_, i) => skin.getX(i)).filter(v => v < 0).length).toBeGreaterThan(0);
+  baked.geometry.dispose();
+});

@@ -9,7 +9,7 @@ export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .
 const worldScale = new Vector3(), worldOrigin = new Vector3();
 /** Optimized character GLBs scale the shared hierarchy to their catalog height. */
 export function strideScale(root: Object3D): number { return root.getWorldScale(worldScale).y; }
-const groundClips = /^(die|death-|knockdown|flung|get-up|crawl)/;
+const groundClips = /^(die|death-|knockdown|flung|get-up|crawl|infection-collapse|infection-rise)/;
 const upperBody = /^(torso|head|arm|foreArm|hand)/;
 
 /** Retarget by name, preserving model rest TRS. Additive clips contain upper-body

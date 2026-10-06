@@ -59,7 +59,7 @@ export interface MissionDef {
 export interface MissionResult { time: number; kills: number; damage: number; deaths: number; rescued: number; optionalObjectives: string[] }
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number }
 export interface MissionState {
-  /** M1 infection staging; snapshot restores victims and the chase gate. */
+  /** M1 infection staging; snapshot restores victims and staging completion; brains act independently. */
   outbreak?: { victims: number[]; released: boolean };
   id: string; phase: 'briefing' | 'playing' | 'cinematic' | 'retry' | 'result' | 'progression';
   volumes: boolean[]; killedBosses: string[];
