@@ -1,0 +1,42 @@
+{
+  "id": "char.courier-male",
+  "triangles": {
+    "lod0": 43342,
+    "lod1": 4942,
+    "lod2": 1218
+  },
+  "meshes": 16,
+  "nodes_ok": true,
+  "missing_nodes": [],
+  "rounds": 4,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "deterministic": true,
+  "dimensions": {
+    "x": 0.6180800125002861,
+    "y": 1.397999970242381,
+    "z": 0.8124799551963804
+  },
+  "source": "assets/char.survivor-male/build.py",
+  "source_sha256": "7d0dc131faed57823db9b5321954ff9035134b2694fd1c8157a952d91fcb148a",
+  "gaps": [
+    "WebGPU requires the manual repository check. Runtime manifest/status changes belong to the integrator."
+  ],
+  "lod_deterministic": true,
+  "matches_reference": true,
+  "done": true,
+  "scalp_coverage": true,
+  "face_parts_under_head": true,
+  "build_sha256": "8022dc2d74b4f3a58ea38c8b99b37c618eb0b609609fbba2bfac8cde07f1bcf2",
+  "file_bytes": {
+    "lod0": 226956,
+    "lod1": 47412,
+    "lod2": 28948
+  },
+  "repository_checks": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "unit": "185 passed; prop.package-courier has no manifest entry",
+    "verify_E17": "36 scoped unit/sim tests and 35 browser tests passed; art-integration test spawn rejected inside collider/outside grid"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "id": "kit.edge-roadwork",
+  "tier": "side",
+  "triangles": {
+    "lod0": 11724,
+    "lod1": 1512,
+    "lod2": 400
+  },
+  "draw_calls": 14,
+  "materials": [
+    "pal_denim",
+    "pal_mustard",
+    "pal_navy",
+    "pal_orange",
+    "pal_picketWhite",
+    "pal_schoolBusYellow",
+    "pal_silver",
+    "pal_uiDark",
+    "pal_windowGlow"
+  ],
+  "dimensions_blender": [
+    4.253875017166138,
+    7.388999938964844,
+    2.7322499752044678
+  ],
+  "bbox_blender": {
+    "min": [
+      -2.1269373893737793,
+      -3.694499969482422,
+      0.0
+    ],
+    "max": [
+      2.1269376277923584,
+      3.694499969482422,
+      2.7322499752044678
+    ]
+  },
+  "nodes": [
+    "root",
+    "road_closed",
+    "col:barricade",
+    "mesh_fence",
+    "col:fence",
+    "excavator",
+    "col:excavator",
+    "front"
+  ],
+  "baked_ao": true,
+  "backface_culling": true,
+  "render_engine": "Eevee",
+  "source_triangles": {
+    "lod0": 11724,
+    "lod1": 1512,
+    "lod2": 400
+  },
+  "delivery": {
+    "lod0": {
+      "triangles": 11724,
+      "bytes": 129340,
+      "draw_calls": 14,
+      "dimensions": [
+        4.253874897956848,
+        2.73226320478435,
+        7.389001947734326
+      ],
+      "hash": "83c0d42230a551dccbe0ae9f58bda48256a761b85240dfe74faf6000aad1978b",
+      "nodes_ok": true,
+      "meshopt": true,
+      "backface_culling": true
+    },
+    "lod1": {
+      "triangles": 1512,
+      "bytes": 36652,
+      "draw_calls": 14,
+      "dimensions": [
+        4.241907477378845,
+        2.710603909101891,
+        7.396488789010718
+      ],
+      "hash": "16ffef91d584f4da2462891bdd304cce7626ae19ba1c446d8e502e635b8dd078",
+      "nodes_ok": true,
+      "meshopt": true,
+      "backface_culling": true
+    },
+    "lod2": {
+      "triangles": 400,
+      "bytes": 10952,
+      "draw_calls": 8,
+      "dimensions": [
+        4.085000276565552,
+        2.733810140447266,
+        7.3849768573852845
+      ],
+      "hash": "fb54c6a1b3c7086418d5ec7336c1c6de9dfa57759d44ffeaeb9cc1090ec2a613",
+      "nodes_ok": true,
+      "meshopt": true,
+      "backface_culling": true
+    }
+  },
+  "matches_reference": true,
+  "done": true,
+  "nodes_ok": true,
+  "deterministic": true,
+  "webgl2_ok": null,
+  "webgpu_ok": null,
+  "browser_note": "WebGL2 smoke check could not obtain shared browser lock; WebGPU review is manual.",
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "unit": "200 passed, 2 skipped, 2 todo",
+    "asset_validation": "passed all three LODs",
+    "epic_verify": "not applicable: asset-only task without epic assignment"
+  },
+  "gaps": [
+    "Pending manifest integration; placeholder tier/dimensions need reconciliation.",
+    "Browser checks pending."
+  ]
+}
