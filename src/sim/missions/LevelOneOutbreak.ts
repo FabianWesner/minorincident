@@ -59,7 +59,7 @@ export class LevelOneOutbreak {
   completed(id: string): void {
     const { world } = this.mission, l1 = this.l1;
     if (id === 'pickup') l1.carrying = true;
-    if (id === 'weapon') world.combat?.setLoadout(['weapon.bat'], ['weapon.kick']);
+    if (id === 'weapon') world.combat?.setLoadout(['weapon.bat'], ['weapon.fists']);
     if (id === 'weapon') {
       // Beat 9 guarantee (director rules, section 5.9): at least 6 infected near the garage exit before the player leaves.
       const outbreak = world.npcs?.civilians.outbreak, exit = this.anchor('garage-door'), entry = this.anchor('elm-horde-entry');
@@ -196,7 +196,7 @@ export class LevelOneOutbreak {
         } else ai.rush(id, target, tick + story.exitSearchS * TICKS);
       }
     }
-    world.combat?.setLoadout(['weapon.fists'], ['weapon.kick']);
+    world.combat?.setLoadout(['weapon.fists'], ['weapon.fists']);
     this.mission.setState('exited', true);
     this.mission.requestCheckpoint('accident');
   }

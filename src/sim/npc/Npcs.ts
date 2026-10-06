@@ -4,6 +4,7 @@ import { civilianRoles, npcs } from '../../data/npcs';
 import { Traffic } from './Traffic';
 import { Companion } from './Companion';
 import { Escorts } from './Escorts';
+import { populateMorning } from './MorningRoutines';
 import { Civilians } from './Civilians';
 import { moveAgent } from '../locomotion/AgentMotion';
 import type { Point } from './types';
@@ -59,21 +60,8 @@ export class Npcs {
   configureSlice(driver?: Point): void {
     this.slice=true;this.ambientTarget=0;
     for(const e of this.world.entities.iterate()) if(e.civilian?.ambient || e.traffic) { this.world.entities.delete(e.id);this.world.spatial.delete(e.id); }
-    const nav=this.world.infected!.nav, player=this.world.entities.get(1)!.transform;
-    let placed = 0;
-    for (const district of this.world.districts!.districts) for (const road of district.layout.roads.edges) {
-      const a = road.points[0], b = road.points[road.points.length - 1];
-      const dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz); if (length < 6) continue;
-      const ux = dx / length, uz = dz / length, offset = road.laneWidth / 2 + .75;
-      for (let t = .08; t < .9 && placed < 5; t += .12) for (const side of [-1, 1]) {
-        if (placed >= 5) break;
-        const start = { x: a[0] + dx * t - uz * offset * side + district.origin[0], z: a[1] + dz * t + ux * offset * side + district.origin[1] };
-        if (Math.hypot(start.x - player.x, start.z - player.z) > 30 && district.id === this.world.districts!.districts[0].id) continue;
-        const end = { x: start.x + ux * 5, z: start.z + uz * 5 };
-        if (!nav.visible(start, end, .5)) continue;
-        this.civilians.spawn(civilianRoles[placed === 4 ? 5 : placed].role, start, { waypoints: [start, end] }); placed++;
-      }
-    }
+    const nav = this.world.infected!.nav;
+    populateMorning(this.world);
     if(driver) {
       const cell=nav.nearestCell(driver.x,driver.z),p={x:nav.x(cell),z:nav.z(cell)};
       if(nav.clear(p.x,p.z,.35))this.civilians.spawn('delivery-driver',p,{waypoints:[p]});
@@ -108,7 +96,7 @@ export class Npcs {
     for (const e of this.world.entities.iterate()) {
       if (e.infected) { ai.pool.pop(); ai.active.push(e); }
       const c = e.civilian;
-      if (c) { c.entered += delta; for (const key of ['until', 'pauseUntil', 'knockedUntil'] as const) if (c[key]) c[key] += delta; }
+      if (c) { c.entered += delta; for (const key of ['until', 'pauseUntil', 'knockedUntil', 'activityUntil', 'activityStarted'] as const) if (c[key]) c[key]! += delta; if (c.lastTravelProgress !== undefined) c.lastTravelProgress += delta; }
       if (e.companion) { if (e.companion.until) e.companion.until += delta; if (e.companion.barkAt) e.companion.barkAt += delta; if (e.companion.hurtAt) e.companion.hurtAt += delta; }
       if (e.escort) { e.escort.downedAt += delta; if (e.escort.attackAt) e.escort.attackAt += delta; }
       if (e.infectionRise) { e.infectionRise.started += delta; e.infectionRise.until += delta; }

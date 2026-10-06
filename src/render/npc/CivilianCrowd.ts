@@ -6,7 +6,9 @@ import { crowdBlendedMatrix, packCrowdParts } from '../../assets/crowd';
 import { AssetRegistry } from '../../assets/registry';
 import { civilianRoles } from '../../data/npcs';
 import type { SimWorld } from '../../sim/world/SimWorld';
-import { bakeInfected, framesPerClip, infectedClips } from '../characters/bakeInfected';
+import { bakeInfected, framesPerClip, civilianClips } from '../characters/bakeInfected';
+import { RoutineProps } from './RoutineProps';
+import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
 import { MotionPresentation } from '../characters/MotionPresentation';
 import { MotionPhase } from '../characters/MotionPhase';
@@ -15,9 +17,9 @@ import { disposeCharacter } from '../characters/rig';
 import { createCivilianPlaceholder } from './placeholders';
 import { keepsLook } from '../../sim/outbreak/appearance';
 import type { EntitySnapshot } from '../../sim/world/types';
-type Clip = typeof infectedClips[number];
+type Clip = typeof civilianClips[number];
 /** Lane G's civilian panic and infected tier clips when baked, else the closest shared clip. */
-const clipOr = (name: string, fallback: Clip): Clip => (infectedClips as readonly string[]).includes(name) ? name as Clip : fallback;
+const clipOr = (name: string, fallback: Clip): Clip => (civilianClips as readonly string[]).includes(name) ? name as Clip : fallback;
 const tierGait = { frail: clipOr('infected-frail', 'infected-run'), average: clipOr('infected-lurch', 'infected-run'), athletic: clipOr('infected-sprint', 'infected-run') } as const;
 const civStartle = clipOr('civ-startle', 'hurt'), civFlee = clipOr('civ-flee', 'run'), civGrabbed = clipOr('civ-grabbed', 'hurt');
 const infectedIdle = clipOr('infected-idle', 'idle'), infectedSearch = clipOr('infected-search', 'idle');
@@ -25,6 +27,9 @@ const infectedIdle = clipOr('infected-idle', 'idle'), infectedSearch = clipOr('i
 class CivilianBatch extends Group {
   private poses!: CrowdPosePalette;
   private mesh!: InstancedMesh;
+  private bakedClip!: CrowdClip;
+  private readonly hand = new Matrix4();
+  private readonly nextHand = new Matrix4();
   private texture!: DataTexture;
   private readonly childScale = new Vector3(.7, .7, .7);
   private readonly transform = new Matrix4();
@@ -39,12 +44,12 @@ class CivilianBatch extends Group {
   private readonly shirt = new Color();
   private readonly registry = new AssetRegistry(() => {});
   source = 'placeholder';
-  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly shading?: Materials) { super(); this.name = 'civilian-crowd'; }
+  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly shading?: Materials, private readonly props?: RoutineProps) { super(); this.name = 'civilian-crowd'; }
   async init(): Promise<void> {
     const loaded = await this.registry.loadAsset(this.model, this.distant ? 'lod2' : 'lod1');
     const placeholder = loaded.userData.placeholder, model = placeholder ? createCivilianPlaceholder() : loaded as Group;
     this.source = placeholder ? 'placeholder' : 'glb';
-    const baked = bakeInfected(model), color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
+    const baked = bakeInfected(model, [], false, civilianClips), color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     this.strideScale = baked.strideScale;
     // Packed mark channel: 1 = vein decal vertex, 2 = blood mask (lower face; collar bite on the torso).
     const position = baked.geometry.getAttribute('position'), partOf = baked.geometry.getAttribute('_part_index'), shirtOf = baked.geometry.getAttribute('_shirt');
@@ -59,6 +64,7 @@ class CivilianBatch extends Group {
     }
     baked.geometry.setAttribute('_vein', new BufferAttribute(veins, 1));
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
+    this.bakedClip = baked.clip;
     this.poses = new CrowdPosePalette(baked.clip, 128); this.texture = this.poses.texture;
     packCrowdParts(baked.geometry);
     const parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
@@ -93,15 +99,35 @@ class CivilianBatch extends Group {
       const rising = c.state === 'rising', startle = c.state === 'alarmed' && !!c.l1;
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
       const speed = e.motion && !e.motion.moving ? 0 : motion.speed;
-      const clip: Clip = c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? e.id % 2 ? 'npc-walk' : 'npc-walk-relaxed' : 'idle';
+      const activity = c.schedule?.[c.scheduleStep ?? 0];
+      const performing = c.state === 'calm' && !!c.activityUntil;
+      const elapsed = (this.world.tick - (c.activityStarted ?? this.world.tick)) / 60;
+      const noticingSeated = c.state === 'alarmed' && !!activity?.seat && !!c.activityUntil;
+      const noticeElapsed = (this.world.tick - c.entered) / 60;
+      const routineClip: Clip = activity?.activity === 'stand' ? 'npc-stand-up' : activity?.activity === 'sit' ? elapsed < .6 ? 'npc-sit-down' : 'npc-sit' : activity?.activity === 'water' ? 'npc-water' : activity?.activity === 'chat' ? 'npc-gesture' : 'npc-look-around';
+      const annoyed = c.state === 'annoyed' && this.world.tick - c.entered < 24;
+      const walkClip: Clip = activity?.prop === 'cane' ? 'npc-cane' : activity?.prop ? 'npc-carry' : e.id % 2 ? 'npc-walk' : 'npc-walk-relaxed';
+      const clip: Clip = annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle';
       const duration = authoredClips.get(clip)!.duration, gaitDistance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
-      const phase = c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? gaitDistance / (strides[clip] * this.strideScale * (c.adult ? 1 : .7)) % 1 : (renderTick / 60 + e.id * .137) / duration % 1;
+      const phase = annoyed ? Math.min(1, (this.world.tick - c.entered) / 24) : clip === 'npc-sit-down' || clip === 'npc-stand-up' ? Math.min(1, (noticingSeated ? noticeElapsed : elapsed) / .6) : c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? gaitDistance / (strides[clip] * this.strideScale * (c.adult ? 1 : .7)) % 1 : (renderTick / 60 + e.id * .137) / duration % 1;
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       // Convulsions while on the ground: a seeded body shudder that grows with the infection.
       this.transform.makeRotationY(presented.yaw + (down && c.state !== 'finished' ? Math.sin(this.world.tick * .9 + e.id) * Math.max(c.veins, e.infection ? .4 : 0) * (e.infection ? .09 : .012) : 0)); if (!c.adult) this.transform.scale(this.childScale); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
-      const frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
+      if ((performing || noticingSeated) && activity?.seat) {
+        const seatBlend = noticingSeated ? Math.max(0, 1 - noticeElapsed / .6) : activity.activity === 'stand' ? Math.max(0, 1 - elapsed / .6) : Math.min(1, elapsed / .6);
+        this.transform.setPosition(presented.x + (activity.seat.x - presented.x) * seatBlend, presented.y - .7, presented.z + (activity.seat.z - presented.z) * seatBlend);
+      }
+      const frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
       const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, frame);
+      if (activity?.prop && c.state === 'calm' && this.props) {
+        const part = this.bakedClip.parts.indexOf('handR'), stride = this.bakedClip.parts.length * 16;
+        this.hand.fromArray(this.bakedClip.matrices, Math.floor(frame) * stride + part * 16);
+        this.nextHand.fromArray(this.bakedClip.matrices, Math.ceil(frame) * stride + part * 16);
+        const handBlend = frame % 1;
+        for (let i = 0; i < 16; i++) this.hand.elements[i] += (this.nextHand.elements[i] - this.hand.elements[i]) * handBlend;
+        this.hand.premultiply(this.transform); this.props.place(activity.prop, this.hand);
+      }
       this.tintOf(e, index, blend[0] * 2 + blend[1]);
       const glow = c.eyesGlow ? e.infection ? Math.min(1, (this.world.tick - (e.infection.endsTick - 78)) / 30) : Math.min(1, Math.max(0, (c.veins - .12) / .65)) : 0;
       this.overlay.setXYZ(index, c.veins, Math.max(0, glow), e.infection ? Math.min(1, Math.max(0, (e.infection.progress - .35) / .4)) : 0); index++;
@@ -124,7 +150,7 @@ class CivilianBatch extends Group {
     const phase = b.state === 'dead' ? Math.min(1, (tick - b.deadAt) / 60 / duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && age < 1.34 ? Math.min(1, age / (reaction.heavy ? .7 : .43)) : strides[clip] ? motion.distance / (strides[clip] * this.strideScale) % 1 : (renderTick / 60 + e.id * .137) / duration % 1;
     const presented = this.presentation.sample(e.id, e.transform, tick, alpha);
     this.transform.makeRotationY(presented.yaw); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
-    const frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1), blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
+    const frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1), blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
     this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, frame);
     this.tintOf(e, index, blend[0] * 2 + blend[1]); this.overlay.setXYZ(index, .4, b.state === 'dead' ? 0 : 1, 1);
     return true;
@@ -136,9 +162,10 @@ class CivilianBatch extends Group {
 /** Five civilian silhouettes share rigid-part LOD batches and the E07 clip path. */
 export class CivilianCrowd extends Group {
   private readonly batches: CivilianBatch[];
-  constructor(world: SimWorld, shading?: Materials) { super(); this.batches=['npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly'].flatMap(model=>[new CivilianBatch(world,model,false,shading),new CivilianBatch(world,model,true,shading)]); this.add(...this.batches); }
-  async init(): Promise<void> { await Promise.all(this.batches.map(b=>b.init())); }
-  update(alpha = 1): void { this.batches.forEach(b=>b.update(alpha)); }
+  private readonly props: RoutineProps;
+  constructor(world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.batches=['npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly'].flatMap(model=>[new CivilianBatch(world,model,false,shading,this.props),new CivilianBatch(world,model,true,shading,this.props)]); this.add(...this.batches); }
+  async init(): Promise<void> { await Promise.all(this.batches.map(b=>b.init())); this.update(); }
+  update(alpha = 1): void { this.props.begin(); this.batches.forEach(b=>b.update(alpha)); this.props.finish(); }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
-  dispose(): void { this.batches.forEach(b=>b.dispose());this.clear(); }
+  dispose(): void { this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
 }

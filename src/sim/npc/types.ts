@@ -1,5 +1,11 @@
 export interface Point { x: number; z: number }
-export type CivilianState = 'calm' | 'alarmed' | 'flee' | 'hide' | 'grabbed' | 'bitten' | 'down' | 'rising' | 'infected' | 'finished';
+export type CivilianState = 'calm' | 'annoyed' | 'alarmed' | 'flee' | 'hide' | 'grabbed' | 'bitten' | 'down' | 'rising' | 'infected' | 'finished';
+export type CivilianProp = 'coffee' | 'bag' | 'phone' | 'cane' | 'watering-can';
+/** Resolved layout anchors, in world metres. Durations and cursors use sim ticks and survive checkpoints. */
+export interface CivilianActivity {
+  activity: 'walk' | 'sit' | 'stand' | 'chat' | 'look' | 'water' | 'door' | 'inside';
+  anchor: string; target: Point; ticks: number; facing?: Point; prop?: CivilianProp; seat?: Point;
+}
 /** Serializable NPC components; no render objects or physics bodies. */
 export interface Civilian {
   state: CivilianState; ambient: boolean; adult: boolean; pet: 'dog' | 'cat' | null; owner: number | null;
@@ -8,7 +14,11 @@ export interface Civilian {
   outbreak?: boolean; risingInfectedId?: number;
   entered: number; until: number; downTicks: number; eyesGlow: boolean; veins: number;
   attacker: number; threat: Point; path: number[]; goal: number; pathIndex: number;
+  /** Harmless swing reaction; resumes the previous routine after a short pause. */
+  annoyedFrom?: 'calm' | 'alarmed' | 'flee' | 'hide';
   gore: false; knockedUntil: number;
+  panicReaction?: 'flee' | 'freeze';
+  schedule?: CivilianActivity[]; scheduleStep?: number; activityUntil?: number; activityStarted?: number; lastTravelProgress?: number;
   /** L1 v2 panic layer (src/sim/outbreak): seeded speeds, startle length, chosen refuge door or edge. */
   l1?: { walkSpeed: number; fleeSpeed: number; startleTicks: number; refuge: string | null; target: Point | null; repickAt: number; noticed: number; faces?: (Point | null)[]; graceUntil?: number; progressAt?: number; progressFrom?: Point; doorAt?: number };
 }
@@ -20,6 +30,7 @@ export interface Escort { state: 'follow' | 'wait' | 'cover' | 'downed' | 'dead'
 export interface Traffic { route: Point[]; segment: number; speed: number; desired: number; braking: number; stopped: boolean; panic: boolean }
 export interface Convoy { route: Point[]; samples: Point[]; distance: number; length: number; state: 'stop' | 'go' | 'arrived' | 'destroyed'; speed: number; offset: number }
 export type NpcEvent =
+  | { tick: number; type: 'civilian.bark'; id: number; text: 'Hey!'; position: Point }
   | { tick: number; type: 'civilian.state'; id: number; state: CivilianState; until: number }
   | { tick: number; type: 'civilian.saved' | 'civilian.finished' | 'civilian.eyes'; id: number }
   | { tick: number; type: 'civilian.turned'; id: number; infectedId: number; variant: string; position: Point }

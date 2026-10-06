@@ -56,7 +56,7 @@ export class KinematicController {
       this.displacement.y = Math.max(this.displacement.y, Math.min(.06, ground + survivor.height / 2 + clearance - transform.y));
     }
     let pushX = 0, pushZ = 0, overlaps = 0;
-    if (enabled) for (const neighbor of this.crowd) {
+    if (enabled && !input.attackInPlace) for (const neighbor of this.crowd) {
       const dx = transform.x - neighbor.transform.x, dz = transform.z - neighbor.transform.z;
       const distance = Math.hypot(dx, dz), overlap = survivor.radius + neighbor.radius - distance;
       if (overlap > 0) { pushX += (distance > 0 ? dx / distance : x) * overlap; pushZ += (distance > 0 ? dz / distance : z) * overlap; overlaps++; }
