@@ -23,6 +23,10 @@ test('M1-02 @E04 Blender glTF action library covers shared joints and distinct w
     expect(new Set(strikes.map(c => JSON.stringify(c.tracks))).size).toBe(3);
     for (const strike of strikes) expect(strike.tracks.some(t => t.node.startsWith('arm') && t.path === 'rotation')).toBe(true);
   }
+  sampleClip(library.scene,'npc-walk',authoredClips.get('npc-walk')!.duration*.25);
+  const regular=library.scene.getObjectByName('head')!.quaternion.clone().normalize();
+  sampleClip(library.scene,'npc-walk-relaxed',authoredClips.get('npc-walk-relaxed')!.duration*.25);
+  expect(regular.angleTo(library.scene.getObjectByName('head')!.quaternion.clone().normalize())).toBeGreaterThan(.08);
 });
 
 test('M1-02 @E04 stance feet stay planted while the authored pelvis and knee carry weight', async () => {

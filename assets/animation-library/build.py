@@ -131,6 +131,13 @@ def gait(name,duration,stride,run=False,infected=False):
             pose['head']=(i%3*3-3,-8,12)
             pose['armL']=(-12,0,47+(i%4)*3)
             pose['foreArmR']=z(34)
+        if name=='npc-walk-relaxed':
+            pose['torso']=(0,pose['torso'][1]*.55,1)
+            pose['head']=(0,[0,4,8,4,0,-4,-8,-4,0][i],-1)
+            pose['armL']=z(pose['armL'][2]*.75-5)
+            pose['armR']=z(pose['armR'][2]*.75+3)
+            pose['foreArmL']=z(14)
+            pose['foreArmR']=z(18)
         poses.append((i/8,pose))
     action(name,duration,poses)
 gait('walk',.8,.9)
@@ -195,7 +202,7 @@ action('corgi-idle',3,[(0,p(head=(0,-4,2),tail=(0,-12,0))),(.25,p(head=(0,8,-3),
 for name,duration in [('corgi-walk',.7),('corgi-trot',.46)]:
     poses=[]
     # Diagonal pairs contact together in trot; four beats in a walk.
-    angles=[24,12,-3,-20,-25,-12,8,28,24]
+    angles=[38,19,-4,-30,-40,-19,11,42,38] if name=='corgi-trot' else [24,12,-3,-20,-25,-12,8,28,24]
     for i in range(9):
         pose=p(body=(0,0,[0,-1,0,1,0,-1,0,1,0][i],0,[0,-.014,0,.012,0,-.014,0,.012,0][i],0),head=z([0,1,0,-1,0,1,0,-1,0][i]),tail=(0,[0,10,15,10,0,-10,-15,-10,0][i],0))
         for side,offset in [('FL',0),('BR',0 if name=='corgi-trot' else 6),('FR',4),('BL',4 if name=='corgi-trot' else 2)]:
