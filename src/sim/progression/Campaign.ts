@@ -25,8 +25,11 @@ export function rackSize(level:number):number {return level<2?1:level<4?2:3;}
 export function validRacks(save:CampaignSave,racks:CampaignSave['racks'],level=save.unlockedLevel):boolean {
   return [racks.LEFT,racks.RIGHT].every(r=>Array.isArray(r)&&r.length>=1&&r.length<=rackSize(level)&&new Set(r).size===r.length&&r.every(id=>save.ownedActions.includes(id)));
 }
+export function meetsPrerequisite(save:CampaignSave,id:string):boolean {
+  return id.startsWith('level.')?(save.pending?.level??save.completedLevels)>=Number(id.at(-1)):save.upgrades.includes(id)||save.ownedActions.includes(id);
+}
 export function eligible(save:CampaignSave,d:UpgradeDef):boolean {
-  return !save.upgrades.includes(d.id)&&(!d.grant||!save.ownedActions.includes(d.grant))&&d.prerequisites.every(p=>save.upgrades.includes(p)||save.ownedActions.includes(p))&&(!d.weapon||save.ownedActions.includes(d.weapon));
+  return !save.upgrades.includes(d.id)&&(!d.grant||!save.ownedActions.includes(d.grant))&&d.prerequisites.every(p=>meetsPrerequisite(save,p))&&(!d.weapon||save.ownedActions.includes(d.weapon));
 }
 /** Save-seeded weighted sampling without replacement, isolated from combat RNG. */
 export function offer(save:CampaignSave,level=save.completedLevels+1):string[] {

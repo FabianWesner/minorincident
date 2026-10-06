@@ -1,6 +1,6 @@
 import { catalog } from '../../data/actions/catalog';
 import { upgrades } from '../../data/upgrades';
-import { eligible, validRacks, type CampaignSave } from './Campaign';
+import { eligible, meetsPrerequisite, validRacks, type CampaignSave } from './Campaign';
 export const SAVE_KEY='minor-incident.campaign';
 export const SAVE_ERROR='Save could not be loaded';
 export type SaveResult={status:'empty'}|{status:'ok';save:CampaignSave}|{status:'error';message:string};
@@ -23,7 +23,7 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   }
   if(Object.entries(save.usage).some(([id,n])=>!Object.hasOwn(catalog,id)||!Number.isSafeInteger(n)||n<0))return false;
   const prefix={...save,upgrades:[] as string[]};
-  for(const id of save.upgrades){if(!upgrades[id].prerequisites.every(p=>prefix.upgrades.includes(p)||save.ownedActions.includes(p))||(upgrades[id].weapon&&!save.ownedActions.includes(upgrades[id].weapon!))||(upgrades[id].grant&&!save.ownedActions.includes(upgrades[id].grant!)))return false;prefix.upgrades.push(id);}
+  for(const id of save.upgrades){if(!upgrades[id].prerequisites.every(p=>meetsPrerequisite(prefix,p))||(upgrades[id].weapon&&!save.ownedActions.includes(upgrades[id].weapon!))||(upgrades[id].grant&&!save.ownedActions.includes(upgrades[id].grant!)))return false;prefix.upgrades.push(id);}
   if(save.pending){const p=save.pending;
     if(!record(p)||!Number.isInteger(p.level)||p.level<1||p.level>5||!['unlock','cards','racks'].includes(p.phase)||typeof p.weaponChosen!=='boolean'||!strings(p.cards)||p.cards.some(id=>!Object.hasOwn(upgrades,id))||save.unlockedLevel!==p.level+1)return false;
     if(p.phase==='racks'){if(save.completedLevels!==p.level||p.cards.length!==3||p.cards.filter(id=>save.upgrades.includes(id)).length!==2)return false;}

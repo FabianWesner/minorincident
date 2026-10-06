@@ -16,6 +16,7 @@ describe('campaign',()=>{
     }
   });
   test('@E13 fixed unlock alternatives grant only the chosen weapon and retain guaranteed unlocks',()=>{
+    expect(eligible(newCampaign(),upgrades['upgrade.vehicle.1'])).toBe(false);const vehicleSave=preset('L3-default');beginRewards(vehicleSave,3);expect(eligible(vehicleSave,upgrades['upgrade.vehicle.1'])).toBe(true);
     for(const level of [2,3]as const)for(const id of weaponChoices[level]!){const save=preset(`L${level}-default`);beginRewards(save,level);expect(()=>revealCards(save)).toThrow();chooseWeapon(save,id);revealCards(save);expect(save.ownedActions).toContain(id);expect(save.ownedActions).not.toContain(weaponChoices[level]!.find(other=>other!==id));if(level===2)expect(save.ownedActions).toContain('weapon.molotov');}
   });
   test('@E13 @E13-AC01 used weapon weights bias offers without changing the save-seeded choice',()=>{
