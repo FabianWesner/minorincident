@@ -1,0 +1,42 @@
+
+> test:smoke
+> vitest run -t @smoke && sh tools/e2e-lock.sh playwright test --grep @smoke
+
+
+ RUN  v5.0.3 /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic
+
+
+ Test Files  3 passed | 63 skipped (66)
+      Tests  3 passed | 334 skipped (337)
+   Start at  05:45:30
+   Duration  6.00s (transform 48%, import 42%, tests 9%, worker 1%)
+
+     Import  217 modules were evaluated 2141 times · 7.27s total, 42% of tracked time
+             ~1.40s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+
+Running 20 tests using 2 workers
+
+  ✓   1 [chromium] › tests/e2e/driving.spec.ts:20:1 › S-07 @smoke @E09 vehicle enter, driver travels 50m, real right-click exit (6.8s)
+  ✓   2 [chromium] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.9s)
+  ✓   4 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.9s)
+  ✓   5 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.9s)
+  ✓   6 [pixel-7] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.8s)
+  ✓   7 [pixel-7] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (886ms)
+  ✓   8 [pixel-7] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.6s)
+  ✓   9 [pixel-7-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.8s)
+  ✓  10 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.0s)
+  ✓  11 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (1.8s)
+  ✓   3 [chromium] › tests/e2e/menus-mouse.spec.ts:3:1 › T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only (29.4s)
+  ✓  13 [iphone-14] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.4s)
+  ✓  12 [iphone-14] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (7.1s)
+  ✓  14 [iphone-14] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.0s)
+  ✓  16 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.9s)
+  ✓  17 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.2s)
+  ✓  15 [iphone-14-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (7.0s)
+  ✓  19 [webkit] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.6s)
+  ✓  20 [webkit] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.5s)
+  ✓  18 [webkit] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (7.2s)
+
+  20 passed (55.9s)

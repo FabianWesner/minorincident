@@ -34,7 +34,9 @@ resume after backgrounding.
 For earlier epic harnesses `?test=1` keeps the existing presentation. `?ui=1` opts
 into the real menus/HUD in tests. `hud-golden` is the HUD camera photo spot.
 `__SS__.settings.set` accepts `textSize: 1 | 1.25 | 1.5` and `colorblind: boolean`
-in addition to its existing settings. Those fields affect DOM presentation only.
+in addition to its existing settings. Text size affects DOM presentation;
+colorblind mode also recolors live and future telegraphs without changing their
+geometry, lifetime or simulation state.
 
 Accessibility audits use unmodified axe-core 4.11.0 as a standalone QA tool through
 `npm exec` (external npm cache), or `E14_AXE_PATH` for offline environments. It is

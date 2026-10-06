@@ -1,0 +1,740 @@
+{
+  "config": {
+    "argv": [
+      "/Users/fabianwesner/Library/Application Support/Herd/config/nvm/versions/node/v22.22.2/bin/node",
+      "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/node_modules/.bin/playwright",
+      "test",
+      "--project=chromium",
+      "tests/e2e/ui-accessibility.spec.ts",
+      "tests/e2e/onboarding.spec.ts",
+      "tests/e2e/hud-touch.spec.ts",
+      "tests/perf/ui.spec.ts",
+      "tests/e2e/input-keyboard.spec.ts",
+      "tests/e2e/mission-ui.spec.ts",
+      "--workers=2"
+    ],
+    "configFile": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/playwright.config.ts",
+    "rootDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e14-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3328 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3328",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/hud-touch.spec.ts",
+      "file": "e2e/hud-touch.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E14-05 @E14 @E14-AC05 portrait/landscape touch targets are 56px and clear of minimap/tracker",
+          "ok": true,
+          "tags": [
+            "E14",
+            "E14-AC05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11633,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:32:09.823Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ac9967b4e0faa0fb4db-b9dd046f84a58e695101",
+          "file": "e2e/hud-touch.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/input-keyboard.spec.ts",
+      "file": "e2e/input-keyboard.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E03-04 @E03 @E03-AC04 WASD follows screen up at camera azimuth pi/4",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2011,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:32:09.842Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ae750183f90ce60a669-fe7591eb49d69d5e31a8",
+          "file": "e2e/input-keyboard.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "T-E03-05 @E03 @E03-AC05 keyboard aim turns at 360deg/s, taps snap and action mirrors fire",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2084,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:32:12.086Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ae750183f90ce60a669-93d8e0893b2f5688bf10",
+          "file": "e2e/input-keyboard.spec.ts",
+          "line": 16,
+          "column": 1
+        },
+        {
+          "title": "T-E03-08 @E03 @E03-AC08 last device selects mouse-only mouse-keyboard and keyboard with matching hint",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2239,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:32:14.177Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ae750183f90ce60a669-0de855bb32ed703043d7",
+          "file": "e2e/input-keyboard.spec.ts",
+          "line": 50,
+          "column": 1
+        },
+        {
+          "title": "T-E03-09 @E03 @E03-AC09 binding form persists across reload and rejects conflicts with a message",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2526,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:32:16.422Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ae750183f90ce60a669-946dc64a522710bccd75",
+          "file": "e2e/input-keyboard.spec.ts",
+          "line": 67,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/mission-ui.spec.ts",
+      "file": "e2e/mission-ui.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E12-08 @E12 @E12-AC08 active world anchor, HUD distance, minimap and clamped direction arrow",
+          "ok": true,
+          "tags": [
+            "E12",
+            "E12-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6659,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:32:18.958Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fc4d3b75ad9b6dd7f30e-3f5fdca0b48b0e1f4d0a",
+          "file": "e2e/mission-ui.spec.ts",
+          "line": 11,
+          "column": 1
+        },
+        {
+          "title": "T-E12-09 @E12 @E12-AC09 results equal accumulated sim events; continue requests progression",
+          "ok": true,
+          "tags": [
+            "E12",
+            "E12-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5883,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:32:21.625Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fc4d3b75ad9b6dd7f30e-a306a3ad10b54af8d81b",
+          "file": "e2e/mission-ui.spec.ts",
+          "line": 26,
+          "column": 1
+        },
+        {
+          "title": "T-E12-06-browser @E12 @E12-AC06 real keyboard skip, caption/letterbox and watch/skip hashes equal",
+          "ok": true,
+          "tags": [
+            "E12",
+            "E12-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 9272,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:32:25.628Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fc4d3b75ad9b6dd7f30e-283c2d281a89c99d72fb",
+          "file": "e2e/mission-ui.spec.ts",
+          "line": 39,
+          "column": 1
+        },
+        {
+          "title": "T-E12-10-browser @E12 @E12-AC10 radio subtitle text and ID match the dialogue event",
+          "ok": true,
+          "tags": [
+            "E12",
+            "E12-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4664,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:32:27.518Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fc4d3b75ad9b6dd7f30e-d1a2960a6e75961128b3",
+          "file": "e2e/mission-ui.spec.ts",
+          "line": 44,
+          "column": 1
+        },
+        {
+          "title": "@E12 timer, escort and defend fail screens retry to checkpoint/start",
+          "ok": true,
+          "tags": [
+            "E12"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17032,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:32:32.191Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fc4d3b75ad9b6dd7f30e-b9a1ee99cde71353ab6f",
+          "file": "e2e/mission-ui.spec.ts",
+          "line": 48,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/onboarding.spec.ts",
+      "file": "e2e/onboarding.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E14-04 @E14 @E14-AC04 active mouse/keyboard/touch glyphs, including rebind; once per action per save",
+          "ok": true,
+          "tags": [
+            "E14",
+            "E14-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 18367,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:32:34.912Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0d4d9a63f9dc507f881b-67359ffb50768e8a508b",
+          "file": "e2e/onboarding.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "@E14 onboarding presents L2 selector and second side; L3 vehicle only when present",
+          "ok": true,
+          "tags": [
+            "E14"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13949,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:32:49.243Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0d4d9a63f9dc507f881b-902225bb02df9a99e1d3",
+          "file": "e2e/onboarding.spec.ts",
+          "line": 23,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/ui-accessibility.spec.ts",
+      "file": "e2e/ui-accessibility.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E14-09 @E14 @E14-AC09 keyboard focus, accessible names and axe no critical menu violations",
+          "ok": true,
+          "tags": [
+            "E14",
+            "E14-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 26267,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:32:53.302Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9646cbc1770a02b66cff-c493a0ba82d18a365aee",
+          "file": "e2e/ui-accessibility.spec.ts",
+          "line": 7,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/ui.spec.ts",
+      "file": "perf/ui.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@E14 @perf HUD reuses pins and reports DOM update cost with 200 threats",
+          "ok": true,
+          "tags": [
+            "E14",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6123,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T03:33:03.205Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f1319d659447f09537ec-2d6e2f5784168dbd4ca1",
+          "file": "perf/ui.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-06T03:32:08.280Z",
+    "duration": 71363.416,
+    "expected": 14,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
