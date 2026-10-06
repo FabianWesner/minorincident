@@ -66,6 +66,8 @@ export async function measureOnce(page: Page, cdp: CDPSession, base: string, pro
   const titleMs = await page.evaluate(() => performance.now());
   await page.click('[data-testid=start-game]');
   await page.click('[data-testid=character-female]');
+  // Optional menu "reading time" between the title and choosing L1 (default 0: click immediately).
+  const menuMs = Number(process.env.LOAD_MENU_MS ?? 0); if (menuMs) await page.waitForTimeout(menuMs);
   phase = 'level';
   await page.click('[data-testid=level-L1]');
   await page.waitForFunction(() => document.body.dataset.uiScreen === 'game', undefined, { timeout: 300_000, polling: 16 });

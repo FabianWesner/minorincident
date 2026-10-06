@@ -20,6 +20,12 @@ const productionIds: Record<string, string> = {
   'bld.supermarket': 'int.supermarket', 'bld.pharmacy': 'int.pharmacy-clinic',
   'bld.hospital': 'bld.hospital-exterior', 'bld.substation': 'bld.power-substation',
 };
+/** Runtime URLs DistrictView requests for a placement asset (LOD1 and LOD2 prototypes), for HTTP prefetch. */
+export function districtAssetUrls(id: string, definition: (id: string) => import('./types').AssetDef): string[] {
+  const def = definition(productionIds[id] ?? id);
+  if (!atLeast(def.status, 'integrated') || def.decalTexture) return [];
+  return [...new Set([def.lods?.lod1 ?? def.glb, def.lods?.lod2 ?? def.glb].filter((path): path is string => Boolean(path)).map(path => '/' + path.replace(/^public\//, '')))];
+}
 /** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
 export class DistrictAssets {
   private readonly loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);

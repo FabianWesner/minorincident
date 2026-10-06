@@ -17,6 +17,16 @@ export function rapierWasmFile(): Plugin {
       const ref = this.emitFile({ type: 'asset', name: 'rapier.wasm', source: Buffer.from(match![2], 'base64') });
       return { code: code.slice(0, match!.index) + `import.meta.ROLLUP_FILE_URL_${ref}` + code.slice(match!.index + match![0].length), map: null };
     },
+    // Start the WASM download with the HTML instead of after the JS has run; the matching
+    // fetch() (cors, same-origin credentials) reuses this preload for streaming compilation.
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, context) {
+        const wasm = Object.values(context.bundle ?? {}).find(file => file.type === 'asset' && /rapier.*\.wasm$/.test(file.fileName));
+        if (!wasm || !context.filename.endsWith('/index.html') || context.filename.includes('/preview/')) return html;
+        return { html, tags: [{ tag: 'link', attrs: { rel: 'preload', href: `/${wasm.fileName}`, as: 'fetch', type: 'application/wasm', crossorigin: '' }, injectTo: 'head' }] };
+      },
+    },
   };
 }
 

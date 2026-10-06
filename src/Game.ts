@@ -25,6 +25,7 @@ import type { Tier } from './levels/districts/types';
 import { SimWorld } from './sim/world/SimWorld';
 import { loadMeasure } from './assets/loadTiming';
 import { assetUrl } from './assets/assetUrl';
+import { prefetchLevel } from './assets/prefetch';
 
 /** Injected composition root, with staged initialization adapted from Bruno Game.js. */
 export class Game {
@@ -102,6 +103,8 @@ export class Game {
     });
     if (this.params.has('perf')) this.overlay = new PerfOverlay(this);
     this.ticker.init();
+    // While the player reads the menus, warm the HTTP cache with the level they will most likely start.
+    if (this.params.get('test') !== '1') void this.audioLoad.then(() => prefetchLevel(`L${saved.status === 'ok' ? saved.save.unlockedLevel : 1}`));
   }
   /** Serialize native-world changes so overlapping API loads cannot leak resources. */
   loadScenario(name: string | null, seed = 1, deferAudio = false): Promise<void> {
@@ -131,7 +134,7 @@ export class Game {
         const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(assetUrl(url));if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
         const data=loadMeasure('level:layouts',start);
         const cosmetic=this.world.entities.get(1)?.survivor;
-        await this.audioLoad; this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
+        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
