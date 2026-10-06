@@ -1216,9 +1216,9 @@
     "tier": "hero",
     "glb": "public/assets/models/inf.corpse-poses.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 4.205620288848877,
+      "y": 1.0660696849226952,
+      "z": 4.258085489273071,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -1274,7 +1274,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/inf.corpse-poses/model.glb",
+    "script": "assets/inf.corpse-poses/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.corpse-poses.lod1.glb",
+      "lod2": "public/assets/models/inf.corpse-poses.lod2.glb"
+    }
   },
   {
     "id": "inf.riot-cop",

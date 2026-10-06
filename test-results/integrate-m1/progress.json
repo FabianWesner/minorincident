@@ -5,7 +5,7 @@
     "E09",
     "E15"
   ],
-  "pending": "finish-preliminary-browser-then-final-restart",
+  "pending": "final-regression",
   "manifest_union": 275,
   "asset_registrations": [
     "bld.helipad",
@@ -25,7 +25,7 @@
       "passed": 193
     },
     "unit": {
-      "passed": 84
+      "passed": 85
     }
   },
   "conflicts_resolved": {
@@ -98,5 +98,18 @@
     "typecheck": 0,
     "lint": 0,
     "unit": 83
+  },
+  "main3": {
+    "head": "6eaccaa06fafab3bdccfdb66d2377350475bcd44",
+    "registered_sources": [
+      "inf.corpse-poses"
+    ],
+    "authored_pose_scale_preserved": true,
+    "unit": 85,
+    "inherited_doc": "specs/03-asset-pipeline.md"
+  },
+  "preliminary_e2e": {
+    "passed": 117,
+    "minutes": 27.3
   }
 }
