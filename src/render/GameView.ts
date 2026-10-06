@@ -207,6 +207,7 @@ export class GameView implements Lifecycle {
   settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean; windowMask?: boolean } & VfxSettings): void {
     this.vfx?.set(patch);
     if (patch.gore !== undefined || patch.vfx !== undefined) this.crowd?.setGoreEnabled(this.vfx?.snapshot().enabled === true && this.vfx.snapshot().gore === 'Full');
+    if (patch.colorblind !== undefined) this.vfxSettings.colorblind = patch.colorblind;
     if (patch.vfx !== undefined) this.vfxSettings.vfx = patch.vfx;
     if (patch.gore !== undefined) this.vfxSettings.gore = patch.gore;
     if (patch.flashReduction !== undefined) this.vfxSettings.flashReduction = patch.flashReduction;

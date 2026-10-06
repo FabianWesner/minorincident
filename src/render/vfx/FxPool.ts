@@ -87,6 +87,8 @@ export class FxPool {
     const identity = new Matrix4(); for (let i = 0; i < cap; i++) this.mesh.setMatrixAt(i, identity);
     this.expires = new Float64Array(cap);
   }
+  /** Accessibility palette changes preserve live telegraph geometry and lifetime. */
+  recolor(slot: number, color: number): void { this.tint.setHex(color); this.colors.setXYZ(slot, this.tint.r, this.tint.g, this.tint.b); this.colors.needsUpdate = true; }
   /** Returns a stable slot index; callers retain it only for attack-lifetime telegraphs. */
   spawn(now: number, life: number, x: number, y: number, z: number, vx: number, vy: number, vz: number, size: number, shape: number, color: number, gravity = 0, aspect = 1, preserveLive = false): number {
     let slot = this.cursor++ % this.budget;

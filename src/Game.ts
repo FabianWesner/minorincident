@@ -133,7 +133,7 @@ export class Game {
       this.world.infected.director.setFrustum(this.spawnFrustum.elements);
     }
     this.world.update();
-    if (this.ui.enabled) this.ui.hud.onboarding.observe(this.input.frame);
+    if (this.ui.enabled) this.ui.hud.onboarding.observe(this.world.inputFrame);
     this.view.advance(1 / 60);
   }
   async screenshotReady(): Promise<void> {
@@ -142,9 +142,9 @@ export class Game {
     await this.view.ready();
     for (let i = 0; i < 2; i++) { await new Promise<void>((resolve) => requestAnimationFrame(() => resolve())); this.view.update(this.clock.paused ? 1 : this.clock.alpha); }
   }
-  perf(): { fps: number; frameMs: number; simMs: number; drawCalls: number; triangles: number; geometries: number; textures: number; entities: number; backend: string; loadTiming:Game['lastLoad'] } {
+  perf(): { fps: number; frameMs: number; simMs: number; uiMs: number; drawCalls: number; triangles: number; geometries: number; textures: number; entities: number; backend: string; loadTiming:Game['lastLoad'] } {
     const info = this.view.renderer.info;
-    return { fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad };
+    return { fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad };
   }
   dispose(): void { this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); this.ui.dispose(); }
 }
