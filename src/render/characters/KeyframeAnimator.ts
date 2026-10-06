@@ -25,7 +25,6 @@ export class KeyframeAnimator {
   private readonly backpack: Object3D | undefined;
   private readonly backpackRest: number;
   private carryWeight = 0;
-  private rideLift = 0;
   private readonly carryPose: [Object3D, Quaternion][] = [];
   state: AnimationState = 'idle';
   clip = 'idle';
@@ -115,12 +114,6 @@ export class KeyframeAnimator {
     const holding = !!pose.carrying && !strike && name !== 'hand-over' && name !== 'ride';
     this.carryWeight = Math.max(0, Math.min(1, this.carryWeight + (holding ? 1 : -1) * dt / .15));
     if (this.carryWeight > 0) for (const [node, target] of this.carryPose) node.quaternion.slerp(target, this.carryWeight);
-    // Lean into the steer (GameView lifts the whole rider onto the saddle; lane F).
-    this.rideLift += ((ride ? 1 : 0) - this.rideLift) * Math.min(1, dt / .12);
-    if (this.rideLift > 1e-3) {
-      const steer = (ride?.steer ?? 0) * this.rideLift;
-      this.rig.torso.rotation.x += steer * .14; this.rig.head.rotation.y += steer * .35;
-    }
     for (const node of Object.values(this.rig)) node.quaternion.normalize();
     if (pose.animation === 'die') settleGroundPose(this.rig.root);
     const target = this.rig.torso.rotation.z * -.3;
