@@ -26,7 +26,8 @@
     "assets:build": "tsx tools/assets/build.ts",
     "assets:bake-crowd": "tsx tools/assets/bake-crowd.ts",
     "test:e2e:webgpu": "E2E_WEBGPU=1 sh tools/e2e-lock.sh playwright test --project=webgpu",
-    "layouts:build": "tsx tools/layouts/build.ts"
+    "layouts:build": "tsx tools/layouts/build.ts",
+    "assets:pack": "tsx tools/assets/pack.ts"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "0.21.0",

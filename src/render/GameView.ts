@@ -97,7 +97,7 @@ export class GameView implements Lifecycle {
     if (this.world.districts) {
       this.renderer.shadowMap.enabled=true;
       if(!this.districtResources){
-        const lighting=new Lighting(this.scene),materials=new Materials(lighting),registry=new DistrictAssets(materials),phase=windPhase();
+        const lighting=new Lighting(this.scene),materials=new Materials(lighting),registry=new DistrictAssets(materials,this.renderer),phase=windPhase();
         this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
       }
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
