@@ -6,6 +6,7 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 export interface EntitySnapshot {
   id: number;
   /** Actual fixed-step motion, including collision/avoidance, for NPC locomotion clips. */
+  locomotion?: import('../locomotion/MotionResponse').MotionResponse;
   motion?: { velocity: { x: number; z: number }; speed: number; moving: boolean; distance: number };
   civilian?: import('../npc/types').Civilian;
   companion?: import('../npc/types').Companion;

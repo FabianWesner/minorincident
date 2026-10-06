@@ -12,21 +12,25 @@ function radius(e: EntitySnapshot): number {
  * The survivor stays authoritative in Rapier; AI yields to it, including during
  * attack windups. Stable ID order resolves exact coincidence deterministically. */
 export function installCharacterSeparation(world: SimWorld): void {
-  const neighbors: number[] = [], query = { x: 0, z: 0, r: 2 };
+  const neighbors: number[] = [], query = { x: 0, z: 0, r: 2 }, radii = new Map<number, number>();
   world.events.on('sim.tick', () => {
     const nav = world.infected?.nav; if (!nav) return;
+    radii.clear(); let maximumRadius = 0;
+    for (const e of world.entities.iterate()) { const r = radius(e); radii.set(e.id, r); maximumRadius = Math.max(maximumRadius, r); }
     for (let pass = 0; pass < 3; pass++) for (const e of world.entities.iterate()) {
-      const r = radius(e); if (!r || e.survivor || e.civilian?.state === 'grabbed') continue;
+      const r = radii.get(e.id)!; if (!r || e.survivor || e.civilian?.state === 'grabbed') continue;
       if (world.districts && e.infected && !e.infected.perched && e.infected.special !== 'cling' && e.archetype !== 'infected.crow') e.transform.y = .7 + world.districts.groundHeight(e.transform.x, e.transform.z);
-      query.x = e.transform.x; query.z = e.transform.z; query.r = r + 1.5;
+      query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + .3;
       world.spatial.query(query, neighbors, false);
       for (const id of neighbors) {
         const other = world.entities.get(id); if (!other || other === e) continue;
         if (e.companion && !e.companion.following && e.companion.state === 'follow' && !other.survivor) continue;
-        const otherRadius = radius(other); if (!otherRadius) continue;
+        const otherRadius = radii.get(other.id)!; if (!otherRadius) continue;
         // Larger fighters still need to enter their authored melee/grab range.
         const gap = e.infected || other.infected ? Math.max(.015, Math.min(.3, 1.05 - r - otherRadius)) : .015;
-        const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, distance = Math.hypot(dx, dz), overlap = r + otherRadius + gap - distance;
+        const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, reach = r + otherRadius + gap;
+        if (dx * dx + dz * dz >= reach * reach) continue;
+        const distance = Math.hypot(dx, dz), overlap = reach - distance;
         if (overlap <= .001) continue;
         const angle = e.id * 2.399963, scale = other.survivor || other.civilian?.state === 'grabbed' || (other.companion && !other.companion.following && other.companion.state === 'follow') ? 1 : .5;
         nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, r);

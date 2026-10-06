@@ -1,4 +1,4 @@
-import { BoxGeometry, Color, Group, Mesh, type Material } from 'three/webgpu';
+import { BoxGeometry, Color, Group, Mesh, Quaternion, Vector3, type Material } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../assets/manifest.json';
@@ -18,6 +18,8 @@ export class CharacterView extends Group {
   private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
   private variant: SurvivorVariant = 'female';
   private tier: GearTier = 0;
+  private readonly facingTarget = new Quaternion();
+  private readonly facingAxis = new Vector3(0, 1, 0);
   private facingTime = -1;
   private turn = 0;
   private readonly bloodMaterials: PaletteMaterial[] = [];
@@ -92,7 +94,9 @@ export class CharacterView extends Group {
     if (this.facingTime < 0 || time < this.facingTime) this.rotation.y = yaw;
     const dt = Math.max(0, time - this.facingTime), delta = Math.atan2(Math.sin(yaw - this.rotation.y), Math.cos(yaw - this.rotation.y));
     this.turn = Math.abs(delta) > .12 ? Math.sign(delta) : 0;
-    this.rotation.y += delta * (1 - Math.exp(-24 * dt)); this.facingTime = time;
+    this.facingTarget.setFromAxisAngle(this.facingAxis, yaw);
+    const amount = Math.abs(delta) > 0 ? Math.min(1 - Math.exp(-24 * dt), 6 * dt / Math.abs(delta)) : 1;
+    this.quaternion.slerp(this.facingTarget, amount); this.facingTime = time;
   }
   /** Held views borrow these nodes; CharacterView retains ownership of the rig. */
   socket(side: 'LEFT' | 'RIGHT') { return this.characters.get(this.variant)!.sockets[side]; }
