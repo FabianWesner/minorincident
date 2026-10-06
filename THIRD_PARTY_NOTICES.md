@@ -37,6 +37,8 @@ copyright 2025 Bruno Simon):
 | `Zones.js` (41046b5) | `src/sim/ai/InfectedSystem.ts` — perception enter/alert transitions without singleton dependencies |
 | `PreRenderer.js` (41046b5) | `src/render/GameView.ts`, `src/Game.ts` — shader warm-up before screenshotReady (compileAsync plus two rendered frames) |
 
+| `Physics/PhysicsVehicle.js` (41046b5) | `src/sim/vehicles/VehicleBody.ts` — fixed-step four-wheel raycast suspension, engine taper, low centre of mass and bounded stuck history |
+| `World/VisualVehicle.js` (41046b5) | `src/render/VehicleView.ts` — authoritative wheel pivots/suspension, brake lamps and emergency lamp animation |
 | `Explosions.js` (41046b5) | `src/sim/combat/Damage.ts` — radial splash falloff and direction-scaled impulse, without singleton/render dependencies |
 
 All folio-2025 adaptations above reference commit `41046b5`.

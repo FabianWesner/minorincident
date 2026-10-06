@@ -5,7 +5,7 @@ import type { SimWorld } from '../world/SimWorld';
 export interface DamageEvent {
   attackId: number; actionId: string; sourceId: number; targetId: number; origin: Vec2; direction: Vec2;
   part?: 'leg'; radius?: number; spread?: number;
-  base: number; multiplier: number; type: 'melee' | 'bullet' | 'explosive' | 'status'; knockback: number; stagger: number;
+  base: number; multiplier: number; type: 'melee' | 'bullet' | 'explosive' | 'status' | 'vehicle'; knockback: number; stagger: number;
 }
 /** Directional shields only stop front bullets; splash is radial and ignores shields. */
 export function damageAmount(hit: DamageEvent, target: EntitySnapshot): number {
@@ -38,7 +38,7 @@ export class Damage {
     if (target.id === 1 && this.god) amount = 0;
     if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick);
     else { amount = Math.min(amount, target.health.current); target.health.current -= amount; }
-    const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, amount, damageType: hit.type };
+    const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, amount, damageType: hit.type, ...(hit.type === 'vehicle' ? { cause: 'vehicle' as const } : {}) };
     this.world.events.emit({ ...event, type: 'combat.hit' });
     if (amount > 0) {
       if (target.combat && hit.stagger > 0) { target.combat.staggerUntil = this.world.tick + Math.ceil(hit.stagger * 60); target.combat.attacking = false; }

@@ -1,6 +1,7 @@
 import { InfectedSystem } from '../ai/InfectedSystem';
 import { Mission } from '../missions/Mission';
 import type { MissionDef } from '../missions/types';
+import { Vehicles } from '../vehicles/Vehicles';
 import { survivor } from '../../data/survivor';
 import { Combat } from '../combat/Combat';
 import { Interactables } from '../interact/Interactables';
@@ -36,6 +37,7 @@ export class SimWorld implements Lifecycle {
   get inputFrame(): InputFrame { return this.input; }
   /** Attach a validated mission after scenario/composition assembly. */
   loadMission(def: MissionDef): Mission { const next=new Mission(this,def);this.missions?.dispose();return this.missions=next; }
+  vehicles: Vehicles | null = null;
   /** Level-owned records survive player death; scenario unload clears them. */
   mission: GameStateSnapshot['mission'] = null;
   progression: GameStateSnapshot['progression'] = null;
@@ -44,6 +46,7 @@ export class SimWorld implements Lifecycle {
   scenario: string | null = null;
   previousPlayer: Transform | null = null;
   private input = emptyInput();
+  private readonly drivingCombatInput = emptyInput();
   private scheme: import('../../input/InputFrame').Scheme = 'mouse-only';
   private rng: Rng | null = null;
   async init(): Promise<void> { await this.physics.init(); }
@@ -61,10 +64,17 @@ export class SimWorld implements Lifecycle {
     if (definition.combat) this.combat = new Combat(this, definition);
     if (this.player) this.hazards = new Hazards(this);
     if (this.player) this.pickups = new Pickups(this);
-    this.events.on('sim.tick', () => { if (this.combat) this.combat.intent(this.input); }, SimPhase.input);
+    if (definition.survivor) this.vehicles = new Vehicles(this);
+    if (name === 'drive-course') {
+      this.vehicles!.spawn('vehicle.sedan', { x: 0, z: 0 }); this.vehicles!.spawn('vehicle.police', { x: 0, z: 12 });
+      for (let x = 25; x <= 575; x += 25) { const z = Math.sin(x / 40) * 3; this.vehicles!.obstacles.spawn('cone', { x, z: z - 2 }); this.vehicles!.obstacles.spawn('cone', { x, z: z + 2 }); }
+    }
+    this.events.on('sim.tick', () => this.vehicles?.prePhysics(this.input, this.scheme), SimPhase.input);
+    this.events.on('sim.tick', () => { if (this.combat && this.vehicles?.active == null) this.combat.intent(this.input); }, SimPhase.input);
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
+      if (this.vehicles?.active != null) return;
       if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.prePhysics(this.input, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
@@ -75,10 +85,11 @@ export class SimWorld implements Lifecycle {
     this.placeInteractions(definition);
     this.events.on('sim.tick', () => this.physics.update(), SimPhase.physics);
     this.events.on('sim.tick', () => {
+      this.vehicles?.postPhysics();
       if (this.combat) {
         const position = this.physics.playerBody!.translation(); Object.assign(this.entities.get(1)!.transform, position); this.spatial.set(1, position.x, position.z);
         this.infected?.props.update();
-        this.combat.update(this.input);
+        this.combat.update(this.vehicles?.active != null ? this.drivingCombatInput : this.input);
       }
     }, SimPhase.combat);
     this.events.on('sim.tick', () => {
@@ -86,6 +97,7 @@ export class SimWorld implements Lifecycle {
       this.hazards?.update(); this.pickups?.update(); this.interactables?.update(this.input);
     }, SimPhase.missions);
     this.events.on('sim.tick', () => {
+      if (this.vehicles?.active != null) return;
       if (this.player) { this.player.postPhysics(this.tick); this.spatial.set(1, this.player.entity.transform.x, this.player.entity.transform.z); return; }
       const p = this.physics.playerBody!.translation();
       Object.assign(this.entities.get(1)!.transform, p);
@@ -120,6 +132,7 @@ export class SimWorld implements Lifecycle {
     const {min,max}=next.nav, player=this.entities.get(1)!;
     this.physics.load({name:next.composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:player.transform});
     for(const d of next.districts)for(const aabb of d.decay.colliders.map(c=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
+    this.vehicles?.rebuild(true);
     this.hazards?.debris.reset(true); this.interactables?.rebuildBlockers(next.nav, true);
     this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step();
   }
@@ -153,11 +166,12 @@ export class SimWorld implements Lifecycle {
     const entities = this.query({});
     return { ...(this.infected ? { ai: structuredClone(this.infected.snapshot()) } : {}), ...(entities.some(e => e.interactable || e.hazard || (e.pickup && 'kind' in e.pickup) || e.destructible) ? { interactions: { activeId: this.interactables?.activeId ?? null, debris: this.hazards?.debris.snapshot() ?? [], hazards: this.hazards?.snapshot() ?? null } } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities, mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
   }
-  spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number; reactive?: boolean } = {}): number {
+  spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number; reactive?: boolean; ramDamage?: number } = {}): number {
     if (!this.combat) throw new Error('Load combat-arena before spawning dummies');
     const hp = opts.hp ?? 100, armor = opts.armor ?? 0, yaw = opts.yaw ?? 0, radius = opts.radius ?? 0.4;
     if (![pos.x, pos.z, hp, armor, yaw, radius].every(Number.isFinite) || hp <= 0 || armor < 0 || armor > 1 || radius <= 0) throw new RangeError('Invalid dummy');
     const entity = this.entities.create({ kind: opts.faction === 'escort' ? 'escort' : 'infected', archetype, transform: { ...pos, y: 0.7, yaw }, health: { current: hp, max: hp }, faction: opts.faction ?? 'infected', combat: { radius, armor, shield: opts.shield ?? archetype === 'infected.riot', staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
+    if (opts.ramDamage !== undefined) entity.ramDamage = opts.ramDamage;
     if (opts.reactive && entity.faction === 'infected') entity.hearing = { mode: 'idle', target: { x: pos.x, z: pos.z }, lureUntil: 0 };
     this.spatial.set(entity.id, pos.x, pos.z); return entity.id;
   }
@@ -170,6 +184,7 @@ export class SimWorld implements Lifecycle {
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
   }
   reset(): void {
+    this.vehicles?.dispose(); this.vehicles = null;
     this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.pickups = null; this.hazards = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }

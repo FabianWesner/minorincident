@@ -4,7 +4,7 @@ import { Recorder } from '../../src/input/Recorder';
 import { boot, expect, test } from './fixtures';
 import { tick } from './input-helpers';
 
-test('T-E03-recorder-browser @E03 @E03-AC10 real device frames replay through the browser input phase', async ({ page }) => {
+test('T-E03-recorder-browser @E03 @E03-AC10 @E09 real device frames replay through the browser input phase', async ({ page }) => {
   await boot(page);
   await page.evaluate(async () => { const api = window.__SS__!; await api.loadScenario('empty', { seed: 42 }); api.pause(); api.input.record(); });
   await page.keyboard.down('w'); await tick(page, 30);

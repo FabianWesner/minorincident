@@ -75,7 +75,7 @@ export class Hazards {
   }
   private alarm(e: EntitySnapshot): void {
     e.hazard!.activeUntil = this.world.tick + 600;
-    this.world.events.emit({ type: 'noise', tick: this.world.tick, sourceId: e.id, position: { x: e.transform.x, z: e.transform.z }, radius: 20, duration: 10 });
+    this.world.events.emit({ type: 'noise', tick: this.world.tick, sourceId: e.id, actionId: 'hazard.car-alarm', position: { x: e.transform.x, y: e.transform.y, z: e.transform.z }, radius: 20, loudness: 1, kind: 'alarm', duration: 10 });
     this.lure(e);
   }
   private lure(e: EntitySnapshot): void {

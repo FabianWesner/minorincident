@@ -1,4 +1,5 @@
 import { infectedScenarios } from '../../tests/fixtures/scenarios/infected';
+import { driveCourse } from '../../tests/fixtures/scenarios/drive-course';
 import { combatArena } from '../../tests/fixtures/scenarios/combat-arena';
 import { survivorScenarios } from '../../tests/fixtures/scenarios/survivor';
 import { lookdev } from '../../tests/fixtures/scenarios/lookdev';
@@ -27,7 +28,7 @@ export interface ScenarioDefinition extends InteractionPlacements {
   player: { x: number; y: number; z: number };
 }
 export function loadScenarioDefinition(name: string): ScenarioDefinition {
-  const definition = name === 'interact-yard' ? interactYard : name === 'mission-sandbox' ? { ...combatArena, name } : name === 'combat-arena' ? combatArena : name === 'empty' ? empty : name === 'lookdev' ? lookdev : survivorScenarios[name] ?? infectedScenarios[name] ?? null;
+  const definition = name === 'drive-course' ? driveCourse : name === 'interact-yard' ? interactYard : name === 'mission-sandbox' ? { ...combatArena, name } : name === 'combat-arena' ? combatArena : name === 'empty' ? empty : name === 'lookdev' ? lookdev : survivorScenarios[name] ?? infectedScenarios[name] ?? null;
   if (!definition) throw new Error(`Unknown scenario: ${name}`);
   if (definition.ground.width <= 0 || definition.ground.depth <= 0 || !Object.values(definition.player).every(Number.isFinite)) throw new Error(`Invalid ${name} scenario`);
   return structuredClone(definition);
