@@ -21,7 +21,7 @@ export class Clock implements Lifecycle {
     if (this.paused) return 0;
     this.accumulator += realSeconds * this.timeScale;
     let count = 0;
-    while (this.accumulator + 1e-10 >= FIXED_DT && count < this.maxCatchUp) {
+    while (!this.paused && this.accumulator + 1e-10 >= FIXED_DT && count < this.maxCatchUp) {
       step(); this.accumulator = Math.max(0, this.accumulator - FIXED_DT); count++;
     }
     // Discard excess catch-up, keeping only the interpolation fraction.

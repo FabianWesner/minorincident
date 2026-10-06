@@ -27,6 +27,8 @@ export class Bindings {
     for (const action in this.map) if (this.map[action as Action].includes(code)) return action as Action;
     return null;
   }
+  /** Current keyboard glyph without copying the action map each HUD frame. */
+  keyLabel(action: Action): string { return this.map[action].find(code => !code.startsWith('Mouse'))?.replace('Key', '') ?? ''; }
   get(): BindingMap { return structuredClone(this.map); }
   /** Replaces this action's keyboard alternatives, retaining its fixed mouse mirror. */
   rebind(action: Action, code: string): { ok: boolean; message: string } {

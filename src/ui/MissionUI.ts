@@ -27,6 +27,7 @@ export class MissionUI {
   private phase = '';
   private active = '';
   constructor(private readonly world: SimWorld, private readonly onChange: () => void) {
+    for (const [name, element] of Object.entries({ root: this.root, tracker: this.tracker, subtitle: this.subtitle, toast: this.toast, marker: this.marker, map: this.map, panel: this.panel, heading: this.heading, detail: this.detail, button: this.button, result: this.result })) element.dataset.testid = `mission-${name}`;
     this.root.className = 'mission-ui'; this.root.hidden = true;
     this.tracker.className = 'mission-tracker'; this.tracker.setAttribute('aria-live','polite');
     this.subtitle.className = 'mission-subtitle'; this.subtitle.setAttribute('role','status');
@@ -36,7 +37,7 @@ export class MissionUI {
     this.panel.className = 'mission-panel'; this.panel.setAttribute('aria-label','Mission');
     this.button.type = 'button'; this.button.addEventListener('click',this.accept);
     for (const [key,label] of [['time','Time (seconds)'],['kills','Kills'],['damage','Damage taken'],['deaths','Deaths'],['rescued','Rescued'],['optionalObjectives','Optional objectives']] as const) {
-      const title=document.createElement('dt'), value=document.createElement('dd'); title.textContent=label; value.dataset.stat=key; this.result.append(title,value); this.rows.set(key,value);
+      const title=document.createElement('dt'), value=document.createElement('dd'); title.textContent=label; title.dataset.testid=`result-label-${key}`; value.dataset.testid=`result-${key}`; value.dataset.stat=key; this.result.append(title,value); this.rows.set(key,value);
     }
     this.panel.append(this.heading,this.detail,this.result,this.button);
     this.root.append(this.tracker,this.map,this.marker,this.subtitle,this.toast,this.panel); document.querySelector('#game')!.append(this.root);
@@ -85,7 +86,7 @@ export class MissionUI {
       this.marker.classList.toggle('offscreen',offscreen);
       const extent=100;
       for(const s of mission.def.steps){
-        let pin=this.pins.get(s.id);if(!pin){pin=document.createElement('span');pin.className='mission-map-pin';pin.dataset.objective=s.id;this.map.append(pin);this.pins.set(s.id,pin);}
+        let pin=this.pins.get(s.id);if(!pin){pin=document.createElement('span');pin.className='mission-map-pin';pin.dataset.testid=`mission-pin-${s.id}`;pin.dataset.objective=s.id;this.map.append(pin);this.pins.set(s.id,pin);}
         pin.hidden=state.steps[s.id].status!=='active';if(pin.hidden)continue;const a=mission.def.anchors[s.anchor];
         const dx=(a.x-player.transform.x)/extent*40,dy=(a.z-player.transform.z)/extent*40,scale=Math.min(1,40/Math.max(1,Math.hypot(dx,dy)));
         pin.style.left=`${50+dx*scale}%`;pin.style.top=`${50+dy*scale}%`;
