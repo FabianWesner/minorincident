@@ -36,6 +36,12 @@ export class Lighting {
     else this.scene.fog = new Fog(p.fog, p.fogNear, p.fogFar);
   }
   update(view: View): void {
+    // Portrait framing pulls the camera back to retain the playable circle.
+    // Fog must follow that offset so it still starts beyond the nearby action.
+    const p = timeOfDay[this.preset];
+    const fogOffset = Math.max(0, view.camera.position.distanceTo(view.focus) - 35);
+    this.fogNear.value = p.fogNear + fogOffset; this.fogFar.value = p.fogFar + fogOffset;
+    if (this.scene.fog instanceof Fog) { this.scene.fog.near = this.fogNear.value; this.scene.fog.far = this.fogFar.value; }
     // Bound the view's ground-plane corners, then enclose that area in the light's orthographic frustum.
     const tanV = Math.tan(view.camera.fov * Math.PI / 360);
     const radius = Math.max(16, view.radius * tanV * Math.max(view.camera.aspect, 1 / Math.cos(view.polar)) * 1.5);
@@ -45,9 +51,10 @@ export class Lighting {
     camera.left = camera.bottom = -radius; camera.right = camera.top = radius;
     camera.near = 0.1; camera.far = radius * 4; camera.updateProjectionMatrix();
   }
+  /** Includes live fog ranges so viewport changes can be checked without shader inspection. */
   getState() {
     const p = timeOfDay[this.preset];
-    return { preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: p.sun, sky: p.sky, fog: p.fog, intensity: p.intensity };
+    return { preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: p.sun, sky: p.sky, fog: p.fog, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: p.intensity };
   }
   dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); }
 }
