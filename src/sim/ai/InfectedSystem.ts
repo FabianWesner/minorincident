@@ -53,6 +53,7 @@ export class InfectedSystem {
   }
   private sequence = 0;
   private budget = 0;
+  private routes = 0;
   private readonly lureTarget = { x: 0, z: 0 };
   private readonly waypoint = { x: 0, z: 0 };
   constructor(readonly world: SimWorld, definition: ScenarioDefinition) {
@@ -132,7 +133,7 @@ export class InfectedSystem {
   }
   alert(entity: EntitySnapshot): void { if (entity.infected!.state === 'idle' || entity.infected!.state === 'wander') { entity.infected!.state = 'alerted'; entity.infected!.until = this.world.tick + 6; } }
   update(): void {
-    const player = this.world.entities.get(1)!; this.budget = 2000; this.director.update();
+    const player = this.world.entities.get(1)!; this.budget = 2000; this.routes = 0; this.director.update();
     this.barricades.length = 0; for (const e of this.world.entities.iterate()) if (e.kind === 'barricade' && e.health.current > 0) this.barricades.push(e);
     if (this.active.length > 20) this.navigation.flow(player.transform, 1500);
     this.crowd.length = 0;
@@ -354,9 +355,9 @@ export class InfectedSystem {
     // Per-tier golden-ratio sequence from a seeded start: jitter is uniform over the run, fixed per entity, and
     // infected of one tier spawned together never share a speed (no synchronized group).
     const u = (this.tierStart[tier] + this.tierCount[tier]++ * 0.6180339887498949) % 1, rng = this.l1Rng!;
-    const brain: L1Brain = e.infected!.l1 ?? { mode: 'wander', tier, runSpeed: 0, wanderSpeed: 0, targetId: 0, seenX: 0, seenZ: 0, seenTick: 0, headingX: 0, headingZ: 0, looking: false, lookYaw: 0, pauseUntil: 0, goalX: 0, goalZ: 0, hasGoal: false, search: searchPlan(), episodes: 0, distractionId: 0, biteTargetId: 0 };
+    const brain: L1Brain = e.infected!.l1 ?? { mode: 'wander', tier, runSpeed: 0, wanderSpeed: 0, targetId: 0, seenX: 0, seenZ: 0, seenTick: 0, headingX: 0, headingZ: 0, looking: false, lookYaw: 0, pauseUntil: 0, goalX: 0, goalZ: 0, hasGoal: false, search: searchPlan(), episodes: 0, distractionId: 0, biteTargetId: 0, direct: false, directTick: -1, directX: 0, directZ: 0 };
     const [low, high] = l1v2.infected.wanderSpeed;
-    Object.assign(brain, { mode: 'wander', tier, runSpeed: l1TierSpeed(tier, u), wanderSpeed: low + rng.next() * (high - low), targetId: 0, headingX: 0, headingZ: 0, looking: true, lookYaw: e.transform.yaw, pauseUntil: this.world.tick + 20 + Math.floor(rng.next() * 40), hasGoal: false, episodes: 0, distractionId: 0, biteTargetId: 0 });
+    Object.assign(brain, { mode: 'wander', tier, runSpeed: l1TierSpeed(tier, u), wanderSpeed: low + rng.next() * (high - low), targetId: 0, headingX: 0, headingZ: 0, looking: true, lookYaw: e.transform.yaw, pauseUntil: this.world.tick + 20 + Math.floor(rng.next() * 40), hasGoal: false, episodes: 0, distractionId: 0, biteTargetId: 0, directTick: -1 });
     brain.search.until = 0;
     e.infected!.l1 = brain; e.infected!.speed = brain.runSpeed; e.infected!.state = 'wander';
   }
@@ -425,9 +426,10 @@ export class InfectedSystem {
       const dx = seen.position.x - brain.seenX, dz = seen.position.z - brain.seenZ, d = Math.hypot(dx, dz);
       if (d > 0.05) { brain.headingX = dx / d; brain.headingZ = dz / d; }
     } else {
-      // A fresh sighting: a brief readable "notice" beat (stop, snap toward the human), then the run.
-      if (brain.mode !== 'chase') { brain.pauseUntil = tick + 12; brain.looking = true; brain.lookYaw = -Math.atan2(seen.position.z - e.transform.z, seen.position.x - e.transform.x); }
-      brain.headingX = brain.headingZ = 0;
+      // A fresh sighting from calm: a brief readable "notice" beat (stop, snap toward the human), then the run.
+      // Searching infected are already hunting and re-acquire without it.
+      if (brain.mode === 'wander' || (brain.mode === 'search' && brain.distractionId !== 0) || brain.mode === 'attracted') { brain.pauseUntil = tick + 12; brain.looking = true; brain.lookYaw = -Math.atan2(seen.position.z - e.transform.z, seen.position.x - e.transform.x); }
+      brain.headingX = brain.headingZ = 0; brain.distractionId = 0;
       this.world.events.emit({ type: 'ai.alerted', tick, sourceId: seen.id, targetId: e.id, cause: 'sight', position: { ...e.transform } });
     }
     brain.mode = 'chase'; b.state = 'chase'; brain.targetId = seen.id; brain.seenX = seen.position.x; brain.seenZ = seen.position.z; brain.seenTick = tick;
@@ -445,13 +447,13 @@ export class InfectedSystem {
     const distance = Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z), lunge = l1v2.infected.lungeRangeM;
     if (target.kind === 'player') {
       if (distance <= lunge && this.world.tick >= b.cooldown && this.l1!.lineOfSight(e.transform, target.position)) { b.combo = 0; this.windup(e); return; }
-      this.seek(e, target.position, brain.runSpeed, true);
+      this.steerL1(e, brain, target.position, brain.runSpeed, true, true);
       return;
     }
     // Civilians: runner lunge burst inside 2.5 m, then grab on contact.
     const contact = e.combat!.radius + 0.35 + 0.3;
     if (distance <= contact) { this.startBite(e, b, brain, target); return; }
-    this.seek(e, target.position, distance <= lunge ? Math.min(7, brain.runSpeed * 1.25) : brain.runSpeed, false);
+    this.steerL1(e, brain, target.position, distance <= lunge ? Math.min(7, brain.runSpeed * 1.25) : brain.runSpeed, false, true);
   }
   private startBite(e: EntitySnapshot, b: InfectedState, brain: L1Brain, target: HumanTarget): void {
     const tick = this.world.tick, victim = this.world.entities.get(target.id);
@@ -491,7 +493,7 @@ export class InfectedSystem {
       s.next = 0; brain.mode = 'search'; b.state = 'attracted'; brain.looking = true; brain.lookYaw = e.transform.yaw + 1.2; brain.pauseUntil = tick + 30;
       return;
     }
-    this.seek(e, { x: brain.goalX, z: brain.goalZ }, brain.runSpeed * 0.85, false);
+    this.steerL1(e, brain, { x: brain.goalX, z: brain.goalZ }, brain.runSpeed * 0.85);
   }
   private searchL1(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
     const s = brain.search, tick = this.world.tick, rng = this.l1Rng!;
@@ -509,7 +511,7 @@ export class InfectedSystem {
       brain.pauseUntil = tick + 18 + Math.floor(rng.next() * 30);
       return;
     }
-    this.seek(e, { x: tx, z: tz }, s.next < 0 ? brain.runSpeed : brain.runSpeed * 0.7, false);
+    this.steerL1(e, brain, { x: tx, z: tz }, s.next < 0 ? brain.runSpeed : brain.runSpeed * 0.7);
   }
   /** Keeps a long search busy: one more probe 4-12 m around the origin. */
   private extendSearch(s: L1Brain['search'], rng: Rng): void {
@@ -535,7 +537,7 @@ export class InfectedSystem {
       brain.pauseUntil = tick + 60 + Math.floor(rng.next() * 150);
       return;
     }
-    this.seek(e, { x: brain.goalX, z: brain.goalZ }, brain.wanderSpeed, false);
+    this.steerL1(e, brain, { x: brain.goalX, z: brain.goalZ }, brain.wanderSpeed);
   }
   /** Standing look-around: turn the body toward `lookYaw` at a bounded rate, then sweep back the other way. */
   private look(e: EntitySnapshot, brain: L1Brain): void {
@@ -549,7 +551,42 @@ export class InfectedSystem {
   }
   /** E26 uses the same authored attack damage when resolving barricades. */
   barricadeDamage(sourceId: number, base: number): number { return base * (this.world.entities.get(sourceId)?.archetype === 'infected.gorilla' ? 6 : this.world.entities.get(sourceId)?.archetype === 'infected.brute' ? 5 : 1); }
-  private seek(e: EntitySnapshot, target: { x: number; z: number }, speed = e.infected!.speed, flow = true): void {
+  /**
+   * L1 steering under the motion limits: straight when the goal is in clear view (re-checked every 6 ticks or when the
+   * goal moved), else a budgeted A* route (at most 4 new routes per tick; moving goals re-route every 0.25 s), or the
+   * shared flow field when chasing the survivor in a crowd. `pursue` keeps full speed onto a moving human.
+   */
+  private steerL1(e: EntitySnapshot, brain: L1Brain, goal: { x: number; z: number }, speed: number, survivor = false, pursue = false): void {
+    const b = e.infected!, tick = this.world.tick, radius = e.combat!.radius, grid = this.navigation.district(e.transform);
+    if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }
+    const nav = this.navigation.grid(e.transform), target = this.navigation.target(e.transform, goal);
+    if ((tick + e.id) % 6 === 0 || brain.directTick < 0 || Math.hypot(target.x - brain.directX, target.z - brain.directZ) > 1.5) {
+      brain.direct = nav.visible(e.transform, target, radius); brain.directTick = tick; brain.directX = target.x; brain.directZ = target.z;
+    }
+    let x = target.x, z = target.z;
+    if (!brain.direct) {
+      const from = nav.nearestCell(e.transform.x, e.transform.z);
+      let next = -1;
+      if (survivor && this.active.length > 20) next = nav.flowNext(from);
+      else {
+        const to = nav.nearestCell(target.x, target.z);
+        const stale = b.pathIndex >= b.path.length || (b.goal !== to && (tick + e.id) % 15 === 0);
+        if (stale && this.budget > 0 && this.routes < 4) { this.routes++; nav.path(from, to, b.path, this.budget); this.budget -= nav.expansions; b.pathIndex = 0; b.goal = to; }
+        while (b.pathIndex < b.path.length && Math.hypot(nav.x(b.path[b.pathIndex]) - e.transform.x, nav.z(b.path[b.pathIndex]) - e.transform.z) < 0.6) b.pathIndex++;
+        if ((tick + e.id) % 3 === 0 && b.pathIndex + 2 < b.path.length) {
+          this.waypoint.x = nav.x(b.path[b.pathIndex + 2]); this.waypoint.z = nav.z(b.path[b.pathIndex + 2]);
+          if (nav.visible(e.transform, this.waypoint, radius)) b.pathIndex += 2;
+        }
+        next = b.pathIndex < b.path.length ? b.path[b.pathIndex] : -1;
+      }
+      if (next >= 0 && next !== from) { x = nav.x(next); z = nav.z(next); }
+    }
+    const dx = x - e.transform.x, dz = z - e.transform.z, distance = Math.hypot(dx, dz);
+    const remaining = x === target.x && z === target.z ? distance - (pursue ? radius + 0.36 : 0) : distance;
+    if (remaining < 0.02) return;
+    const velocity = Math.min(speed, remaining * (pursue ? 60 : 2)); moveAgent(e, dx / distance * velocity, dz / distance * velocity, this.nav, tick);
+  }
+  private seek(e: EntitySnapshot, target: { x: number; z: number }): void {
     const grid = this.navigation.district(e.transform), b = e.infected!;
     if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }
     const nav = this.navigation.grid(e.transform); target = this.navigation.target(e.transform, target);
@@ -557,7 +594,7 @@ export class InfectedSystem {
     const from = nav.nearestCell(e.transform.x, e.transform.z), to = nav.nearestCell(x, z);
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
       let next = from;
-      if (flow && this.active.length > 20) next = nav.flowNext(from);
+      if (this.active.length > 20) next = nav.flowNext(from);
       else {
         if ((b.goal !== to || b.pathIndex >= b.path.length) && this.budget > 0) {
           nav.path(from, to, b.path, this.budget); this.budget -= nav.expansions; b.pathIndex = 0; b.goal = to;
@@ -571,13 +608,13 @@ export class InfectedSystem {
           }
           next = b.path[b.pathIndex]; if (Math.hypot(nav.x(next) - e.transform.x, nav.z(next) - e.transform.z) < 0.15) next = b.path[++b.pathIndex] ?? to; }
       }
-      if (next < 0 || (flow && this.active.length > 20 && next === from)) return;
+      if (next < 0 || (this.active.length > 20 && next === from)) return;
       x = nav.x(next); z = nav.z(next);
     }
     const dx = x - e.transform.x, dz = z - e.transform.z, distance = Math.hypot(dx, dz);
     const remaining = x === target.x && z === target.z ? distance - e.combat!.radius - 0.36 : distance;
     if (remaining < 0.02) return;
-    const velocity = Math.min(speed, remaining * 2); moveAgent(e, dx / distance * velocity, dz / distance * velocity, this.nav, this.world.tick);
+    const speed = Math.min(b.speed, remaining * 2); moveAgent(e, dx / distance * speed, dz / distance * speed, this.nav, this.world.tick);
   }
   private separate(e: EntitySnapshot): void {
     this.query.x = e.transform.x; this.query.z = e.transform.z; this.query.r = e.combat!.radius + 0.7; this.world.spatial.query(this.query, this.neighbors, false);
