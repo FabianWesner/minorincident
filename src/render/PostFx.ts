@@ -1,6 +1,6 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from folio-2025 Rendering.js / Passes/cheapDOF.js by Bruno Simon (MIT), commit 41046b5.
-import { RenderPipeline, type Camera, type Scene, type WebGPURenderer, type RenderTarget } from 'three/webgpu';
+import { ColorManagement, NoToneMapping, RenderPipeline, type Camera, type Scene, type WebGPURenderer, type RenderTarget } from 'three/webgpu';
 import { pass, uv, uniform, mix, vec2 } from 'three/tsl';
 import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 import { hashBlur } from 'three/addons/tsl/display/hashBlur.js';
@@ -14,7 +14,7 @@ export class PostFx {
   private readonly blurredOutput;
   private readonly scenePass;
   private readonly bloomPass;
-  constructor(renderer: WebGPURenderer, scene: Scene, camera: Camera, tier: QualityTier = 'high') {
+  constructor(private readonly renderer: WebGPURenderer, scene: Scene, camera: Camera, tier: QualityTier = 'high') {
     this.scenePass = pass(scene, camera); const source = this.scenePass.getTextureNode('output');
     this.bloomPass = bloom(source, 0.25, 0, 1);
     this.tier = tier;
@@ -32,6 +32,16 @@ export class PostFx {
   private tier: QualityTier = 'high';
   setDof(enabled: boolean): void { this.pipeline.outputNode = enabled && this.tier === 'high' ? this.blurredOutput : this.sharpOutput; this.pipeline.needsUpdate = true; }
   snapshot() { return { bloomMips: qualityBudgets[this.tier].bloomMips, dof: this.pipeline.outputNode === this.blurredOutput }; }
+  /** Compile the gameplay target once, rather than building a second canvas-context variant. */
+  async compile(): Promise<void> {
+    const renderer = this.renderer, target = renderer.getRenderTarget(), mrt = renderer.getMRT();
+    const tone = renderer.toneMapping, color = renderer.outputColorSpace;
+    this.scenePass.renderTarget.samples = renderer.samples;
+    this.scenePass.renderTarget.texture.type = renderer.getOutputBufferType();
+    renderer.toneMapping = NoToneMapping; renderer.outputColorSpace = ColorManagement.workingColorSpace;
+    try { await this.scenePass.compileAsync(renderer); }
+    finally { renderer.setRenderTarget(target); renderer.setMRT(mrt); renderer.toneMapping = tone; renderer.outputColorSpace = color; }
+  }
   render(): void { this.pipeline.render(); }
   dispose(): void {
     this.pipeline.dispose(); this.bloomPass.dispose(); this.scenePass.dispose();

@@ -137,6 +137,7 @@ export class Game {
           const definition=id==='L1'?levelOneSlice(campaign):campaign;
           if(definition.slice)this.world.npcs?.configureSlice(definition.anchors['incident-0']);
           const mission=this.world.loadMission(definition);
+          if (id === 'L1') { this.world.preparedDistricts.set(this.world.districts!.composition.tier, this.world.districts!); this.world.prepareTier(0); this.world.prepareTier(1); }
           if(opts?.checkpoint) mission.loadCheckpoint(opts.checkpoint);
         }
         if(this.campaign)this.watchCampaign();
@@ -174,6 +175,7 @@ export class Game {
   /** Queue one presentation rebuild when a mission script changes decay. */
   private refreshView(): Promise<void> {
     if (this.loading || this.renderedDistricts === this.world.districts) return this.levelQueue;
+    if (this.view.switchPreparedDistrict()) { this.renderedDistricts = this.world.districts; return this.levelQueue; }
     this.loading=true;
     const refresh=this.levelQueue.then(async()=>{
       try { await this.view.load(); this.renderedDistricts=this.world.districts; await this.audio.load(); }
