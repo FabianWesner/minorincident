@@ -62,6 +62,12 @@ for (const scene of ['hud', 'live'] as const) for (const viewport of sizes) {
     await page.getByTestId('objective-tracker').tap(); await expect(page.getByTestId('objective-detail')).toBeVisible();
     await expect(page.getByTestId('objective-full-text')).toHaveText(await page.getByTestId('objective-tracker').textContent() ?? '');
     await page.getByTestId('objective-close').tap(); await expect(page.getByTestId('objective-detail')).toBeHidden();
+    // Also rotate an already loaded scene: a stale canvas width must not enlarge the layout viewport.
+    const rotated = { width: viewport.height, height: viewport.width };
+    await page.setViewportSize(rotated);
+    await expect.poll(() => page.evaluate(() => ({ width: innerWidth, height: innerHeight }))).toEqual(rotated);
+    await page.setViewportSize(viewport);
+    await expect.poll(() => page.evaluate(() => ({ width: innerWidth, height: innerHeight }))).toEqual(viewport);
     await page.getByTestId('pause-button').tap(); await expect(page.getByTestId('menu-pause')).toBeVisible();
   });
 }

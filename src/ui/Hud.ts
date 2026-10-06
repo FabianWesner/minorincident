@@ -63,7 +63,7 @@ export class Hud {
       const collapsed = this.map.classList.toggle('is-collapsed');
       this.map.setAttribute('aria-expanded', String(!collapsed));
     });
-    this.map.setAttribute('aria-expanded', 'true');
+    if (this.map.getAttribute('role') === 'button') this.map.setAttribute('aria-expanded', 'true');
     activate(this.tracker, () => { text(this.fullText, this.trackerText.textContent ?? ''); this.detail.showModal(); });
     const slots = node('div', 'slot-cards'); slots.className = 'hud-slots'; for (const slot of this.slots) slots.append(slot.root);
     this.vignette.className = 'hud-vignette'; this.damage.className = 'hud-damage'; this.bark.className = 'hud-bark'; this.interaction.className = 'hud-interaction';

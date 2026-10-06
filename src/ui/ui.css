@@ -147,3 +147,5 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .touch-ui .mission-marker{font-size:24px}
 .touch-ui .hud [role=button]:focus-visible{outline:3px solid #72ead8;outline-offset:3px}
 .touch-ui:has([data-touch-stick]:not([hidden])) .hud-stick-zone{visibility:hidden}
+/* An old inline canvas width must not expand the mobile layout viewport on rotation. */
+.full-ui.touch-ui #game>canvas{position:fixed;inset:0;width:100dvw!important;height:100dvh!important}
