@@ -158,6 +158,7 @@ export class AudioService implements Lifecycle {
         document.head.append(this.captionStyle);
         this.ringElement.dataset.noiseRings = '';
         this.ringElement.style.cssText = 'position:fixed;inset:0;pointer-events:none;overflow:hidden';
+        this.controls.hidden = !new URLSearchParams(location.search).has('debug');
         this.controls.dataset.audioControls = '';
         this.controls.style.cssText = 'position:fixed;top:96px;left:12px;background:#182333;color:white;padding:8px;font:14px sans-serif;max-width:250px';
         const summary = document.createElement('summary');

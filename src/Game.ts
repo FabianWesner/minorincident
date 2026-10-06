@@ -134,7 +134,9 @@ export class Game {
           if(this.campaign)this.applyCampaign();
           if (id === 'L1') { this.world.enableInfected(); this.world.infected!.director.levelCap=15; this.world.combat.clearLoadout(); }
           const campaign = resolveCampaignMission(id as MissionId, this.world.districts!);
-          const mission=this.world.loadMission(id === 'L1' ? levelOneSlice(campaign) : campaign);
+          const definition=id==='L1'?levelOneSlice(campaign):campaign;
+          if(definition.slice)this.world.npcs?.configureSlice(definition.anchors['incident-0']);
+          const mission=this.world.loadMission(definition);
           if(opts?.checkpoint) mission.loadCheckpoint(opts.checkpoint);
         }
         if(this.campaign)this.watchCampaign();

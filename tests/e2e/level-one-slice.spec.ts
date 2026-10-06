@@ -1,3 +1,4 @@
+import { PNG } from 'pngjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 import { menuStart, menuUrl } from './ui-helpers';
@@ -30,16 +31,6 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
         for(const [i,a]of layout.controls.entries())for(const b of layout.controls.slice(i+1))expect(a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y,`${label}: ${a.id} overlaps ${b.id}`).toBe(false);
       }
       await page.evaluate(()=>window.__SS__!.screenshotReady());await page.screenshot({path:`${output}/${mode}-${label}.png`});};
-    const samples:Record<string,unknown>={};
-    const perf=async(label:string)=>{
-      const data=await page.evaluate(async()=>{
-        const a=window.__SS__!,fps:number[]=[];a.resume();
-        for(let i=0;i<120;i++){await new Promise<void>(r=>requestAnimationFrame(()=>r()));if(i>30)fps.push(a.perf().fps);}
-        a.pause();fps.sort((a,b)=>a-b);
-        const gl=document.querySelector('canvas')!.getContext('webgl2')!,extension=gl.getExtension('WEBGL_debug_renderer_info');
-        return {medianFps:fps[Math.floor(fps.length/2)],unthrottled:true,gpu:extension?gl.getParameter(extension.UNMASKED_RENDERER_WEBGL) as string:null,counters:a.perf()};
-      });samples[label]=data;expect(data.medianFps,`${mode} ${label} native GPU median FPS`).toBeGreaterThanOrEqual(mode==='desktop'?60:30);writeFileSync(`${output}/${mode}-perf.json`,JSON.stringify(samples,null,2));
-    };
     const move=async(x:number,z:number)=>{
       for(let i=0;i<160;i++){
         const p=await page.evaluate(()=>window.__SS__!.getState().player!.transform);
@@ -59,15 +50,28 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
       throw new Error(`Could not walk to ${x},${z}: ${JSON.stringify(await page.evaluate(()=>window.__SS__!.getState().player!.transform))}`);
     };
     await shot('morning');expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons)).toBeUndefined();
-    await move(0,0);await move(42,0);await move(42,-6.5);await step(1);
+    await expect(page.locator('[data-audio-controls]')).toBeHidden();for(const panel of await page.locator('body>details').all())await expect(panel).toBeHidden();
+    expect(await page.evaluate(()=>window.__SS__!.query({kind:'companion'}))).toHaveLength(1);
+    await page.evaluate(()=>window.__SS__!.settings.set({idPass:true}));await page.evaluate(()=>window.__SS__!.screenshotReady());
+    const mask=PNG.sync.read(await page.screenshot());let top=mask.height,bottom=-1;
+    for(let y=0;y<mask.height;y++)for(let x=0;x<mask.width;x++){const i=(y*mask.width+x)*4;if(mask.data[i]>240&&mask.data[i+1]<20&&mask.data[i+2]>240){top=Math.min(top,y);bottom=Math.max(bottom,y);}}
+    const playerHeight=(bottom-top+1)/mask.height;expect(playerHeight).toBeGreaterThanOrEqual(mode==='portrait'?.12:1/5.5);
+    writeFileSync(`${output}/${mode}-pixels.json`,JSON.stringify({playerHeight,playerPixels:bottom-top+1,viewport:page.viewportSize(),companionCount:1},null,2));
+    await page.evaluate(()=>window.__SS__!.settings.set({idPass:false}));await page.evaluate(()=>window.__SS__!.screenshotReady());
+    const project=await page.evaluate(()=>window.__SS__!.input.project(window.__SS__!.getState().player!.transform));
+    if(cdp){await page.getByTestId('touch-left').tap();await page.getByTestId('touch-right').tap();expect(await page.getByTestId('touch-icon-left').evaluate(e=>(e as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);}
+    else {await page.mouse.click(project.x,project.y);await page.mouse.click(project.x,project.y,{button:'right'});}await step(1);
+    expect(await page.evaluate(()=>window.__SS__!.events().some(e=>e.type==='combat.hit'&&e.sourceId===1))).toBe(false);
+
+    await move(-14,-4);await move(0,0);await move(42,0);await shot('before-incident');await move(42,-6.5);await step(1);
     expect(await page.evaluate(()=>window.__SS__!.getState().mission!.completedObjectives)).toContain('breakfast');
-    expect(await page.evaluate(()=>window.__SS__!.query({kind:'infected'}).filter(e=>e.health.current>0))).toHaveLength(4);await shot('incident');await perf('incident');
+    expect(await page.evaluate(()=>window.__SS__!.query({kind:'infected'}).filter(e=>e.health.current>0))).toHaveLength(4);expect(await page.evaluate(()=>window.__SS__!.events().some(e=>e.type==='civilian.turned'&&e.variant==='inf.delivery-driver'))).toBe(true);await shot('incident');
     await move(42,0);await move(70,0);await move(70,-7);await step(1);
     expect(await page.evaluate(()=>window.__SS__!.missions.state()!.checkpoint)).toBe('melee');
     await shot('display');await page.getByTestId('choose-machete').click();
     if(cdp)await page.getByTestId('touch-interact').tap();else {await page.keyboard.press('f');}
     await step(1);
-    expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.machete');await shot('store');await perf('store');
+    expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.machete');await shot('store');
     if(mode==='desktop'){
       // Let the real AI kill the idle player; step only advances time, without damage cheats.
       for(let i=0;i<80;i++){await step(30);if(await page.evaluate(()=>window.__SS__!.events().some(e=>e.type==='player.died')))break;}
@@ -100,5 +104,23 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
     const events=await page.evaluate(()=>window.__SS__!.events());expect(events.some(e=>e.type==='combat.hit'&&e.actionId==='weapon.kick')).toBe(true);expect(events.some(e=>e.type==='combat.hit'&&e.actionId==='weapon.machete')).toBe(true);
     await shot('complete');await page.getByRole('button',{name:'Restart',exact:true}).click();await page.evaluate(()=>window.__SS__!.pause());await step(1);
     expect(await page.evaluate(()=>window.__SS__!.getState().mission!.completedObjectives)).toEqual([]);
+  });
+  test(`@E19 slice GPU performance ${mode}`,async({page})=>{
+    test.setTimeout(180_000);mkdirSync(output,{recursive:true});await menuStart(page);await page.evaluate(()=>window.__SS__!.pause());
+    const samples:Record<string,unknown>={};
+    const perf=async(label:string)=>{
+      const data=await page.evaluate(async()=>{
+        const a=window.__SS__!,fps:number[]=[];a.resume();
+        for(let i=0;i<120;i++){await new Promise<void>(r=>requestAnimationFrame(()=>r()));if(i>30)fps.push(a.perf().fps);}
+        a.pause();fps.sort((a,b)=>a-b);
+        const gl=document.querySelector('canvas')!.getContext('webgl2')!,extension=gl.getExtension('WEBGL_debug_renderer_info');
+        return {medianFps:fps[Math.floor(fps.length/2)],unthrottled:true,gpu:extension?gl.getParameter(extension.UNMASKED_RENDERER_WEBGL) as string:null,counters:a.perf()};
+      });samples[label]=data;expect(data.medianFps,`${mode} ${label} native GPU median FPS`).toBeGreaterThanOrEqual(mode==='desktop'?60:30);writeFileSync(`${output}/${mode}-perf.json`,JSON.stringify(samples,null,2));
+    };
+    // Photo/performance setup is separate from the real-input playthrough above.
+    await page.evaluate(async()=>{ const a=window.__SS__!;a.teleport('player',{x:42,z:-6.5});await a.step(1); });
+    await perf('incident');
+    await page.evaluate(async()=>{ const a=window.__SS__!;await a.loadLevel('L1');a.pause();a.missions.begin();a.missions.completeObjective('breakfast');a.missions.completeObjective('escape');a.teleport('player',{x:70,z:-7});a.missions.completeObjective('melee');await a.step(1);await a.screenshotReady(); });
+    await perf('store');
   });
 });

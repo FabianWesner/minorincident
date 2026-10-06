@@ -14,6 +14,7 @@ export function installCampaignNpcs(world: SimWorld): void {
   world.infected.nav.mask = (x, z) => { const nav = world.districts!.nav; return nav.cells[nav.index(x, z)] === 1; }; world.infected.nav.rebake();
   world.events.on('sim.tick', () => world.infected?.update(), SimPhase.ai); world.events.on('sim.tick', () => world.npcs?.update(), SimPhase.ai);
   world.events.on('objective.completed', event => { if (event.type === 'objective.completed' && event.id === 'breakfast' && world.missions?.def.id === 'L1') { if(world.missions.def.slice)world.npcs?.civilians.alarm(world.missions.def.anchors.diner); else world.npcs?.dinerIncident(world.missions.def.anchors.diner); } });
+  world.events.on('mission.spawned',event=>{if(event.type==='mission.spawned' && event.id==='incident' && world.missions?.def.slice)world.npcs?.sliceIncident(world.missions.def.anchors.diner);});
   world.npcs.configure(Number(districts.composition.id[1])); world.npcs.companion.spawn();
   // W0/W1 ambient traffic is authored only on collision-safe street lanes.
   if (districts.composition.tier <= 1) {

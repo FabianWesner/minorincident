@@ -162,7 +162,7 @@ export class Hud {
     this.tracker.hidden = !objective; if (objective) text(this.trackerText, `${objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))} m` : ''}`);
     for (let i = 0; i < sides.length; i++) {
       const side = sides[i], card = this.slots[i], state = player.weapons?.[side]; card.root.hidden = !state && !mission?.def.slice;
-      if (!state) { text(card.name, side === 'LEFT' ? 'Unarmed' : 'Locked'); text(card.stats, 'Find a weapon'); card.icon.hidden=true; card.ring.hidden=true; for(const strip of card.strips)strip.hidden=true;this.game.input.touch.setEmpty(side==='LEFT'?'left':'right');continue; }
+      if (!state) { text(card.name, side === 'LEFT' ? 'Unarmed' : 'Locked'); text(card.stats, 'Find a weapon'); card.icon.hidden=false;card.icon.src=actionIconUrl(side==='LEFT'?'icon.fists':'icon.kick');card.actionId=''; card.ring.hidden=true; for(const strip of card.strips)strip.hidden=true;this.game.input.touch.setEmpty(side==='LEFT'?'left':'right');continue; }
       card.icon.hidden=card.ring.hidden=false;
       const slot = state.rack[state.index], def = action(slot.id);
       card.root.classList.toggle('is-selected', player.weapons!.selectedSide === side);

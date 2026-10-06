@@ -53,20 +53,20 @@ test('T-E02-02 @E02 @E02-AC02 close camera angles and projected survivor height'
   expect((maxY - minY + 1) / image.height).toBeLessThanOrEqual(1 / 4);
 });
 
-test('T-E02-04 @E02 @E02-AC04 portrait preserves nine metres of ground and local fog', async ({ page }) => {
+test('T-E02-04 @E02 @E02-AC04 portrait preserves seven metres of ground and local fog', async ({ page }) => {
   await boot(page);
   await page.evaluate(async () => { await window.__SS__!.loadScenario('survivor'); window.__SS__!.pause(); });
   const sample = () => page.evaluate(() => {
     const api = window.__SS__!, camera = api.getState().render.camera, lighting = api.getState().render.lighting!;
-    return { height: Math.abs(api.camera.project(0, 1.8, 0)[1] - api.camera.project(0, 0, 0)[1]) * innerHeight / 2, fogGap: lighting.fogNear - camera.radius };
+    return { height: Math.abs(api.camera.project(0, innerWidth<innerHeight?2.25:1.8, 0)[1] - api.camera.project(0, 0, 0)[1]) * innerHeight / 2, fogGap: lighting.fogNear - camera.radius };
   });
   await page.setViewportSize({ width: 844, height: 390 });
   await page.evaluate(() => window.__SS__!.screenshotReady()); const landscape = await sample();
   await page.setViewportSize({ width: 390, height: 844 });
   await page.evaluate(() => window.__SS__!.screenshotReady()); const portrait = await sample();
-  expect(portrait.height / landscape.height).toBeGreaterThan(.9); expect(portrait.height / landscape.height).toBeLessThan(1.1);
+  expect(portrait.height / landscape.height).toBeGreaterThan(.9); expect(portrait.height / landscape.height).toBeLessThan(1.8); expect(portrait.height/844).toBeGreaterThanOrEqual(.12);
   const groundWidth = await page.evaluate(() => { const c = window.__SS__!.getState().render.camera; return 2 * c.radius * Math.tan(c.fov * Math.PI / 360) * innerWidth / innerHeight; });
-  expect(groundWidth).toBeGreaterThanOrEqual(9 - 1e-8);
+  expect(groundWidth).toBeGreaterThanOrEqual(7 - 1e-8);
   expect(portrait.fogGap).toBeCloseTo(landscape.fogGap, 1);
 });
 

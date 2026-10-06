@@ -2,6 +2,7 @@
 // Source: Inputs/InteractiveButtons.js / Inputs/Pointer.js, commit 41046b5.
 import { Nipple } from './Nipple';
 import type { Vec2 } from '../InputFrame';
+import { actionIconUrl } from '../../assets/icons';
 import { node, text } from '../../ui/dom';
 
 type TouchAction = 'left' | 'right' | 'selector' | 'pause' | 'interact';
@@ -48,7 +49,7 @@ export class Touch {
   }
   /** L1 starts with empty racks; hide empty image elements and stale prior-level icons. */
   setEmpty(side: 'left' | 'right'): void {
-    const slot=this.slots.get(side)!;slot.icon.hidden=true;slot.icon.removeAttribute('src');
+    const slot=this.slots.get(side)!;slot.icon.hidden=false;slot.icon.src=actionIconUrl(side==='left'?'icon.fists':'icon.kick');
     slot.button.setAttribute('aria-label', `${side} · ${side==='left'?'unarmed':'locked'}`);
     slot.button.classList.remove('is-selected');slot.button.style.setProperty('--progress','0');
   }
