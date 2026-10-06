@@ -38,3 +38,5 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E21-AC07 | Timer expiry → `mission.failed{reason:'timeout'}` → retry from the last checkpoint with the timer restored to its checkpoint value + 60 s grace | sim |
 | E21-AC08 | Full-browser bot playthrough (both routes) with screenshots, no console errors, and driving at time scale 2 | e2e |
 | E21-AC09 | Vision: `l3-mainstreet-w2` (emergency response reads: barriers, cones, blood trails, abandoned belongings), `l3-driving`, `l3-checkpoint`, `l3-safe-zone` pass §7.1/§7.5 | vision |
+| E21-AC10 | Carried over from E08-AC11: in L3 `complete` campaign-bot runs, average concurrent ambient civilians over the first 3 minutes stays within ±10% of the L3 target (24 high tier; low tier ×0.6), measured at both tiers. | sim |
+| E21-AC11 | Carried over from E08-AC17: across full L3 `complete` campaign-bot runs, the corgi never enters an infection state and has no infection event; retain the event log for continuous-campaign verification in E24. | sim |

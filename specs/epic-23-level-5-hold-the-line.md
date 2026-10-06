@@ -44,3 +44,5 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E23-AC09 | Full-browser bot playthrough, with screenshots at P1–P4 and the twist, no console errors | e2e |
 | E23-AC10 | Vision: `l5-gas-station-wave` and `l5-bridge-peak` pass §7.4 (player readable inside the horde, telegraphs visible, convoy distinguishable) and §7.5 (W4 overrun reads) | vision |
 | E23-AC11 | Prep phases: each position has a 20 s prep with 3–5 barricade slots and ≥ 2× the props needed to fill them; the `complete` bot braces ≥ 2 slots per position; an A/B sim (barricades disabled vs enabled, 10 seeds) shows ≥ 30% less convoy damage with barricades | sim |
+| E23-AC12 | Carried over from E08-AC11: in L5 `complete` campaign-bot runs, average concurrent ambient civilians over the first 3 minutes stays within ±10% of the L5 target (6 high tier; low tier ×0.6), measured at both tiers. | sim |
+| E23-AC13 | Carried over from E08-AC17: across full L5 `complete` campaign-bot runs, the corgi never enters an infection state and has no infection event; retain the event log for continuous-campaign verification in E24. | sim |

@@ -57,3 +57,9 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E08-AC15 | Children: child NPCs are never targeted (no `grab`/`attack` events with a child target over a full L2 run), cannot enter the bite/turn states, have gore disabled, and the brother escort uses only the downed state | sim |
 | E08-AC16 | Visual: the down → rising sequence screenshot set (`turning-probe`, 5 frames) shows the lying body, the darkened veins, the glowing eyes, and the get-up; it passes a vision check that the person reads as a civilian turning (not as an infected corpse) | visual/vision |
 | E08-AC17 | Pets: a walked dog whose owner is grabbed turns with a probability from the data (seeded) after a 2–4 s *down*; the corgi never enters any infection state (no event across a full L1–L6 bot campaign) | sim |
+
+## Dependency-stage verification
+
+- **E08-AC11:** The campaign bot verifies the unchanged density criterion in E19–E24, for each level and both quality tiers.
+- **E08-AC15:** The campaign bot verifies the unchanged full-L2 child-protection criterion in E20.
+- **E08-AC17:** The campaign bot verifies the unchanged immunity criterion in E19–E24, including the continuous L1–L6 campaign in E24; seeded pet-turn verification remains in E08.
