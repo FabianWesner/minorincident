@@ -19,12 +19,16 @@ export function steer(state: Motion, input: { x: number; z: number }, speed: num
   } else { state.vx = input.x * speed; state.vz = input.z * speed; }
   state.x += state.vx * dt; state.z += state.vz * dt;
   state.speed = Math.hypot(state.vx, state.vz); state.distance += state.speed * dt;
-  if (state.speed < .025) { state.omega = 0; return; }
+  if (state.speed < .025) {
+    if (prototype) { state.omega += Math.max(-12 * dt, Math.min(12 * dt, -state.omega)); state.yaw += state.omega * dt; }
+    else state.omega = 0;
+    return;
+  }
   const delta = angleDelta(state.yaw, -Math.atan2(state.vz, state.vx));
   if (prototype) {
     const target = Math.max(-4.5, Math.min(4.5, delta * 10));
     state.omega += Math.max(-12 * dt, Math.min(12 * dt, target - state.omega));
-    state.yaw += Math.sign(delta) * Math.min(Math.abs(delta), Math.abs(state.omega * dt));
+    state.yaw += state.omega * dt;
   } else if (civilian) state.yaw += Math.max(-.12, Math.min(.12, delta));
   else state.yaw += delta;
 }
