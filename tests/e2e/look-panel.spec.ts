@@ -27,7 +27,7 @@ test('@E19 look uniforms change pixels while paused and survive quality and leve
   await page.locator('[data-lookdev="panel"]').evaluate(el => { (el as HTMLElement).style.display = 'none'; });
   await page.evaluate(async () => { const a = window.__SS__!; a.pause(); a.camera.preset('V1'); await a.screenshotReady(); });
   const before = await page.locator('canvas').first().screenshot();
-  const patch = { version: 1 as const, worldLook: { sun: '#ff9966', sunIntensity: 2, shadow: '#552288', fogA: '#aabbdd', fogB: '#ddbbaa', bloomStrength: .7, dofRepeats: Number(worldLook.dofRepeats) === 16 ? 25 : 16, vignette: .3, grassHeight: .3, grassDensity: 10, foliageDensity: .5, foliageHeight: 1.3, windStrength: 0 }, palette: { woodWarm: '#dd9955' } };
+  const patch = { version: 1 as const, worldLook: { sun: '#ff9966', sunIntensity: 2, shadow: '#552288', fogA: '#aabbdd', fogB: '#ddbbaa', fogCenterX: .4, fogCenterY: .3, blossomPink: '#eeaabb', worldSurvivorRed: '#aa6677', dofRepeatsLow: 4, coreLightEdge: .9, bloomStrength: .7, dofRepeats: Number(worldLook.dofRepeats) === 16 ? 25 : 16, vignette: .3, grassHeight: .3, grassDensity: 10, foliageDensity: .5, foliageHeight: 1.3, windStrength: 0 }, palette: { woodWarm: '#dd9955' } };
   const state = await page.evaluate(async patch => {
     const a = window.__SS__!, tick = a.tick(); a.look.set(patch); await a.screenshotReady();
     return { tick, afterTick: a.tick(), render: a.getState().render, exported: a.look.export() };
@@ -40,9 +40,11 @@ test('@E19 look uniforms change pixels while paused and survive quality and leve
   const a = PNG.sync.read(before), b = PNG.sync.read(after);
   expect(pixelmatch(a.data, b.data, undefined, a.width, a.height, { threshold: .05 })).toBeGreaterThan(1000);
   const rebuilt = await page.evaluate(async () => {
-    const a = window.__SS__!; a.settings.set({ quality: 'low' }); await a.loadLevel('L1', { seed: 1 }); a.pause(); a.camera.preset('V1'); await a.screenshotReady(); a.settings.set({ quality: 'high' }); await a.screenshotReady();
-    return { patch: a.look.export(), render: a.getState().render };
+    const a = window.__SS__!; a.settings.set({ quality: 'low' }); await a.loadLevel('L1', { seed: 1 }); a.pause(); a.camera.preset('V1'); await a.screenshotReady(); const low = a.getState().render.postFx; a.settings.set({ quality: 'high' }); await a.screenshotReady();
+    return { patch: a.look.export(), render: a.getState().render, low };
   });
+  expect(rebuilt.low).toMatchObject({ dof: true, dofRepeats: 4, dofResolution: .5 });
+  expect(rebuilt.render.lighting!.coreShadowEdges).toEqual([.9, -.25]);
   expect(rebuilt.patch).toEqual(patch); expect(rebuilt.render.postFx!.dofRepeats).toBe(patch.worldLook.dofRepeats); expect(rebuilt.render.lighting!.intensity).toBe(2);
   await page.evaluate(() => window.__SS__!.look.reset());
   expect(await page.evaluate(() => window.__SS__!.look.export())).toEqual({ version: 1, worldLook: {}, palette: {} });

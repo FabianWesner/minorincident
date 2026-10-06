@@ -132,6 +132,8 @@ test('@E19 @E19-AC06 M1-10 entrant walks offscreen, bites three visible customer
   const m = await start(); const p = world.entities.get(1)!;
   Object.assign(p.transform, {x:42,z:-6.5}); world.physics.playerBody!.setTranslation(p.transform,true);
   m.completeObjective('breakfast');
+  // Retreating lets nearer customers carry the chain; standing close draws attacks immediately.
+  Object.assign(p.transform, {x:80,z:0}); world.physics.playerBody!.setTranslation(p.transform,true);
   const entrant = world.infected!.active[0];
   expect(world.infected!.director.visible(entrant.transform)).toBe(false);
   expect(m.state.outbreak!.victims).toHaveLength(3);
@@ -147,7 +149,7 @@ test('@E19 @E19-AC06 M1-10 entrant walks offscreen, bites three visible customer
     const turned = events.find(e=>e.type==='civilian.turned'&&e.id===id);
     expect(turned).toBeDefined();
   }
-  expect(world.infected!.active.every(e=>['alerted','chase','attack'].includes(e.infected!.state))).toBe(true);
+  expect(world.infected!.active.every(e=>['alerted','chase','attack'].includes(e.infected!.state) || e.infected!.state === 'migration' && !!world.entities.get(e.infected!.targetId)?.civilian)).toBe(true);
   m.restore('escape'); expect(m.state.outbreak!.released).toBe(false); expect(world.infected!.active).toHaveLength(1);
 });
 
@@ -165,4 +167,78 @@ for (const [width,height] of [[1600,900],[390,844]]) for (const zoom of [-10,10]
     expect(d.offscreen(point)||d.occluded(point)).toBe(true);
     expect(point.z).toBeLessThanOrEqual(m.def.anchors.hardware.z-12);
   }
+});
+
+test('@E19 M1-22 prepared decay survives restart and matches live collision/navigation', async () => {
+  const m = await start(), morning = world.districts!;
+  world.preparedDistricts.set(0, morning); world.prepareTier(0); world.prepareTier(1);
+  const incident = world.preparedDistricts.get(1)!;
+  const colliders = world.physics.colliderCount;
+  m.completeObjective('breakfast');
+  expect(world.districts).toBe(incident); expect(world.physics.colliderCount).toBeGreaterThan(colliders);
+  const prepared = world.infected!.nav.blocked.slice(); world.infected!.nav.rebake();
+  expect(world.infected!.nav.blocked).toEqual(prepared);
+  m.completeObjective('escape'); m.completeObjective('melee'); m.completeObjective('store-fight'); m.restartSlice();
+  expect(world.districts).toBe(morning); expect(world.physics.colliderCount).toBe(colliders);
+  expect(world.entities.get(1)!.weapons).toBeUndefined();
+  world.reset(); expect(world.preparedDistricts.size).toBe(0); expect(world.preparedNpcNavigation.size).toBe(0);
+});
+
+test('@E19 M1-23 M1-24 each diner rise releases its own brain before the chain finishes', async () => {
+  const m = await start(), player = world.entities.get(1)!;
+  Object.assign(player.transform, { x: 42, z: -6.5 }); world.physics.playerBody!.setTranslation(player.transform, true);
+  world.combat!.damage.god = true; m.completeObjective('breakfast');
+  Object.assign(player.transform, { x: 80, z: 0 }); world.physics.playerBody!.setTranslation(player.transform, true);
+  const initialVictims = [...m.state.outbreak!.victims], movements = new Set<number>();
+  let firstTurn = 0, actionBeforeLastTurn = false, maxInfected = 0;
+  const births = new Map<number, { tick: number; x: number; z: number }>();
+  for (let i = 0; i < 3600; i++) {
+    world.update(); maxInfected = Math.max(maxInfected, world.infected!.director.count);
+    for (const id of initialVictims) {
+      const e = world.entities.get(id)!;
+      if (e.civilian!.state === 'flee' && e.motion!.moving) movements.add(id);
+    }
+    for (const event of world.events.events(world.tick - 1)) if (event.type === 'civilian.turned' && !births.has(event.infectedId)) {
+      const e = world.entities.get(event.infectedId)!;
+      births.set(event.infectedId, { tick: event.tick, x: e.transform.x, z: e.transform.z }); firstTurn ||= event.tick;
+    }
+    const unfinished = initialVictims.some(id => !['infected','finished'].includes(world.entities.get(id)!.civilian!.state));
+    for (const [id, birth] of births) {
+      const e = world.entities.get(id)!;
+      expect(e.infectionRise).toBeUndefined();
+      if (unfinished && (e.combat!.attacking || Math.hypot(e.transform.x - birth.x, e.transform.z - birth.z) > .1)) actionBeforeLastTurn = true;
+    }
+    if (m.state.outbreak!.released) break;
+  }
+  expect(firstTurn).toBeGreaterThan(0); expect(actionBeforeLastTurn).toBe(true); expect(movements.size).toBeGreaterThan(0);
+  expect(maxInfected).toBeLessThanOrEqual(15);
+  const events = world.events.events(), timings = [];
+  for (const id of initialVictims) {
+    const bitten = events.find(e => e.type === 'civilian.state' && e.id === id && e.state === 'bitten');
+    const turned = events.find(e => e.type === 'civilian.turned' && e.id === id);
+    if (bitten && turned) { timings.push(turned.tick - bitten.tick); expect(turned.tick - bitten.tick).toBeGreaterThanOrEqual(156); expect(turned.tick - bitten.tick).toBeLessThanOrEqual(180); }
+  }
+  expect(timings.length).toBe(3); expect(new Set(timings).size).toBeGreaterThan(1);
+  m.completeObjective('escape'); expect(world.infected!.active).toHaveLength(0);
+});
+
+
+test('@E19 M1-23 a newborn stays grounded and harmless during its rise; killing it cancels the turn', async () => {
+  const m = await start(), p = world.entities.get(1)!;
+  Object.assign(p.transform, { x: 42, z: -6.5 }); world.physics.playerBody!.setTranslation(p.transform, true);
+  world.combat!.damage.god = true; m.completeObjective('breakfast');
+  let body = world.entities.get(m.state.outbreak!.victims[0])!;
+  for (let i = 0; i < 1500 && !body.civilian!.risingInfectedId; i++) world.update();
+  const newborn = world.entities.get(body.civilian!.risingInfectedId!)!;
+  expect(newborn.infectionRise).toBeDefined(); expect(body.hidden).toBe(true);
+  const position = { ...newborn.transform }, until = newborn.infectionRise!.until;
+  for (let i = 0; i < 30; i++) {
+    world.update(); expect(newborn.transform).toEqual(position); expect(newborn.combat!.attacking).toBe(false);
+  }
+  newborn.health.current = 0; world.update(); expect(body.civilian!.state).toBe('finished');
+  expect(newborn.infectionRise).toBeUndefined();
+  while (world.tick <= until + 1) world.update();
+  expect(world.events.events().some(e => e.type === 'civilian.turned' && e.id === body.id)).toBe(false);
+  m.restore('escape'); body = world.entities.get(m.state.outbreak!.victims[0])!;
+  expect(body.hidden).toBeUndefined(); expect(body.civilian!.state).toBe('calm'); expect(world.infected!.active).toHaveLength(1);
 });

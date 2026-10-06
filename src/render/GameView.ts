@@ -1,3 +1,4 @@
+import { ContactShadows } from './ContactShadows';
 import { NpcView } from './npc/NpcView';
 import { lookViewpoints } from '../data/lookViewpoints';
 import { LookUniforms } from './LookUniforms';
@@ -11,7 +12,7 @@ import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
 import type { SurvivorState } from '../data/survivor';
 import { CharacterView } from './characters/CharacterView';
-import { BoxGeometry, Color, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, type Material } from 'three/webgpu';
+import { BoxGeometry, Color, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial, type Material } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -19,6 +20,7 @@ import { MeshGridMaterial } from './MeshGridMaterial';
 import { PhysicsWireframe } from './PhysicsWireframe';
 import { View } from './View';
 import { Renderer } from './Renderer';
+import { preRender } from './PreRenderer';
 import { Lighting } from './Lighting';
 import { Materials } from './Materials';
 import { Lookdev } from './Lookdev';
@@ -51,7 +53,9 @@ export class GameView implements Lifecycle {
   private readonly meshes: Mesh[] = [];
   private vehicles: VehicleView | null = null;
   private actions: ActionView | null = null;
+  private contactShadows: ContactShadows | null = null;
   private crowd: CrowdView | null = null;
+  private readonly preparedDistrictViews = new Map<SimWorld['districts'], DistrictView>();
   private npcs: NpcView | null = null;
   private interactions: InteractionView | null = null;
   private entityAssets: EntityAssets | null = null;
@@ -130,7 +134,17 @@ export class GameView implements Lifecycle {
         this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
       }
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
-      this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low');await this.districts.load(1);
+      const instanceCapacity = this.world.scenario === 'L1' ? this.renderer.attributeInstanceCapacity() : undefined;
+      this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low', instanceCapacity);await this.districts.load(1);
+      if (this.world.scenario === 'L1') {
+        await this.districts.prepare();
+        this.preparedDistrictViews.set(this.world.districts, this.districts);
+        for (const prepared of this.world.preparedDistricts.values()) if (prepared !== this.world.districts) {
+          const district = new DistrictView(prepared, this.materials, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity);
+          await district.load(1); await district.prepare(); district.visible = false;
+          this.preparedDistrictViews.set(prepared, district); this.scene.add(district);
+        }
+      }
       this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
       this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
 
@@ -156,6 +170,7 @@ export class GameView implements Lifecycle {
       this.cube = new Mesh(new BoxGeometry(1, 1, 1), new MeshBasicNodeMaterial({ color: '#ed935c' }));
       this.meshes.push(ground, this.cube); this.scene.add(...this.meshes);
     }
+    if (this.character) { this.contactShadows = new ContactShadows(this.world); this.scene.add(this.contactShadows); }
     if (player) {
       const material = new MeshBasicNodeMaterial({ color: '#64ffce', depthWrite: false, depthTest: false }); material.name = 'keep_moveMarker';
       this.destination = new Mesh(new RingGeometry(.22, .32, 32), material);
@@ -196,8 +211,24 @@ export class GameView implements Lifecycle {
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.districts?.ready()]);
-    if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
+    if (this.world.scenario === 'L1') {
+      this.lighting?.update(this.view);
+      // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
+      const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
+      const restore = this.vfx?.prewarm(focus.x, focus.z);
+      try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), () => this.postFx ? this.postFx.compile() : this.renderer.compileAsync(this.scene, this.camera)); }
+      finally { restore?.(); }
+    } else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
     this.idPass = this.params.get('idpass') === '1'; this.update(1);
+  }
+  /** A prepared decay swap retains characters, crowd pools, GPU programs, camera and audio. */
+  switchPreparedDistrict(): boolean {
+    const next = this.preparedDistrictViews.get(this.world.districts);
+    if (!next) return false;
+    if (this.districts) this.districts.visible = false;
+    this.districts = next; next.visible = true; next.setQuality(this.quality);
+    next.updateLods(this.view); this.lighting?.set(next.world.composition.timeOfDay);
+    return true;
   }
   /** Real render seconds, deliberately independent of sim ticks/time scale. */
   frame(seconds: number): void { this.vfx?.advance(Math.min(1, seconds)); }
@@ -271,8 +302,8 @@ export class GameView implements Lifecycle {
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
   project(x: number, y: number, z: number): number[] { return this.projection.set(x, y, z).project(this.camera).toArray(); }
   getState() {
-    const materialInventory = new Map<string, { name: string; palette: boolean }>();
-    this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial }); });
+    const materialInventory = new Map<string, { name: string; palette: boolean; plainLit: boolean; emissive: number }>();
+    this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial, plainLit: (material instanceof MeshLambertNodeMaterial || material instanceof MeshStandardMaterial) && !(material instanceof PaletteMaterial), emissive: material.userData.emissiveStrength ?? 0 }); });
     return { quality: this.quality, pixelRatio: this.renderer.getPixelRatio(), postFx: this.postFx?.snapshot() ?? null, moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
       npcs: this.npcs?.snapshot() ?? null,
       vehicles: [...(this.vehicles?.snapshot() ?? []), ...(this.vehicleFeedback?.getState() ?? []).map(v => ({ ...v, wheels: [], brake: 0, sirens: [], placeholder: true }))], entityAssets: this.entityAssets?.getState() ?? null, character: this.character?.getState() ?? null, crowd: this.crowd?.getState() ?? null, actions: this.actions?.getState() ?? null,
@@ -326,7 +357,7 @@ export class GameView implements Lifecycle {
     this.vehicles?.update(alpha);
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); this.missionUI?.update(this.camera,innerWidth,innerHeight);
-    this.crowd?.update(this.view); this.actions?.update();
+    this.crowd?.update(this.view); this.contactShadows?.update(); this.actions?.update();
     this.entityAssets?.update();
     this.interactions?.update(this.camera); this.npcs?.update(this.camera);
     this.flashOverlay.style.opacity = String(this.vfx?.flash ?? 0);
@@ -336,9 +367,10 @@ export class GameView implements Lifecycle {
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;
     if(this.windowMask&&this.districts){
-      const background=this.scene.background,fog=this.scene.fog,shadow=this.renderer.shadowMap.enabled;
-      this.scene.background=new Color(0);this.scene.fog=null;this.renderer.shadowMap.enabled=false;this.districts.mask(true);const heroVisible=this.character?.visible;if(this.character)this.character.visible=false;this.renderer.render(this.scene,this.camera);if(this.character)this.character.visible=heroVisible!;this.districts.mask(false);this.scene.background=background;this.scene.fog=fog;this.renderer.shadowMap.enabled=shadow;
+      const backgroundNode=this.scene.backgroundNode;this.scene.backgroundNode=null;const background=this.scene.background,fog=this.scene.fog,shadow=this.renderer.shadowMap.enabled;
+      this.scene.background=new Color(0);this.scene.fog=null;this.renderer.shadowMap.enabled=false;this.districts.mask(true);const heroVisible=this.character?.visible;if(this.character)this.character.visible=false;this.renderer.render(this.scene,this.camera);if(this.character)this.character.visible=heroVisible!;this.districts.mask(false);this.scene.background=background;this.scene.backgroundNode=backgroundNode;this.scene.fog=fog;this.renderer.shadowMap.enabled=shadow;
     } else if (this.idPass && (this.lookdev || this.character)) {
+      const backgroundNode = this.scene.backgroundNode; this.scene.backgroundNode = null;
       const background = this.scene.background, fog = this.scene.fog, shadow = this.renderer.shadowMap.enabled;
       this.scene.background = new Color(0); this.scene.fog = null; this.renderer.shadowMap.enabled = false;
       this.scene.traverse((child) => {
@@ -349,13 +381,14 @@ export class GameView implements Lifecycle {
       this.idPlayer.depthTest = !this.occlusion.getState().some((building) => building.blocked);
       this.renderer.render(this.scene, this.camera);
       for (const [mesh, material] of this.savedMaterials) mesh.material = material;
-      this.savedMaterials.clear(); this.scene.background = background; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
+      this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
   }
   async ready(): Promise<void> {
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
   reset(): void {
+    this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;
     if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }
     if (this.vfx) { this.scene.remove(this.vfx); this.vfx.dispose(); this.vfx = null; }
     if (this.vehicleFeedback) { this.scene.remove(this.vehicleFeedback); this.vehicleFeedback.dispose(); this.vehicleFeedback = null; }
@@ -365,7 +398,9 @@ export class GameView implements Lifecycle {
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
     this.windowMask=false;
     this.postFx?.dispose();this.postFx = null; this.dofEnabled = false;
-    if(this.districts){this.scene.remove(this.districts);this.districts.dispose();this.districts=null;}
+    for (const district of this.preparedDistrictViews.values()) { this.scene.remove(district); district.dispose(); }
+    if (this.districts && !this.preparedDistrictViews.has(this.districts.world)) { this.scene.remove(this.districts); this.districts.dispose(); }
+    this.preparedDistrictViews.clear(); this.districts = null;
     this.frozenStarted = -1; this.frozenPose = null;
     if (this.crowd) { this.scene.remove(this.crowd); this.crowd.dispose(); this.crowd = null; }
     if (this.actions) { this.scene.remove(this.actions); this.actions.dispose(); this.actions = null; }
@@ -374,7 +409,7 @@ export class GameView implements Lifecycle {
     if(this.materials!==this.districtResources?.materials)this.materials?.dispose();this.materials=null;
     if(this.lighting===this.districtResources?.lighting)this.scene.remove(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);else this.lighting?.dispose();this.lighting=null;
     this.districtResources?.registry.dispose(); this.districtResources?.grassMaterial.dispose(); this.districtResources?.materials.dispose(); this.districtResources?.lighting.dispose(); this.districtResources = null;
-    this.occlusion.reset(); this.idPass = false; this.scene.fog = null; this.scene.background = new Color('#293447'); this.renderer.shadowMap.enabled = false;
+    this.occlusion.reset(); this.idPass = false; this.scene.fog = null; this.scene.backgroundNode = null; this.scene.background = new Color('#293447'); this.renderer.shadowMap.enabled = false;
     for (const mesh of this.meshes) {
       this.scene.remove(mesh); mesh.geometry.dispose();
       for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) if (!(material instanceof PaletteMaterial)) material.dispose();

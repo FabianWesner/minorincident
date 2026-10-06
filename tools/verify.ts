@@ -17,6 +17,12 @@ const commands: string[][] = [
       // Native GPU load timing stays headless: run once, after the other browser checks.
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/district-load.spec.ts', '--grep', '@E10-AC06', '--project=chromium', '--workers=2'],
     ]
+    : target === 'E19'
+      ? [
+        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'M1-22', '--workers=2'],
+        // Transition frame budgets must not compete with another context loading GPU programs.
+        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/l1-transitions.spec.ts', '--project=chromium', '--workers=1'],
+      ]
     : target === 'E18'
       ? [
         ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E18-AC08|@E18-AC09|WebGPU low tier parity', '--workers=2'],
