@@ -20,7 +20,7 @@ export class Loadout {
       const id = slot.id === 'weapon.kick' ? 'weapon.fists' : slot.id;
       if (seen.has(id)) return [];
       seen.add(id); return [{ side, index, id }];
-    }));
+    })).sort((a, b) => Number(b.id === 'weapon.fists') - Number(a.id === 'weapon.fists'));
   }
   cycleActive(direction: number, tick: number): void {
     const entries = this.activeEntries(), side = this.state.selectedSide, state = this.state[side];
@@ -40,8 +40,9 @@ export class Loadout {
       if (frame.aimPoint) { side.aimPoint ??= { x: 0, z: 0 }; side.aimPoint.x = frame.aimPoint.x; side.aimPoint.z = frame.aimPoint.z; }
       else side.aimPoint = null;
     }
-    if (frame.selectedSlot) {
-      const choice = frame.selectedSlot, rack = this.state[choice.side];
+    const choice = frame.selectedSlot ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? this.activeEntries()[frame.selectedActiveSlot] : undefined);
+    if (choice) {
+      const rack = this.state[choice.side];
       if (Number.isInteger(choice.index) && choice.index >= 0 && choice.index < rack.rack.length && tick >= rack.swapUntil) {
         this.state.selectedSide = choice.side;
         if (rack.index !== choice.index) { rack.index = choice.index; rack.swapUntil = tick + 15; }

@@ -43,3 +43,11 @@ test('@E03-AC17 rapid active cycling advances each press during the swap delay',
   expect(loadout.current(loadout.state.selectedSide).id).toBe('weapon.grenade');
   expect(loadout.usable('RIGHT', 2)).toBe(false);
 });
+
+test('@E03-AC05 active numbers select unarmed first across one-slot L1 racks', () => {
+  const loadout = new Loadout(['weapon.bat'], ['weapon.fists'], undefined, 1);
+  loadout.input({ ...emptyInput(), selectedActiveSlot: 0 }, 1);
+  expect(loadout.state.selectedSide).toBe('RIGHT');
+  loadout.input({ ...emptyInput(), selectedActiveSlot: 1 }, 20);
+  expect(loadout.state.selectedSide).toBe('LEFT');
+});

@@ -24,6 +24,8 @@ export interface InputFrame {
   pointerTarget?: boolean;
   /** Explicit side for a touch swipe or target attack while approaching. */
   /** Direct number-key rack choice. Out-of-range slots are ignored. */
+  /** Mouse-mode number keys address the same carried list as RMB. */
+  selectedActiveSlot?: number;
   selectedSlot?: { side: 'LEFT' | 'RIGHT'; index: number };
   selectorSide?: 'LEFT' | 'RIGHT';
   move: Vec2;

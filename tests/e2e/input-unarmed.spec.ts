@@ -8,15 +8,15 @@ test('@E03 @E03-AC19 Shift swings annoy adults harmlessly and pass through child
   const ids = await page.evaluate(async () => {
     const a = window.__SS__!; await a.loadScenario('turning-probe'); a.pause();
     a.setLoadout(['weapon.fists'], ['weapon.fists']);
-    return [a.npcs.civilian('cashier', { x: .8, z: 0 }, { waypoints: [{ x: .8, z: 0 }] }),
-      a.npcs.civilian('cashier', { x: .6, z: .15 }, { child: true, waypoints: [{ x: .6, z: .15 }] })];
+    return [a.npcs.civilian('cashier', { x: .8, z: -.45 }, { waypoints: [{ x: .8, z: -.45 }] }),
+      a.npcs.civilian('cashier', { x: .8, z: .45 }, { child: true, waypoints: [{ x: .8, z: .45 }] })];
   });
   const cursor = await page.evaluate(() => window.__SS__!.input.project({ x: 4, z: 0 }));
   await page.mouse.move(cursor.x, cursor.y); await page.keyboard.down('Shift'); await page.mouse.click(cursor.x, cursor.y);
   await tick(page, 14);
   const entities = await page.evaluate(ids => ids.map(id => window.__SS__!.getEntity(id)!), ids);
   expect(entities[0].civilian!.state).toBe('annoyed'); expect(entities[0].transform.x).toBeGreaterThan(.8);
-  expect(entities[1].civilian!.state).toBe('calm'); expect(entities[1].transform.x).toBe(.6);
+  expect(entities[1].civilian!.state).toBe('calm'); expect(entities[1].transform.x).toBe(.8);
   expect(entities.map(e => e.health.current)).toEqual([100, 100]);
   await expect(page.getByTestId('civilian-bark')).toBeVisible();
   await expect(page.getByTestId('civilian-bark')).toHaveText('Hey!');
@@ -55,15 +55,19 @@ test('@E03 @E03-AC20 seven unarmed moves play through real Shift LMB without mov
 });
 
 test('@E03 @E03-AC21 mouse HUD shows active and next and L1 hints describe switching', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('minor-incident.onboarding.v1', JSON.stringify(['move', 'evade', 'interact', 'pickup'])));
   await menuStart(page);
-  await page.evaluate(async () => { const a = window.__SS__!; a.pause(); await a.loadLevel('L1', { checkpoint: 'melee' }); a.setLoadout(['weapon.fists', 'weapon.bat'], ['weapon.fists']); });
+  await page.evaluate(async () => { const a = window.__SS__!; a.pause(); await a.loadLevel('L1', { checkpoint: 'melee' }); a.setLoadout(['weapon.fists'], ['weapon.bat']); });
   await page.mouse.move(800, 450); await tick(page, 1);
+  await expect(page.getByTestId('onboarding-prompt')).toBeVisible();
+  await expect(page.getByTestId('onboarding-prompt')).toContainText('Shift+LMB in place');
   await expect(page.getByTestId('slot-LEFT')).toContainText('ACTIVE · LMB');
   await expect(page.getByTestId('slot-RIGHT')).toContainText('RMB · NEXT');
   await expect(page.getByTestId('slot-RIGHT')).toContainText('bat');
   await page.mouse.click(800, 450, { button: 'right' }); await tick(page, 20);
-  await expect(page.getByTestId('slot-LEFT')).toContainText('bat');
-  await expect(page.getByTestId('slot-RIGHT')).toContainText('unarmed');
+  await expect(page.getByTestId('slot-RIGHT')).toContainText('ACTIVE · LMB');
+  await expect(page.getByTestId('slot-RIGHT')).toContainText('bat');
+  await expect(page.getByTestId('slot-LEFT')).toContainText('unarmed');
   await expect(page.locator('[data-input-hint]')).toContainText('Shift+LMB');
   await expect(page.locator('[data-input-hint]')).toContainText('RMB / Q cycle');
 });
@@ -96,4 +100,12 @@ test('@E03 @E03-AC02 queued RMB presses retain one active cycle pulse each', asy
   await page.mouse.click(800, 450, { button: 'right' }); await page.mouse.click(800, 450, { button: 'right' });
   for (let i=0; i<2; i++) { const frame = await tick(page); expect(frame.selector).toBe(1); expect(frame.selectorActive).toBe(true); expect(frame.right.down).toBe(false); }
   expect((await tick(page)).selector).toBe(0);
+});
+
+test('@E03 @E03-AC05 mouse-mode numbers directly select the unarmed-first carried list', async ({ page }) => {
+  await boot(page); await page.evaluate(async () => { const a=window.__SS__!; await a.loadScenario('combat-arena'); a.pause(); a.setLoadout(['weapon.bat'], ['weapon.fists']); });
+  await page.mouse.move(800, 450); await page.keyboard.press('1'); await tick(page, 20);
+  expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.selectedSide)).toBe('RIGHT');
+  await page.keyboard.press('2'); await tick(page, 20);
+  expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.selectedSide)).toBe('LEFT');
 });

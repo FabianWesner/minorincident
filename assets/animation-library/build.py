@@ -187,14 +187,20 @@ unarmed=[
     ('roundhouse-kick',p(legR=(12,-25,50),shinR=z(-100)),p(legR=(38,45,98),shinR=z(-8),torso=(0,20,12),armL=z(65)),p(legR=(25,80,70),shinR=z(-30),torso=(0,35,8)),38),
     ('uppercut',p(hip=hip(y=-.065),armR=z(8),foreArmR=z(100)),p(armR=(0,15,134),foreArmR=z(38),torso=z(-8)),p(armR=(0,28,142),foreArmR=z(48),torso=z(-5)),18),
     ('knee',p(legR=z(28),shinR=z(-115),armL=z(65),armR=z(65)),p(legR=z(108),shinR=z(-130),torso=z(-14),foreArmL=z(60),foreArmR=z(60)),p(legR=z(86),shinR=z(-115),torso=z(-8)),12),
-    ('spinning-backfist',p(armR=(0,-65,65),foreArmR=z(75)),p(armR=(0,65,100),foreArmR=z(12)),p(armR=(0,95,88),foreArmR=z(20)),110),
+    ('spinning-backfist',p(armR=(0,-65,65),foreArmR=z(75)),p(armR=(0,-110,100),foreArmR=z(12)),p(armR=(0,-125,88),foreArmR=z(20)),110),
 ]
 for name,wind,strike,follow,twist in unarmed:
     anticipation={**guard,**wind,'hip':hip(y=-.04,twist=-twist*.35),'torso':(0,-twist*.65,5),'head':(0,twist*.35,-3)}
     contact={**guard,**strike,'hip':hip(y=-.02,twist=twist*.45),'torso':strike.get('torso',(0,twist*.5,-7)),'head':(0,-twist*.3,5)}
     through={**guard,**follow,'hip':hip(y=-.025,twist=twist*.65),'torso':follow.get('torso',(0,twist*.8,-4)),'head':(0,-twist*.4,3)}
+    def limb_blend(t):
+        return {node:tuple(a+(b-a)*t for a,b in zip(anticipation.get(node,(0,0,0)),contact.get(node,(0,0,0))))
+                for node in set(anticipation)|set(contact) if node.startswith(('arm','foreArm','leg','shin','foot'))}
     action('unarmed-'+name,1,[(0,guard),(.035,{**guard,'hip':anticipation['hip']}),
-        (.075,anticipation),(.20,contact),(.36,through),(.66,{**guard,'torso':(0,twist*.12,0)}),(1,guard)])
+        (.05,{**guard,'hip':anticipation['hip'],'torso':anticipation['torso'],'head':anticipation['head']}),
+        (.075,anticipation),(.125,{**anticipation,**limb_blend(.4),'hip':contact['hip']}),
+        (.15,{**contact,**limb_blend(.6)}),(.20,contact),(.36,through),
+        (.66,{**guard,'torso':(0,twist*.12,0)}),(1,guard)])
 
 action('swing',.5,[(0,p()),(.1,p(armR=z(-30),torso=(0,-30,5))),(.2,p(armR=(0,55,100),foreArmR=z(8),torso=(0,35,-10))),(.5,p(armR=(0,85,100),torso=(0,45,-5))),(1,p())])
 action('kick',.65,[(0,p(armL=z(35),foreArmL=z(50))),(.12,p(hip=hip(y=-.03),legR=z(68),shinR=z(-110),torso=z(12))),
