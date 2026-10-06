@@ -1,6 +1,6 @@
 // Adapted from folio-2025 Materials.js by Bruno Simon (MIT), commit 41046b5.
 import { DataTexture, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, type Color, type Node } from 'three/webgpu';
-import { attribute, positionGeometry, positionLocal, sin, uniform, vec3 } from 'three/tsl';
+import { attribute, color, mix, positionGeometry, positionLocal, sin, uniform, vec3 } from 'three/tsl';
 import { palette, paletteTokens, type PaletteToken } from '../data/palette';
 import { PaletteMaterial } from './PaletteMaterial';
 import type { Lighting } from './Lighting';
@@ -19,6 +19,16 @@ export class Materials {
     });
     this.texture = new DataTexture(data, paletteTokens.length, 1, RGBAFormat, UnsignedByteType);
     this.texture.colorSpace = SRGBColorSpace; this.texture.minFilter = this.texture.magFilter = NearestFilter; this.texture.needsUpdate = true;
+  }
+  get look() { return this.lighting.look; }
+  applyLook(): void {
+    const data = this.texture.image.data as Uint8Array;
+    let changed = false;
+    paletteTokens.forEach((token, i) => {
+      const hex = Number.parseInt(this.look.palette[token].slice(1), 16), rgb = [hex >> 16, hex >> 8 & 255, hex & 255];
+      rgb.forEach((value, channel) => { if (data[i * 4 + channel] !== value) { data[i * 4 + channel] = value; changed = true; } });
+    });
+    if (changed) this.texture.needsUpdate = true;
   }
   get(token: PaletteToken, emissive = 0): PaletteMaterial {
     const key = `${token}:${emissive}`;
@@ -49,8 +59,10 @@ export class Materials {
     const key = 'wind-foliage';
     let material = this.cache.get(key);
     if (!material) {
-      material = this.shaded(attribute('color', 'vec3'));
-      const weight = positionGeometry.y.smoothstep(.25, 1.7).mul(.055);
+      const ramp = positionGeometry.y.smoothstep(.25, 1.7);
+      const tint = mix(this.look.nodes.foliageDark.rgb.div(color('#4a7533').rgb), this.look.nodes.foliageLight.rgb.div(color('#98b94f').rgb), ramp).mul(this.look.nodes.foliage.rgb.div(color('#789c4c').rgb));
+      material = this.shaded(attribute('color', 'vec3').mul(tint));
+      const weight = positionGeometry.y.smoothstep(.25, 1.7).mul(.055).mul(this.look.nodes.windStrength);
       const gust = sin(positionLocal.x.mul(.7).add(positionLocal.z.mul(.4)).add(this.wind.mul(1.2)));
       material.positionNode = positionLocal.add(vec3(gust.mul(weight), 0, gust.mul(weight).mul(.6)));
       material.name = 'pal_wind-foliage'; this.cache.set(key, material);

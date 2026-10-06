@@ -1,10 +1,11 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from folio-2025 Ligthing.js / Fog.js by Bruno Simon (MIT), commit 41046b5.
 import { Color, DirectionalLight, Fog, HemisphereLight, Scene, Vector3 } from 'three/webgpu';
-import { uniform } from 'three/tsl';
+import { uniform, screenUV, mix } from 'three/tsl';
 import { timeOfDay, type TimeOfDay } from '../data/timeOfDay';
 import type { View } from './View';
 import { worldLook } from '../data/worldLook';
+import { LookUniforms } from './LookUniforms';
 
 /** One sun, a hemisphere and shared stylized lighting uniforms. Shadows follow the visible ground region. */
 export class Lighting {
@@ -19,9 +20,14 @@ export class Lighting {
   readonly fogColor = uniform(new Color());
   readonly fogNear = uniform(55);
   readonly fogFar = uniform(140);
-  readonly bounce = uniform(new Color(worldLook.bounce));
+  readonly bounce;
+  readonly fogA = uniform(new Color());
+  readonly fogB = uniform(new Color());
+  readonly fogGradient;
   preset: TimeOfDay = 'golden';
-  constructor(private readonly scene: Scene) {
+  constructor(private readonly scene: Scene, readonly look = new LookUniforms()) {
+    this.bounce = look.nodes.bounce;
+    this.fogGradient = mix(this.fogA, this.fogB, screenUV.sub(.5).length().smoothstep(look.nodes.fogRatioA, look.nodes.fogRatioB));
     this.sun.castShadow = true; this.sun.shadow.mapSize.set(1024, 1024);
     this.sun.shadow.bias = -0.0005; this.sun.shadow.normalBias = 0.04; this.sun.shadow.radius = 3;
     this.scene.add(this.sun, this.sun.target, this.hemisphere); this.set('golden');
@@ -41,11 +47,29 @@ export class Lighting {
     if (this.scene.background instanceof Color) this.scene.background.set(p.sky); else this.scene.background = new Color(p.sky);
     if (this.scene.fog instanceof Fog) { this.scene.fog.color.set(p.fog); this.scene.fog.near = p.fogNear; this.scene.fog.far = p.fogFar; }
     else this.scene.fog = new Fog(p.fog, p.fogNear, p.fogFar);
+    this.applyLook();
+  }
+  /** Reapply authored presets plus explicit live overrides; gameplay never reads these values. */
+  applyLook(): void {
+    const p = timeOfDay[this.preset], v = this.look.values;
+    this.direction.value.setFromSphericalCoords(1, (this.look.has('sunPolar') || this.preset === 'L1') ? v.sunPolar : p.polar, (this.look.has('sunAzimuth') || this.preset === 'L1') ? v.sunAzimuth : p.azimuth);
+    this.color.value.set((this.look.has('sun') || this.preset === 'L1') ? v.sun : p.sun); this.sun.color.copy(this.color.value);
+    this.intensity.value = (this.look.has('sunIntensity') || this.preset === 'L1') ? v.sunIntensity : p.intensity; this.sun.intensity = this.intensity.value;
+    this.shadow.value.set((this.look.has('shadow') || this.preset === 'L1') ? v.shadow : p.shadow);
+    this.skyAmbient.value.set(v.skyAmbient); this.groundAmbient.value.set(v.groundAmbient); this.hemisphere.intensity = v.hemisphereIntensity;
+    this.fogColor.value.set((this.look.has('fog') || this.preset === 'L1') ? v.fog : p.fog);
+    this.fogA.value.set(this.look.has('fog') && !this.look.has('fogA') ? v.fog : (this.look.has('fogA') || this.preset === 'L1') ? v.fogA : this.fogColor.value);
+    this.fogB.value.set(this.look.has('fog') && !this.look.has('fogB') ? v.fog : (this.look.has('fogB') || this.preset === 'L1') ? v.fogB : this.fogColor.value);
+    this.scene.background = new Color((this.look.has('sky') || this.preset === 'L1') ? v.sky : p.sky);
+    this.scene.backgroundNode = this.look.has('fogA') || this.look.has('fogB') || this.preset === 'L1' && v.fogA !== v.fogB ? this.fogGradient : null;
+    if (this.scene.fog instanceof Fog) this.scene.fog.color.copy(this.fogColor.value);
+    this.sun.shadow.bias = v.shadowBias; this.sun.shadow.normalBias = v.shadowNormalBias; this.sun.shadow.radius = v.shadowRadius;
+    this.sun.shadow.needsUpdate = true;
   }
   update(view: View): void {
     // Portrait framing pulls the camera back to retain the playable circle.
     // Fog must follow that offset so it still starts beyond the nearby action.
-    const p = timeOfDay[this.preset];
+    const preset = timeOfDay[this.preset], p = { fogNear: (this.look.has('fogNear') || this.preset === 'L1') ? this.look.values.fogNear : preset.fogNear, fogFar: (this.look.has('fogFar') || this.preset === 'L1') ? this.look.values.fogFar : preset.fogFar };
     // Use the follow framing radius: authored cinematic positions must retain distance fog.
     const fogOffset = Math.max(0, view.radius * (view.driving ? 1.15 : 1) - 19);
     this.fogNear.value = p.fogNear + fogOffset; this.fogFar.value = p.fogFar + fogOffset;
@@ -62,7 +86,7 @@ export class Lighting {
   /** Includes live fog ranges so viewport changes can be checked without shader inspection. */
   getState() {
     const p = timeOfDay[this.preset];
-    return { shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: p.sun, sky: p.sky, fog: p.fog, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: p.intensity };
+    return { shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value };
   }
   dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); }
 }
