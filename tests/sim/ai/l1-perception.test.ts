@@ -6,6 +6,8 @@ import type { EntitySnapshot } from '../../../src/sim/world/types';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { measureHorde } from '../../../tools/performance/sim';
+import { readFileSync } from 'node:fs';
+import { compositions } from '../../../src/levels/compositions';
 
 /** Scripted humans the tests move by hand (lane D supplies the real civilian query in the game). */
 class Humans implements HumanTargetQuery {
@@ -333,4 +335,19 @@ describe('L1 v2 infected perception', () => {
     console.info(`[perf] E18 reference p95 ${reference.simMsP95.toFixed(2)} ms`);
     expect(p95).toBeLessThanOrEqual(Math.max(4, reference.simMsP95 * 1.25));
   }, 120_000);
+
+  test('T-E19-grove @E19 @E19-AC08 D-GROVE enables the L1 brain automatically (vision-only, tiered speed)', async () => {
+    const w = new SimWorld(); worlds.push(w); await w.init();
+    const c = compositions['D-GROVE'];
+    w.loadComposition(c, c.districts.map((d) => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 4);
+    w.enableInfected();
+    const ai = w.infected!, player = w.entities.get(1)!.transform;
+    expect(ai.l1).not.toBeNull();
+    const yaw = 0; let x = player.x - 9;
+    while (!ai.nav.clear(x, player.z, 0.6) && x > player.x - 15) x -= 0.5;
+    const e = w.entities.get(ai.spawn('infected.runner', { x, z: player.z }, { yaw, variant: 'npc.civilian-elderly' }))!;
+    expect(brain(e).tier).toBe('frail'); expect(brain(e).runSpeed).toBeGreaterThan(l1v2.player.runMs);
+    for (let i = 0; i < 240 && brain(e).mode !== 'chase'; i++) w.update();
+    expect(brain(e).mode).toBe('chase'); expect(brain(e).targetId).toBe(1);
+  });
 });
