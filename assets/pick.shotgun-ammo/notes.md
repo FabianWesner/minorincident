@@ -1,9 +1,7 @@
-# Shotgun ammunition pickup
+# Lightweight shotgun ammunition pickup
 
-Open carton: 0.36 m deep × 0.56 m wide; front wall 0.23 m tall, open lid about 0.40 m high. Front faces +X and the carton floor contacts z=0. Five parallel red shells have stepped gold collars, rim flanges, recessed base discs and raised primers. Cardboard has folded rims, cream/red printed panels, bold raised caliber and ammunition labels, and a few broad print chips.
+Performance revision: LOD0 ≤2,500 triangles, ≤6 draw calls. The original open carton silhouette and dimensions, palette colours and all seven exported node names remain. Three broad eight-sided red/gold cartridge shapes replace the five detailed shells. Stepped bases, primers, small wear marks and multi-segment bevels are omitted. Front markings are flat raised geometry reading `12 GA` and `AMMO`, at least 3 mm clear of the printed panels.
 
-All parts are static; joined into six palette batches beneath `root`, with `body` representing the cardboard. No lights, animation, or physical simulation are needed for this collectible. Palette substitution intentionally replaces photographic cardboard variation with clean warm tan/cream. No image textures. Label and wear layers are at least 3 mm beyond underlying surfaces. AO is baked with the shared deterministic CPU Cycles helper.
+Static geometry batches: `body`, `static_blood`, `static_picketWhite`, `static_schoolBusYellow`, `static_survivorRed`, `static_uiDark`, under `root`. No moving parts or lights. Deterministic vertex AO is baked using the shared helper; no textures. The same script exports model.glb, model.lod1.glb and model.lod2.glb, preserving node names while decimating the two lower levels to 50% and 25%. Base geometry is restored before rendering.
 
-Review rounds: 1 established geometry and exposed excess text topology/cropped lid; 2 corrected shell height, alignment, framing and simplified text; 3 refined bold lettering and worn print while reducing radial segments. Build and rendering use the shared Blender runner. Arial Bold is the macOS installed font used for geometry generation.
-
-Round 4 finalized 20-sided shell profiles, enlarged the bold label, and replaced block wear marks with triangular raised ink chips. Exported GLB independently measured at 10,837 triangles, six primitives and zero textures.
+Build uses the shared Blender runner. Hero is rendered at 1600×900, 96 samples; game render at 960×540, 24 samples. No manifest edits.

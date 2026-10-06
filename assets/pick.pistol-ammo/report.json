@@ -1,10 +1,9 @@
 {
   "id": "pick.pistol-ammo",
   "tier": "Side",
-  "triangles": 9688,
-  "draw_calls": 10,
+  "triangles": 1016,
+  "draw_calls": 6,
   "materials": [
-    "pal_asphalt",
     "pal_grass",
     "pal_schoolBusYellow",
     "pal_uiDark",
@@ -12,10 +11,24 @@
   ],
   "nodes_ok": true,
   "within_budget": true,
-  "rounds": 3,
+  "rounds": 4,
   "webgpu_ok": true,
   "webgl2_ok": true,
   "gaps": [
-    "Fine reference scratches simplified to sparse raised wear chips."
-  ]
+    "Detailed rounds replaced with three brass bundles and nine chunky tips; fine wear and rivets omitted."
+  ],
+  "lods": {
+    "lod1": {
+      "triangles": 508,
+      "draw_calls": 6
+    },
+    "lod2": {
+      "triangles": 250,
+      "draw_calls": 6
+    }
+  },
+  "budget": {
+    "triangles": 2500,
+    "draw_calls": 6
+  }
 }
