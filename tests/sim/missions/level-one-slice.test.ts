@@ -16,7 +16,7 @@ test('@E19 @E19-AC01 slice graph ends at store combat, without the deferred fina
   const m=await start();while(m.state.phase==='playing')m.completeObjective();
   expect(m.state.phase).toBe('result');expect(m.state.completedObjectives).toEqual(['breakfast','escape','melee','store-fight']);
 });
-test('@E19 @E19-AC04 no attacks before pickup; diner spawns real chasing AI and caps population',async()=>{
+test('@E19 @E19-AC04 morning has no attacks; diner spawns real chasing AI and caps population',async()=>{
   const m=await start();world.setInput({left:{down:true,held:true,up:false},right:{down:true,held:true,up:false}});
   for(let i=0;i<60;i++)world.update();expect(world.entities.get(1)!.weapons).toBeUndefined();expect(world.events.events().some(e=>e.type==='combat.attack')).toBe(false);
   world.clearInput();m.completeObjective('breakfast');expect(world.infected!.active).toHaveLength(4);expect(world.infected!.active.every(e=>e.infected!.state==='chase')).toBe(true);
@@ -65,5 +65,62 @@ test('@E19 slice complete policy finishes 20 seeds with normal movement, pickup 
       world.update();
     }
     expect(m.state.phase,`seed ${seed}: ${JSON.stringify({p:world.entities.get(1)!.transform,hp:world.entities.get(1)!.health,steps:m.state.steps,actors:world.infected!.active.map(e=>({id:e.id,p:e.transform,hp:e.health.current,state:e.infected!.state}))})}`).toBe('result');expect(m.state.stats.kills).toBe(5);expect(m.state.stats.deaths).toBeLessThanOrEqual(2);world.dispose();
+  }
+});
+
+
+test('@E19 incident checkpoint restores escape, fists and live runners after death', async () => {
+  const m = await start(); m.completeObjective('breakfast');
+  expect(m.state.checkpoint).toBe('escape');
+  world.player!.damage(100, world.tick);
+  for (let i = 0; i < 125; i++) world.update();
+  expect(m.state.completedObjectives).toEqual(['breakfast']);
+  expect(m.state.steps.escape.status).toBe('active');
+  expect(m.state.steps.melee.status).toBe('pending');
+  expect(world.entities.get(1)!.weapons!.LEFT.rack[0].id).toBe('weapon.fists');
+  expect(world.infected!.active.filter(e => e.health.current > 0)).toHaveLength(4);
+  expect(world.infected!.active.every(e => e.combat!.damageMultiplier === .2)).toBe(true);
+});
+
+test('@E19 four incident runners cannot kill an idle unarmed survivor within 25 seconds', async () => {
+  const m = await start(); const p = world.entities.get(1)!;
+  Object.assign(p.transform, {x:42, z:-6.5}); world.physics.playerBody!.setTranslation(p.transform, true);
+  m.completeObjective('breakfast');
+  for (let i = 0; i < 1500; i++) world.update();
+  expect(m.state.stats.deaths).toBe(0); expect(p.health.current).toBeGreaterThan(0);
+  const damage = world.events.events().filter(e => e.type === 'player.damaged');
+  expect(damage.length).toBeGreaterThan(10);
+  expect(damage.every(e => e.type === 'player.damaged' && e.amount === 2)).toBe(true);
+});
+
+for (const side of ['LEFT', 'RIGHT'] as const) test(`@E19 incident ${side} unarmed action hits and kills real AI`, async () => {
+  const m = await start(); const p = world.entities.get(1)!;
+  Object.assign(p.transform, {x:42, z:-6.5}); world.physics.playerBody!.setTranslation(p.transform, true);
+  m.completeObjective('breakfast');
+  for (let i = 0; i < 660 && m.state.stats.kills === 0; i++) {
+    const target = world.infected!.active.filter(e => e.health.current > 0).sort((a,b) => Math.hypot(a.transform.x-p.transform.x,a.transform.z-p.transform.z)-Math.hypot(b.transform.x-p.transform.x,b.transform.z-p.transform.z))[0];
+    world.setInput({attackTarget:{id:target.id,side}, [side === 'LEFT' ? 'left' : 'right']:{down:false,held:true,up:false}}); world.update();
+  }
+  expect(m.state.stats.kills).toBeGreaterThan(0); expect(m.state.stats.deaths).toBe(0);
+  expect(world.events.events().some(e => e.type === 'combat.hit' && e.sourceId === 1 && e.amount > 0 && e.actionId === (side === 'LEFT' ? 'weapon.fists' : 'weapon.kick'))).toBe(true);
+});
+
+test('@E19 loaded ground edges stop direct movement at both outer and missing-district boundaries after decay', async () => {
+  await start();
+  for (const tier of [0, 1] as const) {
+    world.setTier(tier);
+    for (const edge of [{x:0,z:-25,move:{x:0,z:-1}}, {x:0,z:25,move:{x:0,z:1}}, {x:81,z:0,move:{x:1,z:0}}, {x:0,z:0,move:{x:-1,z:0}}]) {
+      const p = world.entities.get(1)!;
+      Object.assign(p.transform, {x:edge.x,z:edge.z,y:.705}); world.physics.playerBody!.setTranslation(p.transform,true);
+      world.setInput({move:edge.move});
+      for (let i = 0; i < 1500; i++) { world.update(); expect(p.transform.y).toBeGreaterThan(.65); }
+      expect(world.districts!.nav.walkable([p.transform.x,p.transform.z])).toBe(true);
+      expect(p.health.current).toBe(100);
+    }
+  }
+  for (const target of [[1000,1000],[-1000,-1000],[0,60],[42,-10]] as [number,number][]) {
+    const clamped = world.districts!.nav.clamp(target); expect(world.districts!.nav.walkable(clamped)).toBe(true);
+    world.clearInput(); world.setInput({moveTarget:{x:target[0],z:target[1]}}); world.update();
+    expect(world.controls.moveTarget).toEqual({x:clamped[0],z:clamped[1]});
   }
 });

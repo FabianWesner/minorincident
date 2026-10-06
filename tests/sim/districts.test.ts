@@ -79,7 +79,7 @@ test("T-E10-runtime @E10 gameplay blockers have Rapier colliders, fires damage o
     expect(world.player).not.toBeNull();
     expect(world.physics.characterController).not.toBeNull();
     const colliderCount =
-      2 +
+      2 + world.districts!.boundaries.length +
       world.districts!.districts.reduce(
         (n, d) => n + d.decay.colliders.length + d.blockers.length,
         0,

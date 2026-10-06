@@ -128,6 +128,7 @@ export class SimWorld implements Lifecycle {
     this.physics.load({name:composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]}});
     Object.assign(this.entities.get(1)!.transform,{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]});this.previousPlayer={...this.entities.get(1)!.transform};this.player!.setCheckpoint(this.entities.get(1)!.transform);this.spatial.set(1,districts.playerStart[0],districts.playerStart[1]);
     for(const d of districts.districts)for(const aabb of d.decay.colliders.map((c)=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
+    for (const boundary of districts.boundaries) this.physics.addStatic(boundary, [0, 0]);
     this.physics.world!.step();
     for (const d of districts.districts) {
       this.placeInteractions(d.gameplay.interactions ?? {}, d.origin);
@@ -159,6 +160,7 @@ export class SimWorld implements Lifecycle {
     const {min,max}=next.nav, player=this.entities.get(1)!;
     this.physics.load({name:next.composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:player.transform});
     for(const d of next.districts)for(const aabb of d.decay.colliders.map(c=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
+    for (const boundary of next.boundaries) this.physics.addStatic(boundary, [0, 0]);
     this.vehicles?.rebuild(true);
     this.hazards?.debris.reset(true); this.interactables?.rebuildBlockers(next.nav, true);
     this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step(); rebuildNpcNavigation(this);
