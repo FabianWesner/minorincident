@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Headless runner, adapted from experiment/tools/blender_run.py.
 
-All lanes share four process slots and one Cycles slot. Existing reference-tool
+All lanes share three process slots and one Cycles slot. Existing reference-tool
 locks are opened read-only; other checkouts use a common system-temp pool.
 Script exceptions are fatal; locks are released even when Blender fails.
 """
@@ -36,7 +36,7 @@ def acquire(prefix, count):
 
 
 def run(script, args):
-    held = [acquire('any', 4)]
+    held = [acquire('any', 3)]
     try:
         if '--render' in args or '--bake-ao' in args:
             held.append(acquire('slot', 1))

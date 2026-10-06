@@ -1,4 +1,6 @@
-import { Group, Mesh, MeshLambertNodeMaterial, type BufferGeometry, type Material } from "three/webgpu";
+import { Group, Mesh, MeshLambertNodeMaterial, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
+import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
+import { KTX2Loader } from "three/addons/loaders/KTX2Loader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import type { PaletteToken } from "../data/palette";
 import { paletteTokens } from "../data/palette";
@@ -17,12 +19,19 @@ const productionIds: Record<string, string> = {
 };
 /** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
 export class DistrictAssets {
-  private readonly loader = new GLTFLoader();
+  private readonly loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
   private readonly cache = new Map<string, Promise<Group>>();
   private readonly geometries = new Set<BufferGeometry>();
   private readonly batchMaterials = new Set<Material>();
-  private readonly assets = new AssetRegistry((event) => console.info(JSON.stringify(event)));
-  constructor(private readonly materials: Materials, private readonly quality: 'high' | 'low' = 'high') {}
+  private readonly assets: AssetRegistry;
+  private readonly ktx?: KTX2Loader;
+  constructor(private readonly materials: Materials, renderer?: WebGPURenderer) {
+    this.assets = new AssetRegistry((event) => console.info(JSON.stringify(event)), { renderer });
+    if (renderer) {
+      this.ktx = new KTX2Loader().setTranscoderPath('/assets/basis/').detectSupport(renderer);
+      this.loader.setKTX2Loader(this.ktx);
+    }
+  }
   private remember(root: Group): Group {
     root.traverse((o) => {
       if (o instanceof Mesh) this.geometries.add(o.geometry);
@@ -116,5 +125,6 @@ export class DistrictAssets {
     for (const material of this.batchMaterials) material.dispose(); this.batchMaterials.clear();
     this.cache.clear();
     void this.assets.dispose();
+    this.ktx?.dispose();
   }
 }
