@@ -21,6 +21,10 @@ export interface EntitySnapshot {
   /** E07 consumes this temporary noise target in preference to the player. */
   /** A newborn is rendered in its collapse/rise pose and cannot act until this timer ends. */
   infectionRise?: { started: number; until: number };
+  /** L1 v2 identity of a pedestrian, kept through infection (same model, tint, accessories; section 5.7). */
+  appearance?: import('../outbreak/appearance').Appearance;
+  /** L1 v2 transformation of a bitten pedestrian (0 to 1); removed when the same entity rises infected. */
+  infection?: import('../outbreak/types').InfectionState;
   noiseTarget?: { id: number; until: number };
   pickup?: import('../interact/Pickups').Pickup | { actionId: string; armed: boolean };
   speedBuff?: { multiplier: number; until: number };
