@@ -1,3 +1,4 @@
+import { AudioService } from './audio/AudioService';
 // Adapted from folio-2025 by Bruno Simon (MIT).
 import { Matrix4 } from 'three';
 import { InputSystem } from './input/InputSystem';
@@ -16,6 +17,7 @@ export class Game {
   readonly clock: Clock;
   readonly view: GameView;
   readonly input: InputSystem;
+  readonly audio: AudioService;
   readonly ticker = new Ticker();
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
   frameMs = 0;
@@ -27,6 +29,12 @@ export class Game {
     this.clock = new Clock(params.get('test') === '1' ? 20 : 5);
     this.view = this.services.add(new GameView(this.world, params));
     this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera));
+    this.audio = this.services.add(new AudioService(this.world, {
+      pause: () => this.clock.pause(), resume: () => { this.ticker.reset(); this.clock.resume(); },
+      release: () => { this.input.clear(); this.world.clearInput(); this.ticker.reset(); },
+      offscreen: (p) => { const q = this.view.project(p.x, p.y ?? 0.7, p.z); return Math.abs(q[0]) > 1 || Math.abs(q[1]) > 1 || q[2] > 1; },
+      project: (p) => { const q = this.view.project(p.x, p.y ?? 0, p.z); return { x: (q[0] + 1) / 2, y: (1 - q[1]) / 2 }; },
+    }, params));
   }
   async init(): Promise<void> {
     await this.services.init();
@@ -49,9 +57,10 @@ export class Game {
     const load = this.levelQueue.then(async () => {
       this.loading = true;
       try {
-        this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
+        this.audio.reset(); this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
         if (name !== null) { this.world.loadScenario(name, seed); await this.view.load(); }
         else this.view.update();
+        await this.audio.load();
       } finally { this.loading = false; this.ticker.reset(); }
     });
     this.levelQueue = load.catch(() => {}); return load;
@@ -65,9 +74,9 @@ export class Game {
         const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(url);if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
         const data=performance.now();
         const cosmetic=this.world.entities.get(1)?.survivor;
-        this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
+        this.audio.reset();this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
-        const sim=performance.now();await this.view.load();this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:performance.now()-sim};
+        const sim=performance.now();await this.view.load();this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:performance.now()-sim};await this.audio.load();
       }finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
   }

@@ -1,5 +1,6 @@
 /** One source for sim hearing and audio noise. Radii in metres (09-sound-design §3). */
 export const noise = {
+    scream: { radius: 20, loudness: 1 },
     melee: { radius: 6, loudness: 0.5 }, pistol: { radius: 25, loudness: 1 }, smg: { radius: 25, loudness: 1 },
     shotgun: { radius: 35, loudness: 1 }, rifle: { radius: 35, loudness: 1 }, machineGun: { radius: 40, loudness: 1 },
     explosionSmall: { radius: 30, loudness: 1 }, explosionMedium: { radius: 45, loudness: 1 },
