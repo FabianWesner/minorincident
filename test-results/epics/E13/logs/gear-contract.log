@@ -1,0 +1,10 @@
+
+> test:e2e
+> sh tools/e2e-lock.sh playwright test --project=chromium tests/visual/survivor.spec.ts --grep @E04-AC10 --workers=2
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/visual/survivor.spec.ts:46:1 › T-E04-10 @E04 @E04-AC10 all five tiers retain red/teal; tier 0 and 4 differ on over 5% of character pixels (48.2s)
+
+  1 passed (50.1s)
