@@ -30,6 +30,7 @@ import { resolvePosition } from "../levels/districts/validate";
 import type { CameraPose } from "./View";
 import type { View } from './View';
 import { AmbientLife } from './AmbientLife';
+import { Foliage } from './Foliage';
 
 interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; id: string; lit: boolean; loaded: boolean }
 /** Shared static instances; detailed prototypes stream only into the close view. */
@@ -48,6 +49,7 @@ export class DistrictView extends Group {
   private cameraAspect = 0;
 
   private readonly grass: Grass[] = [];
+  private readonly foliage: Foliage;
   private ambient?: AmbientLife;
   private readonly districtRoots: { root: Group; bounds: Box3 }[] = [];
   private readonly ownedGeometry: BufferGeometry[] = [];
@@ -68,6 +70,7 @@ export class DistrictView extends Group {
   ) {
     super();
     this.name = "sunset-grove";
+    this.foliage = new Foliage(materials, phase); this.add(this.foliage); this.foliage.setQuality(low);
   }
   async load(seed: number): Promise<void> {
     this.phase.value = 0;
@@ -112,9 +115,14 @@ export class DistrictView extends Group {
           root.add(clone);
         }
         const references = new Map<string, Object3D[]>();
+        const crowns = new Map<string, Object3D[]>();
         const base = scenes[0];
         base.updateMatrixWorld(true);
         base.traverse((o) => {
+          if (o.userData.foliageColors && o.userData.minTier <= this.world.composition.tier && o.userData.maxTier >= this.world.composition.tier) {
+            const key = o.userData.foliageColors.join(":"), ref = new Object3D(); o.matrixWorld.decompose(ref.position, ref.quaternion, ref.scale);
+            if (!crowns.has(key)) crowns.set(key, []); crowns.get(key)!.push(ref);
+          }
           if (
             typeof o.userData.assetId !== "string" ||
             o.userData.minTier > this.world.composition.tier ||
@@ -132,6 +140,7 @@ export class DistrictView extends Group {
           if (!references.has(key)) references.set(key, []);
           references.get(key)!.push(reference);
         });
+        for (const [colors, refs] of crowns) this.foliage.addCrowns(refs, colors.split(":") as [string, string], d.origin);
         await Promise.all(
           [...references].map(async ([key, refs]) => {
             const [id, power] = key.split(":");
@@ -248,6 +257,7 @@ export class DistrictView extends Group {
   setQuality(tier: 'high' | 'low'): void {
     if (this.low !== (tier === 'low')) { this.low = tier === 'low'; this.cameraPosition = [Infinity, Infinity, Infinity]; }
     for (const grass of this.grass) grass.setQuality(tier === 'low');
+    this.foliage.setQuality(tier === 'low');
     this.ambient?.setQuality(tier === 'low');
     // Measured L6 cost: many small prop meshes render again into the sun shadow map.
     // Low preserves building/vehicle/hero shadows and omits detailed prop shadow casters.
@@ -255,6 +265,8 @@ export class DistrictView extends Group {
       if (node instanceof Mesh) { node.userData.qualityCastShadow ??= node.castShadow; node.castShadow = tier === 'high' && node.userData.qualityCastShadow; }
     });
   }
+  setFoliageReveal(enabled: boolean): void { this.foliage.reveal = enabled; }
+  updateFoliage(view: View, player?: { x: number; y: number; z: number }, target?: { x: number; y: number; z: number }): void { this.foliage.update(view, player, target); }
   advance(seconds: number): void {
     this.phase.value += seconds; this.labelTime += seconds;
   }
@@ -338,6 +350,7 @@ export class DistrictView extends Group {
         0,
       ),
       windPhase: this.phase.value,
+      foliage: this.foliage.getState(),
       ambient: this.ambient != null,
       photoSpots: [...this.spots.keys()],
       windowMeshes: this.windows.length,
@@ -346,6 +359,7 @@ export class DistrictView extends Group {
   dispose(): void {
     this.disposed = true;
     this.ambient?.dispose();
+    this.foliage.dispose();
     for (const b of this.batches) b.dispose();
     for (const g of this.grass) g.dispose();
     for (const g of this.ownedGeometry) g.dispose();
