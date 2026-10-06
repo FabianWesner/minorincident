@@ -16,7 +16,8 @@ export class Buttons {
   }
   pulse(): void { this.down = true; this.up = true; }
   release(): void { if (this.sources.size) this.up = true; this.sources.clear(); this.down = false; }
-  reset(): void { this.sources.clear(); this.down = false; this.up = false; Object.assign(this.frame, { down: false, held: false, up: false }); }
+  /** Pause cleanup retains a release for the next tick; level resets drop all edges. */
+  reset(preserveRelease = false): void { const up = preserveRelease && (this.up || this.sources.size > 0); this.sources.clear(); this.down = false; this.up = up; Object.assign(this.frame, { down: false, held: false, up: false }); }
   /** Reused object, valid until the next sample; consumers copy only when recording. */
   sample(): Button {
     this.frame.down = this.down; this.frame.held = this.sources.size > 0; this.frame.up = this.up;
