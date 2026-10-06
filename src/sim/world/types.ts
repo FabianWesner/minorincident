@@ -29,6 +29,11 @@ export interface EntitySnapshot {
   /** Retaliation HP cost for vehicle ramming; supplied by infected definitions. */
   ramDamage?: number;
   vehicle?: import('../vehicles/Vehicles').VehicleState;
+  /** L1 v2: the courier bicycle (entity) and the id of the bicycle the player is riding (player entity). */
+  bicycle?: import('../vehicles/Bicycle').BicycleState;
+  riding?: number;
+  /** L1 v2 interactive toys (dumpster, car alarm, car wash); gates use `interactable`. */
+  toy?: import('../interact/Toys').ToyState;
   survivor?: SurvivorState;
   weapons?: import('../combat/Loadout').LoadoutState;
   combat?: { radius: number; armor: number; shield: boolean; staggerUntil: number; attacking: boolean; damageMultiplier: number; statuses: import('../combat/Status').StatusState[];
