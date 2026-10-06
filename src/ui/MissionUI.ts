@@ -64,7 +64,7 @@ export class MissionUI {
     this.choices.hidden=!mission.def.slice||!playing||state.steps.melee?.status!=='active'||!p||p.health.current<=0||Math.hypot(p.transform.x-hardware.x,p.transform.z-hardware.z)>5;
     if(!this.choices.hidden){
       for(const button of this.choices.querySelectorAll('button'))button.setAttribute('aria-pressed',String(`weapon.${button.textContent}`===mission.meleeChoice));
-      this.text(this.choiceHint, `Selected ${mission.meleeChoice.slice(7)} · Stand at display / F / middle-click`);
+      this.text(this.choiceHint, `Selected ${mission.meleeChoice.slice(7)} · Stand at display / ${document.body.classList.contains('touch-ui') ? 'ACTION' : 'F / middle-click'}`);
     }
     const cinematic=state.cinematic ? mission.def.cinematics[state.cinematic.id] : null;
     this.root.classList.toggle('is-cinematic',!!cinematic);
@@ -74,7 +74,7 @@ export class MissionUI {
     this.panel.hidden=playing||!!cinematic;
     if (this.panel.hidden && this.panel.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();
     this.tracker.hidden=this.map.hidden=!playing;
-    this.result.hidden=state.phase!=='result';
+    this.result.hidden=state.phase!=='result'||!!mission.def.slice;
     if(this.phase!==state.phase){
       this.phase=state.phase;
       const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${state.checkpoint??'level start'}.`,'Retry'],result:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};

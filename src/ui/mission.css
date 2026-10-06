@@ -27,3 +27,7 @@ body.touch-ui .slice-choices button{font-size:14px;padding:8px}
 .full-ui.touch-ui .slice-choices button{min-height:44px;min-width:64px;font-size:12px;padding:6px 8px}
 .full-ui.touch-ui .slice-choices span{font-size:11px}
 @media(orientation:landscape){.full-ui.touch-ui .slice-choices{bottom:auto;top:158px}}
+
+.full-ui .mission-panel button{background:#ffcf77;color:#172131}
+.full-ui:has(.mission-panel:not([hidden])) [data-touch-controls],.full-ui:has(.mission-panel:not([hidden])) [data-touch-stick]{display:none!important}
+@media(orientation:landscape){.full-ui.touch-ui .slice-choices{left:calc(50% + 12px);top:148px;width:min(280px,calc(50vw - 24px))}}
