@@ -1,10 +1,27 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
-// Adapted from folio-2025 Ligthing.js / Fog.js by Bruno Simon (MIT), commit 41046b5.
-import { Color, DirectionalLight, Fog, HemisphereLight, Scene, Vector3, type DepthTexture, type DirectionalLightShadow, type Node } from 'three/webgpu';
-import { Fn, float, reference, texture, uniform, vec2 } from 'three/tsl';
+// Adapted from Bruno Simon folio-2025 Ligthing.js / Fog.js (MIT).
+import { Color, DirectionalLight, Fog, HemisphereLight, Scene, Vector2, Vector3, Plane, Ray, type DepthTexture, type Node } from 'three/webgpu';
+import { uniform, mix, vec2, viewportUV, Fn, texture, reference, float } from 'three/tsl';
 import { timeOfDay, type TimeOfDay } from '../data/timeOfDay';
 import type { View } from './View';
 import { worldLook } from '../data/worldLook';
+import { LookUniforms } from './LookUniforms';
+
+// r186's default PCF rotates five taps with per-pixel noise. A fixed weighted
+// grid keeps the soft penumbra without stipple, including the WebGL2 fallback.
+const stableSunShadow = Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: {
+  depthTexture: DepthTexture; shadowCoord: Node<'vec3'>; shadow: DirectionalLight['shadow']; depthLayer: Node<'float'>;
+}) => {
+  const step = reference('radius', 'float', shadow).div(reference('mapSize', 'vec2', shadow));
+  let filtered: Node<'float'> = float(0);
+  for (const x of [-1, 0, 1]) for (const y of [-1, 0, 1]) {
+    let sample = texture(depthTexture, shadowCoord.xy.add(vec2(x, y).mul(step)));
+    if (depthTexture.isArrayTexture) sample = sample.depth(depthLayer);
+    const visibility = sample.compare(shadowCoord.z) as unknown as Node<'float'>;
+    filtered = filtered.add(visibility.mul((x === 0 ? 2 : 1) * (y === 0 ? 2 : 1) / 16));
+  }
+  return filtered;
+});
 
 /** One sun, a hemisphere and shared stylized lighting uniforms. Shadows follow the visible ground region. */
 export class Lighting {
@@ -13,28 +30,38 @@ export class Lighting {
   readonly direction = uniform(new Vector3());
   readonly color = uniform(new Color());
   readonly intensity = uniform(1);
+  readonly worldPaletteEnabled = uniform(0);
   readonly shadow = uniform(new Color());
   readonly skyAmbient = uniform(this.hemisphere.color);
   readonly groundAmbient = uniform(this.hemisphere.groundColor);
   readonly fogColor = uniform(new Color());
+  readonly coreShadowEdgeHigh;
+  readonly coreShadowEdgeLow;
+  readonly fogColorA = uniform(new Color());
+  readonly fogCenter = uniform(new Vector2(.5, .35));
+  readonly fogRadialStart;
+  readonly fogRadialEnd;
+  readonly radialFog;
+  private readonly ground = new Plane(new Vector3(0, 1, 0), 0);
+  private readonly ray = new Ray();
+  private readonly corner = new Vector3();
   readonly fogNear = uniform(55);
   readonly fogFar = uniform(140);
-  readonly bounce = uniform(new Color(worldLook.bounce));
+  readonly bounce;
+  readonly fogA = this.fogColorA;
+  readonly fogB = this.fogColor;
+  readonly fogGradient;
   preset: TimeOfDay = 'golden';
-  constructor(private readonly scene: Scene) {
+  constructor(private readonly scene: Scene, readonly look = new LookUniforms()) {
+    this.bounce = look.nodes.bounce;
+    this.coreShadowEdgeHigh = look.nodes.coreLightEdge; this.coreShadowEdgeLow = look.nodes.coreShadowEdge;
+    this.fogRadialStart = look.nodes.fogRatioA; this.fogRadialEnd = look.nodes.fogRatioB;
+    this.radialFog = mix(this.fogColorA, this.fogColor, vec2(viewportUV.xy).sub(this.fogCenter).length().smoothstep(this.fogRadialStart, this.fogRadialEnd));
+    this.fogGradient = this.radialFog;
     this.sun.castShadow = true; this.sun.shadow.mapSize.set(1024, 1024);
-    this.sun.shadow.bias = -0.0005; this.sun.shadow.normalBias = 0.04; this.sun.shadow.radius = 3;
-    // r186's default PCF rotates five taps with per-pixel noise. Without TAA
-    // that stipples character faces and clothing; a fixed symmetric kernel
-    // keeps the same soft-shadow radius without changing the lighting grade.
-    Object.assign(this.sun.shadow, { filterNode: Fn(({ depthTexture, shadowCoord, shadow }: { depthTexture: DepthTexture; shadowCoord: Node<'vec3'>; shadow: DirectionalLightShadow }) => {
-      const texel = reference('radius', 'float', shadow).div(reference('mapSize', 'vec2', shadow)).mul(Math.SQRT1_2);
-      const sum = float(0).toVar();
-      for (const x of [-1, 0, 1]) for (const y of [-1, 0, 1]) {
-        sum.addAssign(texture(depthTexture, shadowCoord.xy.add(texel.mul(vec2(x, y)))).compare(shadowCoord.z).mul((x === 0 ? 2 : 1) * (y === 0 ? 2 : 1)));
-      }
-      return sum.div(16);
-    }) });
+    this.sun.shadow.bias = -0.0005; this.sun.shadow.normalBias = 0.08; this.sun.shadow.radius = 2;
+    // LightShadow.filterNode is public at runtime but omitted from @types/three.
+    (this.sun.shadow as typeof this.sun.shadow & { filterNode: typeof stableSunShadow }).filterNode = stableSunShadow;
     this.scene.add(this.sun, this.sun.target, this.hemisphere); this.set('golden');
   }
   setQuality(tier: QualityTier): void {
@@ -44,26 +71,50 @@ export class Lighting {
   }
   set(name: TimeOfDay): void {
     if (!(name in timeOfDay)) throw new Error(`Unknown time-of-day preset: ${name}`);
+    this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
     this.direction.value.setFromSphericalCoords(1, p.polar, p.azimuth);
     this.color.value.set(p.sun); this.intensity.value = p.intensity; this.shadow.value.set(p.shadow);
     this.sun.color.set(p.sun); this.sun.intensity = p.intensity;
-    this.fogColor.value.set(p.fog); this.fogNear.value = p.fogNear; this.fogFar.value = p.fogFar;
+    this.fogColorA.value.set(p.sky); this.fogColor.value.set(p.fog); this.scene.backgroundNode = this.radialFog; this.fogNear.value = p.fogNear; this.fogFar.value = p.fogFar;
     if (this.scene.background instanceof Color) this.scene.background.set(p.sky); else this.scene.background = new Color(p.sky);
     if (this.scene.fog instanceof Fog) { this.scene.fog.color.set(p.fog); this.scene.fog.near = p.fogNear; this.scene.fog.far = p.fogFar; }
     else this.scene.fog = new Fog(p.fog, p.fogNear, p.fogFar);
+    this.applyLook();
+  }
+  /** Reapply authored presets plus explicit live overrides; gameplay never reads these values. */
+  applyLook(): void {
+    const p = timeOfDay[this.preset], v = this.look.values;
+    this.direction.value.setFromSphericalCoords(1, (this.look.has('sunPolar') || this.preset === 'L1') ? v.sunPolar : p.polar, (this.look.has('sunAzimuth') || this.preset === 'L1') ? v.sunAzimuth : p.azimuth);
+    this.color.value.set((this.look.has('sun') || this.preset === 'L1') ? v.sun : p.sun); this.sun.color.copy(this.color.value);
+    this.intensity.value = (this.look.has('sunIntensity') || this.preset === 'L1') ? v.sunIntensity : p.intensity; this.sun.intensity = this.intensity.value;
+    this.shadow.value.set((this.look.has('shadow') || this.preset === 'L1') ? v.shadow : p.shadow);
+    this.skyAmbient.value.set(v.skyAmbient); this.groundAmbient.value.set(v.groundAmbient); this.hemisphere.intensity = v.hemisphereIntensity;
+    this.fogColor.value.set((this.look.has('fog') || this.preset === 'L1') ? v.fog : p.fog);
+    this.fogA.value.set(this.look.has('fog') && !this.look.has('fogA') ? v.fog : this.look.has('sky') && !this.look.has('fogA') ? v.sky : (this.look.has('fogA') || this.preset === 'L1') ? v.fogA : p.sky);
+    this.fogB.value.set(this.look.has('fog') && !this.look.has('fogB') ? v.fog : (this.look.has('fogB') || this.preset === 'L1') ? v.fogB : p.fog);
+    this.scene.background = new Color((this.look.has('sky') || this.preset === 'L1') ? v.sky : p.sky);
+    this.fogCenter.value.set(v.fogCenterX, v.fogCenterY); this.scene.backgroundNode = this.radialFog;
+    if (this.scene.fog instanceof Fog) this.scene.fog.color.copy(this.fogColor.value);
+    this.sun.shadow.bias = v.shadowBias; this.sun.shadow.normalBias = v.shadowNormalBias; this.sun.shadow.radius = v.shadowRadius;
+    this.sun.shadow.needsUpdate = true;
   }
   update(view: View): void {
     // Portrait framing pulls the camera back to retain the playable circle.
     // Fog must follow that offset so it still starts beyond the nearby action.
-    const p = timeOfDay[this.preset];
+    const preset = timeOfDay[this.preset], p = { fogNear: (this.look.has('fogNear') || this.preset === 'L1') ? this.look.values.fogNear : preset.fogNear, fogFar: (this.look.has('fogFar') || this.preset === 'L1') ? this.look.values.fogFar : preset.fogFar };
     // Use the follow framing radius: authored cinematic positions must retain distance fog.
     const fogOffset = Math.max(0, view.radius * (view.driving ? 1.15 : 1) - 19);
     this.fogNear.value = p.fogNear + fogOffset; this.fogFar.value = p.fogFar + fogOffset;
     if (this.scene.fog instanceof Fog) { this.scene.fog.near = this.fogNear.value; this.scene.fog.far = this.fogFar.value; }
     // Bound the view's ground-plane corners, then enclose that area in the light's orthographic frustum.
-    const tanV = Math.tan(view.camera.fov * Math.PI / 360);
-    const radius = Math.max(16, view.radius * tanV * Math.max(view.camera.aspect, 1 / Math.cos(view.polar)) * 1.5);
+    let visibleRadius = 0;
+    for (const x of [-1, 1]) for (const y of [-1, 1]) {
+      this.corner.set(x, y, .5).unproject(view.camera).sub(view.camera.position).normalize();
+      this.ray.set(view.camera.position, this.corner);
+      if (this.ray.intersectPlane(this.ground, this.corner)) visibleRadius = Math.max(visibleRadius, this.corner.distanceTo(view.focus));
+    }
+    const radius = Math.max(8, visibleRadius) * 1.1;
     this.sun.target.position.copy(view.focus);
     this.sun.position.copy(this.direction.value).multiplyScalar(radius * 2).add(view.focus);
     const camera = this.sun.shadow.camera;
@@ -73,7 +124,7 @@ export class Lighting {
   /** Includes live fog ranges so viewport changes can be checked without shader inspection. */
   getState() {
     const p = timeOfDay[this.preset];
-    return { shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: p.sun, sky: p.sky, fog: p.fog, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: p.intensity };
+    return { shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`] };
   }
-  dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); }
+  dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); this.scene.backgroundNode = null; }
 }
