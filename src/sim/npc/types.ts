@@ -16,7 +16,7 @@ export interface Civilian {
   attacker: number; threat: Point; path: number[]; goal: number; pathIndex: number;
   gore: false; knockedUntil: number;
   panicReaction?: 'flee' | 'freeze';
-  schedule?: CivilianActivity[]; scheduleStep?: number; activityUntil?: number; activityStarted?: number; travelStarted?: number;
+  schedule?: CivilianActivity[]; scheduleStep?: number; activityUntil?: number; activityStarted?: number; lastTravelProgress?: number;
 }
 export interface Companion { following?: boolean; velocity?: Point; state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number }
 export interface Escort { state: 'follow' | 'wait' | 'cover' | 'downed' | 'dead'; order: 'follow' | 'wait'; child: boolean; gore: false; failed: boolean; downedAt: number; progress: number; latched: boolean; path: number[]; goal: number; pathIndex: number; cover: Point | null; attackAt: number }

@@ -121,7 +121,7 @@ export class Npcs {
     for (const e of this.world.entities.iterate()) {
       if (e.infected) { ai.pool.pop(); ai.active.push(e); }
       const c = e.civilian;
-      if (c) { c.entered += delta; for (const key of ['until', 'pauseUntil', 'knockedUntil', 'activityUntil', 'activityStarted'] as const) if (c[key]) c[key]! += delta; if (c.travelStarted !== undefined) c.travelStarted += delta; }
+      if (c) { c.entered += delta; for (const key of ['until', 'pauseUntil', 'knockedUntil', 'activityUntil', 'activityStarted'] as const) if (c[key]) c[key]! += delta; if (c.lastTravelProgress !== undefined) c.lastTravelProgress += delta; }
       if (e.companion) { if (e.companion.until) e.companion.until += delta; if (e.companion.barkAt) e.companion.barkAt += delta; if (e.companion.hurtAt) e.companion.hurtAt += delta; }
       if (e.escort) { e.escort.downedAt += delta; if (e.escort.attackAt) e.escort.attackAt += delta; }
       if (e.infectionRise) { e.infectionRise.started += delta; e.infectionRise.until += delta; }
