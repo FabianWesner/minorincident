@@ -58,8 +58,10 @@ test('T-E16-05b @E16 @E16-AC05 150-infected crowd plays only clusters plus four 
     await start(page);
     const data = await page.evaluate(async () => {
         const a = window.__SS__!;
-        for (let i = 0; i < 150; i++)
-            a.spawn('infected.runner', { x: Math.cos(i * Math.PI * 2 / 150) * 22, z: Math.sin(i * Math.PI * 2 / 150) * 22 }, { state: 'idle' });
+        for (let i = 0; i < 150; i++) {
+            const radius = i < 4 ? 5 : 22, angle = i < 4 ? i * Math.PI / 2 : i * Math.PI * 2 / 150;
+            a.spawn('infected.runner', { x: Math.cos(angle) * radius, z: Math.sin(angle) * radius }, { state: 'idle' });
+        }
         await a.step(60);
         const snapshot = a.audio.snapshot(), emitters = a.audio.emitters();
         return { snapshot, emitters };
@@ -67,7 +69,11 @@ test('T-E16-05b @E16 @E16-AC05 150-infected crowd plays only clusters plus four 
     const clusters = data.emitters.filter(v => v.cue.startsWith('horde.loop.'));
     expect(clusters.length).toBeGreaterThanOrEqual(3);
     expect(clusters.length).toBeLessThanOrEqual(6);
-    expect(data.emitters.filter(v => v.cue === 'infected.vocal').length).toBeLessThanOrEqual(4);
+    const vocals = data.emitters.filter(v => v.cue === 'infected.vocal');
+    expect(vocals.length).toBeGreaterThan(0);
+    expect(vocals.length).toBeLessThanOrEqual(4);
+    for (const v of vocals)
+        expect(Math.hypot(v.position!.x, v.position!.z)).toBeLessThanOrEqual(6);
     for (const v of clusters)
         expect(data.snapshot.clusters.some(c => Math.hypot(v.position!.x - c.x, v.position!.z - c.z) < 2)).toBe(true);
     expect(data.snapshot.voices).toBeLessThanOrEqual(32);
@@ -208,7 +214,7 @@ test('T-E16-17a @E16 @E16-AC17 captions show important direction cues and noise 
     await page.evaluate(() => {
         const a = window.__SS__!;
         a.audio.play('telegraph.runner', { position: { x: 2, z: -2 } }, 200);
-        a.audio.emit({ type: 'noise', tick: 0, sourceId: 201, actionId: 'alarm', kind: 'alarm', position: { x: -3, z: 3 }, radius: 20, loudness: 1 });
+        a.audio.emit({ type: 'noise', tick: 0, sourceId: 201, actionId: 'alarm', kind: 'alarm', position: { x: -3, y: 0.7, z: 3 }, radius: 20, loudness: 1 });
         a.audio.emit({ type: 'dialogue', tick: 0, text: 'Head to safety.', position: { x: 2, z: -2 } });
     });
     await expect(page.locator('[data-audio-captions]')).toContainText('Runner snarling');
