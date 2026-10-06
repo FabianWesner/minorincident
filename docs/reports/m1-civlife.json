@@ -1,0 +1,159 @@
+{
+  "lane": "m1-civlife",
+  "issues": [
+    "M1-06",
+    "M1-16",
+    "M1-30"
+  ],
+  "status": "complete",
+  "routines": [
+    "bench coffee with sit/stand transitions",
+    "sidewalk groceries and phone walks",
+    "elderly cane walk with flower stops",
+    "water flower boxes",
+    "diner door entry/exit",
+    "paired facing chats with gestures",
+    "dog walk using existing healthy corgi asset"
+  ],
+  "authoring": "Per-civilian serializable schedules resolve reachable layout benches, flowers, sidewalks and doors. Fixed durations use sim ticks; saved cursors/timers restore at checkpoints.",
+  "clips": [
+    "npc-sit",
+    "npc-sit-down",
+    "npc-stand-up",
+    "npc-gesture",
+    "npc-look-around",
+    "npc-water",
+    "npc-carry",
+    "npc-cane"
+  ],
+  "props": [
+    "coffee",
+    "bag",
+    "phone",
+    "cane",
+    "watering-can"
+  ],
+  "infection": "Routines yield to notice/flee/freeze/grab. Independent attackers interrupt moving customers and use the merged outbreak stagger/collapse/rise lifecycle. Selected civilian model is preserved at the early rise handoff and after turning; pooled infected reset identity.",
+  "validation": {
+    "typecheck": "passed on final implementation in full E19 gate",
+    "lint": "passed on final implementation in full E19 gate",
+    "unit": "177 passed in 58 files on final implementation",
+    "focusedSim": "4 routine tests passed including 60s reachability/activity/movement, interrupted bench/carry/flower activities and rise identity, saved timers, blocked walking fallback",
+    "smoke": "Passed on final implementation: 3 Vitest checks and 22 headless browser tests (1.7 minutes)",
+    "captures": "Final settled camera sequence: 34 frames over 60 seconds at diner/crescent/hardware (including paired chat and healthy dog); all inspected. 17 portrait infection/chain frames inspected. All temporary review captures deleted.",
+    "verifyE19": "Passed: typecheck, lint, production build, 47 selected Vitest checks in 11 files, 52 headless browser tests (19.0 minutes)",
+    "focusedBrowser": "8 passed: quality-tier horde budgets, portrait L1 look, bat/crowbar/machete input, 60-second routines, diner combat render, portrait outbreak chain",
+    "build": "passed production build on final implementation",
+    "commands": [
+      "npm run typecheck",
+      "npm run lint",
+      "npm run test:unit",
+      "E2E_SLOTS=1 E2E_PORT=3350 npm run test:smoke -- --workers=1",
+      "E2E_SLOTS=1 E2E_PORT=3350 npm run verify -- E19"
+    ],
+    "e19VitestPassed": 47,
+    "e19BrowserPassed": 52,
+    "evidenceFiles": [
+      "test-results/m1-civlife/e19-checks.json",
+      "test-results/m1-civlife/e19-vitest.json",
+      "test-results/m1-civlife/e19-playwright.json",
+      "test-results/m1-civlife/morning-60s.json",
+      "test-results/m1-civlife/smoke-playwright.json",
+      "test-results/m1-civlife/e19.log",
+      "test-results/m1-civlife/smoke.log",
+      "test-results/m1-civlife/unit.log"
+    ],
+    "smokeVitestPassed": 3,
+    "smokeBrowserPassed": 22,
+    "unitPassed": 177,
+    "unitFilesPassed": 58
+  },
+  "commits": [
+    "73884f6",
+    "c55131a",
+    "6fa6b36",
+    "353ebed",
+    "b79d793",
+    "7cf9b23",
+    "97dea00",
+    "111ff96",
+    "fff0306",
+    "e11abbb",
+    "84c9817",
+    "bfde5fb",
+    "387d73e"
+  ],
+  "timing": "The full-slice fixture retains all assertions and 20 seeds, with a 120-second timeout for the additional live morning population on the shared Mac.",
+  "poseStorage": "Float32 matrix buffers are shared by props and GPU textures. Infected bake 23 used clips; civilians bake 17 used clips. The authored library retains 59 clips.",
+  "criterionCorrection": "E18 tier caps are 200 high / 100 low (specs/epic-18-performance-quality-mobile.md). The grade stress fixture forced 200 high-tier simulated actors into low rendering, then enforced the 100-actor 500,000-triangle budget; it now tests 100 low and 200 high with all original frame/draw/triangle limits. No specs edited.",
+  "visualReview": {
+    "morningFrames": 34,
+    "outbreakFrames": 17,
+    "durationSeconds": 60,
+    "locations": [
+      "diner",
+      "crescent",
+      "hardware"
+    ],
+    "observations": [
+      "Bench coffee sit/stand followed by sidewalk walking",
+      "Watering can carried to reachable flower boxes",
+      "Cane walk pauses at flowers then resumes",
+      "Grocery and phone walkers move across route",
+      "Door customer enters and leaves hidden interior",
+      "Two distinct models chat facing each other with gestures",
+      "Healthy corgi follows its owner",
+      "Outbreak interrupts a live activity and retains model through collapse/rise"
+    ],
+    "capturesDeleted": true,
+    "supplementaryL1LookFrames": 16,
+    "supplementaryL1LookReview": "Final desktop and iPhone L1 camera captures inspected; routine props, diverse models, dog, flowers, hardware and diner are readable. Temporary captures deleted."
+  },
+  "performanceEvidence": {
+    "portraitL1CollectedHeapBytes": 64760436,
+    "lowTierHordeActors": 100,
+    "lowTierP95FrameMs": 3.1,
+    "lowTierDrawCalls": 58,
+    "lowTierTriangles": 461845,
+    "measurement": "final full E19 run on WebGL2/ANGLE Metal"
+  },
+  "integration": {
+    "mainMerge": "6fa6b36",
+    "outbreakCommit": "bc7e801",
+    "reuse": [
+      "97dea00",
+      "111ff96",
+      "fff0306",
+      "387d73e"
+    ],
+    "navigation": "Use continuous segment clearance and visible nearest-cell approaches so routine legs and real survivor inputs traverse sidewalk corners."
+  },
+  "browserExecution": {
+    "headless": true,
+    "renderer": "WebGL2 via ANGLE Metal",
+    "port": 3350,
+    "workers": 1,
+    "lock": "tools/e2e-lock.sh",
+    "captureEnvironment": [
+      "CIVLIFE_CAPTURE=1",
+      "OUTBREAK_CAPTURE=1"
+    ]
+  },
+  "authoringCommand": [
+    "python3",
+    "/Users/fabianwesner/Workspace/suburban-survivors/experiment/tools/blender_run.py",
+    "m1-civlife",
+    "assets/animation-library/build.py",
+    "--",
+    "--glb",
+    "assets/animation-library/library.glb"
+  ],
+  "fixturesCorrected": [
+    "Approach a visible enemy before desktop mouse combat input",
+    "Retreat after triggering the outbreak, allowing independent attackers to complete the diner chain before returning for render checks",
+    "Wait for three portrait civilian turns, rather than stopping at the first independent newborn turn",
+    "Use the specified 100 low-tier / 200 high-tier horde caps while retaining all original performance budgets"
+  ],
+  "done": true,
+  "preservedWorkspaceChange": "tools/e2e-lock.sh default-one-slot edit matches current main and is preserved outside this lane commits."
+}
