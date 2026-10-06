@@ -1,5 +1,7 @@
 import { NpcView } from './npc/NpcView';
 import { lookViewpoints } from '../data/lookViewpoints';
+import { LookUniforms } from './LookUniforms';
+import type { LookPatch } from '../data/lookPatch';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
@@ -63,6 +65,7 @@ export class GameView implements Lifecycle {
   private cube: Mesh | null = null;
   private character: CharacterView | null = null;
   private wireframe: PhysicsWireframe | null = null;
+  readonly look = new LookUniforms();
   private lighting: Lighting | null = null;
   private materials: Materials | null = null;
   private districtResources:{lighting:Lighting;materials:Materials;registry:DistrictAssets;phase:ReturnType<typeof windPhase>;grassMaterial:ReturnType<typeof Grass.material>}|null=null;
@@ -103,7 +106,7 @@ export class GameView implements Lifecycle {
   /** Apply inexpensive tier controls without rebuilding the level or interrupting its simulation. */
   setQuality(tier: QualityTier): void {
     const changed = this.quality !== tier; this.quality = tier; this.resize();
-    if (changed && this.postFx) { const enabled = this.postFx.bloomEnabled.value; this.postFx.dispose(); this.postFx = new PostFx(this.renderer, this.scene, this.camera, tier); this.postFx.bloomEnabled.value = enabled; this.postFx.setDof(this.dofEnabled); }
+    if (changed && this.postFx) { const enabled = this.postFx.bloomEnabled.value; this.postFx.dispose(); this.postFx = new PostFx(this.renderer, this.scene, this.camera, tier, this.look); this.postFx.bloomEnabled.value = enabled; this.postFx.setDof(this.dofEnabled); this.postFx.applyLook(); }
     this.lighting?.setQuality(tier); this.districts?.setQuality(tier);
     this.vfx?.set({ quality: tier }); this.crowd?.setQuality(tier);
   }
@@ -123,30 +126,30 @@ export class GameView implements Lifecycle {
     if (this.world.districts) {
       this.renderer.shadowMap.enabled=true;
       if(!this.districtResources){
-        const lighting=new Lighting(this.scene),materials=new Materials(lighting),registry=new DistrictAssets(materials,this.renderer),phase=materials.wind;
+        const lighting=new Lighting(this.scene, this.look),materials=new Materials(lighting),registry=new DistrictAssets(materials,this.renderer),phase=materials.wind;
         this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
       }
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low');await this.districts.load(1);
-      this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality);
+      this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
       this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
 
       this.character=new CharacterView();await this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low');this.scene.add(this.character);
     } else if (this.world.player) {
       this.renderer.shadowMap.enabled = true;
-      this.lighting = new Lighting(this.scene); this.materials = new Materials(this.lighting);
+      this.lighting = new Lighting(this.scene, this.look); this.materials = new Materials(this.lighting);
       const ground = new Mesh(new PlaneGeometry(this.world.combat?.definition.ground.width ?? 100, this.world.combat?.definition.ground.depth ?? 100), this.materials.get('sidewalk')); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;
       this.meshes.push(ground); this.scene.add(ground);
       if (this.world.scenario === 'horde-readability') {
         this.lookdev = new Lookdev(this.materials, this.occlusion, false); this.scene.add(this.lookdev);
-        this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality);
+        this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
       }
       this.character = new CharacterView(); await this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low'); this.scene.add(this.character);
     } else if (this.world.scenario === 'lookdev') {
       this.renderer.shadowMap.enabled = true;
-      this.lighting = new Lighting(this.scene); this.materials = new Materials(this.lighting);
+      this.lighting = new Lighting(this.scene, this.look); this.materials = new Materials(this.lighting);
       this.lookdev = new Lookdev(this.materials, this.occlusion); this.scene.add(this.lookdev);
-      this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality);
+      this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
     } else {
       const ground = new Mesh(new PlaneGeometry(100, 100), new MeshGridMaterial());
       ground.rotation.x = -Math.PI / 2;
@@ -184,10 +187,11 @@ export class GameView implements Lifecycle {
       const survivor = this.world.entities.get(1)?.survivor;
       this.frozenPose = survivor ? structuredClone(survivor) : null;
     }
-    if (this.world.scenario === 'drive-course') this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality);
+    if (this.world.scenario === 'drive-course') this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
     if (this.params.has('debug')) {
       this.wireframe = new PhysicsWireframe(this.world.physics); this.scene.add(this.wireframe.lines);
     }
+    this.lighting?.applyLook(); this.materials?.applyLook(); this.postFx?.applyLook(); this.districts?.applyLook();
     this.lighting?.setQuality(this.quality); this.districts?.setQuality(this.quality); this.crowd?.setQuality(this.quality);
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
@@ -210,7 +214,7 @@ export class GameView implements Lifecycle {
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
     const reviewSpot = lookViewpoints.find(spot => spot.id === name);
-    if (reviewSpot) { this.view.reset(reviewSpot); this.update(1); return; }
+    if (reviewSpot) { this.view.reset(reviewSpot); this.view.spot = name; this.update(1); return; }
     if (name === 'hud-golden') {
       const player = this.world.entities.get(1)!.transform;
       this.view.preset(name, { position: [player.x + 15, 18, player.z + 15], target: [player.x, .4, player.z] }); this.update(1); return;
@@ -239,6 +243,12 @@ export class GameView implements Lifecycle {
     const pose = photoSpots[name as keyof typeof photoSpots];
     if (!this.lookdev || !pose) throw new Error(`Unknown photo spot: ${name}`);
     this.view.preset(name, pose); this.update(1);
+  }
+  setLook(patch: LookPatch): void { this.look.set(patch); this.applyLook(); }
+  resetLook(): void { this.look.reset(); this.applyLook(); }
+  private applyLook(): void {
+    this.lighting?.applyLook(); this.materials?.applyLook(); this.postFx?.applyLook(); this.districts?.applyLook();
+    this.update(1);
   }
   /** Render settings only; persistence and gameplay accessibility remain owned by E14. */
   settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean; windowMask?: boolean } & VfxSettings): void {
