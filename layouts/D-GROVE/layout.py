@@ -26,13 +26,13 @@ ZN, Z0, ZS = -31, 0, 30            # Main Row / Maple-Larch axis / Elm Street
 XW, X2, X3, X4 = -64, -30, 14, 50  # Maple St / Juniper west / Juniper east / Larch St
 E = 4.5                            # road centre line to sidewalk inner edge
 ROADS = [
-    dict(id='main', a=(-85, Z0), b=(85, Z0), ga=(-80.4, Z0), gb=(80.4, Z0), w=5, kind='road'),
-    dict(id='row', a=(-85, ZN), b=(X4, ZN), ga=(-80.4, ZN), w=5, kind='road'),
-    dict(id='elm', a=(-85, ZS), b=(85, ZS), ga=(-80.4, ZS), gb=(80.4, ZS), w=5, kind='road'),
+    dict(id='main', a=(-85, Z0), b=(85, Z0), ga=(-77.5, Z0), gb=(77.5, Z0), w=5, kind='road'),
+    dict(id='row', a=(-85, ZN), b=(X4, ZN), ga=(-77.5, ZN), w=5, kind='road'),
+    dict(id='elm', a=(-85, ZS), b=(85, ZS), ga=(-77.5, ZS), gb=(77.5, ZS), w=5, kind='road'),
     dict(id='maple', a=(XW, ZN), b=(XW, ZS), w=5, kind='road'),
-    dict(id='junw', a=(X2, -53), b=(X2, 53), ga=(X2, -50.0), gb=(X2, 50.0), w=5, kind='road'),
-    dict(id='june', a=(X3, -53), b=(X3, 53), ga=(X3, -50.0), gb=(X3, 50.0), w=5, kind='road'),
-    dict(id='larch', a=(X4, ZN), b=(X4, 53), gb=(X4, 50.0), w=5, kind='road'),
+    dict(id='junw', a=(X2, -53), b=(X2, 53), ga=(X2, -47.4), gb=(X2, 47.4), w=5, kind='road'),
+    dict(id='june', a=(X3, -53), b=(X3, 53), ga=(X3, -47.4), gb=(X3, 47.4), w=5, kind='road'),
+    dict(id='larch', a=(X4, ZN), b=(X4, 53), gb=(X4, 47.4), w=5, kind='road'),
     dict(id='alley-r0', a=(XW, -15.5), b=(X4, -15.5), w=3, kind='alley'),
     dict(id='alley-r1', a=(XW, 15.0), b=(82, 15.0), w=3, kind='alley'),
     dict(id='alley-n', a=(-82, -48.5), b=(48, -48.5), w=3, kind='alley'),
@@ -113,13 +113,14 @@ def row(name, x0, x1, facing, line, rear, kinds, drives=None, gate_at=None):
         depth = dims(asset)[0] * scale
         lx0, lx1 = edges[i], edges[i + 1]; lot_w = lx1 - lx0; cx = (lx0 + lx1) / 2
         side_door = abs(dz_door) > 3          # house-b: the entry is on the side, towards a clear side yard
-        d = 0 if side_door else drives[i]
+        d = 0 if (side_door or lot_w - w < 3.6) else drives[i]
         free = lot_w - w - .7
         lat = rot(yaw, dx_door, dz_door)[0]   # lateral world offset of the door from the house centre
+        room = max(0.0, lot_w / 2 - w / 2 - .7)
         if side_door:
-            shift = -math.copysign(lot_w / 2 - w / 2 - .7, lat)
+            shift = -math.copysign(room, lat)
         else:
-            shift = 0.0 if not d else -d * (lot_w / 2 - w / 2 - .7)
+            shift = 0.0 if not d else -d * room
         hx = cx + shift
         hz = line + sgn * (1.0 + depth / 2)
         g.place(asset, hx, hz, yaw, scale)
@@ -182,8 +183,8 @@ houses += row('r1c2n', *C2, 'N', *R1N, ['a', 'c', 'b'], [1, -1, 0], gate_at=-20.
 houses += row('r1c2s', *C2, 'S', *R1S, ['c', 'a', 'a'], [-1, 1, 0])
 houses += row('r1c3n', *C3, 'N', *R1N, ['c', 'a'], [0, 1], gate_at=41.0)
 houses += row('r1c3s', *C3, 'S', *R1S, ['b', 'c'], [0, 1])
-C4 = (54.5, 83.6)
-houses += row('r1c4n', *C4, 'N', *R1N, ['a', 'b', 'c'], [1, 0, -1])
+C4 = (54.5, 80.0)
+houses += row('r1c4n', *C4, 'N', *R1N, ['a', 'b'], [1, 0])
 houses += row('r1c4s', *C4, 'S', *R1S, ['c', 'a', 'c'], [1, -1, 1])
 # north strip: houses face south onto Main Row, deep back yards, alley behind (z = -48.5)
 NFRONT = -35.5
@@ -204,7 +205,7 @@ g.place(cafe, cafe_x, cafe_z, FACE_YAW['E'])
 if g.placeholder(cafe):
     g.shell('cafe', cafe_x, cafe_z, 'E', cdx, cdz, [('front', 0, 2.4)])
 anchors['cafe-patio'] = (CAFE_FRONT_X + 1.0, cafe_z)
-anchors['bike-start'] = (-72.4, 4.9)
+anchors['bike-start'] = (-72.4, 3.8)
 g.place('prop.bike-rack', -72.4, 5.5, PI / 2)
 anchors['player-start'] = (-67.6, 9.0)
 doors.append((CAFE_FRONT_X + 1.0, cafe_z))
@@ -222,8 +223,8 @@ g.collide_only('bus-stop-shelter-s', [2.0, 2.6, .3], [-69.5, 1.3, -6.6])
 anchors['bus-stop'] = (-67.6, -9.0)
 for (x, z) in [(-75, -20), (-80, -10), (-74, -8), (-80, -23)]:
     g.place('prop.street-tree-blossom' if (x + z) % 2 else 'prop.street-tree', x, z, 0, 1.0, soft=True)
-g.hedge(GX0 + 1.2, GZ0 + .6, GX1 - 2.5, GZ0 + .6, scale=1.15)
-g.hedge(GX0 + .8, GZ0 + 1.5, GX0 + .8, GZ1 - 1.5, scale=1.15)
+g.hedge(GX0 + 3.0, GZ0 + 1.9, GX1 - 2.5, GZ0 + 1.9, scale=1.15)
+g.hedge(GX0 + .8, GZ0 + 2.2, GX0 + .8, GZ1 - 1.5, scale=1.15)
 g.path(-79, -22, -72, -22.6)
 g.path(-76.4, -23, -75.6, -7.5)
 g.place('prop.bench', -77.4, -16.5, FACE_YAW['E'], .95, soft=True)
@@ -255,7 +256,7 @@ g.place(depot, depot_x, depot_z, FACE_YAW['S'])
 if g.placeholder(depot):
     g.shell('depot', depot_x, depot_z, 'S', ddx, ddz, [('front', 0, 2.2)])
 anchors['parcel-door'] = (depot_x, SHOP_FRONT + .9)
-anchors['parcel-counter'] = (depot_x, SHOP_FRONT - 1.3)
+anchors['parcel-counter'] = (depot_x, SHOP_FRONT + 1.0)   # real depot collision is a closed shell: hand-over happens at the door
 doors.append(anchors['parcel-door'])
 g.place('veh.courier-van', PASS_X, SHOP_FRONT + 1.7 - .35, 0, 1.0, soft=True)
 # shop-front dressing: A-frame / vending / bench between the planters, lamps come with the kerb line below
@@ -289,9 +290,9 @@ anchors['lab-exit-window'] = (ax_ - kdz / 2 - 1.6, az_ + 3.0)
 anchors['lab-tech-spawn'] = (ax_, az_ + kdx / 2 - 3.0)
 anchors['lab-smoke-vent'] = (ax_ + 1.0, az_ - kdx / 2 + 2.5)
 anchors['lab-smoke-window'] = (ax_ - kdz / 2 + .3, az_ + 2.0)
-anchors['lab-bike-rack'] = (57.8, -6.1)
-anchors['lab-bike-rack-front'] = (57.8, -5.2)
-g.place('prop.bike-rack', 57.8, -6.1, PI / 2)
+anchors['lab-bike-rack'] = (57.8, -5.3)
+anchors['lab-bike-rack-front'] = (57.8, -5.3)
+g.place('prop.bike-rack', 57.8, -6.8, PI / 2)
 doors.append(anchors['lab-door'])
 # staff parking east of the compound, a van and a sedan
 g.place('veh.courier-van', 81.2, -22.0, PI / 2, 1.0, soft=True)
@@ -315,12 +316,12 @@ g.flowers(56, -48, 82, -34, 50)
 garage = 'bld.garage-detached'
 gdx, gdy, gdz = dims(garage)
 GARAGE_FRONT = 36.4
-gx, gz_ = 22.0, GARAGE_FRONT + gdx / 2
+gx, gz_ = 22.8, GARAGE_FRONT + gdx / 2
 g.place(garage, gx, gz_, FACE_YAW['N'])
 if g.placeholder(garage):
     g.shell('garage', gx, gz_, 'N', gdx, gdz, [('front', 0, 2.6)])
 anchors['garage-door'] = (gx, GARAGE_FRONT - 1.2)
-anchors['garage-bat'] = (gx - .8, GARAGE_FRONT + 2.4)
+anchors['garage-bat'] = (gx, GARAGE_FRONT + 1.5)
 g.path(gx - 1.5, SFRONT, gx + 1.5, GARAGE_FRONT, 'uiDark')
 hd = HOUSE['d']
 henderson = kind('d')
@@ -334,12 +335,11 @@ ox, oz = rot(FACE_YAW['N'], hdx, hdz)
 anchors['henderson-door'] = (hx_ + ox, hz_ + oz)
 doors.append(anchors['henderson-door'])
 g.path(hx_ + ox - .6, SFRONT, hx_ + ox + .6, SFRONT + 1.4)
-g.fence('picket', 26.2, SFRONT + .25, 40.0, SFRONT + .25, gaps=[(hx_ + ox, 1.7)])
-g.fence('picket', 18.8, SFRONT + .25, 25.0, SFRONT + .25, gaps=[(gx, 3.2)])
-g.fence('privacy', 26.0, SFRONT + .4, 26.0, 46.0)
+g.fence('picket', 27.0, SFRONT + .25, 40.0, SFRONT + .25, gaps=[(hx_ + ox, 1.7)])
+g.fence('picket', 18.8, SFRONT + .25, 26.6, SFRONT + .25, gaps=[(gx, 3.2)])
+g.fence('privacy', 26.8, SFRONT + .4, 26.8, 46.0)
 g.fence('privacy', 41.0, SFRONT + .4, 41.0, 46.0)
-g.fence('privacy', 18.8, 46.0, 41.0, 46.0)
-g.fence('privacy', 18.8, SFRONT + .4, 18.8, 46.0)
+g.fence('privacy', 18.6, 46.0, 41.0, 46.0)
 g.place('veh.sedan-blue', 29.2, SFRONT + 3.2, PI / 2, 1.0, soft=True)
 cars.append((29.2, SFRONT + 3.2, 'henderson'))
 g.place('prop.trash-bin', 27.2, SFRONT + 1.0, FACE_YAW['N'], .55, soft=True)
@@ -365,7 +365,7 @@ g.hedge(-46.0, 46.2, -35.0, 46.2, scale=1.15)
 # --- Fire Station 3 (south-west corner)
 fs = 'bld.fire-station'
 fdx, fdy, fdz = dims(fs)
-FS_X = -75.0
+FS_X = -73.2
 FS_Z = SFRONT + fdx / 2
 g.place(fs, FS_X, FS_Z, FACE_YAW['N'])
 # model local +X is the apron/door side: door and trigger sit on the apron in front of the bay
@@ -375,6 +375,12 @@ fx, fz = rot(FACE_YAW['N'], 4.9, 0)
 anchors['fire-bay-trigger'] = (FS_X + fx, FS_Z + fz)
 doors.append(anchors['fire-bay-trigger'])
 g.place('prop.fire-hydrant', -68.2, 36.2, 0, .8, soft=True)
+
+# Fire Station 3 interior: muffled interior + outro sting (lane H). Polygon = collision shell (local x -5.7..3.1, z +-6.1), facing north.
+_fx0, _fx1 = FS_X - 6.1, FS_X + 6.1
+_fz0, _fz1 = FS_Z - 3.1, FS_Z + 5.7
+l.data['acousticZones'].append(dict(id='fire-station-3', preset='interior-large', polygon=[[_fx0, _fz0], [_fx1, _fz0], [_fx1, _fz1], [_fx0, _fz1], [_fx0, _fz0]]))
+l.data['buildings'].append(dict(id='fire-station-3', assetId=fs, aabb=dict(min=[_fx0, 0, _fz0], max=[_fx1, fdy, _fz1]), label='Fire Station 3'))
 
 # ------------------------------------------------------------------------------------------------ perimeter
 PN, PS, PW, PE = -50.4, 49.9, -83.6, 83.6
@@ -402,19 +408,25 @@ for sx in (-5.0, 5.0):
     g.fence('privacy', X4 + sx, PS, X4 + sx, 54.9)
 # road-work barriers at every street that reaches the map edge
 RW = 'kit.edge-roadwork'
-def barrier(x, z, yaw, sidewalks=(), side_axis=0):
-    g.place(RW, x, z, yaw, 1.0)
-    for (sx, sz) in sidewalks:   # barricade pieces close the two sidewalks between the barrier (3 m) and the fence gap (5 m)
-        g.place('prop.barricade', sx, sz, yaw + PI / 2, (1.0, 1.0, .88))
-barrier(-84.2, Z0, PI / 2, [(-84.2, -4.0), (-84.2, 4.0)])
-barrier(84.2, Z0, PI / 2, [(84.2, -4.0), (84.2, 4.0)])
-barrier(-84.2, ZN, PI / 2, [(-84.2, ZN - 4.0), (-84.2, ZN + 4.0)])
-barrier(-84.2, ZS, PI / 2, [(-84.2, ZS - 4.0), (-84.2, ZS + 4.0)])
-barrier(84.2, ZS, PI / 2, [(84.2, ZS - 4.0), (84.2, ZS + 4.0)])
+def barrier(x, z, along):
+    """Road-work barrier across a street end, stretched to cover carriageway + both sidewalks (up to the 5 m fence gap).
+    along: 'z' when the barrier runs N-S (east/west street ends), 'x' for N/S ends. Model long axis is local Z."""
+    g.place(RW, x, z, 0.0 if along == 'z' else PI / 2, (1.0, 1.0, 4.95 / (dims(RW)[2] / 2)))
+    # the barrier model is an open sawhorse line: a solid plank fence right behind it seals the street end
+    inner = dims(RW)[0] / 2 + .3
+    if along == 'z':
+        ix = x - math.copysign(inner, x)
+        g.fence('privacy', ix, z - 4.75, ix, z + 4.75)
+        for wz in (z - 5.0, z + 5.0):      # side wings close the pocket between the fence line and the bounds
+            g.fence('privacy', ix, wz, math.copysign(84.9, x), wz)
+    else:
+        iz = z - math.copysign(inner, z)
+        g.fence('privacy', x - 4.75, iz, x + 4.75, iz)
+for x, z in [(-82.8, Z0), (82.8, Z0), (-82.8, ZN), (-82.8, ZS), (82.8, ZS)]:
+    barrier(x, z, 'z')
 for x in (X2, X3):
-    barrier(x, -53.4, 0.0, [(x - 4.0, -53.4), (x + 4.0, -53.4)])
-    barrier(x, 53.4, 0.0, [(x - 4.0, 53.4), (x + 4.0, 53.4)])
-barrier(X4, 53.4, 0.0, [(X4 - 4.0, 53.4), (X4 + 4.0, 53.4)])
+    barrier(x, -52.6, 'x'); barrier(x, 52.6, 'x')
+barrier(X4, 52.6, 'x')
 # tree line just inside the bounds to hide the edge, mixed blossom / green
 for x in range(-80, 81, 8):
     for pz, off in ((-52.6, 0), (51.8, 0)):
@@ -499,13 +511,13 @@ for dx, dz in DUMPSTERS.values():   # worn asphalt pads: the dumpsters (F) stand
 doors_sorted = sorted(doors)
 for i, d in enumerate(doors_sorted, 1):
     anchors[f'refuge-door-{i}'] = d
-anchors['edge-in-1'] = (-81.5, Z0)
-anchors['edge-in-2'] = (X2, -51.5)
-anchors['edge-in-3'] = (X3, -51.5)
-anchors['edge-in-4'] = (81.5, Z0)
-anchors['edge-in-5'] = (X3, 51.5)
-anchors['edge-in-6'] = (X2, 51.5)
-anchors['elm-horde-entry'] = (X4, 51.0)
+anchors['edge-in-1'] = (-78.5, Z0)
+anchors['edge-in-2'] = (X2, -48.5)
+anchors['edge-in-3'] = (X3, -48.5)
+anchors['edge-in-4'] = (78.5, Z0)
+anchors['edge-in-5'] = (X3, 48.5)
+anchors['edge-in-6'] = (X2, 48.5)
+anchors['elm-horde-entry'] = (X4, 47.0)
 anchors['photo-l1-morning'] = (-67.8, 9.0)
 anchors['photo-l1-pickup'] = (depot_x, SHOP_FRONT + 3.5)
 anchors['photo-l1-facility'] = (60.0, -6.0)
