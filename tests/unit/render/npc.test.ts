@@ -25,7 +25,7 @@ test('@E19 civilian variety keeps authored gait, sim idle hysteresis and raised 
   const { infectedClips, framesPerClip } = await import('../../../src/render/characters/bakeInfected');
   const player = { id: 1, transform: { x: 0, y: .7, z: 0 } };
   const civilian = { id: 2, transform: { x: 3, y: 2.7, z: 0, yaw: 0 },
-    civilian: { model: 'npc.civilian-man-b', variant: 'inf.bbq-dad', adult: true, state: 'calm', knockedUntil: 0, entered: 0, veins: 0, eyesGlow: false },
+    civilian: { model: 'npc.civilian-man-b', variant: 'inf.bbq-dad', adult: true, state: 'calm', knockedUntil: 0, entered: 0, until: 180, veins: 0, eyesGlow: false },
     motion: { speed: 0, moving: false, distance: 0 } };
   const world = { tick: 120, entities: { iterate: () => [player, civilian], get: () => player } };
   // Asset loading is stubbed; baking, material graphs and instance updates remain real CPU code.
@@ -46,7 +46,7 @@ test('@E19 civilian variety keeps authored gait, sim idle hysteresis and raised 
     expect(clip()).toBe('npc-walk-relaxed');
     civilian.motion.speed = .08; civilian.motion.moving = false; world.tick++; crowd.update();
     expect(clip()).toBe('idle');
-    civilian.civilian.state = 'down'; world.tick++; crowd.update(); expect(clip()).toBe('death-side');
-    civilian.civilian.state = 'rising'; civilian.civilian.entered = world.tick - 36; crowd.update(); expect(clip()).toBe('get-up');
+    civilian.civilian.state = 'down'; civilian.civilian.entered = world.tick; civilian.civilian.until = world.tick + 60; world.tick++; crowd.update(); expect(clip()).toBe('infection-collapse');
+    civilian.civilian.state = 'rising'; civilian.civilian.entered = world.tick - 36; civilian.civilian.until = civilian.civilian.entered + 72; crowd.update(); expect(clip()).toBe('infection-rise');
   } finally { crowd.dispose(); materials.dispose(); lighting.dispose(); load.mockRestore(); }
 });

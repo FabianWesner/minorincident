@@ -45,6 +45,7 @@ export class Mission {
     world.mission = this.state; this.rebuildGates();
     for (const step of def.steps) {this.registerZones(step.complete); for(const fail of step.fail)this.registerZones(fail.trigger);}
     this.stops.push(world.events.on('sim.tick', () => this.update(), SimPhase.missions));
+    this.stops.push(world.events.on('civilian.grabbed', event => { if (event.type === 'civilian.grabbed' && this.def.slice) this.outbreak.grabbed(event.sourceId, event.targetId); }, SimPhase.missions));
     this.stops.push(world.events.on('civilian.turned', event => { if (event.type === 'civilian.turned' && this.def.slice) this.outbreak.turned(event.id, event.infectedId); }, SimPhase.missions));
     for (const type of ['combat.kill', 'player.damaged', 'player.died', 'player.respawned', 'mission.signal', 'mission.failed'] as const) this.stops.push(world.events.on(type, event => this.event(event), SimPhase.missions));
     this.emit({ type: 'mission.briefing', id: def.id, text: def.briefing });
@@ -127,7 +128,7 @@ export class Mission {
     // Crossing the hardware entrance closes the first chase; the weapon display is a safe beat.
     if (this.def.slice && def.id === 'escape') {
       this.outbreak.end();
-      for (const actor of this.def.groups.incident) {
+      for (const actor of Object.keys(this.state.actors).filter(name => name.startsWith('incident-'))) {
         const entity=this.world.entities.get(this.state.actors[actor]);if(entity?.infected)this.world.infected!.release(entity);
       }
       this.world.player!.restoreVitals(this.world.tick);
@@ -168,7 +169,7 @@ export class Mission {
     if (event.type === 'combat.kill') {
       const entity = this.world.entities.get(event.targetId);
       if (entity?.faction === 'infected' && event.sourceId === 1) this.state.stats.kills++;
-      for (const [id, actor] of Object.entries(this.state.actors)) if (actor === event.targetId && this.def.actors[id].boss && !this.deadBosses.has(id)) {this.deadBosses.add(id);this.state.killedBosses.push(id);}
+      for (const [id, actor] of Object.entries(this.state.actors)) if (actor === event.targetId && this.def.actors[id]?.boss && !this.deadBosses.has(id)) {this.deadBosses.add(id);this.state.killedBosses.push(id);}
       for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(event.targetId)) step.kills.push(event.targetId);
     }
     const type = event.type === 'mission.signal' ? event.name : event.type;

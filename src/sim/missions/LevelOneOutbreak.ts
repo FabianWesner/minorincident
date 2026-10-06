@@ -12,7 +12,18 @@ export class LevelOneOutbreak {
     // Replace the previous instant-turn stand-in with customers present before the incident.
     for (const e of world.entities.iterate()) if (e.archetype === 'npc.delivery-driver' && !e.civilian?.schedule) { world.entities.delete(e.id); world.spatial.delete(e.id); }
     state.outbreak = { victims: [], released: false };
-    for (let i = 0; i < 3; i++) state.outbreak.victims.push(dinerCustomer(world, i, def.anchors.diner));
+    for (let i = 0; i < 3; i++) {
+      const id = dinerCustomer(world, i, def.anchors.diner);
+      world.entities.get(id)!.civilian!.outbreak = true;
+      state.outbreak.victims.push(id);
+    }
+  }
+  grabbed(sourceId: number, targetId: number): void {
+    const { state, world } = this.mission, outbreak = state.outbreak, victim = world.entities.get(targetId);
+    if (!outbreak || state.steps.escape.status !== 'active' || !victim?.civilian?.adult || victim.civilian.pet) return;
+    if (!Object.entries(state.actors).some(([name, id]) => name.startsWith('incident-') && id === sourceId)) return;
+    victim.civilian.outbreak = true;
+    if (!outbreak.victims.includes(targetId)) outbreak.victims.push(targetId);
   }
   turned(id: number, infectedId: number): void {
     const { state, world } = this.mission, index = state.outbreak?.victims.indexOf(id) ?? -1;
@@ -20,43 +31,64 @@ export class LevelOneOutbreak {
     state.actors[`incident-${index + 1}`] = infectedId;
     const e = world.entities.get(infectedId)!;
     e.combat!.damageMultiplier = .2;
-    e.infected!.state = state.outbreak!.released ? 'chase' : 'migration';
+    e.infected!.state = 'chase';
     // A rising victim keeps its clothes/position; this is not a population spawn.
   }
   update(): void {
     const { state, world } = this.mission, outbreak = state.outbreak;
-    if (!outbreak || outbreak.released || state.steps.escape.status !== 'active') return;
+    if (!outbreak || state.steps.escape.status !== 'active') return;
     const group = Object.entries(state.actors).filter(([name]) => name.startsWith('incident-')).map(([, id]) => world.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0);
+    const civilians = world.npcs!.civilians, player = world.entities.get(1)!;
     for (const e of group) {
-      e.combat!.attacking = world.npcs!.civilians.holds(e.id);
-      if (e.combat!.attacking) {
-        // E07 pauses brains held by E08, so the existing attack clip can present the bite.
-        e.infected!.state = 'attack'; e.infected!.until = world.tick;
-        e.infected!.targetId = outbreak.victims.find(id => world.entities.get(id)?.civilian?.attacker === e.id) ?? 0;
-      } else { e.infected!.state = 'migration'; e.infected!.targetId = 0; }
-    }
-    const victim = outbreak.victims.map(id => world.entities.get(id)).find(e => e?.civilian && ['calm', 'alarmed', 'flee', 'hide', 'grabbed'].includes(e.civilian.state));
-    const attacker = group.find(e => !world.npcs!.civilians.holds(e.id) && e.combat!.staggerUntil <= world.tick);
-    if (victim && attacker && victim.civilian!.state !== 'grabbed') {
-      // Notice interrupts the current activity; selected customers freeze before the bite.
-      const c = victim.civilian!;
-      if (c.state === 'calm' && Math.hypot(attacker.transform.x - victim.transform.x, attacker.transform.z - victim.transform.z) < 6) { c.state = 'alarmed'; c.entered = world.tick; c.until = world.tick + 90; Object.assign(c.threat, attacker.transform); }
-      if (c.state === 'alarmed') c.until = world.tick + 60;
-      if (c.state === 'alarmed') Object.assign(c.threat, attacker.transform);
-      world.npcs!.move(attacker, victim.transform, 2.3, attacker.infected!, .8);
-      if (Math.hypot(attacker.transform.x - victim.transform.x, attacker.transform.z - victim.transform.z) <= 1.1) {
-        attacker.transform.yaw = -Math.atan2(victim.transform.z - attacker.transform.z, victim.transform.x - attacker.transform.x);
-        world.npcs!.civilians.grab(victim.id, attacker.id, true);
+      if (e.infectionRise) continue;
+      const brain = e.infected!;
+      if (civilians.holds(e.id)) {
+        e.combat!.attacking = true; brain.state = 'attack'; brain.until = world.tick;
+        brain.targetId = [...world.entities.iterate()].find(v => v.civilian?.state === 'grabbed' && v.civilian.attacker === e.id)?.id ?? 0;
+        continue;
+      }
+      if (world.entities.get(brain.targetId)?.civilian) { brain.targetId = 0; brain.state = 'migration'; e.combat!.attacking = false; }
+      if (e.combat!.staggerUntil > world.tick || brain.state === 'stagger') continue;
+      const firstEntrant = e.id === state.actors['incident-0'] && !outbreak.victims.some(id => world.entities.get(id)?.civilian?.attacker);
+      const playerDistance = Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z);
+      let nearest = firstEntrant ? Infinity : playerDistance;
+      let victim: EntitySnapshot | undefined;
+      if (!e.combat!.reaction) for (const human of world.entities.iterate()) {
+        const c = human.civilian;
+        if (!c?.adult || c.pet || human.hidden || !['calm','alarmed','flee','hide'].includes(c.state)) continue;
+        const distance = Math.hypot(human.transform.x - e.transform.x, human.transform.z - e.transform.z);
+        if (distance < nearest) { nearest = distance; victim = human; }
+      }
+      if (victim) {
+        // Notice interrupts the current activity before this independently chosen bite.
+        const c = victim.civilian!;
+        if (c.state === 'calm' && nearest < 6) { c.state = 'alarmed'; c.entered = world.tick; c.until = world.tick + 30; }
+        if (c.state === 'alarmed') Object.assign(c.threat, e.transform);
+        // Each attacker makes its own decision. Panic is never reset to calm.
+        brain.state = 'migration'; brain.targetId = victim.id; e.combat!.attacking = false;
+        world.npcs!.move(e, victim.transform, firstEntrant ? 3.7 : 5.5, brain, .8);
+        world.spatial.set(e.id, e.transform.x, e.transform.z);
+        if (Math.hypot(e.transform.x - victim.transform.x, e.transform.z - victim.transform.z) <= 1.1) {
+          e.transform.yaw = -Math.atan2(victim.transform.z - e.transform.z, victim.transform.x - e.transform.x);
+          // The grabbed event also tracks systemic bites in the same checkpoint ownership.
+          civilians.grab(victim.id, e.id, true);
+        }
+      } else {
+        // Generic E07 handles attacks/telegraphs immediately, without a group start.
+        if (brain.state === 'migration') brain.state = 'chase';
+        brain.targetId = 0;
       }
     }
-    const done = outbreak.victims.every(id => ['infected', 'finished'].includes(world.entities.get(id)?.civilian?.state ?? 'finished'));
-    if (done || !group.length) { outbreak.released = true; for (const e of group) { e.infected!.state = 'alerted'; e.infected!.until = world.tick + 60; e.combat!.attacking = false; } }
+    // Completion records staging only; it never gates the individual brains.
+    if (outbreak.victims.every(id => ['infected', 'finished'].includes(world.entities.get(id)?.civilian?.state ?? 'finished')) || !group.length) outbreak.released = true;
   }
+
   end(): void {
     const { state, world } = this.mission;
     if (state.outbreak) {
       state.outbreak.released = true;
-      for (const id of state.outbreak.victims) { const e = world.entities.get(id); if (e?.civilian && e.civilian.state !== 'infected') { e.civilian.state = 'finished'; e.hidden = true; world.spatial.delete(id); } }
+      for (const id of state.outbreak.victims) { const e = world.entities.get(id); if (e?.civilian && e.civilian.state !== 'infected') {
+        const newborn = world.entities.get(e.civilian.risingInfectedId ?? 0); if (newborn) world.infected!.release(newborn); delete e.civilian.risingInfectedId; e.civilian.state = 'finished'; e.hidden = true; world.spatial.delete(id); } }
       world.npcs?.civilians.restore();
     }
   }

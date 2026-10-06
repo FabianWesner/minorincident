@@ -10,6 +10,8 @@ export interface CivilianActivity {
 export interface Civilian {
   state: CivilianState; ambient: boolean; adult: boolean; pet: 'dog' | 'cat' | null; owner: number | null;
   model?: string; variant: string; routine: string; waypoints: Point[]; waypoint: number; pauseUntil: number;
+  /** Diner uses a short, jittered post-bite cycle; other E08 encounters retain their timing. */
+  outbreak?: boolean; risingInfectedId?: number;
   entered: number; until: number; downTicks: number; eyesGlow: boolean; veins: number;
   attacker: number; threat: Point; path: number[]; goal: number; pathIndex: number;
   gore: false; knockedUntil: number;

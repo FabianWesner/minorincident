@@ -146,5 +146,5 @@ export function dinerCustomer(world: SimWorld, index: number, diner: Point): num
     schedule = [{ activity: index === 2 ? 'look' : 'walk', anchor: 'diner/flowers', target: a, facing: diner, ticks: index === 2 ? 120 : 1, prop: index === 2 ? 'cane' : 'bag' },
       { activity: 'walk', anchor: 'diner/sidewalk', target: safe({ x: a.x + 2.4, z: a.z }), ticks: 1, prop: index === 2 ? 'cane' : 'bag' }];
   }
-  return world.npcs!.civilians.spawn(roles[index], schedule[0].target, { model: models[index], panicReaction: 'freeze', schedule, waypoints: schedule.map(s => s.target) });
+  return world.npcs!.civilians.spawn(roles[index], schedule[0].target, { model: models[index], panicReaction: index === 1 ? 'flee' : 'freeze', schedule, waypoints: schedule.map(s => s.target) });
 }

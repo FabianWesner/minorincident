@@ -8,8 +8,11 @@ existing E12 structure tests; segments 4–6 are not part of this playtest.
 L1 enables the existing infected system against town colliders, with a living
 cap of 15. One infected delivery driver enters from outside the expanded camera
 frustum and attacks three diner customers. Each customer follows E08 grabbed →
-bitten → down/convulse → rising/red-eyes → infected before the group notices and
-chases the survivor. The mission checkpoint stores the outbreak victim IDs and
+bitten/clutch → collapse/convulse with progressive skin tint and eye glow → infected rise.
+The post-bite cycle lasts 2.6–3 seconds with seeded timing jitter. The model handoff
+happens in the shared low collapse pose. Each risen infected independently chooses
+the nearest remaining adult human or the closer/attacking survivor; civilians flee
+in panic while the chain continues. The mission checkpoint stores the outbreak victim IDs and
 release state. The slice uses one corgi and collision-safe nearby
 civilian routines from E08; crowd rendering binds the real male/female models. Crossing the hardware entrance retires that chase and captures the
 `melee` checkpoint. D-MAIN places the real Maple Hardware model and derives the display anchor from its bounds. The display offers a temporary bat/crowbar/machete choice;

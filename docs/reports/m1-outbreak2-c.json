@@ -1,0 +1,37 @@
+{
+  "job": "m1-outbreak2-c",
+  "mainMergedOnce": "2315868293a58c941c1fe11904fb60e28550821d",
+  "resolved": {
+    "src/render/CrowdView.ts": "Retains outbreak skin-marker clamp, infection-rise clip and per-victim rise phase; incoming opaque Bayer corpse fade uses maskNode and depth test/write without fractional alpha.",
+    "src/render/PaletteMaterial.ts": "Incoming broad surface blood splats preserved unchanged; merged without conflict.",
+    "animationLibrary": "Previous combined 51-action library and grounded locomotion remain unchanged."
+  },
+  "validation": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "unit": {
+      "status": "passed after isolated timeout retry",
+      "uniqueTests": 176,
+      "files": 58,
+      "workers": 1,
+      "initialRun": {
+        "passed": 175,
+        "failed": 1,
+        "failure": "asset validator exceeded unchanged 120s deadline"
+      },
+      "retry": {
+        "file": "tests/unit/assets/validate.test.ts",
+        "passed": 3,
+        "seconds": 97.13,
+        "timeoutsChanged": false
+      }
+    },
+    "smoke": {
+      "simulationPassed": 3,
+      "browserPassed": 22,
+      "browserWorkers": 2
+    },
+    "E2E_PORT": 3345,
+    "headless": true
+  }
+}
