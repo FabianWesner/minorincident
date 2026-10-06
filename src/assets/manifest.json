@@ -12162,5 +12162,1152 @@
       "lod1": "public/assets/models/prop.garden-bush-small.lod1.glb",
       "lod2": "public/assets/models/prop.garden-bush-small.lod2.glb"
     }
+  },
+  {
+    "id": "bld.clinic-annex",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.clinic-annex.glb",
+    "dimensions": {
+      "x": 16,
+      "y": 7.5,
+      "z": 14,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "door_front",
+      "door_side",
+      "window_front",
+      "window_blast_bowed",
+      "window_blast_shattered",
+      "roof",
+      "smoke_vent",
+      "smoke_window",
+      "light_flicker_a",
+      "light_flicker_b",
+      "glass_shards",
+      "gate_slide"
+    ],
+    "animatedNodes": [
+      "door_front",
+      "door_side",
+      "gate_slide"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.garage-detached",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.garage-detached.glb",
+    "dimensions": {
+      "x": 6.5,
+      "y": 4.5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "door_roll",
+      "door_side",
+      "bat_anchor",
+      "work_light",
+      "roof",
+      "interior"
+    ],
+    "animatedNodes": [
+      "door_roll"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.cafe-corner",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.cafe-corner.glb",
+    "dimensions": {
+      "x": 10,
+      "y": 6.5,
+      "z": 10,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "door_main",
+      "patio_anchor",
+      "bike_rack_anchor",
+      "roof",
+      "interior"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.courier-depot",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.courier-depot.glb",
+    "dimensions": {
+      "x": 7,
+      "y": 5,
+      "z": 6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "door_main",
+      "window_front",
+      "counter_anchor",
+      "interior"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "veh.courier-bike",
+    "category": "vehicle",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.courier-bike.glb",
+    "dimensions": {
+      "x": 1.6,
+      "y": 1.3,
+      "z": 0.65,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "frame",
+      "wheelF",
+      "wheelR",
+      "crank",
+      "pedalL",
+      "pedalR",
+      "handlebar",
+      "seat_socket",
+      "handL_grip",
+      "handR_grip",
+      "footL_pedal",
+      "footR_pedal",
+      "rack_socket",
+      "kickstand"
+    ],
+    "animatedNodes": [
+      "wheelF",
+      "wheelR",
+      "crank",
+      "pedalL",
+      "pedalR",
+      "handlebar"
+    ],
+    "sockets": [
+      "seat_socket",
+      "handL_grip",
+      "handR_grip",
+      "footL_pedal",
+      "footR_pedal",
+      "rack_socket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.package-courier",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/prop.package-courier.glb",
+    "dimensions": {
+      "x": 0.5,
+      "y": 0.35,
+      "z": 0.35,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "handle_anchor",
+      "scanner"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "char.courier-male",
+    "category": "character",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/char.courier-male.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.8,
+      "z": 1.0,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket",
+      "cap",
+      "bag"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "char.courier-female",
+    "category": "character",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/char.courier-female.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.8,
+      "z": 1.0,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket",
+      "cap",
+      "bag"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.lab-tech-a",
+    "category": "character",
+    "status": "placeholder",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.lab-tech-a.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.8,
+      "z": 1.0,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.lab-tech-b",
+    "category": "character",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/npc.lab-tech-b.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.8,
+      "z": 1.0,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.lab-guard",
+    "category": "character",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/npc.lab-guard.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.8,
+      "z": 1.0,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.depot-clerk",
+    "category": "character",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/npc.depot-clerk.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.8,
+      "z": 1.0,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 60000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.house-d",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.house-d.glb",
+    "dimensions": {
+      "x": 9,
+      "y": 7.5,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "door_front",
+      "roof",
+      "interior"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.house-e",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/bld.house-e.glb",
+    "dimensions": {
+      "x": 8.5,
+      "y": 5.5,
+      "z": 8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "door_front",
+      "roof",
+      "interior"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "kit.house-variants",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/kit.house-variants.glb",
+    "dimensions": {
+      "x": 3,
+      "y": 2.5,
+      "z": 3,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "garage_door_closed",
+      "garage_door_open",
+      "garage_door_half",
+      "porch_set_chairs",
+      "porch_set_toys"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.yard-gate",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.yard-gate.glb",
+    "dimensions": {
+      "x": 0.12,
+      "y": 1.4,
+      "z": 1.3,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "gate",
+      "post_a",
+      "post_b"
+    ],
+    "animatedNodes": [
+      "gate"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.privacy-fence",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.privacy-fence.glb",
+    "dimensions": {
+      "x": 0.15,
+      "y": 1.8,
+      "z": 2.0,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.bike-rack",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.bike-rack.glb",
+    "dimensions": {
+      "x": 0.5,
+      "y": 0.9,
+      "z": 2.0,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": false
+    }
+  },
+  {
+    "id": "prop.cafe-patio-set",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.cafe-patio-set.glb",
+    "dimensions": {
+      "x": 3,
+      "y": 2.4,
+      "z": 3,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "umbrella",
+      "table_a",
+      "table_b"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.garden-set",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.garden-set.glb",
+    "dimensions": {
+      "x": 3,
+      "y": 1.2,
+      "z": 3,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "bbq",
+      "lawn_chair_a",
+      "lawn_chair_b",
+      "kiddie_pool",
+      "gnome",
+      "flamingo",
+      "sprinkler",
+      "hose_reel",
+      "wheelbarrow"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.flower-bed",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.flower-bed.glb",
+    "dimensions": {
+      "x": 2.0,
+      "y": 0.5,
+      "z": 0.7,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.alley-set",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.alley-set.glb",
+    "dimensions": {
+      "x": 3,
+      "y": 1.5,
+      "z": 2,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "crates",
+      "carpet",
+      "trash_bags",
+      "broken_chair",
+      "recycling_bin",
+      "laundry_line"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.car-wash",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/kit.car-wash.glb",
+    "dimensions": {
+      "x": 5,
+      "y": 4,
+      "z": 10,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "brush_a",
+      "brush_b",
+      "brush_c",
+      "kiosk",
+      "start_button",
+      "curtain",
+      "vfx_foam"
+    ],
+    "animatedNodes": [
+      "brush_a",
+      "brush_b",
+      "brush_c"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.lab-signs",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "side",
+    "glb": "public/assets/models/prop.lab-signs.glb",
+    "dimensions": {
+      "x": 2,
+      "y": 2,
+      "z": 0.3,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "sign_authorized",
+      "sign_nobike",
+      "sign_hazard",
+      "sign_deliveries",
+      "keypad"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.backdrop-houses",
+    "category": "building",
+    "status": "placeholder",
+    "tier": "distant",
+    "glb": "public/assets/models/bld.backdrop-houses.glb",
+    "dimensions": {
+      "x": 40,
+      "y": 8,
+      "z": 4,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 4000,
+      "materials": 6,
+      "fileKB": 600,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": false
+    }
+  },
+  {
+    "id": "kit.edge-roadwork",
+    "category": "prop",
+    "status": "placeholder",
+    "tier": "distant",
+    "glb": "public/assets/models/kit.edge-roadwork.glb",
+    "dimensions": {
+      "x": 6,
+      "y": 2,
+      "z": 1.5,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 4000,
+      "materials": 6,
+      "fileKB": 600,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "uiDark",
+      "solid": true
+    }
   }
 ]
