@@ -1,0 +1,200 @@
+{
+  "job": "r1-foliage-2",
+  "merged_main": "2315868293a58c941c1fe11904fb60e28550821d",
+  "resolved": {
+    "prop.hedge": "Retained runtime 80/40 alpha-tested crown cards; rebuilt all three authored and delivered GLB tiers through the project Blender runner. Preview materials use foliageDark/foliageLight.",
+    "src/assets/staticCollision.ts": "Regenerated with npm run assets:collision from delivered GLBs; no hand merge of generated cache or binary files.",
+    "src/render/DistrictView.ts": "Combined crown loading/reveal with incoming quality LODs, grass density and live look bindings. New street trees and garden bushes participate in foliage controls.",
+    "src/render/GameView.ts": "Preserved incoming lookdev panel, grading, contact shadows and rendering fixes; crown debug passes preserve radial backgroundNode; fixed-view stress fixture retained.",
+    "lookdev": "Manifest crown token pairs sample the shared live palette. foliageDark/foliageLight, peach/pink blossoms, foliageDensity, foliageHeight and windStrength affect runtime crowns. Reset restores original crown transforms without accumulation.",
+    "tools/verify.ts": "Plain builds run outside the browser lock as requested; only browser runs use the shared lock.",
+    "playwright.config.ts": "Artifact directories include E2E_PORT when provided, preventing teardown races between simultaneous runs in one worktree.",
+    "tools/e2e-lock.sh": "Preserved later orchestrator update to a single default browser slot; current file is byte-identical to current main. No second main merge."
+  },
+  "protected_incoming": "Figure assets, character renderer and src/data/worldLook.ts match merged main 2315868; no edits to protected figure assets or rendering code.",
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "test_unit": {
+      "passed": 178,
+      "failed": 0
+    },
+    "E19_node": {
+      "passed": 41,
+      "failed": 0
+    },
+    "panel_E19": {
+      "passed": 3,
+      "failed": 0
+    },
+    "smoke": {
+      "unit_passed": 3,
+      "browser_passed": 22,
+      "failed": 0
+    },
+    "E19_browser": {
+      "passed": 38,
+      "failed": 12,
+      "duration_seconds": 1127.530743,
+      "failures": [
+        {
+          "title": "portrait low / @E19 @perf grade holds frame/draw/triangle budgets with 200 infected",
+          "project": "chromium",
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m500000\u001b[39m\nReceived:    \u001b[31m787381\u001b[39m\n\n  41 |     mkdirSync('test-results/r1-grade', { recursive: true }); writeFileSync(`test-results/r1-grade/horde-${mobile ? 'low' : 'high'}.json`, JSON.stringify(proof, null, 2));\n  42 |     expect(proof.infected).toBe(200); expect(proof.ticks).toBeGreaterThanOrEqual(300); expect(proof.renderTier).toBe(mobile ? 'low' : 'high'); "
+          ]
+        },
+        {
+          "title": "landscape / @E19 slice real-input start to end landscape",
+          "project": "chromium",
+          "errors": [
+            "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m",
+            "Error: cdpSession.send: Target page, context or browser has been closed\n\n  53 |           const origin={id:1,x:70,y:page.viewportSize()!.height*.6};\n  54 |           await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[origin]});\n> 55 |           await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{...origin,x:origin.x+(dx-dz)/Math.SQRT2*50,y:origin.y+(dx+dz)/Math.SQRT2*50}]});\n     |                     ^\n  56 |           await step(Math.min(24,Math.max"
+          ]
+        },
+        {
+          "title": "landscape / @E19 slice GPU performance landscape",
+          "project": "chromium",
+          "errors": [
+            "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+          ]
+        },
+        {
+          "title": "desktop / M1-03 M1-11 M1-12 M1-13 @E19 desktop chooses and fights with bat through real input",
+          "project": "chromium",
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  44 |     }\n  45 |     const events=await page.evaluate(()=>window.__SS__!.events()),hits=events.filter(e=>e.type==='combat.hit'&&e.actionId===`weapon.${weapon}`);\n> 46 |     expect(hits.length).toBeGreaterThan(0);expect(maximumTrail).toBeGreaterThan(0);expect(maximumParticles).toBeGreaterThan(0);\n     |                         ^\n  47 |     "
+          ]
+        },
+        {
+          "title": "desktop / M1-03 M1-11 M1-12 M1-13 @E19 desktop chooses and fights with crowbar through real input",
+          "project": "chromium",
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  44 |     }\n  45 |     const events=await page.evaluate(()=>window.__SS__!.events()),hits=events.filter(e=>e.type==='combat.hit'&&e.actionId===`weapon.${weapon}`);\n> 46 |     expect(hits.length).toBeGreaterThan(0);expect(maximumTrail).toBeGreaterThan(0);expect(maximumParticles).toBeGreaterThan(0);\n     |                         ^\n  47 |     "
+          ]
+        },
+        {
+          "title": "desktop / M1-03 M1-11 M1-12 M1-13 @E19 desktop chooses and fights with machete through real input",
+          "project": "chromium",
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  44 |     }\n  45 |     const events=await page.evaluate(()=>window.__SS__!.events()),hits=events.filter(e=>e.type==='combat.hit'&&e.actionId===`weapon.${weapon}`);\n> 46 |     expect(hits.length).toBeGreaterThan(0);expect(maximumTrail).toBeGreaterThan(0);expect(maximumParticles).toBeGreaterThan(0);\n     |                         ^\n  47 |     "
+          ]
+        },
+        {
+          "title": "iphone / M1-03 M1-11 M1-12 M1-13 @E19 iphone chooses and fights with bat through real input",
+          "project": "chromium",
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  44 |     }\n  45 |     const events=await page.evaluate(()=>window.__SS__!.events()),hits=events.filter(e=>e.type==='combat.hit'&&e.actionId===`weapon.${weapon}`);\n> 46 |     expect(hits.length).toBeGreaterThan(0);expect(maximumTrail).toBeGreaterThan(0);expect(maximumParticles).toBeGreaterThan(0);\n     |                         ^\n  47 |     "
+          ]
+        },
+        {
+          "title": "iphone / M1-03 M1-11 M1-12 M1-13 @E19 iphone chooses and fights with crowbar through real input",
+          "project": "chromium",
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  44 |     }\n  45 |     const events=await page.evaluate(()=>window.__SS__!.events()),hits=events.filter(e=>e.type==='combat.hit'&&e.actionId===`weapon.${weapon}`);\n> 46 |     expect(hits.length).toBeGreaterThan(0);expect(maximumTrail).toBeGreaterThan(0);expect(maximumParticles).toBeGreaterThan(0);\n     |                         ^\n  47 |     "
+          ]
+        },
+        {
+          "title": "iphone / M1-03 M1-11 M1-12 M1-13 @E19 iphone chooses and fights with machete through real input",
+          "project": "chromium",
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  44 |     }\n  45 |     const events=await page.evaluate(()=>window.__SS__!.events()),hits=events.filter(e=>e.type==='combat.hit'&&e.actionId===`weapon.${weapon}`);\n> 46 |     expect(hits.length).toBeGreaterThan(0);expect(maximumTrail).toBeGreaterThan(0);expect(maximumParticles).toBeGreaterThan(0);\n     |                         ^\n  47 |     "
+          ]
+        },
+        {
+          "title": "M1-28 @E19 corpses behind and in front of the survivor preserve depth throughout fade",
+          "project": "chromium",
+          "errors": [
+            "Error: browserContext.close: ENOENT: no such file or directory, open '/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/r1-foliage/test-results/playwright/run/.playwright-artifacts-1/traces/3de8ab1c06875218caa4-f14b6c5a6932816a22ed-recording8.trace'",
+            "Error: ENOENT: no such file or directory, open '/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/r1-foliage/test-results/playwright/run/.playwright-artifacts-1/bbb9110ac193677b979d88009894e223.zip'"
+          ]
+        },
+        {
+          "title": "desktop / @E19 M1-world real-input hedge collision, forecourt access and resting companion desktop",
+          "project": "chromium",
+          "errors": [
+            "Error: Movement stalled to -19,-4.5: {\"x\":-20.251850128173828,\"y\":0.7050995826721191,\"z\":-4.677694320678711,\"yaw\":-4.737991206426441}\n\n  34 |       }\n  35 |       await photograph('stalled');\n> 36 |       throw new Error(`Movement stalled to ${x},${z}: ${JSON.stringify(await page.evaluate(() => window.__SS__!.getState().player!.transform))}`);\n     |             ^\n  37 |     };\n  38 |     await photograph('morning');\n  39 |     await move(-14, -4); await move(-19, -4.5); await move(-19, -6.3);\n "
+          ]
+        },
+        {
+          "title": "iphone-portrait / @E19 M1-world real-input hedge collision, forecourt access and resting companion iphone-portrait",
+          "project": "chromium",
+          "errors": [
+            "Error: Movement stalled to -19,-4.5: {\"x\":-16.789899826049805,\"y\":0.7050994038581848,\"z\":-4.499978065490723,\"yaw\":-3.1416086221912063}\n\n  34 |       }\n  35 |       await photograph('stalled');\n> 36 |       throw new Error(`Movement stalled to ${x},${z}: ${JSON.stringify(await page.evaluate(() => window.__SS__!.getState().player!.transform))}`);\n     |             ^\n  37 |     };\n  38 |     await photograph('morning');\n  39 |     await move(-14, -4); await move(-19, -4.5); await move(-19, -6.3);\n"
+          ]
+        }
+      ],
+      "aggregate_green": false,
+      "after_isolated_retries": {
+        "passed": 41,
+        "failed": 9,
+        "verified_baseline_failures": 6,
+        "inherited_unverified_on_main": 3
+      }
+    },
+    "corpse_depth_retry": {
+      "passed": 1,
+      "failed": 0,
+      "output_isolated": true
+    },
+    "landscape_retry": {
+      "passed": 2,
+      "failed": 0,
+      "workers": 1,
+      "seconds": 162,
+      "thresholds_unchanged": true
+    }
+  },
+  "notes": [
+    "Initial focused panel run had loading/rebuild timeouts under shared machine load; all three checks subsequently passed within E19 unchanged. A concurrent focused retry lost a Playwright trace at teardown; no semantic assertion failed in that retry.",
+    "One E19 corpse-fade check completed all eight pixel assertions but lost its trace at teardown because simultaneous Playwright runs shared the default artifact directory. Isolated retry passed 1/1; port-specific artifact directories now prevent the race.",
+    "Previously accepted six-view foliage coverage, reveal and 200-infected metrics remain in docs/reports/r1-foliage.md and r1-foliage-metrics.json; not re-scored in this merge-only follow-up.",
+    "The two landscape slice checks initially timed out under heavy shared-machine load. Both passed serially with unchanged timeouts and assertions."
+  ],
+  "baseline_failures": [
+    {
+      "test": "M1-world desktop and iPhone portrait",
+      "reason": "Movement stalled to (-19,-4.5), the same invalid bench-overlapping waypoint recorded by r0-lookdev and the accepted foliage lane. Bench/layout collision is unchanged from merged main."
+    },
+    {
+      "test": "portrait low grade horde 200 infected",
+      "reason": "787381 triangles vs 500000. Existing protected crowd geometry budget failure in horde-arena, which has no crown foliage; recorded by r1-grade. Desktop counterpart passes."
+    },
+    {
+      "test": "desktop real-input bat, crowbar and machete",
+      "reason": "Three zero-hit failures also recorded in r0-lookdev baseline report. Combat and figure files are unchanged from merged main."
+    }
+  ],
+  "done": true,
+  "commits": [
+    "b3fafba"
+  ],
+  "inherited_unverified_on_main": [
+    {
+      "test": "iPhone real-input bat, crowbar and machete",
+      "reason": "Same zero-hit failures as prior accepted foliage delivery. Not replayed on merged-main checkout, so not classified as verified main baseline."
+    }
+  ],
+  "scope": "Requested merge/integration follow-up complete. Original foliage work was accepted by the orchestrator. Aggregate E19 remains non-green; confirmed baseline and inherited-unverified failures are reported separately.",
+  "horde_perf": {
+    "high": {
+      "infected": 200,
+      "renderTier": "high",
+      "ticks": 719,
+      "durationMs": 12007.199999928474,
+      "p95Ms": 6.899999999999636,
+      "drawCalls": 59,
+      "triangles": 1258749
+    },
+    "low": {
+      "infected": 200,
+      "renderTier": "low",
+      "ticks": 720,
+      "durationMs": 12011.299999952316,
+      "p95Ms": 5.399999999999636,
+      "drawCalls": 58,
+      "triangles": 787381
+    }
+  }
+}

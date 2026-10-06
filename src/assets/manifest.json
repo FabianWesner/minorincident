@@ -9948,7 +9948,9 @@
     "category": "prop",
     "status": "integrated",
     "tier": "side",
+    "script": "assets/prop.hedge/build.py",
     "glb": "public/assets/models/prop.hedge.glb",
+    "sourceGlb": "assets/prop.hedge/model.glb",
     "dimensions": {
       "x": 2.528046131134033,
       "y": 1.563220500946045,
@@ -9961,23 +9963,72 @@
     ],
     "requiredNodes": [
       "root",
-      "body"
+      "body",
+      "crownProxy",
+      "crown:0",
+      "crown:1",
+      "crown:2"
     ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 4000,
+      "materials": 3,
+      "fileKB": 300,
+      "drawCalls": 3
     },
     "decayVariants": [],
-    "sourceGlb": "assets/prop.hedge/model.glb",
-    "script": "assets/prop.hedge/build.py",
-    "sourceForward": "+X",
     "world": {
       "token": "foliage",
       "solid": true
+    },
+    "foliage": {
+      "colors": [
+        "#4a7533",
+        "#b5c563"
+      ],
+      "crowns": [
+        {
+          "position": [
+            -0.69,
+            0.78,
+            0
+          ],
+          "radius": [
+            0.45,
+            0.55,
+            0.32
+          ]
+        },
+        {
+          "position": [
+            0,
+            0.78,
+            0
+          ],
+          "radius": [
+            0.45,
+            0.55,
+            0.32
+          ]
+        },
+        {
+          "position": [
+            0.69,
+            0.78,
+            0
+          ],
+          "radius": [
+            0.45,
+            0.55,
+            0.32
+          ]
+        }
+      ],
+      "tokens": [
+        "foliageDark",
+        "foliageLight"
+      ]
     },
     "lods": {
       "lod1": "public/assets/models/prop.hedge.lod1.glb",
@@ -10339,11 +10390,13 @@
     "category": "prop",
     "status": "integrated",
     "tier": "side",
-    "glb": "public/assets/models/prop.hedge.glb",
+    "script": "assets/prop.street-tree/build.py",
+    "glb": "public/assets/models/prop.street-tree.glb",
+    "sourceGlb": "assets/prop.street-tree/model.glb",
     "dimensions": {
-      "x": 2.528046131134033,
-      "y": 1.563220500946045,
-      "z": 0.8810849189758301,
+      "x": 6.2,
+      "y": 5.8,
+      "z": 6.2,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -10352,24 +10405,50 @@
     ],
     "requiredNodes": [
       "root",
-      "body"
+      "body",
+      "crownProxy",
+      "crown:0"
     ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 4000,
+      "materials": 3,
+      "fileKB": 300,
+      "drawCalls": 3
     },
     "decayVariants": [],
     "world": {
       "token": "foliage",
       "solid": false
     },
+    "foliage": {
+      "colors": [
+        "#527d35",
+        "#c5ca65"
+      ],
+      "crowns": [
+        {
+          "position": [
+            0,
+            3.65,
+            0
+          ],
+          "radius": [
+            2.35,
+            1.5,
+            2.35
+          ]
+        }
+      ],
+      "tokens": [
+        "foliageDark",
+        "foliageLight"
+      ]
+    },
     "lods": {
-      "lod1": "public/assets/models/prop.hedge.lod1.glb",
-      "lod2": "public/assets/models/prop.hedge.lod2.glb"
+      "lod1": "public/assets/models/prop.street-tree.lod1.glb",
+      "lod2": "public/assets/models/prop.street-tree.lod2.glb"
     }
   },
   {
@@ -11819,5 +11898,269 @@
       "drawCalls": 1
     },
     "decayVariants": []
+  },
+  {
+    "id": "prop.street-tree",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.street-tree/build.py",
+    "glb": "public/assets/models/prop.street-tree.glb",
+    "sourceGlb": "assets/prop.street-tree/model.glb",
+    "dimensions": {
+      "x": 6.2,
+      "y": 5.8,
+      "z": 6.2,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "crownProxy",
+      "crown:0"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 4000,
+      "materials": 3,
+      "fileKB": 300,
+      "drawCalls": 3
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "foliage",
+      "solid": false
+    },
+    "foliage": {
+      "colors": [
+        "#527d35",
+        "#c5ca65"
+      ],
+      "crowns": [
+        {
+          "position": [
+            0,
+            3.65,
+            0
+          ],
+          "radius": [
+            2.35,
+            1.5,
+            2.35
+          ]
+        }
+      ],
+      "tokens": [
+        "foliageDark",
+        "foliageLight"
+      ]
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.street-tree.lod1.glb",
+      "lod2": "public/assets/models/prop.street-tree.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.street-tree-blossom",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.street-tree-blossom/build.py",
+    "glb": "public/assets/models/prop.street-tree-blossom.glb",
+    "sourceGlb": "assets/prop.street-tree-blossom/model.glb",
+    "dimensions": {
+      "x": 6.2,
+      "y": 5.55,
+      "z": 6.2,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "crownProxy",
+      "crown:0"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 4000,
+      "materials": 3,
+      "fileKB": 300,
+      "drawCalls": 3
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "foliage",
+      "solid": false
+    },
+    "foliage": {
+      "colors": [
+        "#ce897e",
+        "#ffd7b1"
+      ],
+      "crowns": [
+        {
+          "position": [
+            0,
+            3.65,
+            0
+          ],
+          "radius": [
+            2.3,
+            1.36,
+            2.3
+          ]
+        }
+      ],
+      "tokens": [
+        "flamingoPink",
+        "flamingoBlush"
+      ]
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.street-tree-blossom.lod1.glb",
+      "lod2": "public/assets/models/prop.street-tree-blossom.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.garden-bush",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.garden-bush/build.py",
+    "glb": "public/assets/models/prop.garden-bush.glb",
+    "sourceGlb": "assets/prop.garden-bush/model.glb",
+    "dimensions": {
+      "x": 2.0,
+      "y": 1.55,
+      "z": 1.8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "crownProxy",
+      "crown:0"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 4000,
+      "materials": 3,
+      "fileKB": 300,
+      "drawCalls": 3
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "foliage",
+      "solid": true
+    },
+    "foliage": {
+      "colors": [
+        "#587b38",
+        "#c0c968"
+      ],
+      "crowns": [
+        {
+          "position": [
+            0,
+            0.77,
+            0
+          ],
+          "radius": [
+            0.74,
+            0.55,
+            0.66
+          ]
+        }
+      ],
+      "tokens": [
+        "foliageDark",
+        "foliageLight"
+      ]
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.garden-bush.lod1.glb",
+      "lod2": "public/assets/models/prop.garden-bush.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.garden-bush-small",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.garden-bush-small/build.py",
+    "glb": "public/assets/models/prop.garden-bush-small.glb",
+    "sourceGlb": "assets/prop.garden-bush-small/model.glb",
+    "dimensions": {
+      "x": 1.2,
+      "y": 0.85,
+      "z": 1.1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "crownProxy",
+      "crown:0"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 4000,
+      "materials": 3,
+      "fileKB": 300,
+      "drawCalls": 3
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "foliage",
+      "solid": true
+    },
+    "foliage": {
+      "colors": [
+        "#638441",
+        "#ced17a"
+      ],
+      "crowns": [
+        {
+          "position": [
+            0,
+            0.42,
+            0
+          ],
+          "radius": [
+            0.44,
+            0.3,
+            0.4
+          ]
+        }
+      ],
+      "tokens": [
+        "foliageDark",
+        "foliageLight"
+      ]
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.garden-bush-small.lod1.glb",
+      "lod2": "public/assets/models/prop.garden-bush-small.lod2.glb"
+    }
   }
 ]
