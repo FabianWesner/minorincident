@@ -32,15 +32,25 @@
     }
   },
   "conflicts_resolved": {
-    "src/Game.ts": "mission loading plus infected spawn frustum",
-    "src/debug/testApi.ts": "mission controls plus E07 spawn/killAll",
-    "src/levels/loader.ts": "union scenario catalog",
-    "src/render/GameView.ts": "mission marker/UI and crowd update/state/lifecycle",
-    "src/sim/world/EntityStore.ts": "checkpoint restore plus pooled adopt/delete",
-    "src/sim/world/SimWorld.ts": "mission lifecycle plus infected system",
-    "src/sim/world/types.ts": "union mission/infected events",
-    "src/assets/manifest.json": "recursive per-ID and per-field union, retained flashbang script",
-    "tests/e2e/harness.spec.ts": "check additive API plus implemented killAll/objective error"
+    "src/Game.ts": "retain mission progression/checkpoint load, crowd spawn frustum, vehicle input and hit stop wiring",
+    "src/debug/testApi.ts": "union mission, crowd, interactions, vehicles and VFX controls/state; distributive telegraph payload typing; version 1.7",
+    "src/levels/loader.ts": "union scenario catalog and district/mission/interactable/vehicle spawn paths",
+    "src/render/GameView.ts": "compose all views, update phases and disposal; render-clock hit stop, crowd VFX, real vehicle blood and fixture feedback adapter",
+    "src/sim/world/EntityStore.ts": "combine checkpoint restoration and vehicle/interactable components with pooled infected adopt/delete",
+    "src/sim/world/SimWorld.ts": "combine mission, interactions/hazards, vehicles and infected systems; rebuild native handles/navigation on checkpoint or tier change",
+    "src/sim/world/types.ts": "union components/events and damage causes; both telegraph payload forms; common noise duration",
+    "src/assets/manifest.json": "per-ID/per-field union of 275 IDs; baseline source registration retained; late registration handed to central reconcile",
+    "tests/e2e/harness.spec.ts": "additive API/version checks and all implemented mission/infected/interaction/vehicle/VFX controls",
+    "src/sim/combat/Damage.ts": "preserve infected Bloated exact 35 damage and E11 environmental blast reduction; keep vehicle/action damage feedback causes",
+    "public/assets/models/npc.helicopter-pilot.lod1.glb": "regenerated through optimizeExports from assets/npc.helicopter-pilot/model.glb using merged optimizer",
+    "tools/assets/optimize.ts": "retain incoming character LOD1 budget ratio and canonical source optimization",
+    "tests/e2e/webgpu.spec.ts": "retain native WebGPU acceptance tests for every delivered epic",
+    "src/render/VehicleView.ts": "retain actual vehicle model/wheels/lights/fire/smoke; unique blood material copies preserve imported authored colors and lighting",
+    "src/render/CrowdView.ts": "retain instancing and frustum pooling; per-instance hit/gore state plus shared stump-cap batch",
+    "src/sim/ai/NavGrid.ts": "dynamic overlapping blocker updates invalidate actual infected pathfinding",
+    "src/sim/ai/InfectedSystem.ts": "alarm targets expire, pooled reuse clears state, vehicle-attached infected suspend independent movement",
+    "src/sim/vehicles/Vehicles.ts": "integrate E11 destructible prop/nav/debris lifecycle and E12 native-body/timer restoration",
+    "src/render/vfx/Vfx.ts": "adapt real AI, hazard, pickup and vehicle events; exclude environment/vehicle targets from infected gore"
   },
   "E11": {
     "manifest_union": 275,
@@ -137,5 +147,11 @@
     "runtime_exports_removed": 27,
     "palette_additions_removed": 11,
     "further_asset_driven_main_merges": false
+  },
+  "native_compile_order_fix": {
+    "cause": "soft-particle viewport depth compiled before actual MSAA render target",
+    "change": "native VFX warms during first actual render; WebGL/non-VFX precompile unchanged",
+    "targeted_native_E06_passed": 1,
+    "pending": "full E06 verify then remaining requested epic verifies"
   }
 }
