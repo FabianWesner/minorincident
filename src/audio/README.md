@@ -71,3 +71,11 @@ The headless live capture runs with:
 It taps the final production PCM into WAVs without audible OS output, exercises
 the authored diner incident and store fight, and exports loudness/peak/gap/log
 measurements alongside three previews. `AUDIO_PREVIEW_DIR` overrides their location.
+
+Streams start only in L1–L6 missions, with at most four cached, lazily created
+decks. Acoustic tier refreshes preserve the score and cue history. Four reserved
+slots keep combined sprite/media voices within 32 high / 16 low. Music files
+measure approximately −18 LUFS; SFX and voice bus trims are −2 and −1.5 dB.
+Per-file grants, authors and provenance are in `assets/audio/LICENSES.md` and
+`assets/audio/imports.json`; research and rejected sources are documented in
+`epics-pipeline/audio-research.md`.
