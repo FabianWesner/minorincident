@@ -16,13 +16,14 @@ test('M1-16 M1-30 @E19 civilian morning at diner, crescent and hardware over 60s
     await page.evaluate(async spot => {
       const a = window.__SS__!; await a.loadLevel('L1'); a.pause();
       a.missions.begin(); a.teleport('player', { x: spot.playerX, z: spot.playerZ });
+      a.camera.preset('hud-golden'); // Snap the blend before selecting the review pose.
       a.camera.cinematic({ position: [spot.x + 13, 17, spot.z + 15], target: [spot.x, 0, spot.z] });
       await a.step(1); await a.screenshotReady();
     }, spot);
     await page.waitForTimeout(1200); // Let the presentation-only cinematic blend settle while sim is paused.
     const frames = [];
     let elapsed = 0;
-    for (const seconds of [0, 1, 3, 6, 10, 20, 30, 45, 60]) {
+    for (const seconds of [0, 1, 3, 6, 10, 12, 15, 20, 30, 45, 60]) {
       await page.evaluate(async ticks => { await window.__SS__!.step(ticks); await window.__SS__!.screenshotReady(); }, Math.max(1, (seconds - elapsed) * 60));
       elapsed = seconds;
       const crowd = await page.evaluate(() => window.__SS__!.query({ kind: 'civilian' }).filter(e => e.civilian?.schedule));
