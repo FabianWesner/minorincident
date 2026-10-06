@@ -24,7 +24,10 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
           const data = a instanceof InterleavedBufferAttribute ? a.data : a;
           return `${name}:${data.array.constructor.name}:${a.itemSize}:${a.normalized}:${'stride' in data ? data.stride : a.itemSize}:${'offset' in a ? a.offset : 0}`;
         }).sort().join(',');
-        const key = `${materials.map(m => m.uuid).join(',')}:${object instanceof InstancedMesh}:${object.castShadow}:${object.receiveShadow}:${attributes}`;
+        // Default instancing may use a uniform matrix array: its capacity is part
+        // of the shader layout, even when active instance counts match.
+        const capacity = object instanceof InstancedMesh ? `${object.instanceMatrix.count}:${object.instanceColor?.count ?? 0}` : 'none';
+        const key = `${materials.map(m => m.uuid).join(',')}:${capacity}:${object.castShadow}:${object.receiveShadow}:${attributes}`;
         if (variants.has(key)) repeated.push(object); else variants.add(key);
       }
       if (object instanceof Mesh || object instanceof Sprite) object.frustumCulled = false;
