@@ -21,7 +21,7 @@ export const civilianRoles = [
  */
 export const l1Pedestrians = {
   models: ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'],
-  shirts: ['#3178ac', '#e5d9b9', '#a86645', '#79865b', '#d4ad32', '#ac7a91', '#c4473d', '#4f8f8a', '#6d5aa8', '#e08a3c', '#2f4858', '#9bb7d4'],
+  shirts: ['#3178ac', '#e5d9b9', '#a86645', '#79865b', '#d4ad32', '#ac7a91', '#c4473d', '#f2efe4', '#6d5aa8', '#e08a3c', '#2f4858', '#e07fa0'],
   accessories: ['none', 'cap', 'glasses', 'backpack', 'scarf'],
   handProps: ['coffee', 'bag', 'phone', 'cane', 'watering-can'],
   /** Seconds between top-up walkers entering from an edge while the director tops up (section 5.9). */
