@@ -3,7 +3,7 @@
 import type { Game } from '../Game';
 import { action } from '../data/actions/catalog';
 import { actionIconUrl } from '../assets/icons';
-import { node, text } from './dom';
+import { button, node, text } from './dom';
 import { Onboarding } from './Onboarding';
 import type { GameEvent } from '../sim/world/types';
 const sides = ['LEFT', 'RIGHT'] as const;
@@ -15,6 +15,10 @@ export class Hud {
   private readonly health = this.bar('health');
   private readonly armor = this.bar('armor');
   private readonly companion = node('span', 'corgi-state');
+  private readonly corgiBadge = node('span', 'corgi-badge', '🐕');
+  private readonly detail = node('dialog', 'objective-detail');
+  private readonly fullText = node('p', 'objective-full-text');
+  private readonly trackerText = node('span', 'objective-text');
   private readonly map = node('div', 'minimap');
   private readonly playerPin = this.pin('player', '▲');
   private readonly objectivePin = this.pin('objective');
@@ -36,7 +40,8 @@ export class Hud {
     const vitals = node('div', 'vitals'); vitals.className = 'hud-vitals hud-panel';
     this.portrait.className = 'hud-portrait'; this.portrait.setAttribute('aria-label', 'Survivor portrait');
     const bars = node('div', 'vital-bars'); bars.className = 'hud-bars'; bars.append(this.health.root, this.armor.root);
-    vitals.append(this.portrait, bars);
+    this.corgiBadge.className = 'hud-corgi-badge';
+    vitals.append(this.portrait, bars, this.corgiBadge);
     const companion = node('div', 'corgi-companion'); companion.className = 'hud-companion hud-panel';
     const face = node('div', 'corgi-portrait', '🐕'); face.className = 'hud-portrait'; companion.append(face, this.companion);
     this.map.className = 'hud-map'; this.map.setAttribute('aria-label', 'North-up minimap, range 30 meters');
@@ -44,12 +49,27 @@ export class Hud {
     this.map.append(north, this.playerPin, this.objectivePin, this.homePin);
     // Allocated once; no entity snapshots, DOM creation, or pin lists per frame.
     for (let i = 0; i < 256; i++) { const pin = this.pin(`threat-${i}`); pin.classList.add('hud-pin-threat'); pin.hidden = true; this.threats.push(pin); this.map.append(pin); }
-    this.tracker.className = 'hud-tracker hud-panel';
+    this.tracker.className = 'hud-tracker hud-panel'; this.tracker.append(this.trackerText);
+    this.detail.className = 'hud-objective-detail hud-panel';
+    this.detail.setAttribute('aria-label', 'Current objective');
+    this.detail.append(this.fullText, button('objective-close', 'Close', () => this.detail.close()));
+    const activate = (element: HTMLElement, callback: () => void): void => {
+      if (!(navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches)) return;
+      element.setAttribute('role', 'button'); element.tabIndex = 0;
+      element.addEventListener('click', callback);
+      element.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); callback(); } });
+    };
+    activate(this.map, () => {
+      const collapsed = this.map.classList.toggle('is-collapsed');
+      this.map.setAttribute('aria-expanded', String(!collapsed));
+    });
+    if (this.map.getAttribute('role') === 'button') this.map.setAttribute('aria-expanded', 'true');
+    activate(this.tracker, () => { text(this.fullText, this.trackerText.textContent ?? ''); this.detail.showModal(); });
     const slots = node('div', 'slot-cards'); slots.className = 'hud-slots'; for (const slot of this.slots) slots.append(slot.root);
     this.vignette.className = 'hud-vignette'; this.damage.className = 'hud-damage'; this.bark.className = 'hud-bark'; this.interaction.className = 'hud-interaction';
     this.damage.hidden = this.bark.hidden = this.interaction.hidden = true;
-    const stick = node('div', 'stick-zone', '◉ Move'); stick.className = 'hud-stick-zone';
-    this.root.append(stick, this.vignette, vitals, companion, this.map, this.tracker, slots, this.damage, this.bark, this.interaction, this.onboarding.element);
+    const stick = node('div', 'stick-zone'); stick.className = 'hud-stick-zone';
+    this.root.append(stick, this.vignette, vitals, companion, this.map, this.tracker, slots, this.damage, this.bark, this.interaction, this.onboarding.element, this.detail);
   }
   private bar(name: string) {
     const root = node('div', `${name}-bar`), fill = node('div', `${name}-fill`), label = node('span', `${name}-label`);
@@ -71,7 +91,7 @@ export class Hud {
   }
   init(): void { document.querySelector('#game')!.append(this.root); }
   /** Reset subscriptions after EventBus.reset; old-level feedback cannot survive a load. */
-  clear(): void { for (const stop of this.stops) stop(); this.stops.length = 0; this.onboarding.clear(); this.root.hidden = true; }
+  clear(): void { for (const stop of this.stops) stop(); this.stops.length = 0; this.onboarding.clear(); this.detail.close(); this.root.hidden = true; }
   loaded(): void {
     this.clear();
     this.damagedUntil = this.barkUntil = -1;
@@ -129,7 +149,9 @@ export class Hud {
       pin.hidden = false; pin.dataset.entityId = String(entity.id); this.place(pin, entity.transform.x, entity.transform.z, px, pz);
     }
     for (let i = pinCount; i < this.threats.length; i++) this.threats[i].hidden = true;
-    text(this.companion, corgi ? corgi.hidden ? 'Corgi · hiding' : 'Corgi · following' : 'Corgi · awaiting rescue');
+    const corgiStatus = corgi ? corgi.hidden ? 'Corgi · hiding' : 'Corgi · following' : 'Corgi · awaiting rescue';
+    text(this.companion, corgiStatus); this.corgiBadge.title = corgiStatus; this.corgiBadge.setAttribute('aria-label', corgiStatus);
+    this.corgiBadge.dataset.state = corgi ? corgi.hidden ? 'hiding' : 'following' : 'awaiting-rescue';
     this.place(this.playerPin, px, pz, px, pz); this.playerPin.style.rotate = `${-player.transform.yaw + Math.PI / 2}rad`;
     const anchor = mission?.state.marker ? mission.def.anchors[mission.state.marker] : null;
     this.objectivePin.hidden = !anchor;
@@ -137,7 +159,7 @@ export class Hud {
     const home = mission?.def.anchors.home ?? player.survivor?.checkpoint;
     this.homePin.hidden = !home; if (home) this.place(this.homePin, home.x, home.z, px, pz, true);
     const objective = mission?.def.steps.find(step => mission.state.steps[step.id].status === 'active');
-    this.tracker.hidden = !objective; if (objective) text(this.tracker, `${objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))} m` : ''}`);
+    this.tracker.hidden = !objective; if (objective) text(this.trackerText, `${objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))} m` : ''}`);
     for (let i = 0; i < sides.length; i++) {
       const side = sides[i], card = this.slots[i], state = player.weapons?.[side]; card.root.hidden = !state;
       if (!state) continue;
@@ -151,7 +173,9 @@ export class Hud {
       card.stats.dataset.ammo = String(slot.magazine); card.stats.dataset.charges = String(slot.charges);
       const until = slot.reloadUntil || slot.nextCharge || slot.readyAt;
       const duration = (slot.reloadUntil ? def.reloadTime : slot.nextCharge ? def.recharge : Math.max(def.cooldown, def.windup + def.active + def.recovery)) * 60;
-      card.ring.style.setProperty('--progress', String(until > world.tick ? 1 - clamp((until - world.tick) / (duration || 1)) : 1));
+      const progress = until > world.tick ? 1 - clamp((until - world.tick) / (duration || 1)) : 1;
+      card.ring.style.setProperty('--progress', String(progress));
+      this.game.input.touch.setWeapon(side === 'LEFT' ? 'left' : 'right', actionIconUrl(def.iconId), `${card.name.textContent}, ${card.stats.textContent}`, progress, player.weapons!.selectedSide === side, slot.magazine, slot.charges);
       card.ring.dataset.until = String(until); text(card.ring, slot.reloadUntil ? '↻' : until > world.tick ? Math.max(0, (until - world.tick) / 60).toFixed(1) : '✓');
       for (let j = 0; j < card.strips.length; j++) { card.strips[j].hidden = j >= state.rack.length; card.strips[j].classList.toggle('is-current', j === state.index); }
     }

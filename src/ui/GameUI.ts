@@ -33,7 +33,11 @@ export class GameUI {
   }
   init(): void {
     if (!this.enabled) return;
-    document.body.classList.add('full-ui'); this.root.className = 'menus';
+    document.body.classList.add('full-ui');
+    document.body.classList.toggle('touch-ui', navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches); this.root.className = 'menus';
+    this.pauseButton.setAttribute('aria-label', 'Pause');
+    const pauseLabel = node('span', 'pause-label', 'Pause');
+    this.pauseButton.replaceChildren(node('span', 'pause-icon', 'Ⅱ '), pauseLabel);
     this.build(); document.querySelector('#game')!.append(this.root, this.pauseButton);
     window.addEventListener('keydown', this.key, true);
     document.addEventListener('click', this.missionAccept);
@@ -235,5 +239,5 @@ export class GameUI {
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   };
-  dispose(): void { window.removeEventListener('keydown', this.key, true); document.removeEventListener('click', this.missionAccept); this.root.remove(); this.pauseButton.remove(); this.hud.dispose(); document.body.classList.remove('full-ui'); delete document.body.dataset.uiScreen; }
+  dispose(): void { window.removeEventListener('keydown', this.key, true); document.removeEventListener('click', this.missionAccept); this.root.remove(); this.pauseButton.remove(); this.hud.dispose(); document.body.classList.remove('full-ui', 'touch-ui'); delete document.body.dataset.uiScreen; }
 }

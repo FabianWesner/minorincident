@@ -12,11 +12,14 @@ export class Nipple {
   }
   start(x: number, y: number): void {
     this.x = x; this.y = y; this.move.x = 0; this.move.z = 0;
+    this.element.style.setProperty('--stick-x', '0px'); this.element.style.setProperty('--stick-y', '0px');
     this.element.style.left = `${x - 60}px`; this.element.style.top = `${y - 60}px`; this.element.hidden = false;
   }
   drag(x: number, y: number): void {
     const dx = x - this.x, dy = y - this.y, distance = Math.hypot(dx, dy);
     const progress = Math.min(1, distance / 60);
+    this.element.style.setProperty('--stick-x', `${distance ? dx / distance * progress * 40 : 0}px`);
+    this.element.style.setProperty('--stick-y', `${distance ? dy / distance * progress * 40 : 0}px`);
     this.move.x = distance ? dx / distance * progress : 0; this.move.z = distance ? dy / distance * progress : 0;
   }
   release(): void { this.move.x = 0; this.move.z = 0; this.element.hidden = true; }

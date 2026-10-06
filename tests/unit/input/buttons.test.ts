@@ -37,3 +37,13 @@ test('T-E03-buttons @E03 sources combine without releasing another held binding'
   buttons.release();
   expect(buttons.sample()).toEqual({ down: false, held: false, up: true });
 });
+
+test('T-E03-pause-clear @E03 @E03-AC13 repeated pause cleanup preserves one release; level reset stays neutral', () => {
+  const buttons = new Buttons();
+  buttons.set('Mouse0', true); buttons.sample();
+  buttons.release(); buttons.reset(true); buttons.release(); buttons.reset(true);
+  expect(buttons.sample()).toEqual({ down: false, held: false, up: true });
+  expect(buttons.sample()).toEqual({ down: false, held: false, up: false });
+  buttons.set('Mouse0', true); buttons.reset();
+  expect(buttons.sample()).toEqual({ down: false, held: false, up: false });
+});
