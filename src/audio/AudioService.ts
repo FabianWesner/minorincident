@@ -153,6 +153,19 @@ export class AudioService implements Lifecycle {
         if (this.background)
             this.host.pause();
     }
+    /** Decay rebuilds presentation/acoustics in the same world; keep mission cues and score. */
+    refreshAcoustics(): void {
+        this.graph.map = fromDistricts(this.world.districts);
+        const tier = this.world.districts?.composition.tier ?? 0;
+        if (tier === this.tier) return;
+        this.tier = tier;
+        this.ambience = new AmbienceSchedule(tier, this.world.seed, this.context.currentTime);
+        const beds = new Set(ambienceTiers[tier].beds.map(id => `bed:${id}`));
+        for (const key of this.loops.keys()) if (key.startsWith('bed:') && !beds.has(key)) this.stopLoop(key);
+        for (const bed of ambienceTiers[tier].beds)
+            this.loop(`bed:${bed}`, `bed.${bed}`, { gain: tier === 5 ? dbGain(-16) : 1 });
+    }
+    private get hasScore(): boolean { return /^L[1-6]$/.test(this.world.scenario ?? ''); }
     private mount(): void {
         this.captionElement.dataset.audioCaptions = '';
         this.captionElement.setAttribute('role', 'status');
@@ -420,7 +433,7 @@ export class AudioService implements Lifecycle {
         this.started = true;
         this.musicEpoch = this.context.currentTime + 0.02;
         this.music = new MusicDirector(this.level, this.musicEpoch);
-        void this.score.transition('calm', this.musicEpoch, this.musicEpoch, this.music.bar);
+        if (this.hasScore) void this.score.transition('calm', this.musicEpoch, this.musicEpoch, this.music.bar);
         for (const layer of musicLayers) {
             const v = this.play(`music.${this.level}.${layer}`, { time: this.musicEpoch, gain: 0, rate: 1, loop: true });
             if (v)
@@ -438,7 +451,7 @@ export class AudioService implements Lifecycle {
         // Restore the committed state even when the director has no history yet.
         if (!this.scheduledTransition || transition.state !== this.scheduledTransition.state || transition.layers.join() !== this.scheduledTransition.layers.join()) {
             this.scheduledTransition = transition;
-            void this.score.transition(transition.state, transition.time, this.musicEpoch, this.music.bar);
+            if (this.hasScore) void this.score.transition(transition.state, transition.time, this.musicEpoch, this.music.bar);
             for (const [layer, v] of this.stemVoices) {
                 const at = Math.max(t, transition.time);
                 v.gain.gain.cancelScheduledValues(at);

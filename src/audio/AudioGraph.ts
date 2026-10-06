@@ -98,8 +98,10 @@ export class AudioGraph {
         merge.connect(this.mono).connect(this.output);
         this.output.connect(context.destination);
         this.sfx = context.createGain();
+        this.sfx.gain.value = dbGain(-2);
         this.sfx.connect(this.master);
         this.voice = context.createGain();
+        this.voice.gain.value = dbGain(-1.5);
         this.voice.connect(this.master);
         this.musicGate = context.createGain();
         this.musicGate.connect(this.master);
