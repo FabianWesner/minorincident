@@ -1,8 +1,8 @@
 [
   {
     "perf": {
-      "fps": 60.24096385542697,
-      "frameMs": 16.599999999998545,
+      "fps": 2.857959416976282,
+      "frameMs": 349.89999999999964,
       "simMs": 0,
       "drawCalls": 166,
       "triangles": 127863,
@@ -11,9 +11,9 @@
       "entities": 1,
       "backend": "webgl",
       "loadTiming": {
-        "dataMs": 8.799999952316284,
-        "simMs": 414.89999997615814,
-        "viewMs": 1093.5
+        "dataMs": 8,
+        "simMs": 55.799999952316284,
+        "viewMs": 12491
       },
       "quality": {
         "setting": "auto",
@@ -36,7 +36,7 @@
       "renderedFrames": 12,
       "contextLost": false,
       "paused": true,
-      "heapBytes": 68000000
+      "heapBytes": 39600000
     },
     "state": {
       "combat": {
@@ -888,24 +888,19 @@
           ],
           "batches": [
             {
-              "assetId": "bld.joes-diner",
+              "assetId": "bld.house-a",
+              "instances": 2,
+              "meshes": 5
+            },
+            {
+              "assetId": "bld.house-b",
               "instances": 1,
               "meshes": 5
             },
             {
-              "assetId": "bld.mainstreet-brick",
-              "instances": 1,
-              "meshes": 5
-            },
-            {
-              "assetId": "bld.pharmacy",
+              "assetId": "bld.house-c",
               "instances": 1,
               "meshes": 4
-            },
-            {
-              "assetId": "bld.supermarket",
-              "instances": 1,
-              "meshes": 5
             },
             {
               "assetId": "prop.flower",
@@ -919,7 +914,7 @@
             },
             {
               "assetId": "prop.picket-fence",
-              "instances": 12,
+              "instances": 17,
               "meshes": 1
             },
             {
@@ -1003,19 +998,24 @@
               "meshes": 4
             },
             {
-              "assetId": "bld.house-a",
-              "instances": 2,
-              "meshes": 5
-            },
-            {
-              "assetId": "bld.house-b",
+              "assetId": "bld.joes-diner",
               "instances": 1,
               "meshes": 5
             },
             {
-              "assetId": "bld.house-c",
+              "assetId": "bld.mainstreet-brick",
+              "instances": 1,
+              "meshes": 5
+            },
+            {
+              "assetId": "bld.pharmacy",
               "instances": 1,
               "meshes": 4
+            },
+            {
+              "assetId": "bld.supermarket",
+              "instances": 1,
+              "meshes": 5
             },
             {
               "assetId": "prop.flower",
@@ -1029,7 +1029,7 @@
             },
             {
               "assetId": "prop.picket-fence",
-              "instances": 17,
+              "instances": 12,
               "meshes": 1
             },
             {
@@ -1056,18 +1056,18 @@
           "grassBlades": 4600,
           "windPhase": 0.49999999999999994,
           "photoSpots": [
-            "D-SHOP/W0/overview",
-            "D-SHOP/W1/overview",
-            "D-SHOP/W2/overview",
-            "D-SHOP/W3/overview",
-            "D-SHOP/W4/overview",
-            "D-SHOP/W5/overview",
-            "D-SHOP/W0/landmark",
-            "D-SHOP/W1/landmark",
-            "D-SHOP/W2/landmark",
-            "D-SHOP/W3/landmark",
-            "D-SHOP/W4/landmark",
-            "D-SHOP/W5/landmark",
+            "D-RES/W0/overview",
+            "D-RES/W1/overview",
+            "D-RES/W2/overview",
+            "D-RES/W3/overview",
+            "D-RES/W4/overview",
+            "D-RES/W5/overview",
+            "D-RES/W0/landmark",
+            "D-RES/W1/landmark",
+            "D-RES/W2/landmark",
+            "D-RES/W3/landmark",
+            "D-RES/W4/landmark",
+            "D-RES/W5/landmark",
             "D-MAIN/W0/overview",
             "D-MAIN/W1/overview",
             "D-MAIN/W2/overview",
@@ -1080,18 +1080,18 @@
             "D-MAIN/W3/landmark",
             "D-MAIN/W4/landmark",
             "D-MAIN/W5/landmark",
-            "D-RES/W0/overview",
-            "D-RES/W1/overview",
-            "D-RES/W2/overview",
-            "D-RES/W3/overview",
-            "D-RES/W4/overview",
-            "D-RES/W5/overview",
-            "D-RES/W0/landmark",
-            "D-RES/W1/landmark",
-            "D-RES/W2/landmark",
-            "D-RES/W3/landmark",
-            "D-RES/W4/landmark",
-            "D-RES/W5/landmark"
+            "D-SHOP/W0/overview",
+            "D-SHOP/W1/overview",
+            "D-SHOP/W2/overview",
+            "D-SHOP/W3/overview",
+            "D-SHOP/W4/overview",
+            "D-SHOP/W5/overview",
+            "D-SHOP/W0/landmark",
+            "D-SHOP/W1/landmark",
+            "D-SHOP/W2/landmark",
+            "D-SHOP/W3/landmark",
+            "D-SHOP/W4/landmark",
+            "D-SHOP/W5/landmark"
           ],
           "windowMeshes": 10
         },
@@ -1653,8 +1653,8 @@
   },
   {
     "perf": {
-      "fps": 59.88023952095548,
-      "frameMs": 16.700000000000728,
+      "fps": 60.24096385542697,
+      "frameMs": 16.599999999998545,
       "simMs": 0,
       "drawCalls": 126,
       "triangles": 96959,
@@ -1663,9 +1663,9 @@
       "entities": 1,
       "backend": "webgl",
       "loadTiming": {
-        "dataMs": 8.799999952316284,
-        "simMs": 414.89999997615814,
-        "viewMs": 1093.5
+        "dataMs": 8,
+        "simMs": 55.799999952316284,
+        "viewMs": 12491
       },
       "quality": {
         "setting": "auto",
@@ -1688,7 +1688,7 @@
       "renderedFrames": 17,
       "contextLost": false,
       "paused": true,
-      "heapBytes": 68000000
+      "heapBytes": 39600000
     },
     "state": {
       "combat": {
@@ -2540,24 +2540,19 @@
           ],
           "batches": [
             {
-              "assetId": "bld.joes-diner",
+              "assetId": "bld.house-a",
+              "instances": 2,
+              "meshes": 5
+            },
+            {
+              "assetId": "bld.house-b",
               "instances": 1,
               "meshes": 5
             },
             {
-              "assetId": "bld.mainstreet-brick",
-              "instances": 1,
-              "meshes": 5
-            },
-            {
-              "assetId": "bld.pharmacy",
+              "assetId": "bld.house-c",
               "instances": 1,
               "meshes": 4
-            },
-            {
-              "assetId": "bld.supermarket",
-              "instances": 1,
-              "meshes": 5
             },
             {
               "assetId": "prop.flower",
@@ -2571,7 +2566,7 @@
             },
             {
               "assetId": "prop.picket-fence",
-              "instances": 12,
+              "instances": 17,
               "meshes": 1
             },
             {
@@ -2655,19 +2650,24 @@
               "meshes": 4
             },
             {
-              "assetId": "bld.house-a",
-              "instances": 2,
-              "meshes": 5
-            },
-            {
-              "assetId": "bld.house-b",
+              "assetId": "bld.joes-diner",
               "instances": 1,
               "meshes": 5
             },
             {
-              "assetId": "bld.house-c",
+              "assetId": "bld.mainstreet-brick",
+              "instances": 1,
+              "meshes": 5
+            },
+            {
+              "assetId": "bld.pharmacy",
               "instances": 1,
               "meshes": 4
+            },
+            {
+              "assetId": "bld.supermarket",
+              "instances": 1,
+              "meshes": 5
             },
             {
               "assetId": "prop.flower",
@@ -2681,7 +2681,7 @@
             },
             {
               "assetId": "prop.picket-fence",
-              "instances": 17,
+              "instances": 12,
               "meshes": 1
             },
             {
@@ -2708,18 +2708,18 @@
           "grassBlades": 4600,
           "windPhase": 1.016666666666668,
           "photoSpots": [
-            "D-SHOP/W0/overview",
-            "D-SHOP/W1/overview",
-            "D-SHOP/W2/overview",
-            "D-SHOP/W3/overview",
-            "D-SHOP/W4/overview",
-            "D-SHOP/W5/overview",
-            "D-SHOP/W0/landmark",
-            "D-SHOP/W1/landmark",
-            "D-SHOP/W2/landmark",
-            "D-SHOP/W3/landmark",
-            "D-SHOP/W4/landmark",
-            "D-SHOP/W5/landmark",
+            "D-RES/W0/overview",
+            "D-RES/W1/overview",
+            "D-RES/W2/overview",
+            "D-RES/W3/overview",
+            "D-RES/W4/overview",
+            "D-RES/W5/overview",
+            "D-RES/W0/landmark",
+            "D-RES/W1/landmark",
+            "D-RES/W2/landmark",
+            "D-RES/W3/landmark",
+            "D-RES/W4/landmark",
+            "D-RES/W5/landmark",
             "D-MAIN/W0/overview",
             "D-MAIN/W1/overview",
             "D-MAIN/W2/overview",
@@ -2732,18 +2732,18 @@
             "D-MAIN/W3/landmark",
             "D-MAIN/W4/landmark",
             "D-MAIN/W5/landmark",
-            "D-RES/W0/overview",
-            "D-RES/W1/overview",
-            "D-RES/W2/overview",
-            "D-RES/W3/overview",
-            "D-RES/W4/overview",
-            "D-RES/W5/overview",
-            "D-RES/W0/landmark",
-            "D-RES/W1/landmark",
-            "D-RES/W2/landmark",
-            "D-RES/W3/landmark",
-            "D-RES/W4/landmark",
-            "D-RES/W5/landmark"
+            "D-SHOP/W0/overview",
+            "D-SHOP/W1/overview",
+            "D-SHOP/W2/overview",
+            "D-SHOP/W3/overview",
+            "D-SHOP/W4/overview",
+            "D-SHOP/W5/overview",
+            "D-SHOP/W0/landmark",
+            "D-SHOP/W1/landmark",
+            "D-SHOP/W2/landmark",
+            "D-SHOP/W3/landmark",
+            "D-SHOP/W4/landmark",
+            "D-SHOP/W5/landmark"
           ],
           "windowMeshes": 10
         },

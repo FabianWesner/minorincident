@@ -54,10 +54,10 @@
         "--grep",
         "@(?:E18)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
         "--grep-invert",
-        "@E18-AC09|WebGPU low tier parity",
+        "@E18-AC08|@E18-AC09|WebGPU low tier parity",
         "--workers=2"
       ],
-      "exitCode": 1
+      "exitCode": 0
     },
     {
       "command": [
@@ -67,6 +67,7 @@
         "playwright",
         "test",
         "tests/perf/e18-desktop.spec.ts",
+        "tests/perf/e18-devices.spec.ts",
         "--project=chromium",
         "--workers=1"
       ],

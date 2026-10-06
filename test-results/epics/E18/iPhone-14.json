@@ -1,8 +1,8 @@
 [
   {
     "perf": {
-      "fps": 29.940119760481,
-      "frameMs": 33.39999999999782,
+      "fps": 4.614674665436149,
+      "frameMs": 216.6999999999971,
       "simMs": 0,
       "drawCalls": 164,
       "triangles": 125751,
@@ -11,9 +11,9 @@
       "entities": 1,
       "backend": "webgl",
       "loadTiming": {
-        "dataMs": 10.700000047683716,
-        "simMs": 399.89999997615814,
-        "viewMs": 1099.6000000238419
+        "dataMs": 7.799999952316284,
+        "simMs": 53.39999997615814,
+        "viewMs": 19201.900000095367
       },
       "quality": {
         "setting": "auto",
@@ -36,7 +36,7 @@
       "renderedFrames": 12,
       "contextLost": false,
       "paused": true,
-      "heapBytes": 64000000
+      "heapBytes": 39600000
     },
     "state": {
       "combat": {
@@ -938,6 +938,61 @@
               "meshes": 4
             },
             {
+              "assetId": "bld.joes-diner",
+              "instances": 1,
+              "meshes": 5
+            },
+            {
+              "assetId": "bld.mainstreet-brick",
+              "instances": 1,
+              "meshes": 5
+            },
+            {
+              "assetId": "bld.pharmacy",
+              "instances": 1,
+              "meshes": 4
+            },
+            {
+              "assetId": "bld.supermarket",
+              "instances": 1,
+              "meshes": 5
+            },
+            {
+              "assetId": "prop.flower",
+              "instances": 64,
+              "meshes": 2
+            },
+            {
+              "assetId": "prop.hedge",
+              "instances": 12,
+              "meshes": 1
+            },
+            {
+              "assetId": "prop.picket-fence",
+              "instances": 12,
+              "meshes": 1
+            },
+            {
+              "assetId": "prop.street-lamp",
+              "instances": 12,
+              "meshes": 2
+            },
+            {
+              "assetId": "prop.traffic-cone",
+              "instances": 4,
+              "meshes": 3
+            },
+            {
+              "assetId": "prop.tree",
+              "instances": 36,
+              "meshes": 2
+            },
+            {
+              "assetId": "veh.sedan-red",
+              "instances": 4,
+              "meshes": 4
+            },
+            {
               "assetId": "bld.gas-station",
               "instances": 1,
               "meshes": 5
@@ -996,61 +1051,6 @@
               "assetId": "veh.sedan-red",
               "instances": 4,
               "meshes": 4
-            },
-            {
-              "assetId": "bld.joes-diner",
-              "instances": 1,
-              "meshes": 5
-            },
-            {
-              "assetId": "bld.mainstreet-brick",
-              "instances": 1,
-              "meshes": 5
-            },
-            {
-              "assetId": "bld.pharmacy",
-              "instances": 1,
-              "meshes": 4
-            },
-            {
-              "assetId": "bld.supermarket",
-              "instances": 1,
-              "meshes": 5
-            },
-            {
-              "assetId": "prop.flower",
-              "instances": 64,
-              "meshes": 2
-            },
-            {
-              "assetId": "prop.hedge",
-              "instances": 12,
-              "meshes": 1
-            },
-            {
-              "assetId": "prop.picket-fence",
-              "instances": 12,
-              "meshes": 1
-            },
-            {
-              "assetId": "prop.street-lamp",
-              "instances": 12,
-              "meshes": 2
-            },
-            {
-              "assetId": "prop.traffic-cone",
-              "instances": 4,
-              "meshes": 3
-            },
-            {
-              "assetId": "prop.tree",
-              "instances": 36,
-              "meshes": 2
-            },
-            {
-              "assetId": "veh.sedan-red",
-              "instances": 4,
-              "meshes": 4
             }
           ],
           "grassBlades": 4600,
@@ -1068,18 +1068,6 @@
             "D-RES/W3/landmark",
             "D-RES/W4/landmark",
             "D-RES/W5/landmark",
-            "D-MAIN/W0/overview",
-            "D-MAIN/W1/overview",
-            "D-MAIN/W2/overview",
-            "D-MAIN/W3/overview",
-            "D-MAIN/W4/overview",
-            "D-MAIN/W5/overview",
-            "D-MAIN/W0/landmark",
-            "D-MAIN/W1/landmark",
-            "D-MAIN/W2/landmark",
-            "D-MAIN/W3/landmark",
-            "D-MAIN/W4/landmark",
-            "D-MAIN/W5/landmark",
             "D-SHOP/W0/overview",
             "D-SHOP/W1/overview",
             "D-SHOP/W2/overview",
@@ -1091,7 +1079,19 @@
             "D-SHOP/W2/landmark",
             "D-SHOP/W3/landmark",
             "D-SHOP/W4/landmark",
-            "D-SHOP/W5/landmark"
+            "D-SHOP/W5/landmark",
+            "D-MAIN/W0/overview",
+            "D-MAIN/W1/overview",
+            "D-MAIN/W2/overview",
+            "D-MAIN/W3/overview",
+            "D-MAIN/W4/overview",
+            "D-MAIN/W5/overview",
+            "D-MAIN/W0/landmark",
+            "D-MAIN/W1/landmark",
+            "D-MAIN/W2/landmark",
+            "D-MAIN/W3/landmark",
+            "D-MAIN/W4/landmark",
+            "D-MAIN/W5/landmark"
           ],
           "windowMeshes": 10
         },
@@ -1653,8 +1653,8 @@
   },
   {
     "perf": {
-      "fps": 60.24096385541377,
-      "frameMs": 16.600000000002183,
+      "fps": 59.88023952095548,
+      "frameMs": 16.700000000000728,
       "simMs": 0,
       "drawCalls": 128,
       "triangles": 98175,
@@ -1663,9 +1663,9 @@
       "entities": 1,
       "backend": "webgl",
       "loadTiming": {
-        "dataMs": 10.700000047683716,
-        "simMs": 399.89999997615814,
-        "viewMs": 1099.6000000238419
+        "dataMs": 7.799999952316284,
+        "simMs": 53.39999997615814,
+        "viewMs": 19201.900000095367
       },
       "quality": {
         "setting": "auto",
@@ -1688,7 +1688,7 @@
       "renderedFrames": 17,
       "contextLost": false,
       "paused": true,
-      "heapBytes": 64000000
+      "heapBytes": 39600000
     },
     "state": {
       "combat": {
@@ -2590,6 +2590,61 @@
               "meshes": 4
             },
             {
+              "assetId": "bld.joes-diner",
+              "instances": 1,
+              "meshes": 5
+            },
+            {
+              "assetId": "bld.mainstreet-brick",
+              "instances": 1,
+              "meshes": 5
+            },
+            {
+              "assetId": "bld.pharmacy",
+              "instances": 1,
+              "meshes": 4
+            },
+            {
+              "assetId": "bld.supermarket",
+              "instances": 1,
+              "meshes": 5
+            },
+            {
+              "assetId": "prop.flower",
+              "instances": 64,
+              "meshes": 2
+            },
+            {
+              "assetId": "prop.hedge",
+              "instances": 12,
+              "meshes": 1
+            },
+            {
+              "assetId": "prop.picket-fence",
+              "instances": 12,
+              "meshes": 1
+            },
+            {
+              "assetId": "prop.street-lamp",
+              "instances": 12,
+              "meshes": 2
+            },
+            {
+              "assetId": "prop.traffic-cone",
+              "instances": 4,
+              "meshes": 3
+            },
+            {
+              "assetId": "prop.tree",
+              "instances": 36,
+              "meshes": 2
+            },
+            {
+              "assetId": "veh.sedan-red",
+              "instances": 4,
+              "meshes": 4
+            },
+            {
               "assetId": "bld.gas-station",
               "instances": 1,
               "meshes": 5
@@ -2648,61 +2703,6 @@
               "assetId": "veh.sedan-red",
               "instances": 4,
               "meshes": 4
-            },
-            {
-              "assetId": "bld.joes-diner",
-              "instances": 1,
-              "meshes": 5
-            },
-            {
-              "assetId": "bld.mainstreet-brick",
-              "instances": 1,
-              "meshes": 5
-            },
-            {
-              "assetId": "bld.pharmacy",
-              "instances": 1,
-              "meshes": 4
-            },
-            {
-              "assetId": "bld.supermarket",
-              "instances": 1,
-              "meshes": 5
-            },
-            {
-              "assetId": "prop.flower",
-              "instances": 64,
-              "meshes": 2
-            },
-            {
-              "assetId": "prop.hedge",
-              "instances": 12,
-              "meshes": 1
-            },
-            {
-              "assetId": "prop.picket-fence",
-              "instances": 12,
-              "meshes": 1
-            },
-            {
-              "assetId": "prop.street-lamp",
-              "instances": 12,
-              "meshes": 2
-            },
-            {
-              "assetId": "prop.traffic-cone",
-              "instances": 4,
-              "meshes": 3
-            },
-            {
-              "assetId": "prop.tree",
-              "instances": 36,
-              "meshes": 2
-            },
-            {
-              "assetId": "veh.sedan-red",
-              "instances": 4,
-              "meshes": 4
             }
           ],
           "grassBlades": 4600,
@@ -2720,18 +2720,6 @@
             "D-RES/W3/landmark",
             "D-RES/W4/landmark",
             "D-RES/W5/landmark",
-            "D-MAIN/W0/overview",
-            "D-MAIN/W1/overview",
-            "D-MAIN/W2/overview",
-            "D-MAIN/W3/overview",
-            "D-MAIN/W4/overview",
-            "D-MAIN/W5/overview",
-            "D-MAIN/W0/landmark",
-            "D-MAIN/W1/landmark",
-            "D-MAIN/W2/landmark",
-            "D-MAIN/W3/landmark",
-            "D-MAIN/W4/landmark",
-            "D-MAIN/W5/landmark",
             "D-SHOP/W0/overview",
             "D-SHOP/W1/overview",
             "D-SHOP/W2/overview",
@@ -2743,7 +2731,19 @@
             "D-SHOP/W2/landmark",
             "D-SHOP/W3/landmark",
             "D-SHOP/W4/landmark",
-            "D-SHOP/W5/landmark"
+            "D-SHOP/W5/landmark",
+            "D-MAIN/W0/overview",
+            "D-MAIN/W1/overview",
+            "D-MAIN/W2/overview",
+            "D-MAIN/W3/overview",
+            "D-MAIN/W4/overview",
+            "D-MAIN/W5/overview",
+            "D-MAIN/W0/landmark",
+            "D-MAIN/W1/landmark",
+            "D-MAIN/W2/landmark",
+            "D-MAIN/W3/landmark",
+            "D-MAIN/W4/landmark",
+            "D-MAIN/W5/landmark"
           ],
           "windowMeshes": 10
         },

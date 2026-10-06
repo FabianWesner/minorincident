@@ -5,6 +5,7 @@
       "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/node_modules/.bin/playwright",
       "test",
       "tests/perf/e18-desktop.spec.ts",
+      "tests/perf/e18-devices.spec.ts",
       "--project=chromium",
       "--workers=1"
     ],
@@ -165,7 +166,7 @@
       "line": 0,
       "specs": [
         {
-          "title": "T-E18-09 @E18-AC09 @perf local native-GPU Chrome high horde p95 frame <=16.7ms",
+          "title": "T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms",
           "ok": true,
           "tags": [
             "E18-AC09",
@@ -183,12 +184,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 7341,
+                  "duration": 15195,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T05:25:20.297Z",
+                  "startTime": "2026-10-06T06:35:24.069Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -196,9 +197,9 @@
               "status": "expected"
             }
           ],
-          "id": "7c075c58ab864332a98e-16b275e41529c9e108f8",
+          "id": "7c075c58ab864332a98e-1e3f9e28dee7bf7def56",
           "file": "perf/e18-desktop.spec.ts",
-          "line": 13,
+          "line": 5,
           "column": 1
         },
         {
@@ -209,43 +210,334 @@
           ],
           "tests": [
             {
-              "timeout": 90000,
-              "annotations": [],
-              "expectedStatus": "passed",
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "WebGPU-only checks are verified manually; browser automation is headless.",
+                  "location": {
+                    "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-desktop.spec.ts",
+                    "line": 30,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
               "projectId": "chromium",
               "projectName": "chromium",
               "results": [
                 {
                   "workerIndex": 0,
                   "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 1550,
+                  "status": "skipped",
+                  "duration": 124,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T05:25:28.336Z",
-                  "annotations": [],
+                  "startTime": "2026-10-06T06:35:40.032Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "WebGPU-only checks are verified manually; browser automation is headless.",
+                      "location": {
+                        "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-desktop.spec.ts",
+                        "line": 30,
+                        "column": 8
+                      }
+                    }
+                  ],
                   "attachments": []
                 }
               ],
-              "status": "expected"
+              "status": "skipped"
             }
           ],
           "id": "7c075c58ab864332a98e-cddcf7d99e37be73b3f3",
           "file": "perf/e18-desktop.spec.ts",
-          "line": 32,
+          "line": 29,
           "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/e18-devices.spec.ts",
+      "file": "perf/e18-devices.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E18-08-physical @E18-AC08 @manual physical iOS and Android recordings at final verification",
+          "ok": true,
+          "tags": [
+            "E18-AC08",
+            "manual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "AC08 real-device recordings pending user run at final verification; emulated profiles recorded",
+                  "location": {
+                    "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-devices.spec.ts",
+                    "line": 47,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 144,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T06:36:47.618Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "AC08 real-device recordings pending user run at final verification; emulated profiles recorded",
+                      "location": {
+                        "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-devices.spec.ts",
+                        "line": 47,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "c615eaead3291d76306e-cace4ace079918b4eb7d",
+          "file": "perf/e18-devices.spec.ts",
+          "line": 44,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "Pixel 7",
+          "file": "perf/e18-devices.spec.ts",
+          "line": 9,
+          "column": 8,
+          "specs": [
+            {
+              "title": "T-E18-08-android-webgl @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps",
+              "ok": true,
+              "tags": [
+                "E18-AC08",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 34641,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-06T06:35:41.631Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c615eaead3291d76306e-1f761c348d715a139961",
+              "file": "perf/e18-devices.spec.ts",
+              "line": 11,
+              "column": 57
+            },
+            {
+              "title": "T-E18-08-android-webgpu @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps",
+              "ok": true,
+              "tags": [
+                "E18-AC08",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "WebGPU-only checks require manual verification; browser automation is headless.",
+                      "location": {
+                        "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-devices.spec.ts",
+                        "line": 12,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 185,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-06T06:36:16.524Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "WebGPU-only checks require manual verification; browser automation is headless.",
+                          "location": {
+                            "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-devices.spec.ts",
+                            "line": 12,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c615eaead3291d76306e-725c0d6ed97b9ba92c9b",
+              "file": "perf/e18-devices.spec.ts",
+              "line": 11,
+              "column": 57
+            }
+          ]
+        },
+        {
+          "title": "iPhone 14",
+          "file": "perf/e18-devices.spec.ts",
+          "line": 9,
+          "column": 8,
+          "specs": [
+            {
+              "title": "T-E18-08-ios-webgl @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps",
+              "ok": true,
+              "tags": [
+                "E18-AC08",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 30722,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-06T06:36:16.723Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c615eaead3291d76306e-4ae29ab7ac5a26a5a359",
+              "file": "perf/e18-devices.spec.ts",
+              "line": 11,
+              "column": 57
+            },
+            {
+              "title": "T-E18-08-ios-webgpu @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps",
+              "ok": true,
+              "tags": [
+                "E18-AC08",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "WebGPU-only checks require manual verification; browser automation is headless.",
+                      "location": {
+                        "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-devices.spec.ts",
+                        "line": 12,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 158,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-06T06:36:47.452Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "WebGPU-only checks require manual verification; browser automation is headless.",
+                          "location": {
+                            "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-devices.spec.ts",
+                            "line": 12,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c615eaead3291d76306e-b84ed49aa44a1dad7503",
+              "file": "perf/e18-devices.spec.ts",
+              "line": 11,
+              "column": 57
+            }
+          ]
         }
       ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-06T05:25:19.021Z",
-    "duration": 12392.476999999999,
-    "expected": 2,
-    "skipped": 0,
+    "startTime": "2026-10-06T06:35:22.821Z",
+    "duration": 85897.647,
+    "expected": 3,
+    "skipped": 4,
     "unexpected": 0,
     "flaky": 0
   }
