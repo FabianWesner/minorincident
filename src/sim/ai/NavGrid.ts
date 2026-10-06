@@ -133,10 +133,27 @@ export class NavGrid {
     if (this.visible(position, target, radius)) { route.path.length = 0; route.goal = -1; Object.assign(waypoint, target); return true; }
     const to = this.nearestCell(target.x, target.z);
     if (to !== route.goal || route.pathIndex >= route.path.length) {
-      if (!this.path(this.nearestCell(position.x, position.z), to, route.path, budget)) return false;
+      let from = this.nearestCell(position.x, position.z);
+      // A closest cell across a collider corner is not a reachable starting point.
+      if (from >= 0 && !this.visible(position, { x: this.x(from), z: this.z(from) }, radius)) {
+        let distance = Infinity; from = -1;
+        for (let dz = -3; dz <= 3; dz++) for (let dx = -3; dx <= 3; dx++) {
+          const cell = this.cell(position.x + dx * this.cellSize, position.z + dz * this.cellSize);
+          if (cell < 0 || this.blocked[cell]) continue;
+          const point = { x: this.x(cell), z: this.z(cell) }, d = (point.x - position.x) ** 2 + (point.z - position.z) ** 2;
+          if (d < distance && this.visible(position, point, radius)) { from = cell; distance = d; }
+        }
+      }
+      if (!this.path(from, to, route.path, budget)) return false;
+      // Align with that visible start before rounding the first corner.
+      if (from >= 0) route.path.unshift(from);
       route.goal = to; route.pathIndex = 0;
     }
-    while (route.pathIndex < route.path.length && Math.hypot(position.x - this.x(route.path[route.pathIndex]), position.z - this.z(route.path[route.pathIndex])) < .12) route.pathIndex++;
+    while (route.pathIndex < route.path.length && Math.hypot(position.x - this.x(route.path[route.pathIndex]), position.z - this.z(route.path[route.pathIndex])) < .12) {
+      const next = route.path[route.pathIndex + 1];
+      if (next !== undefined && !this.visible(position, { x: this.x(next), z: this.z(next) }, radius)) break;
+      route.pathIndex++;
+    }
     for (let i = route.path.length - 1; i >= route.pathIndex; i--) {
       waypoint.x = this.x(route.path[i]); waypoint.z = this.z(route.path[i]);
       if (this.visible(position, waypoint, radius)) { route.pathIndex = i; return true; }

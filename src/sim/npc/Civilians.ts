@@ -2,7 +2,8 @@ import { Rng } from '../../core/Rng';
 import { civilianRoles, npcs } from '../../data/npcs';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
-import type { Civilian, CivilianState, Point } from './types';
+import { updateRoutine } from './MorningRoutines';
+import type { Civilian, CivilianActivity, CivilianState, Point } from './types';
 const mobileStates = new Set<CivilianState>(['calm', 'alarmed', 'flee', 'hide']);
 const grabStates = new Set<CivilianState>(['calm', 'alarmed', 'flee']);
 const immobileStates = new Set<CivilianState>(['grabbed', 'down', 'rising']);
@@ -23,13 +24,14 @@ export class Civilians {
     world.events.on('noise', event => { if (event.type === 'noise' && event.radius >= 6) this.alarm(event.position); });
   }
   private duration(range: readonly [number, number]): number { return range[0] + Math.floor(this.rng.next() * (range[1] - range[0] + 1)); }
-  spawn(role: string, position: Point, options: { ambient?: boolean; child?: boolean; pet?: 'dog' | 'cat'; owner?: number; waypoints?: Point[] } = {}): number {
+  spawn(role: string, position: Point, options: { ambient?: boolean; child?: boolean; pet?: 'dog' | 'cat'; owner?: number; waypoints?: Point[]; model?: string; schedule?: CivilianActivity[]; panicReaction?: 'flee' | 'freeze' } = {}): number {
     const def = civilianRoles.find(d => d.role === role) ?? civilianRoles[0];
     const nav = this.world.infected!.nav;
     if (!nav.clear(position.x, position.z, .35)) throw new RangeError('Civilian spawn outside navigation');
     const waypoints = options.waypoints ?? [position, { x: position.x + 3, z: position.z }, { x: position.x + 3, z: position.z + 3 }, { x: position.x, z: position.z + 3 }];
     if (!waypoints.length || !waypoints.every(p => Number.isFinite(p.x) && Number.isFinite(p.z) && nav.clear(p.x, p.z, .35))) throw new RangeError('Invalid civilian routine');
-    const civilian: Civilian = { state: 'calm', ambient: options.ambient ?? false, adult: !options.child, pet: options.pet ?? null, owner: options.owner ?? null, model: ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'][this.world.entities.size % 5], variant: options.pet ? `inf.${options.pet === 'dog' ? 'dog-retriever' : 'cat-tabby'}` : def.variant,
+    const civilian: Civilian = { state: 'calm', ambient: options.ambient ?? false, adult: !options.child, pet: options.pet ?? null, owner: options.owner ?? null, model: options.model ?? ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'][this.world.entities.size % 5], variant: options.pet ? `inf.${options.pet === 'dog' ? 'dog-retriever' : 'cat-tabby'}` : def.variant,
+      panicReaction: options.panicReaction, schedule: options.schedule ? structuredClone(options.schedule) : undefined, scheduleStep: 0, activityUntil: 0, activityStarted: 0, travelStarted: this.world.tick,
       routine: options.pet ? 'pet' : options.child ? 'protected' : def.routine, waypoints: structuredClone(waypoints), waypoint: 1 % waypoints.length, pauseUntil: 0,
       entered: this.world.tick, until: 0, downTicks: 0, eyesGlow: false, veins: 0, attacker: 0, threat: { ...position }, path: [], goal: -1, pathIndex: 0, gore: false, knockedUntil: 0 };
     const e = this.world.entities.create({ kind: options.pet ? 'pet' : 'civilian', archetype: options.child ? 'npc.child' : `npc.${role}`, faction: 'civilian', transform: { ...position, y: .7, yaw: 0 }, health: { current: 100, max: 100 }, civilian,
@@ -44,8 +46,8 @@ export class Civilians {
     this.query.x = position.x; this.query.z = position.z;
     for (const id of this.world.spatial.query(this.query, this.nearby)) {
       const e = this.world.entities.get(id), c = e?.civilian;
-      if (!e || !c?.adult || !mobileStates.has(c.state)) continue;
-      Object.assign(c.threat, position); if (c.state === 'calm' || c.state === 'hide') this.state(e, 'alarmed', 12);
+      if (!e || e.hidden || !c?.adult || !mobileStates.has(c.state)) continue;
+      Object.assign(c.threat, position); if (c.state === 'calm' || c.state === 'hide') { this.state(e, 'alarmed', c.schedule ? 30 : 12); }
     }
   }
   /** Story beats use the same deterministic cycle as systemic grabs, bypassing only the chance roll. */
@@ -91,7 +93,17 @@ export class Civilians {
           this.world.events.emit({ type: 'civilian.turned', tick, id: e.id, infectedId, variant: c.variant, position: { x: e.transform.x, z: e.transform.z } });
         } else { this.state(e, 'down', 1); }
       }
-      if (c.state === 'alarmed' && tick >= c.until) this.state(e, 'flee');
+      if (c.state === 'alarmed') {
+        const yaw = -Math.atan2(c.threat.z - e.transform.z, c.threat.x - e.transform.x);
+        const delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));
+        e.transform.yaw += Math.max(-.08, Math.min(.08, delta));
+      }
+      if (c.state === 'alarmed' && tick >= c.until) {
+        if (c.panicReaction === 'freeze') {
+          if (ai.active.some(a => a.health.current > 0 && Math.hypot(a.transform.x - e.transform.x, a.transform.z - e.transform.z) < npcs.panicRadius)) c.until = tick + 30;
+          else this.state(e, 'calm');
+        } else this.state(e, 'flee');
+      }
       if (tick < c.knockedUntil || immobileStates.has(c.state)) continue;
       if (c.state === 'flee' || c.state === 'bitten') {
         let dx = e.transform.x - c.threat.x, dz = e.transform.z - c.threat.z, distance = Math.hypot(dx, dz);
@@ -100,6 +112,8 @@ export class Civilians {
         const targetCell = ai.nav.nearestCell(e.transform.x + dx / distance * 5, e.transform.z + dz / distance * 5);
         if (targetCell >= 0) this.world.npcs!.move(e, { x: ai.nav.x(targetCell), z: ai.nav.z(targetCell) }, speed, c, .2);
         if (c.state === 'flee' && distance > 25) this.state(e, 'hide');
+      } else if (c.state === 'calm' && c.schedule) {
+        updateRoutine(this.world, e);
       } else if (c.state === 'calm' && tick >= c.pauseUntil) {
         const target = c.owner ? this.world.entities.get(c.owner)?.transform : c.waypoints[c.waypoint];
         if (target) this.world.npcs!.move(e, target, c.routine === 'jog' ? 2.5 : npcs.routineSpeed, c, c.owner ? 1 : .15);
@@ -108,9 +122,9 @@ export class Civilians {
           c.pauseUntil = tick + this.duration(c.routine === 'chat' || c.routine === 'bus-stop' ? [120, 240] : [45, 120]);
         }
       }
-      this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+      if (!e.hidden) this.world.spatial.set(e.id, e.transform.x, e.transform.z);
       // Systemic grabs share E07's archetype chance; retry at 2 Hz, not every tick.
-      if ((!c.pet || !c.owner) && tick % 30 === e.id % 30 && grabStates.has(c.state)) {
+      if (!e.hidden && (!c.pet || !c.owner) && tick % 30 === e.id % 30 && grabStates.has(c.state)) {
         for (const infected of ai.active) if (infected.health.current > 0 && Math.hypot(infected.transform.x - e.transform.x, infected.transform.z - e.transform.z) <= 1.2 && this.grab(e.id, infected.id)) break;
       }
     }
