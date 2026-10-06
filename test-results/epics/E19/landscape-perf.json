@@ -1,0 +1,90 @@
+{
+  "incident": {
+    "medianFps": 454.54545454605585,
+    "unthrottled": true,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+    "counters": {
+      "fps": 434.7826086957897,
+      "frameMs": 2.2999999999992724,
+      "simMs": 0,
+      "uiMs": 0.10000002384185791,
+      "drawCalls": 100,
+      "triangles": 113656,
+      "geometries": 61,
+      "textures": 22,
+      "entities": 11,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 17.100000023841858,
+        "simMs": 74.39999997615814,
+        "viewMs": 2255.5
+      },
+      "quality": {
+        "setting": "auto",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 250,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 386000000
+    }
+  },
+  "store": {
+    "medianFps": 555.5555555546573,
+    "unthrottled": true,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+    "counters": {
+      "fps": 500,
+      "frameMs": 2,
+      "simMs": 0,
+      "uiMs": 0.10000002384185791,
+      "drawCalls": 104,
+      "triangles": 178533,
+      "geometries": 66,
+      "textures": 22,
+      "entities": 12,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 0,
+        "simMs": 33.299999952316284,
+        "viewMs": 4817.700000047684
+      },
+      "quality": {
+        "setting": "auto",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 379,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 386000000
+    }
+  }
+}
