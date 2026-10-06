@@ -15,6 +15,7 @@ export class VehicleBody {
   readonly rotation = { x: 0, y: 0, z: 0, w: 1 };
   readonly wheels = Array.from({ length: 4 }, () => ({ rotation: 0, steer: 0, suspension: 0, contact: false }));
   readonly intent: DriveIntent = { throttle: 0, steer: 0, brake: true, boost: false };
+  boostScale = 1;
   speed = 0; forwardSpeed = 0; roll = 0; stuck = false;
   private readonly travel = new Float64Array(180);
   private travelIndex = 0; private travelCount = 0; private travelSum = 0;
@@ -38,8 +39,8 @@ export class VehicleBody {
     Object.assign(this.previous, this.transform);
     const { throttle, brake, steer, boost } = this.intent;
     const reversing = throttle * this.forwardSpeed < -.5;
-    const limit = this.def.topSpeed * (boost ? 1.25 : 1);
-    const force = brake || reversing ? 0 : throttle * this.def.engineForce * (boost ? 1.5 : 1) * Math.max(0, 1 - Math.abs(this.forwardSpeed) / limit);
+    const limit = this.def.topSpeed * (boost ? 1.25 * this.boostScale : 1);
+    const force = brake || reversing ? 0 : throttle * this.def.engineForce * (boost ? 1.5 * this.boostScale : 1) * Math.max(0, 1 - Math.abs(this.forwardSpeed) / limit);
     for (let i = 0; i < 4; i++) {
       this.controller.setWheelSteering(i, i < 2 ? steer * this.def.steering : 0);
       this.controller.setWheelEngineForce(i, force);

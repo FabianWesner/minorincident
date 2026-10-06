@@ -1,4 +1,6 @@
-import { Group, Mesh, type BufferGeometry, type Material } from "three/webgpu";
+import { Group, Mesh, MeshLambertNodeMaterial, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
+import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
+import { KTX2Loader } from "three/addons/loaders/KTX2Loader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import type { PaletteToken } from "../data/palette";
 import { paletteTokens } from "../data/palette";
@@ -7,13 +9,29 @@ import { placeholder } from "./districtPlaceholders";
 import { worldAssets } from "./worldDefinitions";
 import { AssetRegistry } from "./registry";
 import { atLeast } from "./types";
+import type { AssetQuality } from './types';
+import { staticBatch } from './staticBatch';
+// E10's semantic building IDs predate the accepted production inventory.
+const productionIds: Record<string, string> = {
+  'bld.school': 'bld.school-elementary', 'bld.gym': 'int.gym-cafeteria',
+  'bld.supermarket': 'int.supermarket', 'bld.pharmacy': 'int.pharmacy-clinic',
+  'bld.hospital': 'bld.hospital-exterior', 'bld.substation': 'bld.power-substation',
+};
 /** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
 export class DistrictAssets {
-  private readonly loader = new GLTFLoader();
+  private readonly loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
   private readonly cache = new Map<string, Promise<Group>>();
   private readonly geometries = new Set<BufferGeometry>();
-  private readonly assets = new AssetRegistry((event) => console.info(JSON.stringify(event)));
-  constructor(private readonly materials: Materials) {}
+  private readonly batchMaterials = new Set<Material>();
+  private readonly assets: AssetRegistry;
+  private readonly ktx?: KTX2Loader;
+  constructor(private readonly materials: Materials, renderer?: WebGPURenderer) {
+    this.assets = new AssetRegistry((event) => console.info(JSON.stringify(event)), { renderer });
+    if (renderer) {
+      this.ktx = new KTX2Loader().setTranscoderPath('/assets/basis/').detectSupport(renderer);
+      this.loader.setKTX2Loader(this.ktx);
+    }
+  }
   private remember(root: Group): Group {
     root.traverse((o) => {
       if (o instanceof Mesh) this.geometries.add(o.geometry);
@@ -58,13 +76,38 @@ export class DistrictAssets {
       );
     return this.cache.get(key)!;
   }
-  async asset(id: string, lit = true): Promise<Group> {
+  async asset(id: string, lit = true, lod: AssetQuality = 'lod1'): Promise<Group> {
     const def = worldAssets[id];
     if (!def) throw new Error(`Unknown asset: ${id}`);
-    if (atLeast(def.status, "integrated")) {
-      const key = `${id}:${lit}`;
-      if (!this.cache.has(key)) this.cache.set(key, this.assets.loadAsset(id).then((asset) => {
-        const root = new Group(); root.add(asset); return root;
+    const productionId = productionIds[id] ?? id;
+    if (atLeast(this.assets.definition(productionId).status, "integrated")) {
+      const assetDef = this.assets.definition(productionId);
+      const canonical = (lod === 'lod1' || lod === 'lod2') && !assetDef.lods?.[lod] ? 'lod0' : lod;
+      const key = `${id}:${lit}:${canonical}`;
+      // Powered and unpowered placements share their large diffuse geometry.
+      const baseKey = `${id}:batch:${canonical}`;
+      if (!this.cache.has(baseKey)) this.cache.set(baseKey, this.assets.loadAsset(productionId, canonical).then((asset) => {
+        if (productionId !== id) {
+          const source = this.assets.definition(productionId).dimensions, target = def.dimensions;
+          const straight = Math.min(1, target.x / source.x, target.z / source.z), turned = Math.min(1, target.x / source.z, target.z / source.x);
+          // Fit legacy footprints while retaining human-sized doors/floors.
+          const fit = Math.max(straight, turned); asset.scale.set(fit, 1, fit);
+          if (turned > straight) asset.rotation.y = Math.PI / 2;
+        }
+        const root = this.remember(staticBatch(asset, true));
+        root.traverse(node => { if (node instanceof Mesh) this.batchMaterials.add(node.material as Material); });
+        return root;
+      }));
+      if (!this.cache.has(key)) this.cache.set(key, this.cache.get(baseKey)!.then(source => {
+        if (lit) return source;
+        const root = source.clone(true);
+        root.traverse(node => {
+          if (!(node instanceof Mesh) || node.name !== 'window-light') return;
+          const material = new MeshLambertNodeMaterial({ vertexColors: true });
+          material.name = 'emi_static-windows'; material.color.setScalar(.08);
+          this.batchMaterials.add(material); node.material = material;
+        });
+        return root;
       }));
       return this.cache.get(key)!;
     }
@@ -79,7 +122,9 @@ export class DistrictAssets {
   dispose(): void {
     for (const geometry of this.geometries) geometry.dispose();
     this.geometries.clear();
+    for (const material of this.batchMaterials) material.dispose(); this.batchMaterials.clear();
     this.cache.clear();
     void this.assets.dispose();
+    this.ktx?.dispose();
   }
 }

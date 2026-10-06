@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { Group } from 'three/webgpu';
+import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial } from 'three/webgpu';
 import { AssetRegistry, lodForScreenHeight, type PlaceholderLog } from '../../../src/assets/registry';
 import { fixture } from './fixture';
 import { placeholder } from '../../../src/assets/placeholders';
@@ -26,6 +26,7 @@ test('T-E17-05b @E17-AC05 prototypes are independently cloned and every LOD uses
   const urls: string[] = [];
   const registry = new AssetRegistry(() => {}, { manifest: [def], load: async (url) => {
     urls.push(url); const root = new Group();
+    root.add(new Mesh(new BoxGeometry(def.dimensions.x, def.dimensions.y, def.dimensions.z), new MeshBasicNodeMaterial()));
     for (const name of [...def.requiredNodes, ...def.sockets]) { const node = new Group(); node.name = name; root.add(node); }
     return root;
   } });

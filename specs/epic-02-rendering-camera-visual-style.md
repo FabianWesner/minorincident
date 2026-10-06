@@ -34,7 +34,7 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E02-AC01 | WebGPU is used when available; `?renderer=webgl` forces WebGL2; the selected backend shows in `perf()` and `getState().render.backend` | e2e |
 | E02-AC02 | Camera defaults: FOV 25°, azimuth π/4 ±0.01, polar 0.30π ±0.02. The survivor's projected height is **1/5.5–1/4** of the viewport height at 1600×900 (close camera like `initial-drafts/sunset-grove-combat-gameplay-mockup.png`; product owner decision 2026-10-06, was 1/14–1/10); in portrait the visible ground width is ≥ 9 m | e2e |
 | E02-AC03 | Camera follow: after the player teleports 20 m, the camera focus converges within 1.0 s (sim) and never overshoots by more than 0.5 m | e2e |
-| E02-AC04 | Portrait 390×844: the camera radius grows so a 12 m circle around the player stays fully inside the viewport | e2e |
+| E02-AC04 | Portrait 390×844: the survivor remains readable with at least 9 m visible ground width; camera-distance changes preserve the local fog density | e2e |
 | E02-AC05 | Palette coverage: every material in the lookdev scenario is a `PaletteMaterial` or explicitly `keep_`; the palette tokens match `01-art-direction.md` §3 | unit/e2e |
 | E02-AC06 | Shadows are tinted: in the lookdev `shadow-probe` spot, the sampled shadow pixel has hue in 230–290° and is not pure black (L > 15%) | visual |
 | E02-AC07 | Emissives bloom: a lamp head's pixel neighborhood brightness is greater with bloom on than off (mean luminance in an 8 px ring +10%) | visual |

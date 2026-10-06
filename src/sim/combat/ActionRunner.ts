@@ -1,4 +1,3 @@
-import { action } from '../../data/actions/catalog';
 import { ticks, type ActionDef, type Side } from '../../data/actions/schema';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import { Loadout } from './Loadout';
@@ -18,7 +17,7 @@ export class ActionRunner {
       if (!enabled) { delete this.running[side]; continue; }
       if (attack && tick >= attack.endsAt) { delete this.running[side]; attack = undefined; }
       const button = side === 'LEFT' ? frame.left : frame.right;
-      const def = action(this.loadout.current(side).id);
+      const def = this.loadout.definition(this.loadout.current(side).id);
       if (!attack && (button.down || (button.held && (def.category === 'melee' || def.category === 'ranged'))) && this.loadout.usable(side, tick)) {
         this.loadout.state.selectedSide = side;
         const state = this.loadout.state[side];

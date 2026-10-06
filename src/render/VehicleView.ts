@@ -1,5 +1,6 @@
 // Adapted from Bruno Simon folio-2025 VisualVehicle.js (MIT, 41046b5): wheel pivots/suspension and lamps.
 import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, SphereGeometry, TorusGeometry, type Object3D } from 'three/webgpu';
+import { productionObstacleAssets } from './EntityAssets';
 import { AssetRegistry } from '../assets/registry';
 import { atLeast } from '../assets/types';
 import { vehiclePlaceholder } from '../assets/vehiclePlaceholder';
@@ -7,9 +8,11 @@ import { color, mix, positionGeometry, sin, uniform } from 'three/tsl';
 import { PaletteMaterial } from './PaletteMaterial';
 import type { VehicleFeedbackEvent } from './vfx/VehicleFeedback';
 import type { SimWorld } from '../sim/world/SimWorld';
+import type { View } from './View';
+import type { AssetQuality } from '../assets/types';
 import type { Materials } from './Materials';
 import { lerp } from '../core/maths';
-interface Record { parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number }
+interface Record { lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number }
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
 export class VehicleView extends Group {
   private readonly registry = new AssetRegistry(() => {});
@@ -24,11 +27,13 @@ export class VehicleView extends Group {
   private readonly feedbackEvents = new Map<number, VehicleFeedbackEvent>();
   private disposed = false;
   private readonly pending = new Map<number, Promise<void>>();
-  constructor(private readonly world: SimWorld, private readonly materials: Materials) { super(); this.fireMaterial.color.multiplyScalar(3); }
+  constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) { super(); this.fireMaterial.color.multiplyScalar(3); }
   async load(): Promise<void> { for (const car of this.world.vehicles!.cars.values()) await this.addCar(car.entity.id); this.update(1); }
   private async addCar(id: number): Promise<void> {
     const car = this.world.vehicles!.cars.get(id)!, def = car.physics.def;
-    const model = atLeast(this.registry.definition(def.asset).status, 'integrated') ? await this.registry.loadAsset(def.asset) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
+    const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
+    const lod = distance > 30 ? 'lod2' : this.low || distance > 12 ? 'lod1' : 'lod0';
+    const model = atLeast(this.registry.definition(def.asset).status, 'integrated') ? await this.registry.loadAsset(def.asset, lod) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
     if (this.disposed) return;
     const paint: Record['paint'] = [], copies = new Map<import('three').Material, Record['paint'][number]>();
     model.traverse(node => { if (!(node instanceof Mesh)) return; const convert = (material: import('three').Material) => {
@@ -57,12 +62,16 @@ export class VehicleView extends Group {
     const smoke = new Group(); parent.add(smoke);
     for (let i = 0; i < 5; i++) { const mesh = new Mesh(this.puffGeometry, this.smokeMaterial); mesh.position.set(def.length * .3, 1 + i * .32, (i % 2 ? 1 : -1) * .12); mesh.scale.setScalar(1 + i * .25); smoke.add(mesh); }
     const fire = new Mesh(this.puffGeometry, this.fireMaterial); fire.position.set(def.length * .3, .9, 0); fire.scale.set(1.8, 2.8, 1.3); parent.add(fire);
-    this.records.set(id, { parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0 });
+    const previous = this.records.get(id); if (previous) { previous.parent.removeFromParent(); this.releaseRecord(previous); }
+    this.records.set(id, { lod, parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0 });
     const feedback = this.feedbackEvents.get(id); if (feedback) this.feedback(feedback, this.bloodEnabled);
   }
   update(alpha: number): void {
     for (const [id, car] of this.world.vehicles!.cars) {
-      const record = this.records.get(id); if (!record) { if (!this.pending.has(id)) { this.pending.set(id, this.addCar(id).finally(() => { this.pending.delete(id); })); } continue; }
+      const record = this.records.get(id);
+      const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
+      const lod = distance > 30 ? 'lod2' : this.low || distance > 12 ? 'lod1' : 'lod0';
+      if (!record || record.lod !== lod) { if (!this.pending.has(id)) { this.pending.set(id, this.addCar(id).finally(() => { this.pending.delete(id); })); } if (!record) continue; }
       const body = car.physics, p = body.transform, prev = body.previous, state = car.entity.vehicle!;
       record.parent.position.set(lerp(prev.x, p.x, alpha), lerp(prev.y, p.y, alpha), lerp(prev.z, p.z, alpha));
       record.parent.quaternion.copy(body.rotation);
@@ -75,6 +84,7 @@ export class VehicleView extends Group {
       record.smoke.position.y = (this.world.tick % 60) / 120;
     }
     for (const item of this.world.vehicles!.obstacles.items) {
+      if (productionObstacleAssets[item.entity.archetype]) continue;
       let mesh = this.props.get(item.entity.id);
       if (!mesh) { mesh = new Mesh(this.propGeometry, this.materials.get(item.light ? 'orange' : 'asphalt')); mesh.scale.set(item.halfX * 2, 1, item.halfZ * 2); mesh.position.copy(item.entity.transform); mesh.castShadow = mesh.receiveShadow = true; this.props.set(item.entity.id, mesh); this.add(mesh); }
       mesh.visible = !item.broken;
@@ -93,6 +103,10 @@ export class VehicleView extends Group {
   setBloodEnabled(enabled: boolean): void { this.bloodEnabled = enabled; for (const record of this.records.values()) for (const material of record.paint) material.bloodCoverage.value = enabled ? record.blood : 0; }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   snapshot() { return [...this.records].map(([id, r]) => ({ id, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder })); }
+  private releaseRecord(record: Record): void {
+    for (const material of record.paint) material.dispose();
+    record.door.geometry.dispose(); record.brake.dispose(); for (const material of record.sirens) material.dispose();
+  }
   dispose(): void {
     this.disposed = true;
     const geometries = new Set<import('three').BufferGeometry>(), materials = new Set<MeshBasicNodeMaterial>();

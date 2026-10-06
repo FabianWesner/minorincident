@@ -5,12 +5,14 @@ import { pathToFileURL } from 'node:url';
 import { Matrix4, Quaternion, Vector3, Color } from 'three';
 import manifest from '../../src/assets/manifest.json';
 import type { Document, Node } from '@gltf-transform/core';
-import { dedup, prune, weld, join, meshopt, simplify, normals, getBounds } from '@gltf-transform/functions';
+import { dedup, prune, weld, join, meshopt, simplify, normals, getBounds, transformMesh } from '@gltf-transform/functions';
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
 import type { DistrictLayout } from '../../src/levels/districts/types';
 import type { AssetDef } from '../../src/assets/types';
 import { assetIO } from './io';
 import { compressTextures } from './textures';
+import { consolidateMeshopt } from './compress';
+import { semanticNodeNames } from './delivery';
 import { palette } from '../../src/assets/palette';
 
 /** Rotate the entire assembly, leaving joint-local animation axes and sockets intact. */
@@ -155,18 +157,89 @@ function removeDegenerateTriangles(document: Document): void {
   }
 }
 
+/** Distance tiers share normals at coincident corners so meshopt can weld them. */
+function smoothLodNormals(document: Document): void {
+  for (const mesh of document.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
+    const positions = primitive.getAttribute('POSITION')!, normals = primitive.getAttribute('NORMAL');
+    if (!normals) continue;
+    const sums = new Map<string, Vector3>(), keys: string[] = [], point: number[] = [], normal: number[] = [];
+    for (let i = 0; i < positions.getCount(); i++) {
+      positions.getElement(i, point); normals.getElement(i, normal);
+      const key = point.join('|'); keys.push(key);
+      const sum = sums.get(key) ?? new Vector3(); sum.add(new Vector3().fromArray(normal)); sums.set(key, sum);
+    }
+    for (let i = 0; i < keys.length; i++) normals.setElement(i, sums.get(keys[i])!.clone().normalize().toArray());
+  }
+}
+
+/** A rigid pivot can own one mesh with several material primitives. */
+function bundleStaticSiblings(document: Document): void {
+  for (const parent of [...document.getRoot().listNodes(), ...document.getRoot().listScenes()]) {
+    const children = parent.listChildren().filter(node => !node.getName() && node.getMesh() && !node.getSkin() && !node.getMesh()!.listPrimitives().some(p => p.listTargets().length));
+    if (children.length < 2) continue;
+    const mesh = document.createMesh();
+    for (const child of children) {
+      const source = document.createMesh();
+      for (const primitive of child.getMesh()!.listPrimitives()) source.addPrimitive(primitive.clone());
+      transformMesh(source, child.getMatrix());
+      for (const primitive of source.listPrimitives()) { source.removePrimitive(primitive); mesh.addPrimitive(primitive); }
+      source.dispose();
+      child.setMesh(null);
+      if (!child.listChildren().length) child.dispose();
+    }
+    parent.addChild(document.createNode().setMesh(mesh));
+  }
+}
+
+/** Sharing the quantized streams cuts JSON/buffer-view overhead on tiny tiers. */
+function shareVertexStreams(document: Document): void {
+  for (const mesh of document.getRoot().listMeshes()) {
+    const primitives = mesh.listPrimitives();
+    if (primitives.length < 2 || primitives.some(p => p.listTargets().length)) continue;
+    const semantics = primitives[0].listSemantics().sort();
+    if (primitives.some(p => p.listSemantics().sort().join('|') !== semantics.join('|'))) continue;
+    const offsets: number[] = []; let count = 0;
+    for (const primitive of primitives) { offsets.push(count); count += primitive.getAttribute('POSITION')!.getCount(); }
+    for (const semantic of semantics) {
+      const first = primitives[0].getAttribute(semantic)!;
+      const array = first.getArray()!;
+      if (primitives.some(p => p.getAttribute(semantic)!.getComponentType() !== first.getComponentType() || p.getAttribute(semantic)!.getNormalized() !== first.getNormalized())) continue;
+      const combined = new (array.constructor as typeof Float32Array)(count * first.getElementSize());
+      for (const [i, primitive] of primitives.entries()) combined.set(primitive.getAttribute(semantic)!.getArray()!, offsets[i] * first.getElementSize());
+      const accessor = first.clone().setArray(combined);
+      for (const primitive of primitives) primitive.setAttribute(semantic, accessor);
+    }
+    for (const [i, primitive] of primitives.entries()) {
+      const indices = primitive.getIndices()!;
+      const array = Uint32Array.from(indices.getArray()! as Uint32Array, index => index + offsets[i]);
+      primitive.setIndices(indices.clone().setArray(count < 65535 ? new Uint16Array(array) : array));
+    }
+  }
+}
+
 /** Named transforms are gameplay pivots; quantization acts on geometry children. */
 export async function optimizeDocument(document: Document, def: AssetDef, ratio = 1): Promise<void> {
   normalizeForward(document, def);
   normalizeScale(document, def);
   removeDegenerateTriangles(document);
-  compressTextures(document);
+  compressTextures(document, undefined, def.tier === 'side' ? 512 : 1024);
   await Promise.all([MeshoptEncoder.ready, MeshoptSimplifier.ready]);
-  const protectedNames = new Set([...def.requiredNodes, ...def.animatedNodes, ...def.sockets, ...def.frontNodes]);
+  for (const skin of document.getRoot().listSkins()) if (!skin.getInverseBindMatrices()) {
+    const matrices = new Float32Array(skin.listJoints().length * 16);
+    for (let i = 0; i < skin.listJoints().length; i++) matrices.set(new Matrix4().toArray(), i * 16);
+    skin.setInverseBindMatrices(document.createAccessor().setType('MAT4').setArray(matrices).setBuffer(document.getRoot().listBuffers()[0]));
+  }
+  const protectedNames = new Set([...semanticNodeNames(document), ...def.requiredNodes, ...def.animatedNodes, ...def.sockets, ...def.frontNodes]);
+  for (const node of document.getRoot().listNodes()) if (node.getName().includes('stump_')) protectedNames.add(node.getName().replace('stump_', ''));
   for (const animation of document.getRoot().listAnimations()) for (const channel of animation.listChannels()) {
     const target = channel.getTargetNode(); if (target) protectedNames.add(target.getName());
   }
   const pivots = new Map<string, number[]>();
+  // The runtime shades with COLOR_0. Blender sometimes also exports its inactive
+  // material-color layer as COLOR_1; retaining it adds bytes without affecting rendering.
+  for (const mesh of document.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
+    for (const semantic of primitive.listSemantics()) if (/^COLOR_[1-9]\d*$/.test(semantic)) primitive.setAttribute(semantic, null);
+  }
   if (!document.getRoot().listTextures().length) for (const mesh of document.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
     for (const semantic of primitive.listSemantics()) if (semantic.startsWith('TEXCOORD_')) primitive.setAttribute(semantic,null);
   }
@@ -174,7 +247,33 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
     if (!protectedNames.has(node.getName()) && !/^(stump_|light:|col:)/.test(node.getName())) continue;
     if (!node.getName().includes('stump_')) pivots.set(node.getName(), node.getWorldTranslation());
     const mesh = node.getMesh();
-    if (mesh) { node.setMesh(null); node.addChild(document.createNode().setMesh(mesh)); }
+    if (mesh) {
+      mesh.setName(''); // GLTFLoader must not reserve the gameplay pivot name for its geometry child.
+      const child = document.createNode().setMesh(mesh).setSkin(node.getSkin());
+      child.setWeights(node.getWeights());
+      for (const animation of document.getRoot().listAnimations()) for (const channel of animation.listChannels()) {
+        if (channel.getTargetNode() === node && channel.getTargetPath() === 'weights') {
+          child.setName(`${node.getName()}__geometry`); protectedNames.add(child.getName()); channel.setTargetNode(child);
+        }
+      }
+      node.setMesh(null).setSkin(null).setWeights([]); node.addChild(child);
+    }
+  }
+  // Move static decoration to its nearest gameplay pivot before joining. Nested
+  // exporter transform wrappers otherwise prevent siblings from sharing buffers.
+  for (const node of document.getRoot().listNodes()) {
+    if (!node.getMesh() || node.getSkin() || protectedNames.has(node.getName()) || /^(stump_|light:|col:)/.test(node.getName())) continue;
+    let parent = node.getParentNode();
+    while (parent && !protectedNames.has(parent.getName()) && !/^(stump_|light:|col:)/.test(parent.getName())) parent = parent.getParentNode();
+    const world = new Matrix4().fromArray(node.getWorldMatrix());
+    if (parent) {
+      const local = new Matrix4().fromArray(parent.getWorldMatrix()).invert().multiply(world);
+      parent.addChild(node); node.setMatrix(local.toArray());
+    } else {
+      const scene = document.getRoot().listScenes().find(scene => { let found = false; scene.traverse(child => { if (child === node) found = true; }); return found; });
+      if (scene) { scene.addChild(node); node.setMatrix(world.toArray()); }
+    }
+    node.setName(''); node.getMesh()!.setName('');
   }
   // Static siblings may join by material; rigid assemblies and contract names remain separate.
   for (const node of document.getRoot().listNodes()) if (node.getMesh() && !protectedNames.has(node.getName()) && !/^(stump_|light:|col:)/.test(node.getName())) {
@@ -186,6 +285,8 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
     for (const mesh of document.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
       primitive.setAttribute('NORMAL', null);
       const position = primitive.getAttribute('POSITION')!, color = primitive.getAttribute('COLOR_0');
+      const coordinate: number[] = [];
+      for (let i = 0; i < position.getCount(); i++) { position.getElement(i, coordinate); position.setElement(i, coordinate.map(value => Math.round(value * 1e6) / 1e6 || 0)); }
       if (!color) continue;
       // Average corner AO at shared positions so lower LODs can weld hard seams.
       const sums = new Map<string,{sum:number[];count:number}>(), keys: string[] = [], point = [0,0,0], value: number[] = [];
@@ -201,32 +302,85 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
         color.setElement(i,entry.sum.map(v=>v/entry.count));
       }
     }
-    // Disconnected bevelled panels can hit a topology floor. The sloppy pass clusters
-    // positions for distant tiers; retain at least one triangle per material/part.
+    // Each disconnected part has its own scale and a closed-geometry floor.
+    // Whole-assembly error lets a building flatten its roof tiles and floor slabs.
     const lodSimplifier = { ...MeshoptSimplifier, simplify: (...args: Parameters<typeof MeshoptSimplifier.simplify>) => {
-      const [indices, positions, stride, count, error, flags] = args, target = Math.max(3,count);
-      const result = MeshoptSimplifier.simplify(indices,positions,stride,target,error,flags);
-      // A tiny decorative part can collapse completely. Keep its six extrema
-      // faces instead of restoring the entire original part at distant LODs.
-      const keepExtrema = (): [Uint32Array,number] => {
+      const [indices, positions, stride, count, error, flags] = args;
+      if (!def.sourceGlb && !existsSync(`assets/${def.id}/model.glb`)) {
+        // Keep the established build behavior for legacy procedural exports that
+        // have no detailed source file in this delivery inventory.
+        const target = Math.max(3, count), result = MeshoptSimplifier.simplify(indices, positions, stride, target, error, flags);
+        if (result[0].length && result[0].length <= target * 1.25) return result;
+        const clustered = MeshoptSimplifier.simplifySloppy(indices, positions, stride, null, target, error);
+        if (clustered[0].length) return clustered;
         const faces = new Set<number>();
-        for (let axis=0;axis<3;axis++) for (const direction of [-1,1]) {
-          let corner=0;
-          for(let i=1;i<indices.length;i++) if(positions[indices[i]*stride+axis]*direction>positions[indices[corner]*stride+axis]*direction) corner=i;
-          faces.add(Math.floor(corner/3)*3);
+        for (let axis = 0; axis < 3; axis++) for (const direction of [-1, 1]) {
+          let corner = 0;
+          for (let i = 1; i < indices.length; i++) if (positions[indices[i] * stride + axis] * direction > positions[indices[corner] * stride + axis] * direction) corner = i;
+          faces.add(Math.floor(corner / 3) * 3);
         }
-        return [Uint32Array.from([...faces].flatMap(face=>Array.from(indices.slice(face,face+3)))),0];
+        return [Uint32Array.from([...faces].flatMap(face => Array.from(indices.slice(face, face + 3)))), 0] as [Uint32Array, number];
+      }
+      const parents = new Map<number, number>();
+      const find = (vertex: number): number => {
+        if (!parents.has(vertex)) parents.set(vertex, vertex);
+        let parent = vertex;
+        while (parents.get(parent)! !== parent) parent = parents.get(parent)!;
+        while (vertex !== parent) { const next = parents.get(vertex)!; parents.set(vertex, parent); vertex = next; }
+        return parent;
       };
-      if (!result[0].length) return keepExtrema();
-      if (result[0].length <= target * 1.25) return result;
-      const clustered = MeshoptSimplifier.simplifySloppy(indices,positions,stride,null,target,error);
-      return clustered[0].length ? clustered : keepExtrema();
+      for (let i = 0; i < indices.length; i += 3) {
+        const root = find(indices[i]);
+        parents.set(find(indices[i + 1]), root); parents.set(find(indices[i + 2]), root);
+      }
+      const components = new Map<number, number[]>();
+      for (let i = 0; i < indices.length; i += 3) {
+        const root = find(indices[i]), component = components.get(root) ?? [];
+        component.push(indices[i], indices[i + 1], indices[i + 2]); components.set(root, component);
+      }
+      const output: number[] = []; let maxError = 0;
+      for (const component of components.values()) {
+        if (component.length <= 36) { output.push(...component); continue; }
+        const vertices = [...new Set(component)], remap = new Map(vertices.map((vertex, index) => [vertex, index]));
+        const min = [Infinity, Infinity, Infinity], max = [-Infinity, -Infinity, -Infinity];
+        for (const vertex of vertices) for (let axis = 0; axis < 3; axis++) {
+          min[axis] = Math.min(min[axis], positions[vertex * stride + axis]);
+          max[axis] = Math.max(max[axis], positions[vertex * stride + axis]);
+        }
+        // Normalize each axis independently: millimetre-thick panels keep their thickness.
+        const local = Float32Array.from(vertices.flatMap(vertex => min.map((value, axis) => (positions[vertex * stride + axis] - value) / (max[axis] - value || 1))));
+        const input = Uint32Array.from(component, vertex => remap.get(vertex)!);
+        const target = Math.min(component.length, Math.max(36, Math.floor(component.length * count / indices.length / 3) * 3));
+        const locks = new Uint8Array(vertices.length);
+        for (let axis = 0; axis < 3; axis++) for (const direction of [-1, 1]) {
+          let tip = 0;
+          for (let i = 1; i < vertices.length; i++) if (local[i * 3 + axis] * direction > local[tip * 3 + axis] * direction) tip = i;
+          locks[tip] = 1;
+        }
+        // Static props and architecture have thin curved shells and raised lettering.
+        // Their surface coverage needs a tighter error than articulated bodies.
+        const surfaceError = /^(char|npc|inf)\./.test(def.id) ? (ratio < .05 ? .3 : .2) : (ratio < .05 ? .04 : .02);
+        const result = MeshoptSimplifier.simplifyWithAttributes(input, local, 3, new Float32Array(), 0, [], locks, target, surfaceError, [...(flags ?? []), 'LockBorder']);
+        if (result[0].length < 12) output.push(...component);
+        else { maxError = Math.max(maxError, result[1]); for (const vertex of result[0]) output.push(vertices[vertex]); }
+      }
+      return [Uint32Array.from(output), maxError] as [Uint32Array, number];
     } };
-    await document.transform(weld(), simplify({ simplifier: lodSimplifier, ratio, error: ratio < .05 ? .3 : .1 }), normals(), weld());
+    await document.transform(weld(), simplify({ simplifier: lodSimplifier, ratio, error: ratio < .05 ? .3 : .1 }), normals());
+    smoothLodNormals(document);
+    await document.transform(weld());
   }
   generateStumpCaps(document, def, ratio < .05 ? 6 : 8);
-  await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'medium', quantizePosition: 16, quantizeNormal: 10, cleanup: false }));
+  bundleStaticSiblings(document);
+  // Seven-bit baked AO is visually stable and compresses better than noisy bytes.
+  const colors = new Set(document.getRoot().listMeshes().flatMap(mesh => mesh.listPrimitives().map(p => p.getAttribute('COLOR_0')).filter(a => a !== null)));
+  for (const color of colors) {
+    const value: number[] = [];
+    for (let i = 0; i < color.getCount(); i++) { color.getElement(i, value); color.setElement(i, value.map(v => Math.round(v * 127) / 127)); }
+  }
+  await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'high', quantizePosition: 16, quantizeNormal: 8, quantizeColor: 8, cleanup: false }));
   removeDegenerateTriangles(document);
+  shareVertexStreams(document);
   await document.transform(prune({ keepLeaves: true, keepAttributes: true, keepExtras: true }));
   for (const [name, before] of pivots) {
     const node = document.getRoot().listNodes().find((n) => n.getName() === name);
@@ -236,8 +390,9 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
 export async function optimizeAsset(raw: string, output: string, def: AssetDef, ratio = 1): Promise<void> {
   const io = await assetIO(), document = await io.read(raw);
   await optimizeDocument(document, def, ratio);
+  if (ratio < 1) for (const scene of document.getRoot().listScenes()) scene.setExtras({ ...scene.getExtras(), deliveryLodGenerated: true });
   mkdirSync(dirname(output), { recursive: true });
-  await io.write(output, document);
+  writeFileSync(output, await consolidateMeshopt(await io.writeBinary(document)));
 }
 
 /** Process existing exports without invoking Blender; supplied LODs remain authoritative. */
