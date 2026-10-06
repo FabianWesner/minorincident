@@ -9,6 +9,7 @@ export class View {
   readonly azimuth = Math.PI / 4;
   readonly polar = Math.PI * 0.30;
   radius = 35;
+  driving = false;
   cameraShake = true;
   spot: string | null = null;
   private readonly target = new Vector3();
@@ -26,7 +27,7 @@ export class View {
     this.camera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z }, 0);
   }
   reset(player: { x: number; z: number }): void {
-    this.focus.set(player.x, 0, player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0;
+    this.driving = false; this.focus.set(player.x, 0, player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0;
     this.update(player, 0);
   }
   /** Named deterministic photo pose (instant); cinematic poses can blend over 1 s. */
@@ -48,7 +49,7 @@ export class View {
   update(player: { x: number; z: number }, seconds: number): void {
     this.focus.x += (player.x - this.focus.x) * (1 - Math.exp(-10 * seconds));
     this.focus.z += (player.z - this.focus.z) * (1 - Math.exp(-10 * seconds));
-    this.offset.setFromSphericalCoords(this.radius, this.polar, this.azimuth);
+    this.offset.setFromSphericalCoords(this.radius * (this.driving ? 1.15 : 1), this.polar, this.azimuth);
     this.camera.position.copy(this.focus).add(this.offset); this.camera.lookAt(this.focus);
     this.blend += Math.sign(this.blendTarget - this.blend) * Math.min(Math.abs(this.blendTarget - this.blend), seconds);
     if (this.blend > 0) {
@@ -62,6 +63,6 @@ export class View {
     this.camera.position.add(this.offset); this.camera.updateMatrixWorld();
   }
   getState() {
-    return { fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius, focus: this.focus.toArray(), position: this.camera.position.toArray(), spot: this.spot };
+    return { fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * (this.driving ? 1.15 : 1), focus: this.focus.toArray(), position: this.camera.position.toArray(), spot: this.spot };
   }
 }

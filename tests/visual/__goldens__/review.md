@@ -20,3 +20,7 @@ Overall PASS: 4/4 must items and 3/4 should items (75%, requirement ≥70%). A8 
 Additional review: L1 is visibly brightest and warm-neutral; L4 is golden; L6 is cool and darkest while glowing windows/eyes remain visible. Bloom-on/off show halos only when enabled. The inside-house screenshot hides the roof and preserves the survivor silhouette. ID reference and occluded player masks show no lost silhouette pixels. The three photo spots are intentional first goldens; future updates require a new visual review.
 
 Final audit: the overview was intentionally pulled back to place the complete survivor silhouette near 1/12 of the viewport. The final golden was re-opened after adding explicit shader fog and hemisphere fill; the checklist results above remain unchanged. The far-fog probe resolves to the exact L4 fog color (229, 179, 158). Optional tilt-shift is tested separately to preserve all pixels in the central 60% of the image.
+
+## E09 vehicle goldens — 2026-10-06
+
+`vehicle-brake-siren-right.png`, `vehicle-driving-wheels.png` and `vehicle-brake-siren-left.png` were opened and reviewed with their reference/render comparison. The full AC10 and applicable checklist-C PASS review and pixel measurements are recorded in `test-results/epics/E09/review.md` and `visual-metrics.json`. These are intentional first goldens for below-integrated code placeholders, not an art-status promotion.

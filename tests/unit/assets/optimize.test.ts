@@ -119,15 +119,29 @@ test('T-E17-height @E17-AC02 adult exports stay 1.75–1.85 m at every LOD', asy
   }
 });
 
-test('T-E17-lanes @E17-AC02 vehicle envelopes including mirrors fit district lanes at every LOD', async () => {
+test('T-E17-lanes @E17-AC02 road vehicle envelopes including mirrors fit district lanes at every LOD', async () => {
   const layout=JSON.parse(readFileSync('public/assets/layouts/D-MAIN.layout.json','utf8'));
   const lane=Math.min(...layout.roads.edges.map((edge:{laneWidth:number})=>edge.laneWidth/2));
   const {default:manifest}=await import('../../../src/assets/manifest.json'),io=await assetIO();
   for(const def of manifest as AssetDef[]) {
-    if(def.category!=='vehicle' || (!def.sourceGlb && def.status!=='integrated')) continue;
+    // Aircraft retain their authored rotor span; the separate aircraft contract checks all LODs.
+    if(def.category!=='vehicle' || def.id==='veh.helicopter' || (!def.sourceGlb && def.status!=='integrated')) continue;
     for(const path of [def.glb,def.lods?.lod1,def.lods?.lod2].filter((p):p is string=>!!p)) {
       const doc=await io.read(path),bounds=getBounds(doc.getRoot().listScenes()[0]);
       expect(bounds.max[2]-bounds.min[2],path).toBeLessThan(lane-.1);
     }
+  }
+});
+
+
+test('T-E17-aircraft @E17-AC02 helicopter preserves authored scale and rotor pivots at every LOD', async () => {
+  const {default:manifest}=await import('../../../src/assets/manifest.json'),io=await assetIO();
+  const def=manifest.find(d=>d.id==='veh.helicopter')! as AssetDef;
+  expect(def.sourceGlb).toBe('assets/veh.helicopter/model.glb');
+  for(const path of [def.glb,def.lods?.lod1,def.lods?.lod2].filter((p):p is string=>!!p)) {
+    const doc=await io.read(path),bounds=getBounds(doc.getRoot().listScenes()[0]);
+    expect(bounds.max[2]-bounds.min[2],path).toBeGreaterThan(9);
+    expect(validateDocument(doc,def,0).errors.filter(e=>e.startsWith('dimensions.') || e.startsWith('animated '))).toEqual([]);
+    for(const name of ['mainRotor','tailRotor']) expect(doc.getRoot().listNodes().some(n=>n.getName()===name),`${path}:${name}`).toBe(true);
   }
 });

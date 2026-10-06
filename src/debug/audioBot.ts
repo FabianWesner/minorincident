@@ -34,6 +34,7 @@ export async function runAudioL1Bot(game: Game): Promise<{
     cues: number;
 }> {
     await game.loadLevel('L1', { seed: 16 });
+    game.world.missions?.begin();
     game.clock.pause();
     await game.audio.unlock();
     game.audio.log.length = 0;
@@ -42,7 +43,7 @@ export async function runAudioL1Bot(game: Game): Promise<{
     for (const d of districts.districts)
         for (const objective of d.gameplay.objectives) {
             const local = resolvePosition(objective.position, d.layout), target: Point = [local[0] + d.origin[0], local[1] + d.origin[1]], player = world.entities.get(1)!.transform;
-            for (const [x, z] of route(districts.nav, [player.x, player.z], target)) {
+            for (const [x, z] of route(world.districts!.nav, [player.x, player.z], target)) {
                 let remaining = 100;
                 while (Math.hypot(x - player.x, z - player.z) > 0.22 && remaining--) {
                     const dx = x - player.x, dz = z - player.z, len = Math.hypot(dx, dz), speed = Math.min(1, len * 2);

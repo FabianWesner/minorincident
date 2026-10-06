@@ -30,7 +30,7 @@ export class Combat {
   private readonly origin = { x: 0, z: 0 };
   constructor(private readonly world: SimWorld, readonly definition: ScenarioDefinition) {
     this.rng = new Rng(world.seed, 'combat');
-    this.query = new HitQuery(world.entities, world.spatial, definition.walls ?? []);
+    this.query = new HitQuery(world.entities, world.spatial, definition.walls ?? [], world.interactables?.walls);
     this.effects = new ActionEffects(world); this.pickups = new Pickups(world);
     this.damage = new Damage(world); this.status = new Status(world); this.assist = new AimAssist(world.entities, this.query);
     this.runner = new ActionRunner(1, new Loadout(['weapon.bat', 'weapon.pistol'], ['weapon.grenade', 'ability.ground-slam']));
@@ -133,7 +133,7 @@ export class Combat {
           if (def.splash) this.splash(p.attack, p);
           this.effects.create(p.attack, p);
           if (def.category === 'throwable' && def.damage) this.effects.noise(p, def.noiseRadius, def.id);
-          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, position: { x: p.x, y: p.y, z: p.z } });
+          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
           this.projectiles.splice(i, 1);
         }
       } else if (age > 0) {
@@ -145,7 +145,7 @@ export class Combat {
           if (target) { p.x = target.transform.x; p.z = target.transform.z; }
           else { p.x += p.attack.aim.x * wall; p.z += p.attack.aim.z * wall; }
           this.splash(p.attack, p); this.effects.noise(p, def.noiseRadius, def.id);
-          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, position: { x: p.x, y: p.y, z: p.z } });
+          this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
           this.projectiles.splice(i, 1); continue;
         }
         while (target && p.attack.hit.size < def.maxTargets) {

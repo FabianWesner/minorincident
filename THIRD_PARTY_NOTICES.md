@@ -5,6 +5,8 @@ copyright 2025 Bruno Simon):
 
 | Reference | Local adaptation |
 | --- | --- |
+| `Zones.js`, `Respawns.js` (41046b5) | `src/sim/missions/Mission.ts` — volume edge latches and named checkpoint restore |
+| `Notifications.js` (41046b5) | `src/ui/MissionUI.ts` — stable objective/subtitle identity, sim tick expiry |
 | `Game.js` | `src/core/Services.ts`, `src/main.ts`, `src/Game.ts` — staged boot and injected ownership |
 | `Events.js` | `src/core/EventBus.ts` — ordered callback buckets |
 | `Ticker.js` | `src/core/Ticker.ts` — render ticker, with a separate fixed sim clock |
@@ -35,7 +37,11 @@ copyright 2025 Bruno Simon):
 | `Zones.js` (41046b5) | `src/sim/ai/InfectedSystem.ts` — perception enter/alert transitions without singleton dependencies |
 | `PreRenderer.js` (41046b5) | `src/render/GameView.ts`, `src/Game.ts` — shader warm-up before screenshotReady (compileAsync plus two rendered frames) |
 
+| `Physics/PhysicsVehicle.js` (41046b5) | `src/sim/vehicles/VehicleBody.ts` — fixed-step four-wheel raycast suspension, engine taper, low centre of mass and bounded stuck history |
+| `World/VisualVehicle.js` (41046b5) | `src/render/VehicleView.ts` — authoritative wheel pivots/suspension, brake lamps and emergency lamp animation |
 | `Explosions.js` (41046b5) | `src/sim/combat/Damage.ts` — radial splash falloff and direction-scaled impulse, without singleton/render dependencies |
+
+| `Noises.js`, `World/Confetti.js`, `World/Leaves.js`, `Trails.js` (41046b5) | `src/render/vfx/FxPool.ts` — fixed instancing, shader burst trajectories, shared sine noise and tracer slots |
 
 All folio-2025 adaptations above reference commit `41046b5`.
 

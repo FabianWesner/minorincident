@@ -36,7 +36,7 @@ resumes only unmuted audio, with a 300 ms fade; the game requires an explicit Re
 Music loops remain in the suspended context and retain their phase. All schedulers
 use audio/sim time, and late ambience updates emit one sound rather than a backlog.
 
-The additive `__SS__.audio` API (version 1.5) provides snapshot, emitter-node
+The additive `__SS__.audio` API (version 1.8) provides snapshot, emitter-node
 inspection, cue playback, native decode checks, event-bus injection, acoustic-map
 fixtures, an L1 composition traversal bot, interruption simulation, and PCM WAV
 offline renders. `tools/audio/measure.ts` independently measures these WAVs with

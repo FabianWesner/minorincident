@@ -12,13 +12,13 @@ export class ActionEffects {
   readonly zones: ActionZone[] = [];
   private readonly direction = { x: 0, z: 0 };
   constructor(private readonly world: SimWorld) {}
-  noise(position: Vec2, radius: number, actionId: string): void {
+  noise(position: Vec2, radius: number, actionId: string, sourceId = 1, kind?: string): void {
     if (!radius) return;
-    this.world.events.emit({ type: 'noise', tick: this.world.tick, sourceId: 1, actionId, position: { x: position.x, y: 0.7, z: position.z }, radius, loudness: noiseForAction(actionId).loudness, kind: action(actionId).category });
+    this.world.events.emit({ type: 'noise', tick: this.world.tick, sourceId, actionId, position: { x: position.x, y: 0.7, z: position.z }, radius, loudness: kind ? 1 : noiseForAction(actionId).loudness, kind: kind ?? action(actionId).category });
     for (const entity of this.world.entities.iterate()) {
       const brain = entity.hearing;
       if (!brain || entity.health.current <= 0 || brain.mode === 'lured' || this.inSmoke(entity.transform) || (entity.transform.x - position.x) ** 2 + (entity.transform.z - position.z) ** 2 > radius ** 2) continue;
-      if (brain.mode === 'idle') this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, targetId: entity.id, sourceId: 1, cause: 'noise', position: { ...entity.transform } });
+      if (brain.mode === 'idle') this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, targetId: entity.id, sourceId, cause: 'noise', position: { ...entity.transform } });
       brain.mode = 'investigate'; brain.target.x = position.x; brain.target.z = position.z;
     }
   }
@@ -67,7 +67,7 @@ export class ActionEffects {
   moveListeners(): void {
     for (const entity of this.world.entities.iterate()) {
       const brain = entity.hearing;
-      if (!brain || entity.health.current <= 0) continue;
+      if (!brain || entity.health.current <= 0 || entity.attachedTo) continue;
       if (brain.mode === 'lured' && this.world.tick >= brain.lureUntil) brain.mode = 'idle';
       if (this.inSmoke(entity.transform)) brain.mode = 'idle';
       if (brain.mode === 'idle' || Status.stunned(entity, this.world.tick)) continue;

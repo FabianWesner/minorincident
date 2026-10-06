@@ -11,10 +11,41 @@ export class NavGrid {
   readonly height: number;
   readonly cells: Uint8Array;
   hash = "";
+  private readonly blocks = new Map<number, number[]>();
+  private readonly occupancy = new Map<number, { count: number; base: number }>();
+  /** Dynamic blockers preserve baked occupancy and overlapping doors/fences. */
+  block(id: number, wall: { x: number; z: number; halfX: number; halfZ: number }): void {
+    if (this.blocks.has(id)) return;
+    const indices: number[] = [];
+    const x0 = Math.max(0, Math.ceil((wall.x - wall.halfX - .4 - this.min[0]) / this.cellSize - .5)),
+      x1 = Math.min(this.width - 1, Math.floor((wall.x + wall.halfX + .4 - this.min[0]) / this.cellSize - .5)),
+      z0 = Math.max(0, Math.ceil((wall.z - wall.halfZ - .4 - this.min[1]) / this.cellSize - .5)),
+      z1 = Math.min(this.height - 1, Math.floor((wall.z + wall.halfZ + .4 - this.min[1]) / this.cellSize - .5));
+    for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) {
+      const px = this.min[0] + (x + .5) * this.cellSize, pz = this.min[1] + (z + .5) * this.cellSize;
+      if (Math.abs(px - wall.x) > wall.halfX + .4 || Math.abs(pz - wall.z) > wall.halfZ + .4) continue;
+      const index = z * this.width + x, cell = this.occupancy.get(index) ?? { count: 0, base: this.cells[index] };
+      cell.count++; this.occupancy.set(index, cell); this.cells[index] = 0; indices.push(index);
+    }
+    this.blocks.set(id, indices); this.rehash();
+  }
+  unblock(id: number): void {
+    for (const index of this.blocks.get(id) ?? []) {
+      const cell = this.occupancy.get(index)!;
+      if (--cell.count === 0) { this.cells[index] = cell.base; this.occupancy.delete(index); }
+    }
+    this.blocks.delete(id); this.rehash();
+  }
+  private rehash(): void {
+    let hash = (2166136261 ^ this.hashSeed) >>> 0;
+    for (const cell of this.cells) hash = Math.imul(hash ^ cell, 16777619) >>> 0;
+    this.hash = `${this.width}x${this.height}:${hash.toString(16).padStart(8, '0')}`;
+  }
   constructor(
     readonly min: Point,
     readonly max: Point,
     readonly cellSize = 1,
+    private readonly hashSeed = 0,
   ) {
     this.width = Math.ceil((max[0] - min[0]) / cellSize);
     this.height = Math.ceil((max[1] - min[1]) / cellSize);
@@ -66,7 +97,7 @@ export function bakeNav(districts: NavDistrict[], seed: number): NavGrid {
         min[a] = Math.min(min[a], p[a] + d.origin[a]);
         max[a] = Math.max(max[a], p[a] + d.origin[a]);
       }
-  const nav = new NavGrid(min, max);
+  const nav = new NavGrid(min, max, 1, seed);
   for (const d of districts) {
     for (let z = 0; z < nav.height; z++)
       for (let x = 0; x < nav.width; x++) {
