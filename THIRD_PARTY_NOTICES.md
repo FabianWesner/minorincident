@@ -31,6 +31,8 @@ copyright 2025 Bruno Simon):
 | `Ligthing.js`, `Fog.js`, `Cycles/DayCycles.js` (41046b5) | `src/render/Lighting.ts`, `src/data/timeOfDay.ts` — fitted sun shadows, coherent level moods and fog |
 | `Rendering.js`, `Passes/cheapDOF.js` (41046b5) | `src/render/PostFx.ts` — bloom and optional edge-only hash blur |
 | `InstancedGroup.js` (41046b5) | `src/render/InstancedGroup.ts` — shared mesh batches and dirty placement updates |
+| `InstancedGroup.js` (41046b5) | `src/render/CrowdView.ts` — infected rigid-part GPU batches, extended through E17 crowd helpers |
+| `Zones.js` (41046b5) | `src/sim/ai/InfectedSystem.ts` — perception enter/alert transitions without singleton dependencies |
 | `PreRenderer.js` (41046b5) | `src/render/GameView.ts`, `src/Game.ts` — shader warm-up before screenshotReady (compileAsync plus two rendered frames) |
 
 | `Explosions.js` (41046b5) | `src/sim/combat/Damage.ts` — radial splash falloff and direction-scaled impulse, without singleton/render dependencies |

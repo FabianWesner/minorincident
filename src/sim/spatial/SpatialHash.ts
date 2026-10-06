@@ -1,13 +1,16 @@
+const numericOrder = (a: number, b: number): number => a - b;
 /** 4 m cells; the exact distance filter and numeric sort give stable queries. */
 export class SpatialHash {
   private readonly cells = new Map<string, Set<number>>();
+  private readonly free: { x: number; z: number }[] = [];
   private readonly positions = new Map<number, { x: number; z: number }>();
   private key(x: number, z: number): string { return `${Math.floor(x / 4)},${Math.floor(z / 4)}`; }
   set(id: number, x: number, z: number): void {
     const previous = this.positions.get(id);
     if (previous && this.key(previous.x, previous.z) === this.key(x, z)) { previous.x = x; previous.z = z; return; }
-    this.delete(id);
-    this.positions.set(id, { x, z });
+    if (previous) this.cells.get(this.key(previous.x, previous.z))!.delete(id);
+    const position = previous ?? this.free.pop() ?? { x, z }; position.x = x; position.z = z;
+    this.positions.set(id, position);
     const key = this.key(x, z);
     let cell = this.cells.get(key);
     if (!cell) this.cells.set(key, cell = new Set());
@@ -17,10 +20,10 @@ export class SpatialHash {
     const position = this.positions.get(id);
     if (!position) return;
     const key = this.key(position.x, position.z), cell = this.cells.get(key)!;
-    cell.delete(id); if (!cell.size) this.cells.delete(key);
+    cell.delete(id); this.free.push(position);
     this.positions.delete(id);
   }
-  query(within: { x: number; z: number; r: number }, result: number[] = []): number[] {
+  query(within: { x: number; z: number; r: number }, result: number[] = [], sorted = true): number[] {
     if (![within.x, within.z, within.r].every(Number.isFinite) || within.r < 0) throw new RangeError('Query position and radius must be finite, radius nonnegative');
     result.length = 0;
     for (let x = Math.floor((within.x - within.r) / 4); x <= Math.floor((within.x + within.r) / 4); x++) {
@@ -31,7 +34,7 @@ export class SpatialHash {
         }
       }
     }
-    return result.sort((a, b) => a - b);
+    return sorted ? result.sort(numericOrder) : result;
   }
-  reset(): void { this.cells.clear(); this.positions.clear(); }
+  reset(): void { this.cells.clear(); this.positions.clear(); this.free.length = 0; }
 }

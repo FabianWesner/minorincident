@@ -5,6 +5,7 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 /** Plain components only; physics handles and render objects are never serialized. */
 export interface EntitySnapshot {
   id: number;
+  infected?: import('../ai/types').InfectedState;
   survivor?: SurvivorState;
   weapons?: import('../combat/Loadout').LoadoutState;
   combat?: { radius: number; armor: number; shield: boolean; staggerUntil: number; attacking: boolean; damageMultiplier: number; statuses: import('../combat/Status').StatusState[] };
@@ -18,6 +19,12 @@ export interface EntitySnapshot {
   faction: string;
 }
 export type GameEvent =
+  | { tick: number; type: 'civilian.grabbed'; sourceId: number; targetId: number; variant: string; rescueUntil: number }
+  | { tick: number; type: 'infected.prop-thrown'; sourceId: number; propId: number; attackId: number }
+  | { tick: number; type: 'telegraph'; sourceId: number; attackId: number; special: string; duration: number }
+  | { tick: number; type: 'infected.attack'; sourceId: number; attackId: number; targetId: number; special: string; amount: number }
+  | { tick: number; type: 'infected.revived' | 'infected.leg-lost'; sourceId: number; targetId: number }
+
   | { tick: number; type: 'noise'; sourceId: number; actionId: string; position: { x: number; y: number; z: number }; radius: number; loudness: number; kind: string }
   | { tick: number; type: 'ai.alerted'; sourceId: number; targetId: number; cause: 'noise'; position: Transform }
   | { tick: number; type: 'combat.effect'; sourceId: number; actionId: string; kind: import('../../data/actions/schema').ActionEffect['kind']; position: { x: number; y: number; z: number }; radius: number; expires: number }
@@ -34,6 +41,7 @@ export type GameEvent =
   | { tick: number; type: 'scenario.unloaded'; name: string };
 export interface GameStateSnapshot {
   tick: number;
+  ai?: ReturnType<import('../ai/InfectedSystem').InfectedSystem['snapshot']>;
   combat?: ReturnType<import('../combat/Combat').Combat['snapshot']>;
   input: { scheme: Scheme; frame: InputFrame };
   seed: number;
@@ -45,4 +53,4 @@ export interface GameStateSnapshot {
   rng: { stream: string; state: number; cursor: number }[];
   perf: { entities: number; bodies: number; colliders: number; listeners: number };
 }
-export interface EntityFilter { kind?: string; archetype?: string; within?: { x: number; z: number; r: number } }
+export interface EntityFilter { kind?: string; archetype?: string; detectable?: boolean; within?: { x: number; z: number; r: number } }

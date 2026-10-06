@@ -1,0 +1,39 @@
+
+> test:sim
+> vitest run tests/sim --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E07/sim.json
+
+
+ RUN  v5.0.3 /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e07-epic
+
+stdout | tests/sim/ai/director.test.ts > T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget
+{"scenario":"horde-arena","infected":200,"simMsP95":0.9630419999998594,"budget":4}
+
+ ✓ tests/sim/ai/director.test.ts (9 tests) 1919ms
+   ✓ T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed entity objects 1118ms
+   ✓ T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget 496ms
+ ✓ tests/sim/combat/balance.test.ts (3 tests) 3580ms
+   ✓ T-E05-14 T-E06-10 @E05 @E05-AC14 @E06 @E06-AC10 measure every reference weapon × archetype TTK in authored bands 3410ms
+ ✓ tests/sim/districts.test.ts (2 tests) 3343ms
+   ✓ T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objective from player start at every tier 3135ms
+ ✓ tests/sim/player.test.ts (8 tests) 1365ms
+   ✓ T-E04-02 @E04 @E04-AC02 200-direction capsule sweep never penetrates the static wall ring over 0.02m 1175ms
+ ✓ tests/sim/runner.test.ts (1 test) 1193ms
+   ✓ T-E01-08 @E01 @E01-AC08 npm sim writes a headless JSON report 1192ms
+ ✓ tests/sim/weapons.test.ts (69 tests) 724ms
+   ✓ T-E06-perf @E06 @perf sustained weapons, fire and 200 reactive infected stay below 4ms sim p95 316ms
+ ✓ tests/sim/determinism.test.ts (3 tests) 516ms
+   ✓ T-E01-04 @E01 @E01-AC04 same seed and script give the same 3600-tick state 309ms
+ ✓ tests/sim/ai/navigation.test.ts (8 tests) 549ms
+ ✓ tests/sim/ai/specials.test.ts (10 tests) 412ms
+   ✓ T-E07-05 @E07 @E07-AC05 every archetype attack including death explosion has a sufficient telegraph 304ms
+ ✓ tests/sim/ai/animals.test.ts (9 tests) 275ms
+ ✓ tests/sim/combat/combat.test.ts (19 tests) 272ms
+ ✓ tests/sim/recorder.test.ts (1 test) 238ms
+ ✓ tests/sim/ai/turning.test.ts (1 test) 95ms
+
+ Test Files  13 passed (13)
+      Tests  143 passed (143)
+   Start at  01:50:16
+   Duration  16.18s (tests 94%, import 3%, transform 2%)
+
+JSON report written to /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e07-epic/test-results/epics/E07/sim.json

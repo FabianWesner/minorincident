@@ -30,6 +30,7 @@ export default defineConfig({
     { name: 'iphone-14', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts'], use: { ...devices['iPhone 14'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
     { name: 'iphone-14-landscape', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts'], use: { ...devices['iPhone 14 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
     ...(process.env.E2E_WEBGPU === '1' ? [{ name: 'webgpu', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: false, launchOptions: { args: ['--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } } }] : []),
+    ...(process.env.E2E_WEBGPU_HEADLESS === '1' ? [{ name: 'webgpu-headless', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: true, launchOptions: { args: ['--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } } }] : []),
     { name: 'webkit', testMatch: '**/smoke.spec.ts', use: { browserName: 'webkit' } },
   ],
   // Test the real production output, including the query-gated API chunk.

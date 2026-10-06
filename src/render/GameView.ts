@@ -1,3 +1,4 @@
+import { CrowdView } from './CrowdView';
 import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
 import { CombatView } from './CombatView';
@@ -33,6 +34,7 @@ export class GameView implements Lifecycle {
   private readonly meshes: Mesh[] = [];
   private actions: ActionView | null = null;
   private combat: CombatView | null = null;
+  private crowd: CrowdView | null = null;
   private stopHitStop: (() => void) | null = null;
   private hitStopUntil = 0;
   private hitStopTick = 0;
@@ -92,12 +94,17 @@ export class GameView implements Lifecycle {
       const ground = new Mesh(new PlaneGeometry(this.world.combat?.definition.ground.width ?? 100, this.world.combat?.definition.ground.depth ?? 100), this.materials.get('sidewalk')); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;
       this.meshes.push(ground); this.scene.add(ground);
       if (this.world.combat) {
-        this.combat = new CombatView(this.world, this.materials); this.scene.add(this.combat);
+        if (this.world.infected) { this.crowd = new CrowdView(this.world); await this.crowd.init(); this.scene.add(this.crowd); }
+        else { this.combat = new CombatView(this.world, this.materials); this.scene.add(this.combat); }
         this.stopHitStop = this.world.events.on('combat.hit-stop', (event) => {
           if (event.type !== 'combat.hit-stop') return;
           this.hitStopTick = this.world.tick; this.hitStopUntil = this.world.tick + Math.ceil(event.durationMs * 60 / 1000);
           this.frozenPose = structuredClone(this.world.entities.get(1)!.survivor!);
         });
+      }
+      if (this.world.scenario === 'horde-readability') {
+        this.lookdev = new Lookdev(this.materials, this.occlusion, false); this.scene.add(this.lookdev);
+        this.postFx = new PostFx(this.renderer, this.scene, this.camera);
       }
       this.character = new CharacterView(); await this.character.init(this.materials); this.scene.add(this.character);
       if (this.world.combat) { this.actions = new ActionView(this.world, this.character, this.materials, this.renderer); await this.actions.init(); this.actions.update(); this.scene.add(this.actions); }
@@ -129,6 +136,7 @@ export class GameView implements Lifecycle {
   }
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
+    if (name === 'horde-readability' && this.crowd) { this.view.preset(name, { position: [15, 15, 19], target: [0, 0.5, -1] }); this.update(1); return; }
     if (this.world.combat && name === 'aim') { this.view.preset(name, combatPhotoSpots.aim); this.update(1); return; }
     if(this.districts){const pose=this.districts.spots.get(name);if(!pose)throw new Error(`Unknown district photo spot: ${name}`);this.view.preset(name,pose);this.update(1);return;}
     if (this.character) {
@@ -158,7 +166,7 @@ export class GameView implements Lifecycle {
     const materialInventory = new Map<string, { name: string; palette: boolean }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial }); });
     return { districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
-      character: this.character?.getState() ?? null, actions: this.actions?.getState() ?? null,
+      character: this.character?.getState() ?? null, crowd: this.crowd?.getState() ?? null, actions: this.actions?.getState() ?? null,
       materials: [...materialInventory.values()], occlusion: this.occlusion.getState(),
       probes: this.lookdev ? { lamp: this.project(...this.lookdev.lampHead.position.toArray() as [number, number, number]), shadow: this.project(...this.lookdev.shadowProbe.position.toArray() as [number, number, number]) } : null };
   }
@@ -175,13 +183,13 @@ export class GameView implements Lifecycle {
       this.cube.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha), lerp(previous?.z ?? current.z, current.z, alpha));
       this.cube.rotation.y = current.yaw;
     }
-    if (this.lookdev && current) {
+    if (this.lookdev && current && !this.crowd) {
       this.lookdev.player.position.set(lerp(previous?.x ?? current.x, current.x, alpha), current.y - 0.5, lerp(previous?.z ?? current.z, current.z, alpha));
       this.lookdev.player.rotation.y = current.yaw;
       this.playerPosition.copy(this.lookdev.player.position);
       this.occlusion.update(this.camera, this.playerPosition, 0, this.lookdev.playerMeshes);
     }
-    this.combat?.update(); this.actions?.update();
+    this.combat?.update(); this.crowd?.update(); this.actions?.update();
     this.lighting?.update(this.view);
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
@@ -208,6 +216,7 @@ export class GameView implements Lifecycle {
     this.postFx?.dispose();this.postFx = null;
     if(this.districts){this.scene.remove(this.districts);this.districts.dispose();this.districts=null;}
     this.stopHitStop?.(); this.stopHitStop = null; this.hitStopUntil = 0; this.frozenPose = null;
+    if (this.crowd) { this.scene.remove(this.crowd); this.crowd.dispose(); this.crowd = null; }
     if (this.actions) { this.scene.remove(this.actions); this.actions.dispose(); this.actions = null; }
     if (this.combat) { this.scene.remove(this.combat); this.combat.dispose(); this.combat = null; }
     if (this.character) { this.scene.remove(this.character); this.character.dispose(); this.character = null; }

@@ -1,0 +1,100 @@
+{
+  "main": "bce6bc2d4b4614641d0889a98919eb3004bdd96e",
+  "implementation": "8740dae25f2a3f02ee3992411aaf7d3c3b0d4c02",
+  "checks": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 8.07
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "seconds": 2.924
+    },
+    {
+      "name": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "seconds": 3.66
+    },
+    {
+      "name": "test:unit",
+      "command": [
+        "npm",
+        "run",
+        "test:unit",
+        "--",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E07/unit.json"
+      ],
+      "exitCode": 0,
+      "seconds": 30.003
+    },
+    {
+      "name": "test:sim",
+      "command": [
+        "npm",
+        "run",
+        "test:sim",
+        "--",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E07/sim.json"
+      ],
+      "exitCode": 0,
+      "seconds": 20.288
+    },
+    {
+      "name": "test:smoke",
+      "command": [
+        "npm",
+        "run",
+        "test:smoke"
+      ],
+      "exitCode": 0,
+      "seconds": 235.025
+    },
+    {
+      "name": "verify",
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E07"
+      ],
+      "exitCode": 0,
+      "seconds": 99.562
+    },
+    {
+      "name": "browser-regression",
+      "command": [
+        "lockf",
+        "-k",
+        "/tmp/minor-incident-e2e.lock",
+        "npx",
+        "playwright",
+        "test",
+        "--workers=2"
+      ],
+      "exitCode": 0,
+      "seconds": 1309.213
+    }
+  ]
+}

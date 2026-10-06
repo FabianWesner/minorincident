@@ -1,0 +1,21 @@
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 164 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                 0.61 kB │ gzip:     0.36 kB
+dist/preview/index.html                         1.10 kB │ gzip:     0.60 kB
+dist/assets/basis_transcoder-o4Hde_L7.js       57.53 kB
+dist/assets/basis_transcoder-VXdx5NbI.wasm    527.33 kB │ gzip:   247.62 kB
+dist/assets/crowdProbe-CFzDF95g.js              1.25 kB │ gzip:     0.73 kB
+dist/assets/testApi-Diuyq4pB.js                 3.82 kB │ gzip:     1.53 kB
+dist/assets/index-CNkGXzeD.js                  24.43 kB │ gzip:     6.37 kB
+dist/assets/index-CQS4l5AF.js                 198.53 kB │ gzip:    57.78 kB
+dist/assets/three.module-Wey9rKO0.js          266.70 kB │ gzip:    71.34 kB
+dist/assets/registry-DN6r8MuZ.js              986.76 kB │ gzip:   256.83 kB
+dist/assets/rapier-DstIs6Rl.js              4,322.52 kB │ gzip: 1,641.14 kB
+✓ built in 3.34s

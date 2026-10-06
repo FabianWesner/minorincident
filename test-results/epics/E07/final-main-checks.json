@@ -1,0 +1,98 @@
+{
+  "main": "b5dcd1c418cda0c60e1bbeeae17555b4be01cee4",
+  "implementation": "2e248a7187c6f5c97aa6d997abd532bcf10dc71d",
+  "checks": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 5.444
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "seconds": 2.932
+    },
+    {
+      "name": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "seconds": 3.795
+    },
+    {
+      "name": "test:unit",
+      "command": [
+        "npm",
+        "run",
+        "test:unit",
+        "--",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E07/unit.json"
+      ],
+      "exitCode": 0,
+      "seconds": 34.202
+    },
+    {
+      "name": "test:sim",
+      "command": [
+        "npm",
+        "run",
+        "test:sim",
+        "--",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E07/sim.json"
+      ],
+      "exitCode": 0,
+      "seconds": 17.314
+    },
+    {
+      "name": "test:smoke",
+      "command": [
+        "npm",
+        "run",
+        "test:smoke"
+      ],
+      "exitCode": 0,
+      "seconds": 28.33
+    },
+    {
+      "name": "verify",
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E07"
+      ],
+      "exitCode": 0,
+      "seconds": 58.701
+    }
+  ],
+  "vitestMaxWorkers": 1,
+  "remainingGateLock": [
+    "lockf",
+    "-k",
+    "/tmp/minor-incident-e2e.lock",
+    "env",
+    "E2E_LOCK=/tmp/minor-incident-e07-inner.lock",
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e07-epic/.cache/e07-finish-gates.py",
+    "--locked"
+  ]
+}

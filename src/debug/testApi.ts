@@ -9,7 +9,7 @@ export type ProgressionPreset = Record<string, unknown>;
 export type Settings = Parameters<Game['view']['settings']>[0] & { aimAssist?: import('../sim/combat/AimAssist').AimAssistSetting };
 export interface BotStatus { running: boolean; policy: string | null }
 
-/** Version 1.4: E10 composition/decay snapshots and district photo spots. Future-epic methods fail explicitly, never silently. */
+/** Version 1.4: E07 crowds and E10 composition/decay snapshots. Future-epic methods fail explicitly, never silently. */
 export interface SSTestApi {
   version: string;
   ready: Promise<void>;
@@ -90,8 +90,10 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       replay: async (data) => { await game.loadScenario(data.level, data.seed); game.clock.pause(); game.input.recorder.play(data); },
     },
     spawn: (id, pos, opts) => {
-      if (!game.world.combat) return pending('E07', 'spawn');
-      return id.startsWith('weapon.') || id.startsWith('ability.') ? game.world.combat.pickups.spawn(id, pos) : game.world.spawnDummy(id, pos, opts);
+      if (game.world.combat && (id.startsWith('weapon.') || id.startsWith('ability.'))) return game.world.combat.pickups.spawn(id, pos);
+      if (game.world.infected) return game.world.infected.spawn(id, pos, opts);
+      if (game.world.combat) return game.world.spawnDummy(id, pos, opts);
+      throw new Error('Load an infected or combat scenario before spawning');
     },
     teleport: (id, pos) => {
       if (!Number.isFinite(pos.x) || !Number.isFinite(pos.z)) throw new RangeError('Position must be finite');
@@ -110,7 +112,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       checkpoint: (pos) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.setCheckpoint(pos); },
     },
     setLoadout: (left, right) => { if (!game.world.combat) throw new Error('Load combat-arena before setting loadout'); game.world.combat.setLoadout(left, right); },
-    cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => pending('E07', 'cheats.killAll'), completeObjective: () => pending('E12', 'cheats.completeObjective') },
+    cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) e.health.current = 0; }, completeObjective: () => pending('E12', 'cheats.completeObjective') },
     bot: { start: () => pending('E19', 'bot.start'), stop: () => pending('E19', 'bot.stop'), status: () => pending('E19', 'bot.status') },
     camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose) => game.view.view.cinematic(pose) },
     settings: { set: (patch) => { if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.view.settings(patch); } },

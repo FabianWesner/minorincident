@@ -1,3 +1,4 @@
+import { InfectedSystem } from '../ai/InfectedSystem';
 import { survivor } from '../../data/survivor';
 import { Combat } from '../combat/Combat';
 import { Status } from '../combat/Status';
@@ -22,6 +23,7 @@ export class SimWorld implements Lifecycle {
   districts: DistrictWorld | null = null;
   player: Player | null = null;
   combat: Combat | null = null;
+  infected: InfectedSystem | null = null;
   /** Level-owned records survive player death; scenario unload clears them. */
   mission: GameStateSnapshot['mission'] = null;
   progression: GameStateSnapshot['progression'] = null;
@@ -48,16 +50,18 @@ export class SimWorld implements Lifecycle {
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
-      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1); this.player.prePhysics(this.input, this.tick, !Status.stunned(player, this.tick)); return; }
+      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1); this.player.prePhysics(this.input, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
       body.setLinvel({ x: this.input.move.x * 5, y: body.linvel().y, z: this.input.move.z * 5 }, true);
     }, SimPhase.intent);
     this.events.on('sim.tick', () => this.combat?.effects.moveListeners(), SimPhase.ai);
+    if (definition.infected) { this.infected = new InfectedSystem(this, definition); this.events.on('sim.tick', () => this.infected!.update(), SimPhase.ai); }
     this.events.on('sim.tick', () => this.physics.update(), SimPhase.physics);
     this.events.on('sim.tick', () => {
       if (this.combat) {
         const position = this.physics.playerBody!.translation(); Object.assign(this.entities.get(1)!.transform, position); this.spatial.set(1, position.x, position.z);
+        this.infected?.props.update();
         this.combat.update(this.input);
       }
     }, SimPhase.combat);
@@ -96,10 +100,10 @@ export class SimWorld implements Lifecycle {
   getEntity(id: number): EntitySnapshot | null { return structuredClone(this.entities.get(id) ?? null); }
   query(filter: EntityFilter): EntitySnapshot[] {
     const nearby = filter.within ? new Set(this.spatial.query(filter.within)) : null;
-    return structuredClone(this.entities.values().filter((e) => (!filter.kind || e.kind === filter.kind) && (!filter.archetype || e.archetype === filter.archetype) && (!nearby || nearby.has(e.id))));
+    return structuredClone(this.entities.values().filter((e) => (!filter.detectable || !e.infected?.hidden) && (!filter.kind || e.kind === filter.kind) && (!filter.archetype || e.archetype === filter.archetype) && (!nearby || nearby.has(e.id))));
   }
   getState(): GameStateSnapshot {
-    return { ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities: this.query({}), mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
+    return { ...(this.infected ? { ai: structuredClone(this.infected.snapshot()) } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities: this.query({}), mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
   }
   spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number; reactive?: boolean } = {}): number {
     if (!this.combat) throw new Error('Load combat-arena before spawning dummies');
@@ -118,7 +122,7 @@ export class SimWorld implements Lifecycle {
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
   }
   reset(): void {
-    this.mission = null; this.progression = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.mission = null; this.progression = null; this.infected = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }
   dispose(): void { this.reset(); }

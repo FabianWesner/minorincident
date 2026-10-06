@@ -4,6 +4,7 @@ import type { EntitySnapshot, GameEvent } from '../world/types';
 import type { SimWorld } from '../world/SimWorld';
 export interface DamageEvent {
   attackId: number; actionId: string; sourceId: number; targetId: number; origin: Vec2; direction: Vec2;
+  part?: 'leg'; radius?: number; spread?: number;
   base: number; multiplier: number; type: 'melee' | 'bullet' | 'explosive' | 'status'; knockback: number; stagger: number;
 }
 /** Directional shields only stop front bullets; splash is radial and ignores shields. */
@@ -14,6 +15,10 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot): number {
     const dx = hit.origin.x - target.transform.x, dz = hit.origin.z - target.transform.z, distance = Math.hypot(dx, dz);
     const dot = distance ? (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / distance : 1;
     if (dot >= 0.5 - 1e-8) return 0;
+  }
+  if (target.infected?.special === 'armor' && hit.type !== 'explosive' && hit.type !== 'status') {
+    const dx = hit.origin.x - target.transform.x, dz = hit.origin.z - target.transform.z, distance = Math.hypot(dx, dz);
+    if (!distance || (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / distance >= 0.5) amount *= 0.25;
   }
   if (hit.type !== 'status') amount *= 1 - (target.combat?.armor ?? 0);
   return Math.max(0, amount);
@@ -27,6 +32,7 @@ export class Damage {
     if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction) return 0;
     const wasAlive = target.health.current > 0;
     let amount = damageAmount(hit, target);
+    if (amount > 0 && target.archetype === 'infected.crow' && this.world.infected) amount = this.world.infected.hitFlock(target, hit.origin, hit.direction, hit.radius ?? 30, hit.type === 'explosive' ? 360 : hit.spread ?? 0);
     if (target.id === 1 && this.world.combat?.effects.shielded(target.transform)) amount = 0;
     if (target.id === 1 && this.god) amount = 0;
     if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick);
@@ -38,6 +44,7 @@ export class Damage {
       if (hit.knockback > 0) this.world.knockback(target, hit.direction, hit.knockback);
       if (hit.type === 'melee') this.world.events.emit({ type: 'combat.hit-stop', tick: this.world.tick, sourceId: hit.sourceId, durationMs: 50 });
     }
+    if (hit.part === 'leg' && amount > 0) this.world.infected?.loseLeg(target.id, this.world.infected.gore);
     if (wasAlive && target.health.current === 0) this.world.events.emit({ ...event, type: 'combat.kill' } satisfies GameEvent);
     return amount;
   }

@@ -1,0 +1,32 @@
+
+ RUN  v5.0.3 /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e07-epic
+
+ ❯ tests/sim/ai/navigation.test.ts (8 tests | 1 failed | 7 skipped) 131ms
+   × T-E07-07c @E07 @E07-AC07 scripted cats validate the actual selected perch before spawning 130ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sim/ai/navigation.test.ts > T-E07-07c @E07 @E07-AC07 scripted cats validate the actual selected perch before spawning
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/sim/ai/navigation.test.ts:68:58
+     66| test('T-E07-07c @E07 @E07-AC07 scripted cats validate the actual selec…
+     67|   const w = await arena('animal-lab'), director = w.infected!.director;
+     68|   expect(director.safe('infected.cat', { x: 52, z: 0 })).toBe(false);
+       |                                                          ^
+     69|   director.request('infected.cat', { x: 52, z: 0 });
+     70|   director.request('infected.cat', { x: 52, z: 0 }, { perched: false }…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 skipped (8)
+   Start at  00:52:55
+   Duration  702ms (transform 66%, tests 22%, import 11%)

@@ -4137,7 +4137,8 @@
       "lod1": "public/assets/models/bld.school-elementary.lod1.glb",
       "lod2": "public/assets/models/bld.school-elementary.lod2.glb"
     },
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "script": "assets/bld.school-elementary/build.py"
   },
   {
     "id": "int.gym-cafeteria",
@@ -4197,7 +4198,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/kit.playground/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "script": "assets/kit.playground/build.py"
   },
   {
     "id": "int.supermarket",
@@ -4232,7 +4234,8 @@
       "lod1": "public/assets/models/int.supermarket.lod1.glb",
       "lod2": "public/assets/models/int.supermarket.lod2.glb"
     },
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "script": "assets/int.supermarket/build.py"
   },
   {
     "id": "int.mini-mall",
@@ -4419,7 +4422,8 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/kit.police-checkpoint/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "script": "assets/kit.police-checkpoint/build.py"
   },
   {
     "id": "kit.evac-camp",
@@ -5110,7 +5114,8 @@
     "lods": {
       "lod1": "public/assets/models/npc.civilian-kid.lod1.glb",
       "lod2": "public/assets/models/npc.civilian-kid.lod2.glb"
-    }
+    },
+    "script": "assets/npc.civilian-kid/build.py"
   },
   {
     "id": "npc.civilian-elderly",
@@ -5180,7 +5185,9 @@
       "lod1": "public/assets/models/npc.civilian-elderly.lod1.glb",
       "lod2": "public/assets/models/npc.civilian-elderly.lod2.glb"
     },
-    "sourceScale": 1.27233734
+    "sourceScale": 1.27233734,
+    "script": "assets/npc.civilian-elderly/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "npc.patient-zero-courier",
@@ -5550,7 +5557,8 @@
       "lod2": "public/assets/models/npc.police-officer.lod2.glb"
     },
     "sourceForward": "+X",
-    "sourceScale": 1.2694477414759615
+    "sourceScale": 1.2694477414759615,
+    "script": "assets/npc.police-officer/build.py"
   },
   {
     "id": "npc.paramedic",
@@ -5685,7 +5693,8 @@
     "lods": {
       "lod1": "public/assets/models/npc.firefighter-alive.lod1.glb",
       "lod2": "public/assets/models/npc.firefighter-alive.lod2.glb"
-    }
+    },
+    "script": "assets/npc.firefighter-alive/build.py"
   },
   {
     "id": "npc.national-guard",
@@ -5756,7 +5765,8 @@
     "lods": {
       "lod1": "public/assets/models/npc.national-guard.lod1.glb",
       "lod2": "public/assets/models/npc.national-guard.lod2.glb"
-    }
+    },
+    "script": "assets/npc.national-guard/build.py"
   },
   {
     "id": "npc.survivor-group",
@@ -5884,7 +5894,15 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.helicopter-pilot/model.glb",
+    "script": "assets/npc.helicopter-pilot/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.helicopter-pilot.lod1.glb",
+      "lod2": "public/assets/models/npc.helicopter-pilot.lod2.glb"
+    },
+    "sourceScale": 1.273240958716773
   },
   {
     "id": "wpn.knife",
@@ -6258,7 +6276,10 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "actionCategory": "throwable"
+    "actionCategory": "throwable",
+    "sourceGlb": "assets/thr.flashbang/model.glb",
+    "script": "assets/thr.flashbang/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "abl.shield-bubble",
@@ -6435,7 +6456,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.box-truck/model.glb",
+    "script": "assets/veh.box-truck/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/veh.box-truck.lod1.glb",
+      "lod2": "public/assets/models/veh.box-truck.lod2.glb"
+    }
   },
   {
     "id": "veh.semi-trailer",
@@ -6692,7 +6720,8 @@
     "lods": {
       "lod1": "public/assets/models/bld.tunnel-portal.lod1.glb",
       "lod2": "public/assets/models/bld.tunnel-portal.lod2.glb"
-    }
+    },
+    "script": "assets/bld.tunnel-portal/build.py"
   },
   {
     "id": "bld.power-substation",
