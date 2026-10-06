@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { npcs } from '../../../src/data/npcs';
 import { npcWorld, step, teleport } from './helpers';
 test('T-E08-04 @E08 @E08-AC04 three-minute combat bot: corgi close 95% and no player obstruction', async () => {
@@ -14,7 +15,8 @@ test('T-E08-04 @E08 @E08-AC04 three-minute combat bot: corgi close 95% and no pl
     if (Math.hypot(p.transform.x - corgi.transform.x, p.transform.z - corgi.transform.z) <= 6) close++;
     blocked = Math.hypot(p.transform.x - x, p.transform.z - z) < .005 ? blocked + 1 : 0; maxBlocked = Math.max(maxBlocked, blocked);
   }
-  expect(close / 10800).toBeGreaterThanOrEqual(.95); expect(maxBlocked).toBeLessThanOrEqual(30); expect(corgi.health.current).toBe(100); expect(w.entities.get(1)!.health.current).toBeGreaterThan(0); expect(w.events.events().some(e => e.type === 'combat.attack')).toBe(true); w.dispose();
+  expect(close / 10800).toBeGreaterThanOrEqual(.95); expect(maxBlocked).toBeLessThanOrEqual(30); expect(corgi.health.current).toBe(100); expect(w.entities.get(1)!.health.current).toBeGreaterThan(0); expect(w.events.events().some(e => e.type === 'combat.attack')).toBe(true);
+  mkdirSync('test-results/epics/E08', { recursive: true }); writeFileSync('test-results/epics/E08/companion.json', JSON.stringify({ ticks: 10800, within6mRatio: close / 10800, maxBlockedTicks: maxBlocked, hp: corgi.health.current, playerHp: w.entities.get(1)!.health.current }, null, 2)); w.dispose();
 });
 test('T-E08-05 @E08 @E08-AC05 approaching offscreen threat within 18m barks with unit direction', async () => {
   const w = await npcWorld(); w.infected!.director.camera.halfWidth = 5; w.infected!.director.camera.halfDepth = 5;
