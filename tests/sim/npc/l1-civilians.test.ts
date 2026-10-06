@@ -3,7 +3,7 @@ import { l1v2 } from '../../../src/data/l1v2';
 import { keepsLook } from '../../../src/sim/outbreak/appearance';
 import type { BiteEvent, InfectionEvent } from '../../../src/sim/outbreak/types';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
-import { anchor, groveWorld, infectedCount, mockHunters, releaseFive, step } from './l1-grove';
+import { anchor, groveWorld, infectedCount, releaseFive, step } from './l1-grove';
 
 const civilians = (w: Awaited<ReturnType<typeof groveWorld>>['w']) => [...w.entities.iterate()].filter(e => e.civilian?.l1);
 const park = (w: Awaited<ReturnType<typeof groveWorld>>['w']) => { const p = w.entities.get(1)!; p.transform.x = -82; p.transform.z = -52; w.spatial.set(1, -82, -52); };
@@ -48,10 +48,10 @@ describe('L1 v2 civilians and infection', () => {
     }
   }, 240_000);
 
-  test('T-E19-06 @E19 @E19-AC06 every new infected is caused by a bite event (idle player, systemic spread)', async () => {
+  test('T-E19-06 @E19 @E19-AC06 every new infected is caused by a bite event (idle player, systemic spread, lane C AI)', async () => {
     const at120: number[] = [], at240: number[] = [];
     for (let seed = 1; seed <= 20; seed++) {
-      const { w, outbreak } = await groveWorld(seed); park(w); mockHunters(w, outbreak);
+      const { w, outbreak } = await groveWorld(seed); park(w); expect(outbreak.aiBites()).toBe(true);
       step(w, 300); releaseFive(w); expect(infectedCount(w)).toBe(5);
       const born = new Set<number>(), bitten = new Set<number>();
       w.events.on('outbreak.infection', e => { if (e.type === 'outbreak.infection' && e.phase === 'infected') born.add(e.entityId); });
