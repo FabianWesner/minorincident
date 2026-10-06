@@ -14,7 +14,7 @@ export class Lookdev extends Group {
   readonly shadowProbe = new Object3D();
   private readonly geometries = new Set<BufferGeometry>();
   private readonly instances: InstancedGroup[] = [];
-  constructor(private readonly materials: Materials, occlusion: Occlusion) {
+  constructor(private readonly materials: Materials, occlusion: Occlusion, characters = true) {
     super(); this.name = 'lookdev';
     this.box(this, 'grass', [65, 0.2, 65], [0, -0.12, 0]);
     this.box(this, 'asphalt', [7, 0.08, 46], [0, 0, 0]);
@@ -23,9 +23,9 @@ export class Lookdev extends Group {
     this.house(-7, -4, 'schoolBusYellow', occlusion); this.house(8.5, -7, 'brick', occlusion);
     // Fixed sidewalk point beneath the house's cast shadow.
     this.shadowProbe.position.set(-4.5, 0.075, -5.5); this.add(this.shadowProbe);
-    this.character(this.player, false); this.player.traverse((c) => { if (c instanceof Mesh) { c.material = materials.unique((c.material as import('./PaletteMaterial').PaletteMaterial).token); this.playerMeshes.push(c); } }); this.add(this.player);
+    if (characters) { this.character(this.player, false); this.player.traverse((c) => { if (c instanceof Mesh) { c.material = materials.unique((c.material as import('./PaletteMaterial').PaletteMaterial).token); this.playerMeshes.push(c); } }); this.add(this.player);
     const infected = new Group(); this.character(infected, true);
-    this.batch(infected, infectedPositions.map(([x, z], i) => this.placement(x, 0, z, i * 0.8)));
+    this.batch(infected, infectedPositions.map(([x, z], i) => this.placement(x, 0, z, i * 0.8))); }
     const fence = new Group();
     for (const x of [-0.4, 0.4]) this.box(fence, 'picketWhite', [0.16, 1.0, 0.12], [x, 0.5, 0]);
     for (const y of [0.3, 0.7]) this.box(fence, 'picketWhite', [1, 0.12, 0.14], [0, y, -0.03]);

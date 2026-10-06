@@ -1,17 +1,17 @@
 import { ticks, type StatusDef, type StatusKind } from '../../data/actions/schema';
 import type { EntitySnapshot } from '../world/types';
 import type { SimWorld } from '../world/SimWorld';
-export interface StatusState { kind: StatusKind; stacks: number; expires: number; nextDot: number; def: StatusDef; sourceId: number; actionId: string }
+export interface StatusState { attackId?: number; kind: StatusKind; stacks: number; expires: number; nextDot: number; def: StatusDef; sourceId: number; actionId: string }
 export interface WaterZone { x: number; z: number; radius: number }
 /** Same-kind applications refresh duration and cap stacks; water removes burning before its DoT. */
 export class Status {
   readonly water: WaterZone[] = [];
   constructor(private readonly world: SimWorld) {}
-  apply(target: EntitySnapshot, def: StatusDef, sourceId: number, actionId: string): void {
-    if (!target.combat || target.health.current <= 0) return;
+  apply(target: EntitySnapshot, def: StatusDef, sourceId: number, actionId: string, attackId = 0): void {
+    if (!target.combat || target.health.current <= 0 || (target.infected?.special === 'fire-immune' && def.kind === 'burning') || (target.archetype === 'infected.hazmat' && def.kind === 'toxic')) return;
     const statuses = target.combat.statuses, existing = statuses.find((status) => status.kind === def.kind);
     if (existing) { existing.stacks = Math.min(def.maxStacks, existing.stacks + 1); existing.expires = this.world.tick + ticks(def.duration); }
-    else statuses.push({ kind: def.kind, stacks: 1, expires: this.world.tick + ticks(def.duration), nextDot: this.world.tick + 60, def, sourceId, actionId });
+    else statuses.push({ attackId, kind: def.kind, stacks: 1, expires: this.world.tick + ticks(def.duration), nextDot: this.world.tick + 60, def, sourceId, actionId });
     if (def.kind === 'stunned') target.combat.attacking = false;
   }
   update(): void {
@@ -25,7 +25,7 @@ export class Status {
         const intervalEnd = Math.min(status.nextDot, status.expires);
         if (this.world.tick >= intervalEnd && status.def.dps > 0) {
           const duration = (intervalEnd - (status.nextDot - 60)) / 60;
-          this.world.combat!.damage.apply({ attackId: 0, actionId: status.actionId, sourceId: status.sourceId, targetId: entity.id, origin: entity.transform, direction: { x: 0, z: 0 }, base: status.def.dps * status.stacks * duration, multiplier: 1, type: 'status', knockback: 0, stagger: 0 });
+          this.world.combat!.damage.apply({ attackId: status.attackId ?? 0, actionId: status.actionId, sourceId: status.sourceId, targetId: entity.id, origin: entity.transform, direction: { x: 0, z: 0 }, base: status.def.dps * status.stacks * duration, multiplier: 1, type: 'status', knockback: 0, stagger: 0 });
           status.nextDot += 60;
         }
         if (this.world.tick >= status.expires) statuses.splice(i, 1);
