@@ -10,10 +10,13 @@ import { launchArgs, measure, type LoadRun } from '../../tools/performance/load-
 // Mac runs many jobs at once (timings carry a CPU-load factor; bytes and requests do not).
 const output = 'test-results/load';
 const budgets = {
-  // Bytes are deterministic for a build: fail when the critical download grows by > 25 %.
-  criticalBytes: 19_000_000,
-  criticalRequests: 200,
-  bootBytes: 4_500_000,
+  // Unique bytes downloaded before the first playable frame (~15.7 MB at introduction, baseline
+  // 33 MB). Fails when the critical download grows by > 15 %.
+  criticalBytes: 18_000_000,
+  // Includes the menu-time prefetch of the same files (served from the HTTP cache on the second request).
+  criticalRequests: 300,
+  // Code payload (HTML, CSS, JS, WASM) of a cold visit.
+  codeBytes: 2_000_000,
   // Start -> playable, generous multiples of the targets (3 s desktop, 6 s 4G, 1.5 s warm).
   desktopCold: 30_000, mobileCold: 45_000, warm: 25_000,
 };
@@ -47,11 +50,14 @@ test('T-LOAD-01 @perf @load production L1 load: critical download, title and Sta
   writeFileSync(`${output}/load.json`, JSON.stringify({ at: new Date().toISOString(), protocol: tls ? 'h2' : 'http/1.1', budgets, runs: summary }, null, 2) + '\n');
   const [desktopCold, desktopWarm, mobileCold] = runs;
   for (const run of runs) expect(run.errors.filter(e => e.startsWith('pageerror')), `${run.profile} ${run.cache}`).toEqual([]);
-  expect(desktopCold.criticalBytes).toBeLessThanOrEqual(budgets.criticalBytes);
+  expect(desktopCold.uniqueCriticalBytes).toBeLessThanOrEqual(budgets.criticalBytes);
   expect(desktopCold.criticalRequests).toBeLessThanOrEqual(budgets.criticalRequests);
-  expect(desktopCold.bootBytes).toBeLessThanOrEqual(budgets.bootBytes);
-  // Warm visits must come from the HTTP cache: hashed bundles and versioned assets need no transfer.
-  expect(desktopWarm.criticalBytes).toBeLessThan(200_000);
+  const code = ['html/css', 'js', 'js-rapier', 'wasm'].reduce((n, kind) => n + (desktopCold.byKind[kind]?.bytes ?? 0), 0);
+  expect(code).toBeLessThanOrEqual(budgets.codeBytes);
+  // Warm visits must come from the HTTP cache: hashed bundles and versioned assets need no transfer
+  // (sound banks are fetched unversioned by src/audio and may revalidate or refetch).
+  const audioBytes = desktopWarm.files.filter(f => f.url.startsWith('/assets/audio/')).reduce((n, f) => n + f.bytes, 0);
+  expect(desktopWarm.criticalBytes - audioBytes).toBeLessThan(200_000);
   expect(desktopCold.startToPlayableMs).toBeLessThanOrEqual(budgets.desktopCold);
   expect(mobileCold.startToPlayableMs).toBeLessThanOrEqual(budgets.mobileCold);
   expect(desktopWarm.startToPlayableMs).toBeLessThanOrEqual(budgets.warm);
