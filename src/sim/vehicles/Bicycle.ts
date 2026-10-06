@@ -97,7 +97,7 @@ export class Bicycle {
     // The attack buttons are disabled while riding; a coasting bicycle with no input keeps its heading.
     const off = { down: false, held: false, up: false };
     const next: InputFrame = { ...frame, move: { x: Math.cos(b.heading) * m, z: Math.sin(b.heading) * m }, left: off, right: { ...off }, selector: 0, interact: false };
-    delete next.attackTarget;
+    delete next.attackTarget; delete next.navigation; // the bicycle has its own acceleration and turning model
     return next;
   }
   /** Keeps the parked/ridden bicycle on the rider after physics. */

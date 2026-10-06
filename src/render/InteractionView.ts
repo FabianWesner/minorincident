@@ -27,7 +27,7 @@ export class InteractionView extends Group {
   private readonly box = new BoxGeometry(1, 1, 1);
   private readonly led = new SphereGeometry(.06, 8, 6);
   private readonly brush = new CylinderGeometry(.18, .18, 2.2, 8);
-  private readonly foam = new MeshBasicNodeMaterial({ color: '#f4fbff', transparent: true, opacity: .45, depthWrite: false });
+  private readonly foam = new MeshBasicNodeMaterial({ color: '#f4fbff', transparent: true, opacity: .28, depthWrite: false });
   private readonly black = new MeshBasicNodeMaterial({ color: '#151e30', depthTest: false, depthWrite: false, transparent: true });
   private readonly white = new MeshBasicNodeMaterial({ color: '#ffffff', depthTest: false, depthWrite: false, transparent: true });
   private readonly teal = new MeshBasicNodeMaterial({ color: '#58ffe0', depthTest: false, depthWrite: false, transparent: true });
@@ -84,8 +84,8 @@ export class InteractionView extends Group {
       const m = new Mesh(this.box, material); m.scale.set(w, h, d); m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; parent.add(m); return m;
     };
     if (kind === 'gate') {
-      const hinge = new Group(); hinge.name = 'hinge'; hinge.position.x = -.9; g.add(hinge);
-      box(1.8, 1.15, .08, this.materials.get('woodWarm'), .9, .6, 0, hinge); box(1.8, .08, .1, this.materials.get('picketWhite'), .9, 1.12, 0, hinge); box(.08, 1.15, .1, this.materials.get('picketWhite'), .02, .6, 0, hinge);
+      // Real model (hinged `gate` node, long axis Z) is attached by `attachGate`; this wrapper turns it onto the entity's wall axis.
+      const wrap = new Group(); wrap.name = 'gateModel'; wrap.rotation.y = Math.PI / 2; g.add(wrap);
     } else if (kind === 'dumpster') {
       const rail = Math.abs((e.toy?.to.z ?? 0) - (e.toy?.from.z ?? 0)) > Math.abs((e.toy?.to.x ?? 0) - (e.toy?.from.x ?? 0));
       const body = new Group(); body.rotation.y = rail ? 0 : Math.PI / 2; g.add(body);
@@ -102,6 +102,20 @@ export class InteractionView extends Group {
     }
     return g;
   }
+  /** Swaps the real yard-gate / car-wash models into a toy object once loaded (code art stays if a load fails). */
+  private async attachModels(e: EntitySnapshot, object: Group): Promise<void> {
+    const wrap = object.getObjectByName('gateModel');
+    if (wrap) { const model = await this.registry.loadAsset('prop.yard-gate', this.low ? 'lod1' : 'lod0'); if (!this.disposed) wrap.add(model); return; }
+    const foam = object.getObjectByName('foam');
+    if (foam && e.toy?.kind === 'carwash') {
+      // The real kit's curtain and brushes (kit frame at the bay centre): the layout's static kit stays the building.
+      const kit = await this.registry.loadAsset('kit.car-wash', this.low ? 'lod1' : 'lod0'); if (this.disposed) return;
+      const moved = new Group(); moved.name = 'kitParts';
+      for (const name of ['curtain', 'brush_a', 'brush_b', 'brush_c']) { const n = kit.getObjectByName(name); if (n) { n.name = name.startsWith('brush') ? 'brush' : name; moved.add(n); } }
+      for (const c of foam.children.filter(c => c.name === 'brush')) c.removeFromParent();
+      foam.add(moved);
+    }
+  }
   private animateToy(e: EntitySnapshot, object: Object3D): void {
     const tick = this.world.tick;
     if (e.toy?.kind === 'car-alarm') {
@@ -112,13 +126,13 @@ export class InteractionView extends Group {
       if (!e.interactable!.enabled && !active) led.visible = false;
     } else if (e.toy?.kind === 'carwash') {
       const foam = object.getObjectByName('foam')!, active = tick < e.toy.until; foam.visible = active;
-      if (active) for (const c of foam.children) if (c.name === 'brush') c.rotation.y += .3;
+      if (active) foam.traverse(c => { if (c.name === 'brush') c.rotation.y += .3; });
     } else if (!e.toy && e.interactable) {
-      const hinge = object.getObjectByName('hinge'); if (hinge) hinge.rotation.y += ((e.interactable.open ? -Math.PI / 2 : 0) - hinge.rotation.y) * .25;
+      const hinge = object.getObjectByName('gate'); if (hinge) hinge.rotation.y += ((e.interactable.open ? -Math.PI / 2 : 0) - hinge.rotation.y) * .25;
     }
   }
   private async create(e: EntitySnapshot, lod: AssetQuality): Promise<Object3D> {
-    if (e.toy || this.world.toys?.gateIds.includes(e.id)) return this.toyObject(e);
+    if (e.toy || this.world.toys?.gateIds.includes(e.id)) { const object = this.toyObject(e); await this.attachModels(e, object); return object; }
     const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined, id = this.assetId(e);
     if (id) {
       const def = this.registry.definition(id), canonical = (lod === 'lod1' || lod === 'lod2') && !def.lods?.[lod] ? 'lod0' : lod;

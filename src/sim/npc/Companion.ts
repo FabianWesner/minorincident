@@ -65,8 +65,8 @@ export class Companion {
         if (distance < 2.05 && ai.nav.visible(e.transform, player.transform, .35)) c.following = false;
         const riding = this.world.vehicles?.bicycle.riding === true, frozen = this.safe && this.warn(e, c, player.transform) && distance < 6;
         if (frozen) { if (c.velocity) c.velocity.x = c.velocity.z = 0; }
-        // While the player rides, the corgi's speed cap rises to the bicycle speed and it runs alongside (spec 5.10).
-        else if (c.following) this.world.npcs!.move(e, player.transform, riding ? Math.min(l1v2.corgi.riderSpeedCapMs, Math.hypot(player.motion?.velocity.x ?? 0, player.motion?.velocity.z ?? 0, 4.5) + Math.max(0, distance - 3) * 2) : Math.min(8, 4.5 + Math.max(0, distance - 4) * 2), c, riding ? 1.5 : 2);
+        // While the player rides, the corgi's speed cap rises to 7.5 m/s (a short 15 % catch-up when it falls > 4 m behind) and it runs alongside (spec 5.10).
+        else if (c.following) this.world.npcs!.move(e, player.transform, riding ? Math.min(l1v2.corgi.riderSpeedCapMs * (distance > 4 ? 1.15 : 1), l1v2.corgi.riderSpeedCapMs * .9 + Math.max(0, distance - 3) * 2) : Math.min(8, 4.5 + Math.max(0, distance - 4) * 2), c, riding ? 1.5 : 2);
         else if (c.velocity) c.velocity.x = c.velocity.z = 0;
       }
       if (!this.safe && this.world.tick >= c.barkAt) for (const enemy of ai.active) {
@@ -103,7 +103,7 @@ export class Companion {
     if (stage === 'bark' && this.world.tick >= c.barkAt) {
       c.barkAt = this.world.tick + tuning.barkIntervalS * 60;
       this.emitWarn(e, threat.id, 'bark', best, { x: dx / length, z: dz / length });
-      this.world.events.emit({ type: 'corgi.sound', tick: this.world.tick, sourceId: e.id, position: { ...e.transform }, kind: 'warning' });
+      // No `corgi.sound`/`corgi.bark` here: the HUD turns those into a 'Woof!' text bubble, and the warnings carry no UI text.
     }
     return true;
   }
