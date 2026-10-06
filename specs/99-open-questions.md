@@ -6,7 +6,7 @@ All open questions were answered by the product owner on **2026-10-05**. The spe
 | --- | --- | --- | --- |
 | Q1 | Is the corgi part of the game? | **Yes, as a companion that can't die.** It warns of off-screen threats, fetches pickups, hides when hurt, and "corgi lure" is a slottable ability. | 00 §4, E08, E14 |
 | Q2 | Mockup's 4 ability cards vs. 2 sides + selector | **2 sides + selector.** The HUD shows LEFT/RIGHT cards with rack strips. | 00 §5, 01 §8, E05, E14 |
-| Q3 | Mouse-only movement | **Cursor steering with a 1.2 m dead-zone ring**; aim = toward the cursor | 00 §5.3, E03 |
+| Q3 | Mouse movement | **Revised 2026-10-06 (product owner): click-to-move** (click a place → walk there; LMB/RMB on a target = attack 1/2; wheel = weapon of the last-clicked side; middle-click = extra action). Cursor steering is dropped. | 00 §5.3, E03, E09 |
 | Q4 | Interaction without an extra button | **Stand-to-interact (radial fill)**, plus instant interact with **`E`** and with **middle-click (wheel click)** when the mouse has one | 00 §5.2–5.3, E03-AC12, E11-AC01 |
 | Q5 | Ammo | **Infinite reserve + magazines and reloads**; throwables use recharging charges | 00 §6.1, E05, E06 |
 | Q6 | Story specifics | **Keep as proposed** (Patient Zero courier + medical cooler, brother + Mrs. Alvarez, Civic Center safe zone, river bridge, helicopter extraction) | 00 §11, E19–E24 |
