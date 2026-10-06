@@ -43,3 +43,30 @@ offline renders. `tools/audio/measure.ts` independently measures these WAVs with
 FFT/autocorrelation/Schroeder decay and FFmpeg EBU R128 with true-peak analysis.
 The traversal bot covers every currently authored L1 objective; the E19 campaign
 mission-completion bot remains a separate contract.
+# Recorded score and Foley
+
+The adaptive score streams stereo recordings via `StreamedMusic` into the existing
+music bus. `MusicDirector` chooses calm, tension, combat and aftermath at bar
+boundaries; two-second fades wait for the incoming recording to start. Objective
+events begin the diner tension/stinger and store combat; completed levels resolve
+to aftermath. Blur, mute, hidden, freeze and interruption pause media as well as
+the AudioContext. Filtered recorded excerpts supply low-level accent layers.
+
+`AudioRegistry` chooses four sprite variants without immediate repetition and
+applies ±1 dB gain and ±3% pitch variation to core Foley. Telegraph gain/pitch
+remain stable for information and timing. Cue logs retain logical cue IDs and
+record the physical `variant` slice. Hit events play flesh impacts at the target;
+swing events play separate recorded bamboo swooshes.
+
+Rebuild with `npx tsx tools/audio/build.ts` (FFmpeg, curl, bsdtar required). Masters
+are cached outside git at `AUDIO_MASTER_CACHE` or the system temporary directory.
+`assets/audio/imports.json` pins downloads, archive members and hashes, and maps
+every recorded sprite slice. The builder rejects changed, silent or truncated
+masters and writes both license ledgers. `--score-only` rebuilds streamed music;
+category arguments rebuild selected sprites while preserving all provenance.
+
+The headless live capture runs with:
+`E2E_PORT=3351 sh tools/e2e-lock.sh npx playwright test tests/e2e/audio/preview.spec.ts --project=chromium --workers=1`.
+It taps the final production PCM into WAVs without audible OS output, exercises
+the authored diner incident and store fight, and exports loudness/peak/gap/log
+measurements alongside three previews. `AUDIO_PREVIEW_DIR` overrides their location.

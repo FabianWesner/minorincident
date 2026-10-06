@@ -79,7 +79,8 @@ export interface SSTestApi {
     map(map:import('../audio/acoustics').AcousticMap):void;
     emitters():{id:number;cue:string;priority:number;gain:number;rate:number;cutoff:number;position:import('../data/audioEvents').SoundPosition|null;panner:string|null;loop:boolean}[];
     render(request:import('./audioHarness').AudioRenderRequest):Promise<import('./audioHarness').AudioRenderResult>;
-    decode(format:'webm'|'m4a'):Promise<{id:string;frames:number}[]>;
+    /** Decode and scan each sprite slice; peak detects empty imports as well as truncated grids. */
+    decode(format:'webm'|'m4a'):Promise<{id:string;frames:number;peak:number}[]>;
     profile():{p50Ms:number;p95Ms:number;maxVoices:number;limit:number;ticks:number};
     l1Bot():Promise<Awaited<ReturnType<typeof runAudioL1Bot>>>;
     interrupt():Promise<void>;
@@ -177,7 +178,15 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       decode:async format=>{
         const {audioCategories,audioCues,audioFile}=await import('../data/audioCues');
         const result=[];
-        for(const category of audioCategories){const response=await fetch(audioFile(category,format));const buffer=await game.audio.context.decodeAudioData(await response.arrayBuffer());for(const cue of Object.values(audioCues))if(cue.category===category){if(buffer.duration+0.03<cue.offset+cue.duration)throw new Error(`Sprite decode truncated: ${cue.id}`);result.push({id:cue.id,frames:buffer.length});}}
+        for(const category of audioCategories){
+          const response=await fetch(audioFile(category,format));const buffer=await game.audio.context.decodeAudioData(await response.arrayBuffer());
+          for(const cue of Object.values(audioCues))if(cue.category===category){
+            if(buffer.duration+0.03<cue.offset+cue.duration)throw new Error(`Sprite decode truncated: ${cue.id}`);
+            let peak=0;const samples=buffer.getChannelData(0),start=Math.round(cue.offset*buffer.sampleRate),end=Math.min(samples.length,Math.round((cue.offset+cue.duration)*buffer.sampleRate));
+            for(let i=start;i<end;i++)peak=Math.max(peak,Math.abs(samples[i]));
+            result.push({id:cue.id,frames:end-start,peak});
+          }
+        }
         return result;
       },
       interrupt:async()=>{

@@ -20,6 +20,28 @@ test('T-E16-04 @E16 @E16-AC04 storm culls lowest priorities first and never exce
         expect(limiter.voices.size).toBe(0);
     }
 });
+test('@E16 score follows calm, incident tension, combat and sustained-quiet aftermath on the bar grid', () => {
+    const music = new MusicDirector('L1');
+    music.update(0, { alerted: 0 });
+    expect(music.state).toBe('calm');
+    music.update(0.2, { alerted: 0, incident: true });
+    expect(music.pending?.state).toBe('tension');
+    music.update(2, { alerted: 0, incident: true });
+    expect(music.state).toBe('tension');
+    expect(music.layers).toContain('pulse');
+    music.update(2.1, { alerted: 10, incident: true });
+    music.update(4, { alerted: 10, incident: true });
+    expect(music.state).toBe('combat');
+    music.update(4.1, { alerted: 0, incident: true });
+    music.update(14.1, { alerted: 0, incident: true });
+    music.update(16, { alerted: 0, incident: true });
+    expect(music.state).toBe('aftermath');
+    expect(music.layers).toEqual(['base']);
+    music.update(16.2, { alerted: 20, complete: true });
+    music.update(18, { alerted: 20, complete: true });
+    expect(music.state).toBe('aftermath');
+    for (const transition of music.transitions) expect(transition.time % music.bar).toBeCloseTo(0);
+});
 test('T-E16-05 @E16 @E16-AC05 150 infected yield 3–6 true centroids, four close vocals, monotone gain', () => {
     const horde = new HordeClusters(), positions = Array.from({ length: 150 }, (_, id) => ({ id, x: (id % 5) * 8 - 16 + (id % 3) * 0.1, z: Math.floor(id / 5) % 5 * 8 - 16 }));
     horde.update(positions, { x: 0, z: 0 });
