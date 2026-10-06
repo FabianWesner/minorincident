@@ -61,12 +61,15 @@ Doors, cars, generators, and rescue targets use **stand-to-interact**. Standing 
 
 ### 5.3 Bindings
 
-| Scheme | Move | Aim | Left / Right action | Selector | Interact |
+Classic action-RPG controls (product owner decision, 2026-10-06). The survivor only moves when the player asks it to; attacks never cause movement except the short melee lunge in §6.
+
+| Scheme | Move | Left action (attack 1) | Right action (attack 2) | Weapon switch | Extra action (interact, enter/exit car) |
 | --- | --- | --- | --- | --- | --- |
-| **Mouse-only** | The cursor steers. The survivor walks toward the cursor when it is outside a dead-zone ring (radius 1.2 m around the survivor); speed scales with distance up to 4 m. Inside the ring the survivor stands still and only turns. | Direction from the survivor to the cursor | LMB / RMB | Wheel | Middle-click or stand |
-| **Mouse + keyboard** | WASD (camera-relative) | Cursor | LMB / RMB (also `J` / `K`) | Wheel or `Q` | `E`, middle-click, or stand |
-| **Keyboard-only** | WASD | Arrow keys. Aim rotates at 360°/s; tapping an arrow snaps to that direction. | `J` / `K` (also `Space` / `Shift`) | `Q` / `L` | `E` or stand |
-| **Mobile** | Floating left virtual stick | Drag from an action button (press–drag–release aims and fires). A tap fires along the last aim with aim assist. | Two large buttons, bottom right | Small selector button above them | Stand-to-interact |
+| **Mouse** | **Click a place → the survivor walks there** (click-to-move with a ground marker; holding LMB on the ground keeps walking toward the cursor). Clicking a new place re-targets. | **LMB on an infected/target** → walk into range if needed, then attack with the LEFT action; LMB held on a target repeats | **RMB on an infected/target** → RIGHT action at it (approach if out of range); RMB on the ground fires/throws the RIGHT action toward that point **without moving** | **Wheel** cycles the weapons of the side that was clicked last (after an LMB attack the wheel switches LEFT, after RMB it switches RIGHT) | **Middle-click** (on a car, door, generator, rescue target — or anywhere near one) |
+| **Keyboard** (with or without mouse) | `W` `A` `S` `D` (camera-relative) | `J` (also LMB when a mouse is present) | `K` (also RMB) | `Q` cycles the last-used side | `F` (also `E`) |
+| **Mobile** | Bruno-style touch movement: press and drag anywhere on the left part of the screen; a floating stick appears under the finger | Large **LEFT** button (tap = attack nearest target in front with aim assist; press–drag–release aims) | Large **RIGHT** button (same) | Swipe up on the LEFT/RIGHT button cycles that side's weapon | Third button **ACTION** (enabled only near something interactable; also stand-to-interact) |
+
+Aim: with a mouse the cursor aims; with keyboard only, attacks target the nearest infected in the facing direction (aim assist); on touch, aim assist unless the player drags from an action button. Pause is `Esc`, `P` or the small on-screen pause button (not one of the three mobile buttons).
 
 Gamepad support is **not in v1** (Q17). All keys can be rebound. Click and scroll are mirrored to keys for players with a weak mouse. Pause is `Esc`, `P`, or the on-screen pause button.
 
