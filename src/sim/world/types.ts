@@ -5,6 +5,11 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 /** Plain components only; physics handles and render objects are never serialized. */
 export interface EntitySnapshot {
   id: number;
+  civilian?: import('../npc/types').Civilian;
+  companion?: import('../npc/types').Companion;
+  escort?: import('../npc/types').Escort;
+  traffic?: import('../npc/types').Traffic;
+  convoy?: import('../npc/types').Convoy;
   infected?: import('../ai/types').InfectedState;
   interactable?: import('../interact/Interactables').Interactable;
   inventory?: string[];
@@ -34,7 +39,8 @@ export interface EntitySnapshot {
 /** Presentation events contain only plain authored geometry; views never write back. */
 export type TelegraphKind = 'lunge' | 'charge' | 'splash' | 'bloated';
 export type EffectKind = 'explosion' | 'fire' | 'smoke' | 'toxic' | 'electric' | 'screamer' | 'objective' | 'pickup' | 'ash' | 'vehicle-smoke' | 'vehicle-fire';
-export type GameEvent = import('../../data/audioEvents').AudioSystemEvent
+export type GameEvent = import('../npc/types').NpcEvent
+  | import('../../data/audioEvents').AudioSystemEvent
   | { tick: number; type: 'civilian.grabbed'; sourceId: number; targetId: number; variant: string; rescueUntil: number }
   | { tick: number; type: 'infected.prop-thrown'; sourceId: number; propId: number; attackId: number }
   | { tick: number; type: 'telegraph'; sourceId: number; attackId: number; special: string; duration: number }

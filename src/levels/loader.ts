@@ -1,3 +1,4 @@
+import { npcScenarios } from '../../tests/fixtures/scenarios/npc';
 import { infectedScenarios } from '../../tests/fixtures/scenarios/infected';
 import { driveCourse } from '../../tests/fixtures/scenarios/drive-course';
 import { vfxScenarios } from '../../tests/fixtures/scenarios/vfx';
@@ -22,6 +23,7 @@ export interface ScenarioDefinition extends InteractionPlacements {
   survivor?: boolean;
   combat?: boolean;
   infected?: boolean;
+  npcs?: { ambient?: number; companion?: boolean; level?: number; tier?: 'high' | 'low' };
   navigation?: import('../sim/ai/DistrictNavigation').NavDistrict[];
   perches?: { x: number; z: number; y: number }[];
   walls?: { x: number; y: number; z: number; halfX: number; halfY: number; halfZ: number }[];
@@ -29,7 +31,7 @@ export interface ScenarioDefinition extends InteractionPlacements {
   player: { x: number; y: number; z: number };
 }
 export function loadScenarioDefinition(name: string): ScenarioDefinition {
-  const definition = name === 'drive-course' ? driveCourse : name === 'interact-yard' ? interactYard : name === 'mission-sandbox' ? { ...combatArena, name } : name === 'combat-arena' ? combatArena : name === 'empty' ? empty : name === 'lookdev' ? lookdev : survivorScenarios[name] ?? infectedScenarios[name] ?? vfxScenarios[name] ?? null;
+  const definition = name === 'drive-course' ? driveCourse : name === 'interact-yard' ? interactYard : name === 'mission-sandbox' ? { ...combatArena, name } : name === 'combat-arena' ? combatArena : name === 'empty' ? empty : name === 'lookdev' ? lookdev : npcScenarios[name] ?? survivorScenarios[name] ?? infectedScenarios[name] ?? vfxScenarios[name] ?? null;
   if (!definition) throw new Error(`Unknown scenario: ${name}`);
   if (definition.ground.width <= 0 || definition.ground.depth <= 0 || !Object.values(definition.player).every(Number.isFinite)) throw new Error(`Invalid ${name} scenario`);
   return structuredClone(definition);
