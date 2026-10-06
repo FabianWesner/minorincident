@@ -85,7 +85,7 @@ test('S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserv
     mkdirSync(root, { recursive: true });
     writeFileSync(`${root}/background-${info.project.name}.json`, JSON.stringify(rows, null, 2) + '\n');
 });
-test('T-E16-18 @E16 @E16-AC18 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend', async ({ page }, info) => {
+test('T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend', async ({ page }, info) => {
     await boot(page);
     expect(await page.evaluate(() => window.__SS__!.audio.snapshot().unlocked)).toBe(false);
     await page.evaluate(() => { (window as unknown as {
@@ -95,7 +95,7 @@ test('T-E16-18 @E16 @E16-AC18 @mobile first real gesture unlocks; haptics/settin
         }).vibrations.push(p); return true; } }); });
     await page.mouse.click(200, 250);
     await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().state)).toBe('running');
-    await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('horde-arena'); a.pause(); a.settings.set({ haptics: true }); a.survivor.damage(25); a.audio.emit({ type: 'explosion.beat', tick: 0, sourceId: 2, beat: 'crack', size: 'large', position: { x: 15, z: 0 } }); a.audio.emit({ type: 'vehicle.sound', tick: 0, sourceId: 3, phase: 'crash', position: { x: 2, z: 0 }, velocity: { x: 0, z: 0 }, rpm: 0, speed: 0, health: 1, impulse: 30 }); });
+    await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('survivor'); a.pause(); a.settings.set({ haptics: true }); a.survivor.damage(25); a.audio.emit({ type: 'explosion.beat', tick: 0, sourceId: 2, beat: 'crack', size: 'large', position: { x: 15, z: 0 } }); a.audio.emit({ type: 'vehicle.sound', tick: 0, sourceId: 3, phase: 'crash', position: { x: 2, z: 0 }, velocity: { x: 0, z: 0 }, rpm: 0, speed: 0, health: 1, impulse: 30 }); });
     expect(await page.evaluate(() => (window as unknown as {
         vibrations: unknown[];
     }).vibrations)).toHaveLength(3);
@@ -125,6 +125,16 @@ test('T-E16-18 @E16 @E16-AC18 @mobile first real gesture unlocks; haptics/settin
     await page.evaluate(() => { const a = window.__SS__!; a.settings.set({ captions: true, noiseRings: true }); a.audio.emit({ type: 'dialogue', tick: 0, text: 'Safe zone ahead.', position: { x: -6, z: 6 } }); a.audio.emit({ type: 'noise', tick: 0, sourceId: 1, actionId: 'weapon.pistol', kind: 'ranged', position: { x: 0, y: 0.7, z: 0 }, radius: 25, loudness: 1 }); });
     await page.evaluate(() => window.__SS__!.audio.emit({ type: 'noise', tick: 0, sourceId: 1, actionId: 'weapon.fists', kind: 'melee', position: { x: 0, y: 0.7, z: 0 }, radius: 6, loudness: 1 }));
     await page.locator('[data-audio-controls]').evaluate(e => (e as HTMLDetailsElement).open = true);
+    const layout = await page.evaluate(() => {
+        const caption = document.querySelector('[data-audio-captions]')!.getBoundingClientRect();
+        const overlap = [...document.querySelectorAll('[data-touch-action]')].some(button => {
+            const b = button.getBoundingClientRect();
+            return caption.left < b.right && caption.right > b.left && caption.top < b.bottom && caption.bottom > b.top;
+        });
+        return { overlap, inFrame: caption.left >= 0 && caption.top >= 0 && caption.right <= innerWidth && caption.bottom <= innerHeight };
+    });
+    expect(layout.overlap).toBe(false);
+    expect(layout.inFrame).toBe(true);
     mkdirSync(root, { recursive: true });
     await page.screenshot({ path: `${root}/accessibility-${info.project.name}.png` });
 });

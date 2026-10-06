@@ -84,6 +84,7 @@ export class AudioService implements Lifecycle {
     private externalIntensity: MusicIntensity | null = null;
     private vehicleSpeed = 0;
     private readonly captionElement = document.createElement('output');
+    private readonly captionStyle = document.createElement('style');
     private readonly ringElement = document.createElement('div');
     private readonly controls = document.createElement('details');
     private readonly pauseElement = document.createElement('div');
@@ -148,8 +149,12 @@ export class AudioService implements Lifecycle {
         this.captionElement.dataset.audioCaptions = '';
         this.captionElement.setAttribute('role', 'status');
         this.captionElement.setAttribute('aria-live', 'polite');
-        this.captionElement.style.cssText = 'position:fixed;bottom:104px;left:50%;transform:translateX(-50%);max-width:90vw;color:#fff;background:#182333eb;padding:10px;border-radius:8px;font:16px sans-serif;pointer-events:none;white-space:pre-line';
+        this.captionElement.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);color:#fff;background:#182333eb;padding:10px;border-radius:8px;font:16px sans-serif;pointer-events:none;white-space:pre-line';
         this.captionElement.hidden = true;
+        this.captionStyle.textContent = `[data-audio-captions]{bottom:104px;width:max-content;max-width:90vw;box-sizing:border-box}
+            @media(pointer:coarse){[data-audio-captions]{bottom:168px}}
+            @media(pointer:coarse) and (orientation:landscape){[data-audio-captions]{bottom:12px;max-width:calc(100vw - 360px)}}`;
+        document.head.append(this.captionStyle);
         this.ringElement.dataset.noiseRings = '';
         this.ringElement.style.cssText = 'position:fixed;inset:0;pointer-events:none;overflow:hidden';
         this.controls.dataset.audioControls = '';
@@ -746,5 +751,5 @@ export class AudioService implements Lifecycle {
         this.vehicleSpeed = 0;
         this.quietMusicUntil = 0;
     }
-    dispose(): void { this.disposed = true; this.reset(); document.removeEventListener('pointerdown', this.gesture); document.removeEventListener('keydown', this.gesture); document.removeEventListener('visibilitychange', this.visibility); window.removeEventListener('blur', this.blur); window.removeEventListener('focus', this.focus); window.removeEventListener('pagehide', this.pagehide); window.removeEventListener('pageshow', this.pageshow); document.removeEventListener('freeze', this.freeze); document.removeEventListener('resume', this.thaw); this.context.removeEventListener('statechange', this.statechange); this.graph.dispose(); void this.context.close(); this.captionElement.remove(); this.ringElement.remove(); this.controls.remove(); this.pauseElement.remove(); }
+    dispose(): void { this.disposed = true; this.reset(); document.removeEventListener('pointerdown', this.gesture); document.removeEventListener('keydown', this.gesture); document.removeEventListener('visibilitychange', this.visibility); window.removeEventListener('blur', this.blur); window.removeEventListener('focus', this.focus); window.removeEventListener('pagehide', this.pagehide); window.removeEventListener('pageshow', this.pageshow); document.removeEventListener('freeze', this.freeze); document.removeEventListener('resume', this.thaw); this.context.removeEventListener('statechange', this.statechange); this.graph.dispose(); void this.context.close(); this.captionElement.remove(); this.captionStyle.remove(); this.ringElement.remove(); this.controls.remove(); this.pauseElement.remove(); }
 }
