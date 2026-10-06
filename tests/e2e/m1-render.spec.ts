@@ -38,11 +38,14 @@ test('M1-27 @E19 real diner combat and wheel zoom keep survivor colour blocks fr
   await page.evaluate(async () => {
     const a = window.__SS__!; a.pause(); a.cheats.god(true); a.settings.set({ cameraShake: false, quality: 'high' });
     a.teleport('player', { x: 42, z: -6.5 }); await a.step(1);
+    // Let nearer customers carry the chain before testing real diner combat.
+    a.teleport('player', { x: 80, z: 0 });
   });
   // Setup shortcuts the walk; the authored diner outbreak and every attack are real.
   for (let i = 0; i < 130 && !await page.evaluate(() => window.__SS__!.missions.state()!.outbreak!.released); i++) {
     await page.evaluate(() => window.__SS__!.step(30));
   }
+  await page.evaluate(async () => { const a = window.__SS__!; a.teleport('player', { x: 42, z: -6.5 }); await a.step(1); });
   await page.mouse.wheel(0, -500); await page.evaluate(() => window.__SS__!.step(30));
   for (let turn = 0; turn < 100; turn++) {
     const target = await page.evaluate(() => {

@@ -1,5 +1,11 @@
 export interface Point { x: number; z: number }
 export type CivilianState = 'calm' | 'annoyed' | 'alarmed' | 'flee' | 'hide' | 'grabbed' | 'bitten' | 'down' | 'rising' | 'infected' | 'finished';
+export type CivilianProp = 'coffee' | 'bag' | 'phone' | 'cane' | 'watering-can';
+/** Resolved layout anchors, in world metres. Durations and cursors use sim ticks and survive checkpoints. */
+export interface CivilianActivity {
+  activity: 'walk' | 'sit' | 'stand' | 'chat' | 'look' | 'water' | 'door' | 'inside';
+  anchor: string; target: Point; ticks: number; facing?: Point; prop?: CivilianProp; seat?: Point;
+}
 /** Serializable NPC components; no render objects or physics bodies. */
 export interface Civilian {
   state: CivilianState; ambient: boolean; adult: boolean; pet: 'dog' | 'cat' | null; owner: number | null;
@@ -11,6 +17,8 @@ export interface Civilian {
   /** Harmless swing reaction; resumes the previous routine after a short pause. */
   annoyedFrom?: 'calm' | 'alarmed' | 'flee' | 'hide';
   gore: false; knockedUntil: number;
+  panicReaction?: 'flee' | 'freeze';
+  schedule?: CivilianActivity[]; scheduleStep?: number; activityUntil?: number; activityStarted?: number; lastTravelProgress?: number;
 }
 export interface Companion { following?: boolean; velocity?: Point; state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number }
 export interface Escort { state: 'follow' | 'wait' | 'cover' | 'downed' | 'dead'; order: 'follow' | 'wait'; child: boolean; gore: false; failed: boolean; downedAt: number; progress: number; latched: boolean; path: number[]; goal: number; pathIndex: number; cover: Point | null; attackAt: number }
