@@ -36,8 +36,9 @@ for (const mode of ['desktop', 'iphone-portrait'] as const) test.describe(mode, 
       throw new Error(`Movement stalled to ${x},${z}: ${JSON.stringify(await page.evaluate(() => window.__SS__!.getState().player!.transform))}`);
     };
     await photograph('morning');
-    // Stay above the hedge clearance before approaching its left side.
-    await move(-14, -4); await move(-14, -3.5); await move(-19.5, -3.5); await move(-19.5, -6.3);
+    // Reach the hedge's west side from the road; the old -19,-4.5 waypoint
+    // is inside a delivered solid footprint after the hedge rebuild.
+    await move(-14, -4); await move(-14, 0); await move(-21, 0); await move(-21, -6.3); await move(-19, -6.3);
     if (mode === 'desktop') {
       // A single genuine ground click must route around the visible hedge.
       const point = await page.evaluate(() => window.__SS__!.input.project({ x: -15, z: -6.3 }));
@@ -50,7 +51,7 @@ for (const mode of ['desktop', 'iphone-portrait'] as const) test.describe(mode, 
       await cdp!.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ ...origin, x: origin.x + 35, y: origin.y + 35 }] }); await step(90);
       await cdp!.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await step(6);
       const p = await page.evaluate(() => window.__SS__!.getState().player!.transform); expect(p.x).toBeLessThan(-18.3);
-      await move(-19.5, -6.3); await move(-19.5, -3.5); await move(-15, -3.5);
+      await move(-21, -6.3); await move(-21, 0); await move(-14, 0); await move(-14, -4);
     }
     await photograph('hedge'); await move(-14, -4); await move(0, 0); await move(42, 0); await move(52, 0); await move(52, 18); await move(46.75, 18); await move(46.75, 15); await move(45, 15); await move(45, 14.3);
     await photograph('forecourt'); await step(240);

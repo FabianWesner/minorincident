@@ -172,7 +172,7 @@ export class CrowdView extends Group {
       const phase = e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? Math.min(1, (this.world.tick - b.deadAt) / 60 / duration) : clip === 'windup' ? Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : duration)) : strides[clip] ? motion.distance / (strides[clip] * batch.strideScale) % 1 : (tick / 60 + e.id * .137) / duration % 1;
       const frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1), tint = variantShirts[b.variant] ?? batch.shirt;
       const flight = reaction ? Math.max(0, 1 - age / .28) : 0;
-      const resting = b.state === 'dead' ? this.corpsePosition(e) : e.transform;
+      const resting = b.state === 'dead' ? this.corpsePosition(e, b.deadAt) : e.transform;
       const settle = b.state === 'dead' ? Math.min(1, (this.world.tick - b.deadAt) / 60) : 0;
       const x = e.transform.x + (resting.x - e.transform.x) * settle + (reaction ? (reaction.from.x - reaction.to.x) * flight * flight : 0), z = e.transform.z + (resting.z - e.transform.z) * settle + (reaction ? (reaction.from.z - reaction.to.z) * flight * flight : 0);
       const fade = b.state === 'dead' ? Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 360) / 180)) : 0;
@@ -196,8 +196,8 @@ export class CrowdView extends Group {
   }
   /** Keep settled bodies on clear ground, giving each a readable footprint.
    * This is presentation only; damage and revive continue to use sim transforms. */
-  private corpsePosition(e: EntitySnapshot) {
-    const deadAt = e.infected!.deadAt, previous = this.corpses.get(e.id);
+  private corpsePosition(e: EntitySnapshot, deadAtTick: number) {
+    const deadAt = deadAtTick, previous = this.corpses.get(e.id);
     if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z) return previous;
     const pose = { x: e.transform.x, z: e.transform.z, sourceX: e.transform.x, sourceZ: e.transform.z, deadAt };
     const clear = (x: number, z: number) => this.world.infected?.nav.clear(x, z, .6) && [...this.corpses].every(([id, p]) => id === e.id || Math.hypot(x - p.x, z - p.z) >= 1.25);
