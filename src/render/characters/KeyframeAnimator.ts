@@ -1,4 +1,5 @@
 import { AdditiveAnimationBlendMode, AnimationMixer, LoopOnce, LoopRepeat, Vector3, type AnimationAction, type Object3D } from 'three';
+import { meleeChains } from '../../data/meleeCombos';
 import type { AnimationState, SurvivorState } from '../../data/survivor';
 import { authoredClips, retargetClip, settleGroundPose, strides, strideScale } from './clips';
 import type { CharacterRig } from './rig';
@@ -31,7 +32,7 @@ export class KeyframeAnimator {
     for (const name of authoredClips.keys()) {
       if (name.startsWith('corgi-') || name === 'infected-flight' || name === 'animal-death') continue;
       this.actions.set(name, this.mixer.clipAction(retargetClip(rig.root, name)));
-      if (/^(fists-|bat-|crowbar-|machete-|swing|shoot|throw)/.test(name)) {
+      if (/^(unarmed-|fists-|bat-|crowbar-|machete-|swing|shoot|throw)/.test(name)) {
         const clip = retargetClip(rig.root, name, true); clip.blendMode = AdditiveAnimationBlendMode;
         this.actions.set(`${name}:upper`, this.mixer.clipAction(clip));
       }
@@ -63,9 +64,9 @@ export class KeyframeAnimator {
     let strike: string | undefined;
     if (['swing','kick','shoot','throw'].includes(pose.animation)) {
       const weapon = combat?.actionId.replace('weapon.', '') ?? 'swing';
-      strike = pose.animation === 'kick' ? combat?.combo === 1 ? 'spin-kick' : 'kick' : ['fists','bat','crowbar','machete'].includes(weapon) ? `${weapon}-${(combat?.combo ?? 0) + 1}` : pose.animation;
+      strike = weapon === 'fists' ? `unarmed-${meleeChains['weapon.fists'][combat?.combo ?? 0]}` : pose.animation === 'kick' ? combat?.combo === 1 ? 'spin-kick' : 'kick' : ['fists','bat','crowbar','machete'].includes(weapon) ? `${weapon}-${(combat?.combo ?? 0) + 1}` : pose.animation;
     }
-    const upper = strike && moving && pose.animation !== 'kick';
+    const upper = strike && moving && pose.animation !== 'kick' && !(combat?.actionId === 'weapon.fists' && [2,3,5].includes(combat.combo));
     if (strike && !upper) name = strike;
     else if (!strike && !['idle','walk','run'].includes(pose.animation)) name = pose.animation;
     if (this.clip !== name || strike && !upper && this.attackTick !== pose.animationTick || !this.base) {

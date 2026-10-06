@@ -25,7 +25,7 @@ export function levelOneSlice(campaign: MissionDef): MissionDef {
   // A brief choice window precedes automatic stand-to-interact; F/MMB completes instantly.
   def.steps[2].complete = { kind:'interact', anchor:'hardware', seconds:3 };
   def.steps[2].onComplete = [{kind:'grant',item:'melee'}, {kind:'spawn',group:'store'}];
-  def.steps.push({ id:'store-fight', type:'killAll', text:'Clear the store — LEFT weapon, RIGHT kick', anchor:'hardware', start:{kind:'objectives',ids:['melee'],mode:'all'}, complete:{kind:'kills',actors:def.groups.store}, fail:[] });
+  def.steps.push({ id:'store-fight', type:'killAll', text:'Clear the store — LMB attack, Shift+LMB stand and swing, RMB switch', anchor:'hardware', start:{kind:'objectives',ids:['melee'],mode:'all'}, complete:{kind:'kills',actors:def.groups.store}, fail:[] });
   def.finish = ['store-fight']; def.onComplete = []; def.onStart = [];
   return def;
 }

@@ -25,3 +25,14 @@ test('@E02-AC03 @E03-AC03 zoom smooths, clamps, preserves angle/follow and reset
   expect(view.radius).toBeCloseTo(19*.85,3);expect(view.getState().polar).toBe(Math.PI*.30);
   view.reset({x:0,z:0});expect(view.radius).toBe(19);
 });
+
+test('@E03-AC17 carried cycle deduplicates unarmed and preserves active timers', () => {
+  const loadout = new Loadout(['weapon.fists', 'weapon.bat'], ['weapon.kick', 'weapon.grenade']);
+  expect(loadout.activeEntries().map(e => e.id)).toEqual(['weapon.fists', 'weapon.bat', 'weapon.grenade']);
+  loadout.state.LEFT.rack[0].readyAt = 100;
+  for (const [tick, id] of [[1, 'weapon.bat'], [20, 'weapon.grenade'], [40, 'weapon.fists']] as const) {
+    loadout.input({ ...emptyInput(), selector: 1, selectorActive: true }, tick);
+    expect(loadout.current(loadout.state.selectedSide).id).toBe(id);
+  }
+  expect(loadout.state.LEFT.rack[0].readyAt).toBe(100);
+});
