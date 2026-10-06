@@ -295,7 +295,7 @@ export class GameView implements Lifecycle {
         this.frozenPose.velocity = velocity; Object.assign(velocity, survivor.velocity);
         this.frozenPose.checkpoint = checkpoint; Object.assign(checkpoint, survivor.checkpoint);
       }
-      this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, alpha);
+      this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha);
     }
     if (this.cube && current) {
       this.cube.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha), lerp(previous?.z ?? current.z, current.z, alpha));
