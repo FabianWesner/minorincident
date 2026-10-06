@@ -61,6 +61,19 @@ export class NavGrid {
   walkable(p: Point): boolean {
     return this.cells[this.index(...p)] === 1;
   }
+  /** Click destinations stay on baked walkable ground, including clicks beyond a district edge. */
+  clamp(p: Point): Point {
+    if (this.walkable(p)) return [...p];
+    let nearest: Point | null = null, distance = Infinity;
+    for (let i = 0; i < this.cells.length; i++) if (this.cells[i]) {
+      const x = this.min[0] + (i % this.width + .5) * this.cellSize;
+      const z = this.min[1] + (Math.floor(i / this.width) + .5) * this.cellSize;
+      const d = (x - p[0]) ** 2 + (z - p[1]) ** 2;
+      if (d < distance) { distance = d; nearest = [x, z]; }
+    }
+    if (!nearest) throw new Error('No walkable destination');
+    return nearest;
+  }
   /** Load/test-time flood fill. The typed queue bounds memory and does not use Array.shift(). */
   flood(start: Point): Uint8Array {
     const reached = new Uint8Array(this.cells.length),

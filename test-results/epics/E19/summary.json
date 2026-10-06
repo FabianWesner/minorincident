@@ -1,140 +1,105 @@
 {
-  "scope": "Milestone 1, E19 segments 1\u20133; full E19 remains deferred",
-  "implementationRevision": "28442df",
-  "reviewedAt": "2026-10-06T10:19:56.673433+00:00",
+  "scope": "Milestone 1 segments 1\u20133 fix round",
+  "base": "6ca262b",
+  "mergedMainOnce": true,
   "checks": {
     "typecheck": "pass",
     "lint": "pass",
     "unit": {
-      "passed": 136
+      "passed": 136,
+      "files": 52
     },
-    "simulation": {
-      "passed": 282,
-      "evadeSeeds": 20,
-      "completeSeeds": 20
+    "targetedSim": {
+      "passed": 14,
+      "files": 2
+    },
+    "verifyE19": {
+      "simPassed": 15,
+      "browserPassed": 30,
+      "exitCode": 0
     },
     "smoke": {
       "simPassed": 3,
-      "browserPassed": 22
-    },
-    "verifyE19": {
-      "selectedSimUnitPassed": 10,
-      "browserPassed": 29
+      "browserPassed": 22,
+      "exitCode": 0
     }
   },
-  "inputRoutes": [
-    "desktop physical mouse click-to-move, LMB/RMB, F, middle-click",
-    "portrait touch movement, LEFT/RIGHT/ACTION",
-    "landscape touch movement, LEFT/RIGHT/ACTION"
-  ],
-  "visual": {
-    "pixels": {
-      "desktop": {
-        "playerHeight": 0.19777777777777777,
-        "playerPixels": 178,
-        "viewport": {
-          "width": 1600,
-          "height": 900
-        },
-        "companionCount": 1
-      },
-      "portrait": {
-        "playerHeight": 0.13507109004739337,
-        "playerPixels": 114,
-        "viewport": {
-          "width": 390,
-          "height": 844
-        },
-        "companionCount": 1
-      },
-      "landscape": {
-        "playerHeight": 0.19487179487179487,
-        "playerPixels": 76,
-        "viewport": {
-          "width": 844,
-          "height": 390
-        },
-        "companionCount": 1
-      }
+  "playthrough": {
+    "desktop": {
+      "time": 32.75,
+      "kills": 6,
+      "damage": 38,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
     },
-    "portraitHudCoverageLimit": 0.25,
-    "interactiveOverlaps": false,
-    "realArtReviewed": true,
-    "screenshotsDeletedAfterReview": true
+    "portrait": {
+      "time": 36.88333333333333,
+      "kills": 5,
+      "damage": 54,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    },
+    "landscape": {
+      "time": 36.733333333333334,
+      "kills": 5,
+      "damage": 62,
+      "deaths": 0,
+      "rescued": 0,
+      "optionalObjectives": []
+    }
+  },
+  "incidentSurvival": {
+    "idleSurvival_s": 66.18333333333334,
+    "checkpoint": "escape",
+    "deaths": 1
   },
   "perf": {
-    "headless": true,
-    "backend": "WebGL2 ANGLE Metal",
-    "workers": 2,
-    "port": 3338,
-    "unthrottled": true,
-    "mobileEmulationOnly": true,
-    "medianFpsGates": {
-      "desktop": 60,
-      "mobileEmulation": 30
+    "desktop": {
+      "incident": 416.66666666672984,
+      "store": 370.3703703707696
     },
-    "samples": {
-      "desktop": {
-        "incident": {
-          "medianFps": 322.58,
-          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
-          "drawCalls": 115,
-          "triangles": 973515
-        },
-        "store": {
-          "medianFps": 370.37,
-          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
-          "drawCalls": 115,
-          "triangles": 1187462
-        }
-      },
-      "portrait": {
-        "incident": {
-          "medianFps": 400,
-          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
-          "drawCalls": 103,
-          "triangles": 112272
-        },
-        "store": {
-          "medianFps": 588.24,
-          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
-          "drawCalls": 102,
-          "triangles": 184789
-        }
-      },
-      "landscape": {
-        "incident": {
-          "medianFps": 454.55,
-          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
-          "drawCalls": 100,
-          "triangles": 113656
-        },
-        "store": {
-          "medianFps": 555.56,
-          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
-          "drawCalls": 104,
-          "triangles": 178533
-        }
-      }
+    "portrait": {
+      "incident": 333.3333333333333,
+      "store": 526.3157894732811
+    },
+    "landscape": {
+      "incident": 555.5555555552187,
+      "store": 454.5454545453042
     }
   },
-  "closedPlaytestIssues": [
-    "missing diner infected AI encounter",
-    "hardware pickup did not award LEFT weapon",
-    "invisible WebGL2 infected",
-    "duplicate corgi renders",
-    "brown mannequin neighbors",
-    "armed start",
-    "empty intersection spawn",
-    "production dev-panel overlap and empty touch icons",
-    "portrait player too small"
-  ],
-  "knownLimits": [
-    "Display and fight staged at hardware entrance for the simplified slice.",
-    "Driver transformation is immediate.",
-    "Residential clutter remains simpler than the reference illustration.",
-    "Segments 4\u20136, Patient Zero, twist, permanent choice and onward progression are deferred.",
-    "Traffic panic, full newbie timing and full E19 photo/certification gates are deferred.",
-    "Mobile FPS is emulated on Apple M1 Max, not physical-phone evidence."
-  ]
+  "pixels": {
+    "desktop": {
+      "playerHeight": 0.19777777777777777,
+      "playerPixels": 178,
+      "viewport": {
+        "width": 1600,
+        "height": 900
+      },
+      "companionCount": 1
+    },
+    "portrait": {
+      "playerHeight": 0.13507109004739337,
+      "playerPixels": 114,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "companionCount": 1
+    },
+    "landscape": {
+      "playerHeight": 0.19487179487179487,
+      "playerPixels": 76,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "companionCount": 1
+    }
+  },
+  "realInput": true,
+  "falls": 0,
+  "skyBelowHorizon": "pixel checks passed",
+  "screenshots": "inspected and deleted"
 }

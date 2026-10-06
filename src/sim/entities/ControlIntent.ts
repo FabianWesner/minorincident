@@ -15,7 +15,10 @@ export class ControlIntent {
     const player = this.world.entities.get(1)!;
     if (raw.cancelMove || Math.hypot(raw.move.x, raw.move.z) > 0 || raw.interact || (!raw.attackTarget && !raw.pointerGround && (raw.left.down || raw.right.down))) this.reset();
     if (this.world.vehicles?.active != null || player.health.current <= 0) { this.reset(); return raw; }
-    if (raw.moveTarget) { this.moveTarget = { ...raw.moveTarget }; this.attack = null; }
+    if (raw.moveTarget) {
+      const point = this.world.districts?.nav.clamp([raw.moveTarget.x, raw.moveTarget.z]);
+      this.moveTarget = point ? { x: point[0], z: point[1] } : { ...raw.moveTarget }; this.attack = null;
+    }
     if (raw.attackTarget) { this.attack = { ...raw.attackTarget, started: false }; this.moveTarget = null; }
     if (!this.moveTarget && !this.attack && !raw.pointerGround && raw.aimSource !== 'assist') return raw;
     const frame: InputFrame = { ...raw, move: { ...raw.move }, left: { ...raw.left }, right: { ...raw.right } };

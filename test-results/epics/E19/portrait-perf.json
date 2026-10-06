@@ -1,28 +1,28 @@
 {
   "incident": {
-    "medianFps": 400,
+    "medianFps": 333.3333333333333,
     "unthrottled": true,
     "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
     "counters": {
-      "fps": 285.7142857142857,
-      "frameMs": 3.5,
+      "fps": 333.3333333333333,
+      "frameMs": 3,
       "simMs": 0,
       "uiMs": 0.19999992847442627,
-      "drawCalls": 103,
-      "triangles": 112272,
-      "geometries": 60,
-      "textures": 22,
+      "drawCalls": 109,
+      "triangles": 120096,
+      "geometries": 65,
+      "textures": 26,
       "entities": 11,
       "backend": "webgl",
       "loadTiming": {
-        "dataMs": 16.399999976158142,
-        "simMs": 77,
-        "viewMs": 2096.7000000476837
+        "dataMs": 17.100000023841858,
+        "simMs": 74.5,
+        "viewMs": 5571.399999976158
       },
       "quality": {
         "setting": "auto",
         "tier": "low",
-        "p90Ms": 3.2,
+        "p90Ms": 2777.1001,
         "slowSeconds": 0,
         "budgets": {
           "frameMs": 33.333333333333336,
@@ -37,31 +37,31 @@
           "cullDistance": 45
         }
       },
-      "renderedFrames": 312,
+      "renderedFrames": 187,
       "contextLost": false,
       "paused": true,
       "heapBytes": 386000000
     }
   },
   "store": {
-    "medianFps": 588.2352941186541,
+    "medianFps": 526.3157894732811,
     "unthrottled": true,
     "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
     "counters": {
-      "fps": 624.9999999991473,
-      "frameMs": 1.6000000000021828,
-      "simMs": 0,
-      "uiMs": 0.19999992847442627,
-      "drawCalls": 102,
-      "triangles": 184789,
-      "geometries": 63,
+      "fps": 454.5454545453042,
+      "frameMs": 2.2000000000007276,
+      "simMs": 0.2999999523162842,
+      "uiMs": 0.10000002384185791,
+      "drawCalls": 103,
+      "triangles": 184791,
+      "geometries": 64,
       "textures": 21,
       "entities": 12,
       "backend": "webgl",
       "loadTiming": {
         "dataMs": 0.10000002384185791,
-        "simMs": 29,
-        "viewMs": 5876
+        "simMs": 34.10000002384186,
+        "viewMs": 5946.899999976158
       },
       "quality": {
         "setting": "auto",
@@ -81,7 +81,7 @@
           "cullDistance": 45
         }
       },
-      "renderedFrames": 441,
+      "renderedFrames": 316,
       "contextLost": false,
       "paused": true,
       "heapBytes": 386000000
