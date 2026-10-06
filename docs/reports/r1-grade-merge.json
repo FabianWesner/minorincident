@@ -1,0 +1,43 @@
+{
+  "done": true,
+  "merged_main": "202ffc2aef33393ce047561e532ced42d4e49326",
+  "resolved": [
+    "src/data/worldLook.ts",
+    "src/render/Lighting.ts",
+    "src/render/Materials.ts",
+    "src/render/PaletteMaterial.ts",
+    "src/render/PostFx.ts"
+  ],
+  "grade": "Golden defaults, shared texture/materials, radial fog, emissives, high/low DOF and contact shadows retained.",
+  "panel": "All worldLook tokens remain automatically bound; added live world-sheet colours, fog centre and low DOF repeats. Shadow edges and hemisphere ambient intensity bind into the unified shader. Export/reset and rebuild persistence verified.",
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "test_unit": {
+      "passed": 168,
+      "failed": 3,
+      "classification": "baseline imported animation tests"
+    },
+    "focused_grade_and_look_unit": {
+      "passed": 18,
+      "failed": 0
+    },
+    "test_smoke": {
+      "unit_passed": 3,
+      "browser_passed": 22,
+      "failed": 0
+    },
+    "panel_and_grade_browser": {
+      "passed": 4,
+      "failed": 0
+    }
+  },
+  "baseline_failures": [
+    "M1-02 stance feet stay planted",
+    "M1-25 grounded locomotion retains support",
+    "M1-25 walk-to-run crossfade preserves support phase"
+  ],
+  "baseline_evidence": "Animation test and its protected figure/animation files match the merged main revision; no lane edits to those files.",
+  "scope": "Integration task complete; original independent-art-review and low-200-geometry acceptance gates were not re-scored in this task."
+}
