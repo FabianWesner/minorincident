@@ -6,7 +6,8 @@ import { menuStart } from '../e2e/ui-helpers';
 const output = 'test-results/epics/E19/hitch';
 // Baseline capture uses the same test and unmodified production bundle, without the new budget gate.
 const phase = process.env.HITCH_PHASE ?? 'after';
-test.describe.configure({ mode: 'serial' });
+// Keep both device captures when one budget fails; the E19 runner uses one worker.
+test.describe.configure({ mode: 'default' });
 test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
 interface Frame { ms: number; tick: number; objectives: string[]; phase: string }
 interface GlCall { call: string; ms: number; tick: number; stack: string }
