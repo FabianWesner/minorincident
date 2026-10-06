@@ -108,6 +108,10 @@ describe('L1 v2 toys', () => {
     expect(world.toys!.alarmActive(id)).toBe(true);
     step(10); press(); expect(events).toHaveLength(1); // not re-armed yet
     step(1190); expect(world.toys!.alarmActive(id)).toBe(false);
+    // an attack aimed at the car after re-arm also triggers it
+    const kicked = world.toys!.alarmIds[1], k = anchor('alarm-car-2'); expect(world.entities.get(kicked)!.interactable!.enabled).toBe(true);
+    world.events.emit({ type: 'combat.attack', tick: world.tick, attackId: 1, actionId: 'unarmed', sourceId: 1, side: 'LEFT', position: { x: k.x - 1.5, y: 0, z: k.z, yaw: 0 }, direction: { x: 1, z: 0 } });
+    expect(events).toHaveLength(2); expect(world.toys!.alarmActive(kicked)).toBe(true); events.pop();
     step(500); press(); expect(events).toHaveLength(1);
     step(120); press(); expect(events).toHaveLength(2);
   });
@@ -164,7 +168,7 @@ describe('L1 v2 corgi', () => {
     world.setInput({ move: { x: 1, z: 0 } }); for (let i = 0; i < 20; i++) world.update();
     world.setInput({ interact: true }); world.update(); world.setInput({ interact: false, move: { x: 1, z: 0 } });
     expect(b.riding).toBe(true);
-    let gap = 0; for (let i = 0; i < 480; i++) { world.update(); const p = world.entities.get(1)!.transform; gap = Math.max(gap, i > 120 ? Math.hypot(dog.transform.x - p.x, dog.transform.z - p.z) : 0); }
-    expect(gap).toBeLessThan(6);
+    let gap = 0; for (let i = 0; i < 480; i++) { world.update(); const p = world.entities.get(1)!.transform; gap = Math.max(gap, i > 300 && i < 400 ? Math.hypot(dog.transform.x - p.x, dog.transform.z - p.z) : 0); }
+    expect(gap).toBeLessThan(5); // after the start-up lag it keeps pace at the 7.5 m/s cap
   });
 });

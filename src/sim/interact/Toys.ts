@@ -59,6 +59,15 @@ export class Toys {
   private readonly walls = new Map<number, { x: number; z: number; hx: number; hz: number }>();
   constructor(private readonly world: SimWorld) {
     world.events.on('interact.completed', e => { if (e.type === 'interact.completed') this.completed(e.id); });
+    // Kicking or attacking a parked alarm car (player attack, car within reach and in front) sets it off like interacting.
+    world.events.on('combat.attack', e => {
+      if (e.type !== 'combat.attack' || e.sourceId !== 1) return;
+      for (const id of this.alarmIds) {
+        const car = world.entities.get(id); if (!car?.interactable?.enabled) continue;
+        const dx = car.transform.x - e.position.x, dz = car.transform.z - e.position.z, d = Math.hypot(dx, dz);
+        if (d <= 2.8 && (d < .5 || (dx * e.direction.x + dz * e.direction.z) / d > 0)) this.completed(id);
+      }
+    });
   }
   /** Reads the anchors of every loaded district; a district without them (all campaign levels) gets no toys. */
   install(): void {
