@@ -1,0 +1,41 @@
+{
+  "main": "202ffc2aef33393ce047561e532ced42d4e49326",
+  "method": "Isolated git archive of merged main, using shared node_modules; no audio changes. Same three failed assertion values as final worktree unit run.",
+  "baselineFailures": [
+    {
+      "name": "M1-02 @E04 stance feet stay planted while the authored pelvis and knee carry weight",
+      "messages": [
+        "AssertionError: expected 0.07750043534921491 to be less than 0.035\n    at /private/var/folders/kn/sl1drbps1g7dbr_r0jmllvqh0000gn/T/audio-1-baseline-4pgnglqd/tests/unit/render/authored-animation.test.ts:39:83\n    at file:///Users/fabianwesner/Workspace/suburban-survivors/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs",
+      "messages": [
+        "AssertionError: char.survivor-female walk L planted ankle: expected 0.0020629324182721495 to be less than 0.002\n    at /private/var/folders/kn/sl1drbps1g7dbr_r0jmllvqh0000gn/T/audio-1-baseline-4pgnglqd/tests/unit/render/authored-animation.test.ts:115:112\n    at file:///Users/fabianwesner/Workspace/suburban-survivors/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "M1-25 @E04 walk to run preserves support phase through the crossfade",
+      "messages": [
+        "AssertionError: expected 0.9829394902475423 to be close to 0.9821853431167644, received difference is 0.0007541471307779268, but expected 5e-7\n    at /private/var/folders/kn/sl1drbps1g7dbr_r0jmllvqh0000gn/T/audio-1-baseline-4pgnglqd/tests/unit/render/authored-animation.test.ts:144:45\n    at file:///Users/fabianwesner/Workspace/suburban-survivors/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///Users/fabianwesner/Workspace/suburban-survivors/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///Users/fabianwesner/Workspace/suburban-survivors/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///Users/fabianwesner/Workspace/suburban-survivors/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///Users/fabianwesner/Workspace/suburban-survivors/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///Users/fabianwesner/Workspace/suburban-survivors/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///Users/fabianwesner/Workspace/suburban-survivors/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+      ]
+    }
+  ],
+  "audioWorktreeUnitRun": {
+    "passed": 166,
+    "failed": 6,
+    "log": "/tmp/audio-1-unit-final.log",
+    "loadRelatedTimeouts": [
+      "tests/unit/static.test.ts",
+      "tests/unit/assets/build.test.ts",
+      "tests/unit/assets/validate.test.ts"
+    ],
+    "serialTimeoutRerun": {
+      "passed": 6,
+      "failed": 0,
+      "report": "/tmp/audio-1-unit-timeout-rerun.json"
+    },
+    "remainingFailures": 3,
+    "remainingFailuresMatchMain": true
+  }
+}

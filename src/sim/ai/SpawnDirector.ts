@@ -1,3 +1,4 @@
+import { moveAgent } from '../locomotion/AgentMotion';
 import { infectedDef } from '../../data/infected';
 import type { InfectedSystem, InfectedSpawn } from './InfectedSystem';
 import type { EntitySnapshot } from '../world/types';
@@ -5,7 +6,7 @@ import type { EntitySnapshot } from '../world/types';
 export interface CameraEnvelope { x: number; z: number; halfWidth: number; halfDepth: number; yaw: number }
 interface Request { archetype: string; position: { x: number; z: number }; options: InfectedSpawn; turning?: boolean; migration?: { group: Migration; index: number } }
 export interface Migration {
-  points: readonly { x: number; z: number }[]; samples: Float64Array; lengths: Float64Array;
+  points: readonly { x: number; z: number }[]; offsets: readonly { x: number; z: number }[]; samples: Float64Array; lengths: Float64Array;
   requested: number; length: number; speed: number; expectedSeconds: number; started: number; arrived: number; members: number[];
 }
 /** Level-owned director: caps use weighted living entities; scripted requests remain queued until safe. */
@@ -124,11 +125,16 @@ export class SpawnDirector {
       for (const [axis, offset] of [['x', 0], ['z', 1]] as const) samples[i * 2 + offset] = 0.5 * (2 * p1[axis] + (-p0[axis] + p2[axis]) * u + (2 * p0[axis] - 5 * p1[axis] + 4 * p2[axis] - p3[axis]) * u * u + (-p0[axis] + 3 * p1[axis] - 3 * p2[axis] + p3[axis]) * u * u * u);
       if (i) lengths[i] = lengths[i - 1] + Math.hypot(samples[i * 2] - samples[i * 2 - 2], samples[i * 2 + 1] - samples[i * 2 - 1]);
     }
-    const migration: Migration = { requested: count, points, samples, lengths, length: lengths[256], speed, expectedSeconds: lengths[256] / speed, started: -1, arrived: 0, members: [] };
+    // Hexagonal lanes fit the stream without overlapping spawn circles. The old
+    // compressed spiral needed continuous hard pushes, defeating bounded motion.
+    const lanes: { x: number; z: number }[] = [], extent = Math.ceil(Math.sqrt(count));
+    for (let z = -extent; z <= extent; z++) for (let x = -extent; x <= extent; x++) lanes.push({ x: .716 * (x + z / 2), z: .716 * z * Math.sqrt(3) / 2 });
+    lanes.sort((a, b) => a.x * a.x + a.z * a.z - b.x * b.x - b.z * b.z || a.x - b.x || a.z - b.z);
+    const offsets = lanes.slice(0, count);
+    const migration: Migration = { offsets, requested: count, points, samples, lengths, length: lengths[256], speed, expectedSeconds: lengths[256] / speed, started: -1, arrived: 0, members: [] };
     // A stream uses several lanes, avoiding a single coincident spawn while preserving one spline.
     for (let i = 0; i < count; i++) {
-      const angle = i * 2.399963, radius = Math.sqrt(i) * 0.32;
-      this.target.x = points[0].x + Math.cos(angle) * radius; this.target.z = points[0].z + Math.sin(angle) * radius;
+      this.target.x = points[0].x + offsets[i].x; this.target.z = points[0].z + offsets[i].z;
       if (!this.safe('infected.runner', this.target)) throw new Error('Migration stream begins in an unsafe cell');
       this.request('infected.runner', this.target, { state: 'migration' }); this.queue[this.queue.length - 1].migration = { group: migration, index: i };
     }
@@ -136,13 +142,25 @@ export class SpawnDirector {
   }
   private advanceMigration(e: EntitySnapshot): void {
     const record = this.migrationByEntity.get(e.id); if (!record) return;
-    const { migration: m, index } = record, distance = (this.ai.world.tick - record.started) / 60 * m.speed;
+    const { migration: m, index } = record, elapsed = (this.ai.world.tick - record.started) / 60;
+    // The target describes the start of this integration step; feed-forward
+    // advances it by one tick without permanently leading the authored spline.
+    const distance = Math.max(0, elapsed - 1 / 60) * m.speed;
     let segment = 1; while (segment < 256 && m.lengths[segment] < distance) segment++;
     const t = Math.min(1, (distance - m.lengths[segment - 1]) / Math.max(0.0001, m.lengths[segment] - m.lengths[segment - 1]));
-    const angle = index * 2.399963, fan = Math.sqrt(index) * 0.32;
-    this.target.x = m.samples[segment * 2 - 2] * (1 - t) + m.samples[segment * 2] * t + Math.cos(angle) * fan;
-    this.target.z = m.samples[segment * 2 - 1] * (1 - t) + m.samples[segment * 2 + 1] * t + Math.sin(angle) * fan;
-    this.ai.nav.move(e.transform, this.target.x - e.transform.x, this.target.z - e.transform.z, e.combat!.radius); this.ai.world.spatial.set(e.id, e.transform.x, e.transform.z);
-    if (distance >= m.length) { e.infected!.state = 'wander'; e.infected!.until = this.ai.world.tick + 600; e.infected!.dx = Math.cos(angle); e.infected!.dz = Math.sin(angle); m.arrived++; this.migrationByEntity.delete(e.id); }
+    const angle = index * 2.399963, offset = m.offsets[index];
+    this.target.x = m.samples[segment * 2 - 2] * (1 - t) + m.samples[segment * 2] * t + offset.x;
+    this.target.z = m.samples[segment * 2 - 1] * (1 - t) + m.samples[segment * 2 + 1] * t + offset.z;
+    const dx = this.target.x - e.transform.x, dz = this.target.z - e.transform.z;
+    // Predict the tangent over the response's ~1/3-second lag so a bend
+    // does not drag the whole formation outside its authored arrival envelope.
+    let tangent = segment; while (tangent < 256 && m.lengths[tangent] < distance + m.speed / 3) tangent++;
+    const tx = m.samples[tangent * 2] - m.samples[tangent * 2 - 2], tz = m.samples[tangent * 2 + 1] - m.samples[tangent * 2 - 1];
+    const length = Math.hypot(tx, tz) || 1, feedforward = distance < m.length ? m.speed : 0;
+    // Follow the moving spline target without a permanent acceleration lag.
+    const vx = tx / length * feedforward + dx * 3, vz = tz / length * feedforward + dz * 3;
+    const scale = Math.min(1, m.speed * 1.5 / (Math.hypot(vx, vz) || 1));
+    moveAgent(e, vx * scale, vz * scale, this.ai.nav, this.ai.world.tick); this.ai.world.spatial.set(e.id, e.transform.x, e.transform.z);
+    if (elapsed >= m.expectedSeconds) { e.infected!.state = 'wander'; e.infected!.until = this.ai.world.tick + 600; e.infected!.dx = Math.cos(angle); e.infected!.dz = Math.sin(angle); m.arrived++; this.migrationByEntity.delete(e.id); }
   }
 }

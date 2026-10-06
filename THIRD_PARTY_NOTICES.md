@@ -101,10 +101,37 @@ anti-spam, distance fade, rate variation, persistent mute, blur and focus patter
 from Bruno Simon's `Audio.js`, and the arming/variant pattern from
 `World/ExplosiveCrates.js` (MIT, commit 41046b5). The original MIT notice above applies.
 
-All files in `public/assets/audio/` are original, self-made procedural placeholders
-produced by `src/audio/synthesis.ts` and `tools/audio/build.ts`, released under MIT.
-`public/assets/audio/LICENSES.md` records every file and its SHA256. No Bruno SFX,
-recordings, music, or third-party voice recordings have been copied.
+Recordings and original system cues share the sprite files in `public/assets/audio/`.
+`assets/audio/LICENSES.md` (also shipped at `public/assets/audio/LICENSES.md`) records
+every encoded file, SHA256, source URL, author, license URL and per-cue sprite segment.
+Source masters and download hashes are pinned in `assets/audio/imports.json`.
+Original synthesized system cues remain self-made MIT (`src/audio/synthesis.ts`).
+No Bruno SFX or John Murphy music, samples or melodies are used.
+
+All third-party recordings below were modified: excerpts, EQ, fades, loudness
+normalization and Opus/AAC encoding. Their licenses apply to the audio independently
+of the repository's MIT source license. Attribution also appears in the credits screen.
+
 The graph uses native Web Audio and its small registry/loader instead of Howler,
 as explicitly permitted by sound-design §9 for a custom graph/offline rendering.
 FFmpeg is a local asset/test tool, not bundled or redistributed with the game.
+
+## Recorded music and sound credits
+
+- Blinding Lights — Zander Noriega. Source: https://opengameart.org/content/blinding-lights. Licensed under CC-BY 3.0: https://creativecommons.org/licenses/by/3.0/. Modified as described above.
+- Running free; comfort in uncertainty — bbatv / bbatv1. Source: https://opengameart.org/content/peace-is-king-here. Licensed under CC-BY 3.0: https://creativecommons.org/licenses/by/3.0/. Modified as described above.
+- Fantozzi's Footsteps — Fantozzi. Source: https://opengameart.org/content/fantozzis-footsteps-grasssand-stone. Licensed under CC0: https://creativecommons.org/publicdomain/zero/1.0/. Modified as described above.
+- 37 hits/punches — Independent.nu. Source: https://opengameart.org/content/37-hitspunches. Licensed under CC0: https://creativecommons.org/publicdomain/zero/1.0/. Modified as described above.
+- 12 wet towel impacts — Iwan Gabovitch (qubodup). Source: https://opengameart.org/content/12-wet-towel-hittingfallingpunching-floor-sounds. Licensed under CC0: https://creativecommons.org/publicdomain/zero/1.0/. Modified as described above.
+- Undead Moans — AntumDeluge. Source: https://opengameart.org/content/undead-moans. Licensed under CC0: https://creativecommons.org/publicdomain/zero/1.0/. Modified as described above.
+- Bamboo stick swooshes — qubodup. Source: https://opengameart.org/content/swish-bamboo-stick-weapon-swhoshes. Licensed under CC0: https://creativecommons.org/publicdomain/zero/1.0/. Modified as described above.
+- Interface Sounds — Kenney. Source: https://kenney.nl/assets/interface-sounds. Licensed under CC0: https://creativecommons.org/publicdomain/zero/1.0/. Modified as described above.
+- Dog barking mono — Brandon Morris. Source: https://opengameart.org/content/dog-barking-mono. Licensed under CC0: https://creativecommons.org/publicdomain/zero/1.0/. Modified as described above.
+- Zombie Sound Effects — Bendzer. Source: https://opengameart.org/content/zombie-sound-effects-by-bendzer. Licensed under CC-BY 4.0: https://creativecommons.org/licenses/by/4.0/. Modified as described above.
+- Ambient Bird Sounds — isaiah658. Source: https://opengameart.org/content/ambient-bird-sounds. Licensed under CC0: https://creativecommons.org/publicdomain/zero/1.0/. Modified as described above.
+- High traffic road sounds — IgnasD. Source: https://opengameart.org/content/high-traffic-road-sounds. Licensed under CC0: https://creativecommons.org/publicdomain/zero/1.0/. Modified as described above.
+- Sirens and Alarm Noise — aquinn. Source: https://opengameart.org/content/sirens-and-alarm-noise. Licensed under CC0: https://creativecommons.org/publicdomain/zero/1.0/. Modified as described above.
+- Crowd Shouting/Speaking Ambience — StarNinjas. Source: https://opengameart.org/content/crowd-shoutingspeaking-ambience. Licensed under CC0: https://creativecommons.org/publicdomain/zero/1.0/. Modified as described above.
+- Female high-pitched scream SFX — WuxiaScrub. Source: https://opengameart.org/content/female-high-pitched-scream-sfx. Licensed under CC0: https://creativecommons.org/publicdomain/zero/1.0/. Modified as described above.
+
+Zander Noriega author link: https://soundcloud.com/zander-noriega
