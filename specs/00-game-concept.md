@@ -32,12 +32,15 @@ Moment to moment: read the threat, position, choose a side (left or right action
 
 - Pick a **male or female survivor** at campaign start (`initial-drafts/survivors-corgi-and-equipment.png`). The choice is cosmetic only; stats are identical.
 - **Corgi companion** (decided, Q1). The corgi follows the player and barks at infected that are off-screen or behind cover (a directional warning), fetches dropped pickups within 6 m, and cannot die (it hides when hurt). It shows in the HUD as in the mockup. Its later "special" (lure a group of infected) is an **action** that can be slotted like any weapon.
+  **L1 rule (product owner, 2026-10-06):** in L1 the corgi has no health bar, is ignored by infected and civilians, never attacks, is not commanded and does not fetch; it only warns by stopping, stiffening, looking toward the threat, growling and barking (E19 §5.8).
+- **In L1 the player is a courier** (male or female courier outfit on the survivor rigs) with a courier bicycle (E19 §5.10).
 - Base stats (tuning starts here; all values live in data files):
 
 | Stat | L1 start | Final upgrade ceiling |
 | --- | --- | --- |
 | Health | 100 | 250 |
-| Move speed | 4.5 m/s | 5.6 m/s |
+| Move speed (run, the default) | 4.5 m/s | 5.6 m/s |
+| Walk speed (hold Walk) | 2.0 m/s | 2.0 m/s |
 | Hurt-recovery i-frames | 0.6 s | 0.9 s |
 | Health regen out of combat (after 4 s) | 2 HP/s | 6 HP/s |
 
@@ -72,6 +75,8 @@ Classic action-RPG controls (product owner decision, 2026-10-06). The survivor o
 **M1-05 orchestrator decision (2026-10-06):** wheel scroll smoothly zooms the camera (0.85–1.35× default distance), preserving isometric angle and follow; two fingers pinching the world provide touch zoom. Number keys and clickable HUD slots replace wheel selection; touch keeps upward LEFT/RIGHT swipes. Shift is a rack modifier, not an attack mirror. The E02-AC02 default stays unchanged.
 
 Mouse details (product owner, 2026-10-06, Diablo-style): left-click ground = walk there; hold LMB + move cursor = keep walking toward the cursor; left-click an infected = attack it with the LEFT weapon (approach if needed); hold LMB on an infected = keep attacking that target; **Shift + left-click = attack in place toward the cursor without moving, even with no infected near** (the swing always plays). A Shift-swing that hits a civilian is a slapstick gag: the civilian stumbles back with a "Hey!", may drop what they carry and stays annoyed briefly — no damage, never a kill; children are never hit (the swing passes through them). **Right-click cycles weapons** (product owner, 2026-10-06): the mouse scheme has ONE attack (LMB / Shift+LMB with the current weapon); RMB cycles through the carried weapons/actions, starting with **unarmed** (fists → found weapon …). Unarmed merges the former fists and kick (product owner, 2026-10-06): one unarmed style whose attacks flow through varied martial moves — jab, cross, front kick, roundhouse kick, uppercut, knee, spinning backfist — all with the same damage; consecutive clicks chain them as a combo, never the same move twice in a row, with an occasional flashier finisher; kicks keep a little knockback for feel; the HUD shows the active one and the next. Keyboard 1/2/3 select directly, Q cycles; touch keeps its buttons. This supersedes "RMB = RIGHT action" and "wheel/last-side selector" for the mouse scheme (the wheel zooms, M1-05).
+
+**Run by default, hold to walk (product owner, 2026-10-06; bindings chosen by the orchestrator):** the survivor always moves at run speed; holding **Walk** moves at walk speed. Keyboard: hold `C` or `Alt`/`Option` while moving with WASD. Mouse: hold `Alt`/`Option` while clicking or holding LMB on the ground (left hand stays near Shift/1–3; `Ctrl` is avoided because Ctrl+click is a right-click on macOS; `Alt` keyup is `preventDefault`ed so browsers do not open their menu bar). Touch: the floating stick walks below 50 % deflection and runs above (no extra button). Walk is rebindable. There is no sprint and no stamina in L1.
 
 Aim: with a mouse the cursor aims; with keyboard only, attacks target the nearest infected in the facing direction (aim assist); on touch, aim assist unless the player drags from an action button. Pause is `Esc`, `P` or the small on-screen pause button (not one of the three mobile buttons).
 
@@ -127,11 +132,13 @@ The infected are fast, aggressive humans. Archetypes are **mechanical roles**; v
 
 **Pets turn too:** dogs walked by civilians (and stray cats) can be infected (they lie down for only 2–4 s before rising). The corgi is immune and never turns. Uninfected zoo animals (zebras, an elephant) panic and stampede as a hazard in L4.
 
-**Civilians become infected in front of you:** regular people walk around, fewer every level (60 in L1 down to 2–3 stragglers in L6). When an infected grabs one, the player has a 1.5 s **rescue window**. Otherwise the person is bitten, staggers, **lies down for a few seconds** (twitching; the eyes start glowing in the last seconds) and **gets up as an infected** wearing their own clothes. During the glowing-eyes phase the body can be finished so it never rises. Children never take part in this (E08).
+**Civilians become infected in front of you:** regular people walk around, fewer every level (60 in L1 down to 2–3 stragglers in L6). When an infected grabs one, the player has a 1.5 s **rescue window**. Otherwise the person is bitten, staggers, **lies down for a few seconds** (twitching; the eyes start glowing in the last seconds) and **gets up as an infected** wearing their own clothes. During the glowing-eyes phase the body can be finished so it never rises. Children never take part in this (E08). L1 timing: a 1.0 s rescue window and a 3.0 ± 0.5 s transformation (E19 §5.1, §5.7).
 
 **Aggro model:** infected sense by sight (110° cone, 14 m), hearing (gunshots reveal the player within 25 m; melee within 6 m), and Screamer alerts. Before they turn, they are civilians (E08).
 
-**Hordes:** waves, ambient wanderers, and **migrations** (L4–L6: big streams following path splines toward a target). Concurrent target counts are L1 ≤ 15, L2 ≤ 40, L3 ≤ 60, L4 ≤ 80, L5 ≤ 150, L6 ≤ 200 on the desktop "high" tier. Mobile caps are half (E18).
+**L1 perception rules (product owner, 2026-10-06; E19 §5.2–5.4):** sight only — a 90° forward cone (16 m, line of sight); no hearing of the player; the closest visible human (player or civilian) is the target; on losing sight a randomized 10–18 s search (probe points, direction changes, double-backs), then wander; deliberate loud events (car alarms) attract within 30 m. Priority: visible human > distraction > wander. Speeds come from a visual tier (frail 4.7 / average 5.1 / athletic 5.6 m/s) times ±6 % individual jitter, all faster than the running player; civilians flee at 3.2–4.0 m/s. Later levels may re-enable hearing (gunshots) per level data.
+
+**Hordes:** waves, ambient wanderers, and **migrations** (L4–L6: big streams following path splines toward a target). Concurrent target counts are L1 ≤ 60 (v2 systemic outbreak; low tier 30), L2 ≤ 40, L3 ≤ 60, L4 ≤ 80, L5 ≤ 150, L6 ≤ 200 on the desktop "high" tier. Mobile caps are half (E18).
 
 ## 8. Vehicles
 
@@ -185,7 +192,7 @@ The infected are fast, aggressive humans. Archetypes are **mechanical roles**; v
 
 | Level | Title | World tier | Districts | New mechanics | Unlocks at end |
 | --- | --- | --- | --- | --- | --- |
-| L1 | Stop the Outbreak | W0→W1 | D-RES → D-MAIN → D-CIVIC (clinic) | movement, evasion, first melee weapon, stand-to-interact | first permanent weapon choice (bat / crowbar / machete) |
+| L1 | Special Delivery (Stop the Outbreak) | W0→W1 | D-GROVE (compact L1 neighbourhood: café, parcel shop, lab annex, garage, fire station) | movement (run default, walk modifier), bicycle, evasion by line of sight, unarmed fighting, first melee weapon, stand-to-interact, world toys | baseball bat (found in the garage) |
 | L2 | Get Them Out | W1 | D-RES → D-SCHOOL → D-PARK (evac point at the baseball field) | firearms, throwables, second slot, escorts, Brute, Screamer | pistol / shotgun, Molotov; rack 2/2 |
 | L3 | Reach the Safe Zone | W2 | D-MAIN → D-SHOP → D-CIVIC (safe-zone camp) | **vehicles**, route choice, timer, Sprinter, Riot, Bloated | SMG or rifle, vehicle perks |
 | L4 | Open the Escape Route | W3 | D-CIVIC → D-ZOO → D-EDGE (substation, rail crossing, bridge) | multi-task objectives, hazards (power, fire), Butcher elite | heavy weapons (machine gun, rocket launcher), stronger explosives; rack 3/3 |
@@ -196,7 +203,7 @@ The detailed level designs are in the level epics [E19](epic-19-level-1-stop-the
 
 ### Story beats (proposed, editable)
 
-- **L1:** Morning in Sunset Grove. A delivery driver collapses outside Joe's Diner and attacks a customer. The player follows a trail of incidents to the **Sunset Pharmacy / clinic**, where a sick courier ("Patient Zero") brought a sealed medical cooler. The player defeats the infected courier and seals the cooler room (*objective complete*). Cutscene: three infected escape through the back door into the streets. **Mission successful. Outbreak not contained.**
+- **L1 (rewritten 2026-10-06 per product owner, E19):** A normal morning. The young courier and their corgi pick up a sealed package at Sunset Parcel and deliver it to the Grove Bio-Diagnostics lab annex. A few calm seconds after the hand-over, a contained accident inside releases five infected — among them the technician who took the package. The outbreak then spreads on its own: infected chase and bite pedestrians, who turn and hunt in turn. The courier fights with bare hands, finds a baseball bat in a neighbour's garage, sees the crowd grow beyond control and escapes to Fire Station 3. **Delivery complete. Outbreak: not contained.**
 - **L2:** Get your **younger brother (from the school) and your neighbor Mrs. Alvarez** to the evacuation buses at the baseball field. The buses leave; the field is overrun as the last bus departs. You are left behind.
 - **L3:** A police broadcast names the **Civic Center safe zone**, which closes at a deadline. Cross town by foot and by car. Inside the fence, a medic tent "patient" turns. The safe zone collapses.
 - **L4:** The survivors' radio says the only exit is the **river bridge**: restore power at the substation, raise the rail-crossing gates, and clear the bridge blockade. Done, but a migration is coming.
