@@ -63,7 +63,10 @@ function plantLocomotion(root: Object3D, name: string, duration: number, tracks:
   const hipTrack = tracks.find(t => t.name === 'hip.position')!;
   const position = hipTrack.InterpolantFactoryMethodLinear();
   const rotation = tracks.find(t => t.name === 'hip.quaternion')!.InterpolantFactoryMethodLinear();
-  const stance = name === 'run' ? .5 : .6, stride = strides[name];
+  // Phase playback uses the target's leg ratio. The stance curve must cover
+  // that same local distance, with world scale applied by the view hierarchy.
+  const stance = name === 'run' ? .5 : .6;
+  const stride = strides[name] * strideScale(root) / root.getWorldScale(worldScale).y;
   const footTarget = (phase: number): Vector3 => {
     if (phase <= stance) return new Vector3(stride * (stance / 2 - phase), 0, 0);
     const t = (phase - stance) / (1 - stance);
