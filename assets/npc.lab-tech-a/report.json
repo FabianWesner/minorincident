@@ -1,0 +1,247 @@
+{
+  "id": "npc.lab-tech-a",
+  "triangles": {
+    "lod0": 53066,
+    "lod1": 5828,
+    "lod2": 1801
+  },
+  "materials": {
+    "lod0": 28,
+    "lod1": 28,
+    "lod2": 24
+  },
+  "fileKB": {
+    "lod0": 413.43359375,
+    "lod1": 71.91015625,
+    "lod2": 41.69140625
+  },
+  "dimensions": [
+    0.47823984055093705,
+    1.3650687119229765,
+    0.8307791355919218
+  ],
+  "geometry_hash": "2b5b88ed0d489bf0616abfb9b31996a276f2e940d949b9310146a28621bbefd8",
+  "deterministic": true,
+  "raw_geometry_hash": "7631693869af48eec8c6e8e2d84b13c780774cb4e932f5e4a7595efd6dca5bef",
+  "nodes_ok": true,
+  "missing_nodes": [],
+  "validation": [
+    {
+      "lod": 0,
+      "id": "npc.lab-tech-a",
+      "errors": [],
+      "triangles": 53066,
+      "materials": 28,
+      "drawCalls": 61,
+      "fileKB": 413.43359375,
+      "dimensions": [
+        0.47823984055093705,
+        1.3650687119229765,
+        0.8307791355919218
+      ],
+      "hash": "2b5b88ed0d489bf0616abfb9b31996a276f2e940d949b9310146a28621bbefd8"
+    },
+    {
+      "lod": 1,
+      "id": "npc.lab-tech-a",
+      "errors": [],
+      "triangles": 5828,
+      "materials": 28,
+      "drawCalls": 61,
+      "fileKB": 71.91015625,
+      "dimensions": [
+        0.4782381805271225,
+        1.365068659823029,
+        0.8307806435008017
+      ],
+      "hash": "fb7ffc5780efa5c716aadaa1b0ceafd3edc9794f8dd0b9dd514efa6e842c0c88",
+      "ratio": 0.10982550032035579
+    },
+    {
+      "lod": 2,
+      "id": "npc.lab-tech-a",
+      "errors": [],
+      "triangles": 1801,
+      "materials": 24,
+      "drawCalls": 51,
+      "fileKB": 41.69140625,
+      "dimensions": [
+        0.4934304841514344,
+        1.357922835205327,
+        0.8298329508086857
+      ],
+      "hash": "5e47e018c5d0c4f7692f1de31ae8c0f67f7de0ef5676a0a5d2e72731a21e3236",
+      "ratio": 0.03393886857875099
+    }
+  ],
+  "runtime_contract": [
+    {
+      "lod": 0,
+      "handMotion": 0.23041569690475877,
+      "footMotion": 0.1417929572770254,
+      "skinVertices": 20652,
+      "pupilVertices": 4104
+    },
+    {
+      "lod": 1,
+      "handMotion": 0.23041569690475877,
+      "footMotion": 0.1417929572770254,
+      "skinVertices": 2208,
+      "pupilVertices": 408
+    },
+    {
+      "lod": 2,
+      "handMotion": 0.23041569690475877,
+      "footMotion": 0.1417929572770254,
+      "skinVertices": 846,
+      "pupilVertices": 144
+    }
+  ],
+  "pivot_review": [
+    {
+      "lod": 0,
+      "maxPivotDelta": 0
+    },
+    {
+      "lod": 1,
+      "maxPivotDelta": 0
+    },
+    {
+      "lod": 2,
+      "maxPivotDelta": 0
+    }
+  ],
+  "rounds": 4,
+  "renderer": "Eevee",
+  "backface_culling": true,
+  "webgl2_ok": true,
+  "webgpu_ok": false,
+  "browser_review": [
+    {
+      "lod": 0,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 61,
+        "triangles": 53066,
+        "size": [
+          0.478,
+          1.365,
+          0.831
+        ]
+      },
+      "handMotion": 0.23041569690475877,
+      "footMotion": 0.1417929572770254,
+      "skinVertices": 20652,
+      "pupilVertices": 4104,
+      "hiddenCaps": [],
+      "infection": {
+        "caps": [
+          {
+            "name": "stump_legL",
+            "hidden": true,
+            "hasMesh": true
+          },
+          {
+            "name": "stump_legR",
+            "hidden": true,
+            "hasMesh": true
+          },
+          {
+            "name": "stump_foreArmL",
+            "hidden": true,
+            "hasMesh": true
+          },
+          {
+            "name": "stump_foreArmR",
+            "hidden": true,
+            "hasMesh": true
+          },
+          {
+            "name": "stump_armL",
+            "hidden": true,
+            "hasMesh": true
+          },
+          {
+            "name": "stump_armR",
+            "hidden": true,
+            "hasMesh": true
+          },
+          {
+            "name": "stump_head",
+            "hidden": true,
+            "hasMesh": true
+          }
+        ],
+        "gogglesGlow": false
+      },
+      "errors": []
+    },
+    {
+      "lod": 1,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 61,
+        "triangles": 5828,
+        "size": [
+          0.478,
+          1.365,
+          0.831
+        ]
+      },
+      "handMotion": 0.23041569690475877,
+      "footMotion": 0.1417929572770254,
+      "skinVertices": 2208,
+      "pupilVertices": 408,
+      "hiddenCaps": [],
+      "errors": []
+    },
+    {
+      "lod": 2,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 51,
+        "triangles": 1801,
+        "size": [
+          0.493,
+          1.358,
+          0.83
+        ]
+      },
+      "handMotion": 0.23041569690475877,
+      "footMotion": 0.1417929572770254,
+      "skinVertices": 846,
+      "pupilVertices": 144,
+      "hiddenCaps": [],
+      "errors": []
+    }
+  ],
+  "matches_reference": true,
+  "done": true,
+  "gaps": [
+    "WebGPU manual check pending.",
+    "Manifest registration/status and runtime integration are owned by the integrator."
+  ],
+  "verification": {
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "test_unit": {
+      "status": "PASS",
+      "passed": 200,
+      "todo": 2
+    },
+    "verify_E17": {
+      "status": "FAIL",
+      "typecheck": "PASS",
+      "lint": "PASS",
+      "build": "PASS",
+      "tagged_tests": "PASS",
+      "browser_passed": 35,
+      "browser_failed": 1,
+      "failure": "tests/e2e/art-integration.spec.ts:20: Infected spawn inside collider or outside grid",
+      "outside_asset_scope": true
+    },
+    "asset_validation": "PASS",
+    "webgl2_all_lods": "PASS",
+    "webgpu": "manual check pending"
+  }
+}
