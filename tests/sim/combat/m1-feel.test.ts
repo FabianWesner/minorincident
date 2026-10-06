@@ -42,7 +42,8 @@ test('@E03-AC20 unarmed retains varied moves across pauses, equal damage, slight
   }
   expect(new Set(moves).size).toBe(7); expect(moves.every((move, i) => !i || move !== moves[i - 1])).toBe(true);
   expect(new Set(damages).size).toBe(1); expect(damages[0]).toBeGreaterThan(0);
-  expect(knockbacks[moves.indexOf(2)]).toBe(.45); expect(moves.filter(move => move === 6).length).toBe(2);
+  // E19 §5.6: kicks shove 1.5–2.5 m; punches only flinch.
+  expect(knockbacks[moves.indexOf(2)]).toBeGreaterThanOrEqual(1.5); expect(knockbacks[moves.indexOf(2)]).toBeLessThanOrEqual(2.5); expect(knockbacks[moves.indexOf(0)]).toBeLessThan(.5); expect(moves.filter(move => move === 6).length).toBe(2);
 });
 
 

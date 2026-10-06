@@ -1,3 +1,4 @@
+import { meleeMoves } from '../../../src/data/meleeCombos';
 import { expect, test } from 'vitest';
 import { arena, dummy, equip, fire, step } from '../../sim/combat/helpers';
 
@@ -11,6 +12,7 @@ test('T-E05-12 @E05 @E05-AC12 attack/hit/kill carry stable entity IDs, positions
     expect(hit).toMatchObject({ sourceId: 1, targetId: target, attackId: 1, position: { x: 1, y: 0.7, z: 0 }, amount: 10 });
     expect(events.filter((e) => e.type === 'combat.kill')).toEqual([{ ...hit, type: 'combat.kill' }]);
     expect(events.indexOf(attack!)).toBeLessThan(events.indexOf(hit!));
-    if (id === 'weapon.bat') expect(events).toContainEqual({ type: 'combat.hit-stop', tick: 7, sourceId: 1, durationMs: 50 });
+    // E19 §5.6 forehand: 5-tick anticipation, authored 42 ms impact freeze.
+    if (id === 'weapon.bat') expect(events).toContainEqual({ type: 'combat.hit-stop', tick: 1 + meleeMoves['weapon.bat'][0].windup, sourceId: 1, durationMs: meleeMoves['weapon.bat'][0].hitStopMs });
   }
 });

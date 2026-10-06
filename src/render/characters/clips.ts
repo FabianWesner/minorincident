@@ -5,7 +5,16 @@ import type { CharacterRig } from './rig';
 
 /** Blender GLB samplers compiled by tools/assets/animation-library.ts. */
 export const authoredClips = new Map(library.map(clip => [clip.name, clip]));
-export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'npc-carry': .9, 'npc-cane': .9, 'corgi-walk': .55, 'corgi-trot': .8 };
+export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'npc-carry': .9, 'npc-cane': .9, 'corgi-walk': .55, 'corgi-trot': .8,
+  // E19 §5.4 tiers read from cadence: frail chops short quick steps, the lurch is
+  // medium, the athletic sprint covers ground in long low strides.
+  'infected-frail': .95, 'infected-lurch': 1.25, 'infected-sprint': 1.75, 'civ-flee': 1.25, 'corgi-gallop': 1.1, ride: 3.2 };
+/** Planted support per gait: stance fraction of the cycle and swing-foot lift (m). */
+const gaitShape: Record<string, { stance: number; lift: number }> = {
+  walk: { stance: .6, lift: .055 }, shamble: { stance: .6, lift: .055 }, 'npc-walk': { stance: .6, lift: .055 }, 'npc-walk-relaxed': { stance: .6, lift: .055 },
+  run: { stance: .5, lift: .085 }, 'infected-run': { stance: .5, lift: .085 }, 'civ-flee': { stance: .5, lift: .08 },
+  'infected-frail': { stance: .56, lift: .03 }, 'infected-lurch': { stance: .5, lift: .07 }, 'infected-sprint': { stance: .4, lift: .12 },
+};
 const worldScale = new Vector3(), worldOrigin = new Vector3();
 /** Library humanoid rest leg (leg->shin->foot), metres; strides are authored for it. */
 const libraryLeg = .516;
@@ -73,7 +82,7 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean): A
       }
     }
   }
-  if (!additive && /^(walk|run|shamble|infected-run|npc-walk|npc-walk-relaxed)$/.test(name)) plantLocomotion(root, name, source.duration, tracks);
+  if (!additive && gaitShape[name]) plantLocomotion(root, name, source.duration, tracks);
   return new AnimationClip(name, source.duration, tracks);
 }
 
@@ -86,7 +95,7 @@ function plantLocomotion(root: Object3D, name: string, duration: number, tracks:
   const hipTrack = tracks.find(t => t.name === 'hip.position')!;
   const position = hipTrack.InterpolantFactoryMethodLinear();
   const rotation = tracks.find(t => t.name === 'hip.quaternion')!.InterpolantFactoryMethodLinear();
-  const stance = /run$/.test(name) ? .5 : .6, stride = strides[name] * strideProportion(root);
+  const { stance, lift } = gaitShape[name], stride = strides[name] * strideProportion(root);
   // A grouped NPC can have a rotated sub-root above its hip. Express actor
   // travel in that parent's coordinates, rather than sliding along its local X.
   const forward = new Vector3(1, 0, 0).applyQuaternion(root.getWorldQuaternion(new Quaternion()));
@@ -96,7 +105,7 @@ function plantLocomotion(root: Object3D, name: string, duration: number, tracks:
     const t = (phase - stance) / (1 - stance);
     // Match the backward stance velocity at toe-off and heel contact.
     const smooth = t * t * (3 - 2 * t) - (1 - stance) / stance * (2 * t * t * t - 3 * t * t + t);
-    return forward.clone().multiplyScalar(stride * stance * (smooth - .5)).add(new Vector3(0, Math.sin(Math.PI * t) ** 2 * (/run$/.test(name) ? .085 : .055), 0));
+    return forward.clone().multiplyScalar(stride * stance * (smooth - .5)).add(new Vector3(0, Math.sin(Math.PI * t) ** 2 * lift, 0));
   };
   // Lower the mean pelvis only as far as this rig requires for a softly bent
   // support knee. Clamping an unreachable ankle would turn support into sliding.
