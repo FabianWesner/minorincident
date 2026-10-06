@@ -27,18 +27,19 @@ for (const mobile of [false, true]) test.describe(mobile ? 'portrait low' : 'des
     test.setTimeout(120_000);
     await boot(page); await page.evaluate(async mobile => {
       const a = window.__SS__!; await a.loadScenario('horde-arena'); a.settings.set({ quality: 'high' }); a.pause(); a.cheats.god(true);
-      for (let i = 0; i < 200; i++) a.spawn('infected.runner', { x: i % 20 * .65 - 6.5, z: Math.floor(i / 20) * .65 - 3.25 }, { state: 'idle' });
+      for (let i = 0; i < 200; i++) a.spawn('infected.runner', { x: i % 20 * .65 - 6.5, z: Math.floor(i / 20) * .65 - 3.25 }, { state: 'chase' });
       if (mobile) a.debug.renderQuality('low');
       await a.step(0); await a.screenshotReady();
     }, mobile);
     const proof = await page.evaluate(async () => {
       const a = window.__SS__!, intervals: number[] = []; a.resume(); let previous = 0;
-      for (let i = 0; i < 180; i++) { const now = await new Promise<number>(resolve => requestAnimationFrame(resolve)); if (i > 30) intervals.push(now - previous); previous = now; }
+      const start = performance.now(), startTick = a.tick();
+      for (let i = 0; i < 180 || performance.now() - start < 12_000; i++) { const now = await new Promise<number>(resolve => requestAnimationFrame(resolve)); if (i > 30) intervals.push(now - previous); previous = now; }
       a.pause(); intervals.sort((a, b) => a - b);
-      return { infected: a.getState().ai!.count, renderTier: a.getState().render.quality, p95Ms: intervals[Math.floor(intervals.length * .95)], perf: a.perf() };
+      return { infected: a.getState().ai!.count, renderTier: a.getState().render.quality, actorState: 'chase', ticks: a.tick() - startTick, durationMs: performance.now() - start, p95Ms: intervals[Math.floor(intervals.length * .95)], perf: a.perf() };
     });
     mkdirSync('test-results/r1-grade', { recursive: true }); writeFileSync(`test-results/r1-grade/horde-${mobile ? 'low' : 'high'}.json`, JSON.stringify(proof, null, 2));
-    expect(proof.infected).toBe(200); expect(proof.renderTier).toBe(mobile ? 'low' : 'high'); expect(proof.p95Ms).toBeLessThanOrEqual(mobile ? 1000 / 30 : 1000 / 60);
+    expect(proof.infected).toBe(200); expect(proof.ticks).toBeGreaterThanOrEqual(300); expect(proof.renderTier).toBe(mobile ? 'low' : 'high'); expect(proof.p95Ms).toBeLessThanOrEqual(mobile ? 1000 / 30 : 1000 / 60);
     expect(proof.perf.drawCalls).toBeLessThanOrEqual(mobile ? 300 : 600); expect(proof.perf.triangles).toBeLessThanOrEqual(mobile ? 500_000 : 1_500_000);
   });
 });
