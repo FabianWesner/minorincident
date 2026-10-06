@@ -1,7 +1,7 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from folio-2025 Ligthing.js / Fog.js by Bruno Simon (MIT), commit 41046b5.
-import { Color, DirectionalLight, Fog, HemisphereLight, Scene, Vector3 } from 'three/webgpu';
-import { uniform, screenUV, mix } from 'three/tsl';
+import { Color, DirectionalLight, Fog, HemisphereLight, Scene, Vector3, type DepthTexture, type DirectionalLightShadow, type Node } from 'three/webgpu';
+import { Fn, float, reference, texture, uniform, vec2, screenUV, mix } from 'three/tsl';
 import { timeOfDay, type TimeOfDay } from '../data/timeOfDay';
 import type { View } from './View';
 import { worldLook } from '../data/worldLook';
@@ -30,6 +30,17 @@ export class Lighting {
     this.fogGradient = mix(this.fogA, this.fogB, screenUV.sub(.5).length().smoothstep(look.nodes.fogRatioA, look.nodes.fogRatioB));
     this.sun.castShadow = true; this.sun.shadow.mapSize.set(1024, 1024);
     this.sun.shadow.bias = -0.0005; this.sun.shadow.normalBias = 0.04; this.sun.shadow.radius = 3;
+    // r186's default PCF rotates five taps with per-pixel noise. Without TAA
+    // that stipples character faces and clothing; a fixed symmetric kernel
+    // keeps the same soft-shadow radius without changing the lighting grade.
+    Object.assign(this.sun.shadow, { filterNode: Fn(({ depthTexture, shadowCoord, shadow }: { depthTexture: DepthTexture; shadowCoord: Node<'vec3'>; shadow: DirectionalLightShadow }) => {
+      const texel = reference('radius', 'float', shadow).div(reference('mapSize', 'vec2', shadow)).mul(Math.SQRT1_2);
+      const sum = float(0).toVar();
+      for (const x of [-1, 0, 1]) for (const y of [-1, 0, 1]) {
+        sum.addAssign(texture(depthTexture, shadowCoord.xy.add(texel.mul(vec2(x, y)))).compare(shadowCoord.z).mul((x === 0 ? 2 : 1) * (y === 0 ? 2 : 1)));
+      }
+      return sum.div(16);
+    }) });
     this.scene.add(this.sun, this.sun.target, this.hemisphere); this.set('golden');
   }
   setQuality(tier: QualityTier): void {

@@ -1,0 +1,305 @@
+{
+  "job": "m1-render-fix",
+  "issues": [
+    "M1-27",
+    "M1-28"
+  ],
+  "base": "1292268",
+  "branch": "lane/m1-render-fix",
+  "main_merged_once": true,
+  "root_causes": [
+    "Character blood fragment hash produced isolated red pixels on shared skin, hair and clothing materials.",
+    "Three r186 default PCF rotates five shadow taps with per-pixel noise, creating visible stipple without temporal accumulation.",
+    "Transparent crowd instances cannot sort independently; corpse alpha blending contaminated survivor colours and depth during fade."
+  ],
+  "fixes": [
+    "Three smooth part-local blood surface splats.",
+    "Stable symmetric weighted nine-tap PCF, retaining grade and shadow settings.",
+    "Opaque crowd depth test/write with coherent 4x4 screen-door corpse fade."
+  ],
+  "unchanged": [
+    "survivor asset geometry",
+    "AI/transformation",
+    "lighting grade",
+    "shadow bias and normal bias",
+    "gibs: already opaque with depth writes",
+    "hit flash: already uniform emissive pulse"
+  ],
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "production_build": "pass",
+    "test_unit": {
+      "status": "pass",
+      "files": 56,
+      "tests": 150,
+      "seconds": 75.62
+    },
+    "test_smoke": {
+      "status": "pass",
+      "vitest_tests": 3,
+      "browser_tests": 22
+    },
+    "render_regressions": {
+      "status": "pass",
+      "tests": 2,
+      "seconds": 48.8,
+      "original_renderer_negative_control": "both tests fail at base 1292268"
+    }
+  },
+  "verify_E19": {
+    "status": "baseline failure",
+    "passed": 32,
+    "failed": 2,
+    "browser_phase": "not reached",
+    "failures": [
+      {
+        "test": "M1-08 gas forecourt reachability",
+        "remaining_m": 2.5820746,
+        "required_m": 0.15
+      },
+      {
+        "test": "M1-07 hedge click navigation",
+        "remaining_m": 4.2076876,
+        "required_m": 0.15
+      }
+    ],
+    "scope_decision": "Orchestrator explicitly directed recording inherited navigation failures as baseline, without fixes."
+  },
+  "evidence_dir": "test-results/m1-render-fix",
+  "regression_test": "tests/e2e/m1-render.spec.ts",
+  "evidence": {
+    "smoke_log": "test-results/m1-render-fix/smoke.log",
+    "unit_log": "test-results/m1-render-fix/unit-final.log",
+    "verify_log": "test-results/m1-render-fix/verify.log",
+    "browser": "headless Chromium / ANGLE Metal",
+    "port": 3346,
+    "lock": "tools/e2e-lock.sh",
+    "quality": "high (fixed for pixel regressions)",
+    "render_log": "test-results/m1-render-fix/final-render.log",
+    "original_renderer_log": "test-results/m1-render-fix/original-render.log",
+    "diner_screenshot": "test-results/m1-render-fix/diner-combat.png",
+    "half_fade_screenshot": "test-results/m1-render-fix/depth-front-1860-5.png",
+    "original_renderer_dir": "test-results/m1-render-fix/original-render"
+  },
+  "noise": {
+    "metric": "isolated RGB contrast >30 against all eight neighbours inside eroded survivor ID mask",
+    "original": {
+      "bloodPixels": 889,
+      "fullNoise": {
+        "pixels": 8215,
+        "spikes": 384,
+        "ratio": 0.046743761412051124
+      },
+      "cleanNoise": {
+        "pixels": 8215,
+        "spikes": 83,
+        "ratio": 0.010103469263542301
+      },
+      "excess": 0.03664029214850882,
+      "zoom": 0.9277434863285531,
+      "coverage": 0.1,
+      "fx": {
+        "enabled": true,
+        "colorblind": false,
+        "gore": "Full",
+        "quality": "high",
+        "flashReduction": false,
+        "time": 8.099999999999998,
+        "lastSpray": {
+          "actionId": "weapon.fists",
+          "direction": {
+            "x": 0.9890937628547449,
+            "z": -0.14728723054576584
+          },
+          "droplets": 44,
+          "chunks": 4,
+          "gravity": 9.81
+        },
+        "surfaceSplats": 0,
+        "pendingSplats": 0,
+        "particles": 0,
+        "particleCap": 2048,
+        "decals": 125,
+        "decalCap": 600,
+        "gibs": 0,
+        "gibCap": 80,
+        "telegraphs": [],
+        "hitStop": {
+          "active": false,
+          "until": 6.049999999999999,
+          "started": 5.999999999999999,
+          "suppressed": 0
+        },
+        "flash": 0,
+        "coverage": 0.1,
+        "detached": 0,
+        "dismemberedKills": 0,
+        "kills": 4,
+        "explosionRadius": 0
+      }
+    },
+    "fixed": {
+      "bloodPixels": 408,
+      "fullNoise": {
+        "pixels": 8215,
+        "spikes": 97,
+        "ratio": 0.011807668898356665
+      },
+      "cleanNoise": {
+        "pixels": 8215,
+        "spikes": 86,
+        "ratio": 0.010468654899573951
+      },
+      "excess": 0.0013390139987827145,
+      "zoom": 0.9277434863285531,
+      "coverage": 0.1,
+      "fx": {
+        "enabled": true,
+        "colorblind": false,
+        "gore": "Full",
+        "quality": "high",
+        "flashReduction": false,
+        "time": 8.099999999999998,
+        "lastSpray": {
+          "actionId": "weapon.fists",
+          "direction": {
+            "x": 0.989131790238303,
+            "z": -0.14703163448717377
+          },
+          "droplets": 44,
+          "chunks": 4,
+          "gravity": 9.81
+        },
+        "surfaceSplats": 0,
+        "pendingSplats": 0,
+        "particles": 0,
+        "particleCap": 2048,
+        "decals": 125,
+        "decalCap": 600,
+        "gibs": 0,
+        "gibCap": 80,
+        "telegraphs": [],
+        "hitStop": {
+          "active": false,
+          "until": 6.049999999999999,
+          "started": 5.999999999999999,
+          "suppressed": 0
+        },
+        "flash": 0,
+        "coverage": 0.1,
+        "detached": 0,
+        "dismemberedKills": 0,
+        "kills": 4,
+        "explosionRadius": 0
+      }
+    }
+  },
+  "depth": {
+    "samples": [
+      {
+        "age": 180,
+        "side": "behind",
+        "changed": 0,
+        "upperChanged": 0,
+        "pixels": 54634,
+        "overlap": 0,
+        "mixed": 0,
+        "mixedRatio": 0
+      },
+      {
+        "age": 180,
+        "side": "front",
+        "changed": 8314,
+        "upperChanged": 120,
+        "pixels": 54634,
+        "overlap": 5534,
+        "mixed": 0,
+        "mixedRatio": 0
+      },
+      {
+        "age": 1800,
+        "side": "behind",
+        "changed": 76,
+        "upperChanged": 16,
+        "pixels": 54634,
+        "overlap": 0,
+        "mixed": 0,
+        "mixedRatio": 0
+      },
+      {
+        "age": 1800,
+        "side": "front",
+        "changed": 8318,
+        "upperChanged": 123,
+        "pixels": 54634,
+        "overlap": 5534,
+        "mixed": 9,
+        "mixedRatio": 0.0016263100831225153
+      },
+      {
+        "age": 1860,
+        "side": "behind",
+        "changed": 396,
+        "upperChanged": 53,
+        "pixels": 54634,
+        "overlap": 0,
+        "mixed": 0,
+        "mixedRatio": 0
+      },
+      {
+        "age": 1860,
+        "side": "front",
+        "changed": 4298,
+        "upperChanged": 62,
+        "pixels": 54634,
+        "overlap": 5534,
+        "mixed": 11,
+        "mixedRatio": 0.0019877123238164077
+      },
+      {
+        "age": 1919,
+        "side": "behind",
+        "changed": 0,
+        "upperChanged": 0,
+        "pixels": 54634,
+        "overlap": 0,
+        "mixed": 0,
+        "mixedRatio": 0
+      },
+      {
+        "age": 1919,
+        "side": "front",
+        "changed": 0,
+        "upperChanged": 0,
+        "pixels": 54634,
+        "overlap": 5534,
+        "mixed": 0,
+        "mixedRatio": 0
+      }
+    ],
+    "original_half_fade_front": {
+      "age": 1860,
+      "side": "front",
+      "changed": 7408,
+      "upperChanged": 58,
+      "pixels": 54634,
+      "overlap": 5548,
+      "mixed": 4933,
+      "mixedRatio": 0.8891492429704398
+    },
+    "fixed_half_fade_front": {
+      "age": 1860,
+      "side": "front",
+      "changed": 4298,
+      "upperChanged": 62,
+      "pixels": 54634,
+      "overlap": 5534,
+      "mixed": 11,
+      "mixedRatio": 0.0019877123238164077
+    }
+  },
+  "commits": {
+    "implementation": "cf1f451"
+  }
+}
