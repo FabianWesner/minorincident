@@ -16,6 +16,7 @@ import type { View } from './View';
 import { bakeInfected, framesPerClip, infectedClips } from './characters/bakeInfected';
 import { authoredClips, strides } from './characters/clips';
 import { MotionPhase } from './characters/MotionPhase';
+import { keepsLook } from '../sim/outbreak/appearance';
 interface Batch { mesh: InstancedMesh; state: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
 const variantShirts: Record<string, Color> = { 'inf.jogger': new Color('#3178ac'), 'inf.cashier': new Color('#e5d9b9'), 'inf.delivery-driver': new Color('#d4ad32'), 'inf.suburban-mom': new Color('#79865b'), 'inf.bbq-dad': new Color('#a86645'), 'inf.bathrobe-neighbor': new Color('#ac7a91') };
 /** One instanced, rigid-part GPU batch per archetype. Scene graph size never grows with infected population. */
@@ -140,6 +141,8 @@ export class CrowdView extends Group {
       if (e.id === 1 || e.faction !== 'infected' || !e.combat) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
       if (e.hidden || e.infected?.hidden || distance > this.cullDistance || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > 540) continue;
+      // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
+      if (keepsLook(e)) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); continue; }
       const availableLod = this.low ? 'lod2' : 'lod1';
       const role = this.batches.has(`${e.archetype}:${availableLod}`) ? e.archetype : 'infected.runner';
       const variant = e.infected?.variant;

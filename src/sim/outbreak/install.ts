@@ -1,0 +1,21 @@
+import { installNpcSystems } from '../npc/install';
+import type { SimWorld } from '../world/SimWorld';
+import { Outbreak } from './Outbreak';
+import { groveRefuges, populateGrove } from './Population';
+
+export interface L1OutbreakSetup { tier?: 'high' | 'low'; civilians?: number }
+/**
+ * Lane E entry point for L1 v2 on D-GROVE: installs combat/infected/NPC systems if the composition did not
+ * (D-GROVE is not a campaign `L1..L6` id yet), attaches the outbreak layer and populates the morning.
+ * High tier: 56 pedestrians (section 5.1: 50-60); low tier: 40 and the infected cap 30 (section 5.9).
+ */
+export function installL1Outbreak(world: SimWorld, setup: L1OutbreakSetup = {}): Outbreak {
+  if (!world.infected || !world.npcs) installNpcSystems(world);
+  for (const e of [...world.entities.iterate()]) if (e.civilian?.ambient || e.traffic) { world.entities.delete(e.id); world.spatial.delete(e.id); }
+  world.npcs!.setAmbient(0);
+  const tier = setup.tier ?? 'high';
+  const outbreak = new Outbreak(world, { ...groveRefuges({ world }), tier });
+  world.npcs!.civilians.outbreak = outbreak;
+  populateGrove(outbreak, setup.civilians ?? (tier === 'low' ? 40 : 56));
+  return outbreak;
+}
