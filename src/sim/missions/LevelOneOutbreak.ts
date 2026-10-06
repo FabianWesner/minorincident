@@ -1,3 +1,4 @@
+import { dinerCustomer } from '../npc/MorningRoutines';
 import type { Mission } from './Mission';
 import type { EntitySnapshot } from '../world/types';
 
@@ -9,14 +10,11 @@ export class LevelOneOutbreak {
     if (!ai || !npcs) return;
     Object.assign(ai.director.camera, { halfWidth: 10, halfDepth: 12, yaw: Math.PI / 4 });
     // Replace the previous instant-turn stand-in with customers present before the incident.
-    for (const e of world.entities.iterate()) if (e.archetype === 'npc.delivery-driver') { world.entities.delete(e.id); world.spatial.delete(e.id); }
+    for (const e of world.entities.iterate()) if (e.archetype === 'npc.delivery-driver' && !e.civilian?.schedule) { world.entities.delete(e.id); world.spatial.delete(e.id); }
     state.outbreak = { victims: [], released: false };
-    for (const [i, role] of ['cashier', 'suburban-mom', 'bbq-dad'].entries()) {
-      const point = { x: def.anchors.diner.x + (i - 1) * 1.8, z: def.anchors.diner.z + 1.5 };
-      const cell = ai.nav.nearestCell(point.x, point.z), p = ai.nav.clear(point.x, point.z, .65) ? point : { x: ai.nav.x(cell), z: ai.nav.z(cell) };
-      const id = npcs.civilians.spawn(role, p, { waypoints: [p] });
-      const civilian = world.entities.get(id)!.civilian!;
-      civilian.pauseUntil = Number.MAX_SAFE_INTEGER; civilian.outbreak = true;
+    for (let i = 0; i < 3; i++) {
+      const id = dinerCustomer(world, i, def.anchors.diner);
+      world.entities.get(id)!.civilian!.outbreak = true;
       state.outbreak.victims.push(id);
     }
   }
@@ -62,6 +60,10 @@ export class LevelOneOutbreak {
         if (distance < nearest) { nearest = distance; victim = human; }
       }
       if (victim) {
+        // Notice interrupts the current activity before this independently chosen bite.
+        const c = victim.civilian!;
+        if (c.state === 'calm' && nearest < 6) { c.state = 'alarmed'; c.entered = world.tick; c.until = world.tick + 30; }
+        if (c.state === 'alarmed') Object.assign(c.threat, e.transform);
         // Each attacker makes its own decision. Panic is never reset to calm.
         brain.state = 'migration'; brain.targetId = victim.id; e.combat!.attacking = false;
         world.npcs!.move(e, victim.transform, firstEntrant ? 3.7 : 5.5, brain, .8);

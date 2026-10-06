@@ -107,8 +107,8 @@ test('@E19 M1-04 corgi settles after turns/stops with stable yaw, zero idle spee
 
 test('@E19 M1-06 neighbors use five models, safe sidewalk routines and actual movement/idle states', async () => {
   await slice();
-  const neighbors = [...world.entities.iterate()].filter(e => e.civilian && e.archetype !== 'npc.delivery-driver');
-  expect(neighbors).toHaveLength(5); expect(new Set(neighbors.map(e => e.civilian!.model)).size).toBe(5);
+  const neighbors = [...world.entities.iterate()].filter(e => e.civilian?.schedule && !e.civilian.pet);
+  expect(neighbors).toHaveLength(10); expect(new Set(neighbors.map(e => e.civilian!.model)).size).toBe(5);
   const moving = new Set<number>(), idle = new Set<number>();
   for (let i = 0; i < 1200; i++) {
     world.update();
@@ -118,7 +118,7 @@ test('@E19 M1-06 neighbors use five models, safe sidewalk routines and actual mo
       if (!e.motion!.moving) expect(e.motion!.speed).toBeLessThan(.13);
     }
   }
-  expect(moving.size).toBe(5); expect(idle.size).toBe(5);
+  expect(moving.size).toBe(neighbors.length); expect(idle.size).toBe(neighbors.length);
 });
 
 test('@E19 M1-10 all character bodies separate, even in stationary infected attack states', async () => {

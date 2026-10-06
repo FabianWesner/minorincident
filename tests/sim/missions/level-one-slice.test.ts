@@ -68,7 +68,7 @@ test('@E19 slice complete policy finishes 20 seeds with normal movement, pickup 
     }
     expect(m.state.phase,`seed ${seed}: ${JSON.stringify({p:world.entities.get(1)!.transform,hp:world.entities.get(1)!.health,steps:m.state.steps,actors:world.infected!.active.map(e=>({id:e.id,p:e.transform,hp:e.health.current,state:e.infected!.state}))})}`).toBe('result');expect(m.state.stats.kills).toBe(5);expect(m.state.stats.deaths).toBeLessThanOrEqual(2);world.dispose();
   }
-});
+}, 120_000); // Twenty full slices also simulate the morning population on the shared Mac.
 
 
 test('@E19 incident checkpoint restores escape, fists and live runners after death', async () => {
@@ -140,7 +140,8 @@ test('@E19 @E19-AC06 M1-10 entrant walks offscreen, bites three visible customer
   expect(world.infected!.active).toHaveLength(1);
   for (let i=0;i<3600 && !m.state.outbreak!.released;i++) world.update();
   expect(m.state.outbreak!.released).toBe(true);
-  expect(world.infected!.active.filter(e=>e.health.current>0)).toHaveLength(4);
+  expect(world.infected!.active.filter(e=>e.health.current>0)).toHaveLength(m.state.outbreak!.victims.length + 1);
+  expect(world.infected!.director.count).toBeLessThanOrEqual(15);
   const events = world.events.events();
   for (const id of m.state.outbreak!.victims) {
     const sequence = events.filter(e=>e.type==='civilian.state'&&e.id===id).map(e=>e.type==='civilian.state'?e.state:'');

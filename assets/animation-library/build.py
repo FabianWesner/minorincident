@@ -147,6 +147,32 @@ gait('shamble',1.1,.72,False,True)
 gait('infected-run',.64,1.5,True,True)
 gait('npc-walk',.9,.9)
 gait('npc-walk-relaxed',1,.85)
+
+# Morning activities: feet stay planted; arm/head motion has a purpose and a held prop.
+seated=p(hip=hip(y=-.22),legL=z(88),legR=z(88),shinL=z(-88),shinR=z(-88),foreArmL=z(35),foreArmR=z(75),armR=z(15))
+half_seated=p(hip=hip(y=-.12),torso=z(-12),legL=z(40),legR=z(40),shinL=z(-65),shinR=z(-65),foreArmR=z(65))
+action('npc-sit-down',.6,[(0,p(foreArmR=z(65))),(.5,half_seated),(1,seated)])
+action('npc-stand-up',.6,[(0,seated),(.5,half_seated),(1,p(foreArmR=z(65)))])
+action('npc-sit',4,[(0,seated),(.25,{**seated,'foreArmR':z(118),'armR':z(38),'head':z(7)}),(.5,seated),(.75,{**seated,'head':(0,-18,0),'torso':(0,-5,0)}),(1,seated)])
+action('npc-gesture',3,[(0,p(foreArmL=z(22),foreArmR=z(28))),(.22,p(armR=(0,-20,32),foreArmR=z(75),head=(0,8,0))),(.48,p(armL=(0,12,25),foreArmL=z(52),armR=z(12),foreArmR=z(30),head=z(4))),(.75,p(armR=(0,25,20),foreArmR=z(55))),(1,p(foreArmL=z(22),foreArmR=z(28)))])
+action('npc-look-around',2.5,[(0,p(foreArmR=z(16))),(.3,p(head=(0,-25,2),torso=(0,-7,0),foreArmR=z(16))),(.65,p(head=(0,22,-2),torso=(0,5,0),foreArmR=z(16))),(1,p(foreArmR=z(16)))])
+action('npc-water',3,[(0,p(armR=z(20),foreArmR=z(30))),(.25,p(torso=z(-9),armR=z(52),foreArmR=z(20),handR=(0,0,-28),head=z(-10))),(.7,p(torso=z(-9),armR=z(52),foreArmR=z(20),handR=(0,0,-28),head=z(-10))),(1,p(armR=z(20),foreArmR=z(30)))])
+# Carry reuses the authored contact poses, fixing the right arm around the prop.
+# Cane shares a restrained gait while the left arm balances the step.
+for name in ['npc-carry','npc-cane']:
+    poses=[]
+    for i in range(9):
+        y=[-.064,-.038,-.027,-.045,-.064,-.038,-.027,-.045,-.064][i]
+        pose=p(hip=hip(y=y),torso=z(-2),foreArmR=z(12 if name=='npc-carry' else 22),armR=z(4 if name=='npc-carry' else 18))
+        for side,index in [('L',i),('R',(i+4)%8)]:
+            targets=[(.225,0),(.11,0),(-.01,0),(-.12,0),(-.225,.015),(-.14,.12),(.015,.16),(.19,.10),(.225,0)]
+            thigh,knee=leg_pose(*targets[index],y)
+            pose['leg'+side]=z(thigh);pose['shin'+side]=z(knee)
+            pose['foot'+side]=z(-thigh-knee+[-8,0,0,10,20,-12,-18,-10,-8][index])
+        pose['armL']=z([-18,-9,0,9,18,9,0,-9,-18][i]);pose['foreArmL']=z(18)
+        poses.append((i/8,pose))
+    action(name,1,poses)
+
 action('start',.18,[(0,p()),(.4,p(hip=hip(y=-.055),torso=z(-10),legL=z(15),shinL=z(-28),armR=z(15))),
     (1,p(torso=z(-8),legL=z(25),shinL=z(-30),legR=z(-15),foreArmL=z(55),foreArmR=z(55)))])
 action('stop',.22,[(0,p(torso=z(-8),legL=z(20),shinL=z(-25))),(.45,p(hip=hip(y=-.045),torso=z(5),legL=z(12),shinL=z(-20))), (1,p())])
