@@ -49,13 +49,17 @@ export class Combat {
     const loadout = new Loadout(left, right, actionResolver(this.actionDefinitions), this.rackCapacity), infinite = this.runner.infiniteCharges;
     this.runner = new ActionRunner(1, loadout, this.runner.lastAttackId); this.runner.infiniteCharges = infinite; this.attach();
   }
+  /** Empty starting loadout: no visible/effective actions until the display pickup. */
+  clearLoadout(): void { delete this.world.entities.get(1)!.weapons; this.projectiles.length = 0; }
   intent(frame: InputFrame): void {
+    if (!this.world.entities.get(1)!.weapons) return;
     this.runner.loadout.update(this.world.tick, this.switched);
     this.runner.loadout.input(frame, this.world.tick);
     this.status.update();
   }
   update(frame: InputFrame): void {
     const player = this.world.entities.get(1)!;
+    if (!player.weapons) return;
     this.runner.update(frame, this.world.tick, player.health.current > 0 && !Status.stunned(player, this.world.tick), this.started, this.resolve);
     this.updateProjectiles();
     this.effects.update(); this.pickups.update();

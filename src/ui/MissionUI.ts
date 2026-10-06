@@ -19,6 +19,8 @@ export class MissionUI {
   private readonly heading = document.createElement('h1');
   private readonly detail = document.createElement('p');
   private readonly button = document.createElement('button');
+  private readonly choices = document.createElement('div');
+  private readonly choiceHint = document.createElement('span');
   private readonly result = document.createElement('dl');
   private readonly rows = new Map<keyof MissionResult, HTMLElement>();
   private readonly pins = new Map<string, HTMLSpanElement>();
@@ -39,18 +41,31 @@ export class MissionUI {
     for (const [key,label] of [['time','Time (seconds)'],['kills','Kills'],['damage','Damage taken'],['deaths','Deaths'],['rescued','Rescued'],['optionalObjectives','Optional objectives']] as const) {
       const title=document.createElement('dt'), value=document.createElement('dd'); title.textContent=label; title.dataset.testid=`result-label-${key}`; value.dataset.testid=`result-${key}`; value.dataset.stat=key; this.result.append(title,value); this.rows.set(key,value);
     }
+    this.choices.className='slice-choices'; this.choices.dataset.testid='weapon-display';
+    for (const name of ['bat','crowbar','machete']) {
+      const button=document.createElement('button'); button.type='button';button.textContent=name;button.dataset.testid=`choose-${name}`;
+      button.addEventListener('click',()=>{this.world.missions?.chooseMelee(`weapon.${name}`);button.blur();});this.choices.append(button);
+    }
+    this.choices.append(this.choiceHint);
+    this.root.append(this.choices);
     this.panel.append(this.heading,this.detail,this.result,this.button);
     this.root.append(this.tracker,this.map,this.marker,this.subtitle,this.toast,this.panel); document.querySelector('#game')!.append(this.root);
   }
   private readonly accept = (): void => {
     const mission=this.world.missions;if(!mission)return;
-    if(mission.state.phase==='briefing')mission.begin();else if(mission.state.phase==='retry')mission.restore();else if(mission.state.phase==='result')mission.continue();
+    if(mission.state.phase==='briefing')mission.begin();else if(mission.state.phase==='retry')mission.restore();else if(mission.state.phase==='result') { if(mission.def.slice)mission.restartSlice();else mission.continue(); }
     this.onChange();
   };
   private text(element: HTMLElement, value: string): void { if(element.textContent!==value)element.textContent=value; }
   update(camera: PerspectiveCamera, width: number, height: number): void {
     const mission=this.world.missions;if(this.displayedMission!==mission){this.reset();this.displayedMission=mission;}this.root.hidden=!mission;if(!mission)return;
     const state=mission.state,playing=state.phase==='playing';
+    const hardware=mission.def.anchors.hardware,p=this.world.entities.get(1);
+    this.choices.hidden=!mission.def.slice||!playing||state.steps.melee?.status!=='active'||!p||p.health.current<=0||Math.hypot(p.transform.x-hardware.x,p.transform.z-hardware.z)>5;
+    if(!this.choices.hidden){
+      for(const button of this.choices.querySelectorAll('button'))button.setAttribute('aria-pressed',String(`weapon.${button.textContent}`===mission.meleeChoice));
+      this.text(this.choiceHint, `Selected ${mission.meleeChoice.slice(7)} · Stand at display / ${document.body.classList.contains('touch-ui') ? 'ACTION' : 'F / middle-click'}`);
+    }
     const cinematic=state.cinematic ? mission.def.cinematics[state.cinematic.id] : null;
     this.root.classList.toggle('is-cinematic',!!cinematic);
     this.subtitle.hidden=!cinematic&&(!state.subtitle||!playing);
@@ -59,11 +74,11 @@ export class MissionUI {
     this.panel.hidden=playing||!!cinematic;
     if (this.panel.hidden && this.panel.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();
     this.tracker.hidden=this.map.hidden=!playing;
-    this.result.hidden=state.phase!=='result';
+    this.result.hidden=state.phase!=='result'||!!mission.def.slice;
     if(this.phase!==state.phase){
       this.phase=state.phase;
       const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${state.checkpoint??'level start'}.`,'Retry'],result:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
-      const [title,detail,button]=labels[state.phase];this.text(this.heading,title);this.text(this.detail,detail);this.text(this.button,button);this.button.hidden=!button;
+      const [title,detail,button]=mission.def.slice&&state.phase==='result' ? ['Milestone 1 complete — thanks for playing','You survived the first incident.','Restart'] : labels[state.phase];this.text(this.heading,title);this.text(this.detail,detail);this.text(this.button,button);this.button.hidden=!button;
       if(!this.panel.hidden&&!this.button.hidden)this.button.focus({preventScroll:true});
     }
     if(state.result)for(const [key,element]of this.rows){const value=state.result[key];this.text(element,Array.isArray(value)?value.join(', ')||'None':String(Math.round(value*100)/100));}

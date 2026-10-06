@@ -9,7 +9,7 @@ import { bakeInfected, framesPerClip, infectedClips } from '../characters/bakeIn
 import { disposeCharacter } from '../characters/rig';
 import { createCivilianPlaceholder } from './placeholders';
 /** One human crowd draw regardless of density; poses, veins, eyes and clothing vary per instance. */
-export class CivilianCrowd extends Group {
+class CivilianBatch extends Group {
   private mesh!: InstancedMesh;
   private texture!: DataTexture;
   private readonly childScale = new Vector3(.7, .7, .7);
@@ -21,9 +21,9 @@ export class CivilianCrowd extends Group {
   private readonly decay = new InstancedBufferAttribute(new Float32Array(128), 1);
   private readonly registry = new AssetRegistry(() => {});
   source = 'placeholder';
-  constructor(readonly world: SimWorld) { super(); this.name = 'civilian-crowd'; }
+  constructor(readonly world: SimWorld, readonly female: boolean, readonly distant: boolean) { super(); this.name = 'civilian-crowd'; }
   async init(): Promise<void> {
-    const loaded = await this.registry.loadAsset('npc.civilian-adult-m', 'high');
+    const loaded = await this.registry.loadAsset(this.female ? 'npc.civilian-woman-a' : 'npc.civilian-man-a', this.distant ? 'lod2' : 'lod1');
     const placeholder = loaded.userData.placeholder, model = placeholder ? createCivilianPlaceholder() : loaded as Group;
     this.source = placeholder ? 'placeholder' : 'glb';
     const baked = bakeInfected(model), color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
@@ -46,6 +46,8 @@ export class CivilianCrowd extends Group {
     if (!this.mesh) return; let index = 0;
     for (const e of this.world.entities.iterate()) {
       const c = e.civilian; if (!c || c.pet || e.hidden || c.state === 'infected') continue;
+      const player=this.world.entities.get(1)!.transform;if((Math.hypot(e.transform.x-player.x,e.transform.z-player.z)>30)!==this.distant)continue;
+      const female = ['inf.suburban-mom','inf.bathrobe-neighbor'].includes(c.variant); if (female !== this.female) continue;
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
       const rising = c.state === 'rising';
       const clip = down || rising ? 'die' : c.state === 'grabbed' || c.state === 'bitten' ? 'hurt' : c.state === 'flee' ? 'run' : c.state === 'hide' || !c.adult || this.world.tick < c.pauseUntil ? 'idle' : 'run';
@@ -58,4 +60,14 @@ export class CivilianCrowd extends Group {
   }
   snapshot() { return { instances: this.mesh?.count ?? 0, draws: this.mesh?.count ? 1 : 0, source: this.source }; }
   dispose(): void { if (this.mesh) { this.mesh.geometry.dispose(); (this.mesh.material as MeshLambertNodeMaterial).dispose(); this.mesh.dispose(); this.texture.dispose(); } void this.registry.dispose(); this.clear(); }
+}
+
+/** Real male/female civilians share rigid-part LOD batches and the E07 clip path. */
+export class CivilianCrowd extends Group {
+  private readonly batches: CivilianBatch[];
+  constructor(world: SimWorld) { super(); this.batches=[new CivilianBatch(world,false,false),new CivilianBatch(world,true,false),new CivilianBatch(world,false,true),new CivilianBatch(world,true,true)]; this.add(...this.batches); }
+  async init(): Promise<void> { await Promise.all(this.batches.map(b=>b.init())); }
+  update(): void { this.batches.forEach(b=>b.update()); }
+  snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
+  dispose(): void { this.batches.forEach(b=>b.dispose());this.clear(); }
 }

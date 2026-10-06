@@ -21,6 +21,12 @@ test('S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, st
   const arrived = await page.evaluate(() => window.__SS__!.getState().player!.transform);
   expect(Math.hypot(arrived.x - start.x - 2, arrived.z - start.z)).toBeLessThan(.15);
   expect(await page.evaluate(() => window.__SS__!.getState().render.moveMarker!.visible)).toBe(false);
+  expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons)).toBeUndefined();
+  // L1 is now unarmed. An attack is a no-op; the armed control assertion below
+  // supplies its own fixture loadout. The E19 device playthrough earns it in-game.
+  await page.mouse.click(point.x, point.y, { button: 'right' }); await tick(page, 1);
+  expect(await page.evaluate(() => window.__SS__!.events().some(e => e.type === 'combat.attack'))).toBe(false);
+  await page.evaluate(() => window.__SS__!.setLoadout(['weapon.bat'], ['weapon.kick']));
   const far = await page.evaluate(p => window.__SS__!.input.project({ x: p.x + 2, z: p.z + 1 }), arrived);
   await page.mouse.click(far.x, far.y, { button: 'right' }); await tick(page, 90);
   const attacked = await page.evaluate(() => window.__SS__!.getState());

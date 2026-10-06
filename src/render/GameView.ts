@@ -282,6 +282,8 @@ export class GameView implements Lifecycle {
     const current = this.world.entities.get(1)?.transform, previous = this.world.previousPlayer;
     const survivor = this.world.entities.get(1)?.survivor;
     if (this.character && current && survivor) {
+      // Portrait hero readability supplements the seven-metre camera floor; collision stays in metres.
+      this.character.scale.setScalar(this.camera.aspect < 1 ? 1.25 : 1);
       this.character.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha) - 0.7, lerp(previous?.z ?? current.z, current.z, alpha));
       const from = previous?.yaw ?? current.yaw;
       this.character.rotation.y = from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha;

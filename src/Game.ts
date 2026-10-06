@@ -1,3 +1,4 @@
+import { levelOneSlice } from './levels/levelOneSlice';
 import { GameUI } from './ui/GameUI';
 import { CampaignUI } from './ui/CampaignUI';
 import { newCampaign, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
@@ -131,7 +132,11 @@ export class Game {
         if(missionIds.includes(id as MissionId)) {
           this.world.combat ??= new Combat(this.world, { name:id,survivor:true,combat:true,ground:{width:100,depth:100},player:{...this.world.entities.get(1)!.transform} });
           if(this.campaign)this.applyCampaign();
-          const mission=this.world.loadMission(resolveCampaignMission(id as MissionId, this.world.districts!));
+          if (id === 'L1') { this.world.enableInfected(); this.world.infected!.director.levelCap=15; this.world.combat.clearLoadout(); }
+          const campaign = resolveCampaignMission(id as MissionId, this.world.districts!);
+          const definition=id==='L1'?levelOneSlice(campaign):campaign;
+          if(definition.slice)this.world.npcs?.configureSlice(definition.anchors['incident-0']);
+          const mission=this.world.loadMission(definition);
           if(opts?.checkpoint) mission.loadCheckpoint(opts.checkpoint);
         }
         if(this.campaign)this.watchCampaign();
@@ -186,7 +191,7 @@ export class Game {
   }
   private simTick(): void {
     this.input.setDriving(this.world.vehicles?.active != null);
-    this.input.touch.setInteractable(this.world.vehicles?.canInteract() === true || this.world.interactables?.activeId != null);
+    this.input.touch.setInteractable(this.world.vehicles?.canInteract() === true || this.world.interactables?.activeId != null || (this.world.missions?.state.steps.melee?.status === 'active' && !!this.world.missions.def.slice && !!this.world.entities.get(1) && Math.hypot(this.world.entities.get(1)!.transform.x-this.world.missions.def.anchors.hardware.x,this.world.entities.get(1)!.transform.z-this.world.missions.def.anchors.hardware.z)<=2));
     const player = this.world.entities.get(1)?.transform;
     if (this.driver) this.world.applyInput(this.driver.sample(), 'keyboard');
     else if (player) {

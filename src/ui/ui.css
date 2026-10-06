@@ -2,7 +2,7 @@
 :root{--text-scale:1;--ui-ink:#fff4df;--ui-dark:#182333;--ui-warm:#f8bf70}
 .full-ui *{box-sizing:border-box}
 .full-ui [hidden]{display:none!important}
-.full-ui [data-input-hint],.full-ui [data-audio-pause]{display:none!important}
+.full-ui:not(.debug-ui) [data-input-hint],.full-ui [data-audio-pause]{display:none!important}
 body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([data-ui-screen=game]) [data-testid=stick-zone]{display:none!important}
 .full-ui{color:var(--ui-ink);font-family:system-ui,sans-serif}
 .menus{position:fixed;inset:0;z-index:40;display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));background:linear-gradient(160deg,#293447e8,#162032ee)}
@@ -90,7 +90,7 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .hud-stick-zone{position:absolute;bottom:max(16px,env(safe-area-inset-bottom));left:max(16px,env(safe-area-inset-left));width:120px;height:120px;border:2px dashed #dfcba666;border-radius:50%;display:none;place-items:center;color:#fff0d4;font-size:14px;background:#18233355}
 @media(pointer:coarse){.hud-stick-zone{display:grid}}
 .full-ui [data-touch-action=left]::before{content:'⚔ ';font-size:18px}.full-ui [data-touch-action=right]::before{content:'✦ ';font-size:18px}.full-ui [data-touch-action=pause]::before{content:'Ⅱ '}
-.full-ui>details{display:none!important}
+.full-ui:not(.debug-ui)>details{display:none!important}
 .full-ui .settings-fields input[type=checkbox]{width:56px;height:56px}
 
 @media(min-width:700px){
@@ -150,4 +150,7 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .full-ui.touch-ui [data-touch-action=interact]{right:0;bottom:0;width:64px;height:64px!important;font-size:10px}
 [data-touch-action=interact]:disabled{opacity:.4}
 
+/* Gameplay uses pause > Settings; development panels require ?debug. */
+body:not(.debug-ui) [data-input-hint]{display:none!important}
+[data-touch-action] img[hidden]{display:none!important}
 .hud-vitals .hud-portrait,.hud-companion .hud-portrait{background-size:cover;background-position:center}

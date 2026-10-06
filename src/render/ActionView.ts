@@ -74,6 +74,10 @@ export class ActionView extends Group {
   }
   update(): void {
     const combat = this.world.combat, player = this.world.entities.get(1); if (!combat || !player) return;
+    if (!player.weapons) {
+      for (const held of Object.values(this.held)) held.model.removeFromParent();
+      this.offset = 0; this.geometry.setDrawRange(0, 0); return;
+    }
     const loadout = combat.runner.loadout;
     for (const side of sides) {
       const def = action(loadout.current(side).id); let held = this.held[side];

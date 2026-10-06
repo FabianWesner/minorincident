@@ -77,6 +77,7 @@ export class InputSystem implements Lifecycle {
     document.addEventListener('visibilitychange', this.visibility);
     this.hint.dataset.inputHint = ''; this.hint.setAttribute('role', 'note'); this.hint.style.cssText = 'position:fixed;top:12px;left:12px;color:white;background:#182333;padding:8px;font:14px sans-serif;pointer-events:none';
     this.controls.style.cssText = 'position:fixed;top:54px;left:12px;background:#182333;color:white;padding:8px;font:14px sans-serif;max-width:260px';
+    this.controls.hidden = !new URLSearchParams(location.search).has('debug');
     this.controls.innerHTML = '<summary>Controls</summary><form><label>Action <select name="action"></select></label><label>Key code <input name="code" placeholder="KeyZ" required></label><button>Bind</button></form>';
     const select = this.controls.querySelector('select')!;
     for (const action of Object.keys(defaultBindings)) { const option = document.createElement('option'); option.value = action; option.textContent = action; select.append(option); }
