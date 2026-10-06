@@ -100,7 +100,7 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
     expect(await page.evaluate(()=>window.__SS__!.missions.state()!.checkpoint)).toBe('escape');
     if(mode==='desktop'){
       const started=await page.evaluate(()=>window.__SS__!.getState().tick);
-      // All combat comes from LMB/RMB on live infected, including the formerly inert fists.
+      // All combat comes from LMB on live infected, with RMB switching, including the formerly inert fists.
       for(let turn=0;turn<20;turn++){
         if(await page.evaluate(()=>window.__SS__!.missions.state()!.stats.kills>0))break;
         const point=await page.evaluate(()=>{
@@ -108,7 +108,7 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
           const target=a.query({kind:'infected'}).filter(e=>e.health.current>0).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];
           return a.input.project(target.transform);
         });
-        const button=turn===0?'right':'left';await page.mouse.move(point.x,point.y);await page.mouse.down({button});await step(36);await page.mouse.up({button});
+        await page.mouse.move(point.x,point.y);await page.mouse.down();await step(36);await page.mouse.up();
       }
       const hits=await page.evaluate(()=>window.__SS__!.events());
       expect(hits.some(e=>e.type==='combat.hit'&&e.actionId==='weapon.fists'&&e.amount>0)).toBe(true);
@@ -139,12 +139,16 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
       }
       else{
         const point=await page.evaluate(p=>window.__SS__!.input.project(p),target.transform);
-        await page.mouse.move(point.x,point.y);await page.mouse.down({button:side});await step(36);await page.mouse.up({button:side});
+        await page.mouse.move(point.x,point.y);
+        const desired = side === 'right' ? 'weapon.fists' : 'weapon.bat';
+        const active = await page.evaluate(() => { const w=window.__SS__!.getState().player!.weapons!; return w[w.selectedSide].rack[w[w.selectedSide].index].id; });
+        if (active !== desired) { await page.mouse.click(point.x,point.y,{button:'right'}); await step(16); }
+        await page.mouse.down();await step(36);await page.mouse.up();
       }
       if(turn===2)await shot('fight');
     }
     await expect(page.getByTestId('mission-heading')).toHaveText('Milestone 1 complete — thanks for playing');
-    const events=await page.evaluate(()=>window.__SS__!.events());expect(events.some(e=>e.type==='combat.hit'&&e.actionId==='weapon.kick')).toBe(true);expect(events.some(e=>e.type==='combat.hit'&&e.actionId==='weapon.bat')).toBe(true);
+    const events=await page.evaluate(()=>window.__SS__!.events());expect(events.some(e=>e.type==='combat.hit'&&e.actionId==='weapon.fists')).toBe(true);expect(events.some(e=>e.type==='combat.hit'&&e.actionId==='weapon.bat')).toBe(true);
     expect(await page.evaluate(()=>window.__SS__!.missions.state()!.stats.deaths)).toBe(0);
     writeFileSync(`${output}/${mode}-playthrough.json`,JSON.stringify(await page.evaluate(()=>window.__SS__!.missions.state()!.stats),null,2));
     await shot('complete');await page.getByRole('button',{name:'Restart',exact:true}).click();await page.evaluate(()=>window.__SS__!.pause());await step(1);
