@@ -64,7 +64,7 @@ export class ControlIntent {
   }
   private walk(frame: InputFrame, target: Vec2, remaining: number): void {
     const p = this.world.entities.get(1)!.transform, nav = this.world.infected?.nav;
-    if (nav && !nav.steer(p, target, this.route, survivor.radius + .02, this.waypoint)) { frame.move.x = frame.move.z = 0; return; }
+    if (nav && !nav.steer(p, target, this.route, survivor.radius, this.waypoint)) { frame.move.x = frame.move.z = 0; return; }
     const destination = nav ? this.waypoint : target, dx = destination.x - p.x, dz = destination.z - p.z, distance = Math.hypot(dx, dz);
     if (distance < .02) { frame.move.x = frame.move.z = 0; return; }
     // Slow near arrival; the controller remains responsible for acceleration and collision.
