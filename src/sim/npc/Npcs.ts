@@ -25,6 +25,7 @@ export class Npcs {
     world.events.on('sim.tick', () => {
       for (const e of world.entities.iterate()) {
         const p = previous.get(e.id); if (!p) continue;
+        if (world.districts) e.transform.y = (e.companion || e.civilian?.pet ? .3 : .7) + world.districts.groundHeight(e.transform.x, e.transform.z);
         const dx = e.transform.x - p.x, dz = e.transform.z - p.z, distance = Math.hypot(dx, dz);
         const motion = e.motion ??= { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: 0 };
         motion.velocity.x = dx * 60; motion.velocity.z = dz * 60; motion.speed = distance * 60;
@@ -89,13 +90,13 @@ export class Npcs {
       const a = road.points[0], b = road.points[road.points.length - 1];
       const dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz); if (length < 6) continue;
       const ux = dx / length, uz = dz / length, offset = road.laneWidth / 2 + .75;
-      for (let t = .2; t < .9 && placed < 5; t += .23) for (const side of [-1, 1]) {
+      for (let t = .08; t < .9 && placed < 5; t += .12) for (const side of [-1, 1]) {
         if (placed >= 5) break;
         const start = { x: a[0] + dx * t - uz * offset * side + district.origin[0], z: a[1] + dz * t + ux * offset * side + district.origin[1] };
-        if (Math.hypot(start.x - player.x, start.z - player.z) > 30 && placed < 3) continue;
+        if (Math.hypot(start.x - player.x, start.z - player.z) > 30 && district.id === this.world.districts!.districts[0].id) continue;
         const end = { x: start.x + ux * 5, z: start.z + uz * 5 };
         if (!nav.visible(start, end, .5)) continue;
-        this.civilians.spawn(civilianRoles[placed % civilianRoles.length].role, start, { waypoints: [start, end] }); placed++;
+        this.civilians.spawn(civilianRoles[placed === 4 ? 5 : placed].role, start, { waypoints: [start, end] }); placed++;
       }
     }
     if(driver) {

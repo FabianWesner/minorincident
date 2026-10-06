@@ -27,6 +27,7 @@
     "assets:bake-crowd": "tsx tools/assets/bake-crowd.ts",
     "test:e2e:webgpu": "E2E_WEBGPU=1 sh tools/e2e-lock.sh playwright test --project=webgpu",
     "layouts:build": "tsx tools/layouts/build.ts",
+    "assets:collision": "tsx tools/assets/bake-static-collision.ts",
     "assets:pack": "tsx tools/assets/pack.ts"
   },
   "dependencies": {

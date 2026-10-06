@@ -31,6 +31,8 @@ export interface Placement extends PlacementTransform {
   visualAabb: Aabb;
 }
 export interface StaticCollider {
+  /** Low GLB paving/steps support feet without blocking planar navigation. */
+  walkable?: boolean;
   id: string;
   aabb: Aabb;
   minTier: Tier;
