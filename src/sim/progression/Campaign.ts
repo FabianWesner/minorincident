@@ -4,7 +4,7 @@ import { upgrades, type Modifiers, type UpgradeDef } from '../../data/upgrades';
 import type { GearTier, SurvivorVariant } from '../../data/survivor';
 export type Level = 1|2|3|4|5|6;
 export type ProgressionPreset = `L${2|3|4|5|6}-default`;
-export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'; muted?:boolean; captions?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High' }
+export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'; muted?:boolean; captions?:boolean; noiseRings?:boolean; mono?:boolean; haptics?:boolean; tinnitus?:boolean; bloom?:boolean; cheapDof?:boolean; vfx?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High' }
 export interface CampaignSave {
   version:1; seed:number; character:SurvivorVariant; unlockedLevel:Level; completedLevels:number;
   ownedActions:string[]; upgrades:string[]; racks:{LEFT:string[];RIGHT:string[]}; settings:CampaignSettings;
@@ -60,7 +60,7 @@ export function beginRewards(save:CampaignSave,level:Level):void {
 }
 export function chooseWeapon(save:CampaignSave,id:string):void {
   if(save.pending?.level!==1||save.pending.phase!=='unlock'||save.pending.weaponChosen||!meleeChoices.includes(id as typeof meleeChoices[number]))throw new Error('Invalid permanent weapon');
-  save.ownedActions.push(id);save.racks.LEFT=[id];save.pending.weaponChosen=true;
+  if(!save.ownedActions.includes(id))save.ownedActions.push(id);save.racks.LEFT=[id];save.pending.weaponChosen=true;
 }
 export function revealCards(save:CampaignSave):void {
   if(!save.pending||save.pending.phase!=='unlock'||!save.pending.weaponChosen)throw new Error('Choose a weapon first');

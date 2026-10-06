@@ -39,7 +39,7 @@ describe('campaign',()=>{
   test('T-E13-06 @E13 @E13-AC06 corrupt/unknown saves fail safely and v0 migrates exactly',()=>{
     const save=preset('L5-default');expect(decodeSave(JSON.stringify(save))).toEqual({status:'ok',save});
     const {unlockedLevel,...rest}=save;expect(decodeSave(JSON.stringify({...rest,version:0,level:unlockedLevel}))).toEqual({status:'ok',save});
-    for(const data of ['{','null','[]',JSON.stringify({...save,version:99}),JSON.stringify({...save,upgrades:['unknown']}),JSON.stringify({...save,racks:{LEFT:['unknown'],RIGHT:[]}}),JSON.stringify({...save,settings:{cameraShake:'yes'}}),JSON.stringify({...save,usage:{'weapon.bat':-1}}),JSON.stringify({...save,pending:{level:4,cards:['unknown'],phase:'cards'}})])expect(decodeSave(data).status).toBe('error');
+    for(const data of ['{','null','[]',JSON.stringify({...save,version:99}),JSON.stringify({...save,ownedActions:[...save.ownedActions,'toString']}),JSON.stringify({...save,unlockedLevel:6}),JSON.stringify({...save,upgrades:[]}),JSON.stringify({...save,upgrades:['unknown']}),JSON.stringify({...save,racks:{LEFT:['unknown'],RIGHT:[]}}),JSON.stringify({...save,settings:{cameraShake:'yes'}}),JSON.stringify({...save,usage:{'weapon.bat':-1}}),JSON.stringify({...save,pending:{level:4,cards:['unknown'],phase:'cards'}})])expect(decodeSave(data).status).toBe('error');
     const broken=new SaveStore({getItem(){throw new Error('blocked');},setItem(){throw new Error('quota');},removeItem(){throw new Error('blocked');}});expect(broken.load().status).toBe('error');expect(broken.write(save)).toBe(false);expect(broken.clear()).toBe(false);
   });
   test('T-E13-07-unit @E13 @E13-AC07 L2 through L6 presets are valid reproducible complete saves',()=>{
@@ -49,6 +49,6 @@ describe('campaign',()=>{
     expect([2,3,4,5,6].map(level=>gearTier(preset(`L${level as 2|3|4|5|6}-default`)))).toEqual([0,1,2,3,4]);
   });
   test('@E13 saves round-trip at each pending phase; rewards cannot be claimed twice',()=>{
-    const save=newCampaign();beginRewards(save,1);expect(validateSave(save)).toBe(true);expect(()=>revealCards(save)).toThrow();chooseWeapon(save,'weapon.bat');expect(()=>chooseWeapon(save,'weapon.machete')).toThrow();revealCards(save);expect(validateSave(save)).toBe(true);pickUpgrades(save,save.pending!.cards.slice(0,2));expect(validateSave(save)).toBe(true);finishRewards(save,save.racks);expect(()=>beginRewards(save,1)).toThrow();
+    const save=newCampaign();save.ownedActions.push('weapon.bat');beginRewards(save,1);expect(validateSave(save)).toBe(true);expect(()=>revealCards(save)).toThrow();chooseWeapon(save,'weapon.bat');expect(()=>chooseWeapon(save,'weapon.machete')).toThrow();revealCards(save);expect(validateSave(save)).toBe(true);pickUpgrades(save,save.pending!.cards.slice(0,2));expect(validateSave(save)).toBe(true);finishRewards(save,save.racks);expect(()=>beginRewards(save,1)).toThrow();
   });
 });

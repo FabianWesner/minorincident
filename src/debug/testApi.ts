@@ -12,14 +12,20 @@ import { deviceKinds, type DeviceKind, type DeviceOptions } from '../sim/interac
 import { hazardKinds, destructibleKinds, type HazardKind, type DestructibleKind, type HazardOptions } from '../sim/interact/Hazards';
 import { pickupKinds, type PickupKind } from '../sim/interact/Pickups';
 
-export type ProgressionPreset = Record<string, unknown>;
+import { validateSave } from '../sim/progression/Save';
+import type { CampaignSave, CampaignSettings, ProgressionPreset } from '../sim/progression/Campaign';
+export type { ProgressionPreset } from '../sim/progression/Campaign';
 export type Settings = Parameters<Game['view']['settings']>[0] & Partial<import('../audio/AudioService').AudioSettings> & { aimAssist?: import('../sim/combat/AimAssist').AimAssistSetting };
 export interface BotStatus { running: boolean; policy: string | null }
 
-/** Version 1.8: crowds, vehicles, interactions, missions, VFX and E16 audio probes. */
+/** Version 1.9: campaign saves/presets plus crowds, vehicles, interactions, missions, VFX and E16 audio probes. */
 type WithoutTick<T> = T extends GameEvent ? Omit<T, 'tick'> : never;
 export interface SSTestApi {
   version: string;
+  campaign: {
+    state():CampaignSave|null; menu():void; save():boolean;
+    restore(save:CampaignSave):void;
+  };
   /** E12 mission controls share the headless sim entry points; state is copied. */
   missions: ReturnType<typeof missionControls>;
   ready: Promise<void>;
@@ -88,11 +94,11 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
-    version: '1.8.0', ready, missions: missionControls(game.world),
+    version: '1.9.0', ready,
+    campaign: {state:()=>structuredClone(game.campaign),menu:()=>game.campaignUI.showMenu(game.saves.load()),save:()=>game.saveCampaign(),restore:save=>{if(!validateSave(save))throw new Error('Invalid campaign');game.campaign=structuredClone(save);game.applyCampaign();}}, missions: missionControls(game.world),
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
     loadLevel: (id, opts) => {
-      if(opts?.progression)pending('E13','loadLevel.progression');
       return game.loadLevel(id, opts);
     },
     loadScenario: (name, opts) => game.loadScenario(name, opts?.seed),
@@ -142,7 +148,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) e.health.current = 0; }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
     bot: { start: (policy) => { if (policy !== 'driver' || game.world.scenario !== 'drive-course') pending('E19', 'bot.start'); game.driver = new Driver(game.world); }, stop: () => { game.driver = null; }, status: () => ({ running: !!game.driver && !game.driver.finished, policy: game.driver ? 'driver' : null }) },
     camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose) => game.view.view.cinematic(pose) },
-    settings: { set: (patch) => { if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.audio.set(patch); game.view.settings(patch); } },
+    settings: { set: (patch) => { if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.audio.set(patch); game.view.settings(patch); const keys=['cameraShake','flashReduction','gore','quality','muted','captions','noiseRings','mono','haptics','tinnitus','bloom','cheapDof','vfx','aimAssist'];game.campaignSettings(Object.fromEntries(Object.entries(patch).filter(([key])=>keys.includes(key))) as CampaignSettings); } },
     vfx: {
       stepRender: (seconds) => game.view.frame(seconds),
       emit: (event) => { game.world.events.emit({ ...event, tick: game.world.tick } as GameEvent); game.view.update(1); },

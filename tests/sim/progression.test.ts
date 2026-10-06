@@ -20,6 +20,7 @@ test('T-E13-02 @E13 @E13-AC02 melee damage is exactly +20% and every firearm mag
 });
 test('T-E13-07-sim @E13 @E13-AC07 L5 default equips its expected upgraded loadout in sim',()=>{
   const save=preset('L5-default');applyCampaign(world,save);
+  expect(save.racks).toEqual({LEFT:['weapon.bat','weapon.kick','weapon.fists'],RIGHT:['weapon.pipe-bomb','weapon.rocket-launcher','weapon.machine-gun']});
   expect(world.getState().progression!.campaign).toEqual(save);expect(world.player!.entity.survivor!.gearTier).toBe(3);
   for(const side of ['LEFT','RIGHT']as const)expect(world.player!.entity.weapons![side].rack.map(s=>s.id)).toEqual(save.racks[side]);
 });
@@ -32,4 +33,11 @@ test('@E13 action hooks, player stats and vehicle perks materialize once without
   expect(defs['weapon.grenade'].charges).toBe(3);expect(defs['weapon.grenade'].splash!.radius).toBeCloseTo(4*1.15);expect(defs['weapon.bat'].damage).toBeCloseTo(25*1.15);expect(defs['weapon.bat'].knockback).toBeCloseTo(.5*1.2);
   const id=world.vehicles!.spawn('vehicle.sedan',{x:4,z:4}),hp=world.entities.get(id)!.health.current;world.vehicles!.damage(id,100);expect(world.entities.get(id)!.health.current).toBe(hp-90);world.update();expect(world.vehicles!.cars.get(id)!.physics.boostScale).toBe(1.1);
   expect(catalog['weapon.grenade'].charges).toBe(2);
+});
+
+test('T-E13-04-sim @E13 @E13-AC04 pickups replace full campaign racks instead of exceeding level capacity',()=>{
+  for(const level of [1,2,3,4,5,6]as const){const save=level===1?newCampaign():preset(`L${level}-default`);applyCampaign(world,save);const l=world.combat!.runner.loadout;const capacity=level<2?1:level<4?2:3;
+    for(const id of ['weapon.bat','weapon.pistol','weapon.shotgun','weapon.grenade'])l.collect('LEFT',id);
+    expect(l.state.LEFT.rack).toHaveLength(capacity);expect(()=>world.combat!.setLoadout(Array(capacity+1).fill('weapon.bat'),['weapon.kick'])).toThrow();
+  }
 });
