@@ -84,15 +84,15 @@ All values live in data files (`src/data/*`), are deterministic per seed, and ar
 - **Attracted (car alarm):** infected within **30 m** of a sounding car alarm (sound passes walls) and not chasing switch to `attracted`: move to a random point within 3 m of the car, then search around it (same search behaviour, centred on the car) for the alarm duration (20 s) + 4–8 s. Seeing a human interrupts it.
 
 ### 5.4 Infected speed tiers
-Speed = tier base × individual jitter (uniform ±6 %, seeded per entity, fixed for its life). Player run = 4.5 m/s.
+Speed = tier base × individual jitter (uniform ±4 %, seeded per entity, fixed for its life; orchestrator decision 2026-10-06 — was ±6 %, which let slow 'average' infected take ~34 s to close 10 m). Player run = 4.5 m/s.
 
 | Tier | Who (visual read) | Base run m/s | Readable cue |
 | --- | --- | --- | --- |
 | frail | elderly civilians, bathrobe neighbour | 4.7 | stiff hunched shuffle-run, short stride |
-| average | adult civilians, lab staff, workers | 5.1 | lurching run, arms forward |
+| average | adult civilians, lab staff, workers | 5.3 | lurching run, arms forward |
 | athletic | joggers, young adults, skater | 5.6 | long low sprint stride, aggressive lean |
 
-Every tier is faster than the running player (min frail × 0.94 = 4.42 is the only overlap; tune so that ≥ 95 % of spawned frail infected exceed 4.5). Crawlers are not used in L1 v2.
+Every tier is faster than the running player (min frail × 0.96 = 4.51 > 4.5; every average infected closes 10 m in ≤ ~17 s). Crawlers are not used in L1 v2.
 
 ### 5.5 Player movement
 - **Running is the default** (4.5 m/s, current base speed). **Hold Walk** to walk at 2.0 m/s (careful positioning, roleplay). Bindings in `00-game-concept.md` §5.3.
