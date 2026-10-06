@@ -43,3 +43,16 @@ Accessibility audits use unmodified axe-core 4.11.0 as a standalone QA tool thro
 not added to package.json/node_modules or distributed in the game. Tests audit all
 menu screens, focus visibility, and accessible button names. `perf().uiMs` records
 DOM update cost separately from the sim and renderer.
+
+Touch devices use `.touch-ui` in the full UI: compact vitals with a corgi badge,
+a tap-to-collapse minimap, and a two-line objective that opens its full text in a
+native dialog. The touch actions display the equipped weapon icon, cooldown/reload
+ring and selected side through `Touch.setWeapon`; desktop slot cards keep their
+layout. The full UI uses only `pause-button`, while the E03 input-only harness
+retains its touch pause action. Touch controls retain release-to-fire and independent
+stick/aim contacts. Safe-area offsets apply in both orientations.
+
+`mobile-hud-layout.spec.ts` measures the union of all visible HUD rectangles
+(including onboarding, subtitles and markers), interactive intersections, minimum
+44 px targets and safe bounds in the HUD sandbox and the production `/` entry
+point at 412×915, 390×844 and 915×412. Existing E14 touch targets still meet 56 px.
