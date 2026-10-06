@@ -10,7 +10,8 @@ try {
     installTestApi(game, ready);
   }
   await ready;
-  if (import.meta.env.DEV && params.has('debug')) {
+  if (params.has('lookdev') || import.meta.env.DEV && params.has('debug')) {
+    if (params.has('lookdev')) await game.loadLevel('L1', { seed: Number(params.get('seed') ?? 1) });
     const { Debug } = await import('./debug/Debug');
     const debug = new Debug(game);
     if (import.meta.hot) import.meta.hot.dispose(() => debug.dispose());

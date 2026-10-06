@@ -48,11 +48,20 @@ test('M1-30 @E19 attack interrupts bench, carrying and flower routines before th
     w.npcs!.civilians.alarm(e.transform);
     expect(c.state).toBe('alarmed'); const step = c.scheduleStep;
     for (let i = 0; i < 31; i++) w.update();
-    expect(c.state).toBe('alarmed'); expect(c.scheduleStep).toBe(step);
+    expect(c.state).toBe(c.panicReaction === 'flee' ? 'flee' : 'alarmed'); expect(c.scheduleStep).toBe(step);
     Object.assign(w.entities.get(attacker)!.transform, e.transform);
     expect(w.npcs!.civilians.grab(id, attacker, true)).toBe(true);
     expect(c.state).toBe('grabbed');
-    for (let i = 0; i < 1500 && c.state !== 'infected'; i++) w.update();
+    let sawAuthoredRise = false;
+    for (let i = 0; i < 1500 && c.state !== 'infected'; i++) {
+      w.update();
+      if (c.risingInfectedId) {
+        const rising = w.entities.get(c.risingInfectedId)!;
+        expect(rising.infected!.model).toBe(c.model); expect(rising.infectionRise).toBeDefined();
+        expect(e.hidden).toBe(true); sawAuthoredRise = true;
+      }
+    }
+    expect(sawAuthoredRise).toBe(true);
     const turn = w.events.events().find(event => event.type === 'civilian.turned' && event.id === id);
     expect(turn?.type).toBe('civilian.turned');
     if (turn?.type === 'civilian.turned') {
