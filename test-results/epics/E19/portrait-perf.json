@@ -1,28 +1,28 @@
 {
   "incident": {
-    "medianFps": 526.315789473785,
+    "medianFps": 312.5000000001066,
     "unthrottled": true,
     "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
     "counters": {
-      "fps": 416.66666666672984,
-      "frameMs": 2.399999999999636,
+      "fps": 322.58064516125245,
+      "frameMs": 3.100000000000364,
       "simMs": 0,
-      "uiMs": 0.19999992847442627,
-      "drawCalls": 106,
-      "triangles": 137180,
-      "geometries": 60,
-      "textures": 21,
-      "entities": 10,
+      "uiMs": 0.20000004768371582,
+      "drawCalls": 139,
+      "triangles": 141650,
+      "geometries": 91,
+      "textures": 32,
+      "entities": 12,
       "backend": "webgl",
       "loadTiming": {
-        "dataMs": 16.299999952316284,
-        "simMs": 71.60000002384186,
-        "viewMs": 1961.1999999284744
+        "dataMs": 33.699999928474426,
+        "simMs": 122.60000002384186,
+        "viewMs": 2278.399999976158
       },
       "quality": {
         "setting": "auto",
         "tier": "low",
-        "p90Ms": 0,
+        "p90Ms": 4.6,
         "slowSeconds": 0,
         "budgets": {
           "frameMs": 33.333333333333336,
@@ -37,31 +37,31 @@
           "cullDistance": 45
         }
       },
-      "renderedFrames": 177,
+      "renderedFrames": 223,
       "contextLost": false,
       "paused": true,
       "heapBytes": 386000000
     }
   },
   "store": {
-    "medianFps": 555.5555555557801,
+    "medianFps": 384.6153846155999,
     "unthrottled": true,
     "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
     "counters": {
-      "fps": 500,
-      "frameMs": 2,
+      "fps": 370.3703703707696,
+      "frameMs": 2.6999999999970896,
       "simMs": 0,
-      "uiMs": 0.19999992847442627,
-      "drawCalls": 98,
-      "triangles": 171631,
-      "geometries": 60,
-      "textures": 20,
-      "entities": 14,
+      "uiMs": 0.20000004768371582,
+      "drawCalls": 150,
+      "triangles": 199437,
+      "geometries": 110,
+      "textures": 27,
+      "entities": 13,
       "backend": "webgl",
       "loadTiming": {
-        "dataMs": 0.10000002384185791,
-        "simMs": 40.10000002384186,
-        "viewMs": 5572.799999952316
+        "dataMs": 0,
+        "simMs": 54.700000047683716,
+        "viewMs": 10123.399999976158
       },
       "quality": {
         "setting": "auto",
@@ -81,7 +81,7 @@
           "cullDistance": 45
         }
       },
-      "renderedFrames": 306,
+      "renderedFrames": 352,
       "contextLost": false,
       "paused": true,
       "heapBytes": 386000000

@@ -9,7 +9,9 @@ test('S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, st
   await menuStart(page);
   await page.evaluate(() => window.__SS__!.pause());
   const start = await page.evaluate(() => window.__SS__!.getState().player!.transform);
-  const point = await page.evaluate(p => window.__SS__!.input.project({ x: p.x + 2, z: p.z }), start);
+  // The +X destination is inside the now-solid garden fence. Use the open
+  // sidewalk below the porch for this arrival/marker control regression.
+  const point = await page.evaluate(p => window.__SS__!.input.project({ x: p.x, z: p.z + 2 }), start);
   await page.mouse.move(point.x, point.y); await tick(page, 30);
   const idle = await page.evaluate(() => window.__SS__!.getState().player!.transform);
   expect(Math.hypot(idle.x - start.x, idle.z - start.z)).toBeLessThan(.02);
@@ -19,7 +21,7 @@ test('S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, st
   mkdirSync(output, { recursive: true }); await page.screenshot({ path: `${output}/l1-desktop-marker.png` });
   await tick(page, 120);
   const arrived = await page.evaluate(() => window.__SS__!.getState().player!.transform);
-  expect(Math.hypot(arrived.x - start.x - 2, arrived.z - start.z)).toBeLessThan(.15);
+  expect(Math.hypot(arrived.x - start.x, arrived.z - start.z - 2)).toBeLessThan(.15);
   expect(await page.evaluate(() => window.__SS__!.getState().render.moveMarker!.visible)).toBe(false);
   expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons)).toBeUndefined();
   // L1 is now unarmed. An attack is a no-op; the armed control assertion below

@@ -7,7 +7,7 @@ export class PhysicsWireframe {
   readonly geometry = new BufferGeometry();
   readonly material = new LineBasicNodeMaterial({ vertexColors: true });
   readonly lines = new LineSegments(this.geometry, this.material);
-  constructor(private readonly physics: Physics) { this.lines.frustumCulled = false; }
+  constructor(private readonly physics: Physics) { this.lines.frustumCulled = false; this.material.depthTest = false; this.lines.renderOrder = 100; }
   update(): void {
     if (!this.physics.world) return;
     const { vertices, colors } = this.physics.world.debugRender();

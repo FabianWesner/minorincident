@@ -29,7 +29,7 @@ export class Civilians {
     if (!nav.clear(position.x, position.z, .35)) throw new RangeError('Civilian spawn outside navigation');
     const waypoints = options.waypoints ?? [position, { x: position.x + 3, z: position.z }, { x: position.x + 3, z: position.z + 3 }, { x: position.x, z: position.z + 3 }];
     if (!waypoints.length || !waypoints.every(p => Number.isFinite(p.x) && Number.isFinite(p.z) && nav.clear(p.x, p.z, .35))) throw new RangeError('Invalid civilian routine');
-    const civilian: Civilian = { state: 'calm', ambient: options.ambient ?? false, adult: !options.child, pet: options.pet ?? null, owner: options.owner ?? null, variant: options.pet ? `inf.${options.pet === 'dog' ? 'dog-retriever' : 'cat-tabby'}` : def.variant,
+    const civilian: Civilian = { state: 'calm', ambient: options.ambient ?? false, adult: !options.child, pet: options.pet ?? null, owner: options.owner ?? null, model: ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'][this.world.entities.size % 5], variant: options.pet ? `inf.${options.pet === 'dog' ? 'dog-retriever' : 'cat-tabby'}` : def.variant,
       routine: options.pet ? 'pet' : options.child ? 'protected' : def.routine, waypoints: structuredClone(waypoints), waypoint: 1 % waypoints.length, pauseUntil: 0,
       entered: this.world.tick, until: 0, downTicks: 0, eyesGlow: false, veins: 0, attacker: 0, threat: { ...position }, path: [], goal: -1, pathIndex: 0, gore: false, knockedUntil: 0 };
     const e = this.world.entities.create({ kind: options.pet ? 'pet' : 'civilian', archetype: options.child ? 'npc.child' : `npc.${role}`, faction: 'civilian', transform: { ...position, y: .7, yaw: 0 }, health: { current: 100, max: 100 }, civilian,
@@ -97,15 +97,15 @@ export class Civilians {
         let dx = e.transform.x - c.threat.x, dz = e.transform.z - c.threat.z, distance = Math.hypot(dx, dz);
         if (!distance) { dx = e.id % 2 ? 1 : -1; dz = .3; distance = Math.hypot(dx, dz); }
         const speed = c.state === 'bitten' ? .6 : npcs.fleeSpeed;
-        this.world.npcs!.moveStep(e, dx / distance * speed / 60, dz / distance * speed / 60);
-        e.transform.yaw = -Math.atan2(dz, dx);
+        const targetCell = ai.nav.nearestCell(e.transform.x + dx / distance * 5, e.transform.z + dz / distance * 5);
+        if (targetCell >= 0) this.world.npcs!.move(e, { x: ai.nav.x(targetCell), z: ai.nav.z(targetCell) }, speed, c, .2);
         if (c.state === 'flee' && distance > 25) this.state(e, 'hide');
       } else if (c.state === 'calm' && tick >= c.pauseUntil) {
         const target = c.owner ? this.world.entities.get(c.owner)?.transform : c.waypoints[c.waypoint];
         if (target) this.world.npcs!.move(e, target, c.routine === 'jog' ? 2.5 : npcs.routineSpeed, c, c.owner ? 1 : .15);
         if (!c.owner && target && Math.hypot(e.transform.x - target.x, e.transform.z - target.z) < .2) {
           c.waypoint = (c.waypoint + 1) % c.waypoints.length;
-          c.pauseUntil = tick + (c.routine === 'chat' || c.routine === 'bus-stop' ? 180 : 0);
+          c.pauseUntil = tick + this.duration(c.routine === 'chat' || c.routine === 'bus-stop' ? [120, 240] : [45, 120]);
         }
       }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);

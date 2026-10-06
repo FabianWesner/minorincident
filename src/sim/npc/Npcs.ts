@@ -5,6 +5,7 @@ import { Traffic } from './Traffic';
 import { Companion } from './Companion';
 import { Escorts } from './Escorts';
 import { Civilians } from './Civilians';
+import { SimPhase } from '../../core/EventBus';
 import type { Point } from './types';
 /** E08 composition and reused E07 navigation. Public authoring hooks are also headless test hooks. */
 export class Npcs {
@@ -15,23 +16,43 @@ export class Npcs {
   private ambientTarget = 0;
   private slice = false;
   private readonly waypoint = { x: 0, z: 0 };
-  constructor(readonly world: SimWorld) { this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
+  constructor(readonly world: SimWorld) {
+    const previous = new Map<number, Point>();
+    world.events.on('sim.tick', () => {
+      previous.clear();
+      for (const e of world.entities.iterate()) if (e.civilian || e.companion || e.escort) previous.set(e.id, { x: e.transform.x, z: e.transform.z });
+    }, SimPhase.intent);
+    world.events.on('sim.tick', () => {
+      for (const e of world.entities.iterate()) {
+        const p = previous.get(e.id); if (!p) continue;
+        if (world.districts) e.transform.y = (e.companion || e.civilian?.pet ? .3 : .7) + world.districts.groundHeight(e.transform.x, e.transform.z);
+        const dx = e.transform.x - p.x, dz = e.transform.z - p.z, distance = Math.hypot(dx, dz);
+        const motion = e.motion ??= { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: 0 };
+        motion.velocity.x = dx * 60; motion.velocity.z = dz * 60; motion.speed = distance * 60;
+        motion.moving = motion.speed > (motion.moving ? .04 : .12); motion.distance += distance;
+      }
+    }, SimPhase.cleanup);
+    this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
   move(e: EntitySnapshot, target: Point, speed: number, path: { path: number[]; goal: number; pathIndex: number }, stop = .1): void {
     const nav = this.world.infected!.nav;
-    let dx = target.x - e.transform.x, dz = target.z - e.transform.z, distance = Math.hypot(dx, dz);
-    if (distance <= stop) return;
-    if (!nav.visible(e.transform, target, .35)) {
-      const goal = nav.nearestCell(target.x, target.z);
-      if (goal !== path.goal || path.pathIndex >= path.path.length) {
-        if (!nav.path(nav.nearestCell(e.transform.x, e.transform.z), goal, path.path, 300)) return;
-        path.goal = goal; path.pathIndex = 0;
-      }
-      const cell = path.path[path.pathIndex]; this.waypoint.x = nav.x(cell); this.waypoint.z = nav.z(cell);
-      dx = this.waypoint.x - e.transform.x; dz = this.waypoint.z - e.transform.z; distance = Math.hypot(dx, dz);
-      if (distance < .15) { path.pathIndex++; return; }
-    } else { path.path.length = 0; path.goal = -1; }
-    const step = Math.min(distance, speed / 60);
-    this.moveStep(e, dx / distance * step, dz / distance * step); e.transform.yaw = -Math.atan2(dz, dx);
+    let dx = target.x - e.transform.x, dz = target.z - e.transform.z;
+    const distance = Math.hypot(dx, dz);
+    if (distance <= stop) { if (e.companion?.velocity) e.companion.velocity.x = e.companion.velocity.z = 0; return; }
+    if (!nav.steer(e.transform, target, path, .35, this.waypoint)) return;
+    dx = this.waypoint.x - e.transform.x; dz = this.waypoint.z - e.transform.z;
+    const routed = Math.hypot(dx, dz); if (routed < .01) return;
+    let vx = dx / routed * Math.min(speed, Math.max(0, distance - stop) * 4), vz = dz / routed * Math.min(speed, Math.max(0, distance - stop) * 4);
+    if (e.companion) {
+      const v = e.companion.velocity ??= { x: 0, z: 0 }, delta = Math.hypot(vx - v.x, vz - v.z), amount = Math.min(1, .3 / (delta || 1));
+      v.x += (vx - v.x) * amount; v.z += (vz - v.z) * amount; vx = v.x; vz = v.z;
+    }
+    const before = { x: e.transform.x, z: e.transform.z };
+    this.moveStep(e, vx / 60, vz / 60);
+    const actualX = e.transform.x - before.x, actualZ = e.transform.z - before.z;
+    if (Math.hypot(actualX, actualZ) > .0005) {
+      const yaw = -Math.atan2(actualZ, actualX), delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));
+      e.transform.yaw += Math.max(-.12, Math.min(.12, delta));
+    }
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
   }
   moveStep(e: EntitySnapshot, dx: number, dz: number): void {
@@ -63,11 +84,19 @@ export class Npcs {
   configureSlice(driver?: Point): void {
     this.slice=true;this.ambientTarget=0;
     for(const e of this.world.entities.iterate()) if(e.civilian?.ambient || e.traffic) { this.world.entities.delete(e.id);this.world.spatial.delete(e.id); }
-    const nav=this.world.infected!.nav,player=this.world.entities.get(1)!.transform;
-    for(const [role,p] of [['suburban-mom',{x:player.x+3,z:player.z+2}],['bbq-dad',{x:player.x-3,z:player.z+3}],['bathrobe-neighbor',{x:player.x+8,z:-4.5}],['cashier',{x:42,z:-4}]] as const) {
-      const cell=nav.nearestCell(p.x,p.z),start=nav.clear(p.x,p.z,.65)?{...p}:{x:nav.x(cell),z:nav.z(cell)};
-      for(const [dx,dz]of [[0,1.5],[1.5,0],[-1.5,0],[0,-1.5]]){const end={x:start.x+dx,z:start.z+dz};
-        if(nav.visible(start,end,.65)){this.civilians.spawn(role,start,{waypoints:[start,end]});break;}
+    const nav=this.world.infected!.nav, player=this.world.entities.get(1)!.transform;
+    let placed = 0;
+    for (const district of this.world.districts!.districts) for (const road of district.layout.roads.edges) {
+      const a = road.points[0], b = road.points[road.points.length - 1];
+      const dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz); if (length < 6) continue;
+      const ux = dx / length, uz = dz / length, offset = road.laneWidth / 2 + .75;
+      for (let t = .08; t < .9 && placed < 5; t += .12) for (const side of [-1, 1]) {
+        if (placed >= 5) break;
+        const start = { x: a[0] + dx * t - uz * offset * side + district.origin[0], z: a[1] + dz * t + ux * offset * side + district.origin[1] };
+        if (Math.hypot(start.x - player.x, start.z - player.z) > 30 && district.id === this.world.districts!.districts[0].id) continue;
+        const end = { x: start.x + ux * 5, z: start.z + uz * 5 };
+        if (!nav.visible(start, end, .5)) continue;
+        this.civilians.spawn(civilianRoles[placed === 4 ? 5 : placed].role, start, { waypoints: [start, end] }); placed++;
       }
     }
     if(driver) {
