@@ -5,9 +5,7 @@ import { authoredClips, retargetClip, settleGroundPose, strides, strideScale } f
 import type { CharacterRig } from './rig';
 
 /** Rider state from the bicycle (crank angle in radians, steer −1..1). */
-export interface RidePose { pedal: number; steer: number; seatHeight?: number }
-/** Saddle height of veh.courier-bike (seat node, metres above ground). */
-const saddle = 1.115;
+export interface RidePose { pedal: number; steer: number }
 /** Authored glTF actions, 140 ms crossfades, speed-matched strides and upper-body layers.
  * The explicit sim clock supports paused stepping and visual hit-stop. */
 export class KeyframeAnimator {
@@ -20,7 +18,6 @@ export class KeyframeAnimator {
   private moving = false;
   private phase = 0;
   private readonly worldPosition = new Vector3();
-  private readonly scaleScratch = new Vector3();
   private lastPosition: { x: number; z: number } | undefined;
   private transitionUntil = 0;
   private secondary = 0;
@@ -29,7 +26,6 @@ export class KeyframeAnimator {
   private readonly backpackRest: number;
   private carryWeight = 0;
   private rideLift = 0;
-  private hipRest: number | undefined;
   private readonly carryPose: [Object3D, Quaternion][] = [];
   state: AnimationState = 'idle';
   clip = 'idle';
@@ -119,12 +115,9 @@ export class KeyframeAnimator {
     const holding = !!pose.carrying && !strike && name !== 'hand-over' && name !== 'ride';
     this.carryWeight = Math.max(0, Math.min(1, this.carryWeight + (holding ? 1 : -1) * dt / .15));
     if (this.carryWeight > 0) for (const [node, target] of this.carryPose) node.quaternion.slerp(target, this.carryWeight);
-    // Seat the rider: lift the pelvis onto the saddle and lean into the steer.
+    // Lean into the steer (GameView lifts the whole rider onto the saddle; lane F).
     this.rideLift += ((ride ? 1 : 0) - this.rideLift) * Math.min(1, dt / .12);
     if (this.rideLift > 1e-3) {
-      const hip = this.rig.hip, scale = (hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1;
-      this.hipRest ??= hip.position.y;
-      hip.position.y += Math.max(0, ((ride?.seatHeight ?? saddle) + .03) / scale - this.hipRest) * this.rideLift;
       const steer = (ride?.steer ?? 0) * this.rideLift;
       this.rig.torso.rotation.x += steer * .14; this.rig.head.rotation.y += steer * .35;
     }
