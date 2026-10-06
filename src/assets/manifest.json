@@ -5911,9 +5911,9 @@
     "tier": "side",
     "glb": "public/assets/models/wpn.knife.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.555,
+      "y": 0.066999,
+      "z": 0.105002,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5936,7 +5936,10 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "actionCategory": "melee"
+    "actionCategory": "melee",
+    "sourceGlb": "assets/wpn.knife/model.glb",
+    "script": "assets/wpn.knife/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "wpn.fire-axe",
@@ -5945,9 +5948,9 @@
     "tier": "side",
     "glb": "public/assets/models/wpn.fire-axe.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 1.025562,
+      "y": 0.360645,
+      "z": 0.072668,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5970,7 +5973,10 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "actionCategory": "melee"
+    "actionCategory": "melee",
+    "sourceGlb": "assets/wpn.fire-axe/model.glb",
+    "script": "assets/wpn.fire-axe/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "wpn.katana",
@@ -6087,9 +6093,9 @@
     "tier": "side",
     "glb": "public/assets/models/wpn.assault-rifle.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.878,
+      "y": 0.389768,
+      "z": 0.09723,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -6112,7 +6118,10 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "actionCategory": "ranged"
+    "actionCategory": "ranged",
+    "sourceGlb": "assets/wpn.assault-rifle/model.glb",
+    "script": "assets/wpn.assault-rifle/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "wpn.machine-gun",
@@ -6155,9 +6164,9 @@
     "tier": "side",
     "glb": "public/assets/models/wpn.rocket-launcher.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 1.534,
+      "y": 0.552932,
+      "z": 0.378019,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -6180,7 +6189,10 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "actionCategory": "ranged"
+    "actionCategory": "ranged",
+    "sourceGlb": "assets/wpn.rocket-launcher/model.glb",
+    "script": "assets/wpn.rocket-launcher/build.py",
+    "sourceForward": "+X"
   },
   {
     "id": "proj.rocket",
@@ -6253,9 +6265,9 @@
     "tier": "side",
     "glb": "public/assets/models/thr.flashbang.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 0.19849999994039536,
+      "y": 0.35349999368190765,
+      "z": 0.14800000190734863,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -6375,9 +6387,9 @@
     "tier": "hero",
     "glb": "public/assets/models/veh.military-truck.glb",
     "dimensions": {
-      "x": 4.4,
-      "y": 1.8,
-      "z": 1.9,
+      "x": 6.926596,
+      "y": 3.64641,
+      "z": 2.899995,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -6411,7 +6423,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.military-truck/model.glb",
+    "script": "assets/veh.military-truck/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/veh.military-truck.lod1.glb",
+      "lod2": "public/assets/models/veh.military-truck.lod2.glb"
+    }
   },
   {
     "id": "veh.box-truck",
@@ -6472,9 +6491,9 @@
     "tier": "hero",
     "glb": "public/assets/models/veh.semi-trailer.glb",
     "dimensions": {
-      "x": 4.4,
-      "y": 1.8,
-      "z": 1.9,
+      "x": 17.181,
+      "y": 4.739544,
+      "z": 3.050019,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -6508,7 +6527,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.semi-trailer/model.glb",
+    "script": "assets/veh.semi-trailer/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/veh.semi-trailer.lod1.glb",
+      "lod2": "public/assets/models/veh.semi-trailer.lod2.glb"
+    }
   },
   {
     "id": "veh.helicopter",
@@ -6517,15 +6543,14 @@
     "tier": "hero",
     "glb": "public/assets/models/veh.helicopter.glb",
     "dimensions": {
-      "x": 4.4,
-      "y": 1.8,
-      "z": 1.9,
+      "x": 11.086511,
+      "y": 4.511504,
+      "z": 9.662842,
       "tolerance": 0.1
     },
     "forward": "+X",
     "frontNodes": [
-      "wheelFL",
-      "wheelFR"
+      "lightsFront"
     ],
     "requiredNodes": [
       "body",
@@ -6534,13 +6559,13 @@
       "wheelRL",
       "wheelRR",
       "lightsFront",
-      "lightsBrake"
+      "lightsBrake",
+      "mainRotor",
+      "tailRotor"
     ],
     "animatedNodes": [
-      "wheelFL",
-      "wheelFR",
-      "wheelRL",
-      "wheelRR"
+      "mainRotor",
+      "tailRotor"
     ],
     "sockets": [
       "driverSeat",
@@ -6553,7 +6578,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.helicopter/model.glb",
+    "script": "assets/veh.helicopter/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/veh.helicopter.lod1.glb",
+      "lod2": "public/assets/models/veh.helicopter.lod2.glb"
+    }
   },
   {
     "id": "veh.train-freight",
@@ -6788,9 +6820,9 @@
     "tier": "hero",
     "glb": "public/assets/models/bld.helipad.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 10.07,
+      "y": 1.599516,
+      "z": 10.07,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -6808,7 +6840,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.helipad/model.glb",
+    "script": "assets/bld.helipad/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/bld.helipad.lod1.glb",
+      "lod2": "public/assets/models/bld.helipad.lod2.glb"
+    }
   },
   {
     "id": "bld.civic-center",

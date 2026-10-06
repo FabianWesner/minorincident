@@ -1,0 +1,39 @@
+{
+  "merged": [
+    "E12"
+  ],
+  "pending": "E11",
+  "manifest_union": 275,
+  "asset_registrations": [
+    "bld.helipad",
+    "veh.helicopter",
+    "veh.military-truck",
+    "veh.semi-trailer",
+    "wpn.assault-rifle",
+    "wpn.fire-axe",
+    "wpn.knife",
+    "wpn.rocket-launcher"
+  ],
+  "checks": {
+    "E12_verify": 0,
+    "typecheck": 0,
+    "lint": 0,
+    "E12_sim": {
+      "passed": 193
+    },
+    "unit": {
+      "passed": 71
+    }
+  },
+  "conflicts_resolved": {
+    "src/Game.ts": "mission loading plus infected spawn frustum",
+    "src/debug/testApi.ts": "mission controls plus E07 spawn/killAll",
+    "src/levels/loader.ts": "union scenario catalog",
+    "src/render/GameView.ts": "mission marker/UI and crowd update/state/lifecycle",
+    "src/sim/world/EntityStore.ts": "checkpoint restore plus pooled adopt/delete",
+    "src/sim/world/SimWorld.ts": "mission lifecycle plus infected system",
+    "src/sim/world/types.ts": "union mission/infected events",
+    "src/assets/manifest.json": "recursive per-ID and per-field union, retained flashbang script",
+    "tests/e2e/harness.spec.ts": "check additive API plus implemented killAll/objective error"
+  }
+}

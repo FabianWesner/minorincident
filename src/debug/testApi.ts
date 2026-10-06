@@ -1,3 +1,4 @@
+import { missionControls } from '../sim/missions/controls';
 import type { ActionState, GearTier, SurvivorVariant } from '../data/survivor';
 import { Vector3 } from 'three';
 import type { Action, BindingMap } from '../data/bindings';
@@ -9,9 +10,11 @@ export type ProgressionPreset = Record<string, unknown>;
 export type Settings = Parameters<Game['view']['settings']>[0] & { aimAssist?: import('../sim/combat/AimAssist').AimAssistSetting };
 export interface BotStatus { running: boolean; policy: string | null }
 
-/** Version 1.4: E07 crowds and E10 composition/decay snapshots. Future-epic methods fail explicitly, never silently. */
+/** Version 1.5: E12 shared mission controls, checkpoints and objective progression. Future-epic methods fail explicitly, never silently. */
 export interface SSTestApi {
   version: string;
+  /** E12 mission controls share the headless sim entry points; state is copied. */
+  missions: ReturnType<typeof missionControls>;
   ready: Promise<void>;
   pause(): void;
   resume(): void;
@@ -60,11 +63,10 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
-    version: '1.4.0', ready,
+    version: '1.5.0', ready, missions: missionControls(game.world),
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
     loadLevel: (id, opts) => {
-      if(opts?.checkpoint)pending('E12','loadLevel.checkpoint');
       if(opts?.progression)pending('E13','loadLevel.progression');
       return game.loadLevel(id, opts);
     },
@@ -95,16 +97,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       if (game.world.combat) return game.world.spawnDummy(id, pos, opts);
       throw new Error('Load an infected or combat scenario before spawning');
     },
-    teleport: (id, pos) => {
-      if (!Number.isFinite(pos.x) || !Number.isFinite(pos.z)) throw new RangeError('Position must be finite');
-      const player = game.world.entities.get(id === 'player' ? 1 : id);
-      if (!player || player.id !== 1) throw new Error(`Unknown entity: ${id}`);
-      Object.assign(player.transform, pos);
-      game.world.previousPlayer = { ...player.transform };
-      game.world.physics.playerBody!.setTranslation(player.transform, true);
-      game.world.spatial.set(player.id, pos.x, pos.z);
-      game.view.update(1);
-    },
+    teleport: (id,pos) => { missionControls(game.world).teleport(id,pos); game.view.update(1); },
     survivor: {
       select: (variant, tier = 0) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.select(variant, tier); game.view.update(1); },
       damage: (amount) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); const taken = game.world.player.damage(amount, game.world.tick); game.view.update(1); return taken; },
@@ -112,7 +105,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       checkpoint: (pos) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.setCheckpoint(pos); },
     },
     setLoadout: (left, right) => { if (!game.world.combat) throw new Error('Load combat-arena before setting loadout'); game.world.combat.setLoadout(left, right); },
-    cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) e.health.current = 0; }, completeObjective: () => pending('E12', 'cheats.completeObjective') },
+    cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) e.health.current = 0; }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
     bot: { start: () => pending('E19', 'bot.start'), stop: () => pending('E19', 'bot.stop'), status: () => pending('E19', 'bot.status') },
     camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose) => game.view.view.cinematic(pose) },
     settings: { set: (patch) => { if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.view.settings(patch); } },

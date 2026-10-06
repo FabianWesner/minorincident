@@ -10,10 +10,10 @@ export const districtOrigins: Record<DistrictId, [number, number]> =
   ) as Record<DistrictId, [number, number]>;
 const ids = [
   ["D-RES", "D-MAIN", "D-SHOP"],
-  ["D-RES", "D-SCHOOL", "D-SHOP"],
-  ["D-CIVIC", "D-PARK"],
+  ["D-RES", "D-SCHOOL", "D-SHOP", "D-PARK"],
+  ["D-MAIN", "D-SHOP", "D-PARK", "D-CIVIC"],
   ["D-CIVIC", "D-ZOO", "D-EDGE"],
-  ["D-CIVIC"],
+  ["D-RES", "D-MAIN", "D-SCHOOL", "D-CIVIC", "D-PARK", "D-EDGE"],
   [...districtIds],
 ] as DistrictId[][];
 export const compositions: Record<string, LevelComposition> =

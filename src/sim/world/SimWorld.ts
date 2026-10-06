@@ -1,4 +1,6 @@
 import { InfectedSystem } from '../ai/InfectedSystem';
+import { Mission } from '../missions/Mission';
+import type { MissionDef } from '../missions/types';
 import { survivor } from '../../data/survivor';
 import { Combat } from '../combat/Combat';
 import { Status } from '../combat/Status';
@@ -24,6 +26,10 @@ export class SimWorld implements Lifecycle {
   player: Player | null = null;
   combat: Combat | null = null;
   infected: InfectedSystem | null = null;
+  missions: Mission | null = null;
+  get inputFrame(): InputFrame { return this.input; }
+  /** Attach a validated mission after scenario/composition assembly. */
+  loadMission(def: MissionDef): Mission { const next=new Mission(this,def);this.missions?.dispose();return this.missions=next; }
   /** Level-owned records survive player death; scenario unload clears them. */
   mission: GameStateSnapshot['mission'] = null;
   progression: GameStateSnapshot['progression'] = null;
@@ -85,8 +91,18 @@ export class SimWorld implements Lifecycle {
     this.events.on('sim.tick',()=>{
       if(this.tick%60!==0)return;
       const player=this.entities.get(1)!;
-      for(const fire of districts.fires)if((player.transform.x-fire.x)**2+(player.transform.z-fire.z)**2<=fire.radius**2)this.player!.damage(fire.damagePerSecond,this.tick);
+      for(const fire of this.districts!.fires)if((player.transform.x-fire.x)**2+(player.transform.z-fire.z)**2<=fire.radius**2)this.player!.damage(fire.damagePerSecond,this.tick);
     },SimPhase.combat);
+  }
+  /** Mission script integration: rebuild decay collision/nav once on a tier change. */
+  setTier(tier: 0|1|2|3|4|5): void {
+    const previous = this.districts; if (!previous || previous.composition.tier === tier) return;
+    const next = new DistrictWorld({...previous.composition,tier},previous.districts.map(d=>d.layout),this.seed);
+    this.districts = next;
+    const {min,max}=next.nav, player=this.entities.get(1)!;
+    this.physics.load({name:next.composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:player.transform});
+    for(const d of next.districts)for(const aabb of d.decay.colliders.map(c=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
+    this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step();
   }
   setInput(patch: Partial<InputFrame>): void {
     const next = { ...this.input, ...structuredClone(patch) };
@@ -96,7 +112,12 @@ export class SimWorld implements Lifecycle {
   /** Device frames are borrowed for this tick; snapshots are independently copied. */
   applyInput(frame: InputFrame, scheme: import('../../input/InputFrame').Scheme): void { this.input = frame; this.scheme = scheme; }
   clearInput(): void { this.input = emptyInput(); this.scheme = 'mouse-only'; }
-  update(): void { if (this.scenario) this.events.emit({ type: 'sim.tick', tick: ++this.tick }); }
+  update(): void {
+    if (!this.scenario) return;
+    if (this.missions?.state.phase === 'cinematic') { this.missions.advanceCinematic(this.input); return; }
+    if (this.missions && this.missions.state.phase !== 'playing') return;
+    this.events.emit({ type: 'sim.tick', tick: ++this.tick });
+  }
   getEntity(id: number): EntitySnapshot | null { return structuredClone(this.entities.get(id) ?? null); }
   query(filter: EntityFilter): EntitySnapshot[] {
     const nearby = filter.within ? new Set(this.spatial.query(filter.within)) : null;
@@ -122,7 +143,7 @@ export class SimWorld implements Lifecycle {
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
   }
   reset(): void {
-    this.mission = null; this.progression = null; this.infected = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }
   dispose(): void { this.reset(); }

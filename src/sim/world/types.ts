@@ -25,6 +25,7 @@ export type GameEvent =
   | { tick: number; type: 'infected.attack'; sourceId: number; attackId: number; targetId: number; special: string; amount: number }
   | { tick: number; type: 'infected.revived' | 'infected.leg-lost'; sourceId: number; targetId: number }
 
+  | import('../missions/events').MissionEvent
   | { tick: number; type: 'noise'; sourceId: number; actionId: string; position: { x: number; y: number; z: number }; radius: number; loudness: number; kind: string }
   | { tick: number; type: 'ai.alerted'; sourceId: number; targetId: number; cause: 'noise'; position: Transform }
   | { tick: number; type: 'combat.effect'; sourceId: number; actionId: string; kind: import('../../data/actions/schema').ActionEffect['kind']; position: { x: number; y: number; z: number }; radius: number; expires: number }
@@ -48,7 +49,7 @@ export interface GameStateSnapshot {
   scenario: string | null;
   player: EntitySnapshot | null;
   entities: EntitySnapshot[];
-  mission: { completedObjectives: string[] } | null;
+  mission: import('../missions/types').MissionState | { completedObjectives: string[] } | null;
   progression: { pickups: string[] } | null;
   rng: { stream: string; state: number; cursor: number }[];
   perf: { entities: number; bodies: number; colliders: number; listeners: number };

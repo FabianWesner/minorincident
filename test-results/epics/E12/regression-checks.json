@@ -1,0 +1,27 @@
+{
+  "regression-headless": {
+    "command": [
+      "npm",
+      "run",
+      "test:e2e",
+      "--",
+      "--grep-invert",
+      "@E10-AC06",
+      "--workers=2"
+    ],
+    "exitCode": 0
+  },
+  "regression-native-webgpu": {
+    "command": [
+      "npm",
+      "run",
+      "test:e2e",
+      "--",
+      "tests/perf/district-load.spec.ts",
+      "--grep",
+      "@E10-AC06",
+      "--workers=2"
+    ],
+    "exitCode": 0
+  }
+}

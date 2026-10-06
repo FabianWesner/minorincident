@@ -1,5 +1,8 @@
 // Adapted from folio-2025 by Bruno Simon (MIT).
 import { Matrix4 } from 'three';
+import { missionSandbox } from '../tests/fixtures/scenarios/mission-sandbox';
+import { missionIds, resolveCampaignMission, type MissionId } from './levels/missions';
+import { Combat } from './sim/combat/Combat';
 import { InputSystem } from './input/InputSystem';
 import { Clock } from './core/Clock';
 import { Services } from './core/Services';
@@ -22,6 +25,7 @@ export class Game {
   simMs = 0;
   private readonly spawnFrustum = new Matrix4();
   private loading = false;
+  private renderedDistricts: SimWorld['districts'] = null;
   private levelQueue: Promise<void> = Promise.resolve();
   constructor(readonly params: URLSearchParams) {
     this.clock = new Clock(params.get('test') === '1' ? 20 : 5);
@@ -35,6 +39,7 @@ export class Game {
     this.view.update(1);
     this.ticker.events.on('frame', ({ seconds }) => {
       this.frameMs = seconds * 1000;
+      if (!this.loading && this.renderedDistricts !== this.world.districts) this.refreshView();
       if (!this.loading) {
         const start = performance.now();
         this.clock.advance(seconds, () => this.simTick());
@@ -50,26 +55,43 @@ export class Game {
       this.loading = true;
       try {
         this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
-        if (name !== null) { this.world.loadScenario(name, seed); await this.view.load(); }
+        if (name !== null) { this.world.loadScenario(name, seed); if (name === 'mission-sandbox') this.world.loadMission(missionSandbox()); await this.view.load(); }
         else this.view.update();
+        this.renderedDistricts=this.world.districts;
       } finally { this.loading = false; this.ticker.reset(); }
     });
     this.levelQueue = load.catch(() => {}); return load;
   }
-  /** E10 level composition only. Mission/checkpoint/progression behavior is provided by later epics. */
-  loadLevel(id:string,opts?:{seed?:number;tier?:Tier}):Promise<void>{
+  /** E10 composition plus E12 mission briefing; checkpoints restore reached state or reconstruct an authored graph prefix. */
+  loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string}):Promise<void>{
     const load=this.levelQueue.then(async()=>{
       this.loading=true;
       try{
+        if(opts?.checkpoint && this.world.missions?.def.id === id) { this.world.missions.loadCheckpoint(opts.checkpoint); this.view.update(1); return; }
         const start=performance.now();
         const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(url);if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
         const data=performance.now();
         const cosmetic=this.world.entities.get(1)?.survivor;
         this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
-        const sim=performance.now();await this.view.load();this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:performance.now()-sim};
+        if(missionIds.includes(id as MissionId)) {
+          this.world.combat = new Combat(this.world, { name:id,survivor:true,combat:true,ground:{width:100,depth:100},player:{...this.world.entities.get(1)!.transform} });
+          const mission=this.world.loadMission(resolveCampaignMission(id as MissionId, this.world.districts!));
+          if(opts?.checkpoint) mission.loadCheckpoint(opts.checkpoint);
+        }
+        const sim=performance.now();await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:performance.now()-sim};
       }finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
+  }
+  /** Queue one presentation rebuild when a mission script changes decay. */
+  private refreshView(): Promise<void> {
+    if (this.loading || this.renderedDistricts === this.world.districts) return this.levelQueue;
+    this.loading=true;
+    const refresh=this.levelQueue.then(async()=>{
+      try { await this.view.load(); this.renderedDistricts=this.world.districts; }
+      finally { this.loading=false; this.ticker.reset(); }
+    });
+    this.levelQueue=refresh.catch(()=>{});return refresh;
   }
   async step(ticks: number): Promise<void> {
     if (!Number.isSafeInteger(ticks) || ticks < 0) throw new RangeError('Ticks must be a nonnegative integer');
@@ -77,7 +99,7 @@ export class Game {
     if (!this.clock.paused) throw new Error('step requires pause()');
     if (!this.world.scenario) throw new Error('step requires a loaded scenario');
     for (let i = 0; i < ticks; i++) this.simTick();
-    this.view.update(1);
+    await this.refreshView(); this.view.update(1);
   }
   private simTick(): void {
     const player = this.world.entities.get(1)?.transform;
@@ -91,7 +113,7 @@ export class Game {
     this.view.advance(1 / 60);
   }
   async screenshotReady(): Promise<void> {
-    await this.levelQueue;
+    await this.levelQueue; await this.refreshView();
     for (let i = 0; i < 2; i++) { await new Promise<void>((resolve) => requestAnimationFrame(() => resolve())); this.view.update(this.clock.paused ? 1 : this.clock.alpha); }
   }
   perf(): { fps: number; frameMs: number; simMs: number; drawCalls: number; triangles: number; geometries: number; textures: number; entities: number; backend: string; loadTiming:Game['lastLoad'] } {

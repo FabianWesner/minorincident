@@ -1,0 +1,681 @@
+{
+  "expected": {
+    "time": 2.0166666666666666,
+    "kills": 1,
+    "damage": 100,
+    "deaths": 1,
+    "rescued": 1
+  },
+  "state": {
+    "id": "mission-sandbox",
+    "phase": "result",
+    "completedObjectives": [
+      "escort"
+    ],
+    "volumes": [],
+    "killedBosses": [
+      "boss"
+    ],
+    "steps": {
+      "escort": {
+        "status": "completed",
+        "started": 120,
+        "kills": [
+          2
+        ],
+        "events": {},
+        "interaction": 0
+      }
+    },
+    "actors": {
+      "boss": 2,
+      "runner": 3,
+      "escort": 4,
+      "car": 5,
+      "target": 6
+    },
+    "items": [],
+    "states": {
+      "driving:car": false,
+      "power": false
+    },
+    "counters": {
+      "breakers": 0
+    },
+    "gates": {
+      "exit": false
+    },
+    "marker": null,
+    "checkpoint": "C",
+    "tier": null,
+    "timeOfDay": null,
+    "subtitle": {
+      "id": "L1.briefing",
+      "text": "Reports of an incident at Joe’s Diner. Check it out.",
+      "until": 300
+    },
+    "cinematic": null,
+    "failure": null,
+    "stats": {
+      "time": 2.0166666666666666,
+      "kills": 1,
+      "damage": 100,
+      "deaths": 1,
+      "rescued": 1,
+      "optionalObjectives": []
+    },
+    "result": {
+      "time": 2.0166666666666666,
+      "kills": 1,
+      "damage": 100,
+      "deaths": 1,
+      "rescued": 1,
+      "optionalObjectives": []
+    }
+  },
+  "events": [
+    {
+      "tick": 0,
+      "type": "scenario.loaded",
+      "name": "mission-sandbox",
+      "seed": 1
+    },
+    {
+      "type": "mission.briefing",
+      "id": "mission-sandbox",
+      "text": "Complete the sandbox objective.",
+      "tick": 0
+    },
+    {
+      "type": "mission.spawned",
+      "id": "actors",
+      "tick": 0
+    },
+    {
+      "type": "dialogue.line",
+      "id": "L1.briefing",
+      "text": "Reports of an incident at Joe’s Diner. Check it out.",
+      "tick": 0
+    },
+    {
+      "type": "objective.started",
+      "id": "escort",
+      "tick": 0
+    },
+    {
+      "type": "checkpoint.set",
+      "id": "C",
+      "tick": 0
+    },
+    {
+      "tick": 0,
+      "attackId": 0,
+      "actionId": "weapon.grenade",
+      "sourceId": 1,
+      "targetId": 2,
+      "position": {
+        "x": -5,
+        "z": 0,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "amount": 100,
+      "type": "combat.hit"
+    },
+    {
+      "tick": 0,
+      "attackId": 0,
+      "actionId": "weapon.grenade",
+      "sourceId": 1,
+      "targetId": 2,
+      "position": {
+        "x": -5,
+        "z": 0,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "amount": 100,
+      "type": "combat.kill"
+    },
+    {
+      "type": "player.damaged",
+      "tick": 0,
+      "id": 1,
+      "amount": 100
+    },
+    {
+      "type": "player.died",
+      "tick": 0,
+      "id": 1
+    },
+    {
+      "type": "sim.tick",
+      "tick": 1
+    },
+    {
+      "type": "sim.tick",
+      "tick": 2
+    },
+    {
+      "type": "sim.tick",
+      "tick": 3
+    },
+    {
+      "type": "sim.tick",
+      "tick": 4
+    },
+    {
+      "type": "sim.tick",
+      "tick": 5
+    },
+    {
+      "type": "sim.tick",
+      "tick": 6
+    },
+    {
+      "type": "sim.tick",
+      "tick": 7
+    },
+    {
+      "type": "sim.tick",
+      "tick": 8
+    },
+    {
+      "type": "sim.tick",
+      "tick": 9
+    },
+    {
+      "type": "sim.tick",
+      "tick": 10
+    },
+    {
+      "type": "sim.tick",
+      "tick": 11
+    },
+    {
+      "type": "sim.tick",
+      "tick": 12
+    },
+    {
+      "type": "sim.tick",
+      "tick": 13
+    },
+    {
+      "type": "sim.tick",
+      "tick": 14
+    },
+    {
+      "type": "sim.tick",
+      "tick": 15
+    },
+    {
+      "type": "sim.tick",
+      "tick": 16
+    },
+    {
+      "type": "sim.tick",
+      "tick": 17
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18
+    },
+    {
+      "type": "sim.tick",
+      "tick": 19
+    },
+    {
+      "type": "sim.tick",
+      "tick": 20
+    },
+    {
+      "type": "sim.tick",
+      "tick": 21
+    },
+    {
+      "type": "sim.tick",
+      "tick": 22
+    },
+    {
+      "type": "sim.tick",
+      "tick": 23
+    },
+    {
+      "type": "sim.tick",
+      "tick": 24
+    },
+    {
+      "type": "sim.tick",
+      "tick": 25
+    },
+    {
+      "type": "sim.tick",
+      "tick": 26
+    },
+    {
+      "type": "sim.tick",
+      "tick": 27
+    },
+    {
+      "type": "sim.tick",
+      "tick": 28
+    },
+    {
+      "type": "sim.tick",
+      "tick": 29
+    },
+    {
+      "type": "sim.tick",
+      "tick": 30
+    },
+    {
+      "type": "sim.tick",
+      "tick": 31
+    },
+    {
+      "type": "sim.tick",
+      "tick": 32
+    },
+    {
+      "type": "sim.tick",
+      "tick": 33
+    },
+    {
+      "type": "sim.tick",
+      "tick": 34
+    },
+    {
+      "type": "sim.tick",
+      "tick": 35
+    },
+    {
+      "type": "sim.tick",
+      "tick": 36
+    },
+    {
+      "type": "sim.tick",
+      "tick": 37
+    },
+    {
+      "type": "sim.tick",
+      "tick": 38
+    },
+    {
+      "type": "sim.tick",
+      "tick": 39
+    },
+    {
+      "type": "sim.tick",
+      "tick": 40
+    },
+    {
+      "type": "sim.tick",
+      "tick": 41
+    },
+    {
+      "type": "sim.tick",
+      "tick": 42
+    },
+    {
+      "type": "sim.tick",
+      "tick": 43
+    },
+    {
+      "type": "sim.tick",
+      "tick": 44
+    },
+    {
+      "type": "sim.tick",
+      "tick": 45
+    },
+    {
+      "type": "sim.tick",
+      "tick": 46
+    },
+    {
+      "type": "sim.tick",
+      "tick": 47
+    },
+    {
+      "type": "sim.tick",
+      "tick": 48
+    },
+    {
+      "type": "sim.tick",
+      "tick": 49
+    },
+    {
+      "type": "sim.tick",
+      "tick": 50
+    },
+    {
+      "type": "sim.tick",
+      "tick": 51
+    },
+    {
+      "type": "sim.tick",
+      "tick": 52
+    },
+    {
+      "type": "sim.tick",
+      "tick": 53
+    },
+    {
+      "type": "sim.tick",
+      "tick": 54
+    },
+    {
+      "type": "sim.tick",
+      "tick": 55
+    },
+    {
+      "type": "sim.tick",
+      "tick": 56
+    },
+    {
+      "type": "sim.tick",
+      "tick": 57
+    },
+    {
+      "type": "sim.tick",
+      "tick": 58
+    },
+    {
+      "type": "sim.tick",
+      "tick": 59
+    },
+    {
+      "type": "sim.tick",
+      "tick": 60
+    },
+    {
+      "type": "sim.tick",
+      "tick": 61
+    },
+    {
+      "type": "sim.tick",
+      "tick": 62
+    },
+    {
+      "type": "sim.tick",
+      "tick": 63
+    },
+    {
+      "type": "sim.tick",
+      "tick": 64
+    },
+    {
+      "type": "sim.tick",
+      "tick": 65
+    },
+    {
+      "type": "sim.tick",
+      "tick": 66
+    },
+    {
+      "type": "sim.tick",
+      "tick": 67
+    },
+    {
+      "type": "sim.tick",
+      "tick": 68
+    },
+    {
+      "type": "sim.tick",
+      "tick": 69
+    },
+    {
+      "type": "sim.tick",
+      "tick": 70
+    },
+    {
+      "type": "sim.tick",
+      "tick": 71
+    },
+    {
+      "type": "sim.tick",
+      "tick": 72
+    },
+    {
+      "type": "sim.tick",
+      "tick": 73
+    },
+    {
+      "type": "sim.tick",
+      "tick": 74
+    },
+    {
+      "type": "sim.tick",
+      "tick": 75
+    },
+    {
+      "type": "sim.tick",
+      "tick": 76
+    },
+    {
+      "type": "sim.tick",
+      "tick": 77
+    },
+    {
+      "type": "sim.tick",
+      "tick": 78
+    },
+    {
+      "type": "sim.tick",
+      "tick": 79
+    },
+    {
+      "type": "sim.tick",
+      "tick": 80
+    },
+    {
+      "type": "sim.tick",
+      "tick": 81
+    },
+    {
+      "type": "sim.tick",
+      "tick": 82
+    },
+    {
+      "type": "sim.tick",
+      "tick": 83
+    },
+    {
+      "type": "sim.tick",
+      "tick": 84
+    },
+    {
+      "type": "sim.tick",
+      "tick": 85
+    },
+    {
+      "type": "sim.tick",
+      "tick": 86
+    },
+    {
+      "type": "sim.tick",
+      "tick": 87
+    },
+    {
+      "type": "sim.tick",
+      "tick": 88
+    },
+    {
+      "type": "sim.tick",
+      "tick": 89
+    },
+    {
+      "type": "sim.tick",
+      "tick": 90
+    },
+    {
+      "type": "sim.tick",
+      "tick": 91
+    },
+    {
+      "type": "sim.tick",
+      "tick": 92
+    },
+    {
+      "type": "sim.tick",
+      "tick": 93
+    },
+    {
+      "type": "sim.tick",
+      "tick": 94
+    },
+    {
+      "type": "sim.tick",
+      "tick": 95
+    },
+    {
+      "type": "sim.tick",
+      "tick": 96
+    },
+    {
+      "type": "sim.tick",
+      "tick": 97
+    },
+    {
+      "type": "sim.tick",
+      "tick": 98
+    },
+    {
+      "type": "sim.tick",
+      "tick": 99
+    },
+    {
+      "type": "sim.tick",
+      "tick": 100
+    },
+    {
+      "type": "sim.tick",
+      "tick": 101
+    },
+    {
+      "type": "sim.tick",
+      "tick": 102
+    },
+    {
+      "type": "sim.tick",
+      "tick": 103
+    },
+    {
+      "type": "sim.tick",
+      "tick": 104
+    },
+    {
+      "type": "sim.tick",
+      "tick": 105
+    },
+    {
+      "type": "sim.tick",
+      "tick": 106
+    },
+    {
+      "type": "sim.tick",
+      "tick": 107
+    },
+    {
+      "type": "sim.tick",
+      "tick": 108
+    },
+    {
+      "type": "sim.tick",
+      "tick": 109
+    },
+    {
+      "type": "sim.tick",
+      "tick": 110
+    },
+    {
+      "type": "sim.tick",
+      "tick": 111
+    },
+    {
+      "type": "sim.tick",
+      "tick": 112
+    },
+    {
+      "type": "sim.tick",
+      "tick": 113
+    },
+    {
+      "type": "sim.tick",
+      "tick": 114
+    },
+    {
+      "type": "sim.tick",
+      "tick": 115
+    },
+    {
+      "type": "sim.tick",
+      "tick": 116
+    },
+    {
+      "type": "sim.tick",
+      "tick": 117
+    },
+    {
+      "type": "sim.tick",
+      "tick": 118
+    },
+    {
+      "type": "sim.tick",
+      "tick": 119
+    },
+    {
+      "type": "sim.tick",
+      "tick": 120
+    },
+    {
+      "type": "player.respawned",
+      "tick": 120,
+      "id": 1
+    },
+    {
+      "type": "checkpoint.restored",
+      "id": "C",
+      "tick": 120
+    },
+    {
+      "type": "sim.tick",
+      "tick": 121
+    },
+    {
+      "type": "escort.rescued",
+      "id": 4,
+      "tick": 121
+    },
+    {
+      "type": "objective.completed",
+      "id": "escort",
+      "tick": 121
+    },
+    {
+      "type": "level.completed",
+      "id": "mission-sandbox",
+      "result": {
+        "time": 2.0166666666666666,
+        "kills": 1,
+        "damage": 100,
+        "deaths": 1,
+        "rescued": 1,
+        "optionalObjectives": []
+      },
+      "tick": 121
+    }
+  ],
+  "perf": {
+    "fps": 60.24096385542202,
+    "frameMs": 16.59999999999991,
+    "simMs": 0,
+    "drawCalls": 69,
+    "triangles": 2567,
+    "geometries": 62,
+    "textures": 5,
+    "entities": 6,
+    "backend": "webgl",
+    "loadTiming": null
+  }
+}
