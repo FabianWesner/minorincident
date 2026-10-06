@@ -120,6 +120,8 @@ test('T-E16-18 @E16 @E16-AC18 @mobile first real gesture unlocks; haptics/settin
             window.dispatchEvent(new Event('focus')); await window.__SS__!.audio.unlock(); }, trigger);
         await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().state)).toBe('running');
     }
+    await page.locator('[data-audio-pause] button').click();
+    await page.evaluate(() => window.__SS__!.pause());
     await page.evaluate(() => { const a = window.__SS__!; a.settings.set({ captions: true, noiseRings: true }); a.audio.emit({ type: 'dialogue', tick: 0, text: 'Safe zone ahead.', position: { x: -6, z: 6 } }); a.audio.emit({ type: 'noise', tick: 0, sourceId: 1, actionId: 'weapon.pistol', kind: 'ranged', position: { x: 0, y: 0.7, z: 0 }, radius: 25, loudness: 1 }); });
     await page.evaluate(() => window.__SS__!.audio.emit({ type: 'noise', tick: 0, sourceId: 1, actionId: 'weapon.fists', kind: 'melee', position: { x: 0, y: 0.7, z: 0 }, radius: 6, loudness: 1 }));
     await page.locator('[data-audio-controls]').evaluate(e => (e as HTMLDetailsElement).open = true);
