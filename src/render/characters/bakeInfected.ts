@@ -5,7 +5,8 @@ import { characterNodes } from '../../data/survivor';
 import { authoredClips, sampleClip, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import type { CrowdClip } from '../../assets/crowd';
-export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple', 'infection-stagger', 'infection-collapse', 'infection-rise'] as const;
+export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple', 'infection-stagger', 'infection-collapse', 'infection-rise',
+  'infected-frail', 'infected-lurch', 'infected-sprint', 'infected-idle', 'infected-search', 'civ-startle', 'civ-flee', 'civ-grabbed'] as const;
 export const framesPerClip = 24;
 /** Bake once at level load: merged color geometry, part indices and the shared authored glTF rigid-part actions. */
 export function bakeInfected(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false) {
@@ -23,7 +24,7 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
     const t = frame / (framesPerClip - 1);
     const animal = !!root.getObjectByName('body');
-    const name = animal ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : clip === 'idle' ? 'corgi-idle' : root.getObjectByName('wingL') ? 'infected-flight' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
+    const name = animal ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : root.getObjectByName('wingL') ? 'infected-flight' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
     sampleClip(root, name, t * authoredClips.get(name)!.duration);
     root.updateMatrixWorld(true); for (const part of parts) matrices.push(...part.matrixWorld.elements);
   }

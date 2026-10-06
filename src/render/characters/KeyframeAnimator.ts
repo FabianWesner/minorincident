@@ -1,4 +1,5 @@
-import { AdditiveAnimationBlendMode, AnimationMixer, LoopOnce, LoopRepeat, Vector3, type AnimationAction, type Object3D } from 'three';
+import { AdditiveAnimationBlendMode, AnimationMixer, LoopOnce, LoopRepeat, Quaternion, Vector3, type AnimationAction, type Object3D } from 'three';
+import { meleeChains } from '../../data/meleeCombos';
 import type { AnimationState, SurvivorState } from '../../data/survivor';
 import { authoredClips, retargetClip, settleGroundPose, strides, strideScale } from './clips';
 import type { CharacterRig } from './rig';
@@ -21,6 +22,8 @@ export class KeyframeAnimator {
   private secondaryVelocity = 0;
   private readonly backpack: Object3D | undefined;
   private readonly backpackRest: number;
+  private carryWeight = 0;
+  private readonly carryPose: [Object3D, Quaternion][] = [];
   state: AnimationState = 'idle';
   clip = 'idle';
   evaluations = 0;
@@ -31,10 +34,15 @@ export class KeyframeAnimator {
     for (const name of authoredClips.keys()) {
       if (name.startsWith('corgi-') || name === 'infected-flight' || name === 'animal-death') continue;
       this.actions.set(name, this.mixer.clipAction(retargetClip(rig.root, name)));
-      if (/^(fists-|bat-|crowbar-|machete-|swing|shoot|throw)/.test(name)) {
+      if (/^(unarmed-|fists-|bat-|crowbar-|machete-|swing|shoot|throw)/.test(name)) {
         const clip = retargetClip(rig.root, name, true); clip.blendMode = AdditiveAnimationBlendMode;
         this.actions.set(`${name}:upper`, this.mixer.clipAction(clip));
       }
+    }
+    const carry = retargetClip(rig.root, 'carry');
+    for (const node of ['armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR'] as const) {
+      const track = carry.tracks.find(t => t.name === `${node}.quaternion`);
+      if (track) this.carryPose.push([rig[node], new Quaternion().fromArray(track.values, 0)]);
     }
   }
   private play(name: string, loop = true): AnimationAction {
@@ -63,14 +71,17 @@ export class KeyframeAnimator {
     let strike: string | undefined;
     if (['swing','kick','shoot','throw'].includes(pose.animation)) {
       const weapon = combat?.actionId.replace('weapon.', '') ?? 'swing';
-      strike = pose.animation === 'kick' ? combat?.combo === 1 ? 'spin-kick' : 'kick' : ['fists','bat','crowbar','machete'].includes(weapon) ? `${weapon}-${(combat?.combo ?? 0) + 1}` : pose.animation;
+      const combo = combat?.combo ?? 0, unarmed = `unarmed-${meleeChains['weapon.fists'][combo] ?? 'jab'}`;
+      strike = weapon === 'fists' ? this.actions.has(unarmed) ? unarmed : `fists-${combo % 3 + 1}` : pose.animation === 'kick' ? combo === 1 ? 'spin-kick' : 'kick' : ['bat','crowbar','machete'].includes(weapon) ? `${weapon}-${combo + 1}` : pose.animation;
     }
-    const upper = strike && moving && pose.animation !== 'kick';
+    const upper = strike && moving && pose.animation !== 'kick' && !/kick|knee/.test(strike);
     if (strike && !upper) name = strike;
     else if (!strike && !['idle','walk','run'].includes(pose.animation)) name = pose.animation;
+    // E19 courier: seated pedalling while riding (mount/dismount play as actions).
+    else if (pose.riding) name = 'ride';
     if (this.clip !== name || strike && !upper && this.attackTick !== pose.animationTick || !this.base) {
       const previous = this.base; this.base = this.play(name, !!strides[name] || name === 'idle');
-      if (previous && previous !== this.base) previous.crossFadeTo(this.base, strike ? .14 : .2, false);
+      if (previous && previous !== this.base) previous.crossFadeTo(this.base, strike ? .06 : .2, false);
       this.clip = name;
     }
     if (strides[name] && this.base) {
@@ -80,13 +91,22 @@ export class KeyframeAnimator {
         action.time = this.phase * action.getClip().duration; action.setEffectiveTimeScale(0);
       }
     }
-    if (strike && combat && this.base && !upper) this.base.setEffectiveTimeScale(this.base.getClip().duration * 60 / Math.max(1, combat.endsAt - combat.started));
-    if (upper && strike && this.attackTick !== pose.animationTick) {
-      this.overlay?.fadeOut(.12); this.overlay = this.play(`${strike}:upper`, false).fadeIn(.1);
-      if (combat) this.overlay.setEffectiveTimeScale(this.overlay.getClip().duration * 60 / Math.max(1, combat.endsAt - combat.started));
-    } else if (!upper && this.overlay) { this.overlay.fadeOut(.12); this.overlay = undefined; }
+    if (upper && strike && this.attackTick !== pose.animationTick) { this.overlay?.fadeOut(.12); this.overlay = this.play(`${strike}:upper`, false).fadeIn(.05); }
+    else if (!upper && this.overlay) { this.overlay.fadeOut(.12); this.overlay = undefined; }
+    // Authored contact sits at 20 % of every strike clip: warp anticipation onto the
+    // sim windup and follow-through onto recovery, so the hit lands on the damage tick.
+    const struck = strike && combat ? upper ? this.overlay : this.base : undefined;
+    if (struck && combat) {
+      const u = tick + alpha - 1 - combat.started, a = Math.max(1, combat.activeAt - combat.started), e = Math.max(a + 1, combat.endsAt - combat.started);
+      const phase = u < a ? .2 * Math.max(0, u) / a : Math.min(1, .2 + .8 * (u - a) / (e - a));
+      struck.time = phase * struck.getClip().duration; struck.setEffectiveTimeScale(0);
+    }
     this.attackTick = strike ? pose.animationTick : -1;
     this.mixer.update(dt);
+    // Parcel carry: arms hold the box over any lower-body motion, eased in/out over 150 ms.
+    const holding = !!pose.carrying && !strike && name !== 'hand-over' && name !== 'ride';
+    this.carryWeight = Math.max(0, Math.min(1, this.carryWeight + (holding ? 1 : -1) * dt / .15));
+    if (this.carryWeight > 0) for (const [node, target] of this.carryPose) node.quaternion.slerp(target, this.carryWeight);
     for (const node of Object.values(this.rig)) node.quaternion.normalize();
     if (pose.animation === 'die') settleGroundPose(this.rig.root);
     const target = this.rig.torso.rotation.z * -.3;

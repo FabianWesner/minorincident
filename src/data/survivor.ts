@@ -9,15 +9,17 @@ export type SurvivorVariant = 'female' | 'male';
 export type GearTier = 0 | 1 | 2 | 3 | 4;
 export const characterNodes = ['root', 'hip', 'torso', 'head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR', 'legL', 'legR', 'shinL', 'shinR', 'footL', 'footR', 'weaponSocketR', 'weaponSocketL', 'backpackSocket'] as const;
 export type CharacterNode = typeof characterNodes[number];
-export const actionStates = ['swing', 'shoot', 'throw', 'kick', 'interact', 'enter-car'] as const;
+export const actionStates = ['swing', 'shoot', 'throw', 'kick', 'interact', 'enter-car', 'mount', 'dismount', 'hand-over', 'equip'] as const;
 export type ActionState = typeof actionStates[number];
 export type AnimationState = 'idle' | 'walk' | 'run' | 'hurt' | 'die' | ActionState;
 /** Action duration is presentation intent; damage/charges remain owned by E05/E06. */
-export const actionTicks: Record<ActionState, number> = { swing: 30, shoot: 12, throw: 36, kick: 30, interact: 45, 'enter-car': 60 };
+export const actionTicks: Record<ActionState, number> = { swing: 30, shoot: 12, throw: 36, kick: 30, interact: 45, 'enter-car': 60, mount: 24, dismount: 24, 'hand-over': 60, equip: 54 };
 export interface SurvivorState {
   /** Plain combat timing for authored clips and trails. */
   attack?: { actionId: string; combo: number; started: number; activeAt: number; recoveryAt: number; endsAt: number };
   variant: SurvivorVariant; gearTier: GearTier; animation: AnimationState; animationTick: number;
+  /** E19 presentation hooks set by the bicycle (F) and mission (E) sims; render-only reads. */
+  riding?: { since: number }; carrying?: string;
   velocity: { x: number; z: number }; grounded: boolean; invulnerableUntil: number;
   checkpoint: { x: number; y: number; z: number }; diedAt: number | null;
 }
