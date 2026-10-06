@@ -1,7 +1,7 @@
 import { expect, test, vi } from 'vitest';
 import { BoxGeometry, Group, InstancedMesh, MeshBasicNodeMaterial, Matrix4, PerspectiveCamera, Scene, Vector2 } from 'three/webgpu';
 import { preRender } from '../../../src/render/PreRenderer';
-import type { Renderer } from '../../../src/render/Renderer';
+import { Renderer } from '../../../src/render/Renderer';
 
 for (const fails of [false, true]) test(`@E19 pre-render warms hidden zero-count variants and restores state on ${fails ? 'failure' : 'success'}`, async () => {
   const scene = new Scene(), group = new Group(), mesh = new InstancedMesh(new BoxGeometry(), new MeshBasicNodeMaterial(), 2);
@@ -25,4 +25,17 @@ test('@E19 pre-render warms every render object including distinct shadow and ca
   await preRender(renderer, scene, new PerspectiveCamera(), () => { expect(meshes.map(m => m.visible)).toEqual([true, true, true, true]); });
   expect(meshes.map(m => m.visible)).toEqual([false, true, true, true]); expect(meshes.map(m => m.count)).toEqual([2, 2, 2, 4]);
   meshes.forEach(mesh => mesh.dispose()); geometry.dispose(); material.dispose();
+});
+
+
+test('@E19 warm-up waits for a new render frame even when the GPU fence is already signaled', async () => {
+  let frame: FrameRequestCallback | undefined, finished = false;
+  const fence = vi.fn(async () => {}), request = vi.fn((callback: FrameRequestCallback) => { frame = callback; return 1; });
+  vi.stubGlobal('requestAnimationFrame', request);
+  try {
+    const renderer = { selectedBackend: 'webgl', backend: { utils: { _clientWaitAsync: fence } } } as unknown as Renderer;
+    const warm = Renderer.prototype.finishWarmUp.call(renderer); void warm.then(() => { finished = true; });
+    await Promise.resolve(); expect(fence).toHaveBeenCalledOnce(); expect(request).toHaveBeenCalledOnce(); expect(finished).toBe(false);
+    frame!(0); await warm; expect(finished).toBe(true);
+  } finally { vi.unstubAllGlobals(); }
 });

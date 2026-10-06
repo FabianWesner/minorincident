@@ -30,6 +30,9 @@ export class Renderer extends WebGPURenderer {
       const backend = this.backend as unknown as { utils: { _clientWaitAsync(): Promise<void> } };
       await backend.utils._clientWaitAsync();
     }
+    // PassNode and ShadowNode cache work per animation frame. A fence can already
+    // be signaled: still let Three advance its frame before the next warm-up draw.
+    await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
   }
   /** Three 0.186 retains shared shader bindings by render context, and WebGL VAOs.
    * Level unload retires all render objects before dropping these renderer-owned caches. */
