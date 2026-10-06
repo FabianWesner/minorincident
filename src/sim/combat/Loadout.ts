@@ -8,8 +8,8 @@ const slot = (id: string, resolve: (id:string)=>ActionDef): ActionSlot => { cons
 /** Rack timers belong to slots and survive cycling. Aim belongs to sides and survives cycling too. */
 export class Loadout {
   readonly state: LoadoutState;
-  constructor(left: string[], right: string[], readonly definition: (id:string)=>ActionDef = action) {
-    for (const rack of [left, right]) if (rack.length < 1 || rack.length > 3) throw new RangeError('Racks require 1–3 actions');
+  constructor(left: string[], right: string[], readonly definition: (id:string)=>ActionDef = action, readonly capacity = 3) {
+    for (const rack of [left, right]) if (rack.length < 1 || rack.length > this.capacity) throw new RangeError(`Racks require 1–${this.capacity} actions`);
     const side = (rack: string[]): SideState => ({ rack: rack.map(id=>slot(id,this.definition)), index: 0, aim: { x: 1, z: 0 }, aimPoint: null, swapUntil: 0 });
     this.state = { selectedSide: 'LEFT', LEFT: side(left), RIGHT: side(right) };
   }
@@ -29,7 +29,7 @@ export class Loadout {
   /** Adds to selected rack; full racks replace exactly the current slot. */
   collect(side: Side, id: string): string | null {
     const rack = this.state[side], next = slot(id,this.definition);
-    if (rack.rack.length < 3) { rack.rack.push(next); return null; }
+    if (rack.rack.length < this.capacity) { rack.rack.push(next); return null; }
     const previous = rack.rack[rack.index].id; rack.rack[rack.index] = next; return previous;
   }
   current(side: Side): ActionSlot { const state = this.state[side]; return state.rack[state.index]; }

@@ -26,6 +26,7 @@ export class Combat {
   private readonly pelletHits = new Map<EntitySnapshot, number>();
   private readonly pelletDirection = { x: 1, z: 0 };
   readonly assist: AimAssist;
+  rackCapacity = 3;
   actionDefinitions: Record<string,ActionDef> | null = null;
   runner: ActionRunner;
   readonly projectiles: Projectile[] = [];
@@ -45,7 +46,7 @@ export class Combat {
     player.combat ??= { radius: 0.3, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] };
   }
   setLoadout(left: string[], right: string[]): void {
-    const loadout = new Loadout(left, right, actionResolver(this.actionDefinitions)), infinite = this.runner.infiniteCharges;
+    const loadout = new Loadout(left, right, actionResolver(this.actionDefinitions), this.rackCapacity), infinite = this.runner.infiniteCharges;
     this.runner = new ActionRunner(1, loadout, this.runner.lastAttackId); this.runner.infiniteCharges = infinite; this.attach();
   }
   intent(frame: InputFrame): void {
