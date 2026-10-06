@@ -65,7 +65,7 @@ test('T-E05-05 @E05 @E05-AC05 grenade landing clamps to range, fuse/falloff and 
   expect(landing).toMatchObject({ position: { x: 5, y: 0, z: 0 } }); expect(health(w, center)).toBe(100);
   step(w, 64); expect(w.events.events().filter((e) => e.type === 'combat.exploded')).toHaveLength(0);
   step(w, 1);
-  expect(w.events.events()).toContainEqual({ type: 'combat.exploded', tick: 91, sourceId: 1, attackId: 1, position: { x: 5, y: 0, z: 0 } });
+  expect(w.events.events()).toContainEqual({ type: 'combat.exploded', tick: 91, sourceId: 1, attackId: 1, radius: 4, position: { x: 5, y: 0, z: 0 } });
   expect(health(w, center)).toBe(0); expect(health(w, near)).toBeCloseTo(25); expect(health(w, far)).toBeCloseTo(75);
   expect(health(w, blocked)).toBe(100); expect(health(w, outside)).toBe(100);
   fire(w, 'RIGHT', { x: 0, z: -1 }, { x: 0, z: -20 }); step(w, 50);

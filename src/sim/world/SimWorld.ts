@@ -2,6 +2,7 @@ import { InfectedSystem } from '../ai/InfectedSystem';
 import { Mission } from '../missions/Mission';
 import type { MissionDef } from '../missions/types';
 import { Vehicles } from '../vehicles/Vehicles';
+import { installVfxScenario } from '../../../tests/fixtures/scenarios/vfx';
 import { survivor } from '../../data/survivor';
 import { Combat } from '../combat/Combat';
 import { Interactables } from '../interact/Interactables';
@@ -103,6 +104,7 @@ export class SimWorld implements Lifecycle {
       Object.assign(this.entities.get(1)!.transform, p);
       this.spatial.set(1, p.x, p.z);
     }, SimPhase.cleanup);
+    installVfxScenario(this);
     this.events.emit({ tick: 0, type: 'scenario.loaded', name, seed });
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
@@ -173,7 +175,7 @@ export class SimWorld implements Lifecycle {
     const entity = this.entities.create({ kind: opts.faction === 'escort' ? 'escort' : 'infected', archetype, transform: { ...pos, y: 0.7, yaw }, health: { current: hp, max: hp }, faction: opts.faction ?? 'infected', combat: { radius, armor, shield: opts.shield ?? archetype === 'infected.riot', staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
     if (opts.ramDamage !== undefined) entity.ramDamage = opts.ramDamage;
     if (opts.reactive && entity.faction === 'infected') entity.hearing = { mode: 'idle', target: { x: pos.x, z: pos.z }, lureUntil: 0 };
-    this.spatial.set(entity.id, pos.x, pos.z); return entity.id;
+    this.spatial.set(entity.id, pos.x, pos.z); this.events.emit({ type: 'entity.spawned', tick: this.tick, id: entity.id }); return entity.id;
   }
   /** E05 impulse is the authored displacement in metres, swept against full cover. */
   knockback(entity: EntitySnapshot, direction: { x: number; z: number }, impulse: number): void {

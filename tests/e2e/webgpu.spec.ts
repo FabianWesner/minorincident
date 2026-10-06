@@ -57,6 +57,31 @@ test('T-E11-webgpu @E11 @E11-AC09 native WebGPU renders the interaction ring and
   await page.screenshot({ path: 'test-results/epics/E11/interact-ui-W5-webgpu.png' });
 });
 
+test('T-E15-webgpu @E15 native WebGPU compiles particles, ground tells and blood materials', async ({ page }) => {
+  await page.goto(testUrl.replace('&renderer=webgl', ''));
+  await page.waitForFunction(() => Boolean(window.__SS__));
+  const result = await page.evaluate(async () => {
+    const api = window.__SS__!; await api.ready; api.pause();
+    await api.loadScenario('vfx-showcase'); api.pause(); api.camera.preset('L6');
+    await api.step(1); api.vfx.stepRender(0.12); await api.screenshotReady();
+    // Measure regular gameplay RAF frames on the native GPU, without API stepping.
+    const frameMs: number[] = []; api.resume();
+    for (let i = 0; i < 120; i++) {
+      await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+      frameMs.push(api.perf().frameMs);
+    }
+    api.pause(); await api.screenshotReady();
+    return { render: api.getState().render, perf: api.perf(), frameMs };
+  });
+  expect(result.render.backend).toBe('webgpu');
+  expect(result.render.vfx!.particles).toBeGreaterThan(0);
+  expect(result.render.vfx!.telegraphs).toHaveLength(1);
+  expect(result.perf.drawCalls).toBeGreaterThan(1);
+  mkdirSync('test-results/epics/E15', { recursive: true });
+  writeFileSync('test-results/epics/E15/native-perf.json', JSON.stringify(result, null, 2) + '\n');
+  await page.screenshot({ path: 'test-results/epics/E15/webgpu.png' });
+});
+
 test('T-E06-webgpu @E06 headed native WebGPU renders catalog attachments and selected telegraphs', async ({ page }) => {
   await page.goto(testUrl.replace('&renderer=webgl', '')); await page.waitForFunction(() => Boolean(window.__SS__));
   const result = await page.evaluate(async () => {
