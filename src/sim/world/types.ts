@@ -18,6 +18,8 @@ export interface EntitySnapshot {
   hazard?: import('../interact/Hazards').Hazard;
   destructible?: import('../interact/Hazards').Destructible;
   /** E07 consumes this temporary noise target in preference to the player. */
+  /** A newborn is rendered in its collapse/rise pose and cannot act until this timer ends. */
+  infectionRise?: { started: number; until: number };
   noiseTarget?: { id: number; until: number };
   pickup?: import('../interact/Pickups').Pickup | { actionId: string; armed: boolean };
   speedBuff?: { multiplier: number; until: number };
