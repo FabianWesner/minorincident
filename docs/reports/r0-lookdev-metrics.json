@@ -1,0 +1,165 @@
+{
+  "capture": {
+    "seconds": 37.823955709,
+    "images": 12,
+    "sheets": 6
+  },
+  "capture_viewpoints": [
+    {
+      "id": "V1",
+      "tier": "desktop",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 230,
+      "triangles": 894293
+    },
+    {
+      "id": "V2",
+      "tier": "desktop",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 192,
+      "triangles": 756673
+    },
+    {
+      "id": "V3",
+      "tier": "desktop",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 172,
+      "triangles": 628614
+    },
+    {
+      "id": "V4",
+      "tier": "desktop",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 186,
+      "triangles": 815996
+    },
+    {
+      "id": "V5",
+      "tier": "desktop",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 182,
+      "triangles": 636751
+    },
+    {
+      "id": "V6",
+      "tier": "desktop",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 187,
+      "triangles": 1029341
+    },
+    {
+      "id": "V1",
+      "tier": "portrait",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 230,
+      "triangles": 329083
+    },
+    {
+      "id": "V2",
+      "tier": "portrait",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 202,
+      "triangles": 384885
+    },
+    {
+      "id": "V3",
+      "tier": "portrait",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 179,
+      "triangles": 429884
+    },
+    {
+      "id": "V4",
+      "tier": "portrait",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 180,
+      "triangles": 251983
+    },
+    {
+      "id": "V5",
+      "tier": "portrait",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 179,
+      "triangles": 239864
+    },
+    {
+      "id": "V6",
+      "tier": "portrait",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 153,
+      "triangles": 222393
+    }
+  ],
+  "performance": {
+    "desktop": {
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+      "infected": 200,
+      "ticks": 180,
+      "p95Ms": 4.900000000000546,
+      "fpsFromP95": 204.0816326530385,
+      "drawCalls": 57,
+      "triangles": 1306153,
+      "triangleLimit": 1500000,
+      "geometryPass": true,
+      "timingPass": true,
+      "heapBytes": 364000000
+    },
+    "portrait": {
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+      "infected": 200,
+      "ticks": 180,
+      "p95Ms": 4,
+      "fpsFromP95": 250.0,
+      "drawCalls": 33,
+      "triangles": 531317,
+      "triangleLimit": 500000,
+      "geometryPass": false,
+      "timingPass": true,
+      "heapBytes": 304000000
+    }
+  },
+  "manual_checks": [
+    "WebGPU",
+    "physical-phone performance"
+  ],
+  "outstanding": [
+    "Portrait 200-infected scene exceeds 500000-triangle budget; figure assets owned by another lane.",
+    "All-prop live palette recolouring depends on r1-grade shared-palette migration."
+  ],
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "unit": {
+      "passed": 164,
+      "files": 57
+    },
+    "patchUnit": {
+      "passed": 14
+    },
+    "smoke": {
+      "browserPassed": 22,
+      "nodePassed": 3
+    },
+    "E19": {
+      "nodePassed": 34,
+      "browser": "pending"
+    },
+    "productionPanel": {
+      "previousPassed": 2,
+      "latest": "pending"
+    },
+    "scoring": "pass"
+  }
+}
