@@ -484,9 +484,10 @@ export class AudioService implements Lifecycle {
             return;
         }
         if (event.type === 'civilian.state') {
-            if (event.state === 'bitten') this.play('civilian.scream', { position }, source);
-            if (event.state === 'rising') this.play('civilian.transform', { position }, source);
-            return; // Gasp once, then silence until the eyes-phase growl.
+            if (event.state === 'bitten') this.play('civilian.scream', { position, gain: .4 }, source);
+            if (event.state === 'down') this.play('bark.female.hurt', { position, gain: .4 }, source);
+            if (event.state === 'rising') this.play('civilian.transform', { position, gain: .45 }, source);
+            return; // One-shots only: keep the collapse quiet between state reactions.
         }
         if (event.type === 'telegraph') {
             const special = 'special' in event ? event.special : event.kind;

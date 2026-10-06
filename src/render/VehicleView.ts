@@ -1,3 +1,4 @@
+import { paletteTokens } from '../data/palette';
 // Adapted from Bruno Simon folio-2025 VisualVehicle.js (MIT, 41046b5): wheel pivots/suspension and lamps.
 import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, SphereGeometry, TorusGeometry, type Object3D } from 'three/webgpu';
 import { productionObstacleAssets } from './EntityAssets';
@@ -15,7 +16,7 @@ import { lerp } from '../core/maths';
 interface Record { lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number }
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
 export class VehicleView extends Group {
-  private readonly registry = new AssetRegistry(() => {});
+  private readonly registry: AssetRegistry;
   private readonly records = new Map<number, Record>();
   private readonly props = new Map<number, Mesh>();
   private readonly debris: Mesh[] = [];
@@ -27,7 +28,7 @@ export class VehicleView extends Group {
   private readonly feedbackEvents = new Map<number, VehicleFeedbackEvent>();
   private disposed = false;
   private readonly pending = new Map<number, Promise<void>>();
-  constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) { super(); this.fireMaterial.color.multiplyScalar(3); }
+  constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) { super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.fireMaterial.color.multiplyScalar(3); }
   async load(): Promise<void> { for (const car of this.world.vehicles!.cars.values()) await this.addCar(car.entity.id); this.update(1); }
   private async addCar(id: number): Promise<void> {
     const car = this.world.vehicles!.cars.get(id)!, def = car.physics.def;
@@ -37,10 +38,16 @@ export class VehicleView extends Group {
     if (this.disposed) return;
     const paint: Record['paint'] = [], copies = new Map<import('three').Material, Record['paint'][number]>();
     model.traverse(node => { if (!(node instanceof Mesh)) return; const convert = (material: import('three').Material) => {
+      if (material.name.startsWith('emi_') || material.userData.emissiveStrength > 0) return material;
       if (!(material instanceof PaletteMaterial) && !(material instanceof MeshLambertNodeMaterial)) return material;
       let copy = copies.get(material);
       if (!copy) {
-        if (material instanceof PaletteMaterial) copy = this.materials.unique(material.token);
+        if (material instanceof PaletteMaterial) {
+          const token = material.name.startsWith('pal_') ? material.token : paletteTokens[this.materials.nearest(material.color)];
+          copy = this.materials.uniqueWorld(token, material.vertexColors);
+          copy.transparent = material.transparent; copy.side = material.side;
+          (copy as PaletteMaterial).fade.value = material.fade.value;
+        }
         else {
           const owned = Object.assign(material.clone(), { bloodCoverage: uniform(0) });
           const grain = sin(positionGeometry.x.mul(127.1).add(positionGeometry.y.mul(311.7)).add(positionGeometry.z.mul(74.7))).mul(43758.5453).fract();
