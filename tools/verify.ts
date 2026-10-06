@@ -22,7 +22,7 @@ const commands: string[][] = [
         // Frame budgets and CPU-throttled profiles use native GPU headless Chrome, one worker.
         ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/e18-desktop.spec.ts', 'tests/perf/e18-devices.spec.ts', '--project=chromium', '--workers=1'],
       ]
-      : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern]]),
+      : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, ...(target === 'E19' ? ['--workers=1'] : [])]]),
 ];
 const checks: { command: string[]; exitCode: number | null }[] = [];
 for (const [command, ...args] of commands) {
