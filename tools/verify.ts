@@ -9,7 +9,8 @@ mkdirSync(output, { recursive: true });
 const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
   ['npm', 'run', 'build'],
-  ['npx', 'vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
+  // E19's 20-seed fixed-tick scenarios need wall-clock headroom on the shared Mac.
+  ['npx', 'vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', ...(target === 'E19' ? ['--testTimeout=120000'] : []), '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
   ...(target === 'E10'
     ? [
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E10-AC06', '--workers=2'],
