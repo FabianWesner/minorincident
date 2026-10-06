@@ -1,0 +1,287 @@
+{
+  "capture": {
+    "seconds": 37.823955709,
+    "images": 12,
+    "sheets": 6,
+    "excludesExternalLockWait": true
+  },
+  "capture_viewpoints": [
+    {
+      "id": "V1",
+      "tier": "desktop",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 230,
+      "triangles": 894293
+    },
+    {
+      "id": "V2",
+      "tier": "desktop",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 192,
+      "triangles": 756673
+    },
+    {
+      "id": "V3",
+      "tier": "desktop",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 172,
+      "triangles": 628614
+    },
+    {
+      "id": "V4",
+      "tier": "desktop",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 186,
+      "triangles": 815996
+    },
+    {
+      "id": "V5",
+      "tier": "desktop",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 182,
+      "triangles": 636751
+    },
+    {
+      "id": "V6",
+      "tier": "desktop",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 187,
+      "triangles": 1029341
+    },
+    {
+      "id": "V1",
+      "tier": "portrait",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 230,
+      "triangles": 329083
+    },
+    {
+      "id": "V2",
+      "tier": "portrait",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 202,
+      "triangles": 384885
+    },
+    {
+      "id": "V3",
+      "tier": "portrait",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 179,
+      "triangles": 429884
+    },
+    {
+      "id": "V4",
+      "tier": "portrait",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 180,
+      "triangles": 251983
+    },
+    {
+      "id": "V5",
+      "tier": "portrait",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 179,
+      "triangles": 239864
+    },
+    {
+      "id": "V6",
+      "tier": "portrait",
+      "seed": 1,
+      "tick": 0,
+      "drawCalls": 153,
+      "triangles": 222393
+    }
+  ],
+  "performance": {
+    "desktop": {
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+      "infected": 200,
+      "ticks": 180,
+      "p95Ms": 4.900000000000546,
+      "fpsFromP95": 204.0816326530385,
+      "drawCalls": 57,
+      "triangles": 1306153,
+      "triangleLimit": 1500000,
+      "geometryPass": true,
+      "timingPass": true,
+      "heapBytes": 364000000
+    },
+    "portrait": {
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+      "infected": 200,
+      "ticks": 180,
+      "p95Ms": 4,
+      "fpsFromP95": 250.0,
+      "drawCalls": 33,
+      "triangles": 531317,
+      "triangleLimit": 500000,
+      "geometryPass": false,
+      "timingPass": true,
+      "heapBytes": 304000000
+    }
+  },
+  "manual_checks": [
+    "WebGPU",
+    "physical-phone performance"
+  ],
+  "outstanding": [
+    "Portrait 200-infected scene exceeds 500000-triangle budget; figure assets owned by another lane.",
+    "All-prop live palette recolouring depends on r1-grade shared-palette migration."
+  ],
+  "validation": {
+    "typecheck": "pass on final source",
+    "lint": "pass on final source",
+    "unit": {
+      "passed": 163,
+      "failed": 1,
+      "filesPassed": 56,
+      "filesFailed": 1,
+      "status": "baseline stale hedge collision hash",
+      "previousWithTemporaryRepairs": {
+        "passed": 164,
+        "files": 57
+      }
+    },
+    "patchUnit": {
+      "passed": 14
+    },
+    "smoke": {
+      "browserPassed": 22,
+      "nodePassed": 3
+    },
+    "E19": {
+      "nodePassed": 34,
+      "browserPassed": 37,
+      "browserFailed": 6,
+      "status": "failed baseline/non-lookdev gates",
+      "context": "Run with temporary baseline repairs; repairs subsequently removed per orchestrator.",
+      "failures": [
+        "world desktop/portrait: route crosses unchanged bench clearance",
+        "live portrait connection: 518228 triangles vs500000",
+        "desktop bat/crowbar/machete: zero combat.hit events (not rerun on main)"
+      ]
+    },
+    "productionPanel": {
+      "passed": 2,
+      "status": "pass on final rebuilt production source"
+    },
+    "scoring": "pass"
+  },
+  "scopeDecision": "Orchestrator instructed baseline E19 failures are not this lane to fix; baseline repairs removed from final diff.",
+  "liveL1BaselinePerformance": {
+    "desktop": [
+      {
+        "view": "01-porch",
+        "p95Ms": 5,
+        "drawCalls": 233,
+        "triangles": 899075,
+        "collectedHeapBytes": 143645124
+      },
+      {
+        "view": "02-crescent",
+        "p95Ms": 5,
+        "drawCalls": 231,
+        "triangles": 829073,
+        "collectedHeapBytes": 144155636
+      },
+      {
+        "view": "03-connection",
+        "p95Ms": 5.399999999999636,
+        "drawCalls": 242,
+        "triangles": 772110,
+        "collectedHeapBytes": 144586176
+      },
+      {
+        "view": "04-diner",
+        "p95Ms": 5.299999999999272,
+        "drawCalls": 227,
+        "triangles": 942446,
+        "collectedHeapBytes": 147465996
+      },
+      {
+        "view": "05-main",
+        "p95Ms": 5.799999999999272,
+        "drawCalls": 259,
+        "triangles": 796895,
+        "collectedHeapBytes": 148160832
+      },
+      {
+        "view": "06-hardware",
+        "p95Ms": 4.899999999997817,
+        "drawCalls": 256,
+        "triangles": 1135341,
+        "collectedHeapBytes": 148689764
+      },
+      {
+        "view": "07-shop",
+        "p95Ms": 5,
+        "drawCalls": 204,
+        "triangles": 1019393,
+        "collectedHeapBytes": 149296940
+      }
+    ],
+    "portrait": [
+      {
+        "view": "01-porch",
+        "p95Ms": 4.5,
+        "drawCalls": 234,
+        "triangles": 333867,
+        "collectedHeapBytes": 143748736
+      },
+      {
+        "view": "02-crescent",
+        "p95Ms": 5,
+        "drawCalls": 241,
+        "triangles": 457285,
+        "collectedHeapBytes": 144590732
+      },
+      {
+        "view": "03-connection",
+        "p95Ms": 5.100000000000364,
+        "drawCalls": 216,
+        "triangles": 518228,
+        "collectedHeapBytes": 144648468
+      },
+      {
+        "view": "04-diner",
+        "p95Ms": 4.599999999998545,
+        "drawCalls": 221,
+        "triangles": 345583,
+        "collectedHeapBytes": 145442244
+      },
+      {
+        "view": "05-main",
+        "p95Ms": 5.099999999998545,
+        "drawCalls": 244,
+        "triangles": 382016,
+        "collectedHeapBytes": 145972652
+      },
+      {
+        "view": "06-hardware",
+        "p95Ms": 4.399999999997817,
+        "drawCalls": 190,
+        "triangles": 283269,
+        "collectedHeapBytes": 146186748
+      },
+      {
+        "view": "07-shop",
+        "p95Ms": 4.80000000000291,
+        "drawCalls": 177,
+        "triangles": 341299,
+        "collectedHeapBytes": 146674456
+      }
+    ]
+  },
+  "scopeDone": true
+}

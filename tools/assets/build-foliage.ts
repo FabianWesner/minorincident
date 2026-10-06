@@ -9,7 +9,10 @@ import { validateDocument } from './validate';
 // Shared reference runner is deliberately outside the worktree; no reference scripts are edited.
 const commonGit = execFileSync('git', ['rev-parse', '--git-common-dir'], { encoding: 'utf8' }).trim();
 const runner = process.env.FOLIAGE_BLENDER_RUNNER ?? resolve(commonGit, '../experiment/tools/blender_run.py');
-for (const def of (manifest as AssetDef[]).filter(a => a.foliage && a.id !== 'prop.tree')) {
+const target = process.argv[2];
+const assets = (manifest as AssetDef[]).filter(a => a.foliage && a.id !== 'prop.tree' && (!target || a.id === target));
+if (!assets.length) throw new Error(`Unknown foliage asset: ${target}`);
+for (const def of assets) {
   const result = spawnSync('python3', [runner, 'r1-foliage', def.script!, '--', '--glb', def.sourceGlb!, '--lod1', `assets/${def.id}/model.lod1.glb`, '--lod2', `assets/${def.id}/model.lod2.glb`], { stdio: 'inherit' });
   if (result.status !== 0) throw new Error(`Foliage build failed: ${def.id}`);
   const validations = [];
