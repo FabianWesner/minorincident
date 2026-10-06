@@ -387,14 +387,8 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
     if (!node || Math.hypot(...node.getWorldTranslation().map((v, i) => v - before[i])) > .001) throw new Error(`Optimization moved/lost pivot ${name}`);
   }
 }
-export async function optimizeAsset(raw: string, output: string, def: AssetDef, ratio = 1, prepass?: number): Promise<void> {
+export async function optimizeAsset(raw: string, output: string, def: AssetDef, ratio = 1): Promise<void> {
   const io = await assetIO(), document = await io.read(raw);
-  // Hero characters made of many small closed parts: a whole-mesh pre-pass without
-  // per-part floors reaches the tier ratio; the standard tier pipeline follows.
-  if (ratio < 1 && prepass !== undefined) {
-    await MeshoptSimplifier.ready;
-    await document.transform(weld(), simplify({ simplifier: MeshoptSimplifier, ratio, error: prepass, lockBorder: false }));
-  }
   await optimizeDocument(document, def, ratio);
   if (ratio < 1) for (const scene of document.getRoot().listScenes()) scene.setExtras({ ...scene.getExtras(), deliveryLodGenerated: true });
   mkdirSync(dirname(output), { recursive: true });
@@ -414,7 +408,7 @@ export async function optimizeExports(def: AssetDef): Promise<void> {
     const handMade = generatedRatio === undefined && existsSync(supplied);
     // Leave room for retained rigid parts and infected stump caps within the LOD1 budget.
     const targetRatio = lod === 'lod1' && (def.category === 'infected' || def.category === 'character') ? .10 : ratio;
-    await optimizeAsset(handMade ? supplied : source, output, def, handMade ? 1 : generatedRatio ?? targetRatio, def.lodPrepass?.[lod]);
+    await optimizeAsset(handMade ? supplied : source, output, def, handMade ? 1 : generatedRatio ?? targetRatio);
   }
 }
 /** Refresh exported collision/minimap metadata after canonical dimensions change, without Blender. */
