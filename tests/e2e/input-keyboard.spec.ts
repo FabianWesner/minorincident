@@ -14,7 +14,7 @@ test('T-E03-04 @E03 @E03-AC04 WASD follows screen up at camera azimuth pi/4', as
 });
 
 test('T-E03-05 @E03 @E03-AC05 keyboard aim turns at 360deg/s, taps snap and action mirrors fire', async ({ page }) => {
-  await boot(page); await page.clock.install(); await page.clock.pauseAt(new Date());
+  await boot(page); await page.clock.install({ time: new Date('2025-01-01T00:00:00Z') }); await page.clock.pauseAt(new Date('2025-01-01T00:01:00Z'));
   await page.keyboard.down('ArrowLeft');
   const rotating = await tick(page, 6);
   expect(Math.atan2(rotating.aim!.z, rotating.aim!.x)).toBeCloseTo(Math.PI / 5, 4);
