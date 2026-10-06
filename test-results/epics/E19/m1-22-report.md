@@ -20,4 +20,12 @@ Raw per-frame samples and CDP traces: `test-results/epics/E19/hitch/`. Lightweig
 
 ## Validation
 
-Current typecheck and lint pass; all 155 unit tests pass across 57 files. Seven targeted render warm-up/instancing tests also pass. The final production transition gate passes; final unit rerun passes (155 tests); final verify and smoke reruns are pending. `npm run verify -- E19` passed typecheck/lint/build and 36 selected tests, then failed the two inherited navigation cases in `tests/sim/m1-world.test.ts`: M1-08 forecourt arrival (2.5820746000804036 m, expected <0.15) and M1-07 hedge routing (4.207687608483755 m, expected <0.15). Both reproduce with exactly the same values on pristine `1292268`; recorded as **baseline** per orchestrator instruction, and no hedge or forecourt changes are included. Raw baseline verification log: `hitch/baseline-navigation.log`.
+Typecheck, lint and production build pass. All 155 unit tests pass across 57 files. `npm run test:smoke` passes three simulation/unit checks and all 22 browser checks. The focused production transition regression passes both device tests, covering all fourteen transition windows at the unchanged 50 ms budget.
+
+The final `npm run verify -- E19` passes typecheck/lint/build and 39 selected tests. It stops on two inherited navigation failures in `tests/sim/m1-world.test.ts`: M1-08 forecourt arrival (2.5820746000804036 m, expected <0.15) and M1-07 hedge routing (4.207687608483755 m, expected <0.15). Both reproduce with exactly the same values on pristine `1292268`; classified **baseline** per orchestrator instruction. No hedge or forecourt changes are included. Baseline log: `hitch/baseline-navigation.log`.
+
+An earlier overloaded run hit three simulation timeouts. Those passed an isolated diagnostic retry and then the final normal E19 run at the original timeout.
+
+A broader E19 browser run was interrupted by the scheduler time limit. Before interruption it observed a mobile triangle-budget assertion (519538 versus 500000), desktop playthrough death count, crowbar middle-click pickup, and desktop animation failures. These were not independently classified as baseline. The orchestrator explicitly removed the full E19 suite from the resumed scope and handles those checks elsewhere; this report does not claim that suite passed.
+
+Raw CDP traces and per-frame samples remain locally in `hitch/`; the committed lightweight maxima are in `m1-22-frame-maxima.json`.

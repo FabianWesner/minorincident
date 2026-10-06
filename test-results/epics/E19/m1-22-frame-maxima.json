@@ -104,5 +104,27 @@
         "gpu": 1.6
       }
     }
+  },
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "unit": {
+      "passed": 155,
+      "files": 57
+    },
+    "smoke": {
+      "simulationUnitPassed": 3,
+      "browserPassed": 22
+    },
+    "focusedTransitions": {
+      "deviceTestsPassed": 2,
+      "transitionWindowsPassed": 14
+    },
+    "verifyE19": {
+      "selectedPassed": 39,
+      "confirmedBaselineFailures": 2
+    },
+    "fullE19Browser": "interrupted; deferred by orchestrator; not claimed passing"
   }
 }
