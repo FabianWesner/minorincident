@@ -60,8 +60,16 @@ def prepare(l, residential=False):
     original_place=l.place
     def place(asset,pos,yaw=0,tier=0,allowed=False,scale=(1,1,1)):
         if asset=='prop.flower':return flower(l,*pos,scale,yaw)
+        if asset=='prop.tree':
+            asset='prop.street-tree' if sum(p['assetId'].startswith('prop.street-tree') for p in l.data['placements'])%2==0 else 'prop.street-tree-blossom'
         return original_place(asset,pos,yaw,tier,allowed,scale)
     l.place=place
+    removed={p['id'] for p in l.data['placements'] if p['assetId']=='prop.tree'}
+    l.data['placements']=[p for p in l.data['placements'] if p['id'] not in removed]
+    l.data['colliders']=[c for c in l.data['colliders'] if c['id'] not in removed]
+    for o in list(l.empties):
+        if o.get('assetId')=='prop.tree' or any(o.name.startswith('crown:'+id+':') for id in removed):
+            l.empties.remove(o);bpy.data.objects.remove(o,do_unlink=True)
     # Replace just the L1 roads. Their centre lines, connectivity and all anchors stay fixed.
     for o in list(l.layers[0]):
         if o.name.startswith(('road-', 'curb', 'lane-mark', 'crosswalk', 'collapse-canopy')):
@@ -147,6 +155,32 @@ def garden(l,x,z,variant):
 
 def dress(l,residential=False):
     rng=random.Random(14)
+    # Nine-metre canopy cadence with lamps between crowns. Entrances and the
+    # porch's existing hedge detour take precedence over the planting rhythm.
+    for i,base_x in enumerate(range(-23,27,9)):
+        x=base_x+2.2
+        for side in [-1,1]:
+            if not residential and abs(x)<6:continue
+            tx=-22 if residential and i==0 and side<0 else x
+            if not residential and side<0 and abs(tx+14)<3.5: tx=-9
+            l.place('prop.street-tree' if (i+side)%2 else 'prop.street-tree-blossom',[tx,0,side*5.9])
+            lx,lz=x+4.5,side*5.2
+            if i<5 and (residential or abs(lx)>6) and not any(abs(lx-a['position'][0])<2.5 and abs(lz-a['position'][2])<2.6 for a in l.data['anchors'].values() if a['position'][1]==0):
+                l.place('prop.street-lamp',[lx,0,lz])
+    for b in l.data['buildings']:
+        p=next(p for p in l.data['placements'] if p['id']==b['id']);x=p['position'][0];front=b['aabb']['max'][2]
+        for side in [-1,1]:
+            l.place('prop.garden-bush',[x+side*3.8,0,front+2.2])
+            if front<0: l.place('prop.garden-bush',[x+side*4.5,0,max(front+3.7,-4.4)],scale=(1.25,1.25,1.25))
+    if residential:
+        l.place('prop.street-tree',[-21,0,-13.5])
+    else:
+        for x,z in [(-5.8,-5.8),(5.8,5.8),(-5.8,5.8),(5.8,-5.8)]:
+            l.place('prop.street-tree' if x*z>0 else 'prop.street-tree-blossom',[x,0,z])
+        for x,z in [(-21,-6.7),(-8,-7.4),(-21,7), (9,-6.7)]:
+            l.place('prop.street-tree-blossom' if x<0 else 'prop.street-tree',[x,0,z])
+        if l.data['district']=='D-MAIN':
+            l.place('prop.street-tree',[-21,0,-13.5])
     leaf_vertices=[];leaf_faces=[];leaf_colors=[]
     # Staggered compositions along the entire route, including district joins.
     for i,x in enumerate(range(-24,28,6)):
