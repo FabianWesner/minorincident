@@ -107,9 +107,9 @@ test('T-E17-caps @E17-AC11 exported caps survive compression and stay on the sur
 });
 
 
-test('T-E17-height @E17-AC02 standing adult exports stay 1.75–1.85 m at every LOD', async () => {
+test('T-E17-height @E17-AC02 adult exports stay 1.75–1.85 m at every LOD', async () => {
   const {default:manifest}=await import('../../../src/assets/manifest.json'), io=await assetIO();
-  const exceptions=new Set(['char.corgi','npc.brother','npc.civilian-kid','inf.crawler','inf.brute','inf.teen-skater','inf.corpse-poses']);
+  const exceptions=new Set(['char.corgi','npc.brother','npc.civilian-kid','inf.crawler','inf.brute','inf.teen-skater']);
   for(const def of manifest as AssetDef[]) {
     if(!def.sourceGlb || !['character','infected'].includes(def.category) || exceptions.has(def.id)) continue;
     for(const path of [def.glb,def.lods?.lod1,def.lods?.lod2].filter((p):p is string=>!!p)) {
@@ -143,24 +143,5 @@ test('T-E17-aircraft @E17-AC02 helicopter preserves authored scale and rotor piv
     expect(bounds.max[2]-bounds.min[2],path).toBeGreaterThan(9);
     expect(validateDocument(doc,def,0).errors.filter(e=>e.startsWith('dimensions.') || e.startsWith('animated '))).toEqual([]);
     for(const name of ['mainRotor','tailRotor']) expect(doc.getRoot().listNodes().some(n=>n.getName()===name),`${path}:${name}`).toBe(true);
-  }
-});
-
-test('T-E17-corpses @E17-AC02 posed corpse set preserves authored metre bounds and four articulated poses at every LOD', async () => {
-  const { default: manifest } = await import('../../../src/assets/manifest.json'), io = await assetIO();
-  const def = (manifest as AssetDef[]).find(d => d.id === 'inf.corpse-poses')!;
-  const source = await io.read(def.sourceGlb!), authored = getBounds(source.getRoot().listScenes()[0]);
-  const expected = authored.max.map((v, i) => v - authored.min[i]);
-  for (const path of [def.glb, def.lods!.lod1!, def.lods!.lod2!]) {
-    const doc = await io.read(path), bounds = getBounds(doc.getRoot().listScenes()[0]);
-    bounds.max.forEach((v, i) => expect(Math.abs(v - bounds.min[i] - expected[i]), path).toBeLessThan(expected[i] * def.dimensions.tolerance));
-    expect(Math.abs(bounds.min[1]), path).toBeLessThan(.01); expect(bounds.max[1], path).toBeLessThan(1.2);
-    const poses = doc.getRoot().listNodes().filter(n => typeof n.getExtras().pose === 'string');
-    expect(poses.map(n => n.getExtras().pose).sort(), path).toEqual(['curled', 'faceDown', 'onBack', 'sitting']);
-    for (const pose of poses) {
-      const parts = new Set<string>(); pose.traverse(n => { const name = n.getExtras().canonicalNode; if (typeof name === 'string') parts.add(name); });
-      for (const joint of def.animatedNodes) expect(parts.has(joint), `${path}: ${pose.getName()}/${joint}`).toBe(true);
-      expect(getBounds(pose).max[1], path).toBeLessThan(1.2);
-    }
   }
 });
