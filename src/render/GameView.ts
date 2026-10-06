@@ -128,12 +128,13 @@ export class GameView implements Lifecycle {
         this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
       }
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
-      this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low');await this.districts.load(1);
+      const instanceCapacity = this.world.scenario === 'L1' ? this.renderer.attributeInstanceCapacity() : undefined;
+      this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low', instanceCapacity);await this.districts.load(1);
       if (this.world.scenario === 'L1') {
         await this.districts.prepare();
         this.preparedDistrictViews.set(this.world.districts, this.districts);
         for (const prepared of this.world.preparedDistricts.values()) if (prepared !== this.world.districts) {
-          const district = new DistrictView(prepared, this.materials, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low');
+          const district = new DistrictView(prepared, this.materials, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity);
           await district.load(1); await district.prepare(); district.visible = false;
           this.preparedDistrictViews.set(prepared, district); this.scene.add(district);
         }

@@ -65,6 +65,7 @@ export class DistrictView extends Group {
     readonly phase: ReturnType<typeof windPhase>,
     private readonly grassMaterial: ReturnType<typeof Grass.material>,
     private low = false,
+    private readonly instanceCapacity?: number,
   ) {
     super();
     this.name = "sunset-grove";
@@ -136,9 +137,9 @@ export class DistrictView extends Group {
           [...references].map(async ([key, refs]) => {
             const [id, power] = key.split(":");
             const prototypes = await Promise.all(['lod1', 'lod1', 'lod2'].map(lod => this.registry.asset(id, power === 'true', lod as 'lod0' | 'lod1' | 'lod2')));
-            // Three embeds small instance-buffer capacities in GLSL. Bucket L1's
-            // pooled district batches so placement counts do not multiply programs.
-            const capacity = this.world.composition.id === 'L1' ? Math.max(64, 2 ** Math.ceil(Math.log2(refs.length || 1))) : refs.length;
+            // L1 uses the shared vertex-attribute instancing path; live counts stay
+            // unchanged while shader code no longer depends on placement capacity.
+            const capacity = Math.max(refs.length, this.instanceCapacity ?? refs.length);
             const hero = new InstancedGroup(prototypes[0], refs.slice(), capacity), near = new InstancedGroup(prototypes[1], refs.slice(), capacity), far = new InstancedGroup(prototypes[2], refs.slice(), capacity);
             // Distant low-tier props keep their shaded production art without a shadow draw.
             if (this.low) far.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
@@ -301,7 +302,7 @@ export class DistrictView extends Group {
     const prototype = await this.registry.asset(entry.id, entry.lit, 'lod0');
     if (this.disposed) return;
     // Allocate full placement capacity, then retain only currently visible refs.
-    const replacement = new InstancedGroup(prototype, entry.refs.slice(), (entry.hero.children[0] as InstancedMesh).instanceMatrix.count), old = entry.hero;
+    const replacement = new InstancedGroup(prototype, entry.refs.slice(), entry.hero.capacity), old = entry.hero;
     replacement.references.splice(0, replacement.references.length, ...old.references);
     replacement.visible = old.visible; replacement.name = old.name;
     for (const child of replacement.children) if (child instanceof InstancedMesh) child.count = replacement.references.length;

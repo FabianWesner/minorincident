@@ -5,7 +5,7 @@ import { Group, InstancedMesh, Matrix4, Mesh, Object3D } from 'three/webgpu';
 export class InstancedGroup extends Group {
   private readonly batches: { mesh: InstancedMesh; local: Matrix4 }[] = [];
   private readonly scratch = new Matrix4();
-  constructor(prototype: Object3D, readonly references: Object3D[], capacity = references.length) {
+  constructor(prototype: Object3D, readonly references: Object3D[], readonly capacity = references.length) {
     super(); prototype.updateWorldMatrix(true, true);
     const inverse = prototype.matrixWorld.clone().invert();
     prototype.traverse((child) => {
