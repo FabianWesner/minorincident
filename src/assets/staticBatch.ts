@@ -1,5 +1,5 @@
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
-import { BufferAttribute, BufferGeometry, Color, Group, MathUtils, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, Color, Group, MathUtils, Matrix3, type Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
 import { attribute, luminance, varying } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Materials } from '../render/Materials';
@@ -18,6 +18,27 @@ function decode(attribute: import('three').BufferAttribute | import('three').Int
   return values;
 }
 
+const normalMatrix = new Matrix3();
+/** BufferGeometry.applyMatrix4 for xyz position/normal arrays, with the same arithmetic
+ * (Vector3.applyMatrix4 / applyNormalMatrix) but without per-vertex attribute accessors. */
+function transform(position: Float32Array, normal: Float32Array, matrix: Matrix4): void {
+  const e = matrix.elements;
+  for (let i = 0; i < position.length; i += 3) {
+    const x = position[i], y = position[i + 1], z = position[i + 2];
+    const w = 1 / (e[3] * x + e[7] * y + e[11] * z + e[15]);
+    position[i] = (e[0] * x + e[4] * y + e[8] * z + e[12]) * w;
+    position[i + 1] = (e[1] * x + e[5] * y + e[9] * z + e[13]) * w;
+    position[i + 2] = (e[2] * x + e[6] * y + e[10] * z + e[14]) * w;
+  }
+  const n = normalMatrix.getNormalMatrix(matrix).elements;
+  for (let i = 0; i < normal.length; i += 3) {
+    const x = normal[i], y = normal[i + 1], z = normal[i + 2];
+    let nx = n[0] * x + n[3] * y + n[6] * z, ny = n[1] * x + n[4] * y + n[7] * z, nz = n[2] * x + n[5] * y + n[8] * z;
+    const scale = 1 / (Math.sqrt(nx * nx + ny * ny + nz * nz) || 1);
+    nx *= scale; ny *= scale; nz *= scale;
+    normal[i] = nx; normal[i + 1] = ny; normal[i + 2] = nz;
+  }
+}
 /** District placements never animate their parts. Store world swatch indices (figure batches retain vertex colors),
  * keeping glowing windows separate for power and the window mask. */
 export function staticBatch(source: Object3D, lit: boolean, materials?: Materials, foliage = false): Group {
@@ -31,9 +52,10 @@ export function staticBatch(source: Object3D, lit: boolean, materials?: Material
     const emissive = material.name.startsWith('emi_') || material.userData.emissiveStrength > 0;
     const geometry = new BufferGeometry();
     // Decode quantized attributes before applying transforms (integer arrays clamp).
-    for (const name of ['position', 'normal']) geometry.setAttribute(name, new BufferAttribute(decode(node.geometry.getAttribute(name)), node.geometry.getAttribute(name).itemSize));
+    const position = decode(node.geometry.getAttribute('position')), normal = decode(node.geometry.getAttribute('normal'));
+    transform(position, normal, node.matrixWorld);
+    geometry.setAttribute('position', new BufferAttribute(position, 3)); geometry.setAttribute('normal', new BufferAttribute(normal, 3));
     if (node.geometry.index) geometry.setIndex(node.geometry.index.clone());
-    geometry.applyMatrix4(node.matrixWorld);
     const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), indices = new Float32Array(count), vertexColor = node.geometry.getAttribute('color');
     // Per-mesh constants are hoisted: this loop runs for every vertex of every district prototype.
     const base = material.color.toArray(), dim = emissive && !lit ? .08 : 1;
