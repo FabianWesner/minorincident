@@ -12,10 +12,12 @@ export class Keyboard {
     if (event.repeat || this.pressed.has(event.code)) return;
     this.pressed.add(event.code); this.change(event.code, true);
     // Keep browser scrolling and page search out of game controls.
-    if (/^(Arrow|Space|Tab)/.test(event.code)) event.preventDefault();
+    if (/^(Arrow|Space|Tab|Alt)/.test(event.code)) event.preventDefault();
   };
   private readonly up = (raw: Event): void => {
     const code = (raw as KeyboardEvent).code;
+    // Alt keyup would focus the browser menu bar (Windows/Linux) and steal the next keys.
+    if (/^Alt/.test(code)) raw.preventDefault();
     if (this.pressed.delete(code)) this.change(code, false);
   };
   readonly release = (): void => { for (const code of this.pressed) this.change(code, false); this.pressed.clear(); };

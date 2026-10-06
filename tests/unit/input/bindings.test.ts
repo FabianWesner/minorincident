@@ -7,7 +7,7 @@ test('T-E03-bindings @E03 @E03-AC09 each logical action can be rebound and persi
   const storage = { getItem: (key: string) => entries.get(key) ?? null, setItem: (key: string, value: string) => { entries.set(key, value); } };
   const bindings = new Bindings(storage);
   for (const [index, action] of (Object.keys(defaultBindings) as Action[]).entries()) {
-    const code = index < 12 ? `F${index + 1}` : 'KeyZ';
+    const code = index < 12 ? `F${index + 1}` : ['KeyZ', 'KeyX'][index - 12];
     expect(bindings.rebind(action, code).ok).toBe(true);
     expect(new Bindings(storage).action(code)).toBe(action);
   }

@@ -14,6 +14,7 @@ import { RayCursor } from './devices/RayCursor';
 import { Touch } from './devices/Touch';
 import { Wheel } from './devices/Wheel';
 
+export const walkHintKey = 'minor-incident.walk-hint.v1';
 /** Device ownership ends here. sample() runs immediately before every fixed sim tick. */
 export class InputSystem implements Lifecycle {
   readonly bindings: Bindings;
@@ -55,6 +56,10 @@ export class InputSystem implements Lifecycle {
   private readonly hint = document.createElement('output');
   private readonly controls = document.createElement('details');
   private readonly message = document.createElement('output');
+  /** One-time "hold to walk" hint (E19 §5.5): after ~2 s of running, shown for 5 s, once per profile. */
+  private readonly walkHint = document.createElement('output');
+  private walkHintTicks = 0;
+  private walkHintDone = false;
   constructor(private readonly canvas: HTMLElement, private readonly camera: Camera, private readonly zoom: (delta: number) => void = () => {}) {
     let storage: Storage | undefined;
     try { storage = localStorage; } catch { /* Defaults work with storage disabled. */ }
@@ -86,7 +91,11 @@ export class InputSystem implements Lifecycle {
     for (const action of Object.keys(defaultBindings)) { const option = document.createElement('option'); option.value = action; option.textContent = action; select.append(option); }
     this.message.setAttribute('role', 'status'); this.controls.append(this.message);
     this.controls.querySelector('form')!.addEventListener('submit', this.submit);
-    document.body.append(this.hint, this.controls); this.setScheme(this.scheme);
+    this.walkHint.dataset.testid = 'walk-hint'; this.walkHint.setAttribute('role', 'note'); this.walkHint.hidden = true;
+    this.walkHint.style.cssText = 'position:fixed;left:50%;bottom:120px;transform:translateX(-50%);color:white;background:#182333e6;padding:8px 14px;border-radius:10px;font:600 15px system-ui,sans-serif;pointer-events:none;z-index:5';
+    // Automated browsers keep their reference screenshots clean unless a test opts in ('force').
+    try { const state = localStorage.getItem(walkHintKey); this.walkHintDone = state === '1' || (navigator.webdriver && state !== 'force'); } catch { /* Shown once per session without storage. */ }
+    document.body.append(this.hint, this.controls, this.walkHint); this.setScheme(this.scheme);
   }
   private readonly submit = (event: Event): void => {
     event.preventDefault(); const form = this.controls.querySelector('form')!;
@@ -164,7 +173,7 @@ export class InputSystem implements Lifecycle {
     if (this.recorder.playing) return this.recorder.next() ?? this.frameNeutral();
     if (this.injected) { this.recorder.capture(this.injected); return this.injected; }
     const frame = this.frame;
-    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
+    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; if (this.active.has('walk')) frame.walk = true; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
     frame.cancelMove = this.cancelMove; this.cancelMove = false;
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
     this.driving.throttle = y ? -y : 0; this.driving.steer = x; frame.drive = this.driving; frame.brake = false;
@@ -193,7 +202,12 @@ export class InputSystem implements Lifecycle {
       else frame.aimSource = 'assist';
     }
     if (this.scheme === 'touch') {
+      // Light push walks, beyond half deflection runs (E19 §5.5): the stick picks a gait, not a speed.
+      const deflection = Math.hypot(this.touch.stick.move.x, this.touch.stick.move.z);
       this.screenVector(this.touch.stick.move.x, this.touch.stick.move.z, frame.move);
+      const length = Math.hypot(frame.move.x, frame.move.z);
+      if (deflection > .08 && length > 0) { frame.move.x /= length; frame.move.z /= length; if (deflection < .5) frame.walk = true; }
+      else { frame.move.x = 0; frame.move.z = 0; }
       if (this.touch.aiming) this.aimAngle = this.screenAngle(this.touch.aim.x, this.touch.aim.z);
       this.aim.x = Math.cos(this.aimAngle); this.aim.z = Math.sin(this.aimAngle);
       frame.aim = this.aim; frame.aimSource = this.touchFire ?? 'touch'; this.touchFire = null;
@@ -241,10 +255,22 @@ export class InputSystem implements Lifecycle {
     frame.selector = selection?.direction ?? 0;
     if (selection?.side) frame.selectorSide = selection.side;
     if (selection?.active) frame.selectorActive = true; frame.interact = this.interact; frame.pause = this.pause;
-    this.interact = false; this.pause = false; this.recorder.capture(frame); return frame;
+    this.interact = false; this.pause = false; this.updateWalkHint(frame); this.recorder.capture(frame); return frame;
+  }
+  private updateWalkHint(frame: InputFrame): void {
+    if (this.walkHintDone) return;
+    const moving = Math.hypot(frame.move.x, frame.move.z) > .1 || !!frame.moveTarget || !!frame.pointerGround;
+    if (this.walkHint.hidden) {
+      this.walkHintTicks = moving ? this.walkHintTicks + 1 : this.walkHintTicks;
+      if (this.walkHintTicks < 120) return;
+      const key = this.bindings.keyLabel('walk') || 'C';
+      this.walkHint.textContent = this.scheme === 'touch' ? 'Push the stick lightly to walk' : this.scheme === 'mouse-only' ? 'Hold Alt while clicking to walk' : `Hold ${key} or Alt to walk`;
+      this.walkHint.hidden = false; this.walkHintTicks = 0;
+      try { localStorage.setItem(walkHintKey, '1'); } catch { /* Storage disabled. */ }
+    } else if (++this.walkHintTicks >= 300 || frame.walk) { this.walkHint.hidden = true; this.walkHintDone = true; }
   }
   private frameNeutral(): InputFrame {
-    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
+    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
     frame.left.down = frame.left.held = frame.left.up = false; frame.right.down = frame.right.held = frame.right.up = false;
     frame.selector = 0; frame.interact = false; frame.pause = false; return frame;
   }
@@ -263,6 +289,6 @@ export class InputSystem implements Lifecycle {
   dispose(): void {
     this.reset(); this.keyboard.dispose(); this.pointer.dispose(); this.wheel.dispose(); this.touch.dispose();
     window.removeEventListener('blur', this.release); window.removeEventListener('pagehide', this.release); document.removeEventListener('visibilitychange', this.visibility);
-    this.controls.querySelector('form')?.removeEventListener('submit', this.submit); this.controls.remove(); this.hint.remove();
+    this.controls.querySelector('form')?.removeEventListener('submit', this.submit); this.controls.remove(); this.hint.remove(); this.walkHint.remove();
   }
 }
