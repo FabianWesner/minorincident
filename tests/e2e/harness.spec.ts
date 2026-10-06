@@ -83,7 +83,7 @@ test('T-E01-06 @E01 @E01-AC06 pause + exact step and 10x sim time within 2%', as
   await boot(page);
   // Compile with live RAF before freezing time; then reset the exact-step origin.
   await page.evaluate(async () => { const api = window.__SS__!; await api.loadScenario('empty'); api.pause(); });
-  await page.clock.install(); await page.clock.pauseAt(new Date());
+  await page.clock.install({ time: new Date('2025-01-01T00:00:00Z') }); await page.clock.pauseAt(new Date('2025-01-01T00:01:00Z'));
   await page.evaluate(async () => { const api = window.__SS__!; await api.step(17); await api.step(23); });
   expect(await page.evaluate(() => window.__SS__!.tick())).toBe(40);
   await page.clock.runFor(1000);
