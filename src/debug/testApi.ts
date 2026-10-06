@@ -158,7 +158,8 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       checkpoint: (pos) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.setCheckpoint(pos); },
       present: (patch) => {
         const pose = game.world.player?.entity.survivor; if (!pose) throw new Error('Load a survivor scenario first');
-        if (patch.riding !== undefined) { if (patch.riding) pose.riding = { since: game.world.tick }; else delete pose.riding; }
+        const player = game.world.entities.get(1) as { riding?: number } | undefined;
+        if (patch.riding !== undefined && player) { if (patch.riding) player.riding ??= -1; else delete player.riding; }
         if (patch.carrying !== undefined) { if (patch.carrying) pose.carrying = patch.carrying; else delete pose.carrying; }
       },
     },

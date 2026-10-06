@@ -4,6 +4,10 @@ import type { AnimationState, SurvivorState } from '../../data/survivor';
 import { authoredClips, retargetClip, settleGroundPose, strides, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 
+/** Rider state from the bicycle (crank angle in radians, steer −1..1). */
+export interface RidePose { pedal: number; steer: number; seatHeight?: number }
+/** Saddle height of veh.courier-bike (seat node, metres above ground). */
+const saddle = 1.115;
 /** Authored glTF actions, 140 ms crossfades, speed-matched strides and upper-body layers.
  * The explicit sim clock supports paused stepping and visual hit-stop. */
 export class KeyframeAnimator {
@@ -16,6 +20,7 @@ export class KeyframeAnimator {
   private moving = false;
   private phase = 0;
   private readonly worldPosition = new Vector3();
+  private readonly scaleScratch = new Vector3();
   private lastPosition: { x: number; z: number } | undefined;
   private transitionUntil = 0;
   private secondary = 0;
@@ -23,6 +28,8 @@ export class KeyframeAnimator {
   private readonly backpack: Object3D | undefined;
   private readonly backpackRest: number;
   private carryWeight = 0;
+  private rideLift = 0;
+  private hipRest: number | undefined;
   private readonly carryPose: [Object3D, Quaternion][] = [];
   state: AnimationState = 'idle';
   clip = 'idle';
@@ -50,7 +57,7 @@ export class KeyframeAnimator {
     if (!action) { this.missingClips++; throw new Error(`Missing character clip ${name}`); }
     action.reset().setEffectiveWeight(1).setEffectiveTimeScale(1).setLoop(loop ? LoopRepeat : LoopOnce, loop ? Infinity : 1); action.clampWhenFinished = !loop; action.play(); return action;
   }
-  update(pose: SurvivorState, tick: number, alpha = 1, turn = 0): void {
+  update(pose: SurvivorState, tick: number, alpha = 1, turn = 0, ride?: RidePose): void {
     const time = (tick + alpha - 1) / 60, dt = Math.max(0, time - this.lastTime); this.lastTime = time;
     if (dt === 0 && this.base) return;
     this.state = pose.animation;
@@ -78,13 +85,16 @@ export class KeyframeAnimator {
     if (strike && !upper) name = strike;
     else if (!strike && !['idle','walk','run'].includes(pose.animation)) name = pose.animation;
     // E19 courier: seated pedalling while riding (mount/dismount play as actions).
-    else if (pose.riding) name = 'ride';
+    else if (ride) name = 'ride';
     if (this.clip !== name || strike && !upper && this.attackTick !== pose.animationTick || !this.base) {
       const previous = this.base; this.base = this.play(name, !!strides[name] || name === 'idle');
       if (previous && previous !== this.base) previous.crossFadeTo(this.base, strike ? .06 : .2, false);
       this.clip = name;
     }
-    if (strides[name] && this.base) {
+    if (name === 'ride' && this.base && ride) {
+      // Pedalling follows the bike's crank; no stride accumulation while seated.
+      this.base.time = ((ride.pedal / (Math.PI * 2)) % 1 + 1) % 1 * this.base.getClip().duration; this.base.setEffectiveTimeScale(0);
+    } else if (strides[name] && this.base) {
       this.phase = (this.phase + speed * dt / (strides[name] * strideScale(this.rig.root))) % 1;
       // Keep the outgoing gait on the same support phase throughout crossfade.
       for (const [clip, action] of this.actions) if (strides[clip]) {
@@ -107,6 +117,15 @@ export class KeyframeAnimator {
     const holding = !!pose.carrying && !strike && name !== 'hand-over' && name !== 'ride';
     this.carryWeight = Math.max(0, Math.min(1, this.carryWeight + (holding ? 1 : -1) * dt / .15));
     if (this.carryWeight > 0) for (const [node, target] of this.carryPose) node.quaternion.slerp(target, this.carryWeight);
+    // Seat the rider: lift the pelvis onto the saddle and lean into the steer.
+    this.rideLift += ((ride ? 1 : 0) - this.rideLift) * Math.min(1, dt / .12);
+    if (this.rideLift > 1e-3) {
+      const hip = this.rig.hip, scale = (hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1;
+      this.hipRest ??= hip.position.y;
+      hip.position.y += Math.max(0, ((ride?.seatHeight ?? saddle) + .03) / scale - this.hipRest) * this.rideLift;
+      const steer = (ride?.steer ?? 0) * this.rideLift;
+      this.rig.torso.rotation.x += steer * .14; this.rig.head.rotation.y += steer * .35;
+    }
     for (const node of Object.values(this.rig)) node.quaternion.normalize();
     if (pose.animation === 'die') settleGroundPose(this.rig.root);
     const target = this.rig.torso.rotation.z * -.3;
