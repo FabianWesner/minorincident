@@ -1,0 +1,54 @@
+{
+  "epic": "E14",
+  "runtimeCommit": "616fcd0",
+  "checks": {
+    "typecheck": 0,
+    "lint": 0,
+    "build": 0,
+    "test:unit": 0,
+    "test:smoke": 0,
+    "verify -- E14": 0
+  },
+  "unit": {
+    "passed": 98,
+    "failed": 0
+  },
+  "verify": {
+    "nodePassed": 5,
+    "nodeOutsideSelection": 332,
+    "browserPassed": 39,
+    "failed": 0,
+    "flaky": 0
+  },
+  "smoke": {
+    "nodePassed": 3,
+    "nodeOutsideSelection": 334,
+    "browserPassed": 20,
+    "failed": 0,
+    "flaky": 0
+  },
+  "regression": {
+    "nodePassed": 101,
+    "browserBatchPassed": 14,
+    "earlierEpicBrowserPassed": 9
+  },
+  "vision": {
+    "mustPassed": 3,
+    "mustTotal": 3,
+    "shouldPassed": 1,
+    "shouldTotal": 1
+  },
+  "acceptance": {
+    "E14-AC01": "PASS",
+    "E14-AC02": "PASS",
+    "E14-AC03": "PASS",
+    "E14-AC04": "PASS",
+    "E14-AC05": "PASS",
+    "E14-AC06": "PASS",
+    "E14-AC07": "PASS",
+    "E14-AC08": "PASS",
+    "E14-AC09": "PASS",
+    "E14-AC10": "PASS",
+    "E14-AC11": "PASS"
+  }
+}

@@ -7,7 +7,7 @@ export class Nipple {
   readonly element = document.createElement('div');
   private x = 0; private y = 0;
   constructor() {
-    this.element.dataset.touchStick = ''; this.element.hidden = true;
+    this.element.dataset.touchStick = ''; this.element.dataset.testid = 'touch-stick'; this.element.hidden = true;
     this.element.style.cssText = 'position:fixed;width:120px;height:120px;border:2px solid white;border-radius:50%;background:#ffffff20;pointer-events:none;box-sizing:border-box';
   }
   start(x: number, y: number): void {
