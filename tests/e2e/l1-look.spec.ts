@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 import { menuStart } from './ui-helpers';
+// L1 v2 replaced the diner/hardware story these checks assume; the L1 v2 playthrough is tests/e2e/levels/L1.spec.ts.
+test.beforeEach(() => { test.fixme(true, 'old L1 diner flow retired (L1 v2)'); });
 
 // Native GPU, headless, unthrottled. Fixed close-camera poses are identical before/after.
 test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync'] } });
@@ -64,7 +66,8 @@ for (const mobile of [false, true]) test.describe(mobile ? 'iPhone portrait' : '
       await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
     } else {
       const point = await page.evaluate(() => window.__SS__!.input.project({ x: 2, z: 0 }));
-      await page.mouse.click(point.x, point.y); await page.evaluate(() => window.__SS__!.step(30));
+      // Allow the bounded click acceleration to build speed; keep the distance assertion.
+      await page.mouse.click(point.x, point.y); await page.evaluate(() => window.__SS__!.step(60));
     }
     const end = await page.evaluate(() => window.__SS__!.getState().player!.transform);
     expect(Math.hypot(end.x - start.x, end.z - start.z)).toBeGreaterThan(1);

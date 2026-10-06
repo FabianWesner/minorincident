@@ -1,0 +1,790 @@
+{
+  "date": "2026-10-06T18:28:37.666143+00:00",
+  "mainMergedOnce": "202ffc2aef33393ce047561e532ced42d4e49326",
+  "audioCodeCommit": "c6c5f5f",
+  "verify": {
+    "exitCode": 0,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E16)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E16/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E16)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "node": {
+      "passed": 20,
+      "failed": 0
+    },
+    "browser": {
+      "stats": {
+        "startTime": "2026-10-06T18:21:01.347Z",
+        "duration": 219306.612,
+        "expected": 69,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "file": "e2e/audio/offline.spec.ts",
+          "title": "T-E16-06 @E16 @E16-AC06 native convolution gives ordered measured RT60 within preset bands",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 1784
+        },
+        {
+          "file": "e2e/audio/offline.spec.ts",
+          "title": "T-E16-07 @E16 @E16-AC07 one building reduces measured centroid \u226530% and level 4\u20138dB",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 1663
+        },
+        {
+          "file": "e2e/audio/offline.spec.ts",
+          "title": "T-E16-08 @E16 @E16-AC08 15m/s pass-by has a measured 6\u201312% pitch drop",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 1032
+        },
+        {
+          "file": "e2e/audio/offline.spec.ts",
+          "title": "T-E16-11 @E16 @E16-AC11 each twist gives one second below \u221250dBFS then a stinger; L6 dawn reprise",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 2347
+        },
+        {
+          "file": "e2e/audio/offline.spec.ts",
+          "title": "T-E16-13b @E16 @E16-AC13 burnt W5 streets measure at least 10dB quieter than W2",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 1226
+        },
+        {
+          "file": "e2e/audio/offline.spec.ts",
+          "title": "T-E16-14a @E16 @E16-AC14 measured radio and mega duck envelopes respect protected buses",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 4979
+        },
+        {
+          "file": "e2e/audio/offline.spec.ts",
+          "title": "T-E16-16 @E16 @E16-AC16 60s production graph mix meets EBU R128 loudness, true peak and dialogue dominance",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 8528
+        },
+        {
+          "file": "e2e/audio/offline.spec.ts",
+          "title": "T-E16-17b @E16 @E16-AC17 mono sums both channels to equal output",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 1278
+        },
+        {
+          "file": "e2e/audio/preview.spec.ts",
+          "title": "@E16 recorded diner incident and store fight: live PCM tap, streaming, mix and stinger timing",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 83557
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-01b @E16 @E16-AC01 every production cue decodes in both native Opus and AAC",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 2089
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.runner @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3695
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.crawler @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3495
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.brute @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 5656
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.screamer @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3579
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.sprinter @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3491
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.riot @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3444
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.bloated @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3447
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.firefighter @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 4482
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.hazmat @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 6944
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.armored @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 5645
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.butcher @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 4190
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.nurse @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3628
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.dog @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3498
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.cat @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3627
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.crow @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 4410
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.lion @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3644
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.gorilla @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3580
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-infected.flamingo @E16 @E16-AC03 real archetype events play before damage",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3599
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-03-gain @E16 @E16-AC03 offscreen gain is +3dB and protected",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 6325
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-05b @E16 @E16-AC05 150-infected crowd plays only clusters plus four nearby vocals",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3565
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-09 @E16 @E16-AC09 sim walking reads asphalt\u2192grass\u2192wood\u2192glass from the surface map",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 2502
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; offline schedules stay on grid",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 8201
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "@E16 a canceled first alert keeps the streamed score aligned with the calm director",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 22833
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-12 @E16 @E16-AC12 positional jukebox/jingle variants and radio lowpass/emergency duck",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 5113
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-14b @E16 @E16-AC14 tinnitus only within 4m and respects its setting; overlaps compose ducks",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 27489
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-15 @E16 @E16-AC15 light-lab, prop-yard and blast-lab use real bus event\u2192cue adapters",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 4087
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-17a @E16 @E16-AC17 captions show important direction cues and noise rings obey settings",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 5183
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-01c @E16 @E16-AC01 full L1 composition coverage bot logs zero missing cues with graph active/output muted",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 27041
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-02b @E16 @E16-AC02 production audio consumes the same pistol noise as AI exactly once",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 8496
+        },
+        {
+          "file": "e2e/audio/runtime.spec.ts",
+          "title": "T-E16-perf @E16 @E16-AC04 @E16-AC05 @perf 150 infected with native audio stay within sim/voice budgets",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 6685
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 6621
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 1464
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "project": "pixel-7",
+          "status": "expected",
+          "durationMs": 7115
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+          "project": "pixel-7",
+          "status": "expected",
+          "durationMs": 1700
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "project": "pixel-7-landscape",
+          "status": "expected",
+          "durationMs": 6825
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+          "project": "pixel-7-landscape",
+          "status": "expected",
+          "durationMs": 1895
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "project": "iphone-14",
+          "status": "expected",
+          "durationMs": 6825
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+          "project": "iphone-14",
+          "status": "expected",
+          "durationMs": 1478
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "project": "iphone-14-landscape",
+          "status": "expected",
+          "durationMs": 6530
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+          "project": "iphone-14-landscape",
+          "status": "expected",
+          "durationMs": 1542
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "project": "webkit",
+          "status": "expected",
+          "durationMs": 9285
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+          "project": "webkit",
+          "status": "expected",
+          "durationMs": 7071
+        },
+        {
+          "file": "e2e/controls-playtest.spec.ts",
+          "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, stationary RMB",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 6965
+        },
+        {
+          "file": "e2e/driving.spec.ts",
+          "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 4036
+        },
+        {
+          "file": "e2e/integration-m1.spec.ts",
+          "title": "M1 @E16 real E11 destruction and E12 radio share audio with both E07/E15 telegraphs",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 9647
+        },
+        {
+          "file": "e2e/menus-mouse.spec.ts",
+          "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 6562
+        },
+        {
+          "file": "e2e/save.spec.ts",
+          "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 10077
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 1010
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 854
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "project": "pixel-7",
+          "status": "expected",
+          "durationMs": 783
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "project": "pixel-7",
+          "status": "expected",
+          "durationMs": 852
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "project": "pixel-7-landscape",
+          "status": "expected",
+          "durationMs": 656
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "project": "pixel-7-landscape",
+          "status": "expected",
+          "durationMs": 737
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "project": "iphone-14",
+          "status": "expected",
+          "durationMs": 659
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "project": "iphone-14",
+          "status": "expected",
+          "durationMs": 705
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "project": "iphone-14-landscape",
+          "status": "expected",
+          "durationMs": 645
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "project": "iphone-14-landscape",
+          "status": "expected",
+          "durationMs": 749
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "project": "webkit",
+          "status": "expected",
+          "durationMs": 3127
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "project": "webkit",
+          "status": "expected",
+          "durationMs": 4002
+        }
+      ]
+    }
+  },
+  "smoke": {
+    "exitCode": 0,
+    "node": {
+      "passed": 3,
+      "failed": 0
+    },
+    "browser": {
+      "stats": {
+        "startTime": "2026-10-06T18:26:22.529Z",
+        "duration": 52976.638999999996,
+        "expected": 22,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "tests": [
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 7156
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "project": "pixel-7",
+          "status": "expected",
+          "durationMs": 7084
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "project": "pixel-7-landscape",
+          "status": "expected",
+          "durationMs": 6932
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "project": "iphone-14",
+          "status": "expected",
+          "durationMs": 6964
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "project": "iphone-14-landscape",
+          "status": "expected",
+          "durationMs": 7175
+        },
+        {
+          "file": "e2e/audio/smoke.spec.ts",
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "project": "webkit",
+          "status": "expected",
+          "durationMs": 8921
+        },
+        {
+          "file": "e2e/controls-playtest.spec.ts",
+          "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, stationary RMB",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 7724
+        },
+        {
+          "file": "e2e/driving.spec.ts",
+          "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 3236
+        },
+        {
+          "file": "e2e/menus-mouse.spec.ts",
+          "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 6644
+        },
+        {
+          "file": "e2e/save.spec.ts",
+          "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 9568
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 1291
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "project": "chromium",
+          "status": "expected",
+          "durationMs": 1122
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "project": "pixel-7",
+          "status": "expected",
+          "durationMs": 1122
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "project": "pixel-7",
+          "status": "expected",
+          "durationMs": 865
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "project": "pixel-7-landscape",
+          "status": "expected",
+          "durationMs": 1258
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "project": "pixel-7-landscape",
+          "status": "expected",
+          "durationMs": 969
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "project": "iphone-14",
+          "status": "expected",
+          "durationMs": 1175
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "project": "iphone-14",
+          "status": "expected",
+          "durationMs": 821
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "project": "iphone-14-landscape",
+          "status": "expected",
+          "durationMs": 1374
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "project": "iphone-14-landscape",
+          "status": "expected",
+          "durationMs": 928
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "project": "webkit",
+          "status": "expected",
+          "durationMs": 2952
+        },
+        {
+          "file": "e2e/smoke.spec.ts",
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "project": "webkit",
+          "status": "expected",
+          "durationMs": 3800
+        }
+      ]
+    }
+  },
+  "fullUnit": {
+    "passed": 166,
+    "failed": 6,
+    "log": "/tmp/audio-1-unit-final.log",
+    "loadRelatedTimeouts": [
+      "tests/unit/static.test.ts",
+      "tests/unit/assets/build.test.ts",
+      "tests/unit/assets/validate.test.ts"
+    ],
+    "serialTimeoutRerun": {
+      "passed": 6,
+      "failed": 0,
+      "report": "/tmp/audio-1-unit-timeout-rerun.json"
+    },
+    "remainingFailures": 3,
+    "remainingFailuresMatchMain": true
+  },
+  "previews": [
+    {
+      "name": "01-morning",
+      "path": "/private/tmp/claude-501/-Users-fabianwesner-Workspace-suburban-survivors/88be267a-0002-4cac-aeec-a7e79e9db694/scratchpad/audio-preview/01-morning.wav",
+      "duration": 8.021333333333333,
+      "lufs": -17.5,
+      "truePeak": -7,
+      "clipped": 0,
+      "longestGap": 0
+    },
+    {
+      "name": "02-diner-incident",
+      "path": "/private/tmp/claude-501/-Users-fabianwesner-Workspace-suburban-survivors/88be267a-0002-4cac-aeec-a7e79e9db694/scratchpad/audio-preview/02-diner-incident.wav",
+      "duration": 25.514666666666667,
+      "lufs": -14.1,
+      "truePeak": -1.9,
+      "clipped": 0,
+      "longestGap": 0
+    },
+    {
+      "name": "03-store-fight",
+      "path": "/private/tmp/claude-501/-Users-fabianwesner-Workspace-suburban-survivors/88be267a-0002-4cac-aeec-a7e79e9db694/scratchpad/audio-preview/03-store-fight.wav",
+      "duration": 28.074666666666666,
+      "lufs": -15.6,
+      "truePeak": -1.8,
+      "clipped": 0,
+      "longestGap": 0
+    }
+  ],
+  "signalProxy": "100ms RMS windows below -60dB after first0.7s; EBU R128 / true peak via FFmpeg; human emotional fit not assessed",
+  "captureSetup": "headless production PCM tap, god mode, diner anchor and authored melee checkpoint; real subsequent mission/AI/combat events",
+  "mix": {
+    "lufs": -14,
+    "truePeak": -1.6,
+    "dominance": [
+      16.306390656098774,
+      14.008014055688378,
+      13.11226848364404
+    ],
+    "voices": 11
+  }
+}

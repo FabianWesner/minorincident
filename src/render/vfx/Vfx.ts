@@ -173,7 +173,7 @@ export class Vfx extends Group {
         if (explosive) for (let i = 0; i < 3; i++) this.gibs.spawn(this.time, event.position.x, 0.7, event.position.z, this.rng);
         this.burst(event.position.x, 1, event.position.z, 0xb3121f, 24, 0.18, 1.2);
       }
-    } else if (event.type === 'combat.hit-stop') this.hitStop.hit(this.time);
+    } else if (event.type === 'combat.hit-stop') this.hitStop.hit(this.time, event.durationMs / 1000);
     else if (event.type === 'combat.attack') {
       const def = actions[event.actionId];
       if (def?.category === 'ranged') {
@@ -196,7 +196,7 @@ export class Vfx extends Group {
       const kind: TelegraphKind = 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' ? 'charge' : event.special === 'aura' ? 'splash' : 'lunge';
       const position = 'position' in event ? event.position : source?.transform;
       if (!position) return;
-      const radius = 'radius' in event ? event.radius : kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.slice ? 1 : 2, infectedDef(source.archetype).range) : 2;
+      const radius = 'radius' in event ? event.radius : kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2;
       const angle = 'angle' in event ? event.angle : -Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
       const shape = telegraphShapes[kind];
       const slot = this.telegraphs.spawn(this.time, 1e9, position.x, 0.025, position.z, angle, 0, 0, radius * 2, shape, this.telegraphColor(kind), 0, kind === 'charge' ? 0.3 : 1, true);

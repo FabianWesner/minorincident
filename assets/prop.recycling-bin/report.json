@@ -1,0 +1,66 @@
+{
+  "id": "prop.recycling-bin",
+  "triangles": {
+    "lod0": 2268,
+    "lod1": 264,
+    "lod2": 62
+  },
+  "dimensions_blender": [
+    0.6499999761581421,
+    0.7477999925613403,
+    1.1165000200271606
+  ],
+  "draw_calls": 6,
+  "materials": [
+    "pal_policeBlue",
+    "pal_uiDark",
+    "pal_brass",
+    "pal_silver",
+    "pal_picketWhite"
+  ],
+  "nodes": [
+    "root",
+    "lid",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 3,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 58668,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 15152,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 11568,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.1164021164021164,
+    "lod2": 0.027336860670194002
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.recycling-bin",
+    "geometry_hash": "33792836629e33cc9e38cc45209ed3311c7d3e6c9475b4c5740116304c83e4cf",
+    "second_geometry_hash": "33792836629e33cc9e38cc45209ed3311c7d3e6c9475b4c5740116304c83e4cf",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
+}

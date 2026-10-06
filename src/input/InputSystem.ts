@@ -14,6 +14,7 @@ import { RayCursor } from './devices/RayCursor';
 import { Touch } from './devices/Touch';
 import { Wheel } from './devices/Wheel';
 
+export const walkHintKey = 'minor-incident.walk-hint.v1';
 /** Device ownership ends here. sample() runs immediately before every fixed sim tick. */
 export class InputSystem implements Lifecycle {
   readonly bindings: Bindings;
@@ -32,14 +33,15 @@ export class InputSystem implements Lifecycle {
   private readonly right = new Buttons();
   private readonly active = new Set<Action>();
   private readonly heldTokens = new Map<string, Action>();
-  private readonly selectors: (-1 | 1)[] = [];
+  private readonly selectors: { direction: -1 | 1; side?: 'LEFT' | 'RIGHT'; active?: boolean }[] = [];
   private interact = false;
   private cancelMove = false;
-  private pointerGround: false | 'move' | 'stop' = false;
-  private readonly clicks: { button: number; x: number; y: number }[] = [];
+  private pointerTarget = false;
+  private pointerGround: false | 'move' = false;
+  private readonly clicks: { x: number; y: number; shift: boolean }[] = [];
+  private selectedActiveSlot: number | undefined;
   private selectedSlot: { side: 'LEFT' | 'RIGHT'; index: number } | undefined;
-  cycle(side: 'LEFT' | 'RIGHT'): void { this.selectors.push(1); this.selectorSide = side; }
-  private selectorSide: 'LEFT' | 'RIGHT' | undefined;
+  cycle(side: 'LEFT' | 'RIGHT'): void { this.selectors.push({ direction: 1, side }); }
   private readonly projected = new Vector3();
   private pause = false;
   private injected: InputFrame | null = null;
@@ -54,6 +56,10 @@ export class InputSystem implements Lifecycle {
   private readonly hint = document.createElement('output');
   private readonly controls = document.createElement('details');
   private readonly message = document.createElement('output');
+  /** One-time "hold to walk" hint (E19 §5.5): after ~2 s of running, shown for 5 s, once per profile. */
+  private readonly walkHint = document.createElement('output');
+  private walkHintTicks = 0;
+  private walkHintDone = false;
   constructor(private readonly canvas: HTMLElement, private readonly camera: Camera, private readonly zoom: (delta: number) => void = () => {}) {
     let storage: Storage | undefined;
     try { storage = localStorage; } catch { /* Defaults work with storage disabled. */ }
@@ -63,7 +69,7 @@ export class InputSystem implements Lifecycle {
     this.pointer = new Pointer(canvas, window, this.mouseActivity, this.token);
     this.wheel = new Wheel(canvas, (direction) => { this.mouseActivity(); this.zoom(direction * .075); });
     this.touch = new Touch(canvas, () => { this.pointer.valid = false; this.cancelMove = true; this.pointerGround = false; this.setScheme('touch'); }, (action, direction, side) => {
-      if (action === 'selector') { this.selectors.push(1); this.selectorSide = side; }
+      if (action === 'selector') { this.selectors.push({ direction: 1, side }); }
       else if (action === 'interact') this.interact = true;
       else if (action === 'pause') this.pause = true;
       else {
@@ -85,7 +91,11 @@ export class InputSystem implements Lifecycle {
     for (const action of Object.keys(defaultBindings)) { const option = document.createElement('option'); option.value = action; option.textContent = action; select.append(option); }
     this.message.setAttribute('role', 'status'); this.controls.append(this.message);
     this.controls.querySelector('form')!.addEventListener('submit', this.submit);
-    document.body.append(this.hint, this.controls); this.setScheme(this.scheme);
+    this.walkHint.dataset.testid = 'walk-hint'; this.walkHint.setAttribute('role', 'note'); this.walkHint.hidden = true;
+    this.walkHint.style.cssText = 'position:fixed;left:50%;bottom:120px;transform:translateX(-50%);color:white;background:#182333e6;padding:8px 14px;border-radius:10px;font:600 15px system-ui,sans-serif;pointer-events:none;z-index:5';
+    // Automated browsers keep their reference screenshots clean unless a test opts in ('force').
+    try { const state = localStorage.getItem(walkHintKey); this.walkHintDone = state === '1' || (navigator.webdriver && state !== 'force'); } catch { /* Shown once per session without storage. */ }
+    document.body.append(this.hint, this.controls, this.walkHint); this.setScheme(this.scheme);
   }
   private readonly submit = (event: Event): void => {
     event.preventDefault(); const form = this.controls.querySelector('form')!;
@@ -101,8 +111,8 @@ export class InputSystem implements Lifecycle {
     this.touch.element.hidden = scheme !== 'touch'; this.touch.element.style.display = scheme === 'touch' ? 'grid' : 'none';
     this.scheme = scheme; this.hint.dataset.scheme = scheme;
     this.hint.textContent = {
-      'mouse-only': 'Click to move · LMB/RMB on infected to attack · wheel zoom · 1/2/3 · Shift+1/2/3 · Q · middle-click ACTION',
-      'mouse-keyboard': 'WASD + cursor · LMB/RMB on infected · wheel zoom · 1/2/3 · Shift+1/2/3 · Q · F / E',
+      'mouse-only': 'Click to move · LMB attack · hold LMB to walk · Shift+LMB attack in place · RMB / Q cycle · 1/2/3 · wheel zoom · middle-click ACTION',
+      'mouse-keyboard': 'WASD + cursor · LMB attack · Shift+LMB attack in place · RMB / Q cycle · 1/2/3 · wheel zoom · F / E',
       keyboard: 'WASD · J / K aim assist · 1/2/3 · Shift+1/2/3 · Q · F / E',
       touch: 'Stick to move · LEFT / RIGHT · swipe up to switch · pinch zoom · ACTION',
     }[scheme];
@@ -114,7 +124,9 @@ export class InputSystem implements Lifecycle {
   private readonly key = (code: string, held: boolean): void => {
     if (code === 'ShiftLeft' || code === 'ShiftRight') return;
     if (held && /^Digit[123]$/.test(code)) {
-      this.selectedSlot = { side: this.keyboard.pressed.has('ShiftLeft') || this.keyboard.pressed.has('ShiftRight') ? 'RIGHT' : 'LEFT', index: Number(code.slice(-1)) - 1 };
+      const index = Number(code.slice(-1)) - 1;
+      if (this.pointer.valid && !this.shift()) this.selectedActiveSlot = index;
+      else this.selectedSlot = { side: this.shift() ? 'RIGHT' : 'LEFT', index };
       this.setScheme(this.pointer.valid ? 'mouse-keyboard' : 'keyboard'); return;
     }
     const action = held ? this.bindings.action(code) : this.heldTokens.get(code);
@@ -132,17 +144,19 @@ export class InputSystem implements Lifecycle {
   private readonly token = (code: string, held: boolean): void => {
     const action = held ? this.bindings.action(code) : this.heldTokens.get(code);
     if (!action) return;
-    if (held && (code === 'Mouse0' || code === 'Mouse2')) this.clicks.push({ button: code === 'Mouse0' ? 0 : 2, x: this.pointer.x, y: this.pointer.y });
+    if (held && code === 'Mouse0') this.clicks.push({ x: this.pointer.x, y: this.pointer.y, shift: this.shift() });
+    else if (held && code === 'Mouse2') { this.selectors.push({ direction: 1, active: true }); this.heldTokens.set(code, action); return; }
     else if (held && (action.startsWith('move') || action === 'left' || action === 'right' || action === 'interact')) { this.cancelMove = true; if (!action.startsWith('move')) this.pointerGround = false; }
     if (held) this.heldTokens.set(code, action); else this.heldTokens.delete(code);
     if (action === 'left') this.left.set(code, held);
     else if (action === 'right') this.right.set(code, held);
-    else if (held && action === 'selector') this.selectors.push(1);
+    else if (held && action === 'selector') { this.selectors.push({ direction: 1, active: this.scheme.startsWith('mouse') }); }
     else if (held && action === 'interact') this.interact = true;
     else if (held && action === 'pause') this.pause = true;
     if (held) this.active.add(action);
     else if (![...this.heldTokens.values()].includes(action)) this.active.delete(action);
   };
+  private shift(): boolean { return this.keyboard.pressed.has('ShiftLeft') || this.keyboard.pressed.has('ShiftRight'); }
   private axis(positive: Action, negative: Action): number { return Number(this.active.has(positive)) - Number(this.active.has(negative)); }
   private aiming(): boolean { return this.active.has('aimUp') || this.active.has('aimDown') || this.active.has('aimLeft') || this.active.has('aimRight'); }
   /** Camera azimuth projected onto ground; pitch does not distort movement. */
@@ -159,7 +173,7 @@ export class InputSystem implements Lifecycle {
     if (this.recorder.playing) return this.recorder.next() ?? this.frameNeutral();
     if (this.injected) { this.recorder.capture(this.injected); return this.injected; }
     const frame = this.frame;
-    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot;
+    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; if (this.active.has('walk')) frame.walk = true; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
     frame.cancelMove = this.cancelMove; this.cancelMove = false;
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
     this.driving.throttle = y ? -y : 0; this.driving.steer = x; frame.drive = this.driving; frame.brake = false;
@@ -188,7 +202,12 @@ export class InputSystem implements Lifecycle {
       else frame.aimSource = 'assist';
     }
     if (this.scheme === 'touch') {
+      // Light push walks, beyond half deflection runs (E19 §5.5): the stick picks a gait, not a speed.
+      const deflection = Math.hypot(this.touch.stick.move.x, this.touch.stick.move.z);
       this.screenVector(this.touch.stick.move.x, this.touch.stick.move.z, frame.move);
+      const length = Math.hypot(frame.move.x, frame.move.z);
+      if (deflection > .08 && length > 0) { frame.move.x /= length; frame.move.z /= length; if (deflection < .5) frame.walk = true; }
+      else { frame.move.x = 0; frame.move.z = 0; }
       if (this.touch.aiming) this.aimAngle = this.screenAngle(this.touch.aim.x, this.touch.aim.z);
       this.aim.x = Math.cos(this.aimAngle); this.aim.z = Math.sin(this.aimAngle);
       frame.aim = this.aim; frame.aimSource = this.touchFire ?? 'touch'; this.touchFire = null;
@@ -199,6 +218,8 @@ export class InputSystem implements Lifecycle {
       const point = this.cursor.project(click.x, click.y);
       if (!point) continue;
       frame.cancelMove = true;
+      frame.mouseAttack = true;
+      if (click.shift) { frame.attackInPlace = true; this.pointerGround = false; this.pointerTarget = false; continue; }
       if (this.drivingContext) continue;
       let picked: EntitySnapshot | null = null, best = Infinity;
       for (const target of candidates!) {
@@ -211,32 +232,45 @@ export class InputSystem implements Lifecycle {
         const score = Math.min(screenDistance / 18, groundDistance / (target.combat?.radius ?? .4) / 1.5);
         if (score <= 1 && score < best) { picked = target; best = score; }
       }
-      if (picked) {
-        frame.attackTarget = { id: picked.id, side: click.button === 0 ? 'LEFT' : 'RIGHT' };
-        if (click.button === 0) this.pointerGround = false;
-        else if (this.pointerGround) this.pointerGround = 'stop';
-      }
-      else if (click.button === 0) { frame.moveTarget = { x: point.x, z: point.z }; this.pointerGround = 'move'; }
-      else {
-        if (this.pointerGround) this.pointerGround = 'stop';
-        frame.aimPoint = { x: point.x, z: point.z };
-        const dx = point.x - player.x, dz = point.z - player.z, distance = Math.hypot(dx, dz);
-        if (distance > 1e-6) { this.aim.x = dx / distance; this.aim.z = dz / distance; frame.aim = this.aim; frame.aimSource = 'pointer'; }
-      }
+      if (picked) { frame.attackTarget = { id: picked.id, side: 'LEFT' }; this.pointerGround = false; this.pointerTarget = true; frame.pointerTarget = true; }
+      else { frame.moveTarget = { x: point.x, z: point.z }; this.pointerGround = 'move'; this.pointerTarget = false; }
     }
     this.clicks.length = 0;
+    if (this.pointer.isHeld(0)) {
+      frame.mouseAttack = true;
+      if (this.pointerTarget) frame.pointerTarget = true;
+      if (this.shift() && !this.drivingContext) {
+        frame.attackInPlace = true; frame.cancelMove = true;
+        delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerTarget; this.pointerGround = false; this.pointerTarget = false;
+      }
+    }
     if (this.pointerGround && !this.drivingContext) {
       frame.pointerGround = true;
       if (this.pointerGround === 'move' && frame.left.held && frame.aimPoint && !this.moving()) frame.moveTarget = { ...frame.aimPoint };
     }
-    if (this.selectorSide) { frame.selectorSide = this.selectorSide; this.selectorSide = undefined; }
     if (this.drivingContext && this.scheme === 'touch' && this.touch.holdingLeft) frame.left.held = true;
+    if (this.selectedActiveSlot !== undefined) { frame.selectedActiveSlot = this.selectedActiveSlot; this.selectedActiveSlot = undefined; }
     if (this.selectedSlot) { frame.selectedSlot = this.selectedSlot; this.selectedSlot = undefined; }
-    frame.selector = this.selectors.shift() ?? 0; frame.interact = this.interact; frame.pause = this.pause;
-    this.interact = false; this.pause = false; this.recorder.capture(frame); return frame;
+    const selection = this.selectors.shift();
+    frame.selector = selection?.direction ?? 0;
+    if (selection?.side) frame.selectorSide = selection.side;
+    if (selection?.active) frame.selectorActive = true; frame.interact = this.interact; frame.pause = this.pause;
+    this.interact = false; this.pause = false; this.updateWalkHint(frame); this.recorder.capture(frame); return frame;
+  }
+  private updateWalkHint(frame: InputFrame): void {
+    if (this.walkHintDone) return;
+    const moving = Math.hypot(frame.move.x, frame.move.z) > .1 || !!frame.moveTarget || !!frame.pointerGround;
+    if (this.walkHint.hidden) {
+      this.walkHintTicks = moving ? this.walkHintTicks + 1 : this.walkHintTicks;
+      if (this.walkHintTicks < 120) return;
+      const key = this.bindings.keyLabel('walk') || 'C';
+      this.walkHint.textContent = this.scheme === 'touch' ? 'Push the stick lightly to walk' : this.scheme === 'mouse-only' ? 'Hold Alt while clicking to walk' : `Hold ${key} or Alt to walk`;
+      this.walkHint.hidden = false; this.walkHintTicks = 0;
+      try { localStorage.setItem(walkHintKey, '1'); } catch { /* Storage disabled. */ }
+    } else if (++this.walkHintTicks >= 300 || frame.walk) { this.walkHint.hidden = true; this.walkHintDone = true; }
   }
   private frameNeutral(): InputFrame {
-    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot;
+    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
     frame.left.down = frame.left.held = frame.left.up = false; frame.right.down = frame.right.held = frame.right.up = false;
     frame.selector = 0; frame.interact = false; frame.pause = false; return frame;
   }
@@ -247,14 +281,14 @@ export class InputSystem implements Lifecycle {
   readonly release = (): void => {
     this.releasing = true; this.keyboard.release(); this.pointer.release(); this.releasing = false;
     this.touch.release(); this.wheel.reset(); this.touchFire = null; this.left.release(); this.right.release(); this.active.clear(); this.heldTokens.clear();
-    this.clicks.length = 0; this.cancelMove = true; this.pointerGround = false; this.selectorSide = undefined; this.selectedSlot = undefined;
-    this.selectors.length = 0; this.interact = false; this.pause = false;
+    this.clicks.length = 0; this.cancelMove = true; this.pointerGround = false; this.selectedSlot = undefined; this.selectedActiveSlot = undefined;
+    this.pointerTarget = false; this.selectors.length = 0; this.interact = false; this.pause = false;
   };
   update(): void { /* Input is sampled in the fixed input phase, not the render update. */ }
   reset(preserveRelease = false): void { this.setDriving(false); this.release(); this.left.reset(preserveRelease); this.right.reset(preserveRelease); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.manualAim = false; this.setScheme(navigator.maxTouchPoints > 0 ? 'touch' : 'mouse-only'); this.frameNeutral(); }
   dispose(): void {
     this.reset(); this.keyboard.dispose(); this.pointer.dispose(); this.wheel.dispose(); this.touch.dispose();
     window.removeEventListener('blur', this.release); window.removeEventListener('pagehide', this.release); document.removeEventListener('visibilitychange', this.visibility);
-    this.controls.querySelector('form')?.removeEventListener('submit', this.submit); this.controls.remove(); this.hint.remove();
+    this.controls.querySelector('form')?.removeEventListener('submit', this.submit); this.controls.remove(); this.hint.remove(); this.walkHint.remove();
   }
 }

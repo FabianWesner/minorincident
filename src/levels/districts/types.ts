@@ -9,7 +9,9 @@ export const districtIds = [
   "D-ZOO",
   "D-EDGE",
 ] as const;
-export type DistrictId = (typeof districtIds)[number];
+/** L1 v2 district. Not in `districtIds`: that list is the campaign set iterated by the district/decay suites and L6. */
+export const groveDistrictId = "D-GROVE" as const;
+export type DistrictId = (typeof districtIds)[number] | typeof groveDistrictId;
 export type Tier = 0 | 1 | 2 | 3 | 4 | 5;
 export type Point = [number, number];
 export interface PlacementTransform {
@@ -29,6 +31,8 @@ export interface Placement extends PlacementTransform {
   allowRoad: boolean;
   lightGroup: string;
   visualAabb: Aabb;
+  /** Optional per-instance colour multiplier (house walls); batches stay shared, colour is an instance attribute. */
+  tint?: string;
 }
 export interface StaticCollider {
   /** Low GLB paving/steps support feet without blocking planar navigation. */
@@ -57,6 +61,8 @@ export interface DistrictLayout {
   };
   placements: Placement[];
   anchors: Record<string, PlacementTransform>;
+  /** Named gameplay polygons (no-bicycle zones, car-wash bay); L1 v2 only. */
+  zones?: Record<string, Point[]>;
   buildings: { id: string; assetId: string; aabb: Aabb; label: string }[];
   colliders: StaticCollider[];
   walkable: { cellSize: number; excluded: Point[][] };

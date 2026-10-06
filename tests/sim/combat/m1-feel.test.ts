@@ -9,9 +9,9 @@ test('M1-12 @E05 held attacks link three distinct beats then reset after recover
     const frame = emptyInput(); frame.left.held = true; frame.aim = { x:1,z:0 };
     for (let i=0;i<130;i++) { w.applyInput(frame,'keyboard'); w.update(); }
     const attacks = w.events.events().filter(e => e.type === 'combat.attack');
-    expect(attacks.slice(0,4).map(e => e.type === 'combat.attack' && e.combo)).toEqual(weapon === 'kick' ? [0,1,0,1] : [0,1,2,0]);
+    expect(attacks.slice(0,4).map(e => e.type === 'combat.attack' && e.combo)).toEqual(weapon === 'kick' ? [0,1,0,1] : weapon === 'fists' ? [0,1,2,4] : [0,1,2,0]);
     w.clearInput(); for(let i=0;i<100;i++) w.update(); w.applyInput(frame,'keyboard'); w.update();
-    const last = w.events.events().filter(e=>e.type==='combat.attack').at(-1)!; expect(last.type==='combat.attack' && last.combo).toBe(0);
+    const last = w.events.events().filter(e=>e.type==='combat.attack').at(-1)!; if (weapon !== 'fists') expect(last.type==='combat.attack' && last.combo).toBe(0);
   }
 });
 
@@ -28,4 +28,34 @@ test('M1-11 M1-12 @E05 connecting hits alternate reactions, kick tumbles into an
     fx.set({gore:'Off'}); hit('weapon.bat'); fx.advance(1); expect(fx.decals.count).toBe(0); expect(fx.snapshot().lastSpray.chunks).toBe(0);
     fx.set({gore:'Reduced',quality:'low',colorblind:true}); for(let i=0;i<100;i++) hit('weapon.bat'); expect(fx.particles.count).toBeLessThanOrEqual(512); expect(fx.snapshot().lastSpray.chunks).toBe(0);
   } finally { fx.dispose(); }
+});
+
+test('@E03-AC20 unarmed retains varied moves across pauses, equal damage, slight kick knockback', async () => {
+  const w = await arena(); w.combat!.setLoadout(['weapon.fists'], ['weapon.fists']);
+  const frame = emptyInput(); frame.left.down = true; frame.aim = { x: 1, z: 0 };
+  const moves: number[] = [], damages: number[] = [], knockbacks: number[] = [];
+  for (let i = 0; i < 15; i++) {
+    w.applyInput(frame, 'keyboard'); w.update();
+    const attack = w.combat!.runner.running.LEFT!;
+    moves.push(attack.combo); damages.push(attack.def.damage); knockbacks.push(attack.def.knockback);
+    w.clearInput(); for (let tick = 0; tick < 100; tick++) w.update();
+  }
+  expect(new Set(moves).size).toBe(7); expect(moves.every((move, i) => !i || move !== moves[i - 1])).toBe(true);
+  expect(new Set(damages).size).toBe(1); expect(damages[0]).toBeGreaterThan(0);
+  // E19 §5.6: kicks shove 1.5–2.5 m; punches only flinch.
+  expect(knockbacks[moves.indexOf(2)]).toBeGreaterThanOrEqual(1.5); expect(knockbacks[moves.indexOf(2)]).toBeLessThanOrEqual(2.5); expect(knockbacks[moves.indexOf(0)]).toBeLessThan(.5); expect(moves.filter(move => move === 6).length).toBe(2);
+});
+
+
+test('@E03-AC19 Shift melee never finishes a civilian in the glowing-eye state', async () => {
+  const w = await arena(); w.loadScenario('horde-arena', 1);
+  w.combat!.setLoadout(['weapon.fists'], ['weapon.fists']);
+  const id = w.npcs!.civilians.spawn('cashier', { x: .8, z: 0 }), e = w.entities.get(id)!;
+  Object.assign(e.civilian!, { state: 'down', entered: w.tick, until: w.tick + 60, downTicks: 60, eyesGlow: true });
+  const frame = emptyInput(); frame.left.down = true; frame.attackInPlace = true; frame.aim = { x: 1, z: 0 };
+  w.applyInput(frame, 'keyboard'); w.update(); w.clearInput();
+  for (let i = 0; i < 14; i++) w.update();
+  expect(e.civilian!.eyesGlow).toBe(true); expect(e.civilian!.state).toBe('down');
+  expect(e.health.current).toBe(100);
+  expect(w.events.events().some(event => event.type === 'civilian.finished' || event.type === 'civilian.turned' || ((event.type === 'combat.hit' || event.type === 'combat.kill') && event.targetId === id))).toBe(false);
 });

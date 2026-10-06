@@ -1,4 +1,5 @@
 import { missionControls } from '../sim/missions/controls';
+import { installL1Outbreak } from '../sim/outbreak/install';
 import { Driver } from './bot/Driver';
 import { runAudioL1Bot } from './audioBot';
 import { renderAudio } from './audioHarness';
@@ -30,7 +31,9 @@ export interface SSTestApi {
   /** E12 mission controls share the headless sim entry points; state is copied. */
   missions: ReturnType<typeof missionControls>;
   /** E08 authoring hooks use exactly the headless production NPC systems. */
-  npcs: { civilian(role: string, pos: { x: number; z: number }, options?: Parameters<import('../sim/npc/Civilians').Civilians['spawn']>[2]): number; escort(pos: { x: number; z: number }, child?: boolean): number; grab(id: number, attackerId: number): boolean; courage(amount: number): void; quality(tier: 'high' | 'low'): void };
+  npcs: { civilian(role: string, pos: { x: number; z: number }, options?: Parameters<import('../sim/npc/Civilians').Civilians['spawn']>[2]): number; escort(pos: { x: number; z: number }, child?: boolean): number; grab(id: number, attackerId: number): boolean; courage(amount: number): void; quality(tier: 'high' | 'low'): void;
+    /** L1 v2 (lane D): install the outbreak layer + morning population on the loaded D-GROVE; returns stats. */
+    l1Outbreak(setup?: import('../sim/outbreak/install').L1OutbreakSetup): { civilians: number }; l1Stats(): Record<string, number> };
   ready: Promise<void>;
   pause(): void;
   resume(): void;
@@ -60,7 +63,9 @@ export interface SSTestApi {
   interact: { giveItem(id: string): void; refuel(id: number, seconds: number): void; barricade(id: number, on: boolean): void; hit(id: number, amount: number, type: import('../sim/combat/Damage').DamageEvent['type']): number };
   teleport(entityId: number | 'player', pos: { x: number; z: number }): void;
   /** E04: cosmetic selection and sim entry points; weapon and mission resolution remain separate. */
-  survivor: { select(variant: SurvivorVariant, tier?: GearTier): void; damage(amount: number): number; act(action: ActionState): void; checkpoint(pos: { x: number; y: number; z: number }): void };
+  survivor: { select(variant: SurvivorVariant, tier?: GearTier): void; damage(amount: number): number; act(action: ActionState): void; checkpoint(pos: { x: number; y: number; z: number }): void;
+    /** E19 presentation hooks (normally set by the bicycle/mission sims). */
+    present(patch: { riding?: boolean; carrying?: string | null }): void };
   setLoadout(left: string[], right: string[]): void;
   cheats: { god(on: boolean): void; infiniteCharges(on: boolean): void; killAll(): void; completeObjective(id?: string): void };
   bot: { start(policy?: 'complete' | 'newbie' | 'idle' | 'aggressive' | 'driver'): void; stop(): void; status(): BotStatus };
@@ -79,7 +84,8 @@ export interface SSTestApi {
     map(map:import('../audio/acoustics').AcousticMap):void;
     emitters():{id:number;cue:string;priority:number;gain:number;rate:number;cutoff:number;position:import('../data/audioEvents').SoundPosition|null;panner:string|null;loop:boolean}[];
     render(request:import('./audioHarness').AudioRenderRequest):Promise<import('./audioHarness').AudioRenderResult>;
-    decode(format:'webm'|'m4a'):Promise<{id:string;frames:number}[]>;
+    /** Decode and scan each sprite slice; peak detects empty imports as well as truncated grids. */
+    decode(format:'webm'|'m4a'):Promise<{id:string;frames:number;peak:number}[]>;
     profile():{p50Ms:number;p95Ms:number;maxVoices:number;limit:number;ticks:number};
     l1Bot():Promise<Awaited<ReturnType<typeof runAudioL1Bot>>>;
     interrupt():Promise<void>;
@@ -102,7 +108,9 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
     look: { get: () => structuredClone({ worldLook: game.view.look.values, palette: game.view.look.palette }), set: patch => game.view.setLook(patch), export: () => game.view.look.export(), reset: () => game.view.resetLook() },
-    version: '1.10.0', ready, npcs: { civilian: (role, pos, opts) => game.world.npcs!.civilians.spawn(role, pos, opts), escort: (pos, child) => game.world.npcs!.escorts.spawn(pos, child), grab: (id, attacker) => game.world.npcs!.civilians.grab(id, attacker, true), courage: amount => { for (const e of game.world.entities.iterate()) if (e.companion) game.world.npcs!.companion.hit(e, amount); }, quality: tier => game.world.npcs!.setQuality(tier) }, missions: { ...missionControls(game.world), load: (def) => { game.ui.reset(); missionControls(game.world).load(def); game.ui.loaded(); } },
+    version: '1.10.0', ready, npcs: { civilian: (role, pos, opts) => game.world.npcs!.civilians.spawn(role, pos, opts), escort: (pos, child) => game.world.npcs!.escorts.spawn(pos, child), grab: (id, attacker) => game.world.npcs!.civilians.grab(id, attacker, true), courage: amount => { for (const e of game.world.entities.iterate()) if (e.companion) game.world.npcs!.companion.hit(e, amount); }, quality: tier => game.world.npcs!.setQuality(tier),
+      l1Outbreak: setup => { installL1Outbreak(game.world, setup); return { civilians: game.world.npcs!.civilians.outbreak!.liveCivilians() }; },
+      l1Stats: () => ({ ...game.world.npcs?.civilians.outbreak?.stats, live: game.world.npcs?.civilians.outbreak?.liveCivilians() ?? 0 }) }, missions: { ...missionControls(game.world), load: (def) => { game.ui.reset(); missionControls(game.world).load(def); game.ui.loaded(); } },
     campaign: {state:()=>structuredClone(game.campaign),menu:()=>game.campaignUI.showMenu(game.saves.load()),save:()=>game.saveCampaign(),restore:save=>{if(!validateSave(save))throw new Error('Invalid campaign');game.campaign=structuredClone(save);game.applyCampaign();}},
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
@@ -153,6 +161,12 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       damage: (amount) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); const taken = game.world.player.damage(amount, game.world.tick); game.view.update(1); return taken; },
       act: (action) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.act(action, game.world.tick); game.view.update(1); },
       checkpoint: (pos) => { if (!game.world.player) throw new Error('Load a survivor scenario first'); game.world.player.setCheckpoint(pos); },
+      present: (patch) => {
+        const pose = game.world.player?.entity.survivor; if (!pose) throw new Error('Load a survivor scenario first');
+        const player = game.world.entities.get(1) as { riding?: number } | undefined;
+        if (patch.riding !== undefined && player) { if (patch.riding) player.riding ??= -1; else delete player.riding; }
+        if (patch.carrying !== undefined) { if (patch.carrying) pose.carrying = patch.carrying; else delete pose.carrying; }
+      },
     },
     setLoadout: (left, right) => { if (!game.world.combat) throw new Error('Load combat-arena before setting loadout'); game.world.combat.setLoadout(left, right); },
     cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) e.health.current = 0; }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
@@ -171,14 +185,22 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       emitters:()=>[...game.audio.graph.active.values()].map(v=>({id:v.id,cue:v.cue,priority:v.priority,gain:v.gain.gain.value,rate:v.source.playbackRate.value,cutoff:v.filter.frequency.value,position:v.position,panner:v.panner?.panningModel??null,loop:v.source.loop})),
       profile:()=>{
         const times:number[]=[];let maxVoices=0;
-         for(let i=0;i<600;i++){const start=performance.now();game.world.update();game.view.frame(0);times.push(performance.now()-start);maxVoices=Math.max(maxVoices,game.audio.graph.active.size);}
+         for(let i=0;i<600;i++){const start=performance.now();game.world.update();game.view.frame(0);times.push(performance.now()-start);maxVoices=Math.max(maxVoices,game.audio.graph.active.size+game.audio.score.voices);}
         times.sort((a,b)=>a-b);return {p50Ms:times[300],p95Ms:times[570],maxVoices,limit:game.audio.graph.limiter.limit,ticks:600};
       },
       render:renderAudio,l1Bot:()=>runAudioL1Bot(game),
       decode:async format=>{
         const {audioCategories,audioCues,audioFile}=await import('../data/audioCues');
         const result=[];
-        for(const category of audioCategories){const response=await fetch(audioFile(category,format));const buffer=await game.audio.context.decodeAudioData(await response.arrayBuffer());for(const cue of Object.values(audioCues))if(cue.category===category){if(buffer.duration+0.03<cue.offset+cue.duration)throw new Error(`Sprite decode truncated: ${cue.id}`);result.push({id:cue.id,frames:buffer.length});}}
+        for(const category of audioCategories){
+          const response=await fetch(audioFile(category,format));const buffer=await game.audio.context.decodeAudioData(await response.arrayBuffer());
+          for(const cue of Object.values(audioCues))if(cue.category===category){
+            if(buffer.duration+0.03<cue.offset+cue.duration)throw new Error(`Sprite decode truncated: ${cue.id}`);
+            let peak=0;const samples=buffer.getChannelData(0),start=Math.round(cue.offset*buffer.sampleRate),end=Math.min(samples.length,Math.round((cue.offset+cue.duration)*buffer.sampleRate));
+            for(let i=start;i<end;i++)peak=Math.max(peak,Math.abs(samples[i]));
+            result.push({id:cue.id,frames:end-start,peak});
+          }
+        }
         return result;
       },
       interrupt:async()=>{

@@ -1,0 +1,63 @@
+{
+  "id": "prop.crates",
+  "triangles": {
+    "lod0": 9684,
+    "lod1": 1160,
+    "lod2": 288
+  },
+  "dimensions_blender": [
+    1.2035250663757324,
+    1.052799940109253,
+    0.6675000190734863
+  ],
+  "draw_calls": 3,
+  "materials": [
+    "pal_woodWarm",
+    "pal_uiDark",
+    "pal_leatherShadow"
+  ],
+  "nodes": [
+    "root",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 4,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 228732,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 31596,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 14816,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.1197852127220157,
+    "lod2": 0.02973977695167286
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.crates",
+    "geometry_hash": "d504d4a32353b43f4e4dea20cb272bf7d888b86ce6d0e24b5626b6857d8208d3",
+    "second_geometry_hash": "d504d4a32353b43f4e4dea20cb272bf7d888b86ce6d0e24b5626b6857d8208d3",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
+}

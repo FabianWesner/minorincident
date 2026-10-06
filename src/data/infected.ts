@@ -1,3 +1,4 @@
+import { l1v2 } from './l1v2';
 /** Infected balance in metres/seconds/HP, from concept §7. Human roles and animals share one brain. */
 export interface InfectedDef {
   id: string; hp: number; speed: number; radius: number; damage: number; range: number;
@@ -34,4 +35,21 @@ export function validateInfected(defs: readonly InfectedDef[] = infectedDefiniti
       !Number.isFinite(def.windup) || def.windup < 0.35 || !Number.isFinite(def.grabChance) || def.grabChance < 0 || def.grabChance > 1) throw new Error(`Invalid infected: ${def.id}`);
     ids.add(def.id);
   }
+}
+/** L1 v2 speed tiers (specs/epic-19 section 5.4): the visual read of the asset decides the tier. */
+export type InfectedSpeedTier = 'frail' | 'average' | 'athletic';
+const frailAssets = /elderly|bathrobe|alvarez/;
+const athleticAssets = /jogger|skater|college|sprinter/;
+export function l1SpeedTier(asset: string): InfectedSpeedTier {
+  return frailAssets.test(asset) ? 'frail' : athleticAssets.test(asset) ? 'athletic' : 'average';
+}
+/**
+ * Run speed of an L1 infected from its tier and a uniform sample `u` in [0, 1): base * (1 +/- jitter). The lower jitter
+ * bound is raised so every spawn outruns the running player by >= 0.5 % (the spec's frail tuning clause: >= 95 % above
+ * player run; this gives 100 %).
+ */
+export function l1TierSpeed(tier: InfectedSpeedTier, u: number): number {
+  const base = l1v2.speedTiers[tier].baseMs, jitter = l1v2.speedTiers.jitter;
+  const low = Math.max(-jitter, l1v2.player.runMs * 1.005 / base - 1);
+  return base * (1 + low + (jitter - low) * u);
 }

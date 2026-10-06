@@ -1,0 +1,1370 @@
+{
+  "date": "2026-10-06T17:06:23.682Z",
+  "reports": {
+    "desktop-50-current": {
+      "deterministic": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2979.3573885764754,
+            "jerkPeakMps3": 30601.804491193318,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 708.2760967932667,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1214.1875945027416,
+            "jerkPeakMps3": 12218.805178903554,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.060309362744708,
+        "heroAnkleSamples": 169,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.36050344418741354,
+          4.667475764563777
+        ],
+        "npcAnkleSamples": [
+          254,
+          254
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.1151160695544559,
+          0.16542261236134387
+        ],
+        "updateMsP50": 0.10000002384185791,
+        "updateMsP95": 0.19999992847442627,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 276363,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 583680,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      },
+      "realtime": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2968.8986518006063,
+            "jerkPeakMps3": 32367.715383360093,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615514
+          },
+          "civilian": {
+            "jerkRmsMps3": 719.8843280577332,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1234.087419527542,
+            "jerkPeakMps3": 12218.805178903554,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.06045757821754,
+        "heroAnkleSamples": 211,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.3605031787010083,
+          4.5854310013319814
+        ],
+        "npcAnkleSamples": [
+          353,
+          333
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.1151160695544559,
+          0.16542261236134387
+        ],
+        "updateMsP50": 0.10000002384185791,
+        "updateMsP95": 0.2999999523162842,
+        "renderSubmitMsP50": 0.5999999046325684,
+        "renderSubmitMsP95": 0.7000000476837158,
+        "frameMsP95": 16.700000000000728,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 276363,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 583680,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      },
+      "gpuSamplesMs": [
+        1.9867489999999999,
+        2.0242899999999997,
+        2.147208,
+        2.010373,
+        3.7659160000000003,
+        3.806875,
+        2.9559569999999997,
+        1.864499,
+        1.806958,
+        1.6767910000000001,
+        1.4209159999999998,
+        1.861249,
+        2.41325,
+        2.9595409999999998,
+        3.092582,
+        2.962791,
+        3.054124,
+        3.105125,
+        2.9563740000000003,
+        3.124373,
+        2.9535400000000003,
+        3.101374,
+        2.9662499999999996,
+        3.110665,
+        2.9707480000000004,
+        3.08279,
+        3.0017490000000002,
+        3.114624,
+        2.230874,
+        2.7695,
+        2.997582,
+        3.193499,
+        2.958333,
+        3.086124,
+        2.95404,
+        3.114916,
+        2.9547499999999998,
+        3.075665,
+        2.9393320000000003,
+        3.113708
+      ],
+      "emulation": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36"
+    },
+    "desktop-50-prototype": {
+      "deterministic": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2979.3573885764754,
+            "jerkPeakMps3": 30601.804491193318,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 7.850336379052821,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.000000000001876
+          },
+          "infected": {
+            "jerkRmsMps3": 10.859370936052464,
+            "jerkPeakMps3": 48.0000000001152,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000033
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.060309362744708,
+        "heroAnkleSamples": 169,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.3604275446739175,
+          0.7999864393280378
+        ],
+        "npcAnkleSamples": [
+          175,
+          189
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.009454602272348922,
+          0.04932607231333821
+        ],
+        "updateMsP50": 0.09999990463256836,
+        "updateMsP95": 0.10000002384185791,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 6,
+        "triangles": 276363,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 506880,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      },
+      "realtime": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2970.3901859246293,
+            "jerkPeakMps3": 32367.715383360093,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615514
+          },
+          "civilian": {
+            "jerkRmsMps3": 8.06672492597586,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000193
+          },
+          "infected": {
+            "jerkRmsMps3": 11.358782365309759,
+            "jerkPeakMps3": 48.0000000001152,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000193
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.06045757821754,
+        "heroAnkleSamples": 211,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.36036812362189524,
+          1.24648571936689
+        ],
+        "npcAnkleSamples": [
+          236,
+          242
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.010707902261115506,
+          0.04932607231333821
+        ],
+        "updateMsP50": 0.10000002384185791,
+        "updateMsP95": 0.5,
+        "renderSubmitMsP50": 0.3999999761581421,
+        "renderSubmitMsP95": 1.399999976158142,
+        "frameMsP95": 16.700000000000728,
+        "gpuMsP95": null,
+        "drawCalls": 6,
+        "triangles": 276363,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 506880,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      },
+      "gpuSamplesMs": [
+        4.647833,
+        3.374999,
+        3.51225,
+        3.721707,
+        3.850875,
+        3.707916,
+        3.9962910000000003,
+        3.8269979999999997,
+        3.804665,
+        3.720832,
+        3.859374,
+        3.7339990000000003,
+        3.831708,
+        3.87929,
+        3.858832,
+        3.756999,
+        3.863583,
+        1.707374,
+        2.284998,
+        2.4755409999999998,
+        2.358082,
+        2.93054,
+        3.432708,
+        3.9550410000000005,
+        3.7692490000000003,
+        3.851707,
+        3.78079,
+        3.919458,
+        3.789541,
+        3.2049160000000003,
+        1.394874,
+        1.901041,
+        2.014208,
+        2.118374,
+        2.344957,
+        2.693332,
+        3.018999,
+        3.885458,
+        3.876416,
+        3.9149570000000002
+      ],
+      "emulation": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36"
+    },
+    "desktop-200-current": {
+      "deterministic": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2979.3573885764754,
+            "jerkPeakMps3": 30601.804491193318,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 708.2760967932667,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1214.1875945027416,
+            "jerkPeakMps3": 12218.805178903554,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.060309362744708,
+        "heroAnkleSamples": 169,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.36050344418741354,
+          4.667475764563777
+        ],
+        "npcAnkleSamples": [
+          254,
+          254
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.1151160695544559,
+          0.16542261236134387
+        ],
+        "updateMsP50": 0.10000002384185791,
+        "updateMsP95": 0.20000004768371582,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 1077213,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 583680,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "realtime": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2970.3901859246293,
+            "jerkPeakMps3": 32367.715383360093,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615514
+          },
+          "civilian": {
+            "jerkRmsMps3": 720.2459881298105,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1234.7074082225313,
+            "jerkPeakMps3": 12218.805178903554,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.06045757821754,
+        "heroAnkleSamples": 211,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.3605031787010083,
+          4.5854310013319814
+        ],
+        "npcAnkleSamples": [
+          353,
+          333
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.1151160695544559,
+          0.16542261236134387
+        ],
+        "updateMsP50": 0.10000002384185791,
+        "updateMsP95": 0.3999999761581421,
+        "renderSubmitMsP50": 0.5,
+        "renderSubmitMsP95": 0.6000000238418579,
+        "frameMsP95": 16.800000000000182,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 1077213,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 583680,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "gpuSamplesMs": [
+        4.48025,
+        3.520499,
+        3.4233330000000004,
+        3.6389989999999997,
+        3.796791,
+        3.431375,
+        7.136291,
+        6.094999,
+        6.225541,
+        4.765041,
+        3.711333,
+        3.4424989999999998,
+        3.4379160000000004,
+        3.619541,
+        5.019666,
+        6.147582,
+        6.091708000000001,
+        6.201582,
+        5.996123,
+        3.8793320000000002,
+        2.7814569999999996,
+        4.107332,
+        4.476998,
+        5.562124,
+        6.102207,
+        4.015291,
+        3.444916,
+        3.623415,
+        3.764957,
+        5.325374,
+        4.093541,
+        6.285833,
+        4.818624,
+        3.7416650000000002,
+        4.123666,
+        5.605624,
+        6.80954,
+        7.048124,
+        3.508499,
+        2.946375
+      ],
+      "emulation": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36"
+    },
+    "desktop-200-prototype": {
+      "deterministic": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2979.3573885764754,
+            "jerkPeakMps3": 30601.804491193318,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 7.850336379052821,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.000000000001876
+          },
+          "infected": {
+            "jerkRmsMps3": 10.859370936052464,
+            "jerkPeakMps3": 48.0000000001152,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000033
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.060309362744708,
+        "heroAnkleSamples": 169,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.3604275446739175,
+          0.7999864393280378
+        ],
+        "npcAnkleSamples": [
+          175,
+          189
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.009454602272348922,
+          0.04932607231333821
+        ],
+        "updateMsP50": 0.10000002384185791,
+        "updateMsP95": 0.20000004768371582,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 6,
+        "triangles": 1077213,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 506880,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "realtime": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2970.3901859246293,
+            "jerkPeakMps3": 32367.715383360093,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615514
+          },
+          "civilian": {
+            "jerkRmsMps3": 8.06672492597586,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000193
+          },
+          "infected": {
+            "jerkRmsMps3": 11.358782365309759,
+            "jerkPeakMps3": 48.0000000001152,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000193
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.06045757821754,
+        "heroAnkleSamples": 211,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.36036812362189524,
+          1.24648571936689
+        ],
+        "npcAnkleSamples": [
+          236,
+          242
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.010707902261115506,
+          0.04932607231333821
+        ],
+        "updateMsP50": 0.10000002384185791,
+        "updateMsP95": 0.30000007152557373,
+        "renderSubmitMsP50": 0.2999999523162842,
+        "renderSubmitMsP95": 0.3999999761581421,
+        "frameMsP95": 16.800000000000182,
+        "gpuMsP95": null,
+        "drawCalls": 6,
+        "triangles": 1077213,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 506880,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "gpuSamplesMs": [
+        12.050082,
+        4.908832,
+        5.595457,
+        6.1950829999999995,
+        8.517123999999999,
+        5.909082,
+        4.0339160000000005,
+        5.341,
+        7.150333,
+        8.000291,
+        8.417250000000001,
+        7.726082,
+        6.421665,
+        3.8030410000000003,
+        5.312582000000001,
+        7.130998,
+        7.923124,
+        8.613458,
+        7.926083,
+        6.737123,
+        4.134916,
+        5.10525,
+        7.204748,
+        6.715874,
+        8.587999,
+        8.47429,
+        8.723833,
+        8.995457,
+        8.520623,
+        8.37775,
+        6.489249,
+        4.025374,
+        5.1132480000000005,
+        6.988208,
+        7.933916,
+        8.645332,
+        8.184999,
+        5.967875,
+        3.851291,
+        5.218832
+      ],
+      "emulation": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36"
+    },
+    "joint-weights": {
+      "current": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2162.3644260033852,
+            "jerkPeakMps3": 20240.261092708308,
+            "turnPeakDegPerFrame": 12.000000000000005,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 721.4803573488824,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1236.8234697409391,
+            "jerkPeakMps3": 12218.805178903547,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.0074336366973635,
+        "heroAnkleSamples": 78,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.36049986790954847,
+          4.667475764563777
+        ],
+        "npcAnkleSamples": [
+          147,
+          134
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.1151160695544559,
+          0.16542261236134387
+        ],
+        "updateMsP50": 0,
+        "updateMsP95": 0.10000002384185791,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 14752,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 583680,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      },
+      "prototype": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2162.3644260033852,
+            "jerkPeakMps3": 20240.261092708308,
+            "turnPeakDegPerFrame": 12.000000000000005,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 8.160410180543956,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000033
+          },
+          "infected": {
+            "jerkRmsMps3": 11.755318731161365,
+            "jerkPeakMps3": 48.00000000010193,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000033
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.0074336366973635,
+        "heroAnkleSamples": 78,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.35967824736654314,
+          1.462800336004189
+        ],
+        "npcAnkleSamples": [
+          108,
+          123
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.009454602272348922,
+          0.04932607231333821
+        ],
+        "updateMsP50": 0,
+        "updateMsP95": 0.10000002384185791,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 6,
+        "triangles": 14752,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 506880,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      }
+    },
+    "mesh2motion": {
+      "current": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2162.3644260033852,
+            "jerkPeakMps3": 20240.261092708308,
+            "turnPeakDegPerFrame": 12.000000000000005,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 721.4803573488824,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1236.8234697409391,
+            "jerkPeakMps3": 12218.805178903547,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.0074336366973635,
+        "heroAnkleSamples": 78,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.36049986790954847,
+          4.667475764563777
+        ],
+        "npcAnkleSamples": [
+          147,
+          134
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.1151160695544559,
+          0.16542261236134387
+        ],
+        "updateMsP50": 0.09999990463256836,
+        "updateMsP95": 0.10000002384185791,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 14752,
+        "candidate": "mesh2motion",
+        "animationTextureBytes": 583680,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      },
+      "prototype": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2162.3644260033852,
+            "jerkPeakMps3": 20240.261092708308,
+            "turnPeakDegPerFrame": 12.000000000000005,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 8.160410180543956,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000033
+          },
+          "infected": {
+            "jerkRmsMps3": 11.755318731161365,
+            "jerkPeakMps3": 48.00000000010193,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000033
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 16.511904711186137,
+        "heroAnkleSamples": 83,
+        "heroTransitionLandmarkPeakM": 0.08922091273444017,
+        "npcAnkleStanceDriftP95Mps": [
+          0.35967824736654314,
+          1.462800336004189
+        ],
+        "npcAnkleSamples": [
+          108,
+          123
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.009454602272348922,
+          0.04932607231333821
+        ],
+        "updateMsP50": 0,
+        "updateMsP95": 0.10000002384185791,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 6,
+        "triangles": 14752,
+        "candidate": "mesh2motion",
+        "animationTextureBytes": 506880,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      }
+    },
+    "pixel7-50-current": {
+      "deterministic": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2979.3573885764754,
+            "jerkPeakMps3": 30601.804491193318,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 708.2760967932667,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1214.1875945027416,
+            "jerkPeakMps3": 12218.805178903554,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.060309362744708,
+        "heroAnkleSamples": 169,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.36050344418741354,
+          4.667475764563777
+        ],
+        "npcAnkleSamples": [
+          254,
+          254
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.1151160695544559,
+          0.16542261236134387
+        ],
+        "updateMsP50": 0.10000002384185791,
+        "updateMsP95": 0.8999999761581421,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 5,
+        "triangles": 273721,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 583680,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      },
+      "realtime": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2968.8986518006063,
+            "jerkPeakMps3": 32367.715383360093,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615514
+          },
+          "civilian": {
+            "jerkRmsMps3": 719.8843280577332,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1234.087419527542,
+            "jerkPeakMps3": 12218.805178903554,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.06045757821754,
+        "heroAnkleSamples": 211,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.3605031787010083,
+          4.5854310013319814
+        ],
+        "npcAnkleSamples": [
+          353,
+          333
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.1151160695544559,
+          0.16542261236134387
+        ],
+        "updateMsP50": 0.5,
+        "updateMsP95": 1,
+        "renderSubmitMsP50": 1.899999976158142,
+        "renderSubmitMsP95": 2.8000000715255737,
+        "frameMsP95": 16.700000000000728,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 276363,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 583680,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      },
+      "gpuSamplesMs": [
+        1.7578740000000002,
+        2.135916,
+        1.832624,
+        1.9748320000000001,
+        1.898166,
+        1.8105820000000001,
+        1.841791,
+        1.786457,
+        1.7339579999999999,
+        1.8789580000000001,
+        1.848457,
+        1.835623,
+        1.7587899999999999,
+        1.7700820000000002,
+        1.835082,
+        1.803666,
+        1.824416,
+        1.6874989999999999,
+        1.7977070000000002,
+        1.8187069999999999,
+        1.754333,
+        1.68175,
+        1.831458,
+        1.799208,
+        1.810249,
+        1.7149579999999998,
+        1.8145829999999998,
+        1.839624,
+        1.712957,
+        1.8055409999999998,
+        1.813582,
+        1.692208,
+        1.839957,
+        1.860498,
+        1.6999570000000002,
+        1.849623,
+        1.833291,
+        1.694124,
+        1.789832,
+        1.833083
+      ],
+      "emulation": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Mobile Safari/537.36"
+    },
+    "pixel7-50-prototype": {
+      "deterministic": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2979.3573885764754,
+            "jerkPeakMps3": 30601.804491193318,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 7.850336379052821,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.000000000001876
+          },
+          "infected": {
+            "jerkRmsMps3": 10.859370936052464,
+            "jerkPeakMps3": 48.0000000001152,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000033
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.060309362744708,
+        "heroAnkleSamples": 169,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.3604275446739175,
+          0.7999864393280378
+        ],
+        "npcAnkleSamples": [
+          175,
+          189
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.009454602272348922,
+          0.04932607231333821
+        ],
+        "updateMsP50": 0.10000002384185791,
+        "updateMsP95": 0.8000000715255737,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 6,
+        "triangles": 276363,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 506880,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      },
+      "realtime": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2968.8986518006063,
+            "jerkPeakMps3": 32367.715383360093,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615514
+          },
+          "civilian": {
+            "jerkRmsMps3": 8.063613645037535,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000193
+          },
+          "infected": {
+            "jerkRmsMps3": 11.356280787122888,
+            "jerkPeakMps3": 48.0000000001152,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000193
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.06045757821754,
+        "heroAnkleSamples": 211,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.36036812362189524,
+          1.24648571936689
+        ],
+        "npcAnkleSamples": [
+          236,
+          242
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.010707902261115506,
+          0.04932607231333821
+        ],
+        "updateMsP50": 0.3999999761581421,
+        "updateMsP95": 1,
+        "renderSubmitMsP50": 1.2999999523162842,
+        "renderSubmitMsP95": 1.8000000715255737,
+        "frameMsP95": 16.800000000000182,
+        "gpuMsP95": null,
+        "drawCalls": 6,
+        "triangles": 276363,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 506880,
+        "infectedDraws": 1,
+        "count": 50,
+        "backend": "webgl"
+      },
+      "gpuSamplesMs": [
+        2.625249,
+        2.626916,
+        2.749999,
+        2.563249,
+        1.372125,
+        1.139541,
+        1.5370819999999998,
+        1.6252479999999998,
+        2.514165,
+        2.557957,
+        2.36579,
+        2.582083,
+        1.2635,
+        1.603999,
+        1.62404,
+        2.34279,
+        1.998915,
+        2.440748,
+        2.468833,
+        2.345832,
+        2.478999,
+        2.556957,
+        2.479999,
+        2.379625,
+        2.484665,
+        1.981707,
+        2.499415,
+        2.488208,
+        2.347249,
+        2.466416,
+        1.395416,
+        1.408124,
+        1.905498,
+        2.046124,
+        2.494208,
+        2.465915,
+        2.379041,
+        2.517582,
+        2.480624,
+        2.6240829999999997
+      ],
+      "emulation": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Mobile Safari/537.36"
+    },
+    "pixel7-200-current": {
+      "deterministic": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2979.3573885764754,
+            "jerkPeakMps3": 30601.804491193318,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 708.2760967932667,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1214.1875945027416,
+            "jerkPeakMps3": 12218.805178903554,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.060309362744708,
+        "heroAnkleSamples": 169,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.36050344418741354,
+          4.667475764563777
+        ],
+        "npcAnkleSamples": [
+          254,
+          254
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.1151160695544559,
+          0.16542261236134387
+        ],
+        "updateMsP50": 0.3999999761581421,
+        "updateMsP95": 0.8999999761581421,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 5,
+        "triangles": 1074571,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 583680,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "realtime": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2970.3901859246293,
+            "jerkPeakMps3": 32367.715383360093,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615514
+          },
+          "civilian": {
+            "jerkRmsMps3": 720.2459881298105,
+            "jerkPeakMps3": 7127.636354360413,
+            "turnPeakDegPerFrame": 6.875493541569885,
+            "angularAccelerationPeakRadps2": 432.0000000000004
+          },
+          "infected": {
+            "jerkRmsMps3": 1234.7074082225313,
+            "jerkPeakMps3": 12218.805178903554,
+            "turnPeakDegPerFrame": 90,
+            "angularAccelerationPeakRadps2": 5654.866776461628
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.06045757821754,
+        "heroAnkleSamples": 211,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.3605031787010083,
+          4.5854310013319814
+        ],
+        "npcAnkleSamples": [
+          353,
+          333
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.1151160695544559,
+          0.16542261236134387
+        ],
+        "updateMsP50": 0.6000000238418579,
+        "updateMsP95": 1.3000000715255737,
+        "renderSubmitMsP50": 2,
+        "renderSubmitMsP95": 2.700000047683716,
+        "frameMsP95": 16.700000000000728,
+        "gpuMsP95": null,
+        "drawCalls": 57,
+        "triangles": 1077213,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 583680,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "gpuSamplesMs": [
+        2.348123,
+        2.19779,
+        2.388915,
+        2.864791,
+        3.7635,
+        2.753748,
+        2.073332,
+        2.842083,
+        2.807874,
+        4.559874,
+        2.487916,
+        2.296416,
+        3.167749,
+        4.321540000000001,
+        4.994248,
+        4.86604,
+        4.901083,
+        4.814041,
+        4.722416,
+        4.860165,
+        4.85029,
+        4.852873,
+        4.597333,
+        4.846207,
+        4.709708,
+        4.609041,
+        4.626791,
+        4.723915,
+        4.923999,
+        4.958374,
+        4.851916,
+        4.6003750000000005,
+        4.9829989999999995,
+        4.851041,
+        4.6462069999999995,
+        4.7362899999999994,
+        4.812375,
+        4.693958,
+        4.775791,
+        4.753208
+      ],
+      "emulation": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Mobile Safari/537.36"
+    },
+    "pixel7-200-prototype": {
+      "deterministic": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2979.3573885764754,
+            "jerkPeakMps3": 30601.804491193318,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615506
+          },
+          "civilian": {
+            "jerkRmsMps3": 7.850336379052821,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.000000000001876
+          },
+          "infected": {
+            "jerkRmsMps3": 10.859370936052464,
+            "jerkPeakMps3": 48.0000000001152,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000033
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.060309362744708,
+        "heroAnkleSamples": 169,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.3604275446739175,
+          0.7999864393280378
+        ],
+        "npcAnkleSamples": [
+          175,
+          189
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.009454602272348922,
+          0.04932607231333821
+        ],
+        "updateMsP50": 0.2999999523162842,
+        "updateMsP95": 0.8999999761581421,
+        "renderSubmitMsP50": 0,
+        "renderSubmitMsP95": 0,
+        "frameMsP95": 0,
+        "gpuMsP95": null,
+        "drawCalls": 6,
+        "triangles": 1077213,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 506880,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "realtime": {
+        "roots": {
+          "survivor": {
+            "jerkRmsMps3": 2970.3901859246293,
+            "jerkPeakMps3": 32367.715383360093,
+            "turnPeakDegPerFrame": 12.000000000000018,
+            "angularAccelerationPeakRadps2": 753.9822368615514
+          },
+          "civilian": {
+            "jerkRmsMps3": 8.06672492597586,
+            "jerkPeakMps3": 48.00000000005852,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000193
+          },
+          "infected": {
+            "jerkRmsMps3": 11.358782365309759,
+            "jerkPeakMps3": 48.0000000001152,
+            "turnPeakDegPerFrame": 4.2971834634811845,
+            "angularAccelerationPeakRadps2": 12.00000000000193
+          }
+        },
+        "heroAnkleStanceDriftP95Mps": 2.06045757821754,
+        "heroAnkleSamples": 211,
+        "heroTransitionLandmarkPeakM": 0.05289993203487212,
+        "npcAnkleStanceDriftP95Mps": [
+          0.36036812362189524,
+          1.24648571936689
+        ],
+        "npcAnkleSamples": [
+          236,
+          242
+        ],
+        "npcTransitionHeadPopPeakM": [
+          0.010707902261115506,
+          0.04932607231333821
+        ],
+        "updateMsP50": 0.5,
+        "updateMsP95": 1,
+        "renderSubmitMsP50": 1.100000023841858,
+        "renderSubmitMsP95": 1.7000000476837158,
+        "frameMsP95": 16.800000000000182,
+        "gpuMsP95": null,
+        "drawCalls": 6,
+        "triangles": 1077213,
+        "candidate": "joint-weights",
+        "animationTextureBytes": 506880,
+        "infectedDraws": 1,
+        "count": 200,
+        "backend": "webgl"
+      },
+      "gpuSamplesMs": [
+        11.538458,
+        3.6266659999999997,
+        3.63854,
+        4.447791,
+        5.928708,
+        6.632582,
+        7.141083,
+        6.995875,
+        6.981832,
+        6.031458,
+        5.564957,
+        2.937623,
+        4.102375,
+        6.276791,
+        5.973083,
+        3.685083,
+        4.34929,
+        5.211249,
+        5.064291000000001,
+        3.310541,
+        3.689082,
+        5.945374,
+        3.909499,
+        3.506374,
+        3.6892490000000002,
+        3.3763739999999998,
+        5.2501240000000005,
+        7.089207,
+        6.904499,
+        3.605082,
+        4.603207,
+        4.328374,
+        4.798541,
+        5.550416,
+        5.822624,
+        7.058541,
+        7.024249,
+        7.2225,
+        3.598458,
+        3.6812069999999997
+      ],
+      "emulation": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Mobile Safari/537.36"
+    }
+  },
+  "errors": []
+}

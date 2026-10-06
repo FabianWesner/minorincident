@@ -8,6 +8,7 @@ import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
 import { ObjectiveMarker } from './ObjectiveMarker';
 import { VehicleView } from './VehicleView';
+import { BicycleView } from './BicycleView';
 import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
 import type { SurvivorState } from '../data/survivor';
@@ -31,6 +32,8 @@ import type { TimeOfDay } from '../data/timeOfDay';
 import { Vector3 } from 'three';
 import { VehicleFeedback } from './vfx/VehicleFeedback';
 import { Vfx, type VfxSettings } from './vfx/Vfx';
+import { LabAccidentFx } from './vfx/labAccident';
+import { labAccidentTargets, anchorLookup } from './vfx/labAccidentView';
 import { DistrictAssets } from '../assets/DistrictAssets';
 import { Grass, windPhase } from './Grass';
 import { DistrictView } from './DistrictView';
@@ -54,6 +57,7 @@ export class GameView implements Lifecycle {
   renderedFrames = 0;
   private readonly meshes: Mesh[] = [];
   private vehicles: VehicleView | null = null;
+  private bicycle: BicycleView | null = null;
   private actions: ActionView | null = null;
   private contactShadows: ContactShadows | null = null;
   private crowd: CrowdView | null = null;
@@ -65,6 +69,7 @@ export class GameView implements Lifecycle {
   private interactions: InteractionView | null = null;
   private entityAssets: EntityAssets | null = null;
   vfx: Vfx | null = null;
+  private labAccident: LabAccidentFx | null = null;
   private vehicleFeedback: VehicleFeedback | null = null;
   private readonly vfxSettings: VfxSettings = {};
   private hitStopTick = 0;
@@ -204,6 +209,7 @@ export class GameView implements Lifecycle {
     if (this.world.missions) { this.marker = new ObjectiveMarker(this.world); this.scene.add(this.marker); }
     if (this.crowd) this.scene.add(this.crowd);
     if (this.vehicles) this.scene.add(this.vehicles);
+    if (this.bicycle) this.scene.add(this.bicycle);
     t = loadMeasure('view:actors', t);
     if (this.world.combat && this.materials) {
       this.vehicleFeedback = new VehicleFeedback(this.materials); this.scene.add(this.vehicleFeedback);
@@ -217,6 +223,7 @@ export class GameView implements Lifecycle {
         shake: strength => this.view.shake(strength),
       });
       this.vfx.set({ ...this.vfxSettings, quality: this.quality }); this.scene.add(this.vfx);
+      if (this.world.scenario === 'L1') { this.labAccident = new LabAccidentFx(this.world, this.vfx, labAccidentTargets(this.scene, s => this.view.shake(s)), anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; }
       this.crowd?.setGoreEnabled(this.vfx.snapshot().enabled && this.vfx.snapshot().gore === 'Full');
       const survivor = this.world.entities.get(1)?.survivor;
       this.frozenPose = survivor ? structuredClone(survivor) : null;
@@ -235,7 +242,7 @@ export class GameView implements Lifecycle {
       this.lighting?.update(this.view);
       // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
-      const restore = this.vfx?.prewarm(focus.x, focus.z);
+      const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
       try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); }))); }
       finally { restore?.(); }
     } else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
@@ -252,8 +259,9 @@ export class GameView implements Lifecycle {
     if (this.character && this.world.combat) this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!);
     if (this.world.interactables && this.materials) { this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); }
     if (this.world.vehicles?.cars.size && this.materials) this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low');
+    if (this.world.vehicles?.bicycle.entity && this.materials) this.bicycle = new BicycleView(this.world, this.materials);
     const actions = this.actions;
-    return Promise.all([this.npcs?.init(), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load()]);
+    return Promise.all([this.npcs?.init(), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
   }
   /** Deferred L1 work: the route's close-view LOD0 prototypes (high tier only; the low tier never
    * draws them), nearest first, after the first playable frames. The load gate slices GLB parsing
@@ -298,7 +306,7 @@ export class GameView implements Lifecycle {
     return true;
   }
   /** Real render seconds, deliberately independent of sim ticks/time scale. */
-  frame(seconds: number): void { this.vfx?.advance(Math.min(1, seconds)); }
+  frame(seconds: number): void { const dt = Math.min(1, seconds); this.vfx?.advance(dt); this.labAccident?.advance(dt); }
   advance(seconds: number): void {
     this.districts?.advance(seconds);
     const player = this.world.entities.get(1);
@@ -360,7 +368,7 @@ export class GameView implements Lifecycle {
     if (patch.colorblind !== undefined) this.vfxSettings.colorblind = patch.colorblind;
     if (patch.vfx !== undefined) this.vfxSettings.vfx = patch.vfx;
     if (patch.gore !== undefined) this.vfxSettings.gore = patch.gore;
-    if (patch.flashReduction !== undefined) this.vfxSettings.flashReduction = patch.flashReduction;
+    if (patch.flashReduction !== undefined) { this.vfxSettings.flashReduction = patch.flashReduction; if (this.labAccident) this.labAccident.flashReduction = patch.flashReduction; }
     if (patch.quality !== undefined) this.vfxSettings.quality = patch.quality;
     if (patch.cameraShake !== undefined) { this.view.cameraShake = patch.cameraShake; this.advance(0); }
     if (patch.bloom !== undefined && this.postFx) this.postFx.bloomEnabled.value = Number(patch.bloom);
@@ -405,6 +413,8 @@ export class GameView implements Lifecycle {
       // Portrait hero readability supplements the seven-metre camera floor; collision stays in metres.
       this.character.scale.setScalar(this.camera.aspect < 1 ? 1.25 : 1);
       this.character.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha) - 0.7, lerp(previous?.z ?? current.z, current.z, alpha));
+      // Riding: sit on the saddle (the bicycle view slides its seat under the rider's feet; hips sit ~0.35 m above the ground pose).
+      if (this.world.vehicles?.bicycle.riding) this.character.position.y += .35;
       const from = previous?.yaw ?? current.yaw;
       this.character.face(from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60);
       const stopped = this.vfx?.hitStop.active(this.vfx.time) ?? false;
@@ -415,7 +425,11 @@ export class GameView implements Lifecycle {
         this.frozenPose.velocity = velocity; Object.assign(velocity, survivor.velocity);
         this.frozenPose.checkpoint = checkpoint; Object.assign(checkpoint, survivor.checkpoint);
       }
-      this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha);
+      // E19 courier: the bicycle sim (lane F) marks the rider; the bike's crank/steer drive the pose.
+      const riding = (this.world.entities.get(1) as { riding?: number } | undefined)?.riding;
+      const bike = riding === undefined ? undefined : (this.world.entities.get(riding) as { bicycle?: { pedal: number; steer: number } } | undefined)?.bicycle;
+      this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
+        riding === undefined ? undefined : { pedal: bike?.pedal ?? this.world.tick * .12, steer: bike?.steer ?? 0 });
     }
     if (this.cube && current) {
       this.cube.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha), lerp(previous?.z ?? current.z, current.z, alpha));
@@ -430,11 +444,13 @@ export class GameView implements Lifecycle {
     if (this.character) this.character.visible = !this.world.entities.get(1)?.hidden;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.vehicles); }
     this.vehicles?.update(alpha);
+    if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.scene.add(this.bicycle); }
+    this.bicycle?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); this.missionUI?.update(this.camera,innerWidth,innerHeight);
-    this.crowd?.update(this.view); this.contactShadows?.update(); this.actions?.update();
+    this.crowd?.update(this.view, alpha); this.contactShadows?.update(); this.actions?.update();
     this.entityAssets?.update();
-    this.interactions?.update(this.camera); this.npcs?.update(this.camera);
+    this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha);
     this.flashOverlay.style.opacity = String(this.vfx?.flash ?? 0);
     this.lighting?.update(this.view); this.districts?.updateLods(this.view);
     this.districts?.cull(this.view, this.quality);
@@ -489,12 +505,14 @@ export class GameView implements Lifecycle {
     this.generation++; this.pendingPreparation = null; this.preparation = null; loadGate.setPaced(false);
     this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;
     if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }
+    this.labAccident?.dispose(); this.labAccident = null;
     if (this.vfx) { this.scene.remove(this.vfx); this.vfx.dispose(); this.vfx = null; }
     if (this.vehicleFeedback) { this.scene.remove(this.vehicleFeedback); this.vehicleFeedback.dispose(); this.vehicleFeedback = null; }
     this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;}
     if (this.interactions) { this.scene.remove(this.interactions); this.interactions.dispose(); this.interactions = null; }
     if (this.entityAssets) { this.scene.remove(this.entityAssets); this.entityAssets.dispose(); this.entityAssets = null; }
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
+    if (this.bicycle) { this.scene.remove(this.bicycle); this.bicycle.dispose(); this.bicycle = null; }
     this.windowMask=false; this.foliageMask=false;
     for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();
     for (const material of this.foliageIdMasks.values()) material.dispose(); this.foliageIdMasks.clear();

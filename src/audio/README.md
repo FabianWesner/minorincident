@@ -21,10 +21,11 @@ tinnitus (strictly inside 4 m), and haptics. `diegetic` sources are spatial; eme
 radio uses dialogue ducking and `inCar` applies a 2.4 kHz low-pass.
 
 The cue table maps all sim event types, including silent control events, archetype
-telegraphs, surfaces and materials. Sprite offsets/durations are seconds. All assets
-are original procedural placeholders built with `npx tsx tools/audio/build.ts`
-(requires a local FFmpeg with Opus/AAC encoders). This produces both formats and
-`public/assets/audio/LICENSES.md` with per-file hashes. The loader tries Opus, then
+telegraphs, surfaces and materials. Sprite offsets/durations are seconds. Licensed
+recordings and residual procedural system cues are built with
+`npx tsx tools/audio/build.ts` (requires FFmpeg with Opus/AAC encoders, curl and bsdtar).
+This produces both formats and `public/assets/audio/LICENSES.md` with per-file hashes.
+The loader tries Opus, then
 AAC, decodes each category once, and never queues a play while locked or away.
 The production graph is also used by the query-gated native offline renderer.
 
@@ -43,3 +44,47 @@ offline renders. `tools/audio/measure.ts` independently measures these WAVs with
 FFT/autocorrelation/Schroeder decay and FFmpeg EBU R128 with true-peak analysis.
 The traversal bot covers every currently authored L1 objective; the E19 campaign
 mission-completion bot remains a separate contract.
+# Recorded score and Foley
+
+The adaptive score streams stereo recordings via `StreamedMusic` into the existing
+music bus. `MusicDirector` chooses calm, tension, combat and aftermath at bar
+boundaries; two-second fades wait for the incoming recording to start. Objective
+events begin the diner tension/stinger and store combat; completed levels resolve
+to aftermath. Blur, mute, hidden, freeze and interruption pause media as well as
+the AudioContext. Filtered recorded excerpts supply low-level accent layers.
+
+`AudioRegistry` chooses four sprite variants without immediate repetition and
+applies ±1 dB gain and ±3% pitch variation to core Foley. Telegraph gain/pitch
+remain stable for information and timing. Cue logs retain logical cue IDs and
+record the physical `variant` slice. Hit events play flesh impacts at the target;
+swing events play separate recorded bamboo swooshes.
+
+Rebuild with `npx tsx tools/audio/build.ts` (FFmpeg, curl, bsdtar required). Masters
+are cached outside git at `AUDIO_MASTER_CACHE` or the system temporary directory.
+`assets/audio/imports.json` pins downloads, archive members and hashes, and maps
+every recorded sprite slice. The builder rejects changed, silent or truncated
+masters and writes both license ledgers. `--score-only` rebuilds streamed music;
+category arguments rebuild selected sprites while preserving all provenance.
+
+The headless live capture runs with:
+`E2E_PORT=3351 sh tools/e2e-lock.sh npx playwright test tests/e2e/audio/preview.spec.ts --project=chromium --workers=1`.
+It taps the final production PCM into WAVs without audible OS output, exercises
+the authored diner incident and store fight, and exports loudness/peak/gap/log
+measurements alongside three previews. `AUDIO_PREVIEW_DIR` overrides their location.
+
+Streams start only in L1–L6 missions, with at most four cached, lazily created
+decks. Acoustic tier refreshes preserve the score and cue history. Four reserved
+slots keep combined sprite/media voices within 32 high / 16 low. Music files
+measure approximately −18 LUFS; SFX and voice bus trims are −2 and −1.5 dB.
+Per-file grants, authors and provenance are in `assets/audio/LICENSES.md` and
+`assets/audio/imports.json`; research and rejected sources are documented in
+`epics-pipeline/audio-research.md`.
+
+## L1 v2 sound arc (lane H)
+
+`L1Arc.ts` (`L1ArcDirector`) is pure logic on audio time: calm layer until the `l1.flicker`/`l1.blast` events, accident cues
+(buzz, muffled blast, glass rattle, ~1.2 s ringing + the tinnitus low-pass, bell, screams), calm beds -12 dB within 3 s then
+faded out, and a chaos layer whose intensity follows the live infected count (cap `l1v2.sound.chaosMaxInfected`).
+`AudioService` feeds it the `l1.*` events and applies the frame. Cues live in sprite `l1arc` (self-made MIT synthesis, ledger
+in `public/assets/audio/LICENSES.md`). The fire-station interior is any `interior-*` acoustic zone during chaos (muffles the
+ambience bus, adds a hush bed); `level.completed` plays `l1.outro.sting`.
