@@ -563,7 +563,7 @@ l.zone('lab-nobike-zone', [(CX0, CZ0), (CX1, CZ0), (CX1, FENCE_Z), (CX0, FENCE_Z
 l.zone('garage-nobike-zone', [(gx - 3.4, GARAGE_FRONT - 1.4), (gx + 3.4, GARAGE_FRONT - 1.4), (gx + 3.4, GARAGE_FRONT + gdx + .4), (gx - 3.4, GARAGE_FRONT + gdx + .4)])
 fx0, fz0 = anchors['fire-bay-door']
 l.zone('fire-nobike-zone', [(FS_X - 6.2, SFRONT), (FS_X + 6.2, SFRONT), (FS_X + 6.2, FS_Z + fdx / 2 + .5), (FS_X - 6.2, FS_Z + fdx / 2 + .5)])
-l.zone('carwash-bay', [(CW_X - 2.5, CW_Z - 5), (CW_X + 2.5, CW_Z - 5), (CW_X + 2.5, CW_Z + 5), (CW_X - 2.5, CW_Z + 5)])
+l.zone('carwash-bay', [(CW_X - cwx / 2, CW_Z - cwz / 2), (CW_X + cwx / 2, CW_Z - cwz / 2), (CW_X + cwx / 2, CW_Z + cwz / 2), (CW_X - cwx / 2, CW_Z + cwz / 2)])
 
 # Plausibility problems (overlaps) are written next to the build cache and fail the build in tests/unit/layouts/d-grove.test.ts
 from pathlib import Path
