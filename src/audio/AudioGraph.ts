@@ -63,7 +63,7 @@ export class AudioGraph {
     private readonly impulses = new Map<ReverbPreset, AudioBuffer>();
     private radioUntil = 0;
     private megaUntil = 0;
-    constructor(readonly context: BaseAudioContext, readonly tier: 'high' | 'low' = 'high', mutedOutput = false) {
+    constructor(readonly context: BaseAudioContext, public tier: 'high' | 'low' = 'high', mutedOutput = false) {
         this.limiter = new VoiceLimiter(tier);
         this.master = context.createGain();
         this.master.gain.value = 2;
@@ -117,7 +117,7 @@ export class AudioGraph {
             node.connect(bus === 'music' ? this.musicFilter : bus === 'ambience' ? this.ambienceFilter : bus === 'dialogue' || bus === 'barks' ? this.voice : ['weapons', 'impacts', 'vehicles', 'props', 'gore'].includes(bus) ? this.sfx : this.master);
             this.buses[bus] = node;
         }
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < (tier === 'high' ? 2 : 1); i++) {
             const node = context.createConvolver(), gain = context.createGain();
             node.normalize = false;
             node.buffer = this.ir('street');
@@ -126,6 +126,21 @@ export class AudioGraph {
             this.zones.push({ preset: 'street', node, gain });
         }
         this.setListener(this.listener);
+    }
+    /** Shared E18 quality hook; trim existing voices and switch convolution/panning in place. */
+    setTier(tier: 'high' | 'low'): void {
+        if (this.tier === tier) return;
+        this.tier = tier; this.limiter.setTier(tier); this.impulses.clear();
+        if (tier === 'low' && this.zones.length > 1) { const zone = this.zones.pop()!; zone.node.disconnect(); zone.gain.disconnect(); }
+        if (tier === 'high' && this.zones.length < 2) {
+            const node = this.context.createConvolver(), gain = this.context.createGain(); node.normalize = false; gain.gain.value = 0;
+            node.connect(gain).connect(this.master); this.zones.push({ preset: 'street', node, gain });
+        }
+        for (const zone of this.zones) zone.node.buffer = this.ir(zone.preset);
+        for (const voice of this.active.values()) {
+            if (voice.panner) voice.panner.panningModel = tier === 'high' ? 'HRTF' : 'equalpower';
+            voice.send.disconnect(); voice.send.connect(this.zones[0].node);
+        }
     }
     private ir(preset: ReverbPreset): AudioBuffer {
         if (!this.impulses.has(preset))
@@ -165,7 +180,7 @@ export class AudioGraph {
     }
     setMono(on: boolean): void { const t = this.context.currentTime; this.mono.gain.setValueAtTime(on ? 1 : 0, t); this.stereo.gain.setValueAtTime(on ? 0 : 1, t); }
     private zone(preset: ReverbPreset, source: boolean, time: number): ConvolverNode {
-        const slot = this.zones[source ? 1 : 0];
+        const slot = this.zones[source && this.tier === 'high' ? 1 : 0];
         if (slot.preset !== preset) {
             slot.gain.gain.cancelScheduledValues(time);
             slot.gain.gain.setValueAtTime(0, time);

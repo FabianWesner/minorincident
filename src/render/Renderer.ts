@@ -3,8 +3,11 @@ import { WebGPURenderer } from 'three/webgpu';
 
 /** Automatic WebGPU → WebGL2 fallback; backend is read after renderer.init(), not inferred from navigator. */
 export class Renderer extends WebGPURenderer {
-  constructor(params: URLSearchParams) {
-    super({ antialias: true, forceWebGL: params.get('renderer') === 'webgl' });
+  constructor(params: URLSearchParams, canvas?: HTMLCanvasElement) {
+    super({ antialias: true, forceWebGL: params.get('renderer') === 'webgl', ...(canvas ? { canvas } : {}) });
+    // Game owns recovery and pauses before another draw can reach the lost backend.
+    const report = this.onDeviceLost;
+    this.onDeviceLost = info => { if (info.api !== 'WebGL') report.call(this, info); };
     // Game owns RAF and resets once per rendered frame, including explicit paused captures.
     this.info.autoReset = false;
   }

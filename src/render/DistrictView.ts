@@ -16,6 +16,7 @@ import {
 import type { DistrictWorld } from "../sim/world/DistrictWorld";
 import type { DistrictAssets } from "../assets/DistrictAssets";
 import type { Materials } from "./Materials";
+import { worldAssets } from "../assets/worldDefinitions";
 import { InstancedGroup } from "./InstancedGroup";
 import { Grass, windPhase } from "./Grass";
 import { resolvePosition } from "../levels/districts/validate";
@@ -28,6 +29,7 @@ export class DistrictView extends Group {
   readonly windows: Mesh[] = [];
 
   private readonly grass: Grass[] = [];
+  private readonly districtRoots: { root: Group; minX: number; maxX: number; minZ: number; maxZ: number }[] = [];
   private readonly ownedGeometry: BufferGeometry[] = [];
   private readonly ownedMaterials: Material[] = [];
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
@@ -51,7 +53,7 @@ export class DistrictView extends Group {
         const root = new Group();
         root.name = d.id;
         root.position.set(d.origin[0], 0, d.origin[1]);
-        this.add(root);
+        this.add(root); this.districtRoots.push({ root, minX: d.origin[0] + Math.min(...d.layout.bounds.map(p => p[0])), maxX: d.origin[0] + Math.max(...d.layout.bounds.map(p => p[0])), minZ: d.origin[1] + Math.min(...d.layout.bounds.map(p => p[1])), maxZ: d.origin[1] + Math.max(...d.layout.bounds.map(p => p[1])) });
         const scenes = await Promise.all(
           Array.from({ length: this.world.composition.tier + 1 }, (_, tier) =>
             this.registry.glb(
@@ -209,6 +211,22 @@ export class DistrictView extends Group {
     const mesh = new Mesh(geometry, material);
     mesh.position.fromArray(p);
     root.add(mesh);
+  }
+  /** Cull whole off-camera district slabs on low; Three still frustum-culls their individual batches. */
+  cull(focus: { x: number; z: number }, tier: 'high' | 'low'): void {
+    for (const { root, minX, maxX, minZ, maxZ } of this.districtRoots) {
+      const dx = Math.max(minX - focus.x, 0, focus.x - maxX);
+      const dz = Math.max(minZ - focus.z, 0, focus.z - maxZ);
+      root.visible = tier === 'high' || dx * dx + dz * dz <= 60 * 60;
+    }
+  }
+  setQuality(tier: 'high' | 'low'): void {
+    for (const grass of this.grass) grass.visible = tier === 'high';
+    // Measured L6 cost: many small prop meshes render again into the sun shadow map.
+    // Low preserves building/vehicle/hero shadows and omits detailed prop shadow casters.
+    for (const batch of this.batches) if (worldAssets[batch.name.slice(5)].category === 'prop') batch.traverse(node => {
+      if (node instanceof Mesh) { node.userData.qualityCastShadow ??= node.castShadow; node.castShadow = tier === 'high' && node.userData.qualityCastShadow; }
+    });
   }
   advance(seconds: number): void {
     this.phase.value += seconds;

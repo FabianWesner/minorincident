@@ -48,6 +48,7 @@ export class Mission {
     if (this.state.phase !== 'briefing') return;
     this.state.phase = 'playing'; this.run(this.def.onStart); this.activate(); this.flushCheckpoint();
     this.checkpoints.set('start', this.capture());
+    this.world.events.emit({ type: 'level.started', tick: this.world.tick, id: this.def.id });
   }
   private registerZones(t: Trigger): void {
     if (t.kind === 'volume' && !this.zones.has(t)) {this.zones.set(t,{actor:t.actor,anchor:t.anchor,index:this.state.volumes.length,inside:false,entered:false,exited:false});this.state.volumes.push(false);}

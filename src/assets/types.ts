@@ -15,6 +15,8 @@ export interface AssetDef {
   glb: string;
   /** Existing standalone exports are inspected without rebuilding their scripts. */
   sourceGlb?: string;
+  /** Optional E18 mobile export (<id>.low.glb); otherwise low reuses declared lod1. */
+  lowGlb?: string;
   lods?: { lod1?: string; lod2?: string };
   dimensions: { x: number; y: number; z: number; tolerance: number };
   forward: '+X';
