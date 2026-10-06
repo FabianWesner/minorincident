@@ -11,6 +11,7 @@ export function installCampaignNpcs(world: SimWorld): void {
   const { min, max } = districts.nav, walls = campaignWalls(world);
   const definition: ScenarioDefinition = { name: districts.composition.id, survivor: true, combat: true, infected: true, ground: { width: max[0] - min[0], depth: max[1] - min[1], center: { x: (min[0] + max[0]) / 2, z: (min[1] + max[1]) / 2 } }, player: { ...world.entities.get(1)!.transform }, walls };
   world.combat = new Combat(world, definition); world.infected = new InfectedSystem(world, definition); world.npcs = new Npcs(world);
+  world.infected.nav.mask = (x, z) => { const nav = world.districts!.nav; return nav.cells[nav.index(x, z)] === 1; }; world.infected.nav.rebake();
   world.events.on('sim.tick', () => world.infected?.update(), SimPhase.ai); world.events.on('sim.tick', () => world.npcs?.update(), SimPhase.ai);
   world.events.on('objective.completed', event => { if (event.type === 'objective.completed' && event.id === 'breakfast' && world.missions?.def.id === 'L1') world.npcs?.dinerIncident(world.missions.def.anchors.diner); });
   world.npcs.configure(Number(districts.composition.id[1])); world.npcs.companion.spawn();

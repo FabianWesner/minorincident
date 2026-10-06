@@ -17,6 +17,8 @@ export class NavGrid {
   private head = 0;
   private tail = 0;
   private readonly blockers = new Map<number, Wall>();
+  /** Optional active-district footprint, supplied by campaign assembly without importing render data. */
+  mask: ((x: number, z: number) => boolean) | null = null;
   target = -1;
   expansions = 0;
   constructor(readonly ground: { width: number; depth: number }, readonly walls: readonly Wall[], readonly clearance = 0.65, readonly center = { x: 0, z: 0 }) {
@@ -34,6 +36,7 @@ export class NavGrid {
   x(cell: number): number { return (cell % this.width + 0.5) * this.cellSize - this.ground.width / 2 + this.center.x; }
   z(cell: number): number { return (Math.floor(cell / this.width) + 0.5) * this.cellSize - this.ground.depth / 2 + this.center.z; }
   clear(x: number, z: number, radius = 0): boolean {
+    if (this.mask && !this.mask(x, z)) return false;
     if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
     for (const w of this.walls) if (Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
     for (const w of this.blockers.values()) if (Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
@@ -54,7 +57,7 @@ export class NavGrid {
     this.target = -1; this.searching = false;
   }
   visible(from: { x: number; z: number }, to: { x: number; z: number }, radius: number): boolean {
-    if (!this.walls.length && !this.blockers.size) return this.clear(to.x, to.z, radius);
+    if (!this.mask && !this.walls.length && !this.blockers.size) return this.clear(to.x, to.z, radius);
     const dx = to.x - from.x, dz = to.z - from.z, steps = Math.ceil(Math.hypot(dx, dz) / 0.2);
     for (let i = 0; i <= steps; i++) if (!this.clear(from.x + dx * i / Math.max(1, steps), from.z + dz * i / Math.max(1, steps), radius)) return false;
     return true;

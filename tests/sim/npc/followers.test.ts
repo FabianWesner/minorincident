@@ -56,3 +56,18 @@ test('@E08 corgi fetch, courage recovery and E06 lure use production systems', a
   w.npcs!.companion.hit(corgi, 100); step(w, npcs.corgiRecoveryTicks - 1); expect(corgi.companion!.state).toBe('hide'); step(w, 1); expect(corgi.companion).toMatchObject({ state: 'follow', courage: 100 });
   const enemy = w.infected!.spawn('infected.runner', { x: 10, z: 0 }); w.combat!.setLoadout(['weapon.bat'], ['ability.corgi-lure']); w.setInput({ right: { down: true, held: true, up: false } }); step(w, 40); expect(w.entities.get(enemy)!.noiseTarget?.id).toBe(corgi.id); w.dispose();
 });
+
+test('@E08 escort seeks reachable cover behind a wall within the 8m threat radius', async () => {
+  const w = await npcWorld('maze'); teleport(w, -20, 0);
+  const id = w.npcs!.escorts.spawn({ x: -11, z: 2 }), e = w.entities.get(id)!, source = w.infected!.spawn('infected.runner', { x: -13, z: 0 });
+  step(w, 1); expect(e.escort!.state).toBe('cover'); const cover = e.escort!.cover!; expect(cover).not.toBeNull(); expect(w.infected!.nav.clear(cover.x, cover.z, .65)).toBe(true);
+  expect(w.infected!.nav.visible(w.entities.get(source)!.transform, cover, .1)).toBe(false);
+  for (let i = 0; i < 180; i++) { w.update(); expect(w.infected!.nav.clear(e.transform.x, e.transform.z, .35)).toBe(true); }
+  w.entities.get(source)!.health.current = 0; step(w, 1); expect(e.escort!.state).toBe('follow'); w.dispose();
+});
+
+test('@E08 @E08-AC15 unattended brother fails mission while remaining downed, never dead or bitten', async () => {
+  const w = await npcWorld('turning-probe'), id = w.npcs!.escorts.spawn({ x: 10, z: 0 }, true), e = w.entities.get(id)!;
+  e.health.current = 0; step(w, 1201); expect(e.escort).toMatchObject({ state: 'downed', child: true, failed: true, gore: false });
+  expect(w.events.events().filter(e => e.type === 'mission.failed')).toHaveLength(1); step(w, 60); expect(w.events.events().filter(e => e.type === 'mission.failed')).toHaveLength(1); w.dispose();
+});

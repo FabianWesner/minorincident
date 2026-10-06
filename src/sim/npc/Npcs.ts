@@ -47,7 +47,7 @@ export class Npcs {
         if (!points.every((p, i) => nav.visible(p, points[(i + 1) % 4], .65))) continue;
         const role = civilianRoles[placed % civilianRoles.length];
         const id = this.civilians.spawn(role.role, points[0], { waypoints: points, ambient: true });
-        if (role.routine === 'walk-dog') this.civilians.spawn('dog', { x: x - 1, z }, { pet: 'dog', owner: id, ambient: true });
+        if (role.routine === 'walk-dog') this.civilians.spawn('dog', points[0], { pet: 'dog', owner: id, ambient: true, waypoints: [points[0]] });
         placed++;
       }
     }
