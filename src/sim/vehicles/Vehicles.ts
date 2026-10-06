@@ -17,6 +17,8 @@ interface Car { entity: EntitySnapshot; physics: VehicleBody; doorTicks: number;
 export class Vehicles {
   readonly cars = new Map<number, Car>();
   active: number | null = null;
+  progressionArmor = 0;
+  progressionBoost = 1;
   readonly obstacles: Obstacles;
   private readonly exitShape = new RAPIER.Capsule(survivor.height / 2 - survivor.radius, survivor.radius);
   private readonly identity = { x: 0, y: 0, z: 0, w: 1 };
@@ -32,6 +34,7 @@ export class Vehicles {
     const player = this.world.entities.get(1)!;
     for (const car of this.cars.values()) {
       const state = car.entity.vehicle!, drive = car.physics.intent;
+      car.physics.boostScale = this.progressionBoost;
       drive.throttle = drive.steer = 0; drive.brake = true; drive.boost = false;
       if (this.active === car.entity.id && frame.right.down) this.exit(car);
       if (car.entity.health.current > 0 && this.active === car.entity.id) {
@@ -139,7 +142,7 @@ export class Vehicles {
   damage(id: number, amount: number): void {
     if (!Number.isFinite(amount) || amount < 0) throw new RangeError('Invalid vehicle damage');
     const car = this.cars.get(id); if (!car) throw new Error(`Unknown vehicle ${id}`);
-    car.entity.health.current = Math.max(0, car.entity.health.current - amount); this.damageState(car);
+    car.entity.health.current = Math.max(0, car.entity.health.current - amount * (1 - this.progressionArmor)); this.damageState(car);
   }
   private damageState(car: Car): void {
     const state = car.entity.vehicle!, ratio = car.entity.health.current / car.entity.health.max;
