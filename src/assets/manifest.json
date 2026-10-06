@@ -12245,23 +12245,21 @@
     ],
     "requiredNodes": [
       "root",
-      "door_front",
-      "door_side",
+      "door_main",
+      "door_main_right",
       "window_front",
-      "window_blast_bowed",
-      "window_blast_shattered",
+      "window_rear",
+      "window_side",
+      "window_door_L",
+      "window_door_R",
       "roof",
-      "smoke_vent",
-      "smoke_window",
-      "light_flicker_a",
-      "light_flicker_b",
-      "glass_shards",
-      "gate_slide"
+      "interior",
+      "fx_smoke",
+      "fx_smoke_window"
     ],
     "animatedNodes": [
-      "door_front",
-      "door_side",
-      "gate_slide"
+      "door_main",
+      "door_main_right"
     ],
     "sockets": [],
     "budget": {
@@ -12299,15 +12297,15 @@
     ],
     "requiredNodes": [
       "root",
-      "door_roll",
-      "door_side",
-      "bat_anchor",
-      "work_light",
+      "door_main",
+      "weapon_bat",
+      "bat_display",
       "roof",
-      "interior"
+      "interior",
+      "window_side"
     ],
     "animatedNodes": [
-      "door_roll"
+      "door_main"
     ],
     "sockets": [],
     "budget": {
@@ -12341,17 +12339,20 @@
     },
     "forward": "+X",
     "frontNodes": [
-      "front"
+      "entry"
     ],
     "requiredNodes": [
       "root",
       "door_main",
-      "patio_anchor",
-      "bike_rack_anchor",
+      "window_entry",
+      "window_left",
+      "window_right",
       "roof",
       "interior"
     ],
-    "animatedNodes": [],
+    "animatedNodes": [
+      "door_main"
+    ],
     "sockets": [],
     "budget": {
       "triangles": 100000,
@@ -12389,11 +12390,16 @@
     "requiredNodes": [
       "root",
       "door_main",
-      "window_front",
-      "counter_anchor",
+      "window_entry",
+      "window_display",
+      "window_side",
+      "parcel_counter",
+      "roof",
       "interior"
     ],
-    "animatedNodes": [],
+    "animatedNodes": [
+      "door_main"
+    ],
     "sockets": [],
     "budget": {
       "triangles": 100000,
@@ -13072,9 +13078,7 @@
       "tolerance": 0.3
     },
     "forward": "+X",
-    "frontNodes": [
-      "front"
-    ],
+    "frontNodes": [],
     "requiredNodes": [
       "root"
     ],
@@ -13110,9 +13114,7 @@
       "tolerance": 0.3
     },
     "forward": "+X",
-    "frontNodes": [
-      "front"
-    ],
+    "frontNodes": [],
     "requiredNodes": [
       "root"
     ],
@@ -13416,10 +13418,6 @@
       "token": "uiDark",
       "solid": true
     },
-    "sourceGlb": "assets/kit.edge-roadwork/model.glb",
-    "lods": {
-      "lod1": "public/assets/models/kit.edge-roadwork.lod1.glb",
-      "lod2": "public/assets/models/kit.edge-roadwork.lod2.glb"
-    }
+    "sourceGlb": "assets/kit.edge-roadwork/model.glb"
   }
 ]
