@@ -1903,6 +1903,56 @@
     "civilian.scream.v3": {
       "source": "scream",
       "start": 4.9
+    },
+    "l1.calm.chatter": {
+      "source": "crowd",
+      "start": 8,
+      "filter": "lowpass=f=2500,volume=0.5"
+    },
+    "l1.calm.talk": {
+      "source": "crowd",
+      "start": 22,
+      "filter": "lowpass=f=3000"
+    },
+    "l1.calm.traffic": {
+      "source": "traffic",
+      "start": 6
+    },
+    "l1.calm.birds": {
+      "source": "birds",
+      "start": 2
+    },
+    "l1.scream": {
+      "source": "scream",
+      "start": 0.1
+    },
+    "l1.chaos.infected": {
+      "source": "moan-1",
+      "start": 0.12
+    },
+    "l1.chaos.distant": {
+      "source": "scream",
+      "start": 1.5,
+      "filter": "lowpass=f=1800,volume=0.6"
+    },
+    "l1.chaos.panic": {
+      "source": "crowd",
+      "start": 18,
+      "filter": "highpass=f=300"
+    },
+    "l1.chaos.car-alarm": {
+      "source": "siren",
+      "start": 0.5
+    },
+    "l1.blast": {
+      "source": "hit-8",
+      "start": 0,
+      "filter": "asetrate=24000,aresample=48000,lowpass=f=700,volume=3"
+    },
+    "l1.crash": {
+      "source": "hit-10",
+      "start": 0,
+      "filter": "asetrate=36000,aresample=48000,lowpass=f=2500"
     }
   },
   "streams": {

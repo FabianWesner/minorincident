@@ -826,8 +826,8 @@ export class AudioService implements Lifecycle {
         if (frame.muffled) this.loop('arc:hush', 'l1.interior.hush', {});
         else this.stopLoop('arc:hush');
         this.graph.ambienceFilter.frequency.setTargetAtTime(frame.muffled ? 900 : 20000, t, 0.3);
-        if (frame.ringing && this.settings.tinnitus)
-            this.graph.tinnitus(t);
+        if (frame.ringing) // Spec beat 5: ~1.2 s ringing + low-pass for everyone; the tinnitus setting only makes it longer/stronger.
+            this.graph.tinnitus(t, this.settings.tinnitus);
         for (const p of frame.plays) {
             let position: SoundPosition | undefined;
             if (p.bearing !== undefined && p.distance !== undefined)
