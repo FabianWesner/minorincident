@@ -71,7 +71,7 @@ export class KeyframeAnimator {
     else if (!strike && !['idle','walk','run'].includes(pose.animation)) name = pose.animation;
     if (this.clip !== name || strike && !upper && this.attackTick !== pose.animationTick || !this.base) {
       const previous = this.base; this.base = this.play(name, !!strides[name] || name === 'idle');
-      if (previous && previous !== this.base) previous.crossFadeTo(this.base, .14, false);
+      if (previous && previous !== this.base) previous.crossFadeTo(this.base, strike ? .035 : .14, false);
       this.clip = name;
     }
     if (strides[name] && this.base) {
@@ -83,7 +83,7 @@ export class KeyframeAnimator {
     }
     if (strike && combat && this.base && !upper) this.base.setEffectiveTimeScale(this.base.getClip().duration * 60 / Math.max(1, combat.endsAt - combat.started));
     if (upper && strike && this.attackTick !== pose.animationTick) {
-      this.overlay?.fadeOut(.12); this.overlay = this.play(`${strike}:upper`, false).fadeIn(.1);
+      this.overlay?.fadeOut(.12); this.overlay = this.play(`${strike}:upper`, false).fadeIn(.035);
       if (combat) this.overlay.setEffectiveTimeScale(this.overlay.getClip().duration * 60 / Math.max(1, combat.endsAt - combat.started));
     } else if (!upper && this.overlay) { this.overlay.fadeOut(.12); this.overlay = undefined; }
     this.attackTick = strike ? pose.animationTick : -1;

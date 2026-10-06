@@ -20,6 +20,8 @@ export interface InputFrame {
   cancelMove?: boolean;
   /** Ground LMB is movement, not a LEFT attack. */
   pointerGround?: boolean;
+  /** Held target press stops firing if that command loses its target. */
+  pointerTarget?: boolean;
   /** Explicit side for a touch swipe or target attack while approaching. */
   /** Direct number-key rack choice. Out-of-range slots are ignored. */
   selectedSlot?: { side: 'LEFT' | 'RIGHT'; index: number };

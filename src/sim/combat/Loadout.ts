@@ -24,9 +24,10 @@ export class Loadout {
   }
   cycleActive(direction: number, tick: number): void {
     const entries = this.activeEntries(), side = this.state.selectedSide, state = this.state[side];
-    if (!entries.length || tick < state.swapUntil) return;
+    if (!entries.length) return;
     const current = entries.findIndex(e => e.side === side && e.index === state.index);
     const next = entries[(current + direction + entries.length) % entries.length];
+    if (next.side === side && next.index === state.index) return;
     this.state.selectedSide = next.side; this.state[next.side].index = next.index; this.state[next.side].swapUntil = tick + 15;
   }
   input(frame: InputFrame, tick: number): void {
