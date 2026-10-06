@@ -31,6 +31,10 @@ export class Damage {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source || target.health.current <= 0) return 0;
     if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction) return 0;
+    if (target.civilian) { this.world.npcs?.civilians.hit(target, hit.type); if (hit.type === 'explosive' && hit.knockback > 0) this.world.knockback(target, hit.direction, hit.knockback); return 0; }
+    if (target.companion) { this.world.npcs?.companion.hit(target, hit.base * hit.multiplier); return 0; }
+    if (target.escort?.state === 'downed' || target.escort?.state === 'dead') return 0;
+    if (target.escort?.child) { target.health.current = Math.max(0, target.health.current - hit.base * hit.multiplier); if (!target.health.current) this.world.npcs?.escorts.down(target); return 0; }
     const wasAlive = target.health.current > 0;
     let amount = damageAmount(hit, target);
     if (amount > 0 && target.archetype === 'infected.crow' && this.world.infected) amount = this.world.infected.hitFlock(target, hit.origin, hit.direction, hit.radius ?? 30, hit.type === 'explosive' ? 360 : hit.spread ?? 0);
@@ -46,6 +50,7 @@ export class Damage {
       if (hit.type === 'melee') this.world.events.emit({ type: 'combat.hit-stop', tick: this.world.tick, sourceId: hit.sourceId, durationMs: 50 });
     }
     if (hit.part === 'leg' && amount > 0) this.world.infected?.loseLeg(target.id, this.world.infected.gore);
+    if (target.escort && target.health.current === 0) { this.world.npcs?.escorts.down(target); return amount; }
     if (wasAlive && target.health.current === 0) this.world.events.emit({ ...event, type: 'combat.kill' } satisfies GameEvent);
     return amount;
   }

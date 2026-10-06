@@ -1,3 +1,4 @@
+import { Npcs } from '../npc/Npcs';
 import { InfectedSystem } from '../ai/InfectedSystem';
 import { Mission } from '../missions/Mission';
 import type { MissionDef } from '../missions/types';
@@ -31,6 +32,7 @@ export class SimWorld implements Lifecycle {
   player: Player | null = null;
   combat: Combat | null = null;
   infected: InfectedSystem | null = null;
+  npcs: Npcs | null = null;
   interactables: Interactables | null = null;
   hazards: Hazards | null = null;
   pickups: Pickups | null = null;
@@ -83,6 +85,7 @@ export class SimWorld implements Lifecycle {
     }, SimPhase.intent);
     this.events.on('sim.tick', () => this.combat?.effects.moveListeners(), SimPhase.ai);
     if (definition.infected) { this.infected = new InfectedSystem(this, definition); this.events.on('sim.tick', () => this.infected!.update(), SimPhase.ai); }
+    if (definition.infected) { this.npcs = new Npcs(this); this.events.on('sim.tick', () => this.npcs?.update(), SimPhase.ai); if (definition.npcs) { this.npcs.configure(definition.npcs.level ?? 1, definition.npcs.tier, definition.npcs.ambient); if (definition.npcs.companion) this.npcs.companion.spawn(); } }
     this.placeInteractions(definition);
     this.events.on('sim.tick', () => this.physics.update(), SimPhase.physics);
     this.events.on('sim.tick', () => {
@@ -187,7 +190,7 @@ export class SimWorld implements Lifecycle {
   }
   reset(): void {
     this.vehicles?.dispose(); this.vehicles = null;
-    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.pickups = null; this.hazards = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }
   dispose(): void { this.reset(); }
