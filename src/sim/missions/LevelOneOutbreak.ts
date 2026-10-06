@@ -14,7 +14,7 @@ const story = {
   anchors: { 'l1.flicker': 'lab-smoke-window', 'l1.blast': 'lab-exit-window', 'l1.ringing': 'lab-door', 'l1.smoke': 'lab-smoke-vent', 'l1.screams': 'lab-door', 'l1.infectedExit': 'lab-exit-front' } as Record<L1AccidentEventName, string>,
   exits: [['lab-exit-front', 125], ['lab-exit-front', 55], ['lab-exit-side', 350], ['lab-exit-window', 180], ['lab-exit-window', 235]] as [string, number][],
   /** Infected looks for the lab staff (existing variants until the lab-staff models are registered). */
-  variants: ['inf.common-worker', 'inf.common-worker', 'inf.cashier', 'inf.bbq-dad', 'inf.suburban-mom'],
+  variants: ['inf.delivery-driver', 'inf.cashier', 'inf.bbq-dad', 'inf.suburban-mom', 'inf.bathrobe-neighbor'],
   techRole: 'delivery-driver', techArchetype: 'npc.lab-tech-a',
   eventOrder: ['l1.flicker', 'l1.blast', 'l1.ringing', 'l1.smoke', 'l1.screams'] as const,
 };
