@@ -24,6 +24,23 @@ for (const mode of ['desktop','iphone'] as const) test.describe(mode, () => {
     await page.evaluate(()=>window.__SS__!.screenshotReady());await page.screenshot({path:`${output}/${mode}-${weapon}-held.png`});
     const cdp=mode==='iphone'?await context.newCDPSession(page):null;
     let maximumTrail=0,maximumParticles=0;
+    if(mode==='desktop') {
+      // Store enemies spawn offscreen. Approach with real ground clicks before
+      // projecting an attack; moving the mouse outside the canvas sends no input.
+      for(let attempt=0;attempt<60;attempt++) {
+        const approach=await page.evaluate(()=>{
+          const a=window.__SS__!,p=a.getState().player!.transform;
+          const target=a.query({kind:'infected'}).filter(e=>e.health.current>0).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];
+          if(!target)return null;
+          const point=a.input.project(target.transform),dx=target.transform.x-p.x,dz=target.transform.z-p.z,d=Math.hypot(dx,dz)||1;
+          return {point,step:a.input.project({x:p.x+dx/d*Math.min(3,d),z:p.z+dz/d*Math.min(3,d)})};
+        });
+        expect(approach).not.toBeNull();
+        if(approach!.point.x>20&&approach!.point.x<1580&&approach!.point.y>100&&approach!.point.y<800)break;
+        expect(attempt,'enemy must enter the canvas through real movement').toBeLessThan(59);
+        await page.mouse.click(approach!.step.x,approach!.step.y);await page.evaluate(()=>window.__SS__!.step(24));
+      }
+    }
     for(let beat=0;beat<8;beat++){
       const target=await page.evaluate(()=>{const a=window.__SS__!,p=a.getState().player!.transform;return a.query({kind:'infected'}).filter(e=>e.health.current>0).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];});
       if(!target)break;
