@@ -41,3 +41,10 @@ test('T-E13-04-sim @E13 @E13-AC04 pickups replace full campaign racks instead of
     expect(l.state.LEFT.rack).toHaveLength(capacity);expect(()=>world.combat!.setLoadout(Array(capacity+1).fill('weapon.bat'),['weapon.kick'])).toThrow();
   }
 });
+
+test('@E13 @E13-AC02 nail-bat bleeding uses its action hook and Hazmat poison immunity does not block it',()=>{
+  const save=newCampaign();save.ownedActions.push('weapon.nail-bat');save.upgrades=['upgrade.nail-bat-bleed'];save.racks.LEFT=['weapon.nail-bat'];applyCampaign(world,save);
+  const id=world.spawnDummy('infected.hazmat',{x:1,z:0},{hp:1000});world.setInput({aim:{x:1,z:0},left:{down:true,held:false,up:false}});world.update();world.clearInput();for(let i=0;i<240;i++)world.update();
+  expect(world.entities.get(id)!.health.current).toBe(1000-catalog['weapon.nail-bat'].damage-15);
+  expect(world.combat!.runner.loadout.definition('weapon.nail-bat').status!.kind).toBe('bleeding');expect(catalog['weapon.nail-bat'].status).toBeNull();
+});

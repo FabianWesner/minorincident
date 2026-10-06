@@ -16,7 +16,7 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   melee('crowbar', 'wpn.crowbar', 30, 1.8, 95, 0.6, 0),
   melee('machete', 'wpn.machete', 32, 1.8, 110, 0.45, 0, 0.2),
   melee('knife', 'wpn.knife', 18, 1.3, 60, 0.3, 0, 0.1),
-  melee('nail-bat', 'wpn.nail-bat', 38, 2, 100, 0.55, 1),
+  { ...melee('nail-bat', 'wpn.nail-bat', 38, 2, 100, 0.55, 1), upgradeHooks: ['damage', 'knockback', 'status'] },
   melee('shovel', 'wpn.shovel', 40, 2.2, 110, 0.75, 1, 0.8),
   melee('police-baton', 'wpn.police-baton', 22, 1.7, 85, 0.35, 1, 0.3),
   melee('fire-axe', 'wpn.fire-axe', 65, 2.1, 100, 0.85, 2, 0.8),

@@ -5,7 +5,7 @@ import {boot,expect,test} from '../e2e/fixtures';
 import {preset} from '../../src/sim/progression/Campaign';
 const dir='test-results/epics/E13';
 test('T-E13-08-visual @E13 @E13-AC08 @visual default campaign gear is visible on the avatar across five tiers',async({page})=>{
-  test.setTimeout(180_000);mkdirSync(dir,{recursive:true});await boot(page);await page.evaluate(async()=>{await window.__SS__!.loadScenario('survivor');window.__SS__!.pause();window.__SS__!.camera.preset('right');});
+  test.setTimeout(180_000);mkdirSync(dir,{recursive:true});await boot(page);await page.evaluate(async()=>{await window.__SS__!.loadScenario('combat-arena');window.__SS__!.pause();window.__SS__!.camera.preset('right');});
   const sheet=new PNG({width:2500,height:800}),metrics=[];let base:PNG|null=null,baseMask:PNG|null=null;let characterPixels=0,gearDifferenceRatio=0;
   for(const [index,level]of ([2,3,4,5,6]as const).entries()){
     const save=preset(`L${level}-default`);await page.evaluate(async save=>{const a=window.__SS__!;a.campaign.restore(save);a.setLoadout(['weapon.bat'],['weapon.kick']);await a.screenshotReady();},save);
