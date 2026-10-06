@@ -123,7 +123,7 @@ export async function runDuel(opts: { seed: number; count: number; weapon: 'unar
     const angle = (i / opts.count) * Math.PI * 2 + rng.next() * .5;
     for (let r = 7; r > 2; r -= .5) {
       const at = { x: player.transform.x + Math.cos(angle) * r, z: player.transform.z + Math.sin(angle) * r };
-      if (ai.nav.clear(at.x, at.z, .45)) { ids.push(ai.spawn('infected.runner', at, { state: 'chase' })); break; }
+      if (ai.nav.clear(at.x, at.z, .45)) { ids.push(ai.spawn('infected.runner', at, { state: 'chase', yaw: -Math.atan2(player.transform.z - at.z, player.transform.x - at.x) })); break; }
     }
   }
   const maxTicks = (opts.maxSeconds ?? 40) * 60, reaction = opts.skill === 'newbie' ? 15 : 1;
