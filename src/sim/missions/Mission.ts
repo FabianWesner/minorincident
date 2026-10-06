@@ -132,7 +132,7 @@ export class Mission {
       }
       this.world.player!.restoreVitals(this.world.tick);
     }
-    if (this.def.slice && def.id === 'melee') this.world.combat!.setLoadout([this.meleeChoice, 'weapon.fists'], ['weapon.fists']);
+    if (this.def.slice && def.id === 'melee') this.world.combat!.setLoadout([this.meleeChoice], ['weapon.fists']);
     if (def.optional && !this.state.stats.optionalObjectives.includes(def.id)) this.state.stats.optionalObjectives.push(def.id);
     if (def.choice) for (const sibling of this.def.steps) if (sibling.id !== def.id && sibling.choice === def.choice) this.state.steps[sibling.id].status = 'cancelled';
     if (def.type === 'escort' && def.complete.kind === 'escort') this.rescue(this.state.actors[def.complete.actor]);

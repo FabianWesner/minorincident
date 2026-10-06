@@ -36,7 +36,8 @@ Regression checks live in `tests/unit/render/authored-animation.test.ts`,
 The unarmed style uses seven `unarmed-*` clips (jab, cross, front kick,
 roundhouse kick, uppercut, knee and spinning backfist). These are authored at
 normalized duration 1 and played over 0.4 seconds: hips lead at phase .035,
-chest/limb anticipation at .075, contact at .20 (50 ms strike), follow-through
+chest anticipation at .05, limb anticipation at .075; hips arrive at .125,
+chest at .15 and hand/foot contact at .20 (50 ms strike), with follow-through
 at .36 and recovery at .66–1. The finisher appears once per seven attacks;
 all moves retain equal damage. Legacy fists/kick clips remain for older fixtures.
 

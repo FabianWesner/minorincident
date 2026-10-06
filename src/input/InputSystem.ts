@@ -38,6 +38,7 @@ export class InputSystem implements Lifecycle {
   private pointerTarget = false;
   private pointerGround: false | 'move' = false;
   private readonly clicks: { x: number; y: number; shift: boolean }[] = [];
+  private selectedActiveSlot: number | undefined;
   private selectedSlot: { side: 'LEFT' | 'RIGHT'; index: number } | undefined;
   cycle(side: 'LEFT' | 'RIGHT'): void { this.selectors.push({ direction: 1, side }); }
   private readonly projected = new Vector3();
@@ -114,7 +115,9 @@ export class InputSystem implements Lifecycle {
   private readonly key = (code: string, held: boolean): void => {
     if (code === 'ShiftLeft' || code === 'ShiftRight') return;
     if (held && /^Digit[123]$/.test(code)) {
-      this.selectedSlot = { side: this.keyboard.pressed.has('ShiftLeft') || this.keyboard.pressed.has('ShiftRight') ? 'RIGHT' : 'LEFT', index: Number(code.slice(-1)) - 1 };
+      const index = Number(code.slice(-1)) - 1;
+      if (this.pointer.valid && !this.shift()) this.selectedActiveSlot = index;
+      else this.selectedSlot = { side: this.shift() ? 'RIGHT' : 'LEFT', index };
       this.setScheme(this.pointer.valid ? 'mouse-keyboard' : 'keyboard'); return;
     }
     const action = held ? this.bindings.action(code) : this.heldTokens.get(code);
@@ -161,7 +164,7 @@ export class InputSystem implements Lifecycle {
     if (this.recorder.playing) return this.recorder.next() ?? this.frameNeutral();
     if (this.injected) { this.recorder.capture(this.injected); return this.injected; }
     const frame = this.frame;
-    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
+    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
     frame.cancelMove = this.cancelMove; this.cancelMove = false;
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
     this.driving.throttle = y ? -y : 0; this.driving.steer = x; frame.drive = this.driving; frame.brake = false;
@@ -232,6 +235,7 @@ export class InputSystem implements Lifecycle {
       if (this.pointerGround === 'move' && frame.left.held && frame.aimPoint && !this.moving()) frame.moveTarget = { ...frame.aimPoint };
     }
     if (this.drivingContext && this.scheme === 'touch' && this.touch.holdingLeft) frame.left.held = true;
+    if (this.selectedActiveSlot !== undefined) { frame.selectedActiveSlot = this.selectedActiveSlot; this.selectedActiveSlot = undefined; }
     if (this.selectedSlot) { frame.selectedSlot = this.selectedSlot; this.selectedSlot = undefined; }
     const selection = this.selectors.shift();
     frame.selector = selection?.direction ?? 0;
@@ -240,7 +244,7 @@ export class InputSystem implements Lifecycle {
     this.interact = false; this.pause = false; this.recorder.capture(frame); return frame;
   }
   private frameNeutral(): InputFrame {
-    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
+    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
     frame.left.down = frame.left.held = frame.left.up = false; frame.right.down = frame.right.held = frame.right.up = false;
     frame.selector = 0; frame.interact = false; frame.pause = false; return frame;
   }
@@ -251,7 +255,7 @@ export class InputSystem implements Lifecycle {
   readonly release = (): void => {
     this.releasing = true; this.keyboard.release(); this.pointer.release(); this.releasing = false;
     this.touch.release(); this.wheel.reset(); this.touchFire = null; this.left.release(); this.right.release(); this.active.clear(); this.heldTokens.clear();
-    this.clicks.length = 0; this.cancelMove = true; this.pointerGround = false; this.selectedSlot = undefined;
+    this.clicks.length = 0; this.cancelMove = true; this.pointerGround = false; this.selectedSlot = undefined; this.selectedActiveSlot = undefined;
     this.pointerTarget = false; this.selectors.length = 0; this.interact = false; this.pause = false;
   };
   update(): void { /* Input is sampled in the fixed input phase, not the render update. */ }

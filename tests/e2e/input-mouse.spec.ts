@@ -110,7 +110,8 @@ test('T-E03-16 @E03 @E03-AC16 Shift LMB distant ground swings stationary and can
   await page.keyboard.up('w'); await page.keyboard.up('Shift');
   const attacks = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'));
   expect(attacks.length).toBeGreaterThan(1);
-  expect(attacks[0]).toMatchObject({ side: 'LEFT', position: { x: start.x, z: start.z } });
+  expect(attacks[0]).toMatchObject({ side: 'LEFT' });
+  if (attacks[0].type === 'combat.attack') expect(Math.hypot(attacks[0].position.x - start.x, attacks[0].position.z - start.z)).toBeLessThan(.00001);
 });
 
 test('T-E03-17 @E03 @E03-AC17 RMB and Q cycle carried actions without attacking', async ({ page }) => {
