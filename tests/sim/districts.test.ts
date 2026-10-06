@@ -4,6 +4,7 @@ import { compositions } from "../../src/levels/compositions";
 import { districtGameplay } from "../../src/levels/districts";
 import {
   districtIds,
+  groveDistrictId,
   type DistrictLayout,
 } from "../../src/levels/districts/types";
 import {
@@ -12,7 +13,7 @@ import {
 } from "../../src/levels/districts/validate";
 import { bakeNav } from "../../src/sim/world/NavGrid";
 const layouts = Object.fromEntries(
-  districtIds.map((id) => [
+  [...districtIds, groveDistrictId].map((id) => [
     id,
     JSON.parse(
       readFileSync(`public/assets/layouts/${id}.layout.json`, "utf8"),

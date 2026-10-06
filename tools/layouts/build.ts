@@ -19,6 +19,7 @@ export const districts = [
   "D-PARK",
   "D-ZOO",
   "D-EDGE",
+  "D-GROVE",
 ];
 const files = (path: string): string[] =>
   readdirSync(path, { withFileTypes: true }).flatMap((e) =>

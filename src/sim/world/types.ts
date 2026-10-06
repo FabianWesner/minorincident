@@ -6,6 +6,7 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 export interface EntitySnapshot {
   id: number;
   /** Actual fixed-step motion, including collision/avoidance, for NPC locomotion clips. */
+  locomotion?: import('../locomotion/MotionResponse').MotionResponse;
   motion?: { velocity: { x: number; z: number }; speed: number; moving: boolean; distance: number };
   civilian?: import('../npc/types').Civilian;
   companion?: import('../npc/types').Companion;
@@ -55,6 +56,7 @@ export type GameEvent = import('../npc/types').NpcEvent
   | { tick: number; type: 'infected.revived' | 'infected.leg-lost'; sourceId: number; targetId: number }
 
   | import('../missions/events').MissionEvent
+  | import('../outbreak/types').OutbreakEvent
   | { tick: number; type: 'world.blocker.changed'; id: number; blocked: boolean; wall: import('../combat/HitQuery').CoverWall }
   | { tick: number; type: 'pickup.collected'; id: number; kind: import('../interact/Pickups').PickupKind; item: string | null }
   | { tick: number; type: 'hazard.armed'; id: number; fuseAt: number }
