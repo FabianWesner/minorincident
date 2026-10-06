@@ -2,6 +2,8 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 import { menuStart, menuUrl } from './ui-helpers';
 const output='test-results/epics/E19';
+// Native headless GPU headroom, without rounding a 60 Hz vsync ceiling into a pass.
+test.use({headless:true,launchOptions:{args:['--use-angle=metal','--enable-gpu','--ignore-gpu-blocklist','--disable-frame-rate-limit','--disable-gpu-vsync']}});
 for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode,()=>{
   test.use({hasTouch:mode!=='desktop',isMobile:mode!=='desktop',viewport:mode==='desktop'?{width:1600,height:900}:mode==='portrait'?{width:390,height:844}:{width:844,height:390}});
   test(`@E19 slice real-input start to end ${mode}`,async({page,context})=>{
@@ -33,8 +35,10 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
       const data=await page.evaluate(async()=>{
         const a=window.__SS__!,fps:number[]=[];a.resume();
         for(let i=0;i<120;i++){await new Promise<void>(r=>requestAnimationFrame(()=>r()));if(i>30)fps.push(a.perf().fps);}
-        a.pause();fps.sort((a,b)=>a-b);return {medianFps:fps[Math.floor(fps.length/2)],counters:a.perf()};
-      });samples[label]=data;writeFileSync(`${output}/${mode}-perf.json`,JSON.stringify(samples,null,2));
+        a.pause();fps.sort((a,b)=>a-b);
+        const gl=document.querySelector('canvas')!.getContext('webgl2')!,extension=gl.getExtension('WEBGL_debug_renderer_info');
+        return {medianFps:fps[Math.floor(fps.length/2)],unthrottled:true,gpu:extension?gl.getParameter(extension.UNMASKED_RENDERER_WEBGL) as string:null,counters:a.perf()};
+      });samples[label]=data;expect(data.medianFps,`${mode} ${label} native GPU median FPS`).toBeGreaterThanOrEqual(mode==='desktop'?60:30);writeFileSync(`${output}/${mode}-perf.json`,JSON.stringify(samples,null,2));
     };
     const move=async(x:number,z:number)=>{
       for(let i=0;i<160;i++){
