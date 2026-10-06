@@ -2,6 +2,7 @@ import type {
   DistrictLayout,
   LevelComposition,
   Point,
+  Aabb,
 } from "../../levels/districts/types";
 import { districtGameplay } from "../../levels/districts/index";
 import {
@@ -16,6 +17,8 @@ export class DistrictWorld {
   readonly districts;
   readonly nav;
   readonly playerStart: Point;
+  /** Exterior slab edges only; shared district seams stay open. */
+  readonly boundaries: Aabb[] = [];
   readonly warnings: string[] = [];
   readonly fires: {
     x: number;
@@ -45,6 +48,18 @@ export class DistrictWorld {
         decay,
         blockers: gameplayLayers.flatMap((l) => l.blockers),
       };
+    });
+    const edges = new Map<string, { a: Point; b: Point; count: number }>();
+    for (const d of this.districts) for (let i = 1; i < d.layout.bounds.length; i++) {
+      const a: Point = [d.layout.bounds[i - 1][0] + d.origin[0], d.layout.bounds[i - 1][1] + d.origin[1]];
+      const b: Point = [d.layout.bounds[i][0] + d.origin[0], d.layout.bounds[i][1] + d.origin[1]];
+      const key = [a.join(','), b.join(',')].sort().join(':');
+      const edge = edges.get(key);
+      if (edge) edge.count++; else edges.set(key, { a, b, count: 1 });
+    }
+    for (const { a, b, count } of edges.values()) if (count === 1) this.boundaries.push({
+      min: [Math.min(a[0], b[0]) - .1, -1, Math.min(a[1], b[1]) - .1],
+      max: [Math.max(a[0], b[0]) + .1, 4, Math.max(a[1], b[1]) + .1],
     });
     this.nav = bakeNav(
       this.districts.map((d) => ({

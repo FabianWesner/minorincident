@@ -276,7 +276,7 @@ export class InfectedSystem {
   }
   private attackPlayer(e: EntitySnapshot, damage: number): void {
     const b = e.infected!;
-    const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId: 1, origin: e.transform, direction: { x: b.dx, z: b.dz }, base: damage, multiplier: 1, type: 'melee', knockback: b.special === 'charge' ? 3.2 : 0, stagger: 0 });
+    const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId: 1, origin: e.transform, direction: { x: b.dx, z: b.dz }, base: damage, multiplier: e.combat!.damageMultiplier, type: 'melee', knockback: b.special === 'charge' ? 3.2 : 0, stagger: 0 });
     this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId: 1, special: b.special, amount });
   }
   private dead(e: EntitySnapshot): void {

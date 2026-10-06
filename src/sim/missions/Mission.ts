@@ -118,6 +118,7 @@ export class Mission {
   }
   private complete(def: ObjectiveDef): void {
     this.state.steps[def.id].status = 'completed'; this.state.completedObjectives.push(def.id);
+    if (this.def.slice && def.id === 'breakfast') this.world.combat!.setLoadout(['weapon.fists'], ['weapon.kick']);
     // Crossing the hardware entrance closes the first chase; the weapon display is a safe beat.
     if (this.def.slice && def.id === 'escape') {
       for (const actor of this.def.groups.incident) {
@@ -199,6 +200,8 @@ export class Mission {
           if (!found) throw new Error(`No clear encounter spawn: ${id}`);
         }
         const entityId = this.world.infected.spawn(def.archetype,position,{state:'chase',variant:id==='incident-0'?'inf.delivery-driver':undefined});
+        // Tutorial incident: 2 HP per accepted runner hit, allowing at least 25 s to react.
+        if (group === 'incident') this.world.entities.get(entityId)!.combat!.damageMultiplier = .2;
         this.state.actors[id]=entityId; continue;
       }
       const convoy = def.archetype === 'defend.convoy' && this.world.npcs ? this.world.npcs.traffic.convoy(['res', 'fuel', 'checkpoint', 'bridge'].map(key => this.def.anchors[key])) : null;
@@ -262,7 +265,7 @@ export class Mission {
   restore(id = this.state.checkpoint ?? 'start'): void {
     this.world.controls.reset();
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
-    const retained = this.def.slice && id !== 'start' ? this.world.entities.get(1)!.weapons : undefined;
+    const retained = this.def.slice && id === 'melee' && this.state.steps.melee.status === 'completed' ? this.world.entities.get(1)!.weapons : undefined;
     const stats = this.state.stats, bosses=this.state.killedBosses, delta = this.world.tick - checkpoint.tick;
     Object.assign(this.state, structuredClone(checkpoint.state)); this.state.stats = stats; this.state.killedBosses=bosses; this.state.failure = null; this.state.phase = 'playing'; this.state.cinematic = null; this.state.result = null;
     this.finishApplied = false; this.pendingCheckpoints.length=0; this.markerObjective=this.def.steps.find(s=>this.state.steps[s.id].status==='active')?.id??null; this.pendingMarker=null;

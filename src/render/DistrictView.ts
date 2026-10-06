@@ -1,6 +1,9 @@
 // Assembly/reference pattern adapted from folio-2025 World.js / References.js (Bruno Simon, MIT).
 import {
   BoxGeometry,
+  PlaneGeometry,
+  Sprite,
+  SpriteMaterial,
   Box3,
   CanvasTexture,
   ConeGeometry,
@@ -65,6 +68,12 @@ export class DistrictView extends Group {
   }
   async load(seed: number): Promise<void> {
     this.phase.value = 0;
+    // Backdrop reaches beyond the camera far plane; it is scenery outside the bounded town.
+    const terrain = new PlaneGeometry(2400, 2400);
+    this.ownedGeometry.push(terrain);
+    const backdrop = new Mesh(terrain, this.materials.get('grass'));
+    backdrop.rotation.x = -Math.PI / 2; backdrop.position.y = -.12; backdrop.receiveShadow = true;
+    this.add(backdrop);
     await Promise.all(
       this.world.districts.map(async (d) => {
         const root = new Group();
@@ -137,6 +146,7 @@ export class DistrictView extends Group {
         root.add(grass);
         for (const b of d.layout.buildings) {
           const p = d.layout.placements.find((p) => p.id === b.id)!;
+          if (b.label === 'Your House') { this.homeLabel(root, [p.position[0], b.aabb.max[1] + .6, p.position[2]]); continue; }
           this.sign(root, b.label, [
             p.position[0],
             Math.min(3, b.aabb.max[1] * 0.6),
@@ -206,6 +216,16 @@ export class DistrictView extends Group {
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     root.add(mesh);
+  }
+  private homeLabel(root: Group, p: [number, number, number]): void {
+    const canvas = document.createElement('canvas'); canvas.width = 256; canvas.height = 64;
+    const ctx = canvas.getContext('2d')!;
+    ctx.fillStyle = '#352c38'; ctx.roundRect(0, 0, 256, 64, 16); ctx.fill();
+    ctx.fillStyle = '#ffc773'; ctx.font = 'bold 30px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('Your House', 128, 32);
+    const texture = new CanvasTexture(canvas); this.textures.push(texture);
+    const material = new SpriteMaterial({ map: texture }); this.ownedMaterials.push(material);
+    const label = new Sprite(material); label.position.fromArray(p); label.scale.set(1.5, .375, 1); root.add(label);
   }
   /** TextCanvas pattern: one small canvas per landmark, fictional place names only. */
   private sign(root: Group, text: string, p: [number, number, number]): void {

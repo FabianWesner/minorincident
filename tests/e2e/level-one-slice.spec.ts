@@ -14,7 +14,19 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
     page.setDefaultTimeout(10_000);
     await page.evaluate(()=>window.__SS__!.pause());
     const cdp=mode==='desktop'?null:await context.newCDPSession(page);
-    const step=async(n:number)=>{await page.evaluate(n=>window.__SS__!.step(n),n);};
+    const step=async(n:number)=>{
+      await page.evaluate(n=>window.__SS__!.step(n),n);
+      expect(await page.evaluate(()=>window.__SS__!.getState().player!.transform.y), 'survivor stays on ground').toBeGreaterThan(.65);
+    };
+    const noVoid=async(buffer:Buffer)=>{
+      const png=PNG.sync.read(buffer);let skyPixels=0,samples=0;
+      // This downward isometric camera has its horizon above the viewport. Sample the lower half.
+      for(let y=Math.floor(png.height/2);y<png.height;y+=4)for(let x=0;x<png.width;x+=4){
+        const i=(y*png.width+x)*4;samples++;
+        if(Math.abs(png.data[i]-197)<8&&Math.abs(png.data[i+1]-218)<8&&Math.abs(png.data[i+2]-229)<8)skyPixels++;
+      }
+      expect(skyPixels/samples,'sky colour must not replace ground below the horizon').toBeLessThan(.001);
+    };
     const shot=async(label:string)=>{
       if(mode!=='desktop'&&await page.evaluate(()=>window.__SS__!.missions.state()!.phase==='playing')){
         const layout=await page.evaluate(()=>{
@@ -30,7 +42,7 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
         if(mode==='portrait')expect(layout.coverage,`${label} HUD coverage`).toBeLessThanOrEqual(.25);
         for(const [i,a]of layout.controls.entries())for(const b of layout.controls.slice(i+1))expect(a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y,`${label}: ${a.id} overlaps ${b.id}`).toBe(false);
       }
-      await page.evaluate(()=>window.__SS__!.screenshotReady());await page.screenshot({path:`${output}/${mode}-${label}.png`});};
+      await page.evaluate(()=>window.__SS__!.screenshotReady());await noVoid(await page.screenshot({path:`${output}/${mode}-${label}.png`}));};
     const move=async(x:number,z:number)=>{
       for(let i=0;i<160;i++){
         const p=await page.evaluate(()=>window.__SS__!.getState().player!.transform);
@@ -46,9 +58,11 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
           const point=await page.evaluate(({x,z})=>window.__SS__!.input.project({x,z}),{x:p.x+(x-p.x)/distance*Math.min(3,distance),z:p.z+(z-p.z)/distance*Math.min(3,distance)});
           await page.mouse.click(point.x,point.y);await step(24);
         }
+        if(i%12===0){await page.evaluate(()=>window.__SS__!.screenshotReady());await noVoid(await page.screenshot());}
       }
       throw new Error(`Could not walk to ${x},${z}: ${JSON.stringify(await page.evaluate(()=>window.__SS__!.getState().player!.transform))}`);
     };
+    expect(await page.evaluate(()=>window.__SS__!.getState().districts!.districts.map(d=>d.id))).toEqual(['D-RES','D-MAIN','D-SHOP']);
     await shot('morning');expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons)).toBeUndefined();
     await expect(page.locator('[data-audio-controls]')).toBeHidden();for(const panel of await page.locator('body>details').all())await expect(panel).toBeHidden();
     expect(await page.evaluate(()=>window.__SS__!.query({kind:'companion'}))).toHaveLength(1);
@@ -66,20 +80,31 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
     await move(-14,-4);await move(0,0);await move(42,0);await shot('before-incident');await move(42,-6.5);await step(1);
     expect(await page.evaluate(()=>window.__SS__!.getState().mission!.completedObjectives)).toContain('breakfast');
     expect(await page.evaluate(()=>window.__SS__!.query({kind:'infected'}).filter(e=>e.health.current>0))).toHaveLength(4);expect(await page.evaluate(()=>window.__SS__!.events().some(e=>e.type==='civilian.turned'&&e.variant==='inf.delivery-driver'))).toBe(true);await shot('incident');
+    expect(await page.evaluate(()=>window.__SS__!.missions.state()!.checkpoint)).toBe('escape');
+    if(mode==='desktop'){
+      const started=await page.evaluate(()=>window.__SS__!.getState().tick);
+      // All combat comes from LMB/RMB on live infected, including the formerly inert fists.
+      for(let turn=0;turn<20;turn++){
+        if(await page.evaluate(()=>window.__SS__!.missions.state()!.stats.kills>0))break;
+        const point=await page.evaluate(()=>{
+          const a=window.__SS__!,p=a.getState().player!.transform;
+          const target=a.query({kind:'infected'}).filter(e=>e.health.current>0).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];
+          return a.input.project(target.transform);
+        });
+        const button=turn===0?'right':'left';await page.mouse.move(point.x,point.y);await page.mouse.down({button});await step(36);await page.mouse.up({button});
+      }
+      const hits=await page.evaluate(()=>window.__SS__!.events());
+      expect(hits.some(e=>e.type==='combat.hit'&&e.actionId==='weapon.fists'&&e.amount>0)).toBe(true);
+      expect(hits.some(e=>e.type==='combat.kill'&&e.actionId==='weapon.fists')).toBe(true);
+      expect(await page.evaluate(()=>window.__SS__!.getState().tick)-started).toBeLessThan(11*60);
+      await shot('fists');
+    }
     await move(42,0);await move(70,0);await move(70,-7);await step(1);
     expect(await page.evaluate(()=>window.__SS__!.missions.state()!.checkpoint)).toBe('melee');
-    await shot('display');await page.getByTestId('choose-machete').click();
+    await shot('display');await page.getByTestId('choose-bat').click();
     if(cdp)await page.getByTestId('touch-interact').tap();else {await page.keyboard.press('f');}
     await step(1);
-    expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.machete');await shot('store');
-    if(mode==='desktop'){
-      // Let the real AI kill the idle player; step only advances time, without damage cheats.
-      for(let i=0;i<80;i++){await step(30);if(await page.evaluate(()=>window.__SS__!.events().some(e=>e.type==='player.died')))break;}
-      expect(await page.evaluate(()=>window.__SS__!.events().some(e=>e.type==='player.died'))).toBe(true);
-      for(let i=0;i<20;i++){await step(15);if(await page.evaluate(()=>window.__SS__!.events().some(e=>e.type==='checkpoint.restored')))break;}
-      expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.machete');
-      expect(await page.evaluate(()=>window.__SS__!.missions.state()!.checkpoint)).toBe('melee');await shot('respawn');
-    }
+    expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.bat');await shot('store');
     // Use both sides against real encounter targets; clicks approach through ControlIntent.
     for(let turn=0;turn<150;turn++){
       const state=await page.evaluate(()=>window.__SS__!.getState());if('phase' in state.mission! && state.mission.phase==='result')break;
@@ -101,7 +126,9 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
       if(turn===2)await shot('fight');
     }
     await expect(page.getByTestId('mission-heading')).toHaveText('Milestone 1 complete — thanks for playing');
-    const events=await page.evaluate(()=>window.__SS__!.events());expect(events.some(e=>e.type==='combat.hit'&&e.actionId==='weapon.kick')).toBe(true);expect(events.some(e=>e.type==='combat.hit'&&e.actionId==='weapon.machete')).toBe(true);
+    const events=await page.evaluate(()=>window.__SS__!.events());expect(events.some(e=>e.type==='combat.hit'&&e.actionId==='weapon.kick')).toBe(true);expect(events.some(e=>e.type==='combat.hit'&&e.actionId==='weapon.bat')).toBe(true);
+    expect(await page.evaluate(()=>window.__SS__!.missions.state()!.stats.deaths)).toBe(0);
+    writeFileSync(`${output}/${mode}-playthrough.json`,JSON.stringify(await page.evaluate(()=>window.__SS__!.missions.state()!.stats),null,2));
     await shot('complete');await page.getByRole('button',{name:'Restart',exact:true}).click();await page.evaluate(()=>window.__SS__!.pause());await step(1);
     expect(await page.evaluate(()=>window.__SS__!.getState().mission!.completedObjectives)).toEqual([]);
   });
@@ -133,4 +160,47 @@ test('@E19 hardware checkpoint accepts a real middle-click for the chosen crowba
   await page.mouse.click(p.x,p.y,{button:'middle'});await page.evaluate(()=>window.__SS__!.step(1));
   expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.crowbar');
   await page.evaluate(()=>window.__SS__!.screenshotReady());await page.screenshot({path:`${output}/desktop-middle-click.png`});
+});
+
+test('@E19 incident idle survival and death resume escape through real clicks',async({page})=>{
+  test.setTimeout(180_000);await menuStart(page);await page.evaluate(()=>window.__SS__!.pause());
+  const walk=async(x:number,z:number)=>{
+    for(let i=0;i<160;i++){
+      const p=await page.evaluate(()=>window.__SS__!.getState().player!.transform),d=Math.hypot(x-p.x,z-p.z);
+      if(d<.7)return;
+      const point=await page.evaluate(p=>window.__SS__!.input.project(p),{x:p.x+(x-p.x)/d*Math.min(3,d),z:p.z+(z-p.z)/d*Math.min(3,d)});
+      await page.mouse.click(point.x,point.y);await page.evaluate(()=>window.__SS__!.step(24));
+      expect(await page.evaluate(()=>window.__SS__!.getState().player!.transform.y)).toBeGreaterThan(.65);
+    }throw new Error(`Incident route stalled to ${x},${z}: ${JSON.stringify(await page.evaluate(()=>window.__SS__!.getState().player!.transform))}`);
+  };
+  await walk(-14,-4);await walk(0,0);
+  // Click beyond the exposed west edge, then attempt to continue off the loaded floor.
+  await walk(-26,0);
+  for(let i=0;i<12;i++){
+    const point=await page.evaluate(()=>{const a=window.__SS__!,p=a.getState().player!.transform;return a.input.project({x:p.x-3,z:p.z});});
+    await page.mouse.click(point.x,point.y);await page.evaluate(()=>window.__SS__!.step(60));
+    const p=await page.evaluate(()=>window.__SS__!.getState().player!.transform);expect(p.x).toBeGreaterThan(-28);expect(p.y).toBeGreaterThan(.65);
+  }
+  await page.evaluate(()=>window.__SS__!.screenshotReady());await page.screenshot({path:`${output}/desktop-edge.png`});
+  await walk(0,0);await walk(42,0);
+  await walk(42,-6.5);
+  await page.evaluate(()=>window.__SS__!.step(1));
+  expect(await page.evaluate(()=>window.__SS__!.missions.state()!.checkpoint)).toBe('escape');
+  const start=await page.evaluate(()=>window.__SS__!.getState().tick);
+  await page.evaluate(()=>window.__SS__!.step(1500));
+  expect(await page.evaluate(()=>window.__SS__!.missions.state()!.stats.deaths)).toBe(0);
+  expect(await page.evaluate(()=>window.__SS__!.getState().player!.health.current)).toBeGreaterThan(0);
+  for(let i=0;i<160;i++){
+    if(await page.evaluate(()=>window.__SS__!.events().some(e=>e.type==='checkpoint.restored'&&e.id==='escape')))break;
+    await page.evaluate(()=>window.__SS__!.step(30));
+  }
+  const events=await page.evaluate(()=>window.__SS__!.events());
+  expect(events.some(e=>e.type==='checkpoint.restored'&&e.id==='escape')).toBe(true);
+  const death=events.find(e=>e.type==='player.died')!;expect((death.tick-start)/60).toBeGreaterThanOrEqual(25);
+  const state=await page.evaluate(()=>window.__SS__!.missions.state()!);
+  expect(state.completedObjectives).toEqual(['breakfast']);expect(state.steps.escape.status).toBe('active');
+  expect(state.steps.melee.status).toBe('pending');
+  expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.fists');
+  await page.evaluate(()=>window.__SS__!.screenshotReady());await page.screenshot({path:`${output}/desktop-escape-respawn.png`});
+  writeFileSync(`${output}/incident-survival.json`,JSON.stringify({idleSurvival_s:(death.tick-start)/60,checkpoint:state.checkpoint,deaths:state.stats.deaths},null,2));
 });
