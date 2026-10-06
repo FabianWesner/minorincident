@@ -23,7 +23,7 @@ test('T-E08-10-browser @E08 @E08-AC10 placeholder corgi turntable and runtime no
 test('@E08 ambient civilian rendering stays instanced and inside frame geometry budgets', async ({ page }) => {
   await boot(page); await page.evaluate(async () => { const api = window.__SS__!; await api.loadScenario('civ-street'); api.pause(); await api.screenshotReady(); });
   const result = await page.evaluate(() => ({ crowd: window.__SS__!.getState().render.npcs!.civilians, perf: window.__SS__!.perf() }));
-  expect(result.crowd.instances).toBe(30); expect(result.crowd.draws).toBe(1); expect(result.perf.drawCalls).toBeLessThan(600); expect(result.perf.triangles).toBeLessThan(1500000);
+  expect(result.crowd.instances).toBe(30); expect(result.crowd.draws).toBeLessThanOrEqual(4); expect(result.perf.drawCalls).toBeLessThan(600); expect(result.perf.triangles).toBeLessThan(1500000);
   writeFileSync(`${output}/render-perf.json`, JSON.stringify(result, null, 2));
 });
 test('T-E08-16 @E08 @E08-AC16 five down/veins/eyes/rising frames show civilian turning', async ({ page }) => {

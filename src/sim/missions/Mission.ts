@@ -22,6 +22,12 @@ export class Mission {
   private pendingMarker: string | null = null;
   private readonly pendingCheckpoints: string[] = [];
   private finishApplied = false;
+  /** Temporary playtest choice; no permanent unlock is awarded. */
+  meleeChoice = 'weapon.bat';
+  chooseMelee(id: string): void {
+    if (this.def.slice && this.state.steps.melee?.status === 'active' && ['weapon.bat','weapon.crowbar','weapon.machete'].includes(id)) this.meleeChoice = id;
+  }
+  restartSlice(): void { if (this.def.slice) { this.world.combat?.clearLoadout(); this.meleeChoice = 'weapon.bat'; this.restore('start'); } }
   private readonly startTick: number;
   constructor(readonly world: SimWorld, readonly def: MissionDef) {
     const errors = validateMission(def); if (errors.length) throw new Error(errors.join('\n'));
@@ -112,6 +118,14 @@ export class Mission {
   }
   private complete(def: ObjectiveDef): void {
     this.state.steps[def.id].status = 'completed'; this.state.completedObjectives.push(def.id);
+    // Crossing the hardware entrance closes the first chase; the weapon display is a safe beat.
+    if (this.def.slice && def.id === 'escape') {
+      for (const actor of this.def.groups.incident) {
+        const entity=this.world.entities.get(this.state.actors[actor]);if(entity?.infected)this.world.infected!.release(entity);
+      }
+      this.world.player!.restoreVitals(this.world.tick);
+    }
+    if (this.def.slice && def.id === 'melee') this.world.combat!.setLoadout([this.meleeChoice], ['weapon.kick']);
     if (def.optional && !this.state.stats.optionalObjectives.includes(def.id)) this.state.stats.optionalObjectives.push(def.id);
     if (def.choice) for (const sibling of this.def.steps) if (sibling.id !== def.id && sibling.choice === def.choice) this.state.steps[sibling.id].status = 'cancelled';
     if (def.type === 'escort' && def.complete.kind === 'escort') this.rescue(this.state.actors[def.complete.actor]);
@@ -173,6 +187,20 @@ export class Mission {
     for (const id of actors) {
       if (this.state.actors[id] || this.deadBosses.has(id)) continue;
       const def = this.def.actors[id], anchor = this.def.anchors[def.anchor];
+      if (this.def.slice && this.world.infected && def.kind === 'infected') {
+        // Authored offsets may be inside an imported prop. Find the nearest clear nav cell.
+        let position = {x:anchor.x,z:anchor.z};
+        if (!this.world.infected.nav.clear(position.x,position.z,.65)) {
+          let found = false;
+          for (let r=.5; r<=10 && !found; r+=.5) for (let i=0; i<16; i++) {
+            const p={x:anchor.x+Math.cos(i*Math.PI/8)*r,z:anchor.z+Math.sin(i*Math.PI/8)*r};
+            if(this.world.infected.nav.clear(p.x,p.z,.65)){position=p;found=true;break;}
+          }
+          if (!found) throw new Error(`No clear encounter spawn: ${id}`);
+        }
+        const entityId = this.world.infected.spawn(def.archetype,position,{state:'chase',variant:id==='incident-0'?'inf.delivery-driver':undefined});
+        this.state.actors[id]=entityId; continue;
+      }
       const convoy = def.archetype === 'defend.convoy' && this.world.npcs ? this.world.npcs.traffic.convoy(['res', 'fuel', 'checkpoint', 'bridge'].map(key => this.def.anchors[key])) : null;
       const entity = convoy ? this.world.entities.get(convoy[0])! : this.world.entities.create({ kind: def.kind, archetype: def.archetype, faction: def.faction, transform: { x: anchor.x, z: anchor.z, y: 0.7, yaw: 0 }, health: { current: def.hp, max: def.hp }, combat: { radius: 0.4, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
       if (entity.kind === 'escort') this.world.npcs?.escorts.attach(entity);
@@ -234,6 +262,7 @@ export class Mission {
   restore(id = this.state.checkpoint ?? 'start'): void {
     this.world.controls.reset();
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
+    const retained = this.def.slice && id !== 'start' ? this.world.entities.get(1)!.weapons : undefined;
     const stats = this.state.stats, bosses=this.state.killedBosses, delta = this.world.tick - checkpoint.tick;
     Object.assign(this.state, structuredClone(checkpoint.state)); this.state.stats = stats; this.state.killedBosses=bosses; this.state.failure = null; this.state.phase = 'playing'; this.state.cinematic = null; this.state.result = null;
     this.finishApplied = false; this.pendingCheckpoints.length=0; this.markerObjective=this.def.steps.find(s=>this.state.steps[s.id].status==='active')?.id??null; this.pendingMarker=null;
@@ -242,20 +271,31 @@ export class Mission {
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) { const entity = entities.find(e => e.id === entityId); if (entity) entity.health.current = 0; }
     // Keep Player's live object because its controller holds that reference.
     const player = this.world.entities.get(1)!;
+    delete player.weapons;
     Object.assign(player, entities[0]); player.health.current = player.health.max; player.survivor!.diedAt = null;
     for (const entity of entities) if (entity.vehicle) { if (entity.vehicle.explodeAt !== null) entity.vehicle.explodeAt += delta; if (entity.vehicle.recoveringUntil) entity.vehicle.recoveringUntil += delta; }
-    this.world.entities.restore(entities, player); this.world.spatial.reset();
+    if (retained) { player.weapons = structuredClone(retained); this.state.items.push('melee'); this.state.steps.melee.status='completed'; if(!this.state.completedObjectives.includes('melee'))this.state.completedObjectives.push('melee'); }
+    if (!this.world.npcs && this.world.infected) { this.world.infected.pool.push(...this.world.infected.active); this.world.infected.active.length=0; }
+    this.world.entities.restore(entities, player);
+    if (!this.world.npcs && this.world.infected) {
+      const ai=this.world.infected;
+      ai.active.length=0; ai.director.queue.length=0;
+      for (const entity of this.world.entities.iterate()) if (entity.infected) { if(entity.infected.until)entity.infected.until+=delta;if(entity.infected.cooldown)entity.infected.cooldown+=delta;entity.infected.path.length=0;ai.active.push(entity); }
+      this.world.player!.locomotion.crowd=[];
+    } this.world.spatial.reset();
     for (const entity of this.world.entities.iterate()) this.world.spatial.set(entity.id, entity.transform.x, entity.transform.z);
     this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.player!.restoreVitals(this.world.tick); this.world.previousPlayer = { ...player.transform };
     if (player.weapons && this.world.combat) {
       const saved = player.weapons; this.world.combat.setLoadout(saved.LEFT.rack.map(s => s.id), saved.RIGHT.rack.map(s => s.id));
       Object.assign(this.world.combat.runner.loadout.state, saved);
-      for (const side of [saved.LEFT, saved.RIGHT]) { if (side.swapUntil) side.swapUntil += delta; for (const slot of side.rack) for (const key of ['nextCharge', 'reloadUntil', 'readyAt'] as const) if (slot[key]) slot[key] += delta; }
+      for (const side of [saved.LEFT, saved.RIGHT]) { if (side.swapUntil) side.swapUntil += delta; for (const slot of side.rack) for (const key of ['nextCharge', 'reloadUntil', 'readyAt'] as const) if (slot[key]) slot[key] = retained ? 0 : slot[key] + delta; }
       this.world.combat.projectiles.length = 0; this.world.combat.effects.zones.length = 0;
     }
+    if (!player.weapons) this.world.combat?.clearLoadout();
+    this.world.npcs?.restore(delta);
+    if (retained) { this.spawn('store'); this.activate(); }
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(entityId)) step.kills.push(entityId);
     if (this.state.tier !== null) this.world.setTier(this.state.tier as 0|1|2|3|4|5);
-    this.world.npcs?.restore(delta);
     this.world.vehicles?.rebuild();
     this.world.hazards?.debris.reset(); this.world.interactables?.rebuildBlockers();
     for(const [gate,handle]of this.gateHandles)this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[gate]);

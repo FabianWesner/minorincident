@@ -33,6 +33,17 @@ export class NavGrid {
     const cx = Math.floor((x - this.center.x + this.ground.width / 2) / this.cellSize), cz = Math.floor((z - this.center.z + this.ground.depth / 2) / this.cellSize);
     return cx < 0 || cz < 0 || cx >= this.width || cz >= this.depth ? -1 : cz * this.width + cx;
   }
+  /** Player clearance is smaller than AI clearance. Route to the nearest walkable
+   * cell when the player hugs a collider, then use direct movement once visible. */
+  nearestCell(x: number, z: number): number {
+    const cell=this.cell(x,z);if(cell<0||!this.blocked[cell])return cell;
+    let nearest=-1,distance=Infinity;
+    for(let dz=-6;dz<=6;dz++)for(let dx=-6;dx<=6;dx++){
+      const candidate=this.cell(x+dx*this.cellSize,z+dz*this.cellSize);if(candidate<0||this.blocked[candidate])continue;
+      const d=(this.x(candidate)-x)**2+(this.z(candidate)-z)**2;if(d<distance){nearest=candidate;distance=d;}
+    }
+    return nearest;
+  }
   x(cell: number): number { return (cell % this.width + 0.5) * this.cellSize - this.ground.width / 2 + this.center.x; }
   z(cell: number): number { return (Math.floor(cell / this.width) + 0.5) * this.cellSize - this.ground.depth / 2 + this.center.z; }
   clear(x: number, z: number, radius = 0): boolean {

@@ -28,7 +28,8 @@ test("T-E10-01 @E10 @E10-AC01 closed bounds, connected roads, manifest reference
   bad.placements[0].assetId = "missing";
   bad.placements[0].position = [0, 0, 0];
   bad.placements[0].visualAabb = { min: [-1, 0, -1], max: [1, 1, 1] };
-  bad.roads.edges = bad.roads.edges.filter((e) => e.end !== "north");
+  bad.roads.nodes.push({id:"orphan",point:[0,0]});
+  bad.placements[1].position=[0,0,0];bad.placements[1].visualAabb={min:[-.5,0,-.5],max:[.5,1,.5]};
   const errors = validateLayout(bad, manifest);
   for (const text of ["bounds", "road graph", "asset", "lane"])
     expect(errors.join(" ")).toContain(text);

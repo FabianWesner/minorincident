@@ -16,3 +16,18 @@
 .mission-panel dl{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 24px}.mission-panel dt{font-weight:400;color:#c0cad6}.mission-panel dd{text-align:right;margin:0}
 .mission-ui.is-cinematic:before,.mission-ui.is-cinematic:after{content:'';position:absolute;left:0;right:0;height:10%;background:#101721}.mission-ui.is-cinematic:before{top:0}.mission-ui.is-cinematic:after{bottom:0}
 @media(max-width:600px){.mission-ui{font-size:15px}.mission-tracker{top:106px;left:12px;padding:10px;max-width:calc(100vw - 140px)}.mission-minimap{right:12px;top:60px;width:88px;height:88px}.mission-subtitle{font-size:17px;bottom:18%;width:80%;padding:10px}.mission-toast{font-size:13px;bottom:28px;width:75%}.mission-panel h1{font-size:24px}}
+
+.slice-choices{position:absolute;bottom:220px;left:50%;transform:translateX(-50%);display:flex;gap:8px;flex-wrap:wrap;justify-content:center;background:#1d2433f0;padding:12px;border-radius:12px;pointer-events:auto;width:min(380px,90vw)}
+.slice-choices button{font:700 16px system-ui;padding:10px 14px;border:2px solid #5d697b;border-radius:8px;background:#354759;color:#fff4df;text-transform:capitalize;cursor:pointer}
+.slice-choices button[aria-pressed=true]{border-color:#ffcf77;color:#ffcf77}.slice-choices span{font-size:13px;text-align:center;width:100%}
+body.touch-ui .slice-choices{bottom:136px;padding:8px;width:min(350px,90vw)}
+body.touch-ui .slice-choices button{font-size:14px;padding:8px}
+.full-ui.touch-ui:has(.slice-choices:not([hidden])) .onboarding,.full-ui.touch-ui:has(.slice-choices:not([hidden])) .hud-stick-zone{visibility:hidden}
+.full-ui.touch-ui .slice-choices{left:12px;transform:none;bottom:172px;width:280px;gap:4px}
+.full-ui.touch-ui .slice-choices button{min-height:44px;min-width:64px;font-size:12px;padding:6px 8px}
+.full-ui.touch-ui .slice-choices span{font-size:11px}
+@media(orientation:landscape){.full-ui.touch-ui .slice-choices{bottom:auto;top:158px}}
+
+.full-ui .mission-panel button{background:#ffcf77;color:#172131}
+.full-ui:has(.mission-panel:not([hidden])) [data-touch-controls],.full-ui:has(.mission-panel:not([hidden])) [data-touch-stick]{display:none!important}
+@media(orientation:landscape){.full-ui.touch-ui .slice-choices{left:calc(50% + 12px);top:148px;width:min(280px,calc(50vw - 24px))}}

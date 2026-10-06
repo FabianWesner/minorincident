@@ -17,7 +17,7 @@ test('T-E02-12 @E02 @E02-AC12 shake is bounded and respects the setting immediat
   expect(() => view.shake(NaN)).toThrow(RangeError);
 });
 
-test('T-E02-camera @E02 follow is frame-rate independent and portrait preserves readable framing and nine metres of ground', () => {
+test('T-E02-camera @E02 follow is frame-rate independent and portrait preserves readable framing and seven metres of ground', () => {
   for (const fps of [30, 60, 144]) {
     const view = new View(); view.reset({ x: 0, z: 0 });
     for (let i = 0; i < fps; i++) { view.update({ x: 20, z: 0 }, 1 / fps); expect(view.focus.x).toBeLessThanOrEqual(20); }
@@ -30,7 +30,7 @@ test('T-E02-camera @E02 follow is frame-rate independent and portrait preserves 
   };
   expect(height(390, 844) / height(844, 390)).toBeGreaterThan(.9);
   view.resize(390, 844);
-  expect(2 * view.radius * Math.tan(view.camera.fov * Math.PI / 360) * view.camera.aspect).toBeGreaterThanOrEqual(9 - 1e-8);
+  expect(2 * view.radius * Math.tan(view.camera.fov * Math.PI / 360) * view.camera.aspect).toBeGreaterThanOrEqual(7 - 1e-8);
   expect(height(1600, 900) / 900).toBeGreaterThanOrEqual(1 / 5.5);
   expect(height(1600, 900) / 900).toBeLessThanOrEqual(1 / 4);
 });

@@ -4308,7 +4308,11 @@
     },
     "sourceGlb": "assets/bld.maple-hardware/model.glb",
     "script": "assets/bld.maple-hardware/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
   },
   {
     "id": "bld.mainstreet-brick",
@@ -9994,6 +9998,10 @@
     "lods": {
       "lod1": "public/assets/models/prop.mailbox-blue.lod1.glb",
       "lod2": "public/assets/models/prop.mailbox-blue.lod2.glb"
+    },
+    "world": {
+      "token": "policeBlue",
+      "solid": true
     }
   },
   {

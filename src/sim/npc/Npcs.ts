@@ -13,6 +13,7 @@ export class Npcs {
   readonly escorts: Escorts;
   readonly traffic: Traffic;
   private ambientTarget = 0;
+  private slice = false;
   private readonly waypoint = { x: 0, z: 0 };
   constructor(readonly world: SimWorld) { this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
   move(e: EntitySnapshot, target: Point, speed: number, path: { path: number[]; goal: number; pathIndex: number }, stop = .1): void {
@@ -20,9 +21,9 @@ export class Npcs {
     let dx = target.x - e.transform.x, dz = target.z - e.transform.z, distance = Math.hypot(dx, dz);
     if (distance <= stop) return;
     if (!nav.visible(e.transform, target, .35)) {
-      const goal = nav.cell(target.x, target.z);
+      const goal = nav.nearestCell(target.x, target.z);
       if (goal !== path.goal || path.pathIndex >= path.path.length) {
-        if (!nav.path(nav.cell(e.transform.x, e.transform.z), goal, path.path, 300)) return;
+        if (!nav.path(nav.nearestCell(e.transform.x, e.transform.z), goal, path.path, 300)) return;
         path.goal = goal; path.pathIndex = 0;
       }
       const cell = path.path[path.pathIndex]; this.waypoint.x = nav.x(cell); this.waypoint.z = nav.z(cell);
@@ -58,6 +59,32 @@ export class Npcs {
     if (!Number.isInteger(level) || level < 1 || level > 6) throw new RangeError('Invalid NPC level');
     this.civilians.level = level; this.world.infected!.director.levelCap = npcs.caps[level - 1]; this.world.infected!.director.tier = tier; this.ambientTarget = count; this.populate(Math.floor(count));
   }
+  /** M1 morning is a small authored neighborhood, with exactly one companion. */
+  configureSlice(driver?: Point): void {
+    this.slice=true;this.ambientTarget=0;
+    for(const e of this.world.entities.iterate()) if(e.civilian?.ambient || e.traffic) { this.world.entities.delete(e.id);this.world.spatial.delete(e.id); }
+    const nav=this.world.infected!.nav,player=this.world.entities.get(1)!.transform;
+    for(const [role,p] of [['suburban-mom',{x:player.x+3,z:player.z+2}],['bbq-dad',{x:player.x-3,z:player.z+3}],['bathrobe-neighbor',{x:player.x+8,z:-4.5}],['cashier',{x:42,z:-4}]] as const) {
+      const cell=nav.nearestCell(p.x,p.z),start=nav.clear(p.x,p.z,.65)?{...p}:{x:nav.x(cell),z:nav.z(cell)};
+      for(const [dx,dz]of [[0,1.5],[1.5,0],[-1.5,0],[0,-1.5]]){const end={x:start.x+dx,z:start.z+dz};
+        if(nav.visible(start,end,.65)){this.civilians.spawn(role,start,{waypoints:[start,end]});break;}
+      }
+    }
+    if(driver) {
+      const cell=nav.nearestCell(driver.x,driver.z),p={x:nav.x(cell),z:nav.z(cell)};
+      if(nav.clear(p.x,p.z,.35))this.civilians.spawn('delivery-driver',p,{waypoints:[p]});
+    }
+    this.world.infected!.director.levelCap=15;
+  }
+  /** The healthy delivery driver becomes the slice's named infected actor at the incident. */
+  sliceIncident(position: Point): void {
+    for(const e of this.world.entities.iterate())if(e.archetype==='npc.delivery-driver' && e.civilian){
+      e.civilian.state='infected';e.hidden=true;this.world.spatial.delete(e.id);
+      const infectedId=this.world.missions?.state.actors['incident-0'];
+      if(infectedId!==undefined)this.world.events.emit({type:'civilian.turned',tick:this.world.tick,id:e.id,infectedId,variant:e.civilian.variant,position:{...e.transform}});
+    }
+    this.civilians.alarm(position);
+  }
   /** L1 story beat; placement is clamped to clear ground near the loaded diner anchor. */
   dinerIncident(position: Point): void {
     const nav = this.world.infected!.nav;
@@ -85,6 +112,7 @@ export class Npcs {
     this.civilians.restore();
   }
   setQuality(tier: 'high' | 'low'): void {
+    if(this.slice)return;
     for (const e of this.world.entities.iterate()) if (e.civilian?.ambient) { this.world.spatial.delete(e.id); this.world.entities.delete(e.id); }
     this.configure(this.civilians.level, tier);
   }

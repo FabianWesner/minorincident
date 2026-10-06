@@ -20,10 +20,10 @@ export class View {
   private blendTarget = 0;
   private shakeStrength = 0;
   private shakeTime = 0;
-  /** Close isometric combat framing; portrait retains at least nine metres of ground width. */
+  /** Close isometric combat framing; portrait retains at least seven metres of ground width. */
   resize(width: number, height: number): void {
     this.camera.aspect = width / height;
-    this.radius = width >= height ? 19 : Math.max(19 * height / width, 9 / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
+    this.radius = width >= height ? 19 : Math.max(19, 7 / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
     this.camera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z }, 0);
   }
   reset(player: { x: number; z: number }): void {
