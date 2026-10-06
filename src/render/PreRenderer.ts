@@ -4,9 +4,9 @@ import type { Renderer } from './Renderer';
 
 /** Warm hidden variants while loading. The real render pass also uploads buffers/textures
  * and compiles shadow and soft-particle programs in their actual HDR/MSAA context. */
-/** Compile lanes: three's compileAsync awaits each object's pipeline in turn, so one call serializes
- * every shader/pipeline compile. Several concurrent calls over disjoint leaf sets let the driver
- * (Dawn async pipelines, ANGLE KHR_parallel_shader_compile) compile on its worker threads. */
+/** Compile lanes (WebGL): three's compileAsync awaits each object's program in turn, so one call
+ * serializes every link. Concurrent calls over disjoint leaf sets let ANGLE's
+ * KHR_parallel_shader_compile work on several programs (L1: 7.4 s -> 2.3 s under load). */
 export const compileLanes = 6;
 export type CompilePartitions = (() => void)[];
 export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); }))): Promise<void> {
@@ -37,7 +37,9 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     const leaves: Object3D[] = [];
     scene.traverse(object => { if (!object.userData.preventPreRender && (object instanceof Mesh || object instanceof Sprite)) leaves.push(object); });
     const partitions = Array.from({ length: compileLanes }, (_, lane) => () => { leaves.forEach((leaf, i) => { leaf.visible = i % compileLanes === lane; }); });
-    try { await compile(partitions); } finally { for (const leaf of leaves) leaf.visible = true; }
+    // WebGL only: measured on WebGPU, three's per-object compileAsync costs more than the
+    // synchronous pipeline creation of the warm-up draw (L1: 1.6-2.8 s vs +0.2 s).
+    try { if (renderer.selectedBackend === 'webgl') await compile(partitions); } finally { for (const leaf of leaves) leaf.visible = true; }
     performance.measure('L1 shader compilation', { start, end: performance.now() });
     const draw = performance.now(); render();
     await renderer.finishWarmUp();
@@ -50,7 +52,9 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // Opaque district geometry can cover the animated batches in the tiny target.
     // Draw each one alone so ANGLE executes its fragment pipeline, rather than
     // postponing native specialization until the first infected becomes visible.
-    const solo = saved.filter(({ object }) => object instanceof InstancedMesh && object.userData.preRenderSolo);
+    // WebGPU pipelines are complete at creation (no lazy driver specialization): measured 0 new
+    // pipelines but seconds of frame pacing in these solo draws, so they run on WebGL only.
+    const solo = renderer.selectedBackend === 'webgl' ? saved.filter(({ object }) => object instanceof InstancedMesh && object.userData.preRenderSolo) : [];
     if (solo.length) {
       for (const { object } of saved) if (object instanceof Mesh || object instanceof Sprite) object.visible = false;
       for (const { object, matrices } of solo) {
