@@ -149,3 +149,5 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 
 .full-ui.touch-ui [data-touch-action=interact]{right:0;bottom:0;width:64px;height:64px!important;font-size:10px}
 [data-touch-action=interact]:disabled{opacity:.4}
+
+.hud-vitals .hud-portrait,.hud-companion .hud-portrait{background-size:cover;background-position:center}

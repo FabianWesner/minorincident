@@ -1,5 +1,5 @@
 // Adapted from Bruno Simon's ResourcesLoader (MIT): loaders + promise cache.
-import { Box3, Group, Mesh, Vector3, type Object3D, type WebGPURenderer } from 'three/webgpu';
+import { Box3, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, SRGBColorSpace, TextureLoader, Vector3, type Object3D, type WebGPURenderer } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
@@ -16,6 +16,7 @@ export class AssetRegistry {
   private readonly definitions: Map<string, AssetDef>;
   private readonly cache = new Map<string, Promise<Object3D>>();
   private readonly materials = new AssetMaterials();
+  private readonly decalTextures = new Set<import('three').Texture>();
   private readonly ktx?: KTX2Loader;
   private readonly load: Loader;
   constructor(private readonly log: (event: PlaceholderLog) => void, options: { manifest?: AssetDef[]; load?: Loader; renderer?: WebGPURenderer } = {}) {
@@ -50,6 +51,16 @@ export class AssetRegistry {
   private async prototype(def: AssetDef, lod: 'lod0' | 'lod1' | 'lod2', decay?: string, lowGlb?: string): Promise<Object3D> {
     const fallback = (reason: string): Group => { this.log({ type: 'asset.placeholder', id: def.id, reason }); return placeholder(def); };
     if (!atLeast(def.status, 'integrated')) return fallback(`status ${def.status}`);
+    if (def.decalTexture) {
+      try {
+        const texture = await new TextureLoader().loadAsync('/' + def.decalTexture.replace(/^public\//, ''));
+        texture.colorSpace = SRGBColorSpace; this.decalTextures.add(texture);
+        const material = new MeshBasicNodeMaterial({ map: texture, transparent: true, depthWrite: false });
+        const geometry = new PlaneGeometry(def.dimensions.x, def.dimensions.z); geometry.rotateX(-Math.PI / 2);
+        const mesh = new Mesh(geometry, material); mesh.name = 'root'; mesh.position.y = .015;
+        const root = new Group(); root.add(mesh); return root;
+      } catch (error) { return fallback(String(error)); }
+    }
     const path = lowGlb ?? (lod === 'lod0' ? def.glb : def.lods?.[lod] ?? def.glb);
     if (!path) return fallback(`missing ${lod}`);
     let root: Object3D | undefined;
@@ -86,6 +97,8 @@ export class AssetRegistry {
     });
     for (const geometry of geometries) geometry.dispose();
     for (const material of materials) material.dispose();
+    for (const texture of this.decalTextures) texture.dispose();
+    this.decalTextures.clear();
     this.cache.clear(); this.materials.dispose(); this.ktx?.dispose();
   }
 }
