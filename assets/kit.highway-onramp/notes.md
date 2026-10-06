@@ -1,0 +1,9 @@
+# Highway on-ramp kit
+
+Hero building kit. Blender +X is the low entry/forward direction, +Z is up; all footings sit at z=0. Approximately 28 × 17 × 9.5 metres including the gantry. The S-shaped concrete viaduct has a 4.6 m roadway, 5.76 m deck, a 5.0 m rise, 96 segmented Jersey barriers, and three cast-concrete support piers. A freestanding cross-braced gantry carries raised SUNSET GROVE / EXIT lettering and a northeast arrow. Three framed amber lanterns supply warm accents.
+
+Materials use the shared palette, with no image textures. All fixed concrete, gantry and lantern-frame meshes merge by material. The three lamp heads remain separately named with centered pivots so each light anchor can control its own emissive glass. The root, lamp heads and 19 collider anchors remain separate empties. Markings, arrow, letters and weathering stand at least 3 mm off their host faces. Road paint occupies separate bands with no hidden asphalt beneath it; the covered deck top is omitted. Real open expansion joints replace shallow pavement overlays. The sign has deep, chunky raised lettering to stay stable under the far-camera depth precision. Cast segments have actual shadow gaps and softly bevelled edges. Weathering is deterministic and intentionally restrained.
+
+The reference is interpreted as a modular road piece with open ends; no terrain, cars, real brands, or surrounding district are included. The green sign uses the closest global palette token, backpackTeal. LODs are regenerated from the current source via mesh decimation; their purpose is retaining the curve, support masses, barriers and gantry at distance.
+
+Build/export and review are run only through experiment/tools/blender_run.py. Studio floor, lamps and camera are presentation-only and excluded from export. AO bakes to an active `ao` vertex color attribute. Source geometry is deterministic (seed 26).
