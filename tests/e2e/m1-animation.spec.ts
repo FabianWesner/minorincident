@@ -33,14 +33,14 @@ for (const mode of ['desktop','iphone'] as const) test.describe(mode, () => {
         await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{...origin,x:origin.x+(dx-dz)/d/Math.SQRT2*60,y:origin.y+(dx+dz)/d/Math.SQRT2*60}]});
         await page.evaluate(n=>window.__SS__!.step(n),Math.max(1,Math.floor(Math.max(0,d-1.15)/4.5*60)));
         await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await page.getByTestId(beat%4===3?'touch-right':'touch-left').tap();
-      }else {const point=await page.evaluate(p=>window.__SS__!.input.project(p),target.transform);await page.mouse.move(point.x,point.y);await page.mouse.down({button:beat%4===3?'right':'left'});}
+      }else {const point=await page.evaluate(p=>window.__SS__!.input.project(p),target.transform);await page.mouse.move(point.x,point.y);await page.mouse.down();}
       for(let tick=0;tick<36;tick++){
         await page.evaluate(async()=>{const a=window.__SS__!;await a.step(1);a.vfx.stepRender(1/60);});
         const render=await page.evaluate(()=>window.__SS__!.getState().render);
         maximumTrail=Math.max(maximumTrail,render.actions!.trailVertices);maximumParticles=Math.max(maximumParticles,render.vfx!.particles);
         if(beat<3&&[5,9,14,22].includes(tick)){await page.evaluate(()=>window.__SS__!.screenshotReady());await page.screenshot({path:`${output}/${mode}-${weapon}-${beat}-${tick}.png`});}
       }
-      if(!cdp)await page.mouse.up({button:beat%4===3?'right':'left'});
+      if(!cdp)await page.mouse.up();
     }
     const events=await page.evaluate(()=>window.__SS__!.events()),hits=events.filter(e=>e.type==='combat.hit'&&e.actionId===`weapon.${weapon}`);
     expect(hits.length).toBeGreaterThan(0);expect(maximumTrail).toBeGreaterThan(0);expect(maximumParticles).toBeGreaterThan(0);
