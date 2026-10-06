@@ -1,4 +1,9 @@
 import { GameUI } from './ui/GameUI';
+import { CampaignUI } from './ui/CampaignUI';
+import { newCampaign, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
+import { applyCampaign } from './sim/progression/apply';
+import { SaveStore } from './sim/progression/Save';
+import type { SurvivorVariant } from './data/survivor';
 import { Driver } from './debug/bot/Driver';
 import { AudioService } from './audio/AudioService';
 // Adapted from folio-2025 by Bruno Simon (MIT).
@@ -25,6 +30,9 @@ export class Game {
   readonly audio: AudioService;
   readonly ui: GameUI;
   readonly ticker = new Ticker();
+  campaign: CampaignSave | null = null;
+  readonly saves = new SaveStore({ getItem: key => localStorage.getItem(key), setItem: (key,value) => localStorage.setItem(key,value), removeItem: key => localStorage.removeItem(key) });
+  campaignUI!: CampaignUI;
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
   driver: Driver | null = null;
   frameMs = 0;
@@ -38,6 +46,7 @@ export class Game {
     this.view = this.services.add(new GameView(this.world, params));
     this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera));
     this.audio = this.services.add(new AudioService(this.world, {
+      settingsChanged: patch => this.campaignSettings(patch),
       pause: () => { this.clock.pause(); this.ui?.pause(); }, resume: () => { this.ticker.reset(); this.clock.resume(); this.ui?.show(null); },
       release: () => { this.input.clear(); this.world.clearInput(); this.ticker.reset(); },
       offscreen: (p) => { const q = this.view.project(p.x, p.y ?? 0.7, p.z); return Math.abs(q[0]) > 1 || Math.abs(q[1]) > 1 || q[2] > 1; },
@@ -47,12 +56,16 @@ export class Game {
   }
   async init(): Promise<void> {
     await this.services.init();
+    this.campaignUI = new CampaignUI(this);
     await this.loadScenario(this.params.get('test') === '1' ? 'empty' : 'survivor', Number(this.params.get('seed') ?? 1));
     this.world.player?.select(this.params.get('survivor') === 'male' ? 'male' : 'female', 0);
     this.view.update(1);
     this.ui.init();
+    const saved = this.saves.load();
+    if ((!this.ui.enabled && saved.status !== 'empty') || saved.status === 'error') this.campaignUI.showMenu(saved);
     this.ticker.events.on('frame', ({ seconds }) => {
       this.frameMs = seconds * 1000;
+      if (!this.loading) this.campaignUI.update();
       if (!this.loading && this.renderedDistricts !== this.world.districts) this.refreshView();
       if (!this.loading) {
         if (!this.clock.paused) this.view.frame(seconds);
@@ -70,7 +83,7 @@ export class Game {
     const load = this.levelQueue.then(async () => {
       this.loading = true;
       try {
-        this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
+        this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
         if (name !== null) { this.world.loadScenario(name, seed); if (name === 'mission-sandbox') this.world.loadMission(missionSandbox()); await this.view.load(); }
         else this.view.update();
         this.renderedDistricts=this.world.districts;
@@ -80,25 +93,55 @@ export class Game {
     this.levelQueue = load.catch(() => {}); return load;
   }
   /** E10 composition plus E12 mission briefing; checkpoints restore reached state or reconstruct an authored graph prefix. */
-  loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string}):Promise<void>{
+  loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string;progression?:ProgressionPreset}):Promise<void>{
     const load=this.levelQueue.then(async()=>{
       this.loading=true;
       try{
+        if(opts?.progression)this.campaign=preset(opts.progression);
         if(opts?.checkpoint && this.world.missions?.def.id === id) { this.world.missions.loadCheckpoint(opts.checkpoint); this.view.update(1); return; }
+        this.campaignUI.reset();
         const start=performance.now();
         const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(url);if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
         const data=performance.now();
         const cosmetic=this.world.entities.get(1)?.survivor;
         this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
+        const quality = this.campaign?.settings.quality ?? this.params.get('quality');
+        if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
         if(missionIds.includes(id as MissionId)) {
-          this.world.combat = new Combat(this.world, { name:id,survivor:true,combat:true,ground:{width:100,depth:100},player:{...this.world.entities.get(1)!.transform} });
+          this.world.combat ??= new Combat(this.world, { name:id,survivor:true,combat:true,ground:{width:100,depth:100},player:{...this.world.entities.get(1)!.transform} });
+          if(this.campaign)this.applyCampaign();
           const mission=this.world.loadMission(resolveCampaignMission(id as MissionId, this.world.districts!));
           if(opts?.checkpoint) mission.loadCheckpoint(opts.checkpoint);
         }
+        if(this.campaign)this.watchCampaign();
         const sim=performance.now();await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:performance.now()-sim};await this.audio.load(); this.ui.loaded();
       }finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
+  }
+  async startCampaign(character:SurvivorVariant):Promise<void> {
+    this.campaign=newCampaign(character,Number(this.params.get('seed')??1));this.campaign.settings={...this.audio.settings};this.saveCampaign();await this.loadLevel('L1');
+  }
+  async continueCampaign(save:CampaignSave,level?:Level):Promise<void> {
+    this.campaign=structuredClone(save);
+    if(save.pending&&!level){this.campaignUI.showRewards();return;}
+    if(level&&level>save.unlockedLevel)throw new Error('Level is locked');
+    const settings = { ...save.settings, quality: save.settings.quality === 'auto' ? matchMedia('(pointer:coarse)').matches ? 'low' as const : 'high' as const : save.settings.quality };
+    this.view.settings(settings);this.audio.set(save.settings);
+    await this.loadLevel(`L${level??save.unlockedLevel}`);
+    this.view.settings(settings);
+  }
+  applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.view.update(1);}}
+  saveCampaign():boolean {
+    if(!this.campaign)return false;
+    if(this.world.progression?.campaign){this.world.progression.campaign=structuredClone(this.campaign);}
+    return this.saves.write(this.campaign);
+  }
+  campaignSettings(patch:CampaignSettings):void {if(this.campaign){Object.assign(this.campaign.settings,patch);this.saveCampaign();}}
+  private watchCampaign():void {
+    const save=this.campaign!;
+    this.world.events.on('combat.attack',event=>{if(event.type==='combat.attack')save.usage[event.actionId]=(save.usage[event.actionId]??0)+1;});
+    this.world.events.on('pickup.collected',event=>{if(event.type==='pickup.collected'&&'actionId' in event&&!save.ownedActions.includes(event.actionId))save.ownedActions.push(event.actionId);});
   }
   /** Queue one presentation rebuild when a mission script changes decay. */
   private refreshView(): Promise<void> {
@@ -147,5 +190,5 @@ export class Game {
     const info = this.view.renderer.info;
     return { fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad };
   }
-  dispose(): void { this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); this.ui.dispose(); }
+  dispose(): void { this.campaignUI?.dispose(); this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); this.ui.dispose(); }
 }

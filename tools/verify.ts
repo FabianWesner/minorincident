@@ -8,11 +8,12 @@ const output = `test-results/epics/${target}`;
 mkdirSync(output, { recursive: true });
 const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'], ['npm', 'run', 'build'],
-  ['npx', 'vitest', 'run', '-t', selection.pattern, '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
+  // Timing fixtures must not compete with other Vitest workers on the shared Mac.
+  ['npx', 'vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
   ...(target === 'E10'
     ? [
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E10-AC06', '--workers=2'],
-      // Native GPU load timing opens a headed window: run once, after the headless suite.
+      // Native GPU load timing stays headless: run once, after the other browser checks.
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/district-load.spec.ts', '--grep', '@E10-AC06', '--project=chromium', '--workers=2'],
     ]
     : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern]]),

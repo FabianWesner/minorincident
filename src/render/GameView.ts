@@ -1,3 +1,4 @@
+import { NpcView } from './npc/NpcView';
 import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
 import { ObjectiveMarker } from './ObjectiveMarker';
@@ -45,6 +46,7 @@ export class GameView implements Lifecycle {
   private actions: ActionView | null = null;
   private combat: CombatView | null = null;
   private crowd: CrowdView | null = null;
+  private npcs: NpcView | null = null;
   private interactions: InteractionView | null = null;
   vfx: Vfx | null = null;
   private vehicleFeedback: VehicleFeedback | null = null;
@@ -137,9 +139,11 @@ export class GameView implements Lifecycle {
       this.destination.renderOrder = 10; this.destination.rotation.x = -Math.PI / 2; this.destination.visible = false;
       this.meshes.push(this.destination); this.scene.add(this.destination);
     }
+    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials); await this.npcs.init(); this.scene.add(this.npcs); }
     if (this.world.combat && this.character) { this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer); await this.actions.init(); this.actions.update(); this.scene.add(this.actions); }
     if (this.world.missions) { this.marker = new ObjectiveMarker(this.world); this.scene.add(this.marker); }
-    if (this.world.districts && this.world.combat) { this.combat = new CombatView(this.world, this.materials!); this.scene.add(this.combat); }
+    if (this.world.districts && this.world.infected) { this.crowd = new CrowdView(this.world); await this.crowd.init(); this.scene.add(this.crowd); }
+    else if (this.world.districts && this.world.combat) { this.combat = new CombatView(this.world, this.materials!); this.scene.add(this.combat); }
     if (this.world.interactables && this.materials) {
       this.interactions = new InteractionView(this.world, this.materials); this.scene.add(this.interactions); await this.interactions.synchronize();
     }
@@ -187,6 +191,7 @@ export class GameView implements Lifecycle {
       const player = this.world.entities.get(1)!.transform;
       this.view.preset(name, { position: [player.x + 15, 18, player.z + 15], target: [player.x, .4, player.z] }); this.update(1); return;
     }
+    if (this.npcs && (name === 'turning-probe' || name === 'corgi')) { this.view.preset(name, { position: name === 'corgi' ? [5, 3, 6] : [8, 5, 8], target: name === 'corgi' ? [0, .4, 2] : [5, .6, 0] }); this.update(1); return; }
     if (name === 'horde-readability' && this.crowd) { this.view.preset(name, { position: [15, 15, 19], target: [0, 0.5, -1] }); this.update(1); return; }
     if (name === 'interact-ui' && this.world.interactables) {
       const p = this.world.entities.get(1)!.transform;
@@ -234,6 +239,7 @@ export class GameView implements Lifecycle {
     const materialInventory = new Map<string, { name: string; palette: boolean }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial }); });
     return { moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
+      npcs: this.npcs?.snapshot() ?? null,
       vehicles: [...(this.vehicles?.snapshot() ?? []), ...(this.vehicleFeedback?.getState() ?? []).map(v => ({ ...v, wheels: [], brake: 0, sirens: [], placeholder: true }))], character: this.character?.getState() ?? null, crowd: this.crowd?.getState() ?? null, actions: this.actions?.getState() ?? null,
       vfx: this.vfx?.snapshot() ?? null, infected: this.combat?.getState() ?? this.crowd?.getGoreState() ?? [],
       materials: [...materialInventory.values()], occlusion: this.occlusion.getState(),
@@ -283,7 +289,7 @@ export class GameView implements Lifecycle {
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); this.missionUI?.update(this.camera,innerWidth,innerHeight);
     this.combat?.update(); this.crowd?.update(); this.actions?.update();
-    this.interactions?.update(this.camera);
+    this.interactions?.update(this.camera); this.npcs?.update(this.camera);
     this.flashOverlay.style.opacity = String(this.vfx?.flash ?? 0);
     this.lighting?.update(this.view);
     this.wireframe?.update();
@@ -308,6 +314,7 @@ export class GameView implements Lifecycle {
   }
   async ready(): Promise<void> { await this.vehicles?.ready(); }
   reset(): void {
+    if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }
     if (this.vfx) { this.scene.remove(this.vfx); this.vfx.dispose(); this.vfx = null; }
     if (this.vehicleFeedback) { this.scene.remove(this.vehicleFeedback); this.vehicleFeedback.dispose(); this.vehicleFeedback = null; }
     this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;}
