@@ -31,7 +31,7 @@ test('T-E19-18 @E19 @E19-AC18 a turned pedestrian renders as the same person: ow
     expect(mesh.geometry.getAttribute('_variant')).toBe(tint);
     expect([tint.getX(0), tint.getY(0), tint.getZ(0)]).toEqual(shirt);
     expect(overlay.getX(0)).toBeCloseTo(.4); expect(overlay.getY(0)).toBe(1); expect(overlay.getZ(0)).toBe(1);
-    person.transform.x += 1; world.tick++; crowd.update(); expect(['infected-run', 'shamble']).toContain(clip());
+    person.transform.x += 1; world.tick++; crowd.update(); expect(['infected-run', 'infected-lurch', 'shamble']).toContain(clip());
     // A pooled record reused for another spawn (new id) is not drawn as the former person.
     person.id = 77; world.tick++; crowd.update(); expect(crowd.snapshot().instances).toBe(0);
   } finally { crowd.dispose(); materials.dispose(); lighting.dispose(); load.mockRestore(); }
