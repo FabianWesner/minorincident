@@ -2,13 +2,14 @@ import { chromium, devices } from '@playwright/test';
 import { spawn } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { PNG } from 'pngjs';
 const scratch = '/private/tmp/claude-501/-Users-fabianwesner-Workspace-suburban-survivors/88be267a-0002-4cac-aeec-a7e79e9db694/scratchpad/motion-lab';
 await mkdir(scratch, { recursive: true });
 const port = process.env.E2E_PORT ?? '3352';
 let server: ReturnType<typeof spawn> | undefined;
 try { await fetch(`http://127.0.0.1:${port}/`, { signal: AbortSignal.timeout(1500) }); }
 catch {
-  // A previous E04 verification may have retired its preview server. Own a dev
+  // A previous E04 verification may have retired its preview server. Own a preview
   // server only when the assigned port is free, and close it with this run.
   server = spawn(process.execPath, [resolve('node_modules/vite/bin/vite.js'), 'preview', '--host', '127.0.0.1', '--port', port, '--strictPort', '--configLoader', 'runner'], { stdio: 'ignore' });
   let ready = false;
@@ -44,13 +45,16 @@ try {
       for (const candidate of ['stage1']) {
         await page.goto(`http://127.0.0.1:${port}/?motionlab&renderer=webgl&paused=1&count=50&view=close&candidate=${candidate}`, { waitUntil: 'networkidle' });
         await page.waitForFunction(() => (window as unknown as { __MOTIONLAB__: { ready: boolean } }).__MOTIONLAB__?.ready);
-        const boxes: unknown[] = [];
-        for (const [index, ticks] of [150].entries()) {
+        const boxes: unknown[] = [], frames: PNG[] = [];
+        for (const ticks of [150, 120, 120]) {
           await page.evaluate(n => (window as unknown as { __MOTIONLAB__: { step(n: number): unknown } }).__MOTIONLAB__.step(n), ticks);
           boxes.push(await page.evaluate(() => (window as unknown as { __MOTIONLAB__: { boxes(): unknown } }).__MOTIONLAB__.boxes()));
-          await page.screenshot({ path: `${scratch}/${candidate}-${index}.png` });
+          frames.push(PNG.sync.read(await page.screenshot()));
         }
-        await writeFile(`${scratch}/${candidate}-boxes.json`, JSON.stringify(boxes));
+        const sheet = new PNG({ width: frames[0].width, height: frames[0].height * frames.length });
+        frames.forEach((frame, index) => PNG.bitblt(frame, sheet, 0, 0, frame.width, frame.height, 0, index * frame.height));
+        await writeFile(`${scratch}/${candidate}-comparison.png`, PNG.sync.write(sheet));
+        reports[`${candidate}-capture-boxes`] = boxes;
         reports[candidate] = await page.evaluate(() => (window as unknown as { __MOTIONLAB__: { metrics(): unknown } }).__MOTIONLAB__.metrics());
       }
     }
