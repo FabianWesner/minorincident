@@ -51,6 +51,8 @@ export class Outbreak {
   readonly entries: Refuge[];
   private readonly heard: { x: number; z: number; tick: number }[] = [];
   private readonly rescue = new Set<number>();
+  /** People convulsing on the ground this tick: witnesses notice them like an infected. */
+  private readonly turning: EntitySnapshot[] = [];
   private emitting = false;
   private topUpAt = 0;
   private readonly offs: (() => void)[] = [];
@@ -105,6 +107,7 @@ export class Outbreak {
     // A pooled record reused by another spawn never inherits a former pedestrian's look.
     for (const e of ai.active) if (e.appearance && e.appearance.entityId !== e.id) delete e.appearance;
     while (this.heard.length && this.heard[0].tick < tick - 1) this.heard.shift();
+    this.turning.length = 0; for (const e of world.entities.iterate()) if (e.infection && e.infection.phase !== 'stagger') this.turning.push(e);
     for (const e of world.entities.iterate()) {
       const c = e.civilian; if (!c || c.pet || !c.l1 || e.hidden) continue;
       if (e.infection) { this.transform(e); continue; }
@@ -158,8 +161,9 @@ export class Outbreak {
     const c = e.civilian!, ai = this.world.infected!, range = civ.noticeRangeM, half = Math.cos(civ.noticeConeDeg / 2 * Math.PI / 180);
     const fx = Math.cos(e.transform.yaw), fz = -Math.sin(e.transform.yaw);
     let threat: Vec2 | null = null, best = Infinity;
-    for (const a of ai.active) {
-      if (a.health.current <= 0 || a.infectionRise || a.infected?.hidden || a.hidden) continue;
+    for (let i = 0, n = ai.active.length + this.turning.length; i < n; i++) {
+      const a = i < ai.active.length ? ai.active[i] : this.turning[i - ai.active.length];
+      if (a.health.current <= 0 || a.infectionRise || a.infected?.hidden || a.hidden || a === e) continue;
       const dx = a.transform.x - e.transform.x, dz = a.transform.z - e.transform.z, d = Math.hypot(dx, dz);
       if (d > range || d >= best) continue;
       if (d > .8 && (dx * fx + dz * fz) / d < half) continue;
