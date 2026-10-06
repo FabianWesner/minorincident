@@ -40,13 +40,21 @@ export class PostFx {
   setDof(enabled: boolean): void { this.pipeline.outputNode = enabled ? this.blurredOutput : this.sharpOutput; this.pipeline.needsUpdate = true; }
   snapshot() { return { bloomMips: qualityBudgets[this.tier].bloomMips, dof: this.pipeline.outputNode === this.blurredOutput, dofRepeats: this.tier === 'high' ? this.look.nodes.dofRepeats.value : this.look.nodes.dofRepeatsLow.value, dofResolution: this.tier === 'high' ? 1 : .5, bloomStrength: this.bloomPass.strength.value }; }
   /** Compile the gameplay target once, rather than building a second canvas-context variant. */
-  async compile(): Promise<void> {
+  async compile(partitions?: (() => void)[]): Promise<void> {
     const renderer = this.renderer, target = renderer.getRenderTarget(), mrt = renderer.getMRT();
     const tone = renderer.toneMapping, color = renderer.outputColorSpace;
     this.scenePass.renderTarget.samples = renderer.samples;
     this.scenePass.renderTarget.texture.type = renderer.getOutputBufferType();
     renderer.toneMapping = NoToneMapping; renderer.outputColorSpace = ColorManagement.workingColorSpace;
-    try { await this.scenePass.compileAsync(renderer); }
+    try {
+      if (!partitions) await this.scenePass.compileAsync(renderer);
+      else {
+        // Same state as PassNode.compileAsync, held across concurrent compile lanes (PreRenderer).
+        const pass = this.scenePass as typeof this.scenePass & { getMRT(): ReturnType<WebGPURenderer['getMRT']> };
+        renderer.setRenderTarget(pass.renderTarget); renderer.setMRT(pass.getMRT());
+        await Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(pass.scene, pass.camera); }));
+      }
+    }
     finally { renderer.setRenderTarget(target); renderer.setMRT(mrt); renderer.toneMapping = tone; renderer.outputColorSpace = color; }
   }
   render(): void { this.pipeline.render(); }

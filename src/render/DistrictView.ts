@@ -95,6 +95,11 @@ export class DistrictView extends Group {
       const length = Math.max(width, depth), count = Math.ceil(length / 2);
       for (let i = 0; i <= count; i++) this.box(perimeter, 'woodWarm', [.16, 1.05, .16], [width > depth ? fence.min[0] + length * i / count : x, .525, depth > width ? fence.min[2] + length * i / count : z]);
     }
+    // Placement asset ids are known from the layout JSON: start their downloads now instead of
+    // after each multi-megabyte layout GLB has arrived and been parsed.
+    for (const d of this.world.districts) for (const id of new Set(d.layout.placements.filter(p => p.minTier <= this.world.composition.tier && p.maxTier >= this.world.composition.tier).map(p => p.assetId))) {
+      this.registry.prefetch(id, 'lod1'); this.registry.prefetch(id, 'lod2');
+    }
     await Promise.all(
       this.world.districts.map(async (d) => {
         const root = new Group();

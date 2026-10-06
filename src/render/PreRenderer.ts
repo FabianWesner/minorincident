@@ -4,7 +4,12 @@ import type { Renderer } from './Renderer';
 
 /** Warm hidden variants while loading. The real render pass also uploads buffers/textures
  * and compiles shadow and soft-particle programs in their actual HDR/MSAA context. */
-export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile = () => renderer.compileAsync(scene, camera)): Promise<void> {
+/** Compile lanes: three's compileAsync awaits each object's pipeline in turn, so one call serializes
+ * every shader/pipeline compile. Several concurrent calls over disjoint leaf sets let the driver
+ * (Dawn async pipelines, ANGLE KHR_parallel_shader_compile) compile on its worker threads. */
+export const compileLanes = 6;
+export type CompilePartitions = (() => void)[];
+export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); }))): Promise<void> {
   const saved: { object: Object3D; visible: boolean; culled: boolean; count?: number; matrices?: Matrix4[] }[] = [];
   scene.updateMatrixWorld(true);
   const focus = camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(camera.position);
@@ -27,7 +32,12 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     });
     renderer.setSize(32, 32, false);
     const start = performance.now();
-    if (renderer.selectedBackend === 'webgl') await compile();
+    // Each partition shows only its share of leaves while three collects that call's render list
+    // (synchronously), so the lanes compile disjoint objects concurrently.
+    const leaves: Object3D[] = [];
+    scene.traverse(object => { if (!object.userData.preventPreRender && (object instanceof Mesh || object instanceof Sprite)) leaves.push(object); });
+    const partitions = Array.from({ length: compileLanes }, (_, lane) => () => { leaves.forEach((leaf, i) => { leaf.visible = i % compileLanes === lane; }); });
+    try { await compile(partitions); } finally { for (const leaf of leaves) leaf.visible = true; }
     performance.measure('L1 shader compilation', { start, end: performance.now() });
     const draw = performance.now(); render();
     await renderer.finishWarmUp();

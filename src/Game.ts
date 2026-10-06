@@ -23,6 +23,8 @@ import { GameView } from './render/GameView';
 import { loadLayouts } from './levels/layouts';
 import type { Tier } from './levels/districts/types';
 import { SimWorld } from './sim/world/SimWorld';
+import { loadMeasure } from './assets/loadTiming';
+import { assetUrl } from './assets/assetUrl';
 
 /** Injected composition root, with staged initialization adapted from Bruno Game.js. */
 export class Game {
@@ -122,8 +124,8 @@ export class Game {
         if(opts?.checkpoint && this.world.missions?.def.id === id) { this.world.missions.loadCheckpoint(opts.checkpoint); this.view.update(1); return; }
         this.campaignUI.reset();
         const start=performance.now();
-        const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(url);if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
-        const data=performance.now();
+        const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(assetUrl(url));if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
+        const data=loadMeasure('level:layouts',start);
         const cosmetic=this.world.entities.get(1)?.survivor;
         this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
@@ -143,7 +145,7 @@ export class Game {
         if(this.campaign)this.watchCampaign();
         this.quality.startLevel();this.applyQuality();
         if (performanceScenario) installPerformanceLevel(this.world, this.quality.tier, performanceScenario);
-        const sim=performance.now();await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:performance.now()-sim};await this.audio.load(); this.ui.loaded();
+        const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded();
         if (performanceScenario) this.view.preset(performanceLevels[performanceScenario].spot);
       }finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
@@ -178,7 +180,12 @@ export class Game {
     if (this.view.switchPreparedDistrict()) { this.renderedDistricts = this.world.districts; return this.levelQueue; }
     this.loading=true;
     const refresh=this.levelQueue.then(async()=>{
-      try { await this.view.load(); this.renderedDistricts=this.world.districts; await this.audio.load(); }
+      try {
+        // A decay variant may still be preparing in the background: wait for it rather than rebuilding.
+        await this.view.preparationReady();
+        if (this.view.switchPreparedDistrict()) { this.renderedDistricts = this.world.districts; return; }
+        await this.view.load(); this.renderedDistricts=this.world.districts; await this.audio.load();
+      }
       finally { this.loading=false; this.ticker.reset(); }
     });
     this.levelQueue=refresh.catch(()=>{});return refresh;

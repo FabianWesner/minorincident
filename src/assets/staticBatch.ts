@@ -1,9 +1,22 @@
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
-import { BufferAttribute, BufferGeometry, Group, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, Color, Group, MathUtils, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
 import { attribute, luminance, varying } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Materials } from '../render/Materials';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+
+/** Float copy of a (possibly quantized/normalized) attribute without per-component getComponent calls. */
+function decode(attribute: import('three').BufferAttribute | import('three').InterleavedBufferAttribute): Float32Array {
+  const size = attribute.itemSize, values = new Float32Array(attribute.count * size);
+  if ('isInterleavedBufferAttribute' in attribute && attribute.isInterleavedBufferAttribute) {
+    for (let i = 0; i < attribute.count; i++) for (let c = 0; c < size; c++) values[i * size + c] = attribute.getComponent(i, c);
+    return values;
+  }
+  const array = attribute.array as Parameters<typeof MathUtils.denormalize>[1];
+  if (attribute.normalized) for (let k = 0; k < values.length; k++) values[k] = MathUtils.denormalize(array[k], array);
+  else for (let k = 0; k < values.length; k++) values[k] = array[k];
+  return values;
+}
 
 /** District placements never animate their parts. Store world swatch indices (figure batches retain vertex colors),
  * keeping glowing windows separate for power and the window mask. */
@@ -18,24 +31,32 @@ export function staticBatch(source: Object3D, lit: boolean, materials?: Material
     const emissive = material.name.startsWith('emi_') || material.userData.emissiveStrength > 0;
     const geometry = new BufferGeometry();
     // Decode quantized attributes before applying transforms (integer arrays clamp).
-    for (const name of ['position', 'normal']) {
-      const attribute = node.geometry.getAttribute(name), values = new Float32Array(attribute.count * attribute.itemSize);
-      for (let i = 0; i < attribute.count; i++) for (let c = 0; c < attribute.itemSize; c++) values[i * attribute.itemSize + c] = attribute.getComponent(i, c);
-      geometry.setAttribute(name, new BufferAttribute(values, attribute.itemSize));
-    }
+    for (const name of ['position', 'normal']) geometry.setAttribute(name, new BufferAttribute(decode(node.geometry.getAttribute(name)), node.geometry.getAttribute(name).itemSize));
     if (node.geometry.index) geometry.setIndex(node.geometry.index.clone());
     geometry.applyMatrix4(node.matrixWorld);
     const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), indices = new Float32Array(count), vertexColor = node.geometry.getAttribute('color');
+    // Per-mesh constants are hoisted: this loop runs for every vertex of every district prototype.
+    const base = material.color.toArray(), dim = emissive && !lit ? .08 : 1;
+    const token = material.name.replace(/^(pal|emi)_/, '') as PaletteToken, tokenIndex = paletteTokens.indexOf(token);
+    const perVertex = material.vertexColors && vertexColor, quantize = material.vertexColors || tokenIndex < 0;
+    const hydrantShift = source.userData.paletteHydrant && token === 'survivorRed' ? paletteTokens.length : 0;
+    const scratch = new Color(), local = new Map<number, number>();
+    const swatch = (r: number, g: number, b: number): number => {
+      if (!materials) return 0;
+      // Same 1/4096 key as Materials.nearest, packed into one exact integer instead of a string.
+      const key = (Math.round(r * 4096) * 8193 + Math.round(g * 4096)) * 8193 + Math.round(b * 4096);
+      let index = local.get(key);
+      if (index === undefined) { index = materials.nearest(scratch.setRGB(r, g, b)); local.set(key, index); }
+      return index;
+    };
+    const constant = quantize && !perVertex ? swatch(base[0] * dim, base[1] * dim, base[2] * dim) : tokenIndex;
     for (let i = 0; i < count; i++) {
-      const color = material.color.toArray();
-      if (material.vertexColors && vertexColor) for (let c = 0; c < 3; c++) color[c] *= vertexColor.getComponent(i, c);
-      if (emissive && !lit) for (let c = 0; c < 3; c++) color[c] *= .08;
-      colors.set(color, i * 3);
-      const token = material.name.replace(/^(pal|emi)_/, '') as PaletteToken;
-      const tokenIndex = paletteTokens.indexOf(token);
+      let r = base[0], g = base[1], b = base[2];
+      if (perVertex) { r *= vertexColor.getX(i); g *= vertexColor.getY(i); b *= vertexColor.getZ(i); }
+      r *= dim; g *= dim; b *= dim;
+      colors[i * 3] = r; colors[i * 3 + 1] = g; colors[i * 3 + 2] = b;
       // Authored vertex-color assets are quantized to the shared sheet; figures keep their swatches.
-      indices[i] = material.vertexColors || tokenIndex < 0 ? materials?.nearest(material.color.clone().fromArray(color)) ?? 0 : tokenIndex;
-      if (source.userData.paletteHydrant && token === 'survivorRed') indices[i] -= paletteTokens.length;
+      indices[i] = (quantize ? perVertex ? swatch(r, g, b) : constant : tokenIndex) - hydrantShift;
     }
     geometry.setAttribute('color', new BufferAttribute(colors, 3));
     geometry.setAttribute('_palette', new BufferAttribute(indices, 1));
