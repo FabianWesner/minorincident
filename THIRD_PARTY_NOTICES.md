@@ -81,3 +81,18 @@ E10 district assembly and placement-empty batching adapt the patterns in Bruno S
 E10 also adapts `World/Grass.js` / `Wind.js` in `src/render/Grass.ts`,
 `World/World.js` / `References.js` in `src/render/DistrictView.ts`, and the
 `TextCanvas.js` canvas-sign pattern for fictional landmark signage (same MIT source).
+
+## E16 audio
+
+`src/audio/AudioRegistry.ts` and `src/audio/AudioService.ts` adapt the registry,
+anti-spam, distance fade, rate variation, persistent mute, blur and focus patterns
+from Bruno Simon's `Audio.js`, and the arming/variant pattern from
+`World/ExplosiveCrates.js` (MIT, commit 41046b5). The original MIT notice above applies.
+
+All files in `public/assets/audio/` are original, self-made procedural placeholders
+produced by `src/audio/synthesis.ts` and `tools/audio/build.ts`, released under MIT.
+`public/assets/audio/LICENSES.md` records every file and its SHA256. No Bruno SFX,
+recordings, music, or third-party voice recordings have been copied.
+The graph uses native Web Audio and its small registry/loader instead of Howler,
+as explicitly permitted by sound-design §9 for a custom graph/offline rendering.
+FFmpeg is a local asset/test tool, not bundled or redistributed with the game.
