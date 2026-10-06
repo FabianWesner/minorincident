@@ -40,8 +40,9 @@ export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'l
         const output = def.lods?.[lod] && variantPath(def.lods[lod]!,options.decay);
         if (!output) throw new Error(`Missing manifest ${lod} path`);
         const staged = `${stage}/${basename(output)}`;
-        const useSupplied = !options.decay && existsSync(supplied);
-        await optimizeAsset(useSupplied ? supplied : raw, staged, def, useSupplied ? 1 : lod === 'lod1' && def.category === 'infected' ? .10 : ratio);
+        const generatedRatio = def.generatedLodRatios?.[lod];
+        const useSupplied = !options.decay && generatedRatio === undefined && existsSync(supplied);
+        await optimizeAsset(useSupplied ? supplied : raw, staged, def, useSupplied ? 1 : generatedRatio ?? (lod === 'lod1' && def.category === 'infected' ? .10 : ratio));
         const validation = validateDocument(await io.read(staged), def, readFileSync(staged).length, lod === 'lod1' ? 1 : 2);
         if (validation.errors.length) throw new Error(`${lod} invalid: ${validation.errors.join('; ')}`);
         outputs.push([staged,output]);

@@ -19,6 +19,12 @@ without running their scripts. Findings are written to
 `test-results/epics/E17/validate-production.json` and cause exit 1. Inventory
 status is authoritative: source files alone do not promote an asset.
 
+`assets:optimize -- <id>` also exports supplied LODs for side assets. Optional
+`generatedLodRatios` in the manifest regenerates a tier from LOD0 when its
+supplied export violates the size or density contract. Compound corpse rigs
+keep prefixed joints and stump caps; distant generated caps use six sides.
+Animal dimensions use their own metre scales, outside the standing-adult height check.
+
 Palette tokens live in `src/assets/palette.json`. AO is the active `COLOR_0`
 attribute. PNG atlases require `toktx` on PATH or `TOKTX_BIN`; color maps use
 ETC1S, detail maps use UASTC. Texture-free builds need no encoder. The bundled

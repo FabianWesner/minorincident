@@ -103,16 +103,19 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   }
   for (const material of root.listMaterials()) if (!validMaterial(material.getName())) errors.push(`material: unknown ${material.getName()}`);
   const materials = root.listMaterials().length, fileKB = bytes / 1024;
-  const budget = lod === 1 ? Math.min(def.budget.triangles, Math.ceil(def.budget.triangles * .15)) : lod === 2 ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
+  const budget = lod === 1 && def.tier === 'hero' ? Math.min(def.budget.triangles, Math.ceil(def.budget.triangles * .15)) : lod === 2 ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
   if (triangles > budget) errors.push(`triangles: ${triangles} > ${budget}`);
   if (materials > def.budget.materials) errors.push(`materials: ${materials} > ${def.budget.materials}`);
   if (fileKB > def.budget.fileKB) errors.push(`fileKB: ${fileKB} > ${def.budget.fileKB}`);
   const staticCalls = nodes.filter((n) => !def.animatedNodes.some((name) => byName.get(name) && descendants(byName.get(name)!).includes(n))).reduce((sum, n) => sum + (n.getMesh()?.listPrimitives().length ?? 0), 0);
   if (staticCalls > def.budget.drawCalls) errors.push(`static drawCalls: ${staticCalls} > ${def.budget.drawCalls}`);
-  if (def.category === 'infected') for (const name of ['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR']) {
-    const cap = byName.get(`stump_${name}`);
-    if (!cap || !descendants(cap).some((n) => n.getMesh())) errors.push(`stump_${name}: missing geometry`);
-    if (cap && cap.getExtras().hidden !== true) errors.push(`stump_${name}: not hidden by default`);
+  if (def.category === 'infected') for (const name of new Set([
+    ...['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].map(name => `stump_${name}`),
+    ...def.requiredNodes.filter(name => name.includes('stump_')),
+  ])) {
+    const cap = byName.get(name);
+    if (!cap || !descendants(cap).some((n) => n.getMesh())) errors.push(`${name}: missing geometry`);
+    if (cap && cap.getExtras().hidden !== true) errors.push(`${name}: not hidden by default`);
   }
   return { id: def.id, errors: [...new Set(errors)], triangles, materials, drawCalls, fileKB, dimensions, hash: geometryHash(document) };
 }

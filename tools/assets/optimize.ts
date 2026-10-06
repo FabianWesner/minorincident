@@ -62,21 +62,22 @@ export function normalizeScale(document: Document, def: AssetDef): void {
 }
 
 /** Repair zero-scale exporter placeholders at the surviving side of each joint. */
-export function generateStumpCaps(document: Document, def: AssetDef): void {
+export function generateStumpCaps(document: Document, def: AssetDef, segments = 8): void {
   if (def.category !== 'infected') return;
   const root = document.getRoot(), buffer = root.listBuffers()[0] ?? document.createBuffer();
   const materials = ['flesh','bone'].map(token => root.listMaterials().find(m=>m.getName()===`pal_${token}`)
     ?? document.createMaterial(`pal_${token}`).setBaseColorFactor(new Color(palette[token]).toArray().concat(1) as [number,number,number,number]).setRoughnessFactor(.85).setDoubleSided(true));
-  for (const cap of root.listNodes().filter(n=>n.getName().startsWith('stump_'))) {
+  for (const cap of root.listNodes().filter(n=>n.getName().includes('stump_'))) {
     let hasMesh = false; cap.traverse(n=>{if(n.getMesh()) hasMesh=true;});
     if (hasMesh) continue;
-    const limb = root.listNodes().find(n=>n.getName()===cap.getName().slice(6));
+    const limbName = cap.getName().replace('stump_', '');
+    const limb = root.listNodes().find(n=>n.getName()===limbName);
     const parent = limb?.getParentNode();
     if (!limb || !parent) throw new Error(`${def.id}: no joint for ${cap.getName()}`);
     const inverse = new Matrix4().fromArray(limb.getWorldMatrix()).invert(), points: Vector3[] = [];
     // Only the proximal part: elbow/knee/hand children have their own joint caps.
     const collect = (node: Node, owner = limb, output = points): void => {
-      if (node !== owner && (def.animatedNodes.includes(node.getName()) || node.getName().startsWith('stump_'))) return;
+      if (node !== owner && (def.animatedNodes.includes(node.getName()) || node.getName().includes('stump_'))) return;
       const matrix = new Matrix4().multiplyMatrices(inverse,new Matrix4().fromArray(node.getWorldMatrix()));
       for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
         const position=primitive.getAttribute('POSITION')!, point: number[]=[];
@@ -87,13 +88,14 @@ export function generateStumpCaps(document: Document, def: AssetDef): void {
     collect(limb);
     if (!points.length) throw new Error(`${def.id}: empty limb ${limb.getName()}`);
     const center = points.reduce((sum,p)=>sum.add(p),new Vector3()).divideScalar(points.length);
-    const axis = limb.getName()==='head' ? new Vector3(0,1,0) : center.lengthSq()>1e-8 ? center.normalize() : new Vector3(0,1,0);
+    const isHead = limbName === 'head' || limbName.endsWith('__head');
+    const axis = isHead ? new Vector3(0,1,0) : center.lengthSq()>1e-8 ? center.normalize() : new Vector3(0,1,0);
     const orientation = new Quaternion().setFromUnitVectors(new Vector3(0,1,0),axis);
     const undo = orientation.clone().invert(), projected=points.map(p=>p.clone().applyQuaternion(undo));
     const closest=Math.min(...projected.map(p=>Math.abs(p.y))), extent=Math.max(...projected.map(p=>Math.abs(p.y)));
     const section=projected.filter(p=>Math.abs(p.y)<=closest+(extent-closest)*.2);
     let rx=Math.max(.025,...section.map(p=>Math.abs(p.x))), rz=Math.max(.025,...section.map(p=>Math.abs(p.z)));
-    if (limb.getName()==='head') {
+    if (isHead) {
       // The jaw/hair silhouette is wider than the neck: infer the cut from the torso.
       const torso: Vector3[]=[];collect(parent,parent,torso);
       const section=torso.map(p=>p.applyQuaternion(undo));
@@ -104,19 +106,19 @@ export function generateStumpCaps(document: Document, def: AssetDef): void {
     }
     const depth=Math.min(rx,rz)*.25;
     const mesh=document.createMesh();
-    // Eight-sided annulus + outer wall (32 tris), closed bone stub (24 tris).
+    // Closed annulus, outer wall and bone stub; distant caps use fewer sides.
     for (let part=0;part<2;part++) {
       const positions:number[]=[],indices:number[]=[];
       const vertex=(x:number,y:number,z:number)=>{positions.push(x,y,z);return positions.length/3-1;};
-      const ring=(r:number,y:number)=>Array.from({length:8},(_,i)=>vertex(Math.cos(i*Math.PI/4)*rx*r,y,Math.sin(i*Math.PI/4)*rz*r));
+      const ring=(r:number,y:number)=>Array.from({length:segments},(_,i)=>vertex(Math.cos(i*2*Math.PI/segments)*rx*r,y,Math.sin(i*2*Math.PI/segments)*rz*r));
       const outer=ring(part ? .3 : 1,0), top=ring(part ? .3 : 1,part ? depth*2 : -depth);
       const inner=part ? [] : ring(.3,0);
-      for(let i=0;i<8;i++) {
-        const j=(i+1)%8;
+      for(let i=0;i<segments;i++) {
+        const j=(i+1)%segments;
         if(part) indices.push(outer[i],top[i],top[j],outer[i],top[j],outer[j]);
         else indices.push(outer[i],top[j],top[i],outer[i],outer[j],top[j],outer[i],inner[j],outer[j],outer[i],inner[i],inner[j]);
       }
-      if(part) {const tip=vertex(0,depth*2,0);for(let i=0;i<8;i++)indices.push(tip,top[(i+1)%8],top[i]);}
+      if(part) {const tip=vertex(0,depth*2,0);for(let i=0;i<segments;i++)indices.push(tip,top[(i+1)%segments],top[i]);}
       const flatPositions:number[]=[],flatNormals:number[]=[];
       for(let i=0;i<indices.length;i+=3) {
         const [a,b,c]=indices.slice(i,i+3).map(id=>new Vector3().fromArray(positions,id*3));
@@ -170,7 +172,7 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
   }
   for (const node of document.getRoot().listNodes()) {
     if (!protectedNames.has(node.getName()) && !/^(stump_|light:|col:)/.test(node.getName())) continue;
-    if (!node.getName().startsWith('stump_')) pivots.set(node.getName(), node.getWorldTranslation());
+    if (!node.getName().includes('stump_')) pivots.set(node.getName(), node.getWorldTranslation());
     const mesh = node.getMesh();
     if (mesh) { node.setMesh(null); node.addChild(document.createNode().setMesh(mesh)); }
   }
@@ -204,14 +206,25 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
     const lodSimplifier = { ...MeshoptSimplifier, simplify: (...args: Parameters<typeof MeshoptSimplifier.simplify>) => {
       const [indices, positions, stride, count, error, flags] = args, target = Math.max(3,count);
       const result = MeshoptSimplifier.simplify(indices,positions,stride,target,error,flags);
-      if (!result[0].length) return [indices,0] as [Uint32Array,number];
+      // A tiny decorative part can collapse completely. Keep its six extrema
+      // faces instead of restoring the entire original part at distant LODs.
+      const keepExtrema = (): [Uint32Array,number] => {
+        const faces = new Set<number>();
+        for (let axis=0;axis<3;axis++) for (const direction of [-1,1]) {
+          let corner=0;
+          for(let i=1;i<indices.length;i++) if(positions[indices[i]*stride+axis]*direction>positions[indices[corner]*stride+axis]*direction) corner=i;
+          faces.add(Math.floor(corner/3)*3);
+        }
+        return [Uint32Array.from([...faces].flatMap(face=>Array.from(indices.slice(face,face+3)))),0];
+      };
+      if (!result[0].length) return keepExtrema();
       if (result[0].length <= target * 1.25) return result;
       const clustered = MeshoptSimplifier.simplifySloppy(indices,positions,stride,null,target,error);
-      return clustered[0].length ? clustered : result;
+      return clustered[0].length ? clustered : keepExtrema();
     } };
     await document.transform(weld(), simplify({ simplifier: lodSimplifier, ratio, error: ratio < .05 ? .3 : .1 }), normals(), weld());
   }
-  generateStumpCaps(document, def);
+  generateStumpCaps(document, def, ratio < .05 ? 6 : 8);
   await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'medium', quantizePosition: 16, quantizeNormal: 10, cleanup: false }));
   removeDegenerateTriangles(document);
   await document.transform(prune({ keepLeaves: true, keepAttributes: true, keepExtras: true }));
@@ -231,13 +244,14 @@ export async function optimizeAsset(raw: string, output: string, def: AssetDef, 
 export async function optimizeExports(def: AssetDef): Promise<void> {
   const source = def.sourceGlb ?? def.glb;
   await optimizeAsset(source, def.glb, def);
-  if (def.tier === 'hero') for (const [lod, ratio] of [['lod1', .12], ['lod2', .03]] as const) {
+  if (def.tier === 'hero' || def.lods) for (const [lod, ratio] of [['lod1', .12], ['lod2', .03]] as const) {
     const supplied = `assets/${def.id}/model.${lod}.glb`, output = def.lods?.[lod];
     if (!output) throw new Error(`${def.id}: missing manifest ${lod} path`);
-    const handMade = existsSync(supplied);
+    const generatedRatio = def.generatedLodRatios?.[lod];
+    const handMade = generatedRatio === undefined && existsSync(supplied);
     // Leave room for retained rigid parts and infected stump caps within the LOD1 budget.
     const targetRatio = lod === 'lod1' && (def.category === 'infected' || def.category === 'character') ? .10 : ratio;
-    await optimizeAsset(handMade ? supplied : source, output, def, handMade ? 1 : targetRatio);
+    await optimizeAsset(handMade ? supplied : source, output, def, handMade ? 1 : generatedRatio ?? targetRatio);
   }
 }
 /** Refresh exported collision/minimap metadata after canonical dimensions change, without Blender. */
