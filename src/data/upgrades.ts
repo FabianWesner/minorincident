@@ -12,10 +12,10 @@ export interface UpgradeDef {
 const families: {family: UpgradeFamily; title: string; description: string; modifiers: Partial<Modifiers>; actions?: string[]}[] = [
   {family:'health',title:'Extra endurance',description:'+30 maximum health',modifiers:{health:30}},
   {family:'speed',title:'Fleet feet',description:'+0.22 m/s movement speed',modifiers:{speed:.22}},
-  {family:'melee',title:'Hard hitter',description:'+20% melee damage',modifiers:{melee:.2}},
+  {family:'melee',title:'Hard hitter',description:'+20% melee damage',modifiers:{melee:.2},actions:Object.values(catalog).filter(d=>d.category==='melee').map(d=>d.id)},
   {family:'handling',title:'Larger magazines',description:'+2 rounds to every firearm; 10% faster reload',modifiers:{magazine:2,reload:.1},actions:Object.values(catalog).filter(d=>d.category==='ranged').map(d=>d.id)},
   {family:'throwables',title:'Demolition kit',description:'+1 throwable charge; +15% effect radius',modifiers:{charges:1,radius:.15},actions:Object.values(catalog).filter(d=>d.category==='throwable').map(d=>d.id)},
-  {family:'knockback',title:'Make some room',description:'+20% knockback',modifiers:{knockback:.2}},
+  {family:'knockback',title:'Make some room',description:'+20% knockback',modifiers:{knockback:.2},actions:Object.values(catalog).filter(d=>d.knockback>0).map(d=>d.id)},
   {family:'perk',title:'Bat training',description:'+15% bat damage',modifiers:{},actions:['weapon.bat']},
   {family:'vehicle',title:'Reinforced ride',description:'10% less vehicle damage; +10% boost strength',modifiers:{ramArmor:.1,boost:.1}},
 ];

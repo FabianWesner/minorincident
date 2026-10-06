@@ -18,10 +18,10 @@ describe('campaign',()=>{
   test('@E13 fixed unlock alternatives grant only the chosen weapon and retain guaranteed unlocks',()=>{
     for(const level of [2,3]as const)for(const id of weaponChoices[level]!){const save=preset(`L${level}-default`);beginRewards(save,level);expect(()=>revealCards(save)).toThrow();chooseWeapon(save,id);revealCards(save);expect(save.ownedActions).toContain(id);expect(save.ownedActions).not.toContain(weaponChoices[level]!.find(other=>other!==id));if(level===2)expect(save.ownedActions).toContain('weapon.molotov');}
   });
-  test('@E13 used weapon weights bias offers without changing the save-seeded choice',()=>{
-    let neutral=0,weighted=0;
-    for(let seed=0;seed<1000;seed++){const save=preset('L3-default');save.seed=seed;save.upgrades=[];neutral+=Number(offer(save).includes('upgrade.handling.1'));save.usage={'weapon.pistol':100};weighted+=Number(offer(save).includes('upgrade.handling.1'));}
-    expect(weighted).toBeGreaterThan(neutral*1.5);
+  test('@E13 @E13-AC01 used weapon weights bias offers without changing the save-seeded choice',()=>{
+    let neutral=0,weighted=0,meleeNeutral=0,meleeWeighted=0;
+    for(let seed=0;seed<1000;seed++){const save=preset('L3-default');save.seed=seed;neutral+=Number(offer(save).includes('upgrade.handling.2'));save.usage={'weapon.pistol':100};weighted+=Number(offer(save).includes('upgrade.handling.2'));save.ownedActions.push('weapon.crowbar');save.usage={};meleeNeutral+=Number(offer(save).includes('upgrade.melee.3'));save.usage={'weapon.crowbar':100};meleeWeighted+=Number(offer(save).includes('upgrade.melee.3'));}
+    expect(weighted).toBeGreaterThan(neutral*1.5);expect(meleeWeighted).toBeGreaterThan(meleeNeutral*1.5);
   });
   test('T-E13-03 @E13 @E13-AC03 all 243 seeded choice paths increase power L1 to L6',()=>{
     let paths=0;
