@@ -267,6 +267,7 @@ export class DistrictView extends Group {
   }
   setFoliageReveal(enabled: boolean): void { this.foliage.reveal = enabled; }
   updateFoliage(view: View, player?: { x: number; y: number; z: number }, target?: { x: number; y: number; z: number }): void { this.foliage.update(view, player, target); }
+  setFoliageVisible(visible: boolean): void { this.foliage.visible = visible; }
   advance(seconds: number): void {
     this.phase.value += seconds; this.labelTime += seconds;
   }

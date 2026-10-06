@@ -13,6 +13,14 @@ function coverage(bytes: Buffer): number {
   for (let i = 0; i < png.data.length; i += 4) if (png.data[i] > 240 && png.data[i + 1] > 240 && png.data[i + 2] > 240) pixels++;
   return pixels / (png.width * png.height);
 }
+function heroMask(bytes: Buffer): { height: number; pixels: number } {
+  const png = PNG.sync.read(bytes); let top = png.height, bottom = -1, pixels = 0;
+  for (let y = 0; y < png.height; y++) for (let x = 0; x < png.width; x++) {
+    const i = (y * png.width + x) * 4;
+    if (png.data[i] > 240 && png.data[i + 1] < 20 && png.data[i + 2] > 240) { top = Math.min(top, y); bottom = Math.max(bottom, y); pixels++; }
+  }
+  return { height: (bottom - top + 1) / png.height, pixels };
+}
 for (const low of [false, true]) test.describe(low ? 'portrait-low foliage' : 'desktop-high foliage', () => {
   test.use(low ? { viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true, userAgent: devices['iPhone 14'].userAgent } : { viewport: { width: 1600, height: 900 } });
   test('@foliage V1–V6 crowns, coverage, combat reveal, 200-infected frame and overdraw budgets', async ({ page }) => {
@@ -29,12 +37,26 @@ for (const low of [false, true]) test.describe(low ? 'portrait-low foliage' : 'd
       },spot);
       expect(state.cardsPerCrown).toBe(low ? 40 : 80); expect(state.visible).toBeGreaterThan(0);
       await page.locator('canvas').screenshot({ path: `${output}/${tier}/${spot.id}.png` });
+      const survivors = [];
+      if (spot.id === 'V1') {
+        for (const variant of ['female', 'male'] as const) {
+          await page.evaluate(async variant => { window.__SS__!.survivor.select(variant); window.__SS__!.settings.set({ idPass: true, foliageVisible: true }); await window.__SS__!.screenshotReady(); }, variant);
+          const visible = heroMask(await page.locator('canvas').screenshot());
+          await page.evaluate(async () => { window.__SS__!.settings.set({ foliageVisible: false }); await window.__SS__!.screenshotReady(); });
+          const unobstructed = heroMask(await page.locator('canvas').screenshot());
+          survivors.push({ variant, visible, unobstructed });
+          expect.soft(visible.height, `${variant} survivor height with foliage`).toBeGreaterThanOrEqual(unobstructed.height - 2 / (low ? 844 : 900));
+          expect.soft(visible.pixels, `${variant} survivor silhouette with foliage`).toBeGreaterThanOrEqual(unobstructed.pixels * .98);
+        }
+        await page.evaluate(async () => { window.__SS__!.settings.set({ foliageVisible: true }); await window.__SS__!.screenshotReady(); });
+        await page.evaluate(async () => { window.__SS__!.settings.set({ idPass: false }); await window.__SS__!.screenshotReady(); });
+      }
       await page.evaluate(async () => { window.__SS__!.settings.set({ foliageMask: true }); await window.__SS__!.screenshotReady(); });
       const mass = coverage(await page.locator('canvas').screenshot({ path: `${output}/${tier}/${spot.id}-mass.png` }));
       await page.evaluate(async () => { window.__SS__!.settings.set({ foliageMask: 'crowns' }); await window.__SS__!.screenshotReady(); });
       const canopy = coverage(await page.locator('canvas').screenshot());
       await page.evaluate(async () => { window.__SS__!.settings.set({ foliageMask: false }); await window.__SS__!.screenshotReady(); });
-      metrics.push({ ...spot, ...state, foliageGrassPixels: mass, canopyPixels: canopy, cardOverdrawUpperBound: state.submittedCardScreenArea / Math.max(canopy, .0001), perf: await page.evaluate(()=>window.__SS__!.perf()) });
+      metrics.push({ ...spot, ...state, survivors, foliageGrassPixels: mass, canopyPixels: canopy, cardOverdrawUpperBound: state.submittedCardScreenArea / Math.max(canopy, .0001), perf: await page.evaluate(()=>window.__SS__!.perf()) });
     }
     writeFileSync(`${output}/${tier}/viewpoints.json`,JSON.stringify(metrics,null,2));
     // Both live combat subjects have independently projected holes; kill/cancel clears the target hole.
@@ -57,18 +79,22 @@ for (const low of [false, true]) test.describe(low ? 'portrait-low foliage' : 'd
     await page.evaluate(async () => { const a=window.__SS__!; a.input.clear(); a.input.set({cancelMove:true});await a.step(1);a.input.clear(); });
     const perf = await page.evaluate(async low => {
       const a=window.__SS__!;await a.loadScenario('perf-l1-foliage-200');a.pause();a.camera.preset('V5');await a.screenshotReady();a.resume();
+      await new Promise(resolve=>setTimeout(resolve,3_000));a.pause();await a.screenshotReady();a.resume();
       const gl=document.querySelector('canvas')!.getContext('webgl2')!,extension=gl.getExtension('WEBGL_debug_renderer_info');
       const gpu=extension?gl.getParameter(extension.UNMASKED_RENDERER_WEBGL) as string:null;
       const samples:number[]=[];let previous=0;const start=performance.now(),startTick=a.tick();
       for(let i=0;i<360||performance.now()-start<12_000;i++){const now=await new Promise<number>(resolve=>requestAnimationFrame(resolve));if(i>60&&previous)samples.push(now-previous);previous=now;}
-      samples.sort((a,b)=>a-b);const withFoliage={...a.perf(),frameMsP95:samples[Math.ceil(samples.length*.95)-1]};
+      samples.sort((a,b)=>a-b);const withFoliage={...a.perf(),frameMsP50:samples[Math.ceil(samples.length*.5)-1],frameMsP95:samples[Math.ceil(samples.length*.95)-1]};
       // Same scene, crown/grass draw mask off/on does not estimate overdraw. Report submitted card layers per crown separately.
-      a.pause();await a.screenshotReady();return { low,spot:'V5',gpu,durationMs:performance.now()-start,ticks:a.tick()-startTick,samples:samples.length,count:a.getState().ai!.count,...withFoliage,foliage:a.getState().render.districts!.foliage };
+      a.pause();await a.screenshotReady();return { low,spot:'V5',gpu,durationMs:performance.now()-start,ticks:a.tick()-startTick,samples:samples.length,count:a.getState().ai!.count,...withFoliage,camera:a.getState().render.camera,player:a.getEntity(1)!.transform,crowd:a.getState().render.crowd,foliage:a.getState().render.districts!.foliage };
     },low);
     writeFileSync(`${output}/${tier}/perf.json`,JSON.stringify(perf,null,2));
-    expect(perf.gpu).not.toBeNull(); expect(perf.gpu!).not.toMatch(/swiftshader|llvmpipe|software/i); expect(perf.ticks).toBeGreaterThanOrEqual(600);
-    expect(perf.count).toBe(200); expect(perf.drawCalls).toBeLessThanOrEqual(low?300:600); expect(perf.triangles).toBeLessThanOrEqual(low?500_000:1_500_000);
-    expect(perf.frameMsP95).toBeLessThanOrEqual(low?33.4:16.7);
     for(const spot of metrics.filter(s=>['V1','V2','V4'].includes(s.id))) expect(spot.foliageGrassPixels,`${tier}/${spot.id} foliage + grass pixels`).toBeGreaterThanOrEqual(.25);
+    expect(perf.gpu).not.toBeNull(); expect(perf.gpu!).not.toMatch(/swiftshader|llvmpipe|software/i); expect(perf.ticks).toBeGreaterThanOrEqual(600);
+    expect(perf.camera.target).toEqual([56, 0, 0]); expect(perf.camera.spot).toBe('V5');
+    expect(Math.hypot(perf.player.x - 56, perf.player.z)).toBeLessThan(.5);
+    expect(perf.count).toBe(200); expect(perf.drawCalls).toBeLessThanOrEqual(low?300:600);
+    expect.soft(perf.triangles).toBeLessThanOrEqual(low?500_000:1_500_000);
+    expect(perf.frameMsP95).toBeLessThanOrEqual(low?33.4:16.7);
   });
 });
