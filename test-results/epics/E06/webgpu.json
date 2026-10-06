@@ -2,6 +2,7 @@
   "backend": "webgpu",
   "states": [
     {
+      "bloodCoverage": 0,
       "indicator": {
         "selectedSide": "LEFT",
         "shape": "line",
@@ -194,6 +195,7 @@
       ]
     },
     {
+      "bloodCoverage": 0,
       "indicator": {
         "selectedSide": "LEFT",
         "shape": "cone",
@@ -386,6 +388,7 @@
       ]
     },
     {
+      "bloodCoverage": 0,
       "indicator": {
         "selectedSide": "LEFT",
         "shape": "arc",
@@ -579,14 +582,15 @@
     }
   ],
   "perf": {
-    "fps": 59.88023952095874,
-    "frameMs": 16.699999999999818,
+    "fps": 60.240963855421604,
+    "frameMs": 16.600000000000023,
     "simMs": 0,
-    "drawCalls": 39,
-    "triangles": 1523,
-    "geometries": 58,
-    "textures": 5,
+    "drawCalls": 49,
+    "triangles": 20563,
+    "geometries": 28,
+    "textures": 6,
     "entities": 1,
-    "backend": "webgpu"
+    "backend": "webgpu",
+    "loadTiming": null
   }
 }

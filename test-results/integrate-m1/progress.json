@@ -5,7 +5,7 @@
     "E09",
     "E15"
   ],
-  "pending": "final-regression",
+  "pending": "authorized final main/E16 merge, typecheck/unit/smoke/verify E16 and final evidence commit",
   "manifest_union": 275,
   "asset_registrations": [
     "bld.helipad",
@@ -152,6 +152,220 @@
     "cause": "soft-particle viewport depth compiled before actual MSAA render target",
     "change": "native VFX warms during first actual render; WebGL/non-VFX precompile unchanged",
     "targeted_native_E06_passed": 1,
-    "pending": "full E06 verify then remaining requested epic verifies"
-  }
+    "pending": null,
+    "full_E06_verify": 0,
+    "commit": "61141f4"
+  },
+  "final_checks": {
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "seconds": 2.27,
+      "log": "/tmp/integrate-m1-final-build.log",
+      "saved_log": "test-results/integrate-m1/logs/final-build.log"
+    },
+    "sim": {
+      "command": [
+        "npm",
+        "run",
+        "test:sim"
+      ],
+      "exit_code": 0,
+      "seconds": 9.99,
+      "log": "/tmp/integrate-m1-final-sim.log",
+      "saved_log": "test-results/integrate-m1/logs/final-sim.log"
+    },
+    "smoke": {
+      "command": [
+        "npm",
+        "run",
+        "test:smoke",
+        "--",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 23.45,
+      "log": "/tmp/integrate-m1-final-smoke.log",
+      "saved_log": "test-results/integrate-m1/logs/final-smoke.log"
+    },
+    "e2e": {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e",
+        "--",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 1623.05,
+      "log": "/tmp/integrate-m1-final-e2e.log",
+      "saved_log": "test-results/integrate-m1/logs/final-e2e.log"
+    },
+    "verify-E01": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E01"
+      ],
+      "exit_code": 0,
+      "seconds": 169.12,
+      "log": "/tmp/integrate-m1-final-verify-E01.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E01.log"
+    },
+    "verify-E02": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E02"
+      ],
+      "exit_code": 0,
+      "seconds": 158.3,
+      "log": "/tmp/integrate-m1-final-verify-E02.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E02.log"
+    },
+    "verify-E03": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E03"
+      ],
+      "exit_code": 0,
+      "seconds": 171.86,
+      "log": "/tmp/integrate-m1-final-verify-E03.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E03.log"
+    },
+    "verify-E04": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E04"
+      ],
+      "exit_code": 0,
+      "seconds": 81.13,
+      "log": "/tmp/integrate-m1-final-verify-E04.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E04.log"
+    },
+    "verify-E05": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E05"
+      ],
+      "exit_code": 0,
+      "seconds": 74.36,
+      "log": "/tmp/integrate-m1-final-verify-E05.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E05.log"
+    },
+    "verify-E06": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E06"
+      ],
+      "exit_code": 0,
+      "seconds": 73.78,
+      "log": "/tmp/integrate-m1-final-verify-E06.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E06.log"
+    },
+    "verify-E07": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E07"
+      ],
+      "exit_code": 0,
+      "seconds": 65.89,
+      "log": "/tmp/integrate-m1-final-verify-E07.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E07.log"
+    },
+    "verify-E09": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E09"
+      ],
+      "exit_code": 0,
+      "seconds": 74.82,
+      "log": "/tmp/integrate-m1-final-verify-E09.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E09.log"
+    },
+    "verify-E10": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E10"
+      ],
+      "exit_code": 0,
+      "seconds": 756.45,
+      "log": "/tmp/integrate-m1-final-verify-E10.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E10.log"
+    },
+    "verify-E11": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E11"
+      ],
+      "exit_code": 0,
+      "seconds": 146.26,
+      "log": "/tmp/integrate-m1-final-verify-E11.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E11.log"
+    },
+    "verify-E12": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E12"
+      ],
+      "exit_code": 0,
+      "seconds": 65.62,
+      "log": "/tmp/integrate-m1-final-verify-E12.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E12.log"
+    },
+    "verify-E15": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E15"
+      ],
+      "exit_code": 0,
+      "seconds": 439.26,
+      "log": "/tmp/integrate-m1-final-verify-E15.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E15.log"
+    }
+  },
+  "full_browser": {
+    "passed": 117,
+    "failed": 0,
+    "skipped": 0
+  },
+  "E16_main_merge_requested": true
 }

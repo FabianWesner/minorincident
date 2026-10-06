@@ -15,6 +15,7 @@
   "mismatches": 0,
   "tick": 3612,
   "character": {
+    "bloodCoverage": 0,
     "variant": "female",
     "gearTier": 0,
     "animation": "idle",
@@ -23,25 +24,26 @@
     "sources": [
       {
         "variant": "female",
-        "source": "glb",
-        "reason": null
+        "source": "placeholder",
+        "reason": "Error: status reference"
       },
       {
         "variant": "male",
-        "source": "glb",
-        "reason": null
+        "source": "placeholder",
+        "reason": "Error: status reference"
       }
     ]
   },
   "perf": {
-    "fps": 3.15855969677827,
-    "frameMs": 316.5999999999999,
-    "simMs": 37.40000009536743,
-    "drawCalls": 82,
-    "triangles": 55619,
-    "geometries": 161,
+    "fps": 1.6217969510217323,
+    "frameMs": 616.5999999999999,
+    "simMs": 35.60000002384186,
+    "drawCalls": 18,
+    "triangles": 483,
+    "geometries": 57,
     "textures": 5,
     "entities": 1,
-    "backend": "webgl"
+    "backend": "webgl",
+    "loadTiming": null
   }
 }

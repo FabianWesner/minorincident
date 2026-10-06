@@ -120,6 +120,7 @@
         "yaw": 0
       },
       "amount": 100,
+      "damageType": "explosive",
       "type": "combat.hit"
     },
     {
@@ -135,6 +136,7 @@
         "yaw": 0
       },
       "amount": 100,
+      "damageType": "explosive",
       "type": "combat.kill"
     },
     {
@@ -667,13 +669,13 @@
     }
   ],
   "perf": {
-    "fps": 60.24096385542202,
-    "frameMs": 16.59999999999991,
+    "fps": 59.88023952095874,
+    "frameMs": 16.699999999999818,
     "simMs": 0,
-    "drawCalls": 69,
-    "triangles": 2567,
-    "geometries": 62,
-    "textures": 5,
+    "drawCalls": 119,
+    "triangles": 22087,
+    "geometries": 70,
+    "textures": 7,
     "entities": 6,
     "backend": "webgl",
     "loadTiming": null

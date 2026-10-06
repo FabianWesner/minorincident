@@ -1,25 +1,39 @@
 {
   "samples": [
     {
-      "total": 957.8999999761581,
+      "total": 1040.1999999284744,
       "dataMs": 0.10000002384185791,
-      "simMs": 64.5,
-      "viewMs": 886
+      "simMs": 64.39999997615814,
+      "viewMs": 193.60000002384186
     },
     {
-      "total": 427.60000002384186,
+      "total": 289.7000000476837,
       "dataMs": 0,
-      "simMs": 57.39999997615814,
-      "viewMs": 363.8000000715256
+      "simMs": 61.5,
+      "viewMs": 189.20000004768372
     },
     {
-      "total": 434.5,
+      "total": 285,
       "dataMs": 0,
-      "simMs": 59.799999952316284,
-      "viewMs": 367.8000000715256
+      "simMs": 59.699999928474426,
+      "viewMs": 185.40000009536743
     }
   ],
   "state": {
+    "combat": {
+      "sequence": 0,
+      "rng": {
+        "stream": "combat",
+        "state": 1722653561,
+        "cursor": 0
+      },
+      "god": false,
+      "infiniteCharges": false,
+      "aimAssist": "Default",
+      "water": [],
+      "running": [],
+      "projectiles": []
+    },
     "tick": 0,
     "input": {
       "scheme": "mouse-only",
@@ -80,6 +94,76 @@
           "yaw": 1.1911950666501565
         },
         "diedAt": null
+      },
+      "weapons": {
+        "selectedSide": "LEFT",
+        "LEFT": {
+          "rack": [
+            {
+              "id": "weapon.bat",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.pistol",
+              "magazine": 6,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        },
+        "RIGHT": {
+          "rack": [
+            {
+              "id": "weapon.grenade",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 2,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "ability.ground-slam",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        }
+      },
+      "combat": {
+        "radius": 0.3,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
       }
     },
     "entities": [
@@ -116,10 +200,177 @@
             "yaw": 1.1911950666501565
           },
           "diedAt": null
+        },
+        "weapons": {
+          "selectedSide": "LEFT",
+          "LEFT": {
+            "rack": [
+              {
+                "id": "weapon.bat",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              },
+              {
+                "id": "weapon.pistol",
+                "magazine": 6,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              }
+            ],
+            "index": 0,
+            "aim": {
+              "x": 1,
+              "z": 0
+            },
+            "aimPoint": null,
+            "swapUntil": 0
+          },
+          "RIGHT": {
+            "rack": [
+              {
+                "id": "weapon.grenade",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 2,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              },
+              {
+                "id": "ability.ground-slam",
+                "magazine": 0,
+                "reserve": "infinite",
+                "charges": 0,
+                "nextCharge": 0,
+                "reloadUntil": 0,
+                "readyAt": 0
+              }
+            ],
+            "index": 0,
+            "aim": {
+              "x": 1,
+              "z": 0
+            },
+            "aimPoint": null,
+            "swapUntil": 0
+          }
+        },
+        "combat": {
+          "radius": 0.3,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
         }
       }
     ],
-    "mission": null,
+    "mission": {
+      "id": "L6",
+      "phase": "briefing",
+      "completedObjectives": [],
+      "volumes": [
+        false,
+        false
+      ],
+      "killedBosses": [],
+      "steps": {
+        "home": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "school": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "mall": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "engine": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "drive": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "flare-1": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "flare-2": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "flare-3": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "extraction": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        }
+      },
+      "actors": {},
+      "items": [],
+      "states": {
+        "driving:fire-engine": false
+      },
+      "counters": {},
+      "gates": {},
+      "marker": null,
+      "checkpoint": null,
+      "tier": 5,
+      "timeOfDay": null,
+      "subtitle": null,
+      "cinematic": null,
+      "failure": null,
+      "stats": {
+        "time": 0,
+        "kills": 0,
+        "damage": 0,
+        "deaths": 0,
+        "rescued": 0,
+        "optionalObjectives": []
+      },
+      "result": null
+    },
     "progression": null,
     "rng": [
       {
@@ -132,12 +383,12 @@
       "entities": 1,
       "bodies": 2,
       "colliders": 191,
-      "listeners": 6
+      "listeners": 34
     },
     "districts": {
       "id": "L6",
       "tier": 5,
-      "navHash": "112x224:655a1ac4",
+      "navHash": "112x224:4121baf8",
       "fireEmitters": 24,
       "warnings": [
         "Orphan anchor: D-RES/backyard-gate",
@@ -259,15 +510,15 @@
               {
                 "id": "bld.house-a:53",
                 "aabb": {
-                  "max": [
-                    -10,
-                    5,
-                    -11
-                  ],
                   "min": [
-                    -18,
+                    -17.57125,
                     0,
-                    -17
+                    -17.585
+                  ],
+                  "max": [
+                    -10.42875,
+                    4.5542,
+                    -10.415
                   ]
                 },
                 "label": "Safe House"
@@ -275,15 +526,15 @@
               {
                 "id": "bld.house-b:78",
                 "aabb": {
-                  "max": [
-                    18,
-                    5,
-                    -11
-                  ],
                   "min": [
-                    10,
+                    10.241,
                     0,
-                    -17
+                    -19.5175
+                  ],
+                  "max": [
+                    17.759,
+                    6.804,
+                    -8.4825
                   ]
                 },
                 "label": "Juniper House"
@@ -291,15 +542,15 @@
               {
                 "id": "bld.house-c:103",
                 "aabb": {
-                  "max": [
-                    -10,
-                    5,
-                    17
-                  ],
                   "min": [
-                    -18,
+                    -18.7016,
                     0,
-                    11
+                    10.0998
+                  ],
+                  "max": [
+                    -9.2984,
+                    5.7675,
+                    17.900199999999998
                   ]
                 },
                 "label": "Cedar House"
@@ -307,15 +558,15 @@
               {
                 "id": "bld.house-a:128",
                 "aabb": {
-                  "max": [
-                    18,
-                    5,
-                    17
-                  ],
                   "min": [
-                    10,
+                    10.42875,
                     0,
-                    11
+                    10.415
+                  ],
+                  "max": [
+                    17.57125,
+                    4.5542,
+                    17.585
                   ]
                 },
                 "label": "Willow House"
@@ -404,15 +655,15 @@
               {
                 "id": "bld.joes-diner:53",
                 "aabb": {
-                  "max": [
-                    -10,
-                    5,
-                    -11
-                  ],
                   "min": [
-                    -18,
+                    -17.48495,
                     0,
-                    -17
+                    -19.8725
+                  ],
+                  "max": [
+                    -10.51505,
+                    6.32,
+                    -8.127500000000001
                   ]
                 },
                 "label": "Joe’s Diner"
@@ -420,15 +671,15 @@
               {
                 "id": "bld.mainstreet-brick:78",
                 "aabb": {
-                  "max": [
-                    18,
-                    5,
-                    -11
-                  ],
                   "min": [
-                    10,
+                    10.30595,
                     0,
-                    -17
+                    -18.85125
+                  ],
+                  "max": [
+                    17.69405,
+                    8.554,
+                    -9.14875
                   ]
                 },
                 "label": "Maple Hardware"
@@ -436,15 +687,15 @@
               {
                 "id": "bld.gas-station:103",
                 "aabb": {
-                  "max": [
-                    -10,
-                    5,
-                    17
-                  ],
                   "min": [
-                    -18,
+                    -19.17,
                     0,
-                    11
+                    8.745000000000001
+                  ],
+                  "max": [
+                    -8.83,
+                    7.69,
+                    19.255
                   ]
                 },
                 "label": "Sunset Fuel"
@@ -533,15 +784,15 @@
               {
                 "id": "bld.school:53",
                 "aabb": {
-                  "max": [
-                    -8,
-                    6,
-                    -10
-                  ],
                   "min": [
                     -20,
                     0,
                     -18
+                  ],
+                  "max": [
+                    -8,
+                    6,
+                    -10
                   ]
                 },
                 "label": "Sunset Grove Elementary"
@@ -549,15 +800,15 @@
               {
                 "id": "bld.gym:78",
                 "aabb": {
-                  "max": [
-                    19,
-                    5,
-                    -10
-                  ],
                   "min": [
                     9,
                     0,
                     -18
+                  ],
+                  "max": [
+                    19,
+                    5,
+                    -10
                   ]
                 },
                 "label": "Sunset Grove Gym"
@@ -646,15 +897,15 @@
               {
                 "id": "bld.supermarket:53",
                 "aabb": {
-                  "max": [
-                    -8,
-                    5,
-                    -10
-                  ],
                   "min": [
                     -20,
                     0,
                     -18
+                  ],
+                  "max": [
+                    -8,
+                    5,
+                    -10
                   ]
                 },
                 "label": "Grove Market"
@@ -662,15 +913,15 @@
               {
                 "id": "bld.pharmacy:78",
                 "aabb": {
-                  "max": [
-                    19,
-                    4,
-                    -10.5
-                  ],
                   "min": [
                     9,
                     0,
                     -17.5
+                  ],
+                  "max": [
+                    19,
+                    4,
+                    -10.5
                   ]
                 },
                 "label": "Grove Pharmacy"
@@ -678,15 +929,15 @@
               {
                 "id": "bld.joes-diner:103",
                 "aabb": {
-                  "max": [
-                    -10,
-                    5,
-                    17
-                  ],
                   "min": [
-                    -18,
+                    -17.48495,
                     0,
-                    11
+                    8.127500000000001
+                  ],
+                  "max": [
+                    -10.51505,
+                    6.32,
+                    19.8725
                   ]
                 },
                 "label": "Food Court"
@@ -694,15 +945,15 @@
               {
                 "id": "bld.mainstreet-brick:128",
                 "aabb": {
-                  "max": [
-                    18,
-                    5,
-                    17
-                  ],
                   "min": [
-                    10,
+                    10.30595,
                     0,
-                    11
+                    9.14875
+                  ],
+                  "max": [
+                    17.69405,
+                    8.554,
+                    18.85125
                   ]
                 },
                 "label": "Maple Mini Mall"
@@ -791,15 +1042,15 @@
               {
                 "id": "bld.police:53",
                 "aabb": {
-                  "max": [
-                    -9,
-                    5,
-                    -10
-                  ],
                   "min": [
                     -19,
                     0,
                     -18
+                  ],
+                  "max": [
+                    -9,
+                    5,
+                    -10
                   ]
                 },
                 "label": "Grove Police"
@@ -807,15 +1058,15 @@
               {
                 "id": "bld.fire-station:78",
                 "aabb": {
-                  "max": [
-                    18,
-                    5,
-                    -11
-                  ],
                   "min": [
                     10,
                     0,
                     -17
+                  ],
+                  "max": [
+                    18,
+                    5,
+                    -11
                   ]
                 },
                 "label": "Grove Fire Station"
@@ -823,15 +1074,15 @@
               {
                 "id": "bld.hospital:103",
                 "aabb": {
-                  "max": [
-                    -9,
-                    7,
-                    18
-                  ],
                   "min": [
                     -19,
                     0,
                     10
+                  ],
+                  "max": [
+                    -9,
+                    7,
+                    18
                   ]
                 },
                 "label": "Grove Hospital"
@@ -920,15 +1171,15 @@
               {
                 "id": "bld.park-lodge:53",
                 "aabb": {
-                  "max": [
-                    -10,
-                    4,
-                    -10.5
-                  ],
                   "min": [
                     -18,
                     0,
                     -17.5
+                  ],
+                  "max": [
+                    -10,
+                    4,
+                    -10.5
                   ]
                 },
                 "label": "Creekside Lodge"
@@ -1017,15 +1268,15 @@
               {
                 "id": "bld.zoo-gate:53",
                 "aabb": {
-                  "max": [
-                    -9,
-                    4,
-                    -11
-                  ],
                   "min": [
                     -19,
                     0,
                     -17
+                  ],
+                  "max": [
+                    -9,
+                    4,
+                    -11
                   ]
                 },
                 "label": "Sunset Grove Zoo"
@@ -1033,15 +1284,15 @@
               {
                 "id": "bld.reptile-house:78",
                 "aabb": {
-                  "max": [
-                    19,
-                    4,
-                    -10
-                  ],
                   "min": [
                     9,
                     0,
                     -18
+                  ],
+                  "max": [
+                    19,
+                    4,
+                    -10
                   ]
                 },
                 "label": "Reptile House"
@@ -1130,15 +1381,15 @@
               {
                 "id": "bld.substation:53",
                 "aabb": {
-                  "max": [
-                    -10,
-                    4,
-                    -10.5
-                  ],
                   "min": [
                     -18,
                     0,
                     -17.5
+                  ],
+                  "max": [
+                    -10,
+                    4,
+                    -10.5
                   ]
                 },
                 "label": "Grove Power"
@@ -1149,6 +1400,14 @@
       ]
     },
     "render": {
+      "missionMarker": {
+        "visible": false,
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
       "districts": {
         "districts": [
           "D-RES",
@@ -1734,7 +1993,9 @@
         "fog": "#344161",
         "intensity": 0.38
       },
+      "vehicles": [],
       "character": {
+        "bloodCoverage": 0,
         "variant": "female",
         "gearTier": 0,
         "animation": "idle",
@@ -1753,6 +2014,227 @@
           }
         ]
       },
+      "crowd": null,
+      "actions": {
+        "bloodCoverage": 0,
+        "indicator": {
+          "selectedSide": "LEFT",
+          "shape": "cone",
+          "visibleSides": [
+            "LEFT"
+          ],
+          "vertices": 300,
+          "maxHeight": 0.04,
+          "landing": {
+            "x": 0,
+            "z": 0
+          }
+        },
+        "attachments": [
+          {
+            "side": "LEFT",
+            "actionId": "weapon.bat",
+            "iconUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMyOTM0NDciLz48ZyBzdHJva2U9IiNmZmQxNjYiIHN0cm9rZS13aWR0aD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTUgNDdMNDMgMTlNMzkgMTVMNDkgMjVNMTIgNDJMMjIgNTIiLz48L2c+PHRleHQgeD0iNDgiIHk9IjU5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiPkJBPC90ZXh0Pjwvc3ZnPgo=",
+            "socket": "weaponSocketL",
+            "handDistance": 0.045000000000000075,
+            "gripDistance": 0,
+            "attached": true,
+            "source": "placeholder",
+            "sockets": [
+              "grip",
+              "tip"
+            ]
+          },
+          {
+            "side": "RIGHT",
+            "actionId": "weapon.grenade",
+            "iconUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMyOTM0NDciLz48ZyBzdHJva2U9IiNmZmQxNjYiIHN0cm9rZS13aWR0aD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48Y2lyY2xlIGN4PSIzMiIgY3k9IjM2IiByPSIxNCIvPjxwYXRoIGQ9Ik0yOSAyMlYxNEgzOE0zNyAxNkw0MyAxMCIvPjwvZz48dGV4dCB4PSI0OCIgeT0iNTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCI+R1I8L3RleHQ+PC9zdmc+Cg==",
+            "socket": "weaponSocketR",
+            "handDistance": 0.045000000000000075,
+            "gripDistance": 0,
+            "attached": true,
+            "source": "placeholder",
+            "sockets": [
+              "grip",
+              "tip"
+            ]
+          }
+        ],
+        "placeholders": [
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.fists",
+            "reason": "status placeholder"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.kick",
+            "reason": "status placeholder"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.baseball-bat",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.crowbar",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.machete",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.knife",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.nail-bat",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.shovel",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.police-baton",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.fire-axe",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.katana",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.pistol",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.shotgun",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.nail-gun",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.smg",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.hunting-rifle",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.assault-rifle",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.machine-gun",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "wpn.rocket-launcher",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "thr.frag-grenade",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "thr.molotov",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "thr.pipe-bomb",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "thr.firecracker-lure",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "thr.smoke-grenade",
+            "reason": "status placeholder"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "thr.flashbang",
+            "reason": "status reference"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "ability.corgi-lure",
+            "reason": "status placeholder"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "ability.shield-bubble",
+            "reason": "status placeholder"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "ability.adrenaline",
+            "reason": "status placeholder"
+          },
+          {
+            "type": "asset.placeholder",
+            "id": "ability.turret",
+            "reason": "status placeholder"
+          }
+        ]
+      },
+      "vfx": {
+        "enabled": true,
+        "gore": "Full",
+        "quality": "high",
+        "flashReduction": false,
+        "time": 0,
+        "particles": 0,
+        "particleCap": 2048,
+        "decals": 0,
+        "decalCap": 600,
+        "gibs": 0,
+        "gibCap": 80,
+        "telegraphs": [],
+        "hitStop": {
+          "active": false,
+          "until": 0,
+          "started": 0,
+          "suppressed": 0
+        },
+        "flash": 0,
+        "coverage": 0,
+        "detached": 0,
+        "dismemberedKills": 0,
+        "kills": 0,
+        "explosionRadius": 0
+      },
+      "infected": [],
       "materials": [
         {
           "name": "pal_schoolBusYellow",
@@ -1999,20 +2481,132 @@
           "palette": false
         },
         {
+          "name": "pal_survivorRed",
+          "palette": true
+        },
+        {
+          "name": "female:",
+          "palette": true
+        },
+        {
+          "name": "pal_backpackTeal",
+          "palette": true
+        },
+        {
+          "name": "pal_survivorRed",
+          "palette": true
+        },
+        {
+          "name": "female:keep_placeholder",
+          "palette": true
+        },
+        {
+          "name": "action:wpn.baseball-bat:pal_woodWarm",
+          "palette": true
+        },
+        {
+          "name": "pal_survivorRed",
+          "palette": true
+        },
+        {
+          "name": "action:thr.frag-grenade:pal_woodWarm",
+          "palette": true
+        },
+        {
+          "name": "female:keep_placeholder",
+          "palette": true
+        },
+        {
+          "name": "female:keep_placeholder",
+          "palette": true
+        },
+        {
+          "name": "pal_survivorRed",
+          "palette": true
+        },
+        {
+          "name": "pal_survivorRed",
+          "palette": true
+        },
+        {
+          "name": "pal_survivorRed",
+          "palette": true
+        },
+        {
+          "name": "male:",
+          "palette": true
+        },
+        {
+          "name": "pal_backpackTeal",
+          "palette": true
+        },
+        {
+          "name": "pal_survivorRed",
+          "palette": true
+        },
+        {
+          "name": "male:keep_placeholder",
+          "palette": true
+        },
+        {
+          "name": "pal_survivorRed",
+          "palette": true
+        },
+        {
+          "name": "male:keep_placeholder",
+          "palette": true
+        },
+        {
+          "name": "pal_survivorRed",
+          "palette": true
+        },
+        {
+          "name": "pal_survivorRed",
+          "palette": true
+        },
+        {
           "name": "",
-          "palette": true
+          "palette": false
         },
         {
-          "name": "keep_placeholder",
-          "palette": true
+          "name": "",
+          "palette": false
         },
         {
-          "name": "keep_placeholder",
-          "palette": true
+          "name": "",
+          "palette": false
         },
         {
-          "name": "keep_placeholder",
-          "palette": true
+          "name": "",
+          "palette": false
+        },
+        {
+          "name": "",
+          "palette": false
+        },
+        {
+          "name": "",
+          "palette": false
+        },
+        {
+          "name": "",
+          "palette": false
+        },
+        {
+          "name": "",
+          "palette": false
+        },
+        {
+          "name": "",
+          "palette": false
+        },
+        {
+          "name": "",
+          "palette": false
+        },
+        {
+          "name": "",
+          "palette": false
         }
       ],
       "occlusion": [],
@@ -2020,19 +2614,19 @@
     }
   },
   "perf": {
-    "fps": 8.554319931565468,
-    "frameMs": 116.89999999999964,
+    "fps": 30.030030030030275,
+    "frameMs": 33.29999999999973,
     "simMs": 0,
-    "drawCalls": 222,
-    "triangles": 225219,
-    "geometries": 137,
-    "textures": 18,
+    "drawCalls": 239,
+    "triangles": 245015,
+    "geometries": 112,
+    "textures": 19,
     "entities": 1,
     "backend": "webgpu",
     "loadTiming": {
       "dataMs": 0,
-      "simMs": 59.799999952316284,
-      "viewMs": 367.8000000715256
+      "simMs": 59.699999928474426,
+      "viewMs": 185.40000009536743
     }
   }
 }

@@ -1,0 +1,153 @@
+
+> verify
+> tsx tools/verify.ts E15
+
+
+Verifying E15: npm run typecheck
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+Verifying E15: npm run lint
+
+> lint
+> eslint src tests tools *.config.ts eslint.config.js
+
+
+Verifying E15: npm run build
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 195 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                 0.76 kB │ gzip:     0.40 kB
+dist/preview/index.html                         1.10 kB │ gzip:     0.60 kB
+dist/assets/basis_transcoder-o4Hde_L7.js       57.53 kB
+dist/assets/basis_transcoder-VXdx5NbI.wasm    527.33 kB │ gzip:   247.62 kB
+dist/assets/index-amQJhetc.css                  3.52 kB │ gzip:     1.21 kB
+dist/assets/crowdProbe-OfE90KSY.js              1.25 kB │ gzip:     0.73 kB
+dist/assets/testApi-CZmghFNg.js                 6.51 kB │ gzip:     2.52 kB
+dist/assets/Pickups-C_rOItS1.js                23.91 kB │ gzip:     7.56 kB
+dist/assets/index-4yh25BDu.js                  24.43 kB │ gzip:     6.37 kB
+dist/assets/three.module-Dl0e6wYx.js          267.77 kB │ gzip:    71.61 kB
+dist/assets/index-COGiw7Ox.js                 292.44 kB │ gzip:    86.69 kB
+dist/assets/registry-DgUE6EXS.js              988.36 kB │ gzip:   257.23 kB
+dist/assets/rapier-CiR99Vtq.js              4,322.54 kB │ gzip: 1,641.15 kB
+✓ built in 2.00s
+
+Verifying E15: npx vitest run -t @(?:E15)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --reporter=default --reporter=json --outputFile=test-results/epics/E15/vitest.json
+
+ RUN  v5.0.3 /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1
+
+ ↓ tests/sim/missions/objectives.test.ts (29 tests | 29 skipped)
+ ↓ tests/sim/missions/perf.test.ts (1 test | 1 skipped)
+ ↓ tests/sim/missions/campaign.test.ts (20 tests | 20 skipped)
+ ↓ tests/sim/vehicles/interact-integration.test.ts (3 tests | 3 skipped)
+ ✓ tests/sim/combat/balance.test.ts (3 tests | 2 skipped) 311ms
+   ✓ S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash 310ms
+ ✓ tests/sim/combat/combat.test.ts (19 tests | 18 skipped) 111ms
+ ↓ tests/sim/interact/integration.test.ts (6 tests | 6 skipped)
+ ✓ tests/sim/determinism.test.ts (3 tests | 2 skipped) 183ms
+ ↓ tests/unit/missions/dialogue.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/missions/schema.test.ts (1 test | 1 skipped)
+ ↓ tests/sim/districts.test.ts (2 tests | 2 skipped)
+ ↓ tests/sim/runner.test.ts (1 test | 1 skipped)
+ ↓ tests/sim/player.test.ts (8 tests | 8 skipped)
+ ↓ tests/sim/recorder.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/static.test.ts (1 test | 1 skipped)
+ ↓ tests/sim/weapons.test.ts (69 tests | 69 skipped)
+ ↓ tests/unit/setup.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/traceability.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/survivor.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/import-graph.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/vehicles.test.ts (1 test | 1 skipped)
+ ↓ tests/sim/ai/animals.test.ts (9 tests | 9 skipped)
+ ↓ tests/sim/ai/director.test.ts (9 tests | 9 skipped)
+ ↓ tests/sim/ai/specials.test.ts (10 tests | 10 skipped)
+ ↓ tests/sim/ai/turning.test.ts (1 test | 1 skipped)
+ ↓ tests/sim/ai/navigation.test.ts (8 tests | 8 skipped)
+ ↓ tests/sim/interact/devices.test.ts (5 tests | 5 skipped)
+ ↓ tests/sim/interact/hazards.test.ts (11 tests | 11 skipped)
+ ↓ tests/sim/interact/infected-integration.test.ts (3 tests | 3 skipped)
+ ↓ tests/sim/interact/pickups.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/assets/png-pixels.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/assets/build.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/assets/crowd.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/assets/optimize.test.ts (11 tests | 11 skipped)
+ ↓ tests/unit/assets/production-gates.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/assets/references.test.ts (2 tests | 2 skipped)
+ ↓ tests/sim/vehicles/handling.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/assets/validate.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/assets/registry.test.ts (3 tests | 3 skipped)
+ ↓ tests/sim/vehicles/consequences.test.ts (9 tests | 9 skipped)
+ ↓ tests/unit/combat/loadout.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/core/foundation.test.ts (4 tests | 4 skipped)
+ ↓ tests/unit/combat/events.test.ts (1 test | 1 skipped)
+ ↓ tests/sim/vehicles/interaction.test.ts (4 tests | 4 skipped)
+ ↓ tests/unit/input/bindings.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/input/buttons.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/layouts/build.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/input/wheel.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/layouts/crossval.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/layouts/districts.test.ts (4 tests | 4 skipped)
+ ↓ tests/unit/render/infected-bake.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/layouts/visual-bounds.test.ts (1 test | 1 skipped)
+ ↓ tests/unit/render/palette.test.ts (2 tests | 2 skipped)
+ ↓ tests/unit/render/view.test.ts (3 tests | 3 skipped)
+ ↓ tests/unit/data/action-assets.test.ts (2 tests | 2 skipped)
+ ✓ tests/unit/vfx/pools.test.ts (3 tests) 43ms
+ ↓ tests/unit/data/actions.test.ts (3 tests | 3 skipped)
+ ✓ tests/unit/vfx/integration.test.ts (5 tests) 204ms
+ ✓ tests/unit/vfx/events.test.ts (4 tests) 1117ms
+   ✓ T-E15-01 @E15 @E15-AC01 60s combat hash is identical with all visual settings 893ms
+
+ Test Files  6 passed | 53 skipped (59)
+      Tests  15 passed | 308 skipped (323)
+   Start at  04:19:13
+   Duration  3.77s (import 42%, transform 31%, tests 25%, worker 2%)
+
+     Import  201 modules were evaluated 1931 times · 3.26s total, 42% of tracked time
+             ~621ms faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+JSON report written to /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/epics/E15/vitest.json
+
+Verifying E15: sh tools/e2e-lock.sh npx playwright test --grep @(?:E15)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$)
+
+Running 28 tests using 2 workers
+
+  ✓   1 [chromium] › tests/e2e/driving.spec.ts:20:1 › S-07 @smoke @E09 vehicle enter, driver travels 50m, real right-click exit (9.5s)
+  ✓   2 [chromium] › tests/e2e/integration-m1.spec.ts:4:1 › M1 E07/E15 @E07 @E15 real crowd explosion detaches instanced limbs and settings preserve the sim (9.8s)
+  ✓   4 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.6s)
+  ✓   5 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.8s)
+  ✓   3 [chromium] › tests/e2e/integration-m1.spec.ts:21:1 › M1 E09/E15 @E09 @E15 real integrated vehicle takes feedback on its existing model and obeys Off (9.9s)
+  ✓   6 [chromium] › tests/e2e/vfx.spec.ts:25:1 › T-E15-01b @E15 @E15-AC01 60s browser combat agrees across VFX and gore settings (2.3m)
+  ✓   8 [chromium] › tests/e2e/vfx.spec.ts:57:1 › T-E15-06 @E15 @E15-AC06 render clock freezes 50ms independent of sim scale; crowds suppress (12.2s)
+  ✓   7 [chromium] › tests/e2e/vfx.spec.ts:37:1 › T-E15-02 @E15 @E15-AC02 @perf ten minutes stress stays capped with stable GPU resources (3.4m)
+  ✓  10 [chromium] › tests/e2e/vfx.spec.ts:101:1 › T-E15-10 @E15 @E15-AC10 player and held weapon masks reach 50%, reset on load, and disable with Off (33.8s)
+  ✓  11 [chromium] › tests/e2e/vfx.spec.ts:113:1 › T-E15-lifecycle @E15 pools, visual physics and event listeners unload without leaks; low tier reduces particles (20.7s)
+  ✓  12 [chromium] › tests/e2e/vfx.spec.ts:125:1 › T-E15-vehicle @E15 vehicle surfaces accumulate blood, obey Off and reset; smoke/fire are presentation only (11.7s)
+  ✓  13 [chromium] › tests/visual/vfx.spec.ts:21:1 › T-E15-03 @E15 @E15-AC03 @visual Full ground splat has palette red; Off has no red decal pixels (19.5s)
+  ✓  14 [chromium] › tests/visual/vfx.spec.ts:42:1 › T-E15-04 @E15 @E15-AC04 @visual each sim telegraph appears in the next frame, stays until resolution, and has a distinct shape (14.7s)
+  ✓  15 [chromium] › tests/visual/vfx.spec.ts:68:1 › T-E15-05 @E15 @E15-AC05 @visual measured shockwave screen radius scales with splash radius ±15% (25.5s)
+  ✓  16 [chromium] › tests/visual/vfx.spec.ts:90:1 › T-E15-07 @E15 @E15-AC07 @vision golden-hour and night showcases have reviewed combat readability (20.8s)
+  ✓  17 [chromium] › tests/visual/vfx.spec.ts:102:1 › T-E15-08 @E15 @E15-AC08 @visual flash reduction keeps successive explosion brightness deltas within 20% (27.9s)
+  ✓  18 [pixel-7] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.9s)
+  ✓  19 [pixel-7] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.1s)
+  ✓  20 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.8s)
+  ✓  21 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.0s)
+  ✓   9 [chromium] › tests/e2e/vfx.spec.ts:76:1 › T-E15-09b @E15 @E15-AC09 real machete and explosion kills hide limbs, show stump caps, expire gibs; settings preserve hash (4.1m)
+  ✓  22 [iphone-14] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.2s)
+  ✓  23 [iphone-14] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.8s)
+  ✓  24 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.1s)
+  ✓  25 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.9s)
+  ✓  27 [webkit] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.4s)
+  ✓  26 [webgpu] › tests/e2e/webgpu.spec.ts:60:1 › T-E15-webgpu @E15 native WebGPU compiles particles, ground tells and blood materials (4.5s)
+  ✓  28 [webkit] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.0s)
+
+  28 passed (7.1m)

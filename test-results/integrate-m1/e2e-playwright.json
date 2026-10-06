@@ -1,0 +1,4753 @@
+{
+  "config": {
+    "argv": [
+      "/Users/fabianwesner/Library/Application Support/Herd/config/nvm/versions/node/v22.22.2/bin/node",
+      "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/node_modules/.bin/playwright",
+      "test",
+      "--project=chromium",
+      "--workers=2"
+    ],
+    "configFile": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/playwright.config.ts",
+    "rootDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3325 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3325",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/asset-conformance.spec.ts",
+      "file": "e2e/asset-conformance.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E17-conformance char.survivor-female @E17-AC02 optimized export renders in the game camera",
+          "ok": true,
+          "tags": [
+            "E17-AC02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3352,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:16.726Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5b51f01213072525e362-06611ac781b8575b3990",
+          "file": "e2e/asset-conformance.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "T-E17-conformance veh.sedan-red @E17-AC02 optimized export renders in the game camera",
+          "ok": true,
+          "tags": [
+            "E17-AC02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2658,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:16.706Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5b51f01213072525e362-db82a270ff0cbe9a8330",
+          "file": "e2e/asset-conformance.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "T-E17-conformance prop.bench @E17-AC02 optimized export renders in the game camera",
+          "ok": true,
+          "tags": [
+            "E17-AC02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 985,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:19.505Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5b51f01213072525e362-93faa508a061eb1e9327",
+          "file": "e2e/asset-conformance.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "T-E17-conformance npc.civilian-woman-a @E17-AC02 optimized export renders in the game camera",
+          "ok": true,
+          "tags": [
+            "E17-AC02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1129,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:20.199Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5b51f01213072525e362-0b9cc4af1f292ace8429",
+          "file": "e2e/asset-conformance.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "T-E17-conformance veh.suv-dark @E17-AC02 optimized export renders in the game camera",
+          "ok": true,
+          "tags": [
+            "E17-AC02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1538,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:20.498Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5b51f01213072525e362-7ebe4c5e0316f9dc0409",
+          "file": "e2e/asset-conformance.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "T-E17-direction @E17-AC03 E04 survivor turns toward keyboard movement",
+          "ok": true,
+          "tags": [
+            "E17-AC03"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3350,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:21.335Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5b51f01213072525e362-c4b5fe0c99f18a321395",
+          "file": "e2e/asset-conformance.spec.ts",
+          "line": 31,
+          "column": 1
+        },
+        {
+          "title": "T-E17-gore-probe inf.common-worker armR @E17-AC11 hidden cap closes detached joint",
+          "ok": true,
+          "tags": [
+            "E17-AC11"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1544,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:22.044Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5b51f01213072525e362-ac91b7bdad4292a98f9e",
+          "file": "e2e/asset-conformance.spec.ts",
+          "line": 48,
+          "column": 3
+        },
+        {
+          "title": "T-E17-gore-probe inf.suburban-mom head @E17-AC11 hidden cap closes detached joint",
+          "ok": true,
+          "tags": [
+            "E17-AC11"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1210,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:23.596Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5b51f01213072525e362-256abe6e299986fec91c",
+          "file": "e2e/asset-conformance.spec.ts",
+          "line": 48,
+          "column": 3
+        },
+        {
+          "title": "T-E17-gore-probe inf.riot-cop foreArmR @E17-AC11 hidden cap closes detached joint",
+          "ok": true,
+          "tags": [
+            "E17-AC11"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1239,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:24.691Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5b51f01213072525e362-8adadbce52feb2f624fd",
+          "file": "e2e/asset-conformance.spec.ts",
+          "line": 48,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/camera.spec.ts",
+      "file": "e2e/camera.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-01 @E02 @E02-AC01 forced WebGL2 and automatic backend report the initialized backend",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2514,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:24.823Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8809442e5b3abcf2477-9c052757eab01733bdc4",
+          "file": "e2e/camera.spec.ts",
+          "line": 7,
+          "column": 1
+        },
+        {
+          "title": "T-E02-03 @E02 @E02-AC03 follow converges after 20 m teleport without overshoot",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC03"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1241,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:25.947Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8809442e5b3abcf2477-86d167916466eb8b0f33",
+          "file": "e2e/camera.spec.ts",
+          "line": 22,
+          "column": 1
+        },
+        {
+          "title": "T-E02-02 @E02 @E02-AC02 default camera angles and projected 1.4 m survivor height",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24300,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:27.195Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8809442e5b3abcf2477-fc5bd8c79e8fe0b8380d",
+          "file": "e2e/camera.spec.ts",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "T-E02-04 @E02 @E02-AC04 portrait keeps every point of the 12 m circle inside the viewport",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1801,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:27.346Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8809442e5b3abcf2477-7f745b383231baf56a86",
+          "file": "e2e/camera.spec.ts",
+          "line": 56,
+          "column": 1
+        },
+        {
+          "title": "T-E02-05b @E02 @E02-AC05 lookdev only uses palette or explicitly retained materials",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 16240,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:29.158Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e8809442e5b3abcf2477-1d9195d734dd34071a61",
+          "file": "e2e/camera.spec.ts",
+          "line": 65,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/combat-wiring.spec.ts",
+      "file": "e2e/combat-wiring.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E05-13 @E05 @E05-AC13 real cursor LMB RMB wheel matches sim side/rack state",
+          "ok": true,
+          "tags": [
+            "E05",
+            "E05-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7286,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:45.449Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0af9e8106ec3788350ff-7e1579f532086a800548",
+          "file": "e2e/combat-wiring.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "T-E05-browser @E05 arena placeholder scene, cheats, settings, screenshot and lifecycle",
+          "ok": true,
+          "tags": [
+            "E05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24871,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:51.551Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0af9e8106ec3788350ff-a668a3701631fca2430c",
+          "file": "e2e/combat-wiring.spec.ts",
+          "line": 39,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/crowd.spec.ts",
+      "file": "e2e/crowd.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E17-07b @E17-AC07 100 infected use one draw per material and GPU poses match at five times and four headings",
+          "ok": true,
+          "tags": [
+            "E17-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6147,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:52.745Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "002f3ce7bb4669f171c4-7d6c8a819a5acaa9f76e",
+          "file": "e2e/crowd.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/driving.spec.ts",
+      "file": "e2e/driving.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E09-08 @E09-AC08 real mouse aims ahead-left to accelerate/turn and dead ring brakes",
+          "ok": true,
+          "tags": [
+            "E09-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13785,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:16:58.917Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-7bac17c06bf378db8a6a",
+          "file": "e2e/driving.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real right-click exit",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8034,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:12.716Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-48a8369a19aa5e31510a",
+          "file": "e2e/driving.spec.ts",
+          "line": 20,
+          "column": 1
+        },
+        {
+          "title": "T-E09-controls @E09 keyboard WASD uses local driving axes",
+          "ok": true,
+          "tags": [
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7694,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:16.436Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-083c45fa806c40c358d0",
+          "file": "e2e/driving.spec.ts",
+          "line": 28,
+          "column": 1
+        },
+        {
+          "title": "T-E09-touch @E09 touch stick accelerates, LEFT holds boost and brake stops without exiting",
+          "ok": true,
+          "tags": [
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7619,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:20.756Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-7ac06add104eba4935d6",
+          "file": "e2e/driving.spec.ts",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "T-E09-asset @E09-AC01 dynamically spawned integrated fire engine renders and unloads its native resources",
+          "ok": true,
+          "tags": [
+            "E09-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4476,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:24.138Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-9fffa25039356ae07111",
+          "file": "e2e/driving.spec.ts",
+          "line": 57,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/harness.spec.ts",
+      "file": "e2e/harness.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E01-04b @E01 @E01-AC04 browser and Node match after 3600 scripted ticks",
+          "ok": true,
+          "tags": [
+            "E01",
+            "E01-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6450,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:28.386Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "696d2ab3be73ec9c37de-fdfa91c4caa1f8cef95d",
+          "file": "e2e/harness.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, delivered methods and remaining epic stubs",
+          "ok": true,
+          "tags": [
+            "E01",
+            "E01-AC05",
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8346,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:28.627Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "696d2ab3be73ec9c37de-22f2694513cf06989c17",
+          "file": "e2e/harness.spec.ts",
+          "line": 30,
+          "column": 1
+        },
+        {
+          "title": "T-E01-06 @E01 @E01-AC06 pause + exact step and 10x sim time within 2%",
+          "ok": true,
+          "tags": [
+            "E01",
+            "E01-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6223,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:34.843Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "696d2ab3be73ec9c37de-939251e2e875d0499eb9",
+          "file": "e2e/harness.spec.ts",
+          "line": 75,
+          "column": 1
+        },
+        {
+          "title": "T-E01-07 @E01 @E01-AC07 load/unload x20 returns all resources to baseline",
+          "ok": true,
+          "tags": [
+            "E01",
+            "E01-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19143,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:36.980Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "696d2ab3be73ec9c37de-d3cb45a00f8d475f9885",
+          "file": "e2e/harness.spec.ts",
+          "line": 94,
+          "column": 1
+        },
+        {
+          "title": "T-E01-10 @E01 @E01-AC10 guard detects errors and uncaught exceptions",
+          "ok": true,
+          "tags": [
+            "E01",
+            "E01-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 669,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:41.073Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "696d2ab3be73ec9c37de-f3b7c4c9a023dbb977cb",
+          "file": "e2e/harness.spec.ts",
+          "line": 114,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/input-keyboard.spec.ts",
+      "file": "e2e/input-keyboard.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E03-04 @E03 @E03-AC04 WASD follows screen up at camera azimuth pi/4",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1043,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:41.752Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ae750183f90ce60a669-fe7591eb49d69d5e31a8",
+          "file": "e2e/input-keyboard.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "T-E03-05 @E03 @E03-AC05 keyboard aim turns at 360deg/s, taps snap and action mirrors fire",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1448,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:42.802Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ae750183f90ce60a669-93d8e0893b2f5688bf10",
+          "file": "e2e/input-keyboard.spec.ts",
+          "line": 16,
+          "column": 1
+        },
+        {
+          "title": "T-E03-08 @E03 @E03-AC08 last device selects mouse-only mouse-keyboard and keyboard with matching hint",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1827,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:44.255Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ae750183f90ce60a669-0de855bb32ed703043d7",
+          "file": "e2e/input-keyboard.spec.ts",
+          "line": 50,
+          "column": 1
+        },
+        {
+          "title": "T-E03-09 @E03 @E03-AC09 binding form persists across reload and rejects conflicts with a message",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2639,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:46.088Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5ae750183f90ce60a669-946dc64a522710bccd75",
+          "file": "e2e/input-keyboard.spec.ts",
+          "line": 67,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/input-mouse.spec.ts",
+      "file": "e2e/input-mouse.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E03-01 @E03 @E03-AC01 mouse dead zone and linear distance steering",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1754,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:48.739Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-78e10fe08c5e0795cb29",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 9,
+          "column": 1
+        },
+        {
+          "title": "T-E03-02 @E03 @E03-AC02 mouse buttons preserve down held up and prevent context menus",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1132,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:50.499Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-be346390abfda177b519",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 21,
+          "column": 1
+        },
+        {
+          "title": "T-E03-03 @E03 @E03-AC03 wheel notches pulse once and trackpads debounce 120ms",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC03"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1630,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:51.637Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-13c7b4d1b11b8501d525",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 38,
+          "column": 1
+        },
+        {
+          "title": "T-E03-12 @E03 @E03-AC12 middle-click and E interact without browser autoscroll",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC12"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1968,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:53.272Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-e2b8807053dfdea0b6f4",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 51,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/input-recorder.spec.ts",
+      "file": "e2e/input-recorder.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E03-recorder-browser @E03 @E03-AC10 @E09 real device frames replay through the browser input phase",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC10",
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2294,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:55.256Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1749e9792bc1e09518b9-33c10cb7f823cd38b875",
+          "file": "e2e/input-recorder.spec.ts",
+          "line": 7,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/input-touch.spec.ts",
+      "file": "e2e/input-touch.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases within one tick",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1178,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:56.137Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-ec5e957fa987784cc6d6",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 21,
+          "column": 1
+        },
+        {
+          "title": "T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap uses assist",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1200,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:57.326Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-236a02f9b64be73ddf29",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "T-E03-13-blur @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1051,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:57.560Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-fb8e97dcf3e9cac92022",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-13-hidden @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1271,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:58.536Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-55abdb86dfc7a3a261ff",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-13-pagehide @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1320,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:58.618Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-267149fd62f99b8f1510",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "title": "T-E03-touch-schemes @E03 @E03-AC08 touch and keyboard switch immediately and hints follow",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 891,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:59.819Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-7a466fb2dc7f984e84fd",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC06",
+            "E03-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1309,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:17:59.946Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e31eed255222c757fe4-ea7e46d21b37b6d2461d",
+          "file": "e2e/input-touch.spec.ts",
+          "line": 93,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/integration-m1.spec.ts",
+      "file": "e2e/integration-m1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "M1 E07/E15 @E07 @E15 real crowd explosion detaches instanced limbs and settings preserve the sim",
+          "ok": true,
+          "tags": [
+            "E07",
+            "E15"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8832,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:18:00.722Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b8beef3166d28778295f-bb2dcd53df0bca556d2a",
+          "file": "e2e/integration-m1.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "M1 E09/E15 @E09 @E15 real integrated vehicle takes feedback on its existing model and obeys Off",
+          "ok": true,
+          "tags": [
+            "E09",
+            "E15"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8004,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:18:01.269Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b8beef3166d28778295f-a04c44b36e7ee59cac22",
+          "file": "e2e/integration-m1.spec.ts",
+          "line": 21,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/interact.spec.ts",
+      "file": "e2e/interact.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E11-01-keyboard @E11 @E11-AC01 real keyboard completes instantly and unload clears the prompt",
+          "ok": true,
+          "tags": [
+            "E11",
+            "E11-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8562,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:18:09.282Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cd70b282d85e81973875-c940487781f7700150c1",
+          "file": "e2e/interact.spec.ts",
+          "line": 3,
+          "column": 3
+        },
+        {
+          "title": "T-E11-01-middle-click @E11 @E11-AC01 real middle-click completes instantly and unload clears the prompt",
+          "ok": true,
+          "tags": [
+            "E11",
+            "E11-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8420,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:18:09.569Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cd70b282d85e81973875-dcda36bda4f90d9597f1",
+          "file": "e2e/interact.spec.ts",
+          "line": 3,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/mission-ui.spec.ts",
+      "file": "e2e/mission-ui.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E12-08 @E12 @E12-AC08 active world anchor, HUD distance, minimap and clamped direction arrow",
+          "ok": true,
+          "tags": [
+            "E12",
+            "E12-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 9491,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:18:17.854Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fc4d3b75ad9b6dd7f30e-3f5fdca0b48b0e1f4d0a",
+          "file": "e2e/mission-ui.spec.ts",
+          "line": 11,
+          "column": 1
+        },
+        {
+          "title": "T-E12-09 @E12 @E12-AC09 results equal accumulated sim events; continue requests progression",
+          "ok": true,
+          "tags": [
+            "E12",
+            "E12-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9417,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:18:17.999Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fc4d3b75ad9b6dd7f30e-a306a3ad10b54af8d81b",
+          "file": "e2e/mission-ui.spec.ts",
+          "line": 26,
+          "column": 1
+        },
+        {
+          "title": "T-E12-06-browser @E12 @E12-AC06 real keyboard skip, caption/letterbox and watch/skip hashes equal",
+          "ok": true,
+          "tags": [
+            "E12",
+            "E12-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 15345,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:18:27.352Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fc4d3b75ad9b6dd7f30e-283c2d281a89c99d72fb",
+          "file": "e2e/mission-ui.spec.ts",
+          "line": 39,
+          "column": 1
+        },
+        {
+          "title": "T-E12-10-browser @E12 @E12-AC10 radio subtitle text and ID match the dialogue event",
+          "ok": true,
+          "tags": [
+            "E12",
+            "E12-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7810,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:18:27.426Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fc4d3b75ad9b6dd7f30e-d1a2960a6e75961128b3",
+          "file": "e2e/mission-ui.spec.ts",
+          "line": 44,
+          "column": 1
+        },
+        {
+          "title": "@E12 timer, escort and defend fail screens retry to checkpoint/start",
+          "ok": true,
+          "tags": [
+            "E12"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19955,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:18:35.244Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fc4d3b75ad9b6dd7f30e-b9a1ee99cde71353ab6f",
+          "file": "e2e/mission-ui.spec.ts",
+          "line": 48,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/smoke.spec.ts",
+      "file": "e2e/smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1435,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:18:42.707Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-b06e96d7bc88dd69cb24",
+          "file": "e2e/smoke.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2558,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:18:44.148Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-74fb4cb910bc7abe9421",
+          "file": "e2e/smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/survivor.spec.ts",
+      "file": "e2e/survivor.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E04-09 @E04 @E04-AC09 sixty-second input bot visits every sim clip with zero missing mappings",
+          "ok": true,
+          "tags": [
+            "E04",
+            "E04-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 33433,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:18:46.718Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "84b67ebda6046700a1b1-7558e2720c33ce999751",
+          "file": "e2e/survivor.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "T-E04-wiring @E04 actual keyboard input moves the survivor; variant selection is cosmetic and unload frees resources",
+          "ok": true,
+          "tags": [
+            "E04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8909,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:18:55.210Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "84b67ebda6046700a1b1-d772b8a46d0bf0d053d8",
+          "file": "e2e/survivor.spec.ts",
+          "line": 34,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/turntable.spec.ts",
+      "file": "e2e/turntable.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E17-08 @E17-AC08 @E17-AC04 five fire-engine views cover 10–80% and preserve contract nodes",
+          "ok": true,
+          "tags": [
+            "E17-AC08",
+            "E17-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8585,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:19:04.132Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d435b5a9a1fa008cfaeb-6b5b62e067cd3f32e0ca",
+          "file": "e2e/turntable.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "T-E17-05e @E17-AC05 pending survivor art uses E04 code rigs with placeholder logs",
+          "ok": true,
+          "tags": [
+            "E17-AC05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2741,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:19:12.723Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d435b5a9a1fa008cfaeb-0777a3919ae3ea704807",
+          "file": "e2e/turntable.spec.ts",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "T-E17-05c @E17-AC05 pre-integrated production art renders a logged placeholder",
+          "ok": true,
+          "tags": [
+            "E17-AC05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 639,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:19:15.470Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d435b5a9a1fa008cfaeb-1e9064ed944e79a3374f",
+          "file": "e2e/turntable.spec.ts",
+          "line": 33,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/vfx.spec.ts",
+      "file": "e2e/vfx.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E15-01b @E15 @E15-AC01 60s browser combat agrees across VFX and gore settings",
+          "ok": true,
+          "tags": [
+            "E15",
+            "E15-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 160977,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:19:16.119Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ec6e762950f9b5bd924e-9930e72e02c12f78367d",
+          "file": "e2e/vfx.spec.ts",
+          "line": 25,
+          "column": 1
+        },
+        {
+          "title": "T-E15-02 @E15 @E15-AC02 @perf ten minutes stress stays capped with stable GPU resources",
+          "ok": true,
+          "tags": [
+            "E15",
+            "E15-AC02",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 256071,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:19:20.166Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ec6e762950f9b5bd924e-aadb45b17be6db0a26e0",
+          "file": "e2e/vfx.spec.ts",
+          "line": 37,
+          "column": 1
+        },
+        {
+          "title": "T-E15-06 @E15 @E15-AC06 render clock freezes 50ms independent of sim scale; crowds suppress",
+          "ok": true,
+          "tags": [
+            "E15",
+            "E15-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13524,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:21:57.105Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ec6e762950f9b5bd924e-c70f7403a351e649c269",
+          "file": "e2e/vfx.spec.ts",
+          "line": 57,
+          "column": 1
+        },
+        {
+          "title": "T-E15-09b @E15 @E15-AC09 real machete and explosion kills hide limbs, show stump caps, expire gibs; settings preserve hash",
+          "ok": true,
+          "tags": [
+            "E15",
+            "E15-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 256894,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:22:10.637Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ec6e762950f9b5bd924e-730c498e34383b3b287f",
+          "file": "e2e/vfx.spec.ts",
+          "line": 76,
+          "column": 1
+        },
+        {
+          "title": "T-E15-10 @E15 @E15-AC10 player and held weapon masks reach 50%, reset on load, and disable with Off",
+          "ok": true,
+          "tags": [
+            "E15",
+            "E15-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 33408,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:23:36.245Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ec6e762950f9b5bd924e-d2876be23b3ee1d299ab",
+          "file": "e2e/vfx.spec.ts",
+          "line": 101,
+          "column": 1
+        },
+        {
+          "title": "T-E15-lifecycle @E15 pools, visual physics and event listeners unload without leaks; low tier reduces particles",
+          "ok": true,
+          "tags": [
+            "E15"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 18241,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:24:09.664Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ec6e762950f9b5bd924e-4668a6bd9bfaa90d9ca6",
+          "file": "e2e/vfx.spec.ts",
+          "line": 113,
+          "column": 1
+        },
+        {
+          "title": "T-E15-vehicle @E15 vehicle surfaces accumulate blood, obey Off and reset; smoke/fire are presentation only",
+          "ok": true,
+          "tags": [
+            "E15"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 9941,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:24:27.913Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ec6e762950f9b5bd924e-c9c64f1b44a4047100f5",
+          "file": "e2e/vfx.spec.ts",
+          "line": 125,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/weapons.spec.ts",
+      "file": "e2e/weapons.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E06-08c @E06 @E06-AC08 all roster actions attach at either hand across both hero rigs",
+          "ok": true,
+          "tags": [
+            "E06",
+            "E06-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 22867,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:24:37.865Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "54aa5bfac59264e4f616-327f9b6c57ec3b7a1e57",
+          "file": "e2e/weapons.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "T-E06-pickup-view @E06 pickup spawn and walk-over wire through the browser API",
+          "ok": true,
+          "tags": [
+            "E06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8048,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:25:00.739Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "54aa5bfac59264e4f616-b62c657523277f31f211",
+          "file": "e2e/weapons.spec.ts",
+          "line": 20,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/district-load.spec.ts",
+      "file": "perf/district-load.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E10-06 @E10 @E10-AC06 largest L6 composition loads in <=6 seconds with warm cache in production",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8113,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:43:08.843Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81a5aed6224ea27b803b-4362eca91e79122a362e",
+          "file": "perf/district-load.spec.ts",
+          "line": 8,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/districts.spec.ts",
+      "file": "perf/districts.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E10-05 @E10 @E10-AC05 repeated props use instance batches and full high-tier district <=250 draw calls",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC05"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 140634,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:25:08.800Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f6ca39967987c6da4b4c-29d87e92ca4a887d1aba",
+          "file": "perf/districts.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "T-E10-lifecycle @E10 world reload preserves bounded shared caches and releases every instance/body/listener",
+          "ok": true,
+          "tags": [
+            "E10"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 50131,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:26:27.544Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f6ca39967987c6da4b4c-023ac07cf0a1152bf8f0",
+          "file": "perf/districts.spec.ts",
+          "line": 46,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/foundation.spec.ts",
+      "file": "perf/foundation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E01-perf @E01 @perf foundation counters report a plane and cube",
+          "ok": true,
+          "tags": [
+            "E01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2102,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:27:17.693Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7ffe77fb7b6d748fd8c3-84ea5c78902afc9be272",
+          "file": "perf/foundation.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/horde.spec.ts",
+      "file": "perf/horde.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and at most 30 crowd draws",
+          "ok": true,
+          "tags": [
+            "E07",
+            "E07-AC12",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19023,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:27:19.811Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb0c4165d88949064c96-4a15667029ea71ebee29",
+          "file": "perf/horde.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "T-E07-13 @E07 @E07-AC13 @vision golden-hour street has 60 separable runners glowing eyes and an identifiable player",
+          "ok": true,
+          "tags": [
+            "E07",
+            "E07-AC13",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 31922,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:27:29.448Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb0c4165d88949064c96-db33a3ee5231cd354d7c",
+          "file": "perf/horde.spec.ts",
+          "line": 32,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/input.spec.ts",
+      "file": "perf/input.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E03-perf @E03 @perf device input preserves renderer counters and reports fixed-tick cost",
+          "ok": true,
+          "tags": [
+            "E03",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1081,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:27:38.845Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "00b339088f740709dc93-2ef2a6a24ba51d607434",
+          "file": "perf/input.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/lookdev.spec.ts",
+      "file": "perf/lookdev.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-perf @E02 @perf lookdev counters, frame costs and lifecycle plateau",
+          "ok": true,
+          "tags": [
+            "E02",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 51318,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:27:39.937Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a2944a322845cc303a65-42ed33581d0e9596c3b2",
+          "file": "perf/lookdev.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/weapons.spec.ts",
+      "file": "perf/weapons.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E06-render-perf @E06 @perf held assets and indicators stay in render budget and unload cleanly",
+          "ok": true,
+          "tags": [
+            "E06",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 20539,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:28:01.384Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e4ec07a9235b635fff1-aab3bf8a494068f9081b",
+          "file": "perf/weapons.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/districts.spec.ts",
+      "file": "visual/districts.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E10-08-D-RES @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 480000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 131093,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:28:21.939Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-26c216e9fa6e7dede241",
+          "file": "visual/districts.spec.ts",
+          "line": 65,
+          "column": 3
+        },
+        {
+          "title": "T-E10-04-D-RES @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 35548,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:28:31.280Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-54f56a3352d76acce374",
+          "file": "visual/districts.spec.ts",
+          "line": 114,
+          "column": 3
+        },
+        {
+          "title": "T-E10-08-D-MAIN @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 480000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 147047,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:29:06.846Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-0cd1b91c0d3dc6253646",
+          "file": "visual/districts.spec.ts",
+          "line": 65,
+          "column": 3
+        },
+        {
+          "title": "T-E10-04-D-MAIN @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 44067,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:30:33.041Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-14abcccf80ec0c8b10b4",
+          "file": "visual/districts.spec.ts",
+          "line": 114,
+          "column": 3
+        },
+        {
+          "title": "T-E10-08-D-SCHOOL @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 480000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 102537,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:31:17.143Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-e14e5def914481a581b1",
+          "file": "visual/districts.spec.ts",
+          "line": 65,
+          "column": 3
+        },
+        {
+          "title": "T-E10-04-D-SCHOOL @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 33218,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:31:33.903Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-6e9b91b05116345624f9",
+          "file": "visual/districts.spec.ts",
+          "line": 114,
+          "column": 3
+        },
+        {
+          "title": "T-E10-08-D-SHOP @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 480000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 123649,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:32:07.128Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-a8f917b7d2256ace6b99",
+          "file": "visual/districts.spec.ts",
+          "line": 65,
+          "column": 3
+        },
+        {
+          "title": "T-E10-04-D-SHOP @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 39845,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:32:59.696Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-453d0101b905bd0d2ecf",
+          "file": "visual/districts.spec.ts",
+          "line": 114,
+          "column": 3
+        },
+        {
+          "title": "T-E10-08-D-CIVIC @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 480000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 123785,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:33:39.549Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-5694c5451d5103908113",
+          "file": "visual/districts.spec.ts",
+          "line": 65,
+          "column": 3
+        },
+        {
+          "title": "T-E10-04-D-CIVIC @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 38249,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:34:10.809Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-4fbcd72078399c4589f3",
+          "file": "visual/districts.spec.ts",
+          "line": 114,
+          "column": 3
+        },
+        {
+          "title": "T-E10-08-D-PARK @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 480000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 101303,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:34:49.070Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-bda9211ba98b2355f656",
+          "file": "visual/districts.spec.ts",
+          "line": 65,
+          "column": 3
+        },
+        {
+          "title": "T-E10-04-D-PARK @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 32647,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:35:43.342Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-d06c63dbe9674a0ed16b",
+          "file": "visual/districts.spec.ts",
+          "line": 114,
+          "column": 3
+        },
+        {
+          "title": "T-E10-08-D-ZOO @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 480000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 110911,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:36:15.998Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-82df12198f36db67f1ed",
+          "file": "visual/districts.spec.ts",
+          "line": 65,
+          "column": 3
+        },
+        {
+          "title": "T-E10-04-D-ZOO @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 34947,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:36:30.382Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-79270f424b18a032c140",
+          "file": "visual/districts.spec.ts",
+          "line": 114,
+          "column": 3
+        },
+        {
+          "title": "T-E10-08-D-EDGE @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 480000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 91371,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:37:05.337Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-ec2de0448defd6d96795",
+          "file": "visual/districts.spec.ts",
+          "line": 65,
+          "column": 3
+        },
+        {
+          "title": "T-E10-04-D-EDGE @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 31287,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:38:06.918Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-12840bc4b1d5e3749afc",
+          "file": "visual/districts.spec.ts",
+          "line": 114,
+          "column": 3
+        },
+        {
+          "title": "T-E10-09 @E10 @E10-AC09 all district diorama and decay review must items pass",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 99,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:38:36.717Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-edb9fb29c3258d0f6746",
+          "file": "visual/districts.spec.ts",
+          "line": 167,
+          "column": 1
+        },
+        {
+          "title": "T-E10-review-thresholds @E10 @E10-AC09 @E10-AC04 reviewed diorama/decay should items meet the 70% threshold",
+          "ok": true,
+          "tags": [
+            "E10",
+            "E10-AC09",
+            "E10-AC04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 57,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:38:36.831Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d746488394f66f4fb0d5-dcbd99557f277baed64c",
+          "file": "visual/districts.spec.ts",
+          "line": 174,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/foundation.spec.ts",
+      "file": "visual/foundation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E01-visual @E01 @visual paused fixture renders stable pixels",
+          "ok": true,
+          "tags": [
+            "E01",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1801,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:38:36.899Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2afa57ec2c994dd00684-ccff15f1f7bcb3332ff9",
+          "file": "visual/foundation.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/interact.spec.ts",
+      "file": "visual/interact.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E11-09-desktop @E11 @E11-AC09 @visual interact-ui is readable above world at every tier",
+          "ok": true,
+          "tags": [
+            "E11",
+            "E11-AC09",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 101655,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:38:38.224Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ad3310a939cd45984e2-e2f27c8a4c8c9f8daca2",
+          "file": "visual/interact.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "T-E11-09-mobile @E11 @E11-AC09 @visual interact-ui is readable above world at every tier",
+          "ok": true,
+          "tags": [
+            "E11",
+            "E11-AC09",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 99743,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:38:38.711Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3ad3310a939cd45984e2-938aa885a07a42c5c076",
+          "file": "visual/interact.spec.ts",
+          "line": 7,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "visual/lookdev.spec.ts",
+      "file": "visual/lookdev.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-06 @E02 @E02-AC06 shadow probe is purple-blue and above 15% lightness",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16898,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:40:18.470Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-435e85f5bec2060163c5",
+          "file": "visual/lookdev.spec.ts",
+          "line": 26,
+          "column": 1
+        },
+        {
+          "title": "T-E02-07 @E02 @E02-AC07 lamp 8 px ring gains at least 10% brightness from bloom",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 18037,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:40:19.900Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-eec6d7c6048bd10f027e",
+          "file": "visual/lookdev.spec.ts",
+          "line": 34,
+          "column": 1
+        },
+        {
+          "title": "T-E02-08 @E02 @E02-AC08 occluder fades in 0.3 s, hides roof inside, and preserves >70% player mask",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23096,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:40:35.377Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-ff400021626808833e8f",
+          "file": "visual/lookdev.spec.ts",
+          "line": 53,
+          "column": 1
+        },
+        {
+          "title": "T-E02-09 @E02 @E02-AC09 L1, L4 and L6 change lighting and screenshot hue/luminance",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 18737,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:40:37.947Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-1b9cac85c0e1bfb6c32b",
+          "file": "visual/lookdev.spec.ts",
+          "line": 75,
+          "column": 1
+        },
+        {
+          "title": "T-E02-10 @E02 @E02-AC10 golden lookdev has a reviewed North-star vision checklist",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 18008,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:40:56.694Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-8a3469a6745804ecb776",
+          "file": "visual/lookdev.spec.ts",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "T-E02-11 @E02 @E02-AC11 overview, street and shadow-probe match reviewed goldens within 1.5%",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC11"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19768,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:40:58.483Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-af81e3510293ae3a160f",
+          "file": "visual/lookdev.spec.ts",
+          "line": 96,
+          "column": 1
+        },
+        {
+          "title": "T-E02-dof @E02 optional tilt-shift changes the edges and preserves the central play area",
+          "ok": true,
+          "tags": [
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 16868,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:41:14.717Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-de9496352a14a4220a4d",
+          "file": "visual/lookdev.spec.ts",
+          "line": 105,
+          "column": 1
+        },
+        {
+          "title": "T-E02-fog @E02 @E02-AC09 palette surfaces beyond fogFar resolve to the preset fog color",
+          "ok": true,
+          "tags": [
+            "E02",
+            "E02-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15702,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:41:18.260Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ec9b36bb09e6832142c-0b958890ae349cb95c48",
+          "file": "visual/lookdev.spec.ts",
+          "line": 116,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/survivor.spec.ts",
+      "file": "visual/survivor.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E04-10 @E04 @E04-AC10 all five tiers retain red/teal; tier 0 and 4 differ on over 5% of character pixels",
+          "ok": true,
+          "tags": [
+            "E04",
+            "E04-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 39173,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:41:31.602Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "31a18348ec92165bd5ae-71a28f1fcb21b78859d2",
+          "file": "visual/survivor.spec.ts",
+          "line": 46,
+          "column": 1
+        },
+        {
+          "title": "T-E04-11 @E04 @E04-AC11 character sheet reviews integrated art or records pending placeholders",
+          "ok": true,
+          "tags": [
+            "E04",
+            "E04-AC11"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9393,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:41:33.997Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "31a18348ec92165bd5ae-ef7ec7a250ac74e23d4b",
+          "file": "visual/survivor.spec.ts",
+          "line": 73,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/vehicles.spec.ts",
+      "file": "visual/vehicles.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E09-10 @E09-AC10 wheel spin/steer, brake lamps and alternating siren pixels",
+          "ok": true,
+          "tags": [
+            "E09-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20269,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:41:43.401Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1a4605bacf3dc1575163-5fa30d7f56a1f3336aee",
+          "file": "visual/vehicles.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/vfx.spec.ts",
+      "file": "visual/vfx.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E15-03 @E15 @E15-AC03 @visual Full ground splat has palette red; Off has no red decal pixels",
+          "ok": true,
+          "tags": [
+            "E15",
+            "E15-AC03",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19185,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:42:03.690Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ef9dd85e08440d82a269-c52b92419b2420dccbc1",
+          "file": "visual/vfx.spec.ts",
+          "line": 21,
+          "column": 1
+        },
+        {
+          "title": "T-E15-04 @E15 @E15-AC04 @visual each sim telegraph appears in the next frame, stays until resolution, and has a distinct shape",
+          "ok": true,
+          "tags": [
+            "E15",
+            "E15-AC04",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14185,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:42:10.786Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ef9dd85e08440d82a269-7a591cc3c77fbf96f22b",
+          "file": "visual/vfx.spec.ts",
+          "line": 42,
+          "column": 1
+        },
+        {
+          "title": "T-E15-05 @E15 @E15-AC05 @visual measured shockwave screen radius scales with splash radius ±15%",
+          "ok": true,
+          "tags": [
+            "E15",
+            "E15-AC05",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 22407,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:42:22.886Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ef9dd85e08440d82a269-4e209b536f70fb3d3583",
+          "file": "visual/vfx.spec.ts",
+          "line": 68,
+          "column": 1
+        },
+        {
+          "title": "T-E15-07 @E15 @E15-AC07 @vision golden-hour and night showcases have reviewed combat readability",
+          "ok": true,
+          "tags": [
+            "E15",
+            "E15-AC07",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 17498,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:42:24.980Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ef9dd85e08440d82a269-007dae92214f020524fe",
+          "file": "visual/vfx.spec.ts",
+          "line": 90,
+          "column": 1
+        },
+        {
+          "title": "T-E15-08 @E15 @E15-AC08 @visual flash reduction keeps successive explosion brightness deltas within 20%",
+          "ok": true,
+          "tags": [
+            "E15",
+            "E15-AC08",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 25873,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:42:42.491Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ef9dd85e08440d82a269-fd115ecafe8cd56f0202",
+          "file": "visual/vfx.spec.ts",
+          "line": 102,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/weapons.spec.ts",
+      "file": "visual/weapons.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E06-09-ranged @E06 @E06-AC09 @visual selected-side ranged indicator",
+          "ok": true,
+          "tags": [
+            "E06",
+            "E06-AC09",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8472,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:42:45.305Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1b037029ca0f5d19f591-5a8f647032be03bf02dd",
+          "file": "visual/weapons.spec.ts",
+          "line": 5,
+          "column": 158
+        },
+        {
+          "title": "T-E06-09-melee @E06 @E06-AC09 @visual selected-side melee indicator",
+          "ok": true,
+          "tags": [
+            "E06",
+            "E06-AC09",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8887,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:42:53.803Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1b037029ca0f5d19f591-6b6a362df36fb0ffc205",
+          "file": "visual/weapons.spec.ts",
+          "line": 5,
+          "column": 158
+        },
+        {
+          "title": "T-E06-09-throwable @E06 @E06-AC09 @visual selected-side throwable indicator",
+          "ok": true,
+          "tags": [
+            "E06",
+            "E06-AC09",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8809,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:43:02.707Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1b037029ca0f5d19f591-157e998d208b10f916b7",
+          "file": "visual/weapons.spec.ts",
+          "line": 5,
+          "column": 158
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-06T01:16:15.295Z",
+    "duration": 1622486.071,
+    "expected": 117,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

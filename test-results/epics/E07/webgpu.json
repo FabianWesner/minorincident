@@ -1,5 +1,6 @@
 {
   "state": {
+    "missionMarker": null,
     "districts": null,
     "backend": "webgpu",
     "camera": {
@@ -31,7 +32,9 @@
       "fog": "#e5b39e",
       "intensity": 1.15
     },
+    "vehicles": [],
     "character": {
+      "bloodCoverage": 0,
       "variant": "female",
       "gearTier": 0,
       "animation": "walk",
@@ -53,8 +56,10 @@
     "crowd": {
       "instances": 416,
       "meshDrawCalls": 3,
-      "objects": 21,
+      "objects": 22,
       "nonInstancedMeshes": 0,
+      "caps": 0,
+      "flashes": 0,
       "batches": [
         {
           "id": "infected.runner",
@@ -241,6 +246,7 @@
       ]
     },
     "actions": {
+      "bloodCoverage": 0,
       "indicator": {
         "selectedSide": "LEFT",
         "shape": "cone",
@@ -432,6 +438,419 @@
         }
       ]
     },
+    "vfx": {
+      "enabled": true,
+      "gore": "Full",
+      "quality": "high",
+      "flashReduction": false,
+      "time": 0,
+      "particles": 0,
+      "particleCap": 2048,
+      "decals": 0,
+      "decalCap": 600,
+      "gibs": 0,
+      "gibCap": 80,
+      "telegraphs": [
+        {
+          "attackId": 1,
+          "slot": 0,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 52
+        },
+        {
+          "attackId": 2,
+          "slot": 1,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 70
+        },
+        {
+          "attackId": 3,
+          "slot": 2,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 71
+        },
+        {
+          "attackId": 4,
+          "slot": 3,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 72
+        },
+        {
+          "attackId": 5,
+          "slot": 4,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 73
+        },
+        {
+          "attackId": 6,
+          "slot": 5,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 74
+        },
+        {
+          "attackId": 7,
+          "slot": 6,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 90
+        },
+        {
+          "attackId": 8,
+          "slot": 7,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 91
+        },
+        {
+          "attackId": 9,
+          "slot": 8,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 92
+        },
+        {
+          "attackId": 10,
+          "slot": 9,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 93
+        },
+        {
+          "attackId": 11,
+          "slot": 10,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 94
+        },
+        {
+          "attackId": 12,
+          "slot": 11,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 109
+        },
+        {
+          "attackId": 13,
+          "slot": 12,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 110
+        },
+        {
+          "attackId": 14,
+          "slot": 13,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 111
+        },
+        {
+          "attackId": 15,
+          "slot": 14,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 112
+        },
+        {
+          "attackId": 16,
+          "slot": 15,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 113
+        },
+        {
+          "attackId": 17,
+          "slot": 16,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 114
+        },
+        {
+          "attackId": 18,
+          "slot": 17,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 115
+        },
+        {
+          "attackId": 19,
+          "slot": 18,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 130
+        },
+        {
+          "attackId": 20,
+          "slot": 19,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 131
+        },
+        {
+          "attackId": 21,
+          "slot": 20,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 132
+        },
+        {
+          "attackId": 22,
+          "slot": 21,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 133
+        },
+        {
+          "attackId": 23,
+          "slot": 22,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 134
+        },
+        {
+          "attackId": 24,
+          "slot": 23,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 150
+        },
+        {
+          "attackId": 25,
+          "slot": 24,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 151
+        },
+        {
+          "attackId": 26,
+          "slot": 25,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 152
+        },
+        {
+          "attackId": 27,
+          "slot": 26,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 153
+        },
+        {
+          "attackId": 28,
+          "slot": 27,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 154
+        },
+        {
+          "attackId": 29,
+          "slot": 28,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 172
+        },
+        {
+          "attackId": 30,
+          "slot": 29,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 51
+        },
+        {
+          "attackId": 31,
+          "slot": 30,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 53
+        },
+        {
+          "attackId": 32,
+          "slot": 31,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 89
+        },
+        {
+          "attackId": 33,
+          "slot": 32,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 95
+        },
+        {
+          "attackId": 34,
+          "slot": 33,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 129
+        },
+        {
+          "attackId": 35,
+          "slot": 34,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 135
+        },
+        {
+          "attackId": 36,
+          "slot": 35,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 171
+        },
+        {
+          "attackId": 37,
+          "slot": 36,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 173
+        },
+        {
+          "attackId": 38,
+          "slot": 37,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 50
+        },
+        {
+          "attackId": 39,
+          "slot": 38,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 69
+        },
+        {
+          "attackId": 40,
+          "slot": 39,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 54
+        },
+        {
+          "attackId": 41,
+          "slot": 40,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 149
+        },
+        {
+          "attackId": 42,
+          "slot": 41,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 49
+        },
+        {
+          "attackId": 43,
+          "slot": 42,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 31
+        },
+        {
+          "attackId": 44,
+          "slot": 43,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 88
+        },
+        {
+          "attackId": 45,
+          "slot": 44,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 75
+        },
+        {
+          "attackId": 46,
+          "slot": 45,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 170
+        },
+        {
+          "attackId": 47,
+          "slot": 46,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 128
+        },
+        {
+          "attackId": 48,
+          "slot": 47,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 32
+        },
+        {
+          "attackId": 49,
+          "slot": 48,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 33
+        },
+        {
+          "attackId": 50,
+          "slot": 49,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 68
+        },
+        {
+          "attackId": 51,
+          "slot": 50,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 108
+        },
+        {
+          "attackId": 52,
+          "slot": 51,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 30
+        },
+        {
+          "attackId": 53,
+          "slot": 52,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 48
+        },
+        {
+          "attackId": 54,
+          "slot": 53,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 55
+        },
+        {
+          "attackId": 55,
+          "slot": 54,
+          "kind": "lunge",
+          "spawned": 0,
+          "sourceId": 148
+        }
+      ],
+      "hitStop": {
+        "active": false,
+        "until": 0,
+        "started": 0,
+        "suppressed": 0
+      },
+      "flash": 0,
+      "coverage": 0,
+      "detached": 0,
+      "dismemberedKills": 0,
+      "kills": 0,
+      "explosionRadius": 0
+    },
+    "infected": [],
     "materials": [
       {
         "name": "pal_sidewalk",
@@ -522,11 +941,19 @@
         "palette": false
       },
       {
+        "name": "",
+        "palette": false
+      },
+      {
         "name": "pal_survivorRed",
         "palette": true
       },
       {
-        "name": "",
+        "name": "female:",
+        "palette": true
+      },
+      {
+        "name": "pal_survivorRed",
         "palette": true
       },
       {
@@ -538,15 +965,27 @@
         "palette": true
       },
       {
-        "name": "keep_placeholder",
+        "name": "pal_backpackTeal",
         "palette": true
       },
       {
-        "name": "pal_woodWarm",
+        "name": "pal_survivorRed",
         "palette": true
       },
       {
-        "name": "pal_woodWarm",
+        "name": "female:keep_placeholder",
+        "palette": true
+      },
+      {
+        "name": "action:wpn.baseball-bat:pal_woodWarm",
+        "palette": true
+      },
+      {
+        "name": "pal_survivorRed",
+        "palette": true
+      },
+      {
+        "name": "action:thr.frag-grenade:pal_woodWarm",
         "palette": true
       },
       {
@@ -554,16 +993,92 @@
         "palette": true
       },
       {
-        "name": "keep_placeholder",
+        "name": "female:keep_placeholder",
         "palette": true
       },
       {
-        "name": "keep_placeholder",
+        "name": "female:keep_placeholder",
+        "palette": true
+      },
+      {
+        "name": "pal_survivorRed",
+        "palette": true
+      },
+      {
+        "name": "pal_survivorRed",
         "palette": true
       },
       {
         "name": "pal_woodWarm",
         "palette": true
+      },
+      {
+        "name": "pal_survivorRed",
+        "palette": true
+      },
+      {
+        "name": "male:",
+        "palette": true
+      },
+      {
+        "name": "pal_backpackTeal",
+        "palette": true
+      },
+      {
+        "name": "pal_survivorRed",
+        "palette": true
+      },
+      {
+        "name": "male:keep_placeholder",
+        "palette": true
+      },
+      {
+        "name": "pal_survivorRed",
+        "palette": true
+      },
+      {
+        "name": "male:keep_placeholder",
+        "palette": true
+      },
+      {
+        "name": "pal_survivorRed",
+        "palette": true
+      },
+      {
+        "name": "pal_survivorRed",
+        "palette": true
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
+      },
+      {
+        "name": "",
+        "palette": false
       },
       {
         "name": "",
@@ -578,13 +1093,13 @@
     "probes": null
   },
   "perf": {
-    "fps": 59.88023952095874,
-    "frameMs": 16.699999999999818,
+    "fps": 1.1111111111111112,
+    "frameMs": 899.9999999999999,
     "simMs": 0,
-    "drawCalls": 42,
-    "triangles": 130055,
-    "geometries": 78,
-    "textures": 23,
+    "drawCalls": 52,
+    "triangles": 149095,
+    "geometries": 49,
+    "textures": 24,
     "entities": 201,
     "backend": "webgpu",
     "loadTiming": null

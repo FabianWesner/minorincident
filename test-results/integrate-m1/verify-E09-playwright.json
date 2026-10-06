@@ -1,0 +1,996 @@
+{
+  "config": {
+    "argv": [
+      "/Users/fabianwesner/Library/Application Support/Herd/config/nvm/versions/node/v22.22.2/bin/node",
+      "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/node_modules/.bin/playwright",
+      "test",
+      "--grep",
+      "@(?:E09)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+    ],
+    "configFile": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/playwright.config.ts",
+    "rootDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webgpu",
+        "name": "webgpu",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/webgpu.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3325 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3325",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/driving.spec.ts",
+      "file": "e2e/driving.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E09-08 @E09-AC08 real mouse aims ahead-left to accelerate/turn and dead ring brakes",
+          "ok": true,
+          "tags": [
+            "E09-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18817,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:01:56.929Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-7bac17c06bf378db8a6a",
+          "file": "e2e/driving.spec.ts",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real right-click exit",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 9773,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:01:56.900Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-48a8369a19aa5e31510a",
+          "file": "e2e/driving.spec.ts",
+          "line": 20,
+          "column": 1
+        },
+        {
+          "title": "T-E09-controls @E09 keyboard WASD uses local driving axes",
+          "ok": true,
+          "tags": [
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8486,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:06.825Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-083c45fa806c40c358d0",
+          "file": "e2e/driving.spec.ts",
+          "line": 28,
+          "column": 1
+        },
+        {
+          "title": "T-E09-touch @E09 touch stick accelerates, LEFT holds boost and brake stops without exiting",
+          "ok": true,
+          "tags": [
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7794,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:15.320Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-7ac06add104eba4935d6",
+          "file": "e2e/driving.spec.ts",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "T-E09-asset @E09-AC01 dynamically spawned integrated fire engine renders and unloads its native resources",
+          "ok": true,
+          "tags": [
+            "E09-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4699,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:15.928Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-9fffa25039356ae07111",
+          "file": "e2e/driving.spec.ts",
+          "line": 57,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/harness.spec.ts",
+      "file": "e2e/harness.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, delivered methods and remaining epic stubs",
+          "ok": true,
+          "tags": [
+            "E01",
+            "E01-AC05",
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7792,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:20.680Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "696d2ab3be73ec9c37de-22f2694513cf06989c17",
+          "file": "e2e/harness.spec.ts",
+          "line": 30,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/input-recorder.spec.ts",
+      "file": "e2e/input-recorder.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E03-recorder-browser @E03 @E03-AC10 @E09 real device frames replay through the browser input phase",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC10",
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2575,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:23.128Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1749e9792bc1e09518b9-33c10cb7f823cd38b875",
+          "file": "e2e/input-recorder.spec.ts",
+          "line": 7,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/integration-m1.spec.ts",
+      "file": "e2e/integration-m1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "M1 E09/E15 @E09 @E15 real integrated vehicle takes feedback on its existing model and obeys Off",
+          "ok": true,
+          "tags": [
+            "E09",
+            "E15"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8406,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:25.714Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b8beef3166d28778295f-a04c44b36e7ee59cac22",
+          "file": "e2e/integration-m1.spec.ts",
+          "line": 21,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/smoke.spec.ts",
+      "file": "e2e/smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1676,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:28.483Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-b06e96d7bc88dd69cb24",
+          "file": "e2e/smoke.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2701,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:30.166Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-74fb4cb910bc7abe9421",
+          "file": "e2e/smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1680,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:34.601Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-b47c75175263bbf2a151",
+          "file": "e2e/smoke.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1751,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:36.412Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-606f9edef12ca51944a0",
+          "file": "e2e/smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1717,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:38.565Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-390c9a040de6fabcb378",
+          "file": "e2e/smoke.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1810,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:40.403Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-0e569f350f7af79ee309",
+          "file": "e2e/smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1825,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:42.660Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-92ffd1bf0aed09418cc1",
+          "file": "e2e/smoke.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2074,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:44.622Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-7af3753670183995ee55",
+          "file": "e2e/smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1785,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:47.840Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-b87ee65b11d1f0642d6c",
+          "file": "e2e/smoke.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1827,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:49.867Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-60f671c069b68bd6e8b3",
+          "file": "e2e/smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1201,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:52.131Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-96d6d563eec8e62b3b00",
+          "file": "e2e/smoke.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1949,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:53.599Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-15be96bfa75c42d15e99",
+          "file": "e2e/smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/vehicles.spec.ts",
+      "file": "visual/vehicles.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E09-10 @E09-AC10 wheel spin/steer, brake lamps and alternating siren pixels",
+          "ok": true,
+          "tags": [
+            "E09-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 22007,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T02:02:32.887Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1a4605bacf3dc1575163-5fa30d7f56a1f3336aee",
+          "file": "visual/vehicles.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-06T02:01:55.240Z",
+    "duration": 60389.397000000004,
+    "expected": 21,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
