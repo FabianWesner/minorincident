@@ -7,7 +7,7 @@ import { infectedDefinitions } from '../data/infected';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { createInfectedPlaceholder } from './characters/infectedPlaceholder';
 import { bakeInfected, framesPerClip, infectedClips } from './characters/bakeInfected';
-interface Batch { mesh: InstancedMesh; frame: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; windup: number; limb: InstancedBufferAttribute; gore: InstancedBufferAttribute; flash: InstancedBufferAttribute; texture: import('three').DataTexture; count: number; placeholders: boolean }
+interface Batch { mesh: InstancedMesh; state: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean }
 const variantShirts: Record<string, Color> = { 'inf.jogger': new Color('#3178ac'), 'inf.cashier': new Color('#e5d9b9'), 'inf.delivery-driver': new Color('#d4ad32'), 'inf.suburban-mom': new Color('#79865b'), 'inf.bbq-dad': new Color('#a86645'), 'inf.bathrobe-neighbor': new Color('#ac7a91') };
 /** One instanced, rigid-part GPU batch per archetype. Scene graph size never grows with infected population. */
 export class CrowdView extends Group {
@@ -37,19 +37,19 @@ export class CrowdView extends Group {
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const baked = bakeInfected(model), texture = clipTexture(baked.clip), capacity = role === 'crow' ? 800 : 350;
       const tint = new InstancedBufferAttribute(new Float32Array(capacity * 3), 3);
-      const frame = new InstancedBufferAttribute(new Float32Array(capacity), 1), limb = new InstancedBufferAttribute(new Float32Array(capacity), 1);
-      const gore = new InstancedBufferAttribute(new Float32Array(capacity), 1), flash = new InstancedBufferAttribute(new Float32Array(capacity), 1);
-      baked.geometry.setAttribute('_gore', gore); baked.geometry.setAttribute('_flash', flash);
-      baked.geometry.setAttribute('_variant', tint); baked.geometry.setAttribute('_clip_frame', frame); baked.geometry.setAttribute('_limb', limb);
-      const material = Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float')), emissiveNode: attribute('color', 'vec3').mul(attribute('_emissive', 'float')).mul(3).add(attribute('_flash', 'float')) });
-      const matrix = crowdMatrix(texture, attribute('_part_index', 'float'), attribute('_clip_frame', 'float'));
+      // Pack frame, detached leg, gore mask and flash into one slot: WebGL2 guarantees 16 attributes.
+      const state = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
+      baked.geometry.setAttribute('_state', state); baked.geometry.setAttribute('_variant', tint);
+      const feedbackState = attribute('_state', 'vec4');
+      const material = Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float')), emissiveNode: attribute('color', 'vec3').mul(attribute('_emissive', 'float')).mul(3).add(feedbackState.w) });
+      const matrix = crowdMatrix(texture, attribute('_part_index', 'float'), feedbackState.x);
       const part = attribute('_part_index', 'float'), leg = baked.clip.parts.indexOf('legL'), shin = baked.clip.parts.indexOf('shinL'), foot = baked.clip.parts.indexOf('footL');
-      let visible = part.equal(leg).or(part.equal(shin)).or(part.equal(foot)).select(attribute('_limb', 'float').oneMinus(), 1);
+      let visible = part.equal(leg).or(part.equal(shin)).or(part.equal(foot)).select(feedbackState.y.oneMinus(), 1);
       const groups = [/^(arm|foreArm|hand)L$/, /^(arm|foreArm|hand)R$/, /^(leg|shin|foot)L$/, /^(leg|shin|foot)R$/, /^head$/];
       groups.forEach((pattern, index) => {
         let hidden = float(0).equal(1);
         baked.clip.parts.forEach((name, partIndex) => { if (pattern.test(name)) hidden = hidden.or(part.equal(partIndex)); });
-        const detached = attribute('_gore', 'float').div(2 ** index).floor().mod(2);
+        const detached = feedbackState.z.div(2 ** index).floor().mod(2);
         visible = hidden.select(visible.mul(detached.oneMinus()), visible);
       });
       const mesh = new InstancedMesh(baked.geometry as BufferGeometry, material, capacity); mesh.name = def.id; mesh.frustumCulled = false; mesh.count = 0;
@@ -58,9 +58,9 @@ export class CrowdView extends Group {
       mesh.onBeforeRender = () => { matrices.version = mesh.instanceMatrix.version; };
       const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset);
       const instance = mat4(column(0), column(4), column(8), column(12));
-      material.positionNode = crowdPosition(instance, texture, part, attribute('_clip_frame', 'float'), positionGeometry.mul(visible));
+      material.positionNode = crowdPosition(instance, texture, part, feedbackState.x, positionGeometry.mul(visible));
       material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.normalize();
-      this.batches.set(def.id, { mesh, frame, limb, gore, flash, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
+      this.batches.set(def.id, { mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
     }
     this.update();
@@ -81,10 +81,10 @@ export class CrowdView extends Group {
       const phase = clip === 'die' ? Math.min(23, Math.floor((this.world.tick - b.deadAt) / 36 * 23)) : clip === 'windup' ? Math.min(23, Math.floor((1 - (b.until - this.world.tick) / (batch.windup * 60)) * 23)) : Math.floor((tick + e.id * 7) % 60 / 60 * 24);
       const frame = infectedClips.indexOf(clip) * framesPerClip + phase, tint = variantShirts[b.variant] ?? batch.shirt;
       if (e.archetype === 'infected.crow') {
-        for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); batch.frame.setX(batch.count, frame); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.gore.setX(batch.count, 0); batch.flash.setX(batch.count, feedback?.strength ?? 0); batch.limb.setX(batch.count++, 0); }
+        for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.state.setXYZW(batch.count++, frame, 0, 0, feedback?.strength ?? 0); }
       } else {
         this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(e.transform.x, e.transform.y - 0.7, e.transform.z);
-        batch.mesh.setMatrixAt(batch.count, this.transform); batch.frame.setX(batch.count, frame); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.gore.setX(batch.count, feedback?.mask ?? 0); batch.flash.setX(batch.count, feedback?.strength ?? 0); batch.limb.setX(batch.count++, Number(b.detached && this.goreEnabled));
+        batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), feedback?.mask ?? 0, feedback?.strength ?? 0);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); }
       }
       if (e.health.current > 0 && e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, 0.018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
@@ -92,7 +92,7 @@ export class CrowdView extends Group {
         const mesh = this.telegraphs[b.special === 'charge' || b.special === 'pin' || b.special === 'pounce' ? 1 : 0]; if (b.special === 'explode') this.transform.makeScale(3.75, 1, 3.75); else this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); this.transform.setPosition(e.transform.x, 0.06, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
       }
     }
-    for (const batch of this.batches.values()) { batch.mesh.count = batch.count; if (batch.count) { batch.mesh.instanceMatrix.needsUpdate = true; batch.frame.needsUpdate = true; batch.tint.needsUpdate = true; batch.limb.needsUpdate = true; batch.gore.needsUpdate = true; batch.flash.needsUpdate = true; } }
+    for (const batch of this.batches.values()) { batch.mesh.count = batch.count; if (batch.count) { batch.mesh.instanceMatrix.needsUpdate = true; batch.state.needsUpdate = true; batch.tint.needsUpdate = true; } }
     for (const mesh of this.telegraphs) if (mesh.count) mesh.instanceMatrix.needsUpdate = true;
     if (this.caps.count) this.caps.instanceMatrix.needsUpdate = true;
     if (this.shadows.count) this.shadows.instanceMatrix.needsUpdate = true;
