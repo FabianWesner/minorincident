@@ -31,7 +31,7 @@ export class EntityAssets extends Group {
   constructor(private readonly world: SimWorld, private readonly low = false) { super(); }
   async init(view: View): Promise<void> {
     this.view = view;
-    this.companion = await this.registry.loadAsset('char.corgi', this.low ? 'lod1' : 'high'); this.add(this.companion);
+    if (!this.world.npcs) { this.companion = await this.registry.loadAsset('char.corgi', this.low ? 'lod1' : 'high'); this.add(this.companion); }
     await this.ready(); this.update();
   }
   private async actorModel(id: string, lod: AssetQuality): Promise<Group> {
@@ -49,7 +49,7 @@ export class EntityAssets extends Group {
   }
   async ready(): Promise<void> {
     for (const entity of this.world.entities.iterate()) {
-      if (entity.id === 1 || this.world.vehicles?.cars.has(entity.id) || entity.faction === 'infected' || this.pending.has(entity.id)) continue;
+      if (entity.id === 1 || this.world.npcs && (entity.companion || entity.escort || entity.civilian) || this.world.vehicles?.cars.has(entity.id) || entity.faction === 'infected' || this.pending.has(entity.id)) continue;
       const id = productionObstacleAssets[entity.archetype] ?? actorAssets[entity.archetype] ?? (manifest.some(a => a.id === entity.archetype) ? entity.archetype : entity.kind === 'escort' || entity.faction === 'civilian' ? 'npc.civilian-man-a' : undefined);
       if (!id) continue;
       const target = this.view?.cameraTarget ?? this.world.entities.get(1)!.transform;

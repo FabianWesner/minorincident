@@ -30,9 +30,9 @@ export class CrowdView extends Group {
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
   private goreEnabled = true;
   private cullDistance = 60;
-  setQuality(tier: QualityTier): void { this.cullDistance = qualityBudgets[tier].cullDistance; }
+  setQuality(tier: QualityTier): void { this.cullDistance = qualityBudgets[tier].cullDistance; this.low = tier === 'low'; }
   private readonly logs: { id: string; reason: string }[] = [];
-  constructor(private readonly world: SimWorld, private readonly low = false) {
+  constructor(private readonly world: SimWorld, private low = false) {
     super(); this.name = 'infected-crowd';
     this.caps.frustumCulled = false; this.caps.count = 0; this.add(this.caps);
     this.registry = new AssetRegistry((event) => this.logs.push(event));
@@ -52,7 +52,7 @@ export class CrowdView extends Group {
         mesh.count = 0; mesh.visible = false; this.heroSlots.set(def.id, mesh); this.add(mesh);
       }
     }
-    const lods: ('lod1' | 'lod2')[] = this.low ? ['lod2'] : ['lod1', 'lod2'];
+    const lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2'];
     await Promise.all(definitions.flatMap(def => lods.map(lod => this.loadBatch(def, lod))));
     this.update();
   }
