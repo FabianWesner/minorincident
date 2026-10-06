@@ -51,3 +51,13 @@ test('M1 E09/E15 @E15 real ramming kills stain real vehicle feedback; render adv
     expect(feedback.get(car.entity.id)?.blood).toBeGreaterThan(0); expect(feedback.get(car.entity.id)?.id).toBe(car.entity.id);
   } finally { fx.dispose(); w.dispose(); }
 });
+
+test('M1 E11/E15 @E15 prop destruction keeps debris feedback without infected blood or gibs', async () => {
+  const w = new SimWorld(); await w.init(); w.loadScenario('interact-yard');
+  const fx = new Vfx(w, targets);
+  try {
+    const id = w.hazards!.spawn('fence', { x: 15, z: 0 }); w.hazards!.hit(id, 1000, 'bullet');
+    expect(w.entities.get(id)!.destructible!.broken).toBe(true); expect(w.hazards!.debris.snapshot()).toHaveLength(8);
+    expect(fx.kills).toBe(0); expect(fx.decals.count).toBe(0); expect(fx.gibs.count).toBe(0);
+  } finally { fx.dispose(); w.dispose(); }
+});

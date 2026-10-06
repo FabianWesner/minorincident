@@ -5,7 +5,7 @@
     "E09",
     "E15"
   ],
-  "pending": "final-regression-restart-after-active-browser",
+  "pending": "finish-preliminary-browser-then-final-restart",
   "manifest_union": 275,
   "asset_registrations": [
     "bld.helipad",
@@ -25,7 +25,7 @@
       "passed": 193
     },
     "unit": {
-      "passed": 71
+      "passed": 84
     }
   },
   "conflicts_resolved": {
@@ -65,7 +65,7 @@
     "unit": 83,
     "typecheck": 0,
     "lint": 0,
-    "extra_node_regressions": 4,
+    "extra_node_regressions": 5,
     "extra_browser_regressions": 2,
     "verify": 0,
     "browser": 25,
