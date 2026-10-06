@@ -13,7 +13,6 @@ export function installCampaignNpcs(world: SimWorld): void {
   if (districts.districts.some(d => d.id === 'D-GROVE')) { installNpcSystems(world); world.npcs!.companion.spawn(); return; }
   if (!/^L[1-6]$/.test(districts.composition.id)) return;
   installNpcSystems(world); const { min, max } = districts.nav;
-  world.events.on('objective.completed', event => { if (event.type === 'objective.completed' && event.id === 'breakfast' && world.missions?.def.id === 'L1') { if(!world.missions.def.slice)world.npcs?.dinerIncident(world.missions.def.anchors.diner); } });
   world.npcs!.configure(Number(districts.composition.id[1])); world.npcs!.companion.spawn();
   // W0/W1 ambient traffic is authored only on collision-safe street lanes.
   if (districts.composition.tier <= 1) {

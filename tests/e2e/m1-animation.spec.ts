@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 import { menuStart, menuUrl } from './ui-helpers';
+// L1 v2 replaced the diner/hardware story these checks assume; the L1 v2 playthrough is tests/e2e/levels/L1.spec.ts.
+test.beforeEach(() => { test.fixme(true, 'old L1 diner flow retired (L1 v2)'); });
 
 const output = 'test-results/m1-anim';
 test.use({ video:'on' });

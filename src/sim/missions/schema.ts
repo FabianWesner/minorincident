@@ -70,7 +70,7 @@ export function validateMission(def: MissionDef): string[] {
   for(const s of def.steps)if(s.start?.kind==='objectives'&&s.start.mode==='all')requireCompatibleChoices(s.start.ids);
   const reachable = new Set<string>();
   for (let pass = 0; pass < def.steps.length; pass++) for (const s of def.steps) {
-    if (s.start?.kind === 'start' || (s.start?.kind === 'objectives' && s.start.ids.length && (s.start.mode === 'all' ? s.start.ids.every(id => reachable.has(id)) : s.start.ids.some(id => reachable.has(id))))) reachable.add(s.id);
+    if (s.start?.kind === 'start' || s.start?.kind === 'state' || (s.start?.kind === 'objectives' && s.start.ids.length && (s.start.mode === 'all' ? s.start.ids.every(id => reachable.has(id)) : s.start.ids.some(id => reachable.has(id))))) reachable.add(s.id);
   }
   for (const s of def.steps) if (!reachable.has(s.id)) errors.push(`Unreachable objective: ${s.id}`);
   return errors;

@@ -2,8 +2,6 @@ import { readFileSync } from 'node:fs';
 import { afterEach, expect, test } from 'vitest';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { compositions } from '../../src/levels/compositions';
-import { levelOneSlice } from '../../src/levels/levelOneSlice';
-import { resolveCampaignMission } from '../../src/levels/missions';
 import { placementColliders } from '../../src/levels/districts/staticCollision';
 import { NavGrid } from '../../src/sim/ai/NavGrid';
 import { staticCollision as baked } from '../../src/assets/staticCollision';
@@ -18,15 +16,15 @@ function teleport(x: number, z: number) {
 }
 async function slice() {
   world = new SimWorld(); await world.init();
-  const c = compositions.L1;
+  const c = compositions['L1-M1'];
   world.loadComposition(c, c.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 1);
-  const def = levelOneSlice(resolveCampaignMission('L1', world.districts!)); world.npcs!.configureSlice(def.anchors['incident-0']);
+  world.npcs!.configureSlice();
   world.combat!.damage.god = true; return world;
 }
 
 test('@E19 M1-07 every solid L1 prop family stops a real survivor capsule outside its GLB compound', async () => {
   world = new SimWorld(); await world.init();
-  const c = compositions.L1, ids = new Set<string>();
+  const c = compositions['L1-M1'], ids = new Set<string>();
   for (const d of c.districts) {
     const layout = JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'));
     for (const p of layout.placements as Placement[]) if (p.minTier === 0 && p.assetId in baked) ids.add(p.assetId);
