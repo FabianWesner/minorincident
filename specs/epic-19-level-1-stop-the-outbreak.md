@@ -36,7 +36,7 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E19-AC01 | The mission graph is structurally completable (E12-AC07 walk) | sim |
 | E19-AC02 | The `complete` bot finishes L1 on **20/20 seeds** in the headless sim-runner without cheats | sim |
 | E19-AC03 | The `newbie` bot (handicapped profile, see `90-test-concept.md` §5) finishes on ≥ 18/20 seeds, with median sim time **5–10 min** and median deaths ≤ 2 | sim |
-| E19-AC04 | The morning starts with an **empty loadout**; at the incident LEFT fists and RIGHT kick can damage infected. The hardware pickup replaces LEFT with the chosen weapon. Hints acknowledge unarmed fighting and point to a better weapon; toasts disappear within 3 s | sim |
+| E19-AC04 | The morning starts with an **empty loadout**; at the incident the unified unarmed style can damage infected through either touch/keyboard side. The hardware pickup replaces LEFT with the chosen weapon; mouse selection cycles unarmed and that weapon. Hints acknowledge unarmed fighting and point to a better weapon; toasts disappear within 3 s | sim |
 | E19-AC05 | Segment 2 is survivable by evasion alone: the `evade-only` bot (never attacks) reaches the hardware store on ≥ 18/20 seeds | sim |
 | E19-AC06 | World tier changes W0 → W1 at the incident trigger (decay layer events logged), and traffic transitions to panic driving | sim |
 | E19-AC07 | Patient Zero telegraphs every damaging attack ≥ 0.5 s ahead; its fight lasts 30–120 s for the `complete` bot | sim |

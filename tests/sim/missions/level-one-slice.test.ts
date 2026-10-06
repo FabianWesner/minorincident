@@ -26,7 +26,7 @@ test('@E19 @E19-AC04 morning has no attacks; diner stages one entrant before rea
 });
 for(const weapon of ['bat','crowbar','machete'])test(`@E19 slice ${weapon} pickup retained after death, brains restore and restart is unarmed`,async()=>{
   const m=await start();m.completeObjective('breakfast');m.completeObjective('escape');m.chooseMelee(`weapon.${weapon}`);m.completeObjective('melee');
-  expect(world.entities.get(1)!.weapons!.LEFT.rack.map(s=>s.id)).toEqual([`weapon.${weapon}`]);expect(world.entities.get(1)!.weapons!.RIGHT.rack[0].id).toBe('weapon.kick');
+  expect(world.entities.get(1)!.weapons!.LEFT.rack.map(s=>s.id)).toEqual([`weapon.${weapon}`]);expect(world.entities.get(1)!.weapons!.RIGHT.rack[0].id).toBe('weapon.fists');
   world.player!.damage(100,world.tick);world.setInput(emptyInput());for(let i=0;i<200;i++)world.update();
   expect(m.state.checkpoint).toBe('melee');expect(m.state.steps['store-fight'].status).toBe('active');expect(world.entities.get(1)!.weapons!.LEFT.rack[0].id).toBe(`weapon.${weapon}`);
   expect(world.infected!.active.every(e=>world.entities.get(e.id)===e)).toBe(true);expect(world.infected!.director.count).toBeLessThanOrEqual(15);
@@ -104,7 +104,7 @@ for (const side of ['LEFT', 'RIGHT'] as const) test(`@E19 incident ${side} unarm
     world.setInput({attackTarget:{id:target.id,side}, [side === 'LEFT' ? 'left' : 'right']:{down:false,held:true,up:false}}); world.update();
   }
   expect(m.state.stats.kills).toBeGreaterThan(0); expect(m.state.stats.deaths).toBe(0);
-  expect(world.events.events().some(e => e.type === 'combat.hit' && e.sourceId === 1 && e.amount > 0 && e.actionId === (side === 'LEFT' ? 'weapon.fists' : 'weapon.kick'))).toBe(true);
+  expect(world.events.events().some(e => e.type === 'combat.hit' && e.sourceId === 1 && e.amount > 0 && e.actionId === 'weapon.fists')).toBe(true);
 });
 
 test('@E19 loaded ground edges stop direct movement at both outer and missing-district boundaries after decay', async () => {
