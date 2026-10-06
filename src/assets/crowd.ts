@@ -1,8 +1,8 @@
 import { BufferAttribute, DataTexture, FloatType, Group, InstancedMesh, InstancedInterleavedBuffer, Matrix4, MeshBasicNodeMaterial, Mesh, RGBAFormat, type Node, type BufferGeometry } from 'three/webgpu';
-import { attribute, instancedBufferAttribute, int, ivec2, mat4, positionGeometry, textureLoad, uniform, vec4, mix, float } from 'three/tsl';
+import { attribute, instancedBufferAttribute, int, ivec2, mat4, positionGeometry, textureLoad, uniform, vec4, mix, float, Fn, If } from 'three/tsl';
 import { palette } from './palette';
 
-export interface CrowdClip { parts: string[]; frames: number; duration: number; matrices: number[] }
+export interface CrowdClip { parts: string[]; frames: number; duration: number; matrices: number[] | Float32Array }
 export function clipTexture(clip: CrowdClip): DataTexture {
   const texture=new DataTexture(new Float32Array(clip.matrices),clip.parts.length*4,clip.frames,RGBAFormat,FloatType);
   texture.needsUpdate=true; return texture;
@@ -13,6 +13,14 @@ export function crowdMatrix(texture: DataTexture, part: Parameters<typeof int>[0
   const f = float(frame), low = f.floor(), high = f.ceil();
   const column = (index:number) => mix(textureLoad(texture,ivec2(start.add(index),int(low))), textureLoad(texture,ivec2(start.add(index),int(high))), f.fract());
   return mat4(column(0),column(1),column(2),column(3));
+}
+/** Outgoing atlas rows are fetched only while an actor is transitioning. */
+export function crowdBlendedMatrix(texture: DataTexture, part: Parameters<typeof int>[0], frame: Parameters<typeof int>[0], outgoing: Parameters<typeof int>[0], weight: Node<'float'>) {
+  return Fn(() => {
+    const current = crowdMatrix(texture, part, frame).toVar();
+    If(weight.lessThan(1), () => { current.assign(crowdMatrix(texture, part, outgoing).mul(weight.oneMinus()).add(current.mul(weight))); });
+    return current;
+  })();
 }
 /** Pose in part-local space before applying the instance's movement/heading. */
 export function crowdPosition(instance: Node<'mat4'>, texture: DataTexture, part: Parameters<typeof int>[0], frame: Parameters<typeof int>[0], position: Node<'vec3'>) {

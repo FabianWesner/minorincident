@@ -1,4 +1,4 @@
-# Motion lab (evaluation branch only)
+# Motion regression lab
 
 For interactive development, start Vite on the assigned port:
 
@@ -8,18 +8,20 @@ E2E_PORT=3352 npx vite --host 127.0.0.1 --port 3352 --strictPort --configLoader 
 
 Open `/?motionlab&renderer=webgl&count=200`; `view=close` compares survivor,
 civilian and infected. `candidate=mesh2motion` displays the actual Mesh2Motion
-export as prototype survivor. `paused=1` installs a deterministic stepping API:
+export as prototype survivor. `candidate=skin` retains the deferred joint-weight study.
+The default compares reference steering with production Stage1 motion limits,
+rigid crowd crossfades and click-navigation capsule response. `paused=1` installs a deterministic stepping API:
 `window.__MOTIONLAB__.step(720)`, `.metrics()`, `.resume()`, `.pause()`.
 All animations stay render-only; lab scenes own and dispose their resources.
 
 Capture serially and headlessly, using the machine-wide browser slot limiter. The
-harness starts and retires its own Vite server on 3352 if no server is present:
+harness starts and retires its own production preview server after `npm run build` on 3352 if no server is present:
 
 ```sh
-E2E_PORT=3352 sh tools/e2e-lock.sh npx tsx tools/motionlab/measure.ts
+E2E_PORT=3352 sh tools/e2e-lock.sh npx tsx tools/motionlab/measure-stage1.ts
 ```
 
-Metrics are written to `epics-pipeline/motion-lib-metrics.json`. Temporary frames
+Metrics are written to `epics-pipeline/motion-stage1-metrics.json`. Temporary frames
 are written under the assigned scratchpad/motion-lab path. Keep only the two
 reviewed comparison sheets; delete intermediate frames after review.
 

@@ -64,7 +64,7 @@ export class SimWorld implements Lifecycle {
     this.reset(); this.seed = seed; this.scenario = name;
     this.rng = new Rng(seed, 'fixture');
     this.physics.load(definition);
-    this.entities.create({ kind: 'player', archetype: definition.survivor ? 'player.survivor' : 'player.stub', transform: { ...definition.player, yaw: this.rng.next() * Math.PI * 2 }, health: { current: 100, max: 100 }, faction: 'survivor' });
+    this.entities.create({ kind: 'player', archetype: definition.survivor ? 'player.survivor' : 'player.stub', transform: { ...this.physics.playerBody!.translation(), yaw: this.rng.next() * Math.PI * 2 }, health: { current: 100, max: 100 }, faction: 'survivor' });
     if (definition.survivor) this.player = new Player(this.entities.get(1)!, this.physics, this.events);
     this.previousPlayer = { ...this.entities.get(1)!.transform };
     this.spatial.set(1, definition.player.x, definition.player.z);

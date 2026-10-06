@@ -1,36 +1,25 @@
+import { respond, faceMotion } from '../../sim/locomotion/MotionResponse';
 /** Evaluation-only policies; no gameplay state is read or written. */
 export const dt = 1 / 60;
 export const angleDelta = (from: number, to: number) => Math.atan2(Math.sin(to - from), Math.cos(to - from));
-export interface Motion { x: number; z: number; yaw: number; vx: number; vz: number; ax: number; az: number; omega: number; distance: number; speed: number }
-export function motion(): Motion { return { x: 0, z: 0, yaw: 0, vx: 0, vz: 0, ax: 0, az: 0, omega: 0, distance: 0, speed: 0 }; }
+export interface Motion { x: number; z: number; yaw: number; vx: number; vz: number; ax: number; az: number; omega: number; updatedAt: number; distance: number; speed: number }
+export function motion(): Motion { return { x: 0, z: 0, yaw: 0, vx: 0, vz: 0, ax: 0, az: 0, omega: 0, updatedAt: -1, distance: 0, speed: 0 }; }
 export function intent(tick: number): { x: number; z: number } {
   const t = tick % 720;
   return t < 90 ? { x: 0, z: 0 } : t < 150 ? { x: .3, z: 0 } : t < 240 ? { x: 1, z: 0 } : t < 360 ? { x: 0, z: 1 } : t < 420 ? { x: 0, z: 0 } : t < 570 ? { x: -1, z: 0 } : { x: 0, z: -1 };
 }
-function limit(x: number, z: number, maximum: number): [number, number] {
-  const scale = Math.min(1, maximum / (Math.hypot(x, z) || 1)); return [x * scale, z * scale];
-}
 export function steer(state: Motion, input: { x: number; z: number }, speed: number, prototype: boolean, civilian = false): void {
   if (prototype) {
-    // Critically damped velocity response, bounded acceleration and jerk.
-    const [jx, jz] = limit(36 * (input.x * speed - state.vx) - 12 * state.ax, 36 * (input.z * speed - state.vz) - 12 * state.az, 48);
-    [state.ax, state.az] = limit(state.ax + jx * dt, state.az + jz * dt, 6);
-    state.vx += state.ax * dt; state.vz += state.az * dt;
+    respond(state, input.x * speed, input.z * speed);
   } else { state.vx = input.x * speed; state.vz = input.z * speed; }
   state.x += state.vx * dt; state.z += state.vz * dt;
   state.speed = Math.hypot(state.vx, state.vz); state.distance += state.speed * dt;
-  if (state.speed < .025) {
-    if (prototype) { state.omega += Math.max(-12 * dt, Math.min(12 * dt, -state.omega)); state.yaw += state.omega * dt; }
-    else state.omega = 0;
-    return;
+  if (prototype) state.yaw = faceMotion(state, state.yaw, state.vx, state.vz);
+  else if (state.speed >= .025) {
+    const delta = angleDelta(state.yaw, -Math.atan2(state.vz, state.vx));
+    state.yaw += civilian ? Math.max(-.12, Math.min(.12, delta)) : delta;
   }
-  const delta = angleDelta(state.yaw, -Math.atan2(state.vz, state.vx));
-  if (prototype) {
-    const target = Math.max(-4.5, Math.min(4.5, delta * 10));
-    state.omega += Math.max(-12 * dt, Math.min(12 * dt, target - state.omega));
-    state.yaw += state.omega * dt;
-  } else if (civilian) state.yaw += Math.max(-.12, Math.min(.12, delta));
-  else state.yaw += delta;
+
 }
 export function percentile(values: number[], p: number): number {
   if (!values.length) return 0;

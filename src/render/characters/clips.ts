@@ -57,7 +57,7 @@ export function retargetClip(root: Object3D, name: string, additive = false): An
       }
     }
   }
-  if (!additive && /^(walk|run|npc-walk|npc-walk-relaxed)$/.test(name)) plantLocomotion(root, name, source.duration, tracks);
+  if (!additive && /^(walk|run|shamble|infected-run|npc-walk|npc-walk-relaxed)$/.test(name)) plantLocomotion(root, name, source.duration, tracks);
   return new AnimationClip(name, source.duration, tracks);
 }
 
@@ -70,7 +70,7 @@ function plantLocomotion(root: Object3D, name: string, duration: number, tracks:
   const hipTrack = tracks.find(t => t.name === 'hip.position')!;
   const position = hipTrack.InterpolantFactoryMethodLinear();
   const rotation = tracks.find(t => t.name === 'hip.quaternion')!.InterpolantFactoryMethodLinear();
-  const stance = name === 'run' ? .5 : .6, stride = strides[name] * strideProportion(root);
+  const stance = /run$/.test(name) ? .5 : .6, stride = strides[name] * strideProportion(root);
   // A grouped NPC can have a rotated sub-root above its hip. Express actor
   // travel in that parent's coordinates, rather than sliding along its local X.
   const forward = new Vector3(1, 0, 0).applyQuaternion(root.getWorldQuaternion(new Quaternion()));
@@ -80,7 +80,7 @@ function plantLocomotion(root: Object3D, name: string, duration: number, tracks:
     const t = (phase - stance) / (1 - stance);
     // Match the backward stance velocity at toe-off and heel contact.
     const smooth = t * t * (3 - 2 * t) - (1 - stance) / stance * (2 * t * t * t - 3 * t * t + t);
-    return forward.clone().multiplyScalar(stride * stance * (smooth - .5)).add(new Vector3(0, Math.sin(Math.PI * t) ** 2 * (name === 'run' ? .085 : .055), 0));
+    return forward.clone().multiplyScalar(stride * stance * (smooth - .5)).add(new Vector3(0, Math.sin(Math.PI * t) ** 2 * (/run$/.test(name) ? .085 : .055), 0));
   };
   // Lower the mean pelvis only as far as this rig requires for a softly bent
   // support knee. Clamping an unreachable ankle would turn support into sliding.
