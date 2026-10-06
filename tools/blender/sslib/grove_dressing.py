@@ -42,10 +42,10 @@ class Grove:
         self.lawn_rects = []
         l.data['lawns'] = []
         original = l.place
-        def place(asset, pos, yaw=0, tier=0, allowed=False, scale=(1, 1, 1)):
+        def place(asset, pos, yaw=0, tier=0, allowed=False, scale=(1, 1, 1), tint=None):
             # Tiny daisies are baked decorations, as in the other L1 districts (sslib/l1_dressing.py).
             if asset == 'prop.flower': return D.flower(l, *pos, scale, yaw)
-            return original(asset, pos, yaw, tier, allowed, scale)
+            return original(asset, pos, yaw, tier, allowed, scale, tint)
         l.place = place
 
     # ---- manifest helpers -------------------------------------------------------------------------------------
@@ -112,13 +112,13 @@ class Grove:
                     return False
         return True
 
-    def place(self, asset, x, z, yaw=0.0, scale=1.0, check=True, y=0.0, soft=False, margin=0.0):
+    def place(self, asset, x, z, yaw=0.0, scale=1.0, check=True, y=0.0, soft=False, margin=0.0, tint=None):
         sc = (scale, scale, scale) if isinstance(scale, (int, float)) else tuple(scale)
         l = self.l
         boxes = self.footprint(asset, x, z, yaw, sc)
         if soft and not self.fits(boxes, margin):
             return None
-        pid = l.place(asset, [x, y, z], yaw=yaw, scale=sc)
+        pid = l.place(asset, [x, y, z], yaw=yaw, scale=sc, tint=tint)
         if asset in HOLLOW and self.placeholder(asset):
             # Placeholder box: replace the footprint collider by walls with door gaps (see shell()).
             l.data['colliders'] = [c for c in l.data['colliders'] if c['id'] != pid]
