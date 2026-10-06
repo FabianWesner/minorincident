@@ -1,0 +1,36 @@
+{
+  "id": "int.gym-cafeteria",
+  "tier": "Hero",
+  "triangles": 94978,
+  "draw_calls": 29,
+  "materials": [
+    "emi_windowGlow",
+    "pal_asphalt",
+    "pal_backpackTeal",
+    "pal_brass",
+    "pal_brick",
+    "pal_canvasTan",
+    "pal_denim",
+    "pal_foliage",
+    "pal_grass",
+    "pal_picketWhite",
+    "pal_policeBlue",
+    "pal_redDark",
+    "pal_schoolBusYellow",
+    "pal_sidewalk",
+    "pal_survivorRed",
+    "pal_tealDark",
+    "pal_trouserViolet",
+    "pal_uiDark",
+    "pal_woodWarm"
+  ],
+  "nodes_ok": true,
+  "within_budget": true,
+  "rounds": 5,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "gaps": [
+    "Small wall clock, waste bins and condiment details are simplified or omitted.",
+    "Default preview game camera near=0.01 causes depth artifacts; near=0.5 diagnostic captures are clean on both renderers. Preview files were left unchanged."
+  ]
+}
