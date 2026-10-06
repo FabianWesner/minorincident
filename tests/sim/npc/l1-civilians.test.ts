@@ -26,8 +26,9 @@ describe('L1 v2 civilians and infection', () => {
       for (let t = 0; t < 3600; t++) {
         step(w, 1);
         for (const e of civilians(w)) {
-          const c = e.civilian!, l1 = c.l1!, moving = (e.motion?.speed ?? 0) > .1;
-          const facing = !!l1.faces?.[(c.waypoint + c.waypoints.length - 1) % c.waypoints.length] && w.tick < c.pauseUntil;
+          const c = e.civilian!, moving = (e.motion?.speed ?? 0) > .1, activity = c.schedule![c.scheduleStep ?? 0];
+          // Performing a civlife activity (sit, chat, water, look at something) or inside a shop counts as purposeful.
+          const facing = e.hidden || !!c.activityUntil && !!activity.facing;
           const n = moving || facing ? 0 : (still.get(e.id) ?? 0) + 1; still.set(e.id, n); worst = Math.max(worst, n);
         }
       }

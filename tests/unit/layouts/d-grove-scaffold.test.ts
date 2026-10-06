@@ -21,7 +21,7 @@ test('T-E19-scaffold @E19 L0 scaffold: D-GROVE exports every fixed anchor, zone 
   expect(validateLayout(layout, worldAssets)).toEqual([]);
   expect(districtGameplay['D-GROVE'].id).toBe('D-GROVE');
   expect(compositions['D-GROVE'].districts[0].id).toBe('D-GROVE');
-  expect(compositions.L1.districts.map((d) => d.id)).not.toContain('D-GROVE');
+  expect(compositions.L1.districts.map((d) => d.id)).toEqual(['D-GROVE']);
 });
 test('T-E19-scaffold @E19 L0 scaffold: tuning table and accident event names', () => {
   expect(l1v2.speedTiers.frail.baseMs).toBeGreaterThan(l1v2.player.runMs);

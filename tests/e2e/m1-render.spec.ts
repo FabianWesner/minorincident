@@ -3,6 +3,8 @@ import { PNG } from 'pngjs';
 import { boot, expect, test } from './fixtures';
 import { menuStart } from './ui-helpers';
 import type { Page } from '@playwright/test';
+// L1 v2 replaced the diner/hardware story these checks assume; the L1 v2 playthrough is tests/e2e/levels/L1.spec.ts.
+test.beforeEach(() => { test.fixme(true, 'old L1 diner flow retired (L1 v2)'); });
 
 const output = 'test-results/m1-render-fix';
 async function shot(page: Page, name: string): Promise<PNG> {
@@ -33,7 +35,8 @@ function noise(p: PNG, mask: PNG): { pixels: number; spikes: number; ratio: numb
   return { pixels, spikes, ratio: spikes / pixels };
 }
 
-test('M1-27 @E19 real diner combat and wheel zoom keep survivor colour blocks free of speckle', async ({ page }) => {
+// Retired diner flow (L1 v2 replaced the M1 slice).
+test.fixme('M1-27 @E19 real diner combat and wheel zoom keep survivor colour blocks free of speckle', async ({ page }) => {
   test.setTimeout(180_000); await menuStart(page);
   await page.evaluate(async () => {
     const a = window.__SS__!; a.pause(); a.cheats.god(true); a.settings.set({ cameraShake: false, quality: 'high' });
@@ -42,7 +45,7 @@ test('M1-27 @E19 real diner combat and wheel zoom keep survivor colour blocks fr
     a.teleport('player', { x: 80, z: 0 });
   });
   // Setup shortcuts the walk; the authored diner outbreak and every attack are real.
-  for (let i = 0; i < 130 && !await page.evaluate(() => window.__SS__!.missions.state()!.outbreak!.released); i++) {
+  for (let i = 0; i < 130 && !await page.evaluate(() => window.__SS__!.missions.state()!.l1!.exitIds.length > 0); i++) {
     await page.evaluate(() => window.__SS__!.step(30));
   }
   await page.evaluate(async () => { const a = window.__SS__!; a.teleport('player', { x: 42, z: -6.5 }); await a.step(1); });
