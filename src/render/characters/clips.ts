@@ -23,7 +23,7 @@ export function strideScale(root: Object3D): number {
   const frame = root.getObjectByName('hip')?.parent ?? root;
   return frame.getWorldScale(worldScale).y * strideProportion(root);
 }
-const groundClips = /^(die|death-|knockdown|flung|get-up|crawl)/;
+const groundClips = /^(die|death-|knockdown|flung|get-up|crawl|infection-collapse|infection-rise)/;
 const upperBody = /^(torso|head|arm|foreArm|hand)/;
 
 /** Retarget by name, preserving model rest TRS. Additive clips contain upper-body
