@@ -17,7 +17,7 @@ export class Touch {
   private readonly contacts = new Map<number, Contact>();
   constructor(private readonly canvas: HTMLElement, private readonly activity: () => void, private readonly fire: (action: TouchAction, direction: Vec2 | null) => void) {
     this.element.dataset.touchControls = '';
-    this.element.style.cssText = 'position:fixed;bottom:max(16px,env(safe-area-inset-bottom));right:max(16px,env(safe-area-inset-right));display:grid;grid-template-columns:64px 64px;gap:8px;touch-action:none';
+    this.element.style.cssText = 'position:fixed;bottom:16px;right:16px;display:grid;grid-template-columns:64px 64px;gap:8px;touch-action:none';
     for (const action of ['selector', 'pause', 'left', 'right', 'brake'] as const) {
       const button = document.createElement('button'); button.dataset.touchAction = action;
       button.textContent = action === 'selector' ? 'NEXT' : action.toUpperCase(); button.setAttribute('aria-label', `Touch ${action}`);

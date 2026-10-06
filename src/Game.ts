@@ -1,4 +1,3 @@
-import { QualityControls } from './ui/QualityControls';
 import { performanceLevels, installPerformanceLevel } from '../tests/fixtures/scenarios/performance';
 import { Quality, type QualitySetting } from './core/Quality';
 import { PerfOverlay } from './debug/performance/PerfOverlay';
@@ -22,7 +21,6 @@ import { SimWorld } from './sim/world/SimWorld';
 export class Game {
   readonly quality: Quality;
   private overlay: PerfOverlay | null = null;
-  private qualityControls: QualityControls | null = null;
   private simulatedFrameMs = 0;
   private restoredWhilePaused = false;
   readonly services = new Services();
@@ -78,7 +76,6 @@ export class Game {
       }
       this.overlay?.update(seconds);
     });
-    this.qualityControls = new QualityControls(this.quality, setting => this.setQuality(setting));
     if (this.params.has('perf')) this.overlay = new PerfOverlay(this);
     this.ticker.init();
   }
@@ -164,7 +161,7 @@ export class Game {
   }
   /** Debug-only synthetic GPU cost. It changes the quality observation, never sim time. */
   simulateFrameCost(ms: number): void { if (!Number.isFinite(ms) || ms < 0) throw new RangeError('Invalid frame cost'); this.simulatedFrameMs = ms; }
-  setQuality(setting: QualitySetting): void { this.quality.set(setting); if (this.qualityControls) this.qualityControls.select.value = setting; }
+  setQuality(setting: QualitySetting): void { this.quality.set(setting); }
   private applyQuality(): void {
     this.view.setQuality(this.quality.tier); this.audio.graph.setTier(this.quality.tier);
     if (this.world.infected) this.world.infected.director.setTier(this.quality.tier);
@@ -175,5 +172,5 @@ export class Game {
     const restore = this.levelQueue.then(async () => { this.loading = true; try { await this.view.restoreContext(); this.restoredWhilePaused = true; } finally { this.loading = false; this.clock.pause(); this.ticker.reset(); } });
     this.levelQueue = restore.catch(error => console.error(error));
   };
-  dispose(): void { document.removeEventListener('visibilitychange', this.visibility); this.view.renderer.domElement.removeEventListener('webglcontextlost', this.contextLost); this.view.renderer.domElement.removeEventListener('webglcontextrestored', this.contextRestored); this.overlay?.dispose(); this.qualityControls?.dispose(); this.quality.dispose(); this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); }
+  dispose(): void { document.removeEventListener('visibilitychange', this.visibility); this.view.renderer.domElement.removeEventListener('webglcontextlost', this.contextLost); this.view.renderer.domElement.removeEventListener('webglcontextrestored', this.contextRestored); this.overlay?.dispose(); this.quality.dispose(); this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); }
 }
