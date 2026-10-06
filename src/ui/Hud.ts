@@ -75,7 +75,9 @@ export class Hud {
   loaded(): void {
     this.clear();
     this.damagedUntil = this.barkUntil = -1;
-    this.loadedScenario = this.game.world.scenario; this.onboarding.reset();
+    this.loadedScenario = this.game.world.scenario;
+    if (!this.loadedScenario) return;
+    this.onboarding.reset();
     for (const type of ['combat.hit', 'corgi.sound'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
   }
   private readonly event = (event: GameEvent): void => {
@@ -85,7 +87,7 @@ export class Hud {
       if (source && player) {
         const origin = this.game.view.project(player.transform.x, player.transform.y, player.transform.z);
         const projected = this.game.view.project(source.transform.x, source.transform.y, source.transform.z);
-        this.damage.style.setProperty('--direction', `${Math.atan2(projected[1] - origin[1], projected[0] - origin[0])}rad`);
+        this.damage.style.setProperty('--direction', `${Math.atan2(origin[1] - projected[1], projected[0] - origin[0]) - Math.PI / 2}rad`);
       }
     } else if (event.type === 'corgi.sound' && event.kind === 'warning') {
       this.barkUntil = this.game.world.tick + 120;
@@ -128,7 +130,7 @@ export class Hud {
     }
     for (let i = pinCount; i < this.threats.length; i++) this.threats[i].hidden = true;
     text(this.companion, corgi ? corgi.hidden ? 'Corgi · hiding' : 'Corgi · following' : 'Corgi · awaiting rescue');
-    this.place(this.playerPin, px, pz, px, pz); this.playerPin.style.rotate = `${player.transform.yaw + Math.PI / 2}rad`;
+    this.place(this.playerPin, px, pz, px, pz); this.playerPin.style.rotate = `${-player.transform.yaw + Math.PI / 2}rad`;
     const anchor = mission?.state.marker ? mission.def.anchors[mission.state.marker] : null;
     this.objectivePin.hidden = !anchor;
     if (anchor) this.place(this.objectivePin, anchor.x, anchor.z, px, pz, true);

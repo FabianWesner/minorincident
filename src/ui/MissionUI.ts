@@ -57,6 +57,7 @@ export class MissionUI {
     this.text(this.subtitle,cinematic?.caption??state.subtitle?.text??'');
     this.subtitle.dataset.lineId=state.subtitle?.id??'';
     this.panel.hidden=playing||!!cinematic;
+    if (this.panel.hidden && this.panel.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();
     this.tracker.hidden=this.map.hidden=!playing;
     this.result.hidden=state.phase!=='result';
     if(this.phase!==state.phase){

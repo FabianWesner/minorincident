@@ -11,7 +11,7 @@ import { HitStop } from './HitStop';
 
 export type Gore = 'Full' | 'Reduced' | 'Off';
 export type { EffectKind, TelegraphKind } from '../../sim/world/types';
-export interface VfxSettings { vfx?: boolean; gore?: Gore; flashReduction?: boolean; quality?: 'high' | 'low' }
+export interface VfxSettings { vfx?: boolean; gore?: Gore; flashReduction?: boolean; colorblind?: boolean; quality?: 'high' | 'low' }
 export interface VfxTargets {
   flash(id: number, strength: number): void;
   detach(id: number, limb: number): { x: number; y: number; z: number } | void;
@@ -47,6 +47,7 @@ export class Vfx extends Group {
   private hitCursor = 0;
   private readonly vehicles = new Map<number, VehicleFeedbackEvent>();
   private enabled = true;
+  private colorblind = false;
   private gore: Gore = 'Full';
   private flashReduction = false;
   private quality: 'high' | 'low' = 'high';
@@ -65,9 +66,13 @@ export class Vfx extends Group {
   set(patch: VfxSettings): void {
     if (patch.gore !== undefined && !['Full', 'Reduced', 'Off'].includes(patch.gore)) throw new RangeError('Invalid gore setting');
     if (patch.quality !== undefined && !['high', 'low'].includes(patch.quality)) throw new RangeError('Invalid VFX quality');
+    if (patch.colorblind !== undefined) {
+      this.colorblind = patch.colorblind;
+      for (const tell of this.tells.values()) this.telegraphs.recolor(tell.slot, this.telegraphColor(tell.kind));
+    }
     if (patch.vfx !== undefined) this.enabled = patch.vfx;
     if (patch.flashReduction !== undefined) this.flashReduction = patch.flashReduction;
-    if (patch.quality !== undefined) { this.quality = patch.quality; this.particles.reset(this.time); this.particles.budget = this.quality === 'low' ? 512 : 2048; this.particles.mesh.count = this.particles.budget; }
+    if (patch.quality !== undefined && patch.quality !== this.quality) { this.quality = patch.quality; this.particles.reset(this.time); this.particles.budget = this.quality === 'low' ? 512 : 2048; this.particles.mesh.count = this.particles.budget; }
     if (patch.gore !== undefined && patch.gore !== this.gore) {
       this.gore = patch.gore; this.particles.reset(this.time); this.decals.reset(this.time); this.gibs.reset(); this.targets.clearGore();
       if (this.gore === 'Off') { this.coverage = 0; this.targets.blood(0); }
@@ -80,6 +85,7 @@ export class Vfx extends Group {
       this.resetPools();
     } else this.targets.blood(this.gore === 'Off' ? 0 : this.coverage);
   }
+  private telegraphColor(kind: TelegraphKind): number { return this.colorblind ? kind === 'bloated' ? 0xffb347 : 0xffffff : kind === 'bloated' ? 0xffe45b : 0x59e8ff; }
   private resetPools(): void { for (const pool of this.pools) pool.reset(this.time); this.gibs.reset(); this.tells.clear(); this.hitCount = this.hitCursor = 0; }
   private pulse(id: number): void {
     let slot = 0;
@@ -157,7 +163,7 @@ export class Vfx extends Group {
       const radius = 'radius' in event ? event.radius : kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(2, infectedDef(source.archetype).range) : 2;
       const angle = 'angle' in event ? event.angle : -Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
       const shape = telegraphShapes[kind];
-      const slot = this.telegraphs.spawn(this.time, 1e9, position.x, 0.025, position.z, angle, 0, 0, radius * 2, shape, kind === 'bloated' ? 0xffe45b : 0x59e8ff, 0, kind === 'charge' ? 0.3 : 1, true);
+      const slot = this.telegraphs.spawn(this.time, 1e9, position.x, 0.025, position.z, angle, 0, 0, radius * 2, shape, this.telegraphColor(kind), 0, kind === 'charge' ? 0.3 : 1, true);
       this.tells.set(event.attackId, { slot, kind, spawned: this.time, ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
     } else if (event.type === 'attack.resolved') {
       const tell = this.tells.get(event.attackId); if (tell) { this.telegraphs.remove(tell.slot); this.tells.delete(event.attackId); }
@@ -229,7 +235,7 @@ export class Vfx extends Group {
   }
   get flash(): number { return this.enabled ? Math.max(0, (this.flashUntil - this.time) / 0.1) * (this.flashReduction ? 0.12 : 0.6) : 0; }
   snapshot() {
-    return { enabled: this.enabled, gore: this.gore, quality: this.quality, flashReduction: this.flashReduction, time: this.time,
+    return { enabled: this.enabled, colorblind: this.colorblind, gore: this.gore, quality: this.quality, flashReduction: this.flashReduction, time: this.time,
       particles: this.particles.count, particleCap: this.particles.budget, decals: this.decals.count, decalCap: this.decals.cap, gibs: this.gibs.count, gibCap: this.gibs.cap,
       telegraphs: [...this.tells].map(([attackId, tell]) => ({ attackId, ...tell })), hitStop: { active: this.hitStop.active(this.time), until: this.hitStop.until, started: this.hitStop.started, suppressed: this.hitStop.suppressed },
       flash: this.flash, coverage: this.coverage, detached: this.detached, dismemberedKills: this.dismemberedKills, kills: this.kills, explosionRadius: this.lastExplosionRadius };

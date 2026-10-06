@@ -12,6 +12,8 @@ export class GameUI {
   readonly root = node('div', 'menus');
   readonly enabled: boolean;
   readonly settings: Settings;
+  /** Latest DOM update duration, measured independently of WebGL work. */
+  updateMs = 0;
   readonly hud: Hud;
   private screen: Screen = null;
   private back: Screen = 'title';
@@ -79,6 +81,11 @@ export class GameUI {
       input.addEventListener('change', () => { this.settings.patch({ [key]: input.checked }); this.applySettings(); });
       row.append(input); form.append(row);
     }
+    for (const [key, label] of [['captions', 'Sound captions'], ['mono', 'Mono audio'], ['haptics', 'Haptics'], ['noiseRings', 'Visual sound cues']] as const) {
+      const row = node('label', `audio-label-${key}`, label), input = node('input', `audio-${key}`);
+      input.type = 'checkbox'; input.checked = this.game.audio.settings[key];
+      input.addEventListener('change', () => this.game.audio.set({ [key]: input.checked })); row.append(input); form.append(row);
+    }
     const controls = node('div', 'settings-controls'); controls.className = 'settings-controls';
     controls.append(node('p', 'controls-guide', 'Mouse: cursor to move, LMB / RMB, wheel, stand to interact. Keyboard: WASD, arrows, J / K, Q, E. Touch: stick, drag or tap actions, stand to interact.'));
     const action = node('select', 'binding-action'); action.setAttribute('aria-label', 'Action to rebind');
@@ -115,7 +122,7 @@ export class GameUI {
     const value = this.settings.value;
     document.body.style.setProperty('--text-scale', String(value.textSize));
     document.body.classList.toggle('colorblind-ui', value.colorblind);
-    this.game.view.settings({ gore: value.gore, cameraShake: value.cameraShake, flashReduction: value.flashReduction, quality: value.quality === 'auto' ? 'high' : value.quality });
+    this.game.view.settings({ gore: value.gore, cameraShake: value.cameraShake, flashReduction: value.flashReduction, colorblind: value.colorblind, quality: value.quality === 'auto' ? matchMedia('(pointer:coarse)').matches ? 'low' : 'high' : value.quality });
     this.game.audio.set({ muted: value.muted || this.game.params.get('audio') === 'muted', gore: value.gore });
     if (this.game.world.combat) this.game.world.combat.assist.setting = value.aimAssist;
   }
@@ -145,6 +152,7 @@ export class GameUI {
     this.screen = screen;
     for (const [name, panel] of this.screens) panel.hidden = name !== screen;
     this.root.hidden = screen === null;
+    if (screen === null && this.root.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();
     document.body.dataset.uiScreen = screen ?? 'game';
     if (screen) {
       this.game.clock.pause();
@@ -169,6 +177,7 @@ export class GameUI {
   }
   update(): void {
     if (!this.enabled) return;
+    const start = performance.now();
     const mission = this.game.world.missions;
     if (mission?.state.phase !== this.missionPhase) {
       this.missionPhase = mission?.state.phase ?? '';
@@ -176,9 +185,10 @@ export class GameUI {
     }
     this.hud.update();
     this.pauseButton.hidden = this.screen !== null || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase));
+    this.updateMs = performance.now() - start;
   }
   private readonly missionAccept = (event: MouseEvent): void => {
-    if ((event.target as HTMLElement).closest('[data-testid=mission-button]') && this.game.world.missions?.state.phase === 'playing' && !this.game.audio.snapshot().background) { this.game.input.clear(); this.game.clock.resume(); this.game.ticker.reset(); }
+    if ((event.target as HTMLElement).closest('[data-testid=mission-button]') && this.game.world.missions?.state.phase === 'playing' && !this.game.audio.snapshot().background) { this.game.input.clear(); this.game.clock.resume(); this.game.ticker.reset(); this.update(); }
   };
   private readonly key = (event: KeyboardEvent): void => {
     if (!this.enabled) return;

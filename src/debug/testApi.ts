@@ -88,7 +88,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
-    version: '1.8.0', ready, missions: missionControls(game.world),
+    version: '1.8.0', ready, missions: { ...missionControls(game.world), load: (def) => { game.ui.reset(); missionControls(game.world).load(def); game.ui.loaded(); } },
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
     loadLevel: (id, opts) => {
