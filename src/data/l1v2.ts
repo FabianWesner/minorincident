@@ -24,9 +24,9 @@ export const l1v2 = {
   /** Section 5.4 / AC12. Speed = base * (1 +/- jitter), jitter seeded per entity. */
   speedTiers: {
     frail: { baseMs: 4.7, who: "elderly civilians, bathrobe neighbour" },
-    average: { baseMs: 5.1, who: "adult civilians, lab staff, workers" },
+    average: { baseMs: 5.3, who: "adult civilians, lab staff, workers" },
     athletic: { baseMs: 5.6, who: "joggers, young adults, skater" },
-    jitter: 0.06,
+    jitter: 0.04,
     frailMinShareAbovePlayerRun: 0.95,
     closeTenMetresMaxS: 20,
   },

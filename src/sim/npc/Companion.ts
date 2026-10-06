@@ -1,4 +1,5 @@
 import { infectedDef } from '../../data/infected';
+import { l1v2 } from '../../data/l1v2';
 import { npcs } from '../../data/npcs';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
@@ -23,7 +24,12 @@ export class Companion {
     const e = this.world.entities.create({ kind: 'companion', archetype: 'char.corgi', faction: 'survivor', transform: { ...this.target, y: .3, yaw: 0 }, health: { current: 100, max: 100 }, companion: { state: 'follow', courage: 100, until: 0, barkAt: 0, hurtAt: 0, pickup: null, path: [], goal: -1, pathIndex: 0 } });
     this.world.spatial.set(e.id, e.transform.x, e.transform.z); return e.id;
   }
+  /** L1 v2 (D-GROVE): the corgi cannot be hurt, has no courage bar, and warns instead of fighting (spec 5.8). */
+  /** Tests and scenarios without a D-GROVE district can force the L1 v2 behaviour. */
+  forceSafe: boolean | null = null;
+  get safe(): boolean { return this.forceSafe ?? this.world.districts?.districts.some(d => d.id === 'D-GROVE') === true; }
   hit(e: EntitySnapshot, amount: number): void {
+    if (this.safe) return;
     const c = e.companion!; c.courage = Math.max(0, c.courage - amount);
     if (!c.courage && c.state !== 'hide') { c.state = 'hide'; c.until = this.world.tick + npcs.corgiRecoveryTicks; c.pickup = null; }
   }
@@ -31,7 +37,7 @@ export class Companion {
     const player = this.world.entities.get(1)!, ai = this.world.infected!;
     for (const e of this.world.entities.iterate()) {
       const c = e.companion; if (!c) continue;
-      if (c.state !== 'hide' && this.world.tick >= c.hurtAt) for (const enemy of ai.active) if (enemy.health.current > 0 && Math.hypot(enemy.transform.x - e.transform.x, enemy.transform.z - e.transform.z) < 1.2) { c.hurtAt = this.world.tick + 60; this.hit(e, infectedDef(enemy.archetype).damage); this.world.events.emit({ type: 'corgi.sound', tick: this.world.tick, sourceId: e.id, position: { ...e.transform }, kind: 'hurt' }); break; }
+      if (!this.safe && c.state !== 'hide' && this.world.tick >= c.hurtAt) for (const enemy of ai.active) if (enemy.health.current > 0 && Math.hypot(enemy.transform.x - e.transform.x, enemy.transform.z - e.transform.z) < 1.2) { c.hurtAt = this.world.tick + 60; this.hit(e, infectedDef(enemy.archetype).damage); this.world.events.emit({ type: 'corgi.sound', tick: this.world.tick, sourceId: e.id, position: { ...e.transform }, kind: 'hurt' }); break; }
       if (c.state === 'hide') {
         // Hiding follows at the player's heels without collision; recovery uses sim time.
         this.world.npcs!.move(e, player.transform, 9, c, 1.5);
@@ -57,10 +63,13 @@ export class Companion {
         const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
         if (distance > 3.2 || !ai.nav.visible(e.transform, player.transform, .35)) c.following = true;
         if (distance < 2.05 && ai.nav.visible(e.transform, player.transform, .35)) c.following = false;
-        if (c.following) this.world.npcs!.move(e, player.transform, Math.min(8, 4.5 + Math.max(0, distance - 4) * 2), c, 2);
+        const riding = this.world.vehicles?.bicycle.riding === true, frozen = this.safe && this.warn(e, c, player.transform) && distance < 6;
+        if (frozen) { if (c.velocity) c.velocity.x = c.velocity.z = 0; }
+        // While the player rides, the corgi's speed cap rises to 7.5 m/s (a short 15 % catch-up when it falls > 4 m behind) and it runs alongside (spec 5.10).
+        else if (c.following) this.world.npcs!.move(e, player.transform, riding ? Math.min(l1v2.corgi.riderSpeedCapMs * (distance > 4 ? 1.15 : 1), l1v2.corgi.riderSpeedCapMs * .9 + Math.max(0, distance - 3) * 2) : Math.min(8, 4.5 + Math.max(0, distance - 4) * 2), c, riding ? 1.5 : 2);
         else if (c.velocity) c.velocity.x = c.velocity.z = 0;
       }
-      if (this.world.tick >= c.barkAt) for (const enemy of ai.active) {
+      if (!this.safe && this.world.tick >= c.barkAt) for (const enemy of ai.active) {
         const dx = enemy.transform.x - player.transform.x, dz = enemy.transform.z - player.transform.z, distance = Math.hypot(dx, dz);
         if (enemy.health.current <= 0 || distance > 18 || ai.director.visible(enemy.transform) || !approaching.has(enemy.infected!.state)) continue;
         c.barkAt = this.world.tick + 180;
@@ -68,5 +77,37 @@ export class Companion {
       }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
+  }
+  /**
+   * Warning ladder against the nearest live infected that is off screen (or behind cover): stop + stiffen + look within 20 m,
+   * growl within 14 m, bark within 9 m (1 per 2 s), then 6 s of nervous idle. Returns true while the corgi must hold still.
+   */
+  private warn(e: EntitySnapshot, c: NonNullable<EntitySnapshot['companion']>, player: { x: number; z: number }): boolean {
+    const tuning = l1v2.corgi, ai = this.world.infected!, w = c.warn ??= { stage: 'none', threat: -1, nervousUntil: 0 };
+    let threat: EntitySnapshot | null = null, best: number = tuning.stiffenM;
+    for (const enemy of ai.active) {
+      if (enemy.health.current <= 0 || enemy.infected?.hidden || ai.director.visible(enemy.transform)) continue;
+      const d = Math.hypot(enemy.transform.x - player.x, enemy.transform.z - player.z);
+      if (d <= best) { best = d; threat = enemy; }
+    }
+    if (!threat) {
+      if (w.stage !== 'none' && w.stage !== 'nervous') { w.stage = 'nervous'; w.nervousUntil = this.world.tick + tuning.nervousS * 60; this.emitWarn(e, w.threat, 'nervous', best, { x: 0, z: 0 }); }
+      else if (w.stage === 'nervous' && this.world.tick >= w.nervousUntil) w.stage = 'none';
+      return false;
+    }
+    const dx = threat.transform.x - e.transform.x, dz = threat.transform.z - e.transform.z, length = Math.hypot(dx, dz) || 1;
+    e.transform.yaw = -Math.atan2(dz, dx); // look toward it
+    const stage = best <= tuning.barkM ? 'bark' : best <= tuning.growlM ? 'growl' : 'stiffen', order = ['none', 'nervous', 'stiffen', 'growl', 'bark'];
+    w.threat = threat.id;
+    if (order.indexOf(stage) > order.indexOf(w.stage) || w.stage === 'nervous') { w.stage = stage; if (stage !== 'bark') this.emitWarn(e, threat.id, stage, best, { x: dx / length, z: dz / length }); }
+    if (stage === 'bark' && this.world.tick >= c.barkAt) {
+      c.barkAt = this.world.tick + tuning.barkIntervalS * 60;
+      this.emitWarn(e, threat.id, 'bark', best, { x: dx / length, z: dz / length });
+      // No `corgi.sound`/`corgi.bark` here: the HUD turns those into a 'Woof!' text bubble, and the warnings carry no UI text.
+    }
+    return true;
+  }
+  private emitWarn(e: EntitySnapshot, threatId: number, stage: 'stiffen' | 'growl' | 'bark' | 'nervous', distance: number, direction: { x: number; z: number }): void {
+    this.world.events.emit({ type: 'corgi.warn', tick: this.world.tick, id: e.id, stage, threatId, direction: { x: direction.x, z: direction.z }, distance });
   }
 }

@@ -188,7 +188,9 @@ def dress(l,residential=False):
             z=side*4.6
             # Cross district sidewalks must stay clear at the junction.
             if not residential and abs(x)<5:continue
-            if (i+side)%3==0:bench(l,x,z)
+            # Keep the morning hedge's sidewalk approach clear for direct touch
+            # movement; the rebuilt hedge and the bench must not form a trap.
+            if (i+side)%3==0:bench(l,-22 if residential and x==-18 and side==-1 else x,z)
             else:garden(l,x,z,i+side)
             for j in range(8):
                 px=x-2+rng.random()*4;pz=side*(3.85+rng.random()*2.2)

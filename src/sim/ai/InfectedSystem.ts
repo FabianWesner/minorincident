@@ -3,7 +3,12 @@ import { motionResponse } from '../locomotion/MotionResponse';
 import { installCharacterSeparation } from './CharacterSeparation';
 import { noise } from '../../data/noise';
 // Zone enter/alert pattern adapted from Bruno Simon folio-2025 Zones.js (MIT, 41046b5).
-import { infectedDef, validateInfected } from '../../data/infected';
+import { infectedDef, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
+import { l1v2 } from '../../data/l1v2';
+import { groveDistrictId } from '../../levels/districts/types';
+import type { DistractionEvent, HumanTarget, HumanTargetQuery } from '../outbreak/types';
+import { Perception, WorldHumans } from './Perception';
+import { planSearch, searchPlan, wanderGoal, type L1Brain } from './Search';
 import { Rng } from '../../core/Rng';
 import { Status } from '../combat/Status';
 import type { SimWorld } from '../world/SimWorld';
@@ -15,7 +20,8 @@ import { updateFlock } from './Flock';
 import { SpawnDirector } from './SpawnDirector';
 import { NavGrid } from './NavGrid';
 import type { InfectedState } from './types';
-export interface InfectedSpawn { state?: InfectedState['state']; yaw?: number; variant?: string; pack?: number; packIndex?: number; perched?: boolean; birds?: number }
+export interface InfectedSpawn { state?: InfectedState['state']; yaw?: number; variant?: string; pack?: number; packIndex?: number; perched?: boolean; birds?: number; /** L1 v2 speed tier; derived from the variant when omitted. */ tier?: InfectedSpeedTier }
+const l1Ticks = (seconds: number) => Math.round(seconds * 60);
 /** Fixed-step infected brain. Entities and path storage are prewarmed and reused, without Rapier bodies. */
 export class InfectedSystem {
   gore: 'Full' | 'Reduced' | 'Off' = 'Full';
@@ -34,6 +40,7 @@ export class InfectedSystem {
   private readonly query = { x: 0, z: 0, r: 2 };
   /** E08 calls this for adjacent adult civilians; its rescue/turning lifecycle remains in E08. */
   tryGrabCivilian(sourceId: number, target: { id: number; adult: boolean; variant: string; position: { x: number; z: number } }): { sourceId: number; rescueUntil: number } | null {
+    if (this.l1) return null; // L1 v2 bites come from the infected brain (BiteEvent), not from civilian proximity rolls.
     const source = this.world.entities.get(sourceId);
     if (!target.adult || !source?.infected || source.health.current <= 0 || Math.hypot(source.transform.x - target.position.x, source.transform.z - target.position.z) > 1.2 || this.rng.next() >= infectedDef(source.archetype).grabChance) return null;
     this.world.events.emit({ type: 'civilian.grabbed', tick: this.world.tick, sourceId, targetId: target.id, variant: target.variant, rescueUntil: this.world.tick + 90 });
@@ -46,6 +53,7 @@ export class InfectedSystem {
   }
   private sequence = 0;
   private budget = 0;
+  private routes = 0;
   private readonly lureTarget = { x: 0, z: 0 };
   private readonly waypoint = { x: 0, z: 0 };
   constructor(readonly world: SimWorld, definition: ScenarioDefinition) {
@@ -63,6 +71,8 @@ export class InfectedSystem {
       for (const entity of this.active) { entity.infected!.goal = -1; entity.infected!.path.length = 0; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical; }
     });
     world.events.on('noise', (event) => { if (event.type === 'noise') this.noise(event.position, event.radius, event.radius >= 25, event.sourceId); });
+    world.events.on('outbreak.distraction', (event) => { if (event.type === 'outbreak.distraction') this.distraction(event); });
+    if (world.districts?.districts.some((d) => d.id === groveDistrictId)) this.configureL1v2();
     world.events.on('combat.hit', (event) => {
       if (event.type !== 'combat.hit' || event.amount <= 0) return;
       const target = world.entities.get(event.targetId);
@@ -96,13 +106,14 @@ export class InfectedSystem {
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || !this.nav.clear(position.x, position.z, def.radius)) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
     entity.locomotion = motionResponse(); delete entity.motion;
-    delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden;
+    delete entity.infected!.model; delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
     Object.assign(entity.infected!, { state: opts.state ?? 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
     for (let bird = 0; bird < 20; bird++) { entity.infected!.birdAlive[bird] = Number(bird < entity.infected!.birds); entity.infected!.birdPositions[bird * 3] = position.x + Math.cos(bird * 2.399963) * 2; entity.infected!.birdPositions[bird * 3 + 1] = 3; entity.infected!.birdPositions[bird * 3 + 2] = position.z + Math.sin(bird * 2.399963) * 2; }
     if (id === 'infected.crow') entity.health.current = entity.health.max = entity.infected!.birds;
+    if (this.l1 && def.special === 'lunge') this.initL1(entity, opts.tier ?? l1SpeedTier(entity.infected!.variant)); else delete entity.infected!.l1;
     this.world.entities.adopt(entity); this.active.push(entity); this.world.spatial.set(entity.id, position.x, position.z); this.counters.reused++;
     return entity.id;
   }
@@ -112,6 +123,7 @@ export class InfectedSystem {
   }
   /** Hearing ignores facing; sight uses a 110° cone and collider line of sight. */
   noise(position: { x: number; z: number }, radius: number, loud = false, sourceId?: number): void {
+    if (this.l1 && !l1v2.infected.hearsPlayer) return; // L1: vision only; deliberate loud events arrive as DistractionEvent.
     for (const e of this.active) if (e.health.current > 0 && Math.hypot(e.transform.x - position.x, e.transform.z - position.z) <= radius) {
       if (sourceId !== undefined && this.world.combat?.effects.inSmoke(e.transform)) continue;
       if (sourceId !== undefined && (e.infected!.state === 'idle' || e.infected!.state === 'wander')) this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId, targetId: e.id, cause: 'noise', position: { ...e.transform } });
@@ -121,7 +133,7 @@ export class InfectedSystem {
   }
   alert(entity: EntitySnapshot): void { if (entity.infected!.state === 'idle' || entity.infected!.state === 'wander') { entity.infected!.state = 'alerted'; entity.infected!.until = this.world.tick + 6; } }
   update(): void {
-    const player = this.world.entities.get(1)!; this.budget = 2000; this.director.update();
+    const player = this.world.entities.get(1)!; this.budget = 2000; this.routes = 0; this.director.update();
     this.barricades.length = 0; for (const e of this.world.entities.iterate()) if (e.kind === 'barricade' && e.health.current > 0) this.barricades.push(e);
     if (this.active.length > 20) this.navigation.flow(player.transform, 1500);
     this.crowd.length = 0;
@@ -130,6 +142,7 @@ export class InfectedSystem {
       const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }
       if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; continue; }
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
+      if (b.l1) { this.updateL1(e, b, b.l1); continue; }
       const lure = e.noiseTarget && this.world.tick < e.noiseTarget.until ? this.world.entities.get(e.noiseTarget.id) : undefined;
       if (lure && b.state !== 'migration' && !Status.stunned(e, this.world.tick)) {
         b.state = 'chase'; e.combat!.attacking = false;
@@ -321,12 +334,265 @@ export class InfectedSystem {
     if (b.birds > 0) { b.state = 'scatter'; b.scatterUntil = this.world.tick + 300; }
     return killed;
   }
+  // ---- L1 v2 brain (specs/epic-19 sections 5.2-5.4): vision only, closest visible human, chase/lunge/bite,
+  // randomised search, wander, attracted by deliberate distractions, speed tiers. All randomness from `l1Rng`.
+  /** Vision, LOS blockers and the human query of L1; null outside L1. */
+  l1: Perception | null = null;
+  private l1Rng: Rng | null = null;
+  private readonly tierStart = { frail: 0, average: 0, athletic: 0 };
+  private readonly tierCount = { frail: 0, average: 0, athletic: 0 };
+  private readonly recentTurns: number[] = [];
+  /** Enables the L1 brain for every human infected spawned from now on (D-GROVE enables it automatically). */
+  configureL1v2(humans?: HumanTargetQuery): Perception {
+    if (!this.l1) {
+      this.l1 = new Perception(this.world); this.l1Rng = new Rng(this.world.seed, 'infected-l1');
+      for (const tier of ['frail', 'average', 'athletic'] as const) this.tierStart[tier] = this.l1Rng.next();
+    }
+    if (humans) this.l1.humans = humans;
+    return this.l1;
+  }
+  private initL1(e: EntitySnapshot, tier: InfectedSpeedTier): void {
+    // Per-tier golden-ratio sequence from a seeded start: jitter is uniform over the run, fixed per entity, and
+    // infected of one tier spawned together never share a speed (no synchronized group).
+    const u = (this.tierStart[tier] + this.tierCount[tier]++ * 0.6180339887498949) % 1, rng = this.l1Rng!;
+    const brain: L1Brain = e.infected!.l1 ?? { mode: 'wander', tier, runSpeed: 0, wanderSpeed: 0, targetId: 0, seenX: 0, seenZ: 0, seenTick: 0, headingX: 0, headingZ: 0, looking: false, lookYaw: 0, pauseUntil: 0, goalX: 0, goalZ: 0, hasGoal: false, search: searchPlan(), episodes: 0, distractionId: 0, biteTargetId: 0, direct: false, directTick: -1, directX: 0, directZ: 0 };
+    const [low, high] = l1v2.infected.wanderSpeed;
+    Object.assign(brain, { mode: 'wander', tier, runSpeed: l1TierSpeed(tier, u), wanderSpeed: low + rng.next() * (high - low), targetId: 0, headingX: 0, headingZ: 0, looking: true, lookYaw: e.transform.yaw, pauseUntil: this.world.tick + 20 + Math.floor(rng.next() * 40), hasGoal: false, episodes: 0, distractionId: 0, biteTargetId: 0, directTick: -1 });
+    brain.search.until = 0;
+    e.infected!.l1 = brain; e.infected!.speed = brain.runSpeed; e.infected!.state = 'wander';
+  }
+  /** Live L1 speed of an infected (for tests, bots and animation): its tier run speed. */
+  l1Speed(id: number): number { return this.world.entities.get(id)?.infected?.l1?.runSpeed ?? 0; }
+  /** Infected currently holding `civilianId` in a bite grab, or 0. Lane D freezes the victim while this is set. */
+  holding(civilianId: number): number {
+    for (const e of this.active) if (e.infected!.l1?.mode === 'bite' && e.infected!.l1.biteTargetId === civilianId && e.health.current > 0) return e.id;
+    return 0;
+  }
+  /**
+   * Sends an L1 infected running to a point, then searching around it until `untilTick` (distractions, accident exits,
+   * director steering). Ignored while it chases or bites.
+   */
+  rush(id: number, point: { x: number; z: number }, untilTick: number, distractionId = 0): boolean {
+    const e = this.world.entities.get(id), brain = e?.infected?.l1;
+    if (!e || !brain || e.health.current <= 0 || brain.mode === 'chase' || brain.mode === 'bite' || e.infected!.state === 'attack') return false;
+    const rng = this.l1Rng!, radius = l1v2.infected.attracted.pointRadiusM;
+    brain.goalX = point.x; brain.goalZ = point.z;
+    for (let k = 0; k < 6; k++) {
+      const angle = rng.next() * Math.PI * 2, r = Math.sqrt(rng.next()) * radius, x = point.x + Math.cos(angle) * r, z = point.z + Math.sin(angle) * r;
+      if (this.nav.clear(x, z, e.combat!.radius)) { brain.goalX = x; brain.goalZ = z; break; }
+    }
+    brain.mode = 'attracted'; e.infected!.state = 'attracted'; brain.hasGoal = true; brain.looking = false; brain.pauseUntil = 0; brain.distractionId = distractionId;
+    brain.search.until = untilTick; brain.search.originX = point.x; brain.search.originZ = point.z; brain.search.legTicks = 0;
+    return true;
+  }
+  private distraction(event: DistractionEvent): void {
+    if (!this.l1) return;
+    const [low, high] = l1v2.infected.attracted.extraS, rng = this.l1Rng!;
+    for (const e of this.active) {
+      const brain = e.infected!.l1;
+      if (!brain || e.health.current <= 0 || brain.distractionId === event.id) continue;
+      if (Math.hypot(e.transform.x - event.position.x, e.transform.z - event.position.z) > event.radius) continue;
+      this.rush(e.id, event.position, event.until + l1Ticks(low + rng.next() * (high - low)), event.id);
+    }
+  }
+  private updateL1(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
+    const tick = this.world.tick;
+    if (Status.stunned(e, tick)) {
+      if (brain.mode === 'bite') this.endBite(e, b, brain, false);
+      if (b.state === 'attack') { b.state = 'chase'; e.combat!.attacking = false; }
+      return;
+    }
+    if (b.state === 'attack') {
+      if (tick >= b.until && this.resolve(e)) { b.state = 'chase'; b.cooldown = tick + Math.max(0, l1Ticks(l1v2.infected.attackCycleS) - Math.ceil(infectedDef(e.archetype).windup * 60)); e.combat!.attacking = false; }
+      return;
+    }
+    if (brain.mode === 'bite') { this.updateBite(e, b, brain); return; }
+    if ((tick + e.id) % l1Ticks(l1v2.infected.targetReevalS) === 0) this.perceive(e, b, brain);
+    if (brain.mode === 'chase') this.chaseL1(e, b, brain);
+    else if (brain.mode === 'attracted') this.attractedL1(e, b, brain);
+    else if (brain.mode === 'search') this.searchL1(e, b, brain);
+    else this.wanderL1(e, b, brain);
+    this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+  }
+  /** Re-evaluates the closest visible human (0.25 s cadence); losing every human while chasing starts a search. */
+  private perceive(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
+    const seen = this.l1!.closest(e, brain.mode === 'chase' ? brain.targetId : 0);
+    if (seen) { this.sight(e, b, brain, seen); return; }
+    if (brain.mode === 'chase') this.startSearch(b, brain, { x: brain.seenX, z: brain.seenZ }, { x: brain.headingX, z: brain.headingZ });
+  }
+  private sight(e: EntitySnapshot, b: InfectedState, brain: L1Brain, seen: HumanTarget): void {
+    const tick = this.world.tick;
+    if (brain.mode === 'chase' && brain.targetId === seen.id) {
+      const dx = seen.position.x - brain.seenX, dz = seen.position.z - brain.seenZ, d = Math.hypot(dx, dz);
+      if (d > 0.05) { brain.headingX = dx / d; brain.headingZ = dz / d; }
+    } else {
+      // A fresh sighting from calm: a brief readable "notice" beat (stop, snap toward the human), then the run.
+      // Searching infected are already hunting and re-acquire without it.
+      if (brain.mode === 'wander' || (brain.mode === 'search' && brain.distractionId !== 0) || brain.mode === 'attracted') { brain.pauseUntil = tick + 12; brain.looking = true; brain.lookYaw = -Math.atan2(seen.position.z - e.transform.z, seen.position.x - e.transform.x); }
+      brain.headingX = brain.headingZ = 0; brain.distractionId = 0;
+      this.world.events.emit({ type: 'ai.alerted', tick, sourceId: seen.id, targetId: e.id, cause: 'sight', position: { ...e.transform } });
+    }
+    brain.mode = 'chase'; b.state = 'chase'; brain.targetId = seen.id; brain.seenX = seen.position.x; brain.seenZ = seen.position.z; brain.seenTick = tick;
+  }
+  private startSearch(b: InfectedState, brain: L1Brain, origin: { x: number; z: number }, heading: { x: number; z: number }): void {
+    const [low, high] = l1v2.infected.search.durationS, rng = this.l1Rng!;
+    planSearch(brain.search, rng, this.nav, this.world.tick, origin, heading, l1Ticks(low + rng.next() * (high - low)));
+    brain.mode = 'search'; b.state = 'search'; brain.targetId = 0; brain.looking = false; brain.pauseUntil = 0; brain.episodes++;
+  }
+  private chaseL1(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
+    const target = this.l1!.humans.get(brain.targetId);
+    if (!target) { this.startSearch(b, brain, { x: brain.seenX, z: brain.seenZ }, { x: brain.headingX, z: brain.headingZ }); return; }
+    if (this.world.tick < brain.pauseUntil) { this.look(e, brain); return; }
+    brain.looking = false;
+    const distance = Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z), lunge = l1v2.infected.lungeRangeM;
+    if (target.kind === 'player') {
+      if (distance <= lunge && this.world.tick >= b.cooldown && this.l1!.lineOfSight(e.transform, target.position)) { b.combo = 0; this.windup(e); return; }
+      this.steerL1(e, brain, target.position, brain.runSpeed, true, true);
+      return;
+    }
+    // Civilians: runner lunge burst inside 2.5 m, then grab on contact.
+    const contact = e.combat!.radius + 0.35 + 0.3;
+    if (distance <= contact) { this.startBite(e, b, brain, target); return; }
+    this.steerL1(e, brain, target.position, distance <= lunge ? Math.min(7, brain.runSpeed * 1.25) : brain.runSpeed, false, true);
+  }
+  private startBite(e: EntitySnapshot, b: InfectedState, brain: L1Brain, target: HumanTarget): void {
+    const tick = this.world.tick, victim = this.world.entities.get(target.id);
+    brain.mode = 'bite'; b.state = 'bite'; brain.biteTargetId = target.id; b.grabHits = 0; b.grabUntil = tick + l1Ticks(l1v2.civilians.grabS); e.combat!.attacking = true;
+    e.transform.yaw = -Math.atan2(target.position.z - e.transform.z, target.position.x - e.transform.x);
+    this.world.events.emit({ type: 'civilian.grabbed', tick, sourceId: e.id, targetId: target.id, variant: victim?.civilian?.variant ?? victim?.archetype ?? '', rescueUntil: b.grabUntil });
+  }
+  private updateBite(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
+    const victim = this.victimPosition(brain.biteTargetId);
+    // Any hit on the infected during the grab rescues the victim (rescue window = the 1.0 s grab).
+    if (b.grabHits > 0 || !victim || Math.hypot(victim.x - e.transform.x, victim.z - e.transform.z) > 1.8) { this.endBite(e, b, brain, false); return; }
+    e.transform.yaw = -Math.atan2(victim.z - e.transform.z, victim.x - e.transform.x);
+    if (this.world.tick >= b.grabUntil) this.endBite(e, b, brain, true);
+  }
+  /** A grabbed civilian may leave the huntable set (lane D marks it grabbed); its body is still where the bite lands. */
+  private victimPosition(id: number): { x: number; z: number } | undefined {
+    const human = this.l1!.humans.get(id); if (human) return human.position;
+    const e = this.world.entities.get(id);
+    return e?.civilian && e.health.current > 0 && !e.hidden && ['grabbed', 'calm', 'alarmed', 'flee', 'hide'].includes(e.civilian.state) ? e.transform : undefined;
+  }
+  private endBite(e: EntitySnapshot, b: InfectedState, brain: L1Brain, bitten: boolean): void {
+    const tick = this.world.tick, victimId = brain.biteTargetId, victim = this.victimPosition(victimId);
+    b.grabUntil = 0; e.combat!.attacking = false; brain.biteTargetId = 0;
+    if (bitten && victim) {
+      while (this.recentTurns.length && tick - this.recentTurns[0] > l1Ticks(l1v2.civilians.transformS + l1v2.civilians.transformJitterS)) this.recentTurns.shift();
+      const cap = this.director.tier === 'low' ? l1v2.director.capLow : l1v2.director.capHigh, turns = this.director.count + this.recentTurns.length < cap;
+      if (turns) this.recentTurns.push(tick);
+      if (this.l1!.humans instanceof WorldHumans) this.l1!.humans.bitten.add(victimId);
+      this.world.events.emit({ type: 'outbreak.bite', tick, sourceId: e.id, targetId: victimId, position: { x: victim.x, z: victim.z }, turns });
+    }
+    // Back to the closest visible human at once (switch back to the player after a bite); else look around.
+    brain.mode = 'wander'; b.state = 'wander'; brain.targetId = 0; brain.hasGoal = false;
+    brain.looking = true; brain.lookYaw = e.transform.yaw + Math.PI * 0.6; brain.pauseUntil = tick + (bitten ? 30 : 24);
+    this.perceive(e, b, brain);
+  }
+  private attractedL1(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
+    const s = brain.search, tick = this.world.tick;
+    if (tick >= s.until) { this.toWander(e, b, brain); return; }
+    const distance = Math.hypot(brain.goalX - e.transform.x, brain.goalZ - e.transform.z);
+    if (distance <= 1 || ++s.legTicks > 600) {
+      // Arrived at the sound: search around it (same behaviour, centred on the source) until the attraction ends.
+      planSearch(s, this.l1Rng!, this.nav, tick, { x: s.originX, z: s.originZ }, { x: 0, z: 0 }, s.until - tick, [3, 7]);
+      s.next = 0; brain.mode = 'search'; b.state = 'attracted'; brain.looking = true; brain.lookYaw = e.transform.yaw + 1.2; brain.pauseUntil = tick + 30;
+      return;
+    }
+    this.steerL1(e, brain, { x: brain.goalX, z: brain.goalZ }, brain.runSpeed * 0.85);
+  }
+  private searchL1(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
+    const s = brain.search, tick = this.world.tick, rng = this.l1Rng!;
+    if (tick >= s.until) { this.toWander(e, b, brain); return; }
+    if (tick < brain.pauseUntil) { this.look(e, brain); return; }
+    brain.looking = false;
+    if (s.next >= 0 && s.next * 2 >= s.probes.length) this.extendSearch(s, rng);
+    const tx = s.next < 0 ? s.originX : s.probes[s.next * 2], tz = s.next < 0 ? s.originZ : s.probes[s.next * 2 + 1];
+    const distance = Math.hypot(tx - e.transform.x, tz - e.transform.z), arrived = distance <= 1.2;
+    if (arrived || ++s.legTicks > 180) {
+      if (arrived && s.next >= 0) { if (s.next === s.doubleBackAt) s.doubledBack = true; else s.visited++; }
+      s.next++; s.legTicks = 0;
+      // Look around before moving on: sweep away from the arrival direction, then back (lane G plays the head sweep).
+      brain.looking = true; brain.lookYaw = e.transform.yaw + (rng.next() < 0.5 ? -1 : 1) * (0.9 + rng.next() * 1.0);
+      brain.pauseUntil = tick + 18 + Math.floor(rng.next() * 30);
+      return;
+    }
+    this.steerL1(e, brain, { x: tx, z: tz }, s.next < 0 ? brain.runSpeed : brain.runSpeed * 0.7);
+  }
+  /** Keeps a long search busy: one more probe 4-12 m around the origin. */
+  private extendSearch(s: L1Brain['search'], rng: Rng): void {
+    const [low, high] = l1v2.infected.search.probeRadiusM;
+    for (let k = 0; k < 6; k++) {
+      const n = s.probes.length, last = n ? Math.atan2(s.probes[n - 1] - s.originZ, s.probes[n - 2] - s.originX) : 0;
+      const angle = last + (rng.next() * 2 - 1) * 1.5, r = low + rng.next() * (high - low), x = s.originX + Math.cos(angle) * r, z = s.originZ + Math.sin(angle) * r;
+      if (this.nav.clear(x, z, 0.45)) { s.probes.push(x, z); return; }
+    }
+    s.probes.push(s.originX + 4, s.originZ);
+  }
+  private toWander(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
+    brain.mode = 'wander'; b.state = 'wander'; brain.hasGoal = false; brain.distractionId = 0;
+    brain.looking = true; brain.lookYaw = e.transform.yaw + Math.PI * (this.l1Rng!.next() - 0.5); brain.pauseUntil = this.world.tick + 60 + Math.floor(this.l1Rng!.next() * 60);
+  }
+  private wanderL1(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
+    const tick = this.world.tick, rng = this.l1Rng!;
+    if (tick < brain.pauseUntil) { this.look(e, brain); return; }
+    brain.looking = false;
+    if (!brain.hasGoal) { if (!wanderGoal(brain, rng, this.nav, e.transform)) { brain.pauseUntil = tick + 30; return; } brain.search.legTicks = 0; }
+    const distance = Math.hypot(brain.goalX - e.transform.x, brain.goalZ - e.transform.z);
+    if (distance <= 0.8 || ++brain.search.legTicks > 900) {
+      brain.hasGoal = false; brain.looking = true; brain.lookYaw = e.transform.yaw + (rng.next() - 0.5) * 2.6;
+      brain.pauseUntil = tick + 60 + Math.floor(rng.next() * 150);
+      return;
+    }
+    this.steerL1(e, brain, { x: brain.goalX, z: brain.goalZ }, brain.wanderSpeed);
+  }
+  /** Standing look-around: turn the body toward `lookYaw` at a bounded rate, then sweep back the other way. */
+  private look(e: EntitySnapshot, brain: L1Brain): void {
+    const delta = Math.atan2(Math.sin(brain.lookYaw - e.transform.yaw), Math.cos(brain.lookYaw - e.transform.yaw)), step = 3.2 / 60;
+    if (Math.abs(delta) <= step) { e.transform.yaw = brain.lookYaw; if (brain.mode !== 'chase') brain.lookYaw = e.transform.yaw - Math.sign(delta || 1) * (0.8 + this.l1Rng!.next() * 0.9); }
+    else e.transform.yaw += Math.sign(delta) * step;
+  }
   /** Stable test/debug surface, including RNG and pool/director counters needed for deterministic replay. */
   snapshot() {
     return { rng: this.rng.snapshot(), pool: { ...this.counters, available: this.pool.length }, cap: this.director.cap, count: this.director.count, queued: this.director.queue.map((q) => ({ archetype: q.archetype, position: q.position, options: q.options, turning: q.turning ?? false })), migrations: this.director.migrations.map((m) => ({ started: m.started, arrived: m.arrived, expectedSeconds: m.expectedSeconds, members: m.members })) };
   }
   /** E26 uses the same authored attack damage when resolving barricades. */
   barricadeDamage(sourceId: number, base: number): number { return base * (this.world.entities.get(sourceId)?.archetype === 'infected.gorilla' ? 6 : this.world.entities.get(sourceId)?.archetype === 'infected.brute' ? 5 : 1); }
+  /**
+   * L1 steering under the motion limits: straight when the goal is in clear view (re-checked every 6 ticks or when the
+   * goal moved), else a budgeted A* route (at most 4 new routes per tick; moving goals re-route every 0.25 s), or the
+   * shared flow field when chasing the survivor in a crowd. `pursue` keeps full speed onto a moving human.
+   */
+  private steerL1(e: EntitySnapshot, brain: L1Brain, goal: { x: number; z: number }, speed: number, survivor = false, pursue = false): void {
+    const b = e.infected!, tick = this.world.tick, radius = e.combat!.radius, grid = this.navigation.district(e.transform);
+    if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }
+    const nav = this.navigation.grid(e.transform), target = this.navigation.target(e.transform, goal);
+    if ((tick + e.id) % 6 === 0 || brain.directTick < 0 || Math.hypot(target.x - brain.directX, target.z - brain.directZ) > 1.5) {
+      brain.direct = nav.visible(e.transform, target, radius); brain.directTick = tick; brain.directX = target.x; brain.directZ = target.z;
+    }
+    let x = target.x, z = target.z;
+    if (!brain.direct) {
+      const from = nav.nearestCell(e.transform.x, e.transform.z);
+      let next = -1;
+      if (survivor && this.active.length > 20) next = nav.flowNext(from);
+      else {
+        const to = nav.nearestCell(target.x, target.z);
+        const stale = b.pathIndex >= b.path.length || (b.goal !== to && (tick + e.id) % 15 === 0);
+        if (stale && this.budget > 0 && this.routes < 4) { this.routes++; nav.path(from, to, b.path, this.budget); this.budget -= nav.expansions; b.pathIndex = 0; b.goal = to; }
+        while (b.pathIndex < b.path.length && Math.hypot(nav.x(b.path[b.pathIndex]) - e.transform.x, nav.z(b.path[b.pathIndex]) - e.transform.z) < 0.6) b.pathIndex++;
+        if ((tick + e.id) % 3 === 0 && b.pathIndex + 2 < b.path.length) {
+          this.waypoint.x = nav.x(b.path[b.pathIndex + 2]); this.waypoint.z = nav.z(b.path[b.pathIndex + 2]);
+          if (nav.visible(e.transform, this.waypoint, radius)) b.pathIndex += 2;
+        }
+        next = b.pathIndex < b.path.length ? b.path[b.pathIndex] : -1;
+      }
+      if (next >= 0 && next !== from) { x = nav.x(next); z = nav.z(next); }
+    }
+    const dx = x - e.transform.x, dz = z - e.transform.z, distance = Math.hypot(dx, dz);
+    const remaining = x === target.x && z === target.z ? distance - (pursue ? radius + 0.36 : 0) : distance;
+    if (remaining < 0.02) return;
+    const velocity = Math.min(speed, remaining * (pursue ? 60 : 2)); moveAgent(e, dx / distance * velocity, dz / distance * velocity, this.nav, tick);
+  }
   private seek(e: EntitySnapshot, target: { x: number; z: number }): void {
     const grid = this.navigation.district(e.transform), b = e.infected!;
     if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }

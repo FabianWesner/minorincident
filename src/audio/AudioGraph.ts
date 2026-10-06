@@ -316,7 +316,7 @@ export class AudioGraph {
     }
     /** Cut the score for a full second, then reopen it for the twist stinger. */
     twist(time = this.context.currentTime): number { this.musicGate.gain.cancelScheduledValues(time); this.musicGate.gain.setValueAtTime(0, time); this.musicGate.gain.setValueAtTime(1, time + 1.05); return time + 1.05; }
-    tinnitus(time = this.context.currentTime): void { const f = this.tinnitusFilter.frequency; f.cancelScheduledValues(time); f.setValueAtTime(1200, time); f.setValueAtTime(1200, time + 1.5); f.exponentialRampToValueAtTime(20000, time + 2.5); }
+    tinnitus(time = this.context.currentTime, strong = true): void { const f = this.tinnitusFilter.frequency, hold = strong ? 1.5 : 1.2, ramp = strong ? 1 : 0.6; f.cancelScheduledValues(time); f.setValueAtTime(strong ? 1200 : 1800, time); f.setValueAtTime(strong ? 1200 : 1800, time + hold); f.exponentialRampToValueAtTime(20000, time + hold + ramp); }
     reset(): void {
         this.limiter.clear();
         this.lowHp = false;

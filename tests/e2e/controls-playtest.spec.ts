@@ -5,7 +5,7 @@ import { tick } from './input-helpers';
 
 const output = 'test-results/controls-v2';
 
-test('S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, stationary RMB', async ({ page }) => {
+test('S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB', async ({ page }) => {
   await menuStart(page);
   await page.evaluate(() => window.__SS__!.pause());
   const start = await page.evaluate(() => window.__SS__!.getState().player!.transform);
@@ -24,13 +24,16 @@ test('S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, st
   expect(Math.hypot(arrived.x - start.x, arrived.z - start.z - 2)).toBeLessThan(.15);
   expect(await page.evaluate(() => window.__SS__!.getState().render.moveMarker!.visible)).toBe(false);
   expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons)).toBeUndefined();
-  // L1 is now unarmed. An attack is a no-op; the armed control assertion below
-  // supplies its own fixture loadout. The E19 device playthrough earns it in-game.
+  // Before the L1 unarmed pickup, cycling has no action to select. The fixture
+  // below supplies carried actions; the E19 playthrough earns them in-game.
   await page.mouse.click(point.x, point.y, { button: 'right' }); await tick(page, 1);
   expect(await page.evaluate(() => window.__SS__!.events().some(e => e.type === 'combat.attack'))).toBe(false);
-  await page.evaluate(() => window.__SS__!.setLoadout(['weapon.bat'], ['weapon.kick']));
+  await page.evaluate(() => window.__SS__!.setLoadout(['weapon.bat'], ['weapon.fists']));
   const far = await page.evaluate(p => window.__SS__!.input.project({ x: p.x + 2, z: p.z + 1 }), arrived);
-  await page.mouse.click(far.x, far.y, { button: 'right' }); await tick(page, 90);
+  await page.mouse.click(far.x, far.y, { button: 'right' }); await tick(page, 20);
+  expect(await page.evaluate(() => window.__SS__!.events().some(e => e.type === 'combat.attack'))).toBe(false);
+  expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.selectedSide)).toBe('RIGHT');
+  await page.keyboard.down('Shift'); await page.mouse.click(far.x, far.y); await tick(page, 90); await page.keyboard.up('Shift');
   const attacked = await page.evaluate(() => window.__SS__!.getState());
   expect(Math.hypot(attacked.player!.transform.x - arrived.x, attacked.player!.transform.z - arrived.z)).toBeLessThan(.02);
   expect(await page.evaluate(() => window.__SS__!.events().some(e => e.type === 'combat.attack' && e.side === 'RIGHT'))).toBe(true);

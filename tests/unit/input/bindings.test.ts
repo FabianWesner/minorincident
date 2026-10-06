@@ -24,3 +24,9 @@ test('T-E03-storage @E03 storage errors leave the existing bindings usable', () 
   expect(bindings.rebind('left', 'KeyZ')).toEqual({ ok: false, message: 'Bindings could not be saved.' });
   expect(bindings.action('KeyJ')).toBe('left'); expect(bindings.action('KeyZ')).toBeNull();
 });
+
+test('@E03-AC02 saved old mouse mirror migrates RMB from attack to cycle', () => {
+  const old = { ...defaultBindings, right: ['Mouse2', 'KeyK'], selector: ['KeyQ', 'KeyL'] };
+  const bindings = new Bindings({ getItem: () => JSON.stringify({ version: 1, bindings: old }), setItem() {} });
+  expect(bindings.action('Mouse2')).toBe('selector'); expect(bindings.action('KeyK')).toBe('right');
+});
