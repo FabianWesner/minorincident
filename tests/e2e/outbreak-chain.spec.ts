@@ -34,6 +34,14 @@ for (const mode of ['desktop', 'portrait'] as const) test.describe(mode, () => {
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.steps.escape.status)).toBe('active');
     await move(42, 0);
     const victims = await page.evaluate(() => window.__SS__!.missions.state()!.outbreak!.victims);
+    const focus = await page.evaluate(id => window.__SS__!.getEntity(id)!.transform, victims[0]);
+    await page.evaluate(p => window.__SS__!.camera.cinematic({ position: [p.x + 8, 8, p.z + 8], target: [p.x, .6, p.z] }), focus);
+    // Physical diagonal keys/stick retreat east while the presentation camera watches the victim.
+    if (cdp) {
+      const origin = { id: 1, x: 70, y: 506 };
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [origin] });
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ ...origin, x: origin.x + 50 / Math.SQRT2, y: origin.y + 50 / Math.SQRT2 }] });
+    } else { await page.keyboard.down('d'); await page.keyboard.down('s'); }
     const seen = new Set<string>(), samples: unknown[] = [];
     let actedDuringChain = false, peak = 0;
     const births = new Map<number, { x: number; z: number }>();
@@ -57,12 +65,42 @@ for (const mode of ['desktop', 'portrait'] as const) test.describe(mode, () => {
         const birth = births.get(e.id);
         if (birth && (e.combat!.attacking || Math.hypot(e.transform.x - birth.x, e.transform.z - birth.z) > .1)) actedDuringChain = true;
       }
-      if (births.size && i > 110) break;
+      if (births.size && actedDuringChain && await page.evaluate(() => window.__SS__!.getState().player!.transform.x >= 70)) break;
     }
+    if (cdp) await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    else { await page.keyboard.up('d'); await page.keyboard.up('s'); }
     expect([...seen].some(s => s.startsWith('bitten'))).toBe(true);
     expect([...seen].some(s => s.startsWith('down'))).toBe(true);
     expect([...seen].some(s => s.startsWith('rising'))).toBe(true);
     expect(actedDuringChain).toBe(true); expect(peak).toBeLessThanOrEqual(15);
-    writeFileSync(`${output}/${mode}.json`, JSON.stringify({ mode, realInput: true, headless: true, samples, actedDuringChain, peak, gpu: await page.evaluate(() => { const gl = document.querySelector('canvas')!.getContext('webgl2')!, debug = gl.getExtension('WEBGL_debug_renderer_info'); return debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) as string : 'WebGL2'; }), events: await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'civilian.state' || e.type === 'civilian.turned' || e.type === 'civilian.grabbed')) }, null, 2));
+    const chainSamples: unknown[] = [];
+    for (let i = 0; i < 600; i++) {
+      await page.evaluate(async () => { const a = window.__SS__!; await a.step(6); a.vfx.stepRender(.1); });
+      const chain = await page.evaluate(newborns => {
+        const a = window.__SS__!, events = a.events(), bitten = events.filter(e => e.type === 'civilian.grabbed' && newborns.includes(e.sourceId)).map(e => e.type === 'civilian.grabbed' ? e.targetId : 0);
+        return { tick: a.tick(), victims: a.missions.state()!.outbreak!.victims.map(id => a.getEntity(id)!), infected: a.query({ kind: 'infected' }), turns: events.filter(e => e.type === 'civilian.turned'), newbornTurn: events.some(e => e.type === 'civilian.turned' && bitten.includes(e.id)) };
+      }, [...births.keys()]);
+      peak = Math.max(peak, chain.infected.filter(e => e.health.current > 0).length);
+      if (i % 30 === 0) {
+        chainSamples.push({ tick: chain.tick, states: chain.victims.map(e => e.civilian!.state), turns: chain.turns });
+        if (process.env.OUTBREAK_CAPTURE === '1') {
+          // Presentation-only overview; the trigger, retreat and all AI use the real game.
+          const focus = chain.victims.find(e => !['infected', 'finished'].includes(e.civilian!.state)) ?? chain.infected[0];
+          await page.evaluate(p => window.__SS__!.camera.cinematic({ position: [p.x + 8, 8, p.z + 8], target: [p.x, .6, p.z] }), focus.transform);
+          await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${output}/${mode}-chain-${i}.png` });
+        }
+      }
+      if (chain.newbornTurn || mode === 'portrait' && new Set(chain.turns.filter(e => e.type === 'civilian.turned').map(e => e.type === 'civilian.turned' ? e.id : 0)).size >= 3) break;
+    }
+    if (process.env.OUTBREAK_CAPTURE === '1') { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${output}/${mode}-chain-turn.png` }); }
+    const infectionEvents = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'civilian.turned' || e.type === 'civilian.grabbed'));
+    writeFileSync(`${output}/${mode}.json`, JSON.stringify({ mode, realInput: true, headless: true, samples, chainSamples, actedDuringChain, peak, deaths: await page.evaluate(() => window.__SS__!.missions.state()!.stats.deaths), gpu: await page.evaluate(() => { const gl = document.querySelector('canvas')!.getContext('webgl2')!, debug = gl.getExtension('WEBGL_debug_renderer_info'); return debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) as string : 'WebGL2'; }), events: await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'civilian.state' || e.type === 'civilian.turned' || e.type === 'civilian.grabbed')) }, null, 2));
+    expect(new Set(infectionEvents.filter(e => e.type === 'civilian.turned').map(e => e.type === 'civilian.turned' ? e.id : 0)).size).toBeGreaterThanOrEqual(2);
+    expect(await page.evaluate(() => window.__SS__!.missions.state()!.stats.deaths)).toBe(0);
+    if (mode === 'desktop') {
+      expect(new Set(infectionEvents.filter(e => e.type === 'civilian.grabbed').map(e => e.type === 'civilian.grabbed' ? e.sourceId : 0)).size).toBeGreaterThan(1);
+      expect(infectionEvents.some(e => e.type === 'civilian.grabbed' && births.has(e.sourceId) && infectionEvents.some(t => t.type === 'civilian.turned' && t.id === e.targetId && t.tick > e.tick))).toBe(true);
+    } else expect(new Set(infectionEvents.filter(e => e.type === 'civilian.turned').map(e => e.type === 'civilian.turned' ? e.id : 0)).size).toBeGreaterThanOrEqual(3);
+    expect(peak).toBeLessThanOrEqual(15);
   });
 });
