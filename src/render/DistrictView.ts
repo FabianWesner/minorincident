@@ -58,7 +58,7 @@ export class DistrictView extends Group {
     private readonly registry: DistrictAssets,
     readonly phase: ReturnType<typeof windPhase>,
     private readonly grassMaterial: ReturnType<typeof Grass.material>,
-    private readonly low = false,
+    private low = false,
   ) {
     super();
     this.name = "sunset-grove";
@@ -118,7 +118,7 @@ export class DistrictView extends Group {
               batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
             }
             const dimensions = new Box3().setFromObject(prototypes[1]).getSize(new Vector3());
-            this.lodBatches.push({ hero, near, far, refs, id, lit: power === 'true', loaded: this.low, origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55 });
+            this.lodBatches.push({ hero, near, far, refs, id, lit: power === 'true', loaded: false, origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55 });
           }),
         );
         // Dynamic nav-blockers use the same positions/extents as their Rapier colliders.
@@ -239,6 +239,7 @@ export class DistrictView extends Group {
     }
   }
   setQuality(tier: 'high' | 'low'): void {
+    if (this.low !== (tier === 'low')) { this.low = tier === 'low'; this.cameraPosition = [Infinity, Infinity, Infinity]; }
     for (const grass of this.grass) grass.visible = tier === 'high';
     // Measured L6 cost: many small prop meshes render again into the sun shadow map.
     // Low preserves building/vehicle/hero shadows and omits detailed prop shadow casters.

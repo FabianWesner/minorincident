@@ -129,7 +129,8 @@ export class GameUI {
   applySettings(): void {
     if (!this.enabled) return;
     const value = this.settings.value;
-    const quality = value.quality === 'auto' ? matchMedia('(pointer:coarse)').matches ? 'low' : 'high' : value.quality;
+    this.game.setQuality(value.quality);
+    const quality = this.game.quality.tier;
     for (const [key, setting] of Object.entries(value)) {
       const control = this.root.querySelector<HTMLInputElement | HTMLSelectElement>(`[data-testid=setting-${key}]`);
       if (control instanceof HTMLInputElement) control.checked = setting as boolean;
