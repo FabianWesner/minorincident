@@ -222,7 +222,13 @@ export class GameUI {
     this.updateMs = performance.now() - start;
   }
   private readonly missionAccept = (event: MouseEvent): void => {
-    if ((event.target as HTMLElement).closest('[data-testid=mission-button]') && this.game.world.missions?.state.phase === 'playing' && !this.game.audio.snapshot().background) { this.game.input.clear(); this.game.clock.resume(); this.game.ticker.reset(); this.update(); }
+    if (!(event.target as HTMLElement).closest('[data-testid=mission-button]')) return;
+    if (this.game.world.missions?.state.phase === 'progression') {
+      // A paused result click must hand off without waiting for the next render frame.
+      this.game.campaignUI.update(); this.update();
+    } else if (this.game.world.missions?.state.phase === 'playing' && !this.game.audio.snapshot().background) {
+      this.game.input.clear(); this.game.clock.resume(); this.game.ticker.reset(); this.update();
+    }
   };
   private readonly key = (event: KeyboardEvent): void => {
     if (!this.enabled || !this.game.campaignUI.root.hidden) return;
