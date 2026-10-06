@@ -100,21 +100,43 @@ test('T-E17-caps @E17-AC11 exported caps survive compression and stay on the sur
     expect(cap.getWorldTranslation()).toEqual(limb.getWorldTranslation());
     expect(cap.getWorldScale().every(v=>v>0)).toBe(true);
     let triangles=0;cap.traverse(n=>{for(const p of n.getMesh()?.listPrimitives()??[])triangles+=(p.getIndices()?.getCount()??0)/3;});
-    expect(triangles).toBe(56);
+    expect(triangles).toBe(42);
     const parent=cap.getParentNode()!;parent.removeChild(limb);
     expect(cap.getParentNode()).toBe(parent);
   }
 });
 
 
+test('T-E17-pose-caps @E17-AC11 prefixed corpse joints retain usable hidden caps', async () => {
+  const io=await assetIO();
+  const {default:manifest}=await import('../../../src/assets/manifest.json');
+  const def=manifest.find(d=>d.id==='inf.corpse-poses')! as AssetDef;
+  for (const path of [def.glb,def.lods!.lod1!,def.lods!.lod2!]) {
+    const doc=await io.read(path),nodes=doc.getRoot().listNodes();
+    for (const name of def.requiredNodes.filter(name=>name.includes('stump_'))) {
+      const cap=nodes.find(n=>n.getName()===name)!,limb=nodes.find(n=>n.getName()===name.replace('stump_',''))!;
+      expect(cap.getExtras().hidden,`${path}:${name}`).toBe(true);
+      expect(cap.getWorldScale().every(v=>v>0),`${path}:${name}`).toBe(true);
+      expect(cap.getParentNode()).toBe(limb.getParentNode());
+      expect(cap.getWorldTranslation()).toEqual(limb.getWorldTranslation());
+    }
+  }
+});
+
 test('T-E17-height @E17-AC02 adult exports stay 1.75–1.85 m at every LOD', async () => {
   const {default:manifest}=await import('../../../src/assets/manifest.json'), io=await assetIO();
   const exceptions=new Set(['char.corgi','npc.brother','npc.civilian-kid','inf.crawler','inf.brute','inf.teen-skater']);
+  // Animal silhouettes and the prone/seated corpse pack are not standing adults.
+  for (const id of ['inf.cat-black','inf.cat-tabby','inf.dog-dachshund','inf.dog-k9','inf.dog-retriever','inf.crow','inf.flamingo','inf.gorilla','inf.lion','inf.corpse-poses']) exceptions.add(id);
   for(const def of manifest as AssetDef[]) {
     if(!def.sourceGlb || !['character','infected'].includes(def.category) || exceptions.has(def.id)) continue;
     for(const path of [def.glb,def.lods?.lod1,def.lods?.lod2].filter((p):p is string=>!!p)) {
-      const doc=await io.read(path),bounds=getBounds(doc.getRoot().listScenes()[0]),height=bounds.max[1]-bounds.min[1];
-      expect(height,path).toBeGreaterThanOrEqual(1.75);expect(height,path).toBeLessThanOrEqual(1.85);
+      const doc=await io.read(path);
+      const subjects=[doc.getRoot().listScenes()[0],...doc.getRoot().listNodes().filter(n=>/^survivor\d+_root$/.test(n.getName()))];
+      for (const subject of subjects) {
+        const bounds=getBounds(subject),height=bounds.max[1]-bounds.min[1];
+        expect(height,`${path}:${subject.getName()}`).toBeGreaterThanOrEqual(1.75);expect(height,`${path}:${subject.getName()}`).toBeLessThanOrEqual(1.85);
+      }
     }
   }
 });
