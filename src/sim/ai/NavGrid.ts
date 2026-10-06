@@ -11,6 +11,8 @@ export class NavGrid {
   private readonly parent: Int32Array;
   private readonly cost: Float64Array;
   private readonly open: Uint8Array;
+  private readonly heap: { cell: number; score: number }[] = [];
+  private readonly buckets = new Map<string, Wall[]>();
   private searchFrom = -1;
   private searchTo = -1;
   private searching = false;
@@ -27,6 +29,7 @@ export class NavGrid {
     this.blocked = new Uint8Array(count); this.distance = new Int32Array(count); this.queue = new Int32Array(count);
     this.parent = new Int32Array(count); this.cost = new Float64Array(count); this.open = new Uint8Array(count);
     this.distance.fill(-1);
+    this.indexWalls();
     for (let cell = 0; cell < count; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), clearance));
   }
   cell(x: number, z: number): number {
@@ -49,12 +52,19 @@ export class NavGrid {
   clear(x: number, z: number, radius = 0): boolean {
     if (this.mask && !this.mask(x, z)) return false;
     if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
-    for (const w of this.walls) if (Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
+    for (const w of this.buckets.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) if (Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
     for (const w of this.blockers.values()) if (Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
     return true;
   }
+  private indexWalls(): void {
+    this.buckets.clear();
+    for (const wall of this.walls) for (let z = Math.floor((wall.z - wall.halfZ - 2) / 4); z <= Math.floor((wall.z + wall.halfZ + 2) / 4); z++) for (let x = Math.floor((wall.x - wall.halfX - 2) / 4); x <= Math.floor((wall.x + wall.halfX + 2) / 4); x++) {
+      const key = `${x},${z}`, bucket = this.buckets.get(key) ?? []; bucket.push(wall); this.buckets.set(key, bucket);
+    }
+  }
   /** E08 campaign tier swaps replace static walls, retaining the fixed search workspace. */
   rebake(): void {
+    this.indexWalls();
     for (let cell = 0; cell < this.blocked.length; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), this.clearance));
     this.target = -1; this.searching = false; this.head = this.tail = 0;
   }
@@ -105,22 +115,51 @@ export class NavGrid {
     for (let d = 0; d < 4; d++) { const n = this.neighbor(cell, d); if (n >= 0 && this.distance[n] >= 0 && this.distance[n] < this.distance[next]) next = n; }
     return next;
   }
+  private push(cell: number, score: number): void {
+    const item = { cell, score }; let index = this.heap.length; this.heap.push(item);
+    while (index > 0) { const parent = (index - 1) >> 1; if (this.heap[parent].score <= score) break; this.heap[index] = this.heap[parent]; index = parent; }
+    this.heap[index] = item;
+  }
+  private pop(): number {
+    const cell = this.heap[0].cell, item = this.heap.pop()!;
+    if (this.heap.length) { let index = 0;
+      while (index * 2 + 1 < this.heap.length) { let next = index * 2 + 1; if (next + 1 < this.heap.length && this.heap[next + 1].score < this.heap[next].score) next++; if (this.heap[next].score >= item.score) break; this.heap[index] = this.heap[next]; index = next; }
+      this.heap[index] = item;
+    }
+    return cell;
+  }
+  /** Shared string-pulled route: skip all visible waypoints, so actors do not zig-zag on the grid. */
+  steer(position: { x: number; z: number }, target: { x: number; z: number }, route: { path: number[]; goal: number; pathIndex: number }, radius: number, waypoint: { x: number; z: number }, budget = 1600): boolean {
+    if (this.visible(position, target, radius)) { route.path.length = 0; route.goal = -1; Object.assign(waypoint, target); return true; }
+    const to = this.nearestCell(target.x, target.z);
+    if (to !== route.goal || route.pathIndex >= route.path.length) {
+      if (!this.path(this.nearestCell(position.x, position.z), to, route.path, budget)) return false;
+      route.goal = to; route.pathIndex = 0;
+    }
+    while (route.pathIndex < route.path.length && Math.hypot(position.x - this.x(route.path[route.pathIndex]), position.z - this.z(route.path[route.pathIndex])) < .12) route.pathIndex++;
+    for (let i = route.path.length - 1; i >= route.pathIndex; i--) {
+      waypoint.x = this.x(route.path[i]); waypoint.z = this.z(route.path[i]);
+      if (this.visible(position, waypoint, radius)) { route.pathIndex = i; return true; }
+    }
+    route.goal = -1; return false;
+  }
   /** Budgeted A*; caller retries later if the tick budget is exhausted. Writes into a reused path array. */
   path(from: number, to: number, result: number[], budget: number): boolean {
     result.length = 0; this.expansions = 0;
     if (from < 0 || to < 0 || this.blocked[from] || this.blocked[to]) return false;
     if (!this.searching || this.searchFrom !== from || this.searchTo !== to) {
       this.searchFrom = from; this.searchTo = to; this.searching = true;
+      this.heap.length = 0; this.push(from, 0);
       this.cost.fill(Infinity); this.parent.fill(-1); this.open.fill(0); this.cost[from] = 0; this.open[from] = 1;
     }
     const tx = to % this.width, tz = Math.floor(to / this.width);
     while (this.expansions < budget) {
-      let best = -1, score = Infinity, heuristic = Infinity;
-      for (let i = 0; i < this.open.length; i++) if (this.open[i] === 1) { const h = Math.abs(i % this.width - tx) + Math.abs(Math.floor(i / this.width) - tz), f = this.cost[i] + h; if (f < score || (f === score && h < heuristic)) { score = f; heuristic = h; best = i; } }
+      let best = -1;
+      while (this.heap.length) { const candidate = this.pop(); if (this.open[candidate] === 1) { best = candidate; break; } }
       if (best < 0) { this.searching = false; return false; }
       this.expansions++; this.open[best] = 2;
       if (best === to) { this.searching = false; for (let cell = to; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true; }
-      for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n]) { this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; } }
+      for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n]) { this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(n % this.width - tx) + Math.abs(Math.floor(n / this.width) - tz)) * 1.00001); } }
     }
     return false;
   }

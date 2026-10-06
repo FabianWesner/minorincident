@@ -131,3 +131,18 @@ changes the look; E02 image goldens were not automatically rebaselined.
 Temporary before/after captures, comparison sheets, generated test screenshots
 and failure traces were deleted after final inspection. Existing tracked reference
 screenshots were restored. Metrics and this written review are retained.
+
+Integration follow-up (2026-10-06): merged main at `55ba8af` once on the
+orchestrator's request. DistrictView keeps ambient focus updates, slab culling,
+and main's fading location tags. CivilianCrowd keeps shared palette shading and
+main's five model variants and movement-driven animation. Generated compound
+asset colliders now coexist with district-authored `dressing:*` solids; the L1
+regression checks that those solids reach navigation while mission anchors stay
+reachable. Narrowed streets, lighting, ground detail, grass and post FX remain.
+
+Typecheck and lint pass. Unit tests pass with one worker: 54 files / 142 tests,
+excluding `tests/unit/static.test.ts`, which launches a production build. A
+focused collider/visual unit rerun passes all five tests. The user requested no
+heavy work: no Blender, browser, rendering or production build ran during this
+merge. Build-containing unit, smoke, E19 verification, integrated desktop/iPhone
+visual review and performance measurements remain pending heavy-work clearance.

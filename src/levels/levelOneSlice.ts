@@ -18,6 +18,7 @@ export function levelOneSlice(campaign: MissionDef): MissionDef {
   };
   encounter('incident', 'diner', ['runner', 'runner', 'runner', 'runner'], [[-3,0],[-5,-3],[-7,2],[-6,5]]);
   encounter('store', 'hardware', ['runner','runner','runner','runner','crawler'], [[4,1],[6,-2],[7,3],[5,5],[3,-4]]);
+  def.steps[1].text = 'Run! Find something better at the hardware store';
   def.steps[0].onComplete = [{ kind:'tier', tier:1 }, { kind:'spawn', group:'incident' }];
   def.steps[1].onStart = [{ kind:'checkpoint', id:'escape' }];
   def.steps[2].text = 'Choose bat, crowbar or machete at the display';

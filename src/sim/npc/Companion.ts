@@ -52,17 +52,13 @@ export class Companion {
           this.world.events.emit({ type: 'corgi.fetched', tick: this.world.tick, id: e.id, pickupId: pickup.id }); c.pickup = null; c.state = 'follow';
         }
       } else {
-        // Trail/side target avoids running ahead of the player. No physics body means no obstruction.
-        const vx = player.survivor?.velocity.x ?? 0, vz = player.survivor?.velocity.z ?? 0, length = Math.hypot(vx, vz);
-        this.target.x = player.transform.x - (length > .1 ? vx / length * 2 : 0);
-        this.target.z = player.transform.z - (length > .1 ? vz / length * 2 : -2);
-        const target = ai.nav.clear(this.target.x, this.target.z, .35) ? this.target : player.transform;
-        this.world.npcs!.move(e, target, 9, c, .4);
-        // Crowd separation uses fixed buffers in the existing store, never touches the player.
-        for (const enemy of ai.active) if (enemy.health.current > 0) {
-          const dx = e.transform.x - enemy.transform.x, dz = e.transform.z - enemy.transform.z, d = Math.hypot(dx, dz);
-          if (d > 0 && d < .8) ai.nav.move(e.transform, dx / d * .03, dz / d * .03, .35);
-        }
+        // Follow the survivor's position with a distance band. Never flip a
+        // trailing offset to a world-axis offset when velocity falls to zero.
+        const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
+        if (distance > 3.2 || !ai.nav.visible(e.transform, player.transform, .35)) c.following = true;
+        if (distance < 2.05 && ai.nav.visible(e.transform, player.transform, .35)) c.following = false;
+        if (c.following) this.world.npcs!.move(e, player.transform, Math.min(8, 4.5 + Math.max(0, distance - 4) * 2), c, 2);
+        else if (c.velocity) c.velocity.x = c.velocity.z = 0;
       }
       if (this.world.tick >= c.barkAt) for (const enemy of ai.active) {
         const dx = enemy.transform.x - player.transform.x, dz = enemy.transform.z - player.transform.z, distance = Math.hypot(dx, dz);

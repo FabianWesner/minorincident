@@ -1,0 +1,77 @@
+{
+  "sourceCommit": "6f22350",
+  "inputRuns": [
+    {
+      "mode": "desktop",
+      "viewport": {
+        "width": 1600,
+        "height": 900
+      },
+      "player": {
+        "x": 45.007083892822266,
+        "y": 0.997698187828064,
+        "z": 14.373652458190918,
+        "yaw": -10.899675931203653
+      },
+      "companion": {
+        "x": 46.47497962697817,
+        "z": 15.732064072410832,
+        "y": 0.5927,
+        "yaw": -4.021675551792416
+      },
+      "companionSpeed": 6.824540119616012e-13,
+      "companionMoving": false,
+      "input": "real mouse or CDP touch events only",
+      "passed": true
+    },
+    {
+      "mode": "iphone-portrait",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "player": {
+        "x": 45.06962966918945,
+        "y": 0.9999374747276306,
+        "z": 14.495757102966309,
+        "yaw": -10.652560929109455
+      },
+      "companion": {
+        "x": 46.55956327001021,
+        "z": 15.829960185389359,
+        "y": 0.5927,
+        "yaw": -4.222094539093409
+      },
+      "companionSpeed": 1.906586229693906e-12,
+      "companionMoving": false,
+      "input": "real mouse or CDP touch events only",
+      "passed": true
+    }
+  ],
+  "visualReview": {
+    "sizes": [
+      "1600x900",
+      "390x844"
+    ],
+    "reviewed": [
+      "morning sidewalk",
+      "hedge detour/collision",
+      "forecourt entry",
+      "settled companion",
+      "production debug overlay",
+      "full-slice diner incident",
+      "portrait hardware fight"
+    ],
+    "findings": "Survivor stops outside hedges; forecourt paving is reachable beneath the canopy; survivor and corgi stand on the paving, separated from pumps and hedges; stationary dog stays calm. Civilian root idle is grounded and the sidewalk neighbor has its own model/tint. Hair, gait clips and world styling remain with the art/animation/look lanes.",
+    "capturesDeleted": true,
+    "generatedReviewCaptureFilesRemoved": 27
+  },
+  "simulationBenchmark": {
+    "districtLoadMs": 128.3,
+    "rapierColliders": 1173,
+    "idle1800TicksMs": 395.74,
+    "moving600TicksMs": 153.58,
+    "note": "Local Node benchmark; not a browser FPS claim."
+  },
+  "specChanges": false
+}
