@@ -35,6 +35,18 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // one instance. ANGLE Metal specializes both driver pipelines on their first draw.
     for (const { object, matrices } of saved) if (object instanceof InstancedMesh) object.count = matrices!.length;
     render(); await renderer.finishWarmUp();
+    // Opaque district geometry can cover the animated batches in the tiny target.
+    // Draw each one alone so ANGLE executes its fragment pipeline, rather than
+    // postponing native specialization until the first infected becomes visible.
+    const solo = saved.filter(({ object }) => object instanceof InstancedMesh && object.userData.preRenderSolo);
+    if (solo.length) {
+      for (const { object } of saved) if (object instanceof Mesh || object instanceof Sprite) object.visible = false;
+      for (const { object, matrices } of solo) {
+        const mesh = object as InstancedMesh; mesh.visible = true;
+        for (const count of [1, matrices!.length]) { mesh.count = count; render(); await renderer.finishWarmUp(); }
+        mesh.visible = false;
+      }
+    }
     performance.measure('L1 driver warm-up', { start: draw, end: performance.now() });
   } finally {
     for (const { object, visible, culled, count, matrices } of saved) {

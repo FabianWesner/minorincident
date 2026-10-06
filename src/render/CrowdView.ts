@@ -90,7 +90,7 @@ export class CrowdView extends Group {
       });
       const slot = lod === 'lod0' ? this.heroSlots.get(def.id) : undefined;
       const mesh = slot ?? new InstancedMesh(baked.geometry, material, capacity);
-      if (slot) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.geometry = baked.geometry; mesh.material = material; this.heroSlots.delete(def.id); } mesh.name = def.id; mesh.frustumCulled = false; mesh.count = 0;
+      if (slot) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.geometry = baked.geometry; mesh.material = material; this.heroSlots.delete(def.id); } mesh.userData.preRenderSolo = true; mesh.name = def.id; mesh.frustumCulled = false; mesh.count = 0;
       // E17's explicit instance * part order: positionNode runs after default instancing.
       const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1);
       mesh.onBeforeRender = () => { matrices.version = mesh.instanceMatrix.version; };

@@ -39,3 +39,15 @@ test('@E19 warm-up waits for a new render frame even when the GPU fence is alrea
     frame!(0); await warm; expect(finished).toBe(true);
   } finally { vi.unstubAllGlobals(); }
 });
+
+test('@E19 animated batches execute both driver paths without opaque occluders', async () => {
+  const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
+  const crowd = new InstancedMesh(geometry, material, 3), district = new InstancedMesh(geometry, material, 2);
+  crowd.userData.preRenderSolo = true; crowd.visible = false; crowd.count = 0; scene.add(crowd, district);
+  const draws: number[][] = [];
+  const renderer = { selectedBackend: 'webgl', getSize: (target: Vector2) => target.set(100, 100), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), compileAsync: vi.fn(async () => {}) } as unknown as Renderer;
+  await preRender(renderer, scene, new PerspectiveCamera(), () => { draws.push([Number(crowd.visible), Number(district.visible), crowd.count]); });
+  expect(draws).toEqual([[1, 1, 1], [1, 1, 2], [1, 0, 1], [1, 0, 2]]);
+  expect(crowd.visible).toBe(false); expect(crowd.count).toBe(0); expect(district.visible).toBe(true); expect(district.count).toBe(2);
+  crowd.dispose(); district.dispose(); geometry.dispose(); material.dispose();
+});
