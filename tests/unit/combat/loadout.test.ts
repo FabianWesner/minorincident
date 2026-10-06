@@ -1,3 +1,4 @@
+import { meleeMoves } from '../../../src/data/meleeCombos';
 import { expect, test } from 'vitest';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { Loadout } from '../../../src/sim/combat/Loadout';
@@ -14,7 +15,10 @@ test('T-E05-phases @E05 windup, active and recovery are fixed tick phases and in
   const rack = new Loadout(['weapon.bat'], ['weapon.grenade']), runner = new ActionRunner(1, rack), starts: number[] = [], hits: number[] = [];
   const frame = emptyInput(); frame.left.held = true;
   for (let tick = 1; tick <= 35; tick++) runner.update(frame, tick, true, () => starts.push(tick), () => hits.push(tick));
-  expect(starts).toEqual([1, 31]); expect(hits).toEqual([7]);
+  // E19 §5.6 authored forehand: 5 + 4 + 11 ticks; contact after the anticipation.
+  const forehand = meleeMoves['weapon.bat'][0];
+  expect(starts).toEqual([1, 1 + forehand.windup + forehand.active + forehand.recovery]); const second = 1 + forehand.windup + forehand.active + forehand.recovery;
+  expect(hits).toEqual([1 + forehand.windup, second + meleeMoves['weapon.bat'][1].windup]);
   runner.update(frame, 36, false, () => {}, () => {}); expect(runner.running.LEFT).toBeUndefined();
 });
 
