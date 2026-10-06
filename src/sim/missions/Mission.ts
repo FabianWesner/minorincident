@@ -1,5 +1,6 @@
 // Zones enter/leave latching and named respawns adapted from Bruno Simon folio-2025
 // Zones.js / Respawns.js (MIT, 41046b5). State belongs to the fixed-step sim.
+import { LevelOneOutbreak } from './LevelOneOutbreak';
 import { dialogue } from '../../data/dialogue';
 import { SimPhase } from '../../core/EventBus';
 import type { InputFrame } from '../../input/InputFrame';
@@ -28,6 +29,7 @@ export class Mission {
     if (this.def.slice && this.state.steps.melee?.status === 'active' && ['weapon.bat','weapon.crowbar','weapon.machete'].includes(id)) this.meleeChoice = id;
   }
   restartSlice(): void { if (this.def.slice) { this.world.combat?.clearLoadout(); this.meleeChoice = 'weapon.bat'; this.restore('start'); } }
+  private readonly outbreak = new LevelOneOutbreak(this);
   private readonly startTick: number;
   constructor(readonly world: SimWorld, readonly def: MissionDef) {
     const errors = validateMission(def); if (errors.length) throw new Error(errors.join('\n'));
@@ -43,6 +45,7 @@ export class Mission {
     world.mission = this.state; this.rebuildGates();
     for (const step of def.steps) {this.registerZones(step.complete); for(const fail of step.fail)this.registerZones(fail.trigger);}
     this.stops.push(world.events.on('sim.tick', () => this.update(), SimPhase.missions));
+    this.stops.push(world.events.on('civilian.turned', event => { if (event.type === 'civilian.turned' && this.def.slice) this.outbreak.turned(event.id, event.infectedId); }, SimPhase.missions));
     for (const type of ['combat.kill', 'player.damaged', 'player.died', 'player.respawned', 'mission.signal', 'mission.failed'] as const) this.stops.push(world.events.on(type, event => this.event(event), SimPhase.missions));
     this.emit({ type: 'mission.briefing', id: def.id, text: def.briefing });
   }
@@ -52,6 +55,7 @@ export class Mission {
   /** A briefing is explicit; callers may accept it immediately for deterministic fixtures. */
   begin(): void {
     if (this.state.phase !== 'briefing') return;
+    if (this.def.slice) this.outbreak.prepare();
     this.state.phase = 'playing'; this.run(this.def.onStart); this.activate(); this.flushCheckpoint();
     this.checkpoints.set('start', this.capture());
     this.world.events.emit({ type: 'level.started', tick: this.world.tick, id: this.def.id });
@@ -85,6 +89,7 @@ export class Mission {
   }
   private update(): void {
     if (this.state.phase !== 'playing') return;
+    if (this.def.slice) this.outbreak.update();
     const alive=this.world.entities.get(1)!.health.current>0;
     this.state.stats.time = (this.world.tick - this.startTick) / 60;
     if (this.state.subtitle && this.world.tick >= this.state.subtitle.until) this.state.subtitle = null;
@@ -121,6 +126,7 @@ export class Mission {
     if (this.def.slice && def.id === 'breakfast') this.world.combat!.setLoadout(['weapon.fists'], ['weapon.kick']);
     // Crossing the hardware entrance closes the first chase; the weapon display is a safe beat.
     if (this.def.slice && def.id === 'escape') {
+      this.outbreak.end();
       for (const actor of this.def.groups.incident) {
         const entity=this.world.entities.get(this.state.actors[actor]);if(entity?.infected)this.world.infected!.release(entity);
       }
@@ -189,18 +195,9 @@ export class Mission {
       if (this.state.actors[id] || this.deadBosses.has(id)) continue;
       const def = this.def.actors[id], anchor = this.def.anchors[def.anchor];
       if (this.def.slice && this.world.infected && def.kind === 'infected') {
-        // Authored offsets may be inside an imported prop. Find the nearest clear nav cell.
-        let position = {x:anchor.x,z:anchor.z};
-        if (!this.world.infected.nav.clear(position.x,position.z,.65)) {
-          let found = false;
-          for (let r=.5; r<=10 && !found; r+=.5) for (let i=0; i<16; i++) {
-            const p={x:anchor.x+Math.cos(i*Math.PI/8)*r,z:anchor.z+Math.sin(i*Math.PI/8)*r};
-            if(this.world.infected.nav.clear(p.x,p.z,.65)){position=p;found=true;break;}
-          }
-          if (!found) throw new Error(`No clear encounter spawn: ${id}`);
-        }
-        const entityId = this.world.infected.spawn(def.archetype,position,{state:'chase',variant:id==='incident-0'?'inf.delivery-driver':undefined});
-        // Tutorial incident: 2 HP per accepted runner hit, allowing at least 25 s to react.
+        if (group === 'incident' && id !== 'incident-0') continue;
+        const position = this.outbreak.spawnPosition(anchor, group === 'store');
+        const entityId = this.world.infected.spawn(def.archetype, position, { state: group === 'incident' ? 'migration' : 'chase', variant: id === 'incident-0' ? 'inf.delivery-driver' : undefined });
         if (group === 'incident') this.world.entities.get(entityId)!.combat!.damageMultiplier = .2;
         this.state.actors[id]=entityId; continue;
       }
@@ -225,7 +222,7 @@ export class Mission {
       case 'migration': this.spawn(action.group); this.emit({ type: 'migration.started', id: action.group, to: this.def.anchors[action.to] }); break;
       case 'tier': this.state.tier = action.tier; this.world.setTier(action.tier); this.emit({ type: 'world.tier-requested', tier: action.tier }); break;
       case 'gate': this.state.gates[action.id] = action.open; this.world.physics.world!.getCollider(this.gateHandles.get(action.id)!).setEnabled(!action.open); this.emit({ type: 'gate.changed', id: action.id, open: action.open }); break;
-      case 'radio': this.state.subtitle = { id: action.id, text: dialogue[action.id], until: this.world.tick + 300 }; this.emit({ type: 'dialogue.line', id: action.id, text: dialogue[action.id] }); break;
+      case 'radio': this.state.subtitle = { id: action.id, text: dialogue[action.id], until: this.world.tick + 180 }; this.emit({ type: 'dialogue.line', id: action.id, text: dialogue[action.id] }); break;
       case 'cinematic': if (this.state.cinematic) throw new Error('Overlapping cinematics'); this.state.cinematic = { id: action.id, elapsed: 0, resume:this.state.phase==='retry'?'retry':'playing' }; this.state.phase = 'cinematic'; this.emit({ type: 'cinematic.started', id: action.id }); break;
       case 'timeOfDay': this.state.timeOfDay = action.value; break;
       case 'grant': this.collect(action.item); break;

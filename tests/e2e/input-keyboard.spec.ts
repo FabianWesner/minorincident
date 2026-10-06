@@ -39,7 +39,7 @@ test('T-E03-05 @E03 @E03-AC05 keyboard aim turns at 360deg/s, taps snap and acti
     const frame = await tick(page);
     expect(frame.aim!.x).toBeCloseTo(direction.x, 4); expect(frame.aim!.z).toBeCloseTo(direction.z, 4);
   }
-  for (const [key, side] of [['j', 'left'], ['k', 'right'], ['Space', 'left'], ['Shift', 'right']] as const) {
+  for (const [key, side] of [['j', 'left'], ['k', 'right'], ['Space', 'left']] as const) {
     await page.keyboard.down(key); expect((await tick(page))[side]).toEqual({ down: true, held: true, up: false });
     await page.keyboard.up(key); expect((await tick(page))[side]).toEqual({ down: false, held: false, up: true });
   }

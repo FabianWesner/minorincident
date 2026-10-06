@@ -100,6 +100,9 @@ export class ActionView extends Group {
       for (let i = 0; i < 32; i++) { const a = i / 32, b = (i + 1) / 32; this.segment(origin.x + dx * scale * a, (0.7 + gravityHeight * a) * (1 - a), origin.z + dz * scale * a, origin.x + dx * scale * b, (0.7 + gravityHeight * b) * (1 - b), origin.z + dz * scale * b); }
       this.circle(this.landing.x, this.landing.z, def.splash?.radius ?? def.effect?.radius ?? 1);
     } else this.circle(origin.x, origin.z, def.range);
+    const command = this.world.controls.snapshot()?.attack;
+    const target = command ? this.world.entities.get(command.id) : null;
+    if (target?.faction === 'infected' && target.health.current > 0 && !target.hidden && !target.infected?.hidden) this.circle(target.transform.x, target.transform.z, .5);
     // Persistent zone silhouettes; hot fire, smoke, lure and shield share their authored radius.
     for (const zone of combat.effects.zones) this.circle(zone.x, zone.z, zone.radius);
     this.geometry.setDrawRange(0, this.offset / 3); this.geometry.getAttribute('position').needsUpdate = true;

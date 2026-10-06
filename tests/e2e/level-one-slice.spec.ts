@@ -79,7 +79,10 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
 
     await move(-14,-4);await move(0,0);await move(42,0);await shot('before-incident');await move(42,-6.5);await step(1);
     expect(await page.evaluate(()=>window.__SS__!.getState().mission!.completedObjectives)).toContain('breakfast');
-    expect(await page.evaluate(()=>window.__SS__!.query({kind:'infected'}).filter(e=>e.health.current>0))).toHaveLength(4);expect(await page.evaluate(()=>window.__SS__!.events().some(e=>e.type==='civilian.turned'&&e.variant==='inf.delivery-driver'))).toBe(true);await shot('incident');
+    expect(await page.evaluate(()=>window.__SS__!.query({kind:'infected'}).filter(e=>e.health.current>0))).toHaveLength(1);await shot('entrant');
+    for(let i=0;i<120 && !await page.evaluate(()=>window.__SS__!.missions.state()!.outbreak!.released);i++)await step(30);
+    expect(await page.evaluate(()=>window.__SS__!.query({kind:'infected'}).filter(e=>e.health.current>0))).toHaveLength(4);
+    expect(await page.evaluate(()=>window.__SS__!.events().filter(e=>e.type==='civilian.turned').length)).toBeGreaterThanOrEqual(3);await shot('incident');
     expect(await page.evaluate(()=>window.__SS__!.missions.state()!.checkpoint)).toBe('escape');
     if(mode==='desktop'){
       const started=await page.evaluate(()=>window.__SS__!.getState().tick);
