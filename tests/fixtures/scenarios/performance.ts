@@ -24,9 +24,10 @@ export function installPerformanceLevel(world: SimWorld, tier: QualityTier, name
   const { min, max } = world.districts!.nav;
   const walls: NonNullable<ScenarioDefinition['walls']> = [];
   for (const d of world.districts!.districts) for (const box of d.decay.colliders.map(c => c.aabb).concat(d.blockers)) walls.push({ x: (box.min[0] + box.max[0]) / 2 + d.origin[0], y: (box.min[1] + box.max[1]) / 2, z: (box.min[2] + box.max[2]) / 2 + d.origin[1], halfX: (box.max[0] - box.min[0]) / 2, halfY: (box.max[1] - box.min[1]) / 2, halfZ: (box.max[2] - box.min[2]) / 2 });
+  const alreadyUpdating = world.infected !== null;
   world.infected = new InfectedSystem(world, { ...arena, name, ground: { width: max[0] - min[0], depth: max[1] - min[1], center: { x: (min[0] + max[0]) / 2, z: (min[1] + max[1]) / 2 } }, walls });
   world.infected.director.tier = tier;
-  world.events.on('sim.tick', () => world.infected!.update(), SimPhase.ai);
+  if (!alreadyUpdating) world.events.on('sim.tick', () => world.infected!.update(), SimPhase.ai);
   world.combat!.damage.god = true;
   const target = tier === 'high' ? 200 : 100;
   const player = world.entities.get(1)!;
