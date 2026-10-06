@@ -18,10 +18,10 @@ Times are targets for a new human player who uses the bicycle; on foot add ~20 s
 
 | # | Beat | Area | What happens | Target time |
 | --- | --- | --- | --- | --- |
-| 1 | Normal morning | Maple Corner (Joe's Diner patio) | Start next to the courier bicycle at the bike rack; dense pedestrian life (§5.1), café chatter, light traffic, birds. Dispatcher line (phone toast): *"Morning! One pickup at Sunset Parcel, goes to Grove Bio-Diagnostics on Larch Street. Easy one."* Objective: **Pick up the package at Sunset Parcel**. Movement and bicycle prompts appear once. | 0:00–0:20 |
-| 2 | Pickup | Sunset Parcel Co. counter (Main Row) | Stand-to-interact at the counter (1.0 s; `E`/F/MMB instant). The clerk hands over a sealed hazard-taped cooler box; the courier carries it (bag on the back, or box on the bicycle rack). Objective: **Deliver the package to Grove Bio-Diagnostics**. | 0:20–0:50 |
+| 1 | Normal morning | Maple Corner (Sunset Grove Coffee patio) | Start next to the courier bicycle at the bike rack; dense pedestrian life (§5.1), café chatter, light traffic, birds. Dispatcher line (phone toast): *"Morning! One cold-chain parcel at the depot, goes to the Medical Annex on Larch Street. Easy one."* Objective: **Pick up the package at the courier depot**. Movement and bicycle prompts appear once. | 0:00–0:20 |
+| 2 | Pickup | Sunset Grove Courier depot counter (Main Row) | Stand-to-interact at the counter (1.0 s; `E`/F/MMB instant). The clerk hands over a sealed cold-chain medical parcel; the courier carries it (in the bicycle's cargo box when riding, under the arm on foot). Objective: **Deliver the package to the Medical Annex**. | 0:20–0:50 |
 | 3 | Ride to the facility | Juniper Lane → Larch Street | Free route through the residential loop. The facility reads as "slightly off": security fence, hazard and "Authorized personnel" signs, a humming rooftop vent, a flickering window, a parked unmarked van. The corgi slows near it and whines once. | 0:50–1:40 |
-| 4 | Leave the bicycle, hand over | Grove Bio-Diagnostics forecourt | A **No bicycles** gate zone: the bicycle cannot enter; the player dismounts at the bike rack outside the gate (auto-dismount when riding into the zone) and walks ~8–10 m. Stand-to-interact at the door: the **lab technician** (a named NPC) comes out, signs, takes the box and walks back inside. Toast: **"Delivered ✓"**. The bicycle stays exactly where it was left for the rest of the level. | 1:40–1:55 |
+| 4 | Leave the bicycle, hand over | Sunset Grove Medical Annex forecourt | A **No bicycles** gate zone: the bicycle cannot enter; the player dismounts at the bike rack outside the gate (auto-dismount when riding into the zone) and walks ~8–10 m. Stand-to-interact at the door: the **lab technician** (a named NPC) comes out, signs, takes the box and walks back inside. Toast: **"Delivered ✓"**. The bicycle stays exactly where it was left for the rest of the level. | 1:40–1:55 |
 | 5 | Brief calm → accident | forecourt | **4–6 s of nothing** (normal ambience, objective panel shows a completed tick, no new objective). Then the corgi stiffens and growls toward the building (≈ 1.5 s before the blast). Accident sequence (≈ 8 s, never a big cinematic, camera stays playable): lights flicker in the windows (0.0 s) → contained pressure blast: windows bow out, one shatters, glass and objects rattle, short camera shake (1.5 s) → muffled ringing / low-pass on the mix for 1.2 s → smoke from the vent and the broken window → screams and crashes inside. | 1:55–2:10 |
 | 6 | Multiple infected escape | forecourt → all directions | At accident + 8–10 s, **5 infected** burst out through the front door, the side door and the broken window, **including the lab technician** who took the package (same model, same clothes, now transformed), and run in **different directions** (at least 3 distinct headings ≥ 60° apart). Objective: **Get away from the facility**. From here on the outbreak is systemic. | 2:10–2:30 |
 | 7 | Panic and spread; first fight | Larch Street, Juniper Lane | Pedestrians notice, scream and flee; infected chase and bite them; victims transform and join. The player can fight 1–2 infected with unarmed kicks/strikes (never one-shot). Dispatcher: *"What was that bang? …Hey, are you okay? Get off the street — grab anything you can!"* Objective: **Find something to defend yourself** (soft marker on the open Henderson garage). | 2:30–3:15 |
@@ -42,10 +42,10 @@ A new compact L1 district built with the existing layout tooling (`layouts/D-GRO
 
 | Area | Position | Contents | Role |
 | --- | --- | --- | --- |
-| **Maple Corner** (start) | west | Joe's Diner with an outdoor café patio (tables, umbrellas), bus stop, bike rack with the courier bicycle, crosswalk | start, life, sound of normal |
-| **Main Row** | north-west → north | 3–4 storefronts (brick row), **Sunset Parcel Co.** (pickup), parked courier van | pickup |
+| **Maple Corner** (start) | west | Sunset Grove Coffee, a brick corner café with an umbrella patio, bus stop, bike rack with the courier bicycle, crosswalk | start, life, sound of normal |
+| **Main Row** | north-west → north | 3–4 storefronts (brick row), **Sunset Grove Courier depot** (pickup), parked courier van | pickup |
 | **Juniper Lane loop** | centre | ring street with 8–12 houses (base types, §6), front yards, fences, hedges, driveways with cars | residential, loops |
-| **Larch Street** | east | **Grove Bio-Diagnostics** lab/clinic annex behind a security fence, small forecourt, bike rack outside the gate, staff parking | delivery, outbreak origin |
+| **Larch Street** | east | **Sunset Grove Medical Annex** lab/clinic annex behind a security fence, small forecourt, bike rack outside the gate, staff parking | delivery, outbreak origin |
 | **Elm Street** | south-centre | **Henderson house with detached garage** (door half open, light on, workbench, sports bag with the bat) | first weapon |
 | **Back alleys** | between blocks | gravel/asphalt alleys behind back yards, **2–3 yard gates**, **2 dumpsters** at alley necks, trash bins, privacy fences | optional routes, toys |
 | **Sunny Suds car wash** | south-west, next to a small Sunset Fuel corner | drive-through car wash bay | toy, line-of-sight blocker |
@@ -122,7 +122,7 @@ The director never places infected in view (M1-10 spawn rule still applies: off-
 - **Caps:** concurrent infected ≤ 60 (high tier) / 30 (low tier, mobile); at the cap a bite kills the civilian instead of turning them.
 
 ### 5.10 Bicycle
-- Courier bicycle at the start bike rack. Mount/dismount by stand-to-interact 0.4 s or `E`/F/MMB/ACTION instantly.
+- Courier cargo bicycle (`veh.courier-bike`) at the start bike rack. Mount/dismount by stand-to-interact 0.4 s or `E`/F/MMB/ACTION instantly.
 - Speed **7.5 m/s** (faster than every infected tier), acceleration 0→7 m/s in 1.5 s, wider turning (min radius 2.5 m), collides like the player (no pass-through), stops on obstacles.
 - **Harmless:** no damage, no knockback, no run-over; colliding with an infected stops the bike and dismounts the player.
 - Infected treat a riding player like any human (vision, chase).
@@ -148,7 +148,7 @@ Each one: stand-to-interact or `E`/F/MMB/ACTION, immediate readable effect, no i
 ## 6. Production philosophy (assets)
 
 - **Base houses:** 5 reusable types (`bld.house-a/b/c` existing + 2 new), each varied by colour palette, mirror/rotation, driveway car (or none), garage door (open/closed/none), garden set and vegetation. Base houses are side tier.
-- **Unique hero locations** get full detail: Sunset Parcel Co. (pickup), Grove Bio-Diagnostics (delivery, with accident states), Henderson garage (bat), Fire Station 3 (safe endpoint; existing `bld.fire-station` plus a working shutter), Joe's Diner patio (start; existing `bld.joes-diner` plus patio dressing).
+- **Unique hero locations** get full detail: Sunset Grove Courier depot (pickup), Sunset Grove Medical Annex (delivery, with accident states), Henderson garage (bat), Fire Station 3 (safe endpoint; existing `bld.fire-station` plus a working shutter), Sunset Grove Coffee (start, `bld.cafe-corner`). Asset ids already in production from the concept sheet `initial-drafts/l1v2-key-locations.png`: `bld.clinic-annex`, `bld.garage-detached`, `bld.cafe-corner`, `veh.courier-bike`, `prop.package-courier`, courier outfit (`char.courier-female/male`).
 - Full list and visual descriptions: `epics-pipeline/l1v2-assets.md`.
 
 ## 7. Bruno references

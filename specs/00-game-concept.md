@@ -192,7 +192,7 @@ The infected are fast, aggressive humans. Archetypes are **mechanical roles**; v
 
 | Level | Title | World tier | Districts | New mechanics | Unlocks at end |
 | --- | --- | --- | --- | --- | --- |
-| L1 | Special Delivery (Stop the Outbreak) | W0→W1 | D-GROVE (compact L1 neighbourhood: café, parcel shop, lab annex, garage, fire station) | movement (run default, walk modifier), bicycle, evasion by line of sight, unarmed fighting, first melee weapon, stand-to-interact, world toys | baseball bat (found in the garage) |
+| L1 | Special Delivery (Stop the Outbreak) | W0→W1 | D-GROVE (compact L1 neighbourhood: café, courier depot, medical annex, garage, fire station) | movement (run default, walk modifier), bicycle, evasion by line of sight, unarmed fighting, first melee weapon, stand-to-interact, world toys | baseball bat (found in the garage) |
 | L2 | Get Them Out | W1 | D-RES → D-SCHOOL → D-PARK (evac point at the baseball field) | firearms, throwables, second slot, escorts, Brute, Screamer | pistol / shotgun, Molotov; rack 2/2 |
 | L3 | Reach the Safe Zone | W2 | D-MAIN → D-SHOP → D-CIVIC (safe-zone camp) | **vehicles**, route choice, timer, Sprinter, Riot, Bloated | SMG or rifle, vehicle perks |
 | L4 | Open the Escape Route | W3 | D-CIVIC → D-ZOO → D-EDGE (substation, rail crossing, bridge) | multi-task objectives, hazards (power, fire), Butcher elite | heavy weapons (machine gun, rocket launcher), stronger explosives; rack 3/3 |
@@ -203,7 +203,7 @@ The detailed level designs are in the level epics [E19](epic-19-level-1-stop-the
 
 ### Story beats (proposed, editable)
 
-- **L1 (rewritten 2026-10-06 per product owner, E19):** A normal morning. The young courier and their corgi pick up a sealed package at Sunset Parcel and deliver it to the Grove Bio-Diagnostics lab annex. A few calm seconds after the hand-over, a contained accident inside releases five infected — among them the technician who took the package. The outbreak then spreads on its own: infected chase and bite pedestrians, who turn and hunt in turn. The courier fights with bare hands, finds a baseball bat in a neighbour's garage, sees the crowd grow beyond control and escapes to Fire Station 3. **Delivery complete. Outbreak: not contained.**
+- **L1 (rewritten 2026-10-06 per product owner, E19):** A normal morning. The young courier and their corgi pick up a sealed package at the Sunset Grove Courier depot and deliver it to the Sunset Grove Medical Annex lab annex. A few calm seconds after the hand-over, a contained accident inside releases five infected — among them the technician who took the package. The outbreak then spreads on its own: infected chase and bite pedestrians, who turn and hunt in turn. The courier fights with bare hands, finds a baseball bat in a neighbour's garage, sees the crowd grow beyond control and escapes to Fire Station 3. **Delivery complete. Outbreak: not contained.**
 - **L2:** Get your **younger brother (from the school) and your neighbor Mrs. Alvarez** to the evacuation buses at the baseball field. The buses leave; the field is overrun as the last bus departs. You are left behind.
 - **L3:** A police broadcast names the **Civic Center safe zone**, which closes at a deadline. Cross town by foot and by car. Inside the fence, a medic tent "patient" turns. The safe zone collapses.
 - **L4:** The survivors' radio says the only exit is the **river bridge**: restore power at the substation, raise the rail-crossing gates, and clear the bridge blockade. Done, but a migration is coming.
