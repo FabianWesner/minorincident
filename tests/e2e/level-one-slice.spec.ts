@@ -100,7 +100,7 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
     expect(await page.evaluate(()=>window.__SS__!.missions.state()!.checkpoint)).toBe('escape');
     if(mode==='desktop'){
       const started=await page.evaluate(()=>window.__SS__!.getState().tick);
-      // All combat comes from LMB/RMB on live infected, including the formerly inert fists.
+      // All combat comes from LMB on live infected, with RMB switching, including the formerly inert fists.
       for(let turn=0;turn<20;turn++){
         if(await page.evaluate(()=>window.__SS__!.missions.state()!.stats.kills>0))break;
         const point=await page.evaluate(()=>{
