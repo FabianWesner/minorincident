@@ -1,6 +1,7 @@
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { Color, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, type DataTexture } from 'three/webgpu';
-import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4 } from 'three/tsl';
+import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix } from 'three/tsl';
+import type { Materials } from '../Materials';
 import { clipTexture, crowdMatrix, crowdPosition } from '../../assets/crowd';
 import { AssetRegistry } from '../../assets/registry';
 import { civilianRoles } from '../../data/npcs';
@@ -21,7 +22,7 @@ class CivilianBatch extends Group {
   private readonly decay = new InstancedBufferAttribute(new Float32Array(128), 1);
   private readonly registry = new AssetRegistry(() => {});
   source = 'placeholder';
-  constructor(readonly world: SimWorld, readonly female: boolean, readonly distant: boolean) { super(); this.name = 'civilian-crowd'; }
+  constructor(readonly world: SimWorld, readonly female: boolean, readonly distant: boolean, private readonly shading?: Materials) { super(); this.name = 'civilian-crowd'; }
   async init(): Promise<void> {
     const loaded = await this.registry.loadAsset(this.female ? 'npc.civilian-woman-a' : 'npc.civilian-man-a', this.distant ? 'lod2' : 'lod1');
     const placeholder = loaded.userData.placeholder, model = placeholder ? createCivilianPlaceholder() : loaded as Group;
@@ -32,14 +33,14 @@ class CivilianBatch extends Group {
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_glow', this.glow); baked.geometry.setAttribute('_decay', this.decay);
     this.texture = clipTexture(baked.clip);
     const eye = attribute('_emissive', 'float'), vein = attribute('_vein', 'float'), decay = attribute('_decay', 'float');
-    const material = new MeshLambertNodeMaterial();
-    material.colorNode = mix(mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float')), mix(vec3(.02), vec3(1, .015, .025), attribute('_glow', 'float')), eye);
-    Object.assign(material, { emissiveNode: vec3(1, .005, .02).mul(eye).mul(attribute('_glow', 'float')).mul(4) });
+    const base = mix(mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float')), mix(vec3(.02), vec3(1, .015, .025), attribute('_glow', 'float')), eye);
+    const glow = vec3(1, .005, .02).mul(eye).mul(attribute('_glow', 'float')).mul(4);
+    const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     this.mesh = new InstancedMesh(baked.geometry, material, 128); this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = this.mesh.receiveShadow = true;
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1); this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; };
     const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset), instance = mat4(column(0), column(4), column(8), column(12)), part = attribute('_part_index', 'float');
     material.positionNode = crowdPosition(instance, this.texture, part, attribute('_clip_frame', 'float'), positionGeometry.mul(vein.greaterThan(.5).select(decay.greaterThan(.25).select(1, 0), 1)));
-    material.normalNode = instance.mul(crowdMatrix(this.texture, part, attribute('_clip_frame', 'float')).mul(vec4(normalGeometry, 0))).xyz.normalize();
+    material.normalNode = instance.mul(crowdMatrix(this.texture, part, attribute('_clip_frame', 'float')).mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
   update(): void {
@@ -65,7 +66,7 @@ class CivilianBatch extends Group {
 /** Real male/female civilians share rigid-part LOD batches and the E07 clip path. */
 export class CivilianCrowd extends Group {
   private readonly batches: CivilianBatch[];
-  constructor(world: SimWorld) { super(); this.batches=[new CivilianBatch(world,false,false),new CivilianBatch(world,true,false),new CivilianBatch(world,false,true),new CivilianBatch(world,true,true)]; this.add(...this.batches); }
+  constructor(world: SimWorld, shading?: Materials) { super(); this.batches=[new CivilianBatch(world,false,false,shading),new CivilianBatch(world,true,false,shading),new CivilianBatch(world,false,true,shading),new CivilianBatch(world,true,true,shading)]; this.add(...this.batches); }
   async init(): Promise<void> { await Promise.all(this.batches.map(b=>b.init())); }
   update(): void { this.batches.forEach(b=>b.update()); }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }

@@ -41,7 +41,8 @@ export function layoutSourceHash(id: string): string {
   // Literal placement references in this district and the shared authoring library.
   const source =
     readFileSync(`layouts/${id}/layout.py`, "utf8") +
-    readFileSync("tools/blender/sslib/layout.py", "utf8");
+    readFileSync("tools/blender/sslib/layout.py", "utf8") +
+    (["D-RES", "D-MAIN", "D-SHOP"].includes(id) ? readFileSync("tools/blender/sslib/l1_dressing.py", "utf8") : "");
   const ids = [
     ...new Set(
       [...source.matchAll(/['"]((?:bld|prop|veh)\.[\w-]+)['"]/g)].map(

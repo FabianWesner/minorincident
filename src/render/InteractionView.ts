@@ -82,7 +82,7 @@ export class InteractionView extends Group {
     const key = `${id}:${canonical}`;
       if (!this.prototypes.has(key)) this.prototypes.set(key, this.registry.loadAsset(id, canonical).then(source => {
         if (this.disposed) return source as Group;
-        const prototype = staticBatch(source, true); prototype.userData = { ...source.userData };
+        const prototype = staticBatch(source, true, this.materials); prototype.userData = { ...source.userData };
         prototype.traverse(node => { if (node instanceof Mesh) { this.geometries.add(node.geometry); this.batchMaterials.add(node.material as Material); } });
         return prototype;
       }));

@@ -142,12 +142,16 @@ test('T-E17-height @E17-AC02 adult exports stay 1.75–1.85 m at every LOD', asy
 });
 
 test('T-E17-lanes @E17-AC02 road vehicle envelopes including mirrors fit district lanes at every LOD', async () => {
-  const layout=JSON.parse(readFileSync('public/assets/layouts/D-MAIN.layout.json','utf8'));
-  const lane=Math.min(...layout.roads.edges.map((edge:{laneWidth:number})=>edge.laneWidth/2));
+  const layouts = ['D-RES','D-MAIN','D-SHOP','D-SCHOOL','D-CIVIC','D-PARK','D-ZOO','D-EDGE'].map(id => JSON.parse(readFileSync(`public/assets/layouts/${id}.layout.json`, 'utf8')) as { placements: {assetId: string}[]; roads: {edges: {laneWidth: number}[]} });
+  const fallback = JSON.parse(readFileSync('public/assets/layouts/D-CIVIC.layout.json', 'utf8')) as { roads: {edges: {laneWidth: number}[]} };
   const {default:manifest}=await import('../../../src/assets/manifest.json'),io=await assetIO();
   for(const def of manifest as AssetDef[]) {
     // Aircraft retain their authored rotor span; the separate aircraft contract checks all LODs.
     if(def.category!=='vehicle' || def.id==='veh.helicopter' || (!def.sourceGlb && def.status!=='integrated')) continue;
+    // Check each actual placement district. Future heavy vehicles use the unchanged
+    // civic arterial; L1's sedans must also fit the narrower residential/commercial streets.
+    const used = layouts.filter(l => l.placements.some(p => p.assetId === def.id));
+    const lane = Math.min(...(used.length ? used : [fallback]).flatMap(l => l.roads.edges.map(e => e.laneWidth / 2)));
     for(const path of [def.glb,def.lods?.lod1,def.lods?.lod2].filter((p):p is string=>!!p)) {
       const doc=await io.read(path),bounds=getBounds(doc.getRoot().listScenes()[0]);
       expect(bounds.max[2]-bounds.min[2],path).toBeLessThan(lane-.1);

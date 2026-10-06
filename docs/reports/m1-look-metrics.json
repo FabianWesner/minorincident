@@ -1,0 +1,429 @@
+{
+  "issue": "M1-14",
+  "date": "2026-10-06",
+  "baselineCommit": "960c215",
+  "backend": "headless native WebGL2 / ANGLE Metal / Apple M1 Max",
+  "unthrottled": true,
+  "workers": 1,
+  "desktop": {
+    "viewport": [
+      1600,
+      900
+    ],
+    "dpr": 1,
+    "quality": "high"
+  },
+  "iphone": {
+    "viewport": [
+      390,
+      844
+    ],
+    "dpr": 1,
+    "quality": "low",
+    "emulated": true
+  },
+  "profiles": {
+    "desktop": [
+      {
+        "spot": {
+          "name": "01-porch",
+          "x": -14,
+          "z": -7
+        },
+        "before": {
+          "medianFps": 400,
+          "p95Ms": 3.5,
+          "drawCalls": 156,
+          "triangles": 1019387
+        },
+        "after": {
+          "medianFps": 384.62,
+          "p95Ms": 3.3,
+          "drawCalls": 185,
+          "triangles": 851803,
+          "collectedHeapBytes": 82226252
+        }
+      },
+      {
+        "spot": {
+          "name": "02-crescent",
+          "x": 0,
+          "z": 0
+        },
+        "before": {
+          "medianFps": 400,
+          "p95Ms": 3.2,
+          "drawCalls": 164,
+          "triangles": 883753
+        },
+        "after": {
+          "medianFps": 384.62,
+          "p95Ms": 3.2,
+          "drawCalls": 204,
+          "triangles": 778511,
+          "collectedHeapBytes": 82701672
+        }
+      },
+      {
+        "spot": {
+          "name": "03-connection",
+          "x": 27,
+          "z": 0
+        },
+        "before": {
+          "medianFps": 400,
+          "p95Ms": 3.3,
+          "drawCalls": 170,
+          "triangles": 475792
+        },
+        "after": {
+          "medianFps": 333.33,
+          "p95Ms": 4,
+          "drawCalls": 217,
+          "triangles": 713612,
+          "collectedHeapBytes": 83102620
+        }
+      },
+      {
+        "spot": {
+          "name": "04-diner",
+          "x": 42,
+          "z": -6.5
+        },
+        "before": {
+          "medianFps": 416.67,
+          "p95Ms": 4.1,
+          "drawCalls": 184,
+          "triangles": 1076865
+        },
+        "after": {
+          "medianFps": 344.83,
+          "p95Ms": 3.9,
+          "drawCalls": 238,
+          "triangles": 1045242,
+          "collectedHeapBytes": 86040304
+        }
+      },
+      {
+        "spot": {
+          "name": "05-main",
+          "x": 56,
+          "z": 0
+        },
+        "before": {
+          "medianFps": 256.41,
+          "p95Ms": 5,
+          "drawCalls": 179,
+          "triangles": 600465
+        },
+        "after": {
+          "medianFps": 277.78,
+          "p95Ms": 4.3,
+          "drawCalls": 242,
+          "triangles": 860025,
+          "collectedHeapBytes": 86547680
+        }
+      },
+      {
+        "spot": {
+          "name": "06-hardware",
+          "x": 70,
+          "z": -7
+        },
+        "before": {
+          "medianFps": 294.12,
+          "p95Ms": 4.1,
+          "drawCalls": 177,
+          "triangles": 1156365
+        },
+        "after": {
+          "medianFps": 333.33,
+          "p95Ms": 3.6,
+          "drawCalls": 224,
+          "triangles": 1121751,
+          "collectedHeapBytes": 86885160
+        }
+      },
+      {
+        "spot": {
+          "name": "07-shop",
+          "x": 70,
+          "z": 47
+        },
+        "before": {
+          "medianFps": 322.58,
+          "p95Ms": 3.7,
+          "drawCalls": 116,
+          "triangles": 992961
+        },
+        "after": {
+          "medianFps": 303.03,
+          "p95Ms": 4,
+          "drawCalls": 170,
+          "triangles": 998809,
+          "collectedHeapBytes": 87391424
+        }
+      }
+    ],
+    "iphone": [
+      {
+        "spot": {
+          "name": "01-porch",
+          "x": -14,
+          "z": -7
+        },
+        "before": {
+          "medianFps": 416.67,
+          "p95Ms": 3.3,
+          "drawCalls": 141,
+          "triangles": 252271
+        },
+        "after": {
+          "medianFps": 526.32,
+          "p95Ms": 2.6,
+          "drawCalls": 169,
+          "triangles": 293175,
+          "collectedHeapBytes": 82373960
+        }
+      },
+      {
+        "spot": {
+          "name": "02-crescent",
+          "x": 0,
+          "z": 0
+        },
+        "before": {
+          "medianFps": 434.78,
+          "p95Ms": 2.9,
+          "drawCalls": 156,
+          "triangles": 328909
+        },
+        "after": {
+          "medianFps": 476.19,
+          "p95Ms": 2.8,
+          "drawCalls": 196,
+          "triangles": 408059,
+          "collectedHeapBytes": 82779096
+        }
+      },
+      {
+        "spot": {
+          "name": "03-connection",
+          "x": 27,
+          "z": 0
+        },
+        "before": {
+          "medianFps": 434.78,
+          "p95Ms": 4,
+          "drawCalls": 139,
+          "triangles": 356240
+        },
+        "after": {
+          "medianFps": 500,
+          "p95Ms": 2.8,
+          "drawCalls": 178,
+          "triangles": 455096,
+          "collectedHeapBytes": 83048804
+        }
+      },
+      {
+        "spot": {
+          "name": "04-diner",
+          "x": 42,
+          "z": -6.5
+        },
+        "before": {
+          "medianFps": 476.19,
+          "p95Ms": 3.2,
+          "drawCalls": 140,
+          "triangles": 174016
+        },
+        "after": {
+          "medianFps": 434.78,
+          "p95Ms": 3.3,
+          "drawCalls": 189,
+          "triangles": 301083,
+          "collectedHeapBytes": 83487992
+        }
+      },
+      {
+        "spot": {
+          "name": "05-main",
+          "x": 56,
+          "z": 0
+        },
+        "before": {
+          "medianFps": 416.67,
+          "p95Ms": 3.6,
+          "drawCalls": 167,
+          "triangles": 217130
+        },
+        "after": {
+          "medianFps": 294.12,
+          "p95Ms": 5.6,
+          "drawCalls": 225,
+          "triangles": 356330,
+          "collectedHeapBytes": 84220540
+        }
+      },
+      {
+        "spot": {
+          "name": "06-hardware",
+          "x": 70,
+          "z": -7
+        },
+        "before": {
+          "medianFps": 357.14,
+          "p95Ms": 3.4,
+          "drawCalls": 129,
+          "triangles": 226905
+        },
+        "after": {
+          "medianFps": 370.37,
+          "p95Ms": 3.2,
+          "drawCalls": 149,
+          "triangles": 276525,
+          "collectedHeapBytes": 84366812
+        }
+      },
+      {
+        "spot": {
+          "name": "07-shop",
+          "x": 70,
+          "z": 47
+        },
+        "before": {
+          "medianFps": 370.37,
+          "p95Ms": 3.3,
+          "drawCalls": 101,
+          "triangles": 212279
+        },
+        "after": {
+          "medianFps": 416.67,
+          "p95Ms": 3.1,
+          "drawCalls": 142,
+          "triangles": 326627,
+          "collectedHeapBytes": 84667056
+        }
+      }
+    ]
+  },
+  "validation": {
+    "fullUnit": {
+      "passed": 138,
+      "files": 53,
+      "maxWorkers": 1
+    },
+    "smoke": {
+      "unitSimPassed": 3,
+      "browserPassed": 22
+    },
+    "verifyE19": {
+      "checks": [
+        {
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "lint"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/e2e-lock.sh",
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npx",
+            "vitest",
+            "run",
+            "-t",
+            "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--maxWorkers=1",
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile=test-results/epics/E19/vitest.json"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/e2e-lock.sh",
+            "npx",
+            "playwright",
+            "test",
+            "--grep",
+            "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+          ],
+          "exitCode": 0
+        }
+      ],
+      "unitSimPassed": 17,
+      "browserStats": {
+        "startTime": "2026-10-06T13:20:47.189Z",
+        "duration": 198414.271,
+        "expected": 32,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    "captureAndDofPassed": 3,
+    "numericRendererRegressionsPassed": 4
+  },
+  "anchorExportCorrections": [
+    {
+      "district": "D-SHOP",
+      "anchor": "food-court-door",
+      "before": {
+        "translation": [
+          -14,
+          0,
+          18
+        ]
+      },
+      "after": {
+        "translation": [
+          -14,
+          0,
+          20.872499465942383
+        ]
+      },
+      "reason": "Old GLB stale; rebuilt position matches existing JSON anchor definition."
+    },
+    {
+      "district": "D-SHOP",
+      "anchor": "mall-door",
+      "before": {
+        "translation": [
+          14,
+          0,
+          18
+        ]
+      },
+      "after": {
+        "translation": [
+          14,
+          0,
+          19.85124969482422
+        ]
+      },
+      "reason": "Old GLB stale; rebuilt position matches existing JSON anchor definition."
+    }
+  ]
+}
