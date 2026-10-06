@@ -5,7 +5,7 @@ import type { GameEvent } from '../sim/world/types';
 import type { Surface, PropMaterial } from './audioEvents';
 export const audioBuses = ['music', 'weapons', 'impacts', 'vehicles', 'props', 'gore', 'telegraph', 'ambience', 'dialogue', 'barks', 'ui'] as const;
 export type AudioBus = typeof audioBuses[number];
-export type SoundShape = 'shot' | 'noise' | 'tone' | 'vocal' | 'music' | 'step' | 'bed';
+export type SoundShape = 'shot' | 'noise' | 'tone' | 'vocal' | 'music' | 'step' | 'bed' | 'buzz' | 'chatter';
 /** Sprite offsets are seconds; recorded and original cues share identical Opus/AAC grids. */
 export interface AudioCue {
     id: string;
@@ -126,6 +126,31 @@ for (const original of Object.values(audioCues)) {
     }
     audioVariationPools[original.id] = ids;
 }
+/** L1 v2 sound arc (lane H): calm layer, accident beats, chaos layer, fire-station interior. One sprite category. */
+const arc = { category: 'l1arc', rateSpread: 0.04 } as const;
+cue('l1.calm.chatter', 'ambience', 'chatter', 2, 260, { ...arc, loop: true, gain: 0.22, antiSpam: 0 });
+cue('l1.calm.talk', 'ambience', 'vocal', 0.9, 170, { ...arc, gain: 0.2, antiSpam: 2 });
+cue('l1.calm.traffic', 'ambience', 'noise', 1.2, 120, { ...arc, gain: 0.18, antiSpam: 3 });
+cue('l1.calm.bike-tick', 'ambience', 'step', 0.25, 2400, { ...arc, gain: 0.14, antiSpam: 1 });
+cue('l1.calm.birds', 'ambience', 'vocal', 0.5, 2600, { ...arc, gain: 0.1, antiSpam: 2 });
+cue('l1.flicker.buzz', 'impacts', 'buzz', 1.5, 100, { ...arc, gain: 0.45, antiSpam: 0.5 });
+cue('l1.blast', 'impacts', 'shot', 0.9, 70, { ...arc, gain: 0.8, antiSpam: 1, rateSpread: 0, caption: 'Muffled blast' });
+cue('l1.glass.rattle', 'props', 'noise', 1, 4000, { ...arc, gain: 0.4, antiSpam: 0.5, caption: 'Glass rattling' });
+cue('l1.ringing', 'impacts', 'tone', 1.2, 3800, { ...arc, gain: 0.08, antiSpam: 1, rateSpread: 0 });
+cue('l1.scream', 'barks', 'vocal', 1.1, 520, { ...arc, gain: 0.5, antiSpam: 0.2, caption: 'Screams' });
+cue('l1.crash', 'impacts', 'shot', 0.5, 200, { ...arc, gain: 0.55, antiSpam: 0.3 });
+cue('l1.bell', 'props', 'tone', 1.5, 880, { ...arc, gain: 0.3, antiSpam: 2, rateSpread: 0, caption: 'Facility alarm bell' });
+cue('l1.chaos.panic', 'ambience', 'chatter', 2, 330, { ...arc, loop: true, gain: 0.3, antiSpam: 0 });
+cue('l1.chaos.infected', 'barks', 'vocal', 0.7, 120, { ...arc, gain: 0.35, antiSpam: 0.3, caption: 'Infected snarling' });
+cue('l1.chaos.run', 'impacts', 'step', 0.3, 160, { ...arc, gain: 0.3, antiSpam: 0.15 });
+cue('l1.chaos.car-alarm', 'vehicles', 'tone', 0.8, 900, { ...arc, gain: 0.3, antiSpam: 1, caption: 'Car alarm' });
+cue('l1.chaos.fall', 'props', 'shot', 0.5, 150, { ...arc, gain: 0.4, antiSpam: 0.5 });
+cue('l1.chaos.distant', 'ambience', 'vocal', 1, 420, { ...arc, gain: 0.25, antiSpam: 1, caption: 'Distant panic' });
+cue('l1.interior.hush', 'ambience', 'bed', 2, 70, { ...arc, loop: true, gain: 0.25, antiSpam: 0 });
+cue('l1.outro.sting', 'music', 'music', 2.5, 196, { ...arc, gain: 0.5, antiSpam: 0, rateSpread: 0 });
+export const l1CalmCues = ['l1.calm.chatter', 'l1.calm.talk', 'l1.calm.traffic', 'l1.calm.bike-tick', 'l1.calm.birds'] as const;
+export const l1AccidentCues = ['l1.flicker.buzz', 'l1.blast', 'l1.glass.rattle', 'l1.ringing', 'l1.scream', 'l1.crash', 'l1.bell'] as const;
+export const l1ChaosCues = ['l1.chaos.panic', 'l1.chaos.infected', 'l1.chaos.run', 'l1.chaos.car-alarm', 'l1.chaos.fall', 'l1.chaos.distant'] as const;
 /** Explicit coverage includes silent control events; these still resolve to a decodable cue. */
 export const eventCues = {
     'level.started': 'ui.tick', 'sim.tick': 'ui.tick', 'scenario.loaded': 'ui.tick', 'scenario.unloaded': 'ui.tick',
@@ -184,7 +209,7 @@ export const eventCues = {
     'world.tier-requested': 'ui.tick',
     // L1 v2 outbreak/accident events (L0 scaffold): silent until lane H assigns cues.
     'outbreak.bite': 'ui.tick', 'outbreak.distraction': 'ui.tick', 'outbreak.civilian-escaped': 'ui.tick', 'outbreak.infection': 'ui.tick',
-    'l1.flicker': 'ui.tick', 'l1.blast': 'ui.tick', 'l1.ringing': 'ui.tick', 'l1.smoke': 'ui.tick', 'l1.screams': 'ui.tick', 'l1.infectedExit': 'ui.tick',
+    'l1.flicker': 'l1.flicker.buzz', 'l1.blast': 'l1.blast', 'l1.ringing': 'l1.ringing', 'l1.smoke': 'l1.bell', 'l1.screams': 'l1.scream', 'l1.infectedExit': 'l1.chaos.infected',
 } satisfies Record<GameEvent['type'], string>;
 export const audioCategories = [...offsets.keys()];
 export function audioFile(category: string, format: 'webm' | 'm4a'): string { return `/assets/audio/${category}.${format}`; }

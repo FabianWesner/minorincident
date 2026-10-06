@@ -79,3 +79,12 @@ measure approximately −18 LUFS; SFX and voice bus trims are −2 and −1.5 dB
 Per-file grants, authors and provenance are in `assets/audio/LICENSES.md` and
 `assets/audio/imports.json`; research and rejected sources are documented in
 `epics-pipeline/audio-research.md`.
+
+## L1 v2 sound arc (lane H)
+
+`L1Arc.ts` (`L1ArcDirector`) is pure logic on audio time: calm layer until the `l1.flicker`/`l1.blast` events, accident cues
+(buzz, muffled blast, glass rattle, ~1.2 s ringing + the tinnitus low-pass, bell, screams), calm beds -12 dB within 3 s then
+faded out, and a chaos layer whose intensity follows the live infected count (cap `l1v2.sound.chaosMaxInfected`).
+`AudioService` feeds it the `l1.*` events and applies the frame. Cues live in sprite `l1arc` (self-made MIT synthesis, ledger
+in `public/assets/audio/LICENSES.md`). The fire-station interior is any `interior-*` acoustic zone during chaos (muffles the
+ambience bus, adds a hush bed); `level.completed` plays `l1.outro.sting`.
