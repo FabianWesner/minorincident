@@ -1,4 +1,4 @@
-import { readFileSync, existsSync, statSync, mkdirSync, writeFileSync } from 'node:fs';
+import { readFileSync, existsSync, statSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { getBounds } from '@gltf-transform/functions';
@@ -8,6 +8,7 @@ import { atLeast } from '../../src/assets/types';
 import { validMaterial } from '../../src/assets/palette';
 import { assetIO } from './io';
 import { reviewErrors } from './review';
+import { requiredLods, semanticNodeNames } from './delivery';
 
 export interface Validation { id: string; errors: string[]; triangles: number; materials: number; drawCalls: number; fileKB: number; dimensions: number[]; hash: string }
 export function geometryHash(document: Document): string {
@@ -47,7 +48,7 @@ function visibleBounds(scene: Scene): ReturnType<typeof getBounds> {
 }
 
 /** No renderer needed: validate actual geometry, hierarchy and export contracts. */
-export function validateDocument(document: Document, def: AssetDef, bytes: number, lod = 0): Validation {
+export function validateDocument(document: Document, def: AssetDef, bytes: number, lod = 0, source?: Document): Validation {
   const errors: string[] = [];
   const root = document.getRoot(), nodes = root.listNodes();
   const byName = new Map(nodes.map((n) => [n.getName(), n]));
@@ -57,14 +58,33 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
     const expected = def.dimensions[axis as 'x' | 'y' | 'z'];
     if (!Number.isFinite(dimensions[i]) || Math.abs(dimensions[i] - expected) > expected * def.dimensions.tolerance) errors.push(`dimensions.${axis}: ${dimensions[i]} expected ${expected}`);
   }
-  const required = new Set([...def.requiredNodes, ...def.animatedNodes, ...def.sockets]);
+  const required = new Set([...(source ? semanticNodeNames(source) : []), ...def.requiredNodes, ...def.animatedNodes, ...def.sockets]);
   for (const name of required) {
     const found = nodes.filter((n) => n.getName() === name);
     if (found.length !== 1) errors.push(`node ${name}: expected exactly one, found ${found.length}`);
   }
+  if (source) for (const name of semanticNodeNames(source)) {
+    const original = source.getRoot().listNodes().find(node => node.getName() === name)!, packed = byName.get(name);
+    if (packed && descendants(original).some(node => node.getMesh()) && !descendants(packed).some(node => node.getMesh())) errors.push(`node ${name}: lost source geometry`);
+    if (/socket/i.test(name) && packed && !descendants(original).some(node => node.getMesh()) && descendants(packed).some(node => node.getMesh())) errors.push(`socket ${name}: must be an empty`);
+  }
   for (const name of def.animatedNodes) {
     const node = byName.get(name);
-    if (node && !descendants(node).some((n) => n.getMesh())) errors.push(`animated ${name}: no separate geometry`);
+    const original = source?.getRoot().listNodes().find(node => node.getName() === name);
+    // Amputees retain empty animation pivots; packing must preserve the source geometry contract.
+    const originallyEmpty = original && !descendants(original).some(node => node.getMesh());
+    if (node && !originallyEmpty && !descendants(node).some((n) => n.getMesh())) errors.push(`animated ${name}: no separate geometry`);
+  }
+  if (source) for (const animation of source.getRoot().listAnimations()) {
+    const packed = root.listAnimations().find(candidate => candidate.getName() === animation.getName());
+    for (const channel of animation.listChannels()) {
+      const name = channel.getTargetNode()?.getName(), path = channel.getTargetPath();
+      if (!packed?.listChannels().some(candidate => candidate.getTargetPath() === path && [name, path === 'weights' ? `${name}__geometry` : name].includes(candidate.getTargetNode()?.getName()))) errors.push(`animation ${animation.getName()}: missing ${name}.${path}`);
+    }
+  }
+  if (source) for (const skin of source.getRoot().listSkins()) {
+    const names = skin.listJoints().map(node => node.getName()).sort().join('|');
+    if (!root.listSkins().some(candidate => candidate.listJoints().map(node => node.getName()).sort().join('|') === names)) errors.push(`skin ${skin.getName()}: missing joints`);
   }
   for (const name of def.sockets) if (byName.get(name)?.getMesh()) errors.push(`socket ${name}: must be an empty`);
   if (def.forward !== '+X') errors.push('forward must be +X');
@@ -107,6 +127,12 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   if (triangles > budget) errors.push(`triangles: ${triangles} > ${budget}`);
   if (materials > def.budget.materials) errors.push(`materials: ${materials} > ${def.budget.materials}`);
   if (fileKB > def.budget.fileKB) errors.push(`fileKB: ${fileKB} > ${def.budget.fileKB}`);
+  if (def.sourceGlb && bytes > (def.tier === 'hero' ? 1_500_000 : 300_000)) errors.push('delivery: file size exceeds tier budget');
+  if (def.sourceGlb) for (const texture of root.listTextures()) {
+    if (!['image/ktx2', 'image/webp'].includes(texture.getMimeType())) errors.push('delivery: texture must be KTX2/WebP');
+    const size = texture.getSize(), limit = def.tier === 'side' ? 512 : 1024;
+    if (!size || size.some(value => value > limit)) errors.push(`delivery: texture exceeds ${limit}px`);
+  }
   const staticCalls = nodes.filter((n) => !def.animatedNodes.some((name) => byName.get(name) && descendants(byName.get(name)!).includes(n))).reduce((sum, n) => sum + (n.getMesh()?.listPrimitives().length ?? 0), 0);
   if (staticCalls > def.budget.drawCalls) errors.push(`static drawCalls: ${staticCalls} > ${def.budget.drawCalls}`);
   if (def.category === 'infected') for (const name of new Set([
@@ -119,18 +145,41 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   }
   return { id: def.id, errors: [...new Set(errors)], triangles, materials, drawCalls, fileKB, dimensions, hash: geometryHash(document) };
 }
-export async function validateAssets(manifest: AssetDef[], production = false): Promise<Validation[]> {
+export async function validateAssets(manifest: AssetDef[], production = true): Promise<Validation[]> {
   const io = await assetIO(), results: Validation[] = [];
   for (const def of manifest) {
-    if (!atLeast(def.status, 'modeled') && !(production && def.sourceGlb)) continue;
+    const sourcePath = def.sourceGlb ?? (existsSync(`assets/${def.id}/model.glb`) ? `assets/${def.id}/model.glb` : undefined);
+    if (!atLeast(def.status, 'modeled') && !(production && sourcePath)) continue;
+    const source = sourcePath && existsSync(sourcePath) ? await io.read(sourcePath) : undefined;
     const paths = [def.glb, def.lods?.lod1, def.lods?.lod2];
+    let base: Validation | undefined;
     for (const [lod, path] of paths.entries()) {
       if (!path) {
-        if (def.tier === 'hero') results.push({ id: `${def.id}:lod${lod}`, errors: ['missing LOD'], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' });
+        if (lod === 0 || (base && requiredLods(def, base.triangles).includes(lod === 1 ? 'lod1' : 'lod2'))) results.push({ id: `${def.id}:lod${lod}`, errors: ['missing LOD'], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' });
         continue;
       }
       if (!existsSync(path)) { results.push({ id: def.id, errors: [`missing GLB ${path}`], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' }); continue; }
-      try { results.push({ ...validateDocument(await io.read(path), def, statSync(path).size, lod), id: `${def.id}:lod${lod}` }); }
+      try {
+        const document = await io.read(path);
+        const validation = { ...validateDocument(document, def, statSync(path).size, lod, source), id: `${def.id}:lod${lod}` };
+        // Pending registration belongs to art-integration. Still enforce shipping and
+        // node preservation for its real exports, without treating placeholder sizes as authored contracts.
+        if (!def.sourceGlb && sourcePath && !atLeast(def.status, 'modeled')) {
+          validation.errors = validation.errors.filter(error => !/^(dimensions\.|triangles:|materials:|fileKB:|static drawCalls:)/.test(error));
+          const limit = def.tier === 'hero' ? 1_500_000 : 300_000;
+          if (statSync(path).size > limit) validation.errors.push('delivery: file size exceeds tier budget');
+        }
+        if (lod === 0) base = validation;
+        if (sourcePath) {
+          const extensions = document.getRoot().listExtensionsUsed().map(extension => extension.extensionName);
+          if (!extensions.includes('EXT_meshopt_compression') || !extensions.includes('KHR_mesh_quantization')) validation.errors.push('delivery: missing meshopt/quantization');
+          if (base && lod > 0 && requiredLods(def, base.triangles).includes(lod === 1 ? 'lod1' : 'lod2')) {
+            const ratio = validation.triangles / base.triangles;
+            if (ratio > (lod === 1 ? .155 : .045)) validation.errors.push(`delivery: triangle ratio ${ratio} exceeds LOD${lod} budget`);
+          }
+        }
+        results.push(validation);
+      }
       catch (error) { results.push({ id: def.id, errors: [String(error)], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' }); }
     }
     if (def.status === 'final') {
@@ -142,8 +191,13 @@ export async function validateAssets(manifest: AssetDef[], production = false): 
   return results;
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const results = await validateAssets(JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')), process.argv.includes('--production'));
+  const results = await validateAssets(JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')));
   mkdirSync('test-results/epics/E17', { recursive: true });
+  for (const directory of ['public/assets/models', 'public/assets/layouts']) for (const file of readdirSync(directory).filter(file => file.endsWith('.glb'))) {
+    const path = `${directory}/${file}`, bytes = readFileSync(path);
+    const json = JSON.parse(bytes.subarray(20, 20 + bytes.readUInt32LE(12)).toString()) as { extensionsRequired?: string[] };
+    if (!['EXT_meshopt_compression', 'KHR_mesh_quantization'].every(extension => json.extensionsRequired?.includes(extension))) results.push({ id: path, errors: ['delivery: missing meshopt/quantization'], triangles: 0, materials: 0, drawCalls: 0, fileKB: bytes.length / 1024, dimensions: [], hash: '' });
+  }
   writeFileSync(`test-results/epics/E17/validate${process.argv.includes('--production') ? '-production' : ''}.json`, JSON.stringify(results, null, 2));
   console.log(JSON.stringify(results.map(({ id, errors, triangles }) => ({ id, errors, triangles })), null, 2));
   if (results.some((r) => r.errors.length)) process.exitCode = 1;

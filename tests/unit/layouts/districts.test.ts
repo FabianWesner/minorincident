@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { expect, test } from "vitest";
+import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { Mesh, Raycaster, Vector3 } from "three";
 import { worldAssets as manifest } from "../../../src/assets/worldDefinitions";
@@ -99,7 +100,7 @@ test("T-E10-10 @E10 @E10-AC10 vector minimap overlays exported 3D roads within o
     const buffer = readFileSync(
       `public/assets/layouts/${layout.district}.base.glb`,
     );
-    const { scene } = await new GLTFLoader().parseAsync(
+    const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(
       buffer.buffer.slice(
         buffer.byteOffset,
         buffer.byteOffset + buffer.byteLength,

@@ -4,13 +4,13 @@ import type { InputFrame, Vec2 } from '../../input/InputFrame';
 export interface ActionSlot { id: string; magazine: number; reserve: 'infinite'; charges: number; nextCharge: number; reloadUntil: number; readyAt: number }
 export interface SideState { rack: ActionSlot[]; index: number; aim: Vec2; aimPoint: Vec2 | null; swapUntil: number }
 export interface LoadoutState { selectedSide: Side; LEFT: SideState; RIGHT: SideState }
-const slot = (id: string): ActionSlot => { const def = action(id); return { id, magazine: def.magazine, reserve: 'infinite', charges: def.charges, nextCharge: 0, reloadUntil: 0, readyAt: 0 }; };
+const slot = (id: string, resolve: (id:string)=>ActionDef): ActionSlot => { const def = resolve(id); return { id, magazine: def.magazine, reserve: 'infinite', charges: def.charges, nextCharge: 0, reloadUntil: 0, readyAt: 0 }; };
 /** Rack timers belong to slots and survive cycling. Aim belongs to sides and survives cycling too. */
 export class Loadout {
   readonly state: LoadoutState;
-  constructor(left: string[], right: string[]) {
-    for (const rack of [left, right]) if (rack.length < 1 || rack.length > 3) throw new RangeError('Racks require 1–3 actions');
-    const side = (rack: string[]): SideState => ({ rack: rack.map(slot), index: 0, aim: { x: 1, z: 0 }, aimPoint: null, swapUntil: 0 });
+  constructor(left: string[], right: string[], readonly definition: (id:string)=>ActionDef = action, readonly capacity = 3) {
+    for (const rack of [left, right]) if (rack.length < 1 || rack.length > this.capacity) throw new RangeError(`Racks require 1–${this.capacity} actions`);
+    const side = (rack: string[]): SideState => ({ rack: rack.map(id=>slot(id,this.definition)), index: 0, aim: { x: 1, z: 0 }, aimPoint: null, swapUntil: 0 });
     this.state = { selectedSide: 'LEFT', LEFT: side(left), RIGHT: side(right) };
   }
   input(frame: InputFrame, tick: number): void {
@@ -29,8 +29,8 @@ export class Loadout {
   }
   /** Adds to selected rack; full racks replace exactly the current slot. */
   collect(side: Side, id: string): string | null {
-    const rack = this.state[side], next = slot(id);
-    if (rack.rack.length < 3) { rack.rack.push(next); return null; }
+    const rack = this.state[side], next = slot(id,this.definition);
+    if (rack.rack.length < this.capacity) { rack.rack.push(next); return null; }
     const previous = rack.rack[rack.index].id; rack.rack[rack.index] = next; return previous;
   }
   current(side: Side): ActionSlot { const state = this.state[side]; return state.rack[state.index]; }
@@ -39,14 +39,14 @@ export class Loadout {
       const side = this.state[name];
       if (side.swapUntil && tick >= side.swapUntil) { side.swapUntil = 0; switched(name, this.current(name).id); }
       for (const slot of side.rack) {
-        const def = action(slot.id);
+        const def = this.definition(slot.id);
         if (slot.reloadUntil && tick >= slot.reloadUntil) { slot.magazine = def.magazine; slot.reloadUntil = 0; }
         if (slot.nextCharge && tick >= slot.nextCharge) { slot.charges++; slot.nextCharge = slot.charges < def.charges ? tick + ticks(def.recharge) : 0; }
       }
     }
   }
   usable(side: Side, tick: number): boolean {
-    const slot = this.current(side), def = action(slot.id);
+    const slot = this.current(side), def = this.definition(slot.id);
     return tick >= this.state[side].swapUntil && tick >= slot.readyAt && !slot.reloadUntil && (!def.charges || slot.charges > 0);
   }
   spend(side: Side, tick: number, def: ActionDef, infiniteCharges: boolean): void {

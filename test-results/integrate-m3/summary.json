@@ -1,0 +1,234 @@
+{
+  "branch": "lane/integrate-m3",
+  "mainMergedOnce": "d899e55",
+  "merged": [
+    "lane/integrate-m2",
+    "lane/e18-epic",
+    "lane/art-integration",
+    "lane/asset-ship"
+  ],
+  "manifestEntries": 275,
+  "manifestFieldConflicts": [],
+  "infectedWebGLBodyPixels": 7389,
+  "screenshotsReviewedAndDeleted": [
+    "desktop-start",
+    "desktop-end",
+    "iphone-start",
+    "iphone-end",
+    "desktop-infected",
+    "iphone-infected"
+  ],
+  "assetValidation": {
+    "records": 471,
+    "failedRecords": 262,
+    "triangleRatioFindings": 258,
+    "triangleLimitFindings": 119,
+    "tierFileSizeFindings": 4,
+    "fullList": "assets-failures.json"
+  },
+  "specResolution": "E02-AC02 retains main close-camera wording; lane E02-AC04 clarification preserves nine metres of portrait ground width and local fog density.",
+  "checks": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "unit": {
+      "passed": 136,
+      "files": 52
+    },
+    "smoke": {
+      "status": "pass",
+      "nodePassed": 3,
+      "browserPassed": 22
+    },
+    "verify": {
+      "E02": {
+        "status": "pass",
+        "nodePassed": 8,
+        "browserPassed": 37,
+        "checks": "E02-checks.json"
+      },
+      "E03": {
+        "status": "pass",
+        "nodePassed": 12,
+        "browserPassed": 120,
+        "checks": "E03-checks.json"
+      },
+      "E08": {
+        "status": "pass",
+        "nodePassed": 30,
+        "browserPassed": 27,
+        "checks": "E08-checks.json"
+      },
+      "E13": {
+        "status": "pass",
+        "nodePassed": 20,
+        "browserPassed": 32,
+        "checks": "E13-checks.json"
+      },
+      "E17": {
+        "status": "pass",
+        "nodePassed": 36,
+        "browserPassed": 36,
+        "checks": "E17-checks.json"
+      },
+      "E18": {
+        "status": "fail",
+        "nodePassed": 15,
+        "browserPassed": 33,
+        "browserFailed": 4,
+        "nativeGpuPassed": 3,
+        "manualSkipped": 4,
+        "checks": "E18-checks.json",
+        "failures": "E18-AC01 L5/L6 triangle budgets"
+      }
+    },
+    "controlsAndInfectedVisibility": {
+      "status": "pass",
+      "browserPassed": 3,
+      "infectedBodyPixels": 7389
+    },
+    "assetsValidate": {
+      "status": "fail",
+      "validatedRecords": 471,
+      "failedRecords": 262,
+      "details": "assets-failures.json"
+    },
+    "desktopHordeUnthrottled": {
+      "durationMs": 12003.600000023842,
+      "ticks": 721,
+      "renderedFrames": 4420,
+      "frameMsP50": 2.899999999999636,
+      "frameMsP95": 3.899999999999636,
+      "count": 200
+    },
+    "initialDownload": {
+      "status": "pass",
+      "gzipBytes": 9017519,
+      "rawBytes": 20376498
+    }
+  },
+  "play": {
+    "desktopMs": 60468,
+    "iphonePortraitMs": 60565,
+    "errors": [],
+    "screenshotsReviewedAndDeleted": 6
+  },
+  "measurementMethod": {
+    "headless": true,
+    "gpu": "ANGLE Metal Apple M1 Max",
+    "e2ePort": 3339,
+    "browserWorkersMax": 2,
+    "unthrottled": true,
+    "frozenStartSimulation": true,
+    "warmupFrames": 60,
+    "sampleFrames": 360,
+    "heap": "CDP Runtime.getHeapUsage after HeapProfiler.collectGarbage",
+    "physicalPhone": false
+  },
+  "perfUnthrottled": {
+    "desktop": {
+      "viewport": [
+        1600,
+        900
+      ],
+      "quality": "high",
+      "drawCalls": 291,
+      "triangles": 808653,
+      "heapBytes": 80204960,
+      "frameP50Ms": 3,
+      "frameP95Ms": 3.4000000000005457,
+      "frameMeanMs": 3.055277777777778
+    },
+    "iphone": {
+      "viewport": [
+        390,
+        844
+      ],
+      "quality": "low",
+      "drawCalls": 208,
+      "triangles": 422375,
+      "heapBytes": 79650836,
+      "frameP50Ms": 2.099999999999909,
+      "frameP95Ms": 2.400000000000091,
+      "frameMeanMs": 2.090833333333334
+    }
+  },
+  "commits": [
+    "44fbd2a",
+    "2697a89",
+    "42fa1dd",
+    "b104206",
+    "b674625",
+    "d8ee81b",
+    "1a5375d",
+    "f34a9b8",
+    "b64f26f"
+  ],
+  "done": false,
+  "issues": [
+    {
+      "criterion": "E18-AC01",
+      "reason": "L5/L6 triangle budgets exceeded; all draw-call limits and deterministic counter checks pass",
+      "scenarios": {
+        "L6-high": 2320851,
+        "L6-low": 1260665,
+        "L5-high": 1716243,
+        "L5-low": 715911
+      },
+      "budgets": {
+        "high": 1500000,
+        "low": 500000
+      }
+    },
+    {
+      "criterion": "asset-delivery",
+      "reason": "Dense LODs exceed triangle ratios/limits and four LOD0 files exceed tier size",
+      "records": 262,
+      "triangleRatioFindings": 258,
+      "triangleLimitFindings": 119,
+      "tierFileSizeFindings": 4,
+      "details": "assets-failures.json"
+    }
+  ],
+  "buildingLod2Checks": {
+    "bld.house-b:lod2": {
+      "bounds": "pass",
+      "dimensions": [
+        7.518067919273353,
+        6.803954508414685,
+        11.035000324249268
+      ],
+      "triangles": 56572,
+      "errors": [
+        "triangles: 56572 > 4000",
+        "delivery: triangle ratio 0.7282323258328613 exceeds LOD2 budget"
+      ]
+    },
+    "bld.house-c:lod2": {
+      "bounds": "pass",
+      "dimensions": [
+        9.403177738189697,
+        5.767419650283474,
+        7.800444876841711
+      ],
+      "triangles": 74104,
+      "errors": [
+        "triangles: 74104 > 4000",
+        "delivery: triangle ratio 0.8254321867759757 exceeds LOD2 budget"
+      ]
+    },
+    "bld.joes-diner:lod2": {
+      "bounds": "pass",
+      "dimensions": [
+        6.969863666942239,
+        6.319914345626017,
+        11.744999885559082
+      ],
+      "triangles": 38022,
+      "errors": [
+        "triangles: 38022 > 4000",
+        "delivery: triangle ratio 0.4266621780844976 exceeds LOD2 budget"
+      ]
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { Rng } from '../../core/Rng';
 /** Visual-only Rapier world with 80 preallocated bodies. It never shares sim bodies or impulses. */
 export class GibPool {
   readonly cap = 80;
+  budget = 80;
   readonly mesh: InstancedMesh;
   readonly heads: InstancedMesh;
   private readonly isHead = new Uint8Array(this.cap);
@@ -35,8 +36,12 @@ export class GibPool {
     }
     this.mesh.frustumCulled = false; this.mesh.instanceMatrix.setUsage(DynamicDrawUsage); this.reset();
   }
+  setQuality(tier: 'high' | 'low'): void {
+    const budget = tier === 'low' ? 30 : 80; if (this.budget === budget) return;
+    this.reset(); this.budget = budget; this.mesh.count = this.heads.count = budget;
+  }
   spawn(now: number, x: number, y: number, z: number, rng: Rng, head = false): void {
-    const slot = this.cursor++ % this.cap, body = this.bodies[slot];
+    const slot = this.cursor++ % this.budget, body = this.bodies[slot];
     this.dirty = true; this.isHead[slot] = Number(head);
     this.velocity.x = x; this.velocity.y = y; this.velocity.z = z;
     body.setTranslation(this.velocity, false); body.setEnabled(true);

@@ -8,7 +8,7 @@ import type { CrowdClip } from '../../assets/crowd';
 export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup'] as const;
 export const framesPerClip = 24;
 /** Bake once at level load: merged color geometry, part indices and the shared procedural rigid-part clips. */
-export function bakeInfected(root: Group) {
+export function bakeInfected(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false) {
   const rig = {} as CharacterRig;
   for (const name of characterNodes) {
     let node = root.getObjectByName(name);
@@ -16,14 +16,26 @@ export function bakeInfected(root: Group) {
     rig[name] = node;
   }
   const parts: Object3D[] = characterNodes.map((name) => rig[name]);
+  for (const name of animatedNodes) { const node = root.getObjectByName(name); if (node && !parts.includes(node)) parts.push(node); }
   const rest = parts.map((part) => ({ position: part.position.clone(), rotation: part.rotation.clone() }));
   const matrices: number[] = [];
   for (const clip of infectedClips) for (let frame = 0; frame < framesPerClip; frame++) {
     for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
     const t = frame / (framesPerClip - 1);
-    if (clip === 'crawl') { rig.hip.position.y = 0.28; rig.torso.rotation.z -= Math.PI / 2; clips.run(rig, t); }
+    if (clip === 'crawl') { if (!crawlingRestPose) { rig.hip.position.y = 0.28; rig.torso.rotation.z -= Math.PI / 2; } clips.run(rig, t); }
     else if (clip === 'windup') { rig.torso.rotation.z += t * 0.45; rig.armL.rotation.z -= t * 0.8; rig.armR.rotation.z -= t * 0.8; }
     else clips[clip as AnimationState](rig, t);
+    // Animal exports have their own joint contract rather than humanoid arms/hips.
+    if (root.getObjectByName('body')) {
+      for (const side of ['FL', 'FR', 'BL', 'BR']) {
+        const leg = root.getObjectByName(`leg${side}`);
+        if (leg && clip === 'run') leg.rotation.z += Math.sin(t * Math.PI * 5 + (side === 'FL' || side === 'BR' ? 0 : Math.PI)) * .5;
+      }
+      if (clip === 'run') for (const side of ['L', 'R']) {
+        const wing = root.getObjectByName(`wing${side}`); if (wing) wing.rotation.x += Math.sin(t * Math.PI * 8) * (side === 'L' ? .6 : -.6);
+      }
+      if (clip === 'die') root.getObjectByName('body')!.rotation.z += Math.min(1, t / .6) * Math.PI / 2;
+    }
     root.updateMatrixWorld(true); for (const part of parts) matrices.push(...part.matrixWorld.elements);
   }
   for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
@@ -33,7 +45,8 @@ export function bakeInfected(root: Group) {
   root.traverse((node) => {
     if (!(node instanceof Mesh)) return;
     for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if (!ancestor.visible || ancestor.name.startsWith('stump_')) return;
-    let owner: Object3D | null = node.parent;
+    // A named animated part can itself be a Mesh (not only a parent joint).
+    let owner: Object3D | null = node;
     while (owner && !parts.includes(owner)) owner = owner.parent;
     const part = parts.indexOf(owner ?? rig.root);
     relative.copy(parts[part].matrixWorld).invert().multiply(node.matrixWorld);
@@ -74,6 +87,6 @@ export function bakeInfected(root: Group) {
     geometry.setAttribute(names[a], new InterleavedBufferAttribute(data, attribute.itemSize, offset));
     offset += attribute.itemSize;
   }
-  const clip: CrowdClip = { parts: characterNodes.slice(), frames: framesPerClip * infectedClips.length, duration: infectedClips.length, matrices };
+  const clip: CrowdClip = { parts: parts.map(part => part.name), frames: framesPerClip * infectedClips.length, duration: infectedClips.length, matrices };
   return { geometry, clip, shirtColor };
 }
