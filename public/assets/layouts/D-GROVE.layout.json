@@ -1,0 +1,816 @@
+{
+  "acousticZones": [
+    {
+      "id": "outdoor",
+      "polygon": [
+        [
+          -85.0,
+          -55.0
+        ],
+        [
+          85.0,
+          -55.0
+        ],
+        [
+          85.0,
+          55.0
+        ],
+        [
+          -85.0,
+          55.0
+        ],
+        [
+          -85.0,
+          -55.0
+        ]
+      ],
+      "preset": "suburb-open"
+    }
+  ],
+  "anchors": {
+    "alarm-car-1": {
+      "position": [
+        -60,
+        0,
+        6
+      ],
+      "yaw": 0
+    },
+    "alarm-car-2": {
+      "position": [
+        -10,
+        0,
+        -15
+      ],
+      "yaw": 0
+    },
+    "alarm-car-3": {
+      "position": [
+        30,
+        0,
+        -5
+      ],
+      "yaw": 0
+    },
+    "alarm-car-4": {
+      "position": [
+        50,
+        0,
+        30
+      ],
+      "yaw": 0
+    },
+    "bike-start": {
+      "position": [
+        -70,
+        0,
+        10
+      ],
+      "yaw": 0
+    },
+    "bus-stop": {
+      "position": [
+        -62,
+        0,
+        14
+      ],
+      "yaw": 0
+    },
+    "cafe-patio": {
+      "position": [
+        -75,
+        0,
+        5
+      ],
+      "yaw": 0
+    },
+    "carwash-bay": {
+      "position": [
+        -50.0,
+        0,
+        45.0
+      ],
+      "yaw": 0
+    },
+    "carwash-start": {
+      "position": [
+        -46,
+        0,
+        41
+      ],
+      "yaw": 0
+    },
+    "dumpster-1": {
+      "position": [
+        -30,
+        0,
+        -20
+      ],
+      "yaw": 0
+    },
+    "dumpster-1-end": {
+      "position": [
+        -30,
+        0,
+        -23
+      ],
+      "yaw": 0
+    },
+    "dumpster-2": {
+      "position": [
+        35,
+        0,
+        22
+      ],
+      "yaw": 0
+    },
+    "dumpster-2-end": {
+      "position": [
+        35,
+        0,
+        19
+      ],
+      "yaw": 0
+    },
+    "edge-in-1": {
+      "position": [
+        -84,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "edge-in-2": {
+      "position": [
+        -40,
+        0,
+        -54
+      ],
+      "yaw": 0
+    },
+    "edge-in-3": {
+      "position": [
+        10,
+        0,
+        -54
+      ],
+      "yaw": 0
+    },
+    "edge-in-4": {
+      "position": [
+        84,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "edge-in-5": {
+      "position": [
+        45,
+        0,
+        54
+      ],
+      "yaw": 0
+    },
+    "edge-in-6": {
+      "position": [
+        -20,
+        0,
+        54
+      ],
+      "yaw": 0
+    },
+    "elm-horde-entry": {
+      "position": [
+        50,
+        0,
+        52
+      ],
+      "yaw": 0
+    },
+    "fire-bay-door": {
+      "position": [
+        -75,
+        0,
+        36
+      ],
+      "yaw": 0
+    },
+    "fire-bay-trigger": {
+      "position": [
+        -75,
+        0,
+        38
+      ],
+      "yaw": 0
+    },
+    "fire-nobike-zone": {
+      "position": [
+        -75.0,
+        0,
+        41.0
+      ],
+      "yaw": 0
+    },
+    "garage-bat": {
+      "position": [
+        21,
+        0,
+        36
+      ],
+      "yaw": 0
+    },
+    "garage-door": {
+      "position": [
+        20,
+        0,
+        31
+      ],
+      "yaw": 0
+    },
+    "garage-nobike-zone": {
+      "position": [
+        20.0,
+        0,
+        36.0
+      ],
+      "yaw": 0
+    },
+    "gate-1": {
+      "position": [
+        -20,
+        0,
+        20
+      ],
+      "yaw": 0
+    },
+    "gate-2": {
+      "position": [
+        10,
+        0,
+        -25
+      ],
+      "yaw": 0
+    },
+    "gate-3": {
+      "position": [
+        45,
+        0,
+        15
+      ],
+      "yaw": 0
+    },
+    "lab-bike-rack": {
+      "position": [
+        55,
+        0,
+        -5
+      ],
+      "yaw": 0
+    },
+    "lab-door": {
+      "position": [
+        65,
+        0,
+        -9
+      ],
+      "yaw": 0
+    },
+    "lab-exit-front": {
+      "position": [
+        65,
+        0,
+        -10
+      ],
+      "yaw": 0
+    },
+    "lab-exit-side": {
+      "position": [
+        73,
+        0,
+        -15
+      ],
+      "yaw": 0
+    },
+    "lab-exit-window": {
+      "position": [
+        59,
+        0,
+        -14
+      ],
+      "yaw": 0
+    },
+    "lab-gate": {
+      "position": [
+        59,
+        0,
+        -8
+      ],
+      "yaw": 0
+    },
+    "lab-nobike-zone": {
+      "position": [
+        67.0,
+        0,
+        -15.0
+      ],
+      "yaw": 0
+    },
+    "lab-smoke-vent": {
+      "position": [
+        66,
+        0,
+        -19
+      ],
+      "yaw": 0
+    },
+    "lab-smoke-window": {
+      "position": [
+        59,
+        0,
+        -18
+      ],
+      "yaw": 0
+    },
+    "lab-tech-spawn": {
+      "position": [
+        66,
+        0,
+        -17
+      ],
+      "yaw": 0
+    },
+    "parcel-counter": {
+      "position": [
+        -45,
+        0,
+        -33
+      ],
+      "yaw": 0
+    },
+    "parcel-door": {
+      "position": [
+        -45,
+        0,
+        -30
+      ],
+      "yaw": 0
+    },
+    "photo-l1-accident": {
+      "position": [
+        64,
+        0,
+        -12
+      ],
+      "yaw": 0
+    },
+    "photo-l1-escape": {
+      "position": [
+        55,
+        0,
+        -2
+      ],
+      "yaw": 0
+    },
+    "photo-l1-facility": {
+      "position": [
+        58,
+        0,
+        -6
+      ],
+      "yaw": 0
+    },
+    "photo-l1-garage": {
+      "position": [
+        20,
+        0,
+        33
+      ],
+      "yaw": 0
+    },
+    "photo-l1-horde": {
+      "position": [
+        30,
+        0,
+        42
+      ],
+      "yaw": 0
+    },
+    "photo-l1-morning": {
+      "position": [
+        -70,
+        0,
+        8
+      ],
+      "yaw": 0
+    },
+    "photo-l1-pickup": {
+      "position": [
+        -45,
+        0,
+        -32
+      ],
+      "yaw": 0
+    },
+    "photo-l1-safe": {
+      "position": [
+        -75,
+        0,
+        41
+      ],
+      "yaw": 0
+    },
+    "photo-l1-spread": {
+      "position": [
+        30,
+        0,
+        5
+      ],
+      "yaw": 0
+    },
+    "player-start": {
+      "position": [
+        -67,
+        0,
+        12
+      ],
+      "yaw": 0
+    },
+    "refuge-door-1": {
+      "position": [
+        -60,
+        0,
+        -5
+      ],
+      "yaw": 0
+    },
+    "refuge-door-10": {
+      "position": [
+        45,
+        0,
+        8
+      ],
+      "yaw": 0
+    },
+    "refuge-door-11": {
+      "position": [
+        -60,
+        0,
+        28
+      ],
+      "yaw": 0
+    },
+    "refuge-door-12": {
+      "position": [
+        -30,
+        0,
+        36
+      ],
+      "yaw": 0
+    },
+    "refuge-door-2": {
+      "position": [
+        -35,
+        0,
+        -30
+      ],
+      "yaw": 0
+    },
+    "refuge-door-3": {
+      "position": [
+        -20,
+        0,
+        -8
+      ],
+      "yaw": 0
+    },
+    "refuge-door-4": {
+      "position": [
+        -8,
+        0,
+        -8
+      ],
+      "yaw": 0
+    },
+    "refuge-door-5": {
+      "position": [
+        6,
+        0,
+        -8
+      ],
+      "yaw": 0
+    },
+    "refuge-door-6": {
+      "position": [
+        -20,
+        0,
+        8
+      ],
+      "yaw": 0
+    },
+    "refuge-door-7": {
+      "position": [
+        -6,
+        0,
+        8
+      ],
+      "yaw": 0
+    },
+    "refuge-door-8": {
+      "position": [
+        8,
+        0,
+        8
+      ],
+      "yaw": 0
+    },
+    "refuge-door-9": {
+      "position": [
+        30,
+        0,
+        28
+      ],
+      "yaw": 0
+    }
+  },
+  "bounds": [
+    [
+      -85.0,
+      -55.0
+    ],
+    [
+      85.0,
+      -55.0
+    ],
+    [
+      85.0,
+      55.0
+    ],
+    [
+      -85.0,
+      55.0
+    ],
+    [
+      -85.0,
+      -55.0
+    ]
+  ],
+  "buildings": [],
+  "colliders": [],
+  "district": "D-GROVE",
+  "geometryHash": "5e4065ec1280e2ef5a2185d6c8bd47ee6c52afe3683736540a70ce3cecacbe49",
+  "lawns": [],
+  "layers": [
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 1
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 2
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 3
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 4
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 5
+    }
+  ],
+  "lightGroups": [
+    {
+      "id": "block-0",
+      "offAt": 3
+    },
+    {
+      "id": "block-1",
+      "offAt": 5
+    },
+    {
+      "id": "block-2",
+      "offAt": 3
+    },
+    {
+      "id": "block-3",
+      "offAt": 5
+    }
+  ],
+  "placements": [],
+  "roads": {
+    "edges": [
+      {
+        "end": "center",
+        "id": "west-center",
+        "laneWidth": 5,
+        "points": [
+          [
+            -85.0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "start": "west"
+      },
+      {
+        "end": "east",
+        "id": "center-east",
+        "laneWidth": 5,
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            85.0,
+            0
+          ]
+        ],
+        "start": "center"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "west",
+        "point": [
+          -85.0,
+          0
+        ]
+      },
+      {
+        "id": "center",
+        "point": [
+          0,
+          0
+        ]
+      },
+      {
+        "id": "east",
+        "point": [
+          85.0,
+          0
+        ]
+      }
+    ]
+  },
+  "surfaces": [
+    {
+      "polygon": [
+        [
+          -85.0,
+          -55.0
+        ],
+        [
+          85.0,
+          -55.0
+        ],
+        [
+          85.0,
+          55.0
+        ],
+        [
+          -85.0,
+          55.0
+        ],
+        [
+          -85.0,
+          -55.0
+        ]
+      ],
+      "surface": "grass"
+    },
+    {
+      "polygon": [
+        [
+          -85.0,
+          -2.5
+        ],
+        [
+          85.0,
+          -2.5
+        ],
+        [
+          85.0,
+          2.5
+        ],
+        [
+          -85.0,
+          2.5
+        ],
+        [
+          -85.0,
+          -2.5
+        ]
+      ],
+      "surface": "asphalt"
+    }
+  ],
+  "title": "Sunset Grove",
+  "version": 1,
+  "walkable": {
+    "cellSize": 1,
+    "excluded": []
+  },
+  "zones": {
+    "carwash-bay": [
+      [
+        -56,
+        42
+      ],
+      [
+        -44,
+        42
+      ],
+      [
+        -44,
+        48
+      ],
+      [
+        -56,
+        48
+      ],
+      [
+        -56,
+        42
+      ]
+    ],
+    "fire-nobike-zone": [
+      [
+        -80,
+        36
+      ],
+      [
+        -70,
+        36
+      ],
+      [
+        -70,
+        46
+      ],
+      [
+        -80,
+        46
+      ],
+      [
+        -80,
+        36
+      ]
+    ],
+    "garage-nobike-zone": [
+      [
+        16,
+        32
+      ],
+      [
+        24,
+        32
+      ],
+      [
+        24,
+        40
+      ],
+      [
+        16,
+        40
+      ],
+      [
+        16,
+        32
+      ]
+    ],
+    "lab-nobike-zone": [
+      [
+        59,
+        -22
+      ],
+      [
+        75,
+        -22
+      ],
+      [
+        75,
+        -8
+      ],
+      [
+        59,
+        -8
+      ],
+      [
+        59,
+        -22
+      ]
+    ]
+  }
+}

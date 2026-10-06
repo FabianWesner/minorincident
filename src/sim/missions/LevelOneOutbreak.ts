@@ -56,6 +56,9 @@ export class LevelOneOutbreak {
       if (!e.combat!.reaction) for (const human of world.entities.iterate()) {
         const c = human.civilian;
         if (!c?.adult || c.pet || human.hidden || !['calm','alarmed','flee','hide'].includes(c.state)) continue;
+        // Keep independent pursuits: a released entrant must not take the prey
+        // that a newborn is already approaching. Existing brain targets own the claim.
+        if (group.some(other => other !== e && other.infected!.state === 'migration' && other.infected!.targetId === human.id)) continue;
         const distance = Math.hypot(human.transform.x - e.transform.x, human.transform.z - e.transform.z);
         if (distance < nearest) { nearest = distance; victim = human; }
       }

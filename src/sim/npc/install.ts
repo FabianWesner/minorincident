@@ -9,22 +9,29 @@ import { inside } from '../../levels/districts/validate';
 /** Minimal campaign integration: assemble navigation from the loaded, decayed district colliders. */
 export function installCampaignNpcs(world: SimWorld): void {
   const districts = world.districts!;
+  // L1 v2 (D-GROVE): systems + corgi only; `installL1Outbreak` adds the pedestrians (lane D).
+  if (districts.districts.some(d => d.id === 'D-GROVE')) { installNpcSystems(world); world.npcs!.companion.spawn(); return; }
   if (!/^L[1-6]$/.test(districts.composition.id)) return;
+  installNpcSystems(world); const { min, max } = districts.nav;
+  world.events.on('objective.completed', event => { if (event.type === 'objective.completed' && event.id === 'breakfast' && world.missions?.def.id === 'L1') { if(!world.missions.def.slice)world.npcs?.dinerIncident(world.missions.def.anchors.diner); } });
+  world.npcs!.configure(Number(districts.composition.id[1])); world.npcs!.companion.spawn();
+  // W0/W1 ambient traffic is authored only on collision-safe street lanes.
+  if (districts.composition.tier <= 1) {
+    for (let z = min[1] + 5; z < max[1] - 5; z += 10) {
+      const a = { x: min[0] + 5, z }, b = { x: min[0] + 25, z };
+      if (world.infected!.nav.visible(a, b, 2) && !world.npcs!.traffic.overlaps(a)) { world.npcs!.traffic.spawn([a, b], districts.composition.tier === 1); break; }
+    }
+  }
+}
+/** Combat, infected brains and NPC systems on the loaded district colliders, without any population. */
+export function installNpcSystems(world: SimWorld): void {
+  const districts = world.districts!;
   const { min, max } = districts.nav, walls = campaignWalls(world);
   // Grid cells need room for the survivor's .45 m corner-steering clearance.
   const definition: ScenarioDefinition = { name: districts.composition.id, survivor: true, combat: true, infected: true, navigationClearance: .5, ground: { width: max[0] - min[0], depth: max[1] - min[1], center: { x: (min[0] + max[0]) / 2, z: (min[1] + max[1]) / 2 } }, player: { ...world.entities.get(1)!.transform }, walls };
   world.combat = new Combat(world, definition); world.infected = new InfectedSystem(world, definition); world.npcs = new Npcs(world);
   world.infected.nav.mask = (x, z) => { return world.districts!.districts.some(d => inside([x - d.origin[0], z - d.origin[1]], d.layout.bounds)); }; world.infected.nav.rebake();
   world.events.on('sim.tick', () => world.infected?.update(), SimPhase.ai); world.events.on('sim.tick', () => world.npcs?.update(), SimPhase.ai);
-  world.events.on('objective.completed', event => { if (event.type === 'objective.completed' && event.id === 'breakfast' && world.missions?.def.id === 'L1') { if(!world.missions.def.slice)world.npcs?.dinerIncident(world.missions.def.anchors.diner); } });
-  world.npcs.configure(Number(districts.composition.id[1])); world.npcs.companion.spawn();
-  // W0/W1 ambient traffic is authored only on collision-safe street lanes.
-  if (districts.composition.tier <= 1) {
-    for (let z = min[1] + 5; z < max[1] - 5; z += 10) {
-      const a = { x: min[0] + 5, z }, b = { x: min[0] + 25, z };
-      if (world.infected.nav.visible(a, b, 2) && !world.npcs.traffic.overlaps(a)) { world.npcs.traffic.spawn([a, b], districts.composition.tier === 1); break; }
-    }
-  }
 }
 
 function campaignWalls(world: SimWorld, districts: DistrictWorld = world.districts!): NonNullable<ScenarioDefinition['walls']> {

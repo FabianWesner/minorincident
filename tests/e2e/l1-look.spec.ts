@@ -64,7 +64,8 @@ for (const mobile of [false, true]) test.describe(mobile ? 'iPhone portrait' : '
       await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
     } else {
       const point = await page.evaluate(() => window.__SS__!.input.project({ x: 2, z: 0 }));
-      await page.mouse.click(point.x, point.y); await page.evaluate(() => window.__SS__!.step(30));
+      // Allow the bounded click acceleration to build speed; keep the distance assertion.
+      await page.mouse.click(point.x, point.y); await page.evaluate(() => window.__SS__!.step(60));
     }
     const end = await page.evaluate(() => window.__SS__!.getState().player!.transform);
     expect(Math.hypot(end.x - start.x, end.z - start.z)).toBeGreaterThan(1);

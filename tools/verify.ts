@@ -10,7 +10,7 @@ const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
   ['npm', 'run', 'build'],
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.
-  [...(target === 'E18' ? ['sh', 'tools/e2e-lock.sh'] : []), 'npx', 'vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', ...(target === 'E19' ? ['--testTimeout=120000'] : []), '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
+  ['npx', 'vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
   ...(target === 'E10'
     ? [
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E10-AC06', '--workers=2'],
@@ -29,7 +29,7 @@ const commands: string[][] = [
         // Frame budgets and CPU-throttled profiles use native GPU headless Chrome, one worker.
         ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/e18-desktop.spec.ts', 'tests/perf/e18-devices.spec.ts', '--project=chromium', '--workers=1'],
       ]
-      : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, ...(target === 'E19' ? ['--workers=1'] : [])]]),
+      : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern]]),
 ];
 const checks: { command: string[]; exitCode: number | null }[] = [];
 for (const [command, ...args] of commands) {
