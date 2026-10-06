@@ -1,0 +1,69 @@
+{
+  "id": "prop.gnome",
+  "triangles": {
+    "lod0": 9852,
+    "lod1": 1174,
+    "lod2": 284
+  },
+  "dimensions_blender": [
+    0.45599988102912903,
+    0.559999942779541,
+    1.1799999475479126
+  ],
+  "draw_calls": 9,
+  "materials": [
+    "pal_leather",
+    "pal_woodWarm",
+    "pal_backpackTeal",
+    "pal_uiDark",
+    "pal_brass",
+    "pal_skinWarm",
+    "pal_picketWhite",
+    "pal_survivorRed",
+    "pal_redDark"
+  ],
+  "nodes": [
+    "root",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 3,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 140496,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 31968,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 18908,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.1191636215996752,
+    "lod2": 0.02882663418595209
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.gnome",
+    "geometry_hash": "4d074872e5ac473b59cb1934d0aaff25f42ca772e0389f0c5847326b77ad50d8",
+    "second_geometry_hash": "4d074872e5ac473b59cb1934d0aaff25f42ca772e0389f0c5847326b77ad50d8",
+    "geometry_identical": true,
+    "raw_byte_identical": false
+  },
+  "matches_reference": true,
+  "done": true
+}

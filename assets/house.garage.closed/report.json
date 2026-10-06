@@ -1,0 +1,72 @@
+{
+  "id": "house.garage.closed",
+  "triangles": {
+    "lod0": 7000,
+    "lod1": 832,
+    "lod2": 204
+  },
+  "dimensions_blender": [
+    1.287731647491455,
+    2.724468946456909,
+    2.3350000381469727
+  ],
+  "draw_calls": 8,
+  "materials": [
+    "pal_sidewalk",
+    "pal_picketWhite",
+    "pal_woodWarm",
+    "pal_pocketRose",
+    "pal_uiDark",
+    "pal_foliageDark",
+    "pal_foliage"
+  ],
+  "nodes": [
+    "root",
+    "door",
+    "col:slab",
+    "col:jamb_-1.13",
+    "col:jamb_1.13",
+    "col:lintel",
+    "col:door",
+    "front"
+  ],
+  "backface_culling": true,
+  "rounds": 4,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 222940,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 37216,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 20720,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.11885714285714286,
+    "lod2": 0.029142857142857144
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "house.garage.closed",
+    "geometry_hash": "083ee77a572e5746c6b60ddff2c0b22fbac1508e45c3ee07ae4c74897d305fda",
+    "second_geometry_hash": "083ee77a572e5746c6b60ddff2c0b22fbac1508e45c3ee07ae4c74897d305fda",
+    "geometry_identical": true,
+    "raw_byte_identical": false
+  },
+  "matches_reference": true,
+  "done": true
+}

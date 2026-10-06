@@ -1,0 +1,62 @@
+{
+  "id": "prop.lawn-chair-a",
+  "triangles": {
+    "lod0": 1520,
+    "lod1": 180,
+    "lod2": 38
+  },
+  "dimensions_blender": [
+    0.6418020129203796,
+    0.6479862928390503,
+    1.1811676025390625
+  ],
+  "draw_calls": 2,
+  "materials": [
+    "pal_picketWhite",
+    "pal_sidewalk"
+  ],
+  "nodes": [
+    "root",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 3,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 43216,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 9620,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 6112,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.11842105263157894,
+    "lod2": 0.025
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.lawn-chair-a",
+    "geometry_hash": "6a6b2c2a3b2ac918daf0b328fe9b395df40607cbc18a4e78c7a8bec41fc92486",
+    "second_geometry_hash": "6a6b2c2a3b2ac918daf0b328fe9b395df40607cbc18a4e78c7a8bec41fc92486",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
+}

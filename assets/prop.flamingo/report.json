@@ -1,0 +1,67 @@
+{
+  "id": "prop.flamingo",
+  "triangles": {
+    "lod0": 5072,
+    "lod1": 602,
+    "lod2": 146
+  },
+  "dimensions_blender": [
+    0.875159740447998,
+    0.2742000222206116,
+    1.3072129487991333
+  ],
+  "draw_calls": 7,
+  "materials": [
+    "pal_flamingoPink",
+    "pal_schoolBusYellow",
+    "pal_uiDark",
+    "pal_picketWhite",
+    "pal_flamingoCoral",
+    "pal_flamingoBlush",
+    "pal_grass"
+  ],
+  "nodes": [
+    "root",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 3,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 71840,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 22008,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 14084,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.11869085173501577,
+    "lod2": 0.028785488958990538
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.flamingo",
+    "geometry_hash": "b0b2071405988a0ec8df49d745dcbe4a5a133098a5d07f20c0ba9067ec3ddc24",
+    "second_geometry_hash": "b0b2071405988a0ec8df49d745dcbe4a5a133098a5d07f20c0ba9067ec3ddc24",
+    "geometry_identical": true,
+    "raw_byte_identical": false
+  },
+  "matches_reference": true,
+  "done": true
+}

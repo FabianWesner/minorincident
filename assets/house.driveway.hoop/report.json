@@ -1,0 +1,69 @@
+{
+  "id": "house.driveway.hoop",
+  "triangles": {
+    "lod0": 5872,
+    "lod1": 688,
+    "lod2": 154
+  },
+  "dimensions_blender": [
+    3.034715175628662,
+    2.998215675354004,
+    2.575000047683716
+  ],
+  "draw_calls": 8,
+  "materials": [
+    "pal_sidewalk",
+    "pal_pocketRose",
+    "pal_foliageDark",
+    "pal_foliage",
+    "pal_uiDark",
+    "pal_brass",
+    "pal_survivorRed",
+    "pal_picketWhite"
+  ],
+  "nodes": [
+    "root",
+    "col:slab",
+    "col:pole",
+    "front"
+  ],
+  "backface_culling": true,
+  "rounds": 3,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 239240,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 38528,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 18900,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.11716621253405994,
+    "lod2": 0.026226158038147138
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "house.driveway.hoop",
+    "geometry_hash": "2f37f8ffe5a7aac7210dd0cfc8f6706db796aaa63128d097d2c3ddfe379e8586",
+    "second_geometry_hash": "2f37f8ffe5a7aac7210dd0cfc8f6706db796aaa63128d097d2c3ddfe379e8586",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
+}
