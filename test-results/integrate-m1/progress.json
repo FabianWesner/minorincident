@@ -5,7 +5,7 @@
     "E09",
     "E15"
   ],
-  "pending": "final-main-and-regression",
+  "pending": "final-regression",
   "manifest_union": 275,
   "asset_registrations": [
     "bld.helipad",
@@ -71,5 +71,18 @@
     "browser": 25,
     "tagged_node": 14,
     "integrated_browser_and_harness": 7
+  },
+  "main": {
+    "head": "8b171c6b3d9e178a035a8bac0cddb24d6ff5d577",
+    "manifest_union": 275,
+    "registered_sources": [
+      "inf.armored-football",
+      "inf.butcher",
+      "inf.construction-worker",
+      "inf.firefighter"
+    ],
+    "typecheck": 0,
+    "lint": 0,
+    "unit": 83
   }
 }

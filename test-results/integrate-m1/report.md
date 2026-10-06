@@ -29,3 +29,7 @@ Combined render-clock hit stop, flash overlay, VFX settings/pools, spawn feedbac
 Crowd hit pulses and five-part gore use per-instance shader attributes and a shared instanced stump-cap mesh, preserving E07's batching. Real E09 vehicles keep wheel/lamp/smoke/fire behavior and take blood masks on their existing per-car palette materials; the E15 isolated vehicle probe remains available for fixture IDs. New Node/browser regressions exercise these integrations and verify render stepping/settings preserve simulation hashes. Environment entities remain excluded from combat placeholder rendering, removed/restored entities retain lifecycle cleanup, and unique feedback materials are disposed.
 
 Manifest union remains 275 IDs. E15's unrelated spec checklist-link edit is excluded as requested; only epic status is changed after verification.
+
+## Current main
+
+Merged main at 8b171c6 after all four epic merges. Its armored football, butcher, construction worker and firefighter standalone sources are retained byte-for-byte. Registered source/build/LOD paths, preserving the 275-entry manifest and each asset's reference status. Existing uniform sourceScale converts their authored heights (1.65–2.06 m) to the required 1.8 m runtime adult envelope while preserving proportions; runtime GLBs/LODs are regenerated through optimizeExports. No source art or spec criteria are edited.

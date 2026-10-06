@@ -1,0 +1,7 @@
+Reference: red padded helmet with ivory center stripe, gray face cage, ivory torn jersey #13 front/back, red shoulder bands, charcoal pants, knee guards, striped socks, fingerless glove and bloodied bare claw, red/charcoal cleats. Broad charger silhouette and older-teen adult build. Head/helmet approximately one-third total height; feet planted, knees bent and torso forward. Rigid procedural hierarchy, all sculpt subdivision applied. Palette materials only, no textures. Stump caps retained on proximal parents and zero-scaled in exported rest pose.
+
+Final geometry: 38,655 triangles, 22 GLB meshes (75 material primitives in Three.js), eight palette materials, no textures. Height 1.95085 m; sole contact at z=0 within floating-point precision. Approximate helmet/head height 0.66 m, one third total. All visible smoothing/subdivision and density reduction applied to mesh data; rigid joint nodes keep unit scales and rest rotations.
+
+Build final set: `python3 experiment/tools/blender_run.py ../assets/inf.armored-football assets/inf.armored-football/build.py -- --render assets/inf.armored-football/renders/hero.png --view final-set --samples 96 --width 1600 --height 900 --glb assets/inf.armored-football/model.glb`
+
+Pose check: `--pose --view pose` rotates armL, foreArmL and legR, moves the articulated left arm away from its attachment and reveals stump_armL. Cap remains on torso; forearm and hand retain the arm parent chain.
