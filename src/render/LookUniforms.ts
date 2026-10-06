@@ -25,5 +25,14 @@ export class LookUniforms {
       else if (typeof value === 'number') node.value = value;
     }
   }
-  export(): LookPatch { return exportLookPatch(this.values, this.palette); }
+  export(): LookPatch {
+    const effective = { ...this.values };
+    // Lighting lets the legacy flat fog override untouched gradient endpoints.
+    // Persist those effective colours so the source patch reproduces the live look.
+    if (this.has('fog')) {
+      if (!this.has('fogA')) effective.fogA = effective.fog;
+      if (!this.has('fogB')) effective.fogB = effective.fog;
+    }
+    return exportLookPatch(effective, this.palette);
+  }
 }
