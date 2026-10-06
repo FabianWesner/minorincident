@@ -1,13 +1,15 @@
-/** Evidence from public/perf-device.html. Browser emulation is never accepted as physical-device evidence. */
+/** Evidence from public/perf-device.html. Emulated evidence is explicitly separate from physical-device evidence. */
 export interface DeviceEvidence {
-  version: number; physicalDevice: boolean; deviceClass: string; platform: string; model: string;
+  version: number; physicalDevice: boolean; emulatedDevice?: boolean; cpuThrottleRate?: number; deviceClass: string; platform: string; model: string;
   recordedAt: string; userAgent: string; scenario: string; quality: string; backend: string;
   durationMs: number; frameMs: number[]; fpsP50: number; infected: number;
 }
-export function validateDeviceEvidence(value: unknown): string[] {
+export function validateDeviceEvidence(value: unknown, mode: 'physical' | 'emulated' = 'physical'): string[] {
   if (!value || typeof value !== 'object') return ['Not a device recording'];
   const d = value as DeviceEvidence, errors: string[] = [];
-  if (d.version !== 1 || d.physicalDevice !== true || d.deviceClass !== 'mid-range') errors.push('Requires declared physical mid-range hardware');
+  if (d.version !== 1 || d.deviceClass !== 'mid-range') errors.push('Requires versioned mid-range evidence');
+  if (mode === 'physical' && (d.physicalDevice !== true || d.emulatedDevice === true)) errors.push('Requires declared physical hardware');
+  if (mode === 'emulated' && (d.physicalDevice !== false || d.emulatedDevice !== true || d.cpuThrottleRate !== (d.platform === 'android' ? 4 : 2))) errors.push('Requires explicit emulation and platform CPU throttling');
   if (!['ios', 'android'].includes(d.platform) || !(d.platform === 'ios' ? /iPhone|iPad|iPod/i : /Android/i).test(d.userAgent ?? '')) errors.push('OS and device user-agent mismatch');
   if (typeof d.model !== 'string' || d.model.trim().length < 3 || !Number.isFinite(Date.parse(d.recordedAt))) errors.push('Missing model or recording date');
   if (d.scenario !== 'perf-l6-mainstreet' || d.quality !== 'low' || !['webgl', 'webgpu'].includes(d.backend) || d.infected !== 100) errors.push('Requires low-tier L6 scene with 100 living infected');
