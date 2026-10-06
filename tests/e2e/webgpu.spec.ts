@@ -14,7 +14,7 @@ test('T-E02-01b @E02 @E02-AC01 an available native GPU selects WebGPU and render
     await api.loadScenario('lookdev'); api.pause(); await api.step(60); await api.screenshotReady();
     return { available, backend: api.getState().render.backend, perf: api.perf() };
   });
-  expect(result.available, 'Requires a headed browser with a real WebGPU adapter').toBe(true);
+  expect(result.available, 'Requires a real WebGPU adapter').toBe(true);
   expect(result.backend).toBe('webgpu'); expect(result.perf.backend).toBe('webgpu'); expect(result.perf.drawCalls).toBeGreaterThan(1);
   await page.screenshot({ path: 'test-results/epics/E02/webgpu.png' });
 });
@@ -31,7 +31,7 @@ test('T-E07-12-native @E07 @E07-AC12 native WebGPU renders the same instanced in
     return { state: api.getState().render, perf: api.perf(), adapter: adapter?.info ? { vendor: adapter.info.vendor, architecture: adapter.info.architecture, device: adapter.info.device, description: adapter.info.description } : null };
   });
   expect(proof.state.backend).toBe('webgpu'); expect(proof.state.crowd!.meshDrawCalls).toBeLessThanOrEqual(30); expect(proof.state.crowd!.nonInstancedMeshes).toBe(0);
-  expect(proof.state.crowd!.batches.find((b) => b.id === 'infected.runner')!.instances).toBe(200);
+  expect(proof.state.crowd!.batches.filter((b) => b.id === 'infected.runner').reduce((sum, batch) => sum + batch.instances, 0)).toBe(200);
   mkdirSync('test-results/epics/E07', { recursive: true });
   await page.locator('canvas').screenshot({ path: 'test-results/epics/E07/webgpu.png' });
   writeFileSync('test-results/epics/E07/webgpu.json', JSON.stringify(proof, null, 2) + '\n');

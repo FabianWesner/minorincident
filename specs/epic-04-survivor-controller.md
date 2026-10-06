@@ -29,7 +29,7 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E04-AC05 | Damage → i-frames for 0.6 s (no further damage); regen starts 4 s after the last damage at 2 HP/s | sim |
 | E04-AC06 | At 0 HP: a `player.died` event, then respawn at the last checkpoint after 2.0 s with full HP; level pickups and objective progress are kept | sim |
 | E04-AC07 | Surrounded by 12 infected in a ring, the player can still escape in at least one direction within 3 s using move input only (anti-pin) | sim |
-| E04-AC08 | Both survivor variants load (placeholder or final), contain every required node (`03` §4), and stand 1.4 m ±0.07 tall | unit |
+| E04-AC08 | Both survivor variants load (placeholder or final), contain every required node (`03` §4), and stand at the manifest height ±0.07 m for integrated exports (1.8 m); code fallbacks remain 1.4 m ±0.07 | unit |
 | E04-AC09 | Animation state follows the sim (`idle`, `run`, `hurt`, `die`, …); the clip mapping table covers every locomotion and action state with no missing-clip fallbacks in a 60 s bot run | e2e |
 | E04-AC10 | Gear tier 0–4 visually differs: the turntable screenshots of tiers 0 and 4 differ by > 5% of the character's pixels, and the identity colors (red top, teal backpack) are present in every tier (color sampling) | visual |
 | E04-AC11 | The character-sheet screenshot passes the **Character vision checklist** (`90` §7.2) against `initial-drafts/survivors-corgi-and-equipment.png` (when the final asset is integrated) | vision |
