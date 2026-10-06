@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
-import { Box3, Matrix4, Vector3 } from 'three';
+import { AnimationMixer, Box3, Matrix4, Vector3, type AnimationAction } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { authoredClips, retargetClip, sampleClip, strides, strideScale } from '../../../src/render/characters/clips';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
 import { MotionPhase } from '../../../src/render/characters/MotionPhase';
@@ -87,4 +87,60 @@ test('M1-04 @E04 corgi trots on diagonal pairs and settles into an authored sit'
   expect(rotation('legFL').angleTo(rotation('legFR'))).toBeGreaterThan(.2);
   animator.update(1,0,.2);expect(animator.clip).toBe('corgi-idle');
   animator.update(6,0,.2);expect(animator.clip).toBe('corgi-sit');expect(body.position.y).toBeLessThan(rest-.08);
+});
+
+test('M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs', async () => {
+  for (const id of ['char.survivor-female','char.survivor-male','npc.civilian-man-a','npc.civilian-woman-a','npc.civilian-elderly']) {
+    const { scene } = await model(`assets/${id}/model.glb`);
+    const height = new Box3().setFromObject(scene).getSize(new Vector3()).y;
+    for (const name of ['walk','run','npc-walk','npc-walk-relaxed']) {
+      const duration = authoredClips.get(name)!.duration, stance = name === 'run' ? .5 : .6;
+      const hips: number[] = [];
+      for (let i = 0; i <= 120; i++) {
+        sampleClip(scene, name, i / 120 * duration);
+        hips.push(scene.getObjectByName('hip')!.getWorldPosition(new Vector3()).y);
+      }
+      const excursion = Math.max(...hips) - Math.min(...hips);
+      expect(excursion / height, `${id} ${name} excursion`).toBeGreaterThan(.018);
+      expect(excursion / height).toBeLessThan(name === 'run' ? .035 : .025);
+      for (const [side, offset] of [['L',0],['R',.5]] as const) {
+        const points: Vector3[] = [];
+        for (let i = 0; i <= 60; i++) {
+          const phase = i / 60 * stance;
+          sampleClip(scene, name, (phase + offset) % 1 * duration);
+          const point = scene.getObjectByName(`foot${side}`)!.getWorldPosition(new Vector3());
+          point.x += phase * strides[name] * strideScale(scene); points.push(point);
+        }
+        for (const point of points) expect(point.distanceTo(points[0]), `${id} ${name} ${side} planted ankle`).toBeLessThan(.002);
+      }
+    }
+  }
+});
+
+test('M1-25 @E04 survivor phase uses collision-resolved displacement rather than requested velocity', () => {
+  const root = createSurvivorPlaceholder('female'), parent = root.clone(false); parent.add(root);
+  const animator = new KeyframeAnimator(resolveRig(root));
+  const pose: SurvivorState = { variant:'female',gearTier:0,animation:'run',animationTick:0,velocity:{x:4.5,z:0},grounded:true,invulnerableUntil:0,checkpoint:{x:0,y:.7,z:0},diedAt:null };
+  for (let tick = 1; tick <= 60; tick++) { parent.position.x = tick / 60; animator.update(pose,tick); }
+  expect(animator.clip).toBe('walk');
+  for (let tick = 61; tick <= 90; tick++) animator.update(pose,tick);
+  expect(animator.clip).toBe('idle');
+});
+
+
+test('M1-25 @E04 walk to run preserves support phase through the crossfade', () => {
+  const actionCalls = vi.spyOn(AnimationMixer.prototype, 'clipAction');
+  const root = createSurvivorPlaceholder('female'), parent = root.clone(false); parent.add(root);
+  const animator = new KeyframeAnimator(resolveRig(root));
+  const pose: SurvivorState = { variant:'female',gearTier:0,animation:'run',animationTick:0,velocity:{x:4.5,z:0},grounded:true,invulnerableUntil:0,checkpoint:{x:0,y:.7,z:0},diedAt:null };
+  const actions = actionCalls.mock.results.map(result => result.value as AnimationAction);
+  const walk = actions.find(action => action.getClip().name === 'walk')!;
+  const run = actions.find(action => action.getClip().name === 'run')!;
+  for (let tick = 1; tick <= 60; tick++) { parent.position.x = tick / 60; animator.update(pose,tick); }
+  const phase = walk.time / walk.getClip().duration;
+  parent.position.x += 4.5 / 60; animator.update(pose,61);
+  expect(animator.clip).toBe('run');
+  expect(run.time / run.getClip().duration).toBeCloseTo((phase + 4.5 / 60 / strides.run) % 1, 6);
+  expect(walk.time / walk.getClip().duration).toBeCloseTo(run.time / run.getClip().duration, 6);
+  actionCalls.mockRestore();
 });
