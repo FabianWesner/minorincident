@@ -3,6 +3,7 @@ import { boot, expect, test } from '../fixtures';
 import { infectedDefinitions } from '../../../src/data/infected';
 import { audioCues, explosionBeats, propMaterials } from '../../../src/data/audioCues';
 import type { GameEvent } from '../../../src/sim/world/types';
+import imports from '../../../assets/audio/imports.json';
 const root = 'test-results/epics/E16';
 function artifact(name: string, data: unknown) { mkdirSync(root, { recursive: true }); writeFileSync(`${root}/${name}.json`, JSON.stringify(data, null, 2) + '\n'); }
 async function start(page: import('@playwright/test').Page, scenario = 'horde-arena') {
@@ -15,8 +16,10 @@ test('T-E16-01b @E16 @E16-AC01 every production cue decodes in both native Opus 
     const formats = await page.evaluate(async () => ({ opus: await window.__SS__!.audio.decode('webm'), aac: await window.__SS__!.audio.decode('m4a') }));
     expect(formats.opus.map(c => c.id).sort()).toEqual(Object.keys(audioCues).sort());
     expect(formats.aac.map(c => c.id).sort()).toEqual(Object.keys(audioCues).sort());
-    for (const row of [...formats.opus, ...formats.aac])
+    for (const row of [...formats.opus, ...formats.aac]) {
         expect(row.frames).toBeGreaterThan(0);
+        if (row.id in imports.cues) expect(row.peak, `recorded slice ${row.id}`).toBeGreaterThan(0.001);
+    }
     artifact('decode', { opus: formats.opus.length, aac: formats.aac.length });
 });
 // Each real archetype retains the same checks and the full 60s test deadline.
