@@ -130,3 +130,16 @@ test('T-E03-upward-aim @E03 @E03-AC07 a held upward drag aims rather than switch
   const frame = await tick(page); expect(frame.right.down).toBe(true); expect(frame.selector).toBe(0); expect(frame.aimSource).toBe('touch');
   expect(frame.aim!.x).toBeCloseTo(-Math.SQRT1_2); expect(frame.aim!.z).toBeCloseTo(-Math.SQRT1_2);
 });
+
+
+test('@E03-AC03 @E02-AC03 M1-05 two-finger pinch zooms without movement or weapon actions', async ({page,context}) => {
+  const cdp=await context.newCDPSession(page),width=page.viewportSize()!.width;
+  const before=await page.evaluate(()=>window.__SS__!.getState().render.camera.radius);
+  const fingers=[{id:11,x:width*.35,y:400},{id:12,x:width*.65,y:400}];
+  await touch(cdp,'touchStart',fingers);
+  await touch(cdp,'touchMove',[{...fingers[0],x:width*.2},{...fingers[1],x:width*.8}]);
+  const frame=await tick(page,60);
+  expect(frame.move).toEqual({x:0,z:0});expect(frame.selector).toBe(0);expect(frame.left.down||frame.right.down).toBe(false);
+  expect(await page.evaluate(()=>window.__SS__!.getState().render.camera.radius)).toBeLessThan(before);
+  await touch(cdp,'touchEnd',[]);expect((await tick(page)).move).toEqual({x:0,z:0});
+});

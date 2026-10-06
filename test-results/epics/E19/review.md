@@ -1,12 +1,9 @@
-# E19 fix-round vision review
+# M1 level lane visual review
 
-Inspected desktop 1600×900, touch portrait 390×844 and touch landscape 844×390 frames: morning, pre-incident, incident, display, store, fight and completion, plus desktop fists, exposed world edge, escape respawn and middle-click crowbar.
+Reviewed the production L1 camera at desktop 1600×900 and emulated iPhone portrait 390×844, plus landscape. Captures include the entrant, grab/bite, collapse, rise, assembled group, hardware/store fight, morning labels and completion.
 
-- Ground reaches every visible viewport edge. At the exposed town boundary, the horizon backdrop is green terrain rather than light-blue sky. Repeated beyond-edge clicks keep the survivor upright on ground.
-- The house no longer has the large flat “Your House” banner across its facade. Its replacement is a small floating sprite above the roof.
-- Morning retains real neighbors and one corgi. Incident runners read clearly, with red eyes and telegraphs. The player remains identifiable in all three viewports.
-- Fists, kick and chosen bat icons are distinct; actual fist/bat attacks and hit flashes appear. Hardware choice buttons and touch controls remain usable without overlap.
-- Death restores the diner escape objective with full health and fists/kick. Completion shows “Milestone 1 complete — thanks for playing” with Restart at all viewports.
-- Lower-half sky-colour sampling and per-step ground-height assertions pass along desktop/touch routes. Existing transient hit flashes and cyan VFX remain visible; this fix round does not change their presentation.
+The outbreak now reads as a sequence: the single delivery driver approaches customers, bodies collapse, red eyes appear, and victims rise into the four-person group. There is no fresh infected popping up among the visible customers. Portrait keeps the player, customers and controls readable. The incident still looks crowded during grabs in this isolated lane: animation/NPC model overlap and the baseline white/cyan hit flash remain integration review items for m1-anim/m1-world, which were notified.
 
-All inspected screenshots are deleted after final validation as requested. Numeric evidence remains in summary.json and the performance/pixel reports.
+The corrected objective acknowledges a better weapon and does not contradict fists/kick. Short-lived notices leave the action clear; desktop prompts sit below the companion panel. The large red overhead disc is absent, and a current-target ground ring stays small. Building names share small floating tags and fade away, rather than flat facade-sized banners. Scene-authored physical signboards remain ordinary building geometry.
+
+Mouse and touch routes complete the actual slice with no deaths. World floor, survivor readability, mobile HUD coverage and control-overlap checks remain passing. Generated captures are deleted after inspection; numeric results are retained in m1-level-evidence.json.

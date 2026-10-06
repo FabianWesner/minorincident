@@ -10,6 +10,13 @@ export class View {
   readonly azimuth = Math.PI / 4;
   readonly polar = Math.PI * 0.30;
   radius = 19;
+  private defaultRadius = 19;
+  private zoomRatio = 1;
+  private targetZoom = 1;
+  /** Wheel down zooms out; pinch spread zooms in. Default framing is unchanged. */
+  zoom(delta: number): void {
+    if (Number.isFinite(delta) && !this.blendTarget) this.targetZoom = Math.max(.85, Math.min(1.35, this.targetZoom * Math.exp(delta)));
+  }
   driving = false;
   cameraShake = true;
   spot: string | null = null;
@@ -23,10 +30,12 @@ export class View {
   /** Close isometric combat framing; portrait retains at least seven metres of ground width. */
   resize(width: number, height: number): void {
     this.camera.aspect = width / height;
-    this.radius = width >= height ? 19 : Math.max(19, 7 / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
+    this.defaultRadius = width >= height ? 19 : Math.max(19, 7 / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
+    this.radius = this.defaultRadius * this.zoomRatio;
     this.camera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z }, 0);
   }
   reset(player: { x: number; z: number }): void {
+    this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
     this.driving = false; this.focus.set(player.x, 0, player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0;
     this.update(player, 0);
   }
@@ -47,6 +56,8 @@ export class View {
     if (this.cameraShake) this.shakeStrength = Math.min(0.4, this.shakeStrength + intensity * 0.4);
   }
   update(player: { x: number; z: number }, seconds: number): void {
+    this.zoomRatio += (this.targetZoom - this.zoomRatio) * (1 - Math.exp(-12 * seconds));
+    this.radius = this.defaultRadius * this.zoomRatio;
     this.focus.x += (player.x - this.focus.x) * (1 - Math.exp(-10 * seconds));
     this.focus.z += (player.z - this.focus.z) * (1 - Math.exp(-10 * seconds));
     this.offset.setFromSphericalCoords(this.radius * (this.driving ? 1.15 : 1), this.polar, this.azimuth);
@@ -65,6 +76,6 @@ export class View {
     this.camera.position.add(this.offset); this.camera.updateMatrixWorld();
   }
   getState() {
-    return { fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * (this.driving ? 1.15 : 1), focus: this.focus.toArray(), target: this.cameraTarget.toArray(), position: this.camera.position.toArray(), spot: this.spot };
+    return { zoom: this.zoomRatio, targetZoom: this.targetZoom, zoomLimits: [.85, 1.35], fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * (this.driving ? 1.15 : 1), focus: this.focus.toArray(), target: this.cameraTarget.toArray(), position: this.camera.position.toArray(), spot: this.spot };
   }
 }

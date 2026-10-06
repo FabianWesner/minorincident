@@ -1,4 +1,4 @@
-import { boot, expect, test } from './fixtures';
+import { boot, expect, test, testUrl } from './fixtures';
 import { tick } from './input-helpers';
 
 test('T-E03-04 @E03 @E03-AC04 WASD follows screen up at camera azimuth pi/4', async ({ page }) => {
@@ -39,7 +39,7 @@ test('T-E03-05 @E03 @E03-AC05 keyboard aim turns at 360deg/s, taps snap and acti
     const frame = await tick(page);
     expect(frame.aim!.x).toBeCloseTo(direction.x, 4); expect(frame.aim!.z).toBeCloseTo(direction.z, 4);
   }
-  for (const [key, side] of [['j', 'left'], ['k', 'right'], ['Space', 'left'], ['Shift', 'right']] as const) {
+  for (const [key, side] of [['j', 'left'], ['k', 'right'], ['Space', 'left']] as const) {
     await page.keyboard.down(key); expect((await tick(page))[side]).toEqual({ down: true, held: true, up: false });
     await page.keyboard.up(key); expect((await tick(page))[side]).toEqual({ down: false, held: false, up: true });
   }
@@ -65,13 +65,13 @@ test('T-E03-08 @E03 @E03-AC08 last device selects mouse-only mouse-keyboard and 
 });
 
 test('T-E03-09 @E03 @E03-AC09 binding form persists across reload and rejects conflicts with a message', async ({ page }) => {
-  await boot(page); await page.getByText('Controls', { exact: true }).click();
+  await boot(page, `${testUrl}&debug`); await page.getByText('Controls', { exact: true }).click();
   await page.locator('select[name=action]').selectOption('left'); await page.locator('input[name=code]').fill('KeyZ'); await page.getByRole('button', { name: 'Bind', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('left bound to KeyZ');
   // Clicking the canvas removes focus from the form before gameplay key events.
   await page.mouse.click(800, 450); await tick(page);
   await page.keyboard.down('z'); expect((await tick(page)).left.held).toBe(true); await page.keyboard.up('z'); await tick(page);
-  await boot(page); await page.keyboard.down('z'); expect((await tick(page)).left.down).toBe(true); await page.keyboard.up('z');
+  await boot(page, `${testUrl}&debug`); await page.keyboard.down('z'); expect((await tick(page)).left.down).toBe(true); await page.keyboard.up('z');
   await page.getByText('Controls', { exact: true }).click(); await page.locator('select[name=action]').selectOption('right');
   await page.locator('input[name=code]').fill('KeyZ'); await page.getByRole('button', { name: 'Bind', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('already bound to left');
