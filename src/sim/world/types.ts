@@ -86,7 +86,7 @@ export interface GameStateSnapshot {
   player: EntitySnapshot | null;
   entities: EntitySnapshot[];
   mission: import('../missions/types').MissionState | { completedObjectives: string[] } | null;
-  progression: { pickups: string[] } | null;
+  progression: { pickups: string[]; campaign?: import('../progression/Campaign').CampaignSave; powerScore?: number } | null;
   rng: { stream: string; state: number; cursor: number }[];
   perf: { entities: number; bodies: number; colliders: number; listeners: number };
 }
