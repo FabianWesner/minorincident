@@ -25,6 +25,7 @@ export interface ScenarioDefinition extends InteractionPlacements {
   combat?: boolean;
   infected?: boolean;
   npcs?: { ambient?: number; companion?: boolean; level?: number; tier?: 'high' | 'low' };
+  navigationClearance?: number;
   navigation?: import('../sim/ai/DistrictNavigation').NavDistrict[];
   perches?: { x: number; z: number; y: number }[];
   walls?: { x: number; y: number; z: number; halfX: number; halfY: number; halfZ: number }[];
