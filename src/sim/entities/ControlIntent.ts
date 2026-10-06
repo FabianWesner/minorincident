@@ -92,8 +92,11 @@ export class ControlIntent {
       frame.move.x = (next.x - p.x) / step; frame.move.z = (next.z - p.z) / step;
     }
     // Keep acceleration along the routed step instead of coasting sideways into a corner.
-    const velocity = this.world.player!.locomotion.velocity, length = Math.hypot(frame.move.x, frame.move.z);
-    const forward = length ? Math.max(0, (velocity.x * frame.move.x + velocity.z * frame.move.z) / length) : 0;
-    velocity.x = length ? frame.move.x / length * forward : 0; velocity.z = length ? frame.move.z / length * forward : 0;
+    const velocity = this.world.player?.locomotion.velocity;
+    if (velocity) {
+      const length = Math.hypot(frame.move.x, frame.move.z);
+      const forward = length ? Math.max(0, (velocity.x * frame.move.x + velocity.z * frame.move.z) / length) : 0;
+      velocity.x = length ? frame.move.x / length * forward : 0; velocity.z = length ? frame.move.z / length * forward : 0;
+    }
   }
 }
