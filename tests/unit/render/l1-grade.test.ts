@@ -72,3 +72,25 @@ test('@E19 golden morning has radial two-color fog and shadow bounds follow actu
   expect(lighting.sun.shadow.camera.right).toBeGreaterThan(desktop);
   lighting.dispose();
 });
+
+test('@E19 live grade edits update the world sheet while preserving figure identity and reset the golden defaults', () => {
+  const scene = new Scene(), lighting = new Lighting(scene), materials = new Materials(lighting);
+  lighting.set('L1');
+  const data = materials.texture.image.data as Uint8Array;
+  const rgb = (token: keyof typeof import('../../../src/data/palette').palette, world = false) => {
+    const i = (paletteTokens.indexOf(token) + Number(world) * paletteTokens.length) * 4;
+    return [...data.slice(i, i + 3)];
+  };
+  const identity = rgb('survivorRed');
+  lighting.look.set({ version: 1, worldLook: { worldSurvivorRed: '#aa6677', blossomPink: '#eeaabb', coreLightEdge: .9, fogCenterX: .4, sky: '#eebb99' }, palette: { woodWarm: '#dd9955' } });
+  lighting.applyLook(); materials.applyLook();
+  expect(rgb('survivorRed', true)).toEqual([170, 102, 119]); expect(rgb('survivorRed')).toEqual(identity);
+  expect(rgb('flamingoPink', true)).toEqual([238, 170, 187]);
+  expect(rgb('woodWarm')).toEqual([221, 153, 85]); expect(rgb('woodWarm', true)).toEqual([221, 153, 85]);
+  expect(lighting.fogA.value.getHexString()).toBe('eebb99');
+  expect(lighting.coreShadowEdgeHigh.value).toBe(.9); expect(lighting.fogCenter.value.x).toBe(.4);
+  lighting.look.reset(); lighting.applyLook(); materials.applyLook();
+  expect(rgb('survivorRed', true)).toEqual([207, 101, 101]); expect(rgb('survivorRed')).toEqual(identity);
+  expect(lighting.coreShadowEdgeHigh.value).toBe(1); expect(lighting.fogCenter.value.x).toBe(.5);
+  materials.dispose(); lighting.dispose();
+});
