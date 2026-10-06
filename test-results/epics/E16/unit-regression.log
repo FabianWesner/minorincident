@@ -1,0 +1,36 @@
+
+> test:unit
+> vitest run tests/unit
+
+
+ RUN  v5.0.3 /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic
+
+ ❯ tests/unit/assets/references.test.ts (2 tests | 1 failed) 49ms
+   × T-E17-sources @E17-AC05 every tracked standalone export and LOD is registered and exported 41ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/assets/references.test.ts > T-E17-sources @E17-AC05 every tracked standalone export and LOD is registered and exported
+AssertionError: bld.helipad: expected undefined to be 'assets/bld.helipad/model.glb' // Object.is equality
+
+- Expected:
+"assets/bld.helipad/model.glb"
+
++ Received:
+undefined
+
+ ❯ tests/unit/assets/references.test.ts:22:32
+     20|     const id = source.split('/')[1];
+     21|     const def = manifest.find(asset => asset.id === id);
+     22|     expect(def?.sourceGlb, id).toBe(source);
+       |                                ^
+     23|     expect(existsSync(def!.glb), def!.glb).toBe(true);
+     24|     for (const lod of ['lod1', 'lod2'] as const) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 32 passed (33)
+      Tests  1 failed | 79 passed (80)
+   Start at  03:19:55
+   Duration  23.66s (tests 94%, import 3%, transform 2%)

@@ -1,0 +1,1838 @@
+{
+  "config": {
+    "argv": [
+      "/Users/fabianwesner/Library/Application Support/Herd/config/nvm/versions/node/v22.22.2/bin/node",
+      "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/node_modules/.bin/playwright",
+      "test",
+      "--grep",
+      "@(?:E16)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+    ],
+    "configFile": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/playwright.config.ts",
+    "rootDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/test-results/playwright/run",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e16-epic/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3326 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3326",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/audio/offline.spec.ts",
+      "file": "e2e/audio/offline.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E16-06 @E16 @E16-AC06 native convolution gives ordered measured RT60 within preset bands",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1896,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:48:47.637Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23caccdc7db070eee245-3d7f69608233b6c7b5d6",
+          "file": "e2e/audio/offline.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "T-E16-07 @E16 @E16-AC07 one building reduces measured centroid ≥30% and level 4–8dB",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1928,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:48:47.577Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23caccdc7db070eee245-7d1ab2c022a8af4e98a4",
+          "file": "e2e/audio/offline.spec.ts",
+          "line": 28,
+          "column": 1
+        },
+        {
+          "title": "T-E16-08 @E16 @E16-AC08 15m/s pass-by has a measured 6–12% pitch drop",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC08"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1216,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:48:49.676Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23caccdc7db070eee245-1291d09ce7dd89cb8848",
+          "file": "e2e/audio/offline.spec.ts",
+          "line": 37,
+          "column": 1
+        },
+        {
+          "title": "T-E16-11 @E16 @E16-AC11 each twist gives one second below −50dBFS then a stinger; L6 dawn reprise",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC11"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1892,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:48:49.676Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23caccdc7db070eee245-8424c87a1c3f8ea2447c",
+          "file": "e2e/audio/offline.spec.ts",
+          "line": 44,
+          "column": 1
+        },
+        {
+          "title": "T-E16-13b @E16 @E16-AC13 burnt W5 streets measure at least 10dB quieter than W2",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1823,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:48:50.903Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23caccdc7db070eee245-41bf956daf307f4953b0",
+          "file": "e2e/audio/offline.spec.ts",
+          "line": 58,
+          "column": 1
+        },
+        {
+          "title": "T-E16-14a @E16 @E16-AC14 measured radio and mega duck envelopes respect protected buses",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC14"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4042,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:48:51.579Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23caccdc7db070eee245-1bffc7376cbe01606fe4",
+          "file": "e2e/audio/offline.spec.ts",
+          "line": 65,
+          "column": 1
+        },
+        {
+          "title": "T-E16-16 @E16 @E16-AC16 60s production graph mix meets EBU R128 loudness, true peak and dialogue dominance",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7042,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:48:52.732Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23caccdc7db070eee245-cd0cafd103b2f2a91250",
+          "file": "e2e/audio/offline.spec.ts",
+          "line": 81,
+          "column": 1
+        },
+        {
+          "title": "T-E16-17b @E16 @E16-AC17 mono sums both channels to equal output",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1285,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:48:55.626Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "23caccdc7db070eee245-8015df5a5e5bc8f762e9",
+          "file": "e2e/audio/offline.spec.ts",
+          "line": 95,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/audio/runtime.spec.ts",
+      "file": "e2e/audio/runtime.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E16-01b @E16 @E16-AC01 every production cue decodes in both native Opus and AAC",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1319,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:48:56.933Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68f14795357b3c565ae1-6763243edd50ff13fdf2",
+          "file": "e2e/audio/runtime.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "T-E16-03 @E16 @E16-AC03 real archetype events play before damage, offscreen gain is +3dB and protected",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC03"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 43719,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:48:58.266Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68f14795357b3c565ae1-c6d3173a2b7568c30f3e",
+          "file": "e2e/audio/runtime.spec.ts",
+          "line": 22,
+          "column": 1
+        },
+        {
+          "title": "T-E16-05b @E16 @E16-AC05 150-infected crowd plays only clusters plus four nearby vocals",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5453,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:48:59.801Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68f14795357b3c565ae1-7d1d49ba3731fd13960c",
+          "file": "e2e/audio/runtime.spec.ts",
+          "line": 57,
+          "column": 1
+        },
+        {
+          "title": "T-E16-09 @E16 @E16-AC09 sim walking reads asphalt→grass→wood→glass from the surface map",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4646,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:49:05.265Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68f14795357b3c565ae1-fbb9d36a7d5d01fa6145",
+          "file": "e2e/audio/runtime.spec.ts",
+          "line": 82,
+          "column": 1
+        },
+        {
+          "title": "T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; offline schedules stay on grid",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4718,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:49:09.921Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68f14795357b3c565ae1-fd523635d8d3a5263c30",
+          "file": "e2e/audio/runtime.spec.ts",
+          "line": 104,
+          "column": 1
+        },
+        {
+          "title": "T-E16-12 @E16 @E16-AC12 positional jukebox/jingle variants and radio lowpass/emergency duck",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC12"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2481,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:49:14.647Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68f14795357b3c565ae1-923b4b83fa4d0eba2719",
+          "file": "e2e/audio/runtime.spec.ts",
+          "line": 119,
+          "column": 1
+        },
+        {
+          "title": "T-E16-14b @E16 @E16-AC14 tinnitus only within 4m and respects its setting; overlaps compose ducks",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC14"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7226,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:49:17.136Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68f14795357b3c565ae1-cfae1895092cf2306246",
+          "file": "e2e/audio/runtime.spec.ts",
+          "line": 149,
+          "column": 1
+        },
+        {
+          "title": "T-E16-15 @E16 @E16-AC15 light-lab, prop-yard and blast-lab use real bus event→cue adapters",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC15"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2507,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:49:24.374Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68f14795357b3c565ae1-c1a5409d0b56f9916c4d",
+          "file": "e2e/audio/runtime.spec.ts",
+          "line": 164,
+          "column": 1
+        },
+        {
+          "title": "T-E16-17a @E16 @E16-AC17 captions show important direction cues and noise rings obey settings",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3176,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:49:26.889Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68f14795357b3c565ae1-447cdee5146affc85e68",
+          "file": "e2e/audio/runtime.spec.ts",
+          "line": 205,
+          "column": 1
+        },
+        {
+          "title": "T-E16-01c @E16 @E16-AC01 full L1 composition coverage bot logs zero missing cues with graph active/output muted",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 38329,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:49:30.073Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68f14795357b3c565ae1-a75490bab15e0bf71ac1",
+          "file": "e2e/audio/runtime.spec.ts",
+          "line": 227,
+          "column": 1
+        },
+        {
+          "title": "T-E16-02b @E16 @E16-AC02 production audio consumes the same pistol noise as AI exactly once",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3747,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:49:41.992Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68f14795357b3c565ae1-20245042fe949a06d808",
+          "file": "e2e/audio/runtime.spec.ts",
+          "line": 241,
+          "column": 1
+        },
+        {
+          "title": "T-E16-perf @E16 @E16-AC04 @E16-AC05 @perf 150 infected with native audio stay within sim/voice budgets",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC04",
+            "E16-AC05",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3399,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:49:45.752Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "68f14795357b3c565ae1-93227dc79d2e48ef5a3b",
+          "file": "e2e/audio/runtime.spec.ts",
+          "line": 259,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/audio/smoke.spec.ts",
+      "file": "e2e/audio/smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6846,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:49:49.174Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-97a3d61ff3acce718662",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC18",
+            "E16-AC17",
+            "mobile"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3729,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:49:56.035Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-a76729b1105aa551e660",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7056,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:05.489Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-2dc10c72b0be464382db",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC18",
+            "E16-AC17",
+            "mobile"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3622,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:08.881Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-20433d0d8dc6cbff497f",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6696,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:15.108Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-15d01b5b0ba9e48f3f0d",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC18",
+            "E16-AC17",
+            "mobile"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3346,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:16.052Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-5a20f06566309242df4c",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6987,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:22.351Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-581cfa9a47816c39bec7",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC18",
+            "E16-AC17",
+            "mobile"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3561,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:22.409Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-119dc7effd9e7ba5d6dd",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6544,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:28.932Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-11aea1404dff4487d786",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC18",
+            "E16-AC17",
+            "mobile"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3282,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:29.970Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-d6d22a48a98329139629",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7171,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:35.990Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-eb40bc0a2fb51cb3189f",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+          "ok": true,
+          "tags": [
+            "E16",
+            "E16-AC18",
+            "E16-AC17",
+            "mobile"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4836,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:36.111Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-8fdfb735e84d3ec865d2",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 88,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/smoke.spec.ts",
+      "file": "e2e/smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1603,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:49:59.778Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-b06e96d7bc88dd69cb24",
+          "file": "e2e/smoke.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2974,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:01.406Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-74fb4cb910bc7abe9421",
+          "file": "e2e/smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1613,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:12.634Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-b47c75175263bbf2a151",
+          "file": "e2e/smoke.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2865,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:12.725Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-606f9edef12ca51944a0",
+          "file": "e2e/smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 827,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:19.521Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-390c9a040de6fabcb378",
+          "file": "e2e/smoke.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1644,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:20.353Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-0e569f350f7af79ee309",
+          "file": "e2e/smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 806,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:26.146Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-92ffd1bf0aed09418cc1",
+          "file": "e2e/smoke.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1567,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:26.960Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-7af3753670183995ee55",
+          "file": "e2e/smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 764,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:33.378Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-b87ee65b11d1f0642d6c",
+          "file": "e2e/smoke.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1554,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:34.148Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-60f671c069b68bd6e8b3",
+          "file": "e2e/smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1436,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:41.221Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-96d6d563eec8e62b3b00",
+          "file": "e2e/smoke.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2396,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-06T01:50:42.664Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-15be96bfa75c42d15e99",
+          "file": "e2e/smoke.spec.ts",
+          "line": 12,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-06T01:48:45.975Z",
+    "duration": 119121.935,
+    "expected": 44,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
