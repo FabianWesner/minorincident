@@ -3,7 +3,7 @@ import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
 import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3 } from 'three/webgpu';
 import { attribute, instancedBufferAttribute, mat4, normalGeometry, vec3, positionGeometry, mix, vec4, float, cameraViewMatrix, luminance, screenCoordinate } from 'three/tsl';
-import { crowdBlendedMatrix } from '../assets/crowd';
+import { crowdBlendedMatrix, packCrowdParts } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { AssetRegistry } from '../assets/registry';
 import manifest from '../assets/manifest.json';
@@ -16,7 +16,7 @@ import { authoredClips, strides } from './characters/clips';
 import { CrowdPosePalette } from './characters/CrowdPosePalette';
 import { MotionPresentation } from './characters/MotionPresentation';
 import { MotionPhase } from './characters/MotionPhase';
-interface Batch { poses: CrowdPosePalette; blend: InstancedBufferAttribute; mesh: InstancedMesh; state: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
+interface Batch { poses: CrowdPosePalette; mesh: InstancedMesh; state: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
 const variantShirts: Record<string, Color> = { 'inf.jogger': new Color('#3178ac'), 'inf.cashier': new Color('#e5d9b9'), 'inf.delivery-driver': new Color('#d4ad32'), 'inf.suburban-mom': new Color('#79865b'), 'inf.bbq-dad': new Color('#a86645'), 'inf.bathrobe-neighbor': new Color('#ac7a91') };
 /** One instanced, rigid-part GPU batch per archetype. Scene graph size never grows with infected population. */
 export class CrowdView extends Group {
@@ -71,15 +71,14 @@ export class CrowdView extends Group {
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback), capacity = role === 'crow' ? 800 : 350;
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
-      const blend = new InstancedBufferAttribute(new Float32Array(capacity * 2), 2);
-      baked.geometry.setAttribute('_blend', blend);
-      const tint = new InstancedBufferAttribute(new Float32Array(capacity * 3), 3);
+      packCrowdParts(baked.geometry);
+      const tint = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
       // Pack frame, detached leg, gore mask and flash into one slot: WebGL2 guarantees 16 attributes.
       const state = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
       baked.geometry.setAttribute('_state', state); baked.geometry.setAttribute('_variant', tint);
-      const feedbackState = attribute('_state', 'vec4');
+      const feedbackState = attribute('_state', 'vec4'), parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
       const opacity = feedbackState.w.div(2).floor().div(255).oneMinus();
-      const base = mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float').max(0)), glow = attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.001)).mul(attribute('_emissive', 'float')).mul(2).add(feedbackState.w.mod(2));
+      const base = mix(attribute('color', 'vec3'), variant.xyz, parts.y.max(0)), glow = attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.001)).mul(parts.z).mul(2).add(feedbackState.w.mod(2));
       const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // Instances cannot be sorted independently in the transparent render list.
       // A shared 4x4 screen-door threshold keeps every surface of a corpse at
@@ -90,9 +89,9 @@ export class CrowdView extends Group {
       const threshold = bayer2(pixel).mul(4).add(bayer2(pixel.div(2).floor())).add(.5).div(16);
       material.maskNode = opacity.greaterThan(threshold);
       material.depthTest = material.depthWrite = true;
-      const blending = attribute('_blend', 'vec2');
-      const matrix = crowdBlendedMatrix(texture, attribute('_part_index', 'float'), feedbackState.x, blending.x, blending.y);
-      const part = attribute('_part_index', 'float'), leg = baked.clip.parts.indexOf('legL'), shin = baked.clip.parts.indexOf('shinL'), foot = baked.clip.parts.indexOf('footL');
+      const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
+      const matrix = crowdBlendedMatrix(texture, parts.x, feedbackState.x, outgoing, weight);
+      const part = parts.x, leg = baked.clip.parts.indexOf('legL'), shin = baked.clip.parts.indexOf('shinL'), foot = baked.clip.parts.indexOf('footL');
       let visible = part.equal(leg).or(part.equal(shin)).or(part.equal(foot)).select(feedbackState.y.oneMinus(), 1);
       const groups = [/^(arm|foreArm|hand)L$/, /^(arm|foreArm|hand)R$/, /^(leg|shin|foot)L$/, /^(leg|shin|foot)R$/, /^head$/];
       groups.forEach((pattern, index) => {
@@ -111,7 +110,7 @@ export class CrowdView extends Group {
       const instance = mat4(column(0), column(4), column(8), column(12));
       material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry.mul(visible), 1))).xyz;
       material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
-      this.batches.set(`${def.id}:${lod}`, { poses, blend, lod, role: def.id, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
+      this.batches.set(`${def.id}:${lod}`, { poses, lod, role: def.id, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
@@ -178,10 +177,10 @@ export class CrowdView extends Group {
       const blend = batch.poses.sample(e.id, clip, frame, renderTick / 60);
       const fade = b.state === 'dead' ? Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 1800) / 120)) : 0;
       if (e.archetype === 'infected.crow') {
-        for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.blend.setXY(batch.count, ...blend); batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.state.setXYZW(batch.count++, frame, 0, 0, feedback?.strength ?? 0); }
+        for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZW(batch.count, tint.r, tint.g, tint.b, blend[0] * 2 + blend[1]); batch.state.setXYZW(batch.count++, frame, 0, 0, feedback?.strength ?? 0); }
       } else {
         this.transform.makeRotationY(presented.yaw); this.transform.setPosition(x, presented.y - 0.7 + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
-        batch.blend.setXY(batch.count, ...blend); batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), feedback?.mask ?? 0, (feedback?.strength ?? 0) + Math.round(fade * 255) * 2);
+        batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZW(batch.count, tint.r, tint.g, tint.b, blend[0] * 2 + blend[1]); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), feedback?.mask ?? 0, (feedback?.strength ?? 0) + Math.round(fade * 255) * 2);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); }
       }
       if (e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
@@ -189,7 +188,7 @@ export class CrowdView extends Group {
         const mesh = this.telegraphs[b.special === 'charge' || b.special === 'pin' || b.special === 'pounce' ? 1 : 0]; if (b.special === 'explode') this.transform.makeScale(3.75, 1, 3.75); else this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); this.transform.setPosition(e.transform.x, 0.06, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
       }
     }
-    for (const batch of this.batches.values()) { batch.mesh.count = batch.count; batch.mesh.visible = batch.count > 0; if (batch.count) { batch.mesh.instanceMatrix.needsUpdate = true; batch.state.needsUpdate = true; batch.blend.needsUpdate = true; batch.tint.needsUpdate = true; } }
+    for (const batch of this.batches.values()) { batch.mesh.count = batch.count; batch.mesh.visible = batch.count > 0; if (batch.count) { batch.mesh.instanceMatrix.needsUpdate = true; batch.state.needsUpdate = true; batch.tint.needsUpdate = true; } }
     for (const mesh of this.telegraphs) { mesh.visible = mesh.count > 0; if (mesh.count) mesh.instanceMatrix.needsUpdate = true; }
     this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0;
     if (this.caps.count) this.caps.instanceMatrix.needsUpdate = true;

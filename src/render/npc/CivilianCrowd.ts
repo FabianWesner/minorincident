@@ -2,7 +2,7 @@
 import { Color, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, type DataTexture } from 'three/webgpu';
 import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance } from 'three/tsl';
 import type { Materials } from '../Materials';
-import { crowdBlendedMatrix } from '../../assets/crowd';
+import { crowdBlendedMatrix, packCrowdParts } from '../../assets/crowd';
 import { AssetRegistry } from '../../assets/registry';
 import { civilianRoles } from '../../data/npcs';
 import type { SimWorld } from '../../sim/world/SimWorld';
@@ -16,7 +16,6 @@ import { createCivilianPlaceholder } from './placeholders';
 /** One human crowd draw regardless of density; poses, veins, eyes and clothing vary per instance. */
 class CivilianBatch extends Group {
   private poses!: CrowdPosePalette;
-  private readonly blend = new InstancedBufferAttribute(new Float32Array(128 * 2), 2);
   private mesh!: InstancedMesh;
   private texture!: DataTexture;
   private readonly childScale = new Vector3(.7, .7, .7);
@@ -26,7 +25,7 @@ class CivilianBatch extends Group {
   private strideScale = 1;
   private readonly colors = civilianRoles.map(d => new Color(d.color));
   private readonly frame = new InstancedBufferAttribute(new Float32Array(128), 1);
-  private readonly tint = new InstancedBufferAttribute(new Float32Array(128 * 3), 3);
+  private readonly tint = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
   private readonly glow = new InstancedBufferAttribute(new Float32Array(128), 1);
   private readonly decay = new InstancedBufferAttribute(new Float32Array(128), 1);
   private readonly registry = new AssetRegistry(() => {});
@@ -42,19 +41,20 @@ class CivilianBatch extends Group {
     baked.geometry.setAttribute('_vein', new BufferAttribute(veins, 1));
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_glow', this.glow); baked.geometry.setAttribute('_decay', this.decay);
     this.poses = new CrowdPosePalette(baked.clip, 128); this.texture = this.poses.texture;
-    baked.geometry.setAttribute('_blend', this.blend);
-    const eye = attribute('_emissive', 'float'), vein = attribute('_vein', 'float'), decay = attribute('_decay', 'float');
-    const clothing = mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float').max(0));
-    const skin = mix(clothing, vec3(.31, .40, .27), attribute('_shirt', 'float').lessThan(0).select(decay, 0));
+    packCrowdParts(baked.geometry);
+    const parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
+    const eye = parts.z, vein = parts.w, decay = attribute('_decay', 'float');
+    const clothing = mix(attribute('color', 'vec3'), variant.xyz, parts.y.max(0));
+    const skin = mix(clothing, vec3(.31, .40, .27), parts.y.lessThan(0).select(decay, 0));
     const base = mix(skin, mix(vec3(.02), vec3(1, .015, .025), attribute('_glow', 'float')), eye);
     const eyeColor = vec3(1, .005, .02);
     const glow = eyeColor.div(luminance(eyeColor)).mul(eye).mul(attribute('_glow', 'float')).mul(2);
     const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     this.mesh = new InstancedMesh(baked.geometry, material, 128); this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = this.mesh.receiveShadow = true;
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1); this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; };
-    const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset), instance = mat4(column(0), column(4), column(8), column(12)), part = attribute('_part_index', 'float');
-    const blending = attribute('_blend', 'vec2');
-    const matrix = crowdBlendedMatrix(this.texture, part, attribute('_clip_frame', 'float'), blending.x, blending.y);
+    const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset), instance = mat4(column(0), column(4), column(8), column(12)), part = parts.x;
+    const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
+    const matrix = crowdBlendedMatrix(this.texture, part, attribute('_clip_frame', 'float'), outgoing, weight);
     material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry.mul(vein.greaterThan(.5).select(decay.greaterThan(.25).select(1, 0), 1)), 1))).xyz;
     material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
@@ -75,11 +75,11 @@ class CivilianBatch extends Group {
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       this.transform.makeRotationY(presented.yaw + (down && c.state !== 'finished' ? Math.sin(this.world.tick * .9) * c.veins * .012 : 0)); if (!c.adult) this.transform.scale(this.childScale); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
       const frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
-      this.blend.setXY(index, ...this.poses.sample(e.id, clip, frame, renderTick / 60));
+      const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, frame);
-      const role = civilianRoles.findIndex(d => d.variant === c.variant), color = this.colors[Math.max(0, role)]; this.tint.setXYZ(index, color.r, color.g, color.b); this.glow.setX(index, c.eyesGlow ? Math.min(1, Math.max(0, (c.veins - .12) / .65)) : 0); this.decay.setX(index, c.veins); index++;
+      const role = civilianRoles.findIndex(d => d.variant === c.variant), color = this.colors[Math.max(0, role)]; this.tint.setXYZW(index, color.r, color.g, color.b, blend[0] * 2 + blend[1]); this.glow.setX(index, c.eyesGlow ? Math.min(1, Math.max(0, (c.veins - .12) / .65)) : 0); this.decay.setX(index, c.veins); index++;
     }
-    this.mesh.count = index; this.mesh.instanceMatrix.needsUpdate = true; this.blend.needsUpdate = this.frame.needsUpdate = this.tint.needsUpdate = this.glow.needsUpdate = this.decay.needsUpdate = true;
+    this.mesh.count = index; this.mesh.instanceMatrix.needsUpdate = true; this.frame.needsUpdate = this.tint.needsUpdate = this.glow.needsUpdate = this.decay.needsUpdate = true;
   }
   snapshot() { return { instances: this.mesh?.count ?? 0, draws: this.mesh?.count ? 1 : 0, source: this.source }; }
   dispose(): void { if (this.mesh) { this.mesh.geometry.dispose(); (this.mesh.material as MeshLambertNodeMaterial).dispose(); this.mesh.dispose(); this.texture.dispose(); } void this.registry.dispose(); this.clear(); }

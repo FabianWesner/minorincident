@@ -6,6 +6,7 @@ import { NavGrid } from '../../../src/sim/ai/NavGrid';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { intent, motion, rootMetrics } from '../../../src/debug/motionlab/Motion';
+import { MotionPresentation } from '../../../src/render/characters/MotionPresentation';
 import { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalette';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
 import { createInfectedPlaceholder } from '../../../src/render/characters/infectedPlaceholder';
@@ -42,4 +43,13 @@ test('crowd fades preserve head position when clips change or interrupt @smoke',
     previous = next;
   }
   palette.texture.dispose(); baked.geometry.dispose();
+});
+
+test('presentation applies paused same-tick teleports and interpolates subsequent movement', () => {
+  const presentation = new MotionPresentation(), transform = { x: 0, y: .7, z: 0, yaw: 0 };
+  presentation.sample(1, transform, 10);
+  transform.x = 1;
+  expect(presentation.sample(1, transform, 10, .5).x).toBe(1);
+  transform.x = 2;
+  expect(presentation.sample(1, transform, 11, .5).x).toBe(1.5);
 });
