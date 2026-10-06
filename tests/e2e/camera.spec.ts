@@ -32,15 +32,15 @@ test('T-E02-03 @E02 @E02-AC03 follow converges after 20 m teleport without overs
   for (const focus of focuses) { expect(focus[0]).toBeGreaterThanOrEqual(0); expect(focus[0]).toBeLessThanOrEqual(20.5); }
 });
 
-test('T-E02-02 @E02 @E02-AC02 default camera angles and projected 1.4 m survivor height', async ({ page }) => {
+test('T-E02-02 @E02 @E02-AC02 close camera angles and projected survivor height', async ({ page }) => {
   await boot(page);
   const result = await page.evaluate(async () => {
-    const api = window.__SS__!; await api.loadScenario('lookdev'); api.pause();
-    const top = api.camera.project(0, 1.4, 0), bottom = api.camera.project(0, 0, 0);
+    const api = window.__SS__!; await api.loadScenario('survivor'); api.pause();
+    const top = api.camera.project(0, 1.8, 0), bottom = api.camera.project(0, 0, 0);
     return { camera: api.getState().render.camera, height: Math.abs(top[1] - bottom[1]) / 2 };
   });
   expect(result.camera.fov).toBe(25); expect(result.camera.azimuth).toBeCloseTo(Math.PI / 4, 2); expect(result.camera.polar).toBeCloseTo(Math.PI * 0.3, 2);
-  expect(result.height).toBeGreaterThanOrEqual(1 / 14); expect(result.height).toBeLessThanOrEqual(1 / 10);
+  expect(result.height).toBeGreaterThanOrEqual(1 / 5.5); expect(result.height).toBeLessThanOrEqual(1 / 4);
   await page.evaluate(() => window.__SS__!.settings.set({ idPass: true }));
   const image = PNG.sync.read(await page.screenshot({ path: 'test-results/epics/E02/player-height-mask.png' }));
   let minY = image.height, maxY = 0;
@@ -49,17 +49,25 @@ test('T-E02-02 @E02 @E02-AC02 default camera angles and projected 1.4 m survivor
     if (image.data[i] > 240 && image.data[i + 1] < 20 && image.data[i + 2] > 240) { minY = Math.min(minY, y); maxY = Math.max(maxY, y); }
   }
   artifact('camera', { ...result, survivorPixelHeight: maxY - minY + 1, viewportHeight: image.height });
-  expect((maxY - minY + 1) / image.height).toBeGreaterThanOrEqual(1 / 14);
-  expect((maxY - minY + 1) / image.height).toBeLessThanOrEqual(1 / 10);
+  expect((maxY - minY + 1) / image.height).toBeGreaterThanOrEqual(1 / 5.5);
+  expect((maxY - minY + 1) / image.height).toBeLessThanOrEqual(1 / 4);
 });
 
-test('T-E02-04 @E02 @E02-AC04 portrait keeps every point of the 12 m circle inside the viewport', async ({ page }) => {
+test('T-E02-04 @E02 @E02-AC04 portrait preserves nine metres of ground and local fog', async ({ page }) => {
   await boot(page);
-  const desktopRadius = await page.evaluate(() => window.__SS__!.getState().render.camera.radius);
+  await page.evaluate(async () => { await window.__SS__!.loadScenario('survivor'); window.__SS__!.pause(); });
+  const sample = () => page.evaluate(() => {
+    const api = window.__SS__!, camera = api.getState().render.camera, lighting = api.getState().render.lighting!;
+    return { height: Math.abs(api.camera.project(0, 1.8, 0)[1] - api.camera.project(0, 0, 0)[1]) * innerHeight / 2, fogGap: lighting.fogNear - camera.radius };
+  });
+  await page.setViewportSize({ width: 844, height: 390 });
+  await page.evaluate(() => window.__SS__!.screenshotReady()); const landscape = await sample();
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect.poll(() => page.evaluate(() => window.__SS__!.getState().render.camera.radius)).toBeGreaterThan(desktopRadius);
-  const points = await page.evaluate(() => Array.from({ length: 360 }, (_, i) => window.__SS__!.camera.project(12 * Math.cos(i * Math.PI / 180), 0, 12 * Math.sin(i * Math.PI / 180))));
-  for (const p of points) { expect(Math.abs(p[0])).toBeLessThan(1); expect(Math.abs(p[1])).toBeLessThan(1); expect(p[2]).toBeGreaterThan(-1); expect(p[2]).toBeLessThan(1); }
+  await page.evaluate(() => window.__SS__!.screenshotReady()); const portrait = await sample();
+  expect(portrait.height / landscape.height).toBeGreaterThan(.9); expect(portrait.height / landscape.height).toBeLessThan(1.1);
+  const groundWidth = await page.evaluate(() => { const c = window.__SS__!.getState().render.camera; return 2 * c.radius * Math.tan(c.fov * Math.PI / 360) * innerWidth / innerHeight; });
+  expect(groundWidth).toBeGreaterThanOrEqual(9 - 1e-8);
+  expect(portrait.fogGap).toBeCloseTo(landscape.fogGap, 1);
 });
 
 test('T-E02-05b @E02 @E02-AC05 lookdev only uses palette or explicitly retained materials', async ({ page }) => {

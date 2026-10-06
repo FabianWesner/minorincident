@@ -95,9 +95,11 @@ test('T-E02-10 @E02 @E02-AC10 golden lookdev has a reviewed North-star vision ch
 
 test('T-E02-11 @E02 @E02-AC11 overview, street and shadow-probe match reviewed goldens within 1.5%', async ({ page }) => {
   await lookdev(page);
+  await page.addStyleTag({ content: 'body > :not(#game), #game > :not(canvas) { visibility: hidden !important; }' });
   for (const spot of ['overview', 'street', 'shadow-probe']) {
     await page.evaluate((name) => window.__SS__!.camera.preset(name), spot); await page.evaluate(() => window.__SS__!.screenshotReady());
-    const png = await page.screenshot({ path: `${output}/${spot}.png` });
+    // Reviewed lookdev goldens contain only the scene, without input/audio debug panels.
+    const png = await page.locator('canvas').screenshot({ path: `${output}/${spot}.png`, style: 'body > details, [data-input-hint] { visibility: hidden !important; }' });
     expect(png).toMatchSnapshot(`${spot}.png`, { threshold: 0.1, maxDiffPixelRatio: 0.015 });
   }
 });
@@ -117,9 +119,11 @@ test('T-E02-fog @E02 @E02-AC09 palette surfaces beyond fogFar resolve to the pre
   await lookdev(page);
   const p = await page.evaluate(async () => {
     const api = window.__SS__!; api.camera.cinematic({ position: [100, 100, 100], target: [0, 0, 0] }); await api.step(60);
-    return api.camera.project(0, 0.05, 8);
+    const render = api.getState().render, camera = render.camera.position;
+    return { ndc: api.camera.project(0, 0.05, 8), distance: Math.hypot(camera[0], camera[1] - .05, camera[2] - 8), fogFar: render.lighting!.fogFar };
   });
-  const image = await capture(page, 'fog-far'); const color = rgb(image, (p[0] + 1) / 2 * image.width, (1 - p[1]) / 2 * image.height);
-  artifact('fog', { color, expected: [229, 179, 158] });
+  expect(p.distance).toBeGreaterThan(p.fogFar);
+  const image = await capture(page, 'fog-far'); const color = rgb(image, (p.ndc[0] + 1) / 2 * image.width, (1 - p.ndc[1]) / 2 * image.height);
+  artifact('fog', { ...p, color, expected: [229, 179, 158] });
   for (let c = 0; c < 3; c++) expect(Math.abs(color[c] - [229, 179, 158][c])).toBeLessThanOrEqual(2);
 });

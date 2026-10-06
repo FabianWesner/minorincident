@@ -1,3 +1,5 @@
+import { actionResolver } from '../progression/apply';
+import type { ActionDef } from '../../data/actions/schema';
 import { ActionEffects } from './ActionEffects';
 import { Pickups } from './Pickups';
 import { Rng } from '../../core/Rng';
@@ -24,6 +26,8 @@ export class Combat {
   private readonly pelletHits = new Map<EntitySnapshot, number>();
   private readonly pelletDirection = { x: 1, z: 0 };
   readonly assist: AimAssist;
+  rackCapacity = 3;
+  actionDefinitions: Record<string,ActionDef> | null = null;
   runner: ActionRunner;
   readonly projectiles: Projectile[] = [];
   private readonly direction = { x: 1, z: 0 };
@@ -42,7 +46,7 @@ export class Combat {
     player.combat ??= { radius: 0.3, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] };
   }
   setLoadout(left: string[], right: string[]): void {
-    const loadout = new Loadout(left, right), infinite = this.runner.infiniteCharges;
+    const loadout = new Loadout(left, right, actionResolver(this.actionDefinitions), this.rackCapacity), infinite = this.runner.infiniteCharges;
     this.runner = new ActionRunner(1, loadout, this.runner.lastAttackId); this.runner.infiniteCharges = infinite; this.attach();
   }
   /** Empty starting loadout: no visible/effective actions until the display pickup. */

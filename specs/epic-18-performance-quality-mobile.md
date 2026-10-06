@@ -59,3 +59,5 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E18-AC07 | Mobile emulation (Pixel 7, iPhone 14 profiles): L1 boot to gameplay with touch, no layout overflow, and the low tier selected by auto | e2e |
 | E18-AC08 | **Real-device check (manual, recorded):** fps logs from one iOS and one Android mid-range device on `perf-l6-mainstreet` ≥ 30 fps p50, stored in `test-results/perf/devices/*.json` | manual |
 | E18-AC09 | Frame-time measurement on the desktop reference machine (headed Chrome with a GPU): `perf-horde-200` p95 frame ≤ 16.7 ms at the high tier (runs locally; not in CI) | perf (local) |
+
+AC08 real-device recordings pending user run at final verification; emulated profiles recorded

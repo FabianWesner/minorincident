@@ -1,6 +1,7 @@
 // Adapted from folio-2025 Menu.js / Modals.js by Bruno Simon (MIT, 41046b5):
 // named screens, visibility classes, first focus, and separate gameplay input context.
 import type { Game } from '../Game';
+import { newCampaign, type Level } from '../sim/progression/Campaign';
 import { defaultBindings, type Action } from '../data/bindings';
 import { Hud } from './Hud';
 import { button, node } from './dom';
@@ -55,11 +56,15 @@ export class GameUI {
   private build(): void {
     const title = this.panel('title', 'MINOR INCIDENT', 'A quieter neighborhood today · Braver people tomorrow');
     title.append(button('start-game', 'Start game', () => this.show('character')),
+      button('continue-game', 'Continue', () => { void this.continueSaved(); }),
+      button('title-levels', 'Level select', () => { const saved = this.game.saves.load(); if (saved.status === 'ok') { this.game.campaign = saved.save; this.show('levels'); } }),
       button('title-settings', 'Settings', () => { this.back = 'title'; this.show('settings'); }),
       button('title-credits', 'Credits', () => this.show('credits')));
     const character = this.panel('character', 'Choose your survivor', 'Same courage. Your style.');
     for (const variant of ['female', 'male'] as const) character.append(button(`character-${variant}`, variant === 'female' ? 'Female survivor' : 'Male survivor', () => {
-      this.variant = variant; this.game.world.player?.select(variant, 0); this.show('levels');
+      this.variant = variant; this.game.world.player?.select(variant, 0);
+      this.game.campaign = newCampaign(variant, Number(this.game.params.get('seed') ?? 1));
+      this.game.campaign.settings = { ...this.game.audio.settings }; this.applySettings(); this.show('levels');
     }));
     character.append(button('character-back', 'Back', () => this.show('title')));
     const levels = this.panel('levels', 'Choose a level', 'Start in Sunset Grove.');
@@ -124,11 +129,30 @@ export class GameUI {
   applySettings(): void {
     if (!this.enabled) return;
     const value = this.settings.value;
+    this.game.setQuality(value.quality);
+    const quality = this.game.quality.tier;
+    for (const [key, setting] of Object.entries(value)) {
+      const control = this.root.querySelector<HTMLInputElement | HTMLSelectElement>(`[data-testid=setting-${key}]`);
+      if (control instanceof HTMLInputElement) control.checked = setting as boolean;
+      else if (control) control.value = String(setting);
+    }
     document.body.style.setProperty('--text-scale', String(value.textSize));
     document.body.classList.toggle('colorblind-ui', value.colorblind);
-    this.game.view.settings({ gore: value.gore, cameraShake: value.cameraShake, flashReduction: value.flashReduction, colorblind: value.colorblind, quality: value.quality === 'auto' ? matchMedia('(pointer:coarse)').matches ? 'low' : 'high' : value.quality });
+    this.game.view.settings({ gore: value.gore, cameraShake: value.cameraShake, flashReduction: value.flashReduction, colorblind: value.colorblind, quality });
+    this.game.world.npcs?.setQuality(quality);
     this.game.audio.set({ muted: value.muted || this.game.params.get('audio') === 'muted', gore: value.gore });
     if (this.game.world.combat) this.game.world.combat.assist.setting = value.aimAssist;
+    this.game.campaignSettings(value);
+  }
+  private async continueSaved(): Promise<void> {
+    const saved = this.game.saves.load(); if (saved.status !== 'ok') return;
+    this.show('loading');
+    try {
+      await this.game.continueCampaign(saved.save);
+      if (this.game.campaignUI.root.hidden) this.show(null);
+    } catch {
+      this.show('title'); this.screens.get('title')!.querySelector('p')!.textContent = 'Could not load saved campaign. Please try again.';
+    }
   }
   private async load(id: string, racks = false): Promise<void> {
     const left: string[] = [], right: string[] = [];
@@ -138,8 +162,8 @@ export class GameUI {
     }
     this.show('loading');
     try {
-      await this.game.loadLevel(id);
-      this.game.world.player?.select(this.variant, 0);
+      if (this.game.campaign) await this.game.continueCampaign(this.game.campaign, Number(id.slice(1)) as Level);
+      else { await this.game.loadLevel(id); this.game.world.player?.select(this.variant, 0); }
       if (racks && left.length && right.length) this.game.world.combat?.setLoadout(left, right);
       else if (id === 'L1') this.game.world.combat?.clearLoadout();
       this.applySettings(); this.show(null);
@@ -154,6 +178,12 @@ export class GameUI {
     if (!this.enabled) return;
     this.game.input.clear(); this.game.world.clearInput();
     this.screen = screen;
+    if (screen === 'title') {
+      this.game.campaignUI.hide();
+      const saved = this.game.saves.load();
+      for (const id of ['continue-game', 'title-levels']) this.root.querySelector<HTMLButtonElement>(`[data-testid=${id}]`)!.hidden = saved.status !== 'ok';
+    }
+    if (screen === 'levels') for (let i = 1; i <= 6; i++) this.root.querySelector<HTMLButtonElement>(`[data-testid=level-L${i}]`)!.disabled = i > (this.game.campaign?.unlockedLevel ?? 1);
     for (const [name, panel] of this.screens) panel.hidden = name !== screen;
     this.root.hidden = screen === null;
     if (screen === null && this.root.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();
@@ -165,7 +195,7 @@ export class GameUI {
     this.pauseButton.hidden = screen !== null;
   }
   pause(): void {
-    if (!this.enabled) return;
+    if (!this.enabled || !this.game.campaignUI.root.hidden) return;
     if (this.screen === null && (!this.game.world.missions || ['playing', 'cinematic'].includes(this.game.world.missions.state.phase))) this.show('pause');
   }
   resume(): void {
@@ -177,6 +207,7 @@ export class GameUI {
   loaded(): void {
     if (!this.started || !this.enabled) return;
     this.missionPhase = ''; if (this.screen !== 'loading') this.show(null);
+    if (this.game.campaign) this.settings.patch(this.game.campaign.settings, false);
     this.applySettings(); this.hud.loaded();
   }
   update(): void {
@@ -185,17 +216,23 @@ export class GameUI {
     const mission = this.game.world.missions;
     if (mission?.state.phase !== this.missionPhase) {
       this.missionPhase = mission?.state.phase ?? '';
-      if (mission?.state.phase === 'progression') { this.nextLevel = `L${Math.min(6, Number(mission.def.id.slice(1)) + 1)}`; this.show('upgrades'); }
+      if (mission?.state.phase === 'progression' && !this.game.campaign) { this.nextLevel = `L${Math.min(6, Number(mission.def.id.slice(1)) + 1)}`; this.show('upgrades'); }
     }
     this.hud.update();
-    this.pauseButton.hidden = this.screen !== null || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase));
+    this.pauseButton.hidden = !this.game.campaignUI.root.hidden || this.screen !== null || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase));
     this.updateMs = performance.now() - start;
   }
   private readonly missionAccept = (event: MouseEvent): void => {
-    if ((event.target as HTMLElement).closest('[data-testid=mission-button]') && this.game.world.missions?.state.phase === 'playing' && !this.game.audio.snapshot().background) { this.game.input.clear(); this.game.clock.resume(); this.game.ticker.reset(); this.update(); }
+    if (!(event.target as HTMLElement).closest('[data-testid=mission-button]')) return;
+    if (this.game.world.missions?.state.phase === 'progression') {
+      // A paused result click must hand off without waiting for the next render frame.
+      this.game.campaignUI.update(); this.update();
+    } else if (this.game.world.missions?.state.phase === 'playing' && !this.game.audio.snapshot().background) {
+      this.game.input.clear(); this.game.clock.resume(); this.game.ticker.reset(); this.update();
+    }
   };
   private readonly key = (event: KeyboardEvent): void => {
-    if (!this.enabled) return;
+    if (!this.enabled || !this.game.campaignUI.root.hidden) return;
     if (!event.repeat && this.game.input.bindings.action(event.code) === 'pause' && !(event.target as HTMLElement)?.closest('input,select,textarea')) {
       event.preventDefault(); event.stopImmediatePropagation();
       if (this.screen === null) this.pause(); else if (this.screen === 'settings') this.show(this.back);

@@ -1,0 +1,496 @@
+{
+  "perf-l6-mainstreet-low": {
+    "first": {
+      "fps": 0.2666808896474478,
+      "frameMs": 3749.800000000001,
+      "simMs": 0,
+      "uiMs": 0,
+      "drawCalls": 266,
+      "triangles": 1260665,
+      "geometries": 174,
+      "textures": 21,
+      "entities": 103,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 12.5,
+        "simMs": 168.89999997615814,
+        "viewMs": 5244.5
+      },
+      "quality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 11,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 553000000
+    },
+    "second": {
+      "fps": 59.88023952095548,
+      "frameMs": 16.700000000000728,
+      "simMs": 0,
+      "uiMs": 0,
+      "drawCalls": 266,
+      "triangles": 1260665,
+      "geometries": 174,
+      "textures": 21,
+      "entities": 103,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 12.5,
+        "simMs": 168.89999997615814,
+        "viewMs": 5244.5
+      },
+      "quality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 13,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 553000000
+    },
+    "ai": {
+      "cap": 100,
+      "count": 100
+    },
+    "deterministic": true
+  },
+  "perf-horde-100-low": {
+    "first": {
+      "fps": 59.88023952095792,
+      "frameMs": 16.700000000000045,
+      "simMs": 0,
+      "uiMs": 0,
+      "drawCalls": 53,
+      "triangles": 428823,
+      "geometries": 71,
+      "textures": 7,
+      "entities": 101,
+      "backend": "webgl",
+      "loadTiming": null,
+      "quality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 11,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 177000000
+    },
+    "second": {
+      "fps": 60.24096385542202,
+      "frameMs": 16.59999999999991,
+      "simMs": 0,
+      "uiMs": 0,
+      "drawCalls": 53,
+      "triangles": 428823,
+      "geometries": 71,
+      "textures": 7,
+      "entities": 101,
+      "backend": "webgl",
+      "loadTiming": null,
+      "quality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 13,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 177000000
+    },
+    "ai": {
+      "cap": 100,
+      "count": 100
+    },
+    "deterministic": true
+  },
+  "perf-l5-bridge-high": {
+    "first": {
+      "fps": 0.14599179526110634,
+      "frameMs": 6849.7,
+      "simMs": 0,
+      "uiMs": 0,
+      "drawCalls": 249,
+      "triangles": 1716243,
+      "geometries": 130,
+      "textures": 22,
+      "entities": 209,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 9.899999976158142,
+        "simMs": 135.19999992847443,
+        "viewMs": 5632.400000095367
+      },
+      "quality": {
+        "setting": "high",
+        "tier": "high",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 16.7,
+          "infected": 200,
+          "drawCalls": 600,
+          "triangles": 1500000,
+          "simMs": 4,
+          "heapMB": 400,
+          "pixelRatio": 2,
+          "shadowSize": 2048,
+          "bloomMips": 5,
+          "cullDistance": 60
+        }
+      },
+      "renderedFrames": 10,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 491000000
+    },
+    "second": {
+      "fps": 59.880239520962,
+      "frameMs": 16.69999999999891,
+      "simMs": 0,
+      "uiMs": 0,
+      "drawCalls": 249,
+      "triangles": 1716243,
+      "geometries": 130,
+      "textures": 22,
+      "entities": 209,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 9.899999976158142,
+        "simMs": 135.19999992847443,
+        "viewMs": 5632.400000095367
+      },
+      "quality": {
+        "setting": "high",
+        "tier": "high",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 16.7,
+          "infected": 200,
+          "drawCalls": 600,
+          "triangles": 1500000,
+          "simMs": 4,
+          "heapMB": 400,
+          "pixelRatio": 2,
+          "shadowSize": 2048,
+          "bloomMips": 5,
+          "cullDistance": 60
+        }
+      },
+      "renderedFrames": 12,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 491000000
+    },
+    "ai": {
+      "cap": 200,
+      "count": 200
+    },
+    "deterministic": true
+  },
+  "perf-horde-200-high": {
+    "first": {
+      "fps": 4,
+      "frameMs": 250,
+      "simMs": 0,
+      "uiMs": 0,
+      "drawCalls": 54,
+      "triangles": 1309159,
+      "geometries": 72,
+      "textures": 8,
+      "entities": 201,
+      "backend": "webgl",
+      "loadTiming": null,
+      "quality": {
+        "setting": "high",
+        "tier": "high",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 16.7,
+          "infected": 200,
+          "drawCalls": 600,
+          "triangles": 1500000,
+          "simMs": 4,
+          "heapMB": 400,
+          "pixelRatio": 2,
+          "shadowSize": 2048,
+          "bloomMips": 5,
+          "cullDistance": 60
+        }
+      },
+      "renderedFrames": 10,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 212000000
+    },
+    "second": {
+      "fps": 59.88023952095792,
+      "frameMs": 16.700000000000045,
+      "simMs": 0,
+      "uiMs": 0,
+      "drawCalls": 54,
+      "triangles": 1309159,
+      "geometries": 72,
+      "textures": 8,
+      "entities": 201,
+      "backend": "webgl",
+      "loadTiming": null,
+      "quality": {
+        "setting": "high",
+        "tier": "high",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 16.7,
+          "infected": 200,
+          "drawCalls": 600,
+          "triangles": 1500000,
+          "simMs": 4,
+          "heapMB": 400,
+          "pixelRatio": 2,
+          "shadowSize": 2048,
+          "bloomMips": 5,
+          "cullDistance": 60
+        }
+      },
+      "renderedFrames": 12,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 212000000
+    },
+    "ai": {
+      "cap": 200,
+      "count": 200
+    },
+    "deterministic": true
+  },
+  "perf-l5-bridge-low": {
+    "first": {
+      "fps": 0.2608718336681188,
+      "frameMs": 3833.300000000001,
+      "simMs": 0,
+      "uiMs": 0,
+      "drawCalls": 199,
+      "triangles": 715911,
+      "geometries": 113,
+      "textures": 18,
+      "entities": 106,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 10.899999976158142,
+        "simMs": 139.20000004768372,
+        "viewMs": 4932.299999952316
+      },
+      "quality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 11,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 491000000
+    },
+    "second": {
+      "fps": 59.88023952095548,
+      "frameMs": 16.700000000000728,
+      "simMs": 0,
+      "uiMs": 0,
+      "drawCalls": 199,
+      "triangles": 715911,
+      "geometries": 113,
+      "textures": 18,
+      "entities": 106,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 10.899999976158142,
+        "simMs": 139.20000004768372,
+        "viewMs": 4932.299999952316
+      },
+      "quality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 13,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 491000000
+    },
+    "ai": {
+      "cap": 100,
+      "count": 100
+    },
+    "deterministic": true
+  },
+  "perf-l6-mainstreet-high": {
+    "first": {
+      "fps": 0.17544475244745425,
+      "frameMs": 5699.800000000001,
+      "simMs": 0,
+      "uiMs": 0,
+      "drawCalls": 305,
+      "triangles": 2320851,
+      "geometries": 183,
+      "textures": 25,
+      "entities": 206,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 12,
+        "simMs": 166.10000002384186,
+        "viewMs": 5718.100000023842
+      },
+      "quality": {
+        "setting": "high",
+        "tier": "high",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 16.7,
+          "infected": 200,
+          "drawCalls": 600,
+          "triangles": 1500000,
+          "simMs": 4,
+          "heapMB": 400,
+          "pixelRatio": 2,
+          "shadowSize": 2048,
+          "bloomMips": 5,
+          "cullDistance": 60
+        }
+      },
+      "renderedFrames": 10,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 553000000
+    },
+    "second": {
+      "fps": 60.24096385542037,
+      "frameMs": 16.600000000000364,
+      "simMs": 0,
+      "uiMs": 0,
+      "drawCalls": 305,
+      "triangles": 2320851,
+      "geometries": 183,
+      "textures": 25,
+      "entities": 206,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 12,
+        "simMs": 166.10000002384186,
+        "viewMs": 5718.100000023842
+      },
+      "quality": {
+        "setting": "high",
+        "tier": "high",
+        "p90Ms": 0,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 16.7,
+          "infected": 200,
+          "drawCalls": 600,
+          "triangles": 1500000,
+          "simMs": 4,
+          "heapMB": 400,
+          "pixelRatio": 2,
+          "shadowSize": 2048,
+          "bloomMips": 5,
+          "cullDistance": 60
+        }
+      },
+      "renderedFrames": 12,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 553000000
+    },
+    "ai": {
+      "cap": 200,
+      "count": 200
+    },
+    "deterministic": true
+  }
+}

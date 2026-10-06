@@ -1,0 +1,2696 @@
+{
+  "flags": [
+    "--disable-frame-rate-limit",
+    "--disable-gpu-vsync"
+  ],
+  "profiles": {
+    "desktop": {
+      "start": {
+        "perf": {
+          "fps": 58.479532163741446,
+          "frameMs": 17.100000000000364,
+          "simMs": 0,
+          "uiMs": 0.10000002384185791,
+          "drawCalls": 291,
+          "triangles": 808653,
+          "geometries": 124,
+          "textures": 19,
+          "entities": 73,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 17.399999976158142,
+            "simMs": 75.60000002384186,
+            "viewMs": 2658
+          },
+          "quality": {
+            "setting": "auto",
+            "tier": "high",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          },
+          "renderedFrames": 43,
+          "contextLost": false,
+          "paused": true,
+          "heapBytes": 412395878
+        },
+        "player": {
+          "x": -2.2450666392614949e-7,
+          "y": 0.7050994038581848,
+          "z": 4,
+          "yaw": 0.3205919885488634
+        },
+        "camera": {
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 19,
+          "focus": [
+            -9.411180853160923e-8,
+            0,
+            4
+          ],
+          "target": [
+            -9.411180853160923e-8,
+            0,
+            4
+          ],
+          "position": [
+            10.869166559424194,
+            11.16791979355699,
+            14.869166653536004
+          ],
+          "spot": null
+        },
+        "crowd": {
+          "instances": 0,
+          "meshDrawCalls": 0,
+          "objects": 103,
+          "nonInstancedMeshes": 0,
+          "caps": 0,
+          "flashes": 0,
+          "batches": [
+            {
+              "id": "infected.runner",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crawler",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.runner",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crawler",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.brute",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.brute",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.screamer",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.sprinter",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.screamer",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.riot",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.sprinter",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.riot",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.bloated",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.bloated",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.firefighter",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.firefighter",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.hazmat",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.hazmat",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.armored",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.armored",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.butcher",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.butcher",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.nurse",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.nurse",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.cat",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.dog",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crow",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.cat",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.dog",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crow",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.lion",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.gorilla",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.lion",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.gorilla",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.patient-zero",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.patient-zero",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.jogger",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.jogger",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.baseball-cap",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.baseball-cap",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.suburban-mom",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.delivery-driver",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.suburban-mom",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.skater",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.delivery-driver",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.skater",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.college-student",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.college-student",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bbq-dad",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bbq-dad",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cashier",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cashier",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bathrobe-neighbor",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.construction-worker",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.construction-worker",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bathrobe-neighbor",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-dachshund",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-dachshund",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-k9",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-k9",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cat-black",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cat-black",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.teen-skater",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.teen-skater",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.flamingo",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.flamingo",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.runner",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.crawler",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.brute",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.screamer",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.sprinter",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.riot",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.bloated",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.firefighter",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.hazmat",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.armored",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.butcher",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.nurse",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.dog",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.cat",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.crow",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.lion",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.gorilla",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.flamingo",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.patient-zero",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.jogger",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.baseball-cap",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.suburban-mom",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.delivery-driver",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.skater",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.college-student",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.bbq-dad",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.cashier",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.bathrobe-neighbor",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.construction-worker",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.dog-dachshund",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.dog-k9",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.cat-black",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.teen-skater",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            }
+          ],
+          "assets": []
+        },
+        "assets": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 73,
+              "lod": "lod1",
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+        "projectedHeight": 0.18305196234961854,
+        "heapBytes": 80204960
+      },
+      "timing": {
+        "samples": 360,
+        "p50Ms": 3,
+        "p95Ms": 3.4000000000005457,
+        "meanMs": 3.055277777777778,
+        "perf": {
+          "fps": 303.03030303028635,
+          "frameMs": 3.300000000000182,
+          "simMs": 0,
+          "uiMs": 0.10000002384185791,
+          "drawCalls": 291,
+          "triangles": 808653,
+          "geometries": 124,
+          "textures": 19,
+          "entities": 73,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 17.399999976158142,
+            "simMs": 75.60000002384186,
+            "viewMs": 2658
+          },
+          "quality": {
+            "setting": "auto",
+            "tier": "high",
+            "p90Ms": 3.5,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          },
+          "renderedFrames": 463,
+          "contextLost": false,
+          "paused": false,
+          "heapBytes": 413830400
+        }
+      },
+      "playedMs": 60468,
+      "moved": {
+        "x": 1.9220510721206665,
+        "y": 0.6904001832008362,
+        "z": 3.987999677658081,
+        "yaw": -0.1527498660814167
+      },
+      "moveMetres": 1.9220887582531438,
+      "end": {
+        "perf": {
+          "fps": 344.82758620672354,
+          "frameMs": 2.900000000001455,
+          "simMs": 0,
+          "uiMs": 0.10000002384185791,
+          "drawCalls": 296,
+          "triangles": 813309,
+          "geometries": 127,
+          "textures": 19,
+          "entities": 73,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 17.399999976158142,
+            "simMs": 75.60000002384186,
+            "viewMs": 2658
+          },
+          "quality": {
+            "setting": "auto",
+            "tier": "high",
+            "p90Ms": 3.5,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          },
+          "renderedFrames": 21366,
+          "contextLost": false,
+          "paused": true,
+          "heapBytes": 420337243
+        },
+        "player": {
+          "x": 1.9226263761520386,
+          "y": 0.6999590992927551,
+          "z": 3.988985538482666,
+          "yaw": 0.7866667153622299
+        },
+        "crowd": {
+          "instances": 0,
+          "meshDrawCalls": 0,
+          "objects": 103,
+          "nonInstancedMeshes": 0,
+          "caps": 0,
+          "flashes": 0,
+          "batches": [
+            {
+              "id": "infected.runner",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crawler",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.runner",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crawler",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.brute",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.brute",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.screamer",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.sprinter",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.screamer",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.riot",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.sprinter",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.riot",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.bloated",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.bloated",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.firefighter",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.firefighter",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.hazmat",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.hazmat",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.armored",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.armored",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.butcher",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.butcher",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.nurse",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.nurse",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.cat",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.dog",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crow",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.cat",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.dog",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crow",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.lion",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.gorilla",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.lion",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.gorilla",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.patient-zero",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.patient-zero",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.jogger",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.jogger",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.baseball-cap",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.baseball-cap",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.suburban-mom",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.delivery-driver",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.suburban-mom",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.skater",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.delivery-driver",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.skater",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.college-student",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.college-student",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bbq-dad",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bbq-dad",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cashier",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cashier",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bathrobe-neighbor",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.construction-worker",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.construction-worker",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bathrobe-neighbor",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-dachshund",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-dachshund",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-k9",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-k9",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cat-black",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cat-black",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.teen-skater",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.teen-skater",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.flamingo",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.flamingo",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.runner",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.crawler",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.brute",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.screamer",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.sprinter",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.riot",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.bloated",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.firefighter",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.hazmat",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.armored",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.butcher",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.nurse",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.dog",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.cat",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.crow",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.lion",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.gorilla",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.flamingo",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "infected.patient-zero",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.jogger",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.baseball-cap",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.suburban-mom",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.delivery-driver",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.skater",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.college-student",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.bbq-dad",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.cashier",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.bathrobe-neighbor",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.construction-worker",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.dog-dachshund",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.dog-k9",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.cat-black",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            },
+            {
+              "id": "inf.teen-skater",
+              "lod": "lod0",
+              "instances": 0,
+              "source": "pending"
+            }
+          ],
+          "assets": []
+        },
+        "attackEvents": 1,
+        "npcs": {
+          "civilians": {
+            "instances": 60,
+            "draws": 1,
+            "source": "placeholder"
+          },
+          "heroes": [
+            {
+              "id": 72,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 217,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 224,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 231,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 238,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 245,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 252,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 259,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 266,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 273,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 280,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            }
+          ],
+          "cars": 1
+        }
+      },
+      "errors": []
+    },
+    "iphone": {
+      "start": {
+        "perf": {
+          "fps": 56.49717514124207,
+          "frameMs": 17.700000000000273,
+          "simMs": 0,
+          "uiMs": 0.19999992847442627,
+          "drawCalls": 208,
+          "triangles": 422375,
+          "geometries": 128,
+          "textures": 17,
+          "entities": 45,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 17.200000047683716,
+            "simMs": 72.19999992847443,
+            "viewMs": 2393.2000000476837
+          },
+          "quality": {
+            "setting": "auto",
+            "tier": "low",
+            "p90Ms": 0,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 33.333333333333336,
+              "infected": 100,
+              "drawCalls": 300,
+              "triangles": 500000,
+              "simMs": 6,
+              "heapMB": 250,
+              "pixelRatio": 1.5,
+              "shadowSize": 1024,
+              "bloomMips": 2,
+              "cullDistance": 45
+            }
+          },
+          "renderedFrames": 99,
+          "contextLost": false,
+          "paused": true,
+          "heapBytes": 377731658
+        },
+        "player": {
+          "x": -1.871064938541167e-7,
+          "y": 0.7050994038581848,
+          "z": 4,
+          "yaw": 0.3205919885488634
+        },
+        "camera": {
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 43.927361274124344,
+          "focus": [
+            -7.046334372169922e-8,
+            0,
+            4
+          ],
+          "target": [
+            -7.046334372169922e-8,
+            0,
+            4
+          ],
+          "position": [
+            25.12914784209145,
+            25.819855129053792,
+            29.129147912554796
+          ],
+          "spot": null
+        },
+        "crowd": {
+          "instances": 0,
+          "meshDrawCalls": 0,
+          "objects": 70,
+          "nonInstancedMeshes": 0,
+          "caps": 0,
+          "flashes": 0,
+          "batches": [
+            {
+              "id": "infected.brute",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crawler",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.runner",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crawler",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.runner",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.brute",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.screamer",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.screamer",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.sprinter",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.sprinter",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.riot",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.riot",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.firefighter",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.bloated",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.firefighter",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.bloated",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.hazmat",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.hazmat",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.armored",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.armored",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.butcher",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.nurse",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.butcher",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.nurse",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.dog",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.cat",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crow",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.dog",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.cat",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crow",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.lion",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.lion",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.gorilla",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.gorilla",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.patient-zero",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.patient-zero",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.jogger",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.jogger",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.baseball-cap",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.baseball-cap",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.suburban-mom",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.delivery-driver",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.delivery-driver",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.suburban-mom",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.skater",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.skater",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.college-student",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.college-student",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bbq-dad",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cashier",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bbq-dad",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cashier",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bathrobe-neighbor",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bathrobe-neighbor",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.construction-worker",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.construction-worker",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-dachshund",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-dachshund",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cat-black",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-k9",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-k9",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cat-black",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.teen-skater",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.teen-skater",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.flamingo",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.flamingo",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            }
+          ],
+          "assets": []
+        },
+        "assets": {
+          "companion": "glb",
+          "actors": [
+            {
+              "id": 73,
+              "lod": "lod1",
+              "source": "glb"
+            }
+          ],
+          "placeholders": []
+        },
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+        "projectedHeight": 0.07661221868437403,
+        "heapBytes": 79650836
+      },
+      "timing": {
+        "samples": 360,
+        "p50Ms": 2.099999999999909,
+        "p95Ms": 2.400000000000091,
+        "meanMs": 2.090833333333334,
+        "perf": {
+          "fps": 454.54545454549213,
+          "frameMs": 2.199999999999818,
+          "simMs": 0,
+          "uiMs": 0.10000002384185791,
+          "drawCalls": 208,
+          "triangles": 422375,
+          "geometries": 128,
+          "textures": 17,
+          "entities": 45,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 17.200000047683716,
+            "simMs": 72.19999992847443,
+            "viewMs": 2393.2000000476837
+          },
+          "quality": {
+            "setting": "auto",
+            "tier": "low",
+            "p90Ms": 2.4,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 33.333333333333336,
+              "infected": 100,
+              "drawCalls": 300,
+              "triangles": 500000,
+              "simMs": 6,
+              "heapMB": 250,
+              "pixelRatio": 1.5,
+              "shadowSize": 1024,
+              "bloomMips": 2,
+              "cullDistance": 45
+            }
+          },
+          "renderedFrames": 519,
+          "contextLost": false,
+          "paused": false,
+          "heapBytes": 379470151
+        }
+      },
+      "playedMs": 60565,
+      "moved": {
+        "x": 3.584489107131958,
+        "y": 0.6867998242378235,
+        "z": 0.41275763511657715,
+        "yaw": 0.7853981633974482
+      },
+      "moveMetres": 5.071180462665915,
+      "end": {
+        "perf": {
+          "fps": 416.666666666414,
+          "frameMs": 2.400000000001455,
+          "simMs": 0,
+          "uiMs": 0.10000002384185791,
+          "drawCalls": 225,
+          "triangles": 443771,
+          "geometries": 129,
+          "textures": 17,
+          "entities": 45,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 17.200000047683716,
+            "simMs": 72.19999992847443,
+            "viewMs": 2393.2000000476837
+          },
+          "quality": {
+            "setting": "auto",
+            "tier": "low",
+            "p90Ms": 2.4,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 33.333333333333336,
+              "infected": 100,
+              "drawCalls": 300,
+              "triangles": 500000,
+              "simMs": 6,
+              "heapMB": 250,
+              "pixelRatio": 1.5,
+              "shadowSize": 1024,
+              "bloomMips": 2,
+              "cullDistance": 45
+            }
+          },
+          "renderedFrames": 29193,
+          "contextLost": false,
+          "paused": true,
+          "heapBytes": 387693747
+        },
+        "player": {
+          "x": 3.6913890838623047,
+          "y": 0.7050992250442505,
+          "z": 0.3073846101760864,
+          "yaw": 0.7853981633974483
+        },
+        "crowd": {
+          "instances": 0,
+          "meshDrawCalls": 0,
+          "objects": 70,
+          "nonInstancedMeshes": 0,
+          "caps": 0,
+          "flashes": 0,
+          "batches": [
+            {
+              "id": "infected.brute",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crawler",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.runner",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crawler",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.runner",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.brute",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.screamer",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.screamer",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.sprinter",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.sprinter",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.riot",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.riot",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.firefighter",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.bloated",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.firefighter",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.bloated",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.hazmat",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.hazmat",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.armored",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.armored",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.butcher",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.nurse",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.butcher",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.nurse",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.dog",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.cat",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crow",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.dog",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.cat",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.crow",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.lion",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.lion",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.gorilla",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.gorilla",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.patient-zero",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.patient-zero",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.jogger",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.jogger",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.baseball-cap",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.baseball-cap",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.suburban-mom",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.delivery-driver",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.delivery-driver",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.suburban-mom",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.skater",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.skater",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.college-student",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.college-student",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bbq-dad",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cashier",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bbq-dad",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cashier",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bathrobe-neighbor",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.bathrobe-neighbor",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.construction-worker",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.construction-worker",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-dachshund",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-dachshund",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cat-black",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-k9",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.dog-k9",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.cat-black",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.teen-skater",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "inf.teen-skater",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.flamingo",
+              "lod": "lod1",
+              "instances": 0,
+              "source": "glb"
+            },
+            {
+              "id": "infected.flamingo",
+              "lod": "lod2",
+              "instances": 0,
+              "source": "glb"
+            }
+          ],
+          "assets": []
+        },
+        "attackEvents": 2,
+        "npcs": {
+          "civilians": {
+            "instances": 36,
+            "draws": 1,
+            "source": "placeholder"
+          },
+          "heroes": [
+            {
+              "id": 72,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 203,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 210,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 217,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 224,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 231,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            },
+            {
+              "id": 238,
+              "source": "glb",
+              "nodes": [
+                "root",
+                "body",
+                "head",
+                "tail",
+                "legFL",
+                "legFR",
+                "legBL",
+                "legBR",
+                "packSocket"
+              ]
+            }
+          ],
+          "cars": 1
+        }
+      },
+      "errors": []
+    }
+  }
+}

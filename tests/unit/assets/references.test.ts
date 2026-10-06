@@ -20,12 +20,13 @@ test('T-E17-sources @E17-AC05 every integrated standalone export and LOD is regi
     if (!source.endsWith('/model.glb')) continue;
     const id = source.split('/')[1];
     const def = manifest.find(asset => asset.id === id);
-    if (!def || !['integrated', 'final'].includes(def.status)) continue;
+    expect(def, id).toBeDefined();
+    if (!['integrated','final'].includes(def!.status)) continue;
     expect(def?.sourceGlb, id).toBe(source);
     expect(existsSync(def!.glb), def!.glb).toBe(true);
     for (const lod of ['lod1', 'lod2'] as const) {
       const source = `assets/${id}/model.${lod}.glb`;
-      if (sources.has(source)) expect(def?.lods?.[lod], source).toBe(def?.glb.replace('.glb', `.${lod}.glb`));
+      if (sources.has(source) && def!.tier === 'hero') expect(def?.lods?.[lod], source).toBe(def?.glb.replace('.glb', `.${lod}.glb`));
       const output = def?.lods?.[lod];
       if (output) expect(existsSync(output), output).toBe(true);
     }

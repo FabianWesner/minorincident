@@ -8,7 +8,7 @@ import { KHRTextureBasisu } from '@gltf-transform/extensions';
 import { getTextureColorSpace, listTextureSlots } from '@gltf-transform/functions';
 
 /** Texture-free palette assets need no external encoder. Atlases require toktx. */
-export function compressTextures(document: Document, binary = process.env.TOKTX_BIN ?? 'toktx'): void {
+export function compressTextures(document: Document, binary = process.env.TOKTX_BIN ?? 'toktx', maxSize = 1024): void {
   const textures = document.getRoot().listTextures().filter(t => t.getMimeType() !== 'image/ktx2');
   if (!textures.length) return;
   const directory = mkdtempSync(join(tmpdir(),'minor-incident-ktx-'));
@@ -17,8 +17,12 @@ export function compressTextures(document: Document, binary = process.env.TOKTX_
       if (texture.getMimeType() !== 'image/png' || !texture.getImage()) throw new Error('Atlases must be PNG');
       const input = join(directory,`${index}.png`), output = join(directory,`${index}.ktx2`);
       writeFileSync(input,texture.getImage()!);
+      let size: number[] | null;
+      try { size = texture.getSize(); } catch { size = null; }
+      const scale = Math.min(1, maxSize / Math.max(...(size ?? [maxSize])));
+      const width = Math.max(1, Math.round((size?.[0] ?? maxSize) * scale)), height = Math.max(1, Math.round((size?.[1] ?? maxSize) * scale));
       const detail = listTextureSlots(texture).some(slot => /normal|occlusion|metallicRoughness/.test(slot));
-      const result = spawnSync(binary,['--t2','--genmipmap','--threads','3','--encode',detail ? 'uastc' : 'etc1s','--assign_oetf',getTextureColorSpace(texture) ?? 'linear',output,input],{encoding:'utf8'});
+      const result = spawnSync(binary,['--t2','--resize',`${width}x${height}`,'--genmipmap','--threads','3','--encode',detail ? 'uastc' : 'etc1s','--assign_oetf',getTextureColorSpace(texture) ?? 'linear',output,input],{encoding:'utf8'});
       if (result.error || result.status !== 0) throw new Error(`KTX2 encode failed: configure TOKTX_BIN (${result.error?.message ?? result.stderr})`);
       const image = readFileSync(output);
       if (image.subarray(0,12).toString('hex') !== 'ab4b5458203230bb0d0a1a0a') throw new Error('Encoder did not produce KTX2');
