@@ -71,6 +71,8 @@ Classic action-RPG controls (product owner decision, 2026-10-06). The survivor o
 
 **M1-05 orchestrator decision (2026-10-06):** wheel scroll smoothly zooms the camera (0.85–1.35× default distance), preserving isometric angle and follow; two fingers pinching the world provide touch zoom. Number keys and clickable HUD slots replace wheel selection; touch keeps upward LEFT/RIGHT swipes. Shift is a rack modifier, not an attack mirror. The E02-AC02 default stays unchanged.
 
+Mouse details (product owner, 2026-10-06, Diablo-style): left-click ground = walk there; hold LMB + move cursor = keep walking toward the cursor; left-click an infected = attack it with the LEFT weapon (approach if needed); hold LMB on an infected = keep attacking that target; **Shift + left-click = attack in place toward the cursor without moving, even with no infected near** (the swing always plays). A Shift-swing that hits a civilian is a slapstick gag: the civilian stumbles back with a "Hey!", may drop what they carry and stays annoyed briefly — no damage, never a kill; children are never hit (the swing passes through them).
+
 Aim: with a mouse the cursor aims; with keyboard only, attacks target the nearest infected in the facing direction (aim assist); on touch, aim assist unless the player drags from an action button. Pause is `Esc`, `P` or the small on-screen pause button (not one of the three mobile buttons).
 
 Gamepad support is **not in v1** (Q17). Action keys can be rebound; 1/2/3 and Shift remain reserved for rack selection. Mouse attacks and weapon selection have keyboard alternatives for players with a weak mouse. Pause is `Esc`, `P`, or the on-screen pause button.
