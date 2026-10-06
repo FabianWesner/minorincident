@@ -13,7 +13,7 @@ export class Escorts {
     this.attach(e, child); this.world.spatial.set(e.id, position.x, position.z); return e.id;
   }
   /** Campaign scripts can attach to their existing actor IDs without respawning them. */
-  attach(e: EntitySnapshot, child = e.archetype === 'npc.brother'): void {
+  attach(e: EntitySnapshot, child = e.archetype === 'npc.brother' || e.archetype === 'escort.brother'): void {
     e.escort = { state: 'follow', order: 'follow', child, gore: false, downedAt: 0, progress: 0, latched: false, path: [], pathIndex: 0, goal: -1, cover: null, attackAt: 0 };
   }
   down(e: EntitySnapshot): void {
@@ -56,7 +56,7 @@ export class Escorts {
         }
         c.state = 'cover';
         if (c.cover) this.world.npcs!.move(e, c.cover, 5, c, .2);
-        else { const dx = e.transform.x - threat.transform.x, dz = e.transform.z - threat.transform.z, d = Math.hypot(dx, dz) || 1; ai.nav.move(e.transform, dx / d * .06, dz / d * .06, .35); }
+        else { const dx = e.transform.x - threat.transform.x, dz = e.transform.z - threat.transform.z, d = Math.hypot(dx, dz) || 1; this.world.npcs!.moveStep(e, dx / d * .06, dz / d * .06); }
         // Children are knocked down, never infected/bitten or recorded as infected attack targets.
         if (Math.hypot(threat.transform.x - e.transform.x, threat.transform.z - e.transform.z) < 1.3 && tick >= c.attackAt && ai.nav.visible(threat.transform, e.transform, .1)) {
           c.attackAt = tick + 60; e.health.current = Math.max(0, e.health.current - infectedDef(threat.archetype).damage);

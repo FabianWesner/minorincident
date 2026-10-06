@@ -1,3 +1,4 @@
+import { installCampaignNpcs, rebuildNpcNavigation } from '../npc/install';
 import { Npcs } from '../npc/Npcs';
 import { InfectedSystem } from '../ai/InfectedSystem';
 import { Mission } from '../missions/Mission';
@@ -123,6 +124,7 @@ export class SimWorld implements Lifecycle {
     for (const d of districts.districts) {
       this.placeInteractions(d.gameplay.interactions ?? {}, d.origin);
     }
+    installCampaignNpcs(this);
     this.events.on('sim.tick',()=>{
       if(this.tick%60!==0)return;
       const player=this.entities.get(1)!;
@@ -139,7 +141,7 @@ export class SimWorld implements Lifecycle {
     for(const d of next.districts)for(const aabb of d.decay.colliders.map(c=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
     this.vehicles?.rebuild(true);
     this.hazards?.debris.reset(true); this.interactables?.rebuildBlockers(next.nav, true);
-    this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step();
+    this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step(); rebuildNpcNavigation(this);
   }
   setInput(patch: Partial<InputFrame>): void {
     const next = { ...this.input, ...structuredClone(patch) };

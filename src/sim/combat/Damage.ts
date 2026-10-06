@@ -31,7 +31,7 @@ export class Damage {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source || target.health.current <= 0) return 0;
     if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction) return 0;
-    if (target.civilian) { this.world.npcs?.civilians.hit(target, hit.type); if (hit.type === 'explosive' && hit.knockback > 0) this.world.knockback(target, hit.direction, hit.knockback); return 0; }
+    if (target.civilian) { this.world.npcs?.civilians.hit(target, hit.type); if (hit.type === 'explosive' && hit.knockback > 0) this.world.npcs?.moveStep(target, hit.direction.x * hit.knockback, hit.direction.z * hit.knockback); return 0; }
     if (target.companion) { this.world.npcs?.companion.hit(target, hit.base * hit.multiplier); return 0; }
     if (target.escort?.state === 'downed' || target.escort?.state === 'dead') return 0;
     if (target.escort?.child) { target.health.current = Math.max(0, target.health.current - hit.base * hit.multiplier); if (!target.health.current) this.world.npcs?.escorts.down(target); return 0; }
