@@ -1,0 +1,47 @@
+{
+  "method": "CDP heap snapshots after GC, L1/L6/L1/L6/L1; 12 rendered frames per load",
+  "beforeFix": {
+    "uniformNodeCountFirst": 1746,
+    "uniformNodeCountLast": 3154,
+    "nodeUniformCountFirst": 4693,
+    "nodeUniformCountLast": 12921,
+    "webGLVertexArrayCountFirst": 99,
+    "webGLVertexArrayCountLast": 603,
+    "webGLBufferCountFirst": 723,
+    "webGLBufferCountLast": 1571,
+    "arrayBufferBackingBytesFirst": 4603773,
+    "arrayBufferBackingBytesLast": 4734845,
+    "instructionStreamBytesFirst": 2334400,
+    "instructionStreamBytesLast": 3431616
+  },
+  "strongRetainer": "window.__SS__ -> Game -> GameView.renderer -> _nodes.nodeBuilderCache -> NodeBuilderState.bindings -> uniforms -> NodeUniform",
+  "cleanup": "At level unload retire render objects, node data, render lists and render contexts; delete fallback VAOs. During async warm-up use the actual RenderObject.context as the shared-binding cache key.",
+  "additionalRetainer": "Three NodeBuilder._bindingGroupsCache: async compileAsync restores _currentRenderContext before getForRenderAsync, so bindings are keyed by the persistent renderer. A debug.onNodeBuilderCreated hook scopes _getBindGroup to the actual render context.",
+  "fallbackAfterVAOFix": {
+    "webGLVertexArrayCountFirst": 100,
+    "webGLVertexArrayCountLast": 100,
+    "webGLBufferCountFirst": 720,
+    "webGLBufferCountLast": 720
+  },
+  "nodeResetOnly": "NodeManager.dispose alone did not meet the heap gate; async cache-key correction and render-context retirement pass both tiers.",
+  "afterFix": {
+    "high": {
+      "heapBytesFirst": 20520940,
+      "heapBytesLast": 22349068,
+      "growthPercent": 8.908597754293911,
+      "geometryCountFirst": 107,
+      "geometryCountLast": 107,
+      "textureCountFirst": 18,
+      "textureCountLast": 18
+    },
+    "low": {
+      "heapBytesFirst": 20342620,
+      "heapBytesLast": 22180972,
+      "growthPercent": 9.036948043074089,
+      "geometryCountFirst": 106,
+      "geometryCountLast": 106,
+      "textureCountFirst": 15,
+      "textureCountLast": 15
+    }
+  }
+}

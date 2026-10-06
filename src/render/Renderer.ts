@@ -3,10 +3,39 @@ import { WebGPURenderer } from 'three/webgpu';
 
 /** Automatic WebGPU → WebGL2 fallback; backend is read after renderer.init(), not inferred from navigator. */
 export class Renderer extends WebGPURenderer {
-  constructor(params: URLSearchParams) {
-    super({ antialias: true, forceWebGL: params.get('renderer') === 'webgl' });
+  constructor(params: URLSearchParams, canvas?: HTMLCanvasElement) {
+    super({ antialias: true, forceWebGL: params.get('renderer') === 'webgl', ...(canvas ? { canvas } : {}) });
+    // Game owns recovery and pauses before another draw can reach the lost backend.
+    const report = this.onDeviceLost;
+    this.onDeviceLost = info => { if (info.api !== 'WebGL') report.call(this, info); };
     // Game owns RAF and resets once per rendered frame, including explicit paused captures.
     this.info.autoReset = false;
+    // r186 async warm-up restores _currentRenderContext before building bindings.
+    // Its module cache then keys bindings by the persistent renderer and pins old levels.
+    this.debug.onNodeBuilderCreated = (builder, object) => {
+      const context = (object as { context: object }).context;
+      const internal = builder as unknown as { _getBindGroup(name: string, bindings: unknown[]): unknown };
+      const getBindGroup = internal._getBindGroup;
+      internal._getBindGroup = (name, bindings) => {
+        const state = this as unknown as { _currentRenderContext: object | null };
+        const previous = state._currentRenderContext; state._currentRenderContext = context;
+        try { return getBindGroup.call(builder, name, bindings); }
+        finally { state._currentRenderContext = previous; }
+      };
+    };
+  }
+  /** Three 0.186 retains shared shader bindings by render context, and WebGL VAOs.
+   * Level unload retires all render objects before dropping these renderer-owned caches. */
+  releaseLevelCaches(): void {
+    const caches = this as unknown as { _objects: { dispose(): void } | null; _nodes: { dispose(): void } | null; _renderLists: { dispose(): void } | null; _renderContexts: { dispose(): void } | null };
+    caches._objects?.dispose(); caches._nodes?.dispose(); caches._renderLists?.dispose(); caches._renderContexts?.dispose();
+    if (this.selectedBackend === 'webgl') {
+      const backend = this.backend as unknown as { gl: WebGL2RenderingContext | null; vaoCache: Record<string, WebGLVertexArrayObject>; state: { setVertexState(vao: WebGLVertexArrayObject | null): void } | null };
+      if (!backend.gl) return;
+      backend.state!.setVertexState(null);
+      for (const vao of Object.values(backend.vaoCache)) backend.gl.deleteVertexArray(vao);
+      backend.vaoCache = {};
+    }
   }
   get selectedBackend(): 'webgpu' | 'webgl' {
     return (this.backend as unknown as { isWebGPUBackend?: boolean }).isWebGPUBackend ? 'webgpu' : 'webgl';

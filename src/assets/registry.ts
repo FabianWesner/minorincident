@@ -39,17 +39,17 @@ export class AssetRegistry {
   async loadAsset(id: string, quality: AssetQuality = 'high', decay?: string): Promise<Object3D> {
     const def = this.definition(id), lod = quality === 'high' ? 'lod0' : quality === 'low' ? 'lod1' : quality;
     if (decay && !def.decayVariants.includes(decay)) throw new Error(`Unknown decay variant ${id}:${decay}`);
-    const key = `${id}:${lod}:${decay ?? ''}`;
+    const key = `${id}:${quality === 'low' && def.lowGlb ? 'low' : lod}:${decay ?? ''}`;
     let pending = this.cache.get(key);
     if (!pending) {
-      pending = this.prototype(def, lod, decay); this.cache.set(key, pending);
+      pending = this.prototype(def, lod, decay, quality === 'low' ? def.lowGlb : undefined); this.cache.set(key, pending);
     }
     return (await pending).clone(true);
   }
-  private async prototype(def: AssetDef, lod: 'lod0' | 'lod1' | 'lod2', decay?: string): Promise<Object3D> {
+  private async prototype(def: AssetDef, lod: 'lod0' | 'lod1' | 'lod2', decay?: string, lowGlb?: string): Promise<Object3D> {
     const fallback = (reason: string): Group => { this.log({ type: 'asset.placeholder', id: def.id, reason }); return placeholder(def); };
     if (!atLeast(def.status, 'integrated')) return fallback(`status ${def.status}`);
-    const path = lod === 'lod0' ? def.glb : def.lods?.[lod];
+    const path = lowGlb ?? (lod === 'lod0' ? def.glb : def.lods?.[lod]);
     if (!path) return fallback(`missing ${lod}`);
     try {
       const root = await this.load('/' + variantPath(path,decay).replace(/^public\//, ''));

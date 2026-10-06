@@ -1,3 +1,4 @@
+import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
 import { BoxGeometry, CircleGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, type BufferGeometry } from 'three/webgpu';
 import { attribute, instancedBufferAttribute, mat4, normalGeometry, positionGeometry, mix, vec4, float } from 'three/tsl';
@@ -19,6 +20,8 @@ export class CrowdView extends Group {
   private readonly feedback = new Map<number, { mask: number; strength: number }>();
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
   private goreEnabled = true;
+  private cullDistance = 60;
+  setQuality(tier: QualityTier): void { this.cullDistance = qualityBudgets[tier].cullDistance; }
   private readonly logs: { id: string; reason: string }[] = [];
   constructor(private readonly world: SimWorld) {
     super(); this.name = 'infected-crowd';
@@ -73,7 +76,7 @@ export class CrowdView extends Group {
     for (const e of this.world.infected!.active) {
       const b = e.infected!, batch = this.batches.get(e.archetype)!;
       const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
-      if (b.hidden || distance > 60) continue;
+      if (b.hidden || distance > this.cullDistance) continue;
       const feedback = this.feedback.get(e.id);
       const tick = distance > 35 ? Math.floor(this.world.tick / 2) * 2 : this.world.tick;
       let clip: typeof infectedClips[number] = b.state === 'dead' ? 'die' : b.legLost || e.archetype === 'infected.crawler' ? 'crawl' : b.state === 'attack' ? this.world.tick < b.until ? 'windup' : 'swing' : b.state === 'stagger' ? 'hurt' : (b.state === 'chase' || b.state === 'migration' || b.state === 'scatter' || b.state === 'wander') ? 'run' : 'idle';

@@ -4,6 +4,9 @@ import { newCampaign, preset, type CampaignSave, type CampaignSettings, type Lev
 import { applyCampaign } from './sim/progression/apply';
 import { SaveStore } from './sim/progression/Save';
 import type { SurvivorVariant } from './data/survivor';
+import { performanceLevels, installPerformanceLevel } from '../tests/fixtures/scenarios/performance';
+import { Quality, type QualitySetting } from './core/Quality';
+import { PerfOverlay } from './debug/performance/PerfOverlay';
 import { Driver } from './debug/bot/Driver';
 import { AudioService } from './audio/AudioService';
 // Adapted from folio-2025 by Bruno Simon (MIT).
@@ -22,6 +25,10 @@ import { SimWorld } from './sim/world/SimWorld';
 
 /** Injected composition root, with staged initialization adapted from Bruno Game.js. */
 export class Game {
+  readonly quality: Quality;
+  private overlay: PerfOverlay | null = null;
+  private simulatedFrameMs = 0;
+  private restoredWhilePaused = false;
   readonly services = new Services();
   readonly world = this.services.add(new SimWorld());
   readonly clock: Clock;
@@ -42,8 +49,11 @@ export class Game {
   private renderedDistricts: SimWorld['districts'] = null;
   private levelQueue: Promise<void> = Promise.resolve();
   constructor(readonly params: URLSearchParams) {
+    const requested = params.get('quality') ?? 'auto';
+    if (!['auto', 'high', 'low'].includes(requested)) throw new RangeError('Invalid quality setting');
+    this.quality = new Quality(requested as QualitySetting, { userAgent: navigator.userAgent, touchPoints: navigator.maxTouchPoints, coarsePointer: matchMedia('(pointer: coarse)').matches, memoryGB: (navigator as Navigator & { deviceMemory?: number }).deviceMemory });
     this.clock = new Clock(params.get('test') === '1' ? 20 : 5);
-    this.view = this.services.add(new GameView(this.world, params));
+    this.view = this.services.add(new GameView(this.world, params, this.quality.tier));
     this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera));
     this.audio = this.services.add(new AudioService(this.world, {
       settingsChanged: patch => this.campaignSettings(patch),
@@ -53,6 +63,11 @@ export class Game {
       project: (p) => { const q = this.view.project(p.x, p.y ?? 0, p.z); return { x: (q[0] + 1) / 2, y: (1 - q[1]) / 2 }; },
     }, params));
     this.ui = new GameUI(this);
+    this.audio.graph.setTier(this.quality.tier);
+    this.quality.onChange(() => this.applyQuality());
+    this.view.renderer.domElement.addEventListener('webglcontextlost', this.contextLost);
+    this.view.renderer.domElement.addEventListener('webglcontextrestored', this.contextRestored);
+    document.addEventListener('visibilitychange', this.visibility);
   }
   async init(): Promise<void> {
     await this.services.init();
@@ -67,24 +82,29 @@ export class Game {
       this.frameMs = seconds * 1000;
       if (!this.loading) this.campaignUI.update();
       if (!this.loading && this.renderedDistricts !== this.world.districts) this.refreshView();
-      if (!this.loading) {
+      if (!this.loading && !this.view.contextLost) {
+        if (document.hidden) this.clock.pause();
+        if (!this.clock.paused) this.quality.observe(Math.max(this.frameMs, this.simulatedFrameMs), seconds, Boolean(this.world.missions?.state.cinematic));
         if (!this.clock.paused) this.view.frame(seconds);
         const start = performance.now();
         this.clock.advance(seconds, () => this.simTick());
         this.simMs = performance.now() - start;
-        if (!this.clock.paused) this.view.update(this.clock.alpha);
+        if (!this.clock.paused || this.restoredWhilePaused) this.view.update(this.clock.paused ? 1 : this.clock.alpha);
       }
       this.ui.update();
+      this.overlay?.update(seconds);
     });
+    if (this.params.has('perf')) this.overlay = new PerfOverlay(this);
     this.ticker.init();
   }
   /** Serialize native-world changes so overlapping API loads cannot leak resources. */
   loadScenario(name: string | null, seed = 1): Promise<void> {
+    if (name && performanceLevels[name]) return this.loadLevel(performanceLevels[name].level, { seed }, name);
     const load = this.levelQueue.then(async () => {
-      this.loading = true;
+      this.loading = true; this.restoredWhilePaused = false;
       try {
         this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
-        if (name !== null) { this.world.loadScenario(name, seed); if (name === 'mission-sandbox') this.world.loadMission(missionSandbox()); await this.view.load(); }
+        if (name !== null) { this.world.loadScenario(name, seed); this.quality.startLevel(); this.applyQuality(); if (name === 'mission-sandbox') this.world.loadMission(missionSandbox()); await this.view.load(); }
         else this.view.update();
         this.renderedDistricts=this.world.districts;
         await this.audio.load(); this.ui.loaded();
@@ -93,9 +113,9 @@ export class Game {
     this.levelQueue = load.catch(() => {}); return load;
   }
   /** E10 composition plus E12 mission briefing; checkpoints restore reached state or reconstruct an authored graph prefix. */
-  loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string;progression?:ProgressionPreset}):Promise<void>{
+  loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string;progression?:ProgressionPreset}, performanceScenario?: string):Promise<void>{
     const load=this.levelQueue.then(async()=>{
-      this.loading=true;
+      this.loading=true; this.restoredWhilePaused = false;
       try{
         if(opts?.progression)this.campaign=preset(opts.progression);
         if(opts?.checkpoint && this.world.missions?.def.id === id) { this.world.missions.loadCheckpoint(opts.checkpoint); this.view.update(1); return; }
@@ -115,7 +135,10 @@ export class Game {
           if(opts?.checkpoint) mission.loadCheckpoint(opts.checkpoint);
         }
         if(this.campaign)this.watchCampaign();
+        this.quality.startLevel();this.applyQuality();
+        if (performanceScenario) installPerformanceLevel(this.world, this.quality.tier, performanceScenario);
         const sim=performance.now();await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:performance.now()-sim};await this.audio.load(); this.ui.loaded();
+        if (performanceScenario) this.view.preset(performanceLevels[performanceScenario].spot);
       }finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
   }
@@ -186,9 +209,22 @@ export class Game {
     await this.view.ready();
     for (let i = 0; i < 2; i++) { await new Promise<void>((resolve) => requestAnimationFrame(() => resolve())); this.view.update(this.clock.paused ? 1 : this.clock.alpha); }
   }
-  perf(): { fps: number; frameMs: number; simMs: number; uiMs: number; drawCalls: number; triangles: number; geometries: number; textures: number; entities: number; backend: string; loadTiming:Game['lastLoad'] } {
+  perf() {
     const info = this.view.renderer.info;
-    return { fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad };
+    return { fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null };
   }
-  dispose(): void { this.campaignUI?.dispose(); this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); this.ui.dispose(); }
+  /** Debug-only synthetic GPU cost. It changes the quality observation, never sim time. */
+  simulateFrameCost(ms: number): void { if (!Number.isFinite(ms) || ms < 0) throw new RangeError('Invalid frame cost'); this.simulatedFrameMs = ms; }
+  setQuality(setting: QualitySetting): void { this.quality.set(setting); }
+  private applyQuality(): void {
+    this.view.setQuality(this.quality.tier); this.audio.graph.setTier(this.quality.tier);
+    if (this.world.infected) this.world.infected.director.setTier(this.quality.tier);
+  }
+  private readonly visibility = (): void => { if (document.hidden) { this.clock.pause(); this.input.clear(); this.world.clearInput(); this.ticker.reset(); } };
+  private readonly contextLost = (event: Event): void => { event.preventDefault(); this.view.contextLost = true; this.view.retireLostRenderer(); this.clock.pause(); this.input.clear(); this.world.clearInput(); };
+  private readonly contextRestored = (): void => {
+    const restore = this.levelQueue.then(async () => { this.loading = true; try { await this.view.restoreContext(); this.restoredWhilePaused = true; } finally { this.loading = false; this.clock.pause(); this.ticker.reset(); } });
+    this.levelQueue = restore.catch(error => console.error(error));
+  };
+  dispose(): void { this.campaignUI?.dispose(); this.ui.dispose(); document.removeEventListener('visibilitychange', this.visibility); this.view.renderer.domElement.removeEventListener('webglcontextlost', this.contextLost); this.view.renderer.domElement.removeEventListener('webglcontextrestored', this.contextRestored); this.overlay?.dispose(); this.quality.dispose(); this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); }
 }
