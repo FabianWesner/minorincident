@@ -11,6 +11,7 @@ import { MusicDirector, type MusicIntensity, type MusicTransition } from './Musi
 import { HordeClusters, type HordePoint } from './HordeClusters';
 import { AmbienceSchedule } from './AmbienceSchedule';
 import { StreamedMusic } from './StreamedMusic';
+import { L1ArcDirector, type ArcFrame } from './L1Arc';
 export interface AudioSettings {
     muted: boolean;
     captions: boolean;
@@ -69,6 +70,8 @@ export class AudioService implements Lifecycle {
     private readonly points: HordePoint[] = [];
     private readonly pointPool: HordePoint[] = [];
     private ambience = new AmbienceSchedule(0, 1);
+    arc: L1ArcDirector | null = null;
+    private arcFrame: ArcFrame | null = null;
     private level = 'L1';
     private tier = 0;
     private loaded = false;
@@ -146,6 +149,8 @@ export class AudioService implements Lifecycle {
         this.musicEpoch = this.context.currentTime + 0.02;
         this.music = new MusicDirector(this.level, this.musicEpoch);
         this.ambience = new AmbienceSchedule(this.tier, this.world.seed, this.musicEpoch);
+        this.arc = this.level === 'L1' ? new L1ArcDirector(this.world.seed, this.musicEpoch) : null;
+        this.arcFrame = null;
         for (const type of Object.keys(eventCues) as GameEvent['type'][])
             this.unsubscribers.push(this.world.events.on(type, e => this.event(e), 10));
         this.graph.setListener(this.world.entities.get(1)!.transform);
@@ -479,6 +484,12 @@ export class AudioService implements Lifecycle {
         const source = 'sourceId' in event ? event.sourceId : 'id' in event && typeof event.id === 'number' ? event.id : undefined;
         const entity = source === undefined ? undefined : this.world.entities.get(source);
         const position = 'position' in event ? event.position : entity?.transform;
+        if (event.type.startsWith('l1.')) {
+            this.arc?.event(event.type, t);
+            return;
+        }
+        if (event.type === 'level.completed' && this.level === 'L1')
+            this.play('l1.outro.sting');
         if (event.type === 'sim.tick') {
             this.update();
             return;
@@ -773,7 +784,9 @@ export class AudioService implements Lifecycle {
                     this.event({ type: 'footstep', tick: this.world.tick, sourceId: e.id, position: p, actor: 'survivor' });
                 }
             }
-        const ambient = this.ambience.update(t);
+        if (this.arc)
+            this.updateArc(player.transform, t);
+        const ambient = this.arc && this.arc.phase !== 'calm' ? null : this.ambience.update(t);
         if (ambient)
             this.play(ambient.cue, { position: { x: player.transform.x + ambient.x, z: player.transform.z + ambient.z } });
         let changed = false;
@@ -792,6 +805,36 @@ export class AudioService implements Lifecycle {
         }
         else
             this.stopLoop('heartbeat');
+    }
+    /** L1 v2 sound arc: calm beds fade (-12 dB in 3 s) after the blast, chaos layer follows the infected count. */
+    private updateArc(listener: SoundPosition, t: number): void {
+        const arc = this.arc!, zone = zoneAt(this.graph.map, listener);
+        const frame = this.arcFrame = arc.update(t, this.points.length, zone.startsWith('interior') && arc.phase === 'chaos');
+        const bedScale = frame.calmGain;
+        this.loop('arc:chatter', 'l1.calm.chatter', { gain: bedScale });
+        for (const bed of ambienceTiers[this.tier].beds) {
+            const v = this.loops.get(`bed:${bed}`);
+            if (v && !v.stopped) { v.baseGain = audioCues[v.cue].gain * (this.tier === 5 ? dbGain(-16) : 1) * bedScale; this.graph.updateEmitter(v); v.gain.gain.setValueAtTime(v.baseGain, t); }
+        }
+        const chatter = this.loops.get('arc:chatter');
+        if (chatter) chatter.gain.gain.setValueAtTime(audioCues['l1.calm.chatter'].gain * bedScale, t);
+        if (frame.chaosGain > 0.02) {
+            const v = this.loop('arc:panic', 'l1.chaos.panic', { gain: frame.chaosGain });
+            if (v) v.gain.gain.setValueAtTime(audioCues['l1.chaos.panic'].gain * frame.chaosGain, t);
+        }
+        else this.stopLoop('arc:panic');
+        if (frame.muffled) this.loop('arc:hush', 'l1.interior.hush', {});
+        else this.stopLoop('arc:hush');
+        this.graph.ambienceFilter.frequency.setTargetAtTime(frame.muffled ? 900 : 20000, t, 0.3);
+        if (frame.ringing && this.settings.tinnitus)
+            this.graph.tinnitus(t);
+        for (const p of frame.plays) {
+            let position: SoundPosition | undefined;
+            if (p.bearing !== undefined && p.distance !== undefined)
+                position = { x: listener.x + Math.cos(p.bearing) * p.distance, z: listener.z + Math.sin(p.bearing) * p.distance };
+            this.play(p.cue, { position, gain: p.gain, rate: p.rate, lowpass: p.lowpass });
+            if (p.cue === 'l1.blast') this.haptic('explosion');
+        }
     }
     snapshot() { return { state: this.context.state, unlocked: this.unlocked, background: this.background, muted: this.settings.muted, master: this.graph.master.gain.value, output: this.graph.output.gain.value, voices: this.graph.active.size + this.score.voices, voiceLimit: this.graph.limiter.limit, music: { level: this.level, state: this.music.state, streamed: this.score.snapshot(), paused: this.context.state !== 'running', position: this.started ? Math.max(0, this.context.currentTime - this.musicEpoch) : 0, layers: this.music.layers, score: this.music.score, transitions: this.music.transitions }, buses: Object.fromEntries(Object.entries(this.graph.buses).map(([k, v]) => [k, v.gain.value])), errors: [...this.registry.errors, ...this.score.errors], cues: [...this.log], clusters: this.horde.clusters.map(c => ({ ...c })), captions: this.captions.map(c => c.text) }; }
     reset(): void {
