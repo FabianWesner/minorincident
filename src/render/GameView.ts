@@ -1,4 +1,5 @@
 import { NpcView } from './npc/NpcView';
+import { lookViewpoints } from '../data/lookViewpoints';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
@@ -208,6 +209,8 @@ export class GameView implements Lifecycle {
   }
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
+    const reviewSpot = lookViewpoints.find(spot => spot.id === name);
+    if (reviewSpot) { this.view.reset(reviewSpot); this.update(1); return; }
     if (name === 'hud-golden') {
       const player = this.world.entities.get(1)!.transform;
       this.view.preset(name, { position: [player.x + 15, 18, player.z + 15], target: [player.x, .4, player.z] }); this.update(1); return;
