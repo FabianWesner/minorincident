@@ -1,6 +1,6 @@
 # Motion lab (evaluation branch only)
 
-Start Vite on the assigned port:
+For interactive development, start Vite on the assigned port:
 
 ```sh
 E2E_PORT=3352 npx vite --host 127.0.0.1 --port 3352 --strictPort --configLoader runner
@@ -12,7 +12,8 @@ export as prototype survivor. `paused=1` installs a deterministic stepping API:
 `window.__MOTIONLAB__.step(720)`, `.metrics()`, `.resume()`, `.pause()`.
 All animations stay render-only; lab scenes own and dispose their resources.
 
-Capture serially and headlessly, taking the machine-wide browser lock once:
+Capture serially and headlessly, taking the machine-wide browser lock once. The
+harness starts and retires its own Vite server on 3352 if no server is present:
 
 ```sh
 E2E_PORT=3352 sh tools/e2e-lock.sh npx tsx tools/motionlab/measure.ts
