@@ -4,7 +4,7 @@ import { tick } from './input-helpers';
 import { menuStart } from './ui-helpers';
 
 test('@E03 @E03-AC19 Shift swings annoy adults harmlessly and pass through children', async ({ page }) => {
-  await boot(page);
+  await menuStart(page);
   const ids = await page.evaluate(async () => {
     const a = window.__SS__!; await a.loadScenario('turning-probe'); a.pause();
     a.setLoadout(['weapon.fists'], ['weapon.fists']);
@@ -13,11 +13,15 @@ test('@E03 @E03-AC19 Shift swings annoy adults harmlessly and pass through child
   });
   const cursor = await page.evaluate(() => window.__SS__!.input.project({ x: 4, z: 0 }));
   await page.mouse.move(cursor.x, cursor.y); await page.keyboard.down('Shift'); await page.mouse.click(cursor.x, cursor.y);
-  await tick(page, 8);
+  await tick(page, 14);
   const entities = await page.evaluate(ids => ids.map(id => window.__SS__!.getEntity(id)!), ids);
   expect(entities[0].civilian!.state).toBe('annoyed'); expect(entities[0].transform.x).toBeGreaterThan(.8);
   expect(entities[1].civilian!.state).toBe('calm'); expect(entities[1].transform.x).toBe(.6);
   expect(entities.map(e => e.health.current)).toEqual([100, 100]);
+  await expect(page.getByTestId('civilian-bark')).toBeVisible();
+  await expect(page.getByTestId('civilian-bark')).toHaveText('Hey!');
+  mkdirSync('test-results/epics/E03', { recursive: true });
+  await page.screenshot({ path: 'test-results/epics/E03/civilian-gag.png' });
   const events = await page.evaluate(() => window.__SS__!.events());
   expect(events.filter(e => e.type === 'civilian.bark')).toEqual([expect.objectContaining({ id: ids[0], text: 'Hey!' })]);
   expect(events.some(e => (e.type === 'combat.hit' || e.type === 'combat.kill' || e.type === 'civilian.turned') && ('targetId' in e ? ids.includes(e.targetId) : 'id' in e && ids.includes(Number(e.id))))).toBe(false);
@@ -27,7 +31,7 @@ test('@E03 @E03-AC19 Shift swings annoy adults harmlessly and pass through child
 
 test('@E03 @E03-AC20 seven unarmed moves play through real Shift LMB without moving', async ({ page }) => {
   await menuStart(page);
-  await page.evaluate(async () => { const a = window.__SS__!; a.pause(); await a.loadLevel('L1', { checkpoint: 'escape' }); a.cheats.god(true); a.setLoadout(['weapon.fists'], ['weapon.fists']); });
+  await page.evaluate(async () => { const a = window.__SS__!; a.pause(); await a.loadLevel('L1', { checkpoint: 'melee' }); a.teleport('player', { x: 70, z: -3 }); a.cheats.god(true); a.setLoadout(['weapon.fists'], ['weapon.fists']); });
   const start = await page.evaluate(() => window.__SS__!.getState().player!.transform);
   const cursor = await page.evaluate(p => window.__SS__!.input.project({ x: p.x + 5, z: p.z }), start);
   await page.mouse.move(cursor.x, cursor.y); await page.keyboard.down('Shift');
@@ -75,4 +79,21 @@ test('@E03 @E03-AC15 mouse LMB uses active action even in RIGHT rack', async ({ 
   await page.mouse.click(cursor.x, cursor.y); await tick(page, 130);
   expect(await page.evaluate(id => window.__SS__!.getEntity(id)!.health.current, id)).toBeLessThan(1000);
   expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'))).toEqual([expect.objectContaining({ side: 'RIGHT', actionId: 'weapon.bat' })]);
+});
+
+test('@E03 @E03-AC15 held target death cancels attacks even before LMB release', async ({ page }) => {
+  await boot(page);
+  const id = await page.evaluate(async () => { const a=window.__SS__!; await a.loadScenario('combat-arena'); a.pause(); a.setLoadout(['weapon.bat'], ['weapon.fists']); return a.spawn('infected.dummy', { x: 1, z: 0 }, { hp: 1 }); });
+  const cursor = await page.evaluate(() => window.__SS__!.input.project({ x: 1, z: 0 }));
+  await page.mouse.move(cursor.x, cursor.y); await page.mouse.down(); await tick(page, 120);
+  expect(await page.evaluate(id => window.__SS__!.getEntity(id)!.health.current, id)).toBe(0);
+  expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'))).toHaveLength(1);
+  await page.mouse.up();
+});
+
+test('@E03 @E03-AC02 queued RMB presses retain one active cycle pulse each', async ({ page }) => {
+  await boot(page); await page.mouse.move(800, 450);
+  await page.mouse.click(800, 450, { button: 'right' }); await page.mouse.click(800, 450, { button: 'right' });
+  for (let i=0; i<2; i++) { const frame = await tick(page); expect(frame.selector).toBe(1); expect(frame.selectorActive).toBe(true); expect(frame.right.down).toBe(false); }
+  expect((await tick(page)).selector).toBe(0);
 });

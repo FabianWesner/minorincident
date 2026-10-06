@@ -20,7 +20,7 @@ The second command compiles the exported GLB samplers to
 animation download. Commit the authoring script, GLB and generated JSON together.
 
 `KeyframeAnimator` retargets by node name, preserves each rig's rest transforms,
-crossfades actions over 140 ms, and uses additive upper-body strikes during movement.
+crossfades locomotion over 140 ms and attacks over 35 ms, and uses additive upper-body strikes during movement.
 Stride lengths in `clips.ts` describe the authored stance displacement; runtime phase
 also includes the optimized asset and portrait/child scale. `bakeInfected` samples
 these same actions for all crowd LODs, with interpolated GPU frames.

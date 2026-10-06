@@ -36,3 +36,10 @@ test('@E03-AC17 carried cycle deduplicates unarmed and preserves active timers',
   }
   expect(loadout.state.LEFT.rack[0].readyAt).toBe(100);
 });
+
+test('@E03-AC17 rapid active cycling advances each press during the swap delay', () => {
+  const loadout = new Loadout(['weapon.fists', 'weapon.bat'], ['weapon.grenade']);
+  loadout.cycleActive(1, 1); loadout.cycleActive(1, 2);
+  expect(loadout.current(loadout.state.selectedSide).id).toBe('weapon.grenade');
+  expect(loadout.usable('RIGHT', 2)).toBe(false);
+});
