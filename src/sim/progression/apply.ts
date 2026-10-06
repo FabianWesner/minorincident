@@ -16,7 +16,7 @@ export function modifiedActions(save:CampaignSave):Record<string,ActionDef> {
     }
     d.knockback*=1+m.knockback;
     if(d.id==='weapon.bat')d.damage*=1+.15*save.upgrades.filter(id=>id.startsWith('upgrade.perk.')).length;
-    if(d.id==='weapon.nail-bat'&&save.upgrades.includes('upgrade.nail-bat-bleed'))d.status={kind:'toxic',duration:3,maxStacks:1,dps:5,slow:0};
+    if(d.id==='weapon.nail-bat'&&save.upgrades.includes('upgrade.nail-bat-bleed'))d.status={kind:'bleeding',duration:3,maxStacks:1,dps:5,slow:0};
     defs[d.id]=d;
   }return defs;
 }
