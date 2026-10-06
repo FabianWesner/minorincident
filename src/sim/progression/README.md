@@ -8,7 +8,9 @@ claim a completed level's rewards again. Racks have one, two, or three slots per
 
 `preset('L5-default')` supplies a valid campaign for later epic tests. Headless consumers
 call `applyCampaign(world, preset(...))` after constructing the survivor/combat world.
-Browser consumers use `__SS__.loadLevel('L5', {progression: 'L5-default'})`. Application
+The additive test API `campaign.state()` returns a copy; `campaign.restore(save)` validates
+and applies a build without writing storage; `campaign.save()` persists it; `campaign.menu()`
+opens the native menu from storage. Browser consumers use `__SS__.loadLevel('L5', {progression: 'L5-default'})`. Application
 materializes action definitions once, leaving the E06 catalog untouched; loadout timers,
 reloads, attacks, and checkpoints consume the same definitions. Earlier-level replays
 truncate equipped racks to that level's capacity without deleting the saved setup.

@@ -22,6 +22,7 @@ export interface BotStatus { running: boolean; policy: string | null }
 type WithoutTick<T> = T extends GameEvent ? Omit<T, 'tick'> : never;
 export interface SSTestApi {
   version: string;
+  /** E13: copied campaign state; menu uses native UI; restore validates/applies without writing storage. */
   campaign: {
     state():CampaignSave|null; menu():void; save():boolean;
     restore(save:CampaignSave):void;
