@@ -148,7 +148,7 @@ export class AudioService implements Lifecycle {
         this.captionElement.dataset.audioCaptions = '';
         this.captionElement.setAttribute('role', 'status');
         this.captionElement.setAttribute('aria-live', 'polite');
-        this.captionElement.style.cssText = 'position:fixed;bottom:104px;left:50%;transform:translateX(-50%);max-width:90vw;color:#fff;background:#182333eb;padding:10px;border-radius:8px;font:16px sans-serif;pointer-events:none';
+        this.captionElement.style.cssText = 'position:fixed;bottom:104px;left:50%;transform:translateX(-50%);max-width:90vw;color:#fff;background:#182333eb;padding:10px;border-radius:8px;font:16px sans-serif;pointer-events:none;white-space:pre-line';
         this.captionElement.hidden = true;
         this.ringElement.dataset.noiseRings = '';
         this.ringElement.style.cssText = 'position:fixed;inset:0;pointer-events:none;overflow:hidden';
@@ -214,15 +214,26 @@ export class AudioService implements Lifecycle {
         if (patch.muted === undefined)
             return;
         if (this.settings.muted) {
-            this.graph.master.gain.cancelScheduledValues(this.context.currentTime);
-            this.graph.master.gain.setValueAtTime(0, this.context.currentTime);
+            this.graph.master.gain.cancelScheduledValues(0);
+            this.graph.master.gain.value = 0;
             void this.context.suspend();
         }
         else if (this.unlocked && !this.background)
             void this.return();
     }
-    private readonly gesture = (): void => { void this.unlock(); };
-    async unlock(): Promise<void> { this.unlocked = true; await this.return(); this.startBedsAndMusic(); }
+    private readonly gesture = (): void => {
+        if (!document.hidden && document.hasFocus() && !this.pageAway && !this.frozen) {
+            this.focused = true;
+            this.interrupted = false;
+        }
+        void this.unlock();
+    };
+    async unlock(): Promise<void> {
+        this.unlocked = true;
+        if (this.context.state !== 'running' || this.background)
+            await this.return();
+        this.startBedsAndMusic();
+    }
     private readonly visibility = (): void => {
         if (document.hidden)
             void this.away();
@@ -249,8 +260,9 @@ export class AudioService implements Lifecycle {
         this.host.release();
         this.pauseElement.hidden = false;
         const gain = this.graph.master.gain;
-        gain.cancelScheduledValues(this.context.currentTime);
-        gain.setValueAtTime(0, this.context.currentTime);
+        // Remove the entire envelope: a suspended context cannot advance an old ramp.
+        gain.cancelScheduledValues(0);
+        gain.value = 0;
         for (const v of this.graph.active.values())
             if (!v.source.loop)
                 v.stop();
@@ -351,7 +363,7 @@ export class AudioService implements Lifecycle {
         element.dataset.noiseRing = '';
         element.style.cssText = 'position:absolute;border:2px solid #ffd670;border-radius:50%;transform:translate(-50%,-50%);box-sizing:border-box';
         this.ringElement.append(element);
-        this.rings.push({ position: { ...position }, radius, expires: this.context.currentTime + 0.8, element });
+        this.rings.push({ position: { ...position, y: 0 }, radius, expires: this.context.currentTime + 0.8, element });
         this.updateRings();
     }
     private updateRings(): void {
@@ -619,6 +631,11 @@ export class AudioService implements Lifecycle {
             return;
         const t = this.context.currentTime;
         if (this.world.tick % 6 === 0) {
+            const previous = this.world.previousPlayer;
+            if (previous) {
+                this.graph.listenerVelocity.x = (player.transform.x - previous.x) * 60;
+                this.graph.listenerVelocity.z = (player.transform.z - previous.z) * 60;
+            }
             this.graph.setListener(player.transform);
             for (const v of this.graph.active.values())
                 this.graph.updateEmitter(v);
@@ -701,6 +718,7 @@ export class AudioService implements Lifecycle {
             this.showCaptions();
         if (this.rings.length)
             this.updateRings();
+        this.graph.lowHealth(player.health.current / player.health.max < 0.25);
         if (player.health.current / player.health.max < 0.25 && t >= this.quietMusicUntil) {
             this.loop('heartbeat', 'stinger.low-hp', { gain: 0.3 });
         }
