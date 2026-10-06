@@ -35,6 +35,18 @@ export function synthesize(cue: AudioCue, sampleRate: number): Float32Array {
                 value = (Math.sin(tau * pitch * t) * 0.35 + Math.sin(tau * pitch * 4 * t) * 0.25 + Math.sin(tau * pitch * 9 * t) * 0.18 + n * 0.035) * (0.3 + syllable * 0.7) * Math.sin(Math.PI * phase);
                 break;
             }
+            case 'buzz': {
+                // Mains hum with failing-ballast dropouts.
+                const gate = Math.sin(tau * 11 * t) > -0.2 && Math.sin(tau * 3.7 * t) > -0.6 ? 1 : 0.15;
+                value = (Math.sin(tau * 100 * t) * 0.3 + Math.sin(tau * 300 * t) * 0.2 + n * 0.12) * gate * (0.6 + 0.4 * Math.sin(Math.PI * phase));
+                break;
+            }
+            case 'chatter': {
+                // Overlapping murmured syllables: band-limited noise with 3-5 Hz modulation.
+                const mod = Math.max(0, Math.sin(tau * 5 * t)) * 0.6 + Math.max(0, Math.sin(tau * 3 * t + 1)) * 0.4;
+                value = (low * 3 + Math.sin(tau * f * (1 + 0.2 * Math.sin(tau * 2 * t)) * t) * 0.06) * (0.3 + mod * 0.7);
+                break;
+            }
             case 'bed':
                 value = low * 0.9 + Math.sin(tau * f * t) * 0.06 + Math.sin(tau * (f * 1.51) * t) * 0.03;
                 break;
