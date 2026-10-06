@@ -1,13 +1,13 @@
 // Runtime adaptation of E17 bake-crowd.ts and Bruno InstancedGroup.js (MIT).
 import { BufferAttribute, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, type Group, type Object3D, type MeshBasicMaterial } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { characterNodes, type AnimationState } from '../../data/survivor';
-import { clips } from './clips';
+import { characterNodes } from '../../data/survivor';
+import { authoredClips, sampleClip, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import type { CrowdClip } from '../../assets/crowd';
-export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup'] as const;
+export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple'] as const;
 export const framesPerClip = 24;
-/** Bake once at level load: merged color geometry, part indices and the shared procedural rigid-part clips. */
+/** Bake once at level load: merged color geometry, part indices and the shared authored glTF rigid-part actions. */
 export function bakeInfected(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false) {
   const rig = {} as CharacterRig;
   for (const name of characterNodes) {
@@ -22,20 +22,9 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
   for (const clip of infectedClips) for (let frame = 0; frame < framesPerClip; frame++) {
     for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
     const t = frame / (framesPerClip - 1);
-    if (clip === 'crawl') { if (!crawlingRestPose) { rig.hip.position.y = 0.28; rig.torso.rotation.z -= Math.PI / 2; } clips.run(rig, t); }
-    else if (clip === 'windup') { rig.torso.rotation.z += t * 0.45; rig.armL.rotation.z -= t * 0.8; rig.armR.rotation.z -= t * 0.8; }
-    else clips[clip as AnimationState](rig, t);
-    // Animal exports have their own joint contract rather than humanoid arms/hips.
-    if (root.getObjectByName('body')) {
-      for (const side of ['FL', 'FR', 'BL', 'BR']) {
-        const leg = root.getObjectByName(`leg${side}`);
-        if (leg && clip === 'run') leg.rotation.z += Math.sin(t * Math.PI * 5 + (side === 'FL' || side === 'BR' ? 0 : Math.PI)) * .5;
-      }
-      if (clip === 'run') for (const side of ['L', 'R']) {
-        const wing = root.getObjectByName(`wing${side}`); if (wing) wing.rotation.x += Math.sin(t * Math.PI * 8) * (side === 'L' ? .6 : -.6);
-      }
-      if (clip === 'die') root.getObjectByName('body')!.rotation.z += Math.min(1, t / .6) * Math.PI / 2;
-    }
+    const animal = !!root.getObjectByName('body');
+    const name = animal ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : clip === 'idle' ? 'corgi-idle' : root.getObjectByName('wingL') ? 'infected-flight' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
+    sampleClip(root, name, t * authoredClips.get(name)!.duration);
     root.updateMatrixWorld(true); for (const part of parts) matrices.push(...part.matrixWorld.elements);
   }
   for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
@@ -88,5 +77,5 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     offset += attribute.itemSize;
   }
   const clip: CrowdClip = { parts: parts.map(part => part.name), frames: framesPerClip * infectedClips.length, duration: infectedClips.length, matrices };
-  return { geometry, clip, shirtColor };
+  return { geometry, clip, shirtColor, strideScale: strideScale(root) };
 }

@@ -75,9 +75,10 @@ export class Combat {
         attack.aim.x = Math.cos(angle); attack.aim.z = Math.sin(angle);
       }
     }
-    this.world.events.emit({ type: 'combat.attack', tick: this.world.tick, attackId: attack.id, actionId: attack.def.id, sourceId: source.id, side: attack.side, position: { ...source.transform }, direction: { ...attack.aim } });
+    this.world.events.emit({ type: 'combat.attack', tick: this.world.tick, attackId: attack.id, actionId: attack.def.id, combo: attack.combo, sourceId: source.id, side: attack.side, position: { ...source.transform }, direction: { ...attack.aim } });
     if (attack.def.category === 'ranged') this.effects.noise(source.transform, attack.def.noiseRadius, attack.def.id);
-    this.world.player?.act(attack.def.id === 'weapon.kick' ? 'kick' : attack.def.category === 'melee' || attack.def.category === 'ability' ? 'swing' : attack.def.category === 'throwable' ? 'throw' : 'shoot', this.world.tick);
+    if (source.survivor) source.survivor.attack = { actionId: attack.def.id, combo: attack.combo, started: attack.started, activeAt: attack.activeAt, recoveryAt: attack.recoveryAt, endsAt: attack.endsAt };
+    this.world.player?.act(attack.def.id === 'weapon.kick' ? 'kick' : attack.def.category === 'melee' || attack.def.category === 'ability' ? 'swing' : attack.def.category === 'throwable' ? 'throw' : 'shoot', this.world.tick, attack.endsAt - attack.started);
   };
   private hit(attack: Attack, target: EntitySnapshot, origin: Vec2, type: 'melee' | 'bullet' | 'explosive', falloff = 1): void {
     if (attack.hit.has(target.id)) return;
@@ -169,7 +170,7 @@ export class Combat {
     }
   }
   snapshot() {
-    const attack = (a: Attack) => ({ id: a.id, sourceId: a.sourceId, side: a.side, actionId: a.def.id, aim: a.aim, aimPoint: a.aimPoint, started: a.started, activeAt: a.activeAt, recoveryAt: a.recoveryAt, endsAt: a.endsAt, resolved: a.resolved, hit: [...a.hit] });
-    return { ...(this.effects.zones.length ? { zones: this.effects.snapshot() } : {}), sequence: this.runner.lastAttackId, rng: this.rng.snapshot(), god: this.damage.god, infiniteCharges: this.runner.infiniteCharges, aimAssist: this.assist.setting, water: this.status.water, running: Object.values(this.runner.running).map(attack), projectiles: this.projectiles.map((p) => ({ ...p, attack: attack(p.attack) })) };
+    const attack = (a: Attack) => ({ id: a.id, sourceId: a.sourceId, side: a.side, actionId: a.def.id, combo: a.combo, aim: a.aim, aimPoint: a.aimPoint, started: a.started, activeAt: a.activeAt, recoveryAt: a.recoveryAt, endsAt: a.endsAt, resolved: a.resolved, hit: [...a.hit] });
+    return { ...(this.effects.zones.length ? { zones: this.effects.snapshot() } : {}), sequence: this.runner.lastAttackId, chains: this.runner.snapshotChains(), rng: this.rng.snapshot(), god: this.damage.god, infiniteCharges: this.runner.infiniteCharges, aimAssist: this.assist.setting, water: this.status.water, running: Object.values(this.runner.running).map(attack), projectiles: this.projectiles.map((p) => ({ ...p, attack: attack(p.attack) })) };
   }
 }

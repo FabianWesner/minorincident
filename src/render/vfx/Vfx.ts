@@ -31,6 +31,7 @@ const effectColors = { fire: 0xff923a, smoke: 0x665f73, toxic: 0x96d354, objecti
 export class Vfx extends Group {
   readonly particles = new FxPool(2048, 'particle');
   readonly decals = new FxPool(600, 'ground', undefined, true);
+  readonly surfaceSplats = new FxPool(64, 'wall', undefined, true);
   readonly telegraphs = new FxPool(256, 'ground');
   readonly waves = new FxPool(16, 'ground');
   readonly gibs: GibPool;
@@ -38,7 +39,10 @@ export class Vfx extends Group {
   private readonly rng: Rng;
   private readonly goreRng: Rng;
   private flashUntil = 0;
-  private readonly pools = [this.particles, this.decals, this.telegraphs, this.waves];
+  private readonly pools = [this.particles, this.decals, this.surfaceSplats, this.telegraphs, this.waves];
+  private readonly landings = Array.from({ length: 384 }, () => ({ at: Infinity, x: 0, z: 0, size: 0, color: 0 }));
+  private landingCursor = 0;
+  private lastSpray = { actionId: '', direction: { x: 1, z: 0 }, droplets: 0, chunks: 0, gravity: 9.81 };
   private readonly stops: (() => void)[] = [];
   private readonly tells = new Map<number, { slot: number; kind: TelegraphKind; spawned: number; sourceId?: number }>();
   private readonly hitIds = new Uint32Array(512);
@@ -60,7 +64,7 @@ export class Vfx extends Group {
   constructor(private readonly world: SimWorld, private readonly targets: VfxTargets, geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
     super(); this.rng = new Rng(world.seed, 'vfx'); this.goreRng = new Rng(world.seed, 'dismemberment');
     this.gibs = new GibPool(geometries);
-    this.add(this.gibs.heads, this.particles.mesh, this.decals.mesh, this.telegraphs.mesh, this.waves.mesh, this.gibs.mesh);
+    this.add(this.gibs.heads, this.particles.mesh, this.decals.mesh, this.surfaceSplats.mesh, this.telegraphs.mesh, this.waves.mesh, this.gibs.mesh);
     for (const type of eventTypes) this.stops.push(world.events.on(type, this.receive));
   }
   set(patch: VfxSettings): void {
@@ -74,7 +78,7 @@ export class Vfx extends Group {
     if (patch.flashReduction !== undefined) this.flashReduction = patch.flashReduction;
     if (patch.quality !== undefined && patch.quality !== this.quality) { this.quality = patch.quality; this.gibs.setQuality(this.quality); this.particles.reset(this.time); this.particles.budget = this.quality === 'low' ? 512 : 2048; this.particles.mesh.count = this.particles.budget; }
     if (patch.gore !== undefined && patch.gore !== this.gore) {
-      this.gore = patch.gore; this.particles.reset(this.time); this.decals.reset(this.time); this.gibs.reset(); this.targets.clearGore();
+      this.gore = patch.gore; this.particles.reset(this.time); this.decals.reset(this.time); this.surfaceSplats.reset(this.time); for (const landing of this.landings) landing.at = Infinity; this.gibs.reset(); this.targets.clearGore();
       if (this.gore === 'Off') { this.coverage = 0; this.targets.blood(0); }
     }
     this.targets.vehicleBloodEnabled?.(this.enabled && this.gore !== 'Off');
@@ -82,7 +86,7 @@ export class Vfx extends Group {
     if (!this.enabled) {
       this.hitStop.reset(); this.targets.clearGore(); this.targets.blood(0);
       for (let i = 0; i < this.hitCount; i++) this.targets.flash(this.hitIds[i], 0);
-      this.resetPools();
+      this.resetPools(); for (const landing of this.landings) landing.at = Infinity;
     } else this.targets.blood(this.gore === 'Off' ? 0 : this.coverage);
   }
   private telegraphColor(kind: TelegraphKind): number { return this.colorblind ? kind === 'bloated' ? 0xffb347 : 0xffffff : kind === 'bloated' ? 0xffe45b : 0x59e8ff; }
@@ -100,9 +104,35 @@ export class Vfx extends Group {
     const n = this.quality === 'low' ? Math.ceil(count / 4) : count;
     for (let i = 0; i < n; i++) this.particles.spawn(this.time, life, x, y, z, (this.rng.next() - 0.5) * 4, this.rng.next() * 3, (this.rng.next() - 0.5) * 4, size, 0, color, gravity);
   }
-  private blood(x: number, z: number, kill: boolean): void {
-    this.burst(x, 0.7, z, this.gore === 'Off' ? 0x38353d : 0xb3121f, kill ? 32 : 16);
-    if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, 0.015, z, this.rng.next() * Math.PI, 0, 0, kill ? 1.8 : 0.65, kill ? 6 : 5, 0xb3121f);
+  private blood(event: Extract<GameEvent, { type: 'combat.hit' | 'combat.kill' }>, kill: boolean): void {
+    const { x, z } = event.position, source = this.world.entities.get(event.sourceId);
+    const dx = event.direction?.x ?? x - (source?.transform.x ?? x - 1), dz = event.direction?.z ?? z - (source?.transform.z ?? z);
+    const length = Math.hypot(dx, dz) || 1, direction = { x: dx / length, z: dz / length };
+    const heavy = event.actionId === 'weapon.kick' || (event.knockback ?? 0) >= .9 || event.amount >= 30;
+    const count = kill ? 48 : event.actionId === 'weapon.fists' ? 12 : heavy ? 40 : event.actionId === 'weapon.bat' ? 32 : event.actionId === 'weapon.crowbar' ? 28 : 24;
+    const n = this.gore === 'Off' ? 6 : Math.ceil(count / (this.quality === 'low' ? 4 : this.gore === 'Reduced' ? 2 : 1));
+    const color = this.gore === 'Off' ? 0x776c75 : this.colorblind ? 0xffba48 : 0xe3293c;
+    let chunks = 0;
+    for (let i = 0; i < n; i++) {
+      const chunk = this.gore === 'Full' && (heavy || kill) && i < (kill ? 4 : 2); if (chunk) chunks++;
+      const spread = (this.rng.next() - .5) * (heavy ? 3 : 2), speed = (heavy ? 4.5 : 3) + this.rng.next() * 3;
+      const vx = direction.x * speed - direction.z * spread, vz = direction.z * speed + direction.x * spread;
+      const vy = 2.3 + this.rng.next() * (heavy ? 2.3 : 1.7), y = 1.1 + this.rng.next() * .25;
+      const landingTime = (vy + Math.sqrt(vy * vy + 2 * 9.81 * y)) / 9.81;
+      const dropletSize = event.actionId === 'weapon.fists' ? .055 : heavy ? .13 : event.actionId === 'weapon.machete' ? .085 : .11;
+      const size = chunk ? .17 + this.rng.next() * .08 : dropletSize + this.rng.next() * .055;
+      this.particles.spawn(this.time, landingTime, x, y, z, vx, vy, vz, size, 0, color, 9.81);
+      if (this.gore !== 'Off' && i % (this.quality === 'low' ? 2 : 5) === 0) {
+        const landing = this.landings[this.landingCursor++ % this.landings.length];
+        landing.at = this.time + landingTime; landing.x = x + vx * landingTime; landing.z = z + vz * landingTime; landing.size = chunk ? .5 : .18 + this.rng.next() * .15; landing.color = color;
+      }
+    }
+    this.lastSpray = { actionId: event.actionId, direction, droplets: n - chunks, chunks, gravity: 9.81 };
+    if (this.gore !== 'Off') {
+      this.decals.spawn(this.time, 18, x, .016, z, this.rng.next() * Math.PI, 0, 0, kill ? 1.1 : .35, this.colorblind ? 0 : kill ? 6 : 5, color);
+      const distance = this.world.combat?.query.clearDistance({ x, z }, direction, 1.8) ?? 1.8;
+      if (distance < 1.75) this.surfaceSplats.spawn(this.time, 12, x + direction.x * Math.max(0, distance - .025), .8, z + direction.z * Math.max(0, distance - .025), Math.atan2(direction.z, direction.x) + Math.PI / 2, 0, 0, heavy ? .8 : .45, this.colorblind ? 0 : 5, color);
+    }
   }
   readonly receive = (event: GameEvent): void => {
     if (event.type === 'vehicle.feedback') {
@@ -114,18 +144,15 @@ export class Vfx extends Group {
     if (!this.enabled) return;
     if (event.type === 'combat.hit' || event.type === 'combat.kill') { const target = this.world.entities.get(event.targetId); if (target?.faction === 'environment' || target?.vehicle) return; }
     if (event.type === 'combat.hit' && event.amount > 0) {
-      this.blood(event.position.x, event.position.z, false);
+      this.blood(event, false);
+      if (event.damageType === 'melee' && event.sourceId === 1) this.targets.shake(this.flashReduction ? .012 : event.actionId === 'weapon.kick' || event.amount >= 30 ? .055 : .028);
       this.pulse(event.targetId);
     } else if (event.type === 'combat.kill') {
-      this.kills++; this.blood(event.position.x, event.position.z, true);
+      this.kills++; this.blood(event, true);
       const def = actions[event.actionId], melee = def?.category === 'melee';
       if (melee && this.gore !== 'Off' && event.sourceId === 1) { this.coverage = Math.min(1, this.coverage + 0.025); this.targets.blood(this.coverage); }
       const explosive = Boolean(def?.splash) && def?.effect?.kind !== 'fire' || event.actionId.includes('explos') || event.actionId.includes('rocket');
       const heavy = heavyBlade.test(event.actionId);
-      if (heavy && this.gore !== 'Off') {
-        const source = this.world.entities.get(event.sourceId), dx = event.position.x - (source?.transform.x ?? 0), dz = event.position.z - (source?.transform.z ?? 0), distance = Math.max(0.1, Math.hypot(dx, dz));
-        for (let i = 0; i < 12; i++) this.particles.spawn(this.time, 0.9, event.position.x, 1, event.position.z, dx / distance * (1 + i * 0.08), 3 + i * 0.12, dz / distance * (1 + i * 0.08), 0.07, 0, 0xb3121f, 9.81);
-      }
       const shotgun = event.actionId.includes('shotgun') && Math.hypot(event.position.x - (this.world.entities.get(event.sourceId)?.transform.x ?? 0), event.position.z - (this.world.entities.get(event.sourceId)?.transform.z ?? 0)) <= 3;
       const vehicle = event.cause === 'vehicle' || event.actionId === 'vehicle.high-speed';
       if (vehicle) { const car = this.world.vehicles?.cars.get(event.sourceId); if (car) this.updateVehicle(car.entity.id, Math.min(1, (this.vehicles.get(car.entity.id)?.blood ?? 0) + .08)); }
@@ -207,6 +234,10 @@ export class Vfx extends Group {
   advance(seconds: number): void {
     if (!Number.isFinite(seconds) || seconds < 0 || seconds > 1) throw new RangeError('Render step must be 0..1 seconds');
     this.time += seconds;
+    for (const landing of this.landings) if (landing.at <= this.time) {
+      if (this.enabled && this.gore !== 'Off') this.decals.spawn(this.time, 12, landing.x, .019, landing.z, 0, 0, 0, landing.size, this.colorblind ? 0 : 5, landing.color);
+      landing.at = Infinity;
+    }
     for (const [attackId, tell] of this.tells) if (tell.sourceId !== undefined) {
       const source = this.world.entities.get(tell.sourceId), brain = source?.infected;
       const pending = brain && brain.attackId === attackId && (brain.state === 'attack' || brain.state === 'dead' && brain.special === 'explode' && this.world.tick < brain.until);
@@ -240,7 +271,7 @@ export class Vfx extends Group {
   get flash(): number { return this.enabled ? Math.max(0, (this.flashUntil - this.time) / 0.1) * (this.flashReduction ? 0.12 : 0.6) : 0; }
   snapshot() {
     return { enabled: this.enabled, colorblind: this.colorblind, gore: this.gore, quality: this.quality, flashReduction: this.flashReduction, time: this.time,
-      particles: this.particles.count, particleCap: this.particles.budget, decals: this.decals.count, decalCap: this.decals.cap, gibs: this.gibs.count, gibCap: this.gibs.budget,
+      lastSpray: this.lastSpray, surfaceSplats: this.surfaceSplats.count, pendingSplats: this.landings.filter(l => l.at < Infinity).length, particles: this.particles.count, particleCap: this.particles.budget, decals: this.decals.count, decalCap: this.decals.cap, gibs: this.gibs.count, gibCap: this.gibs.budget,
       telegraphs: [...this.tells].map(([attackId, tell]) => ({ attackId, ...tell })), hitStop: { active: this.hitStop.active(this.time), until: this.hitStop.until, started: this.hitStop.started, suppressed: this.hitStop.suppressed },
       flash: this.flash, coverage: this.coverage, detached: this.detached, dismemberedKills: this.dismemberedKills, kills: this.kills, explosionRadius: this.lastExplosionRadius };
   }

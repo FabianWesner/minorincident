@@ -6,7 +6,10 @@ import type { Materials } from '../Materials';
 import { disposeCharacter } from '../characters/rig';
 import { createCivilianPlaceholder, createCorgiPlaceholder } from './placeholders';
 import { CivilianCrowd } from './CivilianCrowd';
-interface Hero { root: Group; legs: Object3D[]; head: Object3D | undefined; tail: Object3D | undefined; badge: HTMLElement | null; source: string; moving: boolean; tick: number; x: number; z: number }
+import { QuadrupedAnimator } from '../characters/QuadrupedAnimator';
+import { MotionPhase } from '../characters/MotionPhase';
+import { sampleClip, authoredClips, strides, strideScale } from '../characters/clips';
+interface Hero { animator: QuadrupedAnimator | null; root: Group; legs: Object3D[]; head: Object3D | undefined; tail: Object3D | undefined; badge: HTMLElement | null; source: string; moving: boolean; tick: number; x: number; z: number }
 /** NPC presentation owns its resources and HUD; sim state is consumed but never modified. */
 export class NpcView extends Group {
   private readonly civilians: CivilianCrowd;
@@ -18,6 +21,7 @@ export class NpcView extends Group {
   private readonly placeholders: Group[] = [];
   private readonly cars: InstancedMesh;
   private readonly transform = new Matrix4();
+  private readonly motion = new MotionPhase();
   private readonly point = new Vector3();
   private readonly bark = document.createElement('div');
   private barkUntil = -1;
@@ -55,15 +59,19 @@ export class NpcView extends Group {
         const legs = ['legFL', 'legFR', 'legBL', 'legBR', 'legL', 'legR'].map(name => root.getObjectByName(name)).filter((n): n is Object3D => !!n);
         const badge = e.escort ? document.createElement('div') : null;
         if (badge) { badge.dataset.escortId = String(e.id); badge.style.cssText = 'position:fixed;pointer-events:none;transform:translate(-50%,-100%);background:#292537;color:#fff0cc;border:2px solid #d8bd74;border-radius:50%;padding:5px 9px;font:700 18px system-ui;z-index:6'; document.querySelector('#game')!.appendChild(badge); }
-        hero = { root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort ? 'placeholder' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
+        hero = { animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort ? 'placeholder' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
       }
       if (hero.tick !== this.world.tick) { hero.moving = e.motion?.moving ?? Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
       hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(e.transform.x, e.transform.y - (e.escort ? .7 : .3), e.transform.z); hero.root.rotation.set(0, e.transform.yaw, 0);
       if (e.escort?.child) hero.root.scale.setScalar(.7);
       const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
-      if (down) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
-      for (let i = 0; i < hero.legs.length; i++) hero.legs[i].rotation.z = down || !hero.moving ? 0 : Math.sin(this.world.tick / 6 + i % 2 * Math.PI) * .25;
-      if (hero.tail) hero.tail.rotation.y = Math.sin(this.world.tick / 4) * .2;
+      if (down && hero.animator) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
+      const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
+      if (hero.animator) hero.animator.update(this.world.tick / 60, motion.speed, motion.distance);
+      else {
+        const clip = down ? 'death-side' : motion.speed > 2.5 ? 'run' : motion.speed > .06 ? 'npc-walk' : 'idle';
+        sampleClip(hero.root, clip, down ? authoredClips.get(clip)!.duration : strides[clip] ? motion.distance / (strides[clip] * strideScale(hero.root)) % 1 * authoredClips.get(clip)!.duration : this.world.tick / 60 % authoredClips.get(clip)!.duration);
+      }
       if (hero.badge && e.escort) {
         this.point.set(e.transform.x, e.escort.child ? 1.25 : 1.8, e.transform.z).project(camera);
         hero.badge.style.left = `${(this.point.x + 1) / 2 * innerWidth}px`; hero.badge.style.top = `${(1 - this.point.y) / 2 * innerHeight}px`; hero.badge.style.display = Math.abs(this.point.x) <= 1 && Math.abs(this.point.y) <= 1 ? '' : 'none';
@@ -75,6 +83,6 @@ export class NpcView extends Group {
     this.bark.style.display = this.world.tick < this.barkUntil && threat ? '' : 'none';
     if (threat) { this.point.set(threat.transform.x, .7, threat.transform.z).project(camera); const length = Math.hypot(this.point.x, this.point.y) || 1; this.bark.style.left = `${(this.point.x / length * .4 + .5) * innerWidth}px`; this.bark.style.top = `${(.5 - this.point.y / length * .4) * innerHeight}px`; this.bark.textContent = `🐾 ${Math.abs(this.point.x) > Math.abs(this.point.y) ? this.point.x > 0 ? '→' : '←' : this.point.y > 0 ? '↑' : '↓'}`; }
   }
-  snapshot() { return { civilians: this.civilians.snapshot(), heroes: [...this.heroes].map(([id, h]) => ({ id, source: h.source, nodes: ['root', 'body', 'head', 'tail', 'legFL', 'legFR', 'legBL', 'legBR', 'packSocket'].filter(name => !!h.root.getObjectByName(name)) })), cars: this.cars.count }; }
+  snapshot() { return { civilians: this.civilians.snapshot(), heroes: [...this.heroes].map(([id, h]) => ({ id, source: h.source, clip: h.animator?.clip, nodes: ['root', 'body', 'head', 'tail', 'legFL', 'legFR', 'legBL', 'legBR', 'packSocket'].filter(name => !!h.root.getObjectByName(name)) })), cars: this.cars.count }; }
   dispose(): void { this.off(); this.bark.remove(); for (const h of this.heroes.values()) h.badge?.remove(); this.heroes.clear(); this.civilians.dispose(); for (const root of this.placeholders) disposeCharacter(root); this.cars.geometry.dispose(); (this.cars.material as MeshLambertNodeMaterial).dispose(); this.cars.dispose(); void this.registry.dispose(); this.clear(); }
 }
