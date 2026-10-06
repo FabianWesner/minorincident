@@ -153,3 +153,4 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 /* Gameplay uses pause > Settings; development panels require ?debug. */
 body:not(.debug-ui) [data-input-hint]{display:none!important}
 [data-touch-action] img[hidden]{display:none!important}
+.hud-vitals .hud-portrait,.hud-companion .hud-portrait{background-size:cover;background-position:center}

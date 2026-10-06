@@ -11,7 +11,7 @@ const clamp = (x: number): number => Math.max(0, Math.min(1, x));
 export class Hud {
   readonly root = node('div', 'hud');
   readonly onboarding: Onboarding;
-  private readonly portrait = node('div', 'survivor-portrait', '●');
+  private readonly portrait = node('div', 'survivor-portrait');
   private readonly health = this.bar('health');
   private readonly armor = this.bar('armor');
   private readonly companion = node('span', 'corgi-state');
@@ -43,7 +43,7 @@ export class Hud {
     this.corgiBadge.className = 'hud-corgi-badge';
     vitals.append(this.portrait, bars, this.corgiBadge);
     const companion = node('div', 'corgi-companion'); companion.className = 'hud-companion hud-panel';
-    const face = node('div', 'corgi-portrait', '🐕'); face.className = 'hud-portrait'; companion.append(face, this.companion);
+    const face = node('div', 'corgi-portrait'); face.className = 'hud-portrait'; face.style.backgroundImage = 'url(/assets/ui/portrait-corgi.png)'; companion.append(face, this.companion);
     this.map.className = 'hud-map'; this.map.setAttribute('aria-label', 'North-up minimap, range 30 meters');
     const north = node('span', 'minimap-north', 'N'); north.className = 'hud-map-n';
     this.map.append(north, this.playerPin, this.objectivePin, this.homePin);
@@ -138,7 +138,7 @@ export class Hud {
     this.armor.fill.style.width = `${clamp(shield) * 100}%`; text(this.armor.label, shield ? `Armor ${Math.round(shield * 100)}%` : 'Armor 0%');
     this.armor.root.setAttribute('aria-valuenow', String(clamp(shield) * 100));
     this.portrait.dataset.variant = player.survivor?.variant ?? 'female';
-    text(this.portrait, player.survivor?.variant === 'male' ? '👨' : '👩');
+    this.portrait.style.backgroundImage = `url(/assets/ui/portrait-survivor-${player.survivor?.variant === 'male' ? 'm' : 'f'}.png)`;
     this.vignette.style.opacity = String(clamp((.3 - hp) / .3));
     let corgi = null, pinCount = 0;
     const px = player.transform.x, pz = player.transform.z;

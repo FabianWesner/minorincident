@@ -30,7 +30,7 @@ const effectColors = { fire: 0xff923a, smoke: 0x665f73, toxic: 0x96d354, objecti
  * Infrastructure presets deliberately leave E27's seven-beat choreography to E27. */
 export class Vfx extends Group {
   readonly particles = new FxPool(2048, 'particle');
-  readonly decals = new FxPool(600, 'ground');
+  readonly decals = new FxPool(600, 'ground', undefined, true);
   readonly telegraphs = new FxPool(256, 'ground');
   readonly waves = new FxPool(16, 'ground');
   readonly gibs: GibPool;
@@ -102,7 +102,7 @@ export class Vfx extends Group {
   }
   private blood(x: number, z: number, kill: boolean): void {
     this.burst(x, 0.7, z, this.gore === 'Off' ? 0x38353d : 0xb3121f, kill ? 32 : 16);
-    if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, 0.015, z, this.rng.next() * Math.PI, 0, 0, kill ? 1.8 : 0.65, 0, 0xb3121f);
+    if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, 0.015, z, this.rng.next() * Math.PI, 0, 0, kill ? 1.8 : 0.65, kill ? 6 : 5, 0xb3121f);
   }
   readonly receive = (event: GameEvent): void => {
     if (event.type === 'vehicle.feedback') {
@@ -234,7 +234,7 @@ export class Vfx extends Group {
     // Wounded-infected droplets are based on visual time, never extra sim events or damage.
     if (Math.floor(this.time * 2) !== Math.floor((this.time - seconds) * 2) && this.enabled && this.gore !== 'Off') {
       let emitted = 0;
-      for (const e of this.world.entities.iterate()) if (e.faction === 'infected' && e.health.current > 0 && e.health.current < e.health.max * 0.5 && emitted++ < 32) this.decals.spawn(this.time, 120, e.transform.x, 0.016, e.transform.z, 0, 0, 0, 0.25, 0, 0xb3121f);
+      for (const e of this.world.entities.iterate()) if (e.faction === 'infected' && e.health.current > 0 && e.health.current < e.health.max * 0.5 && emitted++ < 32) this.decals.spawn(this.time, 120, e.transform.x, 0.016, e.transform.z, 0, 0, 0, 0.25, 7, 0xb3121f);
     }
   }
   get flash(): number { return this.enabled ? Math.max(0, (this.flashUntil - this.time) / 0.1) * (this.flashReduction ? 0.12 : 0.6) : 0; }
