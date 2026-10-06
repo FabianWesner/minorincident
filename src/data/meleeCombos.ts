@@ -1,4 +1,5 @@
 import type { ActionDef } from './actions/schema';
+import { catalog } from './actions/catalog';
 
 /** One authored beat of a melee chain. Ticks are 60 Hz sim ticks (research-figures §5
  * timing sheet): anticipation → strike → follow-through/recovery. Omitted fields keep
@@ -41,8 +42,10 @@ export function comboDefinition(def: ActionDef, combo: number): ActionDef {
   const authored = meleeMoves[def.id]?.[combo];
   if (authored) {
     const windup = authored.windup / 60, active = authored.active / 60, recovery = authored.recovery / 60;
+    // Authored beats are relative to the roster weapon, so E13 upgrades (damage, knockback) still scale them.
+    const base = catalog[def.id], damage = base?.damage ? def.damage / base.damage : 1, knockback = base?.knockback ? def.knockback / base.knockback : 1;
     return { ...def, windup, active, recovery, cooldown: windup + active + recovery,
-      damage: authored.damage ?? def.damage, knockback: authored.knockback ?? def.knockback, stagger: authored.stagger ?? def.stagger,
+      damage: authored.damage === undefined ? def.damage : authored.damage * damage, knockback: authored.knockback === undefined ? def.knockback : authored.knockback * knockback, stagger: authored.stagger ?? def.stagger,
       range: authored.range ?? def.range, arc: authored.arc ?? def.arc, maxTargets: authored.maxTargets ?? def.maxTargets,
       ...(authored.hitStopMs === undefined ? {} : { hitStopMs: authored.hitStopMs }) };
   }
