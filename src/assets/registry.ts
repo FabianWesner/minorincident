@@ -8,6 +8,7 @@ import { atLeast, variantPath, type AssetDef, type AssetQuality } from './types'
 import { placeholder } from './placeholders';
 import type { Materials } from '../render/Materials';
 import { AssetMaterials } from './materials';
+import { loadGltf } from './loadGate';
 
 export type PlaceholderLog = { type: 'asset.placeholder'; id: string; reason: string };
 type Loader = (url: string) => Promise<Object3D>;
@@ -29,7 +30,7 @@ export class AssetRegistry {
       gltf.setKTX2Loader(this.ktx);
     }
     this.load = options.load ?? (async (url) => {
-      const parsed = await gltf.loadAsync(url);
+      const parsed = await loadGltf(gltf, url);
       // GLTFLoader sanitizes ':' and '.' for animation binding; restore contract IDs.
       parsed.scene.traverse((node) => {
         const index = parsed.parser.associations.get(node)?.nodes;

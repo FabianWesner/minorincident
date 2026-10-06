@@ -1,5 +1,8 @@
 // Adapted from folio-2025 by Bruno Simon (MIT): staged boot, without a singleton.
 import { Game } from './Game';
+import { installAssetVersions } from './assets/assetUrl';
+
+installAssetVersions();
 
 const params = new URLSearchParams(location.search);
 if (params.has('motionlab')) {
