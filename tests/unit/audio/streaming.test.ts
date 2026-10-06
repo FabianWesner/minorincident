@@ -12,7 +12,7 @@ function fixture(firstPlay?: () => Promise<void>) {
         removeAttribute() {} load() {}
         constructor() { if (!media.length && firstPlay) this.play.mockImplementationOnce(firstPlay); media.push(this); }
     }
-    function gain() { return { gain: { value: 0, cancelAndHoldAtTime: vi.fn(), setValueAtTime: vi.fn(), linearRampToValueAtTime: vi.fn() }, connect: vi.fn(), disconnect: vi.fn() }; }
+    function gain() { return { gain: { value: 0, cancelAndHoldAtTime: vi.fn(), cancelScheduledValues: vi.fn(), setValueAtTime: vi.fn(), linearRampToValueAtTime: vi.fn() }, connect: vi.fn(), disconnect: vi.fn() }; }
     vi.stubGlobal('Audio', FakeAudio);
     const context = { currentTime: 1, createMediaElementSource: () => ({ connect: (g: unknown) => g, disconnect: vi.fn() }), createGain: () => { const g = gain(); gains.push(g); return g; } };
     const score = new StreamedMusic(context as unknown as AudioContext, {} as AudioNode);
