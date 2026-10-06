@@ -1,10 +1,26 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon folio-2025 Ligthing.js / Fog.js (MIT).
-import { Color, DirectionalLight, Fog, HemisphereLight, Scene, Vector2, Vector3, Plane, Ray } from 'three/webgpu';
-import { uniform, mix, vec2, viewportUV } from 'three/tsl';
+import { Color, DirectionalLight, Fog, HemisphereLight, Scene, Vector2, Vector3, Plane, Ray, type DepthTexture, type Node } from 'three/webgpu';
+import { uniform, mix, vec2, viewportUV, Fn, texture, reference, float } from 'three/tsl';
 import { timeOfDay, type TimeOfDay } from '../data/timeOfDay';
 import type { View } from './View';
 import { worldLook } from '../data/worldLook';
+
+// r186's default PCF rotates five taps with per-pixel noise. A fixed weighted
+// grid keeps the soft penumbra without stipple, including the WebGL2 fallback.
+const stableSunShadow = Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: {
+  depthTexture: DepthTexture; shadowCoord: Node<'vec3'>; shadow: DirectionalLight['shadow']; depthLayer: Node<'float'>;
+}) => {
+  const step = reference('radius', 'float', shadow).div(reference('mapSize', 'vec2', shadow));
+  let filtered: Node<'float'> = float(0);
+  for (const x of [-1, 0, 1]) for (const y of [-1, 0, 1]) {
+    let sample = texture(depthTexture, shadowCoord.xy.add(vec2(x, y).mul(step)));
+    if (depthTexture.isArrayTexture) sample = sample.depth(depthLayer);
+    const visibility = sample.compare(shadowCoord.z) as unknown as Node<'float'>;
+    filtered = filtered.add(visibility.mul((x === 0 ? 2 : 1) * (y === 0 ? 2 : 1) / 16));
+  }
+  return filtered;
+});
 
 /** One sun, a hemisphere and shared stylized lighting uniforms. Shadows follow the visible ground region. */
 export class Lighting {
@@ -35,6 +51,8 @@ export class Lighting {
   constructor(private readonly scene: Scene) {
     this.sun.castShadow = true; this.sun.shadow.mapSize.set(1024, 1024);
     this.sun.shadow.bias = -0.0005; this.sun.shadow.normalBias = 0.08; this.sun.shadow.radius = 2;
+    // LightShadow.filterNode is public at runtime but omitted from @types/three.
+    (this.sun.shadow as typeof this.sun.shadow & { filterNode: typeof stableSunShadow }).filterNode = stableSunShadow;
     this.scene.add(this.sun, this.sun.target, this.hemisphere); this.set('golden');
   }
   setQuality(tier: QualityTier): void {
