@@ -1,0 +1,31 @@
+import { expect, test } from 'vitest';
+import { arena } from './helpers';
+import { emptyInput } from '../../../src/input/InputFrame';
+import { Vfx } from '../../../src/render/vfx/Vfx';
+
+test('M1-12 @E05 held attacks link three distinct beats then reset after recovery grace', async () => {
+  for (const weapon of ['fists','bat','crowbar','machete','kick']) {
+    const w = await arena(); w.combat!.setLoadout([`weapon.${weapon}`],['weapon.kick']);
+    const frame = emptyInput(); frame.left.held = true; frame.aim = { x:1,z:0 };
+    for (let i=0;i<130;i++) { w.applyInput(frame,'keyboard'); w.update(); }
+    const attacks = w.events.events().filter(e => e.type === 'combat.attack');
+    expect(attacks.slice(0,4).map(e => e.type === 'combat.attack' && e.combo)).toEqual(weapon === 'kick' ? [0,1,0,1] : [0,1,2,0]);
+    w.clearInput(); for(let i=0;i<100;i++) w.update(); w.applyInput(frame,'keyboard'); w.update();
+    const last = w.events.events().filter(e=>e.type==='combat.attack').at(-1)!; expect(last.type==='combat.attack' && last.combo).toBe(0);
+  }
+});
+
+test('M1-11 M1-12 @E05 connecting hits alternate reactions, kick tumbles into another infected, gore is bounded', async () => {
+  const w = await arena(), a = w.spawnDummy('infected.dummy',{x:1,z:0}), b = w.spawnDummy('infected.dummy',{x:2,z:0});
+  const fx = new Vfx(w,{ flash(){},detach(){},blood(){},clearGore(){},shake(){} });
+  const hit = (actionId:string,knockback=0) => w.combat!.damage.apply({attackId:w.tick+1,actionId,sourceId:1,targetId:a,origin:{x:0,z:0},direction:{x:1,z:0},base:1,multiplier:1,type:'melee',knockback,stagger:.3});
+  try {
+    const reactions:number[]=[]; for(let i=0;i<5;i++){hit('weapon.fists');reactions.push(w.entities.get(a)!.combat!.reaction!.index%2);w.update();}
+    expect(reactions.every((n,i)=>i===0||n!==reactions[i-1])).toBe(true);
+    hit('weapon.kick',1.2); expect(w.entities.get(a)!.transform.x).toBeCloseTo(2.2); expect(w.entities.get(b)!.transform.x).toBeCloseTo(2.5); expect(w.entities.get(b)!.combat!.staggerUntil).toBeGreaterThan(w.tick);
+    expect(fx.snapshot().lastSpray.direction).toEqual({x:1,z:0}); expect(fx.snapshot().lastSpray.chunks).toBeGreaterThan(0);
+    fx.advance(.7);fx.advance(.7);expect(fx.snapshot().pendingSplats).toBe(0);expect(fx.decals.count).toBeGreaterThan(0);
+    fx.set({gore:'Off'}); hit('weapon.bat'); fx.advance(1); expect(fx.decals.count).toBe(0); expect(fx.snapshot().lastSpray.chunks).toBe(0);
+    fx.set({gore:'Reduced',quality:'low',colorblind:true}); for(let i=0;i<100;i++) hit('weapon.bat'); expect(fx.particles.count).toBeLessThanOrEqual(512); expect(fx.snapshot().lastSpray.chunks).toBe(0);
+  } finally { fx.dispose(); }
+});

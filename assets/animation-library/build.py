@@ -44,11 +44,13 @@ for side, sign in [('L', -1), ('R', 1)]:
 # Quadruped actions use separate names, except shared head/root, and are retargeted by name.
 joint('body', 'root', (-.12, .4, 0))
 joint('tail', 'body', (-.45, .08, 0))
+joint('wingL', 'body', (0, 0, -.2))
+joint('wingR', 'body', (0, 0, .2))
 joint('packSocket', 'body', (-.05, .22, 0))
 for side, x, z in [('FL', .375, -.162), ('FR', .375, .162), ('BL', -.34, -.162), ('BR', -.34, .162)]:
     joint('leg'+side, 'body', (x, -.08, z))
 
-humans = [n for n in nodes if n not in ['body', 'tail', 'packSocket', 'legFL', 'legFR', 'legBL', 'legBR']]
+humans = [n for n in nodes if n not in ['body', 'tail', 'packSocket', 'legFL', 'legFR', 'legBL', 'legBR', 'wingL', 'wingR']]
 dogs = ['body', 'head', 'tail', 'packSocket', 'legFL', 'legFR', 'legBL', 'legBR']
 # Maps of offsets: rotation XYZ, then optional position XYZ. All unmentioned joints are rest.
 def p(**kw):
@@ -112,7 +114,7 @@ def gait(name,duration,stride,run=False,infected=False):
     heights=[-.064,-.038,-.027,-.045,-.064,-.038,-.027,-.045,-.064]
     poses=[]
     for i in range(9):
-        y=heights[i]*(.85 if run else 1)
+        y=([-.135,-.08,-.015,-.065,-.135,-.08,-.015,-.065,-.135][i] if run else heights[i])
         pose=p(hip=hip(y=y,roll=[0,-2,-3,-2,0,2,3,2,0][i],twist=[-4,-2,0,2,4,2,0,-2,-4][i]),
             torso=(0,[6,3,0,-3,-6,-3,0,3,6][i],-9 if run else -2),head=(0,0,9 if run else 2))
         for side,index in [('L',i),('R',(i+4)%8)]:
@@ -176,11 +178,13 @@ for name,sign in [('stagger-left',1),('stagger-right',-1)]:
     action(name,.42,[(0,p()),(.18,p(hip=hip(y=-.035,twist=sign*14),torso=(sign*12,sign*24,20),head=(0,-sign*15,-15),armL=z(45),armR=z(55),shinL=z(-30))),(.5,p(hip=hip(y=-.02),torso=(sign*6,sign*12,8),foreArmL=z(35))),(1,p())])
 action('hurt',.3,[(0,p()),(.2,p(hip=hip(y=-.04),torso=z(23),head=z(-16),foreArmL=z(55),armR=z(45))),(.55,p(torso=z(10))),(1,p())])
 # Grounded end poses are normalized to each target's hip height at retarget time.
-back=p(hip=(0,0,88,0,-.55,0),torso=z(8),head=z(-20),armL=(25,0,35),armR=(-30,0,-12),foreArmL=z(45),foreArmR=z(25),legL=z(8),shinL=z(-18),legR=z(-12),shinR=z(-38))
-side=p(hip=(78,0,0,0,-.55,0),torso=(8,15,-12),head=(0,-15,8),armL=z(75),foreArmL=z(85),armR=z(18),foreArmR=z(45),legL=z(38),shinL=z(-75),legR=z(12),shinR=z(-35))
+back=p(hip=(0,0,88,0,-.55,0),torso=z(8),head=z(-20),armL=(25,0,-20),armR=(-30,0,-15),foreArmL=z(0),foreArmR=z(5),legL=z(6),shinL=z(-12),legR=z(12),shinR=z(-20),footL=z(6),footR=z(8))
+side=p(hip=(90,0,0,0,-.55,0),torso=(8,15,-12),head=(0,-15,8),armL=(-65,0,10),foreArmL=z(20),armR=z(25),foreArmR=z(10),legL=z(38),shinL=z(-75),legR=z(12),shinR=z(-35))
 crumple=p(hip=(12,0,-80,0,-.55,0),torso=z(-15),head=z(28),armL=(25,0,35),armR=(-35,0,35),foreArmL=z(80),foreArmR=z(80),legL=z(35),shinL=z(-90),legR=z(18),shinR=z(-68))
-for name,end in [('die',back),('death-back',back),('death-side',side),('death-crumple',crumple),('knockdown',back),('flung',back)]:
+for name,end in [('die',back),('death-back',back),('death-side',side),('death-crumple',crumple)]:
     action(name,.72,[(0,p()),(.16,p(hip=hip(y=-.05),torso=z(25 if end is back else -20),armL=z(60),armR=z(65),shinL=z(-35))),(.48,{**end,'hip':tuple(end['hip'][:3])+(0,-.35,0)}),(.8,end),(1,end)])
+action('knockdown',.48,[(0,p()),(.18,p(hip=hip(y=-.09),torso=z(34),armL=z(78),armR=z(62),shinL=z(-45))),(.55,p(hip=(0,0,58,0,-.32,0),torso=z(18),head=z(-25),armL=z(-10),armR=z(25),legL=z(38),shinL=z(-65))),(.86,back),(1,back)])
+action('flung',.48,[(0,p()),(.14,p(hip=(0,-12,25,0,.04,0),torso=z(15),head=z(-18),armL=(32,0,100),armR=(-38,0,108),legL=z(52),shinL=z(-72),legR=z(25),shinR=z(-45))),(.48,p(hip=(0,8,66,0,-.16,0),torso=z(8),head=z(-30),armL=(35,0,32),armR=(-42,0,15),legL=z(48),shinL=z(-60),legR=z(22),shinR=z(-48))),(.9,back),(1,back)])
 action('get-up',.95,[(0,back),(.25,p(hip=(0,0,48,0,-.4,0),torso=z(-28),legL=z(55),shinL=z(-100),foreArmR=z(70))),(.65,p(hip=hip(y=-.2),torso=z(-30),legL=z(35),shinL=z(-70),armR=z(30))),(1,p())])
 action('crawl',1,[(0,p(hip=(0,0,-78,0,-.42,0),armL=z(35),armR=z(85),shinL=z(-85),shinR=z(-40))),(.5,p(hip=(0,0,-78,0,-.42,0),armL=z(85),armR=z(35),shinL=z(-40),shinR=z(-85))),(1,p(hip=(0,0,-78,0,-.42,0),armL=z(35),armR=z(85),shinL=z(-85),shinR=z(-40)))])
 action('windup',.5,[(0,p()),(.65,p(torso=z(-22),armL=z(-45),armR=z(-35),foreArmL=z(30))), (1,p(torso=z(-28),armL=z(-55),armR=z(-48)))])
@@ -200,6 +204,9 @@ for name,duration in [('corgi-walk',.7),('corgi-trot',.46)]:
     action(name,duration,poses,dogs)
 sit=p(body=(0,0,18,0,-.12,0),head=z(-18),legBL=z(-55),legBR=z(-55),legFL=z(-15),legFR=z(-15),tail=(0,15,0))
 action('corgi-sit',.4,[(0,p()),(.5,{**sit,'body':(0,0,12,0,-.08,0)}),(1,sit)],dogs)
+
+action('infected-flight',.35,[(0,p()),(.25,p(wingL=(35,0,0),wingR=(-35,0,0))),(.5,p()),(.75,p(wingL=(-45,0,0),wingR=(45,0,0))),(1,p())],['body','head','wingL','wingR'])
+action('animal-death',.6,[(0,p()),(.35,p(body=(0,0,35,0,-.08,0),head=z(-15))),(.75,p(body=(0,0,85,0,-.24,0),head=z(-25),legFL=z(25),legFR=z(-15),legBL=z(35),legBR=z(15))),(1,p(body=(0,0,90,0,-.24,0),head=z(-25),legFL=z(25),legFR=z(-15),legBL=z(35),legBR=z(15)))],dogs+['wingL','wingR'])
 
 scene.frame_start=1
 scene.frame_end=241

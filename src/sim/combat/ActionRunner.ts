@@ -13,6 +13,7 @@ export class ActionRunner {
   infiniteCharges = false;
   private readonly chains: Partial<Record<Side, { actionId: string; combo: number; until: number }>> = {};
   constructor(readonly sourceId: number, readonly loadout: Loadout, private sequence = 0) {}
+  snapshotChains() { return Object.fromEntries(Object.entries(this.chains).map(([side, chain]) => [side, { ...chain }])); }
   get lastAttackId(): number { return this.sequence; }
   update(frame: InputFrame, tick: number, enabled: boolean, started: (attack: Attack) => void, resolve: (attack: Attack) => void): void {
     for (const side of ['LEFT', 'RIGHT'] as const) {

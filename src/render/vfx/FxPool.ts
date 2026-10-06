@@ -34,7 +34,7 @@ export class FxPool {
   private readonly bloodTextures: Texture[];
   private cursor = 0;
   budget: number;
-  constructor(readonly cap: number, readonly mode: 'particle' | 'ground', lightSample?: Node<'vec3'>, bloodDecals = false) {
+  constructor(readonly cap: number, readonly mode: 'particle' | 'ground' | 'wall', lightSample?: Node<'vec3'>, bloodDecals = false) {
     this.budget = cap;
     this.bloodTextures = bloodDecals && typeof document !== 'undefined' ? ['splats', 'pool', 'trail'].map(kind => {
       const def = (manifest as AssetDef[]).find(asset => asset.id === `decal.blood-${kind}`)!;
@@ -64,6 +64,7 @@ export class FxPool {
       }
       const growth = style.z.greaterThan(0).select(progress.mul(2).min(1), 1);
       const x = positionGeometry.x.mul(size).mul(growth), z = positionGeometry.y.mul(size).mul(style.w).mul(growth);
+      if (mode === 'wall') return origin.xyz.add(vec3(x.mul(cos(motion.x)), z, x.mul(sin(motion.x))));
       return origin.xyz.add(vec3(x.mul(cos(motion.x)).sub(z.mul(sin(motion.x))), 0, x.mul(sin(motion.x)).add(z.mul(cos(motion.x)))));
     })();
     material.outputNode = Fn(() => {

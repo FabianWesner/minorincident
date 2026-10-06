@@ -1,11 +1,14 @@
-import { AnimationClip, AnimationMixer, Quaternion, QuaternionKeyframeTrack, VectorKeyframeTrack, LoopOnce, type Object3D } from 'three';
+import { AnimationClip, AnimationMixer, Box3, Mesh, Quaternion, QuaternionKeyframeTrack, VectorKeyframeTrack, Vector3, LoopOnce, type Object3D } from 'three';
 import type { AnimationState } from '../../data/survivor';
 import library from './library.json';
 import type { CharacterRig } from './rig';
 
 /** Blender GLB samplers compiled by tools/assets/animation-library.ts. */
 export const authoredClips = new Map(library.map(clip => [clip.name, clip]));
-export const strides: Record<string, number> = { walk: .9, run: 1.8, shamble: .72, 'infected-run': 1.5, 'npc-walk': .9, 'npc-walk-relaxed': .85, 'corgi-walk': .55, 'corgi-trot': .85 };
+export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'corgi-walk': .55, 'corgi-trot': .85 };
+const worldScale = new Vector3(), worldOrigin = new Vector3();
+/** Optimized character GLBs scale the shared hierarchy to their catalog height. */
+export function strideScale(root: Object3D): number { return root.getWorldScale(worldScale).y; }
 const groundClips = /^(die|death-|knockdown|flung|get-up|crawl)/;
 const upperBody = /^(torso|head|arm|foreArm|hand)/;
 
@@ -16,7 +19,7 @@ export function retargetClip(root: Object3D, name: string, additive = false): An
   if (!source) throw new Error(`Missing authored clip ${name}`);
   const tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[] = [], q = new Quaternion();
   const hipHeight = root.getObjectByName('hip')?.position.y ?? .705;
-  const contract = name.startsWith('corgi-') ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR'] : ['root','hip','torso','head','armL','armR','foreArmL','foreArmR','handL','handR','legL','legR','shinL','shinR','footL','footR','backpackSocket'];
+  const contract = name === 'infected-flight' || name === 'animal-death' ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR','wingL','wingR'] : name.startsWith('corgi-') ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR'] : ['root','hip','torso','head','armL','armR','foreArmL','foreArmR','handL','handR','legL','legR','shinL','shinR','footL','footR','backpackSocket'];
   for (const nodeName of contract) {
     const node = root.getObjectByName(nodeName);
     if (!node || additive && !upperBody.test(nodeName)) continue;
@@ -25,7 +28,7 @@ export function retargetClip(root: Object3D, name: string, additive = false): An
       const values: number[] = [];
       if (path === 'rotation') {
         for (let i = 0; i < times.length; i++) {
-          q.set(0, 0, 0, 1); if (track) q.fromArray(track.values, i * 4);
+          q.set(0, 0, 0, 1); if (track) q.fromArray(track.values, i * 4).normalize();
           if (!additive) q.premultiply(node.quaternion);
           values.push(q.x, q.y, q.z, q.w);
         }
@@ -45,6 +48,23 @@ export function retargetClip(root: Object3D, name: string, additive = false): An
 
 /** Deterministic sampler for crowd baking; reset actions to avoid accumulating poses. */
 const samplers = new WeakMap<Object3D, { mixer: AnimationMixer; clips: Map<string, AnimationClip> }>();
+const floorBounds = new WeakMap<Object3D, Mesh[]>();
+const bounds = new Box3(), partBounds = new Box3();
+/** Model-specific accessory thickness (especially backpacks) determines the floor
+ * contact of a corpse; the shared authored joint pose itself stays unchanged. */
+export function settleGroundPose(root: Object3D): void {
+  let meshes = floorBounds.get(root);
+  if (!meshes) { meshes = []; root.traverse(node => { if (node instanceof Mesh) { node.geometry.computeBoundingBox(); meshes!.push(node); } }); floorBounds.set(root, meshes); }
+  root.updateMatrixWorld(true); bounds.makeEmpty();
+  for (const mesh of meshes) {
+    let visible = true;
+    for (let parent: Object3D | null = mesh; parent; parent = parent.parent) if (!parent.visible || parent.name.startsWith('stump_')) { visible = false; break; }
+    if (visible && mesh.geometry.boundingBox) bounds.union(partBounds.copy(mesh.geometry.boundingBox).applyMatrix4(mesh.matrixWorld));
+  }
+  const hip = root.getObjectByName('hip') ?? root.getObjectByName('body');
+  const floor = root.getWorldPosition(worldOrigin).y + .015;
+  if (hip && Number.isFinite(bounds.min.y) && bounds.min.y < floor) { hip.position.y += (floor - bounds.min.y) / strideScale(root); root.updateMatrixWorld(true); }
+}
 export function sampleClip(root: Object3D, name: string, seconds: number): void {
   let sampler = samplers.get(root);
   if (!sampler) { sampler = { mixer: new AnimationMixer(root), clips: new Map() }; samplers.set(root, sampler); }
@@ -53,6 +73,7 @@ export function sampleClip(root: Object3D, name: string, seconds: number): void 
   sampler.mixer.stopAllAction();
   const action = sampler.mixer.clipAction(clip).reset().setLoop(LoopOnce, 1); action.clampWhenFinished = true; action.play();
   sampler.mixer.setTime(Math.max(0, Math.min(clip.duration, seconds)));
+  if (groundClips.test(name) || name === 'animal-death') settleGroundPose(root);
 }
 export type Clip = (rig: CharacterRig, seconds: number) => void;
 /** Complete sim-state contract; every evaluation uses authored glTF keyframes. */

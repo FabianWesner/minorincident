@@ -51,7 +51,7 @@ export class Damage {
       if (target.combat && target.faction === 'infected') {
         const heavy = hit.actionId === 'weapon.kick' || hit.knockback >= .9 || amount >= 35;
         const previous = target.combat.reaction?.index ?? target.id % 3;
-        target.combat.reaction = { index: (previous + 1) % 3, started: this.world.tick, until: this.world.tick + (heavy ? 80 : 26), direction: { ...hit.direction }, from, to: { x: target.transform.x, z: target.transform.z }, heavy };
+        target.combat.reaction = { index: (previous + 1) % 6, started: this.world.tick, until: this.world.tick + (heavy ? 80 : 26), direction: { ...hit.direction }, from, to: { x: target.transform.x, z: target.transform.z }, heavy };
         if (heavy) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + 80);
         // A kicked body sweeps its existing knockback corridor and staggers the next
         // infected it tumbles into. No new physics bodies or navigation rules.
@@ -64,7 +64,7 @@ export class Damage {
             const otherFrom = { x: other.transform.x, z: other.transform.z };
             this.world.knockback(other, hit.direction, .5);
             other.combat.staggerUntil = Math.max(other.combat.staggerUntil, this.world.tick + 54); other.combat.attacking = false;
-            other.combat.reaction = { index: ((other.combat.reaction?.index ?? 0) + 1) % 3, started: this.world.tick, until: this.world.tick + 54, direction: { ...hit.direction }, from: otherFrom, to: { x: other.transform.x, z: other.transform.z }, heavy: true };
+            other.combat.reaction = { index: ((other.combat.reaction?.index ?? 0) + 1) % 6, started: this.world.tick, until: this.world.tick + 54, direction: { ...hit.direction }, from: otherFrom, to: { x: other.transform.x, z: other.transform.z }, heavy: true };
           }
         }
       }

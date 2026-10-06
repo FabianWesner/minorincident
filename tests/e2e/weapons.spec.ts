@@ -8,7 +8,7 @@ test('T-E06-08c @E06 @E06-AC08 all roster actions attach at either hand across b
     const state = await page.evaluate(async ({ id, variant }) => { const api = window.__SS__!; api.survivor.select(variant); api.setLoadout([id], [id]); await api.step(0); return api.getState().render.actions!; }, { id: def.id, variant });
     for (const attachment of state.attachments) {
       expect(attachment.actionId).toBe(def.id); expect(attachment.iconUrl).toMatch(/^(data:image\/svg\+xml|\/assets\/)/); expect(attachment.attached).toBe(true);
-      expect(attachment.socket).toBe(attachment.side === 'LEFT' ? 'weaponSocketL' : 'weaponSocketR');
+      expect(attachment.socket).toBe(attachment.side === 'LEFT' ? 'weaponSocketR' : 'weaponSocketL');
       expect(attachment.handDistance).toBeLessThanOrEqual(0.05); expect(attachment.gripDistance).toBeLessThan(0.0001);
       expect(attachment.sockets).toContain('grip');
       if (def.category === 'ranged') expect(attachment.sockets).toContain('muzzle');

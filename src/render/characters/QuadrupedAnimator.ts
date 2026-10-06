@@ -1,5 +1,5 @@
 import { AnimationMixer, LoopOnce, type AnimationAction, type Object3D } from 'three';
-import { retargetClip, strides } from './clips';
+import { retargetClip, strides, strideScale } from './clips';
 
 /** Authored four-beat walk and diagonal-pair trot, with calm idle/sit crossfades. */
 export class QuadrupedAnimator {
@@ -9,7 +9,7 @@ export class QuadrupedAnimator {
   private time = 0;
   private stoppedAt = 0;
   clip = 'corgi-idle';
-  constructor(root: Object3D) {
+  constructor(private readonly root: Object3D) {
     this.mixer = new AnimationMixer(root);
     for (const name of ['corgi-idle','corgi-walk','corgi-trot','corgi-sit']) this.actions.set(name, this.mixer.clipAction(retargetClip(root, name)));
   }
@@ -22,7 +22,7 @@ export class QuadrupedAnimator {
       if (name === 'corgi-sit') { this.action.setLoop(LoopOnce, 1); this.action.clampWhenFinished = true; }
       previous?.crossFadeTo(this.action, .16, false); this.clip = name;
     }
-    if (strides[name]) { this.action.time = distance / strides[name] % 1 * this.action.getClip().duration; this.action.setEffectiveTimeScale(0); }
+    if (strides[name]) { this.action.time = distance / (strides[name] * strideScale(this.root)) % 1 * this.action.getClip().duration; this.action.setEffectiveTimeScale(0); }
     else this.action.setEffectiveTimeScale(1);
     this.mixer.update(dt);
   }

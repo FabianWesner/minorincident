@@ -18,6 +18,8 @@ export class CharacterView extends Group {
   private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
   private variant: SurvivorVariant = 'female';
   private tier: GearTier = 0;
+  private facingTime = -1;
+  private turn = 0;
   private readonly bloodMaterials: PaletteMaterial[] = [];
   async init(materials: Materials, bloodFeedback = false, low = false): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
@@ -81,10 +83,17 @@ export class CharacterView extends Group {
     for (const [variant, character] of this.characters) {
       character.model.visible = variant === pose.variant;
       for (const gear of character.gear) gear.visible = gear.userData.tier <= pose.gearTier;
-      if (character.model.visible) character.animator.update(pose, tick, alpha);
+      if (character.model.visible) character.animator.update(pose, tick, alpha, this.turn);
     }
   }
   setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; }
+  /** Presentation heading eases aim changes while the sim keeps its exact hit direction. */
+  face(yaw: number, time: number): void {
+    if (this.facingTime < 0 || time < this.facingTime) this.rotation.y = yaw;
+    const dt = Math.max(0, time - this.facingTime), delta = Math.atan2(Math.sin(yaw - this.rotation.y), Math.cos(yaw - this.rotation.y));
+    this.turn = Math.abs(delta) > .12 ? Math.sign(delta) : 0;
+    this.rotation.y += delta * (1 - Math.exp(-24 * dt)); this.facingTime = time;
+  }
   /** Held views borrow these nodes; CharacterView retains ownership of the rig. */
   socket(side: 'LEFT' | 'RIGHT') { return this.characters.get(this.variant)!.sockets[side]; }
   getState() {
