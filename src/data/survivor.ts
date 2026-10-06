@@ -18,8 +18,8 @@ export interface SurvivorState {
   /** Plain combat timing for authored clips and trails. */
   attack?: { actionId: string; combo: number; started: number; activeAt: number; recoveryAt: number; endsAt: number };
   variant: SurvivorVariant; gearTier: GearTier; animation: AnimationState; animationTick: number;
-  /** E19 presentation hooks set by the bicycle (F) and mission (E) sims; render-only reads. */
-  riding?: { since: number }; carrying?: string;
+  /** E19 presentation hook set by the mission sim (E) while the parcel is held; render-only. */
+  carrying?: string;
   velocity: { x: number; z: number }; grounded: boolean; invulnerableUntil: number;
   checkpoint: { x: number; y: number; z: number }; diedAt: number | null;
 }

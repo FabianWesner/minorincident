@@ -351,7 +351,11 @@ export class GameView implements Lifecycle {
         this.frozenPose.velocity = velocity; Object.assign(velocity, survivor.velocity);
         this.frozenPose.checkpoint = checkpoint; Object.assign(checkpoint, survivor.checkpoint);
       }
-      this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha);
+      // E19 courier: the bicycle sim (lane F) marks the rider; the bike's crank/steer drive the pose.
+      const riding = (this.world.entities.get(1) as { riding?: number } | undefined)?.riding;
+      const bike = riding === undefined ? undefined : (this.world.entities.get(riding) as { bicycle?: { pedal: number; steer: number } } | undefined)?.bicycle;
+      this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
+        riding === undefined ? undefined : { pedal: bike?.pedal ?? this.world.tick * .12, steer: bike?.steer ?? 0 });
     }
     if (this.cube && current) {
       this.cube.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha), lerp(previous?.z ?? current.z, current.z, alpha));

@@ -1,8 +1,9 @@
 import { AnimationMixer, LoopOnce, Quaternion, Vector3, type AnimationAction, type Object3D } from 'three';
 import { retargetClip, strides, strideScale } from './clips';
 
-/** E19 §5.8 corgi warning presentation, sim-owned by the companion (lane F). */
-export interface CorgiWarning { kind: 'stiffen' | 'growl' | 'bark' | 'nervous'; since: number; toward?: { x: number; z: number } }
+/** E19 §5.8 corgi warning, sim-owned by the companion (lane F: `companion.warn`), plus
+ * the threat's position for the head look (the caller resolves `warn.threat`). */
+export interface CorgiWarning { stage: 'none' | 'stiffen' | 'growl' | 'bark' | 'nervous'; toward?: { x: number; z: number } | null }
 const warningClips = { stiffen: 'corgi-stiffen', growl: 'corgi-growl', bark: 'corgi-bark', nervous: 'corgi-nervous' } as const;
 const up = new Vector3(0, 1, 0);
 
@@ -31,7 +32,7 @@ export class QuadrupedAnimator {
     const gait = speed > (this.clip === 'corgi-gallop' ? 3.6 : 4.2) ? 'corgi-gallop' : speed > (this.clip === 'corgi-trot' ? 1.2 : 1.6) ? 'corgi-trot' : speed > (this.clip === 'corgi-walk' ? .04 : .12) ? 'corgi-walk' : time - this.stoppedAt > 4 ? 'corgi-sit' : 'corgi-idle';
     // Warnings play when the dog has stopped (it stops to stiffen, §5.8); while
     // moving the gait continues and only the head looks.
-    const name = warning && !strides[gait] ? warningClips[warning.kind] : gait;
+    const name = warning && warning.stage !== 'none' && !strides[gait] ? warningClips[warning.stage] : gait;
     if (!this.action || name !== this.clip) {
       const previous = this.action; this.action = this.actions.get(name)!.reset().setEffectiveWeight(1).play();
       if (name === 'corgi-sit' || name === 'corgi-stiffen' || name === 'corgi-bark') { this.action.setLoop(LoopOnce, 1); this.action.clampWhenFinished = true; }
@@ -42,7 +43,7 @@ export class QuadrupedAnimator {
     this.mixer.update(dt);
     // Head look: yaw toward the threat, capped at ±50°, eased over ~200 ms.
     let target = 0;
-    if (warning?.toward && warning.kind !== 'nervous') {
+    if (warning?.toward && warning.stage !== 'nervous' && warning.stage !== 'none') {
       this.root.getWorldPosition(this.world); this.root.getWorldQuaternion(this.rootTurn);
       const forward = new Vector3(1, 0, 0).applyQuaternion(this.rootTurn);
       const dx = warning.toward.x - this.world.x, dz = warning.toward.z - this.world.z;
