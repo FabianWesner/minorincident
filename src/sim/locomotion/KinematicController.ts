@@ -48,7 +48,10 @@ export class KinematicController {
       // Start a bounded upward sweep at the capsule's leading foot, using the
       // same GLB support tops as NPC grounding. The sweep still tests all solids.
       const supportX = transform.x + this.displacement.x + x * (survivor.radius + .02), supportZ = transform.z + this.displacement.z + z * (survivor.radius + .02);
-      const ground = this.groundHeight?.(supportX, supportZ) ?? this.physics.floorHeight(supportX, supportZ);
+      const support = (px: number, pz: number) => this.groundHeight?.(px, pz) ?? this.physics.floorHeight(px, pz);
+      // Probe the whole leading footprint: a thin raised curb can lie between
+      // the centre and the leading toe, above the paving sampled at the toe.
+      const ground = Math.max(support(supportX, supportZ), support(transform.x + this.displacement.x, transform.z + this.displacement.z), support((supportX + transform.x) / 2, (supportZ + transform.z) / 2));
       const clearance = ground > .01 || navigation ? .02 : magnitude > 0 ? .01 : .005;
       this.displacement.y = Math.max(this.displacement.y, Math.min(.06, ground + survivor.height / 2 + clearance - transform.y));
     }

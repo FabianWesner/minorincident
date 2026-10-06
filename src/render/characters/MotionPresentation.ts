@@ -9,7 +9,8 @@ export class MotionPresentation {
   private readonly result = { x: 0, y: 0, z: 0, yaw: 0 };
   sample(id: number, transform: Transform, tick: number, alpha = 1): Transform {
     let state = this.states.get(id);
-    if (!state || tick < state.tick || Math.hypot(transform.x - state.to.x, transform.z - state.to.z) > 3) {
+    const edited = state && tick === state.tick && (transform.x !== state.to.x || transform.y !== state.to.y || transform.z !== state.to.z || transform.yaw !== state.to.yaw);
+    if (!state || edited || tick < state.tick || Math.hypot(transform.x - state.to.x, transform.z - state.to.z) > 3) {
       state = { tick, from: { ...transform }, to: { ...transform } }; this.states.set(id, state);
     } else if (tick !== state.tick) { state.from = state.to; state.to = { ...transform }; state.tick = tick; }
     const t = Math.max(0, Math.min(1, alpha));

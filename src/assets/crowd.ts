@@ -7,6 +7,18 @@ export function clipTexture(clip: CrowdClip): DataTexture {
   const texture=new DataTexture(new Float32Array(clip.matrices),clip.parts.length*4,clip.frames,RGBAFormat,FloatType);
   texture.needsUpdate=true; return texture;
 }
+/** Pack scalar part flags into one location so production crowds fit WebGL2's
+ * 16-attribute minimum even with instancing, shaded normals and clip fades. */
+export function packCrowdParts(geometry: BufferGeometry): void {
+  const names = ['_part_index', '_shirt', '_emissive', '_vein'], count = geometry.getAttribute('position').count;
+  const values = new Float32Array(count * 4);
+  names.forEach((name, channel) => {
+    const source = geometry.getAttribute(name);
+    if (source) for (let i = 0; i < count; i++) values[i * 4 + channel] = source.getX(i);
+    geometry.deleteAttribute(name);
+  });
+  geometry.setAttribute('_parts', new BufferAttribute(values, 4));
+}
 /** One texel per matrix column; shared by the crowd vertex shader and GPU readback probe. */
 export function crowdMatrix(texture: DataTexture, part: Parameters<typeof int>[0], frame: Parameters<typeof int>[0]) {
   const start=int(part).mul(4);
