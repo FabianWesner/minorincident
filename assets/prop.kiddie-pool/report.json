@@ -1,0 +1,69 @@
+{
+  "id": "prop.kiddie-pool",
+  "triangles": {
+    "lod0": 4648,
+    "lod1": 412,
+    "lod2": 92
+  },
+  "dimensions_blender": [
+    2.013000011444092,
+    2,
+    0.35629165172576904
+  ],
+  "draw_calls": 8,
+  "materials": [
+    "pal_policeBlue",
+    "pal_poloLight",
+    "pal_tealLight",
+    "pal_packBlue",
+    "pal_schoolBusYellow",
+    "pal_survivorRed",
+    "pal_orange",
+    "pal_uiDark"
+  ],
+  "nodes": [
+    "root",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 3,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred.",
+    "Opaque palette water; refraction and animation are runtime work."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 69268,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 17888,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 11920,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.08864027538726334,
+    "lod2": 0.019793459552495698
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.kiddie-pool",
+    "geometry_hash": "6e00c3c7cebaf5e84cecc03cca3e7460ce374ba0c22b09448f792aa33fe7e213",
+    "second_geometry_hash": "6e00c3c7cebaf5e84cecc03cca3e7460ce374ba0c22b09448f792aa33fe7e213",
+    "geometry_identical": true,
+    "raw_byte_identical": false
+  },
+  "matches_reference": true,
+  "done": true
+}

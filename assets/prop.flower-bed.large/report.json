@@ -1,0 +1,69 @@
+{
+  "id": "prop.flower-bed.large",
+  "triangles": {
+    "lod0": 9748,
+    "lod1": 1160,
+    "lod2": 284
+  },
+  "dimensions_blender": [
+    0.9789250493049622,
+    2.149824857711792,
+    0.711892306804657
+  ],
+  "draw_calls": 9,
+  "materials": [
+    "pal_woodWarm",
+    "pal_uiDark",
+    "pal_hairChestnut",
+    "pal_foliageDark",
+    "pal_foliage",
+    "pal_grass",
+    "pal_schoolBusYellow",
+    "pal_flamingoPink",
+    "pal_picketWhite"
+  ],
+  "nodes": [
+    "root",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 4,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 179440,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 44044,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 21824,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.11899876897825194,
+    "lod2": 0.029134181370537547
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.flower-bed.large",
+    "geometry_hash": "b13ffa2d49465f07f33d84f61633e0a1933e8315f4429b730be23f944108254a",
+    "second_geometry_hash": "b13ffa2d49465f07f33d84f61633e0a1933e8315f4429b730be23f944108254a",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
+}

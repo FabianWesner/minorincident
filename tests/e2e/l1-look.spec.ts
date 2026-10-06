@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 import { menuStart } from './ui-helpers';
+// L1 v2 replaced the diner/hardware story these checks assume; the L1 v2 playthrough is tests/e2e/levels/L1.spec.ts.
+test.beforeEach(() => { test.fixme(true, 'old L1 diner flow retired (L1 v2)'); });
 
 // Native GPU, headless, unthrottled. Fixed close-camera poses are identical before/after.
 test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync'] } });
