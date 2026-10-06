@@ -49,6 +49,7 @@ export interface CinematicDef {
   actions: ScriptAction[];
 }
 export interface MissionDef {
+  slice?: boolean;
   id: string; briefing: string; anchors: Record<string, Anchor>; actors: Record<string, ActorDef>;
   groups: Record<string, string[]>; gates: Record<string, { anchor: string; open: boolean }>;
   items: string[]; states: string[]; counters: string[]; checkpoints: string[];

@@ -156,6 +156,10 @@ export class Vfx extends Group {
       if (event.kind === 'fire' || event.kind === 'smoke') this.effect(event.kind, event.position.x, event.position.z, event.radius);
     } else if (event.type === 'telegraph') {
       if (this.tells.has(event.attackId)) return;
+      // A source has one current attack. Retire its previous tell synchronously,
+      // including paused sim stepping that can run many attacks between render frames.
+      if (event.sourceId !== undefined) for (const [id,tell] of this.tells) if(tell.sourceId===event.sourceId){this.telegraphs.remove(tell.slot);this.tells.delete(id);}
+
       const source = event.sourceId !== undefined ? this.world.entities.get(event.sourceId) : undefined;
       const kind: TelegraphKind = 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' ? 'charge' : event.special === 'aura' ? 'splash' : 'lunge';
       const position = 'position' in event ? event.position : source?.transform;

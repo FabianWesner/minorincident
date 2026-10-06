@@ -141,7 +141,7 @@ export class GameUI {
       await this.game.loadLevel(id);
       this.game.world.player?.select(this.variant, 0);
       if (racks && left.length && right.length) this.game.world.combat?.setLoadout(left, right);
-      else if (id === 'L1') this.game.world.combat?.setLoadout(['weapon.fists'], ['weapon.kick']);
+      else if (id === 'L1') this.game.world.combat?.clearLoadout();
       this.applySettings(); this.show(null);
       if (!this.game.audio.snapshot().background) this.game.clock.resume();
       this.game.view.update(1);

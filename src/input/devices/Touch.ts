@@ -46,9 +46,16 @@ export class Touch {
       slot.button.setAttribute('aria-label', `Touch ${side}`);
     }
   }
+  /** L1 starts with empty racks; hide empty image elements and stale prior-level icons. */
+  setEmpty(side: 'left' | 'right'): void {
+    const slot=this.slots.get(side)!;slot.icon.hidden=true;slot.icon.removeAttribute('src');
+    slot.button.setAttribute('aria-label', `${side} · ${side==='left'?'unarmed':'locked'}`);
+    slot.button.classList.remove('is-selected');slot.button.style.setProperty('--progress','0');
+  }
   /** E14 presents the actions themselves as weapon slots, without changing release-to-fire. */
   setWeapon(side: 'left' | 'right', iconUrl: string, label: string, progress: number, selected: boolean, ammo: number, charges: number): void {
     const slot = this.slots.get(side)!;
+    slot.icon.hidden=this.driving;
     if (slot.icon.getAttribute('src') !== iconUrl) slot.icon.src = iconUrl;
     slot.button.style.setProperty('--progress', String(progress));
     slot.button.classList.toggle('is-selected', selected);

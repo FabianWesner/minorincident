@@ -324,7 +324,7 @@ export class InfectedSystem {
     if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }
     const nav = this.navigation.grid(e.transform); target = this.navigation.target(e.transform, target);
     let x = target.x, z = target.z;
-    const from = nav.cell(e.transform.x, e.transform.z), to = nav.cell(x, z);
+    const from = nav.nearestCell(e.transform.x, e.transform.z), to = nav.nearestCell(x, z);
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
       let next = from;
       if (this.active.length > 20) next = nav.flowNext(from);
