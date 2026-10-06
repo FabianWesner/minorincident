@@ -12,7 +12,7 @@ const story = {
   techWalkMs: 1.6, takeBoxS: 1.5, standoffM: 1.4, awayFromLabM: 30, exitSearchS: 12, exitSearchM: 4,
   /** Accident sequence anchors (sim lookups) and the exits: [anchor, heading in degrees, 0 = +X east, 90 = +Z south]. */
   anchors: { 'l1.flicker': 'lab-smoke-window', 'l1.blast': 'lab-exit-window', 'l1.ringing': 'lab-door', 'l1.smoke': 'lab-smoke-vent', 'l1.screams': 'lab-door', 'l1.infectedExit': 'lab-exit-front' } as Record<L1AccidentEventName, string>,
-  exits: [['lab-exit-front', 125], ['lab-exit-front', 55], ['lab-exit-side', 350], ['lab-exit-window', 180], ['lab-exit-window', 235]] as [string, number][],
+  exits: [['lab-exit-front', 125], ['lab-exit-front', 95], ['lab-exit-side', 170], ['lab-exit-window', 215], ['lab-exit-window', 250]] as [string, number][],
   /** Infected looks for the lab staff (existing variants until the lab-staff models are registered). */
   staffModels: ['npc.civilian-man-a', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-man-b'],
   variants: ['inf.delivery-driver', 'inf.cashier', 'inf.bbq-dad', 'inf.suburban-mom', 'inf.bathrobe-neighbor'],
@@ -223,9 +223,9 @@ export class LevelOneOutbreak {
     return e.id;
   }
 
-  /** A point 20 m from the exit along a heading, snapped to clear ground. */
+  /** A point 32 m from the exit along a heading, snapped to clear ground. */
   private farPoint(at: { x: number; z: number }, rad: number): { x: number; z: number } {
-    const nav = this.mission.world.infected!.nav, x = at.x + Math.cos(rad) * 20, z = at.z + Math.sin(rad) * 20, cell = nav.nearestCell(x, z);
+    const nav = this.mission.world.infected!.nav, x = at.x + Math.cos(rad) * 32, z = at.z + Math.sin(rad) * 32, cell = nav.nearestCell(x, z);
     return cell >= 0 ? { x: nav.x(cell), z: nav.z(cell) } : { x, z };
   }
   /** Technician indoor leg only (interior is not walkable nav); at the door the infected AI takes over via `rush`. */

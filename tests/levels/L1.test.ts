@@ -104,6 +104,8 @@ describe('L1 v2 mission', () => {
       w.events.on('outbreak.bite', () => { bites++; }); w.events.on('civilian.turned', () => { bites++; });
       runL1(w, mission, 'idle', { seed, stopWhen: m => m.state.l1!.exitIds.length > 0 });
       w.entities.get(mission.state.l1!.exitIds[seed % 5])!.health.current = 0;
+      // The player leaves the forecourt (an invulnerable idler there would hold every chaser): pedestrians are the targets.
+      const g = mission.def.anchors['garage-door'], me = w.entities.get(1)!.transform; Object.assign(me, { x: g.x, z: g.z }); w.physics.playerBody!.setTranslation(me, true); w.spatial.set(1, g.x, g.z);
       for (let i = 0; i < 60 * 60; i++) w.update();
       expect(bites, `seed ${seed}`).toBeGreaterThan(0);
       w.dispose(); world = undefined;
