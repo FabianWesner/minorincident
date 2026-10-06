@@ -68,10 +68,20 @@ export class Outbreak {
     };
     this.offs.push(world.events.on('l1.blast', hear), world.events.on('l1.screams', hear));
     this.offs.push(world.events.on('outbreak.bite', event => { if (event.type === 'outbreak.bite' && !this.emitting) this.externalBite(event); }));
+    // Lane C's L1 brain grabs on contact and owns the 1.0 s hold and the rescue; the victim only mirrors it here.
+    this.offs.push(world.events.on('civilian.grabbed', event => { if (event.type === 'civilian.grabbed' && !this.emitting && this.aiBites()) this.grabbedBy(event.targetId, event.sourceId); }));
     this.offs.push(world.events.on('combat.hit', event => {
       if (event.type !== 'combat.hit') return;
       if (world.npcs?.civilians.holds(event.targetId)) this.rescue.add(event.targetId);
     }));
+  }
+  /** True when lane C's L1 infected brain is active (D-GROVE): it grabs, holds, rescues and emits `outbreak.bite`. */
+  aiBites(): boolean { return !!this.world.infected?.l1; }
+  private grabbedBy(targetId: number, sourceId: number): void {
+    const e = this.world.entities.get(targetId), c = e?.civilian, attacker = this.world.entities.get(sourceId);
+    if (!e || !c?.l1 || e.infection || !attacker || !mobile.has(c.state)) return;
+    delete c.l1.doorAt; c.attacker = sourceId; c.threat.x = attacker.transform.x; c.threat.z = attacker.transform.z; this.dropProp(e);
+    this.state(e, 'grabbed', ticks(civ.grabS)); this.face(e, attacker.transform, Math.PI); this.hear(e.transform);
   }
   dispose(): void { this.offs.forEach(off => off()); this.offs.length = 0; }
   private snap(p: Vec2): Vec2 {
@@ -119,7 +129,7 @@ export class Outbreak {
         this.face(e, c.threat, .2);
         if (tick >= c.until) { this.state(e, 'flee'); c.l1.repickAt = tick; }
       } else if (c.state === 'flee' || c.state === 'hide') this.flee(e);
-      if (!e.hidden && e.civilian && mobile.has(c.state) && (tick + e.id) % 2 === 0) this.contact(e);
+      if (!e.hidden && e.civilian && mobile.has(c.state) && (tick + e.id) % 2 === 0 && !this.aiBites()) this.contact(e);
     }
     this.topUp();
   }
@@ -247,13 +257,20 @@ export class Outbreak {
   }
   private held(e: EntitySnapshot): void {
     const c = e.civilian!, tick = this.world.tick, attacker = this.world.entities.get(c.attacker);
+    if (this.aiBites() && !this.world.npcs!.civilians.holds(c.attacker)) {
+      // The bite arrives as `outbreak.bite` (externalBite); a released hold without it is a rescue.
+      if (this.world.infected!.holding(e.id) === 0) this.rescued(e);
+      return;
+    }
     const broken = !attacker?.infected || attacker.health.current <= 0 || this.rescue.has(c.attacker) || (attacker.combat?.staggerUntil ?? 0) > tick
       || Math.hypot(attacker.transform.x - e.transform.x, attacker.transform.z - e.transform.z) > l1Pedestrians.grabBreakM;
-    if (broken) {
-      this.rescue.delete(c.attacker); this.stats.rescued++;
-      this.state(e, 'flee'); c.l1!.repickAt = tick; c.l1!.graceUntil = tick + ticks(1);
-      this.world.events.emit({ type: 'civilian.saved', tick, id: e.id }); this.world.missions?.civilianSaved(e.id);
-    } else if (tick >= c.until) this.bite(e, attacker!);
+    if (broken) { this.rescue.delete(c.attacker); this.rescued(e); }
+    else if (tick >= c.until) this.bite(e, attacker!);
+  }
+  private rescued(e: EntitySnapshot): void {
+    const c = e.civilian!, tick = this.world.tick; this.stats.rescued++;
+    this.state(e, 'flee'); c.l1!.repickAt = tick; c.l1!.graceUntil = tick + ticks(1);
+    this.world.events.emit({ type: 'civilian.saved', tick, id: e.id }); this.world.missions?.civilianSaved(e.id);
   }
   /** At the infected cap a bite kills instead of turning (section 5.9). */
   private canTurn(): boolean {
@@ -320,7 +337,7 @@ export class Outbreak {
     const nav = ai.nav, cell = nav.clear(e.transform.x, e.transform.z, .4) ? -1 : nav.nearestCell(e.transform.x, e.transform.z);
     const at = cell >= 0 ? { x: nav.x(cell), z: nav.z(cell) } : { x: e.transform.x, z: e.transform.z };
     let id: number;
-    try { id = ai.spawn('infected.runner', at, { variant: c.variant, yaw: e.transform.yaw, state: 'idle', perched: false }); }
+    try { id = ai.spawn('infected.runner', at, { variant: c.variant, yaw: e.transform.yaw, state: 'idle', perched: false, tier: inf.tier }); }
     catch { delete e.infection; this.kill(e); return; }
     const pooled = this.world.entities.get(id)!;
     this.world.entities.delete(id); this.world.spatial.delete(id);
@@ -328,8 +345,8 @@ export class Outbreak {
     e.kind = 'infected'; e.faction = 'infected'; e.archetype = pooled.archetype;
     e.infected = pooled.infected; e.combat = pooled.combat; e.health = pooled.health;
     Object.assign(e.transform, at);
-    const tier = l1v2.speedTiers[inf.tier];
-    e.infected!.speed = tier.baseMs * (1 + (this.rng.next() * 2 - 1) * l1v2.speedTiers.jitter);
+    // Lane C's L1 brain already gave it the tier run speed; without it (tests, old levels) use the tier base +/- jitter.
+    if (!e.infected!.l1) e.infected!.speed = l1v2.speedTiers[inf.tier].baseMs * (1 + (this.rng.next() * 2 - 1) * l1v2.speedTiers.jitter);
     delete e.civilian; delete e.infection; delete e.motion;
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     if (!bitten) return;

@@ -9,6 +9,8 @@ import { inside } from '../../levels/districts/validate';
 /** Minimal campaign integration: assemble navigation from the loaded, decayed district colliders. */
 export function installCampaignNpcs(world: SimWorld): void {
   const districts = world.districts!;
+  // L1 v2 (D-GROVE): systems + corgi only; `installL1Outbreak` adds the pedestrians (lane D).
+  if (districts.districts.some(d => d.id === 'D-GROVE')) { installNpcSystems(world); world.npcs!.companion.spawn(); return; }
   if (!/^L[1-6]$/.test(districts.composition.id)) return;
   installNpcSystems(world); const { min, max } = districts.nav;
   world.events.on('objective.completed', event => { if (event.type === 'objective.completed' && event.id === 'breakfast' && world.missions?.def.id === 'L1') { if(!world.missions.def.slice)world.npcs?.dinerIncident(world.missions.def.anchors.diner); } });

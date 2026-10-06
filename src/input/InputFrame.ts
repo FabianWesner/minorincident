@@ -19,6 +19,8 @@ export interface InputFrame {
   /** Direct number-key rack choice. Out-of-range slots are ignored. */
   selectedSlot?: { side: 'LEFT' | 'RIGHT'; index: number };
   selectorSide?: 'LEFT' | 'RIGHT';
+  /** Resolved click navigation requests the bounded locomotion response. */
+  navigation?: boolean;
   move: Vec2;
   aim: Vec2 | null;
   /** Optional world-ground landing point; direction-only devices throw to max range. */
