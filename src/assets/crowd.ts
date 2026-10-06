@@ -4,7 +4,7 @@ import { palette } from './palette';
 
 export interface CrowdClip { parts: string[]; frames: number; duration: number; matrices: number[] | Float32Array }
 export function clipTexture(clip: CrowdClip): DataTexture {
-  const texture=new DataTexture(new Float32Array(clip.matrices),clip.parts.length*4,clip.frames,RGBAFormat,FloatType);
+  const texture=new DataTexture(clip.matrices instanceof Float32Array ? clip.matrices : new Float32Array(clip.matrices),clip.parts.length*4,clip.frames,RGBAFormat,FloatType);
   texture.needsUpdate=true; return texture;
 }
 /** Pack scalar part flags into one location so production crowds fit WebGL2's

@@ -5,7 +5,7 @@ import type { CharacterRig } from './rig';
 
 /** Blender GLB samplers compiled by tools/assets/animation-library.ts. */
 export const authoredClips = new Map(library.map(clip => [clip.name, clip]));
-export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'corgi-walk': .55, 'corgi-trot': .8 };
+export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'npc-carry': .9, 'npc-cane': .9, 'corgi-walk': .55, 'corgi-trot': .8 };
 const worldScale = new Vector3(), worldOrigin = new Vector3();
 /** Library humanoid rest leg (leg->shin->foot), metres; strides are authored for it. */
 const libraryLeg = .516;
@@ -28,7 +28,17 @@ const upperBody = /^(torso|head|arm|foreArm|hand)/;
 
 /** Retarget by name, preserving model rest TRS. Additive clips contain upper-body
  * offsets so the locomotion action retains control of planted feet. */
+const restPoses = new WeakMap<Object3D, { node: Object3D; position: Vector3; quaternion: Quaternion }[]>();
+/** Sampling one action must not become the rest pose of the next action. */
 export function retargetClip(root: Object3D, name: string, additive = false): AnimationClip {
+  let rest = restPoses.get(root);
+  if (!rest) { rest = []; root.traverse(node => rest!.push({ node, position: node.position.clone(), quaternion: node.quaternion.clone() })); restPoses.set(root, rest); }
+  const current = rest.map(({ node }) => ({ node, position: node.position.clone(), quaternion: node.quaternion.clone() }));
+  for (const pose of rest) { pose.node.position.copy(pose.position); pose.node.quaternion.copy(pose.quaternion); }
+  try { return buildRetargetedClip(root, name, additive); }
+  finally { for (const pose of current) { pose.node.position.copy(pose.position); pose.node.quaternion.copy(pose.quaternion); } }
+}
+function buildRetargetedClip(root: Object3D, name: string, additive: boolean): AnimationClip {
   const source = authoredClips.get(name);
   if (!source) throw new Error(`Missing authored clip ${name}`);
   const tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[] = [], q = new Quaternion();

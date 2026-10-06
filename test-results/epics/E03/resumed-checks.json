@@ -1,0 +1,32 @@
+{
+  "job": "m1-controls3-2",
+  "scope": "Orchestrator requested reduced final validation; full E19 baseline failures handled elsewhere",
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run test:unit",
+      "exitCode": 0,
+      "passed": 158
+    },
+    {
+      "command": "E2E_PORT=3348 npm run test:smoke",
+      "exitCode": 0,
+      "passed": {
+        "simulation": 3,
+        "browser": 22
+      }
+    },
+    {
+      "command": "E2E_PORT=3348 sh tools/e2e-lock.sh npx playwright test tests/e2e/input-unarmed.spec.ts --grep \"seven unarmed moves\" --project=chromium --workers=1",
+      "exitCode": 0,
+      "passed": 1
+    }
+  ]
+}
