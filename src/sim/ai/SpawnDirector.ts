@@ -20,6 +20,7 @@ export class SpawnDirector {
   private readonly target = { x: 0, z: 0 };
   ambientTarget = 0;
   private point = 0;
+  private cameraPosition: { x: number; y: number; z: number } | null = null;
   private hasFrustum = false;
   private readonly frustum = new Float64Array(16);
   constructor(readonly ai: InfectedSystem) {
@@ -44,8 +45,9 @@ export class SpawnDirector {
     let count = 0; for (const e of this.ai.active) if (e.health.current > 0) count += e.archetype === 'infected.crow' ? e.infected!.birds * 0.25 : 1; return count;
   }
   /** Plain geometric camera-volume input. The sim never imports or reads a renderer/camera object. */
-  setFrustum(matrix: readonly number[]): void {
+  setFrustum(matrix: readonly number[], position?: { x: number; y: number; z: number }): void {
     if (matrix.length !== 16 || !matrix.every(Number.isFinite)) throw new RangeError('Invalid spawn frustum');
+    this.cameraPosition = position ? { ...position } : null;
     this.frustum.set(matrix); this.hasFrustum = true;
   }
   visible(position: { x: number; z: number; y?: number }): boolean {
@@ -57,6 +59,21 @@ export class SpawnDirector {
     }
     const c = this.camera, dx = position.x - c.x, dz = position.z - c.z;
     return Math.abs(dx * Math.cos(c.yaw) + dz * Math.sin(c.yaw)) <= c.halfWidth * 1.1 && Math.abs(-dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw)) <= c.halfDepth * 1.1;
+  }
+  /** A solid building must hide the entire rising silhouette, not just its feet. */
+  occluded(position: { x: number; z: number }): boolean {
+    const origin = this.cameraPosition;
+    if (!origin) return false;
+    return [.1, 1.9].every(y => (this.ai.world.combat?.definition.walls ?? []).some(wall => {
+      if (wall.halfY * 2 < 2.2) return false;
+      let near = 0, far = 1;
+      for (const [axis, half] of [['x', wall.halfX], ['y', wall.halfY], ['z', wall.halfZ]] as const) {
+        const end = axis === 'y' ? y : position[axis], delta = end - origin[axis];
+        if (Math.abs(delta) < 1e-8) { if (origin[axis] < wall[axis] - half || origin[axis] > wall[axis] + half) return false; }
+        else { const a = (wall[axis] - half - origin[axis]) / delta, b = (wall[axis] + half - origin[axis]) / delta; near = Math.max(near, Math.min(a,b)); far = Math.min(far, Math.max(a,b)); }
+      }
+      return near < far && far > 0 && near < .98;
+    }));
   }
   safe(id: string, position: { x: number; z: number }, perched?: boolean): boolean {
     const target = this.ai.perchFor(id, position, perched) ?? position;

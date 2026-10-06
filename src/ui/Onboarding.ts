@@ -44,7 +44,7 @@ export class Onboarding {
   }
   private glyph(lesson: Lesson, scheme: Scheme): string {
     if (scheme === 'touch') return lesson === 'move' || lesson === 'evade' ? '◉ Stick' : ['attack', 'second-side'].includes(lesson) ? lesson === 'attack' ? '☝ LEFT' : '☝ RIGHT' : lesson === 'selector' ? 'Swipe up LEFT / RIGHT' : 'ACTION / Stand';
-    if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? scheme === 'mouse-only' ? 'Click to move' : 'WASD / Click to move' : lesson === 'attack' ? 'LMB on infected to attack' : lesson === 'second-side' ? 'RMB on infected to attack' : lesson === 'selector' ? 'Wheel' : 'Stand / F / MMB';
+    if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? scheme === 'mouse-only' ? 'Click to move' : 'WASD / Click to move' : lesson === 'attack' ? 'LMB on infected to attack' : lesson === 'second-side' ? 'RMB on infected to attack' : lesson === 'selector' ? 'Q / click slot' : 'Stand / F / MMB';
     return lesson === 'move' || lesson === 'evade' ? this.bindings.keyLabel('moveUp') + this.bindings.keyLabel('moveLeft') + this.bindings.keyLabel('moveDown') + this.bindings.keyLabel('moveRight') : this.bindings.keyLabel(lesson === 'attack' ? 'left' : lesson === 'second-side' ? 'right' : lesson === 'selector' ? 'selector' : 'interact');
   }
   update(scheme: Scheme, playing: boolean): void {
@@ -52,9 +52,9 @@ export class Onboarding {
     if (!playing || !level || !/^L[1-6]$/.test(level)) { this.element.hidden = true; return; }
     if (this.world.missions?.def.slice) {
       const mission=this.world.missions, player=this.world.entities.get(1)!;
-      if(player.health.current<=0){this.element.hidden=false;this.element.dataset.action='respawn';text(this.element,`You died · Returning to ${mission.state.checkpoint ? 'the hardware checkpoint' : 'the morning'}…`);return;}
+      if(player.health.current<=0){this.element.hidden=false;this.element.dataset.action='respawn';text(this.element,`You died · Returning to ${mission.state.checkpoint ? mission.state.checkpoint === 'escape' ? 'the diner' : 'the hardware store' : 'the morning'}…`);return;}
       const frame=this.world.inputFrame;
-      if(!player.weapons&&(frame.left.down||frame.left.held||frame.right.down||frame.right.held)&&!frame.pointerGround){this.element.hidden=false;text(this.element,'You have nothing to fight with! Keep moving.');return;}
+      if(!player.weapons&&(frame.left.down||frame.left.held||frame.right.down||frame.right.held)&&!frame.pointerGround && this.world.tick - this.startTick < 180){this.element.hidden=false;text(this.element,'Run! Find something better at the hardware store.');return;}
       if(mission.state.steps.melee.status==='completed') { this.completed.add('pickup');this.completed.add('interact'); }
       if(this.current==='evade'&&mission.state.steps.escape.status==='completed')this.completed.add('evade');
     }
@@ -81,7 +81,7 @@ export class Onboarding {
         break;
       }
     }
-    this.element.hidden = !this.current;
+    this.element.hidden = !this.current || this.world.tick - this.startTick >= 180;
     if (!this.current) return;
     this.element.dataset.action = this.current; this.element.dataset.scheme = scheme;
     text(this.element, `${this.glyph(this.current, scheme)} · ${descriptions[this.current]}`);

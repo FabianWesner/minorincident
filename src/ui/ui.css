@@ -154,3 +154,8 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 body:not(.debug-ui) [data-input-hint]{display:none!important}
 [data-touch-action] img[hidden]{display:none!important}
 .hud-vitals .hud-portrait,.hud-companion .hud-portrait{background-size:cover;background-position:center}
+
+/* Feedback stays beside the HUD; the current target uses a thin ground ring. */
+.full-ui:not(.touch-ui) .onboarding{top:150px;left:18px;transform:none;max-width:300px;padding:7px 10px;font-size:13px;text-align:left}
+.hud-damage{background:transparent;padding:0;font-size:16px;opacity:.6}
+.hud-slot[role=button]{pointer-events:auto;cursor:pointer}

@@ -55,7 +55,7 @@ export class Game {
     this.quality = new Quality(requested as QualitySetting, { userAgent: navigator.userAgent, touchPoints: navigator.maxTouchPoints, coarsePointer: matchMedia('(pointer: coarse)').matches, memoryGB: (navigator as Navigator & { deviceMemory?: number }).deviceMemory });
     this.clock = new Clock(params.get('test') === '1' ? 20 : 5);
     this.view = this.services.add(new GameView(this.world, params, this.quality.tier));
-    this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera));
+    this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera, delta => this.view.view.zoom(delta)));
     this.audio = this.services.add(new AudioService(this.world, {
       settingsChanged: patch => this.campaignSettings(patch),
       pause: () => { this.clock.pause(); this.ui?.pause(); }, resume: () => { this.ticker.reset(); this.clock.resume(); this.ui?.show(null); },
@@ -202,7 +202,7 @@ export class Game {
     if (this.world.infected) {
       this.view.camera.updateMatrixWorld();
       this.spawnFrustum.multiplyMatrices(this.view.camera.projectionMatrix, this.view.camera.matrixWorldInverse);
-      this.world.infected.director.setFrustum(this.spawnFrustum.elements);
+      this.world.infected.director.setFrustum(this.spawnFrustum.elements, this.view.camera.position);
     }
     this.world.update();
     if (this.ui.enabled) this.ui.hud.onboarding.observe(this.world.inputFrame);

@@ -33,17 +33,14 @@ test('T-E03-02 @E03 @E03-AC02 mouse buttons preserve down held up and prevent co
   })).toBe(true);
 });
 
-test('T-E03-03 @E03 @E03-AC03 wheel notches pulse once and trackpads debounce 120ms', async ({ page }) => {
-  await boot(page); await page.clock.install({ time: new Date('2025-01-01T00:00:00Z') }); await page.clock.pauseAt(new Date('2025-01-01T00:01:00Z')); await page.mouse.move(800, 450);
-  await page.mouse.wheel(0, -100); expect((await tick(page)).selector).toBe(-1);
-  expect((await tick(page)).selector).toBe(0);
-  await page.mouse.wheel(0, 100); expect((await tick(page)).selector).toBe(1);
-  await page.mouse.wheel(0, 8); expect((await tick(page)).selector).toBe(1);
-  await page.mouse.wheel(0, 8); expect((await tick(page)).selector).toBe(0);
-  await page.clock.runFor(119);
-  await page.mouse.wheel(0, 8); expect((await tick(page)).selector).toBe(0);
-  await page.clock.runFor(1);
-  await page.mouse.wheel(0, -8); expect((await tick(page)).selector).toBe(-1);
+test('T-E03-03 @E03 @E03-AC03 @E02-AC03 wheel zooms smoothly and never cycles weapons', async ({ page }) => {
+  await boot(page); await page.mouse.move(800,450);
+  const before=await page.evaluate(()=>window.__SS__!.getState().render.camera);
+  await page.mouse.wheel(0,-100); const frame=await tick(page,30);expect(frame.selector).toBe(0);
+  const close=await page.evaluate(()=>window.__SS__!.getState().render.camera);expect(close.radius).toBeLessThan(before.radius);
+  for(let i=0;i<12;i++)await page.mouse.wheel(0,120);await tick(page,120);
+  const far=await page.evaluate(()=>window.__SS__!.getState().render.camera);expect(far.radius).toBeLessThanOrEqual(before.radius*1.35+.001);
+  expect(far.azimuth).toBe(before.azimuth);expect(far.polar).toBe(before.polar);
 });
 
 test('T-E03-12 @E03 @E03-AC12 middle-click F and E interact without browser autoscroll', async ({ page }) => {
@@ -116,11 +113,11 @@ test('T-E03-16 @E03 @E03-AC16 RMB distant ground attacks without movement and ca
   await page.mouse.up();
 });
 
-test('T-E03-17 @E03 @E03-AC17 wheel after RMB switches RIGHT, ground LMB does not select LEFT', async ({ page }) => {
+test('T-E03-17 @E03 @E03-AC17 Q after RMB switches RIGHT, ground LMB does not select LEFT', async ({ page }) => {
   await arena(page); const dest = await point(page, 7);
   await page.mouse.click(dest.x, dest.y, { button: 'right' }); await tick(page);
   await page.mouse.click(dest.x, dest.y); await tick(page);
-  await page.mouse.wheel(0, 120); await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))); await tick(page);
+  await page.keyboard.press('q'); await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))); await tick(page);
   const weapons = await page.evaluate(() => window.__SS__!.getState().player!.weapons!);
   expect(weapons.selectedSide).toBe('RIGHT'); expect(weapons.RIGHT.index).toBe(1); expect(weapons.LEFT.index).toBe(0);
 });
@@ -149,11 +146,11 @@ test('T-E03-15-held @E03 @E03-AC15 held LMB target repeats and target death stop
   expect(Math.hypot((await position(page)).x - stopped.x, (await position(page)).z - stopped.z)).toBeLessThan(.01);
 });
 
-test('T-E03-17-pending @E03 @E03-AC15 @E03-AC17 wheel during target command waits for swap then attacks once', async ({ page }) => {
+test('T-E03-17-pending @E03 @E03-AC15 @E03-AC17 Q during target command waits for swap then attacks once', async ({ page }) => {
   await arena(page);
   const id = await page.evaluate(() => window.__SS__!.spawn('infected.dummy', { x: 1, z: 0 }, { hp: 1000 }));
   const target = await point(page, 1); await page.mouse.click(target.x, target.y);
-  await page.mouse.wheel(0, 120); await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
+  await page.keyboard.press('q'); await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
   await tick(page, 30);
   const events = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'));
   expect(events).toHaveLength(1); expect(events[0]).toMatchObject({ side: 'LEFT', actionId: 'weapon.pistol' });
@@ -188,4 +185,18 @@ test('T-E03-chord @E03 @E03-AC02 @E03-AC13 releasing LMB before RMB clears both 
   await page.mouse.up({ button: 'right' });
   const released = await tick(page); expect(released.right.up).toBe(true); expect(released.right.held).toBe(false); expect(released.left.held).toBe(false);
   const idle = await tick(page, 60); expect(idle.left).toEqual({ down: false, held: false, up: false }); expect(idle.right).toEqual({ down: false, held: false, up: false });
+});
+
+
+test('@E03-AC05 @E03-AC17 M1-05 numbers and HUD clicks select either rack; Shift never attacks',async({page})=>{
+  await arena(page);
+  await page.evaluate(()=>window.__SS__!.setLoadout(['weapon.bat','weapon.crowbar','weapon.machete'],['weapon.kick','weapon.fists','weapon.bat']));
+  await page.keyboard.press('3');await tick(page,20);
+  expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.index)).toBe(2);
+  await page.keyboard.press('Shift+2');const frame=await tick(page,20);expect(frame.right.down).toBe(false);
+  expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.RIGHT.index)).toBe(1);
+  await page.getByTestId('slot-LEFT').click();await tick(page,20);
+  expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.index)).toBe(0);
+  await page.getByTestId('slot-RIGHT').click();await tick(page,20);
+  expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.RIGHT.index)).toBe(2);
 });

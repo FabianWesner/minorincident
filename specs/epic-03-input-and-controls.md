@@ -29,9 +29,9 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | --- | --- | --- |
 | E03-AC01 | Mouse-only: moving the cursor anywhere aims toward it and produces zero `move`; movement requires an explicit ground click or held ground LMB | e2e (Playwright mouse) |
 | E03-AC02 | LMB and RMB map to `left` and `right` (`down`, `held`, `up` edges); the context menu never opens on the canvas | e2e |
-| E03-AC03 | Wheel up and down produce one `selector` edge per notch, with a 120 ms debounce for trackpads | e2e |
+| E03-AC03 | Wheel up/down zoom smoothly within 0.85–1.35× default camera distance and produce no `selector` edge; two-finger pinch zooms on touch | e2e |
 | E03-AC04 | WASD is camera-relative: with the default camera (azimuth π/4), `W` moves the player toward screen-up (the projected motion angle is within 5° of the screen's up vector) | e2e |
-| E03-AC05 | Keyboard: WASD moves camera-relative; `J` / `K` attack LEFT / RIGHT with the nearest visible infected in the facing half-plane as aim assist; `Q` cycles the last-used side; optional arrow aiming and Space/Shift mirrors remain available | e2e |
+| E03-AC05 | Keyboard: WASD moves camera-relative; `J` / `K` attack LEFT / RIGHT with the nearest visible infected in the facing half-plane as aim assist; `Q` cycles the last-used side; 1/2/3 select LEFT rack slots, Shift+1/2/3 select RIGHT; HUD slot clicks cycle their side; optional arrow aiming and the Space mirror remain available | e2e |
 | E03-AC06 | Touch (mobile emulation): dragging the left half creates a floating stick; a 60 px drag gives magnitude 1; releasing gives 0 within one tick | e2e (touch) |
 | E03-AC07 | Touch: LEFT and RIGHT taps attack with `aimSource='assist'`; press–drag–release aims and fires on release; a quick upward swipe (<250 ms, ≥40 px vertical >1.5× horizontal) cycles that button's side without attacking; a longer upward press–drag still aims | e2e (touch) |
 | E03-AC08 | Scheme switching: last device selects mouse (`mouse-only`), keyboard with cursor (`mouse-keyboard`), keyboard (`keyboard`), or mobile (`touch`); hints describe click-to-move, J/K aim assist, or LEFT/RIGHT/ACTION respectively | e2e |
@@ -43,11 +43,11 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E03-AC14 | Clicking ground shows a ground marker and walks to within 0.15 m then stops; a new click retargets; holding LMB on ground continuously updates the destination; releasing preserves the final destination; WASD or an attack cancels it | e2e (real mouse) |
 | E03-AC15 | LMB/RMB on a visible infected issues a LEFT/RIGHT attack: approach when outside that action's range, stop in range, then attack; held LMB repeats; dead/hidden targets cancel the command; an attack without a target never causes movement except an explicitly configured melee lunge | e2e (real mouse) |
 | E03-AC16 | RMB on ground attacks toward that point with RIGHT and cancels any pending destination; with a distant cursor and no movement input the survivor stays stationary | e2e (real mouse) |
-| E03-AC17 | Wheel cycles only the last-used attack side, including after an RMB target/ground click; ground LMB does not select LEFT; Q mirrors this; upward LEFT/RIGHT swipes explicitly select and cycle that side | e2e |
+| E03-AC17 | Q cycles only the last-used attack side, including after an RMB target/ground click; ground LMB does not select LEFT; number keys and HUD clicks explicitly select a rack side; upward LEFT/RIGHT swipes explicitly select and cycle that side | e2e |
 | E03-AC18 | Mobile HUD has exactly three gameplay buttons labelled LEFT, RIGHT, ACTION; ACTION is enabled only near an eligible interactable or while driving (exit). Pause stays separate; portrait HUD coverage ≤25%, no controls overlap, and touch targets ≥44 px (E14 retains ≥56 px) | e2e (touch/layout) |
 
 ## Verification recipe
 `npm run verify -- E03`. The e2e tests use real Playwright mouse, keyboard, and touch events (not `__SS__.input.set`) so the device adapters are exercised.
 
 ## Notes / risks
-On a weak mouse, holding RMB for long periods is tiring; holding a key mirrors it. Trackpad wheel deltas vary, which the debounce and threshold handle.
+On a weak mouse, holding RMB for long periods is tiring; holding a key mirrors it. M1-05 orchestrator decision: wheel/pinch control camera zoom; number keys, Q, HUD clicks and upward action-button swipes select weapons. Trackpad deltas retain a threshold and debounce.
