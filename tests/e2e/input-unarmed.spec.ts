@@ -31,7 +31,7 @@ test('@E03 @E03-AC19 Shift swings annoy adults harmlessly and pass through child
 
 test('@E03 @E03-AC20 seven unarmed moves play through real Shift LMB without moving', async ({ page }) => {
   await menuStart(page);
-  await page.evaluate(async () => { const a = window.__SS__!; a.pause(); await a.loadLevel('L1', { checkpoint: 'melee' }); a.teleport('player', { x: 70, z: -3 }); a.cheats.god(true); a.setLoadout(['weapon.fists'], ['weapon.fists']); await a.step(90); await a.screenshotReady(); });
+  await page.evaluate(async () => { const a = window.__SS__!; a.pause(); await a.loadLevel('L1', { checkpoint: 'accident' }); a.teleport('player', { x: 70, z: -3 }); a.cheats.god(true); a.setLoadout(['weapon.fists'], ['weapon.fists']); await a.step(90); await a.screenshotReady(); });
   const start = await page.evaluate(() => window.__SS__!.getState().player!.transform);
   const cursor = await page.evaluate(p => window.__SS__!.input.project({ x: p.x + 5, z: p.z }), start);
   await page.mouse.move(cursor.x, cursor.y); await page.keyboard.down('Shift');
@@ -57,7 +57,7 @@ test('@E03 @E03-AC20 seven unarmed moves play through real Shift LMB without mov
 test('@E03 @E03-AC21 mouse HUD shows active and next and L1 hints describe switching', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('minor-incident.onboarding.v1', JSON.stringify(['move', 'evade', 'interact', 'pickup'])));
   await menuStart(page);
-  await page.evaluate(async () => { const a = window.__SS__!; a.pause(); await a.loadLevel('L1', { checkpoint: 'melee' }); a.setLoadout(['weapon.fists'], ['weapon.bat']); });
+  await page.evaluate(async () => { const a = window.__SS__!; a.pause(); await a.loadLevel('L1', { checkpoint: 'accident' }); a.setLoadout(['weapon.fists'], ['weapon.bat']); });
   await page.mouse.move(800, 450); await tick(page, 1);
   await expect(page.getByTestId('onboarding-prompt')).toBeVisible();
   await expect(page.getByTestId('onboarding-prompt')).toContainText('Shift+LMB in place');

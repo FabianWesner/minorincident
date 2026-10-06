@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { devices } from '@playwright/test';
 import { test, expect } from '../e2e/fixtures';
 import { menuStart } from '../e2e/ui-helpers';
@@ -24,21 +24,11 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
       prototype.linkProgram = function(program) { const start = performance.now(); link.call(this, program); if (window.hitchRecording && !window.hitchRecording.stopped) window.hitchGlCalls!.push({ call: 'linkProgram', ms: performance.now() - start, tick: window.__SS__!.tick(), stack: new Error().stack ?? '' }); };
     });
     await menuStart(page); await page.evaluate(() => { window.__SS__!.pause(); window.__SS__!.cheats.god(true); });
-    // Real ground clicks walk the approach; paused setup does not enter the transition under test.
-    const walk = async (x: number, z: number) => {
-      for (let i = 0; i < 160; i++) {
-        const p = await page.evaluate(() => window.__SS__!.getState().player!.transform);
-        const d = Math.hypot(x - p.x, z - p.z); if (d < .7) return;
-        const point = await page.evaluate(p => window.__SS__!.input.project(p), { x: p.x + (x - p.x) / d * Math.min(3, d), z: p.z + (z - p.z) / d * Math.min(3, d) });
-        await page.mouse.click(point.x, point.y); await page.evaluate(() => window.__SS__!.step(24));
-      }
-      throw new Error(`Walk failed ${x},${z}`);
-    };
     const cdp = await context.newCDPSession(page);
     const samples: Record<string, { max: number; frames: Frame[]; glCalls?: GlCall[] }> = {};
     const measure = async (label: string, action: () => Promise<unknown>, duration: number) => {
       console.log(`${phase} ${mode} measuring ${label}`);
-      if (process.env.HITCH_CPU_PROFILE === '1' && label === 'diner') { await cdp.send('Profiler.enable'); await cdp.send('Profiler.start'); }
+      if (process.env.HITCH_CPU_PROFILE === '1' && label === 'pickup') { await cdp.send('Profiler.enable'); await cdp.send('Profiler.start'); }
       await cdp.send('Tracing.start', { categories: 'devtools.timeline,v8,blink.user_timing,disabled-by-default-devtools.timeline', transferMode: 'ReturnAsStream' });
       await page.evaluate(async () => {
         const h: Recording = { frames: [], stopped: false, previous: 0 }; window.hitchRecording = h;
@@ -48,7 +38,7 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
       });
       await action(); await page.waitForTimeout(duration);
       const frames = await page.evaluate(() => { const h = window.hitchRecording!; h.stopped = true; window.__SS__!.pause(); return h.frames; });
-      if (process.env.HITCH_CPU_PROFILE === '1' && label === 'diner') { const profile = await cdp.send('Profiler.stop'); writeFileSync(`${output}/${phase}-${mode}-cpu-profile.json`, JSON.stringify(profile)); }
+      if (process.env.HITCH_CPU_PROFILE === '1' && label === 'pickup') { const profile = await cdp.send('Profiler.stop'); writeFileSync(`${output}/${phase}-${mode}-cpu-profile.json`, JSON.stringify(profile)); }
       samples[label] = { max: Math.max(...frames.map(f => f.ms)), frames, glCalls: await page.evaluate(() => window.hitchGlCalls!.splice(0)) };
       writeFileSync(`${output}/${phase}-${mode}-samples.json`, JSON.stringify(samples, null, 2));
       console.log(`${phase} ${mode} ${label} max=${samples[label].max.toFixed(1)}ms`);
@@ -58,53 +48,32 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
       await cdp.send('IO.close', { handle: stream });
       writeFileSync(`${output}/${phase}-${mode}-${label}-trace.json`, trace);
     };
-    const walkLive = async (x: number, z: number) => {
-      for (let i = 0; i < 50; i++) {
-        const p = await page.evaluate(() => window.__SS__!.getState().player!.transform), d = Math.hypot(x - p.x, z - p.z);
-        if (d < .7) return;
-        const point = await page.evaluate(p => window.__SS__!.input.project(p), { x: p.x + (x - p.x) / d * Math.min(2, d), z: p.z + (z - p.z) / d * Math.min(2, d) });
-        await page.mouse.click(point.x, point.y); await page.waitForTimeout(180);
-      }
-      throw new Error(`Live walk failed ${x},${z}`);
-    };
-    await walk(-14, -4); await walk(0, 0); await walk(42, 0);
+    // Anchors come from the layout; setup teleports (paused, outside any measurement) put the player at each transition.
+    const layout = JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as { anchors: Record<string, { position: number[] }> };
+    const at = (name: string) => ({ x: layout.anchors[name].position[0], z: layout.anchors[name].position[2] });
+    const place = (name: string) => page.evaluate(p => { window.__SS__!.teleport('player', p); return window.__SS__!.step(1); }, at(name));
+    const interact = async () => { await page.keyboard.down('e'); await page.waitForTimeout(120); await page.keyboard.up('e'); };
     const loading = await page.evaluate(() => ({ ...window.__SS__!.perf().loadTiming, warmUp: performance.getEntriesByType('measure').filter(e => e.name.startsWith('L1 ')).map(e => ({ name: e.name, ms: e.duration })) }));
     console.log(`${phase} ${mode} loading ${JSON.stringify(loading)}`);
-    await measure('diner', () => walkLive(42, -6.5), 15_000);
-    expect(await page.evaluate(() => window.__SS__!.missions.state()!.completedObjectives)).toContain('breakfast');
-    if (process.env.HITCH_DINER_ONLY === '1') return;
-    // Moving cameras must keep rendering through the swap, rather than silently pausing for loading.
-    expect(new Set(samples.diner.frames.map(f => f.tick)).size).toBeGreaterThan(100);
-    await walk(42, 0); await walk(70, 0);
-    await measure('hardware', () => walkLive(70, -7), 1_500);
-    expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('melee');
-    await page.getByTestId('choose-bat').click();
-    await measure('weapon-pickup-store-spawn', () => page.keyboard.press('f'), 4_000);
+    // Objective transitions of L1 v2: pickup, delivery hand-over, the accident (flicker, blast, smoke, screams), the infected exit,
+    // the bat pickup, death/respawn from the accident checkpoint, and the fire-station shutter with the end caption.
+    await place('parcel-counter'); await measure('pickup', interact, 2_500);
+    expect(await page.evaluate(() => window.__SS__!.missions.state()!.completedObjectives)).toContain('pickup');
+    await place('lab-door');
+    await measure('handover', interact, 16_000);
+    expect(await page.evaluate(() => window.__SS__!.missions.state()!.l1!.delivered)).toBe(true);
+    await measure('accident', () => page.waitForFunction(() => window.__SS__!.events().some(e => e.type === 'l1.screams'), undefined, { timeout: 20_000 }), 1_500);
+    await measure('infected-exit', () => page.waitForFunction(() => window.__SS__!.missions.state()!.l1!.exitIds.length === 5, undefined, { timeout: 20_000 }), 4_000);
+    await place('garage-door');
+    await page.evaluate(() => window.__SS__!.cheats.completeObjective('escape'));
+    await place('garage-bat'); await measure('weapon-pickup', interact, 3_000);
     expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.bat');
-    await measure('store-fight', async () => {
-      for (let i = 0; i < 80; i++) {
-        const point = await page.evaluate(() => {
-          const a = window.__SS__!, p = a.getState().player!.transform;
-          const target = a.query({ kind: 'infected' }).filter(e => e.health.current > 0).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
-          if (!target) return null;
-          const q = a.input.project(target.transform), d = Math.hypot(target.transform.x - p.x, target.transform.z - p.z);
-          if (q.x > 20 && q.y > 20 && q.x < innerWidth - 20 && q.y < innerHeight - 20 && !document.elementFromPoint(q.x, q.y)?.closest('.hud-tracker,.hud-map,.hud-vitals,.menus')) return q;
-          return a.input.project({ x: p.x + (target.transform.x - p.x) / d * Math.min(2, d), z: p.z + (target.transform.z - p.z) / d * Math.min(2, d) });
-        });
-        if (!point) break;
-        await page.mouse.move(point.x, point.y); await page.mouse.down(); await page.waitForTimeout(350); await page.mouse.up();
-        if (await page.evaluate(() => window.__SS__!.events().some(e => e.type === 'combat.hit' && e.sourceId === 1))) break;
-      }
-    }, 1_000);
-    expect(await page.evaluate(() => window.__SS__!.events().some(e => e.type === 'combat.hit' && e.sourceId === 1))).toBe(true);
     await measure('death-respawn', () => page.evaluate(() => window.__SS__!.survivor.damage(100)), 3_500);
     expect(await page.evaluate(() => window.__SS__!.getState().player!.health.current)).toBeGreaterThan(0);
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.stats.deaths)).toBe(1);
-    await measure('end-screen', () => page.evaluate(() => window.__SS__!.cheats.completeObjective('store-fight')), 1_000);
-    await expect(page.getByTestId('mission-heading')).toHaveText('Milestone 1 complete — thanks for playing');
-    // Restart also switches W1 back to its already prepared W0 presentation.
-    await measure('restart', () => page.getByRole('button', { name: 'Restart', exact: true }).click(), 1_000);
-    expect(await page.evaluate(() => window.__SS__!.missions.state()!.completedObjectives)).toEqual([]);
+    await place('fire-bay-trigger');
+    await measure('fire-station-end', () => page.evaluate(() => window.__SS__!.step(2)), 9_000);
+    await expect(page.getByTestId('mission-heading')).toHaveText('Delivery complete. Outbreak: not contained.');
     const proof = await page.evaluate(() => { const a = window.__SS__!, gl = document.querySelector('canvas')!.getContext('webgl2')!, ext = gl.getExtension('WEBGL_debug_renderer_info'); return { gpu: ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) as string : null, mission: a.missions.state(), perf: a.perf() }; });
     writeFileSync(`${output}/${phase}-${mode}.json`, JSON.stringify({ samples, loading, ...proof }, null, 2));
     expect(proof.gpu).not.toMatch(/swiftshader|llvmpipe|software/i);
