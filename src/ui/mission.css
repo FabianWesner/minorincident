@@ -31,3 +31,8 @@ body.touch-ui .slice-choices button{font-size:14px;padding:8px}
 .full-ui .mission-panel button{background:#ffcf77;color:#172131}
 .full-ui:has(.mission-panel:not([hidden])) [data-touch-controls],.full-ui:has(.mission-panel:not([hidden])) [data-touch-stick]{display:none!important}
 @media(orientation:landscape){.full-ui.touch-ui .slice-choices{left:calc(50% + 12px);top:148px;width:min(280px,calc(50vw - 24px))}}
+
+/* Objective changes share the compact header, above all movement/action controls. */
+.mission-tracker{max-width:min(340px,calc(100vw - 165px));padding:6px 10px;font-size:14px;line-height:1.3;background:#18233370;border-width:1px;border-left-width:3px;border-radius:8px;box-shadow:none;text-shadow:0 1px 3px #101824}
+.mission-toast{top:158px;bottom:auto;left:24px;transform:none;max-width:340px;padding:6px 10px;background:#18233399;border-radius:8px;font-size:13px;box-shadow:none}
+@media(max-width:600px){.mission-tracker{top:106px;left:12px;max-width:calc(100vw - 132px);padding:5px 8px;font-size:12px}.mission-toast{top:186px;left:12px;width:auto;max-width:calc(100vw - 24px);font-size:12px}.mission-minimap{top:16px;right:12px;width:76px;height:76px}}

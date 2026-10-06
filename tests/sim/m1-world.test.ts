@@ -149,3 +149,12 @@ test('@E19 M1-07 visibility sweeps thin corners between samples and allows only 
   expect(nav.visible(corner, { x: 1, z: -1 }, .35)).toBe(true);
   expect(nav.visible(corner, { x: 3, z: 0 }, .35)).toBe(false);
 });
+
+test('@E19 VQA-08 combat spacing still lets broad armored fighters enter melee range', async () => {
+  await slice(); teleport(0, 0);
+  const id = world.infected!.spawn('infected.armored', { x: 2, z: 0 }, { state: 'chase' });
+  step(240);
+  expect(world.events.events().some(e => e.type === 'infected.attack' && e.sourceId === id)).toBe(true);
+  const p = world.entities.get(1)!.transform, enemy = world.entities.get(id)!;
+  expect(Math.hypot(p.x - enemy.transform.x, p.z - enemy.transform.z)).toBeGreaterThanOrEqual(.85);
+});

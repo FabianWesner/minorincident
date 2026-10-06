@@ -1,5 +1,5 @@
 import { readFileSync, readdirSync } from 'node:fs';
-import { AnimationMixer, Box3, Matrix4, Vector3, type AnimationAction } from 'three';
+import { AnimationMixer, Box3, Matrix4, Mesh, Vector3, type AnimationAction } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { expect, test, vi } from 'vitest';
@@ -170,4 +170,26 @@ test('M1-23 @E19 infection collapse and rise share a low pose, then rise into in
   expect(Array.from({ length: eyes.count }, (_, i) => eyes.getX(i)).filter(v => v > 0).length).toBeGreaterThan(0);
   expect(Array.from({ length: skin.count }, (_, i) => skin.getX(i)).filter(v => v < 0).length).toBeGreaterThan(0);
   baked.geometry.dispose();
+});
+
+test('VQA-13 @E19 settled infected death poses contact the floor across delivered rigs', async () => {
+  for (const id of readdirSync('assets').filter(id => id.startsWith('inf.') && id !== 'inf.corpse-poses')) {
+    const { scene } = await model(`public/assets/models/${id}.glb`);
+    if (!scene.getObjectByName('hip')) continue;
+    for (const name of ['death-back', 'death-side', 'death-crumple']) {
+      sampleClip(scene, name, authoredClips.get(name)!.duration);
+      const bounds = new Box3();
+      scene.traverse(node => {
+        if (!(node instanceof Mesh)) return;
+        for (let parent: import('three').Object3D | null = node; parent; parent = parent.parent) if (!parent.visible || parent.name.startsWith('stump_')) return;
+        node.geometry.computeBoundingBox();
+        bounds.union(node.geometry.boundingBox!.clone().applyMatrix4(node.matrixWorld));
+      });
+      expect(bounds.min.y, `${id} ${name} ground contact`).toBeCloseTo(.015, 3);
+      if (id === 'inf.common-worker' && name === 'death-back') {
+        for (const part of ['handL', 'handR']) expect(scene.getObjectByName(part)!.getWorldPosition(new Vector3()).y, `${part} rests beside body`).toBeLessThan(.6);
+        for (const part of ['footL', 'footR']) expect(scene.getObjectByName(part)!.getWorldPosition(new Vector3()).y, `${part} rests low`).toBeLessThan(.25);
+      }
+    }
+  }
 });

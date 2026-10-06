@@ -4,6 +4,8 @@ import { SimPhase } from '../../core/EventBus';
 
 function radius(e: EntitySnapshot): number {
   if (e.infectionRise || e.hidden || e.health.current <= 0 || e.attachedTo !== undefined || (e.infected && (e.infected.hidden || e.transform.y > 2)) || e.companion?.state === 'hide' || e.civilian?.state === 'down' || e.civilian?.state === 'rising') return 0;
+  if (e.companion) return .65;
+  if (e.civilian?.pet) return .5;
   return e.survivor || e.companion || e.escort || (e.civilian && e.civilian.state !== 'infected' && e.civilian.state !== 'finished') || e.infected ? e.combat?.radius ?? .35 : 0;
 }
 /** Resolve body circles against the same static geometry as steering, after physics.
@@ -22,7 +24,9 @@ export function installCharacterSeparation(world: SimWorld): void {
         const other = world.entities.get(id); if (!other || other === e) continue;
         if (e.companion && !e.companion.following && e.companion.state === 'follow' && !other.survivor) continue;
         const otherRadius = radius(other); if (!otherRadius) continue;
-        const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, distance = Math.hypot(dx, dz), overlap = r + otherRadius + .015 - distance;
+        // Larger fighters still need to enter their authored melee/grab range.
+        const gap = e.infected || other.infected ? Math.max(.015, Math.min(.3, 1.05 - r - otherRadius)) : .015;
+        const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, distance = Math.hypot(dx, dz), overlap = r + otherRadius + gap - distance;
         if (overlap <= .001) continue;
         const angle = e.id * 2.399963, scale = other.survivor || other.civilian?.state === 'grabbed' || (other.companion && !other.companion.following && other.companion.state === 'follow') ? 1 : .5;
         nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, r);
