@@ -32,6 +32,8 @@ import type { TimeOfDay } from '../data/timeOfDay';
 import { Vector3 } from 'three';
 import { VehicleFeedback } from './vfx/VehicleFeedback';
 import { Vfx, type VfxSettings } from './vfx/Vfx';
+import { LabAccidentFx } from './vfx/labAccident';
+import { labAccidentTargets, anchorLookup } from './vfx/labAccidentView';
 import { DistrictAssets } from '../assets/DistrictAssets';
 import { Grass, windPhase } from './Grass';
 import { DistrictView } from './DistrictView';
@@ -62,6 +64,7 @@ export class GameView implements Lifecycle {
   private interactions: InteractionView | null = null;
   private entityAssets: EntityAssets | null = null;
   vfx: Vfx | null = null;
+  private labAccident: LabAccidentFx | null = null;
   private vehicleFeedback: VehicleFeedback | null = null;
   private readonly vfxSettings: VfxSettings = {};
   private hitStopTick = 0;
@@ -204,6 +207,7 @@ export class GameView implements Lifecycle {
         shake: strength => this.view.shake(strength),
       });
       this.vfx.set({ ...this.vfxSettings, quality: this.quality }); this.scene.add(this.vfx);
+      if (this.world.scenario === 'L1') { this.labAccident = new LabAccidentFx(this.world, this.vfx, labAccidentTargets(this.scene, s => this.view.shake(s)), anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; }
       this.crowd?.setGoreEnabled(this.vfx.snapshot().enabled && this.vfx.snapshot().gore === 'Full');
       const survivor = this.world.entities.get(1)?.survivor;
       this.frozenPose = survivor ? structuredClone(survivor) : null;
@@ -221,7 +225,7 @@ export class GameView implements Lifecycle {
       this.lighting?.update(this.view);
       // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
-      const restore = this.vfx?.prewarm(focus.x, focus.z);
+      const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
       try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), () => this.postFx ? this.postFx.compile() : this.renderer.compileAsync(this.scene, this.camera)); }
       finally { restore?.(); }
     } else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
@@ -237,7 +241,7 @@ export class GameView implements Lifecycle {
     return true;
   }
   /** Real render seconds, deliberately independent of sim ticks/time scale. */
-  frame(seconds: number): void { this.vfx?.advance(Math.min(1, seconds)); }
+  frame(seconds: number): void { const dt = Math.min(1, seconds); this.vfx?.advance(dt); this.labAccident?.advance(dt); }
   advance(seconds: number): void {
     this.districts?.advance(seconds);
     const player = this.world.entities.get(1);
@@ -299,7 +303,7 @@ export class GameView implements Lifecycle {
     if (patch.colorblind !== undefined) this.vfxSettings.colorblind = patch.colorblind;
     if (patch.vfx !== undefined) this.vfxSettings.vfx = patch.vfx;
     if (patch.gore !== undefined) this.vfxSettings.gore = patch.gore;
-    if (patch.flashReduction !== undefined) this.vfxSettings.flashReduction = patch.flashReduction;
+    if (patch.flashReduction !== undefined) { this.vfxSettings.flashReduction = patch.flashReduction; if (this.labAccident) this.labAccident.flashReduction = patch.flashReduction; }
     if (patch.quality !== undefined) this.vfxSettings.quality = patch.quality;
     if (patch.cameraShake !== undefined) { this.view.cameraShake = patch.cameraShake; this.advance(0); }
     if (patch.bloom !== undefined && this.postFx) this.postFx.bloomEnabled.value = Number(patch.bloom);
@@ -431,6 +435,7 @@ export class GameView implements Lifecycle {
   reset(): void {
     this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;
     if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }
+    this.labAccident?.dispose(); this.labAccident = null;
     if (this.vfx) { this.scene.remove(this.vfx); this.vfx.dispose(); this.vfx = null; }
     if (this.vehicleFeedback) { this.scene.remove(this.vehicleFeedback); this.vehicleFeedback.dispose(); this.vehicleFeedback = null; }
     this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;}
