@@ -16,7 +16,7 @@ copyright 2025 Bruno Simon):
 | `Ticker.js` | `src/core/Ticker.ts` — render ticker, with a separate fixed sim clock |
 | `Physics/Physics.js` | `src/physics/Physics.ts` — Rapier service, fixed timestep and disposal |
 | `Physics/PhysicsWireframe.js` | `src/render/PhysicsWireframe.ts` — debug collider buffers |
-| `Debug.js` | `src/debug/Debug.ts` — dev-only Tweakpane |
+| `Debug.js` | `src/debug/Debug.ts` — query-gated Tweakpane, including production look tuning |
 | `Materials/MeshGridMaterial.js` | `src/render/MeshGridMaterial.ts` — trimmed XZ grid shader |
 | `ResourcesLoader.js` | `src/assets/registry.ts` — promise cache and loaders |
 | `Materials.js` | `src/assets/materials.ts` — material swap by name |
