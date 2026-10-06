@@ -126,5 +126,54 @@
       "confirmedBaselineFailures": 2
     },
     "fullE19Browser": "interrupted; deferred by orchestrator; not claimed passing"
+  },
+  "mainIntegration": {
+    "mergeCommit": "b652fa7",
+    "mainCommit": "bc7e801",
+    "animationClips": 51,
+    "devices": {
+      "desktop": {
+        "maxFrameMs": {
+          "diner": 24.7,
+          "hardware": 18.5,
+          "weapon-pickup-store-spawn": 22.7,
+          "store-fight": 19.2,
+          "death-respawn": 23.5,
+          "end-screen": 17.5,
+          "restart": 18.2
+        },
+        "lateShaderCalls": {
+          "diner": 0,
+          "hardware": 0,
+          "weapon-pickup-store-spawn": 0,
+          "store-fight": 0,
+          "death-respawn": 0,
+          "end-screen": 0,
+          "restart": 0
+        },
+        "loadingMs": 17857.9
+      },
+      "mobile": {
+        "maxFrameMs": {
+          "diner": 22.6,
+          "hardware": 18.1,
+          "weapon-pickup-store-spawn": 20.8,
+          "store-fight": 18.7,
+          "death-respawn": 18.9,
+          "end-screen": 18.3,
+          "restart": 18.5
+        },
+        "lateShaderCalls": {
+          "diner": 0,
+          "hardware": 0,
+          "weapon-pickup-store-spawn": 0,
+          "store-fight": 0,
+          "death-respawn": 0,
+          "end-screen": 0,
+          "restart": 0
+        },
+        "loadingMs": 23366.5
+      }
+    }
   }
 }

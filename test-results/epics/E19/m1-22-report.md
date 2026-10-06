@@ -29,3 +29,11 @@ An earlier overloaded run hit three simulation timeouts. Those passed an isolate
 A broader E19 browser run was interrupted by the scheduler time limit. Before interruption it observed a mobile triangle-budget assertion (519538 versus 500000), desktop playthrough death count, crowbar middle-click pickup, and desktop animation failures. These were not independently classified as baseline. The orchestrator explicitly removed the full E19 suite from the resumed scope and handles those checks elsewhere; this report does not claim that suite passed.
 
 Raw CDP traces and per-frame samples remain locally in `hitch/`; the committed lightweight maxima are in `m1-22-frame-maxima.json`.
+
+## Main integration — bc7e801
+
+Merged main once in `b652fa7`. Resolved ActionView, GameView, PaletteMaterial and PostFx by retaining lane district/pipeline prewarming together with main's shared look controls, palette detail, asset materials and low-quality DOF. The mission test resolution retains both prepared-district/restart coverage and main's M1-23/M1-24 outbreak checks.
+
+Regenerated `assets/animation-library/library.glb` with `assets/animation-library/build.py`, then regenerated `src/render/characters/library.json` using `tools/assets/animation-library.ts`. The reproducible outputs contain all 51 main clips (48+3) and all 48 lane clips; the lane set is a subset of main. Outputs match main's generated assets; no binary hand merge was used.
+
+Post-merge typecheck and lint pass. All 181 unit tests pass across 59 files with two workers. The first run hit the existing asset-inventory 120-second timeout while concurrent animation exports were active; the full retry passes at the unchanged timeout. Smoke passes three simulation checks and all 22 browser checks. The one focused production browser file passes both desktop and mobile tests with all fourteen windows below 50 ms: desktop maximum 24.7 ms; mobile maximum 22.6 ms. Per-window integration measurements and late shader calls are recorded in `m1-22-frame-maxima.json`; fresh raw samples and CDP traces remain in `hitch/`. Browser runs use the shared lock and port 3344. The broad E19 suite was excluded as instructed; earlier baseline classifications remain historical.
