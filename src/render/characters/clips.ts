@@ -50,7 +50,70 @@ export function retargetClip(root: Object3D, name: string, additive = false): An
       }
     }
   }
+  if (!additive && /^(walk|run|npc-walk|npc-walk-relaxed)$/.test(name)) plantLocomotion(root, name, source.duration, tracks);
   return new AnimationClip(name, source.duration, tracks);
+}
+
+/** Bake flat-ground support into target-specific tracks. The authored pelvis keeps
+ * its weight shift/counter-rotation; each rig's actual limb lengths determine the
+ * knee arc. Stance travels backwards by exactly the runtime full-cycle distance. */
+function plantLocomotion(root: Object3D, name: string, duration: number, tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[]): void {
+  const hip = root.getObjectByName('hip');
+  if (!hip) return;
+  const hipTrack = tracks.find(t => t.name === 'hip.position')!;
+  const position = hipTrack.InterpolantFactoryMethodLinear();
+  const rotation = tracks.find(t => t.name === 'hip.quaternion')!.InterpolantFactoryMethodLinear();
+  const stance = name === 'run' ? .5 : .6, stride = strides[name];
+  const footTarget = (phase: number): Vector3 => {
+    if (phase <= stance) return new Vector3(stride * (stance / 2 - phase), 0, 0);
+    const t = (phase - stance) / (1 - stance);
+    // Match the backward stance velocity at toe-off and heel contact.
+    const smooth = t * t * (3 - 2 * t) - (1 - stance) / stance * (2 * t * t * t - 3 * t * t + t);
+    return new Vector3(stride * stance * (smooth - .5), Math.sin(Math.PI * t) ** 2 * (name === 'run' ? .085 : .055), 0);
+  };
+  // Lower the mean pelvis only as far as this rig requires for a softly bent
+  // support knee. Clamping an unreachable ankle would turn support into sliding.
+  let lowering = 0;
+  for (const [side, offset] of [['L', 0], ['R', .5]] as const) {
+    const leg = root.getObjectByName(`leg${side}`), shin = root.getObjectByName(`shin${side}`), foot = root.getObjectByName(`foot${side}`);
+    if (!leg || !shin || !foot) continue;
+    const ankle = hip.position.clone().add(leg.position).add(shin.position).add(foot.position);
+    const reach = (shin.position.length() + foot.position.length()) * .98;
+    for (let i = 0; i <= 120; i++) {
+      const hq = new Quaternion().fromArray(rotation.evaluate(i / 120 * duration)).normalize();
+      const hp = new Vector3().fromArray(position.evaluate(i / 120 * duration));
+      const target = ankle.clone().add(footTarget((i / 120 + offset) % 1)).sub(hp).sub(leg.position.clone().applyQuaternion(hq));
+      lowering = Math.max(lowering, -target.y - Math.sqrt(Math.max(0, reach * reach - target.x * target.x - target.z * target.z)));
+    }
+  }
+  for (let i = 1; i < hipTrack.values.length; i += 3) hipTrack.values[i] -= lowering;
+  for (const [side, offset] of [['L', 0], ['R', .5]] as const) {
+    const leg = root.getObjectByName(`leg${side}`), shin = root.getObjectByName(`shin${side}`), foot = root.getObjectByName(`foot${side}`);
+    if (!leg || !shin || !foot) continue;
+    const ankle = hip.position.clone().add(leg.position).add(shin.position).add(foot.position);
+    const a = shin.position.length(), b = foot.position.length();
+    const times: number[] = [], thighValues: number[] = [], shinValues: number[] = [], footValues: number[] = [];
+    for (let i = 0, frames = Math.round(duration * 120); i <= frames; i++) {
+      const time = i / frames * duration, phase = (i / frames + offset) % 1;
+      const hq = new Quaternion().fromArray(rotation.evaluate(time)).normalize();
+      const hp = new Vector3().fromArray(position.evaluate(time));
+      const target = ankle.clone().add(footTarget(phase)).sub(hp).applyQuaternion(hq.clone().invert()).sub(leg.position);
+      const d = Math.min(a + b - .0001, target.length()), axis = target.clone().normalize();
+      const along = (a * a + d * d - b * b) / (2 * d);
+      const bend = new Vector3(1, 0, 0).applyQuaternion(hq.clone().invert());
+      bend.addScaledVector(axis, -bend.dot(axis)).normalize();
+      const knee = axis.clone().multiplyScalar(along).addScaledVector(bend, Math.sqrt(Math.max(0, a * a - along * along)));
+      const thigh = new Quaternion().setFromUnitVectors(shin.position.clone().normalize(), knee.clone().normalize());
+      const lower = axis.multiplyScalar(d).sub(knee).applyQuaternion(thigh.clone().invert());
+      const sq = new Quaternion().setFromUnitVectors(foot.position.clone().normalize(), lower.normalize());
+      const fq = hq.clone().multiply(thigh).multiply(sq).invert().multiply(foot.quaternion);
+      times.push(time); thigh.toArray(thighValues, thighValues.length); sq.toArray(shinValues, shinValues.length); fq.toArray(footValues, footValues.length);
+    }
+    for (const [node, values] of [[leg, thighValues], [shin, shinValues], [foot, footValues]] as const) {
+      const index = tracks.findIndex(t => t.name === `${node.name}.quaternion`);
+      tracks[index] = new QuaternionKeyframeTrack(`${node.name}.quaternion`, times, values);
+    }
+  }
 }
 
 /** Deterministic sampler for crowd baking; reset actions to avoid accumulating poses. */
