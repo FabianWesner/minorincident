@@ -15,6 +15,15 @@ export class ControlIntent {
   reset(): void { this.route.path.length = 0; this.route.goal = -1; this.moveTarget = null; this.attack = null; }
   resolve(raw: InputFrame): InputFrame {
     const player = this.world.entities.get(1)!;
+    if (raw.mouseAttack && player.weapons && !raw.pointerGround) {
+      const side = player.weapons.selectedSide;
+      raw = { ...raw, left: side === 'LEFT' ? { ...raw.left } : { down: false, held: false, up: false }, right: side === 'RIGHT' ? { ...raw.left } : { down: false, held: false, up: false },
+        ...(raw.attackTarget ? { attackTarget: { ...raw.attackTarget, side } } : {}) };
+    }
+    if (raw.attackInPlace || Object.values(this.world.combat?.runner.running ?? {}).some(attack => attack.inPlace && this.world.tick < attack.endsAt)) {
+      this.reset(); this.world.player?.locomotion.reset();
+      return { ...raw, attackInPlace: true, move: { x: 0, z: 0 } };
+    }
     if (raw.cancelMove || Math.hypot(raw.move.x, raw.move.z) > 0 || raw.interact || (!raw.attackTarget && !raw.pointerGround && (raw.left.down || raw.right.down))) this.reset();
     if (this.world.vehicles?.active != null || player.health.current <= 0) { this.reset(); return raw; }
     if (raw.moveTarget) {
@@ -24,7 +33,7 @@ export class ControlIntent {
       this.moveTarget = point ? { x: point[0], z: point[1] } : { ...raw.moveTarget }; this.attack = null;
     }
     if (raw.attackTarget) { this.attack = { ...raw.attackTarget, started: false }; this.moveTarget = null; }
-    if (!this.moveTarget && !this.attack && !raw.pointerGround && raw.aimSource !== 'assist') return raw;
+    if (!this.moveTarget && !this.attack && !raw.pointerGround && !raw.pointerTarget && raw.aimSource !== 'assist') return raw;
     const frame: InputFrame = { ...raw, move: { ...raw.move }, left: { ...raw.left }, right: { ...raw.right } };
     if (raw.pointerGround) frame.left = { down: false, held: false, up: raw.left.up };
     const combat = player.weapons ? this.world.combat : null, attack = this.attack;
@@ -49,6 +58,7 @@ export class ControlIntent {
         }
       }
     }
+    if (raw.pointerTarget && !this.attack) { frame.left.down = frame.left.held = false; frame.right.down = frame.right.held = false; }
     if (this.moveTarget) {
       const distance = Math.hypot(this.moveTarget.x - player.transform.x, this.moveTarget.z - player.transform.z);
       if (distance <= .08) { this.moveTarget = null; this.world.player?.locomotion.reset(); }
@@ -64,11 +74,29 @@ export class ControlIntent {
   }
   private walk(frame: InputFrame, target: Vec2, remaining: number): void {
     const p = this.world.entities.get(1)!.transform, nav = this.world.infected?.nav;
-    if (nav && !nav.steer(p, target, this.route, survivor.radius + .02, this.waypoint)) { frame.move.x = frame.move.z = 0; return; }
+    if (nav && !nav.steer(p, target, this.route, survivor.radius + .02, this.waypoint)) {
+      // Grid paths omit their starting cell; reconnect from its safe center.
+      const cell = nav.nearestCell(p.x, p.z);
+      if (cell < 0) { frame.move.x = frame.move.z = 0; return; }
+      this.waypoint.x = nav.x(cell); this.waypoint.z = nav.z(cell);
+    }
     const destination = nav ? this.waypoint : target, dx = destination.x - p.x, dz = destination.z - p.z, distance = Math.hypot(dx, dz);
     if (distance < .02) { frame.move.x = frame.move.z = 0; return; }
     // Slow near arrival; the controller remains responsible for acceleration and collision.
     const speed = Math.min(1, remaining / .5, remaining / (survivor.speed / 60));
     frame.move.x = dx / distance * speed; frame.move.z = dz / distance * speed;
+    // Match the grid's corner clearance before Rapier performs the actual sweep.
+    if (nav) {
+      const next = { x: p.x, z: p.z }, step = survivor.speed / 60;
+      nav.move(next, frame.move.x * step, frame.move.z * step, survivor.radius + .02);
+      frame.move.x = (next.x - p.x) / step; frame.move.z = (next.z - p.z) / step;
+    }
+    // Keep acceleration along the routed step instead of coasting sideways into a corner.
+    const velocity = this.world.player?.locomotion.velocity;
+    if (velocity) {
+      const length = Math.hypot(frame.move.x, frame.move.z);
+      const forward = length ? Math.max(0, (velocity.x * frame.move.x + velocity.z * frame.move.z) / length) : 0;
+      velocity.x = length ? frame.move.x / length * forward : 0; velocity.z = length ? frame.move.z / length * forward : 0;
+    }
   }
 }

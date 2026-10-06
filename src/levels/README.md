@@ -24,7 +24,7 @@ The choice is not a permanent progression unlock.
 
 The morning starts without a `weapons` component; Combat's internal runner is
 inactive, and its held assets and aim indicators are hidden. At the incident the
-survivor can use LEFT fists and RIGHT kick while seeking a better hardware weapon. Death restores the mission,
+survivor can use varied unarmed attacks while seeking a better hardware weapon; LMB attacks, Shift+LMB swings in place and RMB cycles carried actions. Death restores the mission,
 entity store and infected brains together, retaining the picked weapon and resetting
 its ready timer. Restart returns to the unarmed morning snapshot. The result panel
 ends here rather than entering upgrades or another level.
