@@ -60,7 +60,9 @@ test('@E16 recorded diner incident and store fight: live PCM tap, streaming, mix
     await page.getByTestId('character-female').click();
     await page.getByTestId('level-L1').click();
     await page.getByRole('button', { name: 'Begin mission' }).click();
-    await page.evaluate(() => { window.__SS__!.cheats.god(true); });
+    await page.evaluate(() => { window.__SS__!.cheats.god(true); window.__SS__!.resume(); });
+    const firstTick = await page.evaluate(() => window.__SS__!.tick());
+    await expect.poll(() => page.evaluate(() => window.__SS__!.tick())).toBeGreaterThan(firstTick + 30);
     await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.streamed.state)).toBe('calm');
     const measurements: unknown[] = [];
     const stop = async (name: string) => {
@@ -78,7 +80,8 @@ test('@E16 recorded diner incident and store fight: live PCM tap, streaming, mix
             longestGap = Math.max(longestGap, gap);
         }
         const audio = await page.evaluate(() => window.__SS__!.audio.snapshot());
-        measurements.push({ name, path, duration: capture.duration, audioStart: capture.time, ...measured, peak, clipped, longestGap, music: audio.music, cues: audio.cues });
+        const mission = await page.evaluate(() => ({ state: window.__SS__!.missions.state(), player: window.__SS__!.getState().player!.transform, tick: window.__SS__!.tick() }));
+        measurements.push({ name, path, duration: capture.duration, audioStart: capture.time, ...measured, peak, clipped, longestGap, music: audio.music, cues: audio.cues, mission });
         writeFileSync(join(previewRoot, 'measurements.json'), JSON.stringify(measurements, null, 2) + '\n');
         expect(capture.duration).toBeGreaterThan(6);
         expect(clipped).toBe(0);
@@ -91,7 +94,7 @@ test('@E16 recorded diner incident and store fight: live PCM tap, streaming, mix
     await page.waitForTimeout(8000);
     await stop('01-morning');
     // Encounter setup only: the authored diner volume, attack/turn chain and audio are real.
-    await page.evaluate(() => { const a = window.__SS__!; a.teleport('player', { x: 42, z: -5 }); a.audio.clearLog(); window.__audioCapture.start(); });
+    await page.evaluate(() => { const a = window.__SS__!; a.pause(); a.teleport('player', { x: 42, z: -6.5 }); a.audio.clearLog(); window.__audioCapture.start(); a.resume(); });
     const diner = await page.evaluate(() => window.__SS__!.input.project({ x: 42, z: -6.5 }));
     await page.mouse.click(diner.x, diner.y);
     await page.waitForTimeout(24000);

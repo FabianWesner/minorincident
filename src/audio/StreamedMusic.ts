@@ -92,7 +92,17 @@ export class StreamedMusic {
     snapshot() { return { state: this.state, transitions: [...this.transitions], decks: [...this.decks].map(([state, d]) => ({ state, paused: d.media.paused, position: d.media.currentTime, gain: d.gain.gain.value })) }; }
     reset(): void {
         ++this.generation;
-        for (const deck of this.decks.values()) { deck.media.pause(); deck.media.removeAttribute('src'); deck.media.load(); deck.source.disconnect(); deck.gain.disconnect(); }
-        this.decks.clear(); this.state = null; this.requested = null; this.target = null; this.errors.length = 0; this.transitions.length = 0;
+        // Keep at most four cached decks across world loads. Removing src aborts an
+        // in-flight range request and discards a usable recording on every reload.
+        for (const deck of this.decks.values()) {
+            deck.media.pause(); deck.media.currentTime = 0; deck.retire = Infinity;
+            deck.gain.gain.cancelScheduledValues(0); deck.gain.gain.value = 0;
+        }
+        this.state = null; this.requested = null; this.target = null; this.errors.length = 0; this.transitions.length = 0;
+    }
+    dispose(): void {
+        this.reset();
+        for (const deck of this.decks.values()) { deck.source.disconnect(); deck.gain.disconnect(); }
+        this.decks.clear();
     }
 }
