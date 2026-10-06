@@ -33,7 +33,7 @@ export class GameUI {
   }
   init(): void {
     if (!this.enabled) return;
-    document.body.classList.add('full-ui');
+    document.body.classList.add('full-ui');document.body.classList.toggle('debug-ui',this.game.params.has('debug'));
     document.body.classList.toggle('touch-ui', navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches); this.root.className = 'menus';
     this.pauseButton.setAttribute('aria-label', 'Pause');
     const pauseLabel = node('span', 'pause-label', 'Pause');

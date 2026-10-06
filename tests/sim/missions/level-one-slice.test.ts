@@ -1,7 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, expect, test } from 'vitest';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
-import { Combat } from '../../../src/sim/combat/Combat';
 import { compositions } from '../../../src/levels/compositions';
 import { resolveCampaignMission } from '../../../src/levels/missions';
 import { levelOneSlice } from '../../../src/levels/levelOneSlice';
@@ -11,8 +10,7 @@ afterEach(() => world?.dispose());
 async function start(seed=1) {
   world=new SimWorld();await world.init();const c=compositions.L1;
   world.loadComposition(c,c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`,'utf8'))),seed);
-  world.combat=new Combat(world,{name:'L1',survivor:true,combat:true,ground:{width:168,depth:112},player:world.entities.get(1)!.transform});
-  world.enableInfected();world.combat.clearLoadout();const m=world.loadMission(levelOneSlice(resolveCampaignMission('L1',world.districts!)));m.begin();return m;
+  world.enableInfected();world.combat!.clearLoadout();const def=levelOneSlice(resolveCampaignMission('L1',world.districts!));world.npcs?.configureSlice(def.anchors['incident-0']);const m=world.loadMission(def);m.begin();return m;
 }
 test('@E19 @E19-AC01 slice graph ends at store combat, without the deferred finale',async()=>{
   const m=await start();while(m.state.phase==='playing')m.completeObjective();
@@ -44,7 +42,7 @@ test('@E19 @E19-AC05 evade-only reaches the hardware checkpoint on 20 seeds via 
       }
       throw new Error(`evade seed ${seed} stalled: ${JSON.stringify(world.entities.get(1)!.transform)}`);
     };
-    walk(0,0);walk(42,0);walk(42,-6.5);expect(m.state.steps.escape.status).toBe('active');
+    walk(-14,-4);await walk(0,0);walk(42,0);walk(42,-6.5);expect(m.state.steps.escape.status).toBe('active');
     walk(42,0);walk(70,0);walk(70,-7);expect(m.state.checkpoint).toBe('melee');expect(m.state.stats.deaths).toBe(0);
     expect(world.events.events().some(e=>e.type==='combat.attack')).toBe(false);world.dispose();
   }
@@ -59,7 +57,7 @@ test('@E19 slice complete policy finishes 20 seeds with normal movement, pickup 
         world.setInput({move:{x:(x-p.x)/d*Math.min(1,d),z:(z-p.z)/d*Math.min(1,d)}});world.update();
       }throw new Error(`seed ${seed}: route blocked`);
     };
-    walk(0,0);walk(42,0);walk(42,-6.5);walk(42,0);walk(70,0);walk(70,-7);
+    walk(-14,-4);await walk(0,0);walk(42,0);walk(42,-6.5);walk(42,0);walk(70,0);walk(70,-7);
     world.clearInput();world.setInput({interact:true});world.update();world.clearInput();
     for(let i=0;i<6000&&m.state.phase==='playing';i++){
       const p=world.entities.get(1)!.transform,target=world.infected!.active.filter(e=>e.health.current>0).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];

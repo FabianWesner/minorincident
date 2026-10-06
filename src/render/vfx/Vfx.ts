@@ -164,7 +164,7 @@ export class Vfx extends Group {
       const kind: TelegraphKind = 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' ? 'charge' : event.special === 'aura' ? 'splash' : 'lunge';
       const position = 'position' in event ? event.position : source?.transform;
       if (!position) return;
-      const radius = 'radius' in event ? event.radius : kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(2, infectedDef(source.archetype).range) : 2;
+      const radius = 'radius' in event ? event.radius : kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.slice ? 1 : 2, infectedDef(source.archetype).range) : 2;
       const angle = 'angle' in event ? event.angle : -Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
       const shape = telegraphShapes[kind];
       const slot = this.telegraphs.spawn(this.time, 1e9, position.x, 0.025, position.z, angle, 0, 0, radius * 2, shape, this.telegraphColor(kind), 0, kind === 'charge' ? 0.3 : 1, true);
