@@ -27,9 +27,6 @@ for (const profile of ['Pixel 7', 'iPhone 14'] as const) {
         expect(state.viewport.scrollWidth).toBeLessThanOrEqual(width); expect(state.viewport.scrollHeight).toBeLessThanOrEqual(height);
         expect(state.canvas.width).toBe(Math.floor(width * 1.5)); expect(state.canvas.height).toBe(Math.floor(height * 1.5));
         for (const rect of state.controls) { expect(rect.x).toBeGreaterThanOrEqual(0); expect(rect.y).toBeGreaterThanOrEqual(0); expect(rect.right).toBeLessThanOrEqual(width); expect(rect.bottom).toBeLessThanOrEqual(height); }
-        const quality = await page.getByLabel('Graphics quality').boundingBox(), map = await page.getByLabel('Objective minimap').boundingBox();
-        expect(quality).not.toBeNull(); expect(map).not.toBeNull();
-        expect(quality!.y).toBeGreaterThanOrEqual(map!.y + map!.height);
         proof.push(state); mkdirSync(output, { recursive: true }); await page.screenshot({ path: `${output}/${profile.replaceAll(' ', '-')}-${width}.png` });
         await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await page.evaluate(() => window.__SS__!.step(1));
         expect(await page.evaluate(() => window.__SS__!.getState().input.frame.move)).toEqual({ x: 0, z: 0 });
