@@ -1,6 +1,6 @@
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { Color, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, type DataTexture } from 'three/webgpu';
-import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix } from 'three/tsl';
+import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance } from 'three/tsl';
 import type { Materials } from '../Materials';
 import { clipTexture, crowdMatrix, crowdPosition } from '../../assets/crowd';
 import { AssetRegistry } from '../../assets/registry';
@@ -41,7 +41,8 @@ class CivilianBatch extends Group {
     const clothing = mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float').max(0));
     const skin = mix(clothing, vec3(.31, .40, .27), attribute('_shirt', 'float').lessThan(0).select(decay, 0));
     const base = mix(skin, mix(vec3(.02), vec3(1, .015, .025), attribute('_glow', 'float')), eye);
-    const glow = vec3(1, .005, .02).mul(eye).mul(attribute('_glow', 'float')).mul(4);
+    const eyeColor = vec3(1, .005, .02);
+    const glow = eyeColor.div(luminance(eyeColor)).mul(eye).mul(attribute('_glow', 'float')).mul(2);
     const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     this.mesh = new InstancedMesh(baked.geometry, material, 128); this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = this.mesh.receiveShadow = true;
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1); this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; };
