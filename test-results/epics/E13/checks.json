@@ -1,0 +1,58 @@
+{
+  "target": "E13",
+  "epics": [
+    "E13"
+  ],
+  "pattern": "@(?:E13)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E13)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E13/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@(?:E13)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+      ],
+      "exitCode": 0
+    }
+  ]
+}

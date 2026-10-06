@@ -8,7 +8,7 @@ export class Keyboard {
   private readonly down = (raw: Event): void => {
     const event = raw as KeyboardEvent;
     const element = event.target as HTMLElement | null;
-    if (element?.closest?.('input, textarea, select, [contenteditable], [data-menu-screen], .full-ui .mission-panel, .full-ui button')) return;
+    if (element?.closest?.('input, textarea, select, button, [role=dialog], [contenteditable], [data-menu-screen], .full-ui .mission-panel')) return;
     if (event.repeat || this.pressed.has(event.code)) return;
     this.pressed.add(event.code); this.change(event.code, true);
     // Keep browser scrolling and page search out of game controls.

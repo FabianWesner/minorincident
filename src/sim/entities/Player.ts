@@ -10,6 +10,7 @@ import { KinematicController } from '../locomotion/KinematicController';
 /** Owns survivor timers and animation intent; combat calls damage()/act(), missions setCheckpoint(). */
 export class Player {
   readonly locomotion: KinematicController;
+  progressionSpeed = 1;
   private lastDamage = -Infinity;
   private action: ActionState | null = null;
   private actionUntil = 0;

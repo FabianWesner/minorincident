@@ -55,10 +55,12 @@ test('T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, delivered methods and
     const entity = api.getEntity(1), missing = api.getEntity(999), nearby = api.query({ kind: 'player', archetype: 'player.stub', within: { x: 2, z: 3, r: 1 } });
     api.input.set({ move: { x: 1, z: 0 } }); api.input.clear(); await api.step(1);
     await api.screenshotReady();
-    return { version: api.version, keys: Object.keys(api).sort(), vfxKeys: Object.keys(api.vfx).sort(), errors, bot, entity, missing, nearby, events: api.events(0), perf: api.perf() };
+    return { version: api.version, keys: Object.keys(api).sort(), npcKeys: Object.keys(api.npcs).sort(), campaignKeys: Object.keys(api.campaign).sort(), vfxKeys: Object.keys(api.vfx).sort(), errors, bot, entity, missing, nearby, events: api.events(0), perf: api.perf() };
   });
   expect(surface.version).toMatch(/^\d+\.\d+\.\d+$/);
-  expect(surface.keys).toEqual(['version', 'ready', 'missions', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'interact', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'vfx', 'audio', 'perf', 'screenshotReady'].sort());
+  expect(surface.keys).toEqual(['version', 'ready', 'missions', 'npcs', 'campaign', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'interact', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'vfx', 'audio', 'perf', 'screenshotReady'].sort());
+  expect(surface.npcKeys).toEqual(['civilian', 'escort', 'grab', 'courage', 'quality'].sort());
+  expect(surface.campaignKeys).toEqual(['state', 'menu', 'save', 'restore'].sort());
   expect(surface.errors.spawn).toBe('Load an infected or combat scenario before spawning');
   expect(surface.errors['cheats.killAll']).toBe('NO ERROR');
   expect(surface.errors['cheats.completeObjective']).toBe('No mission loaded');
