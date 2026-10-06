@@ -1,4 +1,4 @@
-import { DataTexture, FloatType, Group, InstancedMesh, InstancedInterleavedBuffer, Matrix4, MeshBasicNodeMaterial, Mesh, RGBAFormat, type Node, type BufferGeometry } from 'three/webgpu';
+import { BufferAttribute, DataTexture, FloatType, Group, InstancedMesh, InstancedInterleavedBuffer, Matrix4, MeshBasicNodeMaterial, Mesh, RGBAFormat, type Node, type BufferGeometry } from 'three/webgpu';
 import { attribute, instancedBufferAttribute, int, ivec2, mat4, positionGeometry, textureLoad, uniform, vec4 } from 'three/tsl';
 import { palette } from './palette';
 
@@ -25,6 +25,7 @@ export class Crowd extends Group {
   readonly instanceCount: number;
   constructor(baked: Group, count: number) {
     super(); this.instanceCount=count;
+    baked.updateMatrixWorld(true);
     const meshes: Mesh[]=[]; baked.traverse((n)=>{if(n instanceof Mesh)meshes.push(n);});
     const clip=baked.userData.crowd as CrowdClip | undefined;
     if(!clip)throw new Error('Missing crowd clip metadata');
@@ -34,7 +35,18 @@ export class Crowd extends Group {
       const original=Array.isArray(source.material)?source.material[0]:source.material;
       const token=original.name.replace(/^(pal|emi)_/,'');
       const material=new MeshBasicNodeMaterial({color:palette[token] ?? '#ffffff'});
-      const mesh=new InstancedMesh(source.geometry as BufferGeometry,material,count);
+      // Restore part-local coordinates from the quantization transform before
+      // the crowd shader applies its independently baked joint matrices.
+      const geometry = (source.geometry as BufferGeometry).clone();
+      for (const name of ['position', 'normal']) {
+        const attribute = geometry.getAttribute(name);
+        if (!attribute) continue;
+        const values = new Float32Array(attribute.count * attribute.itemSize);
+        for (let i = 0; i < attribute.count; i++) for (let channel = 0; channel < attribute.itemSize; channel++) values[i * attribute.itemSize + channel] = attribute.getComponent(i, channel);
+        geometry.setAttribute(name, new BufferAttribute(values, attribute.itemSize));
+      }
+      geometry.applyMatrix4(source.matrixWorld);
+      const mesh=new InstancedMesh(geometry,material,count);
       mesh.frustumCulled=false;
       for(let i=0;i<count;i++){transform.makeTranslation(i%10*1.5,0,Math.floor(i/10)*1.5);mesh.setMatrixAt(i,transform);}
       // NodeMaterial evaluates positionNode after its default instancing step.

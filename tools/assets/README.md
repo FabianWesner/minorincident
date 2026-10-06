@@ -13,11 +13,44 @@ and `--decay <declared variant>`. Batch selection supports `--all` and
 accept `--glb`. This E17 lane rebuilt only the fire engine; supplied production
 exports were inspected unchanged.
 
-`npm run assets:validate` checks modeled/integrated/final assets and their hero
-LOD chains. `-- --production` also inspects existing `sourceGlb` exports,
-without running their scripts. Findings are written to
-`test-results/epics/E17/validate-production.json` and cause exit 1. Inventory
-status is authoritative: source files alone do not promote an asset.
+`npm run assets:pack -- --all` packs existing detailed exports without running
+Blender or changing `model.glb`. It writes runtime GLBs under `public/assets/models`
+and missing source `model.lod1.glb` / `model.lod2.glb` beside each export.
+Use an asset ID or category prefix instead of `--all` for an incremental pack.
+Authored tiers are preferred; generated tiers record their provenance and are
+regenerated from LOD0. `--regenerate` rebuilds all selected distance tiers.
+Targets are 12% / 3% of LOD0; retries stop before destroying small rigid parts.
+Weapons, throwables and pickups above 2,000 triangles require LOD1 only.
+All other hero/side exports require both tiers. Required pivots, sockets, skin
+joints, animation targets and closed infected caps survive every tier.
+Quantization and meshopt preserve palette materials and active vertex AO;
+no palette conversion is performed. `--all` also packs layout/crowd GLBs and
+copies the licensed Three.js Basis transcoder into `public/assets/basis`.
+
+`npm run assets:validate` checks delivery for every available source export,
+including assets awaiting manifest registration, and the full authored contract
+for registered production and modeled/integrated/final assets. It enforces LOD
+presence, maximum triangle ratios (15.5% / 4.5%), LOD1 bytes (25%), hero/side
+sizes (1.5 MB / 300 KB), codecs, textures, required names and animation/skin
+preservation. Intentionally empty source bones remain required empty pivots.
+Pending assets retain their status; their placeholder dimensions and authoring
+budgets are not mistaken for real-export contracts. Findings are written to
+`test-results/epics/E17/validate.json` (or `validate-production.json` with
+`--production`) and cause exit 1. No delivery exceptions are silently waived.
+
+`npx tsx tools/assets/delivery-report.ts` records shipped bytes, all export tiers,
+and both active and planned start-district asset payloads. For temporary visual
+comparison and measured network bytes, build first and run:
+
+```sh
+ASSET_DELIVERY_VISUAL=1 E2E_PORT=3337 sh tools/e2e-lock.sh npx playwright test \
+  tests/visual/asset-delivery.spec.ts tests/e2e/asset-delivery-download.spec.ts \
+  --project=chromium --workers=2
+```
+
+Contact sheets use the close isometric camera at 16 m and the same camera at
+30 m. `inspection=1` in the test viewer renders actual files pending registration;
+it does not alter runtime status gates. Delete sheets after review.
 
 `assets:optimize -- <id>` also exports supplied LODs for side assets. Optional
 `generatedLodRatios` in the manifest regenerates a tier from LOD0 when its

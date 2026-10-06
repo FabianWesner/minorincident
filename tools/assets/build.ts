@@ -5,6 +5,7 @@ import { pathToFileURL } from 'node:url';
 import manifest from '../../src/assets/manifest.json';
 import { variantPath, type AssetDef } from '../../src/assets/types';
 import { assetIO } from './io';
+import { requiredLods, triangleCount } from './delivery';
 import { geometryHash, validateDocument } from './validate';
 import { normalizeForward, normalizeScale, generateStumpCaps, optimizeAsset } from './optimize';
 
@@ -22,7 +23,7 @@ export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'l
   normalizeForward(document, def);
   normalizeScale(document, def);
   generateStumpCaps(document, def);
-  const meta = validateDocument(document, { ...def, budget: { ...def.budget, fileKB: Infinity } }, readFileSync(raw).length);
+  const meta = validateDocument(document, { ...def, sourceGlb: undefined, budget: { ...def.budget, fileKB: Infinity } }, readFileSync(raw).length);
   // Zero-area exporter faces are repaired below; every runtime tier still gets full validation.
   const rawErrors = meta.errors.filter(error => !error.includes('degenerate triangle'));
   if (rawErrors.length) throw new Error(`Raw export invalid: ${rawErrors.join('; ')}`);
@@ -34,14 +35,16 @@ export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'l
     const runtime = validateDocument(await io.read(staged), def, readFileSync(staged).length);
     if (runtime.errors.length) throw new Error(`Optimized export invalid: ${runtime.errors.join('; ')}`);
     outputs.push([staged,output]);
-    if (def.tier === 'hero') {
-      for (const [lod, ratio] of [['lod1', .12], ['lod2', .03]] as const) {
+    if (requiredLods(def, triangleCount(document)).length) {
+      for (const lod of requiredLods(def, triangleCount(document))) {
+        const ratio = lod === 'lod1' ? .12 : .03;
         const supplied = `assets/${def.id}/model.${lod}.glb`;
         const output = def.lods?.[lod] && variantPath(def.lods[lod]!,options.decay);
         if (!output) throw new Error(`Missing manifest ${lod} path`);
         const staged = `${stage}/${basename(output)}`;
         const generatedRatio = def.generatedLodRatios?.[lod];
-        const useSupplied = !options.decay && generatedRatio === undefined && existsSync(supplied);
+        const generated = existsSync(supplied) && (await io.read(supplied)).getRoot().listScenes().some(scene => scene.getExtras().deliveryLodGenerated === true);
+        const useSupplied = !options.decay && !generated && generatedRatio === undefined && existsSync(supplied);
         await optimizeAsset(useSupplied ? supplied : raw, staged, def, useSupplied ? 1 : generatedRatio ?? (lod === 'lod1' && def.category === 'infected' ? .10 : ratio));
         const validation = validateDocument(await io.read(staged), def, readFileSync(staged).length, lod === 'lod1' ? 1 : 2);
         if (validation.errors.length) throw new Error(`${lod} invalid: ${validation.errors.join('; ')}`);

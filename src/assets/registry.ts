@@ -22,7 +22,7 @@ export class AssetRegistry {
     this.definitions = new Map((options.manifest ?? manifest as AssetDef[]).map((a) => [a.id, a]));
     const gltf = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     if (options.renderer) {
-      this.ktx = new KTX2Loader().detectSupport(options.renderer);
+      this.ktx = new KTX2Loader().setTranscoderPath('/assets/basis/').detectSupport(options.renderer);
       gltf.setKTX2Loader(this.ktx);
     }
     this.load = options.load ?? (async (url) => {
