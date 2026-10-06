@@ -67,6 +67,11 @@ export class Vfx extends Group {
     this.add(this.gibs.heads, this.particles.mesh, this.decals.mesh, this.surfaceSplats.mesh, this.telegraphs.mesh, this.waves.mesh, this.gibs.mesh);
     for (const type of eventTypes) this.stops.push(world.events.on(type, this.receive));
   }
+  /** Exercise visible pooled geometry during loading; restore empty slots without sim events. */
+  prewarm(x: number, z: number): () => void {
+    for (const pool of this.pools) pool.spawn(this.time, 1, x, pool.mode === 'particle' ? 1 : .03, z, 0, 0, 0, 2, 0, 0xffffff);
+    return () => this.resetPools();
+  }
   set(patch: VfxSettings): void {
     if (patch.gore !== undefined && !['Full', 'Reduced', 'Off'].includes(patch.gore)) throw new RangeError('Invalid gore setting');
     if (patch.quality !== undefined && !['high', 'low'].includes(patch.quality)) throw new RangeError('Invalid VFX quality');
@@ -202,6 +207,7 @@ export class Vfx extends Group {
     else if (event.type === 'vehicle.exploded') { const p = this.world.entities.get(event.sourceId)?.transform; if (p) this.effect('explosion', p.x, p.z, 6); }
     else if (event.type === 'noise' && event.kind === 'scream') this.effect('screamer', event.position.x, event.position.z, event.radius);
     else if (event.type === 'hazard.electrified' || event.type === 'prop.ignited') { const p = this.world.entities.get(event.id)?.transform; if (p) this.effect(event.type === 'hazard.electrified' ? 'electric' : 'fire', p.x, p.z, 1); }
+    else if (event.type === 'civilian.turned' && this.enabled) this.burst(event.position.x, .9, event.position.z, 0x96b76a, 8, .045, .4, 1);
     else if (event.type === 'pickup.collected') { const e = this.world.entities.get('id' in event ? event.id : event.sourceId); if (e) this.effect('pickup', e.transform.x, e.transform.z, 1); }
     else if (event.type === 'vfx.effect') this.effect(event.kind, event.position.x, event.position.z, event.radius);
   };

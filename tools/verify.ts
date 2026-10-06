@@ -8,7 +8,6 @@ const output = `test-results/epics/${target}`;
 mkdirSync(output, { recursive: true });
 const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
-  // Browser slots are reserved for browser runs; each lane builds its own dist.
   ['npm', 'run', 'build'],
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.
   [...(target === 'E18' ? ['sh', 'tools/e2e-lock.sh'] : []), 'npx', 'vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
@@ -18,6 +17,12 @@ const commands: string[][] = [
       // Native GPU load timing stays headless: run once, after the other browser checks.
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/district-load.spec.ts', '--grep', '@E10-AC06', '--project=chromium', '--workers=2'],
     ]
+    : target === 'E19'
+      ? [
+        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'M1-22', '--workers=2'],
+        // Transition frame budgets must not compete with another context loading GPU programs.
+        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/l1-transitions.spec.ts', '--project=chromium', '--workers=1'],
+      ]
     : target === 'E18'
       ? [
         ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E18-AC08|@E18-AC09|WebGPU low tier parity', '--workers=2'],

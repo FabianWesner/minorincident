@@ -20,6 +20,7 @@ import { MeshGridMaterial } from './MeshGridMaterial';
 import { PhysicsWireframe } from './PhysicsWireframe';
 import { View } from './View';
 import { Renderer } from './Renderer';
+import { preRender } from './PreRenderer';
 import { Lighting } from './Lighting';
 import { Materials } from './Materials';
 import { Lookdev } from './Lookdev';
@@ -54,6 +55,7 @@ export class GameView implements Lifecycle {
   private actions: ActionView | null = null;
   private contactShadows: ContactShadows | null = null;
   private crowd: CrowdView | null = null;
+  private readonly preparedDistrictViews = new Map<SimWorld['districts'], DistrictView>();
   private npcs: NpcView | null = null;
   private interactions: InteractionView | null = null;
   private entityAssets: EntityAssets | null = null;
@@ -135,7 +137,17 @@ export class GameView implements Lifecycle {
         this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
       }
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
-      this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low');await this.districts.load(1);
+      const instanceCapacity = this.world.scenario === 'L1' ? this.renderer.attributeInstanceCapacity() : undefined;
+      this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low', instanceCapacity);await this.districts.load(1);
+      if (this.world.scenario === 'L1') {
+        await this.districts.prepare();
+        this.preparedDistrictViews.set(this.world.districts, this.districts);
+        for (const prepared of this.world.preparedDistricts.values()) if (prepared !== this.world.districts) {
+          const district = new DistrictView(prepared, this.materials, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity);
+          await district.load(1); await district.prepare(); district.visible = false;
+          this.preparedDistrictViews.set(prepared, district); this.scene.add(district);
+        }
+      }
       this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
       this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
 
@@ -202,8 +214,24 @@ export class GameView implements Lifecycle {
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.districts?.ready()]);
-    if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
+    if (this.world.scenario === 'L1') {
+      this.lighting?.update(this.view);
+      // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
+      const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
+      const restore = this.vfx?.prewarm(focus.x, focus.z);
+      try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), () => this.postFx ? this.postFx.compile() : this.renderer.compileAsync(this.scene, this.camera)); }
+      finally { restore?.(); }
+    } else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
     this.idPass = this.params.get('idpass') === '1'; this.update(1);
+  }
+  /** A prepared decay swap retains characters, crowd pools, GPU programs, camera and audio. */
+  switchPreparedDistrict(): boolean {
+    const next = this.preparedDistrictViews.get(this.world.districts);
+    if (!next) return false;
+    if (this.districts) this.districts.visible = false;
+    this.districts = next; next.visible = true; next.setQuality(this.quality);
+    next.updateLods(this.view); this.lighting?.set(next.world.composition.timeOfDay);
+    return true;
   }
   /** Real render seconds, deliberately independent of sim ticks/time scale. */
   frame(seconds: number): void { this.vfx?.advance(Math.min(1, seconds)); }
@@ -406,7 +434,9 @@ export class GameView implements Lifecycle {
     for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();
     for (const material of this.foliageIdMasks.values()) material.dispose(); this.foliageIdMasks.clear();
     this.postFx?.dispose();this.postFx = null; this.dofEnabled = false;
-    if(this.districts){this.scene.remove(this.districts);this.districts.dispose();this.districts=null;}
+    for (const district of this.preparedDistrictViews.values()) { this.scene.remove(district); district.dispose(); }
+    if (this.districts && !this.preparedDistrictViews.has(this.districts.world)) { this.scene.remove(this.districts); this.districts.dispose(); }
+    this.preparedDistrictViews.clear(); this.districts = null;
     this.frozenStarted = -1; this.frozenPose = null;
     if (this.crowd) { this.scene.remove(this.crowd); this.crowd.dispose(); this.crowd = null; }
     if (this.actions) { this.scene.remove(this.actions); this.actions.dispose(); this.actions = null; }
