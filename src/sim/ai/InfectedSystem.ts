@@ -462,14 +462,20 @@ export class InfectedSystem {
     this.world.events.emit({ type: 'civilian.grabbed', tick, sourceId: e.id, targetId: target.id, variant: victim?.civilian?.variant ?? victim?.archetype ?? '', rescueUntil: b.grabUntil });
   }
   private updateBite(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
-    const victim = this.l1!.humans.get(brain.biteTargetId)?.position;
+    const victim = this.victimPosition(brain.biteTargetId);
     // Any hit on the infected during the grab rescues the victim (rescue window = the 1.0 s grab).
     if (b.grabHits > 0 || !victim || Math.hypot(victim.x - e.transform.x, victim.z - e.transform.z) > 1.8) { this.endBite(e, b, brain, false); return; }
     e.transform.yaw = -Math.atan2(victim.z - e.transform.z, victim.x - e.transform.x);
     if (this.world.tick >= b.grabUntil) this.endBite(e, b, brain, true);
   }
+  /** A grabbed civilian may leave the huntable set (lane D marks it grabbed); its body is still where the bite lands. */
+  private victimPosition(id: number): { x: number; z: number } | undefined {
+    const human = this.l1!.humans.get(id); if (human) return human.position;
+    const e = this.world.entities.get(id);
+    return e?.civilian && e.health.current > 0 && !e.hidden && ['grabbed', 'calm', 'alarmed', 'flee', 'hide'].includes(e.civilian.state) ? e.transform : undefined;
+  }
   private endBite(e: EntitySnapshot, b: InfectedState, brain: L1Brain, bitten: boolean): void {
-    const tick = this.world.tick, victimId = brain.biteTargetId, victim = this.l1!.humans.get(victimId)?.position;
+    const tick = this.world.tick, victimId = brain.biteTargetId, victim = this.victimPosition(victimId);
     b.grabUntil = 0; e.combat!.attacking = false; brain.biteTargetId = 0;
     if (bitten && victim) {
       while (this.recentTurns.length && tick - this.recentTurns[0] > l1Ticks(l1v2.civilians.transformS + l1v2.civilians.transformJitterS)) this.recentTurns.shift();
