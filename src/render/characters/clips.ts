@@ -53,6 +53,12 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean): A
       if (path === 'rotation') {
         for (let i = 0; i < times.length; i++) {
           q.set(0, 0, 0, 1); if (track) q.fromArray(track.values, i * 4).normalize();
+          // Forward-reaching infected need their arms beside the body and bent
+          // legs lowered as the back pose settles, rather than pointing upward.
+          if (/^(die|death-back)$/.test(name) && (root.getObjectByName('foreArmL')?.position.x ?? 0) > .08 && /^(arm|foreArm|leg)[LR]$/.test(nodeName)) {
+            const resting = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), (nodeName.startsWith('foreArm') ? 0 : nodeName.startsWith('leg') ? -30 : -100) * Math.PI / 180);
+            q.slerp(resting, Math.max(0, Math.min(1, (times[i] / source.duration - .5) * 2)));
+          }
           if (!additive) q.premultiply(node.quaternion);
           values.push(q.x, q.y, q.z, q.w);
         }
@@ -143,7 +149,7 @@ const floorBounds = new WeakMap<Object3D, Mesh[]>();
 const bounds = new Box3(), partBounds = new Box3();
 /** Model-specific accessory thickness (especially backpacks) determines the floor
  * contact of a corpse; the shared authored joint pose itself stays unchanged. */
-export function settleGroundPose(root: Object3D): void {
+export function settleGroundPose(root: Object3D, resting = false): void {
   let meshes = floorBounds.get(root);
   if (!meshes) { meshes = []; root.traverse(node => { if (node instanceof Mesh) { node.geometry.computeBoundingBox(); meshes!.push(node); } }); floorBounds.set(root, meshes); }
   root.updateMatrixWorld(true); bounds.makeEmpty();
@@ -154,7 +160,7 @@ export function settleGroundPose(root: Object3D): void {
   }
   const hip = root.getObjectByName('hip') ?? root.getObjectByName('body');
   const floor = root.getWorldPosition(worldOrigin).y + .015;
-  if (hip && Number.isFinite(bounds.min.y) && bounds.min.y < floor) { hip.position.y += (floor - bounds.min.y) / (hip.parent ?? root).getWorldScale(worldScale).y; root.updateMatrixWorld(true); }
+  if (hip && Number.isFinite(bounds.min.y) && (bounds.min.y < floor || resting)) { hip.position.y += (floor - bounds.min.y) / (hip.parent ?? root).getWorldScale(worldScale).y; root.updateMatrixWorld(true); }
 }
 export function sampleClip(root: Object3D, name: string, seconds: number): void {
   let sampler = samplers.get(root);
@@ -164,7 +170,7 @@ export function sampleClip(root: Object3D, name: string, seconds: number): void 
   sampler.mixer.stopAllAction();
   const action = sampler.mixer.clipAction(clip).reset().setLoop(LoopOnce, 1); action.clampWhenFinished = true; action.play();
   sampler.mixer.setTime(Math.max(0, Math.min(clip.duration, seconds)));
-  if (groundClips.test(name) || name === 'animal-death') settleGroundPose(root);
+  if (groundClips.test(name) || name === 'animal-death') settleGroundPose(root, /^(die|death-|animal-death)/.test(name) && seconds >= clip.duration * .95);
 }
 export type Clip = (rig: CharacterRig, seconds: number) => void;
 /** Complete sim-state contract; every evaluation uses authored glTF keyframes. */
