@@ -15,7 +15,9 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; glow?: Node<'vec3'>; opacity?: Node<'float'> }) {
     super(); this.name = `${emissive ? 'emi' : 'pal'}_${token}`;
     this.normalNode = normalView;
-    const original = nodes?.base ?? (vertexSwatches ? attribute('color', 'vec3') : swatch ? uniform(swatch).rgb : texture(palette, vec2((paletteTokens.indexOf(token) + 0.5) / (paletteTokens.length * 2), 0.5)).rgb);
+    // The swatch is data: palette colors share shader source instead of embedding
+    // a different texture coordinate literal in every fragment program.
+    const original = nodes?.base ?? (vertexSwatches ? attribute('color', 'vec3') : swatch ? uniform(swatch).rgb : texture(palette, vec2(uniform((paletteTokens.indexOf(token) + 0.5) / (paletteTokens.length * 2)), 0.5)).rgb);
     const base = !swatch && !vertexSwatches && !nodes && !emissive ? surfaceDetail(token, original, lighting.look.nodes) : original;
     const caughtShadow = float(1).toVar();
     this.receivedShadowNode = Fn(([shadow]: [Node<'vec3'>]) => { caughtShadow.mulAssign(shadow.r); return float(1); }) as unknown as NonNullable<MeshLambertNodeMaterial['receivedShadowNode']>;
