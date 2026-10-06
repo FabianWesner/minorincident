@@ -22,6 +22,9 @@ import { GameView } from './render/GameView';
 import { loadLayouts } from './levels/layouts';
 import type { Tier } from './levels/districts/types';
 import { SimWorld } from './sim/world/SimWorld';
+import { loadMeasure } from './assets/loadTiming';
+import { assetUrl } from './assets/assetUrl';
+import { prefetchLevel } from './assets/prefetch';
 
 /** Injected composition root, with staged initialization adapted from Bruno Game.js. */
 export class Game {
@@ -48,6 +51,8 @@ export class Game {
   private loading = false;
   private renderedDistricts: SimWorld['districts'] = null;
   private levelQueue: Promise<void> = Promise.resolve();
+  /** Boot-time sound bank load that runs after the title is shown; awaited before the next audio reset. */
+  private audioLoad: Promise<void> = Promise.resolve();
   constructor(readonly params: URLSearchParams) {
     const requested = params.get('quality') ?? 'auto';
     if (!['auto', 'high', 'low'].includes(requested)) throw new RangeError('Invalid quality setting');
@@ -72,7 +77,8 @@ export class Game {
   async init(): Promise<void> {
     await this.services.init();
     this.campaignUI = new CampaignUI(this);
-    await this.loadScenario(this.params.get('test') === '1' ? 'empty' : 'survivor', Number(this.params.get('seed') ?? 1));
+    // The title backdrop does not wait for sound banks: they stream while the player reads the menu.
+    await this.loadScenario(this.params.get('test') === '1' ? 'empty' : 'survivor', Number(this.params.get('seed') ?? 1), this.params.get('test') !== '1');
     this.world.player?.select(this.params.get('survivor') === 'male' ? 'male' : 'female', 0);
     this.view.update(1);
     this.ui.init();
@@ -96,18 +102,21 @@ export class Game {
     });
     if (this.params.has('perf')) this.overlay = new PerfOverlay(this);
     this.ticker.init();
+    // While the player reads the menus, warm the HTTP cache with the level they will most likely start.
+    if (this.params.get('test') !== '1') void this.audioLoad.then(() => prefetchLevel(`L${saved.status === 'ok' ? saved.save.unlockedLevel : 1}`));
   }
   /** Serialize native-world changes so overlapping API loads cannot leak resources. */
-  loadScenario(name: string | null, seed = 1): Promise<void> {
+  loadScenario(name: string | null, seed = 1, deferAudio = false): Promise<void> {
     if (name && performanceLevels[name]) return this.loadLevel(performanceLevels[name].level, { seed }, name);
     const load = this.levelQueue.then(async () => {
       this.loading = true; this.restoredWhilePaused = false;
       try {
-        this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
+        await this.audioLoad; this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
         if (name !== null) { this.world.loadScenario(name, seed); this.quality.startLevel(); this.applyQuality(); if (name === 'mission-sandbox') this.world.loadMission(missionSandbox()); await this.view.load(); }
         else this.view.update();
         this.renderedDistricts=this.world.districts;
-        await this.audio.load(); this.ui.loaded();
+        if (deferAudio) this.audioLoad = this.audio.load().catch(error => console.error(error)); else await this.audio.load();
+        this.ui.loaded();
       } finally { this.loading = false; this.ticker.reset(); }
     });
     this.levelQueue = load.catch(() => {}); return load;
@@ -121,10 +130,10 @@ export class Game {
         if(opts?.checkpoint && this.world.missions?.def.id === id) { this.world.missions.loadCheckpoint(opts.checkpoint); this.view.update(1); return; }
         this.campaignUI.reset();
         const start=performance.now();
-        const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(url);if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
-        const data=performance.now();
+        const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(assetUrl(url));if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
+        const data=loadMeasure('level:layouts',start);
         const cosmetic=this.world.entities.get(1)?.survivor;
-        this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
+        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
@@ -139,7 +148,7 @@ export class Game {
         if(this.campaign)this.watchCampaign();
         this.quality.startLevel();this.applyQuality();
         if (performanceScenario) installPerformanceLevel(this.world, this.quality.tier, performanceScenario);
-        const sim=performance.now();await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:performance.now()-sim};await this.audio.load(); this.ui.loaded();
+        const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded();
         if (performanceScenario) this.view.preset(performanceLevels[performanceScenario].spot);
       }finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
