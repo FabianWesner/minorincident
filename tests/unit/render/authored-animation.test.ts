@@ -40,6 +40,15 @@ test('M1-02 @E04 stance feet stay planted while the authored pelvis and knee car
   }
 });
 
+test('M1-12 @E04 fixed authored guard rotations survive Blender export and retargeting', async () => {
+  const { scene }=await model('assets/char.survivor-female/model.glb');
+  sampleClip(scene,'bat-1',authoredClips.get('bat-1')!.duration);
+  expect(scene.getObjectByName('armL')!.rotation.z).toBeGreaterThan(.3);
+  expect(scene.getObjectByName('foreArmL')!.rotation.z).toBeGreaterThan(.5);
+  sampleClip(scene,'run',authoredClips.get('run')!.duration*.25);
+  expect(scene.getObjectByName('head')!.rotation.z).toBeGreaterThan(.12);
+});
+
 test('M1-10 @E04 authored death poses flatten the full character and crowd matrices match the hierarchy', async () => {
   const { scene } = await model('assets/char.survivor-female/model.glb');
   const baked = bakeInfected(scene);
