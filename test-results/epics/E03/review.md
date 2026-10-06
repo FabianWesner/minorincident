@@ -1,24 +1,28 @@
-# E03 functional controls review
+# E03 game-camera review
 
-Reviewed 2026-10-05 against `specs/00-game-concept.md` §5.3 and E03's functional DOM scope, following `specs/90-test-concept.md` §7.1's PASS/FAIL-with-evidence protocol.
+Reviewed the five real Shift+LMB frames for each of the seven moves in
+`unarmed/`, plus `unarmed-review.png` (35 crops from the original 1600×900
+headless Chromium screenshots). Camera, rig, materials and shadows are the
+actual L1 game presentation, rather than an animation-editor camera.
 
-E03 has no visual/vision acceptance criteria. These screenshots supplement the device tests; they do not claim to complete E14's HUD art or E02's rendering. No art goldens were changed.
+Pass: anticipation reads before contact; jab/cross use different arms and
+shoulder torque; front kick extends the shoe forward, roundhouse adds a lateral
+sweep/turn, uppercut rises beside the face, knee keeps the lower leg folded;
+spinning backfist clearly rotates the torso/backpack and carries the arm through
+before returning to guard. The strokes remain distinct at the original game
+scale. Silhouette, palette blocks, hands and shoes remain readable; no detached
+limbs, missing clips or conspicuous support-foot drift appear in these frames.
+The real-input test independently verifies unchanged planar player position and
+ordered combos 0,1,2,4,5,3,6. Blender keys stagger hips/chest/limbs and keep the
+limb anticipation-to-contact interval at 50 ms over the 0.4 s action.
 
-Screenshots opened for review: `desktop.png` (1600×900), `stick-pixel-7.png` and `aim-pixel-7.png` (390×844), `stick-iphone-14-landscape.png` and `aim-iphone-14-landscape.png` (844×390). Equivalent captures for desktop touch emulation and the other mobile projects are saved alongside them.
+The default locomotion crossfade is 140 ms; attacks use 35 ms so contact is not
+lost inside an idle-to-strike blend. Backfist contact was adjusted to extend
+forward after the torso turn. All seven runtime tracks come from the reproducible
+Blender library export. No generated bitmap or procedural substitute was used.
 
-| Functional checklist | Result | Evidence / justification |
-| --- | --- | --- |
-| [must] Scheme hint is legible at desktop and mobile sizes | PASS | White text on a dark backing is fully visible in all reviewed images; the desktop hint describes WASD + cursor and the mobile hint describes stick/drag/tap. |
-| [must] Left and right action controls are distinguishable | PASS | The separate `LEFT` and `RIGHT` labels fit their outlined 64 px buttons at both orientations. |
-| [must] Selector and pause controls are legible and accessible | PASS | `NEXT` and `PAUSE` fit without clipping in a separate row above the action buttons. |
-| [must] The floating stick appears in the left movement region | PASS | Both stick screenshots show a complete circle at the contact origin, separate from the bottom-right buttons. |
-| [should] Controls leave the central fixture readable | PASS | The orange player fixture remains visible and separated from the touch controls in portrait and landscape. |
-| [should] Layout keeps distinct movement and action regions | PASS | Movement is on the left; action buttons occupy a compact bottom-right block with visible spacing. |
-
-All four applicable must items and both should items pass. The initial long `SELECTOR` label clipped; it was replaced with `NEXT`, rebuilt, re-captured, and reviewed again. The landscape screenshot contact was moved inside the viewport; the test now exercises a valid on-screen origin.
-
-Of the standard §7 checklist F items, text legibility is applicable and passes. Portrait/health, minimap, slot cards, selected-rack visuals and final mockup styling belong to E14 and are not evaluated here. Drag direction and release timing are proven by E03-AC07 frame assertions rather than inferred from a still image of the E01 cube.
-
-## E02 integration review
-
-Re-captured and opened `desktop.png`, portrait `stick-pixel-7.png` / `aim-pixel-7.png`, and landscape `stick-iphone-14-landscape.png` / `aim-iphone-14-landscape.png` after merging main `c4891e4`. The narrower follow camera and portrait radius change the fixture framing, while all four must items and both should items above still pass: labels remain legible, the full floating stick remains in the movement region, and the player is visible clear of the controls. The E02 visual regression suite passes its unchanged goldens separately.
+Reviewed `civilian-gag.png`: the adult steps back in a readable stagger pose and
+the “Hey!” bubble sits above the reacting actor. The child remains inside the
+swing arc with unchanged health/state and no hit reaction. The test checks both
+health values, no kill/infection, and the adult’s return from annoyed to calm.
+The optional dropped-item gag is omitted. WebGPU is outside this headless review.

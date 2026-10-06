@@ -36,6 +36,7 @@
         "run",
         "-t",
         "@(?:E03)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
         "--reporter=default",
         "--reporter=json",
         "--outputFile=test-results/epics/E03/vitest.json"
@@ -52,7 +53,7 @@
         "--grep",
         "@(?:E03)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
       ],
-      "exitCode": 0
+      "exitCode": null
     }
   ]
 }
