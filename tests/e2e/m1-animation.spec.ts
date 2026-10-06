@@ -19,6 +19,8 @@ for (const mode of ['desktop','iphone'] as const) test.describe(mode, () => {
     const held=await page.evaluate(()=>window.__SS__!.getState().render.actions!.attachments.find(a=>a.side==='LEFT')!);
     expect(held.actionId).toBe(`weapon.${weapon}`);expect(held.socket).toBe('weaponSocketR');expect(held.attached).toBe(true);expect(held.source).toBe('glb');expect(held.gripDistance).toBeLessThan(.001);
     expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe(`weapon.${weapon}`);
+    const icon=page.getByTestId(mode==='iphone'?'touch-icon-left':'icon-LEFT');
+    await expect(icon).toHaveAttribute('src',held.iconUrl!);await expect.poll(()=>icon.evaluate(e=>(e as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
     await page.evaluate(()=>window.__SS__!.screenshotReady());await page.screenshot({path:`${output}/${mode}-${weapon}-held.png`});
     const cdp=mode==='iphone'?await context.newCDPSession(page):null;
     let maximumTrail=0,maximumParticles=0;
