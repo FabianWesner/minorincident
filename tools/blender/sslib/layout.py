@@ -119,7 +119,10 @@ class Layout:
         width=aabb['max'][0]-aabb['min'][0]; height=aabb['max'][1]
         front=aabb['max'][2]
         for side in [-1,1]:
-            self.place('prop.tree',[x+side*(width*.65),0,z])
+            tx=x+side*(width*.65)
+            # Fit narrow side gardens without extending the canopy into a traffic lane.
+            tree_scale=min(1,(abs(tx)-max(e['laneWidth'] for e in self.data['roads']['edges'])/2-.1)/(self.manifest['prop.tree']['dimensions']['x']/2))
+            self.place('prop.tree',[tx,0,z],scale=(tree_scale,1,tree_scale))
             for dz in [-2,2]: self.place('prop.garden-bush-small',[x+side*(width*.65),0,z+dz])
             self.place('prop.hedge',[x+side*(width*.34),0,front+.55])
             for j in range(8): self.place('prop.flower',[x+side*(width*.32)+j*.25-.9,0,front+1.2])
