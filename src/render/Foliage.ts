@@ -2,8 +2,9 @@
 // Adapted from Bruno Simon folio-2025 World/Bushes.js (MIT).
 // Adapted from Bruno Simon folio-2025 World/Trees.js (MIT).
 import { BufferGeometry, DataTexture, DoubleSide, Float32BufferAttribute, Frustum, Group, InstancedMesh, LinearFilter, Matrix4, Object3D, RGBAFormat, Sphere, Vector2, Vector3 } from 'three/webgpu';
-import { attribute, color, min, mix, mx_noise_float, normalWorld, positionLocal, positionView, positionWorld, rotateUV, screenSize, screenUV, smoothstep, texture, uniform, uv, varying, vec2, vec3 } from 'three/tsl';
+import { attribute, min, mix, mx_noise_float, normalWorld, positionLocal, positionView, positionWorld, rotateUV, screenSize, screenUV, smoothstep, texture, uniform, uv, varying, vec2, vec3 } from 'three/tsl';
 import { Rng } from '../core/Rng';
+import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Materials } from './Materials';
 import type { View } from './View';
 import type { windPhase } from './Grass';
@@ -75,11 +76,11 @@ export class Foliage extends Group {
     super(); this.name = 'leaf-card-crowns'; this.sdf.minFilter = this.sdf.magFilter = LinearFilter; this.sdf.needsUpdate = true;
   }
   /** Layout crown empties already contain their world position and three ellipsoid radii. */
-  addCrowns(references: Object3D[], colors: [string, string], origin: [number, number]): void {
+  addCrowns(references: Object3D[], colors: [PaletteToken, PaletteToken], origin: [number, number]): void {
     if (!references.length) return;
     const gradient = normalWorld.y.mul(.5).add(.5).smoothstep(.15, .95);
-    const material = this.materials.shaded(mix(color(colors[0]), color(colors[1]), gradient));
-    const wind = foliageWind(this.phase), gust = varying(wind);
+    const material = this.materials.shaded(mix(this.materials.sample(uniform(paletteTokens.indexOf(colors[0]))), this.materials.sample(uniform(paletteTokens.indexOf(colors[1]))), gradient));
+    const wind = foliageWind(this.phase).mul(this.materials.look.nodes.windStrength), gust = varying(wind);
     const leaf = texture(this.sdf, rotateUV(uv(), gust.mul(.12), vec2(.5))).r;
     const aspect = vec2(screenSize.x.div(screenSize.y), 1);
     const hole = (center: typeof this.player, depth: typeof this.playerDepth) => positionView.z.greaterThan(depth).select(smoothstep(this.holeRadius.mul(.55), this.holeRadius, screenUV.sub(center).mul(aspect).length()), 1);
@@ -93,9 +94,19 @@ export class Foliage extends Group {
     const refs = references.map((reference, i) => {
       const object = new Object3D(); object.position.copy(reference.position); object.position.x += origin[0]; object.position.z += origin[1]; object.scale.copy(reference.scale);
       object.up.set(Math.sin(i * 2.4), Math.cos(i * 2.4), 0); object.lookAt(object.position.clone().add(facing)); object.updateMatrix();
-      object.matrix.makeRotationFromQuaternion(object.quaternion).premultiply(new Matrix4().makeScale(...reference.scale.toArray())).setPosition(object.position); return object;
+      object.matrix.makeRotationFromQuaternion(object.quaternion).premultiply(new Matrix4().makeScale(...reference.scale.toArray())).setPosition(object.position);
+      object.userData.foliageMatrix = object.matrix.clone(); object.userData.foliageScaleY = object.scale.y; return object;
     });
     this.batches.push({ mesh, references: refs, material }); this.add(mesh);
+  }
+  /** Scale the authored crown about ground level; collision remains an authored asset property. */
+  applyLook(): void {
+    const height = this.materials.look.values.foliageHeight;
+    for (const { references } of this.batches) for (const reference of references) {
+      reference.matrix.copy(reference.userData.foliageMatrix);
+      for (const row of [1, 5, 9, 13]) reference.matrix.elements[row] *= height;
+      reference.position.y = reference.matrix.elements[13]; reference.scale.y = reference.userData.foliageScaleY * height;
+    }
   }
   setQuality(low: boolean): void {
     this.low = low; this.geometry.setDrawRange(0, (low ? 40 : 80) * 6);
@@ -119,7 +130,9 @@ export class Foliage extends Group {
     this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     for (const { mesh, references } of this.batches) {
       let count = 0;
-      for (const reference of references) {
+      const limit = Math.ceil(references.length * this.materials.look.values.foliageDensity);
+      for (let i = 0; i < limit; i++) {
+        const reference = references[i];
         this.bounds.center.copy(reference.position); this.bounds.radius = Math.max(reference.scale.x, reference.scale.y, reference.scale.z) * 1.45;
         if (this.frustum.intersectsSphere(this.bounds)) mesh.setMatrixAt(count++, reference.matrix);
       }
@@ -151,6 +164,6 @@ export class Foliage extends Group {
     }
     return area;
   }
-  getState() { return { submittedCardScreenArea: this.submittedCardScreenArea(), crowns: this.batches.reduce((n, b) => n + b.references.length, 0), visible: this.batches.reduce((n, b) => n + b.mesh.count, 0), cardsPerCrown: this.low ? 40 : 80, playerHole: this.player.value.toArray(), targetHole: this.target.value.toArray(), holeRadius: this.holeRadius.value }; }
+  getState() { return { density: this.materials.look.values.foliageDensity, height: this.materials.look.values.foliageHeight, windStrength: this.materials.look.values.windStrength, submittedCardScreenArea: this.submittedCardScreenArea(), crowns: this.batches.reduce((n, b) => n + b.references.length, 0), visible: this.batches.reduce((n, b) => n + b.mesh.count, 0), cardsPerCrown: this.low ? 40 : 80, playerHole: this.player.value.toArray(), targetHole: this.target.value.toArray(), holeRadius: this.holeRadius.value }; }
   dispose(): void { for (const { mesh, material } of this.batches) { mesh.dispose(); material.dispose(); } this.geometry.dispose(); this.sdf.dispose(); this.clear(); }
 }

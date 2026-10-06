@@ -44,7 +44,10 @@ def build(asset_id, glb, segments=12):
     else:o.scale=(dims['x']/2,dims['z']/2,dims['y']/2)
     # The leaf fringe extends beyond the dense hedge body. Keep the physical
     # body slightly inset so the existing porch/diner corner routes stay open.
-    if asset_id=='prop.hedge':o.scale.x=1.15
+    if asset_id=='prop.hedge':
+        o.scale.x=1.15;o.data.materials.clear()
+        o.data.materials.append(mat('foliageDark'));o.data.materials.append(mat('foliageLight'))
+        for face in o.data.polygons:face.material_index=1 if face.normal.z>.3 else 0
     for p in o.data.polygons:p.use_smooth=True
     col=empty('col:trunk' if tree else 'col:bush',(0,1.2 if tree else dims['y']/2,0));col['collider']='cuboid';col['size']=[.5,.5,2.4] if tree else [dims['x'],dims['z'],dims['y']]
     bpy.ops.object.select_all(action='SELECT');bpy.ops.export_scene.gltf(filepath=str(Path(glb).resolve()),export_format='GLB',use_selection=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False)

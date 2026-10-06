@@ -1,6 +1,6 @@
 // Adapted from Bruno Simon folio-2025 World/Grass.js and Wind.js (MIT, commit 41046b5).
 import { BufferGeometry, DoubleSide, Float32BufferAttribute, Mesh } from 'three/webgpu';
-import { attribute, color, cos, mix, positionLocal, sin, uniform, vec3, cameraViewMatrix } from 'three/tsl';
+import { attribute, cos, mix, positionLocal, sin, uniform, vec3, cameraViewMatrix } from 'three/tsl';
 import { Rng } from '../core/Rng';
 import { worldLook } from '../data/worldLook';
 import type { DistrictLayout } from '../levels/districts/types';
@@ -11,12 +11,12 @@ export class Grass extends Mesh {
   private readonly fullCount: number;
   private readonly sparseCount: number;
   static material(materials: Materials, phase: ReturnType<typeof windPhase>) {
-    const tip = attribute('tip', 'float'), weight = tip.mul(tip).mul(.08);
-    const material = materials.shaded(mix(color(worldLook.grassRoot), color(worldLook.grassTip), tip)); material.side = DoubleSide;
+    const tip = attribute('tip', 'float'), weight = tip.mul(tip).mul(.08).mul(materials.look.nodes.windStrength);
+    const material = materials.shaded(mix(materials.look.nodes.grassRoot, materials.look.nodes.grassTip, tip)); material.side = DoubleSide;
     material.normalNode = vec3(0, 1, 0).transformDirection(cameraViewMatrix);
     const gust = sin(positionLocal.x.mul(.8).add(positionLocal.z.mul(.35)).add(phase.mul(1.6)))
       .add(sin(positionLocal.z.mul(1.7).sub(phase.mul(.9))).mul(.35));
-    material.positionNode = positionLocal.add(vec3(gust.mul(weight), 0, cos(phase.add(positionLocal.x)).mul(weight).mul(.45)));
+    material.positionNode = vec3(positionLocal.x.add(gust.mul(weight)), positionLocal.y.mul(materials.look.nodes.grassHeight.div(.41)), positionLocal.z.add(cos(phase.add(positionLocal.x)).mul(weight).mul(.45)));
     return material;
   }
   constructor(layout: DistrictLayout, material: ReturnType<typeof Grass.material>, seed: number) {
@@ -53,7 +53,10 @@ export class Grass extends Mesh {
     super(geometry, material); this.fullCount = positions.length / 3; this.sparseCount = sparseCount;
     this.name = 'grass-gpu-wind'; this.receiveShadow = true;
   }
-  setQuality(low: boolean): void { this.geometry.setDrawRange(0, low ? this.sparseCount : this.fullCount); }
+  setQuality(low: boolean, density: number = low ? worldLook.grassDensityLow : worldLook.grassDensity): void {
+    const maximum = low ? this.sparseCount : this.fullCount, ratio = density / (low ? 5 : 28);
+    this.geometry.setDrawRange(0, Math.floor(maximum * Math.min(1, ratio) / 6) * 6);
+  }
   dispose(): void { this.geometry.dispose(); }
 }
 export const windPhase = () => uniform(0);

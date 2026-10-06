@@ -1,7 +1,8 @@
+import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
-import { BoxGeometry, BufferGeometry, CircleGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3 } from 'three/webgpu';
-import { attribute, instancedBufferAttribute, mat4, normalGeometry, positionGeometry, mix, vec4, float, cameraViewMatrix } from 'three/tsl';
+import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3 } from 'three/webgpu';
+import { attribute, instancedBufferAttribute, mat4, normalGeometry, vec3, positionGeometry, mix, vec4, float, cameraViewMatrix, luminance, screenCoordinate } from 'three/tsl';
 import { clipTexture, crowdMatrix, crowdPosition } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { AssetRegistry } from '../assets/registry';
@@ -43,8 +44,8 @@ export class CrowdView extends Group {
     const ring = new RingGeometry(0.7, 0.8, 24); ring.rotateX(-Math.PI / 2);
     const arrow = new ConeGeometry(0.55, 2.5, 3); arrow.rotateZ(-Math.PI / 2); arrow.translate(1.3, 0, 0);
     for (const geometry of [ring, arrow]) { const mesh = new InstancedMesh(geometry, new MeshBasicNodeMaterial({ color: new Color('#ffb32d').multiplyScalar(1.6), transparent: true, depthWrite: false }), 350); mesh.frustumCulled = false; mesh.count = 0; this.telegraphs.push(mesh); this.add(mesh); }
-    const shadow = new CircleGeometry(0.45, 12); shadow.rotateX(-Math.PI / 2);
-    this.shadows = new InstancedMesh(shadow, new MeshBasicNodeMaterial({ color: '#5d446d', transparent: true, opacity: 0.25, depthWrite: false }), 350); this.shadows.frustumCulled = false; this.shadows.count = 0; this.add(this.shadows);
+    const shadow = new PlaneGeometry(1.2, 1.2); shadow.rotateX(-Math.PI / 2);
+    this.shadows = new InstancedMesh(shadow, contactShadowMaterial(), 350); this.shadows.frustumCulled = false; this.shadows.count = 0; this.add(this.shadows);
   }
   async init(): Promise<void> {
     const variants = manifest.filter(a => a.status === 'integrated' && a.category === 'infected' && !infectedDefinitions.some(d => d.asset === a.id) && a.id !== 'inf.corpse-poses');
@@ -52,7 +53,7 @@ export class CrowdView extends Group {
     for (const def of definitions) {
       this.definitions.set(def.id, def);
       if (!this.low) {
-        const mesh = new InstancedMesh(new BufferGeometry(), new MeshLambertNodeMaterial(), 350);
+        const mesh = new InstancedMesh(new BufferGeometry(), this.shading?.shaded(vec3(1)) ?? new MeshBasicNodeMaterial(), 350);
         mesh.count = 0; mesh.visible = false; this.heroSlots.set(def.id, mesh); this.add(mesh);
       }
     }
@@ -72,9 +73,17 @@ export class CrowdView extends Group {
       baked.geometry.setAttribute('_state', state); baked.geometry.setAttribute('_variant', tint);
       const feedbackState = attribute('_state', 'vec4');
       const opacity = feedbackState.w.div(2).floor().div(255).oneMinus();
-      const base = mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float')), glow = attribute('color', 'vec3').mul(attribute('_emissive', 'float')).mul(3).add(feedbackState.w.mod(2));
-      const material = this.shading?.shaded(base, glow, opacity) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
-      material.transparent = true; material.opacityNode = opacity;
+      const base = mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float')), glow = attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.001)).mul(attribute('_emissive', 'float')).mul(2).add(feedbackState.w.mod(2));
+      const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
+      // Instances cannot be sorted independently in the transparent render list.
+      // A shared 4x4 screen-door threshold keeps every surface of a corpse at
+      // a pixel together, unlike a 3D hash that exposes its deeper body parts.
+      // Living actors keep every pixel; discarded pixels never write depth.
+      const pixel = screenCoordinate.xy.floor();
+      const bayer2 = (p: typeof pixel) => p.x.mod(2).mul(2).add(p.y.mod(2).mul(3)).mod(4);
+      const threshold = bayer2(pixel).mul(4).add(bayer2(pixel.div(2).floor())).add(.5).div(16);
+      material.maskNode = opacity.greaterThan(threshold);
+      material.depthTest = material.depthWrite = true;
       const matrix = crowdMatrix(texture, attribute('_part_index', 'float'), feedbackState.x);
       const part = attribute('_part_index', 'float'), leg = baked.clip.parts.indexOf('legL'), shin = baked.clip.parts.indexOf('shinL'), foot = baked.clip.parts.indexOf('footL');
       let visible = part.equal(leg).or(part.equal(shin)).or(part.equal(foot)).select(feedbackState.y.oneMinus(), 1);
@@ -164,7 +173,7 @@ export class CrowdView extends Group {
         batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), feedback?.mask ?? 0, (feedback?.strength ?? 0) + Math.round(fade * 255) * 2);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); }
       }
-      if (e.health.current > 0 && e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, 0.018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
+      if (e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
       if ((b.state === 'attack' || (b.state === 'dead' && b.special === 'explode')) && this.world.tick < b.until) {
         const mesh = this.telegraphs[b.special === 'charge' || b.special === 'pin' || b.special === 'pounce' ? 1 : 0]; if (b.special === 'explode') this.transform.makeScale(3.75, 1, 3.75); else this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); this.transform.setPosition(e.transform.x, 0.06, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
       }

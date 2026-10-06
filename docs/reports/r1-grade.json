@@ -1,0 +1,249 @@
+{
+  "done": false,
+  "implementation_commit": "ad4de77",
+  "base_commit": "e6ed97035ef0e66281fd2ede94dc11fec26a3f18",
+  "acceptance": {
+    "golden_morning": true,
+    "radial_fog": true,
+    "world_palette_texture": true,
+    "shared_lighting_model": true,
+    "no_plain_lambert_standard_in_scene": true,
+    "hdr_emitters": true,
+    "high_low_dof": true,
+    "soft_contact_shadows": true,
+    "normal_l1_budgets": true,
+    "low_200_triangle_budget": false,
+    "independent_colour_harmony_score": null,
+    "webgpu_manual_check": "pending",
+    "no_shadow_stipple": "pass: local final WebGL2 visual review",
+    "shadow_hue_shift_V1_V2_V4": true,
+    "V4_blooming_light_groups": [
+      "diner roof neon",
+      "diner windows",
+      "vending display"
+    ]
+  },
+  "tests": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "grade_unit": {
+      "passed": 3,
+      "failed": 0
+    },
+    "all_unit": {
+      "passed": 152,
+      "failed": 1,
+      "failure": "inherited stale hedge/tree collision hash",
+      "classification": "baseline"
+    },
+    "smoke": {
+      "unit_passed": 3,
+      "browser_passed": 22,
+      "failed": 0
+    },
+    "grade_and_capture_browser": {
+      "passed": 5,
+      "failed": 1,
+      "failure": "200-runner low triangle budget"
+    },
+    "verify_E19": {
+      "passed": 35,
+      "failed": 2,
+      "browser_phase": "not run because earlier unit/sim gate failed",
+      "failures": [
+        "inherited stale hedge/tree collision hash",
+        "inherited M1-07 hedge navigation arrival error 4.076958438837988 m"
+      ],
+      "classification": "baseline",
+      "note": "Inherited failures reproduced before the final shadow-filter correction; redundant rerun stopped at the queued build per orchestrator instruction."
+    }
+  },
+  "viewpoints": {
+    "desktop": [
+      {
+        "viewpoint": "V1",
+        "x": -14,
+        "z": -7,
+        "p95_ms": 4.800000000000182,
+        "draw_calls": 240,
+        "triangles": 901129,
+        "collected_heap_bytes": 145443308,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "viewpoint": "V2",
+        "x": 0,
+        "z": 0,
+        "p95_ms": 5,
+        "draw_calls": 234,
+        "triangles": 831089,
+        "collected_heap_bytes": 146120660,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "viewpoint": "V3",
+        "x": 27,
+        "z": 0,
+        "p95_ms": 4.600000000000364,
+        "draw_calls": 245,
+        "triangles": 769719,
+        "collected_heap_bytes": 146571524,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "viewpoint": "V4",
+        "x": 42,
+        "z": -6.5,
+        "p95_ms": 4.80000000000291,
+        "draw_calls": 233,
+        "triangles": 950600,
+        "collected_heap_bytes": 149256936,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "viewpoint": "V5",
+        "x": 56,
+        "z": 0,
+        "p95_ms": 5.69999999999709,
+        "draw_calls": 264,
+        "triangles": 799313,
+        "collected_heap_bytes": 150098924,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "viewpoint": "V6",
+        "x": 70,
+        "z": -7,
+        "p95_ms": 4.900000000001455,
+        "draw_calls": 262,
+        "triangles": 1147107,
+        "collected_heap_bytes": 150657260,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      }
+    ],
+    "iphone": [
+      {
+        "viewpoint": "V1",
+        "x": -14,
+        "z": -7,
+        "p95_ms": 4.399999999999636,
+        "draw_calls": 245,
+        "triangles": 320240,
+        "collected_heap_bytes": 145922404,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "viewpoint": "V2",
+        "x": 0,
+        "z": 0,
+        "p95_ms": 4.800000000001091,
+        "draw_calls": 252,
+        "triangles": 385976,
+        "collected_heap_bytes": 146519632,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "viewpoint": "V3",
+        "x": 27,
+        "z": 0,
+        "p95_ms": 4.200000000000728,
+        "draw_calls": 225,
+        "triangles": 409076,
+        "collected_heap_bytes": 147028592,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "viewpoint": "V4",
+        "x": 42,
+        "z": -6.5,
+        "p95_ms": 3.8000000000029104,
+        "draw_calls": 229,
+        "triangles": 333525,
+        "collected_heap_bytes": 147223600,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "viewpoint": "V5",
+        "x": 56,
+        "z": 0,
+        "p95_ms": 4.599999999998545,
+        "draw_calls": 226,
+        "triangles": 298670,
+        "collected_heap_bytes": 147561416,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      },
+      {
+        "viewpoint": "V6",
+        "x": 70,
+        "z": -7,
+        "p95_ms": 3.900000000001455,
+        "draw_calls": 194,
+        "triangles": 262881,
+        "collected_heap_bytes": 147851924,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)"
+      }
+    ]
+  },
+  "horde_stress": {
+    "high": {
+      "infected": 200,
+      "render_tier": "high",
+      "simulation_tier": "high",
+      "actor_state": "chase",
+      "duration_ms": 12007.800000071526,
+      "simulation_ticks": 720,
+      "p95_ms": 5.5,
+      "draw_calls": 59,
+      "triangles": 1310745
+    },
+    "low": {
+      "infected": 200,
+      "render_tier": "low",
+      "simulation_tier": "high",
+      "actor_state": "chase",
+      "duration_ms": 12005.399999976158,
+      "simulation_ticks": 720,
+      "p95_ms": 4.200000000000728,
+      "draw_calls": 58,
+      "triangles": 839377
+    }
+  },
+  "notes": [
+    "Native headless Metal WebGL2 on Apple M1 Max; portrait is mobile emulation, not a physical-phone measurement.",
+    "Low render stress preserves 200 high-tier simulated actors via a render-only test API probe; normal low gameplay caps remain 100.",
+    "Source and snapshots under protected figure scope were not edited.",
+    "No specs were edited.",
+    "Independent art review pending; local comparison is not an independent >=8 score.",
+    "Final stress measures 200 chasing runners over twelve seconds / 720 simulation ticks; desktop passes all budgets, portrait exceeds the triangle budget."
+  ],
+  "implementation_commits": [
+    "b9d5caa",
+    "ad4de77"
+  ],
+  "viewpoints_reviewed": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6"
+  ],
+  "review_tiers": [
+    "desktop-1600x900-high",
+    "portrait-390x844-low"
+  ],
+  "comparison_harness": "r0-lookdev/tools/look/score.ts",
+  "perf": {
+    "desktop": {
+      "max_p95_ms": 5.69999999999709,
+      "max_draw_calls": 264,
+      "max_triangles": 1147107
+    },
+    "iphone": {
+      "max_p95_ms": 4.800000000001091,
+      "max_draw_calls": 252,
+      "max_triangles": 409076
+    }
+  }
+}
