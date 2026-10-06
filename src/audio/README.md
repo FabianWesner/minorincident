@@ -21,10 +21,11 @@ tinnitus (strictly inside 4 m), and haptics. `diegetic` sources are spatial; eme
 radio uses dialogue ducking and `inCar` applies a 2.4 kHz low-pass.
 
 The cue table maps all sim event types, including silent control events, archetype
-telegraphs, surfaces and materials. Sprite offsets/durations are seconds. All assets
-are original procedural placeholders built with `npx tsx tools/audio/build.ts`
-(requires a local FFmpeg with Opus/AAC encoders). This produces both formats and
-`public/assets/audio/LICENSES.md` with per-file hashes. The loader tries Opus, then
+telegraphs, surfaces and materials. Sprite offsets/durations are seconds. Licensed
+recordings and residual procedural system cues are built with
+`npx tsx tools/audio/build.ts` (requires FFmpeg with Opus/AAC encoders, curl and bsdtar).
+This produces both formats and `public/assets/audio/LICENSES.md` with per-file hashes.
+The loader tries Opus, then
 AAC, decodes each category once, and never queues a play while locked or away.
 The production graph is also used by the query-gated native offline renderer.
 

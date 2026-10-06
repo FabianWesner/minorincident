@@ -10,6 +10,7 @@ export class StreamedMusic {
     private generation = 0;
     private suspended = false;
     private requested: MusicState | null = null;
+    private target: { state: MusicState; requested: number; epoch: number; bar: number } | null = null;
     state: MusicState | null = null;
     readonly errors: string[] = [];
     readonly transitions: { state: MusicState; requested: number; time: number }[] = [];
@@ -30,6 +31,7 @@ export class StreamedMusic {
         return deck;
     }
     async transition(state: MusicState, requested: number, epoch: number, bar: number): Promise<void> {
+        this.target = { state, requested, epoch, bar };
         if (state === this.requested || this.suspended) return;
         this.requested = state;
         const generation = ++this.generation, incoming = this.deck(state);
@@ -78,12 +80,18 @@ export class StreamedMusic {
                 try { await deck.media.play(); } catch { /* A later gesture retries playback. */ }
                 if (generation !== this.generation || this.suspended) deck.media.pause();
             }
+        if (generation !== this.generation || this.suspended) return;
         this.requested = this.state;
+        // A blur can interrupt the first play() before it has become the active state.
+        // Keep the last musical request so returning focus can retry that incoming deck.
+        const target = this.target;
+        if (target && target.state !== this.state)
+            await this.transition(target.state, target.requested, target.epoch, target.bar);
     }
     snapshot() { return { state: this.state, transitions: [...this.transitions], decks: [...this.decks].map(([state, d]) => ({ state, paused: d.media.paused, position: d.media.currentTime, gain: d.gain.gain.value })) }; }
     reset(): void {
         ++this.generation;
         for (const deck of this.decks.values()) { deck.media.pause(); deck.media.removeAttribute('src'); deck.media.load(); deck.source.disconnect(); deck.gain.disconnect(); }
-        this.decks.clear(); this.state = null; this.requested = null; this.errors.length = 0; this.transitions.length = 0;
+        this.decks.clear(); this.state = null; this.requested = null; this.target = null; this.errors.length = 0; this.transitions.length = 0;
     }
 }
