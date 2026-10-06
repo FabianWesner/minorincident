@@ -30,14 +30,12 @@ const fresh = (): L1State => ({
  * From beat 6 on the outbreak is systemic (lanes C and D); this class then only counts results.
  */
 export class LevelOneOutbreak {
-  private rng: Rng;
-  constructor(private readonly mission: Mission) { this.rng = new Rng(mission.world.seed, 'l1-story'); }
+  constructor(private readonly mission: Mission) {}
   private get l1(): L1State { return this.mission.state.l1!; }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
 
   prepare(): void {
     const { world, state } = this.mission, ai = world.infected, npcs = world.npcs;
-    this.rng = new Rng(world.seed, 'l1-story');
     state.l1 = fresh();
     world.combat?.clearLoadout();
     // Caps 60 (high) / 30 (low): the director halves levelCap on the low tier.
@@ -60,6 +58,11 @@ export class LevelOneOutbreak {
     const { world } = this.mission, l1 = this.l1;
     if (id === 'pickup') l1.carrying = true;
     if (id === 'weapon') world.combat?.setLoadout(['weapon.bat'], ['weapon.kick']);
+    if (id === 'firestation') {
+      // The shutter closes behind the player (the gate action blocks the player collider): infected outside cannot pass either.
+      const door = this.anchor('fire-bay-door');
+      world.events.emit({ type: 'world.blocker.changed', tick: world.tick, id: 900_001, blocked: true, wall: { x: door.x, z: door.z, y: .7, halfX: door.radius, halfY: .7, halfZ: .2 } });
+    }
   }
   noteTurned(id: number): void { const l1 = this.mission.state.l1; if (l1 && !l1.turnedIds.includes(id)) l1.turnedIds.push(id); }
   noteEscaped(id: number): void { const l1 = this.mission.state.l1; if (l1 && !l1.escapedIds.includes(id)) l1.escapedIds.push(id); }
@@ -135,9 +138,10 @@ export class LevelOneOutbreak {
     else {
       this.place(tech, spawn.x, spawn.z, this.anchor('lab-door'));
       l1.delivered = true; l1.deliveredAt = tick; l1.phase = 'calm'; l1.carrying = false;
-      // 4 to 6 s of nothing, then the accident (seeded, same on every checkpoint replay of the same seed).
-      l1.flickerAt = tick + Math.round((l1v2.accident.calmS[0] + this.rng.next() * (l1v2.accident.calmS[1] - l1v2.accident.calmS[0])) * TICKS);
-      l1.exitAt = l1.flickerAt + Math.round((l1v2.accident.exitDelayS[0] + this.rng.next() * (l1v2.accident.exitDelayS[1] - l1v2.accident.exitDelayS[0])) * TICKS);
+      // 4 to 6 s of nothing, then the accident: a fresh seeded stream, so a retry after death replays the same timing.
+      const rng = new Rng(world.seed, 'l1-story');
+      l1.flickerAt = tick + Math.round((l1v2.accident.calmS[0] + rng.next() * (l1v2.accident.calmS[1] - l1v2.accident.calmS[0])) * TICKS);
+      l1.exitAt = l1.flickerAt + Math.round((l1v2.accident.exitDelayS[0] + rng.next() * (l1v2.accident.exitDelayS[1] - l1v2.accident.exitDelayS[0])) * TICKS);
       this.mission.setState('delivered', true);
       this.mission.signal('l1.delivered');
       this.mission.radio('L1.delivered');

@@ -6,10 +6,13 @@ import { resolveCampaignMission } from '../../../src/levels/missions';
 import { NpcPatrol } from '../../../src/debug/bot/NpcPatrol';
 import { step, teleport } from './helpers';
 async function load(id: 'L1' | 'L2' | 'L5') { const w = new SimWorld(); await w.init(); const c = compositions[id]; w.loadComposition(c, c.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8')))); w.loadMission(resolveCampaignMission(id, w.districts!)); w.missions!.begin(); return w; }
-test('@E08 L1 diner beat uses real rescue lifecycle and tier collision refresh', async () => {
-  const w = await load('L1'); w.missions!.completeObjective('breakfast'); expect(w.districts!.composition.tier).toBe(1);
-  const e = [...w.entities.iterate()].find(e => e.civilian?.state === 'grabbed')!; expect(e).toBeDefined(); w.entities.get(e.civilian!.attacker)!.health.current = 0; step(w, 1); expect(w.missions!.state.stats.rescued).toBe(1);
-  w.setTier(2); expect([...w.entities.iterate()].filter(e => e.traffic)).toHaveLength(0); w.dispose();
+test('@E08 rescue lifecycle and tier collision refresh on the retired M1 map (L1 v2 replaced the diner beat)', async () => {
+  const w = new SimWorld(); await w.init(); const c = compositions['L1-M1']; w.loadComposition(c, c.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))));
+  const nav = w.infected!.nav, p = w.entities.get(1)!.transform, free = (dx: number) => { const cell = nav.nearestCell(p.x + dx, p.z); return { x: nav.x(cell), z: nav.z(cell) }; };
+  const victim = w.npcs!.civilians.spawn('cashier', free(4), { waypoints: [free(4)] }), attacker = w.infected!.spawn('infected.runner', free(6));
+  expect(w.npcs!.civilians.grab(victim, attacker, true)).toBe(true); expect(w.entities.get(victim)!.civilian!.state).toBe('grabbed');
+  w.entities.get(attacker)!.health.current = 0; step(w, 1); expect(w.events.events().some(e => e.type === 'civilian.saved' && e.id === victim)).toBe(true);
+  w.setTier(1); expect(w.districts!.composition.tier).toBe(1); w.setTier(2); expect([...w.entities.iterate()].filter(e => e.traffic)).toHaveLength(0); w.dispose();
 });
 test('@E08 L2 brother receives protected follower component; checkpoint restores references/timers', async () => {
   const w = await load('L2'); w.missions!.completeObjective('neighbor'); w.missions!.completeObjective('school'); w.missions!.completeObjective('brother'); const id = w.missions!.state.actors.brother, e = w.entities.get(id)!;

@@ -96,7 +96,11 @@ export class MissionUI {
         const dx=(a.x-player.transform.x)/extent*40,dy=(a.z-player.transform.z)/extent*40,scale=Math.min(1,40/Math.max(1,Math.hypot(dx,dy)));
         pin.style.left=`${50+dx*scale}%`;pin.style.top=`${50+dy*scale}%`;
       }
-    }else{this.toast.hidden=true;}
+    }else{
+      this.toast.hidden=true;
+      const done=!objective&&playing&&mission.def.l1?[...mission.def.steps].reverse().find(s=>state.steps[s.id].status==='completed'):undefined;
+      if(done)this.text(this.tracker,`✓ ${done.text}`);
+    }
   }
   reset(): void {this.displayedMission=null;this.root.hidden=true;this.phase=this.active='';for(const pin of this.pins.values())pin.remove();this.pins.clear();}
   dispose(): void {this.button.removeEventListener('click',this.accept);this.root.remove();}
