@@ -247,13 +247,21 @@ export class DistrictView extends Group {
   }
   setQuality(tier: 'high' | 'low'): void {
     if (this.low !== (tier === 'low')) { this.low = tier === 'low'; this.cameraPosition = [Infinity, Infinity, Infinity]; }
-    for (const grass of this.grass) grass.setQuality(tier === 'low');
+    for (const grass of this.grass) grass.setQuality(tier === 'low', tier === 'low' ? this.materials.look.values.grassDensityLow : this.materials.look.values.grassDensity);
     this.ambient?.setQuality(tier === 'low');
     // Measured L6 cost: many small prop meshes render again into the sun shadow map.
     // Low preserves building/vehicle/hero shadows and omits detailed prop shadow casters.
     for (const batch of this.batches) if (worldAssets[batch.name.slice(5)].category === 'prop') batch.traverse(node => {
       if (node instanceof Mesh) { node.userData.qualityCastShadow ??= node.castShadow; node.castShadow = tier === 'high' && node.userData.qualityCastShadow; }
     });
+  }
+  applyLook(): void {
+    const v = this.materials.look.values;
+    for (const grass of this.grass) grass.setQuality(this.low, this.low ? v.grassDensityLow : v.grassDensity);
+    for (const entry of this.lodBatches) if (/^prop\.(tree|bush|hedge)/.test(entry.id)) {
+      for (const ref of entry.refs) { ref.userData.lookHeight ??= ref.scale.y; ref.scale.y = ref.userData.lookHeight * v.foliageHeight; }
+    }
+    this.cameraPosition = [Infinity, Infinity, Infinity];
   }
   advance(seconds: number): void {
     this.phase.value += seconds; this.labelTime += seconds;
@@ -277,14 +285,14 @@ export class DistrictView extends Group {
     for (const entry of this.lodBatches) {
       const { hero, near, far, refs, origin, height, radius } = entry;
       hero.references.length = 0; near.references.length = 0; far.references.length = 0;
-      for (const ref of refs) {
+      const foliage = /^prop\.(tree|bush|hedge)/.test(entry.id);
+      for (const [index, ref] of refs.entries()) {
+        if (foliage && index >= Math.ceil(refs.length * this.materials.look.values.foliageDensity)) continue;
         const x = ref.position.x + origin[0], z = ref.position.z + origin[1];
         this.bounds.center.set(x, ref.position.y + height / 2, z); this.bounds.radius = radius;
         if (!this.frustum.intersectsSphere(this.bounds)) continue;
         const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
-        // At the L1 connection, the houses/cars at 18–24 m dominate the mobile
-        // triangle budget; use their authored LOD2 while retaining near silhouettes.
-        (distance > (this.low ? 18 : 30) ? far : !this.low && distance <= 12 ? hero : near).references.push(ref);
+        (distance > (this.low ? 16 : 30) || this.low && worldAssets[entry.id].category === 'prop' ? far : !this.low && distance <= 12 ? hero : near).references.push(ref);
       }
       for (const batch of [hero, near, far]) {
         batch.visible = batch.references.length > 0;

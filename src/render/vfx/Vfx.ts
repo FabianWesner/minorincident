@@ -202,6 +202,7 @@ export class Vfx extends Group {
     else if (event.type === 'vehicle.exploded') { const p = this.world.entities.get(event.sourceId)?.transform; if (p) this.effect('explosion', p.x, p.z, 6); }
     else if (event.type === 'noise' && event.kind === 'scream') this.effect('screamer', event.position.x, event.position.z, event.radius);
     else if (event.type === 'hazard.electrified' || event.type === 'prop.ignited') { const p = this.world.entities.get(event.id)?.transform; if (p) this.effect(event.type === 'hazard.electrified' ? 'electric' : 'fire', p.x, p.z, 1); }
+    else if (event.type === 'civilian.turned' && this.enabled) this.burst(event.position.x, .9, event.position.z, 0x96b76a, 8, .045, .4, 1);
     else if (event.type === 'pickup.collected') { const e = this.world.entities.get('id' in event ? event.id : event.sourceId); if (e) this.effect('pickup', e.transform.x, e.transform.z, 1); }
     else if (event.type === 'vfx.effect') this.effect(event.kind, event.position.x, event.position.z, event.radius);
   };
