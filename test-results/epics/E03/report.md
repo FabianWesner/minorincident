@@ -7,7 +7,8 @@ harmless annoyed stagger alongside the infection states; both state-machine
 updates survive. The latest main mobile policy (far LOD beyond 16 m and
 LOD2 for props) supersedes the earlier 18 m correction below. The GLB and
 runtime tracks are regenerated from the merged Blender script. Merge-specific
-validation will be recorded in `merge-checks.json`.
+validation is recorded in `merge-checks.json`: typecheck, lint, 181 unit tests
+and build pass; browser smoke and the focused unarmed test are queued.
 
 Implemented the product owner's October 6 updates: explicit ground click/hold movement;
 LMB targets/approaches infected with the active action; Shift+LMB always swings in place,
