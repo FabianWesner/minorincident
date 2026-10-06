@@ -286,7 +286,7 @@ export class GameView implements Lifecycle {
       this.character.scale.setScalar(this.camera.aspect < 1 ? 1.25 : 1);
       this.character.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha) - 0.7, lerp(previous?.z ?? current.z, current.z, alpha));
       const from = previous?.yaw ?? current.yaw;
-      this.character.rotation.y = from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha;
+      this.character.face(from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60);
       const stopped = this.vfx?.hitStop.active(this.vfx.time) ?? false;
       if (stopped && this.vfx!.hitStop.started !== this.frozenStarted && this.frozenPose) {
         this.frozenStarted = this.vfx!.hitStop.started; this.hitStopTick = this.world.tick;

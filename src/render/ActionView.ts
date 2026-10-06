@@ -1,4 +1,4 @@
-import { BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
+import { AdditiveBlending, BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
 import { actionIconUrl } from '../assets/icons';
 import { catalog, action } from '../data/actions/catalog';
 import { AssetRegistry, type PlaceholderLog } from '../assets/registry';
@@ -10,6 +10,8 @@ import type { PaletteMaterial } from './PaletteMaterial';
 
 interface LoadedActionAsset { model: Object3D; source: 'glb' | 'placeholder'; reason: string | null }
 const sides = ['LEFT', 'RIGHT'] as const;
+/** Input slots: LEFT uses the dominant right hand. */
+const handSide = { LEFT: 'RIGHT', RIGHT: 'LEFT' } as const;
 
 /** Selected-side telegraph; fixed geometry buffers and reusable projectile meshes.
  * The ribbon update is adapted from Bruno Trails.js (MIT): reuse positions, update in place.
@@ -31,6 +33,15 @@ export class ActionView extends Group {
   private readonly socketPosition = new Vector3();
   private readonly handPosition = new Vector3();
   private readonly gripPosition = new Vector3();
+  private readonly trailGeometry = new BufferGeometry();
+  private readonly trailPositions = new Float32Array(16 * 18);
+  private readonly trailMaterial = new MeshBasicNodeMaterial({ color: '#fff0ba', transparent: true, opacity: .75, blending: AdditiveBlending, depthWrite: false, side: DoubleSide });
+  private readonly trail = new Mesh(this.trailGeometry, this.trailMaterial);
+  private readonly trailHistory = Array.from({ length: 16 }, () => ({ tick: -Infinity, tip: new Vector3(), grip: new Vector3() }));
+  private trailCursor = 0;
+  private trailTick = -1;
+  private trailAttack = -1;
+  private trailVertices = 0;
   private offset = 0;
   private maxHeight = 0;
   private selected: Side = 'LEFT';
@@ -39,6 +50,7 @@ export class ActionView extends Group {
   constructor(private readonly world: SimWorld, private readonly character: CharacterView, private readonly materials: Materials, renderer: WebGPURenderer) {
     super(); this.registry = new AssetRegistry((event) => this.placeholders.push(event), { renderer });
     this.geometry.setAttribute('position', new BufferAttribute(this.positions, 3)); this.geometry.setDrawRange(0, 0); this.indicator.frustumCulled = false; this.indicator.renderOrder = 2; this.add(this.indicator);
+    this.trailGeometry.setAttribute('position', new BufferAttribute(this.trailPositions, 3)); this.trailGeometry.setDrawRange(0, 0); this.trail.frustumCulled = false; this.trail.renderOrder = 3; this.add(this.trail);
     for (let i = 0; i < 32; i++) { const mesh = new Mesh(this.projectileGeometry, this.projectileMaterial); mesh.visible = false; this.projectiles.push(mesh); this.add(mesh); }
   }
   async init(): Promise<void> {
@@ -76,13 +88,14 @@ export class ActionView extends Group {
     const combat = this.world.combat, player = this.world.entities.get(1); if (!combat || !player) return;
     if (!player.weapons) {
       for (const held of Object.values(this.held)) held.model.removeFromParent();
-      this.offset = 0; this.geometry.setDrawRange(0, 0); return;
+      this.offset = 0; this.geometry.setDrawRange(0, 0); this.trailGeometry.setDrawRange(0, 0); return;
     }
     const loadout = combat.runner.loadout;
     for (const side of sides) {
       const def = action(loadout.current(side).id); let held = this.held[side];
       if (held?.id !== def.id) { held?.model.removeFromParent(); held = { id: def.id, model: this.assets.get(def.viewAssetId)!.model.clone(true) }; this.held[side] = held; }
-      const socket = this.character.socket(side).socket; if (held.model.parent !== socket) socket.add(held.model);
+      const socket = this.character.socket(handSide[side]).socket; if (held.model.parent !== socket) socket.add(held.model);
+      held.model.visible = !['weapon.fists', 'weapon.kick'].includes(def.id);
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = action(loadout.current(this.selected).id), origin = player.transform;
     this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(this.selected === 'LEFT' ? '#ffd166' : '#44ffe0');
@@ -109,17 +122,41 @@ export class ActionView extends Group {
       model.position.set(entity.transform.x, 0.25, entity.transform.z); model.rotation.z = 0.2;
     }
     for (const [id, model] of this.pickups) if (!this.world.entities.get(id)) { model.removeFromParent(); this.pickups.delete(id); }
+    this.updateTrail();
+  }
+  /** Short ribbon from actual authored weapon-tip history, including overhead planes. */
+  private updateTrail(): void {
+    const attack = Object.values(this.world.combat!.runner.running).find(a => a.def.category === 'melee' && !['weapon.fists','weapon.kick'].includes(a.def.id));
+    const tick = this.world.tick;
+    if (attack && attack.id !== this.trailAttack) { this.trailAttack = attack.id; for (const point of this.trailHistory) point.tick = -Infinity; }
+    if (attack && tick !== this.trailTick && tick >= attack.activeAt - 3 && tick < attack.recoveryAt + 8) {
+      const model = this.held[attack.side]?.model, tip = model?.getObjectByName('tip'), grip = model?.getObjectByName('grip');
+      if (tip && grip) { this.character.updateMatrixWorld(true); const point = this.trailHistory[this.trailCursor++ % 16]; point.tick = tick; tip.getWorldPosition(point.tip); grip.getWorldPosition(point.grip); }
+    }
+    this.trailTick = tick; this.trailVertices = 0;
+    let previous: typeof this.trailHistory[number] | undefined;
+    for (let i = 0; i < 16; i++) {
+      const point = this.trailHistory[(this.trailCursor + i) % 16];
+      if (tick - point.tick > 9) continue;
+      if (previous) {
+        const fraction = .5 + .45 * Math.min(1, (tick - previous.tick) / 9);
+        this.handPosition.lerpVectors(previous.grip, previous.tip, fraction); this.gripPosition.lerpVectors(point.grip, point.tip, fraction);
+        for (const vertex of [this.handPosition, previous.tip, point.tip, this.handPosition, point.tip, this.gripPosition]) { vertex.toArray(this.trailPositions, this.trailVertices * 3); this.trailVertices++; }
+      }
+      previous = point;
+    }
+    this.trail.visible = this.trailVertices > 0; this.trailGeometry.setDrawRange(0, this.trailVertices); this.trailGeometry.getAttribute('position').needsUpdate = true;
   }
   setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; }
   getState() {
     this.character.updateMatrixWorld(true);
     const attachments = (['LEFT', 'RIGHT'] as const).map((side) => {
-      const nodes = this.character.socket(side), held = this.held[side]; nodes.socket.getWorldPosition(this.socketPosition); nodes.hand.getWorldPosition(this.handPosition);
+      const nodes = this.character.socket(handSide[side]), held = this.held[side]; nodes.socket.getWorldPosition(this.socketPosition); nodes.hand.getWorldPosition(this.handPosition);
       held?.model.getObjectByName('grip')?.getWorldPosition(this.gripPosition);
       const def = held && action(held.id), asset = def && this.assets.get(def.viewAssetId);
       return { side, actionId: held?.id, iconUrl: def ? actionIconUrl(def.iconId) : null, socket: nodes.socket.name, handDistance: this.socketPosition.distanceTo(this.handPosition), gripDistance: this.gripPosition.distanceTo(this.socketPosition), attached: held?.model.parent === nodes.socket, source: asset?.source, sockets: def ? ['grip', def.category === 'ranged' ? 'muzzle' : 'tip'].filter((name) => held?.model.getObjectByName(name)) : [] };
     });
-    return { bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, maxHeight: this.maxHeight, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
+    return { trailVertices: this.trailVertices, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, maxHeight: this.maxHeight, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
   }
-  dispose(): void { for (const held of Object.values(this.held)) held.model.removeFromParent(); void this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.pickups.clear(); this.clear(); }
+  dispose(): void { for (const held of Object.values(this.held)) held.model.removeFromParent(); void this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.trailGeometry.dispose(); this.trailMaterial.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.pickups.clear(); this.clear(); }
 }

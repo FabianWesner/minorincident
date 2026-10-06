@@ -8,7 +8,7 @@ import { createCivilianPlaceholder, createCorgiPlaceholder } from './placeholder
 import { CivilianCrowd } from './CivilianCrowd';
 import { QuadrupedAnimator } from '../characters/QuadrupedAnimator';
 import { MotionPhase } from '../characters/MotionPhase';
-import { sampleClip, authoredClips, strides } from '../characters/clips';
+import { sampleClip, authoredClips, strides, strideScale } from '../characters/clips';
 interface Hero { animator: QuadrupedAnimator | null; root: Group; legs: Object3D[]; head: Object3D | undefined; tail: Object3D | undefined; badge: HTMLElement | null; source: string; moving: boolean; tick: number; x: number; z: number }
 /** NPC presentation owns its resources and HUD; sim state is consumed but never modified. */
 export class NpcView extends Group {
@@ -65,12 +65,12 @@ export class NpcView extends Group {
       hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(e.transform.x, 0, e.transform.z); hero.root.rotation.set(0, e.transform.yaw, 0);
       if (e.escort?.child) hero.root.scale.setScalar(.7);
       const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
-      if (down) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
+      if (down && hero.animator) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
       const motion = this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
       if (hero.animator) hero.animator.update(this.world.tick / 60, motion.speed, motion.distance);
       else {
         const clip = down ? 'death-side' : motion.speed > 2.5 ? 'run' : motion.speed > .06 ? 'npc-walk' : 'idle';
-        sampleClip(hero.root, clip, down ? authoredClips.get(clip)!.duration : strides[clip] ? motion.distance / strides[clip] % 1 * authoredClips.get(clip)!.duration : this.world.tick / 60 % authoredClips.get(clip)!.duration);
+        sampleClip(hero.root, clip, down ? authoredClips.get(clip)!.duration : strides[clip] ? motion.distance / (strides[clip] * strideScale(hero.root)) % 1 * authoredClips.get(clip)!.duration : this.world.tick / 60 % authoredClips.get(clip)!.duration);
       }
       if (hero.badge && e.escort) {
         this.point.set(e.transform.x, e.escort.child ? 1.25 : 1.8, e.transform.z).project(camera);

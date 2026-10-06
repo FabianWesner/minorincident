@@ -2,7 +2,7 @@
 import { BufferAttribute, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, type Group, type Object3D, type MeshBasicMaterial } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { characterNodes } from '../../data/survivor';
-import { authoredClips, sampleClip } from './clips';
+import { authoredClips, sampleClip, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import type { CrowdClip } from '../../assets/crowd';
 export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple'] as const;
@@ -23,7 +23,7 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
     const t = frame / (framesPerClip - 1);
     const animal = !!root.getObjectByName('body');
-    const name = animal ? clip === 'idle' ? 'corgi-idle' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
+    const name = animal ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : clip === 'idle' ? 'corgi-idle' : root.getObjectByName('wingL') ? 'infected-flight' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
     sampleClip(root, name, t * authoredClips.get(name)!.duration);
     root.updateMatrixWorld(true); for (const part of parts) matrices.push(...part.matrixWorld.elements);
   }
@@ -77,5 +77,5 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     offset += attribute.itemSize;
   }
   const clip: CrowdClip = { parts: parts.map(part => part.name), frames: framesPerClip * infectedClips.length, duration: infectedClips.length, matrices };
-  return { geometry, clip, shirtColor };
+  return { geometry, clip, shirtColor, strideScale: strideScale(root) };
 }

@@ -17,6 +17,7 @@ class CivilianBatch extends Group {
   private readonly childScale = new Vector3(.7, .7, .7);
   private readonly transform = new Matrix4();
   private readonly motion = new MotionPhase();
+  private strideScale = 1;
   private readonly colors = civilianRoles.map(d => new Color(d.color));
   private readonly frame = new InstancedBufferAttribute(new Float32Array(128), 1);
   private readonly tint = new InstancedBufferAttribute(new Float32Array(128 * 3), 3);
@@ -30,6 +31,7 @@ class CivilianBatch extends Group {
     const placeholder = loaded.userData.placeholder, model = placeholder ? createCivilianPlaceholder() : loaded as Group;
     this.source = placeholder ? 'placeholder' : 'glb';
     const baked = bakeInfected(model), color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
+    this.strideScale = baked.strideScale;
     for (let i = 0; i < veins.length; i++) veins[i] = Number(Math.abs(color.getX(i) - veinColor.r) < .0001 && Math.abs(color.getY(i) - veinColor.g) < .0001);
     baked.geometry.setAttribute('_vein', new BufferAttribute(veins, 1));
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_glow', this.glow); baked.geometry.setAttribute('_decay', this.decay);
@@ -56,7 +58,7 @@ class CivilianBatch extends Group {
       const motion = this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
       const clip = down ? 'death-side' : rising ? 'get-up' : c.state === 'grabbed' || c.state === 'bitten' ? 'hurt' : motion.speed > 2.5 ? 'run' : motion.speed > .06 ? e.id % 2 ? 'npc-walk' : 'npc-walk-relaxed' : 'idle';
       const duration = authoredClips.get(clip)!.duration;
-      const phase = down ? 1 : rising ? Math.min(1, (this.world.tick - c.entered) / 72) : strides[clip] ? motion.distance / strides[clip] % 1 : (this.world.tick / 60 + e.id * .137) / duration % 1;
+      const phase = down ? 1 : rising ? Math.min(1, (this.world.tick - c.entered) / 72) : strides[clip] ? motion.distance / (strides[clip] * this.strideScale * (c.adult ? 1 : .7)) % 1 : (this.world.tick / 60 + e.id * .137) / duration % 1;
       this.transform.makeRotationY(e.transform.yaw + (down && c.state !== 'finished' ? Math.sin(this.world.tick * .9) * c.veins * .012 : 0)); if (!c.adult) this.transform.scale(this.childScale); this.transform.setPosition(e.transform.x, 0, e.transform.z);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1));
       const role = civilianRoles.findIndex(d => d.variant === c.variant), color = this.colors[Math.max(0, role)]; this.tint.setXYZ(index, color.r, color.g, color.b); this.glow.setX(index, Number(c.eyesGlow)); this.decay.setX(index, c.veins); index++;

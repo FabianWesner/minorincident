@@ -12,7 +12,7 @@ import type { View } from './View';
 import { bakeInfected, framesPerClip, infectedClips } from './characters/bakeInfected';
 import { authoredClips, strides } from './characters/clips';
 import { MotionPhase } from './characters/MotionPhase';
-interface Batch { mesh: InstancedMesh; state: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
+interface Batch { mesh: InstancedMesh; state: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
 const variantShirts: Record<string, Color> = { 'inf.jogger': new Color('#3178ac'), 'inf.cashier': new Color('#e5d9b9'), 'inf.delivery-driver': new Color('#d4ad32'), 'inf.suburban-mom': new Color('#79865b'), 'inf.bbq-dad': new Color('#a86645'), 'inf.bathrobe-neighbor': new Color('#ac7a91') };
 /** One instanced, rigid-part GPU batch per archetype. Scene graph size never grows with infected population. */
 export class CrowdView extends Group {
@@ -70,7 +70,7 @@ export class CrowdView extends Group {
       const state = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
       baked.geometry.setAttribute('_state', state); baked.geometry.setAttribute('_variant', tint);
       const feedbackState = attribute('_state', 'vec4');
-      const material = Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float')), emissiveNode: attribute('color', 'vec3').mul(attribute('_emissive', 'float')).mul(3).add(feedbackState.w) });
+      const material = Object.assign(new MeshLambertNodeMaterial({ vertexColors: false, transparent: true }), { opacityNode: feedbackState.w.div(2).floor().div(255).oneMinus(), colorNode: mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float')), emissiveNode: attribute('color', 'vec3').mul(attribute('_emissive', 'float')).mul(3).add(feedbackState.w.mod(2)) });
       const matrix = crowdMatrix(texture, attribute('_part_index', 'float'), feedbackState.x);
       const part = attribute('_part_index', 'float'), leg = baked.clip.parts.indexOf('legL'), shin = baked.clip.parts.indexOf('shinL'), foot = baked.clip.parts.indexOf('footL');
       let visible = part.equal(leg).or(part.equal(shin)).or(part.equal(foot)).select(feedbackState.y.oneMinus(), 1);
@@ -91,7 +91,7 @@ export class CrowdView extends Group {
       const instance = mat4(column(0), column(4), column(8), column(12));
       material.positionNode = crowdPosition(instance, texture, part, feedbackState.x, positionGeometry.mul(visible));
       material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.normalize();
-      this.batches.set(`${def.id}:${lod}`, { lod, role: def.id, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
+      this.batches.set(`${def.id}:${lod}`, { lod, role: def.id, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
@@ -143,12 +143,12 @@ export class CrowdView extends Group {
       const tick = distance > 35 ? Math.floor(this.world.tick / 2) * 2 : this.world.tick;
       const motion = this.motion.sample(e.id, tick, e.transform.x, e.transform.z), reaction = e.combat.reaction;
       const age = reaction ? (this.world.tick - reaction.started) / 60 : Infinity;
-      const death = (['death-back', 'death-side', 'death-crumple'] as const)[reaction?.index ?? e.id % 3];
+      const death = (['death-back', 'death-side', 'death-crumple'] as const)[(reaction?.index ?? e.id) % 3];
       let clip: typeof infectedClips[number] = b.state === 'dead' ? death : b.legLost || e.archetype === 'infected.crawler' ? 'crawl' : b.state === 'attack' ? this.world.tick < b.until ? 'windup' : 'swing' : motion.speed > 2 ? 'infected-run' : motion.speed > .06 ? 'shamble' : 'idle';
-      if (reaction && age < (reaction.heavy ? 1.34 : .43) && b.state !== 'dead') clip = reaction.heavy ? age < .48 ? 'flung' : age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
+      if (reaction && age < (reaction.heavy ? 1.34 : .43) && b.state !== 'dead') clip = reaction.heavy ? age < .48 ? reaction.index % 2 ? 'knockdown' : 'flung' : age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
       if (b.special === 'dive') clip = 'run';
       const duration = authoredClips.get(clip)!.duration;
-      const phase = b.state === 'dead' ? Math.min(1, (this.world.tick - b.deadAt) / 60 / duration) : clip === 'windup' ? Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, clip === 'knockdown' ? 1 : age / (reaction.heavy ? .48 : duration)) : strides[clip] ? motion.distance / strides[clip] % 1 : (tick / 60 + e.id * .137) / duration % 1;
+      const phase = b.state === 'dead' ? Math.min(1, (this.world.tick - b.deadAt) / 60 / duration) : clip === 'windup' ? Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : duration)) : strides[clip] ? motion.distance / (strides[clip] * batch.strideScale) % 1 : (tick / 60 + e.id * .137) / duration % 1;
       const frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1), tint = variantShirts[b.variant] ?? batch.shirt;
       const flight = reaction ? Math.max(0, 1 - age / .28) : 0;
       const x = e.transform.x + (reaction ? (reaction.from.x - reaction.to.x) * flight * flight : 0), z = e.transform.z + (reaction ? (reaction.from.z - reaction.to.z) * flight * flight : 0);
@@ -156,8 +156,8 @@ export class CrowdView extends Group {
       if (e.archetype === 'infected.crow') {
         for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.state.setXYZW(batch.count++, frame, 0, 0, feedback?.strength ?? 0); }
       } else {
-        this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(x, e.transform.y - 0.7 - fade * .6 + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
-        batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), feedback?.mask ?? 0, feedback?.strength ?? 0);
+        this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(x, e.transform.y - 0.7 + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
+        batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZ(batch.count, tint.r, tint.g, tint.b); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), feedback?.mask ?? 0, (feedback?.strength ?? 0) + Math.round(fade * 255) * 2);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); }
       }
       if (e.health.current > 0 && e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, 0.018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
@@ -178,7 +178,7 @@ export class CrowdView extends Group {
   private limbPosition(id: number, limb: number) {
     const e = this.world.entities.get(id); if (!e?.combat || e.faction !== 'infected') return;
     const z = limb < 2 ? (limb === 0 ? -.3 : .3) : limb < 4 ? (limb === 2 ? -.12 : .12) : 0;
-    return { x: e.transform.x + Math.sin(e.transform.yaw) * z, y: e.transform.y - .7 + (limb < 2 ? .65 : limb < 4 ? .25 : 1.15), z: e.transform.z + Math.cos(e.transform.yaw) * z };
+    return { x: e.transform.x + Math.sin(e.transform.yaw) * z, y: e.transform.y - .7 + (e.health.current <= 0 ? .18 : limb < 2 ? .65 : limb < 4 ? .25 : 1.15), z: e.transform.z + Math.cos(e.transform.yaw) * z };
   }
   detach(id: number, limb: number) {
     const position = this.limbPosition(id, limb); if (!position) return;

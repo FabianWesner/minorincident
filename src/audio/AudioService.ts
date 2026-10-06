@@ -476,7 +476,7 @@ export class AudioService implements Lifecycle {
         }
         if (event.type === 'combat.attack') {
             if (!['ranged', 'throwable'].includes(action(event.actionId).category))
-                this.play(`action.${event.actionId}`, { position }, source);
+                this.play(`action.${event.actionId}`, { position, rate: event.actionId === 'weapon.bat' ? .8 : event.actionId === 'weapon.crowbar' ? .95 : event.actionId === 'weapon.machete' ? 1.3 : event.actionId === 'weapon.kick' ? .72 : 1.15 }, source);
             return;
         }
         if (event.type === 'footstep') {
@@ -638,6 +638,10 @@ export class AudioService implements Lifecycle {
         if (event.type === 'combat.hit' || event.type === 'combat.kill') {
             const target = this.world.entities.get(event.targetId);
             if (target?.faction === 'environment' || target?.vehicle) return;
+            if (event.type === 'combat.hit' && event.amount > 0 && event.damageType === 'melee') {
+                const material = event.actionId === 'weapon.bat' ? 'wood' : /crowbar|machete/.test(event.actionId) ? 'metal' : 'rubber';
+                this.play(`prop.${material}`, { position, gain: .6, rate: event.actionId === 'weapon.kick' ? .6 : event.actionId === 'weapon.machete' ? 1.25 : .85 }, source);
+            }
         }
         if (event.type === 'infected.attack')
             return; // close individual vocals are bounded by the horde manager
