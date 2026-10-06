@@ -228,3 +228,19 @@ test('@E19 M1-23 a newborn stays grounded and harmless during its rise; killing 
   m.restore('escape'); body = world.entities.get(m.state.outbreak!.victims[0])!;
   expect(body.hidden).toBeUndefined(); expect(body.civilian!.state).toBe('calm'); expect(world.infected!.active).toHaveLength(1);
 });
+
+test('@E19 civilian bite contact stops the attacker response until release', async () => {
+  const m = await start(), p = world.entities.get(1)!;
+  Object.assign(p.transform, { x: 80, z: 0 }); world.physics.playerBody!.setTranslation(p.transform, true);
+  m.completeObjective('breakfast');
+  const attacker = world.infected!.active[0];
+  for (let i = 0; i < 1500 && !world.npcs!.civilians.holds(attacker.id); i++) world.update();
+  expect(world.npcs!.civilians.holds(attacker.id)).toBe(true);
+  const contact = { ...attacker.transform };
+  for (let i = 0; i < 60; i++) {
+    world.update();
+    expect(world.npcs!.civilians.holds(attacker.id)).toBe(true);
+    expect(Math.hypot(attacker.transform.x - contact.x, attacker.transform.z - contact.z)).toBeLessThan(1e-6);
+  }
+  expect(attacker.motion!.speed).toBe(0);
+});

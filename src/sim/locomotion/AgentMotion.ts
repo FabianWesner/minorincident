@@ -25,8 +25,8 @@ export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGri
 }
 function actor(e: EntitySnapshot): boolean { return !!(e.infected || e.civilian || e.companion || e.escort); }
 // Corgi hiding still follows at the survivor's heels; it must retain its response.
-function forced(e: EntitySnapshot, tick: number): boolean {
-  return !!(e.hidden || e.health.current <= 0 || e.attachedTo !== undefined || (e.infectionRise && tick < e.infectionRise.until) || e.infected?.hidden || e.infected?.perched || (e.infected && e.infected.grabUntil > tick) || (e.combat && e.combat.staggerUntil > tick) || ['grabbed','down','rising','finished','infected'].includes(e.civilian?.state ?? '') || (e.civilian && e.civilian.knockedUntil > tick) || ['downed','dead'].includes(e.escort?.state ?? ''));
+function forced(e: EntitySnapshot, tick: number, world: SimWorld): boolean {
+  return !!(world.npcs?.civilians.holds(e.id) || e.hidden || e.health.current <= 0 || e.attachedTo !== undefined || (e.infectionRise && tick < e.infectionRise.until) || e.infected?.hidden || e.infected?.perched || (e.infected && e.infected.grabUntil > tick) || (e.combat && e.combat.staggerUntil > tick) || ['grabbed','down','rising','finished','infected'].includes(e.civilian?.state ?? '') || (e.civilian && e.civilian.knockedUntil > tick) || ['downed','dead'].includes(e.escort?.state ?? ''));
 }
 /** Runs once per world. Brakes actors whose behaviour supplies no movement this
  * tick, then publishes post-separation/grounding displacement for every figure. */
@@ -36,12 +36,12 @@ export function installAgentMotion(world: SimWorld): void {
     for (const [id] of previous) if (!world.entities.get(id)) previous.delete(id);
     for (const e of world.entities.iterate()) if (actor(e)) {
       const p = previous.get(e.id) ?? { x: e.transform.x, z: e.transform.z }; p.x = e.transform.x; p.z = e.transform.z; previous.set(e.id, p);
-      if (forced(e, world.tick) && e.locomotion) resetResponse(e.locomotion);
+      if (forced(e, world.tick, world) && e.locomotion) resetResponse(e.locomotion);
     }
   }, SimPhase.intent);
   world.events.on('sim.tick', () => {
     const nav = world.infected!.nav;
-    for (const e of world.entities.iterate()) if (actor(e) && !forced(e, world.tick) && e.locomotion && e.locomotion.updatedAt !== world.tick) {
+    for (const e of world.entities.iterate()) if (actor(e) && !forced(e, world.tick, world) && e.locomotion && e.locomotion.updatedAt !== world.tick) {
       moveAgent(e, 0, 0, nav, world.tick); world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
   }, SimPhase.missions + .5);
