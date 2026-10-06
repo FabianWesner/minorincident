@@ -156,7 +156,8 @@ export class GameView implements Lifecycle {
       this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
       this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
 
-      this.character=new CharacterView();await this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low');this.scene.add(this.character);
+      // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
+      this.character=new CharacterView();await this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', this.world.districts.composition.id === 'L1' ? 'courier' : 'survivor');this.scene.add(this.character);
     } else if (this.world.player) {
       this.renderer.shadowMap.enabled = true;
       this.lighting = new Lighting(this.scene, this.look); this.materials = new Materials(this.lighting);

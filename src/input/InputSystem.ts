@@ -67,7 +67,7 @@ export class InputSystem implements Lifecycle {
     this.cursor = new RayCursor(camera, canvas);
     this.keyboard = new Keyboard(window, this.key);
     this.pointer = new Pointer(canvas, window, this.mouseActivity, this.token);
-    this.wheel = new Wheel(canvas, (direction) => { this.mouseActivity(); this.zoom(direction * .075); });
+    this.wheel = new Wheel(canvas, (direction) => { this.mouseActivity(); this.zoom(direction * .14); });
     this.touch = new Touch(canvas, () => { this.pointer.valid = false; this.cancelMove = true; this.pointerGround = false; this.setScheme('touch'); }, (action, direction, side) => {
       if (action === 'selector') { this.selectors.push({ direction: 1, side }); }
       else if (action === 'interact') this.interact = true;
