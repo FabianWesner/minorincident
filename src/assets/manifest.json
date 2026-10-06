@@ -1136,7 +1136,7 @@
   {
     "id": "inf.crawler",
     "category": "infected",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/inf.crawler/build.py",
     "glb": "public/assets/models/inf.crawler.glb",
@@ -1187,11 +1187,7 @@
       "handL",
       "handR",
       "legL",
-      "legR",
-      "shinL",
-      "shinR",
-      "footL",
-      "footR"
+      "legR"
     ],
     "sockets": [],
     "budget": {
@@ -3069,13 +3065,13 @@
   {
     "id": "prop.shopping-cart",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.shopping-cart.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 1.2125000357627869,
+      "y": 1.1150000020861626,
+      "z": 0.7099999785423279,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3093,7 +3089,14 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.shopping-cart/model.glb",
+    "script": "assets/prop.shopping-cart/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.shopping-cart.lod1.glb",
+      "lod2": "public/assets/models/prop.shopping-cart.lod2.glb"
+    }
   },
   {
     "id": "prop.folding-chair",
@@ -3502,13 +3505,13 @@
   {
     "id": "veh.pickup-white",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/veh.pickup-white.glb",
     "dimensions": {
-      "x": 4.4,
-      "y": 1.8,
-      "z": 1.9,
+      "x": 4.400000274181366,
+      "y": 1.8999999184161425,
+      "z": 1.8000000715255737,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3542,18 +3545,25 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.pickup-white/model.glb",
+    "script": "assets/veh.pickup-white/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/veh.pickup-white.lod1.glb",
+      "lod2": "public/assets/models/veh.pickup-white.lod2.glb"
+    }
   },
   {
     "id": "veh.sedan-green",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/veh.sedan-green.glb",
     "dimensions": {
-      "x": 4.4,
-      "y": 1.8,
-      "z": 1.9,
+      "x": 4.400000095367432,
+      "y": 1.8999999463558197,
+      "z": 1.7999999523162842,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3587,18 +3597,25 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.sedan-green/model.glb",
+    "script": "assets/veh.sedan-green/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/veh.sedan-green.lod1.glb",
+      "lod2": "public/assets/models/veh.sedan-green.lod2.glb"
+    }
   },
   {
     "id": "veh.suv-green",
     "category": "vehicle",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/veh.suv-green.glb",
     "dimensions": {
-      "x": 4.4,
-      "y": 1.8,
-      "z": 1.9,
+      "x": 4.420900344848633,
+      "y": 1.8000001617067172,
+      "z": 1.899999886751175,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -3632,7 +3649,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/veh.suv-green/model.glb",
+    "script": "assets/veh.suv-green/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/veh.suv-green.lod1.glb",
+      "lod2": "public/assets/models/veh.suv-green.lod2.glb"
+    }
   },
   {
     "id": "veh.police-sedan",
@@ -3900,7 +3924,7 @@
   {
     "id": "bld.house-b",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.house-b.glb",
     "dimensions": {
@@ -3935,12 +3959,15 @@
     "world": {
       "token": "backpackTeal",
       "solid": true
+    },
+    "generatedLodRatios": {
+      "lod2": 0.03
     }
   },
   {
     "id": "bld.house-c",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/bld.house-c/build.py",
     "glb": "public/assets/models/bld.house-c.glb",
@@ -3975,6 +4002,9 @@
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "generatedLodRatios": {
+      "lod2": 0.03
     }
   },
   {
@@ -4082,7 +4112,7 @@
   {
     "id": "bld.joes-diner",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.joes-diner.glb",
     "dimensions": {
@@ -4117,6 +4147,9 @@
     "world": {
       "token": "survivorRed",
       "solid": true
+    },
+    "generatedLodRatios": {
+      "lod2": 0.03
     }
   },
   {
@@ -4162,13 +4195,13 @@
   {
     "id": "bld.maple-hardware",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.maple-hardware.glb",
     "dimensions": {
-      "x": 8,
-      "y": 5,
-      "z": 6,
+      "x": 7.429999589920044,
+      "y": 6.989999771118164,
+      "z": 11.399999618530273,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -4176,9 +4209,14 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "roof",
+      "interior",
+      "door_front"
     ],
-    "animatedNodes": [],
+    "animatedNodes": [
+      "door_front"
+    ],
     "sockets": [],
     "budget": {
       "triangles": 100000,
@@ -4186,7 +4224,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/bld.maple-hardware/model.glb",
+    "script": "assets/bld.maple-hardware/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/bld.maple-hardware.lod1.glb",
+      "lod2": "public/assets/models/bld.maple-hardware.lod2.glb"
+    }
   },
   {
     "id": "bld.mainstreet-brick",
@@ -4231,7 +4276,7 @@
   {
     "id": "bld.bus-stop",
     "category": "building",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/bld.bus-stop/build.py",
     "glb": "public/assets/models/bld.bus-stop.glb",
@@ -5063,9 +5108,9 @@
   {
     "id": "ui.portrait.survivor-m",
     "category": "ui",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
-    "glb": "public/assets/models/ui.portrait.survivor-m.glb",
+    "glb": "",
     "dimensions": {
       "x": 1,
       "y": 1,
@@ -5087,14 +5132,15 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "icon": "public/assets/ui/portrait-survivor-m.png"
   },
   {
     "id": "ui.portrait.survivor-f",
     "category": "ui",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
-    "glb": "public/assets/models/ui.portrait.survivor-f.glb",
+    "glb": "",
     "dimensions": {
       "x": 1,
       "y": 1,
@@ -5116,14 +5162,15 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "icon": "public/assets/ui/portrait-survivor-f.png"
   },
   {
     "id": "ui.portrait.corgi",
     "category": "ui",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
-    "glb": "public/assets/models/ui.portrait.corgi.glb",
+    "glb": "",
     "dimensions": {
       "x": 1,
       "y": 1,
@@ -5145,7 +5192,8 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "icon": "public/assets/ui/portrait-corgi.png"
   },
   {
     "id": "ui.palette-swatches",
@@ -5179,13 +5227,13 @@
   {
     "id": "npc.civilian-adult-m",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.civilian-adult-m.glb",
+    "glb": "public/assets/models/npc.civilian-man-a.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.4691,
+      "y": 1.8,
+      "z": 0.8363,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5238,18 +5286,25 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-man-a/model.glb",
+    "sourceScale": 1.25727403,
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-man-a.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-man-a.lod2.glb"
+    }
   },
   {
     "id": "npc.civilian-adult-f",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/npc.civilian-adult-f.glb",
+    "glb": "public/assets/models/npc.civilian-woman-a.glb",
     "dimensions": {
-      "x": 0.7,
-      "y": 1.6,
-      "z": 0.6,
+      "x": 0.6587,
+      "y": 1.8,
+      "z": 0.9618,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -5302,7 +5357,14 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-woman-a/model.glb",
+    "sourceScale": 1.27293605,
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-woman-a.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-woman-a.lod2.glb"
+    }
   },
   {
     "id": "npc.civilian-kid",
@@ -7694,13 +7756,13 @@
   {
     "id": "prop.plank-stack",
     "category": "prop",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.plank-stack.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 2.6837397813796997,
+      "y": 0.7281568124890327,
+      "z": 0.9681584239006042,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -7718,7 +7780,14 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.plank-stack/model.glb",
+    "script": "assets/prop.plank-stack/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.plank-stack.lod1.glb",
+      "lod2": "public/assets/models/prop.plank-stack.lod2.glb"
+    }
   },
   {
     "id": "prop.sandbag-pallet",
@@ -7797,13 +7866,13 @@
   {
     "id": "prop.sofa",
     "category": "prop",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.sofa.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 1.0769999772310257,
+      "y": 1.2500000298023224,
+      "z": 2.520000010728836,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -7821,18 +7890,25 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.sofa/model.glb",
+    "script": "assets/prop.sofa/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.sofa.lod1.glb",
+      "lod2": "public/assets/models/prop.sofa.lod2.glb"
+    }
   },
   {
     "id": "prop.pallet",
     "category": "prop",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.pallet.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 1.0109999850392342,
+      "y": 0.20800000242888927,
+      "z": 1.2000000476837158,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -7850,7 +7926,14 @@
       "fileKB": 1200,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "sourceGlb": "assets/prop.pallet/model.glb",
+    "script": "assets/prop.pallet/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.pallet.lod1.glb",
+      "lod2": "public/assets/models/prop.pallet.lod2.glb"
+    }
   },
   {
     "id": "prop.vending-cart",
@@ -9221,7 +9304,7 @@
   {
     "id": "npc.civilian-man-a",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.civilian-man-a.glb",
     "dimensions": {
@@ -9365,7 +9448,7 @@
   {
     "id": "npc.civilian-woman-a",
     "category": "character",
-    "status": "reference",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/npc.civilian-woman-a.glb",
     "dimensions": {
@@ -9605,7 +9688,7 @@
   {
     "id": "prop.hedge",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.hedge.glb",
     "dimensions": {
@@ -9636,6 +9719,10 @@
     "world": {
       "token": "foliage",
       "solid": true
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.hedge.lod1.glb",
+      "lod2": "public/assets/models/prop.hedge.lod2.glb"
     }
   },
   {
@@ -9951,59 +10038,91 @@
   {
     "id": "prop.tree",
     "category": "prop",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
-    "glb": "public/assets/models/prop.tree.glb",
+    "glb": "public/assets/models/prop.hedge.glb",
     "dimensions": {
-      "x": 3,
-      "y": 5,
-      "z": 3,
+      "x": 2.528046131134033,
+      "y": 1.563220500946045,
+      "z": 0.8810849189758301,
       "tolerance": 0.1
     },
     "forward": "+X",
-    "frontNodes": [],
-    "requiredNodes": [],
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
-      "triangles": 10000,
-      "materials": 8,
-      "fileKB": 512,
-      "drawCalls": 8
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
     },
     "decayVariants": [],
     "world": {
       "token": "foliage",
       "solid": false
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.hedge.lod1.glb",
+      "lod2": "public/assets/models/prop.hedge.lod2.glb"
     }
   },
   {
     "id": "veh.wreck",
     "category": "vehicle",
-    "status": "placeholder",
-    "tier": "side",
-    "glb": "public/assets/models/veh.wreck.glb",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/veh.sedan-green.glb",
     "dimensions": {
-      "x": 4.4,
-      "y": 0.9,
-      "z": 1.9,
+      "x": 4.400000095367432,
+      "y": 1.8999999463558197,
+      "z": 1.7999999523162842,
       "tolerance": 0.1
     },
     "forward": "+X",
-    "frontNodes": [],
-    "requiredNodes": [],
-    "animatedNodes": [],
-    "sockets": [],
+    "frontNodes": [
+      "wheelFL",
+      "wheelFR"
+    ],
+    "requiredNodes": [
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
     "budget": {
-      "triangles": 10000,
-      "materials": 8,
-      "fileKB": 512,
-      "drawCalls": 8
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
     },
     "decayVariants": [],
     "world": {
       "token": "uiDark",
       "solid": true
+    },
+    "lods": {
+      "lod1": "public/assets/models/veh.sedan-green.lod1.glb",
+      "lod2": "public/assets/models/veh.sedan-green.lod2.glb"
     }
   },
   {
@@ -10328,30 +10447,38 @@
   {
     "id": "prop.bus-stop",
     "category": "prop",
-    "status": "placeholder",
-    "tier": "side",
-    "glb": "public/assets/models/prop.bus-stop.glb",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/bld.bus-stop.glb",
     "dimensions": {
-      "x": 3,
-      "y": 2.5,
-      "z": 1.6,
+      "x": 2.0414009504020214,
+      "y": 2.6750000715255737,
+      "z": 4.969200611114502,
       "tolerance": 0.1
     },
     "forward": "+X",
-    "frontNodes": [],
-    "requiredNodes": [],
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
-      "triangles": 10000,
-      "materials": 8,
-      "fileKB": 512,
-      "drawCalls": 8
+      "triangles": 100000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
     },
     "decayVariants": [],
     "world": {
       "token": "policeBlue",
       "solid": true
+    },
+    "lods": {
+      "lod1": "public/assets/models/bld.bus-stop.lod1.glb",
+      "lod2": "public/assets/models/bld.bus-stop.lod2.glb"
     }
   },
   {
@@ -10386,31 +10513,42 @@
   {
     "id": "prop.flower",
     "category": "prop",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.flower.glb",
     "dimensions": {
-      "x": 0.3,
-      "y": 0.5,
-      "z": 0.3,
+      "x": 0.6320115327835083,
+      "y": 0.39080512523651123,
+      "z": 0.22027122974395752,
       "tolerance": 0.1
     },
     "forward": "+X",
-    "frontNodes": [],
-    "requiredNodes": [],
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
-      "triangles": 10000,
-      "materials": 8,
-      "fileKB": 512,
-      "drawCalls": 8
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
     },
     "decayVariants": [],
     "world": {
       "token": "schoolBusYellow",
       "solid": false
-    }
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.flower.lod1.glb",
+      "lod2": "public/assets/models/prop.flower.lod2.glb"
+    },
+    "sourceGlb": "assets/prop.hedge/model.glb",
+    "sourceForward": "+X",
+    "sourceScale": 0.25
   },
   {
     "id": "wpn.fists",
@@ -10447,7 +10585,7 @@
   {
     "id": "icon.fists",
     "category": "ui",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "",
     "icon": "src/assets/icons/fists.svg",
@@ -10505,7 +10643,7 @@
   {
     "id": "icon.kick",
     "category": "ui",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "",
     "icon": "src/assets/icons/kick.svg",
@@ -10531,7 +10669,7 @@
   {
     "id": "icon.bat",
     "category": "ui",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "",
     "icon": "src/assets/icons/bat.svg",
@@ -10557,7 +10695,7 @@
   {
     "id": "icon.crowbar",
     "category": "ui",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "",
     "icon": "src/assets/icons/crowbar.svg",
@@ -10583,7 +10721,7 @@
   {
     "id": "icon.machete",
     "category": "ui",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "",
     "icon": "src/assets/icons/machete.svg",
