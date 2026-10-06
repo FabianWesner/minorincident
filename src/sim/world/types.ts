@@ -21,6 +21,10 @@ export interface EntitySnapshot {
   /** E07 consumes this temporary noise target in preference to the player. */
   /** A newborn is rendered in its collapse/rise pose and cannot act until this timer ends. */
   infectionRise?: { started: number; until: number };
+  /** L1 v2 identity of a pedestrian, kept through infection (same model, tint, accessories; section 5.7). */
+  appearance?: import('../outbreak/appearance').Appearance;
+  /** L1 v2 transformation of a bitten pedestrian (0 to 1); removed when the same entity rises infected. */
+  infection?: import('../outbreak/types').InfectionState;
   noiseTarget?: { id: number; until: number };
   pickup?: import('../interact/Pickups').Pickup | { actionId: string; armed: boolean };
   speedBuff?: { multiplier: number; until: number };
@@ -30,6 +34,11 @@ export interface EntitySnapshot {
   /** Retaliation HP cost for vehicle ramming; supplied by infected definitions. */
   ramDamage?: number;
   vehicle?: import('../vehicles/Vehicles').VehicleState;
+  /** L1 v2: the courier bicycle (entity) and the id of the bicycle the player is riding (player entity). */
+  bicycle?: import('../vehicles/Bicycle').BicycleState;
+  riding?: number;
+  /** L1 v2 interactive toys (dumpster, car alarm, car wash); gates use `interactable`. */
+  toy?: import('../interact/Toys').ToyState;
   survivor?: SurvivorState;
   weapons?: import('../combat/Loadout').LoadoutState;
   combat?: { radius: number; armor: number; shield: boolean; staggerUntil: number; attacking: boolean; damageMultiplier: number; statuses: import('../combat/Status').StatusState[];

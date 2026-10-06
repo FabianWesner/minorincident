@@ -19,13 +19,17 @@ export interface OutbreakSeam extends SnapshotSeam {
 export interface L1Seams { bicycle?: SnapshotSeam; toys?: SnapshotSeam; outbreak?: OutbreakSeam }
 
 const names = ['bicycle', 'toys', 'outbreak'] as const;
+/** The real outbreak layer (lane D) is `world.npcs.civilians.outbreak`; its state is snapshot()/load(). */
+function resolve(world: SimWorld, name: typeof names[number]): SnapshotSeam | undefined {
+  if (name === 'outbreak') { const o = world.npcs?.civilians.outbreak; return o ? { snapshot: () => o.snapshot(), restore: s => o.load(s as ReturnType<typeof o.snapshot>) } : undefined; }
+  return l1Seams(world)[name];
+}
 export function l1Seams(world: SimWorld): L1Seams { return world as unknown as L1Seams; }
 export function captureSeams(world: SimWorld): Record<string, unknown> {
-  const seams = l1Seams(world), out: Record<string, unknown> = {};
-  for (const name of names) if (seams[name]) out[name] = structuredClone(seams[name]!.snapshot());
+  const out: Record<string, unknown> = {};
+  for (const name of names) { const seam = resolve(world, name); if (seam) out[name] = structuredClone(seam.snapshot()); }
   return out;
 }
 export function restoreSeams(world: SimWorld, saved: Record<string, unknown> | undefined): void {
-  const seams = l1Seams(world);
-  for (const name of names) if (seams[name] && saved && name in saved) seams[name]!.restore(structuredClone(saved[name]));
+  for (const name of names) { const seam = resolve(world, name); if (seam && saved && name in saved) seam.restore(structuredClone(saved[name])); }
 }

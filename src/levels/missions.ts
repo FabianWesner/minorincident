@@ -30,7 +30,7 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
     case 'L1': {
       // L1 v2 (specs/epic-19 section 3): courier job, hand-over, accident, systemic spread, bat, fire station.
       def.l1 = true;
-      for (const name of ['player-start', 'parcel-counter', 'lab-door', 'lab-gate', 'lab-exit-front', 'lab-exit-side', 'lab-exit-window', 'lab-smoke-vent', 'lab-smoke-window', 'lab-tech-spawn', 'garage-door', 'garage-bat', 'fire-bay-door', 'fire-bay-trigger']) anchor(name, 'D-GROVE', name);
+      for (const name of ['player-start', 'parcel-counter', 'lab-door', 'lab-gate', 'lab-exit-front', 'lab-exit-side', 'lab-exit-window', 'lab-smoke-vent', 'lab-smoke-window', 'lab-tech-spawn', 'garage-door', 'garage-bat', 'fire-bay-door', 'fire-bay-trigger', 'elm-horde-entry']) anchor(name, 'D-GROVE', name);
       def.items.push('parcel', 'bat'); def.states.push('delivered', 'exited', 'away'); def.checkpoints.push('accident', 'bat');
       def.gates['fire-shutter'] = { anchor: 'fire-bay-door', open: true };
       const pickup = interact('pickup', 'Pick up the package at the courier depot', 'parcel-counter', 1);

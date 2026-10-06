@@ -12,6 +12,8 @@ export class Civilians {
   level = 1;
   turns = 0;
   private readonly held = new Set<number>();
+  /** L1 v2 panic/infection layer; when set it owns every pedestrian it spawned (see src/sim/outbreak/Outbreak.ts). */
+  outbreak: import('../outbreak/Outbreak').Outbreak | null = null;
   private readonly nearby: number[] = [];
   private readonly query = { x: 0, z: 0, r: npcs.panicRadius };
   constructor(readonly world: SimWorld) {
@@ -41,6 +43,7 @@ export class Civilians {
     this.world.events.emit({ type: 'civilian.state', tick: this.world.tick, id: e.id, state, until: c.until });
   }
   alarm(position: Point): void {
+    if (this.outbreak) { this.outbreak.hear(position); return; }
     this.query.x = position.x; this.query.z = position.z;
     for (const id of this.world.spatial.query(this.query, this.nearby)) {
       const e = this.world.entities.get(id), c = e?.civilian;
@@ -61,6 +64,8 @@ export class Civilians {
     return true;
   }
   holds(id: number): boolean { return this.held.has(id); }
+  hold(id: number): void { this.held.add(id); }
+  release(id: number): void { this.held.delete(id); }
   restore(): void { this.held.clear(); this.turns = 0; for (const e of this.world.entities.iterate()) { if (e.civilian?.state === 'grabbed') this.held.add(e.civilian.attacker); if (e.civilian?.state === 'infected') this.turns++; } }
   private down(e: EntitySnapshot): void { const c = e.civilian!; c.downTicks = this.duration(c.outbreak ? [54, 66] : c.pet ? npcs.petDownTicks : npcs.downTicks); this.state(e, 'down', c.downTicks); }
   /** Called before generic damage. Living civilians have no health damage or hit events. */
@@ -72,9 +77,10 @@ export class Civilians {
     } else if (type === 'explosive' && mobileStates.has(c.state)) c.knockedUntil = this.world.tick + 90;
   }
   update(): void {
+    if (this.outbreak) this.outbreak.update();
     const ai = this.world.infected!, tick = this.world.tick;
     for (const e of this.world.entities.iterate()) {
-      const c = e.civilian; if (!c || c.state === 'infected' || c.state === 'finished') continue;
+      const c = e.civilian; if (!c || c.l1 || c.state === 'infected' || c.state === 'finished') continue;
       if (!c.adult) continue;
       if (c.risingInfectedId && (this.world.entities.get(c.risingInfectedId)?.health.current ?? 0) <= 0) {
         const newborn = this.world.entities.get(c.risingInfectedId); if (newborn) delete newborn.infectionRise;

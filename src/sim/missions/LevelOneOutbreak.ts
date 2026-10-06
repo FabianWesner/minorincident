@@ -1,7 +1,7 @@
 import { Rng } from '../../core/Rng';
 import { l1v2 } from '../../data/l1v2';
 import { l1AccidentEvents, type L1AccidentEventName } from '../outbreak/types';
-import { l1Seams } from './l1Seams';
+import { installL1Outbreak } from '../outbreak/install';
 import type { Mission } from './Mission';
 import type { L1State } from './types';
 import type { EntitySnapshot } from '../world/types';
@@ -14,8 +14,9 @@ const story = {
   anchors: { 'l1.flicker': 'lab-smoke-window', 'l1.blast': 'lab-exit-window', 'l1.ringing': 'lab-door', 'l1.smoke': 'lab-smoke-vent', 'l1.screams': 'lab-door', 'l1.infectedExit': 'lab-exit-front' } as Record<L1AccidentEventName, string>,
   exits: [['lab-exit-front', 125], ['lab-exit-front', 55], ['lab-exit-side', 350], ['lab-exit-window', 180], ['lab-exit-window', 235]] as [string, number][],
   /** Infected looks for the lab staff (existing variants until the lab-staff models are registered). */
+  staffModels: ['npc.civilian-man-a', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-man-b'],
   variants: ['inf.delivery-driver', 'inf.cashier', 'inf.bbq-dad', 'inf.suburban-mom', 'inf.bathrobe-neighbor'],
-  techRole: 'delivery-driver', techArchetype: 'npc.lab-tech-a',
+  techRole: 'delivery-driver', techModel: 'npc.civilian-man-b', techTint: '#f1f1ec',
   eventOrder: ['l1.flicker', 'l1.blast', 'l1.ringing', 'l1.smoke', 'l1.screams'] as const,
 };
 const fresh = (): L1State => ({
@@ -41,13 +42,14 @@ export class LevelOneOutbreak {
     // Caps 60 (high) / 30 (low): the director halves levelCap on the low tier.
     if (ai) ai.director.levelCap = l1v2.director.capHigh;
     if (!ai || !npcs) return;
-    // The technician is a civilian-component entity (renders through the NPC path) driven by the script alone.
+    // Lane D: pedestrians, panic, bites and transformations (after setQuality, so the tier is already known).
+    const outbreak = npcs.civilians.outbreak ?? installL1Outbreak(world);
+    // The technician is a pedestrian entity driven by the script alone; he turns in place (same id, look) at the exit.
     const spawn = this.anchor('lab-tech-spawn'), nav = ai.nav;
     const cell = nav.nearestCell(spawn.x, spawn.z), p = nav.clear(spawn.x, spawn.z, .35) ? { x: spawn.x, z: spawn.z } : { x: nav.x(cell), z: nav.z(cell) };
-    const id = npcs.civilians.spawn(story.techRole, p, { waypoints: [p] });
+    const id = outbreak.spawnPedestrian(p, { role: story.techRole, model: story.techModel, tint: story.techTint, tier: 'average' });
     const e = world.entities.get(id)!, c = e.civilian!;
-    e.archetype = story.techArchetype; c.model = story.techArchetype; c.ambient = false; c.pauseUntil = Number.MAX_SAFE_INTEGER;
-    c.variant = story.variants[0]; c.routine = 'staff';
+    c.ambient = false; c.pauseUntil = Number.MAX_SAFE_INTEGER; c.routine = 'staff';
     Object.assign(e.transform, spawn); this.face(e, this.anchor('lab-door'));
     world.spatial.set(id, spawn.x, spawn.z);
     this.l1.techId = id;
@@ -58,6 +60,11 @@ export class LevelOneOutbreak {
     const { world } = this.mission, l1 = this.l1;
     if (id === 'pickup') l1.carrying = true;
     if (id === 'weapon') world.combat?.setLoadout(['weapon.bat'], ['weapon.kick']);
+    if (id === 'weapon') {
+      // Beat 9 guarantee (director rules, section 5.9): at least 6 infected near the garage exit before the player leaves.
+      const outbreak = world.npcs?.civilians.outbreak, exit = this.anchor('garage-door'), entry = this.anchor('elm-horde-entry');
+      if (outbreak && entry) outbreak.ensureHorde(exit, entry);
+    }
     if (id === 'firestation') {
       // The shutter closes behind the player (the gate action blocks the player collider): infected outside cannot pass either.
       const door = this.anchor('fire-bay-door');
@@ -68,8 +75,8 @@ export class LevelOneOutbreak {
   noteEscaped(id: number): void { const l1 = this.mission.state.l1; if (l1 && !l1.escapedIds.includes(id)) l1.escapedIds.push(id); }
   /** Result screen numbers: delivery, living infected now, pedestrians turned, pedestrians who escaped. */
   result(): { delivered: boolean; infected: number; turned: number; escaped: number } {
-    const l1 = this.l1, ai = this.mission.world.infected;
-    return { delivered: l1.delivered, infected: ai ? ai.active.filter(e => e.health.current > 0).length : 0, turned: l1.turnedIds.length, escaped: l1.escapedIds.length };
+    const l1 = this.l1, ai = this.mission.world.infected, ob = this.mission.world.npcs?.civilians.outbreak;
+    return { delivered: l1.delivered, infected: ai ? ai.active.filter(e => e.health.current > 0).length : 0, turned: ob ? ob.stats.turned : l1.turnedIds.length, escaped: ob ? ob.stats.escaped : l1.escapedIds.length };
   }
 
   /**
@@ -193,34 +200,26 @@ export class LevelOneOutbreak {
     this.mission.setState('exited', true);
     this.mission.requestCheckpoint('accident');
   }
+  /** An exiting lab-staff member: a pedestrian turned at once (same pipeline as the technician), looks kept. */
   private spawnInfected(at: { x: number; z: number }, variant: string): number {
-    const ai = this.mission.world.infected!;
+    const { world } = this.mission, ai = world.infected!, outbreak = world.npcs?.civilians.outbreak;
     for (let r = 0; r <= story.exitSearchM; r += .5) for (let k = 0; k < 8; k++) {
       const p = { x: at.x + Math.cos(k * Math.PI / 4) * r, z: at.z + Math.sin(k * Math.PI / 4) * r };
-      if (ai.nav.clear(p.x, p.z, .45) && !ai.active.some(o => o.health.current > 0 && Math.hypot(o.transform.x - p.x, o.transform.z - p.z) < .9)) return ai.spawn('infected.runner', p, { variant });
+      if (!ai.nav.clear(p.x, p.z, .45) || ai.active.some(o => o.health.current > 0 && Math.hypot(o.transform.x - p.x, o.transform.z - p.z) < .9)) continue;
+      if (!outbreak) return ai.spawn('infected.runner', p, { variant });
+      const id = outbreak.spawnPedestrian(p, { role: story.techRole, model: story.staffModels[this.l1.exitIds.length % story.staffModels.length], tint: story.techTint });
+      outbreak.turnNow(world.entities.get(id)!);
+      return id;
     }
     return 0;
   }
-  /** The technician rises as infected #1: same entity id and look, civilian component replaced by the infected brain. */
+  /** The technician turns as infected #1: same entity id and look (lane D `turnNow`). */
   private infectTechnician(at: { x: number; z: number }): number {
-    const { world } = this.mission, l1 = this.l1, e = world.entities.get(l1.techId), ai = world.infected!;
-    if (!e) return this.spawnInfected(at, story.variants[0]);
-    const seam = l1Seams(world).outbreak;
-    if (seam?.infect?.(e.id, { tier: 'average', instant: true })) return e.id;
-    const donor = ai.pool.pop();
-    if (!donor) return this.spawnInfected(at, story.variants[0]);
-    // Fallback in place: adopt a pooled brain, keep the entity object (id, transform, look).
-    delete e.civilian;
-    e.kind = 'infected'; e.faction = 'infected'; e.archetype = 'infected.runner';
-    e.health = { current: 40, max: 40 };
-    e.infected = donor.infected; e.combat = donor.combat;
-    Object.assign(e.combat!, { radius: .35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1 }); e.combat!.statuses.length = 0;
-    Object.assign(e.infected!, { state: 'wander', variant: story.variants[0], speed: 5.1, pathGrid: -1, goal: -1, pathIndex: 0, until: 0, cooldown: 0, targetId: 0, hidden: false, grabHits: 0, grabUntil: 0, special: '', deadAt: -1 }); e.infected!.path.length = 0;
-    delete e.hidden;
-    world.spatial.set(e.id, e.transform.x, e.transform.z);
-    ai.active.push(e);
-    // Give the in-place entity the L1 brain (perception, search, tier speed) like every spawned infected.
-    if (ai.l1) { ai['initL1'](e, 'average'); e.infected!.l1!.pauseUntil = world.tick + 60 * TICKS; }
+    const { world } = this.mission, l1 = this.l1, e = world.entities.get(l1.techId), outbreak = world.npcs?.civilians.outbreak;
+    if (!e || !outbreak) return this.spawnInfected(at, story.variants[0]);
+    outbreak.turnNow(e, 'average');
+    // Held still until he reaches the door (scripted indoor leg), then the real AI is rushed outward.
+    const brain = e.infected?.l1; if (brain) brain.pauseUntil = world.tick + 60 * TICKS;
     return e.id;
   }
 

@@ -10,6 +10,7 @@ import { installVfxScenario } from '../../../tests/fixtures/scenarios/vfx';
 import { survivor } from '../../data/survivor';
 import { Combat } from '../combat/Combat';
 import { Interactables } from '../interact/Interactables';
+import { Toys } from '../interact/Toys';
 import { Hazards } from '../interact/Hazards';
 import { Pickups } from '../interact/Pickups';
 import { Status } from '../combat/Status';
@@ -49,6 +50,8 @@ export class SimWorld implements Lifecycle {
   infected: InfectedSystem | null = null;
   npcs: Npcs | null = null;
   interactables: Interactables | null = null;
+  /** L1 v2 toys (gates, dumpsters, car alarms, car wash) and the LOS blocker registry; null outside D-GROVE. */
+  toys: Toys | null = null;
   hazards: Hazards | null = null;
   pickups: Pickups | null = null;
   missions: Mission | null = null;
@@ -89,14 +92,14 @@ export class SimWorld implements Lifecycle {
       this.vehicles!.spawn('vehicle.sedan', { x: 0, z: 0 }); this.vehicles!.spawn('vehicle.police', { x: 0, z: 12 });
       for (let x = 25; x <= 575; x += 25) { const z = Math.sin(x / 40) * 3; this.vehicles!.obstacles.spawn('cone', { x, z: z - 2 }); this.vehicles!.obstacles.spawn('cone', { x, z: z + 2 }); }
     }
-    this.events.on('sim.tick', () => { this.effectiveInput = this.controls.resolve(this.input); }, SimPhase.input);
+    this.events.on('sim.tick', () => { const frame = this.controls.resolve(this.input); this.effectiveInput = this.vehicles?.bicycle.filter(frame) ?? frame; }, SimPhase.input);
     this.events.on('sim.tick', () => this.vehicles?.prePhysics(this.effectiveInput, this.scheme), SimPhase.input);
     this.events.on('sim.tick', () => { if (this.combat && this.vehicles?.active == null) this.combat.intent(this.effectiveInput); }, SimPhase.input);
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
       if (this.vehicles?.active != null) return;
-      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
+      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * (this.vehicles?.bicycle.speedScale ?? 1) * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
       body.setLinvel({ x: this.effectiveInput.move.x * 5, y: body.linvel().y, z: this.effectiveInput.move.z * 5 }, true);
@@ -147,6 +150,7 @@ export class SimWorld implements Lifecycle {
       this.placeInteractions(d.gameplay.interactions ?? {}, d.origin);
     }
     installCampaignNpcs(this);
+    if (districts.districts.some(d => d.layout.anchors['bike-start'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
     this.events.on('sim.tick',()=>{
       if(this.tick%60!==0)return;
       const player=this.entities.get(1)!;
@@ -228,7 +232,7 @@ export class SimWorld implements Lifecycle {
   }
   reset(): void {
     this.vehicles?.dispose(); this.vehicles = null;
-    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }

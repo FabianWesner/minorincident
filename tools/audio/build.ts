@@ -86,7 +86,7 @@ try {
                 samples.set(recipe ? recording(recipe, cue.duration, cue.loop, cue.bus === 'music') : synthesize(cue, rate), Math.round(cue.offset * rate));
             }
             // Streamed stereo score is 96k. Compact mono sprites keep both codecs below 4MB.
-            encode(category, samples, category === 'ambience' ? '32k' : category.startsWith('music-') ? '48k' : '40k');
+            encode(category, samples, category === 'l1arc' ? '24k' : category === 'ambience' ? '32k' : category.startsWith('music-') ? '48k' : '40k');
             pcmCache.clear();
         }
         for (const ext of ['webm', 'm4a']) {
