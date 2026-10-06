@@ -221,6 +221,7 @@ bpy.ops.object.select_all(action='SELECT')
 output.parent.mkdir(parents=True,exist_ok=True)
 bpy.ops.export_scene.gltf(filepath=str(output.resolve()),export_format='GLB',use_selection=True,
     export_yup=True,export_animations=True,export_animation_mode='NLA_TRACKS',
+    export_optimize_animation_size=True,export_optimize_animation_keep_anim_object=True,
     export_force_sampling=True,export_frame_range=False,export_frame_step=1,
     export_cameras=False,export_lights=False)
 print('EXPORT OK authored animation library',output)

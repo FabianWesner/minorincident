@@ -4,6 +4,9 @@
 It keys contact, passing, anticipation, strike, follow-through and recovery poses;
 Blender exports the clamped curves as sampled glTF actions in `library.glb`.
 The geometry and rigs remain the existing character assets.
+The export forces constant object channels to remain: otherwise Blender drops
+fixed guard arms and head compensation from the NLA actions. Duplicate samples
+still collapse to two keys, and the compiler removes neutral rest channels.
 
 Rebuild from the repository root, using the machine's Blender slot wrapper:
 
