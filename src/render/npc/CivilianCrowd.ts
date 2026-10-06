@@ -15,6 +15,12 @@ import { disposeCharacter } from '../characters/rig';
 import { createCivilianPlaceholder } from './placeholders';
 import { keepsLook } from '../../sim/outbreak/appearance';
 import type { EntitySnapshot } from '../../sim/world/types';
+type Clip = typeof infectedClips[number];
+/** Lane G's civilian panic and infected tier clips when baked, else the closest shared clip. */
+const clipOr = (name: string, fallback: Clip): Clip => (infectedClips as readonly string[]).includes(name) ? name as Clip : fallback;
+const tierGait = { frail: clipOr('infected-frail', 'infected-run'), average: clipOr('infected-lurch', 'infected-run'), athletic: clipOr('infected-sprint', 'infected-run') } as const;
+const civStartle = clipOr('civ-startle', 'hurt'), civFlee = clipOr('civ-flee', 'run'), civGrabbed = clipOr('civ-grabbed', 'hurt');
+const infectedIdle = clipOr('infected-idle', 'idle'), infectedSearch = clipOr('infected-search', 'idle');
 /** One human crowd draw regardless of density; poses, veins, eyes and clothing vary per instance. */
 class CivilianBatch extends Group {
   private poses!: CrowdPosePalette;
@@ -87,9 +93,9 @@ class CivilianBatch extends Group {
       const rising = c.state === 'rising', startle = c.state === 'alarmed' && !!c.l1;
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
       const speed = e.motion && !e.motion.moving ? 0 : motion.speed;
-      const clip = c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' || startle ? 'hurt' : speed > 2.5 ? 'run' : speed > .06 ? e.id % 2 ? 'npc-walk' : 'npc-walk-relaxed' : 'idle';
+      const clip: Clip = c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? e.id % 2 ? 'npc-walk' : 'npc-walk-relaxed' : 'idle';
       const duration = authoredClips.get(clip)!.duration, gaitDistance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
-      const phase = c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(.5, (this.world.tick - c.entered) / 40) : down ? 1 : strides[clip] ? gaitDistance / (strides[clip] * this.strideScale * (c.adult ? 1 : .7)) % 1 : (renderTick / 60 + e.id * .137) / duration % 1;
+      const phase = c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? gaitDistance / (strides[clip] * this.strideScale * (c.adult ? 1 : .7)) % 1 : (renderTick / 60 + e.id * .137) / duration % 1;
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       // Convulsions while on the ground: a seeded body shudder that grows with the infection.
       this.transform.makeRotationY(presented.yaw + (down && c.state !== 'finished' ? Math.sin(this.world.tick * .9 + e.id) * Math.max(c.veins, e.infection ? .4 : 0) * (e.infection ? .09 : .012) : 0)); if (!c.adult) this.transform.scale(this.childScale); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
@@ -112,7 +118,7 @@ class CivilianBatch extends Group {
     const b = e.infected!, tick = this.world.tick, distance = Math.hypot(e.transform.x - player.x, e.transform.z - player.z);
     if (e.hidden || b.hidden || (distance > 30) !== this.distant || b.state === 'dead' && tick - b.deadAt > 540) return false;
     const motion = this.motion.sample(e.id, tick, e.transform.x, e.transform.z), reaction = e.combat?.reaction, age = reaction ? (tick - reaction.started) / 60 : Infinity;
-    let clip: typeof infectedClips[number] = b.state === 'dead' ? 'death-back' : b.state === 'attack' ? tick < b.until ? 'windup' : 'swing' : motion.speed > 2 ? 'infected-run' : motion.speed > .06 ? 'shamble' : 'idle';
+    let clip: Clip = b.state === 'dead' ? 'death-back' : b.state === 'attack' ? tick < b.until ? 'windup' : 'swing' : motion.speed > 2 ? tierGait[e.appearance!.tier] : motion.speed > .06 ? 'shamble' : (b.state as string) === 'search' ? infectedSearch : infectedIdle;
     if (reaction && age < (reaction.heavy ? 1.34 : .43) && b.state !== 'dead') clip = reaction.heavy ? age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
     const duration = authoredClips.get(clip)!.duration, renderTick = Math.max(0, tick + alpha - 1);
     const phase = b.state === 'dead' ? Math.min(1, (tick - b.deadAt) / 60 / duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && age < 1.34 ? Math.min(1, age / (reaction.heavy ? .7 : .43)) : strides[clip] ? motion.distance / (strides[clip] * this.strideScale) % 1 : (renderTick / 60 + e.id * .137) / duration % 1;
