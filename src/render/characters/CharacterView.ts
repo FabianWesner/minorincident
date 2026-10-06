@@ -23,10 +23,11 @@ export class CharacterView extends Group {
   private facingTime = -1;
   private turn = 0;
   private readonly bloodMaterials: PaletteMaterial[] = [];
-  async init(materials: Materials, bloodFeedback = false, low = false): Promise<void> {
+  /** `outfit` picks the hero model set: L1 v2 plays the courier (E19), later levels the survivor. Same rig and clips. */
+  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor'): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     for (const variant of ['female', 'male'] as const) {
-      const id = `char.survivor-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
+      const id = `char.${outfit}-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
       const character = await loadCharacter(variant, async () => {
         if (!def || !atLeast(def.status, 'integrated')) {
           const reason = def ? `status ${def.status}` : 'missing manifest entry';

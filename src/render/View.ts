@@ -1,6 +1,9 @@
 // Adapted from folio-2025 View.js by Bruno Simon (MIT), commit 41046b5.
 import { PerspectiveCamera, Vector3 } from 'three';
 
+/** Zoom range as a fraction of the default radius (PO, E19 I1 review): in until the hero is ~1/3.5 of the
+ * viewport height (courier 1.4 m at 25° FOV ≈ 0.5), out to about twice the visible ground area (√2 ≈ 1.45). */
+export const zoomLimits = [.5, 1.45] as const;
 export interface CameraPose { position: [number, number, number]; target: [number, number, number] }
 /** Narrow-FOV follow camera. Presentation seconds are supplied by Game; never read by sim. */
 export class View {
@@ -15,7 +18,7 @@ export class View {
   private targetZoom = 1;
   /** Wheel down zooms out; pinch spread zooms in. Default framing is unchanged. */
   zoom(delta: number): void {
-    if (Number.isFinite(delta) && !this.blendTarget) this.targetZoom = Math.max(.85, Math.min(1.35, this.targetZoom * Math.exp(delta)));
+    if (Number.isFinite(delta) && !this.blendTarget) this.targetZoom = Math.max(zoomLimits[0], Math.min(zoomLimits[1], this.targetZoom * Math.exp(delta)));
   }
   driving = false;
   cameraShake = true;
@@ -76,6 +79,6 @@ export class View {
     this.camera.position.add(this.offset); this.camera.updateMatrixWorld();
   }
   getState() {
-    return { zoom: this.zoomRatio, targetZoom: this.targetZoom, zoomLimits: [.85, 1.35], fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * (this.driving ? 1.15 : 1), focus: this.focus.toArray(), target: this.cameraTarget.toArray(), position: this.camera.position.toArray(), spot: this.spot };
+    return { zoom: this.zoomRatio, targetZoom: this.targetZoom, zoomLimits: [...zoomLimits], fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * (this.driving ? 1.15 : 1), focus: this.focus.toArray(), target: this.cameraTarget.toArray(), position: this.camera.position.toArray(), spot: this.spot };
   }
 }
