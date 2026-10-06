@@ -17,7 +17,7 @@ const assetIds: Record<string, string> = {
 };
 /** Registry objects and a constant-contrast ring/DOM prompt. The sim never reads this view. */
 export class InteractionView extends Group {
-  private readonly registry = new AssetRegistry(e => console.info(JSON.stringify(e)));
+  private readonly registry: AssetRegistry;
   private readonly objects = new Map<number, Object3D>();
   private readonly lods = new Map<number, AssetQuality>();
   private readonly prototypes = new Map<string, Promise<Group>>();
@@ -42,7 +42,7 @@ export class InteractionView extends Group {
   private readonly debrisMeshes: Mesh[] = [];
   private disposed = false;
   constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) {
-    super(); this.name = 'interactions';
+    super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.name = 'interactions';
     const outline = new Mesh(this.outlineGeometry, this.black), stroke = new Mesh(this.strokeGeometry, this.white);
     outline.renderOrder = 90; stroke.renderOrder = 91; this.fill.renderOrder = 92;
     this.ring.add(outline, stroke, this.fill); this.ring.rotation.x = -Math.PI / 2; this.add(this.ring);

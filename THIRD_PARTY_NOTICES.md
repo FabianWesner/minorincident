@@ -16,7 +16,7 @@ copyright 2025 Bruno Simon):
 | `Ticker.js` | `src/core/Ticker.ts` — render ticker, with a separate fixed sim clock |
 | `Physics/Physics.js` | `src/physics/Physics.ts` — Rapier service, fixed timestep and disposal |
 | `Physics/PhysicsWireframe.js` | `src/render/PhysicsWireframe.ts` — debug collider buffers |
-| `Debug.js` | `src/debug/Debug.ts` — dev-only Tweakpane |
+| `Debug.js` | `src/debug/Debug.ts` — query-gated Tweakpane, including production look tuning |
 | `Materials/MeshGridMaterial.js` | `src/render/MeshGridMaterial.ts` — trimmed XZ grid shader |
 | `ResourcesLoader.js` | `src/assets/registry.ts` — promise cache and loaders |
 | `Materials.js` | `src/assets/materials.ts` — material swap by name |
@@ -34,8 +34,8 @@ copyright 2025 Bruno Simon):
 | `View.js` (41046b5) | `src/render/View.ts` — focus, aspect adaptation, shake and cinematic blending |
 | `Rendering.js`, `Viewport.js` (41046b5) | `src/render/Renderer.ts` — backend bootstrap and pixel ratio |
 | `Materials/MeshDefaultMaterial.js`, `Materials.js` (41046b5) | `src/render/PaletteMaterial.ts`, `src/render/Materials.ts` — palette texture, captured tinted shadows, core shade, bounce, normalized HDR emissive |
-| `Ligthing.js`, `Fog.js`, `Cycles/DayCycles.js` (41046b5) | `src/render/Lighting.ts`, `src/data/timeOfDay.ts` — fitted sun shadows, coherent level moods and fog |
-| `Rendering.js`, `Passes/cheapDOF.js` (41046b5) | `src/render/PostFx.ts` — bloom and optional edge-only hash blur |
+| `Ligthing.js`, `Fog.js`, `Cycles/DayCycles.js` (41046b5) | `src/render/Lighting.ts`, `src/data/timeOfDay.ts` — visible-area sun shadows, golden-morning mood and radial two-colour fog/background |
+| `Rendering.js`, `Passes/cheapDOF.js` (41046b5) | `src/render/PostFx.ts` — HDR bloom and protected tilt-shift blur (18 samples high; 6 at half resolution low) |
 | `InstancedGroup.js` (41046b5) | `src/render/InstancedGroup.ts` — shared mesh batches and dirty placement updates |
 | `InstancedGroup.js` (41046b5) | `src/render/CrowdView.ts` — infected rigid-part GPU batches, extended through E17 crowd helpers |
 | `Zones.js` (41046b5) | `src/sim/ai/InfectedSystem.ts` — perception enter/alert transitions without singleton dependencies |

@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { AnimationMixer, Box3, Matrix4, Vector3, type AnimationAction } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { expect, test, vi } from 'vitest';
 import { authoredClips, retargetClip, sampleClip, strides, strideScale } from '../../../src/render/characters/clips';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
@@ -11,8 +12,9 @@ import { createSurvivorPlaceholder } from '../../../src/render/characters/placeh
 import type { SurvivorState } from '../../../src/data/survivor';
 import { createCorgiPlaceholder } from '../../../src/render/npc/placeholders';
 import { QuadrupedAnimator } from '../../../src/render/characters/QuadrupedAnimator';
+import manifest from '../../../src/assets/manifest.json';
 
-async function model(path: string) { const file = readFileSync(path); return new GLTFLoader().parseAsync(file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength), ''); }
+async function model(path: string) { const file = readFileSync(path); return new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength), ''); }
 
 test('M1-02 @E04 Blender glTF action library covers shared joints and distinct weapon/corgi moves', async () => {
   const library = await model('assets/animation-library/library.glb');
@@ -56,7 +58,7 @@ test('M1-10 @E04 authored death poses flatten the full character and crowd matri
   for (const name of ['death-back','death-side','death-crumple'] as const) {
     sampleClip(scene, name, authoredClips.get(name)!.duration); scene.updateMatrixWorld(true); bounds.setFromObject(scene);
     // Lying on its side, the chibi head (~0.45 m wide) plus side ponytail sets the floor here.
-    expect(bounds.max.y - bounds.min.y, name).toBeLessThan(.85); expect(bounds.min.y, name).toBeGreaterThanOrEqual(.014);
+    expect(bounds.max.y - bounds.min.y, name).toBeLessThan(.85); expect(bounds.min.y, name).toBeCloseTo(.015, 3);
     const frame = infectedClips.indexOf(name) * framesPerClip + framesPerClip - 1;
     for (const node of ['hip','head','handR','footL']) {
       const part = baked.clip.parts.indexOf(node); matrix.fromArray(baked.clip.matrices, (frame * baked.clip.parts.length + part) * 16);
@@ -90,9 +92,17 @@ test('M1-04 @E04 corgi trots on diagonal pairs and settles into an authored sit'
   animator.update(6,0,.2);expect(animator.clip).toBe('corgi-sit');expect(body.position.y).toBeLessThan(rest-.08);
 });
 
-test('M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs', async () => {
-  for (const id of ['char.survivor-female','char.survivor-male','npc.civilian-man-a','npc.civilian-woman-a','npc.civilian-elderly']) {
-    const { scene } = await model(`assets/${id}/model.glb`);
+test.each(['source', 'production'])('M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs (%s)', async (delivery) => {
+  // Catalog aliases share files; some entries only have a production model.
+  // Avoid local generated directories, while still failing on missing declared files.
+  const paths = new Set(manifest
+    .filter(asset => (asset.id.startsWith('char.survivor-') || asset.id.startsWith('npc.')) && asset.requiredNodes?.some(node => node === 'shinL'))
+    .map(asset => delivery === 'source' ? asset.sourceGlb : asset.glb)
+    .filter((path): path is string => typeof path === 'string'));
+  expect(paths.size).toBeGreaterThan(0);
+  for (const id of paths) {
+    const { scene } = await model(id);
+    expect(scene.getObjectByName('shinL'), id).toBeDefined();
     const height = new Box3().setFromObject(scene).getSize(new Vector3()).y;
     for (const name of ['walk','run','npc-walk','npc-walk-relaxed']) {
       const duration = authoredClips.get(name)!.duration, stance = name === 'run' ? .5 : .6;
@@ -129,10 +139,16 @@ test('M1-25 @E04 survivor phase uses collision-resolved displacement rather than
 });
 
 
-test('M1-25 @E04 walk to run preserves support phase through the crossfade', () => {
+test.each([
+  { asset: 'placeholder', scale: 1 },
+  { asset: 'char.survivor-female', scale: 1 },
+  { asset: 'char.survivor-female', scale: 1.59 },
+  { asset: 'char.survivor-male', scale: 1.59 },
+])('M1-25 @E04 walk to run preserves support phase for $asset at world scale $scale', async ({ asset, scale }) => {
   const actionCalls = vi.spyOn(AnimationMixer.prototype, 'clipAction');
-  const root = createSurvivorPlaceholder('female'), parent = root.clone(false); parent.add(root);
-  const animator = new KeyframeAnimator(resolveRig(root));
+  const root = asset === 'placeholder' ? createSurvivorPlaceholder('female') : (await model(`assets/${asset}/model.glb`)).scene;
+  const rig = resolveRig(root), parent = root.clone(false); parent.add(root); parent.scale.setScalar(scale);
+  const animator = new KeyframeAnimator(rig);
   const pose: SurvivorState = { variant:'female',gearTier:0,animation:'run',animationTick:0,velocity:{x:4.5,z:0},grounded:true,invulnerableUntil:0,checkpoint:{x:0,y:.7,z:0},diedAt:null };
   const actions = actionCalls.mock.results.map(result => result.value as AnimationAction);
   const walk = actions.find(action => action.getClip().name === 'walk')!;
@@ -141,7 +157,7 @@ test('M1-25 @E04 walk to run preserves support phase through the crossfade', () 
   const phase = walk.time / walk.getClip().duration;
   parent.position.x += 4.5 / 60; animator.update(pose,61);
   expect(animator.clip).toBe('run');
-  expect(run.time / run.getClip().duration).toBeCloseTo((phase + 4.5 / 60 / (strides.run * strideScale(root))) % 1, 6);
+  expect(run.time / run.getClip().duration).toBeCloseTo((phase + 4.5 / 60 / (strides.run * strideScale(rig.root))) % 1, 6);
   expect(walk.time / walk.getClip().duration).toBeCloseTo(run.time / run.getClip().duration, 6);
   actionCalls.mockRestore();
 });
