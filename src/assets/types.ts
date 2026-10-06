@@ -22,6 +22,8 @@ export interface AssetDef {
   lods?: { lod1?: string; lod2?: string };
   /** Regenerate these tiers from LOD0 when supplied LODs violate size or density contracts. */
   generatedLodRatios?: { lod1?: number; lod2?: number };
+  /** Plain meshopt pre-pass error per generated tier, for assets of many small parts whose per-part floors exceed the tier ratio. */
+  lodPrepass?: { lod1?: number; lod2?: number };
   dimensions: { x: number; y: number; z: number; tolerance: number };
   forward: '+X';
   /** Uniform metres conversion applied to the entire exported assembly once. */

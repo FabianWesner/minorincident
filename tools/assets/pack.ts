@@ -26,7 +26,7 @@ export async function packAsset(def: AssetDef, regenerate = false): Promise<numb
     if (regenerate || generated || !existsSync(supplied) || count > triangles * (lod === 'lod1' ? .155 : .045) || (lod === 'lod1' && statSync(output).size > statSync(def.glb).size * .25)) {
       let target = ratio;
       for (let attempt = 0; attempt < 4; attempt++) {
-        await optimizeAsset(source, output, def, target);
+        await optimizeAsset(source, output, def, target, def.lodPrepass?.[lod]);
         const actual = triangleCount(await io.read(output)) / triangles;
         const byteRatio = statSync(output).size / statSync(def.glb).size;
         if (actual <= (lod === 'lod1' ? .155 : .045) && (lod !== 'lod1' || byteRatio <= .25)) break;
