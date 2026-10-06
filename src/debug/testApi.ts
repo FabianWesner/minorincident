@@ -1,4 +1,5 @@
 import { missionControls } from '../sim/missions/controls';
+import { installL1Outbreak } from '../sim/outbreak/install';
 import { Driver } from './bot/Driver';
 import { runAudioL1Bot } from './audioBot';
 import { renderAudio } from './audioHarness';
@@ -30,7 +31,9 @@ export interface SSTestApi {
   /** E12 mission controls share the headless sim entry points; state is copied. */
   missions: ReturnType<typeof missionControls>;
   /** E08 authoring hooks use exactly the headless production NPC systems. */
-  npcs: { civilian(role: string, pos: { x: number; z: number }, options?: Parameters<import('../sim/npc/Civilians').Civilians['spawn']>[2]): number; escort(pos: { x: number; z: number }, child?: boolean): number; grab(id: number, attackerId: number): boolean; courage(amount: number): void; quality(tier: 'high' | 'low'): void };
+  npcs: { civilian(role: string, pos: { x: number; z: number }, options?: Parameters<import('../sim/npc/Civilians').Civilians['spawn']>[2]): number; escort(pos: { x: number; z: number }, child?: boolean): number; grab(id: number, attackerId: number): boolean; courage(amount: number): void; quality(tier: 'high' | 'low'): void;
+    /** L1 v2 (lane D): install the outbreak layer + morning population on the loaded D-GROVE; returns stats. */
+    l1Outbreak(setup?: import('../sim/outbreak/install').L1OutbreakSetup): { civilians: number }; l1Stats(): Record<string, number> };
   ready: Promise<void>;
   pause(): void;
   resume(): void;
@@ -102,7 +105,9 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
     look: { get: () => structuredClone({ worldLook: game.view.look.values, palette: game.view.look.palette }), set: patch => game.view.setLook(patch), export: () => game.view.look.export(), reset: () => game.view.resetLook() },
-    version: '1.10.0', ready, npcs: { civilian: (role, pos, opts) => game.world.npcs!.civilians.spawn(role, pos, opts), escort: (pos, child) => game.world.npcs!.escorts.spawn(pos, child), grab: (id, attacker) => game.world.npcs!.civilians.grab(id, attacker, true), courage: amount => { for (const e of game.world.entities.iterate()) if (e.companion) game.world.npcs!.companion.hit(e, amount); }, quality: tier => game.world.npcs!.setQuality(tier) }, missions: { ...missionControls(game.world), load: (def) => { game.ui.reset(); missionControls(game.world).load(def); game.ui.loaded(); } },
+    version: '1.10.0', ready, npcs: { civilian: (role, pos, opts) => game.world.npcs!.civilians.spawn(role, pos, opts), escort: (pos, child) => game.world.npcs!.escorts.spawn(pos, child), grab: (id, attacker) => game.world.npcs!.civilians.grab(id, attacker, true), courage: amount => { for (const e of game.world.entities.iterate()) if (e.companion) game.world.npcs!.companion.hit(e, amount); }, quality: tier => game.world.npcs!.setQuality(tier),
+      l1Outbreak: setup => { installL1Outbreak(game.world, setup); return { civilians: game.world.npcs!.civilians.outbreak!.liveCivilians() }; },
+      l1Stats: () => ({ ...game.world.npcs?.civilians.outbreak?.stats, live: game.world.npcs?.civilians.outbreak?.liveCivilians() ?? 0 }) }, missions: { ...missionControls(game.world), load: (def) => { game.ui.reset(); missionControls(game.world).load(def); game.ui.loaded(); } },
     campaign: {state:()=>structuredClone(game.campaign),menu:()=>game.campaignUI.showMenu(game.saves.load()),save:()=>game.saveCampaign(),restore:save=>{if(!validateSave(save))throw new Error('Invalid campaign');game.campaign=structuredClone(save);game.applyCampaign();}},
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
