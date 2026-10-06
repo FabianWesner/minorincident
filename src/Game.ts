@@ -90,9 +90,10 @@ export class Game {
         const data=performance.now();
         const cosmetic=this.world.entities.get(1)?.survivor;
         this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
+        if(this.params.get('quality') === 'low') this.world.npcs?.setQuality('low');
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
         if(missionIds.includes(id as MissionId)) {
-          this.world.combat = new Combat(this.world, { name:id,survivor:true,combat:true,ground:{width:100,depth:100},player:{...this.world.entities.get(1)!.transform} });
+          this.world.combat ??= new Combat(this.world, { name:id,survivor:true,combat:true,ground:{width:100,depth:100},player:{...this.world.entities.get(1)!.transform} });
           const mission=this.world.loadMission(resolveCampaignMission(id as MissionId, this.world.districts!));
           if(opts?.checkpoint) mission.loadCheckpoint(opts.checkpoint);
         }
