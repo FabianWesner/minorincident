@@ -11,6 +11,7 @@ import { MusicDirector, type MusicIntensity, type MusicTransition } from './Musi
 import { HordeClusters, type HordePoint } from './HordeClusters';
 import { AmbienceSchedule } from './AmbienceSchedule';
 import { StreamedMusic } from './StreamedMusic';
+import { l1v2 } from '../data/l1v2';
 import { L1ArcDirector, type ArcFrame } from './L1Arc';
 export interface AudioSettings {
     muted: boolean;
@@ -72,6 +73,7 @@ export class AudioService implements Lifecycle {
     private ambience = new AmbienceSchedule(0, 1);
     arc: L1ArcDirector | null = null;
     private arcFrame: ArcFrame | null = null;
+    private readonly corgiWarnAt = new Map<string, number>();
     private level = 'L1';
     private tier = 0;
     private loaded = false;
@@ -151,6 +153,7 @@ export class AudioService implements Lifecycle {
         this.ambience = new AmbienceSchedule(this.tier, this.world.seed, this.musicEpoch);
         this.arc = this.level === 'L1' ? new L1ArcDirector(this.world.seed, this.musicEpoch) : null;
         this.arcFrame = null;
+        this.corgiWarnAt.clear();
         for (const type of Object.keys(eventCues) as GameEvent['type'][])
             this.unsubscribers.push(this.world.events.on(type, e => this.event(e), 10));
         this.graph.setListener(this.world.entities.get(1)!.transform);
@@ -643,6 +646,16 @@ export class AudioService implements Lifecycle {
         }
         if (event.type === 'music.stinger') {
             this.stinger(event.kind, event.level);
+            return;
+        }
+        if (event.type === 'corgi.warn') {
+            // Stages come rate-limited from the sim (bark every l1v2.corgi.barkIntervalS); keep a matching audio-side floor.
+            const stage = event.stage, gap = stage === 'bark' ? l1v2.corgi.barkIntervalS - 0.2 : 1, last = this.corgiWarnAt.get(stage) ?? -Infinity;
+            if (t - last < gap)
+                return;
+            this.corgiWarnAt.set(stage, t);
+            const [cue, gain, rate] = stage === 'bark' ? ['corgi.warning', 1, 1] : stage === 'growl' ? ['corgi.warning', 0.7, 0.62] : stage === 'stiffen' ? ['corgi.pant', 0.6, 0.8] : ['corgi.pant', 0.5, 1] as const;
+            this.play(cue, { position, gain, rate }, source);
             return;
         }
         if (event.type === 'corgi.sound') {
