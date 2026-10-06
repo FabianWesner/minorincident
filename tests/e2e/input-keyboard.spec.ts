@@ -14,7 +14,7 @@ test('T-E03-04 @E03 @E03-AC04 WASD follows screen up at camera azimuth pi/4', as
 });
 
 test('T-E03-05 @E03 @E03-AC05 keyboard aim turns at 360deg/s, taps snap and action mirrors fire', async ({ page }) => {
-  await page.clock.install(); await page.clock.pauseAt(new Date()); await boot(page);
+  await boot(page); await page.clock.install(); await page.clock.pauseAt(new Date());
   await page.keyboard.down('ArrowLeft');
   const rotating = await tick(page, 6);
   expect(Math.atan2(rotating.aim!.z, rotating.aim!.x)).toBeCloseTo(Math.PI / 5, 4);
@@ -57,7 +57,7 @@ test('T-E03-08 @E03 @E03-AC08 last device selects mouse-only mouse-keyboard and 
   await page.screenshot({ path: 'test-results/epics/E03/desktop.png' });
   await page.keyboard.up('w'); await page.keyboard.press('ArrowRight'); await tick(page);
   expect(await page.evaluate(() => window.__SS__!.getState().input.scheme)).toBe('keyboard');
-  await expect(page.locator('[data-input-hint]')).toContainText('arrows aim');
+  await expect(page.locator('[data-input-hint]')).toContainText('aim assist');
   await page.keyboard.press('j'); await tick(page);
   expect(await page.evaluate(() => window.__SS__!.getState().input.scheme)).toBe('keyboard');
   await page.mouse.move(801, 450); await tick(page);
@@ -66,14 +66,31 @@ test('T-E03-08 @E03 @E03-AC08 last device selects mouse-only mouse-keyboard and 
 
 test('T-E03-09 @E03 @E03-AC09 binding form persists across reload and rejects conflicts with a message', async ({ page }) => {
   await boot(page); await page.getByText('Controls', { exact: true }).click();
-  await page.locator('select[name=action]').selectOption('left'); await page.locator('input[name=code]').fill('KeyF'); await page.getByRole('button', { name: 'Bind', exact: true }).click();
-  await expect(page.getByRole('status')).toContainText('left bound to KeyF');
+  await page.locator('select[name=action]').selectOption('left'); await page.locator('input[name=code]').fill('KeyZ'); await page.getByRole('button', { name: 'Bind', exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('left bound to KeyZ');
   // Clicking the canvas removes focus from the form before gameplay key events.
   await page.mouse.click(800, 450); await tick(page);
-  await page.keyboard.down('f'); expect((await tick(page)).left.held).toBe(true); await page.keyboard.up('f'); await tick(page);
-  await boot(page); await page.keyboard.down('f'); expect((await tick(page)).left.down).toBe(true); await page.keyboard.up('f');
+  await page.keyboard.down('z'); expect((await tick(page)).left.held).toBe(true); await page.keyboard.up('z'); await tick(page);
+  await boot(page); await page.keyboard.down('z'); expect((await tick(page)).left.down).toBe(true); await page.keyboard.up('z');
   await page.getByText('Controls', { exact: true }).click(); await page.locator('select[name=action]').selectOption('right');
-  await page.locator('input[name=code]').fill('KeyF'); await page.getByRole('button', { name: 'Bind', exact: true }).click();
+  await page.locator('input[name=code]').fill('KeyZ'); await page.getByRole('button', { name: 'Bind', exact: true }).click();
   await expect(page.getByRole('status')).toContainText('already bound to left');
   expect(await page.evaluate(() => window.__SS__!.input.bindings().right)).toContain('KeyK');
+});
+
+test('T-E03-05-assist @E03 @E03-AC05 keyboard WASD J K Q F with nearest infected in facing direction', async ({ page }) => {
+  await boot(page); await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('combat-arena'); a.pause(); a.setLoadout(['weapon.pistol', 'weapon.bat'], ['weapon.pistol', 'weapon.grenade']); });
+  await page.keyboard.down('d'); await tick(page, 30); await page.keyboard.up('d'); await tick(page, 20);
+  const ids = await page.evaluate(() => {
+    const a = window.__SS__!, p = a.getState().player!.transform, facing = -p.yaw;
+    const spawn = (angle: number, range: number) => a.spawn('infected.dummy', { x: p.x + Math.cos(angle) * range, z: p.z + Math.sin(angle) * range }, { hp: 1000 });
+    return [spawn(facing + .5, 1.2), spawn(facing + Math.PI, .9)];
+  });
+  for (const key of ['j', 'k']) { await page.keyboard.press(key); expect((await tick(page)).aimSource).toBe('assist'); await tick(page, 40); }
+  const hits = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.hit'));
+  expect(hits.filter(e => e.type === 'combat.hit' && e.targetId === ids[0])).toHaveLength(2);
+  expect(hits.some(e => e.type === 'combat.hit' && e.targetId === ids[1])).toBe(false);
+  await page.keyboard.press('q'); await tick(page);
+  expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.RIGHT.index)).toBe(1);
+  await page.keyboard.press('f'); expect((await tick(page)).interact).toBe(true);
 });

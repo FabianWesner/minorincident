@@ -1,3 +1,4 @@
+import { ControlIntent } from '../entities/ControlIntent';
 import { InfectedSystem } from '../ai/InfectedSystem';
 import { Mission } from '../missions/Mission';
 import type { MissionDef } from '../missions/types';
@@ -35,7 +36,7 @@ export class SimWorld implements Lifecycle {
   hazards: Hazards | null = null;
   pickups: Pickups | null = null;
   missions: Mission | null = null;
-  get inputFrame(): InputFrame { return this.input; }
+  get inputFrame(): InputFrame { return this.effectiveInput; }
   /** Attach a validated mission after scenario/composition assembly. */
   loadMission(def: MissionDef): Mission { const next=new Mission(this,def);this.missions?.dispose();return this.missions=next; }
   vehicles: Vehicles | null = null;
@@ -46,6 +47,8 @@ export class SimWorld implements Lifecycle {
   seed = 1;
   scenario: string | null = null;
   previousPlayer: Transform | null = null;
+  readonly controls = new ControlIntent(this);
+  private effectiveInput = emptyInput();
   private input = emptyInput();
   private readonly drivingCombatInput = emptyInput();
   private scheme: import('../../input/InputFrame').Scheme = 'mouse-only';
@@ -70,16 +73,17 @@ export class SimWorld implements Lifecycle {
       this.vehicles!.spawn('vehicle.sedan', { x: 0, z: 0 }); this.vehicles!.spawn('vehicle.police', { x: 0, z: 12 });
       for (let x = 25; x <= 575; x += 25) { const z = Math.sin(x / 40) * 3; this.vehicles!.obstacles.spawn('cone', { x, z: z - 2 }); this.vehicles!.obstacles.spawn('cone', { x, z: z + 2 }); }
     }
-    this.events.on('sim.tick', () => this.vehicles?.prePhysics(this.input, this.scheme), SimPhase.input);
-    this.events.on('sim.tick', () => { if (this.combat && this.vehicles?.active == null) this.combat.intent(this.input); }, SimPhase.input);
+    this.events.on('sim.tick', () => { this.effectiveInput = this.controls.resolve(this.input); }, SimPhase.input);
+    this.events.on('sim.tick', () => this.vehicles?.prePhysics(this.effectiveInput, this.scheme), SimPhase.input);
+    this.events.on('sim.tick', () => { if (this.combat && this.vehicles?.active == null) this.combat.intent(this.effectiveInput); }, SimPhase.input);
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
       if (this.vehicles?.active != null) return;
-      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.prePhysics(this.input, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
+      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
-      body.setLinvel({ x: this.input.move.x * 5, y: body.linvel().y, z: this.input.move.z * 5 }, true);
+      body.setLinvel({ x: this.effectiveInput.move.x * 5, y: body.linvel().y, z: this.effectiveInput.move.z * 5 }, true);
     }, SimPhase.intent);
     this.events.on('sim.tick', () => this.combat?.effects.moveListeners(), SimPhase.ai);
     if (definition.infected) { this.infected = new InfectedSystem(this, definition); this.events.on('sim.tick', () => this.infected!.update(), SimPhase.ai); }
@@ -90,12 +94,12 @@ export class SimWorld implements Lifecycle {
       if (this.combat) {
         const position = this.physics.playerBody!.translation(); Object.assign(this.entities.get(1)!.transform, position); this.spatial.set(1, position.x, position.z);
         this.infected?.props.update();
-        this.combat.update(this.vehicles?.active != null ? this.drivingCombatInput : this.input);
+        this.combat.update(this.vehicles?.active != null ? this.drivingCombatInput : this.effectiveInput);
       }
     }, SimPhase.combat);
     this.events.on('sim.tick', () => {
       if (this.player) Object.assign(this.player.entity.transform, this.physics.playerBody!.translation());
-      this.hazards?.update(); this.pickups?.update(); this.interactables?.update(this.input);
+      this.hazards?.update(); this.pickups?.update(); this.interactables?.update(this.effectiveInput);
     }, SimPhase.missions);
     this.events.on('sim.tick', () => {
       if (this.vehicles?.active != null) return;
@@ -140,7 +144,7 @@ export class SimWorld implements Lifecycle {
   }
   setInput(patch: Partial<InputFrame>): void {
     const next = { ...this.input, ...structuredClone(patch) };
-    for (const vector of [next.move, next.aim, next.aimPoint]) if (vector && (!Number.isFinite(vector.x) || !Number.isFinite(vector.z))) throw new RangeError('Input vectors must be finite');
+    for (const vector of [next.move, next.aim, next.aimPoint, next.moveTarget]) if (vector && (!Number.isFinite(vector.x) || !Number.isFinite(vector.z))) throw new RangeError('Input vectors must be finite');
     this.input = next;
   }
   /** World-space E11 gameplay placements. Static Blender geometry remains owned by E10. */
@@ -152,7 +156,7 @@ export class SimWorld implements Lifecycle {
   }
   /** Device frames are borrowed for this tick; snapshots are independently copied. */
   applyInput(frame: InputFrame, scheme: import('../../input/InputFrame').Scheme): void { this.input = frame; this.scheme = scheme; }
-  clearInput(): void { this.input = emptyInput(); this.scheme = 'mouse-only'; }
+  clearInput(): void { this.controls.reset(); this.effectiveInput = emptyInput(); this.input = emptyInput(); this.scheme = 'mouse-only'; }
   update(): void {
     if (!this.scenario) return;
     if (this.missions?.state.phase === 'cinematic') { this.missions.advanceCinematic(this.input); return; }
@@ -166,7 +170,8 @@ export class SimWorld implements Lifecycle {
   }
   getState(): GameStateSnapshot {
     const entities = this.query({});
-    return { ...(this.infected ? { ai: structuredClone(this.infected.snapshot()) } : {}), ...(entities.some(e => e.interactable || e.hazard || (e.pickup && 'kind' in e.pickup) || e.destructible) ? { interactions: { activeId: this.interactables?.activeId ?? null, debris: this.hazards?.debris.snapshot() ?? [], hazards: this.hazards?.snapshot() ?? null } } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities, mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
+    const controls = this.controls.snapshot();
+    return { ...(controls ? { controls } : {}), ...(this.infected ? { ai: structuredClone(this.infected.snapshot()) } : {}), ...(entities.some(e => e.interactable || e.hazard || (e.pickup && 'kind' in e.pickup) || e.destructible) ? { interactions: { activeId: this.interactables?.activeId ?? null, debris: this.hazards?.debris.snapshot() ?? [], hazards: this.hazards?.snapshot() ?? null } } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities, mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
   }
   spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number; reactive?: boolean; ramDamage?: number } = {}): number {
     if (!this.combat) throw new Error('Load combat-arena before spawning dummies');

@@ -41,22 +41,19 @@ test('T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap us
   const cdp = await context.newCDPSession(page); const pos = await center(page, 'right');
   const finger = { id: 1, ...pos };
   await touch(cdp, 'touchStart', [finger]); expect((await tick(page)).right.down).toBe(false);
-  await touch(cdp, 'touchMove', [{ ...finger, y: pos.y - 60 }]);
+  await touch(cdp, 'touchMove', [{ ...finger, x: pos.x - 60 }]);
   const aim = await tick(page); expect(aim.aimSource).toBe('touch'); expect(aim.right.down).toBe(false);
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `test-results/epics/E03/aim-${info.project.name}.png` });
-  expect(aim.aim!.x).toBeCloseTo(-Math.SQRT1_2); expect(aim.aim!.z).toBeCloseTo(-Math.SQRT1_2);
+  expect(aim.aim!.x).toBeCloseTo(-Math.SQRT1_2); expect(aim.aim!.z).toBeCloseTo(Math.SQRT1_2);
   await touch(cdp, 'touchEnd', []); const fired = await tick(page);
   expect(fired.right).toEqual({ down: true, held: false, up: true }); expect(fired.aim).toEqual(aim.aim);
   expect((await tick(page)).right.down).toBe(false);
   await page.touchscreen.tap(pos.x, pos.y); const tap = await tick(page);
   expect(tap.right.down).toBe(true); expect(tap.aimSource).toBe('assist'); expect(tap.aim).toEqual(aim.aim);
-  // Left mirrors the same release semantics; selector and pause are functional buttons.
   const left = await center(page, 'left'); await page.touchscreen.tap(left.x, left.y); expect((await tick(page)).left.down).toBe(true);
-  for (const side of ['selector', 'pause']) {
-    const p = await center(page, side); await page.touchscreen.tap(p.x, p.y);
-    const f = await tick(page); expect(side === 'selector' ? f.selector : f.pause).toBe(side === 'selector' ? 1 : true);
-  }
+  const pause = await center(page, 'pause'); await page.touchscreen.tap(pause.x, pause.y); expect((await tick(page)).pause).toBe(true);
+
 });
 
 for (const loss of ['blur', 'hidden', 'pagehide'] as const) {
@@ -98,13 +95,38 @@ test('T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action con
   const moving = { ...stick, x: 120 };
   await touch(cdp, 'touchMove', [moving]);
   await touch(cdp, 'touchStart', [moving, action]);
-  await touch(cdp, 'touchMove', [moving, { ...action, y: action.y - 60 }]);
+  await touch(cdp, 'touchMove', [moving, { ...action, x: action.x - 60 }]);
   const aiming = await tick(page);
   expect(Math.hypot(aiming.move.x, aiming.move.z)).toBeCloseTo(1); expect(aiming.right.down).toBe(false);
   // Lift the action contact while keeping the stick contact pressed.
-  await touch(cdp, 'touchEnd', [{ ...action, y: action.y - 60 }]);
+  await touch(cdp, 'touchEnd', [{ ...action, x: action.x - 60 }]);
   const firing = await tick(page); expect(firing.right.down).toBe(true); expect(Math.hypot(firing.move.x, firing.move.z)).toBeCloseTo(1);
   await touch(cdp, 'touchEnd', []); expect((await tick(page)).move).toEqual({ x: 0, z: 0 });
   await touch(cdp, 'touchStart', [action]); await touch(cdp, 'touchCancel', []);
   expect((await tick(page)).right).toEqual({ down: false, held: false, up: false });
+});
+
+test('T-E03-18 @E03 @E03-AC18 @E03-AC17 three mobile buttons, ACTION proximity, and upward side swipes', async ({ page, context }) => {
+  await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('combat-arena'); a.pause(); a.setLoadout(['weapon.bat', 'weapon.pistol'], ['weapon.bat', 'weapon.grenade']); });
+  await expect(page.locator('[data-touch-action]:not([data-touch-action=pause])')).toHaveCount(3);
+  await expect(page.getByTestId('touch-hint-left')).toHaveText('LEFT'); await expect(page.getByTestId('touch-hint-right')).toHaveText('RIGHT');
+  await expect(page.getByTestId('touch-interact')).toHaveText('ACTION'); await expect(page.getByTestId('touch-interact')).toBeDisabled();
+  const cdp = await context.newCDPSession(page);
+  for (const side of ['right', 'left']) {
+    const pos = await center(page, side), finger = { id: 1, ...pos };
+    await touch(cdp, 'touchStart', [finger]); await touch(cdp, 'touchMove', [{ ...finger, y: pos.y - 60 }]); await touch(cdp, 'touchEnd', []);
+    const frame = await tick(page); expect(frame.selector).toBe(1); expect(frame.selectorSide).toBe(side.toUpperCase()); expect(frame.left.down || frame.right.down).toBe(false);
+    const weapons = await page.evaluate(() => window.__SS__!.getState().player!.weapons!); expect(weapons[side === 'left' ? 'LEFT' : 'RIGHT'].index).toBe(1);
+  }
+  await page.evaluate(async () => { const a = window.__SS__!, p = a.getState().player!.transform; a.spawn('device.radio', p, { holdTime: 10 }); await a.step(2); });
+  await expect(page.getByTestId('touch-interact')).toBeEnabled(); const pos = await center(page, 'interact'); await page.touchscreen.tap(pos.x, pos.y);
+  expect((await tick(page)).interact).toBe(true);
+});
+
+test('T-E03-upward-aim @E03 @E03-AC07 a held upward drag aims rather than switching weapons', async ({ page, context }) => {
+  const cdp = await context.newCDPSession(page), pos = await center(page, 'right'), finger = { id: 1, ...pos };
+  await touch(cdp, 'touchStart', [finger]); await page.waitForTimeout(300);
+  await touch(cdp, 'touchMove', [{ ...finger, y: pos.y - 60 }]); await touch(cdp, 'touchEnd', []);
+  const frame = await tick(page); expect(frame.right.down).toBe(true); expect(frame.selector).toBe(0); expect(frame.aimSource).toBe('touch');
+  expect(frame.aim!.x).toBeCloseTo(-Math.SQRT1_2); expect(frame.aim!.z).toBeCloseTo(-Math.SQRT1_2);
 });

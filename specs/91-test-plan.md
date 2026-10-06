@@ -44,7 +44,7 @@ Artifacts from every stage are uploaded: `test-results/**` and Playwright traces
 | ID | Check |
 | --- | --- |
 | S-01 | App boots with `?test=1`, `__SS__.ready` resolves, no console errors |
-| S-02 | Title → character select → L1 start via mouse-only clicks |
+| S-02 | Title → character select → L1 start via mouse-only clicks; cursor alone does not move, click ground walks and stops, RMB ground attacks without movement |
 | S-03 | `loadLevel` L1–L6 (with progression presets): each loads in ≤ 10 s, with a non-empty frame screenshot |
 | S-04 | 600 ticks of the `complete` bot in L1 without errors; the player moves ≥ 10 m |
 | S-05 | Determinism: 1800 ticks of the `combat-arena` script give the expected golden state hash |
@@ -76,7 +76,7 @@ Every acceptance criterion `E<NN>-ACxx` has a test `T-E<NN>-xx` with the tag `@E
 | --- | --- | --- | --- |
 | E01 Foundation | 11 | static, unit, sim, e2e | `tests/unit/core/*.test.ts`, `tests/sim/determinism.test.ts`, `tests/e2e/harness.spec.ts` |
 | E02 Rendering | 12 | e2e, visual, vision, unit | `tests/e2e/camera.spec.ts`, `tests/visual/lookdev.spec.ts` |
-| E03 Input | 13 | e2e, sim, unit | `tests/e2e/input-{mouse,keyboard,touch}.spec.ts`, `tests/sim/recorder.test.ts` |
+| E03 Input | 18 | e2e, sim, unit | `tests/e2e/input-{mouse,keyboard,touch}.spec.ts`, `tests/sim/recorder.test.ts` |
 | E04 Survivor | 11 | sim, unit, e2e, visual, vision | `tests/sim/player.test.ts`, `tests/visual/survivor.spec.ts` |
 | E05 Combat | 14 | sim, unit, e2e | `tests/sim/combat/*.test.ts`, `tests/e2e/combat-wiring.spec.ts` |
 | E06 Weapons | 10 | unit, sim, e2e, visual | `tests/unit/data/actions.test.ts`, `tests/sim/weapons.test.ts` |
@@ -102,7 +102,7 @@ Every acceptance criterion `E<NN>-ACxx` has a test `T-E<NN>-xx` with the tag `@E
 | E26 Props/Barricades | 16 | static, sim, perf, e2e, visual, vision | `tests/sim/props/*.test.ts`, `tests/sim/barricades.test.ts`, `tests/visual/barricade-ui.spec.ts` |
 | E27 Explosions/Fire/Smoke | 15 | unit, sim, visual, e2e, perf, vision | `tests/sim/explosions.test.ts`, `tests/visual/blast-sequence.spec.ts`, `tests/visual/smoke.spec.ts` |
 | E28 Weather | 12 | sim, visual, e2e, perf, vision | `tests/sim/weather.test.ts`, `tests/visual/weather.spec.ts` |
-| **Total** | **346** | | |
+| **Total** | **351** | | |
 
 A static test (`tests/unit/traceability.test.ts`) parses every `specs/epic-*.md` acceptance table and fails if any AC ID has no tagged test **once that epic is marked in progress or done** in `specs/status.json`. The specs and the tests can therefore not drift apart.
 

@@ -4,44 +4,46 @@ import { Nipple } from './Nipple';
 import type { Vec2 } from '../InputFrame';
 import { node, text } from '../../ui/dom';
 
-type TouchAction = 'left' | 'right' | 'selector' | 'pause' | 'brake';
-interface Contact { action: TouchAction; x: number; y: number; dx: number; dy: number }
+type TouchAction = 'left' | 'right' | 'selector' | 'pause' | 'interact';
+interface Contact { action: TouchAction; x: number; y: number; dx: number; dy: number; started: number }
 /** Each contact has its own owner. Cancellation releases without firing an action. */
 export class Touch {
   readonly stick = new Nipple();
   readonly element = document.createElement('div');
+  readonly pauseElement = document.createElement('button');
   readonly aim: Vec2 = { x: 0, z: 0 };
   aiming = false;
   get holdingLeft(): boolean { for (const c of this.contacts.values()) if (c.action === 'left') return true; return false; }
-  get braking(): boolean { for (const c of this.contacts.values()) if (c.action === 'brake') return true; return false; }
+  setInteractable(on: boolean): void { this.element.querySelector<HTMLButtonElement>('[data-touch-action=interact]')!.disabled = !on; }
   private readonly slots = new Map<'left' | 'right', { button: HTMLButtonElement; icon: HTMLImageElement; hint: HTMLSpanElement }>();
   private driving = false;
   private stickId: number | null = null;
   private readonly contacts = new Map<number, Contact>();
-  constructor(private readonly canvas: HTMLElement, private readonly activity: () => void, private readonly fire: (action: TouchAction, direction: Vec2 | null) => void) {
+  constructor(private readonly canvas: HTMLElement, private readonly activity: () => void, private readonly fire: (action: TouchAction, direction: Vec2 | null, side?: 'LEFT' | 'RIGHT') => void) {
     this.element.dataset.touchControls = ''; this.element.dataset.testid = 'touch-controls';
     this.element.style.cssText = 'position:fixed;bottom:16px;right:16px;display:grid;grid-template-columns:64px 64px;gap:8px;touch-action:none';
-    for (const action of ['selector', 'pause', 'left', 'right', 'brake'] as const) {
-      const button = document.createElement('button'); button.dataset.touchAction = action; button.dataset.testid = `touch-${action}`;
-      button.textContent = action === 'selector' ? 'NEXT' : action.toUpperCase(); button.setAttribute('aria-label', `Touch ${action}`);
+    for (const action of ['left', 'right', 'interact', 'pause'] as const) {
+      const button = action === 'pause' ? this.pauseElement : document.createElement('button'); button.dataset.touchAction = action; button.dataset.testid = `touch-${action}`;
+      button.textContent = action === 'interact' ? 'ACTION' : action.toUpperCase(); button.setAttribute('aria-label', action === 'interact' ? 'ACTION' : `Touch ${action}`);
       button.style.cssText = 'height:64px;color:white;background:#182333;border:2px solid white;border-radius:12px;touch-action:none;user-select:none';
-      if (action === 'brake') button.hidden = true;
+      if (action === 'interact') button.disabled = true;
       if (action === 'left' || action === 'right') {
-        const icon = node('img', `touch-icon-${action}`), hint = node('span', `touch-hint-${action}`, action[0].toUpperCase());
+        const icon = node('img', `touch-icon-${action}`), hint = node('span', `touch-hint-${action}`, action.toUpperCase());
         icon.alt = ''; button.replaceChildren(icon, hint);
         this.slots.set(action, { button, icon, hint });
       }
-      this.element.append(button);
+      if (action === 'pause') button.style.cssText += ';position:fixed;top:16px;right:16px;width:56px;height:56px';
+      else this.element.append(button);
     }
   }
-  /** Driving reuses LEFT/RIGHT and reveals its dedicated hold-to-brake control. */
+  /** Driving keeps the same three buttons; ACTION exits. */
   setDriving(on: boolean): void {
-    this.element.querySelector<HTMLButtonElement>('[data-touch-action=brake]')!.hidden = !on;
+    this.setInteractable(on);
     this.driving = on;
     for (const [side, slot] of this.slots) {
-      text(slot.hint, on ? side === 'left' ? 'HORN' : 'EXIT' : side[0].toUpperCase());
+      text(slot.hint, side.toUpperCase());
       slot.icon.hidden = on;
-      slot.button.setAttribute('aria-label', on ? side === 'left' ? 'Horn / boost' : 'Exit vehicle' : `Touch ${side}`);
+      slot.button.setAttribute('aria-label', `Touch ${side}`);
     }
   }
   /** E14 presents the actions themselves as weapon slots, without changing release-to-fire. */
@@ -55,15 +57,15 @@ export class Touch {
   }
   init(): void {
     this.canvas.style.touchAction = 'none';
-    this.canvas.addEventListener('pointerdown', this.down); this.element.addEventListener('pointerdown', this.down);
+    this.canvas.addEventListener('pointerdown', this.down); this.element.addEventListener('pointerdown', this.down); this.pauseElement.addEventListener('pointerdown', this.down);
     window.addEventListener('pointermove', this.move); window.addEventListener('pointerup', this.up); window.addEventListener('pointercancel', this.cancel);
-    document.body.append(this.element, this.stick.element);
+    document.body.append(this.element, this.stick.element, this.pauseElement);
   }
   private readonly down = (event: PointerEvent): void => {
     if (event.pointerType !== 'touch') return;
     this.activity(); event.preventDefault();
     const action = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-touch-action]')?.dataset.touchAction as TouchAction | undefined;
-    if (action) this.contacts.set(event.pointerId, { action, x: event.clientX, y: event.clientY, dx: 0, dy: 0 });
+    if (action && !(event.target as HTMLElement).closest<HTMLButtonElement>('button')?.disabled) this.contacts.set(event.pointerId, { action, x: event.clientX, y: event.clientY, dx: 0, dy: 0, started: performance.now() });
     else if (event.clientX < innerWidth / 2 && this.stickId === null) { this.stickId = event.pointerId; this.stick.start(event.clientX, event.clientY); }
   };
   private readonly move = (event: PointerEvent): void => {
@@ -84,16 +86,17 @@ export class Touch {
     const contact = this.contacts.get(event.pointerId);
     if (!contact) return;
     this.contacts.delete(event.pointerId); this.aiming = false;
-    if (fire && contact.action !== 'brake') {
+    if (fire) {
       this.activity(); const distance = Math.hypot(contact.dx, contact.dy);
       if (distance >= 8) { this.aim.x = contact.dx / distance; this.aim.z = contact.dy / distance; }
-      this.fire(contact.action, distance >= 8 ? this.aim : null);
+      if ((contact.action === 'left' || contact.action === 'right') && performance.now() - contact.started < 250 && contact.dy <= -40 && Math.abs(contact.dy) > Math.abs(contact.dx) * 1.5) this.fire('selector', null, contact.action === 'left' ? 'LEFT' : 'RIGHT');
+      else this.fire(contact.action, distance >= 8 ? this.aim : null);
     }
   }
   release(): void { this.stickId = null; this.stick.release(); this.contacts.clear(); this.aiming = false; }
   dispose(): void {
-    this.release(); this.canvas.removeEventListener('pointerdown', this.down); this.element.removeEventListener('pointerdown', this.down);
+    this.release(); this.canvas.removeEventListener('pointerdown', this.down); this.element.removeEventListener('pointerdown', this.down); this.pauseElement.removeEventListener('pointerdown', this.down);
     window.removeEventListener('pointermove', this.move); window.removeEventListener('pointerup', this.up); window.removeEventListener('pointercancel', this.cancel);
-    this.element.remove(); this.stick.element.remove();
+    this.element.remove(); this.stick.element.remove(); this.pauseElement.remove();
   }
 }

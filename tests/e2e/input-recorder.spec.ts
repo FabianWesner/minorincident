@@ -20,3 +20,14 @@ test('T-E03-recorder-browser @E03 @E03-AC10 @E09 real device frames replay throu
   mkdirSync('test-results/epics/E03', { recursive: true });
   writeFileSync('test-results/epics/E03/keyboard.ssrec', Recorder.serialize(first.recording));
 });
+
+test('T-E03-recorder-clicks @E03 @E03-AC10 real click destinations survive recording and replay', async ({ page }) => {
+  await boot(page); await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('survivor', { seed: 42 }); a.pause(); a.input.record(); });
+  const point = await page.evaluate(() => window.__SS__!.input.project({ x: 4, z: 0 }));
+  await page.mouse.click(point.x, point.y); await tick(page, 20);
+  const first = await page.evaluate(() => ({ state: window.__SS__!.getState(), recording: window.__SS__!.input.stopRecording() }));
+  expect(first.state.controls!.moveTarget!.x).toBeCloseTo(4, 2);
+  await page.evaluate(async data => { await window.__SS__!.input.replay(data); await window.__SS__!.step(data.frames.length); }, first.recording);
+  expect(stateHash(await page.evaluate(() => window.__SS__!.getState()))).toBe(stateHash(first.state));
+  await tick(page, 120); expect(await page.evaluate(() => window.__SS__!.getState().controls)).toBeUndefined();
+});

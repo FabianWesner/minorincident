@@ -6,6 +6,17 @@ const degrees: Record<AimAssistSetting, number> = { Off: 0, Low: 6, Default: 12,
 export class AimAssist {
   setting: AimAssistSetting = 'Default';
   constructor(private readonly entities: EntityStore, private readonly query: HitQuery) {}
+  /** Keyboard/touch taps pick the nearest visible infected in the facing half-plane. */
+  facing(origin: Vec2, aim: Vec2, range: number): void {
+    if (this.setting === 'Off') return;
+    let best = Infinity, x = aim.x, z = aim.z;
+    for (const target of this.entities.iterate()) {
+      if (target.faction !== 'infected' || target.health.current <= 0 || target.hidden || target.infected?.hidden) continue;
+      const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
+      if (distance > 0 && distance <= range && distance < best && dx * aim.x + dz * aim.z > 0 && this.query.visible(origin, target.transform)) { best = distance; x = dx / distance; z = dz / distance; }
+    }
+    aim.x = x; aim.z = z;
+  }
   /** Mutates a shot's private direction, never the remembered per-side player aim. */
   apply(sourceId: number, origin: Vec2, aim: Vec2, range: number): void {
     if (this.setting === 'Off') return;

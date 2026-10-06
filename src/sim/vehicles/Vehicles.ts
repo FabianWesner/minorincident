@@ -28,12 +28,23 @@ export class Vehicles {
     const entity = this.world.entities.create({ kind: 'vehicle', archetype: id, transform: physics.transform, faction: 'survivor', health: { current: def.hp, max: def.hp }, vehicle: { speed: 0, forwardSpeed: 0, steer: 0, braking: true, boosting: false, driver: null, attached: [], damage: 'normal', explodeAt: null, stuck: false, recoveringUntil: 0 } });
     this.cars.set(entity.id, { entity, physics, doorTicks: 0, noEnterUntil: 0, hits: new Map(), crashAt: -60 }); this.world.spatial.set(entity.id, pos.x, pos.z); return entity.id;
   }
+  canInteract(): boolean {
+    if (this.active != null) return true;
+    const player = this.world.entities.get(1);
+    if (!player || player.health.current <= 0) return false;
+    for (const car of this.cars.values()) {
+      if (car.entity.health.current <= 0 || car.physics.speed >= 1 || this.world.tick < car.noEnterUntil) continue;
+      this.localPoint(car, .2, car.physics.def.width / 2 + .55);
+      if (Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= .7) return true;
+    }
+    return false;
+  }
   prePhysics(frame: InputFrame, scheme: Scheme): void {
     const player = this.world.entities.get(1)!;
     for (const car of this.cars.values()) {
       const state = car.entity.vehicle!, drive = car.physics.intent;
       drive.throttle = drive.steer = 0; drive.brake = true; drive.boost = false;
-      if (this.active === car.entity.id && frame.right.down) this.exit(car);
+      if (this.active === car.entity.id && frame.interact) this.exit(car);
       if (car.entity.health.current > 0 && this.active === car.entity.id) {
         if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
           drive.throttle = frame.drive?.throttle ?? frame.move.x;
@@ -45,18 +56,18 @@ export class Vehicles {
           const distance = Math.hypot(dx, dz), angle = Math.atan2(-dz, dx);
           const delta = Math.atan2(Math.sin(angle - car.entity.transform.yaw), Math.cos(angle - car.entity.transform.yaw));
           drive.steer = Math.max(-1, Math.min(1, delta * 2));
-          drive.throttle = scheme === 'mouse-only' ? Math.min(1, Math.max(0, (distance - 1.2) / 2.8)) : Math.min(1, distance);
-          drive.brake = distance < (scheme === 'mouse-only' ? 1.2 : .05) || !!frame.brake;
+          drive.throttle = scheme === 'mouse-only' ? (frame.left.held ? Math.min(1, Math.max(0, (distance - 1.2) / 2.8)) : 0) : Math.min(1, distance);
+          drive.brake = (scheme === 'mouse-only' && !frame.left.held) || distance < (scheme === 'mouse-only' ? 1.2 : .05) || !!frame.brake;
         }
-        drive.boost = frame.left.held;
-        if (frame.left.down || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
-        if (state.recoveringUntil > this.world.tick) { drive.throttle = -.8; drive.steer = .6; drive.brake = false; }
+        drive.boost = scheme !== 'mouse-only' && frame.left.held;
+        if ((scheme !== 'mouse-only' && frame.left.down) || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
+        if (state.recoveringUntil > this.world.tick && !drive.brake) { drive.throttle = -.8; drive.steer = .6; drive.brake = false; }
       } else if (this.active === null && player.health.current > 0 && car.entity.health.current > 0 && this.world.tick >= car.noEnterUntil && car.physics.speed < 1) {
         this.localPoint(car, .2, car.physics.def.width / 2 + .55);
         const near = Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= .7;
         const still = Math.hypot(frame.move.x, frame.move.z) < .05;
         car.doorTicks = near && still ? car.doorTicks + 1 : 0;
-        if (car.doorTicks >= 36) this.enter(car);
+        if (near && (car.doorTicks >= 36 || frame.interact)) this.enter(car);
       } else car.doorTicks = 0;
       state.steer = drive.steer * car.physics.def.steering; state.braking = drive.brake; state.boosting = drive.boost;
       this.impacts(car);
