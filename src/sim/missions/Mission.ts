@@ -226,6 +226,7 @@ export class Mission {
   }
   /** Restore mission/actors/racks, retain run totals and permanently killed scripted bosses. */
   restore(id = this.state.checkpoint ?? 'start'): void {
+    this.world.controls.reset();
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
     const stats = this.state.stats, bosses=this.state.killedBosses, delta = this.world.tick - checkpoint.tick;
     Object.assign(this.state, structuredClone(checkpoint.state)); this.state.stats = stats; this.state.killedBosses=bosses; this.state.failure = null; this.state.phase = 'playing'; this.state.cinematic = null; this.state.result = null;

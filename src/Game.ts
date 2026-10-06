@@ -120,10 +120,11 @@ export class Game {
   }
   private simTick(): void {
     this.input.setDriving(this.world.vehicles?.active != null);
+    this.input.touch.setInteractable(this.world.vehicles?.canInteract() === true || this.world.interactables?.activeId != null);
     const player = this.world.entities.get(1)?.transform;
     if (this.driver) this.world.applyInput(this.driver.sample(), 'keyboard');
     else if (player) {
-      const frame = this.input.sample(player);
+      const frame = this.input.sample(player, 1 / 60, this.world.entities.iterate());
       if (frame.pause && this.ui.enabled) { this.ui.pause(); return; }
       this.world.applyInput(frame, this.input.scheme);
     }

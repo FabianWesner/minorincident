@@ -43,8 +43,8 @@ export class Onboarding {
     if (this.current === 'evade' && this.world.tick - this.startTick > 60 && Math.hypot(frame.move.x, frame.move.z) > .1) this.completed.add('evade');
   }
   private glyph(lesson: Lesson, scheme: Scheme): string {
-    if (scheme === 'touch') return lesson === 'move' || lesson === 'evade' ? '◉ Stick' : ['attack', 'second-side'].includes(lesson) ? '☝ Action' : lesson === 'selector' ? '↻ Selector' : '◉ Stand';
-    if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? scheme === 'mouse-only' ? 'Cursor' : 'WASD' : lesson === 'attack' ? 'LMB' : lesson === 'second-side' ? 'RMB' : lesson === 'selector' ? 'Wheel' : 'Stand / MMB';
+    if (scheme === 'touch') return lesson === 'move' || lesson === 'evade' ? '◉ Stick' : ['attack', 'second-side'].includes(lesson) ? lesson === 'attack' ? '☝ LEFT' : '☝ RIGHT' : lesson === 'selector' ? 'Swipe up LEFT / RIGHT' : 'ACTION / Stand';
+    if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? scheme === 'mouse-only' ? 'Click to move' : 'WASD / Click to move' : lesson === 'attack' ? 'LMB on infected to attack' : lesson === 'second-side' ? 'RMB on infected to attack' : lesson === 'selector' ? 'Wheel' : 'Stand / MMB';
     return lesson === 'move' || lesson === 'evade' ? this.bindings.keyLabel('moveUp') + this.bindings.keyLabel('moveLeft') + this.bindings.keyLabel('moveDown') + this.bindings.keyLabel('moveRight') : this.bindings.keyLabel(lesson === 'attack' ? 'left' : lesson === 'second-side' ? 'right' : lesson === 'selector' ? 'selector' : 'interact');
   }
   update(scheme: Scheme, playing: boolean): void {

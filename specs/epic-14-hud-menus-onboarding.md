@@ -12,7 +12,7 @@ E03, E05, E12 / all levels, E13.
 - **Menus:** title (logo, "A quieter neighborhood today · Braver people tomorrow"), character select (m/f), level select, settings (controls/rebinding, aim assist, blood, shake, flash reduction, quality, audio, text size, colorblind telegraphs), pause, retry/fail, level result, upgrade cards, rack setup, briefing, credits.
 - **Auto-pause:** leaving the tab or window (hidden, blur, pagehide) pauses the game and opens the pause menu; returning never auto-resumes (the player clicks or taps Resume). The title and menu screens just go silent (E16).
 - **Onboarding:** contextual prompts adapted to the active scheme (the scheme glyphs change), shown once per action. L1 teaches move → evade → interact → pick up weapon → attack → selector (L2) → second side (L2) → vehicle (L3).
-- **Touch HUD:** stick zone, two big action buttons with icons, selector, and pause, sized ≥ 56 CSS px, respecting the safe area.
+- **Touch HUD:** floating stick, exactly three gameplay buttons LEFT / RIGHT / ACTION (swipe up on LEFT/RIGHT to select weapons), and a separate small pause button, sized ≥ 56 CSS px, respecting the safe area.
 - **UI tech:** DOM + CSS over the canvas (Stylus or plain CSS), with no framework required. All UI elements have `data-testid`.
 
 ## Bruno references

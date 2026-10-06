@@ -89,7 +89,7 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 
 .hud-stick-zone{position:absolute;bottom:max(16px,env(safe-area-inset-bottom));left:max(16px,env(safe-area-inset-left));width:120px;height:120px;border:2px dashed #dfcba666;border-radius:50%;display:none;place-items:center;color:#fff0d4;font-size:14px;background:#18233355}
 @media(pointer:coarse){.hud-stick-zone{display:grid}}
-.full-ui [data-touch-action=left]::before{content:'⚔ ';font-size:18px}.full-ui [data-touch-action=right]::before{content:'✦ ';font-size:18px}.full-ui [data-touch-action=selector]::before{content:'↻ '}.full-ui [data-touch-action=pause]::before{content:'Ⅱ '}
+.full-ui [data-touch-action=left]::before{content:'⚔ ';font-size:18px}.full-ui [data-touch-action=right]::before{content:'✦ ';font-size:18px}.full-ui [data-touch-action=pause]::before{content:'Ⅱ '}
 .full-ui>details{display:none!important}
 .full-ui .settings-fields input[type=checkbox]{width:56px;height:56px}
 
@@ -131,9 +131,6 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .full-ui.touch-ui [data-touch-action]::before{content:none}
 .full-ui.touch-ui [data-touch-action=left]{right:76px;bottom:0}
 .full-ui.touch-ui [data-touch-action=right]{right:0;bottom:76px}
-.full-ui.touch-ui [data-touch-action=selector]{right:0;bottom:0;width:56px;height:56px!important;font-size:10px}
-.full-ui.touch-ui [data-touch-action=selector]::before{content:'↻';display:block;font-size:18px;line-height:20px}
-.full-ui.touch-ui [data-touch-action=brake]{right:76px;bottom:76px;width:56px;height:56px!important;font-size:10px}
 .full-ui.touch-ui [data-touch-action=left],.full-ui.touch-ui [data-touch-action=right]{background:radial-gradient(circle closest-side,#182333eb 87%,transparent 89%),conic-gradient(#64dccc calc(var(--progress,1) * 1turn),#5c6677 0)!important;border-color:#77869a!important}
 .full-ui.touch-ui [data-touch-action].is-selected{border-color:#ffcd79!important;box-shadow:0 0 0 2px #ffd47966,0 2px 4px #10182488}
 [data-touch-action] img{width:32px;height:32px;pointer-events:none}
@@ -149,3 +146,6 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .touch-ui:has([data-touch-stick]:not([hidden])) .hud-stick-zone{visibility:hidden}
 /* An old inline canvas width must not expand the mobile layout viewport on rotation. */
 .full-ui.touch-ui #game>canvas{position:fixed;inset:0;width:100dvw!important;height:100dvh!important}
+
+.full-ui.touch-ui [data-touch-action=interact]{right:0;bottom:0;width:64px;height:64px!important;font-size:10px}
+[data-touch-action=interact]:disabled{opacity:.4}

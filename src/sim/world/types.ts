@@ -79,6 +79,7 @@ export interface GameStateSnapshot {
   tick: number;
   ai?: ReturnType<import('../ai/InfectedSystem').InfectedSystem['snapshot']>;
   interactions?: { activeId: number | null; debris: ReturnType<import('../../physics/DebrisPool').DebrisPool['snapshot']>; hazards: ReturnType<import('../interact/Hazards').Hazards['snapshot']> | null };
+  controls?: NonNullable<ReturnType<import('../entities/ControlIntent').ControlIntent['snapshot']>>;
   combat?: ReturnType<import('../combat/Combat').Combat['snapshot']>;
   input: { scheme: Scheme; frame: InputFrame };
   seed: number;
