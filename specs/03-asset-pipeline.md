@@ -171,7 +171,7 @@ Static world geometry is authored like assets: `layouts/<district>/layout.py` is
 
 | Tier | Used for | LOD0 budget | Look |
 | --- | --- | --- | --- |
-| **Hero** | everything the player sees up close and often: survivors, corgi, NPCs, infected, vehicles, buildings | survivor/NPC ≤ 60k, infected ≤ 40k, vehicle ≤ 80k, building ≤ 100k triangles | rich, finished, soft-bevelled forms, many purposeful parts ("round 1") |
+| **Hero** | everything the player sees up close and often: survivors, corgi, NPCs, infected, vehicles, buildings | survivor/NPC ≤ 60k, infected ≤ 40k, vehicle ≤ 80k, building ≤ 100k triangles; animals (appear in groups): crow ≤ 3k, cats/small dogs ≤ 8k, flamingo ≤ 10k, large dogs ≤ 12k, gorilla/lion ≤ 25k; mostly flat structures (helipad, pads, decks) ≤ 20k | rich, finished, soft-bevelled forms, many purposeful parts ("round 1") |
 | **Side** | props and street furniture (vending machine, bench, hydrant, weapons, pickups) | 6–12k (weapons ≤ 6k) | chunky but detailed: insets, frames, multi-part wheels, glowing strips ("round 3") |
 | **Distant** | objects the player never approaches in regular play (skyline, far terrain dressing) | 1–4k | chunky low-poly, flat palette ("round 2") |
 
