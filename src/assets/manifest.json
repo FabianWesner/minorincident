@@ -12104,7 +12104,7 @@
     "glb": "public/assets/models/prop.garden-bush.glb",
     "sourceGlb": "assets/prop.garden-bush/model.glb",
     "dimensions": {
-      "x": 2.0,
+      "x": 2,
       "y": 1.55,
       "z": 1.8,
       "tolerance": 0.1
@@ -12519,7 +12519,7 @@
     "dimensions": {
       "x": 0.7,
       "y": 1.8,
-      "z": 1.0,
+      "z": 1,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -12588,7 +12588,7 @@
     "dimensions": {
       "x": 0.7,
       "y": 1.8,
-      "z": 1.0,
+      "z": 1,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -12657,7 +12657,7 @@
     "dimensions": {
       "x": 0.7,
       "y": 1.8,
-      "z": 1.0,
+      "z": 1,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -12724,7 +12724,7 @@
     "dimensions": {
       "x": 0.7,
       "y": 1.8,
-      "z": 1.0,
+      "z": 1,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -12791,7 +12791,7 @@
     "dimensions": {
       "x": 0.7,
       "y": 1.8,
-      "z": 1.0,
+      "z": 1,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -12858,7 +12858,7 @@
     "dimensions": {
       "x": 0.7,
       "y": 1.8,
-      "z": 1.0,
+      "z": 1,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -12919,14 +12919,14 @@
   {
     "id": "bld.house-d",
     "category": "building",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/bld.house-d.glb",
     "dimensions": {
       "x": 9,
-      "y": 7.5,
-      "z": 8,
-      "tolerance": 0.1
+      "y": 7.501,
+      "z": 8.038,
+      "tolerance": 0.3
     },
     "forward": "+X",
     "frontNodes": [
@@ -12950,19 +12950,24 @@
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "sourceGlb": "assets/bld.house-d/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.house-d.lod1.glb",
+      "lod2": "public/assets/models/bld.house-d.lod2.glb"
     }
   },
   {
     "id": "bld.house-e",
     "category": "building",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/bld.house-e.glb",
     "dimensions": {
-      "x": 8.5,
-      "y": 5.5,
-      "z": 8,
-      "tolerance": 0.1
+      "x": 8.569,
+      "y": 5.505,
+      "z": 8.01,
+      "tolerance": 0.3
     },
     "forward": "+X",
     "frontNodes": [
@@ -12986,6 +12991,11 @@
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "sourceGlb": "assets/bld.house-e/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.house-e.lod1.glb",
+      "lod2": "public/assets/models/bld.house-e.lod2.glb"
     }
   },
   {
@@ -13214,7 +13224,7 @@
     "tier": "side",
     "glb": "public/assets/models/prop.flower-bed.glb",
     "dimensions": {
-      "x": 2.0,
+      "x": 2,
       "y": 0.5,
       "z": 0.7,
       "tolerance": 0.1
@@ -13419,5 +13429,617 @@
       "solid": true
     },
     "sourceGlb": "assets/kit.edge-roadwork/model.glb"
+  },
+  {
+    "id": "prop.flower-bed.large",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.flower-bed.large.glb",
+    "dimensions": {
+      "x": 0.979,
+      "y": 0.712,
+      "z": 2.15,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.flower-bed.large/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.flower-bed.large.lod1.glb",
+      "lod2": "public/assets/models/prop.flower-bed.large.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.flower-bed.small",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.flower-bed.small.glb",
+    "dimensions": {
+      "x": 0.859,
+      "y": 0.632,
+      "z": 1.572,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.flower-bed.small/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.flower-bed.small.lod1.glb",
+      "lod2": "public/assets/models/prop.flower-bed.small.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.flower-box",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.flower-box.glb",
+    "dimensions": {
+      "x": 0.562,
+      "y": 0.47,
+      "z": 1.264,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.flower-box/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.flower-box.lod1.glb",
+      "lod2": "public/assets/models/prop.flower-box.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.bbq",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.bbq.glb",
+    "dimensions": {
+      "x": 0.74,
+      "y": 1.202,
+      "z": 0.874,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.bbq/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.bbq.lod1.glb",
+      "lod2": "public/assets/models/prop.bbq.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.lawn-chair-a",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.lawn-chair-a.glb",
+    "dimensions": {
+      "x": 0.642,
+      "y": 1.181,
+      "z": 0.648,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.lawn-chair-a/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.lawn-chair-a.lod1.glb",
+      "lod2": "public/assets/models/prop.lawn-chair-a.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.lawn-chair-b",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.lawn-chair-b.glb",
+    "dimensions": {
+      "x": 0.642,
+      "y": 1.181,
+      "z": 0.648,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.lawn-chair-b/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.lawn-chair-b.lod1.glb",
+      "lod2": "public/assets/models/prop.lawn-chair-b.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.kiddie-pool",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.kiddie-pool.glb",
+    "dimensions": {
+      "x": 2.013,
+      "y": 0.357,
+      "z": 2,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.kiddie-pool/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.kiddie-pool.lod1.glb",
+      "lod2": "public/assets/models/prop.kiddie-pool.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.gnome",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.gnome.glb",
+    "dimensions": {
+      "x": 0.456,
+      "y": 1.18,
+      "z": 0.56,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.gnome/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.gnome.lod1.glb",
+      "lod2": "public/assets/models/prop.gnome.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.flamingo",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.flamingo.glb",
+    "dimensions": {
+      "x": 0.875,
+      "y": 1.307,
+      "z": 0.274,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.flamingo/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.flamingo.lod1.glb",
+      "lod2": "public/assets/models/prop.flamingo.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.sprinkler",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.sprinkler.glb",
+    "dimensions": {
+      "x": 1.205,
+      "y": 0.29,
+      "z": 0.69,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.sprinkler/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.sprinkler.lod1.glb",
+      "lod2": "public/assets/models/prop.sprinkler.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.hose-reel",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.hose-reel.glb",
+    "dimensions": {
+      "x": 0.917,
+      "y": 0.878,
+      "z": 0.845,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.hose-reel/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.hose-reel.lod1.glb",
+      "lod2": "public/assets/models/prop.hose-reel.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.wheelbarrow",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.wheelbarrow.glb",
+    "dimensions": {
+      "x": 1.385,
+      "y": 0.822,
+      "z": 0.62,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.wheelbarrow/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.wheelbarrow.lod1.glb",
+      "lod2": "public/assets/models/prop.wheelbarrow.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.crates",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.crates.glb",
+    "dimensions": {
+      "x": 1.204,
+      "y": 0.667,
+      "z": 1.053,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.crates/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.crates.lod1.glb",
+      "lod2": "public/assets/models/prop.crates.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.carpet",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.carpet.glb",
+    "dimensions": {
+      "x": 0.868,
+      "y": 0.506,
+      "z": 1.175,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.carpet/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.carpet.lod1.glb",
+      "lod2": "public/assets/models/prop.carpet.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.trash-bags",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.trash-bags.glb",
+    "dimensions": {
+      "x": 0.931,
+      "y": 0.8,
+      "z": 0.903,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.trash-bags/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.trash-bags.lod1.glb",
+      "lod2": "public/assets/models/prop.trash-bags.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.broken-chair",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.broken-chair.glb",
+    "dimensions": {
+      "x": 0.653,
+      "y": 1.036,
+      "z": 0.633,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.broken-chair/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.broken-chair.lod1.glb",
+      "lod2": "public/assets/models/prop.broken-chair.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.recycling-bin",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.recycling-bin.glb",
+    "dimensions": {
+      "x": 0.65,
+      "y": 1.117,
+      "z": 0.748,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.recycling-bin/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.recycling-bin.lod1.glb",
+      "lod2": "public/assets/models/prop.recycling-bin.lod2.glb"
+    }
+  },
+  {
+    "id": "prop.laundry-line",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.laundry-line.glb",
+    "dimensions": {
+      "x": 0.384,
+      "y": 2.059,
+      "z": 2.79,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "sourceGlb": "assets/prop.laundry-line/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.laundry-line.lod1.glb",
+      "lod2": "public/assets/models/prop.laundry-line.lod2.glb"
+    }
   }
 ]
