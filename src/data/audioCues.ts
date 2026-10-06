@@ -39,6 +39,7 @@ for (const [index, def] of infectedDefinitions.entries()) {
     telegraphCues[def.id] = id;
     cue(id, 'telegraph', ['riot', 'armored', 'firefighter', 'gorilla'].includes(name) ? 'step' : 'vocal', name === 'screamer' ? 0.8 : name === 'bloated' ? 1 : 0.4, 100 + index * 27, { gain: 0.6, caption: captions[name] ?? `${name[0].toUpperCase() + name.slice(1)} preparing an attack`, rateSpread: 0, antiSpam: 0 });
 }
+cue('screamer.scream', 'telegraph', 'vocal', 1.2, 700, { gain: 0.65, caption: 'Screamer shrieking', antiSpam: 0.3, rateSpread: 0 });
 for (const name of ['zebra', 'civilian', 'explosive']) {
     telegraphCues[name] = `telegraph.${name}`;
     telegraphCues[`infected.${name}`] = `telegraph.${name}`;
@@ -128,6 +129,7 @@ export function audioFile(category: string, format: 'webm' | 'm4a'): string { re
 export function categoryDuration(category: string): number { return offsets.get(category)!; }
 /** Noise events from weapons and world systems share AI hearing metadata and these cue IDs. */
 export const noiseCues = {
+    scream: 'screamer.scream',
     melee: 'action.weapon.fists', pistol: 'action.weapon.pistol', smg: 'action.weapon.smg', shotgun: 'action.weapon.shotgun', rifle: 'action.weapon.assault-rifle', machineGun: 'action.weapon.machine-gun',
     explosionSmall: 'explosion.boom', explosionMedium: 'explosion.boom', explosionLarge: 'explosion.boom', explosionMega: 'explosion.boom',
     horn: 'vehicle.horn', alarm: 'ambient.alarm', siren: 'vehicle.siren', firecracker: 'action.weapon.firecracker-lure', glass: 'lamp.break', barricade: 'prop.creak',

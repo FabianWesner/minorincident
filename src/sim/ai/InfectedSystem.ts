@@ -1,3 +1,4 @@
+import { noise } from '../../data/noise';
 // Zone enter/alert pattern adapted from Bruno Simon folio-2025 Zones.js (MIT, 41046b5).
 import { infectedDef, validateInfected } from '../../data/infected';
 import { Rng } from '../../core/Rng';
@@ -224,7 +225,7 @@ export class InfectedSystem {
       }
       return true;
     }
-    if (b.special === 'scream') { this.noise(e.transform, 20); return true; }
+    if (b.special === 'scream') { this.world.events.emit({ type: 'noise', tick: this.world.tick, sourceId: e.id, actionId: e.archetype, position: { ...e.transform }, ...noise.scream, kind: 'scream' }); return true; }
     if (b.special === 'revive' && !b.reviveUsed) {
       const downed = this.revivable(e);
       if (downed && this.director.count + 1 <= this.director.cap) { downed.health.current = downed.health.max; downed.infected!.revived = true; downed.infected!.deadAt = -1; downed.infected!.state = 'chase'; b.reviveUsed = true; this.world.events.emit({ type: 'infected.revived', tick: this.world.tick, sourceId: e.id, targetId: downed.id }); return true; }
@@ -262,7 +263,7 @@ export class InfectedSystem {
     if (b.state !== 'dead') {
       b.state = 'dead'; b.deadAt = this.world.tick; b.grabUntil = 0;
       if (e.archetype === 'infected.crow') { b.birds = 0; b.birdAlive.fill(0); }
-      if (b.special === 'explode') { b.attackId = ++this.sequence; b.until = this.world.tick + 21; this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: 'explode', duration: 0.35 }); }
+      if (b.special === 'explode') { b.attackId = ++this.sequence; b.until = this.world.tick + 60; this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: 'explode', duration: 1 }); }
     }
     if (b.special === 'explode' && this.world.tick === b.until) {
       for (const target of this.world.entities.iterate()) {

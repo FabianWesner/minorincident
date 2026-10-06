@@ -6,8 +6,8 @@ Released under MIT, the repository license. No Bruno SFX or third-party recordin
 
 | File | License | Source | SHA256 |
 | --- | --- | --- | --- |
-| telegraph.webm | self-made (MIT) | synthesis.ts | 2563493db79963d4c7e03be93b626fb6d3794ae495ac04aa7d2a46a981ccdf56 |
-| telegraph.m4a | self-made (MIT) | synthesis.ts | 2d15a3d3fe81bd0a280669cfbed7abb8ef9f2ed65bef681e171e90e2ad80dbc0 |
+| telegraph.webm | self-made (MIT) | synthesis.ts | 8e8ced7062c92ea876b32566871cb518b9d78c7905967521bf550eb85f5177c2 |
+| telegraph.m4a | self-made (MIT) | synthesis.ts | 1de781e76a6fc1f66bda664596f28653601d05ebda5a0f1903466f5aee88d534 |
 | weapons.webm | self-made (MIT) | synthesis.ts | 9d9406811ba02ac8c470258bd8a7bf2cc545bc49e93e12ad1bd230ea701a08d8 |
 | weapons.m4a | self-made (MIT) | synthesis.ts | 5497645954d3f2863f125deea2595c2493cc63c65e0b0a7c3312a893f08849f0 |
 | impacts.webm | self-made (MIT) | synthesis.ts | 85edc3e66cc770abf454b35041bc15d669d23cc15da78c4853d01a27e36e876b |
