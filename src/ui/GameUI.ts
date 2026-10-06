@@ -6,6 +6,7 @@ import { defaultBindings, type Action } from '../data/bindings';
 import { Hud } from './Hud';
 import { button, node } from './dom';
 import { Settings, type UISettings } from './Settings';
+import { audioCredits } from '../data/audioCredits';
 import './ui.css';
 
 type Screen = 'title' | 'character' | 'levels' | 'pause' | 'settings' | 'credits' | 'upgrades' | 'rack' | 'loading' | null;
@@ -76,6 +77,17 @@ export class GameUI {
       button('pause-settings', 'Settings', () => { this.back = 'pause'; this.show('settings'); }),
       button('pause-title', 'Title screen', () => this.show('title')));
     const credits = this.panel('credits', 'Credits', 'Minor Incident · Technology adapted from Bruno Simon’s folio-2025 (MIT), Three.js and Rapier.');
+    const audio = node('div', 'audio-credits');
+    audio.append(node('h2', 'audio-credits-heading', 'Music and sound'));
+    for (const credit of audioCredits) {
+      const row = document.createElement('p'), author = document.createElement('a'), license = document.createElement('a');
+      author.textContent = credit.author; author.href = credit.author === 'Zander Noriega' ? 'https://soundcloud.com/zander-noriega' : credit.url;
+      license.textContent = credit.license; license.href = credit.licenseUrl;
+      row.append(`${credit.title} — `, author, ' · ', license);
+      audio.append(row);
+    }
+    audio.append(node('p', 'audio-credit-edits', 'Recordings edited for the game: excerpts, EQ, fades, loudness normalization and encoding.'));
+    credits.append(audio);
     credits.append(button('credits-back', 'Back', () => this.show('title')));
     const settings = this.panel('settings', 'Settings', 'Make yourself comfortable. Changes save automatically.');
     const form = node('div', 'settings-fields'); form.className = 'settings-fields';
