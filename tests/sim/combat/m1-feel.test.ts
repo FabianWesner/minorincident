@@ -44,3 +44,17 @@ test('@E03-AC20 unarmed retains varied moves across pauses, equal damage, slight
   expect(new Set(damages).size).toBe(1); expect(damages[0]).toBeGreaterThan(0);
   expect(knockbacks[moves.indexOf(2)]).toBe(.45); expect(moves.filter(move => move === 6).length).toBe(2);
 });
+
+
+test('@E03-AC19 Shift melee never finishes a civilian in the glowing-eye state', async () => {
+  const w = await arena(); w.loadScenario('horde-arena', 1);
+  w.combat!.setLoadout(['weapon.fists'], ['weapon.fists']);
+  const id = w.npcs!.civilians.spawn('cashier', { x: .8, z: 0 }), e = w.entities.get(id)!;
+  Object.assign(e.civilian!, { state: 'down', entered: w.tick, until: w.tick + 60, downTicks: 60, eyesGlow: true });
+  const frame = emptyInput(); frame.left.down = true; frame.attackInPlace = true; frame.aim = { x: 1, z: 0 };
+  w.applyInput(frame, 'keyboard'); w.update(); w.clearInput();
+  for (let i = 0; i < 14; i++) w.update();
+  expect(e.civilian!.eyesGlow).toBe(true); expect(e.civilian!.state).toBe('down');
+  expect(e.health.current).toBe(100);
+  expect(w.events.events().some(event => event.type === 'civilian.finished' || event.type === 'civilian.turned' || ((event.type === 'combat.hit' || event.type === 'combat.kill') && event.targetId === id))).toBe(false);
+});

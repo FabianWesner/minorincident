@@ -83,7 +83,7 @@ export class Combat {
   private hit(attack: Attack, target: EntitySnapshot, origin: Vec2, type: 'melee' | 'bullet' | 'explosive', falloff = 1): void {
     if (attack.hit.has(target.id)) return;
     attack.hit.add(target.id);
-    if (attack.inPlace && target.faction === 'civilian' && target.civilian && !target.civilian.eyesGlow) {
+    if (attack.inPlace && type === 'melee' && target.faction === 'civilian' && target.civilian) {
       this.world.npcs?.civilians.annoy(target, attack.aim); return;
     }
     const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
