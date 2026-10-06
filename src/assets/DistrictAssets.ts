@@ -13,6 +13,7 @@ import type { AssetQuality } from './types';
 import { dinerSign } from '../render/DinerSign';
 import { attribute } from 'three/tsl';
 import { staticBatch } from './staticBatch';
+import { loadGate, loadGltf } from './loadGate';
 // E10's semantic building IDs predate the accepted production inventory.
 const productionIds: Record<string, string> = {
   'bld.school': 'bld.school-elementary', 'bld.gym': 'int.gym-cafeteria',
@@ -46,8 +47,7 @@ export class DistrictAssets {
     if (!this.cache.has(key))
       this.cache.set(
         key,
-        this.loader
-          .loadAsync(url)
+        loadGltf(this.loader, url)
           .then(({ scene }) => {
             scene.traverse((o) => {
               if (!(o instanceof Mesh)) return;
@@ -79,31 +79,47 @@ export class DistrictAssets {
       );
     return this.cache.get(key)!;
   }
+  /** Start download, parse and batching of a placement prototype before its layout GLB arrives. */
+  prefetch(id: string, lod: AssetQuality = 'lod1'): void {
+    try {
+      if (worldAssets[id] && atLeast(this.assets.definition(productionIds[id] ?? id).status, "integrated")) void this.base(id, lod).catch(() => {});
+    } catch { /* unknown ids report through asset() */ }
+  }
+  private canonical(id: string, lod: AssetQuality): AssetQuality {
+    const assetDef = this.assets.definition(productionIds[id] ?? id);
+    return (lod === 'lod1' || lod === 'lod2') && !assetDef.lods?.[lod] ? 'lod0' : lod;
+  }
+  /** Powered and unpowered placements share their large diffuse geometry. */
+  private base(id: string, lod: AssetQuality): Promise<Group> {
+    const def = worldAssets[id], productionId = productionIds[id] ?? id, canonical = this.canonical(id, lod);
+    const baseKey = `${id}:batch:${canonical}`;
+    if (!this.cache.has(baseKey)) this.cache.set(baseKey, this.assets.loadAsset(productionId, canonical).then(async (asset) => {
+      await loadGate.wait();
+      if (productionId !== id) {
+        const source = this.assets.definition(productionId).dimensions, target = def.dimensions;
+        const straight = Math.min(1, target.x / source.x, target.z / source.z), turned = Math.min(1, target.x / source.z, target.z / source.x);
+        // Fit legacy footprints while retaining human-sized doors/floors.
+        const fit = Math.max(straight, turned); asset.scale.set(fit, 1, fit);
+        if (turned > straight) asset.rotation.y = Math.PI / 2;
+      }
+      const root = this.remember(staticBatch(asset, true, this.materials));
+      if (id === 'bld.joes-diner') {
+        const sign = dinerSign(); root.add(sign.root); this.geometries.add(sign.geometry); this.signTextures.push(sign.texture);
+      }
+      root.traverse(node => { if (node instanceof Mesh) this.batchMaterials.add(node.material as Material); });
+      return root;
+    }));
+    return this.cache.get(baseKey)!;
+  }
   async asset(id: string, lit = true, lod: AssetQuality = 'lod1'): Promise<Group> {
     const def = worldAssets[id];
     if (!def) throw new Error(`Unknown asset: ${id}`);
     const productionId = productionIds[id] ?? id;
     if (atLeast(this.assets.definition(productionId).status, "integrated")) {
-      const assetDef = this.assets.definition(productionId);
-      const canonical = (lod === 'lod1' || lod === 'lod2') && !assetDef.lods?.[lod] ? 'lod0' : lod;
+      const canonical = this.canonical(id, lod);
       const key = `${id}:${lit}:${canonical}`;
-      // Powered and unpowered placements share their large diffuse geometry.
       const baseKey = `${id}:batch:${canonical}`;
-      if (!this.cache.has(baseKey)) this.cache.set(baseKey, this.assets.loadAsset(productionId, canonical).then((asset) => {
-        if (productionId !== id) {
-          const source = this.assets.definition(productionId).dimensions, target = def.dimensions;
-          const straight = Math.min(1, target.x / source.x, target.z / source.z), turned = Math.min(1, target.x / source.z, target.z / source.x);
-          // Fit legacy footprints while retaining human-sized doors/floors.
-          const fit = Math.max(straight, turned); asset.scale.set(fit, 1, fit);
-          if (turned > straight) asset.rotation.y = Math.PI / 2;
-        }
-        const root = this.remember(staticBatch(asset, true, this.materials));
-        if (id === 'bld.joes-diner') {
-          const sign = dinerSign(); root.add(sign.root); this.geometries.add(sign.geometry); this.signTextures.push(sign.texture);
-        }
-        root.traverse(node => { if (node instanceof Mesh) this.batchMaterials.add(node.material as Material); });
-        return root;
-      }));
+      void this.base(id, lod);
       if (!this.cache.has(key)) this.cache.set(key, this.cache.get(baseKey)!.then(source => {
         if (lit) return source;
         const root = source.clone(true);
