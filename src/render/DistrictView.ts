@@ -14,7 +14,6 @@ import {
   Vector3,
   InstancedMesh,
   Mesh,
-  MeshBasicMaterial,
   MeshBasicNodeMaterial,
   Object3D,
   SphereGeometry,
@@ -54,6 +53,8 @@ export class DistrictView extends Group {
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
   private readonly black = new MeshBasicNodeMaterial({ color: "#000000" });
   private readonly saved = new Map<Mesh, Material | Material[]>();
+  private readonly tags: { sprite: Sprite; entered: number | null; done: boolean }[] = [];
+  private labelTime = 0;
   private readonly textures: CanvasTexture[] = [];
   constructor(
     readonly world: DistrictWorld,
@@ -146,12 +147,7 @@ export class DistrictView extends Group {
         root.add(grass);
         for (const b of d.layout.buildings) {
           const p = d.layout.placements.find((p) => p.id === b.id)!;
-          if (b.label === 'Your House') { this.homeLabel(root, [p.position[0], b.aabb.max[1] + .6, p.position[2]]); continue; }
-          this.sign(root, b.label, [
-            p.position[0],
-            Math.min(3, b.aabb.max[1] * 0.6),
-            b.aabb.max[2] + 0.1,
-          ]);
+          this.tag(root, b.label, [p.position[0], 2.8, b.aabb.max[2] + .6]);
         }
         for (const spot of d.gameplay.photoSpots) {
           const p = resolvePosition(spot.target, d.layout),
@@ -217,38 +213,16 @@ export class DistrictView extends Group {
     mesh.receiveShadow = true;
     root.add(mesh);
   }
-  private homeLabel(root: Group, p: [number, number, number]): void {
-    const canvas = document.createElement('canvas'); canvas.width = 256; canvas.height = 64;
+  /** Small camera-facing location tags; show once on approach, then fade over one second. */
+  private tag(root: Group, text: string, p: [number, number, number]): void {
+    const canvas = document.createElement('canvas'); canvas.width = 320; canvas.height = 64;
     const ctx = canvas.getContext('2d')!;
-    ctx.fillStyle = '#352c38'; ctx.roundRect(0, 0, 256, 64, 16); ctx.fill();
-    ctx.fillStyle = '#ffc773'; ctx.font = 'bold 30px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText('Your House', 128, 32);
+    ctx.fillStyle = '#352c38dd'; ctx.roundRect(0, 0, 320, 64, 16); ctx.fill();
+    ctx.fillStyle = '#ffc773'; ctx.font = 'bold 28px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, 160, 32, 300);
     const texture = new CanvasTexture(canvas); this.textures.push(texture);
-    const material = new SpriteMaterial({ map: texture }); this.ownedMaterials.push(material);
-    const label = new Sprite(material); label.position.fromArray(p); label.scale.set(1.5, .375, 1); root.add(label);
-  }
-  /** TextCanvas pattern: one small canvas per landmark, fictional place names only. */
-  private sign(root: Group, text: string, p: [number, number, number]): void {
-    const canvas = document.createElement("canvas");
-    canvas.width = 512;
-    canvas.height = 96;
-    const ctx = canvas.getContext("2d")!;
-    ctx.fillStyle = "#ffc773";
-    ctx.fillRect(0, 0, 512, 96);
-    ctx.fillStyle = "#352c38";
-    ctx.font = "bold 38px sans-serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(text, 256, 48, 480);
-    const texture = new CanvasTexture(canvas);
-    this.textures.push(texture);
-    const material = new MeshBasicMaterial({ map: texture });
-    this.ownedMaterials.push(material);
-    const geometry = new BoxGeometry(4, 0.75, 0.06);
-    this.ownedGeometry.push(geometry);
-    const mesh = new Mesh(geometry, material);
-    mesh.position.fromArray(p);
-    root.add(mesh);
+    const material = new SpriteMaterial({ map: texture, transparent: true, depthWrite: false }); this.ownedMaterials.push(material);
+    const sprite = new Sprite(material); sprite.name = text; sprite.position.fromArray(p); sprite.scale.set(1.8, .36, 1); sprite.visible = false; root.add(sprite);
+    this.tags.push({ sprite, entered: null, done: false });
   }
   /** Cull whole off-camera district slabs on low; Three still frustum-culls their individual batches. */
   cull(focus: { x: number; z: number }, tier: 'high' | 'low'): void {
@@ -268,10 +242,17 @@ export class DistrictView extends Group {
     });
   }
   advance(seconds: number): void {
-    this.phase.value += seconds;
+    this.phase.value += seconds; this.labelTime += seconds;
   }
   /** Static matrices are repartitioned only when the camera moves; far props use LOD2. */
   updateLods(view: View): void {
+    for (const tag of this.tags) {
+      const position = tag.sprite.getWorldPosition(this.bounds.center);
+      if (!tag.done && tag.entered === null && Math.hypot(position.x - view.focus.x, position.z - view.focus.z) < 14) tag.entered = this.labelTime;
+      const age = tag.entered === null ? Infinity : this.labelTime - tag.entered;
+      tag.sprite.visible = age < 3; tag.sprite.material.opacity = Math.max(0, Math.min(1, 3 - age));
+      if (age >= 3 && tag.entered !== null) tag.done = true;
+    }
     const p = view.camera.position;
     const rotation = view.camera.quaternion.toArray();
     if (Math.hypot(p.x - this.cameraPosition[0], p.y - this.cameraPosition[1], p.z - this.cameraPosition[2]) < .5
@@ -330,6 +311,7 @@ export class DistrictView extends Group {
   }
   getState() {
     return {
+      labels: this.tags.map(({ sprite }) => ({ text: sprite.name, visible: sprite.visible, opacity: sprite.material.opacity, width: sprite.scale.x, height: sprite.scale.y })),
       districts: this.world.districts.map((d) => d.id),
       batches: this.batches.map((b) => ({
         assetId: b.name.slice(5),

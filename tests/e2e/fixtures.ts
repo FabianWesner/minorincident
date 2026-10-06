@@ -21,8 +21,8 @@ export const test = base.extend<{ errorGuard: void }>({
 });
 export { expect };
 export const testUrl = '/?test=1&renderer=webgl&dpr=1&quality=high&audio=muted&seed=1';
-export async function boot(page: Page): Promise<void> {
-  await page.goto(testUrl);
+export async function boot(page: Page, url = testUrl): Promise<void> {
+  await page.goto(url);
   await page.waitForFunction(() => Boolean(window.__SS__));
   await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
 }
