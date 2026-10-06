@@ -60,7 +60,12 @@ class CivilianBatch extends Group {
       veins[i] = Number(Math.abs(color.getX(i) - veinColor.r) < .0001 && Math.abs(color.getY(i) - veinColor.g) < .0001);
       // Forward is +X: the front-lower third of the face, and the front-upper collar on one side of the torso.
       const p = partOf.getX(i);
-      if (!veins[i] && (p === head && shirtOf.getX(i) < 0 && rel(0, i, 0) > .62 && rel(0, i, 1) < .42 || p === torso && rel(1, i, 1) > .8 && rel(1, i, 2) > .55 && rel(1, i, 0) > .35)) veins[i] = 2;
+      if (veins[i]) continue;
+      // Irregular splatter on the shirt front (stable per vertex), so blood reads on clothes at the game camera.
+      const splat = p === torso && rel(1, i, 0) > .55 && rel(1, i, 1) > .35 && Math.abs(Math.sin(position.getComponent(i, 0) * 91.7 + position.getComponent(i, 1) * 47.3 + position.getComponent(i, 2) * 63.1) * 43758.5) % 1 > .55;
+      if (p === head && shirtOf.getX(i) < 0 && rel(0, i, 0) > .62 && rel(0, i, 1) < .42 || p === torso && rel(1, i, 1) > .8 && rel(1, i, 2) > .55 && rel(1, i, 0) > .35 || splat) veins[i] = 2;
+      // Sunken, bruised eye sockets around the (glowing) eyes.
+      else if (p === head && shirtOf.getX(i) < 0 && rel(0, i, 0) > .55 && rel(0, i, 1) > .45 && rel(0, i, 1) < .75) veins[i] = 3;
     }
     baked.geometry.setAttribute('_vein', new BufferAttribute(veins, 1));
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
@@ -68,11 +73,14 @@ class CivilianBatch extends Group {
     this.poses = new CrowdPosePalette(baked.clip, 128); this.texture = this.poses.texture;
     packCrowdParts(baked.geometry);
     const parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
-    const overlay = attribute('_overlay', 'vec3'), eye = parts.z, vein = parts.w.greaterThan(.5).select(parts.w.lessThan(1.5).select(1, 0), 0), blood = parts.w.greaterThan(1.5).select(1, 0), decay = overlay.x;
+    const overlay = attribute('_overlay', 'vec3'), eye = parts.z, vein = parts.w.greaterThan(.5).select(parts.w.lessThan(1.5).select(1, 0), 0), blood = parts.w.greaterThan(1.5).select(parts.w.lessThan(2.5).select(1, 0), 0), socket = parts.w.greaterThan(2.5).select(1, 0), decay = overlay.x;
     const clothing = mix(attribute('color', 'vec3'), variant.xyz, parts.y.max(0));
     // Same clothes and body: only the skin blends toward ash-green, blood darkens mouth and bite, eyes ignite.
-    const skin = mix(clothing, vec3(.31, .40, .27), parts.y.lessThan(0).select(decay, 0));
-    const bloody = mix(skin, vec3(.33, .02, .03), blood.mul(overlay.z).mul(.85));
+    // Skin only: drained grey-green (desaturated, darker), at up to 70 % for the 40 % sim blend so it reads at distance.
+    const sick = mix(vec3(luminance(clothing)).mul(.7), vec3(.36, .46, .30), .65), skinShift = parts.y.lessThan(0).select(decay.mul(1.75).min(1), 0);
+    const sunken = mix(sick, vec3(.16, .1, .16), socket.mul(.8));
+    const skin = mix(clothing, sunken, skinShift);
+    const bloody = mix(skin, vec3(.36, .02, .03), blood.mul(overlay.z).mul(.9));
     const base = mix(bloody, mix(vec3(.02), vec3(1, .015, .025), overlay.y), eye);
     const eyeColor = vec3(1, .005, .02);
     const glow = eyeColor.div(luminance(eyeColor)).mul(eye).mul(overlay.y).mul(2);
@@ -120,7 +128,8 @@ class CivilianBatch extends Group {
       const frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
       const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, frame);
-      if (activity?.prop && c.state === 'calm' && this.props) {
+      // A dropped hand prop (startle, bite) stays dropped: `appearance.handProp` is cleared by the outbreak layer.
+      if (activity?.prop && c.state === 'calm' && this.props && e.appearance?.handProp !== null) {
         const part = this.bakedClip.parts.indexOf('handR'), stride = this.bakedClip.parts.length * 16;
         this.hand.fromArray(this.bakedClip.matrices, Math.floor(frame) * stride + part * 16);
         this.nextHand.fromArray(this.bakedClip.matrices, Math.ceil(frame) * stride + part * 16);
