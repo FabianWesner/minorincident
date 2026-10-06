@@ -10,11 +10,11 @@ import { launchArgs, measure, type LoadRun } from '../../tools/performance/load-
 // Mac runs many jobs at once (timings carry a CPU-load factor; bytes and requests do not).
 const output = 'test-results/load';
 const budgets = {
-  // Unique bytes downloaded before the first playable frame (~15.7 MB at introduction, baseline
-  // 33 MB). Fails when the critical download grows by > 15 %.
-  criticalBytes: 18_000_000,
+  // Unique bytes downloaded before the first playable frame (L1 v2 / D-GROVE: ~21.8 MB at
+  // introduction, 45 MB before the load lane). Fails when the critical download grows by > 15 %.
+  criticalBytes: 25_000_000,
   // Includes the menu-time prefetch of the same files (served from the HTTP cache on the second request).
-  criticalRequests: 300,
+  criticalRequests: 420,
   // Code payload (HTML, CSS, JS, WASM) of a cold visit.
   codeBytes: 2_000_000,
   // Start -> playable, generous multiples of the targets (3 s desktop, 6 s 4G, 1.5 s warm).
