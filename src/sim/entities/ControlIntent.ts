@@ -6,17 +6,21 @@ import type { SimWorld } from '../world/SimWorld';
 /** Persistent click commands resolve in the sim, against live target positions and weapon range. */
 export class ControlIntent {
   moveTarget: Vec2 | null = null;
+  private readonly route = { path: [] as number[], goal: -1, pathIndex: 0 };
+  private readonly waypoint = { x: 0, z: 0 };
   private attack: { id: number; side: 'LEFT' | 'RIGHT'; started: boolean } | null = null;
   constructor(private readonly world: SimWorld) {}
   snapshot() { return this.moveTarget || this.attack ? structuredClone({ moveTarget: this.moveTarget, attack: this.attack }) : null; }
   attacked(side: 'LEFT' | 'RIGHT'): void { if (this.attack?.side === side) this.attack.started = true; }
-  reset(): void { this.moveTarget = null; this.attack = null; }
+  reset(): void { this.route.path.length = 0; this.route.goal = -1; this.moveTarget = null; this.attack = null; }
   resolve(raw: InputFrame): InputFrame {
     const player = this.world.entities.get(1)!;
     if (raw.cancelMove || Math.hypot(raw.move.x, raw.move.z) > 0 || raw.interact || (!raw.attackTarget && !raw.pointerGround && (raw.left.down || raw.right.down))) this.reset();
     if (this.world.vehicles?.active != null || player.health.current <= 0) { this.reset(); return raw; }
     if (raw.moveTarget) {
-      const point = this.world.districts?.nav.clamp([raw.moveTarget.x, raw.moveTarget.z]);
+      const nav = this.world.infected?.nav;
+      const cell = nav?.nearestCell(raw.moveTarget.x, raw.moveTarget.z);
+      const point = nav ? nav.clear(raw.moveTarget.x, raw.moveTarget.z, survivor.radius) ? [raw.moveTarget.x, raw.moveTarget.z] : cell !== undefined && cell >= 0 ? [nav.x(cell), nav.z(cell)] : this.world.districts?.nav.clamp([raw.moveTarget.x, raw.moveTarget.z]) : this.world.districts?.nav.clamp([raw.moveTarget.x, raw.moveTarget.z]);
       this.moveTarget = point ? { x: point[0], z: point[1] } : { ...raw.moveTarget }; this.attack = null;
     }
     if (raw.attackTarget) { this.attack = { ...raw.attackTarget, started: false }; this.moveTarget = null; }
@@ -59,7 +63,10 @@ export class ControlIntent {
     return frame;
   }
   private walk(frame: InputFrame, target: Vec2, remaining: number): void {
-    const p = this.world.entities.get(1)!.transform, dx = target.x - p.x, dz = target.z - p.z, distance = Math.hypot(dx, dz);
+    const p = this.world.entities.get(1)!.transform, nav = this.world.infected?.nav;
+    if (nav && !nav.steer(p, target, this.route, survivor.radius + .02, this.waypoint)) { frame.move.x = frame.move.z = 0; return; }
+    const destination = nav ? this.waypoint : target, dx = destination.x - p.x, dz = destination.z - p.z, distance = Math.hypot(dx, dz);
+    if (distance < .02) { frame.move.x = frame.move.z = 0; return; }
     // Slow near arrival; the controller remains responsible for acceleration and collision.
     const speed = Math.min(1, remaining / .5, remaining / (survivor.speed / 60));
     frame.move.x = dx / distance * speed; frame.move.z = dz / distance * speed;
