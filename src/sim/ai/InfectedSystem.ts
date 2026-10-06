@@ -93,6 +93,7 @@ export class InfectedSystem {
     if (this.director.count + weight > this.director.cap) throw new Error('Infected concurrency cap reached');
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || !this.nav.clear(position.x, position.z, def.radius)) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
+    delete entity.infected!.model;
     delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;

@@ -48,7 +48,8 @@ export class CrowdView extends Group {
   }
   async init(): Promise<void> {
     const variants = manifest.filter(a => a.status === 'integrated' && a.category === 'infected' && !infectedDefinitions.some(d => d.asset === a.id) && a.id !== 'inf.corpse-poses');
-    const definitions = [...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
+    const models = new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.schedule && e.civilian.model ? [e.civilian.model] : []));
+    const definitions = [...[...models].map(model => ({ ...infectedDefinitions[0], id: model, asset: model })), ...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
     for (const def of definitions) {
       this.definitions.set(def.id, def);
       if (!this.low) {
@@ -113,7 +114,7 @@ export class CrowdView extends Group {
         .filter(({ e, distance }) => {
           if (distance > 12) return false;
           if (!view) return true;
-          const variant = e.infected?.variant, key = variant && this.definitions.has(variant) ? variant : this.definitions.has(e.archetype) ? e.archetype : 'infected.runner';
+          const variant = e.infected?.model ?? e.infected?.variant, key = variant && this.definitions.has(variant) ? variant : this.definitions.has(e.archetype) ? e.archetype : 'infected.runner';
           const dimensions = this.registry.definition(this.definitions.get(key)!.asset).dimensions;
           this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);
           this.bounds.radius = Math.hypot(dimensions.x, dimensions.y, dimensions.z) / 2;
@@ -127,7 +128,7 @@ export class CrowdView extends Group {
       if (e.hidden || e.infected?.hidden || distance > this.cullDistance || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > 1920) continue;
       const availableLod = this.low ? 'lod2' : 'lod1';
       const role = this.batches.has(`${e.archetype}:${availableLod}`) ? e.archetype : 'infected.runner';
-      const variant = e.infected?.variant;
+      const variant = e.infected?.model ?? e.infected?.variant;
       const key = variant && this.batches.has(`${variant}:${availableLod}`) ? variant : role;
       const def = this.definitions.get(key)!;
       const dimensions = this.registry.definition(def.asset).dimensions;
