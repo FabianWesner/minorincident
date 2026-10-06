@@ -1,7 +1,9 @@
-# Pistol ammunition pickup
+# Pistol ammunition pickup — ground-pickup performance revision
 
-Reference: open, olive pressed-metal box, approximately 1.8:1 width/depth, with three rows of seven brass/copper rounds. No lettering or brands. Case is 0.32 × 0.60 × 0.25 metres before the open lid. The recessed lid opens 108 degrees around its rear Y hinge. Body faces +X, base touches z=0.
+The open olive reference case remains 0.32 × 0.60 metres, rests on z=0 and faces +X. Its recessed lid opens 108 degrees around the rear Y hinge. The folding end handle retains its hinge pivot.
 
-Parts: hollow walls/floor, thick rolled rim, reinforced corners, inset cartridge tray, 21 two-material cartridges, inset lid panel and frame, two hinges, latch tabs, end handle and hinge blocks, rivets, sparse raised edge wear. Lid and handle stay separate with hinge pivots; remaining parts join by material. AO is baked into corner attribute `ao`. No image textures.
+LOD0 now uses three merged brass bundles with nine broad six-sided copper tips, simple hollow walls and rolled rails, corner guards, a recessed lid, two hinges and an open handle. Fine wear chips, rivets and cartridge rims were removed. Static geometry joins by material; lid and handle remain independent assemblies. All original node names are preserved; material-group names without remaining geometry are empty anchors.
 
-Palette finishes are tuned to reference olive, brass and copper under canonical palette names. Reference scratch density is reduced for the Side tier; wear is geometry raised at least 3 mm from its underlying face.
+Budget override: ≤2,500 triangles, ≤6 draw calls. Actual LOD0: 1,016 triangles / 6 calls. LOD1: 508 triangles / 6 calls. LOD2: 250 triangles / 6 calls. Every `--glb model.glb` export also regenerates `model.lod1.glb` and `model.lod2.glb`, using deterministic Blender decimation while retaining the scene hierarchy.
+
+Texture-free Principled palette materials; baked corner AO. Olive/brass/copper colour separation and open-case silhouette take priority over individual ammunition detail. No reference images or manifest entries changed.

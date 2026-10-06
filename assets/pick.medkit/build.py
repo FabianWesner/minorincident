@@ -22,7 +22,7 @@ def material(token,h):
  m.diffuse_color=(*c,1);n=m.node_tree.nodes['Principled BSDF'];n.inputs['Base Color'].default_value=(*c,1);n.inputs['Roughness'].default_value=.48
  return m
 white=material('picketWhite','f2e6dc');red=material('survivorRed','d9363e')
-orange=material('woodWarm','b0703f');dark=material('uiDark','25222c');steel=material('sidewalk','b9a4a0')
+orange=material('woodWarm','b0703f');dark=material('uiDark','25222c')
 def empty(name,loc=(0,0,0),parent=None):
  o=bpy.data.objects.new(name,None);scene.collection.objects.link(o);o.location=loc;o.parent=parent;return o
 root=empty('root');root['asset_id']='pick.medkit'
@@ -33,7 +33,7 @@ def finish(o,name,mat,parent=body,bevel=0):
  o.name=name;o.data.materials.append(mat)
  bpy.context.view_layer.objects.active=o
  if bevel:
-  b=o.modifiers.new('rounded moulding','BEVEL');b.width=bevel;b.segments=3;bpy.ops.object.modifier_apply(modifier=b.name)
+  b=o.modifiers.new('rounded moulding','BEVEL');b.width=bevel;b.segments=1;bpy.ops.object.modifier_apply(modifier=b.name)
   n=o.modifiers.new('weighted normals','WEIGHTED_NORMAL');n.keep_sharp=True;bpy.ops.object.modifier_apply(modifier=n.name)
  bpy.context.view_layer.update();o.parent=parent;o.matrix_parent_inverse=parent.matrix_world.inverted()
  for poly in o.data.polygons:poly.use_smooth=True
@@ -44,7 +44,7 @@ def box(name,loc,size,mat,bevel=.015,parent=body):
  bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
  return finish(o,name,mat,parent,bevel)
 
-def cylinder(name,loc,r,depth,mat,parent=body,axis='X',vertices=16):
+def cylinder(name,loc,r,depth,mat,parent=body,axis='X',vertices=8):
  rot=(0,math.pi/2,0) if axis=='X' else ((math.pi/2,0,0) if axis=='Y' else (0,0,0))
  bpy.ops.mesh.primitive_cylinder_add(vertices=vertices,radius=r,depth=depth,location=loc,rotation=rot)
  return finish(bpy.context.object,name,mat,parent,.002)
@@ -71,12 +71,12 @@ for y in [-.222,.222]:
  box('top clasp',( .081,y,.552),(.10,.090,.029),red,.012,lid)
  box('clasp face',(.124,y,.504),(.035,.094,.106),red,.013,lid)
  box('hinge back',(-.110,y,.105),(.028,.097,.042),dark,.009)
- cylinder('hinge pin',(-.112,y,.108),.012,.105,steel,axis='Y')
+ cylinder('hinge pin',(-.112,y,.108),.012,.105,dark,axis='Y')
 box('handle plinth',(0,0,.567),(.13,.365,.028),red,.011)
 for y in [-.132,.132]:
  box('handle foot',(0,y,.592),(.078,.076,.033),dark,.012)
  box('handle upright',(0,y,.635),(.065,.058,.124),dark,.023,handle)
- cylinder('handle joint',(.043,y,.600),.011,.007,steel)
+ cylinder('handle joint',(.043,y,.600),.011,.007,dark)
 box('orange carry grip',(0,0,.698),(.066,.264,.065),orange,.027,handle)
 # A single extruded cross avoids overlapping coplanar centre faces.
 outline=[(-.055,-.15),(.055,-.15),(.055,-.055),(.15,-.055),(.15,.055),(.055,.055),(.055,.15),(-.055,.15),(-.055,.055),(-.15,.055),(-.15,-.055),(-.055,-.055)]
@@ -86,13 +86,15 @@ mesh=bpy.data.meshes.new('cross');mesh.from_pydata(verts,[],faces);mesh.update()
 o=bpy.data.objects.new('raised medical cross',mesh);scene.collection.objects.link(o);finish(o,o.name,white,lid,.004)
 # Static geometry is joined by material within each articulated assembly.
 for group in [body,lid,handle]:
- for m in [white,red,orange,dark,steel]:
+ for m in [white,red,orange,dark]:
   obs=[o for o in list(scene.objects) if o.type=='MESH' and o.parent==group and o.data.materials[0]==m]
   if not obs:continue
   bpy.ops.object.select_all(action='DESELECT')
   for o in obs:o.select_set(True)
   bpy.context.view_layer.objects.active=obs[0];bpy.ops.object.join();obs[0].name=group.name+'_'+m.name
 
+# Preserve the former metal-detail node as an anchor; pins share dark material.
+empty('body_pal_sidewalk',(-.112,-.222,.108),body)
 col=empty('col:body',(0,0,.365),root);col['collider']='cuboid';col['shape']='cuboid';col['size']=[.25,.75,.73]
 scene.unit_settings.system='METRIC'
 meshes=[o for o in scene.objects if o.type=='MESH']
@@ -125,10 +127,24 @@ for o in meshes:
   value=1-.45*hits/32;values.extend((value,value,value,1))
  colors.data.foreach_set('color',values)
 triangles=sum(len(p.vertices)-2 for o in meshes for p in o.data.polygons)
-report={'id':'pick.medkit','tier':'Side','triangles':triangles,'draw_calls':sum(len(o.data.materials) for o in meshes),'materials':[m.name for m in [white,red,orange,dark,steel]],'nodes_ok':all(bpy.data.objects.get(n) is not None for n in ('root','body','lid','handle','col:body')),'within_budget':6000<=triangles<=12000 and len(meshes)<=30,'rounds':4,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
-(HERE/'build-stats.json').write_text(json.dumps(report,indent=2))
+report={'id':'pick.medkit','tier':'Side','triangles':triangles,'draw_calls':sum(len(o.data.materials) for o in meshes),'materials':[m.name for m in [white,red,orange,dark]],'nodes_ok':all(bpy.data.objects.get(n) is not None for n in ('root','body','lid','handle','col:body')),'within_budget':triangles<=2500 and sum(len(o.data.materials) for o in meshes)<=6,'rounds':5,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
 if a.glb:
  bpy.ops.object.select_all(action='SELECT');bpy.ops.export_scene.gltf(filepath=a.glb,export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_cameras=False,export_lights=False)
+ # Generate lower LODs from the same six material batches without touching pivots.
+ originals={o:o.data for o in meshes};report['lods']={}
+ for level,ratio in [(1,.65),(2,.40)]:
+  for o,data in originals.items():
+   o.data=data.copy();bpy.context.view_layer.objects.active=o
+   dec=o.modifiers.new('pickup LOD','DECIMATE');dec.ratio=ratio
+   bpy.ops.object.modifier_apply(modifier=dec.name)
+  path=Path(a.glb).with_name(Path(a.glb).stem+f'.lod{level}.glb')
+  bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_cameras=False,export_lights=False)
+  raw=path.read_bytes();gltf=json.loads(raw[20:20+int.from_bytes(raw[12:16],'little')])
+  count=sum(gltf['accessors'][p['indices']]['count']//3 for m in gltf['meshes'] for p in m['primitives'])
+  report['lods'][f'lod{level}']={'triangles':count,'draw_calls':sum(len(o.data.materials) for o in meshes)}
+  for o,data in originals.items():
+   reduced=o.data;o.data=data;bpy.data.meshes.remove(reduced)
+(HERE/'build-stats.json').write_text(json.dumps(report,indent=2))
 if a.render:
  bpy.ops.mesh.primitive_plane_add(size=200,location=(0,0,-.008));ground=bpy.context.object
  gm=bpy.data.materials.new('stage');gm.use_nodes=True;gm.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value=(.028,.024,.034,1);gm.node_tree.nodes['Principled BSDF'].inputs['Roughness'].default_value=.85;ground.data.materials.append(gm)
