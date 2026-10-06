@@ -53,7 +53,7 @@ export class KeyframeAnimator {
       if (this.lastPosition && dt > 0) traveled = Math.hypot(position.x - this.lastPosition.x, position.z - this.lastPosition.z);
       this.lastPosition = { x: position.x, z: position.z };
     }
-    const speed = pose.animation === 'idle' ? 0 : traveled !== undefined && dt > 0 ? (traveled > 3 ? 0 : traveled / dt) : Math.hypot(pose.velocity.x, pose.velocity.z);
+    const speed = traveled !== undefined && dt > 0 ? (traveled > 3 ? 0 : traveled / dt) : Math.hypot(pose.velocity.x, pose.velocity.z);
     let name = speed > 2.5 ? 'run' : speed > (this.moving ? .06 : .16) ? 'walk' : 'idle';
     const moving = name !== 'idle';
     if (moving !== this.moving) { this.moving = moving; this.transitionUntil = time + (moving ? .18 : .22); name = moving ? 'start' : 'stop'; }
@@ -70,7 +70,7 @@ export class KeyframeAnimator {
     else if (!strike && !['idle','walk','run'].includes(pose.animation)) name = pose.animation;
     if (this.clip !== name || strike && !upper && this.attackTick !== pose.animationTick || !this.base) {
       const previous = this.base; this.base = this.play(name, !!strides[name] || name === 'idle');
-      if (previous && previous !== this.base) previous.crossFadeTo(this.base, .14, false);
+      if (previous && previous !== this.base) previous.crossFadeTo(this.base, strike ? .14 : .2, false);
       this.clip = name;
     }
     if (strides[name] && this.base) {
