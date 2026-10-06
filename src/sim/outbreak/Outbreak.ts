@@ -3,7 +3,7 @@ import { l1v2 } from '../../data/l1v2';
 import { civilianRoles, l1Pedestrians } from '../../data/npcs';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
-import type { CivilianState, Point } from '../npc/types';
+import type { CivilianActivity, CivilianProp, CivilianState, Point } from '../npc/types';
 import type { Appearance } from './appearance';
 import { HumanTargets } from './humans';
 import type { BiteEvent, InfectionPhase, LosBlockerRegistry, SpeedTier, Vec2 } from './types';
@@ -30,6 +30,10 @@ export interface OutbreakOptions {
 export interface PedestrianOptions {
   role?: string; model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: SpeedTier;
   waypoints?: Point[]; faces?: (Point | null)[]; yaw?: number;
+  /** m1-civlife schedule (sit/chat/water/look/walk/door/inside). Derived from waypoints/faces when omitted. */
+  schedule?: CivilianActivity[];
+  /** Walk speed override (joggers). */
+  walkSpeed?: number;
 }
 
 /**
@@ -97,16 +101,20 @@ export class Outbreak {
   spawnPedestrian(position: Point, options: PedestrianOptions = {}): number {
     const civilians = this.world.npcs!.civilians;
     const role = options.role ?? civilianRoles[Math.floor(this.rng.next() * civilianRoles.length)].role;
-    const id = civilians.spawn(role, position, { waypoints: options.waypoints ?? [position] });
-    const e = this.world.entities.get(id)!, c = e.civilian!;
     const model = options.model ?? l1Pedestrians.models[Math.floor(this.rng.next() * l1Pedestrians.models.length)];
-    c.model = model;
+    const waypoints = options.waypoints ?? [position];
+    // Plain loops become civlife walks; a point with something to face becomes a short look (window, flowers, partner).
+    const schedule: CivilianActivity[] = options.schedule ?? waypoints.map((target, i) => options.faces?.[i]
+      ? { activity: 'look', anchor: 'l1/look', target, facing: options.faces[i]!, ticks: ticks(2 + this.rng.next() * 6), prop: options.handProp as CivilianProp ?? undefined }
+      : { activity: 'walk', anchor: 'l1/walk', target, ticks: 1, prop: options.handProp as CivilianProp ?? undefined });
+    const id = civilians.spawn(role, position, { waypoints: schedule.map(s => s.target), model, schedule });
+    const e = this.world.entities.get(id)!, c = e.civilian!;
     e.transform.yaw = options.yaw ?? this.rng.next() * Math.PI * 2;
     const tier: SpeedTier = options.tier ?? (model === 'npc.civilian-elderly' || role === 'bathrobe-neighbor' ? 'frail' : role === 'jogger' || this.rng.next() < l1Pedestrians.athleticShare ? 'athletic' : 'average');
     e.appearance = { entityId: id, asset: model, tint: options.tint ?? l1Pedestrians.shirts[Math.floor(this.rng.next() * l1Pedestrians.shirts.length)],
-      accessories: [...(options.accessories ?? [])], handProp: options.handProp ?? null, tier } satisfies Appearance;
-    c.l1 = { walkSpeed: this.range(civ.walkSpeed) * (model === 'npc.civilian-elderly' ? .85 : 1), fleeSpeed: this.range(civ.fleeSpeed) * (tier === 'frail' ? .9 : 1),
-      startleTicks: ticks(this.range(civ.startleS)), refuge: null, target: null, repickAt: 0, noticed: -1, faces: options.faces ? structuredClone(options.faces) : undefined };
+      accessories: [...(options.accessories ?? [])], handProp: options.handProp ?? schedule.find(s => s.prop)?.prop ?? null, tier } satisfies Appearance;
+    c.l1 = { walkSpeed: options.walkSpeed ?? this.range(civ.walkSpeed) * (model === 'npc.civilian-elderly' ? .7 : 1), fleeSpeed: this.range(civ.fleeSpeed) * (tier === 'frail' ? .9 : 1),
+      startleTicks: ticks(this.range(civ.startleS)), refuge: null, target: null, repickAt: 0, noticed: -1 };
     c.pauseUntil = this.world.tick + Math.floor(this.rng.next() * 90);
     return id;
   }
@@ -119,7 +127,9 @@ export class Outbreak {
     while (this.heard.length && this.heard[0].tick < tick - 1) this.heard.shift();
     this.turning.length = 0; for (const e of world.entities.iterate()) if (e.infection && e.infection.phase !== 'stagger') this.turning.push(e);
     for (const e of world.entities.iterate()) {
-      const c = e.civilian; if (!c || c.pet || !c.l1 || e.hidden) continue;
+      const c = e.civilian; if (!c || c.pet || !c.l1) continue;
+      // Inside a shop/house for a routine visit: only the routine clock runs.
+      if (e.hidden) { if (c.state === 'calm' && !e.infection) this.routine(e); continue; }
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
       if (c.state === 'finished' || c.state === 'infected') continue;
@@ -145,24 +155,29 @@ export class Outbreak {
   }
   private dropProp(e: EntitySnapshot): void { if (e.appearance) e.appearance.handProp = null; }
 
-  /** Calm life: walk the routine loop at 1.2-1.5 m/s and pause facing something (partner, window, flowers). */
+  /**
+   * Calm life on the m1-civlife schedule (walk, sit, chat, water, look, door, inside): walk to each step at the
+   * pedestrian's own 1.2-1.5 m/s, then perform it facing its target. A walker that makes no 0.3 m progress for 1 s
+   * (oncoming walker, blocked route) moves on to the next step instead of standing in the way.
+   */
   private routine(e: EntitySnapshot): void {
-    const c = e.civilian!, l1 = c.l1!, tick = this.world.tick;
-    const face = l1.faces?.[(c.waypoint + c.waypoints.length - 1) % c.waypoints.length];
-    if (tick < c.pauseUntil) { if (face) this.face(e, face, .1); return; }
-    const target = c.waypoints[c.waypoint];
-    this.world.npcs!.move(e, target, l1.walkSpeed, c, .15);
-    const left = Math.hypot(e.transform.x - target.x, e.transform.z - target.z);
+    const c = e.civilian!, l1 = c.l1!, tick = this.world.tick, schedule = c.schedule!, step = c.scheduleStep ?? 0, activity = schedule[step];
+    if (tick < c.pauseUntil) return;
     l1.progressFrom ??= { x: e.transform.x, z: e.transform.z }; l1.progressAt ??= tick;
-    if (Math.hypot(e.transform.x - l1.progressFrom.x, e.transform.z - l1.progressFrom.z) > .3) { l1.progressAt = tick; l1.progressFrom.x = e.transform.x; l1.progressFrom.z = e.transform.z; }
-    // Two walkers blocking each other (or a blocked route) turn back after 1 s instead of standing in each other's way.
-    const stuck = tick - l1.progressAt > 60;
-    if (left < (c.waypoints.length > 1 ? .3 : 1) || stuck) {
-      l1.progressAt = tick; l1.progressFrom.x = e.transform.x; l1.progressFrom.z = e.transform.z;
-      c.waypoint = (c.waypoint + (stuck && left >= .3 ? c.waypoints.length - 1 : 1)) % c.waypoints.length; c.path.length = 0; c.goal = -1;
-      // Pauses always have something to face; plain walkers keep walking.
-      const faces = l1.faces?.[(c.waypoint + c.waypoints.length - 1) % c.waypoints.length];
-      c.pauseUntil = faces ? tick + ticks(2 + this.rng.next() * 6) : tick;
+    let next = false;
+    if (!c.activityUntil) {
+      this.world.npcs!.move(e, activity.target, l1.walkSpeed, c, .08);
+      if (Math.hypot(e.transform.x - l1.progressFrom.x, e.transform.z - l1.progressFrom.z) > .3) { l1.progressAt = tick; l1.progressFrom.x = e.transform.x; l1.progressFrom.z = e.transform.z; }
+      const reach = activity.activity === 'walk' ? .3 : schedule.length === 1 || activity.seat ? .25 : .5;
+      if (Math.hypot(e.transform.x - activity.target.x, e.transform.z - activity.target.z) < reach || activity.activity !== 'walk' && tick - l1.progressAt > 60) {
+        c.activityStarted = tick; c.activityUntil = tick + Math.max(1, activity.ticks);
+        if (activity.activity === 'inside') { e.hidden = true; this.world.spatial.delete(e.id); }
+      } else if (tick - l1.progressAt > 60) next = true;
+    } else if (activity.facing) this.face(e, activity.facing, .08);
+    if (next || c.activityUntil && tick >= c.activityUntil) {
+      if (e.hidden) { e.hidden = false; this.world.spatial.set(e.id, e.transform.x, e.transform.z); }
+      c.scheduleStep = (step + 1) % schedule.length; c.activityUntil = 0; c.activityStarted = 0;
+      c.path.length = 0; c.goal = -1; l1.progressAt = tick; l1.progressFrom.x = e.transform.x; l1.progressFrom.z = e.transform.z;
     }
   }
 
@@ -234,6 +249,7 @@ export class Outbreak {
     this.stats.escaped++;
     this.world.events.emit({ type: 'outbreak.civilian-escaped', tick: this.world.tick, id: e.id, refuge });
     this.world.spatial.delete(e.id); this.world.entities.delete(e.id);
+    for (const pet of this.world.entities.iterate()) if (pet.civilian?.owner === e.id) { this.world.spatial.delete(pet.id); this.world.entities.delete(pet.id); }
   }
 
   /** An infected that reaches a pedestrian grabs it for 1.0 s; any hit on the grabber in that window rescues. */
@@ -350,6 +366,7 @@ export class Outbreak {
     // Lane C's L1 brain already gave it the tier run speed; without it (tests, old levels) use the tier base +/- jitter.
     if (!e.infected!.l1) e.infected!.speed = l1v2.speedTiers[inf.tier].baseMs * (1 + (this.rng.next() * 2 - 1) * l1v2.speedTiers.jitter);
     delete e.civilian; delete e.infection; delete e.motion;
+    for (const pet of this.world.entities.iterate()) if (pet.civilian?.owner === e.id) pet.civilian.owner = null;
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     if (!bitten) return;
     this.stats.turned++;
