@@ -96,7 +96,7 @@ export class GameUI {
       input.addEventListener('change', () => this.game.audio.set({ [key]: input.checked })); row.append(input); form.append(row);
     }
     const controls = node('div', 'settings-controls'); controls.className = 'settings-controls';
-    controls.append(node('p', 'controls-guide', 'Mouse: Click to move; hold LMB on ground to walk. LMB/RMB on infected to attack; RMB on ground attacks without moving. Wheel switches the last-used side. Middle-click interacts. Driving: hold LMB to drive, release to brake. Keyboard: WASD, J / K (aim assist), Q, F / E. Touch: floating stick, LEFT / RIGHT (drag to aim; swipe up to switch), ACTION near interactables. ACTION exits cars.'));
+    controls.append(node('p', 'controls-guide', 'Mouse: Click to move; hold LMB on ground to walk. LMB/RMB on infected to attack; RMB on ground attacks without moving. Wheel zooms the camera. 1/2/3 select LEFT rack slots; Shift+1/2/3 select RIGHT. Q cycles the last-used side; clicking a HUD slot cycles it. Middle-click interacts. Driving: hold LMB to drive, release to brake. Keyboard: WASD, J / K (aim assist), Q, F / E. Touch: floating stick, pinch to zoom, LEFT / RIGHT (drag to aim; swipe up to switch), ACTION near interactables. ACTION exits cars.'));
     const action = node('select', 'binding-action'); action.setAttribute('aria-label', 'Action to rebind');
     for (const name of Object.keys(defaultBindings) as Action[]) { const option = node('option', `binding-${name}`, name); option.value = name; action.append(option); }
     const code = node('input', 'binding-code'); code.setAttribute('aria-label', 'Keyboard code'); code.placeholder = 'KeyZ';

@@ -7,6 +7,10 @@ import { Lighting } from '../../../src/render/Lighting';
 import { PaletteMaterial } from '../../../src/render/PaletteMaterial';
 import { Grass } from '../../../src/render/Grass';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
+import { placementColliders } from '../../../src/levels/districts/staticCollision';
+import { resolveDecay } from '../../../src/levels/districts/validate';
+import { DistrictWorld } from '../../../src/sim/world/DistrictWorld';
+import { compositions } from '../../../src/levels/compositions';
 
 const layout = (id: string): DistrictLayout => JSON.parse(readFileSync(`public/assets/layouts/${id}.layout.json`, 'utf8')) as DistrictLayout;
 test('@E19 @M1-14 L1 streets retain anchors, narrower lanes and continuous small dressing', () => {
@@ -17,9 +21,25 @@ test('@E19 @M1-14 L1 streets retain anchors, narrower lanes and continuous small
   for (const l of [res, main, shop]) {
     expect(l.roads.edges.every(e => e.laneWidth === 5)).toBe(true);
     expect(l.colliders.filter(c => c.id.startsWith('dressing:')).length).toBeGreaterThan(15);
+    const decay = resolveDecay(l, 0);
+    const colliders = placementColliders(decay.placements, decay.colliders);
+    const dressing = decay.colliders.filter(c => c.id.startsWith('dressing:'));
+    expect(colliders.filter(c => c.id.startsWith('dressing:'))).toEqual(dressing);
     for (const x of [-20, -12, 12, 20, 26]) {
       const details = (l.decorations ?? []).filter(p => p.kind === 'flower' && Math.abs(p.position[0] - x) < 6 && Math.abs(p.position[2]) < 7);
       expect(details.length, `${l.district} x=${x} must have curated verge details`).toBeGreaterThanOrEqual(10);
+    }
+  }
+});
+test('@E19 @M1-14 solid dressing reaches L1 navigation without blocking mission anchors', () => {
+  const world = new DistrictWorld(compositions.L1, ['D-RES', 'D-MAIN', 'D-SHOP'].map(layout), 1);
+  for (const district of world.districts) {
+    const dressing = district.decay.colliders.filter(c => c.id.startsWith('dressing:'));
+    expect(dressing.length).toBeGreaterThan(15);
+    for (const { aabb } of dressing) {
+      const x = (aabb.min[0] + aabb.max[0]) / 2 + district.origin[0];
+      const z = (aabb.min[2] + aabb.max[2]) / 2 + district.origin[1];
+      expect(world.nav.cells[world.nav.index(x, z)], `${district.id}: solid dressing must block navigation`).toBe(0);
     }
   }
 });

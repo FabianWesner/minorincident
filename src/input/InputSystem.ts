@@ -37,6 +37,8 @@ export class InputSystem implements Lifecycle {
   private cancelMove = false;
   private pointerGround: false | 'move' | 'stop' = false;
   private readonly clicks: { button: number; x: number; y: number }[] = [];
+  private selectedSlot: { side: 'LEFT' | 'RIGHT'; index: number } | undefined;
+  cycle(side: 'LEFT' | 'RIGHT'): void { this.selectors.push(1); this.selectorSide = side; }
   private selectorSide: 'LEFT' | 'RIGHT' | undefined;
   private readonly projected = new Vector3();
   private pause = false;
@@ -52,14 +54,14 @@ export class InputSystem implements Lifecycle {
   private readonly hint = document.createElement('output');
   private readonly controls = document.createElement('details');
   private readonly message = document.createElement('output');
-  constructor(private readonly canvas: HTMLElement, private readonly camera: Camera) {
+  constructor(private readonly canvas: HTMLElement, private readonly camera: Camera, private readonly zoom: (delta: number) => void = () => {}) {
     let storage: Storage | undefined;
     try { storage = localStorage; } catch { /* Defaults work with storage disabled. */ }
     this.bindings = new Bindings(storage);
     this.cursor = new RayCursor(camera, canvas);
     this.keyboard = new Keyboard(window, this.key);
     this.pointer = new Pointer(canvas, window, this.mouseActivity, this.token);
-    this.wheel = new Wheel(canvas, (direction) => { this.mouseActivity(); this.selectors.push(direction); });
+    this.wheel = new Wheel(canvas, (direction) => { this.mouseActivity(); this.zoom(direction * .075); });
     this.touch = new Touch(canvas, () => { this.pointer.valid = false; this.cancelMove = true; this.pointerGround = false; this.setScheme('touch'); }, (action, direction, side) => {
       if (action === 'selector') { this.selectors.push(1); this.selectorSide = side; }
       else if (action === 'interact') this.interact = true;
@@ -69,7 +71,7 @@ export class InputSystem implements Lifecycle {
         this.touchFire = direction ? 'touch' : 'assist';
         (action === 'left' ? this.left : this.right).pulse();
       }
-    });
+    }, this.zoom);
   }
   init(): void {
     this.keyboard.init(); this.pointer.init(); this.wheel.init(); this.touch.init();
@@ -99,10 +101,10 @@ export class InputSystem implements Lifecycle {
     this.touch.element.hidden = scheme !== 'touch'; this.touch.element.style.display = scheme === 'touch' ? 'grid' : 'none';
     this.scheme = scheme; this.hint.dataset.scheme = scheme;
     this.hint.textContent = {
-      'mouse-only': 'Click to move · LMB/RMB on infected to attack · wheel · middle-click ACTION',
-      'mouse-keyboard': 'WASD + cursor · LMB/RMB on infected · Q · F / E',
-      keyboard: 'WASD · J / K aim assist · Q · F / E',
-      touch: 'Stick to move · LEFT / RIGHT · swipe up to switch · ACTION',
+      'mouse-only': 'Click to move · LMB/RMB on infected to attack · wheel zoom · 1/2/3 · Shift+1/2/3 · Q · middle-click ACTION',
+      'mouse-keyboard': 'WASD + cursor · LMB/RMB on infected · wheel zoom · 1/2/3 · Shift+1/2/3 · Q · F / E',
+      keyboard: 'WASD · J / K aim assist · 1/2/3 · Shift+1/2/3 · Q · F / E',
+      touch: 'Stick to move · LEFT / RIGHT · swipe up to switch · pinch zoom · ACTION',
     }[scheme];
   }
   private readonly mouseActivity = (): void => {
@@ -110,6 +112,11 @@ export class InputSystem implements Lifecycle {
   };
   private moving(): boolean { return this.active.has('moveUp') || this.active.has('moveDown') || this.active.has('moveLeft') || this.active.has('moveRight'); }
   private readonly key = (code: string, held: boolean): void => {
+    if (code === 'ShiftLeft' || code === 'ShiftRight') return;
+    if (held && /^Digit[123]$/.test(code)) {
+      this.selectedSlot = { side: this.keyboard.pressed.has('ShiftLeft') || this.keyboard.pressed.has('ShiftRight') ? 'RIGHT' : 'LEFT', index: Number(code.slice(-1)) - 1 };
+      this.setScheme(this.pointer.valid ? 'mouse-keyboard' : 'keyboard'); return;
+    }
     const action = held ? this.bindings.action(code) : this.heldTokens.get(code);
     if (held && action) {
       if (action.startsWith('aim')) { this.pointer.valid = false; this.manualAim = true; }
@@ -152,7 +159,7 @@ export class InputSystem implements Lifecycle {
     if (this.recorder.playing) return this.recorder.next() ?? this.frameNeutral();
     if (this.injected) { this.recorder.capture(this.injected); return this.injected; }
     const frame = this.frame;
-    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide;
+    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot;
     frame.cancelMove = this.cancelMove; this.cancelMove = false;
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
     this.driving.throttle = y ? -y : 0; this.driving.steer = x; frame.drive = this.driving; frame.brake = false;
@@ -224,11 +231,12 @@ export class InputSystem implements Lifecycle {
     }
     if (this.selectorSide) { frame.selectorSide = this.selectorSide; this.selectorSide = undefined; }
     if (this.drivingContext && this.scheme === 'touch' && this.touch.holdingLeft) frame.left.held = true;
+    if (this.selectedSlot) { frame.selectedSlot = this.selectedSlot; this.selectedSlot = undefined; }
     frame.selector = this.selectors.shift() ?? 0; frame.interact = this.interact; frame.pause = this.pause;
     this.interact = false; this.pause = false; this.recorder.capture(frame); return frame;
   }
   private frameNeutral(): InputFrame {
-    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide;
+    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot;
     frame.left.down = frame.left.held = frame.left.up = false; frame.right.down = frame.right.held = frame.right.up = false;
     frame.selector = 0; frame.interact = false; frame.pause = false; return frame;
   }
@@ -239,7 +247,7 @@ export class InputSystem implements Lifecycle {
   readonly release = (): void => {
     this.releasing = true; this.keyboard.release(); this.pointer.release(); this.releasing = false;
     this.touch.release(); this.wheel.reset(); this.touchFire = null; this.left.release(); this.right.release(); this.active.clear(); this.heldTokens.clear();
-    this.clicks.length = 0; this.cancelMove = true; this.pointerGround = false; this.selectorSide = undefined;
+    this.clicks.length = 0; this.cancelMove = true; this.pointerGround = false; this.selectorSide = undefined; this.selectedSlot = undefined;
     this.selectors.length = 0; this.interact = false; this.pause = false;
   };
   update(): void { /* Input is sampled in the fixed input phase, not the render update. */ }

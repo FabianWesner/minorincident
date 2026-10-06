@@ -16,6 +16,8 @@ export interface InputFrame {
   /** Ground LMB is movement, not a LEFT attack. */
   pointerGround?: boolean;
   /** Explicit side for a touch swipe or target attack while approaching. */
+  /** Direct number-key rack choice. Out-of-range slots are ignored. */
+  selectedSlot?: { side: 'LEFT' | 'RIGHT'; index: number };
   selectorSide?: 'LEFT' | 'RIGHT';
   move: Vec2;
   aim: Vec2 | null;
@@ -24,7 +26,7 @@ export interface InputFrame {
   aimSource: 'pointer' | 'keyboard' | 'touch' | 'assist' | null;
   left: Button;
   right: Button;
-  /** -1 = previous, +1 = next rack item; wheel pulses drain one per tick. */
+  /** -1 = previous, +1 = next rack item; Q/HUD/swipe pulses drain one per tick. */
   selector: -1 | 0 | 1;
   interact: boolean;
   pause: boolean;

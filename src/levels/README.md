@@ -6,16 +6,22 @@ pickup → store fight. The full authored campaign graph remains available to it
 existing E12 structure tests; segments 4–6 are not part of this playtest.
 
 L1 enables the existing infected system against town colliders, with a living
-cap of 15. A healthy delivery driver turns into the named runner, with three additional
-runners chasing at the diner. The slice uses one corgi and collision-safe nearby
+cap of 15. One infected delivery driver enters from outside the expanded camera
+frustum and attacks three diner customers. Each customer follows E08 grabbed →
+bitten → down/convulse → rising/red-eyes → infected before the group notices and
+chases the survivor. The mission checkpoint stores the outbreak victim IDs and
+release state. The slice uses one corgi and collision-safe nearby
 civilian routines from E08; crowd rendering binds the real male/female models. Crossing the hardware entrance retires that chase and captures the
 `melee` checkpoint. D-MAIN places the real Maple Hardware model and derives the display anchor from its bounds. The display offers a temporary bat/crowbar/machete choice;
 standing in its ring for three seconds, F/E, middle-click, or touch ACTION equips
-that weapon in LEFT and kick in RIGHT. Then four runners and a crawler activate.
+that weapon in LEFT and kick in RIGHT. Then four runners and a crawler emerge from the hidden store/back-door area.
+Fresh infected spawn offscreen with a margin or behind a solid building; customer
+transformations keep their visible position and clothing.
 The choice is not a permanent progression unlock.
 
-An unarmed player has no `weapons` component; Combat's internal runner is inactive,
-and its held assets and aim indicators are hidden. Death restores the mission,
+The morning starts without a `weapons` component; Combat's internal runner is
+inactive, and its held assets and aim indicators are hidden. At the incident the
+survivor can use LEFT fists and RIGHT kick while seeking a better hardware weapon. Death restores the mission,
 entity store and infected brains together, retaining the picked weapon and resetting
 its ready timer. Restart returns to the unarmed morning snapshot. The result panel
 ends here rather than entering upgrades or another level.
