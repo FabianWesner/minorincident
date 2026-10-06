@@ -1,0 +1,71 @@
+{
+  "id": "house.porch-b",
+  "triangles": {
+    "lod0": 11944,
+    "lod1": 1408,
+    "lod2": 260
+  },
+  "dimensions_blender": [
+    2.4054999351501465,
+    1.3545000553131104,
+    1.0859999656677246
+  ],
+  "draw_calls": 15,
+  "materials": [
+    "pal_uiDark",
+    "pal_silver",
+    "pal_policeBlue",
+    "pal_flamingoPink",
+    "pal_survivorRed",
+    "pal_brass",
+    "pal_picketWhite"
+  ],
+  "nodes": [
+    "root",
+    "wheel_rear_policeBlue",
+    "wheel_front_policeBlue",
+    "wheel_rear_flamingoPink",
+    "wheel_front_flamingoPink",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 3,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 204948,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 45740,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 25792,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.11788345612860013,
+    "lod2": 0.021768251841929
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "house.porch-b",
+    "geometry_hash": "a6b1a4f1e73e27df932f7316895893c04d17f66dd47cc74a25743b11a5803a72",
+    "second_geometry_hash": "a6b1a4f1e73e27df932f7316895893c04d17f66dd47cc74a25743b11a5803a72",
+    "geometry_identical": true,
+    "raw_byte_identical": false
+  },
+  "matches_reference": true,
+  "done": true
+}
