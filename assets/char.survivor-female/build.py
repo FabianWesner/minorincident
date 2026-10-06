@@ -336,6 +336,7 @@ tube('smile',[(.119,-.030,1.130),(.131,-.016,1.125),(.135,0,1.123),(.131,.016,1.
 tube('lower lip',[(.126,-.012,1.119),(.130,0,1.118),(.125,.014,1.120)],.002,'skinBlush','head',2)
 
 # Scalp cap with an open face region and a low nape at the rear.
+# Clearance above the skin also survives aggressive distant-LOD simplification.
 vs=[]; fs=[]; segments=32; rows=9
 for k in range(rows):
     t=k/(rows-1)
@@ -344,10 +345,13 @@ for k in range(rows):
         # theta=0 is forward; rear extends below the ears.
         edge=1.00+.72*(1-math.cos(a))/2
         ph=.025+(edge-.025)*t
-        vs.append((-.024+.147*math.sin(ph)*math.cos(a),.160*math.sin(ph)*math.sin(a),1.199+.166*math.cos(ph)))
+        vs.append((-.024+.158*math.sin(ph)*math.cos(a),.173*math.sin(ph)*math.sin(a),1.199+.181*math.cos(ph)))
 for k in range(rows-1):
     for j in range(segments): fs.append((k*segments+j,k*segments+(j+1)%segments,(k+1)*segments+(j+1)%segments,(k+1)*segments+j))
 fs.append(tuple(reversed(range(segments))))
+# Latitude rows run downward: reverse their inward winding so the cap is
+# visible from the overhead game camera as well as behind the character.
+fs=[tuple(reversed(face)) for face in fs]
 cap=mesh('hair scalp',vs,fs,'hairChestnut','head',1)
 # Sweeping bangs from the off-center part, with leaf tips around the temples.
 bangs=[
@@ -467,6 +471,15 @@ for o in list(asset.objects):
 
 # Merge same-material static geometry within each rigid joint, preserving
 # separate shells in the source and every animation/socket node in the GLB.
+# The authored distant tier drops sub-centimetre trim before simplification.
+# Keep joint empties, the continuous scalp/hat and readable eye colours.
+if '--lod2' in ARGS:
+    for detail in list(asset.objects):
+        if detail.type != 'MESH': continue
+        dims=detail.dimensions
+        if dims.x*dims.y*dims.z < .00003 and not any(word in detail.name.lower() for word in ('scalp','cap_crown','cap_white_panel','eye','iris','pupil')):
+            bpy.data.objects.remove(detail, do_unlink=True)
+
 def consolidate():
     groups={}
     for o in list(asset.objects):

@@ -22,6 +22,7 @@ parser.add_argument('--samples', type=int, default=24)
 parser.add_argument('--width', type=int, default=960)
 parser.add_argument('--height', type=int, default=540)
 parser.add_argument('--pose', action='store_true')
+parser.add_argument('--lod2', action='store_true')
 args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
 bpy.ops.wm.read_factory_settings(use_empty=True)
 scene = bpy.context.scene
@@ -426,6 +427,9 @@ for j in range(8):
         if j >= 6 and abs(i+.5-12) < (1.7 if j == 7 else .9):
             continue
         faces.append((j*n+i,j*n+(i+1)%n,(j+1)*n+(i+1)%n,(j+1)*n+i))
+# Outward winding and a closed crown prevent a see-through cap from above.
+faces.append(tuple(reversed(range(n))))
+faces=[tuple(reversed(face)) for face in faces]
 mesh('cap_crown',verts,faces,'trim','head',sub=1)
 # White front is a curved sector closely fitted to crown.
 verts=[]; faces=[]
@@ -436,6 +440,7 @@ for j in range(8):
         verts.append((-.025+.154*math.sin(a)*math.cos(t),.17*math.sin(a)*math.sin(t),1.451+.145*math.cos(a)))
 for j in range(7):
     for i in range(12): faces.append((j*13+i,j*13+i+1,(j+1)*13+i+1,(j+1)*13+i))
+faces=[tuple(reversed(face)) for face in faces]
 mesh('cap_white_panel',verts,faces,'blue','head',sub=1)
 # Brim: curved disc sector with actual edge thickness.
 verts=[]
@@ -588,6 +593,15 @@ for name in ['head','armL','armR','foreArmL','foreArmR','legL','legR']:
 
 # Join decoration by material within each rigid part to keep draw calls practical.
 # Stumps keep their own meshes and exact names.
+# The authored distant tier drops sub-centimetre trim before simplification.
+# Keep joint empties, the continuous scalp/hat and readable eye colours.
+if args.lod2:
+    for detail in list(asset.objects):
+        if detail.type != 'MESH': continue
+        dims=detail.dimensions
+        if dims.x*dims.y*dims.z < .00003 and not any(word in detail.name.lower() for word in ('scalp','cap_crown','cap_white_panel','eye','iris','pupil')):
+            bpy.data.objects.remove(detail, do_unlink=True)
+
 for name, parent in G.items():
     children=[o for o in asset.objects if o.type=='MESH' and o.parent==parent and not o.name.startswith('stump_')]
     batches=[(mat, [o for o in children if o.data.materials and o.data.materials[0]==mat]) for mat in M.values()]

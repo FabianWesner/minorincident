@@ -343,6 +343,9 @@ for k in range(rows):
 for k in range(rows-1):
     for j in range(segments): fs.append((k*segments+j,k*segments+(j+1)%segments,(k+1)*segments+(j+1)%segments,(k+1)*segments+j))
 fs.append(tuple(reversed(range(segments))))
+# Latitude rows run downward: reverse their inward winding so the cap is
+# visible from the overhead game camera as well as behind the character.
+fs=[tuple(reversed(face)) for face in fs]
 mesh('hair scalp',vs,fs,'hairChestnut','head',1)
 for i in range(13):
     a=.70+i*.40; c=math.cos(a); q=math.sin(a)
@@ -431,6 +434,15 @@ for o in list(asset.objects):
 
 # Merge same-material static geometry within each rigid joint, preserving
 # separate shells in the source and every animation/socket node in the GLB.
+# The authored distant tier drops sub-centimetre trim before simplification.
+# Keep joint empties, the continuous scalp/hat and readable eye colours.
+if '--lod2' in ARGS:
+    for detail in list(asset.objects):
+        if detail.type != 'MESH': continue
+        dims=detail.dimensions
+        if dims.x*dims.y*dims.z < .00003 and not any(word in detail.name.lower() for word in ('scalp','cap_crown','cap_white_panel','eye','iris','pupil')):
+            bpy.data.objects.remove(detail, do_unlink=True)
+
 def consolidate():
     groups={}
     for o in list(asset.objects):
