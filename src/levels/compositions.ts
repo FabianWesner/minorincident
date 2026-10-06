@@ -1,13 +1,15 @@
 import {
   districtIds,
+  groveDistrictId,
   type LevelComposition,
   type DistrictId,
 } from "./districts/types";
 /** Neighbouring district slabs touch at boundaries; all connected roads are available from load. */
 export const districtOrigins: Record<DistrictId, [number, number]> =
-  Object.fromEntries(
-    districtIds.map((id, i) => [id, [(i % 2) * 56, Math.floor(i / 2) * 56]]),
-  ) as Record<DistrictId, [number, number]>;
+  Object.fromEntries([
+    ...districtIds.map((id, i) => [id, [(i % 2) * 56, Math.floor(i / 2) * 56]]),
+    [groveDistrictId, [0, 0]],
+  ]) as Record<DistrictId, [number, number]>;
 const ids = [
   ["D-RES", "D-MAIN", "D-SHOP"],
   ["D-RES", "D-SCHOOL", "D-SHOP", "D-PARK"],
@@ -36,3 +38,10 @@ for (const id of districtIds)
     timeOfDay: "L1",
     districts: [{ id, origin: [0, 0] }],
   };
+/** L1 v2 (D-GROVE alone, centred on the origin). The campaign `L1` composition stays on the old districts until lane E switches. */
+compositions[groveDistrictId] = {
+  id: groveDistrictId,
+  tier: 0,
+  timeOfDay: "L1",
+  districts: [{ id: groveDistrictId, origin: [0, 0] }],
+};
