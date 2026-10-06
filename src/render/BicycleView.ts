@@ -1,10 +1,24 @@
 import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, TorusGeometry, type Object3D } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
-import { atLeast } from '../assets/types';
+import manifest from '../assets/manifest.json';
+import { atLeast, type AssetDef } from '../assets/types';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
 
 const ASSET = 'veh.courier-bike', WHEEL_R = { F: .335, R: .405 };
+/**
+ * The delivered model (assets/veh.courier-bike, packed to public/assets/models) carries the vehicle node contract
+ * (wheelF/wheelR/handlebar/seat/basket) while the manifest still lists the richer pedal contract of a placeholder entry.
+ * Until the manifest registration lands, validate against what the model really contains; a registered (integrated)
+ * entry is used unchanged.
+ */
+function definitions(): AssetDef[] {
+  return (manifest as AssetDef[]).map(d => d.id !== ASSET || atLeast(d.status, 'integrated') ? d : {
+    ...d, status: 'integrated', lods: { lod1: d.glb.replace('.glb', '.lod1.glb'), lod2: d.glb.replace('.glb', '.lod2.glb') },
+    dimensions: { x: 2.8, y: 1.2, z: .76, tolerance: .2 }, requiredNodes: ['root', 'wheelF', 'wheelR', 'handlebar', 'seat', 'basket'],
+    animatedNodes: ['wheelF', 'wheelR', 'handlebar'], sockets: [],
+  });
+}
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 /** Code placeholder with the animated-node contract (wheelF/R, handlebar, crank, pedals) until the production GLB is registered. */
 function bicyclePlaceholder(): Group {
@@ -29,7 +43,7 @@ function bicyclePlaceholder(): Group {
   part(crank, 'pedalL', new BoxGeometry(.14, .03, .08), dark, 0, .17, .12); part(crank, 'pedalR', new BoxGeometry(.14, .03, .08), dark, 0, -.17, -.12);
   return root;
 }
-interface Rig { root: Group; model: Object3D; wheelF?: Object3D; wheelR?: Object3D; handlebar?: Object3D; crank?: Object3D; pedals: Object3D[]; lean: Group; wheelAngle: number; last: { x: number; z: number } | null; leanAngle: number }
+interface Rig { root: Group; model: Object3D; wheelF?: Object3D; wheelR?: Object3D; handlebar?: Object3D; crank?: Object3D; pedals: Object3D[]; lean: Group; offset: number; wheelAngle: number; last: { x: number; z: number } | null; leanAngle: number }
 /**
  * Courier bicycle (spec 5.10). Follows the authoritative bicycle entity; wheels roll with the travelled distance, the crank
  * turns with the pedal phase, the handlebar and front wheel steer, and the frame leans into turns like a toy. Uses the
@@ -41,19 +55,20 @@ export class BicycleView extends Group {
   private loading = false;
   private disposed = false;
   constructor(private readonly world: SimWorld, materials: Materials) {
-    super(); this.name = 'bicycle'; this.registry = new AssetRegistry(() => {}, { materials });
+    super(); this.name = 'bicycle'; this.registry = new AssetRegistry(() => {}, { materials, manifest: definitions() });
   }
   async load(): Promise<void> { await this.build(); this.update(); }
   private async build(): Promise<void> {
     if (this.rig || this.loading) return; this.loading = true;
-    const integrated = atLeast(this.registry.definition(ASSET).status, 'integrated');
-    const model = integrated ? await this.registry.loadAsset(ASSET, 'lod0') : bicyclePlaceholder();
+    let model = await this.registry.loadAsset(ASSET, 'lod0');
+    // A missing or invalid GLB falls back to the registry's generic box: use the animated code placeholder instead.
+    if (model.userData.placeholder || !model.getObjectByName('wheelF')) model = bicyclePlaceholder();
     this.loading = false; if (this.disposed) return;
     const lean = new Group(), root = new Group(); lean.add(model); root.add(lean); this.add(root);
     const find = (name: string) => model.getObjectByName(name);
     const wheelF = find('wheelF'), wheelR = find('wheelR'); for (const w of [wheelF, wheelR]) if (w) w.rotation.order = 'YXZ';
     model.traverse(n => { if (n instanceof Mesh) { n.castShadow = true; n.receiveShadow = true; } });
-    this.rig = { root, model, wheelF, wheelR, handlebar: find('handlebar'), crank: find('crank'), pedals: [find('pedalL'), find('pedalR')].filter((n): n is Object3D => !!n), lean, wheelAngle: 0, last: null, leanAngle: 0 };
+    this.rig = { root, model, wheelF, wheelR, handlebar: find('handlebar'), crank: find('crank'), pedals: [find('pedalL'), find('pedalR')].filter((n): n is Object3D => !!n), lean, offset: 0, wheelAngle: 0, last: null, leanAngle: 0 };
   }
   update(): void {
     const bike = this.world.vehicles?.bicycle.entity;
@@ -69,6 +84,9 @@ export class BicycleView extends Group {
     if (rig.crank) { rig.crank.rotation.z = -b.pedal; for (const p of rig.pedals) p.rotation.z = b.pedal; }
     // Toy feel: lean into the turn and bob slightly with every pedal stroke while riding.
     const riding = b.mounted, speed = b.speed / 7.5;
+    // The rider's capsule sits on the saddle (the model's seat is behind its centre): slide the model forward while riding.
+    const seat = rig.model.getObjectByName('seat')?.position.x ?? -.58;
+    rig.offset = lerp(rig.offset, riding ? -seat : 0, .25); rig.lean.position.x = rig.offset;
     rig.leanAngle = lerp(rig.leanAngle, riding ? -b.steer * speed * .32 : 0, .2);
     rig.lean.rotation.x = rig.leanAngle; rig.lean.position.y = riding ? Math.abs(Math.sin(b.pedal * 2)) * .012 * speed : 0;
   }

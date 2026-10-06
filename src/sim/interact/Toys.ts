@@ -54,7 +54,8 @@ export class Toys {
   readonly dumpsterIds: number[] = [];
   readonly alarmIds: number[] = [];
   carwashId = -1;
-  private bay: Vec2[] = [];
+  /** Car-wash bay polygon (world metres); empty when the level has none. */
+  bay: Vec2[] = [];
   private readonly walls = new Map<number, { x: number; z: number; hx: number; hz: number }>();
   constructor(private readonly world: SimWorld) {
     world.events.on('interact.completed', e => { if (e.type === 'interact.completed') this.completed(e.id); });
@@ -86,7 +87,7 @@ export class Toys {
     const e = this.device('gate', a, 'Gate', { halfX: hx, halfZ: hz, radius: 1.8 });
     (this.world.interactables as unknown as { complete(id: number): void })['complete'](e.id); // opens it, unblocking the collider
     Object.assign(e.interactable!, { completed: false, progress: 0, cycle: 0 });
-    this.gateIds.push(e.id); this.walls.set(e.id, { x: a.x, z: a.z, hx, hz });
+    e.transform.yaw = along ? Math.PI / 2 : 0; this.gateIds.push(e.id); this.walls.set(e.id, { x: a.x, z: a.z, hx, hz });
     this.los.register({ id, shape: aabb(a.x, a.z, hx, hz), active: false, source: 'gate' });
   }
   /** Dumpster: one interaction slides it along its rail into the passage. */
