@@ -9,14 +9,21 @@ export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .
 const worldScale = new Vector3(), worldOrigin = new Vector3();
 /** Library humanoid rest leg (leg->shin->foot), metres; strides are authored for it. */
 const libraryLeg = .516;
-/** Optimized character GLBs scale the shared hierarchy to their catalog height; humanoids
- * with shorter (chibi) legs also take proportionally shorter strides so feet stay planted. */
-export function strideScale(root: Object3D): number {
+/** Rest-pose stride ratio in rig-local units, independent of world/model scale. */
+function strideProportion(root: Object3D): number {
   const shin = root.getObjectByName('shinL'), foot = root.getObjectByName('footL');
   const leg = shin && foot && !root.getObjectByName('legFL') ? -(shin.position.y + foot.position.y) : libraryLeg;
-  return root.getWorldScale(worldScale).y * (leg > .2 && leg < .516 ? leg / libraryLeg : 1);
+  return leg > .2 && leg < libraryLeg ? leg / libraryLeg : 1;
 }
-const groundClips = /^(die|death-|knockdown|flung|get-up|crawl)/;
+/** World-space stride multiplier: model scale times the shorter-legged rig's
+ * stride ratio. Stance baking uses only the local ratio so scaling is applied once. */
+export function strideScale(root: Object3D): number {
+  // GLTF scene wrappers can sit above the normalized rig root. Bone offsets
+  // are in the hip parent's coordinates, including that internal asset scale.
+  const frame = root.getObjectByName('hip')?.parent ?? root;
+  return frame.getWorldScale(worldScale).y * strideProportion(root);
+}
+const groundClips = /^(die|death-|knockdown|flung|get-up|crawl|infection-collapse|infection-rise)/;
 const upperBody = /^(torso|head|arm|foreArm|hand)/;
 
 /** Retarget by name, preserving model rest TRS. Additive clips contain upper-body
@@ -63,13 +70,17 @@ function plantLocomotion(root: Object3D, name: string, duration: number, tracks:
   const hipTrack = tracks.find(t => t.name === 'hip.position')!;
   const position = hipTrack.InterpolantFactoryMethodLinear();
   const rotation = tracks.find(t => t.name === 'hip.quaternion')!.InterpolantFactoryMethodLinear();
-  const stance = name === 'run' ? .5 : .6, stride = strides[name];
+  const stance = name === 'run' ? .5 : .6, stride = strides[name] * strideProportion(root);
+  // A grouped NPC can have a rotated sub-root above its hip. Express actor
+  // travel in that parent's coordinates, rather than sliding along its local X.
+  const forward = new Vector3(1, 0, 0).applyQuaternion(root.getWorldQuaternion(new Quaternion()));
+  if (hip.parent) forward.applyQuaternion(hip.parent.getWorldQuaternion(new Quaternion()).invert());
   const footTarget = (phase: number): Vector3 => {
-    if (phase <= stance) return new Vector3(stride * (stance / 2 - phase), 0, 0);
+    if (phase <= stance) return forward.clone().multiplyScalar(stride * (stance / 2 - phase));
     const t = (phase - stance) / (1 - stance);
     // Match the backward stance velocity at toe-off and heel contact.
     const smooth = t * t * (3 - 2 * t) - (1 - stance) / stance * (2 * t * t * t - 3 * t * t + t);
-    return new Vector3(stride * stance * (smooth - .5), Math.sin(Math.PI * t) ** 2 * (name === 'run' ? .085 : .055), 0);
+    return forward.clone().multiplyScalar(stride * stance * (smooth - .5)).add(new Vector3(0, Math.sin(Math.PI * t) ** 2 * (name === 'run' ? .085 : .055), 0));
   };
   // Lower the mean pelvis only as far as this rig requires for a softly bent
   // support knee. Clamping an unreachable ankle would turn support into sliding.
@@ -100,7 +111,7 @@ function plantLocomotion(root: Object3D, name: string, duration: number, tracks:
       const target = ankle.clone().add(footTarget(phase)).sub(hp).applyQuaternion(hq.clone().invert()).sub(leg.position);
       const d = Math.min(a + b - .0001, target.length()), axis = target.clone().normalize();
       const along = (a * a + d * d - b * b) / (2 * d);
-      const bend = new Vector3(1, 0, 0).applyQuaternion(hq.clone().invert());
+      const bend = forward.clone().applyQuaternion(hq.clone().invert());
       bend.addScaledVector(axis, -bend.dot(axis)).normalize();
       const knee = axis.clone().multiplyScalar(along).addScaledVector(bend, Math.sqrt(Math.max(0, a * a - along * along)));
       const thigh = new Quaternion().setFromUnitVectors(shin.position.clone().normalize(), knee.clone().normalize());
@@ -133,7 +144,7 @@ export function settleGroundPose(root: Object3D): void {
   }
   const hip = root.getObjectByName('hip') ?? root.getObjectByName('body');
   const floor = root.getWorldPosition(worldOrigin).y + .015;
-  if (hip && Number.isFinite(bounds.min.y) && bounds.min.y < floor) { hip.position.y += (floor - bounds.min.y) / strideScale(root); root.updateMatrixWorld(true); }
+  if (hip && Number.isFinite(bounds.min.y) && bounds.min.y < floor) { hip.position.y += (floor - bounds.min.y) / (hip.parent ?? root).getWorldScale(worldScale).y; root.updateMatrixWorld(true); }
 }
 export function sampleClip(root: Object3D, name: string, seconds: number): void {
   let sampler = samplers.get(root);
