@@ -1,36 +1,36 @@
-# E19 — Milestone 1 fix round
+# E19 — M1 level lane
 
-The segment 1–3 slice now keeps the survivor on loaded ground, restores the incident checkpoint after death, and lets an unarmed player fight with fists and kick during the incident. Worktree `lane/m1-fix` started from main `6ca262b`; main was merged once (already up to date). No later level segments or additional features were implemented.
+The Level 1 slice now stages the diner outbreak as one infected entering from outside the camera, biting three existing customers, and growing into a group that notices and chases the survivor. Wheel/pinch zoom, rack selection, truthful short-lived messaging, a subtle current-target ring and small fading building tags address M1-05, M1-09 and M1-10.
 
-## Changes
+Worktree `lane/m1-level` started from main `960c215`; main was merged once (already up to date). Restart recovery saved WIP commit `45079a0`. No later segments, features or assets were added.
 
-L1 already preloaded D-RES, D-MAIN and D-SHOP before gameplay; the browser route now asserts their presence at spawn. The missing safeguards were ground-edge colliders and backdrop terrain. Exterior district slab edges now get invisible Rapier colliders, including the missing-district corner; shared seams remain open. Tier changes rebuild these colliders. Ground-click destinations clamp to the baked walkable nav grid. A grass plane beyond the camera's far range covers scenery outside the town.
+## Behavior and ownership
 
-Escape now creates a checkpoint after the diner encounter starts. Restoring it keeps breakfast completed, escape active, fists/kick equipped, and four live incident runners. Retaining a chosen hardware weapon applies only to the melee checkpoint after pickup, so fists cannot accidentally complete the pickup objective during restore.
+`LevelOneOutbreak` uses E08's grabbed → bitten → down/convulse → rising/red-eyes → infected lifecycle. Victim IDs and release state live in mission checkpoints; transformations preserve position and clothing. Incident actors remain in migration/attack presentation during staging, target their victim while held, then spend one second alerted before chasing. The incident's existing 0.2 damage multiplier remains. Leaving early ends unfinished staging cleanly.
 
-Morning remains an empty loadout. At the incident, LEFT becomes fists and RIGHT kick, using the existing action definitions and hit/kill pipeline. Incident actors get a 0.2 damage multiplier (2 HP per accepted hit instead of 10); store enemies retain normal damage. The real browser idle test survived 66.18 seconds before a deliberate death and restored escape correctly. Fists kill a runner within 11 seconds using LMB/RMB; bat and kick hits are verified during store combat.
+One fresh diner entrant starts strictly outside the expanded frustum. Store enemies start in the store/back-door region at clear, separated positions outside the expanded frustum or fully hidden by building walls. Spawn tests cover all eight corners of a human silhouette; systemic director spawns use the same offscreen test. The slice cap stays at 15. Visible customer transformations are explicitly distinguished from fresh population spawns.
 
-“Your House” uses a 1.5 m camera-facing floating label rather than the 4 m building banner.
+The mission supplies animation hooks through existing civilian state/eyes/turned events and infected attack state, victim target and combat flag. This lane does not change animation clips, rigs, NPC movement algorithms or assets; the animation and world lanes own those. Existing clips make collapse and rise visible in this isolated worktree, but bite model overlap/crowding and the baseline white/cyan combat hit flash still need integrated review with their fixes.
+
+Wheel and two-finger world pinch smoothly change camera distance within 0.85–1.35× default, retaining the isometric angle and follow. Reset restores the unchanged E02-AC02 default. 1/2/3 select LEFT slots; Shift+1/2/3 select RIGHT; Q cycles the last-used side; HUD clicks cycle their side. Touch upward swipes remain. Shift and number keys are reserved for selection, including old saved Shift bindings. Controls/help text reflects these bindings.
+
+The escape objective directs players toward a better weapon without denying fists/kick. L1 subtitle/toast/prompt deadlines are at most 180 simulation ticks (3 seconds). Desktop prompts sit below the companion HUD. The red overhead damage disc is hidden in the slice; only the current attack target gets a thin 0.5 m ground ring. All building name tags use the same small camera-facing sprite (1.8×0.36 m), near entrances, with a two-second hold and one-second fade.
+
+## Specification corrections
+
+M1-05 explicitly authorizes changes to game concept §5.3 and E02/E03 criteria. The specs record the **orchestrator decision**, wheel/pinch zoom, rack bindings, unchanged default framing and portrait-width measurement at default zoom. Reserved keys are stated consistently with rebinding behavior.
+
+M1-10 explicitly authorizes E19 segment 2 and spawn rules; segment 3 now identifies the store/back-door entrance. E19-AC04 was wrong on main: the earlier milestone fix already enabled fists/kick during the incident, while the criterion still prohibited damage before pickup. It now describes the empty morning, incident fists/kick, chosen hardware weapon and truthful ≤3-second hints, matching the requested M1-09 gameplay. Full campaign segments 4–6 remain deferred.
 
 ## Validation
 
-| Check | Result |
-| --- | --- |
-| `npm run typecheck` | PASS |
-| `npm run lint` | PASS |
-| `npm run test:unit` | 136 tests / 52 files PASS |
-| Targeted slice + district simulation | 14 tests PASS |
-| `E2E_PORT=3341 npm run verify -- E19` | 15 sim + 30 browser checks PASS |
-| `E2E_PORT=3341 npm run test:smoke` | 3 sim + 22 browser checks PASS |
+- `npm run typecheck` and `npm run lint`: pass.
+- `npm run test:unit -- --maxWorkers=2`: 138 tests in 53 files pass.
+- Input regression browser suite: 30 tests pass, including wheel/pinch, number/Shift slots, Q/HUD cycling, target ring and persisted rebinding.
+- Director/frustum regression: 2 targeted tests pass.
+- `E2E_PORT=3345 npm run test:smoke`: 3 simulation and 22 browser tests pass.
+- `E2E_PORT=3345 npm run verify -- E19`: 20 simulation and 30 browser tests pass, including 17 slice tests, 20/20 evade-only seeds, 20/20 completion seeds, checkpoint staging/weapon restore, and hidden store spawns at desktop/portrait near/far zoom.
 
-Simulation coverage includes 20/20 evade-only and 20/20 slice completion seeds, outer/missing-district edge movement before/after decay, off-ground/blocked click target clamping, unarmed kills, 25-second idle survival, and checkpoint restores for all three hardware weapons.
+Actual production-build L1 routes start through menus and finish with zero deaths using mouse input or emulated iPhone touch. They exercise movement, hardware selection/interact and fists/kick/bat combat; state APIs only pause/advance time, read/project and prepare captures on these routes. Stage assertions require grabbed, bitten, down and rising, three turn events and four infected. UI assertions cover truthful objective text and expiration of toast/subtitle/prompt (the full HUD suppresses the legacy objective toast, so its deadline is checked through the hidden property), fading house tags, tag dimensions and absence of the overhead damage disc.
 
-The production-build browser routes start through menus, walk by real ground clicks or touch stick gestures, select the bat through the UI, interact with F or ACTION, attack live infected with LMB/RMB or touch buttons, and reach the end screen with zero deaths. The test API only pauses/advances time, reads state, projects coordinates and prepares screenshots; it does not inject movement/combat or teleport along these routes. Sky-colour pixels in the lower half of the isometric viewport and survivor ground height are checked along each route. The separate idle/respawn test uses real clicks and normal AI damage.
-
-All browser automation was headless, serialized through `tools/e2e-lock.sh`, capped at two workers, on port 3341 with Metal WebGL2 (`--use-angle=metal --enable-gpu --ignore-gpu-blocklist`). Touch is emulated, not physical-device evidence. Metrics are in `summary.json`, `*-perf.json`, `*-pixels.json`, `checks.json` and `vitest.json`. Screenshots were inspected and are deleted after the final checks at the user's request.
-
-One initial portrait run reached the end but caught a transient `inf.flamingo.glb` 404. The file exists in production output; a standalone rerun and the complete final E19 verification were clean. An initial edge-test route hit a house; it was corrected to use the open west road.
-
-## Scope / specification note
-
-No specs were edited. The explicit owner request for incident fists/kick overrides E19-AC04's older no-hit-before-pickup behavior for this slice. The morning still starts empty; the new incident checkpoint supplements the originally specified checkpoints. Full L1 segments 4–6 and their bot balance, Patient Zero, twist, permanent unlock, and prop tutorial remain outside this fix round.
+All browsers were headless, serialized through `tools/e2e-lock.sh`, capped at two workers, with Metal WebGL2 flags on macOS. Tests used private port 3345. iPhone is emulated, not a physical-device measurement; WebGPU was not checked. Native M1 Max GPU results and final check exit codes are retained in the lane evidence. Desktop 1600×900 and iPhone portrait 390×844 captures were inspected at the game camera and deleted afterward as requested.

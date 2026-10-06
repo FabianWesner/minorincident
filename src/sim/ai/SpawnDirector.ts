@@ -60,25 +60,29 @@ export class SpawnDirector {
     const c = this.camera, dx = position.x - c.x, dz = position.z - c.z;
     return Math.abs(dx * Math.cos(c.yaw) + dz * Math.sin(c.yaw)) <= c.halfWidth * 1.1 && Math.abs(-dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw)) <= c.halfDepth * 1.1;
   }
+  /** Test the whole human silhouette against the expanded viewport. */
+  offscreen(position: { x: number; z: number }): boolean {
+    return [-.5, .5].every(dx => [-.5, .5].every(dz => [.1, 1.9].every(y => !this.visible({ x: position.x + dx, z: position.z + dz, y }))));
+  }
   /** A solid building must hide the entire rising silhouette, not just its feet. */
   occluded(position: { x: number; z: number }): boolean {
     const origin = this.cameraPosition;
     if (!origin) return false;
-    return [.1, 1.9].every(y => (this.ai.world.combat?.definition.walls ?? []).some(wall => {
+    return [-.5, .5].every(dx => [-.5, .5].every(dz => [.1, 1.9].every(y => (this.ai.world.combat?.definition.walls ?? []).some(wall => {
       if (wall.halfY * 2 < 2.2) return false;
       let near = 0, far = 1;
       for (const [axis, half] of [['x', wall.halfX], ['y', wall.halfY], ['z', wall.halfZ]] as const) {
-        const end = axis === 'y' ? y : position[axis], delta = end - origin[axis];
+        const end = axis === 'y' ? y : position[axis] + (axis === 'x' ? dx : dz), delta = end - origin[axis];
         if (Math.abs(delta) < 1e-8) { if (origin[axis] < wall[axis] - half || origin[axis] > wall[axis] + half) return false; }
         else { const a = (wall[axis] - half - origin[axis]) / delta, b = (wall[axis] + half - origin[axis]) / delta; near = Math.max(near, Math.min(a,b)); far = Math.min(far, Math.max(a,b)); }
       }
       return near < far && far > 0 && near < .98;
-    }));
+    }))));
   }
   safe(id: string, position: { x: number; z: number }, perched?: boolean): boolean {
     const target = this.ai.perchFor(id, position, perched) ?? position;
     const player = this.ai.world.entities.get(1)!;
-    return Math.hypot(target.x - player.transform.x, target.z - player.transform.z) >= 18 && !this.visible(target) && this.ai.nav.clear(target.x, target.z, infectedDef(id).radius);
+    return Math.hypot(target.x - player.transform.x, target.z - player.transform.z) >= 18 && this.offscreen(target) && this.ai.nav.clear(target.x, target.z, infectedDef(id).radius);
   }
   request(archetype: string, position: { x: number; z: number }, options: InfectedSpawn = {}): void {
     infectedDef(archetype); if (!Number.isFinite(position.x) || !Number.isFinite(position.z)) throw new RangeError('Spawn position must be finite');

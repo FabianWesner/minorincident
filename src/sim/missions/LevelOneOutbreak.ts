@@ -35,10 +35,14 @@ export class LevelOneOutbreak {
     for (const id of outbreak.victims) { const c = world.entities.get(id)?.civilian; if (c && ['calm','alarmed','flee','hide'].includes(c.state)) c.state = 'calm'; }
     for (const e of group) {
       e.combat!.attacking = world.npcs!.civilians.holds(e.id);
-      if (e.combat!.attacking) { e.infected!.targetId = outbreak.victims.find(id => world.entities.get(id)?.civilian?.attacker === e.id) ?? 0; }
+      if (e.combat!.attacking) {
+        // E07 pauses brains held by E08, so the existing attack clip can present the bite.
+        e.infected!.state = 'attack'; e.infected!.until = world.tick;
+        e.infected!.targetId = outbreak.victims.find(id => world.entities.get(id)?.civilian?.attacker === e.id) ?? 0;
+      } else { e.infected!.state = 'migration'; e.infected!.targetId = 0; }
     }
     const victim = outbreak.victims.map(id => world.entities.get(id)).find(e => e?.civilian && ['calm', 'alarmed', 'flee', 'hide', 'grabbed'].includes(e.civilian.state));
-    const attacker = group.find(e => !world.npcs!.civilians.holds(e.id)) ?? group[0];
+    const attacker = group.find(e => !world.npcs!.civilians.holds(e.id) && e.combat!.staggerUntil <= world.tick);
     if (victim && attacker && victim.civilian!.state !== 'grabbed') {
       // Customers freeze in alarm until the first bite; subsequent attackers form the chain.
       victim.civilian!.state = 'calm';
@@ -49,7 +53,7 @@ export class LevelOneOutbreak {
       }
     }
     const done = outbreak.victims.every(id => ['infected', 'finished'].includes(world.entities.get(id)?.civilian?.state ?? 'finished'));
-    if (done || !group.length) { outbreak.released = true; for (const e of group) { e.infected!.state = 'chase'; e.combat!.attacking = false; } }
+    if (done || !group.length) { outbreak.released = true; for (const e of group) { e.infected!.state = 'alerted'; e.infected!.until = world.tick + 60; e.combat!.attacking = false; } }
   }
   end(): void {
     const { state, world } = this.mission;
@@ -68,7 +72,7 @@ export class LevelOneOutbreak {
       const angle = Math.PI + i * Math.PI / 16, p = { x: base.x + Math.cos(angle) * r, z: base.z + Math.sin(angle) * r };
       if (!ai.nav.clear(p.x, p.z, .65) || ai.active.some(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 1.1)) continue;
       if (store && (p.z > this.mission.def.anchors.hardware.z - 12 || Math.abs(p.x - this.mission.def.anchors.hardware.x) > 8)) continue;
-      if (!ai.director.visible({ ...p, y: .1 }) && !ai.director.visible({ ...p, y: 1.9 }) || ai.director.occluded(p)) return p;
+      if (ai.director.offscreen(p) || store && ai.director.occluded(p)) return p;
     }
     throw new Error('No hidden encounter entrance available');
   }

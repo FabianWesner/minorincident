@@ -1,6 +1,7 @@
 import { boot, expect, test } from './fixtures';
 import type { Page } from '@playwright/test';
 import { tick } from './input-helpers';
+import { hudStart } from './ui-helpers';
 
 async function point(page: Page, x: number, z = 0) {
   return page.evaluate((pos) => window.__SS__!.input.project(pos), { x, z });
@@ -89,6 +90,7 @@ for (const button of ['left', 'right'] as const) test(`T-E03-15-${button} @E03 @
   const target = await point(page, 5); await page.mouse.click(target.x, target.y, { button });
   expect((await tick(page)).attackTarget).toEqual({ id, side: button === 'left' ? 'LEFT' : 'RIGHT' });
   await tick(page, 15); expect(await page.evaluate(() => window.__SS__!.events().some(e => e.type === 'combat.attack'))).toBe(false);
+  expect(await page.evaluate(()=>window.__SS__!.getState().render.actions!.targetMarker)).toEqual({id,radius:.5});
   await tick(page, 90); expect((await position(page)).x).toBeGreaterThan(3);
   const events = await page.evaluate(() => window.__SS__!.events());
   expect(events.some(e => e.type === 'combat.attack' && e.side === (button === 'left' ? 'LEFT' : 'RIGHT'))).toBe(true);
@@ -189,7 +191,7 @@ test('T-E03-chord @E03 @E03-AC02 @E03-AC13 releasing LMB before RMB clears both 
 
 
 test('@E03-AC05 @E03-AC17 M1-05 numbers and HUD clicks select either rack; Shift never attacks',async({page})=>{
-  await arena(page);
+  await hudStart(page);
   await page.evaluate(()=>window.__SS__!.setLoadout(['weapon.bat','weapon.crowbar','weapon.machete'],['weapon.kick','weapon.fists','weapon.bat']));
   await page.keyboard.press('3');await tick(page,20);
   expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.index)).toBe(2);

@@ -85,7 +85,7 @@ export class Hud {
     const name = node('div', `action-${side}`), stats = node('div', `stats-${side}`), ring = node('div', `reload-${side}`), rack = node('div', `rack-${side}`);
     root.setAttribute('role', 'button'); root.tabIndex = 0; root.setAttribute('aria-label', `Cycle ${side} weapon`);
     root.addEventListener('click', () => this.game.input.cycle(side));
-    root.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); this.game.input.cycle(side); } });
+    root.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); this.game.input.cycle(side); } });
     root.title = `${side === 'LEFT' ? '1/2/3' : 'Shift+1/2/3'} · click to cycle`;
     root.className = 'hud-slot hud-panel'; title.className = 'hud-slot-title'; name.className = 'hud-slot-name'; stats.className = 'hud-slot-stats'; ring.className = 'hud-progress'; rack.className = 'hud-rack';
     icon.alt = ''; root.append(icon, title, stats, name, ring, rack);
