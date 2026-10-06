@@ -30,6 +30,7 @@ export interface CueLog {
     voice: number;
 }
 interface AudioHost {
+    settingsChanged?(patch:Partial<AudioSettings>):void;
     pause(): void;
     resume(): void;
     release(): void;
@@ -189,6 +190,10 @@ export class AudioService implements Lifecycle {
         document.body.append(this.ringElement, this.captionElement, this.controls, this.pauseElement);
     }
     set(patch: Partial<AudioSettings>): void {
+        const accepted:Partial<AudioSettings>={};
+        for(const key of ['muted','captions','noiseRings','mono','haptics','tinnitus']as const)if(typeof patch[key]==='boolean')accepted[key]=patch[key];
+        if(patch.gore&&['Off','Reduced','Full'].includes(patch.gore))accepted.gore=patch.gore;
+        this.host.settingsChanged?.(accepted);
         for (const key of ['muted', 'captions', 'noiseRings', 'mono', 'haptics', 'tinnitus'] as const)
             if (typeof patch[key] === 'boolean')
                 this.settings[key] = patch[key]!;
@@ -447,6 +452,10 @@ export class AudioService implements Lifecycle {
         if (event.type === 'sim.tick') {
             this.update();
             return;
+        }
+        if (event.type === 'civilian.state') {
+            if (event.state === 'bitten' || event.state === 'down') this.play('bark.female.hurt', { position, gain: .4 }, source);
+            return; // Gasp once, then silence until the eyes-phase growl.
         }
         if (event.type === 'telegraph') {
             const special = 'special' in event ? event.special : event.kind;

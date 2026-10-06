@@ -4,6 +4,8 @@ export type AssetQuality = 'high' | 'low' | 'lod0' | 'lod1' | 'lod2';
 export interface AssetDef {
   /** E06 code icons and category-specific fallbacks use the same manifest/status gates. */
   icon?: string;
+  /** Transparent ground decal image; no GLB or LOD is needed for its two-triangle quad. */
+  decalTexture?: string;
   actionCategory?: 'melee' | 'ranged' | 'throwable' | 'ability';
   id: string;
   /** District code placeholder palette and collision ownership. */
@@ -15,6 +17,8 @@ export interface AssetDef {
   glb: string;
   /** Existing standalone exports are inspected without rebuilding their scripts. */
   sourceGlb?: string;
+  /** Optional E18 mobile export (<id>.low.glb); otherwise low reuses declared lod1. */
+  lowGlb?: string;
   lods?: { lod1?: string; lod2?: string };
   /** Regenerate these tiers from LOD0 when supplied LODs violate size or density contracts. */
   generatedLodRatios?: { lod1?: number; lod2?: number };

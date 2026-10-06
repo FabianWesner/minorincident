@@ -18,6 +18,10 @@ export async function loadLayouts(
   if (!composition) throw new Error(`Unknown composition: ${level}`);
   if (tier !== undefined && (!Number.isInteger(tier) || tier < 0 || tier > 5))
     throw new RangeError("Tier must be W0…W5");
+  // Keep only layouts resident in this level; a visited L6 must not pin every
+  // district document after returning to L1. Shared districts remain cached.
+  for (const id of cache.keys())
+    if (!composition.districts.some((district) => district.id === id)) cache.delete(id);
   const layouts = await Promise.all(
     composition.districts.map(({ id }) => {
       if (!cache.has(id))

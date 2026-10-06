@@ -6,6 +6,7 @@ test('T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings an
   await page.getByTestId('start-game').click();
   await page.getByTestId('character-female').click();
   await page.getByTestId('level-L1').click();
+  await page.getByTestId('menu-loading').waitFor({ state: 'hidden' });
   await expect(page.getByTestId('mission-panel')).toBeVisible();
   await page.getByRole('button', { name: 'Begin mission' }).click();
   await expect(page.getByTestId('pause-button')).toBeVisible();

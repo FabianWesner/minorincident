@@ -1,5 +1,6 @@
 import { AmbientLight, Box3, DirectionalLight, HemisphereLight, Mesh, PerspectiveCamera, RenderTarget, Scene, Vector3, WebGPURenderer, type Object3D } from 'three/webgpu';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { Crowd } from './crowd';
 import { AssetRegistry, type PlaceholderLog } from './registry';
@@ -10,6 +11,7 @@ export interface AssetViewerApi {
   ready: Promise<void>;
   view(index: number): Promise<void>;
   visibility(name: string, visible: boolean): Promise<void>;
+  deliveryView?(quality: 'high' | 'lod1' | 'lod2', distance: number): Promise<void>;
   info(): { placeholder: boolean; drawCalls: number; triangles: number; nodes: string[]; events: PlaceholderLog[] };
   goreProbe?(limb: string): Promise<{ hiddenBefore: boolean; visibleAfter: boolean; capTriangles: number; jointError: number }>;
   crowdProbe?(): Promise<{ instances: number; materials: number; drawCalls: number; poseError: number }>;
@@ -32,7 +34,7 @@ export async function assetViewer(): Promise<void> {
   const registry = new AssetRegistry((event) => { events.push(event); console.info(event.type, event.id, event.reason); }, { renderer,
     // Explicit production inspection leaves normal registry status gates in place.
     manifest: (import.meta.env.DEV || params.has('test')) && params.has('production')
-      ? (manifest as AssetDef[]).map(def => def.id === id ? { ...def, status: 'integrated' } : def) : undefined,
+      ? (manifest as AssetDef[]).map(def => def.id === id ? { ...def, status: 'integrated', ...(params.has('inspection') ? { requiredNodes: [], animatedNodes: [], sockets: [] } : {}) } : def) : undefined,
   });
   const decay = document.querySelector<HTMLSelectElement>('#decay')!;
   for (const name of registry.definition(id).decayVariants) { const option = new Option(name,name); decay.add(option); }
@@ -54,7 +56,7 @@ export async function assetViewer(): Promise<void> {
   async function load(): Promise<void> {
     if (object) { scene.remove(object); if (object instanceof Crowd) object.dispose(); }
     object = params.has('crowd') && params.has('test')
-      ? new Crowd((await new GLTFLoader().loadAsync(`/assets/models/${id}.crowd.glb`)).scene,100)
+      ? new Crowd((await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(`/assets/models/${id}.crowd.glb`)).scene,100)
       : await registry.loadAsset(id, (document.querySelector<HTMLSelectElement>('#quality')?.value ?? 'high') as 'high' | 'lod1' | 'lod2', decay.value || undefined);
     exploded = false;
     scene.add(object);
@@ -83,8 +85,16 @@ export async function assetViewer(): Promise<void> {
     const node = object.getObjectByName((event.target as HTMLSelectElement).value);
     if (node) { node.getWorldPosition(controls.target); controls.update(); render(); }
   });
+  async function deliveryView(quality: 'high' | 'lod1' | 'lod2', distance: number): Promise<void> {
+    document.querySelector<HTMLSelectElement>('#quality')!.value = quality;
+    await load();
+    const elevation = Math.PI * .2, angle = Math.PI / 4;
+    camera.position.set(center.x + Math.cos(angle) * Math.cos(elevation) * distance, center.y + Math.sin(elevation) * distance, center.z + Math.sin(angle) * Math.cos(elevation) * distance);
+    controls.target.copy(center); controls.update(); camera.lookAt(center);
+    await renderer.compileAsync(scene, camera); render(); render();
+  }
   const ready = load();
-  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, visibility: async (name, visible) => {
+  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, deliveryView, visibility: async (name, visible) => {
     const node = object.getObjectByName(name);
     if (!node) throw new Error(`Missing asset node ${name}`);
     node.visible = visible; await view(4);

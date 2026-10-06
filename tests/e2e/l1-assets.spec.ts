@@ -1,3 +1,4 @@
+import { PNG } from 'pngjs';
 import { mkdirSync } from 'node:fs';
 import { expect, test } from './fixtures';
 const models = ['bld.maple-hardware', 'npc.civilian-adult-m', 'npc.civilian-adult-f', 'veh.pickup-white', 'veh.sedan-green', 'veh.suv-green', 'prop.shopping-cart', 'prop.sofa', 'prop.pallet', 'prop.plank-stack', 'bld.house-b', 'bld.house-c', 'bld.joes-diner', 'inf.crawler', 'prop.tree', 'prop.flower', 'veh.wreck', 'prop.bus-stop'];
@@ -43,4 +44,17 @@ test('L1 portraits and melee icons appear in the game HUD', async ({ page }) => 
     await page.evaluate(async (id) => { const api = window.__SS__!; api.setLoadout([id], [id]); await api.step(1); await api.screenshotReady(); }, weapon);
     await page.screenshot({ path: `test-results/l1-assets/hud-${weapon}.png` });
   }
+});
+
+for (const id of ['decal.blood-splats', 'decal.blood-pool', 'decal.blood-trail']) test(`L1 ${id} renders its registered transparent texture`, async ({ page }) => {
+  mkdirSync('test-results/l1-assets', { recursive: true });
+  await page.goto(`/preview/?asset=${id}&test=1&renderer=webgl`);
+  await page.waitForFunction(() => !!window.__ASSET__);
+  await page.evaluate(() => window.__ASSET__!.ready);
+  const info = await page.evaluate(() => window.__ASSET__!.info());
+  expect(info.placeholder).toBe(false); expect(info.events).toEqual([]);
+  const image = PNG.sync.read(await page.locator('canvas').screenshot({ path: `test-results/l1-assets/${id}.png` }));
+  let red = 0;
+  for (let i = 0; i < image.data.length; i += 4) if (image.data[i] > 20 && image.data[i] > image.data[i + 1] * 1.5 && image.data[i] > image.data[i + 2] * 1.5) red++;
+  expect(red).toBeGreaterThan(100);
 });

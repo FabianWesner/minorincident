@@ -6,8 +6,9 @@ import type { Game } from '../Game';
 export class Debug {
   private readonly pane = new Pane({ title: 'Minor Incident' });
   constructor(game: Game) {
-    const controls = { timeScale: 1, timeOfDay: 'golden', bloom: true, cheapDof: false, cameraShake: true };
+    const controls = { timeScale: 1, timeOfDay: 'golden', bloom: true, cheapDof: false, cameraShake: true, quality: game.quality.setting };
     const rendering = this.pane.addFolder({ title: 'Rendering' });
+    rendering.addBinding(controls, 'quality', { options: { auto: 'auto', high: 'high', low: 'low' } }).on('change', ({ value }) => game.setQuality(value));
     rendering.addBinding(controls, 'timeOfDay', { options: Object.fromEntries(['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'golden'].map((name) => [name, name])) }).on('change', ({ value }) => game.view.settings({ timeOfDay: value as import('../data/timeOfDay').TimeOfDay }));
     for (const key of ['bloom', 'cheapDof', 'cameraShake'] as const) rendering.addBinding(controls, key).on('change', ({ value }) => game.view.settings({ [key]: value }));
     rendering.addButton({ title: 'Lookdev' }).on('click', () => { void game.loadScenario('lookdev'); });

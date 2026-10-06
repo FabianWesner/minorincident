@@ -66,11 +66,16 @@ test("T-E10-runtime @E10 gameplay blockers have Rapier colliders, fires damage o
     world.loadComposition(comp, Object.values(layouts), 42);
     expect(world.districts!.getState().districts).toHaveLength(8);
     const start = world.districts!.playerStart;
+    const companions = world.query({ kind: 'companion' });
+    expect(companions).toHaveLength(1);
+    expect(companions[0].archetype).toBe('char.corgi');
+    // E08's preferred offset is blocked here; the collider-free corgi shares
+    // the player's clear spawn. Keep the exact spatial membership assertion.
     expect(
       world
         .query({ within: { x: start[0], z: start[1], r: 1 } })
         .map((entity) => entity.id),
-    ).toEqual([1]);
+    ).toEqual([1, companions[0].id]);
     expect(world.player).not.toBeNull();
     expect(world.physics.characterController).not.toBeNull();
     const colliderCount =
