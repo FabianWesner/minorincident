@@ -8,7 +8,7 @@ import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
 import type { SurvivorState } from '../data/survivor';
 import { CharacterView } from './characters/CharacterView';
-import { BoxGeometry, Color, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, Sprite, NoToneMapping, ColorManagement, ShadowNode, type Material } from 'three/webgpu';
+import { BoxGeometry, Color, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, type Material } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -206,28 +206,10 @@ export class GameView implements Lifecycle {
       // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const restore = this.vfx?.prewarm(focus.x, focus.z);
-      try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), () => this.compilePreparedScene()); }
+      try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), () => this.postFx ? this.postFx.compile() : this.renderer.compileAsync(this.scene, this.camera)); }
       finally { restore?.(); }
     } else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
     this.idPass = this.params.get('idpass') === '1'; this.update(1);
-  }
-  /** compileAsync covers the color pass; shadow overrides use their own per-object programs. */
-  private async compilePreparedScene(): Promise<void> {
-    if (this.postFx) await this.postFx.compile(); else await this.renderer.compileAsync(this.scene, this.camera);
-    const light = this.lighting?.sun;
-    if (!light?.shadow.map) return;
-    const renderer = this.renderer, target = renderer.getRenderTarget(), mrt = renderer.getMRT(), override = this.scene.overrideMaterial;
-    const tone = renderer.toneMapping, color = renderer.outputColorSpace, hidden: (Mesh | Sprite)[] = [];
-    this.scene.traverse(object => { if ((object instanceof Mesh || object instanceof Sprite) && !object.castShadow && object.visible && !object.children.length) { object.visible = false; hidden.push(object); } });
-    try {
-      renderer.setRenderTarget(light.shadow.map); renderer.setMRT(null);
-      renderer.toneMapping = NoToneMapping; renderer.outputColorSpace = ColorManagement.workingColorSpace;
-      this.scene.overrideMaterial = new ShadowNode(light, light.shadow).getShadowMaterial();
-      await renderer.compileAsync(this.scene, light.shadow.camera);
-    } finally {
-      this.scene.overrideMaterial = override; hidden.forEach(object => { object.visible = true; });
-      renderer.setRenderTarget(target); renderer.setMRT(mrt); renderer.toneMapping = tone; renderer.outputColorSpace = color;
-    }
   }
   /** A prepared decay swap retains characters, crowd pools, GPU programs, camera and audio. */
   switchPreparedDistrict(): boolean {

@@ -17,12 +17,12 @@ for (const fails of [false, true]) test(`@E19 pre-render warms hidden zero-count
   mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose();
 });
 
-test('@E19 pre-render warms repeated vertex layouts once while retaining distinct shadow variants', async () => {
+test('@E19 pre-render warms every render object including distinct shadow and capacity variants', async () => {
   const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
   const meshes = Array.from({ length: 4 }, (_, i) => new InstancedMesh(geometry, material, i === 3 ? 4 : 2));
   meshes[0].visible = false; meshes[2].receiveShadow = true; scene.add(...meshes);
   const renderer = { selectedBackend: 'webgl', getSize: (target: Vector2) => target.set(100, 100), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), compileAsync: vi.fn(async () => { expect(meshes.map(m => m.visible)).toEqual([true, true, true, true]); }) } as unknown as Renderer;
-  await preRender(renderer, scene, new PerspectiveCamera(), () => { expect(meshes.map(m => m.visible)).toEqual([true, false, true, true]); });
+  await preRender(renderer, scene, new PerspectiveCamera(), () => { expect(meshes.map(m => m.visible)).toEqual([true, true, true, true]); });
   expect(meshes.map(m => m.visible)).toEqual([false, true, true, true]); expect(meshes.map(m => m.count)).toEqual([2, 2, 2, 4]);
   meshes.forEach(mesh => mesh.dispose()); geometry.dispose(); material.dispose();
 });
