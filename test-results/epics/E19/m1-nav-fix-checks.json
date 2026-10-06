@@ -1,0 +1,43 @@
+{
+  "main": "ac3fd7c",
+  "mergeCommit": "88bbf93",
+  "port": 3353,
+  "headless": true,
+  "browserSlots": 1,
+  "fullE19PostMerge": false,
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run test:unit -- --maxWorkers=1",
+      "exitCode": 0,
+      "passed": 182
+    },
+    {
+      "command": "npx vitest run tests/sim/m1-world.test.ts -t 'click navigation.*hedge|gas forecourt is reachable' --maxWorkers=1 --testTimeout=120000",
+      "exitCode": 0,
+      "passed": 2
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0
+    },
+    {
+      "command": "E2E_PORT=3353 npm run test:smoke",
+      "exitCode": 0,
+      "simulationPassed": 3,
+      "browserPassed": 22
+    },
+    {
+      "command": "E2E_PORT=3353 sh tools/e2e-lock.sh npx playwright test tests/e2e/m1-world.spec.ts -g 'M1-world real-input hedge collision, forecourt access' --project=chromium --workers=1",
+      "exitCode": 0,
+      "passed": 2
+    }
+  ]
+}

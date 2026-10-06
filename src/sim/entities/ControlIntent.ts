@@ -74,7 +74,8 @@ export class ControlIntent {
   }
   private walk(frame: InputFrame, target: Vec2, remaining: number): void {
     const p = this.world.entities.get(1)!.transform, nav = this.world.infected?.nav;
-    if (nav && !nav.steer(p, target, this.route, survivor.radius + .02, this.waypoint)) {
+    // Leave room for the capsule's acceleration while turning a pulled corner.
+    if (nav && !nav.steer(p, target, this.route, survivor.radius + .1, this.waypoint)) {
       // Grid paths omit their starting cell; reconnect from its safe center.
       const cell = nav.nearestCell(p.x, p.z);
       if (cell < 0) { frame.move.x = frame.move.z = 0; return; }
