@@ -9,6 +9,8 @@ import { loadavg } from 'node:os';
 export const profiles = {
   desktop: { label: 'desktop cable 50 Mbit / 20 ms', down: 50e6 / 8, up: 10e6 / 8, latency: 20 },
   mobile: { label: 'mobile 4G 10 Mbit / 150 ms', down: 10e6 / 8, up: 3e6 / 8, latency: 150 },
+  // A phone on 4G: touch + coarse pointer selects the low quality tier (as on a real device).
+  phone: { label: 'phone (Pixel 7 emulation, low tier) 4G 10 Mbit / 150 ms', down: 10e6 / 8, up: 3e6 / 8, latency: 150 },
   none: { label: 'unthrottled', down: -1, up: -1, latency: 0 },
 } as const;
 export type ProfileName = keyof typeof profiles;
@@ -27,10 +29,10 @@ const kind = (url: string, mime: string): string => {
   return 'other';
 };
 
-type Req = { url: string; kind: string; bytes: number; status: number; cached: boolean; phase: 'boot' | 'level' | 'background'; start: number; end: number };
+type Req = { url: string; kind: string; bytes: number; status: number; cached: boolean; phase: 'boot' | 'menu' | 'level' | 'background'; start: number; end: number; wall: number };
 export type LoadRun = {
   profile: string; cache: 'cold' | 'warm'; firstPaintMs: number; titleMs: number; playableMs: number; startToPlayableMs: number;
-  requests: number; bytes: number; bootBytes: number; levelBytes: number; criticalBytes: number; criticalRequests: number; backgroundBytes: number; byKind: Record<string, { requests: number; bytes: number }>;
+  requests: number; bytes: number; bootBytes: number; menuBytes: number; levelBytes: number; criticalBytes: number; uniqueCriticalBytes: number; criticalRequests: number; backgroundBytes: number; byKind: Record<string, { requests: number; bytes: number }>;
   levelByKind: Record<string, { requests: number; bytes: number }>;
   longTasks: { count: number; totalMs: number; maxMs: number; over50AfterStart: number; top: { start: number; ms: number }[] };
   measures: { name: string; ms: number; at: number }[]; backend: string; errors: string[]; loadAverage: number; playerMoved?: boolean;
@@ -48,6 +50,14 @@ const init = () => {
   const w = window as unknown as { __lt: { start: number; ms: number }[] };
   w.__lt = [];
   new PerformanceObserver(list => { for (const e of list.getEntries()) w.__lt.push({ start: e.startTime, ms: e.duration }); }).observe({ type: 'longtask', buffered: true });
+  // In-page phase marks (Playwright polling lags a busy main thread): title shown, first playable frame.
+  const marks = window as unknown as { __title?: number; __playable?: number };
+  const watch = () => {
+    if (marks.__title === undefined && document.querySelector('[data-menu-screen=title]:not([hidden])')) marks.__title = performance.now();
+    if (marks.__playable === undefined && document.body?.dataset.uiScreen === 'game') { requestAnimationFrame(() => requestAnimationFrame(() => { marks.__playable ??= performance.now(); })); }
+    if (marks.__playable === undefined) requestAnimationFrame(watch);
+  };
+  requestAnimationFrame(watch);
   addEventListener('click', event => {
     const id = (event.target as HTMLElement | null)?.closest?.('[data-testid]')?.getAttribute('data-testid');
     if (id === 'level-L1') (window as unknown as { __start: number }).__start = performance.now();
@@ -57,13 +67,15 @@ const init = () => {
 export async function measureOnce(page: Page, cdp: CDPSession, base: string, profile: ProfileName, cache: 'cold' | 'warm'): Promise<LoadRun> {
   const reqs = new Map<string, Req>(); let phase: Req['phase'] = 'boot'; const errors: string[] = [];
   page.on('pageerror', e => errors.push(`pageerror ${e.message}`)); page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') errors.push(`${m.type()} ${m.text().slice(0, 200)}`); });
-  cdp.on('Network.requestWillBeSent', e => { reqs.set(e.requestId, { url: e.request.url, kind: kind(e.request.url, ''), bytes: 0, status: 0, cached: false, phase, start: e.timestamp, end: e.timestamp }); });
+  cdp.on('Network.requestWillBeSent', e => { reqs.set(e.requestId, { url: e.request.url, kind: kind(e.request.url, ''), bytes: 0, status: 0, cached: false, phase, start: e.timestamp, end: e.timestamp, wall: e.wallTime * 1000 }); });
   cdp.on('Network.responseReceived', e => { const r = reqs.get(e.requestId); if (r) { r.status = e.response.status; r.cached = e.response.fromDiskCache || e.response.fromServiceWorker || e.response.status === 304; r.kind = kind(e.response.url, e.response.mimeType); } });
   cdp.on('Network.requestServedFromCache', e => { const r = reqs.get(e.requestId); if (r) r.cached = true; });
   cdp.on('Network.loadingFinished', e => { const r = reqs.get(e.requestId); if (r) { r.bytes = e.encodedDataLength; r.end = e.timestamp; } });
   await page.goto(base, { waitUntil: 'commit', timeout: 120_000 });
   await page.waitForSelector('[data-menu-screen=title]:not([hidden])', { timeout: 180_000 });
-  const titleMs = await page.evaluate(() => performance.now());
+  await page.waitForFunction(() => (window as unknown as { __title?: number }).__title !== undefined);
+  const titleMs = await page.evaluate(() => (window as unknown as { __title: number }).__title);
+  phase = 'menu'; // requests from here to the L1 click: deferred boot audio and the level prefetch
   await page.click('[data-testid=start-game]');
   await page.click('[data-testid=character-female]');
   // Optional menu "reading time" between the title and choosing L1 (default 0: click immediately).
@@ -74,18 +86,21 @@ export async function measureOnce(page: Page, cdp: CDPSession, base: string, pro
   phase = 'background';
   const result = await page.evaluate(async () => {
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-    const w = window as unknown as { __lt: { start: number; ms: number }[]; __start: number };
+    const w = window as unknown as { __lt: { start: number; ms: number }[]; __start: number; __title?: number; __playable?: number };
+    while (w.__playable === undefined) await new Promise(r => requestAnimationFrame(r));
     const paint = performance.getEntriesByType('paint').find(e => e.name === 'first-contentful-paint') ?? performance.getEntriesByType('paint')[0];
-    return { playable: performance.now(), start: w.__start, firstPaint: paint?.startTime ?? -1, lt: w.__lt, measures: performance.getEntriesByType('measure').map(m => ({ name: m.name, ms: Math.round(m.duration), at: Math.round(m.startTime - w.__start) })) };
+    return { origin: performance.timeOrigin, title: w.__title ?? 0, playable: w.__playable, start: w.__start, firstPaint: paint?.startTime ?? -1, lt: w.__lt, measures: performance.getEntriesByType('measure').map(m => ({ name: m.name, ms: Math.round(m.duration), at: Math.round(m.startTime - w.__start) })) };
   });
   // Let background streaming settle before the next run reuses the context.
   await page.waitForTimeout(Number(process.env.LOAD_SETTLE_MS ?? 1500));
   const settled = [...reqs.values()];
+  const wall = (ms: number) => result.origin + ms;
+  for (const r of settled) r.phase = r.wall < wall(result.title) ? 'boot' : r.wall < wall(result.start) ? 'menu' : r.wall <= wall(result.playable) ? 'level' : 'background';
   const sum = (list: Req[]) => { const out: Record<string, { requests: number; bytes: number }> = {}; for (const r of list) { (out[r.kind] ??= { requests: 0, bytes: 0 }); out[r.kind].requests++; out[r.kind].bytes += r.bytes; } return out; };
   const lt = result.lt;
   return {
     profile, cache, firstPaintMs: Math.round(result.firstPaint), titleMs: Math.round(titleMs), playableMs: Math.round(result.playable), startToPlayableMs: Math.round(result.playable - result.start),
-    requests: settled.length, bytes: settled.reduce((n, r) => n + r.bytes, 0), bootBytes: settled.filter(r => r.phase === 'boot').reduce((n, r) => n + r.bytes, 0), levelBytes: settled.filter(r => r.phase === 'level').reduce((n, r) => n + r.bytes, 0), criticalBytes: settled.filter(r => r.phase !== 'background').reduce((n, r) => n + r.bytes, 0), criticalRequests: settled.filter(r => r.phase !== 'background').length, backgroundBytes: settled.filter(r => r.phase === 'background').reduce((n, r) => n + r.bytes, 0),
+    requests: settled.length, bytes: settled.reduce((n, r) => n + r.bytes, 0), bootBytes: settled.filter(r => r.phase === 'boot').reduce((n, r) => n + r.bytes, 0), menuBytes: settled.filter(r => r.phase === 'menu').reduce((n, r) => n + r.bytes, 0), levelBytes: settled.filter(r => r.phase === 'level').reduce((n, r) => n + r.bytes, 0), criticalBytes: settled.filter(r => r.phase !== 'background').reduce((n, r) => n + r.bytes, 0), uniqueCriticalBytes: [...settled.filter(r => r.phase !== 'background').reduce((map, r) => map.set(r.url, Math.max(map.get(r.url) ?? 0, r.bytes)), new Map<string, number>()).values()].reduce((n, b) => n + b, 0), criticalRequests: settled.filter(r => r.phase !== 'background').length, backgroundBytes: settled.filter(r => r.phase === 'background').reduce((n, r) => n + r.bytes, 0),
     byKind: sum(settled), levelByKind: sum(settled.filter(r => r.phase === 'level')),
     longTasks: { count: lt.length, totalMs: Math.round(lt.reduce((n, t) => n + t.ms, 0)), maxMs: Math.round(Math.max(0, ...lt.map(t => t.ms))), over50AfterStart: lt.filter(t => t.start > result.playable).length, top: [...lt].sort((a, b) => b.ms - a.ms).slice(0, 8).map(t => ({ start: Math.round(t.start), ms: Math.round(t.ms) })) },
     measures: result.measures, backend: '', errors, loadAverage: loadavg()[0],
@@ -95,7 +110,8 @@ export async function measureOnce(page: Page, cdp: CDPSession, base: string, pro
 }
 
 export async function measure(browser: Browser, base: string, profile: ProfileName, caches: ('cold' | 'warm')[] = ['cold', 'warm']): Promise<LoadRun[]> {
-  const context = await browser.newContext({ viewport: { width: 1600, height: 900 }, ignoreHTTPSErrors: !process.env.LOAD_SPKI });
+  const device = profile === 'phone' ? { viewport: { width: 412, height: 915 }, isMobile: true, hasTouch: true, deviceScaleFactor: 1 } : { viewport: { width: 1600, height: 900 } };
+  const context = await browser.newContext({ ...device, ignoreHTTPSErrors: !process.env.LOAD_SPKI });
   await context.addInitScript(init);
   const runs: LoadRun[] = [];
   for (const cache of caches) {
@@ -123,5 +139,5 @@ if (process.argv[1]?.endsWith('load-measure.ts')) {
   await browser.close();
   const json = JSON.stringify({ base, at: new Date().toISOString(), runs: all }, null, 2);
   if (out) writeFileSync(out, json); else console.log(json);
-  for (const r of all) console.log(`${r.profile.padEnd(8)} ${r.cache.padEnd(5)} FCP ${r.firstPaintMs} title ${r.titleMs} start->playable ${r.startToPlayableMs} ms | ${r.requests} req ${(r.bytes / 1e6).toFixed(2)} MB (boot ${(r.bootBytes / 1e6).toFixed(2)}, level ${(r.levelBytes / 1e6).toFixed(2)}, critical ${(r.criticalBytes / 1e6).toFixed(2)} in ${r.criticalRequests} req, background ${(r.backgroundBytes / 1e6).toFixed(2)}) | long tasks ${r.longTasks.count} / ${r.longTasks.totalMs} ms, max ${r.longTasks.maxMs} | load ${r.loadAverage.toFixed(1)}\n   ${r.measures.filter(m => m.at >= 0).map(m => `${m.name}=${m.ms}@${m.at}`).join(' ')}${r.errors.length ? `\n   errors: ${r.errors.slice(0, 5).join(' | ')}` : ''}`);
+  for (const r of all) console.log(`${r.profile.padEnd(8)} ${r.cache.padEnd(5)} FCP ${r.firstPaintMs} title ${r.titleMs} start->playable ${r.startToPlayableMs} ms | ${r.requests} req ${(r.bytes / 1e6).toFixed(2)} MB (boot ${(r.bootBytes / 1e6).toFixed(2)}, menu ${(r.menuBytes / 1e6).toFixed(2)}, level ${(r.levelBytes / 1e6).toFixed(2)}, critical ${(r.criticalBytes / 1e6).toFixed(2)} in ${r.criticalRequests} req, background ${(r.backgroundBytes / 1e6).toFixed(2)}) | long tasks ${r.longTasks.count} / ${r.longTasks.totalMs} ms, max ${r.longTasks.maxMs} | load ${r.loadAverage.toFixed(1)}\n   ${r.measures.filter(m => m.at >= 0).map(m => `${m.name}=${m.ms}@${m.at}`).join(' ')}${r.errors.length ? `\n   errors: ${r.errors.slice(0, 5).join(' | ')}` : ''}`);
 }

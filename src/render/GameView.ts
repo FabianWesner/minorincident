@@ -257,7 +257,8 @@ export class GameView implements Lifecycle {
     const stale = () => generation !== this.generation || this.quality !== 'high';
     const frame = () => new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
     this.preparation = (async () => {
-      await frame(); await frame();
+      // Let the loading screen close and the first playable frames settle before streaming starts.
+      for (let i = 0; i < 30; i++) await frame();
       if (generation !== this.generation) return;
       loadGate.setPaced(true);
       for (const view of this.preparedDistrictViews.values()) view.warmHero = batch => this.warmHidden(batch);
