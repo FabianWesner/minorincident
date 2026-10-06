@@ -13,7 +13,8 @@ export function installL1Outbreak(world: SimWorld, setup: L1OutbreakSetup = {}):
   if (!world.infected || !world.npcs) installNpcSystems(world);
   for (const e of [...world.entities.iterate()]) if (e.civilian?.ambient || e.traffic) { world.entities.delete(e.id); world.spatial.delete(e.id); }
   world.npcs!.setAmbient(0);
-  const tier = setup.tier ?? 'high';
+  // Game.loadLevel applies the quality tier before the mission installs this layer: keep it unless told otherwise.
+  const tier = setup.tier ?? world.infected!.director.tier;
   const outbreak = new Outbreak(world, { ...groveRefuges({ world }), tier });
   world.npcs!.civilians.outbreak = outbreak;
   populateGrove(outbreak, setup.civilians ?? (tier === 'low' ? 40 : 56));
