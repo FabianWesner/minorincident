@@ -1,3 +1,4 @@
+import { noiseForAction } from '../noise';
 import { actions as fixtures } from './fixtures';
 import { validateAction, type ActionDef } from './schema';
 
@@ -5,8 +6,8 @@ import { validateAction, type ActionDef } from './schema';
  * Utility actions intentionally deal no damage. E27 consumes the smoke/fire definitions. */
 const base: ActionDef = { ...fixtures['weapon.bat'], effect: null, pellets: 1, distanceFalloff: null };
 const melee = (id: string, asset: string, damage: number, range: number, arc: number, swing: number, tier: number, knockback = 0.5): ActionDef => ({ ...base, id: `weapon.${id}`, viewAssetId: asset, iconId: `icon.${id}`, damage, range, arc, windup: swing * 0.2, active: 0.1, recovery: swing * 0.8 - 0.1, cooldown: swing, knockback, tier });
-const gun = (id: string, damage: number, range: number, fireRate: number, magazine: number, reloadTime: number, spread: number, tier = 1): ActionDef => ({ ...base, id: `weapon.${id}`, category: 'ranged', viewAssetId: `wpn.${id}`, iconId: `icon.${id}`, damage, range, fireRate, magazine, reloadTime, spread, arc: 0, maxTargets: 1, windup: 0, active: 1 / 60, recovery: 0, cooldown: 0, knockback: 0, stagger: 0, noiseRadius: 30, aimIndicator: 'line', tier, upgradeHooks: ['damage', 'magazine', 'reloadTime', 'spread'] });
-const thrown = (id: string, damage: number, radius: number, fuse: number): ActionDef => ({ ...base, id: `weapon.${id}`, category: 'throwable', viewAssetId: `thr.${id === 'grenade' ? 'frag-grenade' : id}`, iconId: `icon.${id}`, damage, range: 12, arc: 0, maxTargets: 1000, windup: 0, active: 1 / 60, recovery: 0.2, cooldown: 0.25, charges: 2, recharge: 12, projectile: { speed: 12, gravity: 9.81, pierce: 0 }, splash: { radius, falloff: 0.5 }, fuse, knockback: damage ? 0.5 : 0, stagger: damage ? 0.5 : 0, noiseRadius: damage ? 30 : 0, aimIndicator: 'arc', tier: 1, upgradeHooks: ['damage', 'charges', 'recharge', 'radius'] });
+const gun = (id: string, damage: number, range: number, fireRate: number, magazine: number, reloadTime: number, spread: number, tier = 1): ActionDef => ({ ...base, id: `weapon.${id}`, category: 'ranged', viewAssetId: `wpn.${id}`, iconId: `icon.${id}`, damage, range, fireRate, magazine, reloadTime, spread, arc: 0, maxTargets: 1, windup: 0, active: 1 / 60, recovery: 0, cooldown: 0, knockback: 0, stagger: 0, noiseRadius: noiseForAction(`weapon.${id}`).radius, aimIndicator: 'line', tier, upgradeHooks: ['damage', 'magazine', 'reloadTime', 'spread'] });
+const thrown = (id: string, damage: number, radius: number, fuse: number): ActionDef => ({ ...base, id: `weapon.${id}`, category: 'throwable', viewAssetId: `thr.${id === 'grenade' ? 'frag-grenade' : id}`, iconId: `icon.${id}`, damage, range: 12, arc: 0, maxTargets: 1000, windup: 0, active: 1 / 60, recovery: 0.2, cooldown: 0.25, charges: 2, recharge: 12, projectile: { speed: 12, gravity: 9.81, pierce: 0 }, splash: { radius, falloff: 0.5 }, fuse, knockback: damage ? 0.5 : 0, stagger: damage ? 0.5 : 0, noiseRadius: damage ? noiseForAction(`weapon.${id}`).radius : 0, aimIndicator: 'arc', tier: 1, upgradeHooks: ['damage', 'charges', 'recharge', 'radius'] });
 const ability = (id: string, radius: number, duration: number, cooldown: number, kind: NonNullable<ActionDef['effect']>['kind']): ActionDef => ({ ...base, id: `ability.${id}`, category: 'ability', damage: 0, range: radius, arc: 360, maxTargets: 1000, windup: 0, active: 1 / 60, recovery: 0.2, cooldown, knockback: 0, stagger: 0, noiseRadius: 0, aimIndicator: 'circle', tier: 2, effect: { kind, radius, duration }, viewAssetId: `ability.${id}`, iconId: `icon.${id}`, upgradeHooks: ['cooldown', 'duration', 'radius'] });
 export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries(([
   melee('fists', 'wpn.fists', 12, 1.3, 75, 0.4, 0, 0.2),
@@ -27,7 +28,7 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   { ...gun('hunting-rifle', 90, 32, 1, 5, 2.4, 0), tier: 1 },
   gun('assault-rifle', 26, 28, 7.5, 30, 2, 1, 2),
   fixtures['weapon.machine-gun'],
-  { ...gun('rocket-launcher', 180, 35, 0.8, 1, 2.5, 0, 2), projectile: { speed: 18, gravity: 0, pierce: 0 }, splash: { radius: 4, falloff: 0.6 }, maxTargets: 1000, knockback: 1.2, stagger: 0.8, noiseRadius: 40 },
+  { ...gun('rocket-launcher', 180, 35, 0.8, 1, 2.5, 0, 2), projectile: { speed: 18, gravity: 0, pierce: 0 }, splash: { radius: 4, falloff: 0.6 }, maxTargets: 1000, knockback: 1.2, stagger: 0.8, noiseRadius: noiseForAction('weapon.rocket-launcher').radius },
   fixtures['weapon.grenade'],
   { ...thrown('molotov', 10, 4, 0), effect: { kind: 'fire', radius: 4, duration: 6 }, status: { kind: 'burning', duration: 2, maxStacks: 1, dps: 15, slow: 0 } },
   thrown('pipe-bomb', 150, 4.5, 2),
