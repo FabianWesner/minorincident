@@ -52,7 +52,8 @@ export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opt
   const seed = opts.seed ?? world.seed, maxTicks = (opts.maxSeconds ?? 900) * 60, rng = new Rng(seed, `bot-${profile}`);
   const walker = new Walker(), seen = new Set<string>(), timeline: L1Report['timeline'] = [];
   const infectedAfterExit: Record<number, number> = {};
-  let maxInfected = 0, bites = 0, exitTick = 0, detour: { x: number; z: number; until: number } | null = null, decideAt = 0, move = { x: 0, z: 0 }, fight: EntitySnapshot | null = null;
+  const bike = world.vehicles?.bicycle, useBike = profile === 'complete' && !!bike?.entity;
+  let rode = false, press = false, maxInfected = 0, bites = 0, exitTick = 0, detour: { x: number; z: number; until: number } | null = null, decideAt = 0, move = { x: 0, z: 0 }, fight: EntitySnapshot | null = null;
   const stopBites = world.events.on('outbreak.bite', () => { bites++; });
   const stopCivTurn = world.events.on('civilian.turned', () => { bites++; });
   const anchor = (name: string) => mission.def.anchors[name];
@@ -77,9 +78,16 @@ export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opt
       const nearest = threats[0];
       fight = fights && nearest && dist(nearest.transform, p) <= 2.6 && (!newbie || rng.next() > .15) ? nearest : null;
       let goal: { x: number; z: number } | null = null, stop = 1.2, key = step?.id ?? 'wait';
+      press = false;
+      if (bike?.riding) rode = true;
       if (step) goal = anchor(goals[step.id]);
       else if (l1.delivered && !l1.exitIds.length) { goal = anchor('lab-door'); stop = 3; key = 'calm'; }
       if (step?.id === 'deliver' || step?.id === 'pickup') stop = .9;
+      // The courier rides from bike-start through the depot to the facility; it auto-dismounts at the no-bike zone edge.
+      if (useBike && !rode && !bike!.riding && !l1.delivered && step && (step.id === 'pickup' || step.id === 'deliver')) {
+        const at = bike!.entity!.transform;
+        if (dist(at, p) <= 1.4) press = true; else { goal = { x: at.x, z: at.z }; stop = 1; key = 'to-bike'; }
+      }
       if (newbie) {
         if (detour && world.tick > detour.until) detour = null;
         if (!detour && rng.next() < .0006) { const names = Object.keys(mission.def.anchors); const a = anchor(names[Math.floor(rng.next() * names.length)]); detour = { x: a.x, z: a.z, until: world.tick + 360 }; }
@@ -95,7 +103,7 @@ export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opt
       move = fight ? { x: 0, z: 0 } : dir ?? { x: 0, z: 0 };
     }
     const target = fight && fight.health.current > 0 ? fight : null;
-    world.setInput(target ? { move, interact: false, attackTarget: { id: target.id, side: 'LEFT' }, left: { down: false, held: true, up: false } } : { move, interact: false, attackTarget: undefined, left: { down: false, held: false, up: false } });
+    world.setInput(target ? { move, interact: press, attackTarget: { id: target.id, side: 'LEFT' }, left: { down: false, held: true, up: false } }   : { move, interact: press, attackTarget: undefined, left: { down: false, held: false, up: false } });
     world.update();
   }
   stopBites(); stopCivTurn();
