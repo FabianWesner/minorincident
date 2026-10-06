@@ -52,6 +52,15 @@ test('M1-30 @E19 attack interrupts bench, carrying and flower routines before th
     Object.assign(w.entities.get(attacker)!.transform, e.transform);
     expect(w.npcs!.civilians.grab(id, attacker, true)).toBe(true);
     expect(c.state).toBe('grabbed');
+    for (let i = 0; i < 1500 && c.state !== 'infected'; i++) w.update();
+    const turn = w.events.events().find(event => event.type === 'civilian.turned' && event.id === id);
+    expect(turn?.type).toBe('civilian.turned');
+    if (turn?.type === 'civilian.turned') {
+      const newborn = w.entities.get(turn.infectedId)!; expect(newborn.infected!.model).toBe(c.model);
+      w.infected!.release(newborn);
+      const recycled = w.infected!.spawn('infected.runner', e.transform);
+      expect(w.entities.get(recycled)!.infected!.model).toBeUndefined();
+    }
     w.dispose();
   }
 });

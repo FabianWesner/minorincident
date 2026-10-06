@@ -89,6 +89,7 @@ export class Civilians {
       } else if (c.state === 'rising' && tick >= c.until) {
         if (ai.pool.length > 0 && ai.director.count < ai.director.cap) {
           const infectedId = ai.spawn(c.pet ? `infected.${c.pet}` : 'infected.runner', e.transform, { variant: c.variant, state: 'chase', perched: false });
+          if (c.schedule) this.world.entities.get(infectedId)!.infected!.model = c.model;
           this.turns++; this.state(e, 'infected'); e.hidden = true; this.world.spatial.delete(e.id);
           this.world.events.emit({ type: 'civilian.turned', tick, id: e.id, infectedId, variant: c.variant, position: { x: e.transform.x, z: e.transform.z } });
         } else { this.state(e, 'down', 1); }
