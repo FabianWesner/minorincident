@@ -27,3 +27,9 @@ test('@E19 M1-07 moved, scaled and rotated district dressing retains every compo
     expect(after[i].aabb.max[2]).toBeCloseTo(19 - before[i].aabb.min[0] * 2);
   }
 });
+
+test('@E19 M1-08 low flower strips never retain a blocking district fallback', () => {
+  const aabb = { min: [-1, 0, -.4], max: [1, .39, .4] } as Placement['visualAabb'];
+  const placement: Placement = { id: 'flowers', assetId: 'prop.flower', position: [0, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, lightGroup: '', allowRoad: false, visualAabb: aabb };
+  expect(placementColliders([placement], [{ id: placement.id, aabb, minTier: 0, maxTier: 5 }])).toEqual([]);
+});
