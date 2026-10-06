@@ -123,6 +123,11 @@ export async function validateAssets(manifest: AssetDef[], production = false): 
   const io = await assetIO(), results: Validation[] = [];
   for (const def of manifest) {
     if (!atLeast(def.status, 'modeled') && !(production && def.sourceGlb)) continue;
+    // HUD icons and rendered portraits ship as images, with no model contract.
+    if (def.category === 'ui' && def.icon && !def.glb) {
+      if (!existsSync(def.icon)) results.push({ id: def.id, errors: [`missing image ${def.icon}`], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' });
+      continue;
+    }
     const paths = [def.glb, def.lods?.lod1, def.lods?.lod2];
     for (const [lod, path] of paths.entries()) {
       if (!path) {
