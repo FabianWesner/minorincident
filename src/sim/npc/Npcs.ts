@@ -5,7 +5,7 @@ import { Traffic } from './Traffic';
 import { Companion } from './Companion';
 import { Escorts } from './Escorts';
 import { Civilians } from './Civilians';
-import { SimPhase } from '../../core/EventBus';
+import { moveAgent } from '../locomotion/AgentMotion';
 import type { Point } from './types';
 /** E08 composition and reused E07 navigation. Public authoring hooks are also headless test hooks. */
 export class Npcs {
@@ -17,21 +17,6 @@ export class Npcs {
   private slice = false;
   private readonly waypoint = { x: 0, z: 0 };
   constructor(readonly world: SimWorld) {
-    const previous = new Map<number, Point>();
-    world.events.on('sim.tick', () => {
-      previous.clear();
-      for (const e of world.entities.iterate()) if (e.civilian || e.companion || e.escort) previous.set(e.id, { x: e.transform.x, z: e.transform.z });
-    }, SimPhase.intent);
-    world.events.on('sim.tick', () => {
-      for (const e of world.entities.iterate()) {
-        const p = previous.get(e.id); if (!p) continue;
-        if (world.districts) e.transform.y = (e.companion || e.civilian?.pet ? .3 : .7) + world.districts.groundHeight(e.transform.x, e.transform.z);
-        const dx = e.transform.x - p.x, dz = e.transform.z - p.z, distance = Math.hypot(dx, dz);
-        const motion = e.motion ??= { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: 0 };
-        motion.velocity.x = dx * 60; motion.velocity.z = dz * 60; motion.speed = distance * 60;
-        motion.moving = motion.speed > (motion.moving ? .04 : .12); motion.distance += distance;
-      }
-    }, SimPhase.cleanup);
     this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
   move(e: EntitySnapshot, target: Point, speed: number, path: { path: number[]; goal: number; pathIndex: number }, stop = .1): void {
     const nav = this.world.infected!.nav;
@@ -41,23 +26,13 @@ export class Npcs {
     if (!nav.steer(e.transform, target, path, .35, this.waypoint)) return;
     dx = this.waypoint.x - e.transform.x; dz = this.waypoint.z - e.transform.z;
     const routed = Math.hypot(dx, dz); if (routed < .01) return;
-    let vx = dx / routed * Math.min(speed, Math.max(0, distance - stop) * 4), vz = dz / routed * Math.min(speed, Math.max(0, distance - stop) * 4);
-    if (e.companion) {
-      const v = e.companion.velocity ??= { x: 0, z: 0 }, delta = Math.hypot(vx - v.x, vz - v.z), amount = Math.min(1, .3 / (delta || 1));
-      v.x += (vx - v.x) * amount; v.z += (vz - v.z) * amount; vx = v.x; vz = v.z;
-    }
-    const before = { x: e.transform.x, z: e.transform.z };
+    const vx = dx / routed * Math.min(speed, Math.max(0, distance - stop) * 4), vz = dz / routed * Math.min(speed, Math.max(0, distance - stop) * 4);
     this.moveStep(e, vx / 60, vz / 60);
-    const actualX = e.transform.x - before.x, actualZ = e.transform.z - before.z;
-    if (Math.hypot(actualX, actualZ) > .0005) {
-      const yaw = -Math.atan2(actualZ, actualX), delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));
-      e.transform.yaw += Math.max(-.12, Math.min(.12, delta));
-    }
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
   }
   moveStep(e: EntitySnapshot, dx: number, dz: number): void {
     const x = e.transform.x, z = e.transform.z;
-    this.world.infected!.nav.move(e.transform, dx, dz, .35);
+    moveAgent(e, dx * 60, dz * 60, this.world.infected!.nav, this.world.tick, .35);
     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }
   }
   /** Place collision-safe rectangular routines from authored navigation, never inside buildings. */

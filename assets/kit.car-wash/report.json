@@ -1,0 +1,208 @@
+{
+  "id": "kit.car-wash",
+  "lods": {
+    "lod0": {
+      "triangles": 11059,
+      "geometry_hash": "273901291dfca9903cab5ec91845913524efbf257f10274302e8409405e30615",
+      "bytes": 209996,
+      "bounds": {
+        "min": [
+          -2.5000319838192797,
+          4.232612284704729e-05,
+          -3.299999952316284
+        ],
+        "max": [
+          2.5000319838192797,
+          4.583973323931048,
+          2.5999999046325684
+        ]
+      },
+      "dimensions": [
+        5,
+        4.584,
+        5.9
+      ],
+      "missing_nodes": [],
+      "materials": [
+        "pal_backpackTeal",
+        "pal_flamingoPink",
+        "pal_policeBlue",
+        "pal_schoolBusYellow",
+        "pal_silver",
+        "pal_lavenderLight",
+        "pal_picketWhite",
+        "pal_sidewalk",
+        "pal_tealLight",
+        "pal_uiDark",
+        "pal_survivorRed",
+        "pal_orange"
+      ],
+      "double_sided": [],
+      "brush_pivots": [
+        {
+          "name": "brush_a",
+          "position": [
+            1.100000023841858,
+            2.9800000190734863,
+            -0.949999988079071
+          ]
+        },
+        {
+          "name": "brush_b",
+          "position": [
+            1.100000023841858,
+            2.9800000190734863,
+            0.949999988079071
+          ]
+        },
+        {
+          "name": "brush_c",
+          "position": [
+            -1.25,
+            2.9800000190734863,
+            0
+          ]
+        }
+      ]
+    },
+    "lod1": {
+      "triangles": 1614,
+      "geometry_hash": "065abf528102c76a462e82e838a0d97382a13e59801b6876b3c1eb6a28c6efc3",
+      "bytes": 44048,
+      "bounds": {
+        "min": [
+          -2.5000319838192797,
+          4.232612284704729e-05,
+          -3.299999952316284
+        ],
+        "max": [
+          2.5000319838192797,
+          4.5839665440814255,
+          2.5999999046325684
+        ]
+      },
+      "dimensions": [
+        5,
+        4.584,
+        5.9
+      ],
+      "missing_nodes": [],
+      "materials": [
+        "pal_backpackTeal",
+        "pal_flamingoPink",
+        "pal_policeBlue",
+        "pal_schoolBusYellow",
+        "pal_silver",
+        "pal_lavenderLight",
+        "pal_picketWhite",
+        "pal_tealLight",
+        "pal_uiDark",
+        "pal_survivorRed",
+        "pal_sidewalk"
+      ],
+      "double_sided": [],
+      "brush_pivots": [
+        {
+          "name": "brush_a",
+          "position": [
+            1.100000023841858,
+            2.9800000190734863,
+            -0.949999988079071
+          ]
+        },
+        {
+          "name": "brush_b",
+          "position": [
+            1.100000023841858,
+            2.9800000190734863,
+            0.949999988079071
+          ]
+        },
+        {
+          "name": "brush_c",
+          "position": [
+            -1.25,
+            2.9800000190734863,
+            0
+          ]
+        }
+      ]
+    },
+    "lod2": {
+      "triangles": 414,
+      "geometry_hash": "86899ac995332f04594f9c3e88ce1824f1ad174fd9c09d2796830f860ff4cf2e",
+      "bytes": 21908,
+      "bounds": {
+        "min": [
+          -2.5000319838192797,
+          4.232612284704729e-05,
+          -3.299999952316284
+        ],
+        "max": [
+          2.5000319838192797,
+          4.555105069262299,
+          2.5999999046325684
+        ]
+      },
+      "dimensions": [
+        5,
+        4.555,
+        5.9
+      ],
+      "missing_nodes": [],
+      "materials": [
+        "pal_backpackTeal",
+        "pal_flamingoPink",
+        "pal_policeBlue",
+        "pal_schoolBusYellow",
+        "pal_lavenderLight",
+        "pal_silver",
+        "pal_picketWhite",
+        "pal_tealLight",
+        "pal_survivorRed",
+        "pal_sidewalk"
+      ],
+      "double_sided": [],
+      "brush_pivots": [
+        {
+          "name": "brush_a",
+          "position": [
+            1.100000023841858,
+            2.9800000190734863,
+            -0.949999988079071
+          ]
+        },
+        {
+          "name": "brush_b",
+          "position": [
+            1.100000023841858,
+            2.9800000190734863,
+            0.949999988079071
+          ]
+        },
+        {
+          "name": "brush_c",
+          "position": [
+            -1.25,
+            2.9800000190734863,
+            0
+          ]
+        }
+      ]
+    }
+  },
+  "missing_nodes": [],
+  "nodes_ok": true,
+  "matches_reference": true,
+  "done": true,
+  "webgl2_ok": true,
+  "webgpu_ok": null,
+  "webgpu_note": "Manual verification required by repository guidance",
+  "deterministic_rebuild_lods": [
+    "lod0",
+    "lod1"
+  ],
+  "integration_gaps": [
+    "Reconcile placeholder dimensions to delivered bounds 5 x 4.584 x 5.9 m; manifest unchanged."
+  ]
+}

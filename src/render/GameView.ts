@@ -8,6 +8,7 @@ import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
 import { ObjectiveMarker } from './ObjectiveMarker';
 import { VehicleView } from './VehicleView';
+import { BicycleView } from './BicycleView';
 import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
 import type { SurvivorState } from '../data/survivor';
@@ -54,6 +55,7 @@ export class GameView implements Lifecycle {
   renderedFrames = 0;
   private readonly meshes: Mesh[] = [];
   private vehicles: VehicleView | null = null;
+  private bicycle: BicycleView | null = null;
   private actions: ActionView | null = null;
   private contactShadows: ContactShadows | null = null;
   private crowd: CrowdView | null = null;
@@ -192,6 +194,7 @@ export class GameView implements Lifecycle {
       this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); await this.interactions.synchronize();
     }
     if (this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); await this.vehicles.load(); this.scene.add(this.vehicles); }
+    if (this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); await this.bicycle.load(); this.scene.add(this.bicycle); }
     if (this.world.combat && this.materials) {
       this.vehicleFeedback = new VehicleFeedback(this.materials); this.scene.add(this.vehicleFeedback);
       this.vfx = new Vfx(this.world, {
@@ -345,6 +348,8 @@ export class GameView implements Lifecycle {
       // Portrait hero readability supplements the seven-metre camera floor; collision stays in metres.
       this.character.scale.setScalar(this.camera.aspect < 1 ? 1.25 : 1);
       this.character.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha) - 0.7, lerp(previous?.z ?? current.z, current.z, alpha));
+      // Riding: sit on the saddle (the bicycle view slides its seat under the rider's feet; hips sit ~0.35 m above the ground pose).
+      if (this.world.vehicles?.bicycle.riding) this.character.position.y += .35;
       const from = previous?.yaw ?? current.yaw;
       this.character.face(from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60);
       const stopped = this.vfx?.hitStop.active(this.vfx.time) ?? false;
@@ -370,11 +375,13 @@ export class GameView implements Lifecycle {
     if (this.character) this.character.visible = !this.world.entities.get(1)?.hidden;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.vehicles); }
     this.vehicles?.update(alpha);
+    if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.scene.add(this.bicycle); }
+    this.bicycle?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); this.missionUI?.update(this.camera,innerWidth,innerHeight);
-    this.crowd?.update(this.view); this.contactShadows?.update(); this.actions?.update();
+    this.crowd?.update(this.view, alpha); this.contactShadows?.update(); this.actions?.update();
     this.entityAssets?.update();
-    this.interactions?.update(this.camera); this.npcs?.update(this.camera);
+    this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha);
     this.flashOverlay.style.opacity = String(this.vfx?.flash ?? 0);
     this.lighting?.update(this.view); this.districts?.updateLods(this.view);
     this.districts?.cull(this.view, this.quality);
@@ -435,6 +442,7 @@ export class GameView implements Lifecycle {
     if (this.interactions) { this.scene.remove(this.interactions); this.interactions.dispose(); this.interactions = null; }
     if (this.entityAssets) { this.scene.remove(this.entityAssets); this.entityAssets.dispose(); this.entityAssets = null; }
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
+    if (this.bicycle) { this.scene.remove(this.bicycle); this.bicycle.dispose(); this.bicycle = null; }
     this.windowMask=false; this.foliageMask=false;
     for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();
     for (const material of this.foliageIdMasks.values()) material.dispose(); this.foliageIdMasks.clear();
