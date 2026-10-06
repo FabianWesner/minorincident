@@ -25,7 +25,10 @@
       "passed": 193
     },
     "unit": {
-      "passed": 85
+      "passed": 83,
+      "failed": 1,
+      "exception": "T-E17-sources: late inf.armored-football source is unregistered; central reconcile owns late assets",
+      "permitted_by_orchestrator": true
     }
   },
   "conflicts_resolved": {
@@ -83,7 +86,9 @@
     ],
     "typecheck": 0,
     "lint": 0,
-    "unit": 83
+    "unit": 83,
+    "historical_registration_reverted": true,
+    "registration_owner": "central orchestrator reconcile job"
   },
   "main2": {
     "head": "bc2011322b08d1dca5ba8686a8d2e5317fb0f1e3",
@@ -97,7 +102,9 @@
     "new_palette_swatches": 11,
     "typecheck": 0,
     "lint": 0,
-    "unit": 83
+    "unit": 83,
+    "historical_registration_reverted": true,
+    "registration_owner": "central orchestrator reconcile job"
   },
   "main3": {
     "head": "6eaccaa06fafab3bdccfdb66d2377350475bcd44",
@@ -106,10 +113,29 @@
     ],
     "authored_pose_scale_preserved": true,
     "unit": 85,
-    "inherited_doc": "specs/03-asset-pipeline.md"
+    "inherited_doc": "specs/03-asset-pipeline.md",
+    "historical_registration_reverted": true,
+    "registration_owner": "central orchestrator reconcile job"
   },
   "preliminary_e2e": {
     "passed": 117,
     "minutes": 27.3
+  },
+  "scope_steering": {
+    "late_asset_ids": [
+      "inf.armored-football",
+      "inf.butcher",
+      "inf.construction-worker",
+      "inf.firefighter",
+      "inf.hazmat",
+      "inf.nurse",
+      "inf.skater",
+      "npc.survivor-group",
+      "inf.corpse-poses"
+    ],
+    "registrations_reverted": true,
+    "runtime_exports_removed": 27,
+    "palette_additions_removed": 11,
+    "further_asset_driven_main_merges": false
   }
 }
