@@ -1,3 +1,5 @@
+import { installAgentMotion, moveAgent } from '../locomotion/AgentMotion';
+import { motionResponse } from '../locomotion/MotionResponse';
 import { installCharacterSeparation } from './CharacterSeparation';
 import { noise } from '../../data/noise';
 // Zone enter/alert pattern adapted from Bruno Simon folio-2025 Zones.js (MIT, 41046b5).
@@ -55,7 +57,7 @@ export class InfectedSystem {
   private readonly waypoint = { x: 0, z: 0 };
   constructor(readonly world: SimWorld, definition: ScenarioDefinition) {
     this.perches = definition.perches ?? [];
-    installCharacterSeparation(world);
+    installCharacterSeparation(world); installAgentMotion(world);
     validateInfected(); this.rng = new Rng(world.seed, 'infected'); this.nav = new NavGrid(definition.ground, definition.walls ?? [], definition.navigationClearance ?? 0.65, definition.ground.center); this.navigation = new DistrictNavigation(definition, this.nav); this.director = new SpawnDirector(this); this.props = new PropThrows(world);
     for (let i = 0; i < 350; i++) {
       const brain: InfectedState = { state: 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: 0, until: 0, cooldown: 0, attackId: 0, special: '', hidden: false, deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: 0, packIndex: 0, birds: 0, birdPositions: new Array(60).fill(0), birdAlive: new Array(20).fill(0), scatterUntil: 0, variant: '', path: [], pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: false };
@@ -65,7 +67,7 @@ export class InfectedSystem {
       if (event.type !== 'world.blocker.changed') return;
       this.nav.setBlocker(event.id, event.wall, event.blocked);
       for (const district of this.navigation.districts) district.grid.setBlocker(event.id, event.wall, event.blocked);
-      for (const entity of this.active) { entity.infected!.goal = -1; entity.infected!.path.length = 0; }
+      for (const entity of this.active) { entity.infected!.goal = -1; entity.infected!.path.length = 0; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical; }
     });
     world.events.on('noise', (event) => { if (event.type === 'noise') this.noise(event.position, event.radius, event.radius >= 25, event.sourceId); });
     world.events.on('outbreak.distraction', (event) => { if (event.type === 'outbreak.distraction') this.distraction(event); });
@@ -102,11 +104,12 @@ export class InfectedSystem {
     if (this.director.count + weight > this.director.cap) throw new Error('Infected concurrency cap reached');
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || !this.nav.clear(position.x, position.z, def.radius)) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
+    entity.locomotion = motionResponse(); delete entity.motion;
     delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
-    Object.assign(entity.infected!, { state: opts.state ?? 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0;
+    Object.assign(entity.infected!, { state: opts.state ?? 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
     for (let bird = 0; bird < 20; bird++) { entity.infected!.birdAlive[bird] = Number(bird < entity.infected!.birds); entity.infected!.birdPositions[bird * 3] = position.x + Math.cos(bird * 2.399963) * 2; entity.infected!.birdPositions[bird * 3 + 1] = 3; entity.infected!.birdPositions[bird * 3 + 2] = position.z + Math.sin(bird * 2.399963) * 2; }
     if (id === 'infected.crow') entity.health.current = entity.health.max = entity.infected!.birds;
     if (this.l1 && def.special === 'lunge') this.initL1(entity, opts.tier ?? l1SpeedTier(entity.infected!.variant)); else delete entity.infected!.l1;
@@ -168,7 +171,7 @@ export class InfectedSystem {
       if (b.state === 'idle' || b.state === 'wander') {
         if (distance <= 14 && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180)) && this.world.combat!.query.visible(e.transform, player.transform)) this.alert(e);
         if (b.state === 'wander') {
-          this.nav.move(e.transform, b.dx * b.speed / 120, b.dz * b.speed / 120, e.combat!.radius); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+          moveAgent(e, b.dx * b.speed / 2, b.dz * b.speed / 2, this.nav, this.world.tick); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
           if (this.world.tick >= b.until) b.state = 'idle';
         } else if (this.world.tick >= 240 && this.world.tick % 240 === e.id % 240) { b.state = 'wander'; b.until = this.world.tick + 120; const angle = this.rng.next() * Math.PI * 2; b.dx = Math.cos(angle); b.dz = Math.sin(angle); }
         continue;
@@ -278,7 +281,8 @@ export class InfectedSystem {
       const distance = Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z);
       const step = Math.min(Math.max(0, distance - def.range), (b.special === 'charge' ? 8 : b.special === 'cling' ? 6 : b.special === 'pin' ? 7.5 : 7) / 60);
       if (b.special === 'cling') e.transform.y = 0.7 + Math.sin(Math.min(1, (this.world.tick - b.until) / 60) * Math.PI) * 1.5;
-      this.nav.move(e.transform, b.dx * step, b.dz * step, def.radius); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+      // Authored leap/charge timing is a combat impulse, like knockback.
+      moveAgent(e, b.dx * step * 60, b.dz * step * 60, this.nav, this.world.tick, e.combat!.radius, true); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
       if (distance > def.range + 0.15) return this.world.tick >= b.activeUntil;
     }
     if (Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z) > (b.special === 'aura' ? 3 : def.range) + 0.15) return true;
@@ -573,8 +577,7 @@ export class InfectedSystem {
     const dx = x - e.transform.x, dz = z - e.transform.z, distance = Math.hypot(dx, dz);
     const remaining = x === target.x && z === target.z ? distance - e.combat!.radius - 0.36 : distance;
     if (remaining < 0.02) return;
-    const step = Math.min(remaining, speed / 60); this.nav.move(e.transform, dx / distance * step, dz / distance * step, e.combat!.radius);
-    e.transform.yaw = -Math.atan2(dz, dx);
+    const velocity = Math.min(speed, remaining * 2); moveAgent(e, dx / distance * velocity, dz / distance * velocity, this.nav, this.world.tick);
   }
   private separate(e: EntitySnapshot): void {
     this.query.x = e.transform.x; this.query.z = e.transform.z; this.query.r = e.combat!.radius + 0.7; this.world.spatial.query(this.query, this.neighbors, false);
