@@ -26,3 +26,10 @@ the “Hey!” bubble sits above the reacting actor. The child remains inside th
 swing arc with unchanged health/state and no hit reaction. The test checks both
 health values, no kill/infection, and the adult’s return from annoyed to calm.
 The optional dropped-item gag is omitted. WebGPU is outside this headless review.
+
+Post-merge review: refreshed all 35 frames after rebuilding the 58-action
+library and merging main’s survivor/grade changes. Jab, front-kick and spinning
+backfist contact captures were also inspected at full game-camera resolution.
+Distinct arms, shoe extension, torso/backpack turn and planted support remain
+readable, with no detached limbs or missing clips. The focused real-input test
+passes all seven moves without planar movement.

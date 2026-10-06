@@ -90,14 +90,18 @@
     },
     {
       "command": "E2E_PORT=3348 npm run test:smoke",
-      "exitCode": null,
-      "simulationPassed": 3,
-      "status": "waiting for shared browser lock"
+      "exitCode": 0,
+      "status": "passed",
+      "passed": {
+        "simulation": 3,
+        "browser": 22
+      }
     },
     {
       "command": "E2E_PORT=3348 sh tools/e2e-lock.sh npx playwright test tests/e2e/input-unarmed.spec.ts --grep \"seven unarmed moves\" --project=chromium --workers=1",
-      "exitCode": null,
-      "status": "queued after smoke"
+      "exitCode": 0,
+      "status": "passed",
+      "passed": 1
     }
   ]
 }

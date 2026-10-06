@@ -8,7 +8,9 @@ updates survive. The latest main mobile policy (far LOD beyond 16 m and
 LOD2 for props) supersedes the earlier 18 m correction below. The GLB and
 runtime tracks are regenerated from the merged Blender script. Merge-specific
 validation is recorded in `merge-checks.json`: typecheck, lint, 181 unit tests
-and build pass; browser smoke and the focused unarmed test are queued.
+and build pass; smoke passes 3 simulation and 22 browser checks, and the
+focused seven-move real Shift+LMB test passes. Its regenerated clips have no
+missing tracks and retain the unchanged planar player position.
 
 Implemented the product owner's October 6 updates: explicit ground click/hold movement;
 LMB targets/approaches infected with the active action; Shift+LMB always swings in place,
@@ -59,7 +61,7 @@ authored LOD2 beyond 18 m, with high quality unchanged at 30 m. All seven
 iPhone camera spots pass; the connection view falls from 512,458 to 408,015
 triangles. Its game-camera capture was reviewed for preserved silhouettes.
 
-Final resumed validation (m1-controls3-2): typecheck and lint pass; the full
+Pre-merge resumed validation (m1-controls3-2): typecheck and lint pass; the full
 unit suite passes 158 tests in 56 files. Smoke passes 3 selected simulation
 checks and all 22 browser checks. The one requested focused browser test passes:
 all seven unarmed moves play through real Shift+LMB with no planar movement,
