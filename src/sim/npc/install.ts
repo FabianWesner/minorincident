@@ -4,6 +4,7 @@ import { Combat } from '../combat/Combat';
 import type { SimWorld } from '../world/SimWorld';
 import type { ScenarioDefinition } from '../../levels/loader';
 import { Npcs } from './Npcs';
+import type { DistrictWorld } from '../world/DistrictWorld';
 import { inside } from '../../levels/districts/validate';
 /** Minimal campaign integration: assemble navigation from the loaded, decayed district colliders. */
 export function installCampaignNpcs(world: SimWorld): void {
@@ -25,8 +26,8 @@ export function installCampaignNpcs(world: SimWorld): void {
   }
 }
 
-function campaignWalls(world: SimWorld): NonNullable<ScenarioDefinition['walls']> {
-  const districts = world.districts!, walls: NonNullable<ScenarioDefinition['walls']> = [];
+function campaignWalls(world: SimWorld, districts: DistrictWorld = world.districts!): NonNullable<ScenarioDefinition['walls']> {
+  const walls: NonNullable<ScenarioDefinition['walls']> = [];
   for (const d of districts.districts) for (const c of d.decay.colliders.filter(c => !c.walkable).map(c => c.aabb).concat(d.blockers)) {
     walls.push({ x: (c.min[0] + c.max[0]) / 2 + d.origin[0], z: (c.min[2] + c.max[2]) / 2 + d.origin[1], y: (c.min[1] + c.max[1]) / 2, halfX: (c.max[0] - c.min[0]) / 2, halfZ: (c.max[2] - c.min[2]) / 2, halfY: (c.max[1] - c.min[1]) / 2 });
   }
@@ -37,7 +38,7 @@ function campaignWalls(world: SimWorld): NonNullable<ScenarioDefinition['walls']
 export function rebuildNpcNavigation(world: SimWorld): void {
   if (!world.npcs || !world.infected || !world.districts) return;
   const walls = world.combat!.definition.walls!;
-  walls.splice(0, walls.length, ...campaignWalls(world)); world.infected.nav.rebake();
+  walls.splice(0, walls.length, ...campaignWalls(world)); world.infected.nav.rebake(world.preparedNpcNavigation.get(world.districts.composition.tier));
   for (const e of world.entities.iterate()) {
     const brain = e.civilian ?? e.escort ?? e.companion ?? e.infected;
     if (brain) { brain.path.length = 0; brain.goal = -1; }
@@ -46,4 +47,9 @@ export function rebuildNpcNavigation(world: SimWorld): void {
       else { e.traffic.panic = world.districts.composition.tier === 1; e.traffic.desired = e.traffic.panic ? 9 : 6; }
     }
   }
+}
+
+/** Static occupancy only: dynamic doors/barricades are reconciled at the actual swap. */
+export function prepareNpcNavigation(world: SimWorld, districts: DistrictWorld): Uint8Array | undefined {
+  return world.infected?.nav.prepare(campaignWalls(world, districts));
 }

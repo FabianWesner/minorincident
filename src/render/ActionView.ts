@@ -19,6 +19,7 @@ const handSide = { LEFT: 'RIGHT', RIGHT: 'LEFT' } as const;
 export class ActionView extends Group {
   private readonly registry: AssetRegistry;
   private readonly placeholders: PlaceholderLog[] = [];
+  private readonly prototypes = new Group();
   private readonly assets = new Map<string, LoadedActionAsset>();
   private readonly bloodMaterials: PaletteMaterial[] = [];
   private readonly held: Partial<Record<Side, { id: string; model: Object3D }>> = {};
@@ -49,7 +50,7 @@ export class ActionView extends Group {
   private shape = 'cone';
   private landing = { x: 0, z: 0 };
   constructor(private readonly world: SimWorld, private readonly character: CharacterView, private readonly materials: Materials, renderer: WebGPURenderer) {
-    super(); this.registry = new AssetRegistry((event) => this.placeholders.push(event), { renderer });
+    super(); this.prototypes.visible = false; this.add(this.prototypes); this.registry = new AssetRegistry((event) => this.placeholders.push(event), { renderer });
     this.geometry.setAttribute('position', new BufferAttribute(this.positions, 3)); this.geometry.setDrawRange(0, 0); this.indicator.frustumCulled = false; this.indicator.renderOrder = 2; this.add(this.indicator);
     this.trailGeometry.setAttribute('position', new BufferAttribute(this.trailPositions, 3)); this.trailGeometry.setDrawRange(0, 0); this.trail.frustumCulled = false; this.trail.renderOrder = 3; this.add(this.trail);
     for (let i = 0; i < 32; i++) { const mesh = new Mesh(this.projectileGeometry, this.projectileMaterial); mesh.visible = false; this.projectiles.push(mesh); this.add(mesh); }
@@ -69,6 +70,7 @@ export class ActionView extends Group {
       });
       const grip = model.getObjectByName('grip')!; model.updateMatrixWorld(true); grip.getWorldPosition(this.gripPosition); model.position.sub(this.gripPosition);
       const log = this.placeholders.find((e) => e.id === def.viewAssetId);
+      if (this.world.scenario === 'L1' && ['weapon.bat', 'weapon.crowbar', 'weapon.machete'].includes(def.id)) this.prototypes.add(model);
       this.assets.set(def.viewAssetId, { model, source: model.userData.placeholder ? 'placeholder' : 'glb', reason: log?.reason ?? null });
     }
   }

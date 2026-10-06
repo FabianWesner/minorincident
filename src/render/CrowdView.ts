@@ -6,6 +6,7 @@ import { clipTexture, crowdMatrix, crowdPosition } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { AssetRegistry } from '../assets/registry';
 import manifest from '../assets/manifest.json';
+import { civilianRoles } from '../data/npcs';
 import { infectedDefinitions } from '../data/infected';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { createInfectedPlaceholder } from './characters/infectedPlaceholder';
@@ -48,7 +49,9 @@ export class CrowdView extends Group {
   }
   async init(): Promise<void> {
     const variants = manifest.filter(a => a.status === 'integrated' && a.category === 'infected' && !infectedDefinitions.some(d => d.asset === a.id) && a.id !== 'inf.corpse-poses');
-    const definitions = [...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
+    const allDefinitions = [...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
+    const l1Roles = new Set<string>([...Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype), ...civilianRoles.map(role => role.variant)]);
+    const definitions = this.world.scenario === 'L1' ? allDefinitions.filter(def => l1Roles.has(def.id)) : allDefinitions;
     for (const def of definitions) {
       this.definitions.set(def.id, def);
       if (!this.low) {
@@ -56,7 +59,7 @@ export class CrowdView extends Group {
         mesh.count = 0; mesh.visible = false; this.heroSlots.set(def.id, mesh); this.add(mesh);
       }
     }
-    const lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2'];
+    const lods: ('lod0' | 'lod1' | 'lod2')[] = this.world.scenario === 'L1' ? ['lod0', 'lod1', 'lod2'] : ['lod1', 'lod2'];
     await Promise.all(definitions.flatMap(def => lods.map(lod => this.loadBatch(def, lod))));
     this.update();
   }

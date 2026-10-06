@@ -23,7 +23,8 @@ export class NavGrid {
   mask: ((x: number, z: number) => boolean) | null = null;
   target = -1;
   expansions = 0;
-  constructor(readonly ground: { width: number; depth: number }, readonly walls: readonly Wall[], readonly clearance = 0.65, readonly center = { x: 0, z: 0 }) {
+  constructor(readonly ground: { width: number; depth: number }, readonly walls: readonly Wall[], readonly clearance = 0.65, readonly center = { x: 0, z: 0 }, mask: NavGrid['mask'] = null) {
+    this.mask = mask;
     this.width = Math.ceil(ground.width / this.cellSize); this.depth = Math.ceil(ground.depth / this.cellSize);
     const count = this.width * this.depth;
     this.blocked = new Uint8Array(count); this.distance = new Int32Array(count); this.queue = new Int32Array(count);
@@ -63,19 +64,33 @@ export class NavGrid {
     }
   }
   /** E08 campaign tier swaps replace static walls, retaining the fixed search workspace. */
-  rebake(): void {
+  prepare(walls: readonly Wall[]): Uint8Array {
+    return new NavGrid(this.ground, walls, this.clearance, this.center, this.mask).blocked;
+  }
+  rebake(prepared?: Uint8Array): void {
     this.indexWalls();
-    for (let cell = 0; cell < this.blocked.length; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), this.clearance));
+    if (prepared) {
+      this.blocked.set(prepared);
+      for (const wall of this.blockers.values()) this.updateBlockerCells(wall);
+    } else for (let cell = 0; cell < this.blocked.length; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), this.clearance));
     this.target = -1; this.searching = false; this.head = this.tail = 0;
   }
   /** E11 doors and broken props invalidate only their affected cells and cached searches. */
   setBlocker(id: number, wall: Wall, blocked: boolean): void {
     if (blocked) this.blockers.set(id, wall); else this.blockers.delete(id);
-    for (let cell = 0; cell < this.blocked.length; cell++) {
-      const x = this.x(cell), z = this.z(cell);
-      if (Math.abs(x - wall.x) <= wall.halfX + this.clearance + this.cellSize && Math.abs(z - wall.z) <= wall.halfZ + this.clearance + this.cellSize) this.blocked[cell] = Number(!this.clear(x, z, this.clearance));
-    }
+    this.updateBlockerCells(wall);
     this.target = -1; this.searching = false;
+  }
+  private updateBlockerCells(wall: Wall): void {
+    const pad = this.clearance + this.cellSize;
+    const x0 = Math.max(0, Math.floor((wall.x - wall.halfX - pad - this.center.x + this.ground.width / 2) / this.cellSize));
+    const x1 = Math.min(this.width - 1, Math.ceil((wall.x + wall.halfX + pad - this.center.x + this.ground.width / 2) / this.cellSize));
+    const z0 = Math.max(0, Math.floor((wall.z - wall.halfZ - pad - this.center.z + this.ground.depth / 2) / this.cellSize));
+    const z1 = Math.min(this.depth - 1, Math.ceil((wall.z + wall.halfZ + pad - this.center.z + this.ground.depth / 2) / this.cellSize));
+    for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) {
+      const cell = z * this.width + x;
+      this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), this.clearance));
+    }
   }
   visible(from: { x: number; z: number }, to: { x: number; z: number }, radius: number): boolean {
     if (!this.mask && !this.walls.length && !this.blockers.size) return this.clear(to.x, to.z, radius);

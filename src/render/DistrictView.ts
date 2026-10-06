@@ -309,6 +309,11 @@ export class DistrictView extends Group {
     this.batches[this.batches.indexOf(old)] = replacement; entry.hero = replacement; entry.loaded = true;
     old.removeFromParent(); old.dispose();
   }
+  /** L1's entire route is resident before start, including detailed close-view prototypes. */
+  async prepare(): Promise<void> {
+    await this.ready();
+    await Promise.all(this.lodBatches.filter(entry => !entry.loaded).map(entry => this.loadHero(entry)));
+  }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   /** Probe-only mask; render normal view immediately afterwards so it cannot leak across frames. */
   mask(on: boolean): void {

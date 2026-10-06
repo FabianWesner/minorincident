@@ -24,6 +24,13 @@ export class Renderer extends WebGPURenderer {
       };
     };
   }
+  /** Finish the loading draw before gameplay can encounter deferred driver work. */
+  async finishWarmUp(): Promise<void> {
+    if (this.selectedBackend === 'webgl') {
+      const backend = this.backend as unknown as { utils: { _clientWaitAsync(): Promise<void> } };
+      await backend.utils._clientWaitAsync();
+    }
+  }
   /** Three 0.186 retains shared shader bindings by render context, and WebGL VAOs.
    * Level unload retires all render objects before dropping these renderer-owned caches. */
   releaseLevelCaches(): void {
