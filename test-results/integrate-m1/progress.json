@@ -5,7 +5,7 @@
     "E09",
     "E15"
   ],
-  "pending": "authorized final main/E16 merge, typecheck/unit/smoke/verify E16 and final evidence commit",
+  "pending": "commit final main merge and mergeability evidence",
   "manifest_union": 275,
   "asset_registrations": [
     "bld.helipad",
@@ -25,20 +25,20 @@
       "passed": 193
     },
     "unit": {
-      "passed": 83,
+      "passed": 95,
       "failed": 1,
-      "exception": "T-E17-sources: late inf.armored-football source is unregistered; central reconcile owns late assets",
+      "exception": "T-E17-sources: unregistered late bld.dugout source; central reconciliation owns the 23 late sources",
       "permitted_by_orchestrator": true
     }
   },
   "conflicts_resolved": {
-    "src/Game.ts": "retain mission progression/checkpoint load, crowd spawn frustum, vehicle input and hit stop wiring",
-    "src/debug/testApi.ts": "union mission, crowd, interactions, vehicles and VFX controls/state; distributive telegraph payload typing; version 1.7",
+    "src/Game.ts": "retain mission progression/checkpoint load, crowd spawn frustum, vehicle input and hit stop wiring; E16 audio init/reset/load and tier/checkpoint rebind",
+    "src/debug/testApi.ts": "union mission, crowd, interactions, vehicles and VFX controls/state; distributive telegraph payload typing; version 1.7; E16 audio controls retained and version 1.8",
     "src/levels/loader.ts": "union scenario catalog and district/mission/interactable/vehicle spawn paths",
     "src/render/GameView.ts": "compose all views, update phases and disposal; render-clock hit stop, crowd VFX, real vehicle blood and fixture feedback adapter",
     "src/sim/world/EntityStore.ts": "combine checkpoint restoration and vehicle/interactable components with pooled infected adopt/delete",
     "src/sim/world/SimWorld.ts": "combine mission, interactions/hazards, vehicles and infected systems; rebuild native handles/navigation on checkpoint or tier change",
-    "src/sim/world/types.ts": "union components/events and damage causes; both telegraph payload forms; common noise duration",
+    "src/sim/world/types.ts": "union components/events and damage causes; both telegraph payload forms; common noise duration; E16 AudioSystemEvent union",
     "src/assets/manifest.json": "per-ID/per-field union of 275 IDs; baseline source registration retained; late registration handed to central reconcile",
     "tests/e2e/harness.spec.ts": "additive API/version checks and all implemented mission/infected/interaction/vehicle/VFX controls",
     "src/sim/combat/Damage.ts": "preserve infected Bloated exact 35 damage and E11 environmental blast reduction; keep vehicle/action damage feedback causes",
@@ -50,7 +50,10 @@
     "src/sim/ai/NavGrid.ts": "dynamic overlapping blocker updates invalidate actual infected pathfinding",
     "src/sim/ai/InfectedSystem.ts": "alarm targets expire, pooled reuse clears state, vehicle-attached infected suspend independent movement",
     "src/sim/vehicles/Vehicles.ts": "integrate E11 destructible prop/nav/debris lifecycle and E12 native-body/timer restoration",
-    "src/render/vfx/Vfx.ts": "adapt real AI, hazard, pickup and vehicle events; exclude environment/vehicle targets from infected gore"
+    "src/render/vfx/Vfx.ts": "adapt real AI, hazard, pickup and vehicle events; exclude environment/vehicle targets from infected gore",
+    "src/sim/combat/ActionEffects.ts": "retain E09 source/kind overrides and E16 shared weapon loudness metadata",
+    "src/audio/AudioService.ts": "accept both telegraphs; resolve positional E11 event IDs; bind real mission radio/extraction and additional domain cue mappings",
+    "specs/status.json": "preserve E09/E11/E12/E15 done and main E16 done"
   },
   "E11": {
     "manifest_union": 275,
@@ -367,5 +370,307 @@
     "failed": 0,
     "skipped": 0
   },
-  "E16_main_merge_requested": true
+  "E16_main_merge_requested": true,
+  "post_main_local_checks": {
+    "typecheck": {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-typecheck.log"
+    },
+    "lint": {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-lint.log"
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-build.log"
+    },
+    "unit": {
+      "command": [
+        "npm",
+        "run",
+        "test:unit"
+      ],
+      "exit_code": 1,
+      "saved_log": "test-results/integrate-m1/logs/post-main-unit.log",
+      "passed": 95,
+      "failed": 1,
+      "exception": "Unregistered late bld.dugout source; central reconcile owns new asset registration",
+      "permitted_by_orchestrator": true
+    },
+    "sim": {
+      "command": [
+        "npm",
+        "run",
+        "test:sim"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-sim.log",
+      "passed": 239
+    }
+  },
+  "post_main_browser_checks": {
+    "smoke": {
+      "command": [
+        "npm",
+        "run",
+        "test:smoke",
+        "--",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 48.68,
+      "saved_log": "test-results/integrate-m1/logs/post-main-smoke.log",
+      "browser_report": "test-results/integrate-m1/post-main-smoke-playwright.json",
+      "browser_passed": 19,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    },
+    "verify-E16": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E16"
+      ],
+      "exit_code": 0,
+      "seconds": 219.73,
+      "saved_log": "test-results/integrate-m1/logs/post-main-verify-E16.log",
+      "browser_report": "test-results/integrate-m1/post-main-verify-E16-playwright.json",
+      "browser_passed": 64,
+      "browser_failed": 0,
+      "browser_skipped": 0,
+      "node_passed": 15
+    },
+    "verify-E15": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E15"
+      ],
+      "exit_code": 0,
+      "seconds": 439.34,
+      "saved_log": "test-results/integrate-m1/logs/post-main-verify-E15.log",
+      "browser_report": "test-results/integrate-m1/post-main-verify-E15-playwright.json",
+      "browser_passed": 34,
+      "browser_failed": 0,
+      "browser_skipped": 0,
+      "node_passed": 15
+    },
+    "native-E06": {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e:webgpu",
+        "--",
+        "--grep",
+        "@E06",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 12.62,
+      "saved_log": "test-results/integrate-m1/logs/post-main-native-E06.log",
+      "browser_report": "test-results/integrate-m1/post-main-native-E06-playwright.json",
+      "browser_passed": 1,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    },
+    "harness": {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e",
+        "--",
+        "tests/e2e/harness.spec.ts",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 32.23,
+      "saved_log": "test-results/integrate-m1/logs/post-main-harness.log",
+      "browser_report": "test-results/integrate-m1/post-main-harness-playwright.json",
+      "browser_passed": 5,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    }
+  },
+  "E16": {
+    "merged_main": "09945b75eb671c8ede6ef20e87b4b1745e5bb90b",
+    "verify": 0,
+    "node": 15,
+    "browser": 64,
+    "api_version": "1.8.0",
+    "late_source_registration_owner": "central orchestrator reconcile"
+  },
+  "post_main_checks": {
+    "typecheck": {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-typecheck.log"
+    },
+    "lint": {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-lint.log"
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-build.log"
+    },
+    "unit": {
+      "command": [
+        "npm",
+        "run",
+        "test:unit"
+      ],
+      "exit_code": 1,
+      "saved_log": "test-results/integrate-m1/logs/post-main-unit.log",
+      "passed": 95,
+      "failed": 1,
+      "exception": "Unregistered late bld.dugout source; central reconcile owns new asset registration",
+      "permitted_by_orchestrator": true
+    },
+    "sim": {
+      "command": [
+        "npm",
+        "run",
+        "test:sim"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-sim.log",
+      "passed": 239
+    },
+    "smoke": {
+      "command": [
+        "npm",
+        "run",
+        "test:smoke",
+        "--",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 48.68,
+      "saved_log": "test-results/integrate-m1/logs/post-main-smoke.log",
+      "browser_report": "test-results/integrate-m1/post-main-smoke-playwright.json",
+      "browser_passed": 19,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    },
+    "verify-E16": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E16"
+      ],
+      "exit_code": 0,
+      "seconds": 219.73,
+      "saved_log": "test-results/integrate-m1/logs/post-main-verify-E16.log",
+      "browser_report": "test-results/integrate-m1/post-main-verify-E16-playwright.json",
+      "browser_passed": 64,
+      "browser_failed": 0,
+      "browser_skipped": 0,
+      "node_passed": 15
+    },
+    "verify-E15": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E15"
+      ],
+      "exit_code": 0,
+      "seconds": 439.34,
+      "saved_log": "test-results/integrate-m1/logs/post-main-verify-E15.log",
+      "browser_report": "test-results/integrate-m1/post-main-verify-E15-playwright.json",
+      "browser_passed": 34,
+      "browser_failed": 0,
+      "browser_skipped": 0,
+      "node_passed": 15
+    },
+    "native-E06": {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e:webgpu",
+        "--",
+        "--grep",
+        "@E06",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 12.62,
+      "saved_log": "test-results/integrate-m1/logs/post-main-native-E06.log",
+      "browser_report": "test-results/integrate-m1/post-main-native-E06-playwright.json",
+      "browser_passed": 1,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    },
+    "harness": {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e",
+        "--",
+        "tests/e2e/harness.spec.ts",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 32.23,
+      "saved_log": "test-results/integrate-m1/logs/post-main-harness.log",
+      "browser_report": "test-results/integrate-m1/post-main-harness-playwright.json",
+      "browser_passed": 5,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    }
+  },
+  "final_main": {
+    "merged_head": "09945b75eb671c8ede6ef20e87b4b1745e5bb90b",
+    "reason": "Explicit final E16 merge request",
+    "later_source_only_main": "7def6c7f52b862009112257d9a1a37d2519f34bd",
+    "later_source_only_commits": [
+      "38eca44",
+      "7def6c7"
+    ],
+    "late_registrations_or_exports": false
+  },
+  "empty_pool_render_fix": {
+    "file": "src/render/vfx/FxPool.ts",
+    "behavior": "Empty pools skip GPU draws and viewport depth copies; spawn/expiry/removal/reset restore visibility correctly",
+    "music_deadline_ms": 4500,
+    "music_check_passed": true,
+    "post_main_E15_verify": 0,
+    "native_E06_passed": 1
+  }
 }

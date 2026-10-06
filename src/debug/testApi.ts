@@ -1,5 +1,7 @@
 import { missionControls } from '../sim/missions/controls';
 import { Driver } from './bot/Driver';
+import { runAudioL1Bot } from './audioBot';
+import { renderAudio } from './audioHarness';
 import type { ActionState, GearTier, SurvivorVariant } from '../data/survivor';
 import { Vector3 } from 'three';
 import type { Action, BindingMap } from '../data/bindings';
@@ -11,10 +13,10 @@ import { hazardKinds, destructibleKinds, type HazardKind, type DestructibleKind,
 import { pickupKinds, type PickupKind } from '../sim/interact/Pickups';
 
 export type ProgressionPreset = Record<string, unknown>;
-export type Settings = Parameters<Game['view']['settings']>[0] & { aimAssist?: import('../sim/combat/AimAssist').AimAssistSetting };
+export type Settings = Parameters<Game['view']['settings']>[0] & Partial<import('../audio/AudioService').AudioSettings> & { aimAssist?: import('../sim/combat/AimAssist').AimAssistSetting };
 export interface BotStatus { running: boolean; policy: string | null }
 
-/** Version 1.7: E07 crowds, E09 vehicles, E11 interactions and E12 missions. */
+/** Version 1.8: crowds, vehicles, interactions, missions, VFX and E16 audio probes. */
 type WithoutTick<T> = T extends GameEvent ? Omit<T, 'tick'> : never;
 export interface SSTestApi {
   version: string;
@@ -59,6 +61,20 @@ export interface SSTestApi {
   settings: { set(patch: Partial<Settings>): void };
   /** E15 render-only clock/event probes. stepRender never advances simulation or its RNG; the next render consumes the new time. */
   vfx: { stepRender(seconds: number): void; emit(event: Omit<Extract<GameEvent, { type: 'vfx.effect' }>, 'tick'> | WithoutTick<Extract<GameEvent, { type: 'telegraph' }>> | Omit<Extract<GameEvent, { type: 'attack.resolved' }>, 'tick'> | Omit<Extract<GameEvent, { type: 'vehicle.feedback' }>, 'tick'>): void };
+  /** E16: graph active with output muted in test mode. emit() uses the production sim event bus.
+   * render() returns a native OfflineAudioContext PCM WAV, for independent measurement. */
+  audio: {
+    unlock():Promise<void>;snapshot():ReturnType<Game['audio']['snapshot']>;
+    play(id:string,options?:import('../audio/AudioGraph').PlayOptions,sourceId?:number):number|null;
+    emit(event:GameEvent):void;clearLog():void;
+    map(map:import('../audio/acoustics').AcousticMap):void;
+    emitters():{id:number;cue:string;priority:number;gain:number;rate:number;cutoff:number;position:import('../data/audioEvents').SoundPosition|null;panner:string|null;loop:boolean}[];
+    render(request:import('./audioHarness').AudioRenderRequest):Promise<import('./audioHarness').AudioRenderResult>;
+    decode(format:'webm'|'m4a'):Promise<{id:string;frames:number}[]>;
+    profile():{p50Ms:number;p95Ms:number;maxVoices:number;limit:number;ticks:number};
+    l1Bot():Promise<Awaited<ReturnType<typeof runAudioL1Bot>>>;
+    interrupt():Promise<void>;
+  };
   perf(): ReturnType<Game['perf']>;
   screenshotReady(): Promise<void>;
 }
@@ -72,7 +88,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
-    version: '1.7.0', ready, missions: missionControls(game.world),
+    version: '1.8.0', ready, missions: missionControls(game.world),
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
     loadLevel: (id, opts) => {
@@ -126,10 +142,37 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) e.health.current = 0; }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
     bot: { start: (policy) => { if (policy !== 'driver' || game.world.scenario !== 'drive-course') pending('E19', 'bot.start'); game.driver = new Driver(game.world); }, stop: () => { game.driver = null; }, status: () => ({ running: !!game.driver && !game.driver.finished, policy: game.driver ? 'driver' : null }) },
     camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose) => game.view.view.cinematic(pose) },
-    settings: { set: (patch) => { if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.view.settings(patch); } },
+    settings: { set: (patch) => { if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.audio.set(patch); game.view.settings(patch); } },
     vfx: {
       stepRender: (seconds) => game.view.frame(seconds),
       emit: (event) => { game.world.events.emit({ ...event, tick: game.world.tick } as GameEvent); game.view.update(1); },
+    },
+    audio: {
+      unlock:()=>game.audio.unlock(),snapshot:()=>game.audio.snapshot(),
+      play:(id,opts,sourceId)=>game.audio.play(id,opts,sourceId)?.id??null,
+      emit:event=>game.world.events.emit(event),clearLog:()=>{game.audio.log.length=0;},
+      map:map=>{game.audio.graph.map=map;},
+      emitters:()=>[...game.audio.graph.active.values()].map(v=>({id:v.id,cue:v.cue,priority:v.priority,gain:v.gain.gain.value,rate:v.source.playbackRate.value,cutoff:v.filter.frequency.value,position:v.position,panner:v.panner?.panningModel??null,loop:v.source.loop})),
+      profile:()=>{
+        const times:number[]=[];let maxVoices=0;
+         for(let i=0;i<600;i++){const start=performance.now();game.world.update();game.view.frame(0);times.push(performance.now()-start);maxVoices=Math.max(maxVoices,game.audio.graph.active.size);}
+        times.sort((a,b)=>a-b);return {p50Ms:times[300],p95Ms:times[570],maxVoices,limit:game.audio.graph.limiter.limit,ticks:600};
+      },
+      render:renderAudio,l1Bot:()=>runAudioL1Bot(game),
+      decode:async format=>{
+        const {audioCategories,audioCues,audioFile}=await import('../data/audioCues');
+        const result=[];
+        for(const category of audioCategories){const response=await fetch(audioFile(category,format));const buffer=await game.audio.context.decodeAudioData(await response.arrayBuffer());for(const cue of Object.values(audioCues))if(cue.category===category){if(buffer.duration+0.03<cue.offset+cue.duration)throw new Error(`Sprite decode truncated: ${cue.id}`);result.push({id:cue.id,frames:buffer.length});}}
+        return result;
+      },
+      interrupt:async()=>{
+        // Chromium cannot enter Safari's platform interruption state. Exercise the real handler with
+        // only the browser-provided state accessor replaced; suspend still calls the native context.
+        Object.defineProperty(game.audio.context,'state',{configurable:true,get:()=> 'interrupted'});
+        game.audio.context.dispatchEvent(new Event('statechange'));
+        delete (game.audio.context as unknown as {state?:string}).state;
+        await new Promise<void>(resolve=>setTimeout(resolve,50));
+      },
     },
     perf: () => game.perf(), screenshotReady: () => game.screenshotReady(),
   };

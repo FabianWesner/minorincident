@@ -36,7 +36,10 @@ test('M1 E07/E11 @E07 @E07-AC06 enemy bloated bursts retain full player damage b
   try {
     w.combat!.damage.god = false;
     const id = w.infected!.spawn('infected.bloated', { x: 1, z: 0 }, { state: 'idle' }); w.entities.get(id)!.health.current = 0;
-    for (let i = 0; i < 22; i++) w.update();
+    w.update(); const until = w.entities.get(id)!.infected!.until;
+    while (w.tick < until - 1) w.update();
+    expect(w.events.events().some(e=>e.type==='combat.hit' && e.targetId===1 && e.sourceId===id)).toBe(false);
+    w.update();
     expect(w.events.events().find(e=>e.type==='combat.hit' && e.targetId===1 && e.sourceId===id)).toMatchObject({ amount: 35 });
   } finally { w.dispose(); }
 });

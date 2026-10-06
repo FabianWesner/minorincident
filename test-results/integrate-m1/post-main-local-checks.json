@@ -1,0 +1,52 @@
+{
+  "typecheck": {
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "saved_log": "test-results/integrate-m1/logs/post-main-typecheck.log"
+  },
+  "lint": {
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exit_code": 0,
+    "saved_log": "test-results/integrate-m1/logs/post-main-lint.log"
+  },
+  "build": {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit_code": 0,
+    "saved_log": "test-results/integrate-m1/logs/post-main-build.log"
+  },
+  "unit": {
+    "command": [
+      "npm",
+      "run",
+      "test:unit"
+    ],
+    "exit_code": 1,
+    "saved_log": "test-results/integrate-m1/logs/post-main-unit.log",
+    "passed": 95,
+    "failed": 1,
+    "exception": "Unregistered late bld.dugout source; central reconcile owns new asset registration",
+    "permitted_by_orchestrator": true
+  },
+  "sim": {
+    "command": [
+      "npm",
+      "run",
+      "test:sim"
+    ],
+    "exit_code": 0,
+    "saved_log": "test-results/integrate-m1/logs/post-main-sim.log",
+    "passed": 239
+  }
+}

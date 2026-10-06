@@ -1,17 +1,33 @@
 {
   "test": "T-E17-sources @E17-AC05",
+  "first_failure": "bld.dugout",
   "unregistered_late_sources": [
+    "bld.dugout",
+    "bld.fire-station",
+    "bld.power-substation",
+    "bld.restroom-block",
+    "bld.safe-house",
     "inf.armored-football",
     "inf.butcher",
+    "inf.cat-black",
+    "inf.cat-tabby",
     "inf.construction-worker",
     "inf.corpse-poses",
+    "inf.crow",
+    "inf.dog-dachshund",
+    "inf.dog-k9",
+    "inf.dog-retriever",
     "inf.firefighter",
+    "inf.flamingo",
+    "inf.gorilla",
     "inf.hazmat",
+    "inf.lion",
     "inf.nurse",
     "inf.skater",
     "npc.survivor-group"
   ],
   "registered_runtime_exports_missing": [],
   "owner": "central orchestrator reconciliation",
-  "test_unchanged": true
+  "test_unchanged": true,
+  "permitted_by_orchestrator": true
 }

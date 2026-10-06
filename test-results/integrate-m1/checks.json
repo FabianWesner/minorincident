@@ -1,0 +1,353 @@
+{
+  "pre_main": {
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "seconds": 2.27,
+      "log": "/tmp/integrate-m1-final-build.log",
+      "saved_log": "test-results/integrate-m1/logs/final-build.log"
+    },
+    "sim": {
+      "command": [
+        "npm",
+        "run",
+        "test:sim"
+      ],
+      "exit_code": 0,
+      "seconds": 9.99,
+      "log": "/tmp/integrate-m1-final-sim.log",
+      "saved_log": "test-results/integrate-m1/logs/final-sim.log"
+    },
+    "smoke": {
+      "command": [
+        "npm",
+        "run",
+        "test:smoke",
+        "--",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 23.45,
+      "log": "/tmp/integrate-m1-final-smoke.log",
+      "saved_log": "test-results/integrate-m1/logs/final-smoke.log"
+    },
+    "e2e": {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e",
+        "--",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 1623.05,
+      "log": "/tmp/integrate-m1-final-e2e.log",
+      "saved_log": "test-results/integrate-m1/logs/final-e2e.log"
+    },
+    "verify-E01": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E01"
+      ],
+      "exit_code": 0,
+      "seconds": 169.12,
+      "log": "/tmp/integrate-m1-final-verify-E01.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E01.log"
+    },
+    "verify-E02": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E02"
+      ],
+      "exit_code": 0,
+      "seconds": 158.3,
+      "log": "/tmp/integrate-m1-final-verify-E02.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E02.log"
+    },
+    "verify-E03": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E03"
+      ],
+      "exit_code": 0,
+      "seconds": 171.86,
+      "log": "/tmp/integrate-m1-final-verify-E03.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E03.log"
+    },
+    "verify-E04": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E04"
+      ],
+      "exit_code": 0,
+      "seconds": 81.13,
+      "log": "/tmp/integrate-m1-final-verify-E04.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E04.log"
+    },
+    "verify-E05": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E05"
+      ],
+      "exit_code": 0,
+      "seconds": 74.36,
+      "log": "/tmp/integrate-m1-final-verify-E05.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E05.log"
+    },
+    "verify-E06": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E06"
+      ],
+      "exit_code": 0,
+      "seconds": 73.78,
+      "log": "/tmp/integrate-m1-final-verify-E06.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E06.log"
+    },
+    "verify-E07": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E07"
+      ],
+      "exit_code": 0,
+      "seconds": 65.89,
+      "log": "/tmp/integrate-m1-final-verify-E07.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E07.log"
+    },
+    "verify-E09": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E09"
+      ],
+      "exit_code": 0,
+      "seconds": 74.82,
+      "log": "/tmp/integrate-m1-final-verify-E09.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E09.log"
+    },
+    "verify-E10": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E10"
+      ],
+      "exit_code": 0,
+      "seconds": 756.45,
+      "log": "/tmp/integrate-m1-final-verify-E10.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E10.log"
+    },
+    "verify-E11": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E11"
+      ],
+      "exit_code": 0,
+      "seconds": 146.26,
+      "log": "/tmp/integrate-m1-final-verify-E11.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E11.log"
+    },
+    "verify-E12": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E12"
+      ],
+      "exit_code": 0,
+      "seconds": 65.62,
+      "log": "/tmp/integrate-m1-final-verify-E12.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E12.log"
+    },
+    "verify-E15": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E15"
+      ],
+      "exit_code": 0,
+      "seconds": 439.26,
+      "log": "/tmp/integrate-m1-final-verify-E15.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E15.log"
+    }
+  },
+  "post_main": {
+    "typecheck": {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-typecheck.log"
+    },
+    "lint": {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-lint.log"
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-build.log"
+    },
+    "unit": {
+      "command": [
+        "npm",
+        "run",
+        "test:unit"
+      ],
+      "exit_code": 1,
+      "saved_log": "test-results/integrate-m1/logs/post-main-unit.log",
+      "passed": 95,
+      "failed": 1,
+      "exception": "Unregistered late bld.dugout source; central reconcile owns new asset registration",
+      "permitted_by_orchestrator": true
+    },
+    "sim": {
+      "command": [
+        "npm",
+        "run",
+        "test:sim"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-sim.log",
+      "passed": 239
+    },
+    "smoke": {
+      "command": [
+        "npm",
+        "run",
+        "test:smoke",
+        "--",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 48.68,
+      "saved_log": "test-results/integrate-m1/logs/post-main-smoke.log",
+      "browser_report": "test-results/integrate-m1/post-main-smoke-playwright.json",
+      "browser_passed": 19,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    },
+    "verify-E16": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E16"
+      ],
+      "exit_code": 0,
+      "seconds": 219.73,
+      "saved_log": "test-results/integrate-m1/logs/post-main-verify-E16.log",
+      "browser_report": "test-results/integrate-m1/post-main-verify-E16-playwright.json",
+      "browser_passed": 64,
+      "browser_failed": 0,
+      "browser_skipped": 0,
+      "node_passed": 15
+    },
+    "verify-E15": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E15"
+      ],
+      "exit_code": 0,
+      "seconds": 439.34,
+      "saved_log": "test-results/integrate-m1/logs/post-main-verify-E15.log",
+      "browser_report": "test-results/integrate-m1/post-main-verify-E15-playwright.json",
+      "browser_passed": 34,
+      "browser_failed": 0,
+      "browser_skipped": 0,
+      "node_passed": 15
+    },
+    "native-E06": {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e:webgpu",
+        "--",
+        "--grep",
+        "@E06",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 12.62,
+      "saved_log": "test-results/integrate-m1/logs/post-main-native-E06.log",
+      "browser_report": "test-results/integrate-m1/post-main-native-E06-playwright.json",
+      "browser_passed": 1,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    },
+    "harness": {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e",
+        "--",
+        "tests/e2e/harness.spec.ts",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 32.23,
+      "saved_log": "test-results/integrate-m1/logs/post-main-harness.log",
+      "browser_report": "test-results/integrate-m1/post-main-harness-playwright.json",
+      "browser_passed": 5,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    }
+  },
+  "browser_execution": {
+    "port": 3325,
+    "max_workers": 2,
+    "machine_lock": "tools/e2e-lock.sh",
+    "native_webgpu_enabled": true
+  },
+  "vitest_max_workers": 4,
+  "unit_exception_explicitly_authorized": true
+}

@@ -34,7 +34,7 @@ export interface EntitySnapshot {
 /** Presentation events contain only plain authored geometry; views never write back. */
 export type TelegraphKind = 'lunge' | 'charge' | 'splash' | 'bloated';
 export type EffectKind = 'explosion' | 'fire' | 'smoke' | 'toxic' | 'electric' | 'screamer' | 'objective' | 'pickup' | 'ash' | 'vehicle-smoke' | 'vehicle-fire';
-export type GameEvent =
+export type GameEvent = import('../../data/audioEvents').AudioSystemEvent
   | { tick: number; type: 'civilian.grabbed'; sourceId: number; targetId: number; variant: string; rescueUntil: number }
   | { tick: number; type: 'infected.prop-thrown'; sourceId: number; propId: number; attackId: number }
   | { tick: number; type: 'telegraph'; sourceId: number; attackId: number; special: string; duration: number }

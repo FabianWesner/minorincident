@@ -1,0 +1,255 @@
+{
+  "lifecycle": [
+    "pageshow"
+  ],
+  "hidden": false,
+  "focus": true,
+  "tick": 66,
+  "audio": {
+    "state": "running",
+    "unlocked": true,
+    "background": false,
+    "muted": false,
+    "master": 2,
+    "output": 0,
+    "voices": 15,
+    "voiceLimit": 32,
+    "music": {
+      "level": "L1",
+      "paused": false,
+      "position": 3.889333333333333,
+      "layers": [
+        "base",
+        "pulse",
+        "drive"
+      ],
+      "score": 0.5,
+      "transitions": [
+        {
+          "time": 3.5133333333333336,
+          "layers": [
+            "base",
+            "pulse",
+            "drive"
+          ]
+        }
+      ]
+    },
+    "buses": {
+      "music": 1,
+      "weapons": 1,
+      "impacts": 1,
+      "vehicles": 1,
+      "props": 1,
+      "gore": 1,
+      "telegraph": 1,
+      "ambience": 1,
+      "dialogue": 1,
+      "barks": 1,
+      "ui": 1
+    },
+    "errors": [],
+    "cues": [
+      {
+        "cue": "horde.loop.asphalt",
+        "time": 3.3386666666666667,
+        "tick": 12,
+        "sourceId": 100000,
+        "position": {
+          "id": 0,
+          "x": 7.334387162529521,
+          "z": -1.7897659823055865,
+          "count": 3
+        },
+        "gain": 0.07848604768514633,
+        "rate": 1.0175628662109375,
+        "voice": 8
+      },
+      {
+        "cue": "horde.loop.asphalt",
+        "time": 3.3386666666666667,
+        "tick": 12,
+        "sourceId": 100001,
+        "position": {
+          "id": 1,
+          "x": 11.09725102124158,
+          "z": -1.8655715760515421,
+          "count": 2
+        },
+        "gain": 0.07848604768514633,
+        "rate": 0.9854338765144348,
+        "voice": 9
+      },
+      {
+        "cue": "horde.loop.asphalt",
+        "time": 3.3386666666666667,
+        "tick": 12,
+        "sourceId": 100002,
+        "position": {
+          "id": 2,
+          "x": 9.208605224875553,
+          "z": -1.8055184531550796,
+          "count": 5
+        },
+        "gain": 0.07848604768514633,
+        "rate": 1.0148118734359741,
+        "voice": 10
+      },
+      {
+        "cue": "ambient.dog",
+        "time": 4.906666666666666,
+        "tick": 23,
+        "position": {
+          "x": -12.069644062198826,
+          "z": -18.528458346031734
+        },
+        "gain": 0.3499999940395355,
+        "rate": 1.000381350517273,
+        "voice": 11
+      },
+      {
+        "cue": "infected.vocal",
+        "time": 4.912,
+        "tick": 36,
+        "sourceId": 2,
+        "position": {
+          "id": 2,
+          "x": 5.078211914195444,
+          "z": -1.3496854064509423
+        },
+        "gain": 0.11999999731779099,
+        "rate": 0.9735692143440247,
+        "voice": 12
+      },
+      {
+        "cue": "infected.vocal",
+        "time": 4.912,
+        "tick": 36,
+        "sourceId": 3,
+        "position": {
+          "id": 3,
+          "x": 5.776532089512071,
+          "z": -1.313518192385409
+        },
+        "gain": 0.11999999731779099,
+        "rate": 0.9925184845924377,
+        "voice": 13
+      },
+      {
+        "cue": "infected.vocal",
+        "time": 5.077333333333334,
+        "tick": 48,
+        "sourceId": 4,
+        "position": {
+          "id": 4,
+          "x": 5.6028391629128524,
+          "z": -1.4149047970625948
+        },
+        "gain": 0.11999999731779099,
+        "rate": 0.9737738966941833,
+        "voice": 14
+      },
+      {
+        "cue": "infected.vocal",
+        "time": 5.312,
+        "tick": 60,
+        "sourceId": 5,
+        "position": {
+          "id": 5,
+          "x": 5.331051164956377,
+          "z": -0.7689764776317066
+        },
+        "gain": 0.11999999731779099,
+        "rate": 0.9784095287322998,
+        "voice": 15
+      }
+    ],
+    "clusters": [
+      {
+        "id": 0,
+        "x": 4.135361070816986,
+        "z": -1.0242732414692446,
+        "count": 3
+      },
+      {
+        "id": 1,
+        "x": 7.754616335100998,
+        "z": -1.2736291023472959,
+        "count": 3
+      },
+      {
+        "id": 2,
+        "x": 5.8402768831688645,
+        "z": -1.1353561306823259,
+        "count": 4
+      }
+    ],
+    "captions": []
+  },
+  "perf": {
+    "debugPaused": false,
+    "debugLoading": false,
+    "fps": 4.286326618088295,
+    "frameMs": 233.30000000000018,
+    "simMs": 1.6999999284744263,
+    "drawCalls": 43,
+    "triangles": 15047,
+    "geometries": 84,
+    "textures": 23,
+    "entities": 11,
+    "backend": "webgl",
+    "loadTiming": null
+  },
+  "infected": [
+    {
+      "id": 2,
+      "state": "chase",
+      "health": 40
+    },
+    {
+      "id": 3,
+      "state": "chase",
+      "health": 40
+    },
+    {
+      "id": 4,
+      "state": "chase",
+      "health": 40
+    },
+    {
+      "id": 5,
+      "state": "chase",
+      "health": 40
+    },
+    {
+      "id": 6,
+      "state": "chase",
+      "health": 40
+    },
+    {
+      "id": 7,
+      "state": "chase",
+      "health": 40
+    },
+    {
+      "id": 8,
+      "state": "chase",
+      "health": 40
+    },
+    {
+      "id": 9,
+      "state": "chase",
+      "health": 40
+    },
+    {
+      "id": 10,
+      "state": "chase",
+      "health": 40
+    },
+    {
+      "id": 11,
+      "state": "chase",
+      "health": 40
+    }
+  ]
+}

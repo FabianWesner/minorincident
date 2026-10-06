@@ -1,0 +1,704 @@
+{
+  "sim": [
+    {
+      "tick": 0,
+      "type": "scenario.loaded",
+      "name": "horde-arena",
+      "seed": 1
+    },
+    {
+      "type": "light.generator",
+      "tick": 0,
+      "sourceId": 100,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "phase": "pull"
+    },
+    {
+      "type": "light.generator",
+      "tick": 0,
+      "sourceId": 101,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "phase": "sputter"
+    },
+    {
+      "type": "light.generator",
+      "tick": 0,
+      "sourceId": 102,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "phase": "idle"
+    },
+    {
+      "type": "light.lamp",
+      "tick": 0,
+      "sourceId": 103,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "phase": "hum"
+    },
+    {
+      "type": "light.lamp",
+      "tick": 0,
+      "sourceId": 104,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "phase": "flicker"
+    },
+    {
+      "type": "light.lamp",
+      "tick": 0,
+      "sourceId": 105,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "phase": "break"
+    },
+    {
+      "type": "light.power",
+      "tick": 0,
+      "sourceId": 106,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "on": false
+    },
+    {
+      "type": "prop.impact",
+      "tick": 0,
+      "sourceId": 107,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "material": "wood",
+      "impulse": 2
+    },
+    {
+      "type": "prop.impact",
+      "tick": 0,
+      "sourceId": 108,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "material": "wood",
+      "impulse": 20
+    },
+    {
+      "type": "prop.impact",
+      "tick": 0,
+      "sourceId": 109,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "material": "metal",
+      "impulse": 2
+    },
+    {
+      "type": "prop.impact",
+      "tick": 0,
+      "sourceId": 110,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "material": "metal",
+      "impulse": 20
+    },
+    {
+      "type": "prop.impact",
+      "tick": 0,
+      "sourceId": 111,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "material": "plastic",
+      "impulse": 2
+    },
+    {
+      "type": "prop.impact",
+      "tick": 0,
+      "sourceId": 112,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "material": "plastic",
+      "impulse": 20
+    },
+    {
+      "type": "prop.impact",
+      "tick": 0,
+      "sourceId": 113,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "material": "glass",
+      "impulse": 2
+    },
+    {
+      "type": "prop.impact",
+      "tick": 0,
+      "sourceId": 114,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "material": "glass",
+      "impulse": 20
+    },
+    {
+      "type": "prop.impact",
+      "tick": 0,
+      "sourceId": 115,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "material": "rubber",
+      "impulse": 2
+    },
+    {
+      "type": "prop.impact",
+      "tick": 0,
+      "sourceId": 116,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "material": "rubber",
+      "impulse": 20
+    },
+    {
+      "type": "prop.impact",
+      "tick": 0,
+      "sourceId": 117,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "material": "sandbag",
+      "impulse": 2
+    },
+    {
+      "type": "prop.impact",
+      "tick": 0,
+      "sourceId": 118,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "material": "sandbag",
+      "impulse": 20
+    },
+    {
+      "type": "barricade.sound",
+      "tick": 0,
+      "sourceId": 119,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "phase": "hit",
+      "hp": 100,
+      "maxHp": 100
+    },
+    {
+      "type": "barricade.sound",
+      "tick": 0,
+      "sourceId": 120,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "phase": "hit",
+      "hp": 50,
+      "maxHp": 100
+    },
+    {
+      "type": "barricade.sound",
+      "tick": 0,
+      "sourceId": 121,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "phase": "hit",
+      "hp": 5,
+      "maxHp": 100
+    },
+    {
+      "type": "explosion.beat",
+      "tick": 0,
+      "sourceId": 122,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "beat": "tell",
+      "size": "mega"
+    },
+    {
+      "type": "explosion.beat",
+      "tick": 0,
+      "sourceId": 123,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "beat": "crack",
+      "size": "mega"
+    },
+    {
+      "type": "explosion.beat",
+      "tick": 0,
+      "sourceId": 124,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "beat": "boom",
+      "size": "mega"
+    },
+    {
+      "type": "explosion.beat",
+      "tick": 0,
+      "sourceId": 125,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "beat": "sub",
+      "size": "mega"
+    },
+    {
+      "type": "explosion.beat",
+      "tick": 0,
+      "sourceId": 126,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "beat": "debris",
+      "size": "mega"
+    },
+    {
+      "type": "explosion.beat",
+      "tick": 0,
+      "sourceId": 127,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "beat": "roar",
+      "size": "mega"
+    },
+    {
+      "type": "explosion.beat",
+      "tick": 0,
+      "sourceId": 128,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "beat": "crackle",
+      "size": "mega"
+    }
+  ],
+  "cues": [
+    {
+      "cue": "generator.pull",
+      "time": 3.034666666666667,
+      "tick": 0,
+      "sourceId": 100,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 1.0175628662109375,
+      "voice": 8
+    },
+    {
+      "cue": "generator.sputter",
+      "time": 3.034666666666667,
+      "tick": 0,
+      "sourceId": 101,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 0.9854338765144348,
+      "voice": 9
+    },
+    {
+      "cue": "generator.idle",
+      "time": 3.034666666666667,
+      "tick": 0,
+      "sourceId": 102,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 1.0148118734359741,
+      "voice": 10
+    },
+    {
+      "cue": "lamp.hum",
+      "time": 3.034666666666667,
+      "tick": 0,
+      "sourceId": 103,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 1.000381350517273,
+      "voice": 11
+    },
+    {
+      "cue": "lamp.flicker",
+      "time": 3.037333333333333,
+      "tick": 0,
+      "sourceId": 104,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 0.9735692143440247,
+      "voice": 12
+    },
+    {
+      "cue": "lamp.break",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 105,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 0.9925184845924377,
+      "voice": 13
+    },
+    {
+      "cue": "lamp.power-off",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 106,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 0.9737738966941833,
+      "voice": 14
+    },
+    {
+      "cue": "prop.wood",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 107,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.03500000014901161,
+      "rate": 0.9784095287322998,
+      "voice": 15
+    },
+    {
+      "cue": "prop.wood",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 108,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 0.9764537811279297,
+      "voice": 16
+    },
+    {
+      "cue": "prop.metal",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 109,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.03500000014901161,
+      "rate": 1.0132418870925903,
+      "voice": 17
+    },
+    {
+      "cue": "prop.metal",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 110,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 1.0034821033477783,
+      "voice": 18
+    },
+    {
+      "cue": "prop.plastic",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 111,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.03500000014901161,
+      "rate": 0.9919123649597168,
+      "voice": 19
+    },
+    {
+      "cue": "prop.plastic",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 112,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 1.0284110307693481,
+      "voice": 20
+    },
+    {
+      "cue": "prop.glass",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 113,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.03500000014901161,
+      "rate": 1.0276572704315186,
+      "voice": 21
+    },
+    {
+      "cue": "prop.glass",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 114,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 1.0270886421203613,
+      "voice": 22
+    },
+    {
+      "cue": "prop.rubber",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 115,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.03500000014901161,
+      "rate": 1.001813292503357,
+      "voice": 23
+    },
+    {
+      "cue": "prop.rubber",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 116,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 0.9947566986083984,
+      "voice": 24
+    },
+    {
+      "cue": "prop.sandbag",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 117,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.03500000014901161,
+      "rate": 0.9703102707862854,
+      "voice": 25
+    },
+    {
+      "cue": "prop.sandbag",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 118,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 1.0014666318893433,
+      "voice": 26
+    },
+    {
+      "cue": "prop.creak",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 119,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 1.0297166109085083,
+      "voice": 27
+    },
+    {
+      "cue": "prop.creak",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 120,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 1.3158982992172241,
+      "voice": 28
+    },
+    {
+      "cue": "prop.creak",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 121,
+      "position": {
+        "x": 2,
+        "z": 0
+      },
+      "gain": 0.3499999940395355,
+      "rate": 1.7037885189056396,
+      "voice": 29
+    },
+    {
+      "cue": "explosion.tell",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 122,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "gain": 0.9100000262260437,
+      "rate": 1.0003770589828491,
+      "voice": 30
+    },
+    {
+      "cue": "explosion.crack",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 123,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "gain": 0.9100000262260437,
+      "rate": 1.011033058166504,
+      "voice": 31
+    },
+    {
+      "cue": "explosion.boom",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 124,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "gain": 0.9100000262260437,
+      "rate": 0.9956796169281006,
+      "voice": 32
+    },
+    {
+      "cue": "explosion.sub",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 125,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "gain": 0.9100000262260437,
+      "rate": 1.0147227048873901,
+      "voice": 33
+    },
+    {
+      "cue": "explosion.debris",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 126,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "gain": 0.9100000262260437,
+      "rate": 1.025999665260315,
+      "voice": 34
+    },
+    {
+      "cue": "explosion.roar",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 127,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "gain": 0.9100000262260437,
+      "rate": 0.9808940291404724,
+      "voice": 35
+    },
+    {
+      "cue": "explosion.crackle",
+      "time": 3.04,
+      "tick": 0,
+      "sourceId": 128,
+      "position": {
+        "x": 15,
+        "z": 0
+      },
+      "gain": 0.9100000262260437,
+      "rate": 0.9729154706001282,
+      "voice": 36
+    }
+  ]
+}

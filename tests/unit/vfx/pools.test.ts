@@ -4,13 +4,16 @@ import { HitStop } from '../../../src/render/vfx/HitStop';
 
 test('T-E15-pool @E15 @E15-AC02 fixed slots reuse buffers and expire without resource churn', () => {
   const pool = new FxPool(8, 'ground');
+  expect(pool.mesh.visible).toBe(false);
   const geometry = pool.mesh.geometry, material = pool.mesh.material;
   for (let t = 0; t < 600; t++) {
     for (let i = 0; i < 100; i++) pool.spawn(t, 2, i, 0, 0, 0, 0, 0, 1, 0, 0xb3121f);
-    pool.advance(t); expect(pool.count).toBeLessThanOrEqual(8);
+    pool.advance(t); expect(pool.count).toBeLessThanOrEqual(8); expect(pool.mesh.visible).toBe(true);
     expect(pool.mesh.geometry).toBe(geometry); expect(pool.mesh.material).toBe(material);
   }
-  pool.advance(602); expect(pool.count).toBe(0); pool.dispose();
+  pool.advance(602); expect(pool.count).toBe(0); expect(pool.mesh.visible).toBe(false);
+  pool.spawn(602, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0xb3121f); expect(pool.mesh.visible).toBe(true);
+  pool.reset(602); expect(pool.mesh.visible).toBe(false); pool.dispose();
 });
 test('T-E15-hit-stop @E15 @E15-AC06 render time owns the 50 ms freeze and crowds cancel it', () => {
   const stop = new HitStop(); stop.hit(0);

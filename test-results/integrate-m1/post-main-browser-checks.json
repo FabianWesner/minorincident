@@ -1,0 +1,70 @@
+{
+  "smoke": {
+    "command": [
+      "npm",
+      "run",
+      "test:smoke",
+      "--",
+      "--workers=2"
+    ],
+    "exit_code": 0,
+    "seconds": 48.68,
+    "saved_log": "test-results/integrate-m1/logs/post-main-smoke.log",
+    "browser_report": "test-results/integrate-m1/post-main-smoke-playwright.json"
+  },
+  "verify-E16": {
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E16"
+    ],
+    "exit_code": 0,
+    "seconds": 219.73,
+    "saved_log": "test-results/integrate-m1/logs/post-main-verify-E16.log",
+    "browser_report": "test-results/integrate-m1/post-main-verify-E16-playwright.json"
+  },
+  "verify-E15": {
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E15"
+    ],
+    "exit_code": 0,
+    "seconds": 439.34,
+    "saved_log": "test-results/integrate-m1/logs/post-main-verify-E15.log",
+    "browser_report": "test-results/integrate-m1/post-main-verify-E15-playwright.json"
+  },
+  "native-E06": {
+    "command": [
+      "npm",
+      "run",
+      "test:e2e:webgpu",
+      "--",
+      "--grep",
+      "@E06",
+      "--workers=2"
+    ],
+    "exit_code": 0,
+    "seconds": 12.62,
+    "saved_log": "test-results/integrate-m1/logs/post-main-native-E06.log",
+    "browser_report": "test-results/integrate-m1/post-main-native-E06-playwright.json"
+  },
+  "harness": {
+    "command": [
+      "npm",
+      "run",
+      "test:e2e",
+      "--",
+      "tests/e2e/harness.spec.ts",
+      "--workers=2"
+    ],
+    "exit_code": 0,
+    "seconds": 32.23,
+    "saved_log": "test-results/integrate-m1/logs/post-main-harness.log",
+    "browser_report": "test-results/integrate-m1/post-main-harness-playwright.json"
+  }
+}

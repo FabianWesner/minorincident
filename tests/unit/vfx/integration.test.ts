@@ -23,7 +23,9 @@ test('M1 E07/E15 @E15 actual Bloated death produces a three-metre blast and reti
   try {
     const id = w.infected!.spawn('infected.bloated', { x: 1, z: 0 }); w.entities.get(id)!.health.current = 0;
     w.update(); fx.advance(0); expect(fx.snapshot().telegraphs.some(t => t.kind === 'bloated')).toBe(true);
-    for (let i = 0; i < 21; i++) { w.update(); fx.advance(1 / 60); }
+    const until = w.entities.get(id)!.infected!.until;
+    while (w.tick < until - 1) { w.update(); fx.advance(1 / 60); }
+    expect(fx.lastExplosionRadius).toBe(0); w.update(); fx.advance(1 / 60);
     expect(fx.lastExplosionRadius).toBe(3); expect(fx.snapshot().telegraphs.some(t => t.sourceId === id)).toBe(false);
   } finally { fx.dispose(); w.dispose(); }
 });
