@@ -5,11 +5,13 @@ delete process.env.NO_COLOR;
 
 // Parallel worktrees each set their own E2E_PORT so they never reuse another lane's server.
 const port = Number(process.env.E2E_PORT ?? 3301);
-const swiftshader = ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+const gpuArgs = process.platform === 'darwin'
+  ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist']
+  : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
 export default defineConfig({
   testDir: './tests',
   testMatch: '**/*.spec.ts',
-  workers: 2, // SwiftShader runs WebGL on the CPU; several lanes share one Mac
+  workers: 2, // several lanes share one Mac
   fullyParallel: true,
   retries: 0,
   snapshotPathTemplate: '{testDir}/visual/__goldens__/{arg}{ext}',
@@ -21,7 +23,8 @@ export default defineConfig({
     viewport: { width: 1600, height: 900 },
     deviceScaleFactor: 1,
     trace: 'retain-on-failure',
-    launchOptions: { args: swiftshader },
+    headless: true,
+    launchOptions: { args: gpuArgs },
   },
   projects: [
     { name: 'chromium', testIgnore: '**/webgpu.spec.ts', use: { browserName: 'chromium' } },
@@ -29,7 +32,7 @@ export default defineConfig({
     { name: 'pixel-7-landscape', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts'], use: { ...devices['Pixel 7 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
     { name: 'iphone-14', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts'], use: { ...devices['iPhone 14'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
     { name: 'iphone-14-landscape', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts'], use: { ...devices['iPhone 14 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
-    ...(process.env.E2E_WEBGPU === '1' ? [{ name: 'webgpu', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: false, launchOptions: { args: ['--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } } }] : []),
+    ...(process.env.E2E_WEBGPU === '1' ? [{ name: 'webgpu', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } } }] : []),
     ...(process.env.E2E_WEBGPU_HEADLESS === '1' ? [{ name: 'webgpu-headless', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: true, launchOptions: { args: ['--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } } }] : []),
     { name: 'webkit', testMatch: '**/smoke.spec.ts', use: { browserName: 'webkit' } },
   ],

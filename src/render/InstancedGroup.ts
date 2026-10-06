@@ -10,6 +10,7 @@ export class InstancedGroup extends Group {
     const inverse = prototype.matrixWorld.clone().invert();
     prototype.traverse((child) => {
       if (!(child instanceof Mesh)) return;
+      for (let parent: Object3D | null = child; parent; parent = parent.parent) if (!parent.visible) return;
       const mesh = new InstancedMesh(child.geometry, child.material, references.length);
       mesh.name = child.name; mesh.castShadow = child.castShadow; mesh.receiveShadow = child.receiveShadow;
       this.batches.push({ mesh, local: new Matrix4().multiplyMatrices(inverse, child.matrixWorld) }); this.add(mesh);

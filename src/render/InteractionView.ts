@@ -1,6 +1,9 @@
 // Adapted from Bruno Simon InteractivePoints.js / RayCursor.js (MIT):
 // highlighted active point above geometry, range-based reveal, separate presentation state.
-import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, RingGeometry, Vector3, type Camera, type Object3D } from 'three/webgpu';
+import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, RingGeometry, Vector3, type Camera, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
+import type { View } from './View';
+import type { AssetQuality } from '../assets/types';
+import { staticBatch } from '../assets/staticBatch';
 import { AssetRegistry } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { EntitySnapshot } from '../sim/world/types';
@@ -16,6 +19,10 @@ const assetIds: Record<string, string> = {
 export class InteractionView extends Group {
   private readonly registry = new AssetRegistry(e => console.info(JSON.stringify(e)));
   private readonly objects = new Map<number, Object3D>();
+  private readonly lods = new Map<number, AssetQuality>();
+  private readonly prototypes = new Map<string, Promise<Group>>();
+  private readonly geometries = new Set<BufferGeometry>();
+  private readonly batchMaterials = new Set<Material>();
   private readonly pending = new Map<number, Promise<void>>();
   private readonly box = new BoxGeometry(1, 1, 1);
   private readonly black = new MeshBasicNodeMaterial({ color: '#151e30', depthTest: false, depthWrite: false, transparent: true });
@@ -34,7 +41,7 @@ export class InteractionView extends Group {
   private readonly projection = new Vector3();
   private readonly debrisMeshes: Mesh[] = [];
   private disposed = false;
-  constructor(private readonly world: SimWorld, private readonly materials: Materials) {
+  constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) {
     super(); this.name = 'interactions';
     const outline = new Mesh(this.outlineGeometry, this.black), stroke = new Mesh(this.strokeGeometry, this.white);
     outline.renderOrder = 90; stroke.renderOrder = 91; this.fill.renderOrder = 92;
@@ -51,17 +58,36 @@ export class InteractionView extends Group {
     await Promise.all(this.pending.values());
   }
   private ensure(e: EntitySnapshot): void {
-    if (!(e.interactable || e.hazard || e.destructible || (e.pickup && 'kind' in e.pickup)) || this.objects.has(e.id) || this.pending.has(e.id)) return;
-    const load = this.create(e).then(object => {
-      if (!this.disposed) { this.objects.set(e.id, object); this.add(object); }
+    if (!(e.interactable || e.hazard || e.destructible || (e.pickup && 'kind' in e.pickup)) || this.pending.has(e.id)) return;
+    const distance = Math.hypot(e.transform.x - this.view.cameraTarget.x, e.transform.z - this.view.cameraTarget.z);
+    const lod = !this.assetId(e) ? 'lod0' : distance > 30 ? 'lod2' : this.low || distance > 12 ? 'lod1' : 'lod0';
+    if (this.objects.has(e.id) && this.lods.get(e.id) === lod) return;
+    const load = this.create(e, lod).then(object => {
+      if (!this.disposed) {
+        this.objects.get(e.id)?.removeFromParent(); this.objects.set(e.id, object); this.lods.set(e.id, lod);
+        object.position.set(e.transform.x, 0, e.transform.z); object.rotation.y = e.transform.yaw; this.add(object);
+      }
       this.pending.delete(e.id);
     });
     this.pending.set(e.id, load);
   }
-  private async create(e: EntitySnapshot): Promise<Object3D> {
+  private assetId(e: EntitySnapshot): string | undefined {
     const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined;
-    const id = pickup?.kind === 'item' && pickup.item?.startsWith('key.') ? 'util.keys' : pickup?.item === 'batteries' ? 'util.batteries' : assetIds[e.archetype];
-    if (id) return this.registry.loadAsset(id);
+    return pickup?.kind === 'item' && pickup.item?.startsWith('key.') ? 'util.keys' : pickup?.item === 'batteries' ? 'util.batteries' : assetIds[e.archetype];
+  }
+  private async create(e: EntitySnapshot, lod: AssetQuality): Promise<Object3D> {
+    const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined, id = this.assetId(e);
+    if (id) {
+      const def = this.registry.definition(id), canonical = (lod === 'lod1' || lod === 'lod2') && !def.lods?.[lod] ? 'lod0' : lod;
+    const key = `${id}:${canonical}`;
+      if (!this.prototypes.has(key)) this.prototypes.set(key, this.registry.loadAsset(id, canonical).then(source => {
+        if (this.disposed) return source as Group;
+        const prototype = staticBatch(source, true); prototype.userData = { ...source.userData };
+        prototype.traverse(node => { if (node instanceof Mesh) { this.geometries.add(node.geometry); this.batchMaterials.add(node.material as Material); } });
+        return prototype;
+      }));
+      return (await this.prototypes.get(key)!).clone(true);
+    }
     // Devices without an integrated art entry use gameplay-shaped code placeholders.
     const g = new Group(), body = new Mesh(this.box, this.materials.get(pickup ? 'backpackTeal' : e.hazard?.kind === 'toxic' ? 'grass' : e.destructible ? 'woodWarm' : 'policeBlue'));
     if (pickup) body.scale.set(.3, .3, .3);
@@ -109,7 +135,9 @@ export class InteractionView extends Group {
     }
   }
   dispose(): void {
-    this.disposed = true; this.panel.remove(); this.clear(); this.objects.clear();
+    this.disposed = true; this.panel.remove(); this.clear(); this.objects.clear(); this.lods.clear();
+    for (const geometry of this.geometries) geometry.dispose(); for (const material of this.batchMaterials) material.dispose();
+    this.geometries.clear(); this.batchMaterials.clear(); this.prototypes.clear();
     this.box.dispose(); this.fillGeometry.dispose(); this.outlineGeometry.dispose(); this.strokeGeometry.dispose(); this.black.dispose(); this.white.dispose(); this.teal.dispose();
     void this.registry.dispose();
   }

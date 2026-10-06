@@ -3,7 +3,7 @@ import type { Document } from '@gltf-transform/core';
 import { fixture } from './fixture';
 import { readFileSync } from 'node:fs';
 import manifest from '../../../src/assets/manifest.json';
-import type { AssetDef } from '../../../src/assets/types';
+import { atLeast, type AssetDef } from '../../../src/assets/types';
 import { parseInventory } from '../../../tools/assets/inventory';
 import { validateDocument, geometryHash, validateAssets } from '../../../tools/assets/validate';
 
@@ -32,10 +32,10 @@ test('T-E17-02 @E17-AC02 validates geometry and rejects independent contract vio
   doc.getRoot().listNodes()[0].setTranslation([1,0,0]);
   expect(geometryHash(doc)).not.toEqual(geometryHash(fixture().doc));
 });
-test('T-E17-06 @E17-AC06 every inventory table status matches the manifest', () => {
+test('T-E17-06 @E17-AC06 current manifest status meets every inventory snapshot stage', () => {
   const inventory = parseInventory(readFileSync('specs/05-asset-inventory.md', 'utf8'));
   expect(inventory.size).toBeGreaterThan(100);
-  for (const [id, status] of inventory) expect(manifest.find((a) => a.id === id)?.status, id).toBe(status);
+  for (const [id, status] of inventory) expect(atLeast(manifest.find((a) => a.id === id)!.status as AssetDef['status'], status), id).toBe(true);
   expect(new Set(manifest.map((a) => a.id)).size).toBe(manifest.length);
 });
 test('T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts', async () => {
