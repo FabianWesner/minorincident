@@ -1,0 +1,334 @@
+{
+  "lane": "m1-anim",
+  "sourceCommit": "6714ceb",
+  "baseCommit": "960c215",
+  "recordedAt": "2026-10-06T13:45:02.615024+00:00",
+  "animation": {
+    "authoredIn": "Blender bpy",
+    "actions": 48,
+    "trsTracks": 449,
+    "sampleRateHz": 60,
+    "glbSha256": "c8764aed39b59068ea675b45a1cfd2a3f7a648c910d9bb4fcf9292e2fd4a68e9",
+    "crossfadeSeconds": 0.14,
+    "locomotion": "Velocity matched using stride length and world rig scale",
+    "exportConstantPosesPreserved": true
+  },
+  "validation": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "unit": {
+      "passed": 142,
+      "files": 53
+    },
+    "focusedAnimationCombatBalance": {
+      "passed": 11
+    },
+    "testSmoke": {
+      "simPassed": 3,
+      "browserPassed": 22
+    },
+    "verifyE19": {
+      "unitSimPassed": 15,
+      "browserPassed": 37,
+      "checks": [
+        {
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "lint"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/e2e-lock.sh",
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npx",
+            "vitest",
+            "run",
+            "-t",
+            "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--maxWorkers=1",
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile=test-results/epics/E19/vitest.json"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/e2e-lock.sh",
+            "npx",
+            "playwright",
+            "test",
+            "--grep",
+            "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+          ],
+          "exitCode": 0
+        }
+      ]
+    },
+    "e18Horde": {
+      "passed": 1,
+      "count": 200,
+      "headless": true,
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Max, Unspecified Version)",
+      "unthrottled": true,
+      "frameMsP50": 2.9,
+      "frameMsP95": 4.1,
+      "frameBudgetMs": 16.7,
+      "drawCalls": 57,
+      "triangles": 1311383
+    }
+  },
+  "l1NativeGpuBeforeAfter": {
+    "desktop": {
+      "incident": {
+        "beforeMedianFps": 454.5,
+        "afterMedianFps": 400,
+        "unthrottled": true,
+        "drawCalls": 114,
+        "triangles": 964049
+      },
+      "store": {
+        "beforeMedianFps": 454.5,
+        "afterMedianFps": 416.7,
+        "unthrottled": true,
+        "drawCalls": 115,
+        "triangles": 1223106
+      }
+    },
+    "portrait": {
+      "incident": {
+        "beforeMedianFps": 434.8,
+        "afterMedianFps": 400,
+        "unthrottled": true,
+        "drawCalls": 103,
+        "triangles": 112326
+      },
+      "store": {
+        "beforeMedianFps": 588.2,
+        "afterMedianFps": 476.2,
+        "unthrottled": true,
+        "drawCalls": 101,
+        "triangles": 184631
+      }
+    },
+    "landscape": {
+      "incident": {
+        "beforeMedianFps": 588.2,
+        "afterMedianFps": 500,
+        "unthrottled": true,
+        "drawCalls": 101,
+        "triangles": 113758
+      },
+      "store": {
+        "beforeMedianFps": 588.2,
+        "afterMedianFps": 400,
+        "unthrottled": true,
+        "drawCalls": 103,
+        "triangles": 178375
+      }
+    }
+  },
+  "realInputWeapons": [
+    {
+      "mode": "desktop",
+      "weapon": "bat",
+      "realInput": true,
+      "side": "LEFT",
+      "socket": "weaponSocketR",
+      "source": "glb",
+      "gripDistance": 0,
+      "hits": 6,
+      "combos": [
+        0,
+        1,
+        2
+      ],
+      "maximumTrailVertices": 54,
+      "maximumParticles": 219,
+      "hudIconVerified": true
+    },
+    {
+      "mode": "desktop",
+      "weapon": "crowbar",
+      "realInput": true,
+      "side": "LEFT",
+      "socket": "weaponSocketR",
+      "source": "glb",
+      "gripDistance": 0,
+      "hits": 7,
+      "combos": [
+        0,
+        1,
+        2
+      ],
+      "maximumTrailVertices": 54,
+      "maximumParticles": 232,
+      "hudIconVerified": true
+    },
+    {
+      "mode": "desktop",
+      "weapon": "machete",
+      "realInput": true,
+      "side": "LEFT",
+      "socket": "weaponSocketR",
+      "source": "glb",
+      "gripDistance": 8.881784197001252e-16,
+      "hits": 7,
+      "combos": [
+        0,
+        1,
+        2
+      ],
+      "maximumTrailVertices": 54,
+      "maximumParticles": 174,
+      "hudIconVerified": true
+    },
+    {
+      "mode": "portrait",
+      "weapon": "bat",
+      "realInput": true,
+      "side": "LEFT",
+      "socket": "weaponSocketR",
+      "source": "glb",
+      "gripDistance": 0,
+      "hits": 8,
+      "combos": [
+        0,
+        1,
+        2
+      ],
+      "maximumTrailVertices": 54,
+      "maximumParticles": 62,
+      "hudIconVerified": true
+    },
+    {
+      "mode": "portrait",
+      "weapon": "crowbar",
+      "realInput": true,
+      "side": "LEFT",
+      "socket": "weaponSocketR",
+      "source": "glb",
+      "gripDistance": 0,
+      "hits": 7,
+      "combos": [
+        0,
+        1,
+        2
+      ],
+      "maximumTrailVertices": 54,
+      "maximumParticles": 64,
+      "hudIconVerified": true
+    },
+    {
+      "mode": "portrait",
+      "weapon": "machete",
+      "realInput": true,
+      "side": "LEFT",
+      "socket": "weaponSocketR",
+      "source": "glb",
+      "gripDistance": 0,
+      "hits": 8,
+      "combos": [
+        0,
+        1,
+        2
+      ],
+      "maximumTrailVertices": 54,
+      "maximumParticles": 62,
+      "hudIconVerified": true
+    }
+  ],
+  "impactRenderProbe": {
+    "airborneRedPixels": 924,
+    "minimum": 80
+  },
+  "visualReview": {
+    "desktopViewport": [
+      1600,
+      900
+    ],
+    "portraitViewport": [
+      390,
+      844
+    ],
+    "screenshotsReviewed": true,
+    "shortRecordingsReviewed": true,
+    "latestExportScreenshotsReviewed": true,
+    "correctionsFromReview": [
+      "Preserved constant authored guard rotations in glTF",
+      "Grounded full body death poses",
+      "Kept crowd shader within WebGL attribute limit",
+      "Made directional blood visible at the game camera",
+      "Held interpolation constant during hit-stop"
+    ],
+    "temporaryCapturesDeleted": true,
+    "reviewMethod": "Reviewed desktop and portrait gameplay recordings, then strike screenshots from the final glTF export at the game camera."
+  },
+  "scope": {
+    "M1-02": "fixed",
+    "M1-03": "fixed",
+    "M1-04": "Animation fixed; follow jitter belongs to m1-world",
+    "M1-10": "Corpse poses and fading fixed; outbreak staging belongs to m1-level",
+    "M1-11": "fixed",
+    "M1-12": "fixed",
+    "M1-13": "fixed",
+    "specsChanged": false
+  },
+  "integration": {
+    "mainCommit": "9862245cd676c48def540adf0256a15217102f9c",
+    "resolved": [
+      "ActionView: trails and subtle target marker state",
+      "CrowdView: authored clip/stride sampling with shared palette shading, view-space normals and packed corpse alpha",
+      "CivilianCrowd: five model silhouettes, sim motion/idle hysteresis, authored walking/death/get-up and raised ground",
+      "NpcView: authored quadruped/humanoid animation reads actual sim motion and terrain height",
+      "Materials/PaletteMaterial: optional per-instance opacity reaches the custom output alpha"
+    ],
+    "validation": {
+      "typecheck": "passed",
+      "lint": "passed",
+      "fullVitest": {
+        "passed": 450,
+        "failed": 1,
+        "filesPassed": 91,
+        "filesFailed": 1
+      },
+      "focusedRegression": {
+        "passed": 17,
+        "files": 5
+      },
+      "baselineFailure": {
+        "test": "tests/sim/m1-world.test.ts:92 M1-07 click navigation string-pulls",
+        "endpointErrorMeters": 4.076958438837988,
+        "requiredMaximumMeters": 0.15,
+        "reproducedOnIsolatedMain": true
+      }
+    },
+    "pendingHeavyChecks": [
+      "Browser smoke and verify -- E19 on integrated main",
+      "Desktop/portrait real input and visual review of the combined shader/animation path",
+      "E18 unthrottled native-GPU horde frame budgets"
+    ],
+    "blenderExportRequired": false,
+    "heavyWorkPerformed": false
+  }
+}

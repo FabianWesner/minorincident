@@ -29,7 +29,9 @@ export interface EntitySnapshot {
   vehicle?: import('../vehicles/Vehicles').VehicleState;
   survivor?: SurvivorState;
   weapons?: import('../combat/Loadout').LoadoutState;
-  combat?: { radius: number; armor: number; shield: boolean; staggerUntil: number; attacking: boolean; damageMultiplier: number; statuses: import('../combat/Status').StatusState[] };
+  combat?: { radius: number; armor: number; shield: boolean; staggerUntil: number; attacking: boolean; damageMultiplier: number; statuses: import('../combat/Status').StatusState[];
+    /** Authored reaction intent and swept knockback endpoints; presentation only. */
+    reaction?: { index: number; started: number; until: number; direction: { x: number; z: number }; from: { x: number; z: number }; to: { x: number; z: number }; heavy: boolean } };
   /** Reactive fixture hearing; E07 brains consume the same noise contract. */
   hearing?: { mode: 'idle' | 'investigate' | 'lured'; target: { x: number; z: number }; lureUntil: number };
   kind: string;
@@ -73,8 +75,8 @@ export type GameEvent = import('../npc/types').NpcEvent
   | { tick: number; type: 'ai.alerted'; sourceId: number; targetId: number; cause: 'noise'; position: Transform }
   | { tick: number; type: 'combat.effect'; sourceId: number; actionId: string; kind: import('../../data/actions/schema').ActionEffect['kind']; position: { x: number; y: number; z: number }; radius: number; expires: number }
   | { tick: number; type: 'pickup.collected'; sourceId: number; pickupId: number; side: import('../../data/actions/schema').Side; actionId: string; replaced: string | null }
-  | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number } }
-  | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number; cause?: 'vehicle'; damageType?: import('../combat/Damage').DamageEvent['type'] }
+  | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; combo?: number; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number } }
+  | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number; direction?: { x: number; z: number }; knockback?: number; cause?: 'vehicle'; damageType?: import('../combat/Damage').DamageEvent['type'] }
   | { tick: number; type: 'combat.hit-stop'; sourceId: number; durationMs: number }
   | { tick: number; type: 'loadout.switched'; sourceId: number; side: import('../../data/actions/schema').Side; actionId: string }
   | { tick: number; type: 'combat.landed'; sourceId: number; attackId: number; position: { x: number; y: number; z: number } }

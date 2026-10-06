@@ -1,5 +1,5 @@
 import { BufferAttribute, DataTexture, FloatType, Group, InstancedMesh, InstancedInterleavedBuffer, Matrix4, MeshBasicNodeMaterial, Mesh, RGBAFormat, type Node, type BufferGeometry } from 'three/webgpu';
-import { attribute, instancedBufferAttribute, int, ivec2, mat4, positionGeometry, textureLoad, uniform, vec4 } from 'three/tsl';
+import { attribute, instancedBufferAttribute, int, ivec2, mat4, positionGeometry, textureLoad, uniform, vec4, mix, float } from 'three/tsl';
 import { palette } from './palette';
 
 export interface CrowdClip { parts: string[]; frames: number; duration: number; matrices: number[] }
@@ -10,7 +10,8 @@ export function clipTexture(clip: CrowdClip): DataTexture {
 /** One texel per matrix column; shared by the crowd vertex shader and GPU readback probe. */
 export function crowdMatrix(texture: DataTexture, part: Parameters<typeof int>[0], frame: Parameters<typeof int>[0]) {
   const start=int(part).mul(4);
-  const column = (index:number) => textureLoad(texture,ivec2(start.add(index),int(frame)));
+  const f = float(frame), low = f.floor(), high = f.ceil();
+  const column = (index:number) => mix(textureLoad(texture,ivec2(start.add(index),int(low))), textureLoad(texture,ivec2(start.add(index),int(high))), f.fract());
   return mat4(column(0),column(1),column(2),column(3));
 }
 /** Pose in part-local space before applying the instance's movement/heading. */

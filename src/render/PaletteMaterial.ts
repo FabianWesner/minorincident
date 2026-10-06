@@ -11,7 +11,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   /** Render-only procedural surface mask and emissive hit pulse. */
   readonly bloodCoverage = uniform(0);
   readonly hitFlash = uniform(0);
-  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; glow?: Node<'vec3'> }) {
+  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; glow?: Node<'vec3'>; opacity?: Node<'float'> }) {
     super(); this.name = `${emissive ? 'emi' : 'pal'}_${token}`;
     this.normalNode = normalView;
     const original = nodes?.base ?? (vertexSwatches ? attribute('color', 'vec3') : swatch ? uniform(swatch).rgb : texture(palette, vec2((paletteTokens.indexOf(token) + 0.5) / paletteTokens.length, 0.5)).rgb);
@@ -31,7 +31,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const shaded = mix(lit, albedo.mul(lighting.shadow).add(lighting.skyAmbient.mul(.025)), shadow);
       const controlled = mix(shaded, luminance(shaded), .035);
       const output = emissive > 0 ? base.div(luminance(base).max(0.001)).mul(emissive) : mix(controlled.add(nodes?.glow ?? 0), lighting.fogColor, rangeFogFactor(lighting.fogNear, lighting.fogFar));
-      return vec4(output.add(this.hitFlash), this.fade);
+      return vec4(output.add(this.hitFlash), this.fade.mul(nodes?.opacity ?? 1));
     })();
     this.fog = emissive === 0;
   }
