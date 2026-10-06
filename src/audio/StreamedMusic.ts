@@ -19,7 +19,10 @@ export class StreamedMusic {
         let deck = this.decks.get(state);
         if (deck) return deck;
         const media = new Audio();
-        media.preload = 'none';
+        // Decks are created lazily on their first state request. Keep that stream
+        // buffering across an immediate pause; preload=none aborts its first
+        // request in Chromium when the mission intro or pause menu opens.
+        media.preload = 'auto';
         media.loop = true;
         const format = media.canPlayType('audio/webm; codecs="opus"') ? 'webm' : 'm4a';
         media.src = `/assets/audio/score-${state}.${format}`;
