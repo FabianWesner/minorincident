@@ -85,7 +85,8 @@ export interface SSTestApi {
     interrupt():Promise<void>;
   };
   /** E18 synthetic GPU cost in milliseconds; zero clears it. */
-  debug: { simulateFrameCost(ms: number): void };
+  /** Render-only stress probe retains the fixture population when testing low-tier drawing. */
+  debug: { simulateFrameCost(ms: number): void; renderQuality(tier: 'high' | 'low'): void };
   perf(): ReturnType<Game['perf']>;
   screenshotReady(): Promise<void>;
 }
@@ -187,7 +188,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
         await new Promise<void>(resolve=>setTimeout(resolve,50));
       },
     },
-    debug: { simulateFrameCost: ms => game.simulateFrameCost(ms) },
+    debug: { renderQuality: tier => game.view.setQuality(tier), simulateFrameCost: ms => game.simulateFrameCost(ms) },
     perf: () => game.perf(), screenshotReady: () => game.screenshotReady(),
   };
   window.__SS__ = api; return api;
