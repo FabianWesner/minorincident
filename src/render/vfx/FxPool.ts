@@ -81,7 +81,8 @@ export class FxPool {
       const lit = lightSample ?? vec3(1);
       return vec4(attribute('fxColor', 'vec3').mul(lit), mask.mul(fade));
     })();
-    this.mesh = new InstancedMesh(geometry, material, cap); this.mesh.frustumCulled = false;
+    // Empty particle draws still copy viewport depth; omit them until an effect spawns.
+    this.mesh = new InstancedMesh(geometry, material, cap); this.mesh.frustumCulled = false; this.mesh.visible = false;
     this.mesh.renderOrder = mode === 'ground' ? 1 : 2;
     const identity = new Matrix4(); for (let i = 0; i < cap; i++) this.mesh.setMatrixAt(i, identity);
     this.expires = new Float64Array(cap);
@@ -99,12 +100,13 @@ export class FxPool {
     this.tint.setHex(color); this.colors.setXYZ(slot, this.tint.r, this.tint.g, this.tint.b);
     this.expires[slot] = now + life;
     this.origin.needsUpdate = this.motion.needsUpdate = this.style.needsUpdate = this.colors.needsUpdate = true;
+    this.mesh.visible = true;
     return slot;
   }
-  remove(slot: number): void { this.expires[slot] = 0; this.motion.setW(slot, 0); this.motion.needsUpdate = true; }
-  advance(now: number): void { this.clock.value = now; }
+  remove(slot: number): void { this.expires[slot] = 0; this.motion.setW(slot, 0); this.motion.needsUpdate = true; this.mesh.visible = this.count > 0; }
+  advance(now: number): void { this.clock.value = now; this.mesh.visible = this.count > 0; }
   get count(): number { let n = 0; for (const expiry of this.expires) if (expiry > this.clock.value) n++; return n; }
-  reset(now = 0): void { this.expires.fill(0); this.motion.array.fill(0); this.motion.needsUpdate = true; this.cursor = 0; this.clock.value = now; }
+  reset(now = 0): void { this.expires.fill(0); this.motion.array.fill(0); this.motion.needsUpdate = true; this.cursor = 0; this.clock.value = now; this.mesh.visible = false; }
   dispose(): void {
     this.depthNode?.dispose();
     this.mesh.dispose(); this.mesh.geometry.dispose(); (this.mesh.material as MeshBasicNodeMaterial).dispose(); }
