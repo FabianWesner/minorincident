@@ -6,6 +6,8 @@ export interface DamageEvent {
   attackId: number; actionId: string; sourceId: number; targetId: number; origin: Vec2; direction: Vec2;
   part?: 'leg'; radius?: number; spread?: number;
   base: number; multiplier: number; type: 'melee' | 'bullet' | 'explosive' | 'status' | 'vehicle'; knockback: number; stagger: number;
+  /** Authored melee impact freeze (render-only); absent = 50 ms. */
+  hitStopMs?: number;
 }
 /** Directional shields only stop front bullets; splash is radial and ignores shields. */
 export function damageAmount(hit: DamageEvent, target: EntitySnapshot): number {
@@ -55,7 +57,7 @@ export class Damage {
         if (heavy) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + 80);
         // A kicked body sweeps its existing knockback corridor and staggers the next
         // infected it tumbles into. No new physics bodies or navigation rules.
-        if (hit.actionId === 'weapon.kick' && hit.knockback > 0) {
+        if ((hit.actionId === 'weapon.kick' || (hit.type === 'melee' && hit.knockback >= 1.5)) && hit.knockback > 0) {
           for (const other of this.world.entities.iterate()) {
             if (other.id === target.id || other.faction !== 'infected' || other.health.current <= 0 || !other.combat) continue;
             const dx = other.transform.x - from.x, dz = other.transform.z - from.z;
@@ -68,7 +70,7 @@ export class Damage {
           }
         }
       }
-      if (hit.type === 'melee') this.world.events.emit({ type: 'combat.hit-stop', tick: this.world.tick, sourceId: hit.sourceId, durationMs: 50 });
+      if (hit.type === 'melee') this.world.events.emit({ type: 'combat.hit-stop', tick: this.world.tick, sourceId: hit.sourceId, durationMs: hit.hitStopMs ?? 50 });
     }
     if (hit.part === 'leg' && amount > 0) this.world.infected?.loseLeg(target.id, this.world.infected.gore);
     if (target.escort && target.health.current === 0) { this.world.npcs?.escorts.down(target); return amount; }
