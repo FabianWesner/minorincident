@@ -6,6 +6,7 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from './manifest.json';
 import { atLeast, variantPath, type AssetDef, type AssetQuality } from './types';
 import { placeholder } from './placeholders';
+import type { Materials } from '../render/Materials';
 import { AssetMaterials } from './materials';
 
 export type PlaceholderLog = { type: 'asset.placeholder'; id: string; reason: string };
@@ -15,11 +16,12 @@ export function lodForScreenHeight(pixels: number): 'lod0' | 'lod1' | 'lod2' { r
 export class AssetRegistry {
   private readonly definitions: Map<string, AssetDef>;
   private readonly cache = new Map<string, Promise<Object3D>>();
-  private readonly materials = new AssetMaterials();
+  private readonly materials: AssetMaterials;
   private readonly decalTextures = new Set<import('three').Texture>();
   private readonly ktx?: KTX2Loader;
   private readonly load: Loader;
-  constructor(private readonly log: (event: PlaceholderLog) => void, options: { manifest?: AssetDef[]; load?: Loader; renderer?: WebGPURenderer } = {}) {
+  constructor(private readonly log: (event: PlaceholderLog) => void, options: { manifest?: AssetDef[]; load?: Loader; renderer?: WebGPURenderer; materials?: Materials } = {}) {
+    this.materials = new AssetMaterials(options.materials);
     this.definitions = new Map((options.manifest ?? manifest as AssetDef[]).map((a) => [a.id, a]));
     const gltf = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     if (options.renderer) {
@@ -77,7 +79,9 @@ export class AssetRegistry {
           return this.loadAsset(def.id, lod === 'lod2' ? 'lod1' : 'lod0', decay);
         }
       }
-      this.materials.swap(root);
+      root.userData.diner = def.id === 'bld.joes-diner';
+      root.userData.paletteWorld = !/^(char|npc|inf)\./.test(def.id); root.userData.paletteHydrant = def.id === 'prop.fire-hydrant';
+      this.materials.swap(root, !/^(char|npc|inf)\./.test(def.id), def.id === 'prop.fire-hydrant');
       return root;
     } catch (error) {
       root?.traverse(node => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose(); } });
@@ -96,7 +100,7 @@ export class AssetRegistry {
       if (mesh.material) for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
     });
     for (const geometry of geometries) geometry.dispose();
-    for (const material of materials) material.dispose();
+    for (const material of materials) if (!material.userData.sharedPalette) material.dispose();
     for (const texture of this.decalTextures) texture.dispose();
     this.decalTextures.clear();
     this.cache.clear(); this.materials.dispose(); this.ktx?.dispose();

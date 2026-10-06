@@ -1,5 +1,14 @@
 # E03 mouse controls and unified unarmed style
 
+Integration with main `bc7e801` preserves its infection stagger/collapse/rise
+clips, independently rising infected lifecycle, survivor assets, look controls
+and rig-local stride/world-scale handling. Civilian rendering selects the
+harmless annoyed stagger alongside the infection states; both state-machine
+updates survive. The latest main mobile policy (far LOD beyond 16 m and
+LOD2 for props) supersedes the earlier 18 m correction below. The GLB and
+runtime tracks are regenerated from the merged Blender script. Merge-specific
+validation will be recorded in `merge-checks.json`.
+
 Implemented the product owner's October 6 updates: explicit ground click/hold movement;
 LMB targets/approaches infected with the active action; Shift+LMB always swings in place,
 locks locomotion through the swing, and cancels pending destinations; RMB cycles unique
