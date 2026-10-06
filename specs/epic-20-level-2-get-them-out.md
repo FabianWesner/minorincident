@@ -39,3 +39,6 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E20-AC10 | Vision: `l2-panic-street` (W1 panic reads: traffic jam, police, fleeing people vs the W0 L1 spot), `l2-school-gym`, `l2-baseball-evac` pass §7.1/§7.4/§7.5 | vision |
 | E20-AC11 | End-of-level flow: unlock reveal (pistol/shotgun choice + Molotov) → upgrade cards → rack setup (2/2) works | e2e |
 | E20-AC12 | Barricades: Mrs. Alvarez's house uses a board-up point; in the gym, lockers and benches can be pushed into the door slot and braced; an A/B sim over 10 seeds shows the braced door delays the Brute's breakthrough by ≥ 10 s vs unbraced | sim |
+| E20-AC13 | Carried over from E08-AC11: in L2 `complete` campaign-bot runs, average concurrent ambient civilians over the first 3 minutes stays within ±10% of the L2 target (40 high tier; low tier ×0.6), measured at both tiers. | sim |
+| E20-AC14 | Carried over from E08-AC15: across full L2 `complete` campaign-bot runs, child NPCs receive no `grab`/`attack` target events, never enter bite/turn states, have gore disabled, and the brother escort uses only the downed state. | sim |
+| E20-AC15 | Carried over from E08-AC17: across full L2 `complete` campaign-bot runs, the corgi never enters an infection state and has no infection event; retain the event log for continuous-campaign verification in E24. | sim |

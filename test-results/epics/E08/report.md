@@ -1,6 +1,6 @@
 # E08 — Civilians, Corgi Companion and Escorts
 
-Implementation is complete and committed in independently checked slices. **Epic sign-off remains blocked on the absent E19–E24 complete campaign bot.** `specs/status.json` remains `in-progress`; the acceptance criteria have not been weakened or silently replaced. The local NPC evidence below passes, but objective patrols are not certified campaign completion runs.
+**E08 is done for its own scope**, per the orchestrator decision. All local implementation and tagged tests pass. Campaign-bot verification for AC11, AC15 and AC17 is explicitly deferred to E19–E24 and carried into their acceptance tables; the original E08 criteria remain unchanged. `specs/status.json` is `done`. Objective patrols are not claimed as completed campaign runs.
 
 ## Built
 
@@ -13,7 +13,7 @@ Implementation is complete and committed in independently checked slices. **Epic
 
 ## Acceptance evidence
 
-Every ID has a tagged test. PASS here means the criterion's current-stage evidence is satisfied; PARTIAL means its NPC contract passes but its literal complete-campaign verification dependency is absent.
+Every ID has a passing tagged test. PASS means E08 scope is satisfied; campaign verification marked deferred is an outstanding acceptance obligation of the named level epics, per the orchestrator decision.
 
 | Criterion | Result | Evidence |
 | --- | --- | --- |
@@ -27,13 +27,13 @@ Every ID has a tagged test. PASS here means the criterion's current-stage eviden
 | E08-AC08 | PASS | T-E08-08 browser stand/leave/stand toggles and `escort-wait.png`, `escort-follow.png`. |
 | E08-AC09 | PASS | `traffic.test.ts`: normal/panic braking and 1,800-tick pedestrian crossing without overlap. |
 | E08-AC10 | PASS (placeholder stage) | `tests/unit/render/npc.test.ts` T-E08-10 and runtime node test, four `corgi-*.png` captures; final S01 character proportions are conditional on final art, as the AC specifies. |
-| E08-AC11 | PARTIAL | `campaign.test.ts` T-E08-11-high/low: 12 actual composition patrols ×10,800 ticks, exact density averages and active input; `campaign.json`. `complete` policy is still an E19 stub, so literal complete-bot evidence is pending. |
+| E08-AC11 | PASS; campaign deferred | `campaign.test.ts` T-E08-11-high/low: 12 actual composition patrols ×10,800 ticks, exact density averages and active input; `campaign.json`. `complete` policy is still an E19 stub, so literal complete-bot evidence is pending. |
 | E08-AC12 | PASS | T-E08-12: kill and real knockback rescue inside grab, no rescue after bite; L1 diner result counter integration test. |
 | E08-AC13 | PASS | T-E08-13: ≥100 real pistol attacks/hits through living civilians with zero civilian damage; bullet and melee finishing, including rising-body vulnerability. |
 | E08-AC14 | PASS | T-E08-14: full cap delays down→rising; two real 15-person bite waves, L1 cap 15 and chain 8 never exceeded. |
-| E08-AC15 | PARTIAL | Protected fixture stress for 36,000 ticks, unattended brother stays downed, plus 36,000 actual L2-map patrol ticks with the scripted brother/checkpoint. No child target events, infection or gore. Full L2 complete-bot run pending E20. |
+| E08-AC15 | PASS; campaign deferred | Protected fixture stress for 36,000 ticks, unattended brother stays downed, plus 36,000 actual L2-map patrol ticks with the scripted brother/checkpoint. No child target events, infection or gore. Full L2 complete-bot run pending E20. |
 | E08-AC16 | PASS | Five deterministic `turning-*.png` frames, `frames.json`, `compare/turning-sequence.png`, structured image review in `review.md`. |
-| E08-AC17 | PARTIAL | 100 owner-grab seeds test the pet probability and 120–240-tick down/rise; stray-cat systemic test; corgi immune across all six composition patrols in both quality tiers. Full completed L1–L6 campaign pending E19–E24. |
+| E08-AC17 | PASS; campaign deferred | 100 owner-grab seeds test the pet probability and 120–240-tick down/rise; stray-cat systemic test; corgi immune across all six composition patrols in both quality tiers. Full completed L1–L6 campaign pending E19–E24. |
 
 Additional passing checks cover fetch/courage/lure, escort cover, actual L1 diner/tier swap, L2 checkpoint restoration and L5 convoy actor references/spacing/stop/go/HP failure.
 
@@ -48,7 +48,9 @@ Additional passing checks cover fetch/courage/lure, escort cover, actual L1 dine
 | `E2E_PORT=3327 npm run verify -- E08` | Exit 0; 30 selected Vitest tests, 24 browser tests | `checks.json`, `vitest.json`, `playwright.json`, `logs/verify.log` |
 | `E2E_PORT=3327 npm run test:smoke` | Exit 0; 3 simulation checks and 19 browser tests | `logs/smoke.log`, `smoke-playwright.json` |
 
-No browser failures, skips or retries in the final verifier; desktop Chromium, four mobile orientations and WebKit smoke run through the existing machine-wide lock with two workers. The visual captures and structured review pass the current-stage E08 checks. `acceptance.json` maps every criterion to its passing test titles and explicitly retains the three incomplete campaign sign-offs.
+The documentation/status finish was checked with the existing traceability suite: 2/2 pass (`finish-traceability.json`). Implementation and runtime evidence below is unchanged.
+
+No browser failures, skips or retries in the final verifier; desktop Chromium, four mobile orientations and WebKit smoke run through the existing machine-wide lock with two workers. The visual captures and structured review pass the current-stage E08 checks. `acceptance.json` maps every criterion to its passing test titles and explicitly records the three campaign-verification deferrals.
 
 ## Performance
 
@@ -80,8 +82,16 @@ The combat companion run records 100.0% of 10,800 ticks within 6 metres, maximum
 - Bruno `Bubble.js` and `InteractivePoints.js` were read and adapted to the event-driven TypeScript view/interaction lifecycle; notices added. E07 GPU crowd/NavGrid/AI and E04 survivor hierarchy are reused.
 - Latest lane instructions explicitly prohibit a second main merge and defer full regression centrally. Kept the branch isolated; read-only inspection of current main still confirms the complete-bot stub. Earlier unit tests and the isolated E07 peak regression pass locally.
 
-## Remaining dependency / sign-off
+## Approved dependency-stage deferral
 
-`src/debug/testApi.ts` still routes every non-driver bot policy to `NotImplemented('E19', 'bot.start')`. `src/levels/missions.ts` documents campaign encounter tuning and bots as E19–E24-owned; the baseline sim runner supports scenario/tick budgets, not campaign completion. E08 enables those epics, making their complete bot unavailable at this lane's baseline. Implementing vehicle/custom-objective campaign bots would cross the assigned ownership boundary.
+The orchestrator explicitly accepted E08 as done for its own scope and deferred only the campaign-bot verification portions of E08-AC11, E08-AC15 and E08-AC17. The original criterion text, density tolerances, timing windows, protection rules and immunity requirements are unchanged. No campaign-completion evidence is fabricated.
 
-Needed for strict completion: provide the E19–E24 complete-bot implementation and replay AC11/AC15/AC17, or explicitly approve a dependency-stage verification rule. Until then this report does not claim full campaign completion or mark the epic done. Placeholder art is an authorized current-stage result; final corgi checklist B remains its explicitly conditional art follow-up.
+The E08 spec now has a short note for each deferral. Matching “Carried over from E08” acceptance items are added to E19–E24: AC11 density at both tiers in every level; AC15 child protection across full L2 in E20; AC17 corgi immunity in each level and throughout the continuous L1–L6 campaign in E24. Seeded pet-turn checks remain passing E08 evidence.
+
+| Deferred verification | Carried acceptance items |
+| --- | --- |
+| E08-AC11 | E19-AC14, E20-AC13, E21-AC10, E22-AC12, E23-AC12, E24-AC12 |
+| E08-AC15 | E20-AC14 |
+| E08-AC17 | E19-AC15, E20-AC15, E21-AC11, E22-AC13, E23-AC13, E24-AC13 |
+
+No remaining E08 scope issues. Campaign-stage checks remain mandatory for those later epics. Placeholder art is an authorized current-stage result; final corgi checklist B remains its explicitly conditional art follow-up. Main was not merged.
