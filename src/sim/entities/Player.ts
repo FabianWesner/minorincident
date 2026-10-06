@@ -37,7 +37,10 @@ export class Player {
     }
     if (state.diedAt === null && tick - this.lastDamage >= survivor.regenDelayTicks) health.current = Math.min(health.max, health.current + survivor.regenPerSecond * FIXED_DT);
     if (input.interact && state.diedAt === null) this.act('interact', tick);
-    this.locomotion.move(input, this.entity.transform, state.diedAt === null && enabled);
+    // E19 §5.5: running is the default; holding Walk caps the intent at walk speed (not on the bicycle).
+    const walking = (input as InputFrame & { walk?: boolean }).walk && (this.entity as { riding?: number }).riding === undefined;
+    const length = walking ? Math.hypot(input.move.x, input.move.z) : 0, cap = survivor.walkSpeed / survivor.speed;
+    this.locomotion.move(length > cap ? { ...input, move: { x: input.move.x / length * cap, z: input.move.z / length * cap } } : input, this.entity.transform, state.diedAt === null && enabled);
   }
   postPhysics(tick: number): void {
     const p = this.physics.playerBody!.translation(), state = this.entity.survivor!;

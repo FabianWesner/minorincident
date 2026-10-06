@@ -1,6 +1,6 @@
 /** Base survivor balance in metres, seconds and HP (00 §2, E04). */
 export const survivor = {
-  radius: 0.35, height: 1.4, speed: 4.5, acceleration: 36, deceleration: 54,
+  radius: 0.35, height: 1.4, speed: 4.5, walkSpeed: 2.0, acceleration: 36, deceleration: 54,
   turnSpeed: Math.PI * 4, hp: 100, invulnerableTicks: 36, regenDelayTicks: 240,
   regenPerSecond: 2, respawnTicks: 120, hurtTicks: 18, minimumEscapeSpeed: 0.2,
   fallDeathY: -5,
