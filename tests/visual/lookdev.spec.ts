@@ -118,9 +118,11 @@ test('T-E02-fog @E02 @E02-AC09 palette surfaces beyond fogFar resolve to the pre
   await lookdev(page);
   const p = await page.evaluate(async () => {
     const api = window.__SS__!; api.camera.cinematic({ position: [100, 100, 100], target: [0, 0, 0] }); await api.step(60);
-    return api.camera.project(0, 0.05, 8);
+    const render = api.getState().render, camera = render.camera.position;
+    return { ndc: api.camera.project(0, 0.05, 8), distance: Math.hypot(camera[0], camera[1] - .05, camera[2] - 8), fogFar: render.lighting!.fogFar };
   });
-  const image = await capture(page, 'fog-far'); const color = rgb(image, (p[0] + 1) / 2 * image.width, (1 - p[1]) / 2 * image.height);
-  artifact('fog', { color, expected: [229, 179, 158] });
+  expect(p.distance).toBeGreaterThan(p.fogFar);
+  const image = await capture(page, 'fog-far'); const color = rgb(image, (p.ndc[0] + 1) / 2 * image.width, (1 - p.ndc[1]) / 2 * image.height);
+  artifact('fog', { ...p, color, expected: [229, 179, 158] });
   for (let c = 0; c < 3; c++) expect(Math.abs(color[c] - [229, 179, 158][c])).toBeLessThanOrEqual(2);
 });
