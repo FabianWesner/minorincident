@@ -11,6 +11,7 @@ export class CombatView extends Group {
   private readonly eyeMaterial = new MeshBasicNodeMaterial({ color: '#ff3b2f' });
   constructor(private readonly world: SimWorld, private readonly materials: Materials) { super(); }
   update(): void {
+    for(const [id,dummy]of this.dummies)if(!this.world.entities.get(id)){this.remove(dummy);this.dummies.delete(id);}
     for (const entity of this.world.entities.iterate()) {
       if (entity.id === 1 || !entity.combat) continue;
       let dummy = this.dummies.get(entity.id);
