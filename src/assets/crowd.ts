@@ -2,9 +2,9 @@ import { BufferAttribute, DataTexture, FloatType, Group, InstancedMesh, Instance
 import { attribute, instancedBufferAttribute, int, ivec2, mat4, positionGeometry, textureLoad, uniform, vec4, mix, float } from 'three/tsl';
 import { palette } from './palette';
 
-export interface CrowdClip { parts: string[]; frames: number; duration: number; matrices: number[] }
+export interface CrowdClip { parts: string[]; frames: number; duration: number; matrices: number[] | Float32Array }
 export function clipTexture(clip: CrowdClip): DataTexture {
-  const texture=new DataTexture(new Float32Array(clip.matrices),clip.parts.length*4,clip.frames,RGBAFormat,FloatType);
+  const texture=new DataTexture(clip.matrices instanceof Float32Array ? clip.matrices : new Float32Array(clip.matrices),clip.parts.length*4,clip.frames,RGBAFormat,FloatType);
   texture.needsUpdate=true; return texture;
 }
 /** One texel per matrix column; shared by the crowd vertex shader and GPU readback probe. */

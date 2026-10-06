@@ -22,7 +22,7 @@ test('@E19 civilian variety keeps authored gait, sim idle hysteresis and raised 
   const { Materials } = await import('../../../src/render/Materials');
   const { Lighting } = await import('../../../src/render/Lighting');
   const { PaletteMaterial } = await import('../../../src/render/PaletteMaterial');
-  const { infectedClips, framesPerClip } = await import('../../../src/render/characters/bakeInfected');
+  const { civilianClips, framesPerClip } = await import('../../../src/render/characters/bakeInfected');
   const player = { id: 1, transform: { x: 0, y: .7, z: 0 } };
   const civilian = { id: 2, transform: { x: 3, y: 2.7, z: 0, yaw: 0 },
     civilian: { model: 'npc.civilian-man-b', variant: 'inf.bbq-dad', adult: true, state: 'calm', knockedUntil: 0, entered: 0, until: 180, veins: 0, eyesGlow: false },
@@ -40,7 +40,7 @@ test('@E19 civilian variety keeps authored gait, sim idle hysteresis and raised 
     const mesh = meshes.find(n => n.count === 1)!;
     expect(mesh.material).toBeInstanceOf(PaletteMaterial);
     const matrix = new Matrix4(); mesh.getMatrixAt(0, matrix); expect(matrix.elements[13]).toBeCloseTo(2);
-    const clip = () => infectedClips[Math.floor(mesh.geometry.getAttribute('_clip_frame').getX(0) / framesPerClip)];
+    const clip = () => civilianClips[Math.floor(mesh.geometry.getAttribute('_clip_frame').getX(0) / framesPerClip)];
     expect(clip()).toBe('idle');
     civilian.motion = { speed: 1.5, moving: true, distance: .45 }; world.tick++; crowd.update();
     expect(clip()).toBe('npc-walk-relaxed');

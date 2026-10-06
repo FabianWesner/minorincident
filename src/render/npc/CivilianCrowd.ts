@@ -7,7 +7,7 @@ import { clipTexture, crowdMatrix, crowdPosition, type CrowdClip } from '../../a
 import { AssetRegistry } from '../../assets/registry';
 import { civilianRoles } from '../../data/npcs';
 import type { SimWorld } from '../../sim/world/SimWorld';
-import { bakeInfected, framesPerClip, infectedClips } from '../characters/bakeInfected';
+import { bakeInfected, framesPerClip, civilianClips } from '../characters/bakeInfected';
 import { MotionPhase } from '../characters/MotionPhase';
 import { authoredClips, strides } from '../characters/clips';
 import { disposeCharacter } from '../characters/rig';
@@ -35,7 +35,7 @@ class CivilianBatch extends Group {
     const loaded = await this.registry.loadAsset(this.model, this.distant ? 'lod2' : 'lod1');
     const placeholder = loaded.userData.placeholder, model = placeholder ? createCivilianPlaceholder() : loaded as Group;
     this.source = placeholder ? 'placeholder' : 'glb';
-    const baked = bakeInfected(model), color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
+    const baked = bakeInfected(model, [], false, civilianClips), color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     this.strideScale = baked.strideScale;
     for (let i = 0; i < veins.length; i++) veins[i] = Number(Math.abs(color.getX(i) - veinColor.r) < .0001 && Math.abs(color.getY(i) - veinColor.g) < .0001);
     baked.geometry.setAttribute('_vein', new BufferAttribute(veins, 1));
@@ -80,7 +80,7 @@ class CivilianBatch extends Group {
         const blend = noticingSeated ? Math.max(0, 1 - noticeElapsed / .6) : activity.activity === 'stand' ? Math.max(0, 1 - elapsed / .6) : Math.min(1, elapsed / .6);
         this.transform.setPosition(e.transform.x + (activity.seat.x - e.transform.x) * blend, e.transform.y - .7, e.transform.z + (activity.seat.z - e.transform.z) * blend);
       }
-      const frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
+      const frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, frame);
       if (activity?.prop && c.state === 'calm' && this.props) {
         const part = this.bakedClip.parts.indexOf('handR'), stride = this.bakedClip.parts.length * 16;
