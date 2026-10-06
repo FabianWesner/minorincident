@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>E18 real-device recorder</title><style>body{margin:0;background:#182333;color:white;font:16px system-ui}iframe{border:0;width:100vw;height:100dvh}form{position:fixed;top:env(safe-area-inset-top);left:env(safe-area-inset-left);right:env(safe-area-inset-right);padding:8px;background:#182333ee;z-index:30}input,button{font:inherit;max-width:40%;padding:8px}output{display:block;padding:6px}</style></head><body><form><label>Device model <input required placeholder="e.g. Pixel 7" name="model"></label><button>Record physical phone</button><output>Run on a physical iOS or mid-range Android phone. After warm-up, record 1,200 rendered frames. Keep this tab visible.</output></form><iframe title="Minor Incident performance scene" src="/?test=1&amp;quality=auto&amp;perf&amp;audio=muted"></iframe><script type="module">
+const form=document.querySelector('form'),status=document.querySelector('output'),frame=document.querySelector('iframe');
+form.addEventListener('submit',async event=>{
+  event.preventDefault(); const model=new FormData(form).get('model').trim();
+  const platform=/Android/i.test(navigator.userAgent)?'android':/iPhone|iPad|iPod/i.test(navigator.userAgent)?'ios':null;
+  if(!platform){status.textContent='Use a physical iOS or Android phone.';return;}
+  const button=form.querySelector('button');button.disabled=true;
+  try{
+    while(!frame.contentWindow.__SS__)await new Promise(r=>setTimeout(r,100));
+    const a=frame.contentWindow.__SS__;await a.ready;await a.loadScenario('perf-l6-mainstreet');a.cheats.god(true);a.resume();
+    status.textContent='Warming up for five seconds…';await new Promise(r=>setTimeout(r,5000));
+    const frameMs=[],started=performance.now();let previous=a.perf().renderedFrames;
+    while(frameMs.length<1200){await new Promise(requestAnimationFrame);if(document.hidden)throw new Error('Tab was hidden; retry with the screen awake.');const p=a.perf();if(p.renderedFrames===previous)continue;previous=p.renderedFrames;if(p.frameMs>0)frameMs.push(p.frameMs);status.textContent=`Recording ${frameMs.length}/1200 frames…`;}
+    const sorted=[...frameMs].sort((a,b)=>a-b),canvas=frame.contentDocument.querySelector('canvas'),gl=canvas.getContext('webgl2'),ext=gl?.getExtension('WEBGL_debug_renderer_info');
+    const data={version:1,physicalDevice:true,deviceClass:'mid-range',platform,model,recordedAt:new Date().toISOString(),userAgent:navigator.userAgent,scenario:'perf-l6-mainstreet',quality:a.perf().quality.tier,backend:a.perf().backend,viewport:{width:frame.contentWindow.innerWidth,height:frame.contentWindow.innerHeight,dpr:devicePixelRatio},gpu:ext?gl.getParameter(ext.UNMASKED_RENDERER_WEBGL):null,durationMs:performance.now()-started,frameMs,fpsP50:1000/sorted[Math.ceil(sorted.length*.5)-1],infected:a.getState().ai.count,perf:a.perf()};
+    const link=document.createElement('a');link.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));link.download=`${platform}-${model.replace(/[^a-z0-9]/gi,'-')}.json`;link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);
+    status.textContent=`p50 ${data.fpsP50.toFixed(1)} fps. Save JSON to test-results/perf/devices/ in the E18 lane.`;
+  }catch(error){status.textContent=error.message;}finally{button.disabled=false;}
+});
+</script></body></html>
