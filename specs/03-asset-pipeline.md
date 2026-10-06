@@ -167,21 +167,17 @@ Static world geometry is authored like assets: `layouts/<district>/layout.py` is
 | weapon | `grip, muzzle` (ranged), or `grip, tip` (melee), or `grip` (throwable) |
 | building | `root`, optional `door_*`, `window_*` (emissive), `roof` (hidden when the player is inside), `interior` |
 
-**Shipping budgets (decision 2026-10-06, product owner: "no more detail than the reference game").** Measured reference, Bruno's folio-2025: player car 3.7k triangles, character 9.4k, a whole play area 58.6k, typical props 0.3–5k, compressed GLBs 5–60 KB. The game camera is isometric and far away, so the shipped mesh ("game mesh", `model.glb` in the build) is the old LOD1 density. The detailed Blender build (old LOD0) stays in `assets/<id>/` as the offline source and catalog close-up and is **never shipped or loaded by the game**.
+**Detail and camera (decision 2026-10-06, product owner).** The game camera is close, like `initial-drafts/sunset-grove-combat-gameplay-mockup.png` (survivor ≈ 1/5 of the viewport height, E02-AC02), so the detailed Blender builds are the right LOD0 and are **not** re-made. Because the close camera shows only a small part of the town at once, performance comes from the LOD chain, culling and streaming, not from cheaper hero meshes.
 
-| Category | Game mesh (LOD0 shipped) | LOD1 (crowds / > ~15 m) | Shipped GLB (meshopt/quantized) |
+| Tier | Used for | LOD0 budget | Look |
 | --- | --- | --- | --- |
-| survivor, corgi | ≤ 10k | ≤ 3k | ≤ 300 KB |
-| NPC | ≤ 6k | ≤ 2k | ≤ 200 KB |
-| infected (humanoid) | ≤ 4k | ≤ 1.2k (crowd bake beyond ~12 m) | ≤ 150 KB |
-| animals | crow ≤ 1k, cats/small dogs ≤ 2k, other ≤ 4k | ≈ 30% | ≤ 120 KB |
-| vehicle | ≤ 8k (fire engine, bus, train, helicopter ≤ 12k) | ≤ 2.5k | ≤ 300 KB |
-| building / interior / large kit | ≤ 10k (hospital, school, mall, civic center, interiors ≤ 15k) | ≤ 3k (roof/shell only) | ≤ 400 KB |
-| flat structures (helipad, pads, decks, terrain pieces) | ≤ 3k | — | ≤ 150 KB |
-| props, street furniture | ≤ 1.5k (barricade materials ≤ 500) | ≤ 400 | ≤ 60 KB |
-| weapons, throwables, pickups | ≤ 1k | — | ≤ 40 KB |
+| **Hero** | survivors, corgi, NPCs, infected, vehicles, buildings | survivor/NPC ≤ 60k, infected ≤ 40k, vehicle ≤ 80k, building ≤ 100k triangles; animals: crow ≤ 3k, cats/small dogs ≤ 8k, flamingo ≤ 10k, large dogs ≤ 12k, gorilla/lion ≤ 25k; flat structures ≤ 20k; barricade materials ≤ 3k; pickups ≤ 2.5k | rich, finished, soft-bevelled ("round 1") |
+| **Side** | props, street furniture, weapons, pickups | 6–12k (weapons ≤ 6k) | chunky but detailed ("round 3") |
+| **Distant** | never approached (skyline, far dressing) | 1–4k | chunky low-poly ("round 2") |
 
-Rules: textures ≤ 512 px (prefer vertex colours / a shared palette atlas; signs may keep a small decal texture); draw calls per asset ≤ 12 (animated nodes excluded) — join static parts by material; small dressing (shelf products, bottles, cans) becomes a texture on a box, never individual meshes. Get to budget by **removing and merging detail objects first**, decimation second; check the result at the game camera, not the close-up. `npm run assets:validate` enforces the triangle and size budgets on the shipped mesh. New Blender builds target the game-mesh budget directly (round-3 "side" look: chunky, readable silhouettes, flat colours), not the old hero density.
+**Every** hero and side asset ships an LOD chain: LOD1 ≈ 10–15% of LOD0, LOD2 ≈ 3% (or the crowd bake for infected). Runtime rules: LOD0 only within ~12 m of the camera target (what fills the close view), LOD1 to ~30 m, LOD2 beyond; crowds of infected use LOD1/LOD2 or the crowd bake except the nearest ~8; frustum culling; districts stream in and out. Draw calls per asset after joining: hero ≤ 40, side ≤ 30, distant ≤ 12 (animated nodes excluded).
+
+**Delivery budgets (load time).** Shipped GLBs are meshopt-compressed and quantized, textures KTX2/WebP ≤ 1024 px (≤ 512 px for side assets). Per file: hero ≤ 1.5 MB (LOD0), side ≤ 300 KB, LOD1 ≤ 25% of its LOD0. A level's initial download (start district) ≤ 25 MB, the rest streams; time to first playable frame on the desktop reference ≤ 5 s on a 50 Mbit/s connection. Measured reference (25 copies, M1 Max, WebGPU): hero ≈ 8–15 ms, side ≈ 1.5–2.5 ms, distant ≈ 1.5 ms per frame — hence LODs are mandatory for anything that appears more than a handful of times.
 
 ## 8. Placeholders
 
