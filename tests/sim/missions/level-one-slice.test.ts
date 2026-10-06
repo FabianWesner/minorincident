@@ -48,7 +48,8 @@ test('@E19 @E19-AC05 evade-only reaches the hardware checkpoint on 20 seeds via 
     walk(42,0);walk(70,0);walk(70,-7);expect(m.state.checkpoint).toBe('melee');expect(m.state.stats.deaths).toBe(0);
     expect(world.events.events().some(e=>e.type==='combat.attack')).toBe(false);world.dispose();
   }
-});
+}, 120_000); // Twenty town reconstructions share this Mac with browser lanes.
+
 
 test('@E19 slice complete policy finishes 20 seeds with normal movement, pickup and combat',async()=>{
   for(let seed=1;seed<=20;seed++){
@@ -205,6 +206,9 @@ test('@E19 M1-23 M1-24 each diner rise releases its own brain before the chain f
     if (bitten && turned) { timings.push(turned.tick - bitten.tick); expect(turned.tick - bitten.tick).toBeGreaterThanOrEqual(156); expect(turned.tick - bitten.tick).toBeLessThanOrEqual(180); }
   }
   expect(timings.length).toBe(3); expect(new Set(timings).size).toBeGreaterThan(1);
+  const grabs = events.filter(e => e.type === 'civilian.grabbed');
+  expect(new Set(grabs.map(e => e.type === 'civilian.grabbed' ? e.sourceId : 0)).size).toBeGreaterThan(1);
+  expect(grabs.some(e => e.type === 'civilian.grabbed' && births.has(e.sourceId) && events.some(t => t.type === 'civilian.turned' && t.id === e.targetId && t.tick > e.tick))).toBe(true);
   m.completeObjective('escape'); expect(world.infected!.active).toHaveLength(0);
 });
 
