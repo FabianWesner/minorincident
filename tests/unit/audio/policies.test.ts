@@ -20,6 +20,16 @@ test('T-E16-04 @E16 @E16-AC04 storm culls lowest priorities first and never exce
         expect(limiter.voices.size).toBe(0);
     }
 });
+test('@E16 streamed deck reservation preserves the total voice budget across tier changes', () => {
+    const limiter = new VoiceLimiter('high', 4), culled: number[] = [];
+    for (let id = 0; id < 100; id++) limiter.add({ id, priority: id, stop: () => culled.push(id) });
+    expect(limiter.voices.size + 4).toBe(32);
+    expect([...limiter.voices.keys()]).toEqual(Array.from({ length: 28 }, (_, i) => 72 + i));
+    limiter.setTier('low');
+    expect(limiter.voices.size + 4).toBe(16);
+    expect([...limiter.voices.keys()]).toEqual(Array.from({ length: 12 }, (_, i) => 88 + i));
+    expect(culled).toEqual(Array.from({ length: 88 }, (_, i) => i));
+});
 test('@E16 score follows calm, incident tension, combat and sustained-quiet aftermath on the bar grid', () => {
     const music = new MusicDirector('L1');
     music.update(0, { alerted: 0 });

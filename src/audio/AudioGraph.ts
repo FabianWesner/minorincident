@@ -63,8 +63,8 @@ export class AudioGraph {
     private readonly impulses = new Map<ReverbPreset, AudioBuffer>();
     private radioUntil = 0;
     private megaUntil = 0;
-    constructor(readonly context: BaseAudioContext, public tier: 'high' | 'low' = 'high', mutedOutput = false) {
-        this.limiter = new VoiceLimiter(tier);
+    constructor(readonly context: BaseAudioContext, public tier: 'high' | 'low' = 'high', mutedOutput = false, reservedVoices = 0) {
+        this.limiter = new VoiceLimiter(tier, reservedVoices);
         this.master = context.createGain();
         this.master.gain.value = 2;
         this.output = context.createGain();

@@ -132,3 +132,9 @@ Two targeted stream lifecycle tests cover interruption before initial play
 resolves and failure to start an incoming track without fading the outgoing
 track. Browser regression coverage also checks cancellation of an initial alert
 before its bar boundary. The resumed score preserves the last requested state.
+
+The live service reserves four of the existing voice slots for streaming decks;
+rapid transitions may briefly overlap all four states. Sprite voices therefore
+cap at 28 high / 12 low, and total live counters include media voices, preserving
+the E16 total of 32 high / 16 low. Offline renders have no media decks and retain
+their full sprite budget. Priority culling remains lowest/oldest first.
