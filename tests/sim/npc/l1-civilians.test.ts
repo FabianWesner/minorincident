@@ -3,7 +3,7 @@ import { l1v2 } from '../../../src/data/l1v2';
 import { keepsLook } from '../../../src/sim/outbreak/appearance';
 import type { BiteEvent, InfectionEvent } from '../../../src/sim/outbreak/types';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
-import { groveWorld, infectedCount, mockHunters, releaseFive, step } from './l1-grove';
+import { anchor, groveWorld, infectedCount, mockHunters, releaseFive, step } from './l1-grove';
 
 const civilians = (w: Awaited<ReturnType<typeof groveWorld>>['w']) => [...w.entities.iterate()].filter(e => e.civilian?.l1);
 const park = (w: Awaited<ReturnType<typeof groveWorld>>['w']) => { const p = w.entities.get(1)!; p.transform.x = -82; p.transform.z = -52; w.spatial.set(1, -82, -52); };
@@ -121,5 +121,21 @@ describe('L1 v2 civilians and infection', () => {
     outbreak.grab(victim, ai.active[0]); ai.active[0].transform.x = victim.transform.x + .6; ai.active[0].transform.z = victim.transform.z; step(w, 61);
     expect(w.events.events().find(e => e.type === 'outbreak.bite')).toMatchObject({ targetId: victim.id, turns: false });
     step(w, 300); expect(victim.civilian!.state).toBe('finished'); expect(ai.director.count).toBe(l1v2.director.capLow); w.dispose();
+  });
+
+  test('@E19 @E19-AC06 horde guarantee and scripted turns keep the pedestrian look (section 5.9)', async () => {
+    const { w, outbreak } = await groveWorld(5, { civilians: 50 }); park(w);
+    const exit = anchor('garage-door'), entry = anchor('elm-horde-entry');
+    const spawned = outbreak.ensureHorde(exit, entry);
+    expect(spawned).toBe(l1v2.director.hordeMinInfectedNearGarage);
+    const horde = w.infected!.active.filter(e => keepsLook(e));
+    expect(horde).toHaveLength(spawned);
+    for (const e of horde) { expect(e.civilian).toBeUndefined(); expect(e.appearance!.asset).toMatch(/^npc\.civilian-/); }
+    expect(outbreak.ensureHorde(entry, entry)).toBe(0);
+    // Scripted out-of-sight turn (lab technician): same id and look, not counted as a bite.
+    const tech = w.entities.get(outbreak.spawnPedestrian({ x: anchor('lab-exit-front').x, z: anchor('lab-exit-front').z + 2 }))!;
+    const look = structuredClone(tech.appearance); outbreak.turnNow(tech, 'average');
+    expect(w.entities.get(tech.id)).toBe(tech); expect(tech.infected).toBeDefined(); expect(tech.appearance).toEqual({ ...look, tier: 'average' });
+    expect(outbreak.stats.turned).toBe(0); w.dispose();
   });
 });

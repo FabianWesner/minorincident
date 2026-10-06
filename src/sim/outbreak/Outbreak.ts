@@ -334,6 +334,15 @@ export class Outbreak {
     this.world.events.emit({ type: 'civilian.turned', tick, id: e.id, infectedId: e.id, variant: c.variant, position: { x: e.transform.x, z: e.transform.z } });
   }
 
+  /**
+   * Turn a pedestrian immediately (no on-screen transformation), keeping id and look. For scripted beats that happen out
+   * of sight, e.g. the lab technician inside the facility or the off-screen horde. Not counted as a bite.
+   */
+  turnNow(e: EntitySnapshot, tier?: SpeedTier): void {
+    if (tier && e.appearance) e.appearance.tier = tier;
+    e.infection = { entityId: e.id, progress: 1, phase: 'infected', tier: e.appearance?.tier ?? 'average', startedTick: this.world.tick, endsTick: this.world.tick, biteSourceId: 0 };
+    e.hidden = false; this.rise(e, false);
+  }
   /** Live pedestrians (not escaped, not turning, not dead). */
   liveCivilians(): number {
     let count = 0; for (const e of this.world.entities.iterate()) if (e.civilian?.l1 && !e.hidden && !e.infection && mobile.has(e.civilian.state)) count++; return count;
@@ -372,12 +381,12 @@ export class Outbreak {
     const ai = this.world.infected!, d = l1v2.director;
     let near = 0; for (const a of ai.active) if (a.health.current > 0 && Math.hypot(a.transform.x - exit.x, a.transform.z - exit.z) <= d.hordeRadiusM) near++;
     const at = this.snap(entry), missing = Math.max(0, d.hordeMinInfectedNearGarage - near);
+    // M1-10: never spawn in view; the mission simply asks again on a later tick.
+    if (missing && !ai.director.offscreen(at)) return 0;
     let spawned = 0;
     for (let i = 0; i < missing && ai.director.count < ai.director.cap && ai.pool.length; i++) {
       const p = this.snap({ x: at.x + (i % 3) * 1.2 - 1.2, z: at.z + Math.floor(i / 3) * 1.2 });
-      const id = this.spawnPedestrian(p), e = this.world.entities.get(id)!;
-      e.infection = { entityId: id, progress: 1, phase: 'infected', tier: e.appearance!.tier, startedTick: this.world.tick, endsTick: this.world.tick, biteSourceId: 0 };
-      e.civilian!.veins = skinBlend; e.civilian!.eyesGlow = true; this.rise(e, false); spawned++;
+      this.turnNow(this.world.entities.get(this.spawnPedestrian(p))!); spawned++;
     }
     for (let i = 0; i < Math.min(2, spawned); i++) {
       const p = this.snap({ x: at.x + (exit.x - at.x) * .25 + i, z: at.z + (exit.z - at.z) * .25 });
