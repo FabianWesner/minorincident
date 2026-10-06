@@ -1,6 +1,7 @@
 // Zones enter/leave latching and named respawns adapted from Bruno Simon folio-2025
 // Zones.js / Respawns.js (MIT, 41046b5). State belongs to the fixed-step sim.
 import { LevelOneOutbreak } from './LevelOneOutbreak';
+import { captureSeams, restoreSeams } from './l1Seams';
 import { dialogue } from '../../data/dialogue';
 import { SimPhase } from '../../core/EventBus';
 import type { InputFrame } from '../../input/InputFrame';
@@ -23,16 +24,11 @@ export class Mission {
   private pendingMarker: string | null = null;
   private readonly pendingCheckpoints: string[] = [];
   private finishApplied = false;
-  /** Temporary playtest choice; no permanent unlock is awarded. */
-  meleeChoice = 'weapon.bat';
-  chooseMelee(id: string): void {
-    if (this.def.slice && this.state.steps.melee?.status === 'active' && ['weapon.bat','weapon.crowbar','weapon.machete'].includes(id)) this.meleeChoice = id;
-  }
-  restartSlice(): void { if (this.def.slice) { this.world.combat?.clearLoadout(); this.meleeChoice = 'weapon.bat'; this.restore('start'); } }
-  private readonly outbreak = new LevelOneOutbreak(this);
+  private readonly l1: LevelOneOutbreak | null;
   private readonly startTick: number;
   constructor(readonly world: SimWorld, readonly def: MissionDef) {
     const errors = validateMission(def); if (errors.length) throw new Error(errors.join('\n'));
+    this.l1 = def.l1 ? new LevelOneOutbreak(this) : null;
     this.startTick = world.tick;
     this.state = {
       id: def.id, phase: 'briefing', completedObjectives: [], volumes: [], killedBosses: [],
@@ -45,8 +41,13 @@ export class Mission {
     world.mission = this.state; this.rebuildGates();
     for (const step of def.steps) {this.registerZones(step.complete); for(const fail of step.fail)this.registerZones(fail.trigger);}
     this.stops.push(world.events.on('sim.tick', () => this.update(), SimPhase.missions));
-    this.stops.push(world.events.on('civilian.grabbed', event => { if (event.type === 'civilian.grabbed' && this.def.slice) this.outbreak.grabbed(event.sourceId, event.targetId); }, SimPhase.missions));
-    this.stops.push(world.events.on('civilian.turned', event => { if (event.type === 'civilian.turned' && this.def.slice) this.outbreak.turned(event.id, event.infectedId); }, SimPhase.missions));
+    // Result counters: every pedestrian turned or escaped, whichever lane's event reports it (ids dedupe).
+    for (const type of ['civilian.turned', 'outbreak.infection', 'outbreak.bite', 'outbreak.civilian-escaped'] as const) this.stops.push(world.events.on(type, event => {
+      if (event.type === 'civilian.turned') this.l1?.noteTurned(event.id);
+      else if (event.type === 'outbreak.infection' && event.phase === 'infected') this.l1?.noteTurned(event.entityId);
+      else if (event.type === 'outbreak.bite' && event.turns) this.l1?.noteTurned(event.targetId);
+      else if (event.type === 'outbreak.civilian-escaped') this.l1?.noteEscaped(event.id);
+    }, SimPhase.missions));
     for (const type of ['combat.kill', 'player.damaged', 'player.died', 'player.respawned', 'mission.signal', 'mission.failed'] as const) this.stops.push(world.events.on(type, event => this.event(event), SimPhase.missions));
     this.emit({ type: 'mission.briefing', id: def.id, text: def.briefing });
   }
@@ -56,7 +57,7 @@ export class Mission {
   /** A briefing is explicit; callers may accept it immediately for deterministic fixtures. */
   begin(): void {
     if (this.state.phase !== 'briefing') return;
-    if (this.def.slice) this.outbreak.prepare();
+    this.l1?.prepare();
     this.state.phase = 'playing'; this.run(this.def.onStart); this.activate(); this.flushCheckpoint();
     this.checkpoints.set('start', this.capture());
     this.world.events.emit({ type: 'level.started', tick: this.world.tick, id: this.def.id });
@@ -90,7 +91,7 @@ export class Mission {
   }
   private update(): void {
     if (this.state.phase !== 'playing') return;
-    if (this.def.slice) this.outbreak.update();
+    this.l1?.update();
     const alive=this.world.entities.get(1)!.health.current>0;
     this.state.stats.time = (this.world.tick - this.startTick) / 60;
     if (this.state.subtitle && this.world.tick >= this.state.subtitle.until) this.state.subtitle = null;
@@ -124,16 +125,7 @@ export class Mission {
   }
   private complete(def: ObjectiveDef): void {
     this.state.steps[def.id].status = 'completed'; this.state.completedObjectives.push(def.id);
-    if (this.def.slice && def.id === 'breakfast') this.world.combat!.setLoadout(['weapon.fists'], ['weapon.fists']);
-    // Crossing the hardware entrance closes the first chase; the weapon display is a safe beat.
-    if (this.def.slice && def.id === 'escape') {
-      this.outbreak.end();
-      for (const actor of Object.keys(this.state.actors).filter(name => name.startsWith('incident-'))) {
-        const entity=this.world.entities.get(this.state.actors[actor]);if(entity?.infected)this.world.infected!.release(entity);
-      }
-      this.world.player!.restoreVitals(this.world.tick);
-    }
-    if (this.def.slice && def.id === 'melee') this.world.combat!.setLoadout([this.meleeChoice], ['weapon.fists']);
+    this.l1?.completed(def.id);
     if (def.optional && !this.state.stats.optionalObjectives.includes(def.id)) this.state.stats.optionalObjectives.push(def.id);
     if (def.choice) for (const sibling of this.def.steps) if (sibling.id !== def.id && sibling.choice === def.choice) this.state.steps[sibling.id].status = 'cancelled';
     if (def.type === 'escort' && def.complete.kind === 'escort') this.rescue(this.state.actors[def.complete.actor]);
@@ -142,7 +134,8 @@ export class Mission {
   /** A cheat completes precisely one active objective, including in a parallel graph. */
   completeObjective(id?: string): void {
     if (this.state.phase !== 'playing') throw new Error('Mission is not playing');
-    const def = this.def.steps.find(s => this.state.steps[s.id].status === 'active' && (id === undefined || s.id === id));
+    let def = this.def.steps.find(s => this.state.steps[s.id].status === 'active' && (id === undefined || s.id === id));
+    if (!def && this.l1?.advance()) { this.activate(); def = this.def.steps.find(s => this.state.steps[s.id].status === 'active' && (id === undefined || s.id === id)); }
     if (!def) throw new Error(`No active objective: ${id ?? ''}`);
     this.complete(def); this.activate(); this.finish(); this.flushCheckpoint();
   }
@@ -153,7 +146,7 @@ export class Mission {
   }
   private result(): void {
     this.state.phase = 'result'; this.state.stats.time = (this.world.tick - this.startTick) / 60;
-    this.state.result = structuredClone(this.state.stats);
+    this.state.result = { ...structuredClone(this.state.stats), ...this.l1?.result() };
     this.emit({ type: 'level.completed', id: this.def.id, result: this.state.result });
   }
   continue(): void { if (this.state.phase === 'result') { this.state.phase = 'progression'; this.emit({ type: 'progression.requested', id: this.def.id }); } }
@@ -195,13 +188,6 @@ export class Mission {
     for (const id of actors) {
       if (this.state.actors[id] || this.deadBosses.has(id)) continue;
       const def = this.def.actors[id], anchor = this.def.anchors[def.anchor];
-      if (this.def.slice && this.world.infected && def.kind === 'infected') {
-        if (group === 'incident' && id !== 'incident-0') continue;
-        const position = this.outbreak.spawnPosition(anchor, group === 'store');
-        const entityId = this.world.infected.spawn(def.archetype, position, { state: group === 'incident' ? 'migration' : 'chase', variant: id === 'incident-0' ? 'inf.delivery-driver' : undefined });
-        if (group === 'incident') this.world.entities.get(entityId)!.combat!.damageMultiplier = .2;
-        this.state.actors[id]=entityId; continue;
-      }
       const convoy = def.archetype === 'defend.convoy' && this.world.npcs ? this.world.npcs.traffic.convoy(['res', 'fuel', 'checkpoint', 'bridge'].map(key => this.def.anchors[key])) : null;
       const entity = convoy ? this.world.entities.get(convoy[0])! : this.world.entities.create({ kind: def.kind, archetype: def.archetype, faction: def.faction, transform: { x: anchor.x, z: anchor.z, y: 0.7, yaw: 0 }, health: { current: def.hp, max: def.hp }, combat: { radius: 0.4, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
       if (entity.kind === 'escort') this.world.npcs?.escorts.attach(entity);
@@ -223,7 +209,7 @@ export class Mission {
       case 'migration': this.spawn(action.group); this.emit({ type: 'migration.started', id: action.group, to: this.def.anchors[action.to] }); break;
       case 'tier': this.state.tier = action.tier; this.world.setTier(action.tier); this.emit({ type: 'world.tier-requested', tier: action.tier }); break;
       case 'gate': this.state.gates[action.id] = action.open; this.world.physics.world!.getCollider(this.gateHandles.get(action.id)!).setEnabled(!action.open); this.emit({ type: 'gate.changed', id: action.id, open: action.open }); break;
-      case 'radio': this.state.subtitle = { id: action.id, text: dialogue[action.id], until: this.world.tick + (this.def.id === 'L1' ? 180 : 300) }; this.emit({ type: 'dialogue.line', id: action.id, text: dialogue[action.id] }); break;
+      case 'radio': this.state.subtitle = { id: action.id, text: dialogue[action.id], until: this.world.tick + (this.def.id === 'L1' ? 240 : 300) }; this.emit({ type: 'dialogue.line', id: action.id, text: dialogue[action.id] }); break;
       case 'cinematic': if (this.state.cinematic) throw new Error('Overlapping cinematics'); this.state.cinematic = { id: action.id, elapsed: 0, resume:this.state.phase==='retry'?'retry':'playing' }; this.state.phase = 'cinematic'; this.emit({ type: 'cinematic.started', id: action.id }); break;
       case 'timeOfDay': this.state.timeOfDay = action.value; break;
       case 'grant': this.collect(action.item); break;
@@ -242,8 +228,12 @@ export class Mission {
     this.emit({ type: 'cinematic.completed', id: current.id });
     this.activate(); this.flushCheckpoint(); if (this.finishApplied && !this.state.cinematic) this.result();
   }
+  /** Story-triggered checkpoint: captured at the end of the current tick, after all of its spawns. */
+  requestCheckpoint(id: string): void { this.pendingCheckpoints.push(id); }
+  /** Dispatcher/toast line through the same path as scripted radio actions. */
+  radio(id: string): void { this.run([{ kind: 'radio', id }]); }
   checkpoint(id: string): void { if (!this.def.checkpoints.includes(id)) throw new Error(`Unknown checkpoint: ${id}`); this.state.checkpoint = id; this.world.player!.setCheckpoint(this.world.entities.get(1)!.transform); this.checkpoints.set(id, this.capture()); this.emit({ type: 'checkpoint.set', id }); }
-  private capture(): MissionCheckpoint { return { tick: this.world.tick, state: structuredClone(this.state), entities: this.world.query({}) }; }
+  private capture(): MissionCheckpoint { return { tick: this.world.tick, state: structuredClone(this.state), entities: this.world.query({}), seams: captureSeams(this.world) }; }
   private flushCheckpoint(): void { for(const id of this.pendingCheckpoints)this.checkpoint(id);this.pendingCheckpoints.length=0; }
   /** Test loading can reconstruct an authored checkpoint by walking its graph prefix.
    * Existing reached snapshots are always preferred; this is not a gameplay playthrough. */
@@ -255,6 +245,8 @@ export class Mission {
     for(let i=0;i<this.def.steps.length&&!this.checkpoints.has(id);i++){
       if(this.state.phase==='cinematic')for(let frame=0;frame<30;frame++)this.advanceCinematic({...this.world.inputFrame,interact:true});
       if(this.state.phase!=='playing')break;
+      // L1 v2: the scripted gap before the infected exit has no objective; fast-forward it to reach the accident checkpoint.
+      if(this.l1&&!this.def.steps.some(s=>this.state.steps[s.id].status==='active')&&this.l1.advance()){this.activate();this.flushCheckpoint();continue;}
       this.completeObjective();
     }
     this.restore(id);
@@ -263,7 +255,6 @@ export class Mission {
   restore(id = this.state.checkpoint ?? 'start'): void {
     this.world.controls.reset();
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
-    const retained = this.def.slice && id === 'melee' && this.state.steps.melee.status === 'completed' ? this.world.entities.get(1)!.weapons : undefined;
     const stats = this.state.stats, bosses=this.state.killedBosses, delta = this.world.tick - checkpoint.tick;
     Object.assign(this.state, structuredClone(checkpoint.state)); this.state.stats = stats; this.state.killedBosses=bosses; this.state.failure = null; this.state.phase = 'playing'; this.state.cinematic = null; this.state.result = null;
     this.finishApplied = false; this.pendingCheckpoints.length=0; this.markerObjective=this.def.steps.find(s=>this.state.steps[s.id].status==='active')?.id??null; this.pendingMarker=null;
@@ -275,7 +266,6 @@ export class Mission {
     delete player.weapons;
     Object.assign(player, entities[0]); player.health.current = player.health.max; player.survivor!.diedAt = null;
     for (const entity of entities) if (entity.vehicle) { if (entity.vehicle.explodeAt !== null) entity.vehicle.explodeAt += delta; if (entity.vehicle.recoveringUntil) entity.vehicle.recoveringUntil += delta; }
-    if (retained) { player.weapons = structuredClone(retained); this.state.items.push('melee'); this.state.steps.melee.status='completed'; if(!this.state.completedObjectives.includes('melee'))this.state.completedObjectives.push('melee'); }
     if (!this.world.npcs && this.world.infected) { this.world.infected.pool.push(...this.world.infected.active); this.world.infected.active.length=0; }
     this.world.entities.restore(entities, player);
     if (!this.world.npcs && this.world.infected) {
@@ -286,15 +276,17 @@ export class Mission {
     } this.world.spatial.reset();
     for (const entity of this.world.entities.iterate()) this.world.spatial.set(entity.id, entity.transform.x, entity.transform.z);
     this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.player!.restoreVitals(this.world.tick); this.world.previousPlayer = { ...player.transform };
-    if (player.weapons && this.world.combat) {
-      const saved = player.weapons; this.world.combat.setLoadout(saved.LEFT.rack.map(s => s.id), saved.RIGHT.rack.map(s => s.id));
+    const live: EntitySnapshot = player;
+    if (live.weapons && this.world.combat) {
+      const saved = live.weapons; this.world.combat.setLoadout(saved.LEFT.rack.map(s => s.id), saved.RIGHT.rack.map(s => s.id));
       Object.assign(this.world.combat.runner.loadout.state, saved);
-      for (const side of [saved.LEFT, saved.RIGHT]) { if (side.swapUntil) side.swapUntil += delta; for (const slot of side.rack) for (const key of ['nextCharge', 'reloadUntil', 'readyAt'] as const) if (slot[key]) slot[key] = retained ? 0 : slot[key] + delta; }
+      for (const side of [saved.LEFT, saved.RIGHT]) { if (side.swapUntil) side.swapUntil += delta; for (const slot of side.rack) for (const key of ['nextCharge', 'reloadUntil', 'readyAt'] as const) if (slot[key]) slot[key] = slot[key] + delta; }
       this.world.combat.projectiles.length = 0; this.world.combat.effects.zones.length = 0;
     }
-    if (!player.weapons) this.world.combat?.clearLoadout();
+    if (!live.weapons) this.world.combat?.clearLoadout();
     this.world.npcs?.restore(delta);
-    if (retained) { this.spawn('store'); this.activate(); }
+    this.l1?.restore(delta);
+    restoreSeams(this.world, checkpoint.seams);
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(entityId)) step.kills.push(entityId);
     if (this.state.tier !== null) this.world.setTier(this.state.tier as 0|1|2|3|4|5);
     this.world.vehicles?.rebuild();

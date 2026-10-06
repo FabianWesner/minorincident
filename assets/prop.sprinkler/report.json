@@ -1,0 +1,67 @@
+{
+  "id": "prop.sprinkler",
+  "triangles": {
+    "lod0": 2708,
+    "lod1": 320,
+    "lod2": 72
+  },
+  "dimensions_blender": [
+    1.2049999237060547,
+    0.6899999976158142,
+    0.28949999809265137
+  ],
+  "draw_calls": 5,
+  "materials": [
+    "pal_foliage",
+    "pal_backpackTeal",
+    "pal_schoolBusYellow",
+    "pal_uiDark",
+    "pal_brass"
+  ],
+  "nodes": [
+    "root",
+    "sprinklerHead",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 3,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred.",
+    "Water arcs are runtime VFX; the opaque sprinkler model is complete."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 63780,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 15496,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 10536,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.11816838995568685,
+    "lod2": 0.026587887740029542
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.sprinkler",
+    "geometry_hash": "80e79f654df4162f70e0dee9f99e0908a40191f119a151df39e0387c3c5857bb",
+    "second_geometry_hash": "80e79f654df4162f70e0dee9f99e0908a40191f119a151df39e0387c3c5857bb",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
+}

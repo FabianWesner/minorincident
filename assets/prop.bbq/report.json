@@ -1,0 +1,65 @@
+{
+  "id": "prop.bbq",
+  "triangles": {
+    "lod0": 4424,
+    "lod1": 524,
+    "lod2": 120
+  },
+  "dimensions_blender": [
+    0.7400000095367432,
+    0.873978853225708,
+    1.2024999856948853
+  ],
+  "draw_calls": 7,
+  "materials": [
+    "pal_survivorRed",
+    "pal_brass",
+    "pal_uiDark",
+    "pal_silver"
+  ],
+  "nodes": [
+    "root",
+    "lid",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 3,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 78436,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 20160,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 13472,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.11844484629294756,
+    "lod2": 0.027124773960216998
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.bbq",
+    "geometry_hash": "517e09b2d7eab1fa9781f05ec3064f88645e7199329ff47093780123b5d0d113",
+    "second_geometry_hash": "517e09b2d7eab1fa9781f05ec3064f88645e7199329ff47093780123b5d0d113",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
+}

@@ -170,9 +170,12 @@ export class Hud {
     const home = mission?.def.anchors.home ?? player.survivor?.checkpoint;
     this.homePin.hidden = !home; if (home) this.place(this.homePin, home.x, home.z, px, pz, true);
     const objective = mission?.def.steps.find(step => mission.state.steps[step.id].status === 'active');
-    this.tracker.hidden = !objective; if (objective) text(this.trackerText, `${objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
+    // L1 v2 beat 5: after the hand-over the panel shows the completed tick and no new objective.
+    const done = !objective && mission?.def.l1 ? [...mission.def.steps].reverse().find(step => mission.state.steps[step.id].status === 'completed') : undefined;
+    this.tracker.hidden = !objective && !done; if (done) text(this.trackerText, `✓ ${done.text}`);
+    if (objective) text(this.trackerText, `${objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
     for (let i = 0; i < sides.length; i++) {
-      const side = sides[i], card = this.slots[i], state = player.weapons?.[side]; card.root.hidden = !state && !mission?.def.slice;
+      const side = sides[i], card = this.slots[i], state = player.weapons?.[side]; card.root.hidden = !state && !mission?.def.l1;
       if (!state) { text(card.name, side === 'LEFT' ? 'Unarmed' : 'Locked'); text(card.stats, 'Find a weapon'); card.icon.hidden=false;card.icon.src=actionIconUrl(side==='LEFT'?'icon.fists':'icon.kick');card.actionId=''; card.ring.hidden=true; for(const strip of card.strips)strip.hidden=true;this.game.input.touch.setEmpty(side==='LEFT'?'left':'right');continue; }
       card.icon.hidden=card.ring.hidden=false;
       const slot = state.rack[state.index], def = action(slot.id);
@@ -203,7 +206,7 @@ export class Hud {
     const id = world.interactables?.activeId, device = id != null ? world.entities.get(id)?.interactable : null;
     this.interaction.hidden = !device;
     if (device) { this.interaction.style.background = `conic-gradient(#64dccc ${device.progress * 360}deg,#182333 0)`; text(this.interaction, device.hint || `${device.label} · ${Math.round(device.progress * 100)}%`); this.interaction.dataset.progress = String(device.progress); }
-    this.damage.hidden = !!mission?.def.slice || world.tick > this.damagedUntil; this.bark.hidden = world.tick > this.barkUntil;
+    this.damage.hidden = world.tick > this.damagedUntil; this.bark.hidden = world.tick > this.barkUntil;
     this.civilianBark.hidden = world.tick > this.civilianBarkUntil;
     this.onboarding.update(this.game.input.scheme, visible);
   }

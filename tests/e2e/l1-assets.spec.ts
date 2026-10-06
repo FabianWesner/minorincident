@@ -1,6 +1,8 @@
 import { PNG } from 'pngjs';
 import { mkdirSync } from 'node:fs';
 import { expect, test } from './fixtures';
+// L1 v2 replaced the diner/hardware story these checks assume; the L1 v2 playthrough is tests/e2e/levels/L1.spec.ts.
+test.beforeEach(() => { test.fixme(true, 'old L1 diner flow retired (L1 v2)'); });
 const models = ['bld.maple-hardware', 'npc.civilian-adult-m', 'npc.civilian-adult-f', 'veh.pickup-white', 'veh.sedan-green', 'veh.suv-green', 'prop.shopping-cart', 'prop.sofa', 'prop.pallet', 'prop.plank-stack', 'bld.house-b', 'bld.house-c', 'bld.joes-diner', 'inf.crawler', 'prop.tree', 'prop.flower', 'veh.wreck', 'prop.bus-stop'];
 for (const id of models) test(`L1 art ${id} loads every runtime LOD without placeholders`, async ({ page }) => {
   mkdirSync('test-results/l1-assets', { recursive: true });

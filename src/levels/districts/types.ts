@@ -31,6 +31,8 @@ export interface Placement extends PlacementTransform {
   allowRoad: boolean;
   lightGroup: string;
   visualAabb: Aabb;
+  /** Optional per-instance colour multiplier (house walls); batches stay shared, colour is an instance attribute. */
+  tint?: string;
 }
 export interface StaticCollider {
   /** Low GLB paving/steps support feet without blocking planar navigation. */

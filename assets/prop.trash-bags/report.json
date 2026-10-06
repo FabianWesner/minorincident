@@ -1,0 +1,68 @@
+{
+  "id": "prop.trash-bags",
+  "triangles": {
+    "lod0": 1704,
+    "lod1": 182,
+    "lod2": 20
+  },
+  "dimensions_blender": [
+    0.9312887191772461,
+    0.9031999707221985,
+    0.8000000715255737
+  ],
+  "draw_calls": 13,
+  "materials": [
+    "pal_navy",
+    "pal_uiDark",
+    "pal_brass",
+    "pal_navySeam",
+    "pal_leatherShadow"
+  ],
+  "nodes": [
+    "root",
+    "bag_0",
+    "bag_1",
+    "bag_2",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 3,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 58696,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 21508,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 12208,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.1068075117370892,
+    "lod2": 0.011737089201877934
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.trash-bags",
+    "geometry_hash": "2369cb5e809a0db1c28f1e5cc54f4251fb598ed70f5bf40fbb28b0857a073c2f",
+    "second_geometry_hash": "2369cb5e809a0db1c28f1e5cc54f4251fb598ed70f5bf40fbb28b0857a073c2f",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
+}

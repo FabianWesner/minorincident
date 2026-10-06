@@ -40,7 +40,7 @@ test('@E12 @E12-AC07 L3 park route cancels the alternative and reaches the final
   world=new SimWorld();await world.init();const c=compositions.L3;world.loadComposition(c,c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`,'utf8'))));world.loadMission(resolveCampaignMission('L3',world.districts!));const api=missionControls(world);api.begin();api.completeObjective('car');api.completeObjective('park-route');expect(api.state()!.steps['market-route'].status).toBe('cancelled');api.completeObjective('checkpoint');api.completeObjective('gates');expect(api.state()!.phase).toBe('cinematic');
 });
 test('@E12 @E12-AC05 authored source checkpoint can be loaded fresh and retains its reached snapshot',async()=>{
-  world=new SimWorld();await world.init();const c=compositions.L1;world.loadComposition(c,c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`,'utf8'))),42);const m=world.loadMission(resolveCampaignMission('L1',world.districts!));m.loadCheckpoint('source');
-  expect(m.state.steps.source.status).toBe('active');expect(m.state.checkpoint).toBe('source');expect(world.seed).toBe(42);expect(m.state.completedObjectives).toContain('trail-3');
-  m.state.items.push('temporary');m.loadCheckpoint('source');expect(m.state.items).not.toContain('temporary');
+  world=new SimWorld();await world.init();const c=compositions.L1;world.loadComposition(c,c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`,'utf8'))),42);const m=world.loadMission(resolveCampaignMission('L1',world.districts!));m.loadCheckpoint('accident');
+  expect(m.state.steps.escape.status).toBe('active');expect(m.state.checkpoint).toBe('accident');expect(world.seed).toBe(42);expect(m.state.completedObjectives).toContain('deliver');
+  m.state.items.push('temporary');m.loadCheckpoint('accident');expect(m.state.items).not.toContain('temporary');
 });
