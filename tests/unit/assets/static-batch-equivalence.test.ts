@@ -5,7 +5,8 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { expect, test } from 'vitest';
 import { AssetRegistry } from '../../../src/assets/registry';
-import { staticBatch } from '../../../src/assets/staticBatch';
+import { staticBatch, staticBatchAsync } from '../../../src/assets/staticBatch';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { paletteTokens, type PaletteToken } from '../../../src/data/palette';
 import { Materials } from '../../../src/render/Materials';
 import { Lighting } from '../../../src/render/Lighting';
@@ -58,13 +59,16 @@ test('optimized static batch attributes equal the reference loop @load', async (
   for (const id of ['bld.house-a', 'veh.sedan-red', 'prop.bench', 'prop.fire-hydrant', 'bld.joes-diner']) for (const lit of [true, false]) {
     const source = await registry.loadAsset(id, 'lod1');
     source.userData.paletteHydrant = id === 'prop.fire-hydrant';
-    const expected = reference(source, lit, materials), batch = staticBatch(source, lit, materials);
-    for (const mesh of batch.children as Mesh[]) {
+    const expected = reference(source, lit, materials);
+    // The sync and the frame-sliced variants must both equal the original loop + mergeGeometries.
+    for (const batch of [staticBatch(source, lit, materials), await staticBatchAsync(source, lit, materials, () => Promise.resolve(), 0)]) for (const mesh of batch.children as Mesh[]) {
       const parts = expected.get(mesh.name === 'window-light')!;
-      for (const name of ['position', 'normal', 'color', '_palette']) {
-        const merged = Float32Array.from(parts.flatMap(g => Array.from(g.getAttribute(name).array as Float32Array)));
-        expect(Array.from(mesh.geometry.getAttribute(name).array as Float32Array), `${id} ${lit} ${name}`).toEqual(Array.from(merged));
-      }
+      if (parts.some(g => g.index)) for (const g of parts) if (!g.index) g.setIndex(Array.from({ length: g.getAttribute('position').count }, (_, i) => i));
+      const merged = mergeGeometries(parts)!;
+      for (const name of ['position', 'normal', 'color', '_palette']) expect(Array.from(mesh.geometry.getAttribute(name).array as Float32Array), `${id} ${lit} ${name}`).toEqual(Array.from(merged.getAttribute(name).array as Float32Array));
+      expect(mesh.geometry.index?.array.constructor, `${id} index type`).toBe(merged.index?.array.constructor);
+      expect(Array.from(mesh.geometry.index?.array ?? []), `${id} index`).toEqual(Array.from(merged.index?.array ?? []));
+      merged.computeBoundingSphere(); expect(mesh.geometry.boundingSphere!.center.distanceTo(merged.boundingSphere!.center)).toBeLessThan(1e-6); expect(mesh.geometry.boundingSphere!.radius).toBeCloseTo(merged.boundingSphere!.radius, 6);
       mesh.geometry.dispose(); (mesh.material as Material).dispose();
     }
   }

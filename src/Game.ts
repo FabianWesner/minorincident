@@ -187,12 +187,7 @@ export class Game {
     if (this.view.switchPreparedDistrict()) { this.renderedDistricts = this.world.districts; return this.levelQueue; }
     this.loading=true;
     const refresh=this.levelQueue.then(async()=>{
-      try {
-        // A decay variant may still be preparing in the background: wait for it rather than rebuilding.
-        await this.view.preparationReady();
-        if (this.view.switchPreparedDistrict()) { this.renderedDistricts = this.world.districts; return; }
-        await this.view.load(); this.renderedDistricts=this.world.districts; await this.audio.load();
-      }
+      try { await this.view.load(); this.renderedDistricts=this.world.districts; await this.audio.load(); }
       finally { this.loading=false; this.ticker.reset(); }
     });
     this.levelQueue=refresh.catch(()=>{});return refresh;

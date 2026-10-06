@@ -330,11 +330,16 @@ export class DistrictView extends Group {
       }
     }
   }
+  /** Set while the level is playable: prepares a new LOD0 batch's GPU programs and buffers off-screen
+   * (asynchronously) before it replaces the LOD1 hero batch, so the swap does not upload on a frame. */
+  warmHero: ((batch: InstancedGroup) => Promise<void>) | null = null;
   private async loadHero(entry: LodBatch): Promise<void> {
     const prototype = await this.registry.asset(entry.id, entry.lit, 'lod0');
     if (this.disposed) return;
     // Allocate full placement capacity, then retain only currently visible refs.
-    const replacement = new InstancedGroup(prototype, entry.refs.slice(), entry.hero.capacity), old = entry.hero;
+    const replacement = new InstancedGroup(prototype, entry.refs.slice(), entry.hero.capacity);
+    if (this.warmHero) { await this.warmHero(replacement); if (this.disposed) { replacement.dispose(); return; } }
+    const old = entry.hero;
     replacement.references.splice(0, replacement.references.length, ...old.references);
     replacement.visible = old.visible; replacement.name = old.name;
     for (const child of replacement.children) if (child instanceof InstancedMesh) child.count = replacement.references.length;

@@ -12,7 +12,7 @@ import { atLeast } from "./types";
 import type { AssetQuality } from './types';
 import { dinerSign } from '../render/DinerSign';
 import { attribute } from 'three/tsl';
-import { staticBatch } from './staticBatch';
+import { staticBatch, staticBatchAsync } from './staticBatch';
 import { loadGate, loadGltf } from './loadGate';
 // E10's semantic building IDs predate the accepted production inventory.
 const productionIds: Record<string, string> = {
@@ -85,6 +85,18 @@ export class DistrictAssets {
       );
     return this.cache.get(key)!;
   }
+  /** Every static batch of a role (body, lit windows, unlit windows) has the same node graph: one
+   * shared material means one node build and cache key for all of them, so later LOD0 swaps reuse
+   * the warmed render state (no per-asset shader builds during play). */
+  private readonly sharedMaterials = new Map<string, Material>();
+  private share(root: Group): void {
+    for (const child of root.children) {
+      if (!(child instanceof Mesh) || (child.name !== 'window-light' && child.name !== 'static-body')) continue;
+      const shared = this.sharedMaterials.get(child.name);
+      if (shared) { (child.material as Material).dispose(); child.material = shared; }
+      else { this.sharedMaterials.set(child.name, child.material as Material); this.batchMaterials.add(child.material as Material); }
+    }
+  }
   /** Start download, parse and batching of a placement prototype before its layout GLB arrives. */
   prefetch(id: string, lod: AssetQuality = 'lod1'): void {
     try {
@@ -108,7 +120,9 @@ export class DistrictAssets {
         const fit = Math.max(straight, turned); asset.scale.set(fit, 1, fit);
         if (turned > straight) asset.rotation.y = Math.PI / 2;
       }
-      const root = this.remember(staticBatch(asset, true, this.materials));
+      // While a level is playable, batching is sliced over frames (one gate slot per slice).
+      const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
+      this.share(root);
       if (id === 'bld.joes-diner') {
         const sign = dinerSign(); root.add(sign.root); this.geometries.add(sign.geometry); this.signTextures.push(sign.texture);
       }
@@ -131,9 +145,12 @@ export class DistrictAssets {
         const root = source.clone(true);
         root.traverse(node => {
           if (!(node instanceof Mesh) || node.name !== 'window-light') return;
-          const material = this.materials.shaded(this.materials.sample(attribute('_palette', 'float')).mul(.08));
-          material.name = 'emi_static-windows';
-          this.batchMaterials.add(material); node.material = material;
+          let material = this.sharedMaterials.get('window-light:unlit');
+          if (!material) {
+            material = this.materials.shaded(this.materials.sample(attribute('_palette', 'float')).mul(.08));
+            material.name = 'emi_static-windows'; this.sharedMaterials.set('window-light:unlit', material); this.batchMaterials.add(material);
+          }
+          node.material = material;
         });
         return root;
       }));
@@ -150,7 +167,7 @@ export class DistrictAssets {
   dispose(): void {
     for (const geometry of this.geometries) geometry.dispose();
     this.geometries.clear();
-    for (const material of this.batchMaterials) material.dispose(); this.batchMaterials.clear();
+    for (const material of this.batchMaterials) material.dispose(); this.batchMaterials.clear(); this.sharedMaterials.clear();
     for (const texture of this.signTextures) texture.dispose(); this.signTextures.length = 0;
     this.cache.clear();
     void this.assets.dispose();
