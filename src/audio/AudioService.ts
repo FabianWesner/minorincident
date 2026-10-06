@@ -7,9 +7,12 @@ import { audioCues, noiseCues, eventCues, telegraphCues, ambienceTiers, musicLay
 import { AudioGraph, type GraphVoice, type PlayOptions } from './AudioGraph';
 import { AudioRegistry } from './AudioRegistry';
 import { fromDistricts, surfaceAt, zoneAt, dbGain } from './acoustics';
-import { MusicDirector, type MusicIntensity } from './MusicDirector';
+import { MusicDirector, type MusicIntensity, type MusicTransition } from './MusicDirector';
 import { HordeClusters, type HordePoint } from './HordeClusters';
 import { AmbienceSchedule } from './AmbienceSchedule';
+import { StreamedMusic } from './StreamedMusic';
+import { l1v2 } from '../data/l1v2';
+import { L1ArcDirector, type ArcFrame } from './L1Arc';
 export interface AudioSettings {
     muted: boolean;
     captions: boolean;
@@ -28,6 +31,7 @@ export interface CueLog {
     gain: number;
     rate: number;
     voice: number;
+    variant: string;
 }
 interface AudioHost {
     settingsChanged?(patch:Partial<AudioSettings>):void;
@@ -47,6 +51,7 @@ export class AudioService implements Lifecycle {
     readonly context: AudioContext;
     readonly graph: AudioGraph;
     readonly registry: AudioRegistry;
+    readonly score: StreamedMusic;
     readonly log: CueLog[] = [];
     readonly horde = new HordeClusters();
     music = new MusicDirector('L1');
@@ -66,6 +71,9 @@ export class AudioService implements Lifecycle {
     private readonly points: HordePoint[] = [];
     private readonly pointPool: HordePoint[] = [];
     private ambience = new AmbienceSchedule(0, 1);
+    arc: L1ArcDirector | null = null;
+    private arcFrame: ArcFrame | null = null;
+    private readonly corgiWarnAt = new Map<string, number>();
     private level = 'L1';
     private tier = 0;
     private loaded = false;
@@ -81,9 +89,11 @@ export class AudioService implements Lifecycle {
     private quietMusicUntil = 0;
     private lastDamageTick = -1000;
     private lastDamage = 0;
-    private scheduledTransition: object | null = null;
+    private scheduledTransition: MusicTransition | null = null;
     private externalIntensity: MusicIntensity | null = null;
     private vehicleSpeed = 0;
+    private incident = false;
+    private complete = false;
     private readonly captionElement = document.createElement('output');
     private readonly captionStyle = document.createElement('style');
     private readonly ringElement = document.createElement('div');
@@ -97,8 +107,10 @@ export class AudioService implements Lifecycle {
     }[] = [];
     constructor(private readonly world: SimWorld, private readonly host: AudioHost, params: URLSearchParams) {
         this.context = new AudioContext({ latencyHint: 'interactive' });
-        this.graph = new AudioGraph(this.context, params.get('quality') === 'low' || navigator.maxTouchPoints > 0 ? 'low' : 'high', params.get('audio') === 'muted');
+        // At most four streaming decks can overlap during rapid state changes.
+        this.graph = new AudioGraph(this.context, params.get('quality') === 'low' || navigator.maxTouchPoints > 0 ? 'low' : 'high', params.get('audio') === 'muted', 4);
         this.registry = new AudioRegistry(this.context);
+        this.score = new StreamedMusic(this.context, this.graph.buses.music);
         try {
             const stored = localStorage.getItem('minor-incident.audio');
             if (stored)
@@ -139,6 +151,9 @@ export class AudioService implements Lifecycle {
         this.musicEpoch = this.context.currentTime + 0.02;
         this.music = new MusicDirector(this.level, this.musicEpoch);
         this.ambience = new AmbienceSchedule(this.tier, this.world.seed, this.musicEpoch);
+        this.arc = this.level === 'L1' ? new L1ArcDirector(this.world.seed, this.musicEpoch) : null;
+        this.arcFrame = null;
+        this.corgiWarnAt.clear();
         for (const type of Object.keys(eventCues) as GameEvent['type'][])
             this.unsubscribers.push(this.world.events.on(type, e => this.event(e), 10));
         this.graph.setListener(this.world.entities.get(1)!.transform);
@@ -146,6 +161,19 @@ export class AudioService implements Lifecycle {
         if (this.background)
             this.host.pause();
     }
+    /** Decay rebuilds presentation/acoustics in the same world; keep mission cues and score. */
+    refreshAcoustics(): void {
+        this.graph.map = fromDistricts(this.world.districts);
+        const tier = this.world.districts?.composition.tier ?? 0;
+        if (tier === this.tier) return;
+        this.tier = tier;
+        this.ambience = new AmbienceSchedule(tier, this.world.seed, this.context.currentTime);
+        const beds = new Set(ambienceTiers[tier].beds.map(id => `bed:${id}`));
+        for (const key of this.loops.keys()) if (key.startsWith('bed:') && !beds.has(key)) this.stopLoop(key);
+        for (const bed of ambienceTiers[tier].beds)
+            this.loop(`bed:${bed}`, `bed.${bed}`, { gain: tier === 5 ? dbGain(-16) : 1 });
+    }
+    private get hasScore(): boolean { return /^L[1-6]$/.test(this.world.scenario ?? ''); }
     private mount(): void {
         this.captionElement.dataset.audioCaptions = '';
         this.captionElement.setAttribute('role', 'status');
@@ -225,6 +253,7 @@ export class AudioService implements Lifecycle {
         if (patch.muted === undefined)
             return;
         if (this.settings.muted) {
+            this.score.pause();
             this.graph.master.gain.cancelScheduledValues(0);
             this.graph.master.gain.value = 0;
             void this.context.suspend();
@@ -267,6 +296,7 @@ export class AudioService implements Lifecycle {
         if (this.disposed)
             return;
         this.background = true;
+        this.score.pause();
         this.host.pause();
         this.host.release();
         this.pauseElement.hidden = false;
@@ -304,6 +334,7 @@ export class AudioService implements Lifecycle {
         this.graph.master.gain.cancelScheduledValues(t);
         this.graph.master.gain.setValueAtTime(0, t);
         this.graph.master.gain.linearRampToValueAtTime(2, t + 0.3);
+        await this.score.resume();
     }
     private available(): boolean { return this.loaded && this.unlocked && !this.background && !this.settings.muted && this.context.state === 'running'; }
     play(id: string, options: PlayOptions = {}, sourceId?: number): GraphVoice | null {
@@ -314,11 +345,11 @@ export class AudioService implements Lifecycle {
             return null;
         if (result.cue.bus === 'gore' && this.settings.gore === 'Off')
             return null;
-        const gain = (options.gain ?? 1) * (result.cue.bus === 'gore' && this.settings.gore === 'Reduced' ? 0.4 : 1);
+        const gain = (options.gain ?? 1) * result.gain * (result.cue.bus === 'gore' && this.settings.gore === 'Reduced' ? 0.4 : 1);
         const v = this.graph.play(result.cue, result.buffer, { ...options, gain, rate: (options.rate ?? 1) * result.rate });
         if (!v)
             return null;
-        this.log.push({ cue: id, time: t, tick: this.world.tick, sourceId, position: options.position ? { ...options.position } : undefined, gain: v.gain.gain.value, rate: v.source.playbackRate.value, voice: v.id });
+        this.log.push({ cue: id, variant: result.variant, time: t, tick: this.world.tick, sourceId, position: options.position ? { ...options.position } : undefined, gain: v.gain.gain.value, rate: v.source.playbackRate.value, voice: v.id });
         if (this.log.length > 10000)
             this.log.splice(0, 1000);
         if (result.cue.caption)
@@ -410,8 +441,9 @@ export class AudioService implements Lifecycle {
         this.started = true;
         this.musicEpoch = this.context.currentTime + 0.02;
         this.music = new MusicDirector(this.level, this.musicEpoch);
+        if (this.hasScore) void this.score.transition('calm', this.musicEpoch, this.musicEpoch, this.music.bar);
         for (const layer of musicLayers) {
-            const v = this.play(`music.${this.level}.${layer}`, { time: this.musicEpoch, gain: layer === 'base' ? 1 : 0, rate: 1, loop: true });
+            const v = this.play(`music.${this.level}.${layer}`, { time: this.musicEpoch, gain: 0, rate: 1, loop: true });
             if (v)
                 this.stemVoices.set(layer, v);
         }
@@ -420,15 +452,20 @@ export class AudioService implements Lifecycle {
     }
     private musicIntensity(input: MusicIntensity): void {
         const t = this.context.currentTime;
-        this.music.update(t, input);
-        const transition = this.music.pending ?? this.music.transitions.at(-1);
-        if (transition && transition !== this.scheduledTransition) {
+        this.score.update();
+        this.music.update(t, { ...input, incident: this.incident, complete: this.complete });
+        const transition = this.music.pending ?? this.music.transitions.at(-1) ?? { time: t, state: this.music.state, layers: this.music.layers };
+        // A transient alert can cancel the first pending change before its bar.
+        // Restore the committed state even when the director has no history yet.
+        if (!this.scheduledTransition || transition.state !== this.scheduledTransition.state || transition.layers.join() !== this.scheduledTransition.layers.join()) {
             this.scheduledTransition = transition;
+            if (this.hasScore) void this.score.transition(transition.state, transition.time, this.musicEpoch, this.music.bar);
             for (const [layer, v] of this.stemVoices) {
                 const at = Math.max(t, transition.time);
                 v.gain.gain.cancelScheduledValues(at);
                 v.gain.gain.setValueAtTime(v.gain.gain.value, at);
-                v.gain.gain.linearRampToValueAtTime(transition.layers.includes(layer as typeof musicLayers[number]) ? audioCues[v.cue].gain : 0, at + 2);
+                // The recording carries the theme. Add filtered recorded rhythm/dread accents only.
+                v.gain.gain.linearRampToValueAtTime(layer !== 'base' && transition.layers.includes(layer as typeof musicLayers[number]) ? audioCues[v.cue].gain * 0.18 : 0, at + 2);
             }
         }
     }
@@ -450,14 +487,21 @@ export class AudioService implements Lifecycle {
         const source = 'sourceId' in event ? event.sourceId : 'id' in event && typeof event.id === 'number' ? event.id : undefined;
         const entity = source === undefined ? undefined : this.world.entities.get(source);
         const position = 'position' in event ? event.position : entity?.transform;
+        if (event.type.startsWith('l1.')) {
+            this.arc?.event(event.type, t);
+            return;
+        }
+        if (event.type === 'level.completed' && this.level === 'L1')
+            this.play('l1.outro.sting');
         if (event.type === 'sim.tick') {
             this.update();
             return;
         }
         if (event.type === 'civilian.state') {
-            if (event.state === 'rising') this.play('infected.vocal', { position, gain: .45 }, source);
-            if (event.state === 'bitten' || event.state === 'down') this.play('bark.female.hurt', { position, gain: .4 }, source);
-            return; // Gasp once, then silence until the eyes-phase growl.
+            if (event.state === 'bitten') this.play('civilian.scream', { position, gain: .4 }, source);
+            if (event.state === 'down') this.play('bark.female.hurt', { position, gain: .4 }, source);
+            if (event.state === 'rising') this.play('civilian.transform', { position, gain: .45 }, source);
+            return; // One-shots only: keep the collapse quiet between state reactions.
         }
         if (event.type === 'telegraph') {
             const special = 'special' in event ? event.special : event.kind;
@@ -604,6 +648,16 @@ export class AudioService implements Lifecycle {
             this.stinger(event.kind, event.level);
             return;
         }
+        if (event.type === 'corgi.warn') {
+            // Stages come rate-limited from the sim (bark every l1v2.corgi.barkIntervalS); keep a matching audio-side floor.
+            const stage = event.stage, gap = stage === 'bark' ? l1v2.corgi.barkIntervalS - 0.2 : 1, last = this.corgiWarnAt.get(stage) ?? -Infinity;
+            if (t - last < gap)
+                return;
+            this.corgiWarnAt.set(stage, t);
+            const [cue, gain, rate] = stage === 'bark' ? ['corgi.warning', 1, 1] : stage === 'growl' ? ['corgi.warning', 0.7, 0.62] : stage === 'stiffen' ? ['corgi.pant', 0.6, 0.8] : ['corgi.pant', 0.5, 1] as const;
+            this.play(cue, { position, gain, rate }, source);
+            return;
+        }
         if (event.type === 'corgi.sound') {
             this.play(`corgi.${event.kind}`, { position }, source);
             return;
@@ -633,6 +687,8 @@ export class AudioService implements Lifecycle {
             }
         }
         if (event.type === 'level.completed') {
+            this.complete = true;
+            this.musicIntensity({ alerted: 0 });
             this.stinger('extraction', event.id);
             return;
         }
@@ -640,12 +696,18 @@ export class AudioService implements Lifecycle {
             const target = this.world.entities.get(event.targetId);
             if (target?.faction === 'environment' || target?.vehicle) return;
             if (event.type === 'combat.hit' && event.amount > 0 && event.damageType === 'melee') {
-                const material = event.actionId === 'weapon.bat' ? 'wood' : /crowbar|machete/.test(event.actionId) ? 'metal' : 'rubber';
-                this.play(`prop.${material}`, { position, gain: .6, rate: event.actionId === 'weapon.kick' ? .6 : event.actionId === 'weapon.machete' ? 1.25 : .85 }, source);
+                const weapon = event.actionId.split('.').at(-1)!;
+                const targetPosition = target?.transform ?? position;
+                this.play(audioCues[`flesh.${weapon}`] ? `flesh.${weapon}` : 'flesh.fists', { position: targetPosition }, source);
             }
         }
         if (event.type === 'infected.attack')
             return; // close individual vocals are bounded by the horde manager
+        if (event.type === 'objective.started' && event.id !== 'breakfast') {
+            this.incident = true;
+            this.musicIntensity({ alerted: event.id === 'store-fight' ? 10 : 0 });
+            if (event.id === 'escape') this.stinger('elite', this.level);
+        }
         const id = eventCues[event.type];
         if (id !== 'ui.tick')
             this.play(id, { position }, source);
@@ -735,7 +797,9 @@ export class AudioService implements Lifecycle {
                     this.event({ type: 'footstep', tick: this.world.tick, sourceId: e.id, position: p, actor: 'survivor' });
                 }
             }
-        const ambient = this.ambience.update(t);
+        if (this.arc)
+            this.updateArc(player.transform, t);
+        const ambient = this.arc && this.arc.phase !== 'calm' ? null : this.ambience.update(t);
         if (ambient)
             this.play(ambient.cue, { position: { x: player.transform.x + ambient.x, z: player.transform.z + ambient.z } });
         let changed = false;
@@ -755,12 +819,43 @@ export class AudioService implements Lifecycle {
         else
             this.stopLoop('heartbeat');
     }
-    snapshot() { return { state: this.context.state, unlocked: this.unlocked, background: this.background, muted: this.settings.muted, master: this.graph.master.gain.value, output: this.graph.output.gain.value, voices: this.graph.active.size, voiceLimit: this.graph.limiter.limit, music: { level: this.level, paused: this.context.state !== 'running', position: this.started ? Math.max(0, this.context.currentTime - this.musicEpoch) : 0, layers: this.music.layers, score: this.music.score, transitions: this.music.transitions }, buses: Object.fromEntries(Object.entries(this.graph.buses).map(([k, v]) => [k, v.gain.value])), errors: [...this.registry.errors], cues: [...this.log], clusters: this.horde.clusters.map(c => ({ ...c })), captions: this.captions.map(c => c.text) }; }
+    /** L1 v2 sound arc: calm beds fade (-12 dB in 3 s) after the blast, chaos layer follows the infected count. */
+    private updateArc(listener: SoundPosition, t: number): void {
+        const arc = this.arc!, zone = zoneAt(this.graph.map, listener);
+        const frame = this.arcFrame = arc.update(t, this.points.length, zone.startsWith('interior') && arc.phase === 'chaos');
+        const bedScale = frame.calmGain;
+        this.loop('arc:chatter', 'l1.calm.chatter', { gain: bedScale });
+        for (const bed of ambienceTiers[this.tier].beds) {
+            const v = this.loops.get(`bed:${bed}`);
+            if (v && !v.stopped) { v.baseGain = audioCues[v.cue].gain * (this.tier === 5 ? dbGain(-16) : 1) * bedScale; this.graph.updateEmitter(v); v.gain.gain.setValueAtTime(v.baseGain, t); }
+        }
+        const chatter = this.loops.get('arc:chatter');
+        if (chatter) chatter.gain.gain.setValueAtTime(audioCues['l1.calm.chatter'].gain * bedScale, t);
+        if (frame.chaosGain > 0.02) {
+            const v = this.loop('arc:panic', 'l1.chaos.panic', { gain: frame.chaosGain });
+            if (v) v.gain.gain.setValueAtTime(audioCues['l1.chaos.panic'].gain * frame.chaosGain, t);
+        }
+        else this.stopLoop('arc:panic');
+        if (frame.muffled) this.loop('arc:hush', 'l1.interior.hush', {});
+        else this.stopLoop('arc:hush');
+        this.graph.ambienceFilter.frequency.setTargetAtTime(frame.muffled ? 900 : 20000, t, 0.3);
+        if (frame.ringing) // Spec beat 5: ~1.2 s ringing + low-pass for everyone; the tinnitus setting only makes it longer/stronger.
+            this.graph.tinnitus(t, this.settings.tinnitus);
+        for (const p of frame.plays) {
+            let position: SoundPosition | undefined;
+            if (p.bearing !== undefined && p.distance !== undefined)
+                position = { x: listener.x + Math.cos(p.bearing) * p.distance, z: listener.z + Math.sin(p.bearing) * p.distance };
+            this.play(p.cue, { position, gain: p.gain, rate: p.rate, lowpass: p.lowpass });
+            if (p.cue === 'l1.blast') this.haptic('explosion');
+        }
+    }
+    snapshot() { return { state: this.context.state, unlocked: this.unlocked, background: this.background, muted: this.settings.muted, master: this.graph.master.gain.value, output: this.graph.output.gain.value, voices: this.graph.active.size + this.score.voices, voiceLimit: this.graph.limiter.limit, music: { level: this.level, state: this.music.state, streamed: this.score.snapshot(), paused: this.context.state !== 'running', position: this.started ? Math.max(0, this.context.currentTime - this.musicEpoch) : 0, layers: this.music.layers, score: this.music.score, transitions: this.music.transitions }, buses: Object.fromEntries(Object.entries(this.graph.buses).map(([k, v]) => [k, v.gain.value])), errors: [...this.registry.errors, ...this.score.errors], cues: [...this.log], clusters: this.horde.clusters.map(c => ({ ...c })), captions: this.captions.map(c => c.text) }; }
     reset(): void {
         for (const off of this.unsubscribers)
             off();
         this.unsubscribers.length = 0;
         this.graph.reset();
+        this.score.reset();
         this.loops.clear();
         this.stemVoices.clear();
         this.individualVocals.clear();
@@ -774,7 +869,9 @@ export class AudioService implements Lifecycle {
         this.scheduledTransition = null;
         this.externalIntensity = null;
         this.vehicleSpeed = 0;
+        this.incident = false;
+        this.complete = false;
         this.quietMusicUntil = 0;
     }
-    dispose(): void { this.disposed = true; this.reset(); document.removeEventListener('pointerdown', this.gesture); document.removeEventListener('keydown', this.gesture); document.removeEventListener('visibilitychange', this.visibility); window.removeEventListener('blur', this.blur); window.removeEventListener('focus', this.focus); window.removeEventListener('pagehide', this.pagehide); window.removeEventListener('pageshow', this.pageshow); document.removeEventListener('freeze', this.freeze); document.removeEventListener('resume', this.thaw); this.context.removeEventListener('statechange', this.statechange); this.graph.dispose(); void this.context.close(); this.captionElement.remove(); this.captionStyle.remove(); this.ringElement.remove(); this.controls.remove(); this.pauseElement.remove(); }
+    dispose(): void { this.disposed = true; this.reset(); this.score.dispose(); document.removeEventListener('pointerdown', this.gesture); document.removeEventListener('keydown', this.gesture); document.removeEventListener('visibilitychange', this.visibility); window.removeEventListener('blur', this.blur); window.removeEventListener('focus', this.focus); window.removeEventListener('pagehide', this.pagehide); window.removeEventListener('pageshow', this.pageshow); document.removeEventListener('freeze', this.freeze); document.removeEventListener('resume', this.thaw); this.context.removeEventListener('statechange', this.statechange); this.graph.dispose(); void this.context.close(); this.captionElement.remove(); this.captionStyle.remove(); this.ringElement.remove(); this.controls.remove(); this.pauseElement.remove(); }
 }

@@ -31,16 +31,22 @@ def empty(name, pos, yaw=0, scale=(1,1,1)):
     return o
 
 class Layout:
-    def __init__(self, district, title):
+    def __init__(self, district, title, size=None):
+        # size=(width, depth) selects the flat L1 v2 mode: one rectangular ground slab, one W-E road axis, no default props.
+        flat = size is not None
+        W, D = size or (56, 56)
         bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
         self.root = Path(__file__).resolve().parents[3]
         self.manifest = {a['id']: a for a in json.loads((self.root / 'src/assets/manifest.json').read_text())}
         self.layers = [[] for _ in range(6)]
         self.empties = []
-        self.data = dict(version=1, district=district, title=title, bounds=[[-28,-28],[28,-28],[28,28],[-28,28],[-28,-28]], roads={'nodes': [], 'edges': []}, placements=[], anchors={}, buildings=[], colliders=[], lawns=[], walkable={'cellSize': 1, 'excluded': []}, lightGroups=[], acousticZones=[], surfaces=[], layers=[dict(tier=i, remove=[], disableLights=[]) for i in range(1,6)])
-        self.box('bedrock', 'woodWarm', [56,1,56], [0,-0.65,0])
-        self.box('terrain', 'grass', [56,0.25,56], [0,-0.13,0])
+        self.data = dict(version=1, district=district, title=title, bounds=[[-W/2,-D/2],[W/2,-D/2],[W/2,D/2],[-W/2,D/2],[-W/2,-D/2]], roads={'nodes': [], 'edges': []}, placements=[], anchors={}, buildings=[], colliders=[], lawns=[], walkable={'cellSize': 1, 'excluded': []}, lightGroups=[], acousticZones=[], surfaces=[], layers=[dict(tier=i, remove=[], disableLights=[]) for i in range(1,6)])
+        self.box('bedrock', 'woodWarm', [W,1,D], [0,-0.65,0])
+        self.box('terrain', 'grass', [W,0.25,D], [0,-0.13,0])
         self.data['surfaces'].append(dict(surface='grass', polygon=self.data['bounds']))
+        if flat:
+            self.flat_ground(W, D)
+            return
         self.road_cross()
         for name, p in {'player-start': [0,0,4], 'arrival': [0,0,24], 'exit': [0,0,-24], 'safe-point': [5,0,11], 'cat-perch': [-18,3,-19], 'crow-roost': [20,4,-20]}.items(): self.anchor(name,p)
         for i, (x,z) in enumerate([(-23,-23),(23,-23),(-23,23),(23,23)]):
@@ -65,6 +71,27 @@ class Layout:
         self.data['layers'][4]['remove'].append('collapse-canopy')
         self.data['layers'][2]['disableLights'] = ['block-0','block-2']
         self.data['layers'][4]['disableLights'] = ['block-1','block-3']
+
+    def flat_ground(self, W, D):
+        """Placeholder ground: one W-E street (5 m carriageway) on z=0; lane A replaces it with the real street graph."""
+        self.data['roads']['nodes'] = [dict(id='west', point=[-W/2,0]), dict(id='center', point=[0,0]), dict(id='east', point=[W/2,0])]
+        for a, b in [('west','center'),('center','east')]:
+            pa, pb = [n['point'] for n in self.data['roads']['nodes'] if n['id'] in (a,b)]
+            self.data['roads']['edges'].append(dict(id=a+'-'+b, start=a, end=b, points=[pa,pb], laneWidth=5))
+        self.box('road-main', 'asphalt', [W,.08,5], [0,.01,0])
+        self.data['surfaces'].append(dict(surface='asphalt', polygon=[[-W/2,-2.5],[W/2,-2.5],[W/2,2.5],[-W/2,2.5],[-W/2,-2.5]]))
+        for block in range(4): self.data['lightGroups'].append(dict(id=f'block-{block}', offAt=3 if block%2==0 else 5))
+        self.data['acousticZones'].append(dict(id='outdoor', preset='suburb-open', polygon=self.data['bounds']))
+        # L1 v2 has no decay tiers; one buried marker per tier keeps every w1..w5 export non-empty so packing works.
+        for tier in range(1, 6): self.box(f'tier-{tier}-marker', 'grass', [.2,.02,.2], [0,-.3,0], tier)
+
+    def zone(self, name, polygon):
+        """Named gameplay polygon (no-bike zones, car-wash bay): exported as data['zones'] plus a centroid anchor of the same name."""
+        ring = [list(p) for p in polygon]
+        if ring[0] != ring[-1]: ring.append(ring[0])
+        self.data.setdefault('zones', {})[name] = ring
+        pts = ring[:-1]
+        self.anchor(name, [sum(p[0] for p in pts)/len(pts), 0, sum(p[1] for p in pts)/len(pts)])
 
     def road_cross(self):
         nodes = [dict(id='center', point=[0,0]),dict(id='north',point=[0,-28]),dict(id='south',point=[0,28]),dict(id='west',point=[-28,0]),dict(id='east',point=[28,0])]

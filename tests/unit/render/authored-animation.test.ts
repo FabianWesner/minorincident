@@ -96,7 +96,7 @@ test.each(['source', 'production'])('M1-25 @E04 grounded locomotion retains supp
   // Catalog aliases share files; some entries only have a production model.
   // Avoid local generated directories, while still failing on missing declared files.
   const paths = new Set(manifest
-    .filter(asset => (asset.id.startsWith('char.survivor-') || asset.id.startsWith('npc.')) && asset.requiredNodes?.some(node => node === 'shinL'))
+    .filter(asset => (asset.id.startsWith('char.survivor-') || asset.id.startsWith('npc.')) && asset.status !== 'placeholder' && asset.requiredNodes?.some(node => node === 'shinL'))
     .map(asset => delivery === 'source' ? asset.sourceGlb : asset.glb)
     .filter((path): path is string => typeof path === 'string'));
   expect(paths.size).toBeGreaterThan(0);

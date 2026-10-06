@@ -22,6 +22,14 @@ for (const mode of ['desktop','iphone'] as const) test.describe(mode, () => {
     const icon=page.getByTestId(mode==='iphone'?'touch-icon-left':'icon-LEFT');
     await expect(icon).toHaveAttribute('src',held.iconUrl!);await expect.poll(()=>icon.evaluate(e=>(e as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
     await page.evaluate(()=>window.__SS__!.screenshotReady());await page.screenshot({path:`${output}/${mode}-${weapon}-held.png`});
+    // The authored back-door encounter must navigate around the store before a
+    // visible target can receive a real pointer/touch attack. Do not click through it.
+    const nearest = () => page.evaluate(() => {
+      const a=window.__SS__!,p=a.getState().player!.transform;
+      return Math.min(...a.query({kind:'infected'}).filter(e=>e.health.current>0).map(e=>Math.hypot(e.transform.x-p.x,e.transform.z-p.z)));
+    });
+    for(let tick=0;tick<1200 && await nearest()>2.5;tick+=30) await page.evaluate(()=>window.__SS__!.step(30));
+    expect(await nearest()).toBeLessThanOrEqual(2.5);
     const cdp=mode==='iphone'?await context.newCDPSession(page):null;
     let maximumTrail=0,maximumParticles=0;
     if(mode==='desktop') {

@@ -51,7 +51,7 @@ export class ControlIntent {
         if (distance > range + .08) this.walk(frame, t, distance - range);
         else {
           // Stop at range rather than drifting through the target during wind-up.
-          this.world.player?.locomotion.reset(); frame.move = { x: 0, z: 0 };
+          frame.navigation = true; frame.move = { x: 0, z: 0 };
           if (!combat.runner.running[attack.side] && combat.runner.loadout.usable(attack.side, this.world.tick)) {
             button.down = true;
           }
@@ -61,7 +61,7 @@ export class ControlIntent {
     if (raw.pointerTarget && !this.attack) { frame.left.down = frame.left.held = false; frame.right.down = frame.right.held = false; }
     if (this.moveTarget) {
       const distance = Math.hypot(this.moveTarget.x - player.transform.x, this.moveTarget.z - player.transform.z);
-      if (distance <= .08) { this.moveTarget = null; this.world.player?.locomotion.reset(); }
+      if (distance <= .08) { this.moveTarget = null; frame.navigation = true; frame.move = { x: 0, z: 0 }; }
       else this.walk(frame, this.moveTarget, distance);
     }
     if (raw.aimSource === 'assist' && combat && !this.attack) {
@@ -74,6 +74,7 @@ export class ControlIntent {
   }
   private walk(frame: InputFrame, target: Vec2, remaining: number): void {
     const p = this.world.entities.get(1)!.transform, nav = this.world.infected?.nav;
+    if (this.world.player) this.world.player.locomotion.navigationGrid = nav ?? null;
     // Leave room for the capsule's acceleration while turning a pulled corner.
     if (nav && !nav.steer(p, target, this.route, survivor.radius + .1, this.waypoint)) {
       // Grid paths omit their starting cell; reconnect from its safe center.
@@ -84,7 +85,9 @@ export class ControlIntent {
     const destination = nav ? this.waypoint : target, dx = destination.x - p.x, dz = destination.z - p.z, distance = Math.hypot(dx, dz);
     if (distance < .02) { frame.move.x = frame.move.z = 0; return; }
     // Slow near arrival; the controller remains responsible for acceleration and collision.
-    const speed = Math.min(1, remaining / .5, remaining / (survivor.speed / 60));
+    frame.navigation = true;
+    const gain = destination.x === target.x && destination.z === target.z ? 1.5 : 3;
+    const speed = Math.min(1, Math.max(0, Math.min(remaining, distance) - .03) * gain / survivor.speed);
     frame.move.x = dx / distance * speed; frame.move.z = dz / distance * speed;
     // Match the grid's corner clearance before Rapier performs the actual sweep.
     if (nav) {
