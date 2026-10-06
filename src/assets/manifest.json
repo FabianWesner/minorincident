@@ -12230,14 +12230,14 @@
   {
     "id": "bld.clinic-annex",
     "category": "building",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.clinic-annex.glb",
     "dimensions": {
-      "x": 16,
-      "y": 7.5,
-      "z": 14,
-      "tolerance": 0.1
+      "x": 7.887,
+      "y": 5.215,
+      "z": 9.7,
+      "tolerance": 0.3
     },
     "forward": "+X",
     "frontNodes": [
@@ -12274,19 +12274,24 @@
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "sourceGlb": "assets/bld.clinic-annex/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.clinic-annex.lod1.glb",
+      "lod2": "public/assets/models/bld.clinic-annex.lod2.glb"
     }
   },
   {
     "id": "bld.garage-detached",
     "category": "building",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.garage-detached.glb",
     "dimensions": {
-      "x": 6.5,
-      "y": 4.5,
-      "z": 6,
-      "tolerance": 0.1
+      "x": 6.378,
+      "y": 4.356,
+      "z": 7.424,
+      "tolerance": 0.3
     },
     "forward": "+X",
     "frontNodes": [
@@ -12315,19 +12320,24 @@
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "sourceGlb": "assets/bld.garage-detached/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.garage-detached.lod1.glb",
+      "lod2": "public/assets/models/bld.garage-detached.lod2.glb"
     }
   },
   {
     "id": "bld.cafe-corner",
     "category": "building",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.cafe-corner.glb",
     "dimensions": {
-      "x": 10,
-      "y": 6.5,
-      "z": 10,
-      "tolerance": 0.1
+      "x": 7.398,
+      "y": 4.758,
+      "z": 18.72,
+      "tolerance": 0.3
     },
     "forward": "+X",
     "frontNodes": [
@@ -12353,19 +12363,24 @@
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "sourceGlb": "assets/bld.cafe-corner/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.cafe-corner.lod1.glb",
+      "lod2": "public/assets/models/bld.cafe-corner.lod2.glb"
     }
   },
   {
     "id": "bld.courier-depot",
     "category": "building",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "hero",
     "glb": "public/assets/models/bld.courier-depot.glb",
     "dimensions": {
-      "x": 7,
-      "y": 5,
-      "z": 6,
-      "tolerance": 0.1
+      "x": 4.55,
+      "y": 4.31,
+      "z": 5.266,
+      "tolerance": 0.3
     },
     "forward": "+X",
     "frontNodes": [
@@ -12390,6 +12405,11 @@
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "sourceGlb": "assets/bld.courier-depot/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.courier-depot.lod1.glb",
+      "lod2": "public/assets/models/bld.courier-depot.lod2.glb"
     }
   },
   {
@@ -13042,14 +13062,14 @@
   {
     "id": "prop.privacy-fence",
     "category": "prop",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.privacy-fence.glb",
     "dimensions": {
-      "x": 0.15,
-      "y": 1.8,
-      "z": 2.0,
-      "tolerance": 0.1
+      "x": 0.27,
+      "y": 1.795,
+      "z": 2.6,
+      "tolerance": 0.3
     },
     "forward": "+X",
     "frontNodes": [
@@ -13070,19 +13090,24 @@
     "world": {
       "token": "woodWarm",
       "solid": true
+    },
+    "sourceGlb": "assets/prop.privacy-fence/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.privacy-fence.lod1.glb",
+      "lod2": "public/assets/models/prop.privacy-fence.lod2.glb"
     }
   },
   {
     "id": "prop.bike-rack",
     "category": "prop",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/prop.bike-rack.glb",
     "dimensions": {
-      "x": 0.5,
-      "y": 0.9,
-      "z": 2.0,
-      "tolerance": 0.1
+      "x": 1.256,
+      "y": 1.042,
+      "z": 2.397,
+      "tolerance": 0.3
     },
     "forward": "+X",
     "frontNodes": [
@@ -13103,6 +13128,11 @@
     "world": {
       "token": "sidewalk",
       "solid": false
+    },
+    "sourceGlb": "assets/prop.bike-rack/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.bike-rack.lod1.glb",
+      "lod2": "public/assets/models/prop.bike-rack.lod2.glb"
     }
   },
   {
@@ -13357,14 +13387,14 @@
   {
     "id": "kit.edge-roadwork",
     "category": "prop",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "distant",
     "glb": "public/assets/models/kit.edge-roadwork.glb",
     "dimensions": {
-      "x": 6,
-      "y": 2,
-      "z": 1.5,
-      "tolerance": 0.1
+      "x": 4.254,
+      "y": 2.732,
+      "z": 7.389,
+      "tolerance": 0.3
     },
     "forward": "+X",
     "frontNodes": [
@@ -13385,6 +13415,11 @@
     "world": {
       "token": "uiDark",
       "solid": true
+    },
+    "sourceGlb": "assets/kit.edge-roadwork/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.edge-roadwork.lod1.glb",
+      "lod2": "public/assets/models/kit.edge-roadwork.lod2.glb"
     }
   }
 ]
