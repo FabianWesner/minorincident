@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest';
+import { BoxGeometry } from 'three';
 import { getBounds } from '@gltf-transform/functions';
 import manifest from '../../../src/assets/manifest.json';
 import type { AssetDef } from '../../../src/assets/types';
@@ -53,6 +54,7 @@ test('meshopt block consolidation keeps all decoded vertex and animation data id
 test('delivery keeps skin joints and morph animation channels on the geometry node', async () => {
   const { doc, def } = fixture(), root = doc.getRoot();
   const body = root.listNodes().find(node => node.getName() === 'body')!;
+  body.getMesh()!.setName('body');
   const joint = doc.createNode('joint'); root.listScenes()[0].addChild(joint);
   const skin = doc.createSkin('rig').addJoint(joint); body.setSkin(skin).setWeights([.3]);
   const primitive = body.getMesh()!.listPrimitives()[0], count = primitive.getAttribute('POSITION')!.getCount();
@@ -66,6 +68,7 @@ test('delivery keeps skin joints and morph animation channels on the geometry no
   const io = await assetIO(), result = await io.readBinary(await io.writeBinary(doc));
   const geometry = result.getRoot().listAnimations()[0].listChannels()[0].getTargetNode()!;
   expect(geometry.getMesh()).not.toBeNull();
+  expect(geometry.getMesh()!.getName()).toBe('');
   expect(geometry.getSkin()!.listJoints().map(joint => joint.getName())).toEqual(['joint']);
   expect(geometry.getWeights()).toEqual([.3]);
   expect(geometry.getMesh()!.listPrimitives()[0].listTargets()).toHaveLength(1);
@@ -81,4 +84,39 @@ test('delivery validator preserves intentionally empty source pivots but rejects
   expect(validateDocument(packed, def, 0, 1, doc).errors).toContain('animated body: no separate geometry');
   packed.getRoot().listNodes().find(node => node.getName() === 'amputatedFoot')!.dispose();
   expect(validateDocument(packed, def, 0, 1, doc).errors).toContain('node amputatedFoot: expected exactly one, found 0');
+});
+
+test('distance tiers preserve disconnected thin panels inside a large assembly', async () => {
+  const { doc, def } = fixture(), buffer = doc.getRoot().listBuffers()[0];
+  def.sourceGlb = 'fixture.glb';
+  const positions: number[] = [], indices: number[] = [];
+  for (const x of [0, 20]) {
+    const box = new BoxGeometry(1, .01, 1, 4, 4, 4), offset = positions.length / 3;
+    const position = box.getAttribute('position');
+    for (let i = 0; i < position.count; i++) positions.push(position.getX(i) + x, position.getY(i), position.getZ(i));
+    for (const index of box.getIndex()!.array) indices.push(index + offset);
+    box.dispose();
+  }
+  const primitive = doc.getRoot().listMeshes()[0].listPrimitives()[0];
+  primitive.setAttribute('POSITION', doc.createAccessor().setType('VEC3').setArray(Float32Array.from(positions)).setBuffer(buffer));
+  primitive.setIndices(doc.createAccessor().setType('SCALAR').setArray(Uint32Array.from(indices)).setBuffer(buffer));
+  doc.getRoot().listNodes().find(node => node.getName() === 'front')!.setTranslation([22, 0, 0]);
+  await optimizeDocument(doc, def, .03);
+  const io = await assetIO(), result = await io.readBinary(await io.writeBinary(doc));
+  const bounds = getBounds(result.getRoot().listScenes()[0]);
+  expect(bounds.max[1] - bounds.min[1]).toBeGreaterThan(.008);
+  expect(triangleCount(result)).toBeGreaterThan(0);
+  expect(triangleCount(result)).toBeLessThan(indices.length / 3);
+});
+
+test('delivery preserves optional source roof geometry before manifest registration', async () => {
+  const { doc, def } = fixture(); def.sourceGlb = 'fixture.glb';
+  doc.getRoot().listScenes()[0].addChild(doc.createNode('roof').setMesh(doc.getRoot().listMeshes()[0]));
+  const io = await assetIO(), source = await io.readBinary(await io.writeBinary(doc));
+  await optimizeDocument(doc, def, .12);
+  const packed = await io.readBinary(await io.writeBinary(doc));
+  expect(validateDocument(packed, def, 0, 1, source).errors.filter(error => error.includes('roof'))).toEqual([]);
+  const roof = packed.getRoot().listNodes().find(node => node.getName() === 'roof')!;
+  roof.traverse(node => node.setMesh(null));
+  expect(validateDocument(packed, def, 0, 1, source).errors).toContain('node roof: lost source geometry');
 });
