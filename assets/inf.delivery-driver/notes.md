@@ -10,3 +10,9 @@ Reproduce the entire final delivery render pass:
 The final view renders the hero at 96 samples, four 960x540 review views at 24 samples and a 1600x900 pose test at 24 samples. Run `python3 assets/inf.delivery-driver/compose.py` to assemble the turnaround and reference comparison.
 
 Rebuild comparison: all 74 named meshes match within 0.000164 mm. Decimation preserves all skin, shoes and standalone objects, and uses canonical vertex/face order for the larger joined meshes. glTF export still introduces sub-micrometre rounding variation; exact quantized hashes can differ at rounding boundaries. See `determinism.json`; byte-identical rebuilds are not claimed.
+
+M1 fix: the cap crown, front panel and brim were wound inward, so the single-sided
+runtime materials culled them and the skull showed through from the game camera.
+`outward()` recalculates their normals; the pizza badges and rear blood decals now
+face outward too. Rebuild with `python3 tools/blender/run.py assets/inf.delivery-driver/build.py --glb assets/inf.delivery-driver/model.glb`
+then `npm run assets:pack -- inf.delivery-driver` (generated LOD tiers).

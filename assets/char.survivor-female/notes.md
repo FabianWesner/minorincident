@@ -24,3 +24,12 @@ materials. 1.410 m height. Head/face refined toward oval eyes; sharp tee-fold ad
 removed. Browser captures use the existing viewer; capture-fitted.mjs zooms out its
 study camera for this tall character. Model geometry is deterministic across rebuilds.
 See review.md, validation.json, browser-validation.json and report.json for evidence.
+
+M1 scalp fix: the scalp cap and every `lock()` strand were wound inward, so the
+single-sided runtime materials culled them and the crown showed skin from the game
+camera. Both now wind outward; the cap radii clear the face sculpt by about 1 cm.
+`model.lod2.glb` is an authored tier (the per-part floors of `assets:pack` stop
+near 5.7%, above the 4.5% LOD2 contract): plain meshopt pre-pass on the source
+(weld, ratio .03, error .05, no border lock), then the standard
+`optimizeDocument(..., .03)`, saved without `deliveryLodGenerated`. Rebuild with
+`python3 tools/blender/run.py <build.py> --glb model.glb`, `npm run assets:pack -- <id>`.
