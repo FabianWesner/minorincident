@@ -1,10 +1,10 @@
 #!/bin/sh
 # Limit browser test runs machine-wide: several lanes share one Mac and parallel Playwright runs
-# saturate it. E2E_SLOTS (default 2) runs may proceed at once; the rest wait for a free slot.
+# saturate it. E2E_SLOTS (default 1) runs may proceed at once; the rest wait for a free slot.
 # Only wrap browser runs, never plain builds. Without lockf (e.g. Linux CI) just run.
 command -v lockf >/dev/null 2>&1 || exec "$@"
 base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"
-slots="${E2E_SLOTS:-2}"
+slots="${E2E_SLOTS:-1}"
 while :; do
   i=0
   while [ "$i" -lt "$slots" ]; do
