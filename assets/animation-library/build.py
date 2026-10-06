@@ -57,8 +57,8 @@ def p(**kw):
     return kw
 def z(angle):
     return (0, 0, angle)
-def hip(x=0, y=0, roll=0, twist=0, lean=0):
-    return (roll, twist, lean, x, y, 0)
+def hip(x=0, y=0, roll=0, twist=0, lean=0, sway=0):
+    return (roll, twist, lean, x, y, sway)
 def action(name, duration, poses, contract=humans):
     for node_name in contract:
         obj = nodes[node_name]
@@ -99,8 +99,8 @@ action('idle', 4, [(0,p(hip=hip(y=-.006),foreArmL=z(12),foreArmR=z(14))),
     (.75,p(hip=hip(y=.002,roll=-1),torso=(0,-1,-1),head=(0,2,1),foreArmL=z(14),foreArmR=z(12))),
     (1,p(hip=hip(y=-.006),foreArmL=z(12),foreArmR=z(14)))])
 
-# Key foot targets describe a 0.9 m stride. Solve the two-joint knee at the authored
-# contact/passing points so the sole stays on the floor through the stance.
+# Library leg keys establish the silhouette. Retargeting bakes rig-specific
+# support tracks using actual limb lengths, pelvis rotation and runtime strides.
 def leg_pose(x, lift, pelvis_y):
     a,b=.233,.283
     dy=.142+lift-(.658+pelvis_y)
@@ -109,13 +109,14 @@ def leg_pose(x, lift, pelvis_y):
     thigh=math.atan2(x,-dy)+math.acos(max(-1,min(1,(a*a+d*d-b*b)/(2*a*d))))
     return math.degrees(thigh),math.degrees(knee)
 def gait(name,duration,stride,run=False,infected=False):
-    # stance occupies half a cycle; the rear foot lifts through passing, then reaches.
-    targets=[(.225,0),(.11,0),(-.01,0),(-.12,0),(-.225,.015),(-.14,.12),(.015,.16),(.19,.10),(.225,0)]
-    heights=[-.064,-.038,-.027,-.045,-.064,-.038,-.027,-.045,-.064]
+    # Contact -> down -> passing -> up: load follows contact, with modest lift.
+    # Retargeted walks use 60% stance; runs use 50% (no exaggerated flight).
+    targets=[(.225,0),(.11,0),(-.01,0),(-.12,0),(-.225,.015),(-.14,.045),(.015,.06),(.19,.035),(.225,0)]
+    heights=[-.055,-.075,-.06,-.047,-.055,-.075,-.06,-.047,-.055]
     poses=[]
     for i in range(9):
-        y=([-.135,-.08,-.015,-.065,-.135,-.08,-.015,-.065,-.135][i] if run else heights[i])
-        pose=p(hip=hip(y=y,roll=[0,-2,-3,-2,0,2,3,2,0][i],twist=[-4,-2,0,2,4,2,0,-2,-4][i]),
+        y=([-.085,-.11,-.08,-.065,-.085,-.11,-.08,-.065,-.085][i] if run else heights[i])
+        pose=p(hip=hip(y=y,roll=[0,-2,-3,-2,0,2,3,2,0][i],twist=[-4,-2,0,2,4,2,0,-2,-4][i],sway=[0,-.012,-.018,-.012,0,.012,.018,.012,0][i]),
             torso=(0,[6,3,0,-3,-6,-3,0,3,6][i],-9 if run else -2),head=(0,0,9 if run else 2))
         for side,index in [('L',i),('R',(i+4)%8)]:
             x,lift=targets[index]
@@ -192,6 +193,17 @@ for name,end in [('die',back),('death-back',back),('death-side',side),('death-cr
     action(name,.72,[(0,p()),(.16,p(hip=hip(y=-.05),torso=z(25 if end is back else -20),armL=z(60),armR=z(65),shinL=z(-35))),(.48,{**end,'hip':tuple(end['hip'][:3])+(0,-.35,0)}),(.8,end),(1,end)])
 action('knockdown',.48,[(0,p()),(.18,p(hip=hip(y=-.09),torso=z(34),armL=z(78),armR=z(62),shinL=z(-45))),(.55,p(hip=(0,0,58,0,-.32,0),torso=z(18),head=z(-25),armL=z(-10),armR=z(25),legL=z(38),shinL=z(-65))),(.86,back),(1,back)])
 action('flung',.48,[(0,p()),(.14,p(hip=(0,-12,25,0,.04,0),torso=z(15),head=z(-18),armL=(32,0,100),armR=(-38,0,108),legL=z(52),shinL=z(-72),legR=z(25),shinR=z(-45))),(.48,p(hip=(0,8,66,0,-.16,0),torso=z(8),head=z(-30),armL=(35,0,32),armR=(-42,0,15),legL=z(48),shinL=z(-60),legR=z(22),shinR=z(-48))),(.9,back),(1,back)])
+# Diner infection: clutch the wound, buckle and convulse, then drag the body upright.
+# The collapse endpoint and rise start share exactly the same low side silhouette.
+infectionLow={**side,'armL':(-15,0,10),'foreArmL':z(25),'armR':(15,0,10),'foreArmR':z(20),'legL':z(20),'shinL':z(-35)}
+wound=p(hip=hip(y=-.04,twist=-8),torso=(8,12,23),head=z(-18),armL=(12,-18,65),foreArmL=z(100),armR=(-12,12,38),foreArmR=z(75),legL=z(18),shinL=z(-35))
+action('infection-stagger',.6,[(0,p()),(.22,wound),(.5,{**wound,'torso':(-8,-10,32),'head':z(-28),'shinR':z(-35)}),(.78,wound),(1,wound)])
+action('infection-collapse',1,[(0,wound),(.22,p(hip=hip(y=-.27,roll=12),torso=z(38),head=z(-28),legL=z(62),shinL=z(-115),legR=z(45),shinR=z(-100),armL=z(65),foreArmL=z(100))),
+    (.45,infectionLow),(.57,{**infectionLow,'torso':(18,-12,-28),'head':(12,18,-15),'foreArmL':z(55)}),(.69,infectionLow),(.8,{**infectionLow,'torso':(-12,18,4),'head':(-12,-18,20),'shinL':z(-100)}),(.9,infectionLow),(1,infectionLow)])
+infected=p(hip=hip(y=-.045,roll=4),torso=(4,7,-15),head=(0,-8,12),armL=(-12,0,47),foreArmL=z(24),armR=z(12),foreArmR=z(34),shinL=z(-12),shinR=z(-10))
+action('infection-rise',1.2,[(0,infectionLow),(.18,{**infectionLow,'head':(0,18,-8),'foreArmL':z(45)}),
+    (.4,p(hip=hip(y=-.36,roll=15),torso=(12,10,-42),head=z(30),armL=z(48),foreArmL=z(65),legL=z(65),shinL=z(-115),legR=z(45),shinR=z(-95))),
+    (.7,p(hip=hip(y=-.18,roll=-8),torso=(8,-12,-32),head=(8,-18,22),legL=z(32),shinL=z(-65),legR=z(20),shinR=z(-48),armL=z(60),foreArmR=z(48))),(.9,infected),(1,infected)])
 action('get-up',.95,[(0,back),(.25,p(hip=(0,0,48,0,-.4,0),torso=z(-28),legL=z(55),shinL=z(-100),foreArmR=z(70))),(.65,p(hip=hip(y=-.2),torso=z(-30),legL=z(35),shinL=z(-70),armR=z(30))),(1,p())])
 action('crawl',1,[(0,p(hip=(0,0,-78,0,-.42,0),armL=z(35),armR=z(85),shinL=z(-85),shinR=z(-40))),(.5,p(hip=(0,0,-78,0,-.42,0),armL=z(85),armR=z(35),shinL=z(-40),shinR=z(-85))),(1,p(hip=(0,0,-78,0,-.42,0),armL=z(35),armR=z(85),shinL=z(-85),shinR=z(-40)))])
 action('windup',.5,[(0,p()),(.65,p(torso=z(-22),armL=z(-45),armR=z(-35),foreArmL=z(30))), (1,p(torso=z(-28),armL=z(-55),armR=z(-48)))])

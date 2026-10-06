@@ -226,7 +226,8 @@ export class Game {
   private applyQuality(): void {
     this.view.setQuality(this.quality.tier); this.audio.graph.setTier(this.quality.tier);
     if (this.world.districts) this.world.npcs?.setQuality(this.quality.tier);
-    if (this.world.infected) this.world.infected.director.setTier(this.quality.tier);
+    // The fixed 200-actor benchmark keeps its load on both render tiers.
+    if (this.world.infected) this.world.infected.director.setTier(this.world.scenario === 'perf-horde-200' ? 'high' : this.quality.tier);
   }
   private readonly visibility = (): void => { if (document.hidden) { this.clock.pause(); this.input.clear(); this.world.clearInput(); this.ticker.reset(); } };
   private readonly contextLost = (event: Event): void => { event.preventDefault(); this.view.contextLost = true; this.view.retireLostRenderer(); this.clock.pause(); this.input.clear(); this.world.clearInput(); };

@@ -28,7 +28,9 @@
     "test:e2e:webgpu": "E2E_WEBGPU=1 sh tools/e2e-lock.sh playwright test --project=webgpu",
     "layouts:build": "tsx tools/layouts/build.ts",
     "assets:collision": "tsx tools/assets/bake-static-collision.ts",
-    "assets:pack": "tsx tools/assets/pack.ts"
+    "assets:pack": "tsx tools/assets/pack.ts",
+    "look:capture": "sh tools/e2e-lock.sh tsx tools/look/capture.ts",
+    "look:score": "sh tools/e2e-lock.sh tsx tools/look/score.ts"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "0.21.0",

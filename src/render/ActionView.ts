@@ -50,7 +50,7 @@ export class ActionView extends Group {
   private shape = 'cone';
   private landing = { x: 0, z: 0 };
   constructor(private readonly world: SimWorld, private readonly character: CharacterView, private readonly materials: Materials, renderer: WebGPURenderer) {
-    super(); this.prototypes.visible = false; this.add(this.prototypes); this.registry = new AssetRegistry((event) => this.placeholders.push(event), { renderer });
+    super(); this.prototypes.visible = false; this.add(this.prototypes); this.registry = new AssetRegistry((event) => this.placeholders.push(event), { renderer, materials });
     this.geometry.setAttribute('position', new BufferAttribute(this.positions, 3)); this.geometry.setDrawRange(0, 0); this.indicator.frustumCulled = false; this.indicator.renderOrder = 2; this.add(this.indicator);
     this.trailGeometry.setAttribute('position', new BufferAttribute(this.trailPositions, 3)); this.trailGeometry.setDrawRange(0, 0); this.trail.frustumCulled = false; this.trail.renderOrder = 3; this.add(this.trail);
     for (let i = 0; i < 32; i++) { const mesh = new Mesh(this.projectileGeometry, this.projectileMaterial); mesh.visible = false; this.projectiles.push(mesh); this.add(mesh); }
