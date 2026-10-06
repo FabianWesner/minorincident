@@ -102,7 +102,8 @@ export class AudioService implements Lifecycle {
     }[] = [];
     constructor(private readonly world: SimWorld, private readonly host: AudioHost, params: URLSearchParams) {
         this.context = new AudioContext({ latencyHint: 'interactive' });
-        this.graph = new AudioGraph(this.context, params.get('quality') === 'low' || navigator.maxTouchPoints > 0 ? 'low' : 'high', params.get('audio') === 'muted');
+        // At most four streaming decks can overlap during rapid state changes.
+        this.graph = new AudioGraph(this.context, params.get('quality') === 'low' || navigator.maxTouchPoints > 0 ? 'low' : 'high', params.get('audio') === 'muted', 4);
         this.registry = new AudioRegistry(this.context);
         this.score = new StreamedMusic(this.context, this.graph.buses.music);
         try {
@@ -778,7 +779,7 @@ export class AudioService implements Lifecycle {
         else
             this.stopLoop('heartbeat');
     }
-    snapshot() { return { state: this.context.state, unlocked: this.unlocked, background: this.background, muted: this.settings.muted, master: this.graph.master.gain.value, output: this.graph.output.gain.value, voices: this.graph.active.size, voiceLimit: this.graph.limiter.limit, music: { level: this.level, state: this.music.state, streamed: this.score.snapshot(), paused: this.context.state !== 'running', position: this.started ? Math.max(0, this.context.currentTime - this.musicEpoch) : 0, layers: this.music.layers, score: this.music.score, transitions: this.music.transitions }, buses: Object.fromEntries(Object.entries(this.graph.buses).map(([k, v]) => [k, v.gain.value])), errors: [...this.registry.errors, ...this.score.errors], cues: [...this.log], clusters: this.horde.clusters.map(c => ({ ...c })), captions: this.captions.map(c => c.text) }; }
+    snapshot() { return { state: this.context.state, unlocked: this.unlocked, background: this.background, muted: this.settings.muted, master: this.graph.master.gain.value, output: this.graph.output.gain.value, voices: this.graph.active.size + this.score.voices, voiceLimit: this.graph.limiter.limit, music: { level: this.level, state: this.music.state, streamed: this.score.snapshot(), paused: this.context.state !== 'running', position: this.started ? Math.max(0, this.context.currentTime - this.musicEpoch) : 0, layers: this.music.layers, score: this.music.score, transitions: this.music.transitions }, buses: Object.fromEntries(Object.entries(this.graph.buses).map(([k, v]) => [k, v.gain.value])), errors: [...this.registry.errors, ...this.score.errors], cues: [...this.log], clusters: this.horde.clusters.map(c => ({ ...c })), captions: this.captions.map(c => c.text) }; }
     reset(): void {
         for (const off of this.unsubscribers)
             off();

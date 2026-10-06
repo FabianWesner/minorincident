@@ -171,7 +171,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       emitters:()=>[...game.audio.graph.active.values()].map(v=>({id:v.id,cue:v.cue,priority:v.priority,gain:v.gain.gain.value,rate:v.source.playbackRate.value,cutoff:v.filter.frequency.value,position:v.position,panner:v.panner?.panningModel??null,loop:v.source.loop})),
       profile:()=>{
         const times:number[]=[];let maxVoices=0;
-         for(let i=0;i<600;i++){const start=performance.now();game.world.update();game.view.frame(0);times.push(performance.now()-start);maxVoices=Math.max(maxVoices,game.audio.graph.active.size);}
+         for(let i=0;i<600;i++){const start=performance.now();game.world.update();game.view.frame(0);times.push(performance.now()-start);maxVoices=Math.max(maxVoices,game.audio.graph.active.size+game.audio.score.voices);}
         times.sort((a,b)=>a-b);return {p50Ms:times[300],p95Ms:times[570],maxVoices,limit:game.audio.graph.limiter.limit,ticks:600};
       },
       render:renderAudio,l1Bot:()=>runAudioL1Bot(game),

@@ -65,6 +65,7 @@ export class StreamedMusic {
         for (const deck of this.decks.values())
             if (deck.retire <= this.context.currentTime) { deck.media.pause(); deck.retire = Infinity; }
     }
+    get voices(): number { return [...this.decks.values()].filter(deck => !deck.media.paused).length; }
     pause(): void {
         this.suspended = true;
         ++this.generation;
