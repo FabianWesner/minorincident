@@ -257,9 +257,12 @@ describe('L1 v2 infected perception', () => {
       expect(brain(far).distractionId).toBe(0);
       expect(brain(chaser).distractionId).toBe(0);
       // A visible human overrides the attraction.
-      const lure = near.find((e) => brain(e).mode === 'search')!;
-      let spot: Vec2 | undefined;
-      for (const off of [0, 0.5, -0.5, 0.7, -0.7]) for (const r of [6, 4, 9]) { const p = { x: lure.transform.x + Math.cos(-lure.transform.yaw + off) * r, z: lure.transform.z + Math.sin(-lure.transform.yaw + off) * r }; if (!spot && perception.sees(lure, p)) spot = p; }
+      let spot: Vec2 | undefined, lure: EntitySnapshot | undefined;
+      for (const candidate of near) if (!spot && brain(candidate).mode === 'search') for (const off of [0, 0.3, -0.3, 0.6, -0.6]) for (const r of [6, 4, 9, 12]) {
+        const p = { x: candidate.transform.x + Math.cos(-candidate.transform.yaw + off) * r, z: candidate.transform.z + Math.sin(-candidate.transform.yaw + off) * r };
+        if (!spot && Math.abs(p.x) < 58 && Math.abs(p.z) < 58 && perception.sees(candidate, p)) { spot = p; lure = candidate; }
+      }
+      if (!lure) throw new Error('no searching infected with a clear view');
       humans.add(600, 'civilian', spot!.x, spot!.z);
       step(w, 16); expect(brain(lure).mode).toBe('chase'); expect(brain(lure).targetId).toBe(600); humans.remove(600);
       // Others keep searching around the car during the alarm, then wander within alarm + 8 s.
@@ -302,10 +305,8 @@ describe('L1 v2 infected perception', () => {
     const mean = (v: number[]) => v.reduce((a, b) => a + b) / v.length;
     expect(mean(all.frail)).toBeLessThan(mean(all.average)); expect(mean(all.average)).toBeLessThan(mean(all.athletic));
     expect(all.frail.filter((s) => s > 4.5).length / all.frail.length).toBeGreaterThanOrEqual(0.95);
-    // Spec: "the average-tier infected closes 10 m in <= 20 s". At the tier base (5.1 m/s) that is 16.7 s; a -6 % jitter
-    // spawn (4.79 m/s) needs ~34 s, so the clause is checked for average infected at or above the tier base (see c-report).
-    expect(10 / (l1v2.speedTiers.average.baseMs - l1v2.player.runMs)).toBeLessThanOrEqual(l1v2.speedTiers.closeTenMetresMaxS);
-    closing.forEach((t, i) => { if (closingSpeed[i] >= l1v2.speedTiers.average.baseMs) expect(t).toBeLessThanOrEqual(l1v2.speedTiers.closeTenMetresMaxS); });
+    // Strict clause: every average-tier infected closes 10 m in <= 20 s (base 5.3 m/s, jitter +/-4 %).
+    for (const t of closing) expect(t).toBeLessThanOrEqual(l1v2.speedTiers.closeTenMetresMaxS);
     // Simulated closing tracks the analytic 10 / (v - 4.5) within 1.5 s (no hidden slow-downs in the chase).
     closing.forEach((t, i) => { if (t < 60) expect(Math.abs(t - 10 / (closingSpeed[i] - l1v2.player.runMs))).toBeLessThanOrEqual(1.5); });
     console.info(`[AC12] frail ${Math.min(...all.frail).toFixed(2)}-${Math.max(...all.frail).toFixed(2)} average ${Math.min(...all.average).toFixed(2)}-${Math.max(...all.average).toFixed(2)} athletic ${Math.min(...all.athletic).toFixed(2)}-${Math.max(...all.athletic).toFixed(2)} m/s; close 10 m median ${median(closing).toFixed(1)} s (min ${Math.min(...closing).toFixed(1)}, max ${Math.max(...closing).toFixed(1)})`);

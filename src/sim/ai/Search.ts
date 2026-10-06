@@ -63,29 +63,30 @@ export function planSearch(plan: SearchPlan, rng: Rng, nav: ProbeTerrain, tick: 
   plan.probes.length = 0; plan.doubleBackAt = -1; plan.next = -1; plan.visited = 0; plan.doubledBack = false; plan.legTicks = 0;
   const count = tuning.probePoints[0] + Math.floor(rng.next() * (tuning.probePoints[1] - tuning.probePoints[0] + 1));
   const known = heading.x !== 0 || heading.z !== 0, base = known ? Math.atan2(heading.z, heading.x) : rng.next() * Math.PI * 2;
-  let px = origin.x, pz = origin.z, side = rng.next() < 0.5 ? 1 : -1;
+  let px = origin.x, pz = origin.z, side = rng.next() < 0.5 ? 1 : -1, previous = base;
   for (let i = 0; i < count; i++) {
-    // Early probes fan out ahead of the target's heading, alternating sides; later ones may be anywhere around.
-    const spread = i === 0 ? 0.8 : i < 3 ? 1.7 : Math.PI, near = i < 3 ? Math.min(radius[1], radius[0] + 3.5) : radius[1];
-    let bestScore = -Infinity, bx = 0, bz = 0;
+    // The first probe lies ahead of the target's heading; each next one sweeps on around the origin (<= ~90 deg from the
+    // previous one), so legs never cut back through the last-known position.
+    const spread = i === 0 ? 0.8 : i < 3 ? 1.1 : 1.6, near = i < 3 ? Math.min(radius[1], radius[0] + 3.5) : radius[1];
+    let bestScore = -Infinity, bx = 0, bz = 0, ba = 0;
     for (let k = 0; k < 10; k++) {
-      const angle = base + side * rng.next() * spread * (k % 2 ? -1 : 1), r = radius[0] + rng.next() * (near - radius[0]);
+      const angle = previous + side * rng.next() * spread * (k % 2 ? -1 : 1), r = radius[0] + rng.next() * (near - radius[0]);
       const x = origin.x + Math.cos(angle) * r, z = origin.z + Math.sin(angle) * r;
       if (!nav.clear(x, z, agentRadius)) continue;
       const leg = Math.hypot(x - px, z - pz);
       if (leg < 2.5) continue;
       const score = Math.cos(angle - base) * (known ? 0.7 : 0) + (coverEdge(nav, x, z) ? 0.8 : 0) - Math.max(0, leg - 7) * 0.35 + rng.next();
-      if (score > bestScore) { bestScore = score; bx = x; bz = z; }
+      if (score > bestScore) { bestScore = score; bx = x; bz = z; ba = angle; }
     }
     if (bestScore === -Infinity) continue;
-    plan.probes.push(bx, bz); px = bx; pz = bz; side = -side;
+    plan.probes.push(bx, bz); px = bx; pz = bz; previous = ba; side = -side;
   }
-  // Double back: after the second probe, return to (near) the first before moving on.
-  if (plan.probes.length >= 4 && rng.next() < tuning.doubleBackProb + 0.15) {
-    const jitter = rng.next() * Math.PI * 2, x = plan.probes[0] + Math.cos(jitter) * 1.2, z = plan.probes[1] + Math.sin(jitter) * 1.2;
+  // Double back: after the third probe, return to (near) the second before moving on.
+  if (plan.probes.length >= 6 && rng.next() < tuning.doubleBackProb + 0.25) {
+    const jitter = rng.next() * Math.PI * 2, x = plan.probes[2] + Math.cos(jitter) * 1.2, z = plan.probes[3] + Math.sin(jitter) * 1.2;
     const useJitter = nav.clear(x, z, agentRadius);
-    plan.probes.splice(4, 0, useJitter ? x : plan.probes[0], useJitter ? z : plan.probes[1]);
-    plan.doubleBackAt = 2;
+    plan.probes.splice(6, 0, useJitter ? x : plan.probes[2], useJitter ? z : plan.probes[3]);
+    plan.doubleBackAt = 3;
   }
 }
 /** Random wander goal 4-12 m away on walkable ground, or false when none was found this tick. */

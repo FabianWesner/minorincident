@@ -523,7 +523,8 @@ export class InfectedSystem {
   private extendSearch(s: L1Brain['search'], rng: Rng): void {
     const [low, high] = l1v2.infected.search.probeRadiusM;
     for (let k = 0; k < 6; k++) {
-      const angle = rng.next() * Math.PI * 2, r = low + rng.next() * (high - low), x = s.originX + Math.cos(angle) * r, z = s.originZ + Math.sin(angle) * r;
+      const n = s.probes.length, last = n ? Math.atan2(s.probes[n - 1] - s.originZ, s.probes[n - 2] - s.originX) : 0;
+      const angle = last + (rng.next() * 2 - 1) * 1.5, r = low + rng.next() * (high - low), x = s.originX + Math.cos(angle) * r, z = s.originZ + Math.sin(angle) * r;
       if (this.nav.clear(x, z, 0.45)) { s.probes.push(x, z); return; }
     }
     s.probes.push(s.originX + 4, s.originZ);
