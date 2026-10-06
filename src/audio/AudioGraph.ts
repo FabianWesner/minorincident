@@ -45,6 +45,9 @@ export class AudioGraph {
     readonly sfx: GainNode;
     readonly voice: GainNode;
     readonly musicGate: GainNode;
+    readonly musicFilter: BiquadFilterNode;
+    readonly ambienceFilter: BiquadFilterNode;
+    private lowHp = false;
     readonly mono: GainNode;
     readonly stereo: GainNode;
     readonly zones: {
@@ -100,10 +103,18 @@ export class AudioGraph {
         this.voice.connect(this.master);
         this.musicGate = context.createGain();
         this.musicGate.connect(this.master);
+        this.musicFilter = context.createBiquadFilter();
+        this.ambienceFilter = context.createBiquadFilter();
+        for (const filter of [this.musicFilter, this.ambienceFilter]) {
+            filter.type = 'lowpass';
+            filter.frequency.value = 20000;
+        }
+        this.musicFilter.connect(this.musicGate);
+        this.ambienceFilter.connect(this.master);
         for (const bus of audioBuses) {
             const node = context.createGain();
             node.gain.value = 1;
-            node.connect(bus === 'music' ? this.musicGate : bus === 'dialogue' || bus === 'barks' ? this.voice : ['weapons', 'impacts', 'vehicles', 'props', 'gore'].includes(bus) ? this.sfx : this.master);
+            node.connect(bus === 'music' ? this.musicFilter : bus === 'ambience' ? this.ambienceFilter : bus === 'dialogue' || bus === 'barks' ? this.voice : ['weapons', 'impacts', 'vehicles', 'props', 'gore'].includes(bus) ? this.sfx : this.master);
             this.buses[bus] = node;
         }
         for (let i = 0; i < 2; i++) {
@@ -144,6 +155,13 @@ export class AudioGraph {
         }
         else
             l.setOrientation(-Math.SQRT1_2, 0, -Math.SQRT1_2, 0, 1, 0);
+    }
+    lowHealth(on: boolean): void {
+        if (this.lowHp === on)
+            return;
+        this.lowHp = on;
+        for (const filter of [this.musicFilter, this.ambienceFilter])
+            filter.frequency.setTargetAtTime(on ? 1400 : 20000, this.context.currentTime, 0.1);
     }
     setMono(on: boolean): void { const t = this.context.currentTime; this.mono.gain.setValueAtTime(on ? 1 : 0, t); this.stereo.gain.setValueAtTime(on ? 0 : 1, t); }
     private zone(preset: ReverbPreset, source: boolean, time: number): ConvolverNode {
@@ -206,6 +224,7 @@ export class AudioGraph {
             return null;
         this.active.set(voice.id, voice);
         source.onended = () => { voice.stopped = true; source.disconnect(); filter.disconnect(); gain.disconnect(); panner?.disconnect(); send.disconnect(); this.active.delete(voice.id); this.limiter.remove(voice.id); };
+        source.playbackRate.value = voice.rate;
         source.playbackRate.setValueAtTime(voice.rate, t);
         if (position) {
             this.updateEmitter(voice, t, options.lowpass);
@@ -283,6 +302,11 @@ export class AudioGraph {
     tinnitus(time = this.context.currentTime): void { const f = this.tinnitusFilter.frequency; f.cancelScheduledValues(time); f.setValueAtTime(1200, time); f.setValueAtTime(1200, time + 1.5); f.exponentialRampToValueAtTime(20000, time + 2.5); }
     reset(): void {
         this.limiter.clear();
+        this.lowHp = false;
+        for (const filter of [this.musicFilter, this.ambienceFilter]) {
+            filter.frequency.cancelScheduledValues(this.context.currentTime);
+            filter.frequency.setValueAtTime(20000, this.context.currentTime);
+        }
         this.radioUntil = 0;
         this.megaUntil = 0;
         const time = this.context.currentTime;
