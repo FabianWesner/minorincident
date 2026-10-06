@@ -28,10 +28,11 @@ test('motion lab joint weights preserve rest geometry and independent clone bone
 test('motion lab crowd palettes yield finite landmarks and use one instanced mesh', async () => {
   const buffer = await readFile('public/assets/models/inf.jogger.lod1.glb');
   const parsed = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength), '');
-  for (const prototype of [false, true]) {
+  for (const variant of ['reference', 'rigid', 'skin']) {
+    const prototype = variant !== 'reference';
     const model = parsed.scene.clone(true) as Group;
-    const crowd = new LabCrowd(prototype ? skinFigure(model) : model, 200, prototype), state = motion();
-    for (let i = 0; i < 120; i++) { steer(state, { x: 1, z: 0 }, 2.4, prototype); crowd.update([state], [new Vector3(state.x, 0, state.z)]); }
+    const crowd = new LabCrowd(variant === 'skin' ? skinFigure(model) : model, 200, prototype), state = motion();
+    for (let i = 0; i < 120; i++) { steer(state, { x: 1, z: 0 }, 2.4, prototype); crowd.update([state], [new Vector3(state.x, 0, state.z)]); expect(crowd.landmark(0, 'head', false).toArray().every(Number.isFinite)).toBe(true); }
     expect(crowd.mesh.isInstancedMesh).toBe(true); expect(crowd.mesh.count).toBe(1);
     for (const name of ['head', 'footL']) expect(crowd.landmark(0, name).toArray().every(Number.isFinite)).toBe(true);
     crowd.dispose();

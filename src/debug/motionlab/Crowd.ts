@@ -1,8 +1,9 @@
 import { BufferAttribute, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, MeshLambertNodeMaterial, SkinnedMesh, Vector3, type DataTexture } from 'three/webgpu';
 import { attribute, cameraViewMatrix, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec4 } from 'three/tsl';
-import { clipTexture, crowdMatrix } from '../../assets/crowd';
+import { clipTexture, crowdMatrix, crowdBlendedMatrix } from '../../assets/crowd';
 import { bakeInfected, framesPerClip, infectedClips } from '../../render/characters/bakeInfected';
 import { authoredClips, sampleClip, strideScale, strides } from '../../render/characters/clips';
+import { CrowdPosePalette } from '../../render/characters/CrowdPosePalette';
 import { dt, type Motion } from './Motion';
 
 const names = ['idle', 'walk', 'run', 'npc-walk', 'shamble', 'infected-run'] as const;
@@ -10,6 +11,8 @@ const samples = 24;
 export class LabCrowd {
   readonly mesh: InstancedMesh;
   readonly texture: DataTexture;
+  private readonly palette?: CrowdPosePalette;
+  private time = 0;
   private readonly pose: InstancedBufferAttribute;
   private readonly transition: { clip: string; from: number; blend: number }[];
   private readonly scale: number;
@@ -22,8 +25,9 @@ export class LabCrowd {
   constructor(model: Group, capacity: number, private readonly prototype: boolean, private readonly civilian = false) {
     let geometry: import('three').BufferGeometry;
     this.scale = strideScale(model);
-    if (!prototype) {
-      const baked = bakeInfected(model); geometry = baked.geometry; this.texture = clipTexture(baked.clip); this.clips = infectedClips; this.frames = framesPerClip; this.parts = baked.clip.parts;
+    const skinned = !!model.getObjectByName('lab-skin');
+    if (!skinned) {
+      const baked = bakeInfected(model); geometry = baked.geometry; this.palette = prototype ? new CrowdPosePalette(baked.clip, capacity) : undefined; this.texture = this.palette?.texture ?? clipTexture(baked.clip); this.clips = infectedClips; this.frames = framesPerClip; this.parts = baked.clip.parts;
     } else {
       const skin = model.getObjectByName('lab-skin') as SkinnedMesh, skeleton = skin.skeleton;
       this.parts = skeleton.bones.map(b => b.name);
@@ -48,11 +52,11 @@ export class LabCrowd {
     const instance = mat4(column(0), column(4), column(8), column(12));
     const state = attribute('_lab_pose', 'vec3');
     const vertex = (index: Parameters<typeof crowdMatrix>[1], value: ReturnType<typeof vec4>) => {
-      const current = crowdMatrix(this.texture, index, state.x).mul(value);
-      return prototype ? mix(crowdMatrix(this.texture, index, state.y).mul(value), current, state.z) : current;
+      const current = (this.palette ? crowdBlendedMatrix(this.texture, index, state.x, state.y, state.z) : crowdMatrix(this.texture, index, state.x)).mul(value);
+      return prototype && !this.palette ? mix(crowdMatrix(this.texture, index, state.y).mul(value), current, state.z) : current;
     };
     const position = vec4(positionGeometry, 1), normal = vec4(normalGeometry, 0);
-    if (prototype) {
+    if (skinned) {
       const joint = attribute('_joints', 'vec3');
       material.positionNode = instance.mul(mix(vertex(joint.x, position), vertex(joint.y, position), joint.z)).xyz;
       material.normalNode = cameraViewMatrix.mul(instance).mul(mix(vertex(joint.x, normal), vertex(joint.y, normal), joint.z)).xyz.normalize();
@@ -64,14 +68,15 @@ export class LabCrowd {
     this.transition = Array.from({ length: capacity }, () => ({ clip: 'idle', from: 0, blend: 1 }));
   }
   update(states: Motion[], positions: Vector3[], kind = 'infected'): void {
-    this.mesh.count = states.length;
+    this.time += dt; this.mesh.count = states.length;
     for (let i = 0; i < states.length; i++) {
-      const m = states[i], clip = m.speed < .06 ? 'idle' : m.speed > 2 ? kind === 'infected' && !this.prototype ? 'infected-run' : 'run' : this.civilian ? 'npc-walk' : this.prototype ? 'walk' : 'shamble';
+      const m = states[i], clip = m.speed < .06 ? 'idle' : m.speed > 2 ? kind === 'infected' && this.clips === infectedClips ? 'infected-run' : 'run' : this.civilian ? 'npc-walk' : this.clips === infectedClips ? 'shamble' : 'walk';
       const phase = strides[clip] ? m.distance / (strides[clip] * this.scale) % 1 : (m.distance + i * .137) % 1;
       const frame = this.clips.indexOf(clip) * this.frames + phase * (this.frames - 1), transition = this.transition[i];
       if (clip !== transition.clip) { transition.from = this.pose.getX(i); transition.clip = clip; transition.blend = 0; }
       transition.blend = Math.min(1, transition.blend + dt / .16);
-      this.pose.setXYZ(i, frame, transition.from, transition.blend);
+      const blend = this.palette?.sample(i, clip, frame, this.time) ?? [transition.from, transition.blend];
+      this.pose.setXYZ(i, frame, blend[0], blend[1]);
       this.matrix.makeRotationY(m.yaw); this.matrix.setPosition(positions[i]); this.mesh.setMatrixAt(i, this.matrix);
     }
     this.mesh.instanceMatrix.needsUpdate = this.pose.needsUpdate = true;
@@ -89,7 +94,7 @@ export class LabCrowd {
     return point;
   }
   supportPhase(state: Motion): number {
-    const name = state.speed > 2 ? this.prototype ? 'run' : 'infected-run' : this.civilian ? 'npc-walk' : this.prototype ? 'walk' : 'shamble';
+    const name = state.speed > 2 ? this.clips === infectedClips ? 'infected-run' : 'run' : this.civilian ? 'npc-walk' : this.clips === infectedClips ? 'shamble' : 'walk';
     return state.distance / (strides[name] * this.scale) % 1;
   }
   dispose(): void { this.mesh.geometry.dispose(); (this.mesh.material as MeshLambertNodeMaterial).dispose(); this.mesh.dispose(); this.texture.dispose(); }

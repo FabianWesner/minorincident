@@ -25,10 +25,11 @@ interface Side {
 }
 export async function startMotionLab(params: URLSearchParams): Promise<void> {
   const count = Math.max(50, Math.min(200, Number(params.get('count')) || 200));
+  const skins = params.get('candidate') === 'skin';
   const close = params.get('view') === 'close', only = params.get('side');
   const host = document.querySelector<HTMLElement>('#game')!;
   const style = document.createElement('style'); style.textContent = 'body{font:14px system-ui;color:#fff}#lab-ui{position:absolute;inset:12px 12px auto;background:#172137e8;border-radius:12px;padding:12px;z-index:2}#lab-ui a{color:#91e8dc;margin-right:12px}#lab-labels{display:flex;justify-content:space-around;margin-top:10px;font-weight:bold}#lab-status{font-size:12px;color:#cee0ea;margin-top:6px}'; document.head.append(style);
-  const ui = document.createElement('div'); ui.id = 'lab-ui'; ui.innerHTML = '<strong>Minor Incident · Motion lab</strong><div><a href="?motionlab&renderer=webgl&view=close&count=50">Figures</a><a href="?motionlab&renderer=webgl&view=close&count=50&candidate=mesh2motion">Mesh2Motion</a><a href="?motionlab&renderer=webgl&count=50">50 infected</a><a href="?motionlab&renderer=webgl&count=200">200 infected</a><button id="lab-pause">Pause</button></div><div id="lab-labels"><span>Current · rigid parts + stride repair</span><span>Prototype · joint weights + bounded steering</span></div><div id="lab-status">Loading actual game assets…</div>'; host.append(ui);
+  const ui = document.createElement('div'); ui.id = 'lab-ui'; ui.innerHTML = '<strong>Minor Incident · Motion lab</strong><div><a href="?motionlab&renderer=webgl&view=close&count=50">Figures</a><a href="?motionlab&renderer=webgl&view=close&count=50&candidate=mesh2motion">Mesh2Motion</a><a href="?motionlab&renderer=webgl&count=50">50 infected</a><a href="?motionlab&renderer=webgl&count=200">200 infected</a><button id="lab-pause">Pause</button></div><div id="lab-labels"><span>Reference · abrupt NPC steering + raw keyboard</span><span>Stage 1 · bounded navigation + rigid pose fades</span></div><div id="lab-status">Loading actual game assets…</div>'; host.append(ui);
   const renderer = new Renderer(params); (renderer.backend as unknown as { trackTimestamp: boolean }).trackTimestamp = true; await renderer.init(); renderer.setPixelRatio(1); host.append(renderer.domElement);
   const registry = new AssetRegistry(event => { throw new Error(JSON.stringify(event)); });
   const [survivor, civilian, infected] = await Promise.all(['char.survivor-female', 'npc.civilian-man-a', 'inf.jogger'].map(id => registry.loadAsset(id, 'lod1') as Promise<Group>));
@@ -40,14 +41,14 @@ export async function startMotionLab(params: URLSearchParams): Promise<void> {
     const light = new DirectionalLight('#fff2d5', 2.7); light.position.set(-5, 12, 7); scene.add(light);
     const ground = new Mesh(new PlaneGeometry(100, 100), new MeshLambertNodeMaterial({ color: '#7e9a85' })); ground.rotation.x = -Math.PI / 2; scene.add(ground);
     const grid = new GridHelper(60, 60, '#748d89', '#92aaa1'); grid.position.y = .004; scene.add(grid);
-    const heroModel = prototype ? mesh2motion ? cloneSkeleton(mesh2motion.scene) as Group : skinFigure(survivor.clone(true)) : survivor.clone(true);
+    const heroModel = prototype ? mesh2motion ? cloneSkeleton(mesh2motion.scene) as Group : skins ? skinFigure(survivor.clone(true)) : survivor.clone(true) : survivor.clone(true);
     if (mesh2motion && prototype) heroModel.traverse(node => { if (node instanceof Mesh) { const original = (Array.isArray(node.material) ? node.material[0] : node.material) as MeshLambertNodeMaterial; node.material = new MeshLambertNodeMaterial({ color: original.color, vertexColors: original.vertexColors }); } });
     // Exercise the official safe cloning route; geometry/material may be shared.
     const hero = new Group(); hero.add(prototype ? cloneSkeleton(heroModel) : heroModel); scene.add(hero);
     const rig = Object.fromEntries(characterNodes.map(name => [name, hero.getObjectByName(name)!])) as CharacterRig;
     const animator = prototype && mesh2motion ? new LibraryAnimator(hero.children[0], mesh2motion.animations, .9 * strideScale(survivor)) : new KeyframeAnimator(rig);
-    const civ = new LabCrowd(prototype ? skinFigure(civilian.clone(true)) : civilian.clone(true), 1, prototype, true);
-    const crowd = new LabCrowd(prototype ? skinFigure(infected.clone(true)) : infected.clone(true), count, prototype);
+    const civ = new LabCrowd(prototype && skins ? skinFigure(civilian.clone(true)) : civilian.clone(true), 1, prototype, true);
+    const crowd = new LabCrowd(prototype && skins ? skinFigure(infected.clone(true)) : infected.clone(true), count, prototype);
     scene.add(civ.mesh, crowd.mesh);
     const physics = new Physics(); await physics.init(); physics.load({ name: 'motion-lab', survivor: true, ground: { width: 100, depth: 100 }, player: { x: 0, y: .7, z: 0 } });
     sides.push({ scene, hero, animator, civilian: civ, crowd, physics, controller: new KinematicController(physics), transform: { x: 0, y: .7, z: 0, yaw: 0 }, states: Array.from({ length: count + 1 }, motion), heroMotion: motion(), traces: Array.from({ length: 3 }, () => []), drawCalls: 0, triangles: 0, updateMs: [], submitMs: [], frameMs: [], gpuMs: [], footSlide: [], pops: [], npcFoot: [[], []], npcPops: [[], []], lastNpcFoot: [], lastNpcHead: [], lastSpeed: [], lastClip: 'idle', transitionTick: 0 });
@@ -63,7 +64,7 @@ export async function startMotionLab(params: URLSearchParams): Promise<void> {
       if (only && (only === 'current' ? s !== 0 : s !== 1)) continue;
       const side = sides[s], start = performance.now(), h = side.heroMotion;
       const beforeX = side.transform.x, beforeZ = side.transform.z;
-      input.move = command; side.controller.move(input, side.transform, true); side.physics.update(); Object.assign(side.transform, side.physics.playerBody!.translation());
+      input.move = command; input.navigation = s === 1; side.controller.move(input, side.transform, true); side.physics.update(); Object.assign(side.transform, side.physics.playerBody!.translation());
       h.x = side.transform.x; h.z = side.transform.z; h.yaw = side.transform.yaw; h.vx = (h.x - beforeX) / dt; h.vz = (h.z - beforeZ) / dt; h.speed = Math.hypot(h.vx, h.vz); h.distance += h.speed * dt;
       for (let i = 0; i < side.states.length; i++) steer(side.states[i], command, i === 0 ? 1.4 : 2.4, s === 1, i === 0);
       side.hero.position.set(h.x - 5, side.transform.y - .7, h.z); side.hero.rotation.y = h.yaw;
@@ -98,14 +99,14 @@ export async function startMotionLab(params: URLSearchParams): Promise<void> {
     const width = innerWidth, height = innerHeight, selected = only === 'current' ? [0] : only === 'prototype' ? [1] : [0, 1];
     renderer.setSize(width, height); renderer.setScissorTest(true);
     for (const [slot, index] of selected.entries()) {
-      const side = sides[index], w = width / selected.length, extent = close ? 6.5 : 20;
+      const side = sides[index], w = width / selected.length, extent = close ? 9 : 20;
       camera.left = -extent * w / height; camera.right = extent * w / height; camera.top = extent; camera.bottom = -extent; camera.near = .1; camera.far = 150; camera.updateProjectionMatrix();
       const m = side.states[1], cx = close ? (side.heroMotion.x + side.states[0].x + m.x) / 3 : m.x, cz = close ? (side.heroMotion.z + side.states[0].z + m.z) / 3 : m.z + 13;
       camera.position.set(cx - 12, 22, cz + 24); camera.lookAt(cx, .7, cz);
       renderer.setViewport(slot * w, 0, w, height); renderer.setScissor(slot * w, 0, w, height); renderer.info.reset();
       const start = performance.now(); renderer.render(side.scene, camera); side.submitMs.push(performance.now() - start); side.drawCalls = renderer.info.render.drawCalls; side.triangles = renderer.info.render.triangles;
     }
-    status.textContent = `Tick ${tick} · ${count} infected · ${renderer.selectedBackend} · same 60 Hz start/turn/stop input · skins reuse disconnected source geometry`;
+    status.textContent = `Tick ${tick} · ${count} infected · ${renderer.selectedBackend} · same 60 Hz start/turn/stop input · production motion limits and rigid pose fades; optional skin studies deferred`;
   }
   function metrics() {
     return Object.fromEntries(sides.map((side, i) => [i ? 'prototype' : 'current', {
@@ -117,7 +118,7 @@ export async function startMotionLab(params: URLSearchParams): Promise<void> {
       updateMsP50: percentile(side.updateMs.slice(120), .5), updateMsP95: percentile(side.updateMs.slice(120), .95),
       renderSubmitMsP50: percentile(side.submitMs.slice(120), .5), renderSubmitMsP95: percentile(side.submitMs.slice(120), .95),
       frameMsP95: percentile(side.frameMs.slice(120), .95), gpuMsP95: side.gpuMs.length ? percentile(side.gpuMs, .95) : null,
-      drawCalls: side.drawCalls, triangles: side.triangles, candidate: mesh2motion ? 'mesh2motion' : 'joint-weights', animationTextureBytes: side.crowd.bytes, infectedDraws: 1, count, backend: renderer.selectedBackend,
+      drawCalls: side.drawCalls, triangles: side.triangles, candidate: mesh2motion ? 'mesh2motion' : skins ? 'joint-weights' : 'stage1', animationTextureBytes: side.crowd.bytes, infectedDraws: 1, count, backend: renderer.selectedBackend,
     }]));
   }
   function boxes() {
