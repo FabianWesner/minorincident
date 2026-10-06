@@ -256,9 +256,9 @@ action('mount',.4,[(0,p()),(.35,p(hip=hip(y=-.03,roll=-10),torso=(-6,0,-6),legR=
 action('dismount',.4,[(0,ride0),(.3,{**ride0,'legR':(-35,0,40),'shinR':z(-55),'hip':hip(y=-.01,roll=-8)}),(.7,p(hip=hip(y=-.035),legR=z(-6),shinR=z(-18),armL=z(18),armR=z(20))),(1,p())])
 # Parcel: elbows in, forearms level, box against the chest; hand-over extends it,
 # with a small bow and a nod, then returns empty-handed.
-carry=p(armL=(10,0,30),foreArmL=(0,-18,78),armR=(-10,0,30),foreArmR=(0,18,78),handL=z(-10),handR=z(-10),torso=z(3))
+carry=p(armL=z(26),foreArmL=z(88),armR=z(26),foreArmR=z(88),handL=z(-12),handR=z(-12),torso=z(3))
 action('carry',.5,[(0,carry),(1,carry)])
-offer=p(hip=hip(y=-.03),torso=z(-14),head=z(-6),armL=(10,0,78),foreArmL=(0,-14,22),armR=(-10,0,78),foreArmR=(0,14,22))
+offer=p(hip=hip(y=-.03),torso=z(-14),head=z(-6),armL=z(72),foreArmL=z(28),armR=z(72),foreArmR=z(28),handL=z(-20),handR=z(-20))
 action('hand-over',1,[(0,carry),(.2,{**carry,'torso':z(6),'hip':hip(y=-.01)}),(.42,offer),(.6,{**offer,'head':z(-14)}),(.78,p(torso=z(-4),head=z(4),armL=z(12),armR=z(14),foreArmL=z(20),foreArmR=z(22))),(1,p())])
 # Garage bat pickup: lift, twirl the grip a full turn, settle it on the shoulder.
 action('equip',.9,[(0,p()),(.15,p(hip=hip(y=-.03),armR=(0,0,70),foreArmR=z(40),torso=(0,-10,-4))),
@@ -316,14 +316,14 @@ def bat(name,keys):
     action(name,1,[(0,bat_guard)]+[(t,{**bat_guard,**pose}) for t,pose in keys]+[(1,bat_guard)])
 bat('bat-1',[(.12,p(hip=hip(y=-.05,twist=-22),torso=(0,-48,8),head=(0,30,-4),armR=(-20,-40,62),foreArmR=z(96),armL=(20,-62,56),foreArmL=z(72),legR=z(-12),shinR=z(-32),legL=z(10),shinL=z(-16))),
     (.17,p(hip=hip(y=-.055,twist=-25),torso=(0,-54,9),head=(0,33,-4),armR=(-22,-46,64),foreArmR=z(100),armL=(22,-66,58),foreArmL=z(74),legR=z(-13),shinR=z(-34),legL=z(10),shinL=z(-16))),
-    (.2,p(hip=hip(x=.12,y=-.04,twist=16),torso=(0,30,-12),head=(0,-14,8),armR=(10,40,90),foreArmR=z(8),armL=(-10,30,86),foreArmL=z(14),legL=z(28),shinL=z(-22),legR=z(-22),shinR=z(-10),footR=z(15))),
-    (.3,p(hip=hip(x=.13,y=-.04,twist=28),torso=(0,62,-8),head=(0,-25,6),armR=(20,95,84),foreArmR=z(25),armL=(-15,82,70),foreArmL=z(30),legL=z(26),shinL=z(-22),legR=z(-22),shinR=z(-12),footR=z(15))),
-    (.55,p(hip=hip(x=.06,y=-.035,twist=12),torso=(0,30,-4),head=(0,-10,2),armR=(10,40,58),foreArmR=z(55),armL=(-8,20,52),foreArmL=z(55),legL=z(16),shinL=z(-18)))])
+    (.2,p(hip=hip(x=.12,y=-.04,twist=16),torso=(0,30,-12),head=(0,-14,8),armR=(10,40,90),foreArmR=z(8),handR=z(-92),armL=(-10,30,86),foreArmL=z(14),legL=z(28),shinL=z(-22),legR=z(-22),shinR=z(-10),footR=z(15))),
+    (.3,p(hip=hip(x=.13,y=-.04,twist=28),torso=(0,62,-8),head=(0,-25,6),armR=(20,95,84),foreArmR=z(25),handR=z(-100),armL=(-15,82,70),foreArmL=z(30),legL=z(26),shinL=z(-22),legR=z(-22),shinR=z(-12),footR=z(15))),
+    (.55,p(hip=hip(x=.06,y=-.035,twist=12),torso=(0,30,-4),head=(0,-10,2),armR=(10,40,58),foreArmR=z(55),handR=z(-45),armL=(-8,20,52),foreArmL=z(55),legL=z(16),shinL=z(-18)))])
 bat('bat-2',[(.1,p(hip=hip(y=-.045,twist=20),torso=(0,56,6),head=(0,-28,-3),armR=(15,88,72),foreArmR=z(62),armL=(-10,70,64),foreArmL=z(60),legL=z(8),shinL=z(-26))),
     (.16,p(hip=hip(y=-.05,twist=23),torso=(0,60,7),head=(0,-30,-3),armR=(16,92,74),foreArmR=z(66),armL=(-10,74,66),foreArmL=z(62),legL=z(8),shinL=z(-28))),
-    (.2,p(hip=hip(x=.1,y=-.04,twist=-14),torso=(0,-30,-12),head=(0,14,8),armR=(-10,-45,88),foreArmR=z(10),armL=(10,-40,82),foreArmL=z(14),legR=z(24),shinR=z(-20),legL=z(-18),shinL=z(-10))),
-    (.32,p(hip=hip(x=.11,y=-.04,twist=-24),torso=(0,-58,-6),head=(0,24,5),armR=(-15,-90,80),foreArmR=z(26),armL=(12,-80,72),foreArmL=z(28),legR=z(22),shinR=z(-20),legL=z(-18),shinL=z(-10))),
-    (.58,p(hip=hip(x=.05,y=-.035,twist=-10),torso=(0,-24,-4),armR=(-5,-30,50),foreArmR=z(60),legR=z(12),shinR=z(-16)))])
+    (.2,p(hip=hip(x=.1,y=-.04,twist=-14),torso=(0,-30,-12),head=(0,14,8),armR=(-10,-45,88),foreArmR=z(10),handR=z(-92),armL=(10,-40,82),foreArmL=z(14),legR=z(24),shinR=z(-20),legL=z(-18),shinL=z(-10))),
+    (.32,p(hip=hip(x=.11,y=-.04,twist=-24),torso=(0,-58,-6),head=(0,24,5),armR=(-15,-90,80),foreArmR=z(26),handR=z(-98),armL=(12,-80,72),foreArmL=z(28),legR=z(22),shinR=z(-20),legL=z(-18),shinL=z(-10))),
+    (.58,p(hip=hip(x=.05,y=-.035,twist=-10),torso=(0,-24,-4),armR=(-5,-30,50),foreArmR=z(60),handR=z(-40),legR=z(12),shinR=z(-16)))])
 bat('bat-3',[(.12,p(hip=hip(y=-.08),torso=(0,-10,22),head=z(-8),armR=(0,-10,162),foreArmR=z(62),armL=(0,10,158),foreArmL=z(62),legL=z(20),shinL=z(-42),legR=z(14),shinR=z(-40))),
     (.18,p(hip=hip(y=-.09),torso=(0,-12,26),head=z(-10),armR=(0,-10,168),foreArmR=z(66),armL=(0,10,164),foreArmL=z(66),legL=z(22),shinL=z(-46),legR=z(15),shinR=z(-44))),
     (.2,p(hip=hip(x=.14,y=-.11),torso=(0,8,-38),head=z(18),armR=(0,10,62),foreArmR=z(5),armL=(0,-10,58),foreArmL=z(8),legL=z(35),shinL=z(-50),legR=z(-25),shinR=z(-20),footR=z(18))),
