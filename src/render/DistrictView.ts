@@ -74,6 +74,16 @@ export class DistrictView extends Group {
     const backdrop = new Mesh(terrain, this.materials.get('grass'));
     backdrop.rotation.x = -Math.PI / 2; backdrop.position.y = -.12; backdrop.receiveShadow = true;
     this.add(backdrop);
+    // Bound the slice with a visible fence on the actual terrain perimeter.
+    // Every collider below has matching rails and posts; internal seams stay open.
+    const perimeter = new Group(); perimeter.name = 'slice-perimeter'; this.add(perimeter);
+    for (const fence of this.world.boundaries) {
+      const x = (fence.min[0] + fence.max[0]) / 2, z = (fence.min[2] + fence.max[2]) / 2;
+      const width = fence.max[0] - fence.min[0], depth = fence.max[2] - fence.min[2];
+      for (const y of [.35, .8]) this.box(perimeter, 'picketWhite', [width, .15, depth], [x, y, z]);
+      const length = Math.max(width, depth), count = Math.ceil(length / 2);
+      for (let i = 0; i <= count; i++) this.box(perimeter, 'woodWarm', [.16, 1.05, .16], [width > depth ? fence.min[0] + length * i / count : x, .525, depth > width ? fence.min[2] + length * i / count : z]);
+    }
     await Promise.all(
       this.world.districts.map(async (d) => {
         const root = new Group();

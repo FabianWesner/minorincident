@@ -11,13 +11,14 @@ import {
   minimapData,
 } from "../../levels/districts/validate";
 import { crossValidate } from "../../levels/districts/crossValidate";
+import { placementColliders } from "../../levels/districts/staticCollision";
 import { bakeNav } from "./NavGrid";
 /** Sim-side level assembly. Render consumes the same immutable loaded layouts/placements. */
 export class DistrictWorld {
   readonly districts;
   readonly nav;
   readonly playerStart: Point;
-  /** Exterior slab edges only; shared district seams stay open. */
+  /** Visible perimeter fence footprints; shared district seams stay open. */
   readonly boundaries: Aabb[] = [];
   readonly warnings: string[] = [];
   readonly fires: {
@@ -39,6 +40,7 @@ export class DistrictWorld {
         gameplayLayers = gameplay.decay.filter(
           (l) => l.tier <= composition.tier,
         );
+      decay.colliders = placementColliders(decay.placements, decay.colliders);
       const off = new Set(gameplayLayers.flatMap((l) => l.powerOut));
       decay.lights = decay.lights.filter((id) => !off.has(id));
       return {
@@ -58,8 +60,8 @@ export class DistrictWorld {
       if (edge) edge.count++; else edges.set(key, { a, b, count: 1 });
     }
     for (const { a, b, count } of edges.values()) if (count === 1) this.boundaries.push({
-      min: [Math.min(a[0], b[0]) - .1, -1, Math.min(a[1], b[1]) - .1],
-      max: [Math.max(a[0], b[0]) + .1, 4, Math.max(a[1], b[1]) + .1],
+      min: [Math.min(a[0], b[0]) - .08, 0, Math.min(a[1], b[1]) - .08],
+      max: [Math.max(a[0], b[0]) + .08, 1.05, Math.max(a[1], b[1]) + .08],
     });
     this.nav = bakeNav(
       this.districts.map((d) => ({

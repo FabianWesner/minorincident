@@ -110,13 +110,13 @@ export function bakeNav(districts: NavDistrict[], seed: number): NavGrid {
         min[a] = Math.min(min[a], p[a] + d.origin[a]);
         max[a] = Math.max(max[a], p[a] + d.origin[a]);
       }
-  const nav = new NavGrid(min, max, 1, seed);
+  const nav = new NavGrid(min, max, .5, seed);
   for (const d of districts) {
     for (let z = 0; z < nav.height; z++)
       for (let x = 0; x < nav.width; x++) {
         const p: Point = [
-          min[0] + x + 0.5 - d.origin[0],
-          min[1] + z + 0.5 - d.origin[1],
+          min[0] + (x + 0.5) * nav.cellSize - d.origin[0],
+          min[1] + (z + 0.5) * nav.cellSize - d.origin[1],
         ];
         if (
           inside(p, d.layout.bounds) &&

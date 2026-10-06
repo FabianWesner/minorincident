@@ -3,12 +3,12 @@ export type CivilianState = 'calm' | 'alarmed' | 'flee' | 'hide' | 'grabbed' | '
 /** Serializable NPC components; no render objects or physics bodies. */
 export interface Civilian {
   state: CivilianState; ambient: boolean; adult: boolean; pet: 'dog' | 'cat' | null; owner: number | null;
-  variant: string; routine: string; waypoints: Point[]; waypoint: number; pauseUntil: number;
+  model?: string; variant: string; routine: string; waypoints: Point[]; waypoint: number; pauseUntil: number;
   entered: number; until: number; downTicks: number; eyesGlow: boolean; veins: number;
   attacker: number; threat: Point; path: number[]; goal: number; pathIndex: number;
   gore: false; knockedUntil: number;
 }
-export interface Companion { state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number }
+export interface Companion { following?: boolean; velocity?: Point; state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number }
 export interface Escort { state: 'follow' | 'wait' | 'cover' | 'downed' | 'dead'; order: 'follow' | 'wait'; child: boolean; gore: false; failed: boolean; downedAt: number; progress: number; latched: boolean; path: number[]; goal: number; pathIndex: number; cover: Point | null; attackAt: number }
 export interface Traffic { route: Point[]; segment: number; speed: number; desired: number; braking: number; stopped: boolean; panic: boolean }
 export interface Convoy { route: Point[]; samples: Point[]; distance: number; length: number; state: 'stop' | 'go' | 'arrived' | 'destroyed'; speed: number; offset: number }
