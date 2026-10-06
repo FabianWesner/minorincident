@@ -1,9 +1,29 @@
 # Trimmed hedge
 
-Reference proportions interpreted as 2.4 m long, 0.84 m deep, approximately 1.55 m high. Dense rectangular crown, vertical sides, softened irregular leaf perimeter. No exposed stems, planter or additional props.
+About 2.55 m long, 0.93 m deep and 1.62 m high, within the manifest dimension tolerance.
+Rounded box form with soft, clustered leaf blobs, like the bushes in
+`initial-drafts/sunset-grove-combat-gameplay-mockup.png`. There are no exposed stems or
+planter.
 
-744 closed six-sided faceted leaves form overlapping courses on four sides and the crown. Three static palette meshes, joined by material; inset green core conceals gaps. Golden leaves become more frequent near the top. All geometry rests at z=0 after ground normalization. No moving parts or light anchors are relevant. Root and cuboid collider are exported as empties.
+M1 rework (playtest M1-06/M1-07): the old faceted lens leaves read as harsh
+triangles with orange (`schoolBusYellow`) shards. The new build places about 77
+lumpy leaf clumps with Poisson spacing around a dark inset core. Faces hidden inside
+neighbouring clumps are culled. The clumps are closed ellipsoids, so each colour
+change falls where two clumps meet. Vertex normals blend each clump's normal 60/40
+with the overall rounded form for soft shading. Three greens are assigned per clump:
+`foliageDark` #4a7533 on the low skirt, `foliage` #7da23c on the sides and
+`foliageLight` #98b94f on the sunlit crown. Cycles AO (CPU) is baked into the `ao`
+vertex colours with its floor lifted to 0.38.
 
-Every static mesh has a Cycles ambient-occlusion bake at 32 samples in the `ao` vertex-color attribute. No image textures are exported.
+LODs are authored from the same clump layout and fitted to LOD0's bounds.
+- LOD0: about 9.5k triangles.
+- LOD1 (12-30 m): the clumps merged into 26 larger blobs, about 1.2k triangles (12.5%).
+- LOD2: one coarse shell over the clump bumps, banded skirt/sides/crown, about 150 triangles (1.6%).
 
-Three review rounds: blockout/density; staggered courses, varied normals and reference camera; thinner leaf lenses, camera margin and geometric AO. Build script uses direct mesh arrays rather than hundreds of individual objects or modifiers.
+All tiers use 3 materials (3 draw calls). `prop.tree` uses these exports directly.
+`prop.flower` is packed from the same source at 0.25 scale.
+
+Rebuild:
+`python3 tools/blender/run.py assets/prop.hedge/build.py --glb assets/prop.hedge/model.glb --lod1 assets/prop.hedge/model.lod1.glb --lod2 assets/prop.hedge/model.lod2.glb --bake-ao`,
+then `npm run assets:pack -- prop.hedge` and `npm run assets:optimize -- prop.flower`.
+Revert the layout key-order churn that the second command writes.
