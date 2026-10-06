@@ -123,14 +123,17 @@ class Layout:
     def anchor(self,name,pos):
         self.data['anchors'][name]=dict(position=pos,yaw=0)
         self.empties.append(empty('anchor:'+name,pos))
-    def place(self,asset,pos,yaw=0,tier=0,allowed=False,scale=(1,1,1)):
+    def place(self,asset,pos,yaw=0,tier=0,allowed=False,scale=(1,1,1),tint=None):
         id=f'{asset}:{len(self.data["placements"])}'
         m=self.manifest[asset]; dims=[m['dimensions'][a]*scale[i] for i,a in enumerate(['x','y','z'])]
         sx=abs(math.cos(yaw))*dims[0]+abs(math.sin(yaw))*dims[2]; sz=abs(math.sin(yaw))*dims[0]+abs(math.cos(yaw))*dims[2]
         aabb=dict(min=[pos[0]-sx/2,pos[1],pos[2]-sz/2],max=[pos[0]+sx/2,pos[1]+dims[1],pos[2]+sz/2])
         p=dict(id=id,assetId=asset,position=pos,yaw=yaw,scale=list(scale),minTier=tier,maxTier=5,allowRoad=allowed,visualAabb=aabb,lightGroup=f'block-{len(self.data["placements"])%4}')
+        if tint: p['tint']=tint
         self.data['placements'].append(p)
-        o=empty('inst:'+asset+':'+str(len(self.data['placements'])),pos,yaw,scale); o['assetId']=asset; o['lightGroup']=p['lightGroup']; o['minTier']=tier; o['maxTier']=5; self.empties.append(o)
+        o=empty('inst:'+asset+':'+str(len(self.data['placements'])),pos,yaw,scale); o['assetId']=asset; o['lightGroup']=p['lightGroup']
+        if tint: o['tint']=tint
+        o['minTier']=tier; o['maxTier']=5; self.empties.append(o)
         for i,crown in enumerate(m.get('foliage',{}).get('crowns',[])):
             cx,cy,cz=[crown['position'][a]*scale[a] for a in range(3)]
             cp=[pos[0]+cx*math.cos(yaw)+cz*math.sin(yaw),pos[1]+cy,pos[2]-cx*math.sin(yaw)+cz*math.cos(yaw)]

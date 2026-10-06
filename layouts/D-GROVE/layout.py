@@ -70,14 +70,22 @@ HOUSE = {  # kind -> (asset, scale, door local x, door local z)
     'a': ('bld.house-a', 1.0, 4.1, -1.6),
     'b': ('bld.house-b', 1.0, .2, 5.9),
     'c': ('bld.house-c', .8, 5.6 * .8 + .3, -1.25 * .8),
-    'd': ('bld.house-d', 1.0, dims('bld.house-d')[0] / 2 + .9, 0.0),
-    'e': ('bld.house-e', 1.0, dims('bld.house-e')[0] / 2 + .9, 0.0),
+    'd': ('bld.house-d', .8, 4.1 * .8 + .25, 0.0),
+    'D': ('bld.house-d', 1.0, 4.3, 0.0),
+    'e': ('bld.house-e', .85, 4.7 * .85 + .2, 0.0),
 }
 def kind(k):
     asset = HOUSE[k][0]
     if g.placeholder(asset):  # side-tier placeholders fall back to a delivered house until B's model lands
         k = 'a'
     return k
+
+# 6 harmonious pastel wall colours + cream (instance colour multiply on the house batches, see InstancedGroup)
+TINTS = ['#ffe58f', '#bfe8c8', '#b3d7f5', '#ffb8a3', '#d3dfae', '#fff6e6', '#d9c8f2']
+_tint = [0]
+def next_tint():
+    _tint[0] += 1
+    return TINTS[(_tint[0] * 3) % len(TINTS)]
 
 def planter(x, z):
     if not g.fits([(x - .6, z - .3, x + .6, z + .3, .5)], .1):
@@ -123,7 +131,7 @@ def row(name, x0, x1, facing, line, rear, kinds, drives=None, gate_at=None):
             shift = 0.0 if not d else -d * room
         hx = cx + shift
         hz = line + sgn * (1.0 + depth / 2)
-        g.place(asset, hx, hz, yaw, scale)
+        g.place(asset, hx, hz, yaw, scale, tint=next_tint())
         ox, oz = rot(yaw, dx_door, dz_door)
         door = (hx + ox, hz + oz)
         doors.append(door)
@@ -153,17 +161,21 @@ def row(name, x0, x1, facing, line, rear, kinds, drives=None, gate_at=None):
         # back yard: a tree crown rising behind the house (large mass for the top-down camera)
         bz = (hz + sgn * depth / 2 + rear) / 2
         g.place('prop.street-tree' if (i + len(doors)) % 2 else 'prop.street-tree-blossom', hx, bz, 0, 1.0, soft=True)
-        variant = len(doors) % 4
-        gx = (lx0 + 1.6) if near_side > 0 else (lx1 - 1.6)
-        gz = line + sgn * 2.4
+        variant = len(doors) % 5
+        gx = (lx0 + 1.7) if door[0] > hx else (lx1 - 1.7)   # clutter on the side away from the door path
+        gz = line + sgn * 2.6
+        face = yaw
+        g.place('prop.flower-bed.large', door[0] - 2.7, line + sgn * .75, yaw + PI / 2, 1.0, soft=True)
         if variant == 0:
-            planter(gx, gz)
+            g.place('prop.gnome', gx, gz, face, 1.0, soft=True); g.place('prop.flamingo', gx + .7, gz + .2, face, 1.0, soft=True)
         elif variant == 1:
-            D.sphere(l, 'toy-ball', 'survivorRed', .16, [gx, .17, gz]); D.ring(l, 'garden-hose', 'backpackTeal', .42, .035, [gx + .6, .08, gz])
+            g.place('prop.bbq', gx, gz, face, 1.0, soft=True); g.place('prop.lawn-chair-a', gx + 1.0, gz, face + .5, 1.0, soft=True); g.place('prop.lawn-chair-b', gx + 1.0, gz + 1.0, face - .3, 1.0, soft=True)
         elif variant == 2:
-            g.place('prop.trash-bin', gx, gz, yaw, .55, soft=True)
+            g.place('prop.kiddie-pool', gx + .5, gz, 0, 1.0, soft=True); g.place('prop.sprinkler', gx - 1.0, gz, 0, 1.0, soft=True)
+        elif variant == 3:
+            g.place('prop.wheelbarrow', gx, gz, face + .4, 1.0, soft=True); g.place('prop.hose-reel', gx + 1.1, gz, face, 1.0, soft=True)
         else:
-            g.place('prop.folding-chair', gx, gz, yaw + .4, .75, soft=True)
+            g.place('prop.bench', gx + .3, gz, face, .95, soft=True); planter(gx + 2.0, gz)
     return out
 
 # Residential blocks (R0 north of the axis, R1 south of it), two rows each with an alley between the back fences
@@ -171,29 +183,29 @@ R0N, R0S = (-26.5, -17.0), (-4.5, -14.0)
 R1N, R1S = (4.5, 13.5), (25.5, 16.5)
 C1, C2, C3 = (-59.5, -34.5), (-25.5, 9.5), (18.5, 45.5)
 houses = []
-houses += row('r0c1n', *C1, 'N', *R0N, ['b', 'a'], [0, -1])
-houses += row('r0c1s', *C1, 'S', *R0S, ['a', 'c'], [-1, 1])
-houses += row('r0c2n', *C2, 'N', *R0N, ['a', 'c', 'a'], [0, 1, -1], gate_at=-10.0)
-houses += row('r0c2s', *C2, 'S', *R0S, ['c', 'b', 'a'], [1, 0, -1])
-houses += row('r0c3n', *C3, 'N', *R0N, ['a', 'b'], [1, 0])
-houses += row('r0c3s', *C3, 'S', *R0S, ['c', 'a'], [-1, 1], gate_at=None)
-houses += row('r1c1n', *C1, 'N', *R1N, ['a', 'c'], [-1, 1])
+houses += row('r0c1n', *C1, 'N', *R0N, ['b', 'e'], [0, -1])
+houses += row('r0c1s', *C1, 'S', *R0S, ['d', 'c'], [-1, 1])
+houses += row('r0c2n', *C2, 'N', *R0N, ['e', 'c', 'd'], [0, 1, -1], gate_at=-10.0)
+houses += row('r0c2s', *C2, 'S', *R0S, ['c', 'b', 'e'], [1, 0, -1])
+houses += row('r0c3n', *C3, 'N', *R0N, ['d', 'b'], [1, 0])
+houses += row('r0c3s', *C3, 'S', *R0S, ['c', 'e'], [-1, 1], gate_at=None)
+houses += row('r1c1n', *C1, 'N', *R1N, ['d', 'a'], [-1, 1])
 houses += row('r1c1s', *C1, 'S', *R1S, ['a', 'b'], [1, 0])
-houses += row('r1c2n', *C2, 'N', *R1N, ['a', 'c', 'b'], [1, -1, 0], gate_at=-20.0)
-houses += row('r1c2s', *C2, 'S', *R1S, ['c', 'a', 'a'], [-1, 1, 0])
-houses += row('r1c3n', *C3, 'N', *R1N, ['c', 'a'], [0, 1], gate_at=41.0)
+houses += row('r1c2n', *C2, 'N', *R1N, ['d', 'c', 'b'], [1, -1, 0], gate_at=-20.0)
+houses += row('r1c2s', *C2, 'S', *R1S, ['c', 'e', 'a'], [-1, 1, 0])
+houses += row('r1c3n', *C3, 'N', *R1N, ['e', 'a'], [0, 1], gate_at=41.0)
 houses += row('r1c3s', *C3, 'S', *R1S, ['b', 'c'], [0, 1])
 C4 = (54.5, 80.0)
-houses += row('r1c4n', *C4, 'N', *R1N, ['a', 'b'], [1, 0])
-houses += row('r1c4s', *C4, 'S', *R1S, ['c', 'a', 'c'], [1, -1, 1])
+houses += row('r1c4n', *C4, 'N', *R1N, ['d', 'b'], [1, 0])
+houses += row('r1c4s', *C4, 'S', *R1S, ['c', 'e', 'd'], [1, -1, 1])
 # north strip: houses face south onto Main Row, deep back yards, alley behind (z = -48.5)
 NFRONT = -35.5
-houses += row('nstrip-w', *C2, 'S', NFRONT, -47.0, ['a', 'c', 'a'], [1, -1, 0])
+houses += row('nstrip-w', *C2, 'S', NFRONT, -47.0, ['a', 'd', 'e'], [1, -1, 0])
 houses += row('nstrip-e', *C3, 'S', NFRONT, -47.0, ['b', 'a'], [0, 1])
 # south strip: houses face north onto Elm Street, alley behind (z = 48)
 SFRONT = 34.5
-houses += row('sstrip-w', *C2, 'N', SFRONT, 46.0, ['a', 'c', 'a'], [0, 1, -1])
-houses += row('sstrip-e', *C4, 'N', SFRONT, 46.0, ['c', 'a', 'a'], [1, 0, -1])
+houses += row('sstrip-w', *C2, 'N', SFRONT, 46.0, ['e', 'c', 'd'], [0, 1, -1])
+houses += row('sstrip-e', *C4, 'N', SFRONT, 46.0, ['c', 'd', 'a'], [1, 0, -1])
 
 # ------------------------------------------------------------------------------------------------ hero buildings
 # --- Maple Corner: café (south-west corner of the junction, front towards Maple St), rack, patio
@@ -329,7 +341,7 @@ anchors['garage-door'] = (gx, GARAGE_FRONT - 1.9)
 anchors['garage-bat'] = (gx, GARAGE_FRONT - .9)   # open apron in front of the half-open door (real collision shell is closed)
 g.path(gx - 1.5, SFRONT, gx + 1.5, GARAGE_FRONT, 'uiDark')
 hd = HOUSE['d']
-henderson = kind('d')
+henderson = kind('D')
 hasset, hscale, hdx, hdz = HOUSE[henderson]
 hdepth = dims(hasset)[0] * hscale
 hw = dims(hasset)[2] * hscale
@@ -467,18 +479,21 @@ for x, z in [(-47, -3.6), (-9, 3.6), (31, -3.6), (68, 3.6), (-20, ZS - 3.6), (36
     g.place('prop.utility-pole', x, z, PI / 2, 1.0, soft=True)
 DUMPSTERS = {'dumpster-1': (-52.0, -15.5), 'dumpster-1-end': (-58.5, -15.5), 'dumpster-2': (36.0, 15.0), 'dumpster-2-end': (27.0, 15.0)}
 
+ALLEY_ITEMS = ['prop.trash-bags', 'prop.recycling-bin', 'prop.crates', 'prop.broken-chair', 'prop.carpet', 'prop.trash-bin']
 def alley_props(x0, x1, zc, step=9.0, phase=0.0):
-    """Bins against the fences, a crate now and then; the alley corridor itself stays clear."""
+    """Alley dressing against the fences (trash bags, recycling, crates, a broken chair, a rolled carpet, laundry); the corridor stays clear."""
     x = x0 + 4 + phase
     side = -1
+    n = 0
     while x < x1 - 3:
-        z = zc + side * 1.08
+        z = zc + side * 0.95
         if any(abs(x - vx) < 4.6 for vx in (XW, X2, X3, X4)) or any(abs(x - dx) < 6.5 and abs(zc - dz) < 2 for dx, dz in DUMPSTERS.values()):
             x += step; side = -side
             continue
-        g.place('prop.trash-bin', x, z, FACE_YAW['E'] if side < 0 else FACE_YAW['W'], .5, soft=True)
-        if rng.random() < .5:
-            g.solid('crate', 'woodWarm', [.7, .55, .7], [x + 3.2, .28, zc - side * .95]) if g.fits([(x + 2.85, zc - side * .95 - .35, x + 3.55, zc - side * .95 + .35, .55)], .1) else None
+        item = ALLEY_ITEMS[(n + int(x)) % len(ALLEY_ITEMS)]; n += 1
+        g.place(item, x, z, FACE_YAW['E'] if side < 0 else FACE_YAW['W'], .85 if item != 'prop.trash-bin' else .5, soft=True)
+        if n % 4 == 0:
+            g.place('prop.laundry-line', x + 3.5, zc + side * 1.0, PI / 2, 1.0, soft=True)
         x += step; side = -side
 alley_props(XW + 5, X2 - 5, -15.5, 8.0)
 alley_props(X2 + 5, X3 - 5, -15.5, 9.0, 3)
@@ -493,6 +508,13 @@ alley_props(X3 + 5, 47, -48.5, 10.0, 1)
 alley_props(-80, X2 - 5, 48.0, 10.0, 6)
 alley_props(X2 + 5, X3 - 5, 48.0, 9.0, 2)
 alley_props(X3 + 5, 80, 48.0, 10.0, 5)
+# benches for the pedestrian routines (sit with coffee / wait): café terrace, bus stop, sidewalks facing the street or the shops
+for bx, bz, bf in [(-68.0, cafe_z - 4.2, 'E'), (-68.0, cafe_z + 4.2, 'E'), (-68.0, -13.8, 'E'), (-68.0, -4.4, 'E'),
+                   (-45.0, -3.8, 'S'), (-12.0, 3.8, 'N'), (30.0, -3.8, 'S'), (-48.0, 3.8, 'N'), (6.0, -3.8, 'S'), (40.0, 3.8, 'N'),
+                   (-20.0, ZS - 3.8, 'S'), (-48.0, SHOP_FRONT + 1.0, 'S'), (30.0, ZS + 3.8, 'N'), (62.0, 3.8, 'N')]:
+    if any(abs(bx - d[0]) < 2.6 and abs(bz - d[1]) < 3.5 for d in doors): continue   # never in front of a door path
+    g.place('prop.bench', bx, bz, FACE_YAW[bf], .95, soft=True)
+
 # car wash approach lane, queue cones, hedge behind the bay, vending machine at the fuel corner
 g.path(CW_X - 1.8, SFRONT, CW_X + 1.8, CW_Z - 5.0, 'uiDark')
 for dz in (3.0, 5.5):
