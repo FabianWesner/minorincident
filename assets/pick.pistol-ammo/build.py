@@ -14,7 +14,7 @@ a = p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
 M = {}
 # Palette identities with muted olive and metallic brass/copper asset finishes.
-for token, color, metal, rough in [('grass','66633b',.35,.48),('uiDark','25222c',.25,.5),('schoolBusYellow','d6a03b',.75,.29),('woodWarm','b66a3d',.7,.3),('asphalt','5b4f5c',.65,.38)]:
+for token, color, metal, rough in [('grass','66633b',.35,.48),('uiDark','25222c',.25,.5),('schoolBusYellow','d6a03b',.75,.29),('woodWarm','b66a3d',.7,.3)]:
  m=bpy.data.materials.new('pal_'+token); m.use_nodes=True
  rgb=[int(color[i:i+2],16)/255 for i in (0,2,4)]
  bs=m.node_tree.nodes['Principled BSDF']; bs.inputs['Base Color'].default_value=tuple(c/12.92 if c<=.04045 else ((c+.055)/1.055)**2.4 for c in rgb)+(1,)
@@ -35,74 +35,61 @@ def finish(o,name,mat,parent=body,bevel=0):
   mod=o.modifiers.new('weighted normals','WEIGHTED_NORMAL'); bpy.ops.object.modifier_apply(modifier=mod.name)
  bpy.context.view_layer.update(); world=o.matrix_world.copy(); o.parent=parent; o.matrix_world=world; return o
 
-def box(name,loc,size,mat='grass',parent=body,bevel=.003):
+def box(name,loc,size,mat='grass',parent=body,bevel=0):
  bpy.ops.mesh.primitive_cube_add(size=1,location=loc); o=bpy.context.object; o.dimensions=size; bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
  return finish(o,name,mat,parent,min(bevel,min(size)*.28))
 
-def cyl(name,loc,r,depth,mat='asphalt',axis='Z',parent=body):
- bpy.ops.mesh.primitive_cylinder_add(vertices=16,radius=r,depth=depth,location=loc); o=bpy.context.object
+def cyl(name,loc,r,depth,mat='uiDark',axis='Z',parent=body):
+ bpy.ops.mesh.primitive_cylinder_add(vertices=6,radius=r,depth=depth,location=loc); o=bpy.context.object
  if axis=='Y': o.rotation_euler.x=math.pi/2
  if axis=='X': o.rotation_euler.y=math.pi/2
- bpy.ops.object.transform_apply(location=False,rotation=False,scale=True); return finish(o,name,mat,parent,.001)
+ bpy.ops.object.transform_apply(location=False,rotation=False,scale=True); return finish(o,name,mat,parent,0)
 
 def lathe(name,x,y,profile,mat):
- n=12; v=[(x+r*math.cos(i*2*math.pi/n),y+r*math.sin(i*2*math.pi/n),z) for r,z in profile for i in range(n)]
+ n=6; v=[(x+r*math.cos(i*2*math.pi/n),y+r*math.sin(i*2*math.pi/n),z) for r,z in profile for i in range(n)]
  f=[tuple(range(n-1,-1,-1)),tuple((len(profile)-1)*n+i for i in range(n))]
  for j in range(len(profile)-1):
   for i in range(n): k=(i+1)%n; f.append((j*n+i,j*n+k,(j+1)*n+k,(j+1)*n+i))
  me=bpy.data.meshes.new(name); me.from_pydata(v,[],f); me.update(); o=bpy.data.objects.new(name,me); bpy.context.collection.objects.link(o); finish(o,name,mat)
  for face in me.polygons: face.use_smooth=len(face.vertices)==4
 # Hollow case, thick rolled top rails and lower seams.
-box('floor',(0,0,.014),(.32,.58,.028))
+box('floor',(0,0,.014),(.32,.58,.028),bevel=.003)
 for x in (-.153,.153):
  box('long wall',(x,0,.122),(.014,.58,.216))
  box('rolled rim',(x,0,.233),(.023,.596,.025))
- box('lower seam',(x,0,.027),(.020,.58,.012),'asphalt')
+ box('lower seam',(x,0,.027),(.020,.58,.012),'uiDark')
 for y in (-.283,.283):
  box('end wall',(0,y,.122),(.294,.014,.216))
  box('end rim',(0,y,.233),(.32,.024,.025))
 for x in (-.155,.155):
  for y in (-.283,.283):
-  box('corner upright',(x,y,.119),(.025,.024,.223),'asphalt')
+  box('corner upright',(x,y,.119),(.025,.024,.223),'uiDark')
   box('olive corner cap',(x,y,.237),(.029,.032,.030))
   box('corner foot',(x,y,.027),(.032,.052,.054))
 # Dark recessed cartridge tray leaves a visible perimeter well.
 box('tray',(0,0,.158),(.269,.532,.026),'uiDark')
+# Three merged brass bundles and nine broad six-sided tips replace 21 detailed rounds.
 for x in (-.088,0,.088):
- for i in range(7):
-  y=(i-3)*.073
-  lathe('brass case',x,y,[(.028,.170),(.026,.180),(.026,.232),(.029,.235),(.025,.244)],'schoolBusYellow')
-  lathe('copper round',x,y,[(.025,.241),(.024,.255),(.018,.272),(.010,.282),(.003,.286)],'woodWarm')
+ box('brass bundle',(x,0,.211),(.062,.486,.063),'schoolBusYellow',bevel=.004)
+ for y in (-.164,0,.164):
+  lathe('copper bundle tip',x,y,[(.033,.242),(.027,.265),(.012,.284)],'woodWarm')
 # Lid is authored flat at hinge height, then rotated open around its Y hinge.
-box('lid shell',(.015,0,.242),(.32,.592,.020),parent=lid)
-box('lid recessed shadow',(.015,0,.228),(.283,.550,.009),'uiDark',lid)
+box('lid shell',(.015,0,.242),(.32,.592,.020),parent=lid,bevel=.003)
+box('lid recessed shadow',(.015,0,.228),(.283,.550,.009),'grass',lid)
 box('lid inner panel',(.015,0,.219),(.244,.496,.010),'grass',lid)
 for x in (-.139,.169): box('lid long frame',(x,0,.223),(.018,.588,.028),parent=lid)
 for y in (-.284,.284): box('lid end frame',(.015,y,.223),(.310,.020,.028),parent=lid)
 for y in (-.215,.215):
- cyl('hinge pin',(-.146,y,.238),.014,.069,'asphalt','Y')
+ cyl('hinge pin',(-.146,y,.238),.014,.069,'uiDark','Y')
  box('hinge strap',(-.136,y,.231),(.038,.057,.034))
- for yy in (y-.017,y+.017): cyl('hinge screw',(-.127,yy,.252),.003,.004,'woodWarm')
- # Raised lid latch tabs, visible on outer edges.
- box('lid clasp',(.161,y,.269),(.035,.038,.012),'asphalt',lid)
- cyl('lid clasp rivet',(.163,y,.278),.005,.006,'woodWarm',parent=lid)
+ box('lid clasp',(.161,y,.269),(.035,.038,.012),'grass',lid)
 lid.rotation_euler.y=-math.radians(108)
 # End folding handle with open centre, hinge blocks and backing plate.
-box('handle backing',(0,-.295,.17),(.166,.013,.045),'asphalt')
+box('handle backing',(0,-.295,.17),(.166,.013,.045),'uiDark')
 for x in (-.069,.069):
- box('handle hinge',(x,-.308,.158),(.026,.022,.043),'asphalt')
- cyl('handle pin',(x,-.323,.167),.006,.007,'woodWarm','Y')
+ box('handle hinge',(x,-.308,.158),(.026,.022,.043),'uiDark')
  box('handle upright',(x,-.321,.108),(.016,.016,.105),'woodWarm',handle)
 box('handle crossbar',(0,-.321,.060),(.145,.017,.020),'woodWarm',handle)
-for x in (-.158,.158):
- for y in (-.23,.23): cyl('wall rivet',(x,y,.202),.005,.006,'woodWarm','X')
-# Sparse proud wear chips, all at least 3 mm clear of the case surface.
-for i in range(15):
- y=-.26+i*.037+(i%3)*.003
- box('rim wear',(.169,y,.248),(.008,.009+(i%3)*.004,.004),'schoolBusYellow',bevel=.0007)
- if i%2==0: box('lower wear',(.165,y,.036+(i%3)*.012),(.005,.014,.004),'woodWarm',bevel=.0005)
-for y in (-.293,.293):
- for x in (-.1,0,.1): box('end wear',(x,y,.042),(.009,.004,.019),'woodWarm',bevel=.0005)
 # Static geometry merged by material; movable groups retained with joint pivots.
 for parent in (body,lid,handle):
  for mat in M.values():
@@ -122,12 +109,29 @@ for o in meshes:
 bpy.context.view_layer.objects.active=meshes[0]; bpy.ops.object.bake(type='AO')
 tri=0
 for o in meshes: o.data.calc_loop_triangles(); tri+=len(o.data.loop_triangles)
-report={'id':'pick.pistol-ammo','tier':'Side','triangles':tri,'draw_calls':len(meshes),'materials':sorted(m.name for m in M.values()),'nodes_ok':all(bpy.data.objects.get(n) is not None for n in ('root','body','lid','handle')),'within_budget':6000<=tri<=12000 and len(meshes)<=30,'rounds':3,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
-(HERE/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+report={'id':'pick.pistol-ammo','tier':'Side','triangles':tri,'draw_calls':len(meshes),'materials':sorted(m.name for m in M.values()),'nodes_ok':all(bpy.data.objects.get(n) is not None for n in ('root','body','lid','handle')),'within_budget':tri<=2500 and len(meshes)<=6,'rounds':4,'webgpu_ok':False,'webgl2_ok':False,'gaps':['Detailed rounds replaced with three brass bundles and nine chunky tips; fine wear and rivets omitted.']}
+# Preserve the previous mesh node names as transform anchors after material consolidation.
+for name,parent in [('body_pal_asphalt',body),('lid_pal_asphalt',lid),('lid_pal_uiDark',lid),('lid_pal_woodWarm',lid)]:
+ empty(name,parent=parent)
+asset=list(bpy.context.scene.objects)
 if a.glb:
  bpy.ops.object.select_all(action='DESELECT')
  for o in asset: o.select_set(True)
- bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
+ def export_glb(path):
+  bpy.ops.export_scene.gltf(filepath=str(path.resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
+ output=Path(a.glb)
+ export_glb(output)
+ report['lods']={}
+ for level,ratio in ((1,.5),(2,.25)):
+  for o in meshes:
+   mod=o.modifiers.new('LOD simplification','DECIMATE'); mod.ratio=ratio; mod.use_collapse_triangulate=True
+  bpy.context.view_layer.update(); deps=bpy.context.evaluated_depsgraph_get(); count=0
+  for o in meshes:
+   evaluated=o.evaluated_get(deps); me=evaluated.to_mesh(); me.calc_loop_triangles(); count+=len(me.loop_triangles); evaluated.to_mesh_clear()
+  export_glb(output.with_name(output.stem+'.lod'+str(level)+output.suffix))
+  report['lods']['lod'+str(level)]={'triangles':count,'draw_calls':len(meshes)}
+  for o in meshes: o.modifiers.remove(o.modifiers['LOD simplification'])
+(HERE/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 print('BUILD OK',tri,'triangles',len(meshes),'draw calls')
 if a.render:
  world=bpy.data.worlds.new('studio'); scene.world=world; world.use_nodes=True; world.node_tree.nodes['Background'].inputs[0].default_value=(.19,.16,.22,1); world.node_tree.nodes['Background'].inputs[1].default_value=.5

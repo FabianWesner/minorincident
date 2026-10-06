@@ -1,6 +1,8 @@
-# Bandage pickup
-Reference: a horizontal peach/tan hollow roll, seven concentric winding grooves, broad middle dressing band, foreground three-panel folded strip, and a shorter folded strip to the right. No logos or lettering.
+# Bandage pickup — slim ground-pickup version
+The hollow peach roll, broad center wrap, foreground three-panel folded strip, and secondary folded bundle preserve the reference silhouette. No label or brand appears in the reference.
 
-Model is approximately 0.77 × 1.04 × 0.64 metres, intentionally enlarged for pickup readability. Roll axis is Y; +X is forward. Ground contact is z=0. Required prop node `root`, plus `body` and forward marker `front`. Nothing animates. Five static meshes are joined by palette material.
+LOD0 budget: ≤2,500 triangles and ≤6 draw calls. Model uses a 20-segment roll, two winding ridges per end, compact chamfered folded panels, and sparse six-sided perforation markings. Boolean holes, individual wound layers, and raised torus rims have been removed. Markings stand 4 mm above their support faces. Geometry is joined into five palette meshes.
 
-Texture-free materials use palette identities with reference-specific warm peach values. Perforations in folded panels are boolean recesses; the curved roll uses physical rims and recessed dark cups. End windings have real valleys. No coplanar overlays.
+`build.py --lod 0|1|2` regenerates all tiers. Lower LODs use 12/8-segment rolls, one winding ridge per end, simpler panel corners, and no perforation markings. All tiers preserve `root`, `body`, `front`, and the four `static_pal_*` mesh names, metre scale, +X forward, and z=0 contact. Approximate footprint remains 0.763 × 1.022 m and height 0.639 m.
+
+Manifest registration is handled centrally; this job changes only assets/pick.bandages.

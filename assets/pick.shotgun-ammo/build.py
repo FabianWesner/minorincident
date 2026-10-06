@@ -31,13 +31,13 @@ def box(name, loc, size, token, bevel=.003):
     bpy.ops.mesh.primitive_cube_add(size=1,location=loc); o=bpy.context.object
     o.dimensions=size; bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
     if bevel:
-        mod=o.modifiers.new('soft cardboard edges','BEVEL'); mod.width=bevel; mod.segments=3
+        mod=o.modifiers.new('soft cardboard edges','BEVEL'); mod.width=bevel; mod.segments=1
         bpy.ops.object.modifier_apply(modifier=mod.name)
         mod=o.modifiers.new('weighted normals','WEIGHTED_NORMAL'); bpy.ops.object.modifier_apply(modifier=mod.name)
     return finish(o,name,token)
 
 def lathe(name,x,y,z,profile,token):
-    n=20; vs=[(x+t,y+r*math.cos(i*2*math.pi/n),z+r*math.sin(i*2*math.pi/n)) for t,r in profile for i in range(n)]
+    n=8; vs=[(x+t,y+r*math.cos(i*2*math.pi/n),z+r*math.sin(i*2*math.pi/n)) for t,r in profile for i in range(n)]
     fs=[(j*n+i,j*n+(i+1)%n,(j+1)*n+(i+1)%n,(j+1)*n+i) for j in range(len(profile)-1) for i in range(n)]
     fs += [tuple(range(n-1,-1,-1)),tuple((len(profile)-1)*n+i for i in range(n))]
     me=bpy.data.meshes.new(name); me.from_pydata(vs,[],fs); me.update()
@@ -46,7 +46,7 @@ def lathe(name,x,y,z,profile,token):
 
 def label(text, y, z, size, token, x=.189):
     bpy.ops.object.text_add(location=(x,y,z)); o=bpy.context.object
-    o.data.body=text; o.data.font=bpy.data.fonts.load('/System/Library/Fonts/Supplemental/Arial Bold.ttf'); o.data.size=size; o.data.align_x='CENTER'; o.data.align_y='CENTER'; o.data.extrude=.0008; o.data.bevel_depth=0; o.data.resolution_u=3
+    o.data.body=text; o.data.font=bpy.data.fonts.load('/System/Library/Fonts/Supplemental/Arial Bold.ttf'); o.data.size=size; o.data.align_x='CENTER'; o.data.align_y='CENTER'; o.data.extrude=0; o.data.bevel_depth=0; o.data.resolution_u=1
     # local text X -> world -Y, local Y -> world Z, normal -> +X
     o.rotation_euler=(math.pi/2,0,math.pi/2)
     bpy.ops.object.convert(target='MESH'); finish(bpy.context.object,'marking_'+text,token)
@@ -67,23 +67,14 @@ box('front cream label',(.183,0,.116),(.006,.546,.212),'picketWhite')
 box('12 gauge band',(.189,0,.18),(.006,.546,.078),'blood')
 box('bottom red band',(.189,0,.024),(.006,.546,.023),'blood')
 label('12 GA',-.143,.18,.075,'picketWhite',.195)
-label('SHOTGUN AMMO',0,.084,.064,'blood',.189)
+label('AMMO',0,.084,.080,'blood',.189)
 box('shell support tray',(0,0,.14),(.28,.52,.03),'woodWarm')
-# Five shells, individually modeled crimp, red tube, brass collar, rim and primer.
-for i in range(5):
-    y=(i-2)*.104; z=.232
-    lathe('red shell',0,y,z,[(-.145,.038),(-.14,.047),(-.132,.049),(-.11,.049),(-.06,.049),(0,.049),(.042,.049),(.046,.047)],'survivorRed')
-    lathe('crimp inset',0,y,z,[(-.146,.032),(-.147,.036)],'blood')
-    lathe('brass collar',0,y,z,[(.045,.047),(.049,.050),(.054,.050),(.058,.047),(.091,.047),(.096,.05),(.102,.051),(.107,.051),(.11,.047),(.112,.041)],'schoolBusYellow')
-    lathe('base inset',0,y,z,[(.113,.034),(.116,.035)],'woodWarm')
-    lathe('primer socket',0,y,z,[(.117,.016),(.120,.016)],'uiDark')
-    lathe('primer',0,y,z,[(.121,.011),(.124,.010)],'schoolBusYellow')
-# A few broad worn-print chips, raised beyond the label band.
-for y,z,w,h in [(-.23,.212,.028,.012),(.21,.206,.016,.023),(.07,.146,.035,.011),(-.19,.027,.023,.011),(.23,.022,.023,.014)]:
-    me=bpy.data.meshes.new('print wear'); me.from_pydata([(.196,y-w/2,z-h/2),(.196,y+w/2,z-h/2),(.196,y+w/3,z+h/2)],[],[(0,1,2)]); me.update()
-    chip=bpy.data.objects.new('worn ink chip',me); bpy.context.collection.objects.link(chip); finish(chip,'worn ink chip','woodWarm')
-# Broad packaging crease details stand 3mm beyond their underlying faces.
-for y in [-.259,.259]: box('label fold',(.195,y,.117),(.006,.004,.195),'woodWarm',.001)
+# Three chunky cartridge bundles replace the five detailed individual rounds.
+# Eight radial segments and simple collars preserve the red/gold pickup cue.
+for y in [-.17,0,.17]:
+    lathe('red shell bundle',0,y,.232,[(-.145,.074),(.045,.074)],'survivorRed')
+    lathe('brass bundle collar',0,y,.232,[(.045,.075),(.098,.075),(.098,.079),(.112,.079)],'schoolBusYellow')
+    lathe('dark base marker',0,y,.232,[(.116,.018),(.119,.018)],'uiDark')
 # Static material batches keep draw calls low.
 for token,mat in M.items():
     obs=[o for o in bpy.context.scene.objects if o.type=='MESH' and o.data.materials[0]==mat]
@@ -97,11 +88,28 @@ sys.path.insert(0, str(OUT.parents[1]/'tools'/'blender'))
 from sslib import ao
 ao.bake_all(meshes, samples=32)
 tris=sum(sum(len(f.vertices)-2 for f in o.data.polygons) for o in meshes)
-report={'id':ASSET['id'],'tier':'Side','triangles':tris,'draw_calls':len(meshes),'materials':[m.name for m in M.values()], 'nodes_ok':all(bpy.data.objects.get(n) is not None for n in ['root','body']), 'within_budget':6000<=tris<=12000 and len(meshes)<=30,'rounds':4,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
-(OUT/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+report={'id':ASSET['id'],'tier':'Side','triangles':tris,'draw_calls':len(meshes),'materials':[m.name for m in M.values()], 'nodes_ok':all(bpy.data.objects.get(n) is not None for n in ['root','body','static_blood','static_picketWhite','static_schoolBusYellow','static_survivorRed','static_uiDark']), 'within_budget':tris<=2500 and len(meshes)<=6,'rounds':4,'webgpu_ok':False,'webgl2_ok':False,'gaps':['Individual shell detail replaced with three eight-sided red/gold bundles; label reduced to 12 GA / AMMO; fine wear omitted.']}
 bpy.context.scene.unit_settings.system='METRIC'
 if a.glb:
-    bpy.ops.object.select_all(action='SELECT'); bpy.ops.export_scene.gltf(filepath=a.glb,export_format='GLB',use_selection=True,export_apply=True,export_extras=True)
+    bpy.ops.object.select_all(action='SELECT')
+    def export_glb(path):
+        bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_cameras=False,export_lights=False)
+    output=Path(a.glb)
+    export_glb(output)
+    report['lods']={}
+    for level,ratio in [(1,.5),(2,.25)]:
+        for o in meshes:
+            mod=o.modifiers.new('LOD simplification','DECIMATE'); mod.ratio=ratio; mod.use_collapse_triangulate=True
+        bpy.context.view_layer.update()
+        deps=bpy.context.evaluated_depsgraph_get(); count=0
+        for o in meshes:
+            evaluated=o.evaluated_get(deps); me=evaluated.to_mesh(); me.calc_loop_triangles(); count+=len(me.loop_triangles); evaluated.to_mesh_clear()
+        export_glb(output.with_name(output.stem+'.lod'+str(level)+output.suffix))
+        report['lods']['lod'+str(level)]={'triangles':count,'draw_calls':len(meshes)}
+        for o in meshes: o.modifiers.remove(o.modifiers['LOD simplification'])
+elif (OUT/'report.json').exists():
+    report['lods']=json.loads((OUT/'report.json').read_text()).get('lods',{})
+(OUT/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 if a.render:
     scene=bpy.context.scene; scene.render.engine='CYCLES'; scene.cycles.samples=a.samples
     scene.world.color=(.20,.20,.20)
