@@ -124,3 +124,13 @@ for(const mode of ['desktop','portrait','landscape'] as const)test.describe(mode
     await perf('store');
   });
 });
+
+test('@E19 hardware checkpoint accepts a real middle-click for the chosen crowbar',async({page})=>{
+  test.setTimeout(120_000);await menuStart(page);
+  // Isolated input check complements the complete, unmodified menu-to-result routes above.
+  await page.evaluate(async()=>{const a=window.__SS__!;a.pause();await a.loadLevel('L1',{checkpoint:'melee'});a.teleport('player',{x:70,z:-7});await a.step(1);});
+  await page.getByTestId('choose-crowbar').click();const p=await page.evaluate(()=>window.__SS__!.input.project({x:70,z:-8.14875}));
+  await page.mouse.click(p.x,p.y,{button:'middle'});await page.evaluate(()=>window.__SS__!.step(1));
+  expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.crowbar');
+  await page.evaluate(()=>window.__SS__!.screenshotReady());await page.screenshot({path:`${output}/desktop-middle-click.png`});
+});

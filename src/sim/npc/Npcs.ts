@@ -65,8 +65,10 @@ export class Npcs {
     for(const e of this.world.entities.iterate()) if(e.civilian?.ambient || e.traffic) { this.world.entities.delete(e.id);this.world.spatial.delete(e.id); }
     const nav=this.world.infected!.nav,player=this.world.entities.get(1)!.transform;
     for(const [role,p] of [['suburban-mom',{x:player.x+3,z:player.z+2}],['bbq-dad',{x:player.x-3,z:player.z+3}],['bathrobe-neighbor',{x:player.x+8,z:-4.5}],['cashier',{x:42,z:-4}]] as const) {
-      const points=[{...p},{x:p.x+1.5,z:p.z}];
-      if(points.every(q=>nav.clear(q.x,q.z,.65)) && nav.visible(points[0],points[1],.65)) this.civilians.spawn(role,p,{waypoints:points});
+      const cell=nav.nearestCell(p.x,p.z),start=nav.clear(p.x,p.z,.65)?{...p}:{x:nav.x(cell),z:nav.z(cell)};
+      for(const [dx,dz]of [[0,1.5],[1.5,0],[-1.5,0],[0,-1.5]]){const end={x:start.x+dx,z:start.z+dz};
+        if(nav.visible(start,end,.65)){this.civilians.spawn(role,start,{waypoints:[start,end]});break;}
+      }
     }
     if(driver) {
       const cell=nav.nearestCell(driver.x,driver.z),p={x:nav.x(cell),z:nav.z(cell)};
