@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { compositions } from '../../../src/levels/compositions';
 import { resolveCampaignMission } from '../../../src/levels/missions';
@@ -83,4 +83,13 @@ test('M1-30 @E19 ambient gardening flees while checkpoint restoration preserves 
   w.npcs!.civilians.alarm(e.transform);
   for (let i = 0; i < 31; i++) w.update();
   expect(c.state).toBe('flee'); w.dispose();
+});
+
+
+test('M1-30 @E19 a blocked walking leg selects another activity within three seconds', async () => {
+  const w = await morning(), e = [...w.entities.iterate()].find(e => e.civilian?.schedule?.[0].activity === 'water')!;
+  const c = e.civilian!; c.scheduleStep = 1; c.activityUntil = 0; c.lastTravelProgress = w.tick;
+  const move = vi.spyOn(w.npcs!, 'move').mockImplementation(() => {});
+  for (let i = 0; i < 180; i++) w.update();
+  expect(c.scheduleStep).toBe(2); expect(c.state).toBe('calm'); move.mockRestore(); w.dispose();
 });

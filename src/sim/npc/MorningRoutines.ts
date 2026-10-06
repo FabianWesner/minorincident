@@ -27,8 +27,10 @@ export function updateRoutine(world: SimWorld, e: EntitySnapshot): void {
   const c = e.civilian!, schedule = c.schedule!;
   const step = c.scheduleStep ?? 0, activity = schedule[step], tick = world.tick;
   if (!c.activityUntil) {
-    c.travelStarted ??= tick;
+    c.lastTravelProgress ??= tick;
+    const beforeX = e.transform.x, beforeZ = e.transform.z;
     world.npcs!.move(e, activity.target, c.model === 'npc.civilian-elderly' ? .85 : 1.25, c, .08);
+    if (Math.hypot(e.transform.x - beforeX, e.transform.z - beforeZ) > .0001) c.lastTravelProgress = tick;
     if (Math.hypot(e.transform.x - activity.target.x, e.transform.z - activity.target.z) < .16) {
       c.activityStarted = tick; c.activityUntil = tick + Math.max(1, activity.ticks);
       if (activity.activity === 'inside') { e.hidden = true; world.spatial.delete(e.id); }
@@ -43,9 +45,9 @@ export function updateRoutine(world: SimWorld, e: EntitySnapshot): void {
     }
   }
   // A blocked walker looks around, then changes destination instead of walking in place.
-  if (tick >= (c.activityUntil || Infinity) || !c.activityUntil && tick - c.travelStarted! > 900) {
+  if (tick >= (c.activityUntil || Infinity) || !c.activityUntil && tick - c.lastTravelProgress! >= 180) {
     e.hidden = false; c.scheduleStep = (step + 1) % schedule.length;
-    c.activityUntil = 0; c.activityStarted = 0; c.travelStarted = tick; c.path = []; c.goal = -1;
+    c.activityUntil = 0; c.activityStarted = 0; c.lastTravelProgress = tick; c.path = []; c.goal = -1;
   }
 }
 
