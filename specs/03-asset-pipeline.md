@@ -167,15 +167,21 @@ Static world geometry is authored like assets: `layouts/<district>/layout.py` is
 | weapon | `grip, muzzle` (ranged), or `grip, tip` (melee), or `grip` (throwable) |
 | building | `root`, optional `door_*`, `window_*` (emissive), `roof` (hidden when the player is inside), `interior` |
 
-**Detail tiers (decision 2026-10-05, from the three-round Blender shootout in `experiment/`):**
+**Shipping budgets (decision 2026-10-06, product owner: "no more detail than the reference game").** Measured reference, Bruno's folio-2025: player car 3.7k triangles, character 9.4k, a whole play area 58.6k, typical props 0.3–5k, compressed GLBs 5–60 KB. The game camera is isometric and far away, so the shipped mesh ("game mesh", `model.glb` in the build) is the old LOD1 density. The detailed Blender build (old LOD0) stays in `assets/<id>/` as the offline source and catalog close-up and is **never shipped or loaded by the game**.
 
-| Tier | Used for | LOD0 budget | Look |
+| Category | Game mesh (LOD0 shipped) | LOD1 (crowds / > ~15 m) | Shipped GLB (meshopt/quantized) |
 | --- | --- | --- | --- |
-| **Hero** | everything the player sees up close and often: survivors, corgi, NPCs, infected, vehicles, buildings | survivor/NPC ≤ 60k, infected ≤ 40k, vehicle ≤ 80k, building ≤ 100k triangles; animals (appear in groups): crow ≤ 3k, cats/small dogs ≤ 8k, flamingo ≤ 10k, large dogs ≤ 12k, gorilla/lion ≤ 25k; mostly flat structures (helipad, pads, decks) ≤ 20k; barricade materials used in quantity (pallets, planks, sandbags) ≤ 3k; pickups ≤ 2.5k | rich, finished, soft-bevelled forms, many purposeful parts ("round 1") |
-| **Side** | props and street furniture (vending machine, bench, hydrant, weapons, pickups) | 6–12k (weapons ≤ 6k) | chunky but detailed: insets, frames, multi-part wheels, glowing strips ("round 3") |
-| **Distant** | objects the player never approaches in regular play (skyline, far terrain dressing) | 1–4k | chunky low-poly, flat palette ("round 2") |
+| survivor, corgi | ≤ 10k | ≤ 3k | ≤ 300 KB |
+| NPC | ≤ 6k | ≤ 2k | ≤ 200 KB |
+| infected (humanoid) | ≤ 4k | ≤ 1.2k (crowd bake beyond ~12 m) | ≤ 150 KB |
+| animals | crow ≤ 1k, cats/small dogs ≤ 2k, other ≤ 4k | ≈ 30% | ≤ 120 KB |
+| vehicle | ≤ 8k (fire engine, bus, train, helicopter ≤ 12k) | ≤ 2.5k | ≤ 300 KB |
+| building / interior / large kit | ≤ 10k (hospital, school, mall, civic center, interiors ≤ 15k) | ≤ 3k (roof/shell only) | ≤ 400 KB |
+| flat structures (helipad, pads, decks, terrain pieces) | ≤ 3k | — | ≤ 150 KB |
+| props, street furniture | ≤ 1.5k (barricade materials ≤ 500) | ≤ 400 | ≤ 60 KB |
+| weapons, throwables, pickups | ≤ 1k | — | ≤ 40 KB |
 
-Hero assets ship an **LOD chain**: LOD0 (hero), LOD1 ≈ side-tier density (≈ 10–15% of LOD0), LOD2 ≈ distant-tier density; the runtime picks by screen size, and crowds (infected hordes) render LOD1/LOD2 or the crowd bake beyond ~12 m. Draw calls per asset after joining: hero ≤ 40, side ≤ 30, distant ≤ 12 (animated nodes excluded). Measured reference (25 copies, game camera, M1 Max): hero ≈ 8–15 ms, side ≈ 1.5–2.5 ms, distant ≈ 1.5 ms per frame on WebGPU — so LODs are mandatory for anything that appears more than a handful of times.
+Rules: textures ≤ 512 px (prefer vertex colours / a shared palette atlas; signs may keep a small decal texture); draw calls per asset ≤ 12 (animated nodes excluded) — join static parts by material; small dressing (shelf products, bottles, cans) becomes a texture on a box, never individual meshes. Get to budget by **removing and merging detail objects first**, decimation second; check the result at the game camera, not the close-up. `npm run assets:validate` enforces the triangle and size budgets on the shipped mesh. New Blender builds target the game-mesh budget directly (round-3 "side" look: chunky, readable silhouettes, flat colours), not the old hero density.
 
 ## 8. Placeholders
 
