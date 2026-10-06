@@ -60,7 +60,7 @@ Zander specifically requests a linked author credit in HTML; preserve that.
 
 | Need | Source / author / license | Treatment |
 | --- | --- | --- |
-| Asphalt and grass footsteps | [Fantozzi's Footsteps](https://opengameart.org/content/fantozzis-footsteps-grasssand-stone), Fantozzi, CC0 | Four separate stone and grass samples, pitch ±3%, gain ±1 dB. Stone maps to asphalt/sidewalk. |
+| Asphalt and grass footsteps | [Fantozzi's Footsteps](https://opengameart.org/content/fantozzis-footsteps-grasssand-stone), Fantozzi, CC0 | Four stone and sand/grass-footstep recordings, pitch ±3%, gain ±1 dB. Stone stands in for asphalt/sidewalk; the soft-surface recordings stand in for grass. |
 | Fists, kicks, bat, crowbar, machete on flesh | [37 hits/punches](https://opengameart.org/content/37-hitspunches), Independent.nu, CC0 | Body thump pools plus material transient; impact tied to hit, swing kept separate. |
 | Infected groans, attack/bite and transformation | [Zombie Sound Effects](https://opengameart.org/content/zombie-sound-effects-by-bendzer), Bendzer, CC-BY 4.0; [Undead Moans](https://opengameart.org/content/undead-moans), AntumDeluge, CC0 | Recorded mouth performance, distinct pools, transformation swell. |
 | Crowd panic/screams | [Crowd Shouting](https://opengameart.org/content/crowd-shoutingspeaking-ambience), StarNinjas, CC0; [Female scream](https://opengameart.org/content/female-high-pitched-scream-sfx), WuxiaScrub, CC0 | Layer restrained crowd with isolated cries; no wall of identical screams. |
@@ -105,6 +105,30 @@ packs alongside their current OGA CC0 grant.
 
 Validation in progress: E16 headless verification/capture on port 3351 waits on
 the machine-wide E2E lock. Typecheck, lint and audio units pass. Full unit suite:
-166 pass, three authored-animation tests fail identically in an isolated archive
+168 pass, three authored-animation tests fail identically in an isolated archive
 of main 202ffc2 (baseline reproduction stored in /tmp/audio-1-baseline-result.json).
 No animation code or criteria are changed by this lane.
+
+## Mix decisions and source measurements
+
+The eight final music codec exports measure −18.2 to −17.8 LUFS integrated,
+with true peaks from −6.1 to −2.7 dBTP. Calm and aftermath are −18.0 LUFS in
+both codecs; combat Opus is −18.0 and tension Opus −18.1. Music decks trim to
+0.5 before the existing +6 dB master; additional accent layers use only 18% of
+their authored gain. Short SFX slices peak-normalize to −6 dBFS before their cue
+and distance gains. Two-second linear fades retain the old recording until the
+new media element starts. Source loop seams have 40 ms fades; this avoids clicks
+but is not a claim of composer-authored seamless loops.
+
+The retained production compressor, bus ducking, HRTF, occlusion and telegraph
+priority provide the shared mix constraints. Human dialogue is still synthesized
+and is not a voiced script. The final gameplay previews are needed to judge
+music/SFX balance and emotional fit; source LUFS alone does not prove the mix.
+Three 20-second music-only source auditions are available in the requested
+scratchpad's `audio-preview/source-auditions/` directory while the browser lock
+queues the live capture. They are clearly labeled separately from gameplay WAVs.
+
+Two targeted stream lifecycle tests cover interruption before initial play
+resolves and failure to start an incoming track without fading the outgoing
+track. Browser regression coverage also checks cancellation of an initial alert
+before its bar boundary. The resumed score preserves the last requested state.
