@@ -51,6 +51,14 @@ for (const mode of ['desktop','iphone'] as const) test.describe(mode, () => {
         await page.evaluate(n=>window.__SS__!.step(n),Math.max(1,Math.floor(Math.max(0,d-1.15)/4.5*60)));
         await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await page.getByTestId(beat%4===3?'touch-right':'touch-left').tap();
       }else {const point=await page.evaluate(p=>window.__SS__!.input.project(p),target.transform);await page.mouse.move(point.x,point.y);await page.mouse.down();}
+      // Offscreen population spawns need navigation time before the strike review.
+      if(!cdp) for(let approach=0;approach<60;approach++){
+        const distance=await page.evaluate(id=>{const a=window.__SS__!,e=a.getEntity(id),p=a.getState().player!.transform;return !e||e.health.current<=0?0:Math.hypot(e.transform.x-p.x,e.transform.z-p.z);},target.id);
+        if(distance<1.8)break;
+        await page.evaluate(async()=>{const a=window.__SS__!;await a.step(12);a.vfx.stepRender(.2);});
+        const render=await page.evaluate(()=>window.__SS__!.getState().render);
+        maximumTrail=Math.max(maximumTrail,render.actions!.trailVertices);maximumParticles=Math.max(maximumParticles,render.vfx!.particles);
+      }
       for(let tick=0;tick<36;tick++){
         await page.evaluate(async()=>{const a=window.__SS__!;await a.step(1);a.vfx.stepRender(1/60);});
         const render=await page.evaluate(()=>window.__SS__!.getState().render);
