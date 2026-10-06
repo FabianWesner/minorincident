@@ -17,7 +17,9 @@ test('T-E04-09 @E04 @E04-AC09 sixty-second input bot visits every sim clip with 
       if (cycle === 252) api.survivor.act(actions[Math.floor(tick / 600)]);
       if (cycle === 360) api.survivor.damage(5);
       if (cycle === 432) api.survivor.damage(100);
-      observe(); await api.step(12); observe();
+      // Render short actions (shoot lasts fewer than 12 ticks) before observing
+      // intent/pose agreement, then finish the same twelve-tick bot interval.
+      await api.step(1); observe(); await api.step(11); observe();
     }
     api.input.clear(); await api.step(12); observe();
     return { seen: [...seen], mismatches, tick: api.tick(), character: api.getState().render.character, perf: api.perf() };
