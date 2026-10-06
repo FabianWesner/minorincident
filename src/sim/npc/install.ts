@@ -10,7 +10,7 @@ export function installCampaignNpcs(world: SimWorld): void {
   const districts = world.districts!;
   if (!/^L[1-6]$/.test(districts.composition.id)) return;
   const { min, max } = districts.nav, walls = campaignWalls(world);
-  const definition: ScenarioDefinition = { name: districts.composition.id, survivor: true, combat: true, infected: true, ground: { width: max[0] - min[0], depth: max[1] - min[1], center: { x: (min[0] + max[0]) / 2, z: (min[1] + max[1]) / 2 } }, player: { ...world.entities.get(1)!.transform }, walls };
+  const definition: ScenarioDefinition = { name: districts.composition.id, survivor: true, combat: true, infected: true, navigationClearance: .35, ground: { width: max[0] - min[0], depth: max[1] - min[1], center: { x: (min[0] + max[0]) / 2, z: (min[1] + max[1]) / 2 } }, player: { ...world.entities.get(1)!.transform }, walls };
   world.combat = new Combat(world, definition); world.infected = new InfectedSystem(world, definition); world.npcs = new Npcs(world);
   world.infected.nav.mask = (x, z) => { return world.districts!.districts.some(d => inside([x - d.origin[0], z - d.origin[1]], d.layout.bounds)); }; world.infected.nav.rebake();
   world.events.on('sim.tick', () => world.infected?.update(), SimPhase.ai); world.events.on('sim.tick', () => world.npcs?.update(), SimPhase.ai);
@@ -28,7 +28,7 @@ export function installCampaignNpcs(world: SimWorld): void {
 
 function campaignWalls(world: SimWorld): NonNullable<ScenarioDefinition['walls']> {
   const districts = world.districts!, walls: NonNullable<ScenarioDefinition['walls']> = [];
-  for (const d of districts.districts) for (const c of d.decay.colliders.map(c => c.aabb).concat(d.blockers)) {
+  for (const d of districts.districts) for (const c of d.decay.colliders.filter(c => !c.walkable).map(c => c.aabb).concat(d.blockers)) {
     walls.push({ x: (c.min[0] + c.max[0]) / 2 + d.origin[0], z: (c.min[2] + c.max[2]) / 2 + d.origin[1], y: (c.min[1] + c.max[1]) / 2, halfX: (c.max[0] - c.min[0]) / 2, halfZ: (c.max[2] - c.min[2]) / 2, halfY: (c.max[1] - c.min[1]) / 2 });
   }
   for (const c of districts.boundaries) walls.push({ x: (c.min[0] + c.max[0]) / 2, z: (c.min[2] + c.max[2]) / 2, y: .525, halfX: (c.max[0] - c.min[0]) / 2, halfZ: (c.max[2] - c.min[2]) / 2, halfY: .525 });

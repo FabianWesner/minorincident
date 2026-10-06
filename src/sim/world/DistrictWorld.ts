@@ -21,6 +21,7 @@ export class DistrictWorld {
   /** Visible perimeter fence footprints; shared district seams stay open. */
   readonly boundaries: Aabb[] = [];
   readonly warnings: string[] = [];
+  private readonly supports = new Map<string, Aabb[]>();
   readonly fires: {
     x: number;
     z: number;
@@ -51,6 +52,12 @@ export class DistrictWorld {
         blockers: gameplayLayers.flatMap((l) => l.blockers),
       };
     });
+    for (const d of this.districts) for (const c of d.decay.colliders) if (c.walkable) {
+      const a: Aabb = { min: [c.aabb.min[0] + d.origin[0], c.aabb.min[1], c.aabb.min[2] + d.origin[1]], max: [c.aabb.max[0] + d.origin[0], c.aabb.max[1], c.aabb.max[2] + d.origin[1]] };
+      for (let z = Math.floor(a.min[2] / 4); z <= Math.floor(a.max[2] / 4); z++) for (let x = Math.floor(a.min[0] / 4); x <= Math.floor(a.max[0] / 4); x++) {
+        const key = `${x},${z}`, bucket = this.supports.get(key) ?? []; bucket.push(a); this.supports.set(key, bucket);
+      }
+    }
     const edges = new Map<string, { a: Point; b: Point; count: number }>();
     for (const d of this.districts) for (let i = 1; i < d.layout.bounds.length; i++) {
       const a: Point = [d.layout.bounds[i - 1][0] + d.origin[0], d.layout.bounds[i - 1][1] + d.origin[1]];
@@ -67,9 +74,10 @@ export class DistrictWorld {
       this.districts.map((d) => ({
         layout: d.layout,
         origin: d.origin,
-        colliders: d.decay.colliders.map((c) => c.aabb).concat(d.blockers),
+        colliders: d.decay.colliders.filter(c => !c.walkable).map((c) => c.aabb).concat(d.blockers),
       })),
       seed,
+      .5,
     );
     for (const d of this.districts) {
       const result = crossValidate(d.gameplay, d.layout, this.nav, d.origin);
@@ -97,6 +105,14 @@ export class DistrictWorld {
         if (!reached[this.nav.index(p[0] + d.origin[0], p[1] + d.origin[1])])
           throw new Error(`Unreachable level objective: ${d.id}/${obj.id}`);
       }
+  }
+  /** Exact low compound supports only; roofs and solid props never lift NPCs. */
+  groundHeight(x: number, z: number): number {
+    let height = 0;
+    for (const a of this.supports.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) {
+      if (x >= a.min[0] && x <= a.max[0] && z >= a.min[2] && z <= a.max[2]) height = Math.max(height, a.max[1]);
+    }
+    return height;
   }
   getState() {
     return {

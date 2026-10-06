@@ -136,6 +136,7 @@ export class NavGrid {
       if (!this.path(this.nearestCell(position.x, position.z), to, route.path, budget)) return false;
       route.goal = to; route.pathIndex = 0;
     }
+    while (route.pathIndex < route.path.length && Math.hypot(position.x - this.x(route.path[route.pathIndex]), position.z - this.z(route.path[route.pathIndex])) < .12) route.pathIndex++;
     for (let i = route.path.length - 1; i >= route.pathIndex; i--) {
       waypoint.x = this.x(route.path[i]); waypoint.z = this.z(route.path[i]);
       if (this.visible(position, waypoint, radius)) { route.pathIndex = i; return true; }
@@ -158,7 +159,7 @@ export class NavGrid {
       if (best < 0) { this.searching = false; return false; }
       this.expansions++; this.open[best] = 2;
       if (best === to) { this.searching = false; for (let cell = to; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true; }
-      for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n]) { this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + Math.abs(n % this.width - tx) + Math.abs(Math.floor(n / this.width) - tz)); } }
+      for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n]) { this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(n % this.width - tx) + Math.abs(Math.floor(n / this.width) - tz)) * 1.00001); } }
     }
     return false;
   }

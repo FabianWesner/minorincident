@@ -13,6 +13,7 @@ export class KinematicController {
   private readonly next = { x: 0, y: 0, z: 0 };
   speedScale = 1;
   crowd: readonly CrowdObstacle[] = [];
+  groundHeight: ((x: number, z: number) => number) | null = null;
   constructor(private readonly physics: Physics) {}
   move(input: InputFrame, transform: Transform, enabled: boolean): void {
     const length = Math.hypot(input.move.x, input.move.z);
@@ -28,6 +29,13 @@ export class KinematicController {
     this.displacement.x = this.velocity.x * FIXED_DT; this.displacement.z = this.velocity.z * FIXED_DT;
     // Continuous downward intent grounds the capsule; static geometry remains authoritative.
     this.displacement.y = -0.02;
+    if (enabled && magnitude > 0 && this.groundHeight) {
+      // Thin paving edges can defeat Rapier autostep at low joystick speeds.
+      // Start a bounded upward sweep at the capsule's leading foot, using the
+      // same GLB support tops as NPC grounding. The sweep still tests all solids.
+      const ground = this.groundHeight(transform.x + this.displacement.x + x * (survivor.radius + .02), transform.z + this.displacement.z + z * (survivor.radius + .02));
+      this.displacement.y = Math.max(this.displacement.y, Math.min(.06, ground + survivor.height / 2 + .005 - transform.y));
+    }
     let pushX = 0, pushZ = 0, overlaps = 0;
     if (enabled) for (const neighbor of this.crowd) {
       const dx = transform.x - neighbor.transform.x, dz = transform.z - neighbor.transform.z;

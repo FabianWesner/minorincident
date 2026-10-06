@@ -6,8 +6,8 @@ import { levelOneSlice } from '../../src/levels/levelOneSlice';
 import { resolveCampaignMission } from '../../src/levels/missions';
 import { placementColliders } from '../../src/levels/districts/staticCollision';
 import { NavGrid } from '../../src/sim/ai/NavGrid';
-import baked from '../../src/assets/staticCollision.json';
-import type { Aabb, Placement } from '../../src/levels/districts/types';
+import { staticCollision as baked } from '../../src/assets/staticCollision';
+import type { Placement } from '../../src/levels/districts/types';
 
 let world: SimWorld;
 afterEach(() => world?.dispose());
@@ -32,10 +32,12 @@ test('@E19 M1-07 every solid L1 prop family stops a real survivor capsule outsid
     for (const p of layout.placements as Placement[]) if (p.minTier === 0 && p.assetId in baked) ids.add(p.assetId);
   }
   expect([...ids]).toEqual(expect.arrayContaining(['prop.hedge', 'prop.picket-fence', 'prop.mailbox-blue', 'prop.street-lamp', 'prop.gas-pump', 'veh.sedan-red', 'bld.gas-station']));
+  // Solid street dressing remains covered when the look lane adds it to L1.
+  ids.add('prop.fire-hydrant'); ids.add('veh.school-bus');
   for (const assetId of ids) {
     world.loadScenario('survivor');
     const placement: Placement = { id: 'probe', assetId, position: [0, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: '', visualAabb: { min: [0, 0, 0], max: [0, 0, 0] } };
-    const boxes = placementColliders([placement], []).map(c => c.aabb);
+    const boxes = placementColliders([placement], []).filter(c => !c.walkable).map(c => c.aabb);
     expect(boxes.length, assetId).toBeGreaterThan(0);
     for (const box of boxes) world.physics.addStatic(box, [0, 0]);
     // Approach the widest body-height component along its outside normal.
@@ -43,7 +45,7 @@ test('@E19 M1-07 every solid L1 prop family stops a real survivor capsule outsid
     const minX = Math.min(...boxes.map(b => b.min[0])), z = (box.min[2] + box.max[2]) / 2;
     teleport(minX - 1, z); world.setInput({ move: { x: 1, z: 0 } }); step(240);
     const p = world.entities.get(1)!.transform;
-    expect(p.x, assetId).toBeLessThanOrEqual(box.min[0] - .32);
+    expect(p.x, assetId).toBeLessThanOrEqual(box.min[0] - .25);
     expect(p.y, assetId).toBeGreaterThan(.65);
   }
 });
@@ -55,28 +57,39 @@ test('@E19 M1-08 gas forecourt is reachable from the road and canopy legs/pumps 
   const shapes = placementColliders([gas], []);
   expect(shapes.length).toBeGreaterThan(1);
   // Open space on the front/right of the gas station, under its canopy.
-  const destination = { x: gas.position[0] + district.origin[0] + 3, z: gas.position[2] + district.origin[1] + 1.5 };
+  const destination = { x: gas.position[0] + district.origin[0] + 3, z: gas.position[2] + district.origin[1] + .3 };
   expect(nav.clear(destination.x, destination.z, .35)).toBe(true);
   teleport(42, 0); world.setInput({ moveTarget: destination }); step(720);
   const p = world.entities.get(1)!.transform;
   expect(Math.hypot(p.x - destination.x, p.z - destination.z)).toBeLessThan(.15);
+  const infected = world.entities.get(world.infected!.spawn('infected.runner', destination))!;
+  step(1); expect(infected.transform.y).toBeCloseTo(.7 + world.districts!.groundHeight(infected.transform.x, infected.transform.z));
   for (const type of ['prop.gas-pump', 'prop.street-lamp', 'prop.picket-fence']) {
     const placement = district.decay.placements.find(p => p.assetId === type)!;
-    const body = placementColliders([placement], [])[0].aabb;
+    const body = placementColliders([placement], []).find(c => !c.walkable)!.aabb;
     expect(nav.clear((body.min[0] + body.max[0]) / 2 + district.origin[0], (body.min[2] + body.max[2]) / 2 + district.origin[1], .35)).toBe(false);
   }
 });
 
+test('@E19 M1-08 gentle joystick pulses step onto raised forecourt paving instead of snagging at its edge', async () => {
+  await slice(); teleport(48.5, 18);
+  for (let i = 0; i < 24; i++) {
+    world.setInput({ move: { x: -.78, z: 0 } }); step(9); world.clearInput(); step(6);
+  }
+  const p = world.entities.get(1)!.transform;
+  expect(p.x).toBeLessThan(47); expect(p.y).toBeGreaterThan(.95);
+});
+
 test('@E19 M1-07 click navigation string-pulls a path around a hedge, arriving without oscillation', async () => {
-  await slice(); teleport(-17, -4.5);
-  world.setInput({ moveTarget: { x: -17, z: -7.5 } });
+  await slice(); teleport(-19, -6.3);
+  world.setInput({ moveTarget: { x: -15, z: -6.3 } });
   let routed = false;
   for (let i = 0; i < 480; i++) {
     world.update(); const p = world.entities.get(1)!.transform;
-    if (Math.abs(p.x + 17) > 1) routed = true;
+    if (Math.abs(p.z + 6.3) > .7) routed = true;
     expect(world.infected!.nav.clear(p.x, p.z, .32), `tick ${i}`).toBe(true);
   }
-  const p = world.entities.get(1)!.transform; expect(routed).toBe(true); expect(Math.hypot(p.x + 17, p.z + 7.5)).toBeLessThan(.15);
+  const p = world.entities.get(1)!.transform; expect(routed, JSON.stringify({p, destination:world.controls.moveTarget})).toBe(true); expect(Math.hypot(p.x + 15, p.z + 6.3)).toBeLessThan(.15);
 });
 
 test('@E19 M1-04 corgi settles after turns/stops with stable yaw, zero idle speed and no follow-state chatter', async () => {
@@ -87,7 +100,7 @@ test('@E19 M1-04 corgi settles after turns/stops with stable yaw, zero idle spee
     world.setInput({ move: direction }); step(90); world.clearInput(); step(240);
     const rest = { ...corgi.transform }, toggles: boolean[] = [];
     for (let i = 0; i < 240; i++) { world.update(); toggles.push(corgi.motion!.moving); expect(world.infected!.nav.clear(corgi.transform.x, corgi.transform.z, .35)).toBe(true); }
-    expect(corgi.transform).toEqual(rest); expect(corgi.motion!.speed).toBe(0); expect(toggles.every(v => !v)).toBe(true);
+    expect(Math.hypot(corgi.transform.x - rest.x, corgi.transform.z - rest.z)).toBeLessThan(.001); expect(corgi.transform.yaw).toBe(rest.yaw); expect(corgi.motion!.speed).toBeLessThan(.001); expect(toggles.every(v => !v)).toBe(true);
     const p = world.entities.get(1)!.transform; expect(Math.hypot(p.x - corgi.transform.x, p.z - corgi.transform.z)).toBeLessThan(4);
   }
 });

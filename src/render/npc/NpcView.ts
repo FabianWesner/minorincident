@@ -58,7 +58,7 @@ export class NpcView extends Group {
         hero = { root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort ? 'placeholder' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
       }
       if (hero.tick !== this.world.tick) { hero.moving = e.motion?.moving ?? Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
-      hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(e.transform.x, 0, e.transform.z); hero.root.rotation.set(0, e.transform.yaw, 0);
+      hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(e.transform.x, e.transform.y - (e.escort ? .7 : .3), e.transform.z); hero.root.rotation.set(0, e.transform.yaw, 0);
       if (e.escort?.child) hero.root.scale.setScalar(.7);
       const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
       if (down) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
