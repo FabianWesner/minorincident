@@ -1,7 +1,7 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
 import { BoxGeometry, BufferGeometry, CircleGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3 } from 'three/webgpu';
-import { attribute, instancedBufferAttribute, mat4, normalGeometry, positionGeometry, mix, vec4, float, cameraViewMatrix } from 'three/tsl';
+import { attribute, instancedBufferAttribute, mat4, normalGeometry, positionGeometry, mix, vec4, float, cameraViewMatrix, screenCoordinate } from 'three/tsl';
 import { clipTexture, crowdMatrix, crowdPosition } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { AssetRegistry } from '../assets/registry';
@@ -73,8 +73,16 @@ export class CrowdView extends Group {
       const feedbackState = attribute('_state', 'vec4');
       const opacity = feedbackState.w.div(2).floor().div(255).oneMinus();
       const base = mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float')), glow = attribute('color', 'vec3').mul(attribute('_emissive', 'float')).mul(3).add(feedbackState.w.mod(2));
-      const material = this.shading?.shaded(base, glow, opacity) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
-      material.transparent = true; material.opacityNode = opacity;
+      const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
+      // Instances cannot be sorted independently in the transparent render list.
+      // A shared 4x4 screen-door threshold keeps every surface of a corpse at
+      // a pixel together, unlike a 3D hash that exposes its deeper body parts.
+      // Living actors keep every pixel; discarded pixels never write depth.
+      const pixel = screenCoordinate.xy.floor();
+      const bayer2 = (p: typeof pixel) => p.x.mod(2).mul(2).add(p.y.mod(2).mul(3)).mod(4);
+      const threshold = bayer2(pixel).mul(4).add(bayer2(pixel.div(2).floor())).add(.5).div(16);
+      material.maskNode = opacity.greaterThan(threshold);
+      material.depthTest = material.depthWrite = true;
       const matrix = crowdMatrix(texture, attribute('_part_index', 'float'), feedbackState.x);
       const part = attribute('_part_index', 'float'), leg = baked.clip.parts.indexOf('legL'), shin = baked.clip.parts.indexOf('shinL'), foot = baked.clip.parts.indexOf('footL');
       let visible = part.equal(leg).or(part.equal(shin)).or(part.equal(foot)).select(feedbackState.y.oneMinus(), 1);
