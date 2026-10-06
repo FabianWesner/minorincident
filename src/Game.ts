@@ -174,7 +174,7 @@ export class Game {
     if (this.view.switchPreparedDistrict()) { this.renderedDistricts = this.world.districts; return this.levelQueue; }
     this.loading=true;
     const refresh=this.levelQueue.then(async()=>{
-      try { await this.view.load(); this.renderedDistricts=this.world.districts; await this.audio.load(); }
+      try { await this.view.load(); this.renderedDistricts=this.world.districts; this.audio.refreshAcoustics(); }
       finally { this.loading=false; this.ticker.reset(); }
     });
     this.levelQueue=refresh.catch(()=>{});return refresh;

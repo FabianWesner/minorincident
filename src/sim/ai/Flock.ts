@@ -1,7 +1,10 @@
+import { motionResponse, respond } from '../locomotion/MotionResponse';
 import type { EntitySnapshot } from '../world/types';
 /** One entity owns up to 20 one-HP birds. Separation/cohesion is bounded by that fixed flock size. */
 export function updateFlock(entity: EntitySnapshot, tick: number, target: { x: number; z: number }): void {
   const b = entity.infected!, positions = b.birdPositions;
+  const horizontal = b.birdMotion ??= Array.from({ length: 20 }, motionResponse);
+  const vertical = b.birdVertical ??= Array.from({ length: 20 }, motionResponse);
   const scattered = tick < b.scatterUntil, diving = b.state === 'attack' && tick >= b.until;
   for (let i = 0; i < 20; i++) {
     if (!b.birdAlive[i]) continue;
@@ -14,8 +17,12 @@ export function updateFlock(entity: EntitySnapshot, tick: number, target: { x: n
       const dx = positions[i * 3] - positions[j * 3], dz = positions[i * 3 + 2] - positions[j * 3 + 2], d2 = dx * dx + dz * dz;
       if (d2 > 0 && d2 < 0.36) { separationX += dx * (0.36 - d2); separationZ += dz * (0.36 - d2); }
     }
-    positions[i * 3] += (targetX - positions[i * 3]) * 0.12 + separationX;
-    positions[i * 3 + 1] += (y - positions[i * 3 + 1]) * 0.3;
-    positions[i * 3 + 2] += (targetZ - positions[i * 3 + 2]) * 0.12 + separationZ;
+    const dx = (targetX - positions[i * 3]) * 4 + separationX * 60, dz = (targetZ - positions[i * 3 + 2]) * 4 + separationZ * 60;
+    const scale = Math.min(1, 7.2 / (Math.hypot(dx, dz) || 1));
+    respond(horizontal[i], dx * scale, dz * scale);
+    respond(vertical[i], Math.max(-6, Math.min(6, (y - positions[i * 3 + 1]) * 4)), 0);
+    positions[i * 3] += horizontal[i].vx / 60;
+    positions[i * 3 + 1] += vertical[i].vx / 60;
+    positions[i * 3 + 2] += horizontal[i].vz / 60;
   }
 }
