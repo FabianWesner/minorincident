@@ -196,7 +196,9 @@ def patch(name, x, y, z, sy, sz, mat, parent, normal=1, seed=0):
         a = i * math.tau / 12
         r = rr.uniform(.6, 1.2)
         verts.append((x + .0015 * normal, y + sy * r * math.cos(a), z + sz * r * math.sin(a)))
-    return mesh(name, verts, [(0, i+1, (i+1)%12+1) for i in range(12)], mat, parent)
+    faces = [(0, i+1, (i+1)%12+1) for i in range(12)]
+    # Single-sided runtime materials: rear decals wind toward -X.
+    return mesh(name, verts, faces if normal > 0 else [tuple(reversed(f)) for f in faces], mat, parent)
 
 
 def tuft(name, a, b, width, depth, mat='hair'):
@@ -269,7 +271,8 @@ def pizza_badge(name, center, scale, parent, facing='front'):
             for j in range(n-i):
                 faces.append((indices[i,j],indices[i+1,j],indices[i,j+1]))
                 if i+j<n-1: faces.append((indices[i+1,j],indices[i+1,j+1],indices[i,j+1]))
-    mesh(name,verts,faces,'red' if name.startswith('cap') else 'gold',parent,bevel=.002)
+    # Wind toward +X so the single-sided runtime material shows the badge face.
+    mesh(name,verts,[tuple(reversed(f)) for f in faces],'red' if name.startswith('cap') else 'gold',parent,bevel=.002)
     for v,w in [(-.022,.035),(.022,.02),(-.012,-.02)]:
         ell(name+'_pepperoni',(x+.003 if facing=='front' else x-.003,y+v*scale,z+w*scale),(.003,.013*scale,.012*scale),'gold' if name.startswith('cap') else 'red',parent,0)
     tube(name+'_crust',[(x,y+v*scale,z+w*scale) for v,w in points[:2]],.008*scale,'red',parent)
@@ -413,6 +416,13 @@ for side in [-1,1]:
         tuft('nape_lock',(-.105,side*(.027+j*.026),1.397),(-.138-j*.005,side*(.036+j*.03),1.242+.016*math.sin(j)),.04,.031,'hair')
     for j in range(3):
         tuft('hair_flick',(-.015-j*.042,side*.148,1.399-j*.018),(-.079-j*.041,side*.203,1.407-j*.024),.032,.027,'hair')
+def outward(o):
+    # Runtime palette materials are single-sided; the cap rings were authored
+    # inward, which culled the dome and exposed the skull from the game camera.
+    bm = bmesh.new(); bm.from_mesh(o.data)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    bm.to_mesh(o.data); bm.free(); o.data.update()
+    return o
 # Cap dome: dark rear panels, blue front and curved blue brim.
 verts=[]; faces=[]; n=24
 for j in range(9):
@@ -426,7 +436,7 @@ for j in range(8):
         if j >= 6 and abs(i+.5-12) < (1.7 if j == 7 else .9):
             continue
         faces.append((j*n+i,j*n+(i+1)%n,(j+1)*n+(i+1)%n,(j+1)*n+i))
-mesh('cap_crown',verts,faces,'trim','head',sub=1)
+outward(mesh('cap_crown',verts,faces,'trim','head',sub=1))
 # White front is a curved sector closely fitted to crown.
 verts=[]; faces=[]
 for j in range(8):
@@ -436,7 +446,7 @@ for j in range(8):
         verts.append((-.025+.154*math.sin(a)*math.cos(t),.17*math.sin(a)*math.sin(t),1.451+.145*math.cos(a)))
 for j in range(7):
     for i in range(12): faces.append((j*13+i,j*13+i+1,(j+1)*13+i+1,(j+1)*13+i))
-mesh('cap_white_panel',verts,faces,'blue','head',sub=1)
+outward(mesh('cap_white_panel',verts,faces,'blue','head',sub=1))
 # Brim: curved disc sector with actual edge thickness.
 verts=[]
 for zoff in [0,-.012]:
@@ -458,7 +468,7 @@ for i in range(24): faces.append((100+i,101+i,226+i,225+i))
 for i in [0,24]:
     for k in range(4):
         a=k*25+i;faces.append((a,a+25,a+150,a+125))
-mesh('cap_curved_brim',verts,faces,'blue','head',sub=1)
+outward(mesh('cap_curved_brim',verts,faces,'blue','head',sub=1))
 for t in [-.67,.67,math.pi/2,-math.pi/2,math.pi]:
     points=[]
     for j in range(12):

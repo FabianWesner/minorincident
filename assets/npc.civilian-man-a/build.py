@@ -177,8 +177,9 @@ def lock(name, points, widths, depths, mat='hairWarm', normal=(1,0,0), parent='h
     fs=[]
     for k in range(len(points)-1):
         for j in range(seg):
-            fs.append((k*seg+j,k*seg+(j+1)%seg,(k+1)*seg+(j+1)%seg,(k+1)*seg+j))
-    fs.extend([tuple(reversed(range(seg))),tuple((len(points)-1)*seg+j for j in range(seg))])
+            fs.append(((k+1)*seg+j,(k+1)*seg+(j+1)%seg,k*seg+(j+1)%seg,k*seg+j))
+    # Outward winding (single-sided runtime materials cull inward faces).
+    fs.extend([tuple(range(seg)),tuple(reversed(range((len(points)-1)*seg,len(points)*seg)))])
     return mesh(name,vs,fs,mat,parent,1)
 
 # Tucked polo shell: full shoulders, slight waist taper, soft cloth hem.
@@ -339,10 +340,13 @@ for k in range(rows):
         a=2*math.pi*j/segments
         edge=.96+1.12*(1-math.cos(a))/2
         ph=.025+(edge-.025)*t
-        vs.append((-.024+.148*math.sin(ph)*math.cos(a),.162*math.sin(ph)*math.sin(a),1.199+.166*math.cos(ph)))
+        vs.append((-.024+.152*math.sin(ph)*math.cos(a),.174*math.sin(ph)*math.sin(a),1.199+.172*math.cos(ph)))
 for k in range(rows-1):
-    for j in range(segments): fs.append((k*segments+j,k*segments+(j+1)%segments,(k+1)*segments+(j+1)%segments,(k+1)*segments+j))
-fs.append(tuple(reversed(range(segments))))
+    for j in range(segments): fs.append(((k+1)*segments+j,(k+1)*segments+(j+1)%segments,k*segments+(j+1)%segments,k*segments+j))
+# Outward winding: runtime palette materials are single-sided, so an inward cap
+# is culled from outside and exposes the skin beneath it. The radii clear the
+# face sculpt at the temples by about 1 cm so the scalp never z-fights it.
+fs.append(tuple(range(segments)))
 mesh('hair scalp',vs,fs,'hairChestnut','head',1)
 for i in range(13):
     a=.70+i*.40; c=math.cos(a); q=math.sin(a)
