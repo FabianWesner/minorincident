@@ -73,6 +73,7 @@ export class AudioService implements Lifecycle {
     private ambience = new AmbienceSchedule(0, 1);
     arc: L1ArcDirector | null = null;
     private arcFrame: ArcFrame | null = null;
+    private generation = 0;
     private readonly corgiWarnAt = new Map<string, number>();
     private level = 'L1';
     private tier = 0;
@@ -146,7 +147,11 @@ export class AudioService implements Lifecycle {
         this.tier = this.world.districts?.composition.tier ?? 0;
         this.graph.map = fromDistricts(this.world.districts);
         this.registry.reset(this.world.seed);
+        const generation = this.generation;
         await this.registry.prepare(this.level);
+        // reset() or dispose() ran while the banks were loading: this world is gone, bind nothing.
+        if (generation !== this.generation || this.disposed || !this.world.entities.get(1))
+            return;
         this.loaded = true;
         this.musicEpoch = this.context.currentTime + 0.02;
         this.music = new MusicDirector(this.level, this.musicEpoch);
@@ -851,6 +856,7 @@ export class AudioService implements Lifecycle {
     }
     snapshot() { return { state: this.context.state, unlocked: this.unlocked, background: this.background, muted: this.settings.muted, master: this.graph.master.gain.value, output: this.graph.output.gain.value, voices: this.graph.active.size + this.score.voices, voiceLimit: this.graph.limiter.limit, music: { level: this.level, state: this.music.state, streamed: this.score.snapshot(), paused: this.context.state !== 'running', position: this.started ? Math.max(0, this.context.currentTime - this.musicEpoch) : 0, layers: this.music.layers, score: this.music.score, transitions: this.music.transitions }, buses: Object.fromEntries(Object.entries(this.graph.buses).map(([k, v]) => [k, v.gain.value])), errors: [...this.registry.errors, ...this.score.errors], cues: [...this.log], clusters: this.horde.clusters.map(c => ({ ...c })), captions: this.captions.map(c => c.text) }; }
     reset(): void {
+        this.generation++;
         for (const off of this.unsubscribers)
             off();
         this.unsubscribers.length = 0;
