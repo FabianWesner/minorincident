@@ -282,7 +282,9 @@ export class DistrictView extends Group {
         this.bounds.center.set(x, ref.position.y + height / 2, z); this.bounds.radius = radius;
         if (!this.frustum.intersectsSphere(this.bounds)) continue;
         const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
-        (distance > (this.low ? 24 : 30) ? far : !this.low && distance <= 12 ? hero : near).references.push(ref);
+        // At the L1 connection, the houses/cars at 18–24 m dominate the mobile
+        // triangle budget; use their authored LOD2 while retaining near silhouettes.
+        (distance > (this.low ? 18 : 30) ? far : !this.low && distance <= 12 ? hero : near).references.push(ref);
       }
       for (const batch of [hero, near, far]) {
         batch.visible = batch.references.length > 0;
