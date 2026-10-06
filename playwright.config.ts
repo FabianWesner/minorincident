@@ -19,7 +19,8 @@ export default defineConfig({
   retries: 0,
   snapshotPathTemplate: '{testDir}/visual/__goldens__/{arg}{ext}',
   timeout: 60_000,
-  outputDir: 'test-results/playwright/run',
+  // Separate artifacts for simultaneous browser runs using isolated preview ports.
+  outputDir: `test-results/playwright/run${process.env.E2E_PORT ? `-${port}` : ''}`,
   reporter: [['list'], ['json', { outputFile: 'test-results/playwright/results.json' }]],
   use: {
     baseURL: `http://127.0.0.1:${port}`,

@@ -1,6 +1,6 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
-// Adapted from Bruno Simon folio-2025 Rendering.js / Passes/cheapDOF.js (MIT).
-import { RenderPipeline, type Camera, type Scene, type WebGPURenderer, type RenderTarget } from 'three/webgpu';
+// Adapted from folio-2025 Rendering.js / Passes/cheapDOF.js by Bruno Simon (MIT), commit 41046b5.
+import { ColorManagement, NoToneMapping, RenderPipeline, type Camera, type Scene, type WebGPURenderer, type RenderTarget } from 'three/webgpu';
 import { pass, uv, uniform, mix, vec2, rtt } from 'three/tsl';
 import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 import { hashBlur } from 'three/addons/tsl/display/hashBlur.js';
@@ -15,7 +15,7 @@ export class PostFx {
   private readonly scenePass;
   private readonly lowBlur;
   private readonly bloomPass;
-  constructor(renderer: WebGPURenderer, scene: Scene, camera: Camera, tier: QualityTier = 'high', readonly look = new LookUniforms()) {
+  constructor(private readonly renderer: WebGPURenderer, scene: Scene, camera: Camera, tier: QualityTier = 'high', readonly look = new LookUniforms()) {
     this.scenePass = pass(scene, camera); const source = this.scenePass.getTextureNode('output');
     this.bloomPass = bloom(source, look.values.bloomStrength, look.values.bloomRadius, look.values.bloomThreshold);
     this.tier = tier;
@@ -39,6 +39,16 @@ export class PostFx {
   private tier: QualityTier = 'high';
   setDof(enabled: boolean): void { this.pipeline.outputNode = enabled ? this.blurredOutput : this.sharpOutput; this.pipeline.needsUpdate = true; }
   snapshot() { return { bloomMips: qualityBudgets[this.tier].bloomMips, dof: this.pipeline.outputNode === this.blurredOutput, dofRepeats: this.tier === 'high' ? this.look.nodes.dofRepeats.value : this.look.nodes.dofRepeatsLow.value, dofResolution: this.tier === 'high' ? 1 : .5, bloomStrength: this.bloomPass.strength.value }; }
+  /** Compile the gameplay target once, rather than building a second canvas-context variant. */
+  async compile(): Promise<void> {
+    const renderer = this.renderer, target = renderer.getRenderTarget(), mrt = renderer.getMRT();
+    const tone = renderer.toneMapping, color = renderer.outputColorSpace;
+    this.scenePass.renderTarget.samples = renderer.samples;
+    this.scenePass.renderTarget.texture.type = renderer.getOutputBufferType();
+    renderer.toneMapping = NoToneMapping; renderer.outputColorSpace = ColorManagement.workingColorSpace;
+    try { await this.scenePass.compileAsync(renderer); }
+    finally { renderer.setRenderTarget(target); renderer.setMRT(mrt); renderer.toneMapping = tone; renderer.outputColorSpace = color; }
+  }
   render(): void { this.pipeline.render(); }
   dispose(): void {
     // r186's RTTNode has dispose(), currently missing from @types/three.

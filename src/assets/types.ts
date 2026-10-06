@@ -1,7 +1,10 @@
+import type { PaletteToken } from '../data/palette';
 export const statuses = ['placeholder', 'reference', 'upscaled', 'scripted', 'modeled', 'integrated', 'final'] as const;
 export type AssetStatus = typeof statuses[number];
 export type AssetQuality = 'high' | 'low' | 'lod0' | 'lod1' | 'lod2';
 export interface AssetDef {
+  /** Runtime leaf crowns in asset-local Y-up metres; layouts export these as foliage empties. */
+  foliage?: { colors: [string, string]; tokens?: [PaletteToken, PaletteToken]; crowns: { position: [number, number, number]; radius: [number, number, number] }[] };
   /** E06 code icons and category-specific fallbacks use the same manifest/status gates. */
   icon?: string;
   /** Transparent ground decal image; no GLB or LOD is needed for its two-triangle quad. */

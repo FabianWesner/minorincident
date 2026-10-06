@@ -1,5 +1,5 @@
 import { ControlIntent } from '../entities/ControlIntent';
-import { installCampaignNpcs, rebuildNpcNavigation } from '../npc/install';
+import { installCampaignNpcs, rebuildNpcNavigation, prepareNpcNavigation } from '../npc/install';
 import { Npcs } from '../npc/Npcs';
 import { populateHorde } from '../../../tests/fixtures/scenarios/performance';
 import { InfectedSystem } from '../ai/InfectedSystem';
@@ -32,6 +32,18 @@ export class SimWorld implements Lifecycle {
   readonly entities = new EntityStore();
   readonly spatial = new SpatialHash();
   districts: DistrictWorld | null = null;
+  /** L1 decay is baked during loading, before its first objective can fire. */
+  readonly preparedDistricts = new Map<number, DistrictWorld>();
+  readonly preparedNpcNavigation = new Map<number, Uint8Array>();
+  prepareTier(tier: 0|1|2|3|4|5): void {
+    const current = this.districts;
+    if (!current) return;
+    if (!this.preparedDistricts.has(tier)) this.preparedDistricts.set(tier, new DistrictWorld({ ...current.composition, tier }, current.districts.map(d => d.layout), this.seed));
+    if (!this.preparedNpcNavigation.has(tier)) {
+      const blocked = prepareNpcNavigation(this, this.preparedDistricts.get(tier)!);
+      if (blocked) this.preparedNpcNavigation.set(tier, blocked);
+    }
+  }
   player: Player | null = null;
   combat: Combat | null = null;
   infected: InfectedSystem | null = null;
@@ -156,7 +168,7 @@ export class SimWorld implements Lifecycle {
   /** Mission script integration: rebuild decay collision/nav once on a tier change. */
   setTier(tier: 0|1|2|3|4|5): void {
     const previous = this.districts; if (!previous || previous.composition.tier === tier) return;
-    const next = new DistrictWorld({...previous.composition,tier},previous.districts.map(d=>d.layout),this.seed);
+    const next = this.preparedDistricts.get(tier) ?? new DistrictWorld({...previous.composition,tier},previous.districts.map(d=>d.layout),this.seed);
     this.districts = next;
     const {min,max}=next.nav, player=this.entities.get(1)!;
     this.physics.load({name:next.composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:player.transform});
@@ -217,6 +229,7 @@ export class SimWorld implements Lifecycle {
   reset(): void {
     this.vehicles?.dispose(); this.vehicles = null;
     this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }
   dispose(): void { this.reset(); }

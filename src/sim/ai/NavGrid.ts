@@ -23,7 +23,8 @@ export class NavGrid {
   mask: ((x: number, z: number) => boolean) | null = null;
   target = -1;
   expansions = 0;
-  constructor(readonly ground: { width: number; depth: number }, readonly walls: readonly Wall[], readonly clearance = 0.65, readonly center = { x: 0, z: 0 }) {
+  constructor(readonly ground: { width: number; depth: number }, readonly walls: readonly Wall[], readonly clearance = 0.65, readonly center = { x: 0, z: 0 }, mask: NavGrid['mask'] = null) {
+    this.mask = mask;
     this.width = Math.ceil(ground.width / this.cellSize); this.depth = Math.ceil(ground.depth / this.cellSize);
     const count = this.width * this.depth;
     this.blocked = new Uint8Array(count); this.distance = new Int32Array(count); this.queue = new Int32Array(count);
@@ -72,32 +73,69 @@ export class NavGrid {
     }
   }
   /** E08 campaign tier swaps replace static walls, retaining the fixed search workspace. */
-  rebake(): void {
+  prepare(walls: readonly Wall[]): Uint8Array {
+    return new NavGrid(this.ground, walls, this.clearance, this.center, this.mask).blocked;
+  }
+  rebake(prepared?: Uint8Array): void {
     this.indexWalls();
-    for (let cell = 0; cell < this.blocked.length; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), this.clearance));
+    if (prepared) {
+      this.blocked.set(prepared);
+      for (const wall of this.blockers.values()) this.updateBlockerCells(wall);
+    } else for (let cell = 0; cell < this.blocked.length; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), this.clearance));
     this.target = -1; this.searching = false; this.head = this.tail = 0;
   }
   /** E11 doors and broken props invalidate only their affected cells and cached searches. */
   setBlocker(id: number, wall: Wall, blocked: boolean): void {
+    const previous = this.blockers.get(id);
     if (blocked) this.blockers.set(id, wall); else this.blockers.delete(id);
-    for (let cell = 0; cell < this.blocked.length; cell++) {
-      const x = this.x(cell), z = this.z(cell);
-      if (Math.abs(x - wall.x) <= wall.halfX + this.clearance + this.cellSize && Math.abs(z - wall.z) <= wall.halfZ + this.clearance + this.cellSize) this.blocked[cell] = Number(!this.clear(x, z, this.clearance));
-    }
+    if (previous && previous !== wall) this.updateBlockerCells(previous);
+    this.updateBlockerCells(wall);
     this.target = -1; this.searching = false;
+  }
+  private updateBlockerCells(wall: Wall): void {
+    const pad = this.clearance + this.cellSize;
+    const x0 = Math.max(0, Math.floor((wall.x - wall.halfX - pad - this.center.x + this.ground.width / 2) / this.cellSize));
+    const x1 = Math.min(this.width - 1, Math.ceil((wall.x + wall.halfX + pad - this.center.x + this.ground.width / 2) / this.cellSize));
+    const z0 = Math.max(0, Math.floor((wall.z - wall.halfZ - pad - this.center.z + this.ground.depth / 2) / this.cellSize));
+    const z1 = Math.min(this.depth - 1, Math.ceil((wall.z + wall.halfZ + pad - this.center.z + this.ground.depth / 2) / this.cellSize));
+    for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) {
+      const cell = z * this.width + x;
+      this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), this.clearance));
+    }
   }
   visible(from: { x: number; z: number }, to: { x: number; z: number }, radius: number): boolean {
     if (!this.mask && !this.walls.length && !this.blockers.size) return this.clear(to.x, to.z, radius);
     const dx = to.x - from.x, dz = to.z - from.z, steps = Math.ceil(Math.hypot(dx, dz) / 0.2);
-    let escaped = false;
+    if (!this.clear(to.x, to.z, radius)) return false;
+    const walls = new Set(this.blockers.values());
     for (let i = 0; i <= steps; i++) {
       const x = from.x + dx * i / Math.max(1, steps), z = from.z + dz * i / Math.max(1, steps);
-      if (this.clear(x, z, radius)) escaped = true;
-      // Physics can slide a circular capsule into a conservative grid corner.
-      // Permit departure from it, while retaining full clearance for the rest of the route.
-      else if (escaped || !this.clear(x, z, radius, true)) return false;
+      if (this.mask && !this.mask(x, z)) return false;
+      if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
+      for (const wall of this.buckets.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) walls.add(wall);
     }
-    return escaped;
+    // Sampled clearance alone can skip a corner between two samples. A pulled
+    // waypoint must clear the entire segment, including narrow foliage boxes.
+    for (const wall of walls) {
+      const minX = wall.x - wall.halfX - radius, maxX = wall.x + wall.halfX + radius;
+      const minZ = wall.z - wall.halfZ - radius, maxZ = wall.z + wall.halfZ + radius;
+      // Rapier's rounded capsule can rest inside a conservative expanded box
+      // corner. Permit an outward escape, never a route through the solid.
+      if (from.x > minX && from.x < maxX && from.z > minZ && from.z < maxZ &&
+        ((from.x <= wall.x && to.x <= minX) || (from.x >= wall.x && to.x >= maxX) ||
+         (from.z <= wall.z && to.z <= minZ) || (from.z >= wall.z && to.z >= maxZ))) continue;
+      let enter = 0, leave = 1;
+      for (const [start, delta, center, half] of [[from.x, dx, wall.x, wall.halfX], [from.z, dz, wall.z, wall.halfZ]]) {
+        const min = center - half - radius, max = center + half + radius;
+        if (delta === 0) { if (start <= min || start >= max) { leave = -1; break; } }
+        else {
+          const a = (min - start) / delta, b = (max - start) / delta;
+          enter = Math.max(enter, Math.min(a, b)); leave = Math.min(leave, Math.max(a, b));
+        }
+      }
+      if (enter < leave) return false;
+    }
+    return true;
   }
   /** Sweeps movement in subcell increments; axis fallback slides around collider corners. */
   move(position: { x: number; z: number }, dx: number, dz: number, radius: number): void {

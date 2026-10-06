@@ -50,7 +50,7 @@ class CivilianBatch extends Group {
     const eyeColor = vec3(1, .005, .02);
     const glow = eyeColor.div(luminance(eyeColor)).mul(eye).mul(attribute('_glow', 'float')).mul(2);
     const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
-    this.mesh = new InstancedMesh(baked.geometry, material, 128); this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = this.mesh.receiveShadow = true;
+    this.mesh = new InstancedMesh(baked.geometry, material, 128); this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = this.mesh.receiveShadow = true;
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1); this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; };
     const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset), instance = mat4(column(0), column(4), column(8), column(12)), part = parts.x;
     const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);

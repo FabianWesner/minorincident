@@ -1,0 +1,42 @@
+{
+  "id": "veh.courier-bike",
+  "tier": "Side",
+  "triangles": {
+    "lod0": 9266,
+    "lod1": 1384,
+    "lod2": 356
+  },
+  "file_bytes": {
+    "lod0": 159176,
+    "lod1": 37440,
+    "lod2": 16380
+  },
+  "draw_calls": 23,
+  "materials": [
+    "pal_asphalt",
+    "pal_backpackTeal",
+    "pal_orange",
+    "pal_picketWhite",
+    "pal_silver",
+    "pal_uiDark",
+    "pal_redDark",
+    "emi_windowGlow"
+  ],
+  "nodes_ok": true,
+  "within_budget": true,
+  "lod_ratios": {
+    "lod1": 0.14936326354413987,
+    "lod2": 0.0384200302180013
+  },
+  "rounds": 4,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "gaps": [
+    "Shared pal_orange is more amber than the saturated concept paint.",
+    "Saddle contour, grip texture and fine tire markings simplified for side tier.",
+    "LOD2 omits lettering, mudguards and rack supports at distance."
+  ],
+  "matches_reference": true,
+  "reproducible": true,
+  "ground_contact": true
+}
