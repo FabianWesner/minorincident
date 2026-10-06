@@ -107,7 +107,9 @@ export class KeyframeAnimator {
     // sim windup and follow-through onto recovery, so the hit lands on the damage tick.
     const struck = strike && combat ? upper ? this.overlay : this.base : undefined;
     if (struck && combat) {
-      const u = tick + alpha - 1 - combat.started, a = Math.max(1, combat.activeAt - combat.started), e = Math.max(a + 1, combat.endsAt - combat.started);
+      // Render time trails the sim by one tick (alpha interpolation); land contact on the frame that
+      // shows the damage tick, so the hit-stop freezes the contact pose rather than the coil.
+      const u = tick + alpha - 1 - combat.started, a = Math.max(1, combat.activeAt - combat.started - 1), e = Math.max(a + 1, combat.endsAt - combat.started - 1);
       const phase = u < a ? .2 * Math.max(0, u) / a : Math.min(1, .2 + .8 * (u - a) / (e - a));
       struck.time = phase * struck.getClip().duration; struck.setEffectiveTimeScale(0);
     }
