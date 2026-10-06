@@ -68,7 +68,7 @@ test('@E19 slice complete policy finishes 20 seeds with normal movement, pickup 
     }
     expect(m.state.phase,`seed ${seed}: ${JSON.stringify({p:world.entities.get(1)!.transform,hp:world.entities.get(1)!.health,steps:m.state.steps,actors:world.infected!.active.map(e=>({id:e.id,p:e.transform,hp:e.health.current,state:e.infected!.state}))})}`).toBe('result');expect(m.state.stats.kills).toBe(5);expect(m.state.stats.deaths).toBeLessThanOrEqual(2);world.dispose();
   }
-});
+}, 120_000); // Twenty full slices also simulate the morning population on the shared Mac.
 
 
 test('@E19 incident checkpoint restores escape, fists and live runners after death', async () => {
