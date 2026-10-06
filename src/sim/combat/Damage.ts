@@ -42,11 +42,32 @@ export class Damage {
     if (target.id === 1 && this.god) amount = 0;
     if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick);
     else { amount = Math.min(amount, target.health.current); target.health.current -= amount; }
-    const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, amount, damageType: hit.type, ...(hit.type === 'vehicle' ? { cause: 'vehicle' as const } : {}) };
+    const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback: hit.knockback, amount, damageType: hit.type, ...(hit.type === 'vehicle' ? { cause: 'vehicle' as const } : {}) };
     this.world.events.emit({ ...event, type: 'combat.hit' });
     if (amount > 0) {
       if (target.combat && hit.stagger > 0) { target.combat.staggerUntil = this.world.tick + Math.ceil(hit.stagger * 60); target.combat.attacking = false; }
+      const from = { x: target.transform.x, z: target.transform.z };
       if (hit.knockback > 0 && target.faction !== 'environment') this.world.knockback(target, hit.direction, hit.knockback);
+      if (target.combat && target.faction === 'infected') {
+        const heavy = hit.actionId === 'weapon.kick' || hit.knockback >= .9 || amount >= 35;
+        const previous = target.combat.reaction?.index ?? target.id % 3;
+        target.combat.reaction = { index: (previous + 1) % 3, started: this.world.tick, until: this.world.tick + (heavy ? 80 : 26), direction: { ...hit.direction }, from, to: { x: target.transform.x, z: target.transform.z }, heavy };
+        if (heavy) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + 80);
+        // A kicked body sweeps its existing knockback corridor and staggers the next
+        // infected it tumbles into. No new physics bodies or navigation rules.
+        if (hit.actionId === 'weapon.kick' && hit.knockback > 0) {
+          for (const other of this.world.entities.iterate()) {
+            if (other.id === target.id || other.faction !== 'infected' || other.health.current <= 0 || !other.combat) continue;
+            const dx = other.transform.x - from.x, dz = other.transform.z - from.z;
+            const along = dx * hit.direction.x + dz * hit.direction.z, cross = Math.abs(dx * hit.direction.z - dz * hit.direction.x);
+            if (along <= 0 || along > hit.knockback + .6 || cross > target.combat.radius + other.combat.radius) continue;
+            const otherFrom = { x: other.transform.x, z: other.transform.z };
+            this.world.knockback(other, hit.direction, .5);
+            other.combat.staggerUntil = Math.max(other.combat.staggerUntil, this.world.tick + 54); other.combat.attacking = false;
+            other.combat.reaction = { index: ((other.combat.reaction?.index ?? 0) + 1) % 3, started: this.world.tick, until: this.world.tick + 54, direction: { ...hit.direction }, from: otherFrom, to: { x: other.transform.x, z: other.transform.z }, heavy: true };
+          }
+        }
+      }
       if (hit.type === 'melee') this.world.events.emit({ type: 'combat.hit-stop', tick: this.world.tick, sourceId: hit.sourceId, durationMs: 50 });
     }
     if (hit.part === 'leg' && amount > 0) this.world.infected?.loseLeg(target.id, this.world.infected.gore);
