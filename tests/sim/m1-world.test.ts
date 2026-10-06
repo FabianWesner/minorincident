@@ -139,3 +139,22 @@ test('@E19 grid route budgets resume and straight visible sections have no zig-z
   expect(Math.abs(waypoint.z)).toBeGreaterThan(3); expect(route.pathIndex).toBeGreaterThan(2);
   expect(nav.visible({ x: -4, z: 0 }, waypoint, .35)).toBe(true);
 });
+
+test('@E19 M1-07 visibility sweeps thin corners between samples and allows only outward escapes', () => {
+  const nav = new NavGrid({ width: 20, depth: 20 }, [{ x: .1, y: 1, z: 0, halfX: .03, halfY: 1, halfZ: .03 }], 0);
+  expect(nav.visible({ x: 0, z: 0 }, { x: .2, z: 0 }, 0)).toBe(false);
+  nav.setBlocker(1, { x: 2, y: 1, z: 0, halfX: .5, halfY: 1, halfZ: .5 }, true);
+  const corner = { x: 1.2, z: -.8 };
+  expect(nav.clear(corner.x, corner.z, .35)).toBe(false);
+  expect(nav.visible(corner, { x: 1, z: -1 }, .35)).toBe(true);
+  expect(nav.visible(corner, { x: 3, z: 0 }, .35)).toBe(false);
+});
+
+test('@E19 VQA-08 combat spacing still lets broad armored fighters enter melee range', async () => {
+  await slice(); teleport(0, 0);
+  const id = world.infected!.spawn('infected.armored', { x: 2, z: 0 }, { state: 'chase' });
+  step(240);
+  expect(world.events.events().some(e => e.type === 'infected.attack' && e.sourceId === id)).toBe(true);
+  const p = world.entities.get(1)!.transform, enemy = world.entities.get(id)!;
+  expect(Math.hypot(p.x - enemy.transform.x, p.z - enemy.transform.z)).toBeGreaterThanOrEqual(.85);
+});
