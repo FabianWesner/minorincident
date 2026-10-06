@@ -4,7 +4,7 @@ const output = 'test-results/epics/E18';
 test('T-E18-04-browser @E18-AC04 auto drops high to low within 6s and only upgrades at level start', async ({ page }) => {
   await boot(page);
   await page.evaluate(async () => window.__SS__!.loadScenario('combat-arena'));
-  await page.getByLabel('Graphics quality').selectOption('auto');
+  await page.evaluate(() => window.__SS__!.settings.set({ quality: 'auto' }));
   await page.evaluate(() => { const a = window.__SS__!; a.debug.simulateFrameCost(30); a.resume(); });
   const start = Date.now();
   await expect.poll(() => page.evaluate(() => window.__SS__!.perf().quality.tier), { timeout: 6000, intervals: [100] }).toBe('low');
