@@ -10,12 +10,12 @@ test('T-E14-04 @E14 @E14-AC04 active mouse/keyboard/touch glyphs, including rebi
   const def = missionSandbox('custom'); def.id = 'L1';
   await page.evaluate(async def => { const api = window.__SS__!; api.missions.load(def); api.missions.begin(); await api.step(1); }, def);
   const prompt = page.getByTestId('onboarding-prompt');
-  await expect(prompt).toHaveAttribute('data-action', 'attack'); await expect(prompt).toContainText('☝ Action');
+  await expect(prompt).toHaveAttribute('data-action', 'attack'); await expect(prompt).toContainText('☝ LEFT');
   await page.mouse.move(800, 450); await page.evaluate(() => window.__SS__!.step(1)); await expect(prompt).toContainText('LMB');
   await page.keyboard.press('ArrowUp'); await page.evaluate(() => window.__SS__!.step(1)); await expect(prompt).toContainText('J');
-  await page.evaluate(() => window.__SS__!.input.rebind('left', 'KeyF'));
-  await page.evaluate(() => window.__SS__!.step(1)); await expect(prompt).toContainText('F');
-  await page.touchscreen.tap(60, 600); await page.evaluate(() => window.__SS__!.step(1)); await expect(prompt).toContainText('☝ Action');
+  await page.evaluate(() => window.__SS__!.input.rebind('left', 'KeyZ'));
+  await page.evaluate(() => window.__SS__!.step(1)); await expect(prompt).toContainText('Z');
+  await page.touchscreen.tap(60, 600); await page.evaluate(() => window.__SS__!.step(1)); await expect(prompt).toContainText('☝ LEFT');
   const saved = await page.evaluate(key => JSON.parse(localStorage.getItem(key)!), onboardingKey); expect(saved).toContain('attack');
   await page.reload(); await page.waitForFunction(() => Boolean(window.__SS__)); await page.evaluate(() => window.__SS__!.ready);
   await page.evaluate(async def => { const api = window.__SS__!; await api.loadScenario('mission-sandbox'); api.pause(); api.missions.load(def); api.missions.begin(); await api.step(1); }, def);

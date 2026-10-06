@@ -21,6 +21,6 @@ test('T-E03-bindings @E03 @E03-AC09 each logical action can be rebound and persi
 test('T-E03-storage @E03 storage errors leave the existing bindings usable', () => {
   const bindings = new Bindings({ getItem: () => { throw new Error('denied'); }, setItem: () => { throw new Error('denied'); } });
   expect(bindings.get()).toEqual(defaultBindings);
-  expect(bindings.rebind('left', 'KeyF')).toEqual({ ok: false, message: 'Bindings could not be saved.' });
-  expect(bindings.action('KeyJ')).toBe('left'); expect(bindings.action('KeyF')).toBeNull();
+  expect(bindings.rebind('left', 'KeyZ')).toEqual({ ok: false, message: 'Bindings could not be saved.' });
+  expect(bindings.action('KeyJ')).toBe('left'); expect(bindings.action('KeyZ')).toBeNull();
 });

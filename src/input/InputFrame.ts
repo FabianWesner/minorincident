@@ -6,8 +6,17 @@ export type Scheme = 'mouse-only' | 'mouse-keyboard' | 'keyboard' | 'touch';
 export interface InputFrame {
   /** Local vehicle axes from WASD; walking continues to use screen-relative move. */
   drive?: { throttle: number; steer: number };
-  /** Touch/keyboard vehicle brake, independent of RIGHT exit. */
+  /** Touch/keyboard vehicle brake. */
   brake?: boolean;
+  /** Explicit pointer commands; absent means keep the current command. */
+  moveTarget?: Vec2;
+  attackTarget?: { id: number; side: 'LEFT' | 'RIGHT' };
+  /** Cancel any pending destination or target attack. */
+  cancelMove?: boolean;
+  /** Ground LMB is movement, not a LEFT attack. */
+  pointerGround?: boolean;
+  /** Explicit side for a touch swipe or target attack while approaching. */
+  selectorSide?: 'LEFT' | 'RIGHT';
   move: Vec2;
   aim: Vec2 | null;
   /** Optional world-ground landing point; direction-only devices throw to max range. */

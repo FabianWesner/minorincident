@@ -7,7 +7,7 @@ const sizes = [{ width: 412, height: 915 }, { width: 390, height: 844 }, { width
 const dir = 'test-results/mobile-hud';
 
 for (const scene of ['hud', 'live'] as const) for (const viewport of sizes) {
-  test(`@E14 @E14-AC05 @mobile mobile HUD ${scene} ${viewport.width}x${viewport.height}`, async ({ page }, info) => {
+  test(`@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD ${scene} ${viewport.width}x${viewport.height}`, async ({ page }, info) => {
     test.setTimeout(90_000); // Production level loading plus two SwiftShader viewport rebuilds.
     await page.setViewportSize(viewport);
     if (scene === 'hud') await hudStart(page);
