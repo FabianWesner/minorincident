@@ -95,6 +95,7 @@ test('T-E02-10 @E02 @E02-AC10 golden lookdev has a reviewed North-star vision ch
 
 test('T-E02-11 @E02 @E02-AC11 overview, street and shadow-probe match reviewed goldens within 1.5%', async ({ page }) => {
   await lookdev(page);
+  await page.addStyleTag({ content: 'body > :not(#game), #game > :not(canvas) { visibility: hidden !important; }' });
   for (const spot of ['overview', 'street', 'shadow-probe']) {
     await page.evaluate((name) => window.__SS__!.camera.preset(name), spot); await page.evaluate(() => window.__SS__!.screenshotReady());
     // Reviewed lookdev goldens contain only the scene, without input/audio debug panels.

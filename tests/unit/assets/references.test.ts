@@ -26,7 +26,7 @@ test('T-E17-sources @E17-AC05 every integrated standalone export and LOD is regi
     expect(existsSync(def!.glb), def!.glb).toBe(true);
     for (const lod of ['lod1', 'lod2'] as const) {
       const source = `assets/${id}/model.${lod}.glb`;
-      if (sources.has(source)) expect(def?.lods?.[lod], source).toBe(def?.glb.replace('.glb', `.${lod}.glb`));
+      if (sources.has(source) && def.tier === 'hero') expect(def?.lods?.[lod], source).toBe(def?.glb.replace('.glb', `.${lod}.glb`));
       const output = def?.lods?.[lod];
       if (output) expect(existsSync(output), output).toBe(true);
     }

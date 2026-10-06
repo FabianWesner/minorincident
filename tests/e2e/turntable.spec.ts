@@ -14,7 +14,7 @@ test('T-E17-08 @E17-AC08 @E17-AC04 five fire-engine views cover 10–80% and pre
   for (const name of ['body','wheelFL','wheelFR','wheelRL','wheelRR','ladder','sirenL','sirenR']) expect(info.nodes).toContain(name);
   expect(errors).toEqual([]);
 });
-test('T-E17-05e @E17-AC05 pending survivor art uses E04 code rigs with placeholder logs', async ({page}) => {
+test('T-E17-05e @E17-AC05 integrated survivor art uses accepted rigs without placeholder logs', async ({page}) => {
   const events: {type:string;id:string;reason:string}[] = [];
   page.on('console', message => {
     if (message.type() === 'info' && message.text().startsWith('{')) {
@@ -27,14 +27,14 @@ test('T-E17-05e @E17-AC05 pending survivor art uses E04 code rigs with placehold
     await window.__SS__!.loadScenario('survivor'); window.__SS__!.pause();
     return window.__SS__!.getState().render.character!;
   });
-  expect(character.sources.map(source => source.source)).toEqual(['placeholder', 'placeholder']);
-  for (const variant of ['female', 'male']) expect(events).toContainEqual({type:'asset.placeholder',id:`char.survivor-${variant}`,reason:'Error: status reference'});
+  expect(character.sources.map(source => source.source)).toEqual(['glb', 'glb']);
+  expect(events.filter(event => event.id.startsWith('char.survivor-'))).toEqual([]);
 });
-test('T-E17-05c @E17-AC05 pre-integrated production art renders a logged placeholder', async ({page,baseURL}) => {
-  await page.goto(`${baseURL}/preview/?asset=inf.common-worker&test=1&renderer=webgl`);
+test('T-E17-05c @E17-AC05 missing production art renders a logged placeholder', async ({page,baseURL}) => {
+  await page.goto(`${baseURL}/preview/?asset=util.radio&test=1&renderer=webgl`);
   await page.waitForFunction(()=>!!window.__ASSET__);
   await page.evaluate(()=>window.__ASSET__!.ready);
   const info=await page.evaluate(()=>window.__ASSET__!.info());
   expect(info.placeholder).toBe(true);
-  expect(info.events[0]).toMatchObject({type:'asset.placeholder',id:'inf.common-worker'});
+  expect(info.events[0]).toMatchObject({type:'asset.placeholder',id:'util.radio'});
 });
