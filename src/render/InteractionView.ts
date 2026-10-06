@@ -1,6 +1,6 @@
 // Adapted from Bruno Simon InteractivePoints.js / RayCursor.js (MIT):
 // highlighted active point above geometry, range-based reveal, separate presentation state.
-import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, RingGeometry, Vector3, type Camera, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
+import { BoxGeometry, CylinderGeometry, Group, Mesh, MeshBasicNodeMaterial, RingGeometry, SphereGeometry, Vector3, type Camera, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
 import type { View } from './View';
 import type { AssetQuality } from '../assets/types';
 import { staticBatch } from '../assets/staticBatch';
@@ -25,6 +25,9 @@ export class InteractionView extends Group {
   private readonly batchMaterials = new Set<Material>();
   private readonly pending = new Map<number, Promise<void>>();
   private readonly box = new BoxGeometry(1, 1, 1);
+  private readonly led = new SphereGeometry(.06, 8, 6);
+  private readonly brush = new CylinderGeometry(.18, .18, 2.2, 8);
+  private readonly foam = new MeshBasicNodeMaterial({ color: '#f4fbff', transparent: true, opacity: .45, depthWrite: false });
   private readonly black = new MeshBasicNodeMaterial({ color: '#151e30', depthTest: false, depthWrite: false, transparent: true });
   private readonly white = new MeshBasicNodeMaterial({ color: '#ffffff', depthTest: false, depthWrite: false, transparent: true });
   private readonly teal = new MeshBasicNodeMaterial({ color: '#58ffe0', depthTest: false, depthWrite: false, transparent: true });
@@ -75,7 +78,47 @@ export class InteractionView extends Group {
     const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined;
     return pickup?.kind === 'item' && pickup.item?.startsWith('key.') ? 'util.keys' : pickup?.item === 'batteries' ? 'util.batteries' : assetIds[e.archetype];
   }
+  /** L1 v2 toys: gameplay-shaped code art (hinged gate leaf, dumpster, car-alarm LED + beacons, car-wash foam curtain and brushes). */
+  private toyObject(e: EntitySnapshot): Group {
+    const g = new Group(), kind = e.toy?.kind ?? 'gate', box = (w: number, h: number, d: number, material: Material, x: number, y: number, z: number, parent: Object3D = g) => {
+      const m = new Mesh(this.box, material); m.scale.set(w, h, d); m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; parent.add(m); return m;
+    };
+    if (kind === 'gate') {
+      const hinge = new Group(); hinge.name = 'hinge'; hinge.position.x = -.9; g.add(hinge);
+      box(1.8, 1.15, .08, this.materials.get('woodWarm'), .9, .6, 0, hinge); box(1.8, .08, .1, this.materials.get('picketWhite'), .9, 1.12, 0, hinge); box(.08, 1.15, .1, this.materials.get('picketWhite'), .02, .6, 0, hinge);
+    } else if (kind === 'dumpster') {
+      const rail = Math.abs((e.toy?.to.z ?? 0) - (e.toy?.from.z ?? 0)) > Math.abs((e.toy?.to.x ?? 0) - (e.toy?.from.x ?? 0));
+      const body = new Group(); body.rotation.y = rail ? 0 : Math.PI / 2; g.add(body);
+      box(2.2, 1.1, 1.2, this.materials.get('grass'), 0, .6, 0, body); box(2.3, .1, 1.3, this.materials.get('asphalt'), 0, 1.2, 0, body);
+    } else if (kind === 'car-alarm') {
+      const led = new Mesh(this.led, new MeshBasicNodeMaterial({ color: '#ff2020' })); led.name = 'led'; led.position.y = 1.05; g.add(led);
+      for (const z of [-.7, .7]) { const b = new Mesh(this.led, new MeshBasicNodeMaterial({ color: '#ffb020' })); b.name = 'beacon'; b.scale.setScalar(2.6); b.position.set(0, 1.45, z); b.visible = false; g.add(b); }
+    } else {
+      const bay = this.world.toys?.bay ?? [], xs = bay.map(p => p.x), zs = bay.map(p => p.z), cx = (Math.min(...xs) + Math.max(...xs)) / 2, cz = (Math.min(...zs) + Math.max(...zs)) / 2;
+      const wx = Math.max(...xs) - Math.min(...xs), wz = Math.max(...zs) - Math.min(...zs), foam = new Group(); foam.name = 'foam'; foam.position.set(cx - e.transform.x, 0, cz - e.transform.z); foam.visible = false; g.add(foam);
+      box(wx, 2.6, wz, this.foam, 0, 1.3, 0, foam);
+      for (const sx of [-1, 1]) { const brush = new Mesh(this.brush, this.materials.get('picketWhite')); brush.name = 'brush'; brush.position.set(sx * (wx / 2 - .4), 1.2, 0); foam.add(brush); }
+      const sign = box(.5, .5, .5, this.materials.get('backpackTeal'), 0, .3, 0); sign.name = 'button';
+    }
+    return g;
+  }
+  private animateToy(e: EntitySnapshot, object: Object3D): void {
+    const tick = this.world.tick;
+    if (e.toy?.kind === 'car-alarm') {
+      const active = tick < e.toy.until, led = object.getObjectByName('led')!;
+      // Armed: slow dim blink. Alarming: fast bright blink and alternating roof beacons.
+      led.visible = active ? tick % 12 < 6 : tick % 90 < 30; led.scale.setScalar(active ? 1.8 : 1);
+      for (const b of object.children.filter(c => c.name === 'beacon')) b.visible = active && (tick % 16 < 8) === (b.position.z < 0);
+      if (!e.interactable!.enabled && !active) led.visible = false;
+    } else if (e.toy?.kind === 'carwash') {
+      const foam = object.getObjectByName('foam')!, active = tick < e.toy.until; foam.visible = active;
+      if (active) for (const c of foam.children) if (c.name === 'brush') c.rotation.y += .3;
+    } else if (!e.toy && e.interactable) {
+      const hinge = object.getObjectByName('hinge'); if (hinge) hinge.rotation.y += ((e.interactable.open ? -Math.PI / 2 : 0) - hinge.rotation.y) * .25;
+    }
+  }
   private async create(e: EntitySnapshot, lod: AssetQuality): Promise<Object3D> {
+    if (e.toy || this.world.toys?.gateIds.includes(e.id)) return this.toyObject(e);
     const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined, id = this.assetId(e);
     if (id) {
       const def = this.registry.definition(id), canonical = (lod === 'lod1' || lod === 'lod2') && !def.lods?.[lod] ? 'lod0' : lod;
@@ -106,7 +149,8 @@ export class InteractionView extends Group {
         const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined;
         object.position.set(e.transform.x, 0, e.transform.z); object.rotation.y = e.transform.yaw;
         object.visible = !pickup?.collected && !e.destructible?.broken && !e.hazard?.exploded;
-        if (e.interactable?.open) object.rotation.y += Math.PI / 2;
+        if (e.interactable?.open && !this.world.toys?.gateIds.includes(e.id)) object.rotation.y += Math.PI / 2;
+        this.animateToy(e, object);
       }
       if (player && e.interactable?.enabled && !e.interactable.completed) {
         const d = (e.transform.x - player.transform.x) ** 2 + (e.transform.z - player.transform.z) ** 2;
@@ -138,7 +182,7 @@ export class InteractionView extends Group {
     this.disposed = true; this.panel.remove(); this.clear(); this.objects.clear(); this.lods.clear();
     for (const geometry of this.geometries) geometry.dispose(); for (const material of this.batchMaterials) material.dispose();
     this.geometries.clear(); this.batchMaterials.clear(); this.prototypes.clear();
-    this.box.dispose(); this.fillGeometry.dispose(); this.outlineGeometry.dispose(); this.strokeGeometry.dispose(); this.black.dispose(); this.white.dispose(); this.teal.dispose();
+    this.box.dispose(); this.led.dispose(); this.brush.dispose(); this.foam.dispose(); this.fillGeometry.dispose(); this.outlineGeometry.dispose(); this.strokeGeometry.dispose(); this.black.dispose(); this.white.dispose(); this.teal.dispose();
     void this.registry.dispose();
   }
 }

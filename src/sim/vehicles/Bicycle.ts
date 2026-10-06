@@ -112,7 +112,9 @@ export class Bicycle {
     b.mounted = false; b.speed = 0; b.steer = 0; b.armed = false; b.lockUntil = this.world.tick + 18;
     delete player.riding;
     // The bicycle stays exactly where it was left; scripts never move it.
-    Object.assign(bike.transform, { x: at?.x ?? player.transform.x, z: at?.z ?? player.transform.z, yaw: -b.heading });
+    // It is leaned against the left side of where the rider stood, so the rider does not overlap the frame.
+    const x = at?.x ?? player.transform.x, z = at?.z ?? player.transform.z;
+    Object.assign(bike.transform, { x: x - Math.sin(b.heading) * .9, z: z + Math.cos(b.heading) * .9, yaw: -b.heading });
     this.world.player!.locomotion.reset();
   }
 }

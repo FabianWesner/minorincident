@@ -14,7 +14,7 @@ afterEach(() => world?.dispose());
 async function grove() {
   world = new SimWorld(); await world.init();
   world.loadComposition(compositions['D-GROVE'], [layout], 1);
-  world.combat?.damage && (world.combat.damage.god = true);
+  if (world.combat) world.combat.damage.god = true;
   return world;
 }
 const step = (n: number) => { for (let i = 0; i < n; i++) world.update(); };
@@ -40,7 +40,7 @@ describe('L1 v2 bicycle', () => {
     world.setInput({ move: { x: 0, z: 0 } }); step(60); press();
     expect(bike().riding).toBe(false);
     const left = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }, p = pos();
-    expect(Math.hypot(left.x - p.x, left.z - p.z)).toBeLessThan(.2);
+    expect(Math.hypot(left.x - p.x, left.z - p.z)).toBeLessThan(1);
     step(300); expect(bike().entity!.transform.x).toBe(left.x);
     // checkpoint snapshots carry the bicycle: restoring them keeps its position
     const snapshot = world.query({}); const player = world.entities.get(1)!;
@@ -61,7 +61,7 @@ describe('L1 v2 bicycle', () => {
     world.setInput({ move: { x: 1, z: 0 } }); for (let i = 0; i < 240 && bike().riding; i++) step(1);
     expect(bike().riding).toBe(false); world.setInput({ move: { x: 0, z: 0 } }); step(1);
     expect(bike().inNoBikeZone(pos())).toBe(true); expect(pos().x).toBeLessThan(west + .5);
-    expect(bike().inNoBikeZone(bike().entity!.transform)).toBe(false);
+    expect(bike().inNoBikeZone(bike().entity!.transform)).toBe(false); // left at the edge on the rider's side
     world.setInput({ move: { x: 0, z: 0 } }); step(30); press(); expect(bike().riding).toBe(false);
   });
   test('T-E19-16d @E19 @E19-AC16 an infected touching the rider stops the bicycle and dismounts, with zero damage', async () => {
