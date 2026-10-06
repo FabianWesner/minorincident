@@ -119,9 +119,9 @@ export class Game {
     this.campaign=structuredClone(save);
     if(save.pending&&!level){this.campaignUI.showRewards();return;}
     if(level&&level>save.unlockedLevel)throw new Error('Level is locked');
-    await this.loadLevel(`L${level??save.unlockedLevel}`);
     this.view.settings(save.settings);this.audio.set(save.settings);
-    if(save.settings.aimAssist&&this.world.combat)this.world.combat.assist.setting=save.settings.aimAssist;
+    await this.loadLevel(`L${level??save.unlockedLevel}`);
+    this.view.settings(save.settings);
   }
   applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.view.update(1);}}
   saveCampaign():boolean {
