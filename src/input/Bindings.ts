@@ -10,7 +10,11 @@ export class Bindings {
       const text = storage?.getItem(bindingStorageKey);
       if (text) {
         const saved = JSON.parse(text);
-        if (saved.version === 1 && this.valid(saved.bindings)) this.map = saved.bindings;
+        if (saved.version === 1 && this.valid(saved.bindings)) {
+          this.map = saved.bindings;
+          for (const name of Object.keys(this.map) as Action[]) this.map[name] = this.map[name].filter(code => code !== 'Mouse2');
+          this.map.selector.unshift('Mouse2');
+        }
       }
     } catch { /* Storage unavailable or corrupt: keep defaults. */ }
   }

@@ -90,7 +90,7 @@ for (const mode of ['desktop', 'portrait'] as const) test.describe(mode, () => {
           await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${output}/${mode}-chain-${i}.png` });
         }
       }
-      if (chain.newbornTurn || mode === 'portrait' && new Set(chain.turns.filter(e => e.type === 'civilian.turned').map(e => e.type === 'civilian.turned' ? e.id : 0)).size >= 3) break;
+      if (mode === 'portrait' ? new Set(chain.turns.filter(e => e.type === 'civilian.turned').map(e => e.type === 'civilian.turned' ? e.id : 0)).size >= 3 : chain.newbornTurn) break;
     }
     if (process.env.OUTBREAK_CAPTURE === '1') { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${output}/${mode}-chain-turn.png` }); }
     const infectionEvents = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'civilian.turned' || e.type === 'civilian.grabbed'));
