@@ -372,5 +372,38 @@
     "survivorModelChanged": false,
     "bruno": "Extends the existing InstancedGroup-style GPU crowd and palette material path; no new subsystem"
   },
-  "integration": "Combine build.py with m1-gait, then regenerate library.glb and library.json; bake caches in m1-hitch must include the three appended clips. Browser tests now permit a nearer survivor to interrupt the chain, rather than require a synchronized four-infected chase."
+  "integration": "Merged main with gait, survivor remodel, lookdev and grading. Regenerated both animation artifacts from the combined bpy script; retained all main locomotion tracks and all three outbreak tracks, manifest-based rig selection, grounded proportional stance, infection timelines/skin and normalized glow.",
+  "integrationMerge": {
+    "mainCommit": "4cb1b121df941f289cf66164027e52432e618f05",
+    "resolved": [
+      "assets/animation-library/library.glb",
+      "src/render/characters/library.json",
+      "src/render/characters/clips.ts",
+      "src/render/CrowdView.ts",
+      "src/render/npc/CivilianCrowd.ts",
+      "tests/unit/render/authored-animation.test.ts"
+    ],
+    "regenerated": {
+      "actions": 51,
+      "movingTrsTracks": 484,
+      "main48Actions": "all compiled tracks unchanged",
+      "outbreak3Actions": "all compiled tracks unchanged",
+      "method": "Blender background build.py, then tools/assets/animation-library.ts"
+    },
+    "validation": {
+      "typecheck": "passed",
+      "lint": "passed",
+      "unit": {
+        "passed": 176,
+        "files": 58,
+        "workers": 1,
+        "initialFourWorkerRun": "174 passed, two timeout failures from concurrent static build and asset export; unchanged deadlines passed on serial rerun"
+      },
+      "productionBuild": "passed",
+      "smokeSim": "3 passed",
+      "smokeBrowser": "22 passed (headless, 2 workers)",
+      "E2E_PORT": 3345,
+      "headless": true
+    }
+  }
 }

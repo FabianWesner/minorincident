@@ -1,4 +1,4 @@
-import { Group, Mesh, MeshLambertNodeMaterial, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
+import { Group, Mesh, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { KTX2Loader } from "three/addons/loaders/KTX2Loader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -11,6 +11,7 @@ import { AssetRegistry } from "./registry";
 import { atLeast } from "./types";
 import type { AssetQuality } from './types';
 import { dinerSign } from '../render/DinerSign';
+import { attribute } from 'three/tsl';
 import { staticBatch } from './staticBatch';
 // E10's semantic building IDs predate the accepted production inventory.
 const productionIds: Record<string, string> = {
@@ -28,7 +29,7 @@ export class DistrictAssets {
   private readonly assets: AssetRegistry;
   private readonly ktx?: KTX2Loader;
   constructor(private readonly materials: Materials, renderer?: WebGPURenderer) {
-    this.assets = new AssetRegistry((event) => console.info(JSON.stringify(event)), { renderer });
+    this.assets = new AssetRegistry((event) => console.info(JSON.stringify(event)), { renderer, materials });
     if (renderer) {
       this.ktx = new KTX2Loader().setTranscoderPath('/assets/basis/').detectSupport(renderer);
       this.loader.setKTX2Loader(this.ktx);
@@ -58,7 +59,7 @@ export class DistrictAssets {
                   );
                 const emi = m.name.startsWith("emi_");
                 m.dispose();
-                return this.materials.get(
+                return this.materials.world(
                   emi && !lit ? "backpackTeal" : token,
                   emi && lit ? 2 : 0,
                 );
@@ -108,8 +109,8 @@ export class DistrictAssets {
         const root = source.clone(true);
         root.traverse(node => {
           if (!(node instanceof Mesh) || node.name !== 'window-light') return;
-          const material = new MeshLambertNodeMaterial({ vertexColors: true });
-          material.name = 'emi_static-windows'; material.color.setScalar(.08);
+          const material = this.materials.shaded(this.materials.sample(attribute('_palette', 'float')).mul(.08));
+          material.name = 'emi_static-windows';
           this.batchMaterials.add(material); node.material = material;
         });
         return root;

@@ -65,6 +65,7 @@ export class DistrictView extends Group {
     readonly phase: ReturnType<typeof windPhase>,
     private readonly grassMaterial: ReturnType<typeof Grass.material>,
     private low = false,
+    private readonly instanceCapacity?: number,
   ) {
     super();
     this.name = "sunset-grove";
@@ -136,7 +137,10 @@ export class DistrictView extends Group {
           [...references].map(async ([key, refs]) => {
             const [id, power] = key.split(":");
             const prototypes = await Promise.all(['lod1', 'lod1', 'lod2'].map(lod => this.registry.asset(id, power === 'true', lod as 'lod0' | 'lod1' | 'lod2')));
-            const hero = new InstancedGroup(prototypes[0], refs.slice()), near = new InstancedGroup(prototypes[1], refs.slice()), far = new InstancedGroup(prototypes[2], refs.slice());
+            // L1 uses the shared vertex-attribute instancing path; live counts stay
+            // unchanged while shader code no longer depends on placement capacity.
+            const capacity = Math.max(refs.length, this.instanceCapacity ?? refs.length);
+            const hero = new InstancedGroup(prototypes[0], refs.slice(), capacity), near = new InstancedGroup(prototypes[1], refs.slice(), capacity), far = new InstancedGroup(prototypes[2], refs.slice(), capacity);
             // Distant low-tier props keep their shaded production art without a shadow draw.
             if (this.low) far.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
             for (const batch of [hero, near, far]) {
@@ -292,8 +296,7 @@ export class DistrictView extends Group {
         this.bounds.center.set(x, ref.position.y + height / 2, z); this.bounds.radius = radius;
         if (!this.frustum.intersectsSphere(this.bounds)) continue;
         const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
-        // Low-tier scenery reaches LOD2 sooner to retain its triangle budget.
-        (distance > (this.low ? 18 : 30) ? far : !this.low && distance <= 12 ? hero : near).references.push(ref);
+        (distance > (this.low ? 16 : 30) || this.low && worldAssets[entry.id].category === 'prop' ? far : !this.low && distance <= 12 ? hero : near).references.push(ref);
       }
       for (const batch of [hero, near, far]) {
         batch.visible = batch.references.length > 0;
@@ -309,7 +312,7 @@ export class DistrictView extends Group {
     const prototype = await this.registry.asset(entry.id, entry.lit, 'lod0');
     if (this.disposed) return;
     // Allocate full placement capacity, then retain only currently visible refs.
-    const replacement = new InstancedGroup(prototype, entry.refs.slice()), old = entry.hero;
+    const replacement = new InstancedGroup(prototype, entry.refs.slice(), entry.hero.capacity), old = entry.hero;
     replacement.references.splice(0, replacement.references.length, ...old.references);
     replacement.visible = old.visible; replacement.name = old.name;
     for (const child of replacement.children) if (child instanceof InstancedMesh) child.count = replacement.references.length;
@@ -319,6 +322,11 @@ export class DistrictView extends Group {
     replacement.traverse(node => { if (node instanceof Mesh && node.name === 'window-light') this.windows.push(node); });
     this.batches[this.batches.indexOf(old)] = replacement; entry.hero = replacement; entry.loaded = true;
     old.removeFromParent(); old.dispose();
+  }
+  /** L1's entire route is resident before start, including detailed close-view prototypes. */
+  async prepare(): Promise<void> {
+    await this.ready();
+    await Promise.all(this.lodBatches.filter(entry => !entry.loaded).map(entry => this.loadHero(entry)));
   }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   /** Probe-only mask; render normal view immediately afterwards so it cannot leak across frames. */

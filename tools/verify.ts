@@ -8,16 +8,21 @@ const output = `test-results/epics/${target}`;
 mkdirSync(output, { recursive: true });
 const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
-  // Browser slots are shared machine-wide; each worktree owns its build output.
   ['npm', 'run', 'build'],
-  // Keep timing fixtures sequential without occupying a browser slot.
-  ['npx', 'vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
+  // Timing fixtures must not compete with other Vitest workers on the shared Mac.
+  [...(target === 'E18' ? ['sh', 'tools/e2e-lock.sh'] : []), 'npx', 'vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
   ...(target === 'E10'
     ? [
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E10-AC06', '--workers=2'],
       // Native GPU load timing stays headless: run once, after the other browser checks.
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/district-load.spec.ts', '--grep', '@E10-AC06', '--project=chromium', '--workers=2'],
     ]
+    : target === 'E19'
+      ? [
+        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'M1-22', '--workers=2'],
+        // Transition frame budgets must not compete with another context loading GPU programs.
+        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/l1-transitions.spec.ts', '--project=chromium', '--workers=1'],
+      ]
     : target === 'E18'
       ? [
         ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E18-AC08|@E18-AC09|WebGPU low tier parity', '--workers=2'],
