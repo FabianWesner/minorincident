@@ -131,6 +131,7 @@ test('T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; 
 });
 test('@E16 a canceled first alert keeps the streamed score aligned with the calm director', async ({ page }) => {
     await start(page, 'survivor');
+    await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L1'); a.missions.begin(); a.pause(); await a.audio.unlock(); });
     await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.streamed.state)).toBe('calm');
     await page.evaluate(() => {
         const a = window.__SS__!;
