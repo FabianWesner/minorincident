@@ -33,41 +33,37 @@ for(const weapon of ['bat','crowbar','machete'])test(`@E19 slice ${weapon} picku
   m.completeObjective('store-fight');m.restartSlice();expect(world.entities.get(1)!.weapons).toBeUndefined();expect(world.infected!.active).toHaveLength(0);expect(m.state.steps.breakfast.status).toBe('active');
 });
 
-test('@E19 @E19-AC05 evade-only reaches the hardware checkpoint on 20 seeds via movement',async()=>{
-  for(let seed=1;seed<=20;seed++){
-    const m=await start(seed);
-    const walk=(x:number,z:number)=>{
-      for(let tick=0;tick<1400;tick++){
-        const p=world.entities.get(1)!.transform,dx=x-p.x,dz=z-p.z,d=Math.hypot(dx,dz);
-        if(d<.7){world.clearInput();return;}
-        world.setInput({move:{x:dx/d*Math.min(1,d),z:dz/d*Math.min(1,d)}});world.update();
-      }
-      throw new Error(`evade seed ${seed} stalled: ${JSON.stringify(world.entities.get(1)!.transform)}`);
-    };
-    walk(-14,-4);await walk(0,0);walk(42,0);walk(42,-6.5);expect(m.state.steps.escape.status).toBe('active');
-    walk(42,0);walk(70,0);walk(70,-7);expect(m.state.checkpoint).toBe('melee');expect(m.state.stats.deaths).toBe(0);
-    expect(world.events.events().some(e=>e.type==='combat.attack')).toBe(false);world.dispose();
-  }
+test.each(Array.from({ length: 20 }, (_, i) => i + 1))('@E19 @E19-AC05 evade-only reaches the hardware checkpoint via movement (seed %i)', async (seed) => {
+  const m=await start(seed);
+  const walk=(x:number,z:number)=>{
+    for(let tick=0;tick<1400;tick++){
+      const p=world.entities.get(1)!.transform,dx=x-p.x,dz=z-p.z,d=Math.hypot(dx,dz);
+      if(d<.7){world.clearInput();return;}
+      world.setInput({move:{x:dx/d*Math.min(1,d),z:dz/d*Math.min(1,d)}});world.update();
+    }
+    throw new Error(`evade seed ${seed} stalled: ${JSON.stringify(world.entities.get(1)!.transform)}`);
+  };
+  walk(-14,-4);await walk(0,0);walk(42,0);walk(42,-6.5);expect(m.state.steps.escape.status).toBe('active');
+  walk(42,0);walk(70,0);walk(70,-7);expect(m.state.checkpoint).toBe('melee');expect(m.state.stats.deaths).toBe(0);
+  expect(world.events.events().some(e=>e.type==='combat.attack')).toBe(false);
 });
 
-test('@E19 slice complete policy finishes 20 seeds with normal movement, pickup and combat',async()=>{
-  for(let seed=1;seed<=20;seed++){
-    const m=await start(seed);
-    const walk=(x:number,z:number)=>{
-      for(let i=0;i<1500;i++){
-        const p=world.entities.get(1)!.transform,d=Math.hypot(x-p.x,z-p.z);if(d<.7){world.clearInput();return;}
-        world.setInput({move:{x:(x-p.x)/d*Math.min(1,d),z:(z-p.z)/d*Math.min(1,d)}});world.update();
-      }throw new Error(`seed ${seed}: route blocked`);
-    };
-    walk(-14,-4);await walk(0,0);walk(42,0);walk(42,-6.5);walk(42,0);walk(70,0);walk(70,-7);
-    world.clearInput();world.setInput({interact:true});world.update();world.clearInput();
-    for(let i=0;i<6000&&m.state.phase==='playing';i++){
-      const p=world.entities.get(1)!.transform,target=world.infected!.active.filter(e=>e.health.current>0).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];
-      if(target)world.setInput({attackTarget:{id:target.id,side:'LEFT'},left:{down:false,held:true,up:false}});
-      world.update();
-    }
-    expect(m.state.phase,`seed ${seed}: ${JSON.stringify({p:world.entities.get(1)!.transform,hp:world.entities.get(1)!.health,steps:m.state.steps,actors:world.infected!.active.map(e=>({id:e.id,p:e.transform,hp:e.health.current,state:e.infected!.state}))})}`).toBe('result');expect(m.state.stats.kills).toBe(5);expect(m.state.stats.deaths).toBeLessThanOrEqual(2);world.dispose();
+test.each(Array.from({ length: 20 }, (_, i) => i + 1))('@E19 slice complete policy finishes with normal movement, pickup and combat (seed %i)', async (seed) => {
+  const m=await start(seed);
+  const walk=(x:number,z:number)=>{
+    for(let i=0;i<1500;i++){
+      const p=world.entities.get(1)!.transform,d=Math.hypot(x-p.x,z-p.z);if(d<.7){world.clearInput();return;}
+      world.setInput({move:{x:(x-p.x)/d*Math.min(1,d),z:(z-p.z)/d*Math.min(1,d)}});world.update();
+    }throw new Error(`seed ${seed}: route blocked`);
+  };
+  walk(-14,-4);await walk(0,0);walk(42,0);walk(42,-6.5);walk(42,0);walk(70,0);walk(70,-7);
+  world.clearInput();world.setInput({interact:true});world.update();world.clearInput();
+  for(let i=0;i<6000&&m.state.phase==='playing';i++){
+    const p=world.entities.get(1)!.transform,target=world.infected!.active.filter(e=>e.health.current>0).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];
+    if(target)world.setInput({attackTarget:{id:target.id,side:'LEFT'},left:{down:false,held:true,up:false}});
+    world.update();
   }
+  expect(m.state.phase,`seed ${seed}: ${JSON.stringify({p:world.entities.get(1)!.transform,hp:world.entities.get(1)!.health,steps:m.state.steps,actors:world.infected!.active.map(e=>({id:e.id,p:e.transform,hp:e.health.current,state:e.infected!.state}))})}`).toBe('result');expect(m.state.stats.kills).toBe(5);expect(m.state.stats.deaths).toBeLessThanOrEqual(2);
 });
 
 
@@ -125,7 +121,7 @@ test('@E19 loaded ground edges stop direct movement at both outer and missing-di
     world.clearInput(); world.setInput({moveTarget:{x:target[0],z:target[1]}}); world.update();
     expect(world.controls.moveTarget).toEqual({x:clamped[0],z:clamped[1]});
   }
-});
+}, 60_000);
 
 
 test('@E19 @E19-AC06 M1-10 entrant walks offscreen, bites three visible customers, then chases; checkpoint keeps staging', async () => {
