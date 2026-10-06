@@ -1,0 +1,1285 @@
+{
+  "issue": "M1-25",
+  "units": "metres, source GLB scale; world excursions and strides scale together",
+  "method": "240 intervals per cycle; hip world Y range; ankle X range during first 37.5% of cycle after adding actual full-cycle travel. Regression separately checks both feet in XYZ through entire 60% walk/50% run stance, <=2 mm.",
+  "rigs": 17,
+  "before": [
+    {
+      "id": "char.survivor-female",
+      "clip": "walk",
+      "height": 1.4101897943764925,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.036146918936269035,
+      "stanceVertical": 0.004742540771125542
+    },
+    {
+      "id": "char.survivor-female",
+      "clip": "run",
+      "height": 1.4101897943764925,
+      "hipExcursion": 0.11991516520315604,
+      "stanceSlide": 0.059683515823099276,
+      "stanceVertical": 0.007240652870396214
+    },
+    {
+      "id": "char.survivor-female",
+      "clip": "npc-walk",
+      "height": 1.4101897943764925,
+      "hipExcursion": 0.03698927562074672,
+      "stanceSlide": 0.041029021838794255,
+      "stanceVertical": 0.005267600064552402
+    },
+    {
+      "id": "char.survivor-female",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4101897943764925,
+      "hipExcursion": 0.0369978575724752,
+      "stanceSlide": 0.047083280180070936,
+      "stanceVertical": 0.005186556290169231
+    },
+    {
+      "id": "char.survivor-male",
+      "clip": "walk",
+      "height": 1.3985192775726318,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.034622149798198915,
+      "stanceVertical": 0.014314304554976648
+    },
+    {
+      "id": "char.survivor-male",
+      "clip": "run",
+      "height": 1.3985192775726318,
+      "hipExcursion": 0.11991516520315593,
+      "stanceSlide": 0.05086774005133943,
+      "stanceVertical": 0.019253651015379902
+    },
+    {
+      "id": "char.survivor-male",
+      "clip": "npc-walk",
+      "height": 1.3985192775726318,
+      "hipExcursion": 0.03698927562074672,
+      "stanceSlide": 0.03359202631547667,
+      "stanceVertical": 0.014249776314331192
+    },
+    {
+      "id": "char.survivor-male",
+      "clip": "npc-walk-relaxed",
+      "height": 1.3985192775726318,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.03891103001448812,
+      "stanceVertical": 0.014189040491088933
+    },
+    {
+      "id": "npc.brother",
+      "clip": "walk",
+      "height": 1.42654150724411,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.0701531080044869,
+      "stanceVertical": 0.01001878793956873
+    },
+    {
+      "id": "npc.brother",
+      "clip": "run",
+      "height": 1.42654150724411,
+      "hipExcursion": 0.11991516520315604,
+      "stanceSlide": 0.07720363406979702,
+      "stanceVertical": 0.015772030530675857
+    },
+    {
+      "id": "npc.brother",
+      "clip": "npc-walk",
+      "height": 1.42654150724411,
+      "hipExcursion": 0.03698927562074672,
+      "stanceSlide": 0.06552773466965653,
+      "stanceVertical": 0.010261995773184901
+    },
+    {
+      "id": "npc.brother",
+      "clip": "npc-walk-relaxed",
+      "height": 1.42654150724411,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.0603339352883889,
+      "stanceVertical": 0.010359759575926802
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "clip": "walk",
+      "height": 1.3990000486373901,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.05591151718001777,
+      "stanceVertical": 0.005641424967384456
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "clip": "run",
+      "height": 1.3990000486373901,
+      "hipExcursion": 0.11991516520315604,
+      "stanceSlide": 0.06588107061455784,
+      "stanceVertical": 0.015345096839520594
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "clip": "npc-walk",
+      "height": 1.3990000486373901,
+      "hipExcursion": 0.03698927562074672,
+      "stanceSlide": 0.0513072462548837,
+      "stanceVertical": 0.005682412353881949
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "clip": "npc-walk-relaxed",
+      "height": 1.3990000486373901,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.045998428295739274,
+      "stanceVertical": 0.0053996525894131064
+    },
+    {
+      "id": "npc.civilian-kid",
+      "clip": "walk",
+      "height": 1.4744024276733398,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.03444927013741131,
+      "stanceVertical": 0.005661558856998872
+    },
+    {
+      "id": "npc.civilian-kid",
+      "clip": "run",
+      "height": 1.4744024276733398,
+      "hipExcursion": 0.11991516520315604,
+      "stanceSlide": 0.04951784919092489,
+      "stanceVertical": 0.008492289086405619
+    },
+    {
+      "id": "npc.civilian-kid",
+      "clip": "npc-walk",
+      "height": 1.4744024276733398,
+      "hipExcursion": 0.03698927562074672,
+      "stanceSlide": 0.03343983589216129,
+      "stanceVertical": 0.005592598284605205
+    },
+    {
+      "id": "npc.civilian-kid",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4744024276733398,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.03519418865887036,
+      "stanceVertical": 0.005492767965733197
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "clip": "walk",
+      "height": 1.4316673297435045,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.06054593831736976,
+      "stanceVertical": 0.006475332509862514
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "clip": "run",
+      "height": 1.4316673297435045,
+      "hipExcursion": 0.11991516520315593,
+      "stanceSlide": 0.07273604357396826,
+      "stanceVertical": 0.017505199001383837
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "clip": "npc-walk",
+      "height": 1.4316673297435045,
+      "hipExcursion": 0.03698927562074672,
+      "stanceSlide": 0.05591027843665883,
+      "stanceVertical": 0.006521405931146529
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4316673297435045,
+      "hipExcursion": 0.0369978575724752,
+      "stanceSlide": 0.05083261394145788,
+      "stanceVertical": 0.006275910310417937
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "clip": "walk",
+      "height": 1.4376751221716404,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.036485298222661944,
+      "stanceVertical": 0.00955622997624378
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "clip": "run",
+      "height": 1.4376751221716404,
+      "hipExcursion": 0.11991516520315593,
+      "stanceSlide": 0.05082627422308211,
+      "stanceVertical": 0.012246858940528432
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "clip": "npc-walk",
+      "height": 1.4376751221716404,
+      "hipExcursion": 0.03698927562074672,
+      "stanceSlide": 0.03601571131379605,
+      "stanceVertical": 0.009512657563852278
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4376751221716404,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.03703032181483501,
+      "stanceVertical": 0.009475723538430958
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "clip": "walk",
+      "height": 1.4140521343797445,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.0370702361932862,
+      "stanceVertical": 0.03669204616399624
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "clip": "run",
+      "height": 1.4140521343797445,
+      "hipExcursion": 0.11991516520315604,
+      "stanceSlide": 0.08276182702478596,
+      "stanceVertical": 0.07600499894249294
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "clip": "npc-walk",
+      "height": 1.4140521343797445,
+      "hipExcursion": 0.03698927562074672,
+      "stanceSlide": 0.043124017294925876,
+      "stanceVertical": 0.037056058324791946
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4140521343797445,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.050592418574298414,
+      "stanceVertical": 0.03734793875785575
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "clip": "walk",
+      "height": 1.4000000953674316,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.03491799689476405,
+      "stanceVertical": 0.00551163672217006
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "clip": "run",
+      "height": 1.4000000953674316,
+      "hipExcursion": 0.11991516520315604,
+      "stanceSlide": 0.0610108197637117,
+      "stanceVertical": 0.013594846549497719
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "clip": "npc-walk",
+      "height": 1.4000000953674316,
+      "hipExcursion": 0.03698927562074661,
+      "stanceSlide": 0.04034672591344443,
+      "stanceVertical": 0.005446193808211847
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4000000953674316,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.04673789147333879,
+      "stanceVertical": 0.005321660396054084
+    },
+    {
+      "id": "npc.firefighter-alive",
+      "clip": "walk",
+      "height": 1.4557309746742249,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.04886261631122649,
+      "stanceVertical": 0.011754910873123886
+    },
+    {
+      "id": "npc.firefighter-alive",
+      "clip": "run",
+      "height": 1.4557309746742249,
+      "hipExcursion": 0.11991516520315604,
+      "stanceSlide": 0.053195359731201486,
+      "stanceVertical": 0.018036445980320392
+    },
+    {
+      "id": "npc.firefighter-alive",
+      "clip": "npc-walk",
+      "height": 1.4557309746742249,
+      "hipExcursion": 0.03698927562074661,
+      "stanceSlide": 0.04501078092043512,
+      "stanceVertical": 0.011890349994634009
+    },
+    {
+      "id": "npc.firefighter-alive",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4557309746742249,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.03907869703472086,
+      "stanceVertical": 0.011990604012247691
+    },
+    {
+      "id": "npc.helicopter-pilot",
+      "clip": "walk",
+      "height": 1.413715124130249,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.05023652767315062,
+      "stanceVertical": 0.009147461771279064
+    },
+    {
+      "id": "npc.helicopter-pilot",
+      "clip": "run",
+      "height": 1.413715124130249,
+      "hipExcursion": 0.11991516520315604,
+      "stanceSlide": 0.0532828450098467,
+      "stanceVertical": 0.013473865226602155
+    },
+    {
+      "id": "npc.helicopter-pilot",
+      "clip": "npc-walk",
+      "height": 1.413715124130249,
+      "hipExcursion": 0.03698927562074661,
+      "stanceSlide": 0.0462816797529903,
+      "stanceVertical": 0.009190830793884025
+    },
+    {
+      "id": "npc.helicopter-pilot",
+      "clip": "npc-walk-relaxed",
+      "height": 1.413715124130249,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.040063890601097996,
+      "stanceVertical": 0.009208644958534462
+    },
+    {
+      "id": "npc.mrs-alvarez",
+      "clip": "walk",
+      "height": 1.4490698426961899,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.055482321269013035,
+      "stanceVertical": 0.006389393888018541
+    },
+    {
+      "id": "npc.mrs-alvarez",
+      "clip": "run",
+      "height": 1.4490698426961899,
+      "hipExcursion": 0.11991516520315604,
+      "stanceSlide": 0.06109052646644403,
+      "stanceVertical": 0.01048793807888826
+    },
+    {
+      "id": "npc.mrs-alvarez",
+      "clip": "npc-walk",
+      "height": 1.4490698426961899,
+      "hipExcursion": 0.03698927562074672,
+      "stanceSlide": 0.05114931044827814,
+      "stanceVertical": 0.006518324723454871
+    },
+    {
+      "id": "npc.mrs-alvarez",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4490698426961899,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.04541778133931826,
+      "stanceVertical": 0.006396362507471609
+    },
+    {
+      "id": "npc.national-guard",
+      "clip": "walk",
+      "height": 1.4286228399723768,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.03710536837432804,
+      "stanceVertical": 0.01078519959617269
+    },
+    {
+      "id": "npc.national-guard",
+      "clip": "run",
+      "height": 1.4286228399723768,
+      "hipExcursion": 0.11991516520315604,
+      "stanceSlide": 0.052010428230464756,
+      "stanceVertical": 0.02259349434085381
+    },
+    {
+      "id": "npc.national-guard",
+      "clip": "npc-walk",
+      "height": 1.4286228399723768,
+      "hipExcursion": 0.03698927562074672,
+      "stanceSlide": 0.03687515520943885,
+      "stanceVertical": 0.010827369533959269
+    },
+    {
+      "id": "npc.national-guard",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4286228399723768,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.03812938838258184,
+      "stanceVertical": 0.010839326809683275
+    },
+    {
+      "id": "npc.paramedic",
+      "clip": "walk",
+      "height": 1.431420560926199,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.03496529276368843,
+      "stanceVertical": 0.0024225933108657505
+    },
+    {
+      "id": "npc.paramedic",
+      "clip": "run",
+      "height": 1.431420560926199,
+      "hipExcursion": 0.11991516520315604,
+      "stanceSlide": 0.049843910766665944,
+      "stanceVertical": 0.007043282788651267
+    },
+    {
+      "id": "npc.paramedic",
+      "clip": "npc-walk",
+      "height": 1.431420560926199,
+      "hipExcursion": 0.03698927562074672,
+      "stanceSlide": 0.033925050948315605,
+      "stanceVertical": 0.00263599583269708
+    },
+    {
+      "id": "npc.paramedic",
+      "clip": "npc-walk-relaxed",
+      "height": 1.431420560926199,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.03512511748587066,
+      "stanceVertical": 0.002006462999680436
+    },
+    {
+      "id": "npc.patient-zero-courier",
+      "clip": "walk",
+      "height": 1.414486289024353,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.04830420701476337,
+      "stanceVertical": 0.013287337613204026
+    },
+    {
+      "id": "npc.patient-zero-courier",
+      "clip": "run",
+      "height": 1.414486289024353,
+      "hipExcursion": 0.11991516520315593,
+      "stanceSlide": 0.08360578555687342,
+      "stanceVertical": 0.031079205680715427
+    },
+    {
+      "id": "npc.patient-zero-courier",
+      "clip": "npc-walk",
+      "height": 1.414486289024353,
+      "hipExcursion": 0.03698927562074661,
+      "stanceSlide": 0.05425888276143806,
+      "stanceVertical": 0.01321985552007443
+    },
+    {
+      "id": "npc.patient-zero-courier",
+      "clip": "npc-walk-relaxed",
+      "height": 1.414486289024353,
+      "hipExcursion": 0.0369978575724752,
+      "stanceSlide": 0.06094565467745017,
+      "stanceVertical": 0.013149697022723367
+    },
+    {
+      "id": "npc.police-officer",
+      "clip": "walk",
+      "height": 1.4179394245147705,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.03710536837432804,
+      "stanceVertical": 0.01078519959617269
+    },
+    {
+      "id": "npc.police-officer",
+      "clip": "run",
+      "height": 1.4179394245147705,
+      "hipExcursion": 0.11991516520315604,
+      "stanceSlide": 0.052010428230464756,
+      "stanceVertical": 0.02259349434085381
+    },
+    {
+      "id": "npc.police-officer",
+      "clip": "npc-walk",
+      "height": 1.4179394245147705,
+      "hipExcursion": 0.03698927562074672,
+      "stanceSlide": 0.03687515520943885,
+      "stanceVertical": 0.010827369533959269
+    },
+    {
+      "id": "npc.police-officer",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4179394245147705,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.03812938838258184,
+      "stanceVertical": 0.010839326809683275
+    },
+    {
+      "id": "npc.survivor-group",
+      "clip": "walk",
+      "height": 1.450939055532217,
+      "hipExcursion": 0.036992176559516254,
+      "stanceSlide": 0.043902839466420956,
+      "stanceVertical": 0.007278797537326326
+    },
+    {
+      "id": "npc.survivor-group",
+      "clip": "run",
+      "height": 1.450939055532217,
+      "hipExcursion": 0.11991516520315604,
+      "stanceSlide": 0.05125563652557891,
+      "stanceVertical": 0.018204840894733537
+    },
+    {
+      "id": "npc.survivor-group",
+      "clip": "npc-walk",
+      "height": 1.450939055532217,
+      "hipExcursion": 0.03698927562074661,
+      "stanceSlide": 0.039916769065510116,
+      "stanceVertical": 0.0073871823190625185
+    },
+    {
+      "id": "npc.survivor-group",
+      "clip": "npc-walk-relaxed",
+      "height": 1.450939055532217,
+      "hipExcursion": 0.03699785757247531,
+      "stanceSlide": 0.036947833107140254,
+      "stanceVertical": 0.007153997208576179
+    }
+  ],
+  "after": [
+    {
+      "id": "char.survivor-female",
+      "clip": "walk",
+      "height": 1.4101897943764925,
+      "hipExcursion": 0.02797302097397225,
+      "stanceSlide": 3.219493529071915e-05,
+      "stanceVertical": 6.954880025900056e-05
+    },
+    {
+      "id": "char.survivor-female",
+      "clip": "run",
+      "height": 1.4101897943764925,
+      "hipExcursion": 0.044925602014992294,
+      "stanceSlide": 8.167081445575874e-05,
+      "stanceVertical": 0.00015998063126765327
+    },
+    {
+      "id": "char.survivor-female",
+      "clip": "npc-walk",
+      "height": 1.4101897943764925,
+      "hipExcursion": 0.0279840797701415,
+      "stanceSlide": 2.653739963576207e-05,
+      "stanceVertical": 5.7810960098270137e-05
+    },
+    {
+      "id": "char.survivor-female",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4101897943764925,
+      "hipExcursion": 0.02792812218224161,
+      "stanceSlide": 2.1219341892197985e-05,
+      "stanceVertical": 4.799170652158846e-05
+    },
+    {
+      "id": "char.survivor-male",
+      "clip": "walk",
+      "height": 1.3985192775726318,
+      "hipExcursion": 0.02797302097397225,
+      "stanceSlide": 3.855731502822035e-05,
+      "stanceVertical": 7.716692661199898e-05
+    },
+    {
+      "id": "char.survivor-male",
+      "clip": "run",
+      "height": 1.3985192775726318,
+      "hipExcursion": 0.04492563181731474,
+      "stanceSlide": 9.702387051169215e-05,
+      "stanceVertical": 0.00017470933442534364
+    },
+    {
+      "id": "char.survivor-male",
+      "clip": "npc-walk",
+      "height": 1.3985192775726318,
+      "hipExcursion": 0.0279840797701415,
+      "stanceSlide": 3.194263778222295e-05,
+      "stanceVertical": 6.415952287452953e-05
+    },
+    {
+      "id": "char.survivor-male",
+      "clip": "npc-walk-relaxed",
+      "height": 1.3985192775726318,
+      "hipExcursion": 0.02792812218224172,
+      "stanceSlide": 2.560366083154131e-05,
+      "stanceVertical": 5.3296481985209976e-05
+    },
+    {
+      "id": "npc.brother",
+      "clip": "walk",
+      "height": 1.42654150724411,
+      "hipExcursion": 0.027973019986113012,
+      "stanceSlide": 6.3464021922921e-05,
+      "stanceVertical": 0.00010073253437975493
+    },
+    {
+      "id": "npc.brother",
+      "clip": "run",
+      "height": 1.42654150724411,
+      "hipExcursion": 0.04492560201499224,
+      "stanceSlide": 0.00016179296270396604,
+      "stanceVertical": 0.00021707652308722292
+    },
+    {
+      "id": "npc.brother",
+      "clip": "npc-walk",
+      "height": 1.42654150724411,
+      "hipExcursion": 0.0279840797701415,
+      "stanceSlide": 5.2602165216963925e-05,
+      "stanceVertical": 8.381951047184422e-05
+    },
+    {
+      "id": "npc.brother",
+      "clip": "npc-walk-relaxed",
+      "height": 1.42654150724411,
+      "hipExcursion": 0.02792812218224172,
+      "stanceSlide": 4.2346820735894575e-05,
+      "stanceVertical": 6.964117296337502e-05
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "clip": "walk",
+      "height": 1.3990000486373901,
+      "hipExcursion": 0.027973020973972196,
+      "stanceSlide": 5.634081716504591e-05,
+      "stanceVertical": 9.014075364746632e-05
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "clip": "run",
+      "height": 1.3990000486373901,
+      "hipExcursion": 0.04492560201499224,
+      "stanceSlide": 0.00014011427347265792,
+      "stanceVertical": 0.00019324511343180029
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "clip": "npc-walk",
+      "height": 1.3990000486373901,
+      "hipExcursion": 0.027984079770141446,
+      "stanceSlide": 4.6915290156102074e-05,
+      "stanceVertical": 7.502876598566854e-05
+    },
+    {
+      "id": "npc.civilian-elderly",
+      "clip": "npc-walk-relaxed",
+      "height": 1.3990000486373901,
+      "hipExcursion": 0.02792812218224172,
+      "stanceSlide": 3.8073146724049156e-05,
+      "stanceVertical": 6.234870535820614e-05
+    },
+    {
+      "id": "npc.civilian-kid",
+      "clip": "walk",
+      "height": 1.4744024276733398,
+      "hipExcursion": 0.02797302097397225,
+      "stanceSlide": 3.692381398723299e-05,
+      "stanceVertical": 7.553445126556868e-05
+    },
+    {
+      "id": "npc.civilian-kid",
+      "clip": "run",
+      "height": 1.4744024276733398,
+      "hipExcursion": 0.044925631817314626,
+      "stanceSlide": 9.321604621104207e-05,
+      "stanceVertical": 0.00017149047212253188
+    },
+    {
+      "id": "npc.civilian-kid",
+      "clip": "npc-walk",
+      "height": 1.4744024276733398,
+      "hipExcursion": 0.0279840797701415,
+      "stanceSlide": 3.05586083820808e-05,
+      "stanceVertical": 6.275781260667301e-05
+    },
+    {
+      "id": "npc.civilian-kid",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4744024276733398,
+      "hipExcursion": 0.02792812218224161,
+      "stanceSlide": 2.444014016084184e-05,
+      "stanceVertical": 5.211918436726082e-05
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "clip": "walk",
+      "height": 1.4316673297435045,
+      "hipExcursion": 0.027973020973972196,
+      "stanceSlide": 5.956855912858661e-05,
+      "stanceVertical": 9.142286038874015e-05
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "clip": "run",
+      "height": 1.4316673297435045,
+      "hipExcursion": 0.044925602014992294,
+      "stanceSlide": 0.00014736315706570524,
+      "stanceVertical": 0.00019349613415051148
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "clip": "npc-walk",
+      "height": 1.4316673297435045,
+      "hipExcursion": 0.0279840797701415,
+      "stanceSlide": 4.968616285733196e-05,
+      "stanceVertical": 7.611086536929434e-05
+    },
+    {
+      "id": "npc.civilian-man-a",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4316673297435045,
+      "hipExcursion": 0.027928122182241666,
+      "stanceSlide": 4.041086248690595e-05,
+      "stanceVertical": 6.325849757796154e-05
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "clip": "walk",
+      "height": 1.4376751221716404,
+      "hipExcursion": 0.02797302097397225,
+      "stanceSlide": 4.431296798401707e-05,
+      "stanceVertical": 8.447551873849712e-05
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "clip": "run",
+      "height": 1.4376751221716404,
+      "hipExcursion": 0.044925602014992294,
+      "stanceSlide": 0.0001121390020370483,
+      "stanceVertical": 0.00018935021421837006
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "clip": "npc-walk",
+      "height": 1.4376751221716404,
+      "hipExcursion": 0.0279840797701415,
+      "stanceSlide": 3.658895224117886e-05,
+      "stanceVertical": 7.025813717367879e-05
+    },
+    {
+      "id": "npc.civilian-man-b",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4376751221716404,
+      "hipExcursion": 0.027928122182241666,
+      "stanceSlide": 2.9344787873475386e-05,
+      "stanceVertical": 5.836121833921459e-05
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "clip": "walk",
+      "height": 1.4140521343797445,
+      "hipExcursion": 0.02797302097397225,
+      "stanceSlide": 2.639370844270683e-05,
+      "stanceVertical": 6.899082891689834e-05
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "clip": "run",
+      "height": 1.4140521343797445,
+      "hipExcursion": 0.04492560201499218,
+      "stanceSlide": 8.923262763432804e-05,
+      "stanceVertical": 0.00016608102473603115
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "clip": "npc-walk",
+      "height": 1.4140521343797445,
+      "hipExcursion": 0.027984079770141612,
+      "stanceSlide": 2.1607421372082936e-05,
+      "stanceVertical": 5.728583951161714e-05
+    },
+    {
+      "id": "npc.civilian-woman-a",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4140521343797445,
+      "hipExcursion": 0.02792812218224172,
+      "stanceSlide": 1.586366067352074e-05,
+      "stanceVertical": 4.751867200089577e-05
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "clip": "walk",
+      "height": 1.4000000953674316,
+      "hipExcursion": 0.02797302097397225,
+      "stanceSlide": 3.244374224214974e-05,
+      "stanceVertical": 7.118954694973478e-05
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "clip": "run",
+      "height": 1.4000000953674316,
+      "hipExcursion": 0.044925602014992294,
+      "stanceSlide": 8.216818800971248e-05,
+      "stanceVertical": 0.00016396002317414782
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "clip": "npc-walk",
+      "height": 1.4000000953674316,
+      "hipExcursion": 0.02798407977014139,
+      "stanceSlide": 2.6644476809667417e-05,
+      "stanceVertical": 5.915386970162251e-05
+    },
+    {
+      "id": "npc.civilian-woman-b",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4000000953674316,
+      "hipExcursion": 0.02792812218224172,
+      "stanceSlide": 2.1236885585529386e-05,
+      "stanceVertical": 4.9098442052808444e-05
+    },
+    {
+      "id": "npc.firefighter-alive",
+      "clip": "walk",
+      "height": 1.4557309746742249,
+      "hipExcursion": 0.02797302097397225,
+      "stanceSlide": 5.1954220933847495e-05,
+      "stanceVertical": 9.168489907154798e-05
+    },
+    {
+      "id": "npc.firefighter-alive",
+      "clip": "run",
+      "height": 1.4557309746742249,
+      "hipExcursion": 0.04492560201499224,
+      "stanceSlide": 0.00013074824523118256,
+      "stanceVertical": 0.000202226502123537
+    },
+    {
+      "id": "npc.firefighter-alive",
+      "clip": "npc-walk",
+      "height": 1.4557309746742249,
+      "hipExcursion": 0.0279840797701415,
+      "stanceSlide": 4.3015766641507636e-05,
+      "stanceVertical": 7.626485069611721e-05
+    },
+    {
+      "id": "npc.firefighter-alive",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4557309746742249,
+      "hipExcursion": 0.02792812218224172,
+      "stanceSlide": 3.46074719882461e-05,
+      "stanceVertical": 6.335965780598918e-05
+    },
+    {
+      "id": "npc.helicopter-pilot",
+      "clip": "walk",
+      "height": 1.413715124130249,
+      "hipExcursion": 0.027973020973972196,
+      "stanceSlide": 5.186104617210807e-05,
+      "stanceVertical": 9.153553766463873e-05
+    },
+    {
+      "id": "npc.helicopter-pilot",
+      "clip": "run",
+      "height": 1.413715124130249,
+      "hipExcursion": 0.04492560201499224,
+      "stanceSlide": 0.00013171051884225404,
+      "stanceVertical": 0.0002022321465407484
+    },
+    {
+      "id": "npc.helicopter-pilot",
+      "clip": "npc-walk",
+      "height": 1.413715124130249,
+      "hipExcursion": 0.027984079770141446,
+      "stanceSlide": 4.294489729900208e-05,
+      "stanceVertical": 7.617058917544495e-05
+    },
+    {
+      "id": "npc.helicopter-pilot",
+      "clip": "npc-walk-relaxed",
+      "height": 1.413715124130249,
+      "hipExcursion": 0.02792812218224172,
+      "stanceSlide": 3.448327657507022e-05,
+      "stanceVertical": 6.32950219030537e-05
+    },
+    {
+      "id": "npc.mrs-alvarez",
+      "clip": "walk",
+      "height": 1.4490698426961899,
+      "hipExcursion": 0.027973019986113068,
+      "stanceSlide": 5.669028091231931e-05,
+      "stanceVertical": 9.381049437542921e-05
+    },
+    {
+      "id": "npc.mrs-alvarez",
+      "clip": "run",
+      "height": 1.4490698426961899,
+      "hipExcursion": 0.044925602014992294,
+      "stanceSlide": 0.0001423637284449497,
+      "stanceVertical": 0.00020379773440415416
+    },
+    {
+      "id": "npc.mrs-alvarez",
+      "clip": "npc-walk",
+      "height": 1.4490698426961899,
+      "hipExcursion": 0.027984079770141446,
+      "stanceSlide": 4.706108032809242e-05,
+      "stanceVertical": 7.811153554238004e-05
+    },
+    {
+      "id": "npc.mrs-alvarez",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4490698426961899,
+      "hipExcursion": 0.027928122182241666,
+      "stanceSlide": 3.801122824942382e-05,
+      "stanceVertical": 6.490131498335105e-05
+    },
+    {
+      "id": "npc.national-guard",
+      "clip": "walk",
+      "height": 1.4286228399723768,
+      "hipExcursion": 0.02797302097397214,
+      "stanceSlide": 3.816678465878853e-05,
+      "stanceVertical": 8.172058354274925e-05
+    },
+    {
+      "id": "npc.national-guard",
+      "clip": "run",
+      "height": 1.4286228399723768,
+      "hipExcursion": 0.04492557221266996,
+      "stanceSlide": 9.731445802652061e-05,
+      "stanceVertical": 0.00018849817612962005
+    },
+    {
+      "id": "npc.national-guard",
+      "clip": "npc-walk",
+      "height": 1.4286228399723768,
+      "hipExcursion": 0.0279840797701415,
+      "stanceSlide": 3.048960124890643e-05,
+      "stanceVertical": 6.793272303803888e-05
+    },
+    {
+      "id": "npc.national-guard",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4286228399723768,
+      "hipExcursion": 0.02792812218224161,
+      "stanceSlide": 2.439401268056196e-05,
+      "stanceVertical": 5.641981363824211e-05
+    },
+    {
+      "id": "npc.paramedic",
+      "clip": "walk",
+      "height": 1.431420560926199,
+      "hipExcursion": 0.02797302097397225,
+      "stanceSlide": 3.758219664951046e-05,
+      "stanceVertical": 7.62083314878037e-05
+    },
+    {
+      "id": "npc.paramedic",
+      "clip": "run",
+      "height": 1.431420560926199,
+      "hipExcursion": 0.04492563181731474,
+      "stanceSlide": 9.582830470605819e-05,
+      "stanceVertical": 0.00017324658983458585
+    },
+    {
+      "id": "npc.paramedic",
+      "clip": "npc-walk",
+      "height": 1.431420560926199,
+      "hipExcursion": 0.02798407977014139,
+      "stanceSlide": 3.1116592519364605e-05,
+      "stanceVertical": 6.338303182282234e-05
+    },
+    {
+      "id": "npc.paramedic",
+      "clip": "npc-walk-relaxed",
+      "height": 1.431420560926199,
+      "hipExcursion": 0.02792812218224172,
+      "stanceSlide": 2.4886010539959535e-05,
+      "stanceVertical": 5.2649969031592914e-05
+    },
+    {
+      "id": "npc.patient-zero-courier",
+      "clip": "walk",
+      "height": 1.414486289024353,
+      "hipExcursion": 0.02797302097397225,
+      "stanceSlide": 2.6828893194330572e-05,
+      "stanceVertical": 6.62302321869368e-05
+    },
+    {
+      "id": "npc.patient-zero-courier",
+      "clip": "run",
+      "height": 1.414486289024353,
+      "hipExcursion": 0.044925602014992294,
+      "stanceSlide": 6.809242392530335e-05,
+      "stanceVertical": 0.00015617881751217588
+    },
+    {
+      "id": "npc.patient-zero-courier",
+      "clip": "npc-walk",
+      "height": 1.414486289024353,
+      "hipExcursion": 0.02798407977014139,
+      "stanceSlide": 2.1335404182143414e-05,
+      "stanceVertical": 5.5002747600590984e-05
+    },
+    {
+      "id": "npc.patient-zero-courier",
+      "clip": "npc-walk-relaxed",
+      "height": 1.414486289024353,
+      "hipExcursion": 0.02792812218224161,
+      "stanceSlide": 1.7021153120966304e-05,
+      "stanceVertical": 4.561972717664897e-05
+    },
+    {
+      "id": "npc.police-officer",
+      "clip": "walk",
+      "height": 1.4179394245147705,
+      "hipExcursion": 0.02797302097397214,
+      "stanceSlide": 3.816678465878853e-05,
+      "stanceVertical": 8.172058354274925e-05
+    },
+    {
+      "id": "npc.police-officer",
+      "clip": "run",
+      "height": 1.4179394245147705,
+      "hipExcursion": 0.04492557221266996,
+      "stanceSlide": 9.731445802652061e-05,
+      "stanceVertical": 0.00018849817612962005
+    },
+    {
+      "id": "npc.police-officer",
+      "clip": "npc-walk",
+      "height": 1.4179394245147705,
+      "hipExcursion": 0.0279840797701415,
+      "stanceSlide": 3.048960124890643e-05,
+      "stanceVertical": 6.793272303803888e-05
+    },
+    {
+      "id": "npc.police-officer",
+      "clip": "npc-walk-relaxed",
+      "height": 1.4179394245147705,
+      "hipExcursion": 0.02792812218224161,
+      "stanceSlide": 2.439401268056196e-05,
+      "stanceVertical": 5.641981363824211e-05
+    },
+    {
+      "id": "npc.survivor-group",
+      "clip": "walk",
+      "height": 1.450939055532217,
+      "hipExcursion": 0.027973020973972196,
+      "stanceSlide": 0.0005156515473893064,
+      "stanceVertical": 8.051046018844876e-05
+    },
+    {
+      "id": "npc.survivor-group",
+      "clip": "run",
+      "height": 1.450939055532217,
+      "hipExcursion": 0.044925572212669795,
+      "stanceSlide": 0.0006791986903910696,
+      "stanceVertical": 0.00018381151478649715
+    },
+    {
+      "id": "npc.survivor-group",
+      "clip": "npc-walk",
+      "height": 1.450939055532217,
+      "hipExcursion": 0.027984079770141446,
+      "stanceSlide": 0.00051490764055101,
+      "stanceVertical": 6.695542370890872e-05
+    },
+    {
+      "id": "npc.survivor-group",
+      "clip": "npc-walk-relaxed",
+      "height": 1.450939055532217,
+      "hipExcursion": 0.027928151984563998,
+      "stanceSlide": 0.0005137301050070486,
+      "stanceVertical": 5.560386155245567e-05
+    }
+  ],
+  "librarySha256": "864fc6087e036ca8ea95d1da7c7b7a84c09883ad76da861053bf2b79dcbab451",
+  "validation": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "test:unit": "153 tests / 56 files passed",
+    "focusedAnimation": "9 passed",
+    "test:smoke": "passed: 3 sim + 22 browser checks",
+    "verifyE19": "Failed: 32 passed, 2 failed in simulation selection, so verify stopped before browser phase. Clean git archive of main baseline 1292268 reproduced the identical failures: gas forecourt arrival 2.5820746000804036 m and hedge route arrival 4.207687608483755 m, both expected <0.15 m. Browser selection was subsequently run separately; see e19Browser.",
+    "headlessVisualReview": "Passed: 160 headless frames (8 phases \u00d7 walk/run \u00d7 female/male/3 NPC rigs \u00d7 before/after); actual View game camera (25 degree FOV, radius 19, azimuth 45 degrees, polar 54 degrees), ANGLE Metal. Walk maintains support and modest hip motion; run is more energetic without pronounced hopping. Feet remain flat in stance; alternating pelvis shift and torso counter-yaw remain readable. Captures deleted after review.",
+    "e19Browser": {
+      "passed": 34,
+      "failed": 7,
+      "failures": [
+        {
+          "test": "m1-world desktop and iPhone",
+          "count": 2,
+          "reason": "movement stalled approaching (-19,-4.5)"
+        },
+        {
+          "test": "m1-animation desktop bat/crowbar/machete",
+          "count": 3,
+          "reason": "zero sim combat.hit events for chosen weapon"
+        },
+        {
+          "test": "level-one-slice desktop",
+          "count": 1,
+          "reason": "completed with one death; expected zero"
+        },
+        {
+          "test": "l1-look iPhone",
+          "count": 1,
+          "reason": "519538 triangles at connection spot; limit 500000"
+        }
+      ],
+      "baselineReproduction": "The two simulation navigation failures were independently reproduced on main baseline. Additional browser failures are recorded without claiming they were individually baseline-retested."
+    }
+  },
+  "browserFrameSequences": {
+    "before": [
+      {
+        "id": "char.survivor-female",
+        "clip": "walk",
+        "frames": 8,
+        "hipExcursion": 0.03695747668475047,
+        "rootExcursion": 0
+      },
+      {
+        "id": "char.survivor-female",
+        "clip": "run",
+        "frames": 8,
+        "hipExcursion": 0.11911446496487876,
+        "rootExcursion": 0
+      },
+      {
+        "id": "char.survivor-male",
+        "clip": "walk",
+        "frames": 8,
+        "hipExcursion": 0.03695747668475047,
+        "rootExcursion": 0
+      },
+      {
+        "id": "char.survivor-male",
+        "clip": "run",
+        "frames": 8,
+        "hipExcursion": 0.11911446496487876,
+        "rootExcursion": 0
+      },
+      {
+        "id": "npc.civilian-man-a",
+        "clip": "walk",
+        "frames": 8,
+        "hipExcursion": 0.03695747668475047,
+        "rootExcursion": 0
+      },
+      {
+        "id": "npc.civilian-man-a",
+        "clip": "run",
+        "frames": 8,
+        "hipExcursion": 0.11911446496487876,
+        "rootExcursion": 0
+      },
+      {
+        "id": "npc.civilian-woman-a",
+        "clip": "walk",
+        "frames": 8,
+        "hipExcursion": 0.03695747668475047,
+        "rootExcursion": 0
+      },
+      {
+        "id": "npc.civilian-woman-a",
+        "clip": "run",
+        "frames": 8,
+        "hipExcursion": 0.11911446496487876,
+        "rootExcursion": 0
+      },
+      {
+        "id": "npc.civilian-elderly",
+        "clip": "walk",
+        "frames": 8,
+        "hipExcursion": 0.03695747668475047,
+        "rootExcursion": 0
+      },
+      {
+        "id": "npc.civilian-elderly",
+        "clip": "run",
+        "frames": 8,
+        "hipExcursion": 0.11911446496487876,
+        "rootExcursion": 0
+      }
+    ],
+    "after": [
+      {
+        "id": "char.survivor-female",
+        "clip": "walk",
+        "frames": 8,
+        "hipExcursion": 0.02756479429209624,
+        "rootExcursion": 0
+      },
+      {
+        "id": "char.survivor-female",
+        "clip": "run",
+        "frames": 8,
+        "hipExcursion": 0.04461855612352694,
+        "rootExcursion": 0
+      },
+      {
+        "id": "char.survivor-male",
+        "clip": "walk",
+        "frames": 8,
+        "hipExcursion": 0.02756479429209624,
+        "rootExcursion": 0
+      },
+      {
+        "id": "char.survivor-male",
+        "clip": "run",
+        "frames": 8,
+        "hipExcursion": 0.044618585925849163,
+        "rootExcursion": 0
+      },
+      {
+        "id": "npc.civilian-man-a",
+        "clip": "walk",
+        "frames": 8,
+        "hipExcursion": 0.02756479429209624,
+        "rootExcursion": 0
+      },
+      {
+        "id": "npc.civilian-man-a",
+        "clip": "run",
+        "frames": 8,
+        "hipExcursion": 0.044618556123526776,
+        "rootExcursion": 0
+      },
+      {
+        "id": "npc.civilian-woman-a",
+        "clip": "walk",
+        "frames": 8,
+        "hipExcursion": 0.02756479429209613,
+        "rootExcursion": 0
+      },
+      {
+        "id": "npc.civilian-woman-a",
+        "clip": "run",
+        "frames": 8,
+        "hipExcursion": 0.04461855612352672,
+        "rootExcursion": 0
+      },
+      {
+        "id": "npc.civilian-elderly",
+        "clip": "walk",
+        "frames": 8,
+        "hipExcursion": 0.02756479429209624,
+        "rootExcursion": 0
+      },
+      {
+        "id": "npc.civilian-elderly",
+        "clip": "run",
+        "frames": 8,
+        "hipExcursion": 0.04461855612352683,
+        "rootExcursion": 0
+      }
+    ]
+  },
+  "baseCommit": "1292268",
+  "sourceCommit": "d322c1b",
+  "cause": "Shared run hip excursion was 12 cm; walk swing-foot lift was 16 cm. The library leg solver ignored pelvis rotation/sway and used foot spacing independent of runtime stride. Hero gait restarted phase during walk/run changes and used requested velocity.",
+  "fix": "Reduce walk/run hip excursion to 28/45 mm and swing-foot lift; add lateral support weight shift and preserve torso counter-yaw. Bake target-specific two-bone support into locomotion tracks using actual limb lengths, 98% reach, 60% walk stance, flat feet and runtime stride distance. Use actual hero world displacement, retain phase, synchronize outgoing/incoming gait phase, and normalize evaluated rotations. Shared sampling feeds male survivors, NPC heroes and civilian crowd baking; corgi and geometry unchanged."
+}
