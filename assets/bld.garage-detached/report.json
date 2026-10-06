@@ -1,0 +1,30 @@
+{
+  "id": "bld.garage-detached",
+  "tier": "hero",
+  "triangles": {
+    "lod0": 76056,
+    "lod1": 8064,
+    "lod2": 2528
+  },
+  "meshes": 34,
+  "draw_calls": {
+    "lod0": 34,
+    "lod1": 32,
+    "lod2": 23
+  },
+  "nodes_ok": true,
+  "missing_nodes": [],
+  "rounds": 5,
+  "matches_reference": true,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "deterministic": true,
+  "gaps": [
+    "WebGPU verification is manual and was not run."
+  ],
+  "unit_tests": {
+    "passed": 185,
+    "failed": 1,
+    "failure": "Unrelated audio assets test: undefined entry.parentPath."
+  }
+}
