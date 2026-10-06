@@ -3,16 +3,18 @@ import { npcs } from '../../../src/data/npcs';
 import { npcWorld, step, teleport } from './helpers';
 test('T-E08-04 @E08 @E08-AC04 three-minute combat bot: corgi close 95% and no player obstruction', async () => {
   const w = await npcWorld(), corgi = [...w.entities.iterate()].find(e => e.companion)!;
+  w.combat!.damage.god = false;
   let close = 0, blocked = 0, maxBlocked = 0; w.setInput({ move: { x: 1, z: 0 }, left: { down: false, held: true, up: false }, aim: { x: 1, z: 0 } });
   for (let tick = 0; tick < 10800; tick++) {
     const p = w.entities.get(1)!;
     if (tick % 300 === 0) { const phase = (tick / 300) % 4; w.setInput({ move: { x: phase === 0 ? 1 : phase === 2 ? -1 : 0, z: phase === 1 ? 1 : phase === 3 ? -1 : 0 } }); }
     if (tick % 600 === 0) { const id = w.infected!.spawn('infected.runner', { x: p.transform.x + 5, z: p.transform.z }); w.entities.get(id)!.health.current = 20; }
+    if (tick % 30 === 0) { const threat = w.infected!.active.find(e => e.health.current > 0); if (threat) { const dx = threat.transform.x - p.transform.x, dz = threat.transform.z - p.transform.z, d = Math.hypot(dx, dz) || 1; w.setInput({ aim: { x: dx / d, z: dz / d } }); } }
     const x = p.transform.x, z = p.transform.z; w.update();
     if (Math.hypot(p.transform.x - corgi.transform.x, p.transform.z - corgi.transform.z) <= 6) close++;
     blocked = Math.hypot(p.transform.x - x, p.transform.z - z) < .005 ? blocked + 1 : 0; maxBlocked = Math.max(maxBlocked, blocked);
   }
-  expect(close / 10800).toBeGreaterThanOrEqual(.95); expect(maxBlocked).toBeLessThanOrEqual(30); expect(corgi.health.current).toBe(100); expect(w.events.events().some(e => e.type === 'combat.attack')).toBe(true); w.dispose();
+  expect(close / 10800).toBeGreaterThanOrEqual(.95); expect(maxBlocked).toBeLessThanOrEqual(30); expect(corgi.health.current).toBe(100); expect(w.entities.get(1)!.health.current).toBeGreaterThan(0); expect(w.events.events().some(e => e.type === 'combat.attack')).toBe(true); w.dispose();
 });
 test('T-E08-05 @E08 @E08-AC05 approaching offscreen threat within 18m barks with unit direction', async () => {
   const w = await npcWorld(); w.infected!.director.camera.halfWidth = 5; w.infected!.director.camera.halfDepth = 5;

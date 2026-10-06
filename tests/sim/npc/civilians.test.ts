@@ -36,25 +36,38 @@ test('T-E08-12 @E08 @E08-AC12 kill/knockback rescue only during grab', async () 
 });
 test('T-E08-13 @E08 @E08-AC13 finishing eyes only; 100 real crowd shots pass through living people', async () => {
   const w = await world(), { e, attacker } = pair(w); w.npcs!.civilians.grab(e.id, attacker.id, true); hit(w, e.id); expect(e.health.current).toBe(100);
-  step(w, 90 + e.civilian!.until); // advance into bite/down; finish relative to state below
+  step(w, 90); // bite starts at the end of the grab
   while (e.civilian!.state !== 'down') step(w, 1);
   hit(w, e.id); expect(e.civilian!.state).toBe('down'); while (!e.civilian!.eyesGlow) step(w, 1);
   expect(w.combat!.query.ray(1, e.transform, { x: 1, z: 0 }, 10)?.id).toBe(e.id); hit(w, e.id); step(w, 1000); expect(e.civilian!.state).toBe('finished'); expect(w.events.events().some(e => e.type === 'civilian.finished')).toBe(true); expect(w.events.events().some(e => e.type === 'civilian.turned')).toBe(false);
   attacker.health.current = 0;
-  for (let i = 0; i < 10; i++) w.npcs!.civilians.spawn('jogger', { x: i + 1, z: 2 });
+  for (let i = 0; i < 10; i++) w.npcs!.civilians.spawn('jogger', { x: i + 1, z: (i + 1) * .2 });
+  w.spawnDummy('infected.dummy', { x: 15, z: 3 }, { hp: 100000 });
   w.combat!.setLoadout(['weapon.pistol'], ['weapon.grenade']); w.combat!.runner.infiniteCharges = true;
   w.setInput({ left: { down: true, held: true, up: false }, aim: { x: 1, z: .2 } });
   step(w, 3600); expect(w.events.events().filter(e => e.type === 'combat.attack').length).toBeGreaterThanOrEqual(100);
   expect(w.events.events().filter(e => e.type === 'combat.hit' && w.entities.get(e.targetId)?.civilian)).toHaveLength(0);
+  expect(w.events.events().filter(e => e.type === 'combat.hit' && e.actionId === 'weapon.pistol').length).toBeGreaterThanOrEqual(100);
   const living = [...w.entities.iterate()].find(e => e.civilian && e.civilian.state !== 'finished')!; hit(w, living.id, 'explosive'); expect(living.health.current).toBe(100); expect(living.civilian!.knockedUntil).toBeGreaterThan(w.tick); w.dispose();
 });
 test('T-E08-14 @E08 @E08-AC14 full cap postpones rising; mass turning never exceeds L1 cap/chain', async () => {
   const w = await world(); w.infected!.director.levelCap = 1; const { e, attacker } = pair(w); w.npcs!.civilians.grab(e.id, attacker.id, true); step(w, 1000); expect(e.civilian!.state).toBe('down'); attacker.health.current = 0; step(w, 73); expect(e.civilian!.state).toBe('infected'); expect(w.infected!.director.count).toBe(1); w.dispose();
   const mass = await world(); mass.infected!.director.levelCap = 15;
-  const a = mass.infected!.spawn('infected.butcher', { x: 5, z: 0 });
-  for (let i = 0; i < 30; i++) { const id = mass.npcs!.civilians.spawn('cashier', { x: 10 + i, z: 5 }); mass.npcs!.civilians.grab(id, a, true); mass.entities.get(id)!.civilian!.state = 'down'; mass.entities.get(id)!.civilian!.until = 1; }
+  const secondAttackers: number[] = [], bodies: number[] = [];
+  for (let wave = 0; wave < 2; wave++) {
+    const attackers: number[] = [];
+    for (let i = 0; i < 15; i++) {
+      const p = { x: -30 + i * 3, z: wave ? 20 : 5 }, id = mass.npcs!.civilians.spawn('cashier', p), attacker = mass.infected!.spawn('infected.runner', p);
+      expect(mass.npcs!.civilians.grab(id, attacker, true)).toBe(true); attackers.push(attacker); bodies.push(id);
+    }
+    step(mass, 90); // These are real bites: removing attackers now cannot rescue the wave.
+    if (wave === 0) for (const id of attackers) mass.entities.get(id)!.health.current = 0;
+    else secondAttackers.push(...attackers);
+  }
+  step(mass, 900); expect(bodies.every(id => mass.entities.get(id)!.civilian!.state === 'down')).toBe(true);
+  for (const id of secondAttackers.slice(0, 8)) mass.entities.get(id)!.health.current = 0;
   for (let i = 0; i < 1800; i++) { mass.update(); expect(mass.infected!.director.count).toBeLessThanOrEqual(15); }
-  expect(mass.npcs!.civilians.turns).toBeLessThanOrEqual(npcs.turnChainLimit[0]); mass.dispose();
+  expect(mass.npcs!.civilians.turns).toBe(npcs.turnChainLimit[0]); mass.dispose();
 });
 test('T-E08-01 @E08 @E08-AC01 W0 civ-street 30 routines never stuck over five minutes', async () => {
   const w = await world(); w.loadScenario('civ-street'); const crowd = [...w.entities.iterate()].filter(e => e.kind === 'civilian'); expect(crowd).toHaveLength(30);

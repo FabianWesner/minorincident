@@ -39,6 +39,11 @@ export class NavGrid {
     for (const w of this.blockers.values()) if (Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
     return true;
   }
+  /** E08 campaign tier swaps replace static walls, retaining the fixed search workspace. */
+  rebake(): void {
+    for (let cell = 0; cell < this.blocked.length; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), this.clearance));
+    this.target = -1; this.searching = false; this.head = this.tail = 0;
+  }
   /** E11 doors and broken props invalidate only their affected cells and cached searches. */
   setBlocker(id: number, wall: Wall, blocked: boolean): void {
     if (blocked) this.blockers.set(id, wall); else this.blockers.delete(id);

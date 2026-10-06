@@ -172,7 +172,8 @@ export class Mission {
     for (const id of actors) {
       if (this.state.actors[id] || this.deadBosses.has(id)) continue;
       const def = this.def.actors[id], anchor = this.def.anchors[def.anchor];
-      const entity = this.world.entities.create({ kind: def.kind, archetype: def.archetype, faction: def.faction, transform: { x: anchor.x, z: anchor.z, y: 0.7, yaw: 0 }, health: { current: def.hp, max: def.hp }, combat: { radius: 0.4, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
+      const convoy = def.archetype === 'defend.convoy' && this.world.npcs ? this.world.npcs.traffic.convoy(['res', 'fuel', 'checkpoint', 'bridge'].map(key => this.def.anchors[key])) : null;
+      const entity = convoy ? this.world.entities.get(convoy[0])! : this.world.entities.create({ kind: def.kind, archetype: def.archetype, faction: def.faction, transform: { x: anchor.x, z: anchor.z, y: 0.7, yaw: 0 }, health: { current: def.hp, max: def.hp }, combat: { radius: 0.4, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
       if (entity.kind === 'escort') this.world.npcs?.escorts.attach(entity);
       this.state.actors[id] = entity.id; this.world.spatial.set(entity.id, anchor.x, anchor.z);
     }
@@ -252,6 +253,7 @@ export class Mission {
     }
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(entityId)) step.kills.push(entityId);
     if (this.state.tier !== null) this.world.setTier(this.state.tier as 0|1|2|3|4|5);
+    this.world.npcs?.restore(delta);
     this.world.vehicles?.rebuild();
     this.world.hazards?.debris.reset(); this.world.interactables?.rebuildBlockers();
     for(const [gate,handle]of this.gateHandles)this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[gate]);

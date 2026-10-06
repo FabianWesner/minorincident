@@ -1,6 +1,8 @@
+import { infectedDef } from '../../data/infected';
 import { npcs } from '../../data/npcs';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
+const approaching = new Set(['chase', 'attack', 'alerted', 'migration']);
 /** Immune hero: courage replaces HP, path seeking is shared with E07, with no player collider. */
 export class Companion {
   private readonly target = { x: 0, z: 0 };
@@ -18,7 +20,7 @@ export class Companion {
     const p = this.world.entities.get(1)!.transform, nav = this.world.infected!.nav;
     this.target.x = p.x; this.target.z = p.z + 2;
     if (!nav.clear(this.target.x, this.target.z, .35)) { this.target.x = p.x; this.target.z = p.z; }
-    const e = this.world.entities.create({ kind: 'companion', archetype: 'char.corgi', faction: 'survivor', transform: { ...this.target, y: .3, yaw: 0 }, health: { current: 100, max: 100 }, companion: { state: 'follow', courage: 100, until: 0, barkAt: 0, pickup: null, path: [], goal: -1, pathIndex: 0 } });
+    const e = this.world.entities.create({ kind: 'companion', archetype: 'char.corgi', faction: 'survivor', transform: { ...this.target, y: .3, yaw: 0 }, health: { current: 100, max: 100 }, companion: { state: 'follow', courage: 100, until: 0, barkAt: 0, hurtAt: 0, pickup: null, path: [], goal: -1, pathIndex: 0 } });
     this.world.spatial.set(e.id, e.transform.x, e.transform.z); return e.id;
   }
   hit(e: EntitySnapshot, amount: number): void {
@@ -29,6 +31,7 @@ export class Companion {
     const player = this.world.entities.get(1)!, ai = this.world.infected!;
     for (const e of this.world.entities.iterate()) {
       const c = e.companion; if (!c) continue;
+      if (c.state !== 'hide' && this.world.tick >= c.hurtAt) for (const enemy of ai.active) if (enemy.health.current > 0 && Math.hypot(enemy.transform.x - e.transform.x, enemy.transform.z - e.transform.z) < 1.2) { c.hurtAt = this.world.tick + 60; this.hit(e, infectedDef(enemy.archetype).damage); this.world.events.emit({ type: 'corgi.sound', tick: this.world.tick, sourceId: e.id, position: { ...e.transform }, kind: 'hurt' }); break; }
       if (c.state === 'hide') {
         // Hiding follows at the player's heels without collision; recovery uses sim time.
         this.world.npcs!.move(e, player.transform, 9, c, 1.5);
@@ -38,7 +41,7 @@ export class Companion {
       let pickup = c.pickup === null ? undefined : this.world.entities.get(c.pickup);
       if (pickup?.pickup && 'kind' in pickup.pickup && pickup.pickup.collected) pickup = undefined;
       if (!pickup && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 4) {
-        for (const candidate of this.world.entities.iterate()) if (candidate.pickup && !('kind' in candidate.pickup && candidate.pickup.collected) && !('armed' in candidate.pickup && !candidate.pickup.armed) && Math.hypot(candidate.transform.x - player.transform.x, candidate.transform.z - player.transform.z) <= 6 && ai.nav.visible(e.transform, candidate.transform, .35)) { pickup = candidate; break; }
+        for (const candidate of this.world.entities.iterate()) if (candidate.pickup && !('kind' in candidate.pickup && candidate.pickup.collected) && !('armed' in candidate.pickup && !candidate.pickup.armed) && Math.hypot(candidate.transform.x - player.transform.x, candidate.transform.z - player.transform.z) > 1 && Math.hypot(candidate.transform.x - player.transform.x, candidate.transform.z - player.transform.z) <= 6 && ai.nav.visible(e.transform, candidate.transform, .35)) { pickup = candidate; break; }
         c.pickup = pickup?.id ?? null;
       }
       c.state = pickup ? 'fetch' : 'follow';
@@ -63,7 +66,7 @@ export class Companion {
       }
       if (this.world.tick >= c.barkAt) for (const enemy of ai.active) {
         const dx = enemy.transform.x - player.transform.x, dz = enemy.transform.z - player.transform.z, distance = Math.hypot(dx, dz);
-        if (enemy.health.current <= 0 || distance > 18 || ai.director.visible(enemy.transform) || !['chase', 'attack', 'alerted', 'migration'].includes(enemy.infected!.state)) continue;
+        if (enemy.health.current <= 0 || distance > 18 || ai.director.visible(enemy.transform) || !approaching.has(enemy.infected!.state)) continue;
         c.barkAt = this.world.tick + 180;
         this.world.events.emit({ type: 'corgi.bark', tick: this.world.tick, id: e.id, threatId: enemy.id, direction: { x: dx / (distance || 1), z: dz / (distance || 1) } }); break;
       }
