@@ -1,0 +1,41 @@
+
+> test:e2e
+> sh tools/e2e-lock.sh playwright test --project=chromium tests/e2e/audio/runtime.spec.ts --grep T-E16-10b --workers=2
+
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/audio/runtime.spec.ts:107:1 › T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; offline schedules stay on grid (11.1s)
+
+
+  1) [chromium] › tests/e2e/audio/runtime.spec.ts:107:1 › T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; offline schedules stay on grid
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected value: "drive"
+    Received array: ["base"]
+
+    Call Log:
+    - Timeout 4500ms exceeded while waiting on the predicate
+
+      119 |     });
+      120 |     try {
+    > 121 |         await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.layers), { timeout: 4500 }).toContain('drive');
+          |                                                                                                                       ^
+      122 |     } finally {
+      123 |         artifact('music-live-start', await page.evaluate(() => {
+      124 |             const a = window.__SS__!;
+        at /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests/e2e/audio/runtime.spec.ts:121:119
+
+    Error Context: test-results/playwright/run/e2e-audio-runtime-T-E16-10-6ed01-line-schedules-stay-on-grid-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run/e2e-audio-runtime-T-E16-10-6ed01-line-schedules-stay-on-grid-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run/e2e-audio-runtime-T-E16-10-6ed01-line-schedules-stay-on-grid-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/audio/runtime.spec.ts:107:1 › T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; offline schedules stay on grid

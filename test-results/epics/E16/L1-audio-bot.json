@@ -7,10 +7,10 @@
     "D-SHOP/landmark",
     "D-SHOP/exit"
   ],
-  "ticks": 3993,
-  "distance": 259.04803671241547,
+  "ticks": 3945,
+  "distance": 258.81456939678014,
   "errors": [],
-  "cues": 2,
+  "cues": 8,
   "snapshot": {
     "state": "running",
     "unlocked": true,
@@ -18,12 +18,12 @@
     "muted": false,
     "master": 2,
     "output": 0,
-    "voices": 9,
+    "voices": 8,
     "voiceLimit": 32,
     "music": {
       "level": "L1",
       "paused": false,
-      "position": 0.15600000000000014,
+      "position": 0.09199999999999875,
       "layers": [
         "base"
       ],
@@ -46,34 +46,75 @@
     "errors": [],
     "cues": [
       {
-        "cue": "footstep.survivor.grass",
-        "time": 1.1413333333333333,
-        "tick": 17,
-        "sourceId": 1,
-        "position": {
-          "x": -0.6827567219734192,
-          "y": 0.6860995888710022,
-          "z": 4.4735636711120605,
-          "yaw": 3.184812600186522
-        },
+        "cue": "music.L1.base",
+        "time": 28.212,
+        "tick": 1701,
+        "gain": 0.3499999940395355,
+        "rate": 1,
+        "voice": 19
+      },
+      {
+        "cue": "music.L1.pulse",
+        "time": 28.212,
+        "tick": 1701,
+        "gain": 0,
+        "rate": 1,
+        "voice": 20
+      },
+      {
+        "cue": "music.L1.drive",
+        "time": 28.212,
+        "tick": 1701,
+        "gain": 0,
+        "rate": 1,
+        "voice": 21
+      },
+      {
+        "cue": "music.L1.peak",
+        "time": 28.212,
+        "tick": 1701,
+        "gain": 0,
+        "rate": 1,
+        "voice": 22
+      },
+      {
+        "cue": "bed.birds",
+        "time": 28.192,
+        "tick": 1701,
         "gain": 0.18000000715255737,
-        "rate": 1.0073864459991455,
-        "voice": 15
+        "rate": 1.0042411088943481,
+        "voice": 23
+      },
+      {
+        "cue": "bed.traffic",
+        "time": 28.192,
+        "tick": 1701,
+        "gain": 0.18000000715255737,
+        "rate": 1.0065780878067017,
+        "voice": 24
+      },
+      {
+        "cue": "bed.horns",
+        "time": 28.192,
+        "tick": 1701,
+        "gain": 0.18000000715255737,
+        "rate": 1.0145094394683838,
+        "voice": 25
       },
       {
         "cue": "footstep.survivor.grass",
-        "time": 1.264,
-        "tick": 2513,
+        "time": 28.192,
+        "tick": 1717,
         "sourceId": 1,
         "position": {
-          "x": 62.50397872924805,
-          "y": 0.6891213655471802,
-          "z": -9.500104904174805,
-          "yaw": -1.577775352901893
+          "x": 41.05756759643555,
+          "y": 0.6910006999969482,
+          "z": -7.499956130981445,
+          "yaw": 0.00009952669494275348
         },
         "gain": 0.18000000715255737,
-        "rate": 0.9761965870857239,
-        "voice": 16
+        "rate": 1.0073864459991455,
+        "voice": 26
       }
     ],
     "clusters": [],

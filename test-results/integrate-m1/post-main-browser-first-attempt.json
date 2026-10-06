@@ -1,0 +1,28 @@
+{
+  "smoke": {
+    "command": [
+      "npm",
+      "run",
+      "test:smoke",
+      "--",
+      "--workers=2"
+    ],
+    "exit_code": 0,
+    "seconds": 48.92,
+    "saved_log": "test-results/integrate-m1/logs/post-main-smoke.log",
+    "browser_report": "test-results/integrate-m1/post-main-smoke-playwright.json"
+  },
+  "verify-E16": {
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E16"
+    ],
+    "exit_code": 1,
+    "seconds": 176.77,
+    "saved_log": "test-results/integrate-m1/logs/post-main-verify-E16.log",
+    "browser_report": "test-results/integrate-m1/post-main-verify-E16-playwright.json"
+  }
+}

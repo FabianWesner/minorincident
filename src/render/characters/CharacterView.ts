@@ -6,6 +6,7 @@ import { atLeast, type AssetDef } from '../../assets/types';
 import { type PaletteToken } from '../../data/palette';
 import type { GearTier, SurvivorState, SurvivorVariant } from '../../data/survivor';
 import type { Materials } from '../Materials';
+import type { PaletteMaterial } from '../PaletteMaterial';
 import { ProceduralAnimator } from './ProceduralAnimator';
 import { disposeCharacter, loadCharacter } from './rig';
 
@@ -15,7 +16,8 @@ export class CharacterView extends Group {
   private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
   private variant: SurvivorVariant = 'female';
   private tier: GearTier = 0;
-  async init(materials: Materials): Promise<void> {
+  private readonly bloodMaterials: PaletteMaterial[] = [];
+  async init(materials: Materials, bloodFeedback = false): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     for (const variant of ['female', 'male'] as const) {
       const id = `char.survivor-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
@@ -34,9 +36,10 @@ export class CharacterView extends Group {
           let replacement = replacements.get(source);
           if (replacement) return replacement;
           const token = source.name.replace(/^pal_/, '') as PaletteToken;
-          if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = materials.get(token);
-          else replacement = materials.fromColor(source.name, (source as import('three').MeshStandardMaterial).color);
+          if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = bloodFeedback ? materials.unique(token) : materials.get(token);
+          else replacement = materials.fromColor(`${variant}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
           replacement.userData.sharedPalette = true;
+          if (bloodFeedback) this.bloodMaterials.push(replacement as PaletteMaterial);
           oldMaterials.add(source); replacements.set(source, replacement); return replacement;
         };
         object.material = Array.isArray(object.material) ? object.material.map(remap) : remap(object.material);
@@ -70,12 +73,13 @@ export class CharacterView extends Group {
       if (character.model.visible) character.animator.update(pose, tick, alpha);
     }
   }
+  setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; }
   /** Held views borrow these nodes; CharacterView retains ownership of the rig. */
   socket(side: 'LEFT' | 'RIGHT') { return this.characters.get(this.variant)!.sockets[side]; }
   getState() {
     const character = this.characters.get(this.variant);
-    return { variant: this.variant, gearTier: this.tier, animation: character?.animator.state, missingClips: character?.animator.missingClips ?? 0,
+    return { bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, missingClips: character?.animator.missingClips ?? 0,
       evaluations: character?.animator.evaluations ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
   }
-  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.characters.clear(); this.clear(); }
+  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.characters.clear(); this.bloodMaterials.length = 0; this.clear(); }
 }

@@ -441,7 +441,7 @@ export class AudioService implements Lifecycle {
         if (!this.available())
             return;
         const t = this.context.currentTime;
-        const source = 'sourceId' in event ? event.sourceId : undefined;
+        const source = 'sourceId' in event ? event.sourceId : 'id' in event && typeof event.id === 'number' ? event.id : undefined;
         const entity = source === undefined ? undefined : this.world.entities.get(source);
         const position = 'position' in event ? event.position : entity?.transform;
         if (event.type === 'sim.tick') {
@@ -449,7 +449,8 @@ export class AudioService implements Lifecycle {
             return;
         }
         if (event.type === 'telegraph') {
-            const id = telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[event.special] ?? eventCues.telegraph;
+            const special = 'special' in event ? event.special : event.kind;
+            const id = telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[special] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;
             this.play(id, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
             return;
         }
@@ -576,10 +577,11 @@ export class AudioService implements Lifecycle {
             this.loop(key, `diegetic.${event.kind}${warped ? '.warped' : ''}`, { position, lowpass: event.inCar ? 2400 : 20000, rate: warped ? 0.92 : 1 }, source);
             return;
         }
-        if (event.type === 'dialogue') {
-            this.graph.duck('radio', t, event.duration ?? 3);
+        if (event.type === 'dialogue' || event.type === 'dialogue.line') {
+            const duration = 'duration' in event ? event.duration ?? 3 : 3;
+            this.graph.duck('radio', t, duration);
             this.play('dialogue.radio', { position });
-            this.caption(event.text, position, event.duration ?? 3);
+            this.caption(event.text, position, duration);
             return;
         }
         if (event.type === 'music.intensity') {
@@ -618,6 +620,14 @@ export class AudioService implements Lifecycle {
                 this.play('tinnitus');
                 this.graph.tinnitus();
             }
+        }
+        if (event.type === 'level.completed') {
+            this.stinger('extraction', event.id);
+            return;
+        }
+        if (event.type === 'combat.hit' || event.type === 'combat.kill') {
+            const target = this.world.entities.get(event.targetId);
+            if (target?.faction === 'environment' || target?.vehicle) return;
         }
         if (event.type === 'infected.attack')
             return; // close individual vocals are bounded by the horde manager

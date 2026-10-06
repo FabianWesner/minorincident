@@ -11,6 +11,11 @@ export class EntityStore {
   /** Adopt a prewarmed pooled record without creating a new entity object. */
   adopt(entity: EntitySnapshot): void { entity.id = this.nextId++; this.entities.set(entity.id, entity); }
   delete(id: number): void { this.entities.delete(id); }
+  /** Checkpoint records keep numeric IDs stable for scripted actor references. */
+  restore(records: EntitySnapshot[], player: EntitySnapshot): void {
+    this.entities.clear(); this.nextId = 1;
+    for (const entity of records) { this.entities.set(entity.id, entity.id === 1 ? player : entity); this.nextId = Math.max(this.nextId, entity.id + 1); }
+  }
   get(id: number): EntitySnapshot | undefined { return this.entities.get(id); }
   values(): EntitySnapshot[] { return [...this.entities.values()].sort((a, b) => a.id - b.id); }
   iterate(): IterableIterator<EntitySnapshot> { return this.entities.values(); }

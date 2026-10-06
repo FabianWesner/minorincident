@@ -1,0 +1,14 @@
+> test:sim
+> vitest run tests/sim --maxWorkers=1
+
+
+ RUN  v5.0.3 /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1
+
+
+ Test Files  25 passed (25)
+      Tests  238 passed (238)
+   Start at  02:26:13
+   Duration  28.12s (tests 91%, import 5%, transform 3%)
+
+    Isolate  25 workers spawned · ~69ms startup each (spawn + environment, per file)
+             at least ~1.64s faster with isolate: false — reuses workers across files instead of one per file

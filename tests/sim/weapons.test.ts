@@ -67,7 +67,7 @@ test('T-E06-07 @E06 @E06-AC07 walking over pickup fills selected rack or replace
   equip(w, ['weapon.bat', 'weapon.knife', 'weapon.crowbar']); w.combat!.runner.loadout.state.LEFT.index = 1;
   w.combat!.pickups.spawn('weapon.katana', w.entities.get(1)!.transform); step(w, 1);
   expect(w.combat!.runner.loadout.current('LEFT').id).toBe('weapon.katana');
-  const drops = w.query({ kind: 'pickup' }); expect(drops).toHaveLength(1); expect(drops[0].pickup!.actionId).toBe('weapon.knife');
+  const drops = w.query({ kind: 'pickup' }); expect(drops).toHaveLength(1); const dropped = drops[0].pickup!; expect('actionId' in dropped && dropped.actionId).toBe('weapon.knife');
   step(w, 120); expect(w.combat!.runner.loadout.current('LEFT').id).toBe('weapon.katana');
   Object.assign(w.entities.get(1)!.transform, { x: 4, z: 0 }); w.physics.playerBody!.setTranslation(w.entities.get(1)!.transform, true); step(w, 2);
   Object.assign(w.entities.get(1)!.transform, { x: drops[0].transform.x, z: drops[0].transform.z }); w.physics.playerBody!.setTranslation(w.entities.get(1)!.transform, true); step(w, 2); expect(w.combat!.runner.loadout.current('LEFT').id).toBe('weapon.knife');

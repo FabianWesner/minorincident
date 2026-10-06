@@ -44,6 +44,8 @@
     },
     {
       "command": [
+        "sh",
+        "tools/e2e-lock.sh",
         "npx",
         "playwright",
         "test",

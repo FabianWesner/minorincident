@@ -1,0 +1,45 @@
+
+> test:e2e
+> sh tools/e2e-lock.sh playwright test --project=chromium tests/e2e/audio/runtime.spec.ts tests/e2e/integration-m1.spec.ts --grep T-E16-10b|T-E16-01c|T-E16-perf|M1 @E16 --workers=2
+
+
+Running 4 tests using 2 workers
+
+  ✘  2 [chromium] › tests/e2e/audio/runtime.spec.ts:107:1 › T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; offline schedules stay on grid (9.8s)
+  ✓  3 [chromium] › tests/e2e/audio/runtime.spec.ts:269:1 › T-E16-perf @E16 @E16-AC04 @E16-AC05 @perf 150 infected with native audio stay within sim/voice budgets (7.1s)
+  ✓  4 [chromium] › tests/e2e/integration-m1.spec.ts:4:1 › M1 @E16 real E11 destruction and E12 radio share audio with both E07/E15 telegraphs (24.3s)
+  ✓  1 [chromium] › tests/e2e/audio/runtime.spec.ts:237:1 › T-E16-01c @E16 @E16-AC01 full L1 composition coverage bot logs zero missing cues with graph active/output muted (1.2m)
+
+
+  1) [chromium] › tests/e2e/audio/runtime.spec.ts:107:1 › T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; offline schedules stay on grid
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected value: "drive"
+    Received array: ["base"]
+
+    Call Log:
+    - Timeout 4500ms exceeded while waiting on the predicate
+
+      114 |     });
+      115 |     try {
+    > 116 |         await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.layers), { timeout: 4500 }).toContain('drive');
+          |                                                                                                                       ^
+      117 |     } finally {
+      118 |         artifact('music-live-start', await page.evaluate(() => {
+      119 |             const a = window.__SS__!;
+        at /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/integrate-m1/tests/e2e/audio/runtime.spec.ts:116:119
+
+    Error Context: test-results/playwright/run/e2e-audio-runtime-T-E16-10-6ed01-line-schedules-stay-on-grid-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run/e2e-audio-runtime-T-E16-10-6ed01-line-schedules-stay-on-grid-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run/e2e-audio-runtime-T-E16-10-6ed01-line-schedules-stay-on-grid-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/audio/runtime.spec.ts:107:1 › T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; offline schedules stay on grid
+  3 passed (1.2m)

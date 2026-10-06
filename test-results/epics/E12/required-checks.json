@@ -1,0 +1,60 @@
+{
+  "build": {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exitCode": 0
+  },
+  "typecheck": {
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0
+  },
+  "lint": {
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0
+  },
+  "test:unit": {
+    "command": [
+      "npm",
+      "run",
+      "test:unit"
+    ],
+    "exitCode": 0
+  },
+  "test:sim": {
+    "command": [
+      "npm",
+      "run",
+      "test:sim"
+    ],
+    "exitCode": 0
+  },
+  "test:smoke": {
+    "command": [
+      "npm",
+      "run",
+      "test:smoke"
+    ],
+    "exitCode": 0
+  },
+  "verify -- E12": {
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E12"
+    ],
+    "exitCode": 0
+  }
+}

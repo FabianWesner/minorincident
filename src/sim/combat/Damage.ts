@@ -5,12 +5,13 @@ import type { SimWorld } from '../world/SimWorld';
 export interface DamageEvent {
   attackId: number; actionId: string; sourceId: number; targetId: number; origin: Vec2; direction: Vec2;
   part?: 'leg'; radius?: number; spread?: number;
-  base: number; multiplier: number; type: 'melee' | 'bullet' | 'explosive' | 'status'; knockback: number; stagger: number;
+  base: number; multiplier: number; type: 'melee' | 'bullet' | 'explosive' | 'status' | 'vehicle'; knockback: number; stagger: number;
 }
 /** Directional shields only stop front bullets; splash is radial and ignores shields. */
 export function damageAmount(hit: DamageEvent, target: EntitySnapshot): number {
   let amount = hit.base * hit.multiplier;
-  if (hit.type === 'explosive' && target.id === hit.sourceId && target.kind === 'player') amount *= 0.3;
+  // E11 environmental blasts retain 30% player damage; E07 enemy bursts keep their authored damage.
+  if (hit.type === 'explosive' && target.kind === 'player' && (target.id === hit.sourceId || !hit.actionId.startsWith('infected.'))) amount *= 0.3;
   if (hit.type === 'bullet' && target.combat?.shield) {
     const dx = hit.origin.x - target.transform.x, dz = hit.origin.z - target.transform.z, distance = Math.hypot(dx, dz);
     const dot = distance ? (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / distance : 1;
@@ -37,11 +38,11 @@ export class Damage {
     if (target.id === 1 && this.god) amount = 0;
     if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick);
     else { amount = Math.min(amount, target.health.current); target.health.current -= amount; }
-    const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, amount };
+    const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, amount, damageType: hit.type, ...(hit.type === 'vehicle' ? { cause: 'vehicle' as const } : {}) };
     this.world.events.emit({ ...event, type: 'combat.hit' });
     if (amount > 0) {
       if (target.combat && hit.stagger > 0) { target.combat.staggerUntil = this.world.tick + Math.ceil(hit.stagger * 60); target.combat.attacking = false; }
-      if (hit.knockback > 0) this.world.knockback(target, hit.direction, hit.knockback);
+      if (hit.knockback > 0 && target.faction !== 'environment') this.world.knockback(target, hit.direction, hit.knockback);
       if (hit.type === 'melee') this.world.events.emit({ type: 'combat.hit-stop', tick: this.world.tick, sourceId: hit.sourceId, durationMs: 50 });
     }
     if (hit.part === 'leg' && amount > 0) this.world.infected?.loseLeg(target.id, this.world.infected.gore);

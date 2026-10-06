@@ -19,11 +19,11 @@ test('T-E16-01b @E16 @E16-AC01 every production cue decodes in both native Opus 
         expect(row.frames).toBeGreaterThan(0);
     artifact('decode', { opus: formats.opus.length, aac: formats.aac.length });
 });
-test('T-E16-03 @E16 @E16-AC03 real archetype events play before damage, offscreen gain is +3dB and protected', async ({ page }) => {
+// Each real archetype retains the same checks and the full 60s test deadline.
+for (const def of infectedDefinitions) {
+  test(`T-E16-03-${def.id} @E16 @E16-AC03 real archetype events play before damage`, async ({ page }) => {
     await boot(page);
     await page.mouse.click(200, 250);
-    const rows = [];
-    for (const def of infectedDefinitions) {
         const data = await page.evaluate(async (id) => {
             const a = window.__SS__!;
             await a.loadScenario('horde-arena');
@@ -47,12 +47,15 @@ test('T-E16-03 @E16 @E16-AC03 real archetype events play before damage, offscree
         }
         if (def.special === 'scream')
             expect(telegraphs[0]).toMatchObject({ duration: 0.8 });
-        rows.push({ archetype: def.id, telegraphs: telegraphs.length, attacks: attacks.length });
-    }
+        artifact(`telegraphs-${def.id}`, { archetype: def.id, telegraphs: telegraphs.length, attacks: attacks.length });
+  });
+}
+test('T-E16-03-gain @E16 @E16-AC03 offscreen gain is +3dB and protected', async ({ page }) => {
+    await start(page);
     const gain = await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('horde-arena'); a.pause(); await a.audio.unlock(); const on = a.audio.play('telegraph.runner', { position: { x: 0, z: -2 }, offscreen: false }, 100)!; const off = a.audio.play('telegraph.runner', { position: { x: 0, z: -2 }, offscreen: true }, 101)!; a.audio.emit({ type: 'explosion.beat', tick: 0, sourceId: 50, position: { x: 15, z: 0 }, size: 'mega', beat: 'crack' }); const voices = a.audio.emitters(); return { on: voices.find(v => v.id === on)!.gain, off: voices.find(v => v.id === off)!.gain, bus: a.audio.snapshot().buses.telegraph }; });
     expect(20 * Math.log10(gain.off / gain.on)).toBeCloseTo(3, 3);
     expect(gain.bus).toBeGreaterThanOrEqual(10 ** (-6 / 20));
-    artifact('telegraphs', { rows, gain });
+    artifact('telegraphs-gain', gain);
 });
 test('T-E16-05b @E16 @E16-AC05 150-infected crowd plays only clusters plus four nearby vocals', async ({ page }) => {
     await start(page);
@@ -109,7 +112,14 @@ test('T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; 
             a.spawn('infected.runner', { x: 8 + i * 0.4, z: -2 }, { state: 'chase' });
         a.resume();
     });
-    await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.layers), { timeout: 4500 }).toContain('drive');
+    try {
+        await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.layers), { timeout: 4500 }).toContain('drive');
+    } finally {
+        artifact('music-live-start', await page.evaluate(() => {
+            const a = window.__SS__!;
+            return { tick: a.tick(), audio: a.audio.snapshot(), perf: a.perf(), infected: a.query({ kind: 'infected' }).map(e => ({ id: e.id, state: e.infected?.state, health: e.health.current })) };
+        }));
+    }
     const data = await page.evaluate(async () => { const a = window.__SS__!; a.pause(); const live = a.audio.snapshot().music; const offline = await a.audio.render({ scenario: 'music' }); return { live, transitions: offline.transitions }; });
     expect(data.transitions!.length).toBeGreaterThanOrEqual(3);
     for (const t of data.transitions!)

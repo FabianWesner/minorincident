@@ -1,0 +1,119 @@
+{
+  "allPassed": true,
+  "baseCommit": "b5dcd1c",
+  "codeCommit": "b90bc08",
+  "criteria": {
+    "E09-AC01": [
+      {
+        "runner": "vitest",
+        "title": "T-E09-01 @E09-AC01 roster validates and every used asset has its complete vehicle node contract",
+        "status": "passed"
+      },
+      {
+        "runner": "chromium",
+        "title": "T-E09-asset @E09-AC01 dynamically spawned integrated fire engine renders and unloads its native resources",
+        "status": "passed"
+      }
+    ],
+    "E09-AC04": [
+      {
+        "runner": "vitest",
+        "title": "T-E09-04 @E09-AC04 runner run-over kill cause and brute knockback/ramDamage",
+        "status": "passed"
+      }
+    ],
+    "E09-AC05": [
+      {
+        "runner": "vitest",
+        "title": "T-E09-05 @E09-AC05 every light obstacle breaks with <=25% slowdown; every heavy obstacle stops and damages",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "T-E09-05b @E09-AC05 below-threshold impact stays solid and debris bodies remain bounded/recycled",
+        "status": "passed"
+      }
+    ],
+    "E09-AC06": [
+      {
+        "runner": "vitest",
+        "title": "T-E09-06 @E09-AC06 strict smoke/fire thresholds, exactly three-second fuse, eject and splash",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "T-E09-06b @E09-AC06 a boxed-in driver is forcibly ejected and attached infected are released",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "T-E09-06c @E09-AC06 RIGHT can exit a zero-HP car during its fuse",
+        "status": "passed"
+      }
+    ],
+    "E09-AC07": [
+      {
+        "runner": "vitest",
+        "title": "T-E09-07 @E09-AC07 proximity/speed grab limits and acceleration/steering shake-off",
+        "status": "passed"
+      }
+    ],
+    "E09-AC09": [
+      {
+        "runner": "vitest",
+        "title": "T-E09-09 @E09-AC09 driver completes 600m cone course under 90s without cheats",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "T-E09-09b @E09-AC09 commanded stuck car starts reverse recovery after a three-second travel window",
+        "status": "passed"
+      }
+    ],
+    "E09-AC03": [
+      {
+        "runner": "vitest",
+        "title": "T-E09-03 @E09-AC03 sedan acceleration, full-lock radius and slalom stability",
+        "status": "passed"
+      }
+    ],
+    "E09-AC11": [
+      {
+        "runner": "vitest",
+        "title": "T-E09-11 @E09-AC11 30 second scripted Rapier drive is deterministic across three worlds",
+        "status": "passed"
+      }
+    ],
+    "E09-AC02": [
+      {
+        "runner": "vitest",
+        "title": "T-E09-02 @E09-AC02 door dwell, input ownership and capsule-safe exit on opposite side",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "T-E09-02b @E09-AC02 walking or leaving the ring resets the full dwell timer",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "T-E09-02c @E09-AC02 a moving car can exit after a 50m drive on the large course ground",
+        "status": "passed"
+      }
+    ],
+    "E09-AC08": [
+      {
+        "runner": "chromium",
+        "title": "T-E09-08 @E09-AC08 real mouse aims ahead-left to accelerate/turn and dead ring brakes",
+        "status": "passed"
+      }
+    ],
+    "E09-AC10": [
+      {
+        "runner": "chromium",
+        "title": "T-E09-10 @E09-AC10 wheel spin/steer, brake lamps and alternating siren pixels",
+        "status": "passed"
+      }
+    ]
+  }
+}

@@ -1,0 +1,209 @@
+
+> test:e2e
+> sh tools/e2e-lock.sh playwright test --project=chromium --grep-invert @E10-AC06 --workers=2
+
+
+Running 91 tests using 2 workers
+
+  ✓   1 [chromium] › tests/e2e/asset-conformance.spec.ts:7:3 › T-E17-conformance veh.sedan-red @E17-AC02 optimized export renders in the game camera (4.7s)
+  ✓   2 [chromium] › tests/e2e/asset-conformance.spec.ts:7:3 › T-E17-conformance char.survivor-female @E17-AC02 optimized export renders in the game camera (5.4s)
+  ✓   3 [chromium] › tests/e2e/asset-conformance.spec.ts:7:3 › T-E17-conformance prop.bench @E17-AC02 optimized export renders in the game camera (1.7s)
+  ✓   4 [chromium] › tests/e2e/asset-conformance.spec.ts:7:3 › T-E17-conformance npc.civilian-woman-a @E17-AC02 optimized export renders in the game camera (1.9s)
+  ✓   5 [chromium] › tests/e2e/asset-conformance.spec.ts:7:3 › T-E17-conformance veh.suv-dark @E17-AC02 optimized export renders in the game camera (2.7s)
+  ✓   7 [chromium] › tests/e2e/asset-conformance.spec.ts:48:3 › T-E17-gore-probe inf.common-worker armR @E17-AC11 hidden cap closes detached joint (1.9s)
+  ✓   6 [chromium] › tests/e2e/asset-conformance.spec.ts:31:1 › T-E17-direction @E17-AC03 E04 survivor turns toward keyboard movement (5.2s)
+  ✓   8 [chromium] › tests/e2e/asset-conformance.spec.ts:48:3 › T-E17-gore-probe inf.suburban-mom head @E17-AC11 hidden cap closes detached joint (2.1s)
+  ✓   9 [chromium] › tests/e2e/asset-conformance.spec.ts:48:3 › T-E17-gore-probe inf.riot-cop foreArmR @E17-AC11 hidden cap closes detached joint (2.1s)
+  ✓  11 [chromium] › tests/e2e/camera.spec.ts:22:1 › T-E02-03 @E02 @E02-AC03 follow converges after 20 m teleport without overshoot (1.5s)
+  ✓  10 [chromium] › tests/e2e/camera.spec.ts:7:1 › T-E02-01 @E02 @E02-AC01 forced WebGL2 and automatic backend report the initialized backend (3.8s)
+  ✓  13 [chromium] › tests/e2e/camera.spec.ts:56:1 › T-E02-04 @E02 @E02-AC04 portrait keeps every point of the 12 m circle inside the viewport (1.8s)
+  ✓  14 [chromium] › tests/e2e/camera.spec.ts:65:1 › T-E02-05b @E02 @E02-AC05 lookdev only uses palette or explicitly retained materials (16.0s)
+  ✓  15 [chromium] › tests/e2e/combat-wiring.spec.ts:6:1 › T-E05-13 @E05 @E05-AC13 real cursor LMB RMB wheel matches sim side/rack state (4.3s)
+  ✓  12 [chromium] › tests/e2e/camera.spec.ts:35:1 › T-E02-02 @E02 @E02-AC02 default camera angles and projected 1.4 m survivor height (24.9s)
+  ✓  17 [chromium] › tests/e2e/crowd.spec.ts:4:1 › T-E17-07b @E17-AC07 100 infected use one draw per material and GPU poses match at five times and four headings (5.9s)
+  ✓  16 [chromium] › tests/e2e/combat-wiring.spec.ts:39:1 › T-E05-browser @E05 arena placeholder scene, cheats, settings, screenshot and lifecycle (13.4s)
+  ✓  18 [chromium] › tests/e2e/driving.spec.ts:2:1 › T-E09-08 @E09-AC08 real mouse aims ahead-left to accelerate/turn and dead ring brakes (11.1s)
+  ✓  19 [chromium] › tests/e2e/driving.spec.ts:20:1 › S-07 @smoke @E09 vehicle enter, driver travels 50m, real right-click exit (6.3s)
+  ✓  20 [chromium] › tests/e2e/driving.spec.ts:28:1 › T-E09-controls @E09 keyboard WASD uses local driving axes (4.3s)
+  ✓  21 [chromium] › tests/e2e/driving.spec.ts:35:1 › T-E09-touch @E09 touch stick accelerates and a held brake stops without exiting (4.1s)
+  ✓  22 [chromium] › tests/e2e/driving.spec.ts:53:1 › T-E09-asset @E09-AC01 dynamically spawned integrated fire engine renders and unloads its native resources (4.5s)
+  ✓  23 [chromium] › tests/e2e/harness.spec.ts:12:1 › T-E01-04b @E01 @E01-AC04 browser and Node match after 3600 scripted ticks (6.0s)
+  ✘  24 [chromium] › tests/e2e/harness.spec.ts:30:1 › T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and epic stubs (4.3s)
+  ✓  25 [chromium] › tests/e2e/harness.spec.ts:61:1 › T-E01-06 @E01 @E01-AC06 pause + exact step and 10x sim time within 2% (5.7s)
+  ✓  27 [chromium] › tests/e2e/harness.spec.ts:100:1 › T-E01-10 @E01 @E01-AC10 guard detects errors and uncaught exceptions (2.1s)
+  ✓  28 [chromium] › tests/e2e/input-keyboard.spec.ts:4:1 › T-E03-04 @E03 @E03-AC04 WASD follows screen up at camera azimuth pi/4 (1.2s)
+  ✓  29 [chromium] › tests/e2e/input-keyboard.spec.ts:16:1 › T-E03-05 @E03 @E03-AC05 keyboard aim turns at 360deg/s, taps snap and action mirrors fire (2.4s)
+  ✓  30 [chromium] › tests/e2e/input-keyboard.spec.ts:50:1 › T-E03-08 @E03 @E03-AC08 last device selects mouse-only mouse-keyboard and keyboard with matching hint (2.4s)
+  ✓  31 [chromium] › tests/e2e/input-keyboard.spec.ts:67:1 › T-E03-09 @E03 @E03-AC09 binding form persists across reload and rejects conflicts with a message (2.6s)
+  ✓  32 [chromium] › tests/e2e/input-mouse.spec.ts:9:1 › T-E03-01 @E03 @E03-AC01 mouse dead zone and linear distance steering (1.9s)
+  ✓  33 [chromium] › tests/e2e/input-mouse.spec.ts:21:1 › T-E03-02 @E03 @E03-AC02 mouse buttons preserve down held up and prevent context menus (1.3s)
+  ✓  34 [chromium] › tests/e2e/input-mouse.spec.ts:38:1 › T-E03-03 @E03 @E03-AC03 wheel notches pulse once and trackpads debounce 120ms (1.7s)
+  ✓  35 [chromium] › tests/e2e/input-mouse.spec.ts:51:1 › T-E03-12 @E03 @E03-AC12 middle-click and E interact without browser autoscroll (2.1s)
+  ✓  26 [chromium] › tests/e2e/harness.spec.ts:80:1 › T-E01-07 @E01 @E01-AC07 load/unload x20 returns all resources to baseline (21.5s)
+  ✓  37 [chromium] › tests/e2e/input-touch.spec.ts:21:1 › T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases within one tick (2.4s)
+  ✘  36 [chromium] › tests/e2e/input-recorder.spec.ts:7:1 › T-E03-recorder-browser @E03 @E03-AC10 real device frames replay through the browser input phase (4.6s)
+  ✓  38 [chromium] › tests/e2e/input-touch.spec.ts:40:1 › T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap uses assist (1.8s)
+  ✓  39 [chromium] › tests/e2e/input-touch.spec.ts:63:3 › T-E03-13-hidden @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input (1.1s)
+  ✓  41 [chromium] › tests/e2e/input-touch.spec.ts:63:3 › T-E03-13-pagehide @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input (1.3s)
+  ✓  40 [chromium] › tests/e2e/input-touch.spec.ts:63:3 › T-E03-13-blur @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input (2.3s)
+  ✓  42 [chromium] › tests/e2e/input-touch.spec.ts:84:1 › T-E03-touch-schemes @E03 @E03-AC08 touch and keyboard switch immediately and hints follow (1.1s)
+  ✓  43 [chromium] › tests/e2e/input-touch.spec.ts:93:1 › T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires (1.3s)
+  ✓  44 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.6s)
+  ✓  45 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (3.0s)
+  ✓  47 [chromium] › tests/e2e/survivor.spec.ts:34:1 › T-E04-wiring @E04 actual keyboard input moves the survivor; variant selection is cosmetic and unload frees resources (11.3s)
+  ✓  48 [chromium] › tests/e2e/turntable.spec.ts:5:1 › T-E17-08 @E17-AC08 @E17-AC04 five fire-engine views cover 10–80% and preserve contract nodes (6.0s)
+  ✓  49 [chromium] › tests/e2e/turntable.spec.ts:17:1 › T-E17-05e @E17-AC05 pending survivor art uses E04 code rigs with placeholder logs (2.9s)
+  ✓  50 [chromium] › tests/e2e/turntable.spec.ts:33:1 › T-E17-05c @E17-AC05 pre-integrated production art renders a logged placeholder (764ms)
+  ✓  51 [chromium] › tests/e2e/weapons.spec.ts:4:1 › T-E06-08c @E06 @E06-AC08 all roster actions attach at either hand across both hero rigs (5.2s)
+  ✓  52 [chromium] › tests/e2e/weapons.spec.ts:20:1 › T-E06-pickup-view @E06 pickup spawn and walk-over wire through the browser API (4.0s)
+  ✓  46 [chromium] › tests/e2e/survivor.spec.ts:6:1 › T-E04-09 @E04 @E04-AC09 sixty-second input bot visits every sim clip with zero missing mappings (38.0s)
+  ✓  54 [chromium] › tests/perf/districts.spec.ts:46:1 › T-E10-lifecycle @E10 world reload preserves bounded shared caches and releases every instance/body/listener (45.9s)
+  ✓  55 [chromium] › tests/perf/foundation.spec.ts:4:1 › T-E01-perf @E01 @perf foundation counters report a plane and cube (1.7s)
+  ✓  56 [chromium] › tests/perf/input.spec.ts:4:1 › T-E03-perf @E03 @perf device input preserves renderer counters and reports fixed-tick cost (940ms)
+  ✓  57 [chromium] › tests/perf/lookdev.spec.ts:4:1 › T-E02-perf @E02 @perf lookdev counters, frame costs and lifecycle plateau (46.3s)
+  ✓  58 [chromium] › tests/perf/weapons.spec.ts:4:1 › T-E06-render-perf @E06 @perf held assets and indicators stay in render budget and unload cleanly (9.2s)
+  ✓  53 [chromium] › tests/perf/districts.spec.ts:5:1 › T-E10-05 @E10 @E10-AC05 repeated props use instance batches and full high-tier district <=250 draw calls (2.2m)
+  ✓  60 [chromium] › tests/visual/districts.spec.ts:114:3 › T-E10-04-D-RES @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear (39.1s)
+  ✓  59 [chromium] › tests/visual/districts.spec.ts:65:3 › T-E10-08-D-RES @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels (2.2m)
+  ✓  62 [chromium] › tests/visual/districts.spec.ts:114:3 › T-E10-04-D-MAIN @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear (45.9s)
+  ✓  61 [chromium] › tests/visual/districts.spec.ts:65:3 › T-E10-08-D-MAIN @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels (2.5m)
+  ✓  64 [chromium] › tests/visual/districts.spec.ts:114:3 › T-E10-04-D-SCHOOL @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear (39.3s)
+  ✓  63 [chromium] › tests/visual/districts.spec.ts:65:3 › T-E10-08-D-SCHOOL @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels (1.9m)
+  ✓  66 [chromium] › tests/visual/districts.spec.ts:114:3 › T-E10-04-D-SHOP @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear (52.9s)
+  ✓  65 [chromium] › tests/visual/districts.spec.ts:65:3 › T-E10-08-D-SHOP @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels (2.6m)
+  ✓  68 [chromium] › tests/visual/districts.spec.ts:114:3 › T-E10-04-D-CIVIC @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear (47.6s)
+  ✓  67 [chromium] › tests/visual/districts.spec.ts:65:3 › T-E10-08-D-CIVIC @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels (2.5m)
+  ✓  70 [chromium] › tests/visual/districts.spec.ts:114:3 › T-E10-04-D-PARK @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear (36.8s)
+  ✓  69 [chromium] › tests/visual/districts.spec.ts:65:3 › T-E10-08-D-PARK @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels (1.9m)
+  ✓  72 [chromium] › tests/visual/districts.spec.ts:114:3 › T-E10-04-D-ZOO @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear (35.7s)
+  ✓  71 [chromium] › tests/visual/districts.spec.ts:65:3 › T-E10-08-D-ZOO @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels (2.0m)
+  ✘  74 [chromium] › tests/visual/districts.spec.ts:114:3 › T-E10-04-D-EDGE @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear (14.4s)
+  ✘  73 [chromium] › tests/visual/districts.spec.ts:65:3 › T-E10-08-D-EDGE @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels (1.1m)
+
+
+  1) [chromium] › tests/e2e/harness.spec.ts:30:1 › T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and epic stubs
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "NotImplemented E19: bot.stop"
+    Received: "NO ERROR"
+
+      54 |   expect(surface.keys).toEqual(['version', 'ready', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'perf', 'screenshotReady'].sort());
+      55 |   const epics: Record<string, string> = { spawn: 'E07', 'cheats.killAll': 'E07', 'cheats.completeObjective': 'E12', 'bot.start': 'E19', 'bot.stop': 'E19', 'bot.status': 'E19' };
+    > 56 |   for (const [name, epic] of Object.entries(epics)) expect(surface.errors[name]).toBe(`NotImplemented ${epic}: ${name}`);
+         |                                                                                  ^
+      57 |   expect(surface.entity?.transform).toMatchObject({ x: 2, z: 3 }); expect(surface.missing).toBeNull(); expect(surface.nearby).toHaveLength(1);
+      58 |   expect(surface.events).toContainEqual({ tick: 1, type: 'sim.tick' }); expect(surface.perf.entities).toBe(1);
+      59 | });
+        at /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests/e2e/harness.spec.ts:56:82
+
+    Error Context: test-results/playwright/run/e2e-harness-T-E01-05-E01-E-96052-tract-method-and-epic-stubs-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run/e2e-harness-T-E01-05-E01-E-96052-tract-method-and-epic-stubs-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run/e2e-harness-T-E01-05-E01-E-96052-tract-method-and-epic-stubs-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/input-recorder.spec.ts:7:1 › T-E03-recorder-browser @E03 @E03-AC10 real device frames replay through the browser input phase
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -5,11 +5,11 @@
+        },
+        "aimSource": "keyboard",
+        "brake": false,
+        "drive": Object {
+          "steer": 0,
+    -     "throttle": -0,
+    +     "throttle": 0,
+        },
+        "interact": false,
+        "left": Object {
+          "down": false,
+          "held": false,
+
+      16 |   await page.evaluate(async (data) => { await window.__SS__!.input.replay(data); await window.__SS__!.step(data.frames.length); }, copy);
+      17 |   const replay = await page.evaluate(() => window.__SS__!.getState());
+    > 18 |   expect(stateHash(replay)).toBe(stateHash(first.state)); expect(replay.input.frame).toEqual(first.state.input.frame);
+         |                                                                                      ^
+      19 |   await tick(page); expect((await tick(page)).move).toEqual({ x: 0, z: 0 });
+      20 |   mkdirSync('test-results/epics/E03', { recursive: true });
+      21 |   writeFileSync('test-results/epics/E03/keyboard.ssrec', Recorder.serialize(first.recording));
+        at /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests/e2e/input-recorder.spec.ts:18:86
+
+    Error Context: test-results/playwright/run/e2e-input-recorder-T-E03-r-960da-ugh-the-browser-input-phase-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run/e2e-input-recorder-T-E03-r-960da-ugh-the-browser-input-phase-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run/e2e-input-recorder-T-E03-r-960da-ugh-the-browser-input-phase-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/visual/districts.spec.ts:65:3 › T-E10-08-D-EDGE @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels
+
+    Test was interrupted.
+
+    Error: page.evaluate: Test ended.
+
+      25 |     layout,
+      26 |   );
+    > 27 |   await page.evaluate(
+         |              ^
+      28 |     async ({ id, tier, spot, point }) => {
+      29 |       const api = window.__SS__!;
+      30 |       await api.loadLevel(id, { tier: tier as 0 | 5, seed: 1 });
+        at district (/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests/visual/districts.spec.ts:27:14)
+        at /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests/visual/districts.spec.ts:72:13
+
+    Error Context: test-results/playwright/run/visual-districts-T-E10-08--adfcf-amera-and-30-non-sky-pixels-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run/visual-districts-T-E10-08--adfcf-amera-and-30-non-sky-pixels-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run/visual-districts-T-E10-08--adfcf-amera-and-30-non-sky-pixels-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/visual/districts.spec.ts:114:3 › T-E10-04-D-EDGE @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear
+
+    Test was interrupted.
+
+    Error: page.evaluate: Test ended.
+
+      25 |     layout,
+      26 |   );
+    > 27 |   await page.evaluate(
+         |              ^
+      28 |     async ({ id, tier, spot, point }) => {
+      29 |       const api = window.__SS__!;
+      30 |       await api.loadLevel(id, { tier: tier as 0 | 5, seed: 1 });
+        at district (/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests/visual/districts.spec.ts:27:14)
+        at /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests/visual/districts.spec.ts:119:11
+
+    Error Context: test-results/playwright/run/visual-districts-T-E10-04--5ba59-ms-and-fire-emitters-appear-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run/visual-districts-T-E10-04--5ba59-ms-and-fire-emitters-appear-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run/visual-districts-T-E10-04--5ba59-ms-and-fire-emitters-appear-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/e2e/harness.spec.ts:30:1 › T-E01-05 @E01 @E01-AC05 API query gate, semver, every contract method and epic stubs
+    [chromium] › tests/e2e/input-recorder.spec.ts:7:1 › T-E03-recorder-browser @E03 @E03-AC10 real device frames replay through the browser input phase
+  2 interrupted
+    [chromium] › tests/visual/districts.spec.ts:65:3 › T-E10-08-D-EDGE @E10 @E10-AC08 photo spots at all six tiers have finite camera and >=30% non-sky pixels
+    [chromium] › tests/visual/districts.spec.ts:114:3 › T-E10-04-D-EDGE @E10 @E10-AC04 same-place W0/W5 window mask dims and fire emitters appear
+  17 did not run
+  70 passed (15.3m)

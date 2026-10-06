@@ -1,0 +1,10 @@
+
+> test:e2e
+> sh tools/e2e-lock.sh playwright test --project=chromium tests/e2e/audio/runtime.spec.ts --grep T-E16-10b --workers=2
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/audio/runtime.spec.ts:107:1 › T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; offline schedules stay on grid (7.2s)
+
+  1 passed (8.7s)

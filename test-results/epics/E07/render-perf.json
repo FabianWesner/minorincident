@@ -2,8 +2,10 @@
   "crowd": {
     "instances": 400,
     "meshDrawCalls": 2,
-    "objects": 21,
+    "objects": 22,
     "nonInstancedMeshes": 0,
+    "caps": 0,
+    "flashes": 0,
     "batches": [
       {
         "id": "infected.runner",
@@ -190,17 +192,17 @@
     ]
   },
   "perf": {
-    "fps": 30.030030030029867,
-    "frameMs": 33.30000000000018,
+    "fps": 5.452562704471099,
+    "frameMs": 183.4000000000001,
     "simMs": 0,
-    "drawCalls": 41,
-    "triangles": 129287,
-    "geometries": 78,
-    "textures": 23,
+    "drawCalls": 51,
+    "triangles": 148327,
+    "geometries": 88,
+    "textures": 25,
     "entities": 201,
     "backend": "webgl",
     "loadTiming": null
   },
-  "removedDrawCalls": 39,
+  "removedDrawCalls": 49,
   "crowdDrawDelta": 2
 }

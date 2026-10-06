@@ -1,0 +1,33 @@
+[
+  {
+    "check": "smoke",
+    "command": [
+      "npm",
+      "run",
+      "test:smoke"
+    ],
+    "exitCode": 0
+  },
+  {
+    "check": "verify",
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E11"
+    ],
+    "exitCode": 0
+  },
+  {
+    "check": "regression",
+    "status": "skipped",
+    "reason": "Canceled before starting at orchestrator instruction; cross-epic browser regression runs centrally on main",
+    "cancellationExitCode": -15
+  },
+  {
+    "check": "headed-webgpu",
+    "status": "not-run",
+    "reason": "Latest orchestrator instruction limits final browser runs to E11 verify and smoke"
+  }
+]

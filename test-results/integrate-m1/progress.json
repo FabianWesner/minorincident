@@ -1,0 +1,707 @@
+{
+  "merged": [
+    "E12",
+    "E11",
+    "E09",
+    "E15"
+  ],
+  "pending": null,
+  "manifest_union": 275,
+  "asset_registrations": [
+    "bld.helipad",
+    "veh.helicopter",
+    "veh.military-truck",
+    "veh.semi-trailer",
+    "wpn.assault-rifle",
+    "wpn.fire-axe",
+    "wpn.knife",
+    "wpn.rocket-launcher"
+  ],
+  "checks": {
+    "E12_verify": 0,
+    "typecheck": 0,
+    "lint": 0,
+    "E12_sim": {
+      "passed": 193
+    },
+    "unit": {
+      "passed": 95,
+      "failed": 1,
+      "exception": "T-E17-sources: unregistered late bld.dugout source; central reconciliation owns the 23 late sources",
+      "permitted_by_orchestrator": true
+    }
+  },
+  "conflicts_resolved": {
+    "src/Game.ts": "retain mission progression/checkpoint load, crowd spawn frustum, vehicle input and hit stop wiring; E16 audio init/reset/load and tier/checkpoint rebind",
+    "src/debug/testApi.ts": "union mission, crowd, interactions, vehicles and VFX controls/state; distributive telegraph payload typing; version 1.7; E16 audio controls retained and version 1.8",
+    "src/levels/loader.ts": "union scenario catalog and district/mission/interactable/vehicle spawn paths",
+    "src/render/GameView.ts": "compose all views, update phases and disposal; render-clock hit stop, crowd VFX, real vehicle blood and fixture feedback adapter",
+    "src/sim/world/EntityStore.ts": "combine checkpoint restoration and vehicle/interactable components with pooled infected adopt/delete",
+    "src/sim/world/SimWorld.ts": "combine mission, interactions/hazards, vehicles and infected systems; rebuild native handles/navigation on checkpoint or tier change",
+    "src/sim/world/types.ts": "union components/events and damage causes; both telegraph payload forms; common noise duration; E16 AudioSystemEvent union",
+    "src/assets/manifest.json": "per-ID/per-field union of 275 IDs; baseline source registration retained; late registration handed to central reconcile",
+    "tests/e2e/harness.spec.ts": "additive API/version checks and all implemented mission/infected/interaction/vehicle/VFX controls",
+    "src/sim/combat/Damage.ts": "preserve infected Bloated exact 35 damage and E11 environmental blast reduction; keep vehicle/action damage feedback causes",
+    "public/assets/models/npc.helicopter-pilot.lod1.glb": "regenerated through optimizeExports from assets/npc.helicopter-pilot/model.glb using merged optimizer",
+    "tools/assets/optimize.ts": "retain incoming character LOD1 budget ratio and canonical source optimization",
+    "tests/e2e/webgpu.spec.ts": "retain native WebGPU acceptance tests for every delivered epic",
+    "src/render/VehicleView.ts": "retain actual vehicle model/wheels/lights/fire/smoke; unique blood material copies preserve imported authored colors and lighting",
+    "src/render/CrowdView.ts": "retain instancing and frustum pooling; per-instance hit/gore state plus shared stump-cap batch",
+    "src/sim/ai/NavGrid.ts": "dynamic overlapping blocker updates invalidate actual infected pathfinding",
+    "src/sim/ai/InfectedSystem.ts": "alarm targets expire, pooled reuse clears state, vehicle-attached infected suspend independent movement",
+    "src/sim/vehicles/Vehicles.ts": "integrate E11 destructible prop/nav/debris lifecycle and E12 native-body/timer restoration",
+    "src/render/vfx/Vfx.ts": "adapt real AI, hazard, pickup and vehicle events; exclude environment/vehicle targets from infected gore",
+    "src/sim/combat/ActionEffects.ts": "retain E09 source/kind overrides and E16 shared weapon loudness metadata",
+    "src/audio/AudioService.ts": "accept both telegraphs; resolve positional E11 event IDs; bind real mission radio/extraction and additional domain cue mappings",
+    "specs/status.json": "preserve E09/E11/E12/E15 done and main E16 done"
+  },
+  "E11": {
+    "manifest_union": 275,
+    "binary": "pilot LOD regenerated",
+    "checks": {
+      "unit": 71,
+      "sim": 220,
+      "verify": 0
+    },
+    "extra_regressions": [
+      "E07 dynamic blockers/alarm/35-damage Bloated",
+      "E12 tier/checkpoint restores E11 blockers/debris"
+    ]
+  },
+  "E09": {
+    "manifest_union": 275,
+    "unit": 72,
+    "sim_before_final_attachment_guard": 238,
+    "verify": 0,
+    "extra_regressions": 3
+  },
+  "E15": {
+    "state": "passed",
+    "manifest_union": 275,
+    "unit": 83,
+    "typecheck": 0,
+    "lint": 0,
+    "extra_node_regressions": 5,
+    "extra_browser_regressions": 2,
+    "verify": 0,
+    "browser": 25,
+    "tagged_node": 14,
+    "integrated_browser_and_harness": 7
+  },
+  "main": {
+    "head": "8b171c6b3d9e178a035a8bac0cddb24d6ff5d577",
+    "manifest_union": 275,
+    "registered_sources": [
+      "inf.armored-football",
+      "inf.butcher",
+      "inf.construction-worker",
+      "inf.firefighter"
+    ],
+    "typecheck": 0,
+    "lint": 0,
+    "unit": 83,
+    "historical_registration_reverted": true,
+    "registration_owner": "central orchestrator reconcile job"
+  },
+  "main2": {
+    "head": "bc2011322b08d1dca5ba8686a8d2e5317fb0f1e3",
+    "manifest_union": 275,
+    "registered_sources": [
+      "inf.hazmat",
+      "inf.nurse",
+      "inf.skater",
+      "npc.survivor-group"
+    ],
+    "new_palette_swatches": 11,
+    "typecheck": 0,
+    "lint": 0,
+    "unit": 83,
+    "historical_registration_reverted": true,
+    "registration_owner": "central orchestrator reconcile job"
+  },
+  "main3": {
+    "head": "6eaccaa06fafab3bdccfdb66d2377350475bcd44",
+    "registered_sources": [
+      "inf.corpse-poses"
+    ],
+    "authored_pose_scale_preserved": true,
+    "unit": 85,
+    "inherited_doc": "specs/03-asset-pipeline.md",
+    "historical_registration_reverted": true,
+    "registration_owner": "central orchestrator reconcile job"
+  },
+  "preliminary_e2e": {
+    "passed": 117,
+    "minutes": 27.3
+  },
+  "scope_steering": {
+    "late_asset_ids": [
+      "inf.armored-football",
+      "inf.butcher",
+      "inf.construction-worker",
+      "inf.firefighter",
+      "inf.hazmat",
+      "inf.nurse",
+      "inf.skater",
+      "npc.survivor-group",
+      "inf.corpse-poses"
+    ],
+    "registrations_reverted": true,
+    "runtime_exports_removed": 27,
+    "palette_additions_removed": 11,
+    "further_asset_driven_main_merges": false
+  },
+  "native_compile_order_fix": {
+    "cause": "soft-particle viewport depth compiled before actual MSAA render target",
+    "change": "native VFX warms during first actual render; WebGL/non-VFX precompile unchanged",
+    "targeted_native_E06_passed": 1,
+    "pending": null,
+    "full_E06_verify": 0,
+    "commit": "61141f4"
+  },
+  "final_checks": {
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "seconds": 2.27,
+      "log": "/tmp/integrate-m1-final-build.log",
+      "saved_log": "test-results/integrate-m1/logs/final-build.log"
+    },
+    "sim": {
+      "command": [
+        "npm",
+        "run",
+        "test:sim"
+      ],
+      "exit_code": 0,
+      "seconds": 9.99,
+      "log": "/tmp/integrate-m1-final-sim.log",
+      "saved_log": "test-results/integrate-m1/logs/final-sim.log"
+    },
+    "smoke": {
+      "command": [
+        "npm",
+        "run",
+        "test:smoke",
+        "--",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 23.45,
+      "log": "/tmp/integrate-m1-final-smoke.log",
+      "saved_log": "test-results/integrate-m1/logs/final-smoke.log"
+    },
+    "e2e": {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e",
+        "--",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 1623.05,
+      "log": "/tmp/integrate-m1-final-e2e.log",
+      "saved_log": "test-results/integrate-m1/logs/final-e2e.log"
+    },
+    "verify-E01": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E01"
+      ],
+      "exit_code": 0,
+      "seconds": 169.12,
+      "log": "/tmp/integrate-m1-final-verify-E01.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E01.log"
+    },
+    "verify-E02": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E02"
+      ],
+      "exit_code": 0,
+      "seconds": 158.3,
+      "log": "/tmp/integrate-m1-final-verify-E02.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E02.log"
+    },
+    "verify-E03": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E03"
+      ],
+      "exit_code": 0,
+      "seconds": 171.86,
+      "log": "/tmp/integrate-m1-final-verify-E03.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E03.log"
+    },
+    "verify-E04": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E04"
+      ],
+      "exit_code": 0,
+      "seconds": 81.13,
+      "log": "/tmp/integrate-m1-final-verify-E04.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E04.log"
+    },
+    "verify-E05": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E05"
+      ],
+      "exit_code": 0,
+      "seconds": 74.36,
+      "log": "/tmp/integrate-m1-final-verify-E05.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E05.log"
+    },
+    "verify-E06": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E06"
+      ],
+      "exit_code": 0,
+      "seconds": 73.78,
+      "log": "/tmp/integrate-m1-final-verify-E06.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E06.log"
+    },
+    "verify-E07": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E07"
+      ],
+      "exit_code": 0,
+      "seconds": 65.89,
+      "log": "/tmp/integrate-m1-final-verify-E07.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E07.log"
+    },
+    "verify-E09": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E09"
+      ],
+      "exit_code": 0,
+      "seconds": 74.82,
+      "log": "/tmp/integrate-m1-final-verify-E09.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E09.log"
+    },
+    "verify-E10": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E10"
+      ],
+      "exit_code": 0,
+      "seconds": 756.45,
+      "log": "/tmp/integrate-m1-final-verify-E10.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E10.log"
+    },
+    "verify-E11": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E11"
+      ],
+      "exit_code": 0,
+      "seconds": 146.26,
+      "log": "/tmp/integrate-m1-final-verify-E11.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E11.log"
+    },
+    "verify-E12": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E12"
+      ],
+      "exit_code": 0,
+      "seconds": 65.62,
+      "log": "/tmp/integrate-m1-final-verify-E12.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E12.log"
+    },
+    "verify-E15": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E15"
+      ],
+      "exit_code": 0,
+      "seconds": 439.26,
+      "log": "/tmp/integrate-m1-final-verify-E15.log",
+      "saved_log": "test-results/integrate-m1/logs/final-verify-E15.log"
+    }
+  },
+  "full_browser": {
+    "passed": 117,
+    "failed": 0,
+    "skipped": 0
+  },
+  "E16_main_merge_requested": true,
+  "post_main_local_checks": {
+    "typecheck": {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-typecheck.log"
+    },
+    "lint": {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-lint.log"
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-build.log"
+    },
+    "unit": {
+      "command": [
+        "npm",
+        "run",
+        "test:unit"
+      ],
+      "exit_code": 1,
+      "saved_log": "test-results/integrate-m1/logs/post-main-unit.log",
+      "passed": 95,
+      "failed": 1,
+      "exception": "Unregistered late bld.dugout source; central reconcile owns new asset registration",
+      "permitted_by_orchestrator": true
+    },
+    "sim": {
+      "command": [
+        "npm",
+        "run",
+        "test:sim"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-sim.log",
+      "passed": 239
+    }
+  },
+  "post_main_browser_checks": {
+    "smoke": {
+      "command": [
+        "npm",
+        "run",
+        "test:smoke",
+        "--",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 48.68,
+      "saved_log": "test-results/integrate-m1/logs/post-main-smoke.log",
+      "browser_report": "test-results/integrate-m1/post-main-smoke-playwright.json",
+      "browser_passed": 19,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    },
+    "verify-E16": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E16"
+      ],
+      "exit_code": 0,
+      "seconds": 219.73,
+      "saved_log": "test-results/integrate-m1/logs/post-main-verify-E16.log",
+      "browser_report": "test-results/integrate-m1/post-main-verify-E16-playwright.json",
+      "browser_passed": 64,
+      "browser_failed": 0,
+      "browser_skipped": 0,
+      "node_passed": 15
+    },
+    "verify-E15": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E15"
+      ],
+      "exit_code": 0,
+      "seconds": 439.34,
+      "saved_log": "test-results/integrate-m1/logs/post-main-verify-E15.log",
+      "browser_report": "test-results/integrate-m1/post-main-verify-E15-playwright.json",
+      "browser_passed": 34,
+      "browser_failed": 0,
+      "browser_skipped": 0,
+      "node_passed": 15
+    },
+    "native-E06": {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e:webgpu",
+        "--",
+        "--grep",
+        "@E06",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 12.62,
+      "saved_log": "test-results/integrate-m1/logs/post-main-native-E06.log",
+      "browser_report": "test-results/integrate-m1/post-main-native-E06-playwright.json",
+      "browser_passed": 1,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    },
+    "harness": {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e",
+        "--",
+        "tests/e2e/harness.spec.ts",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 32.23,
+      "saved_log": "test-results/integrate-m1/logs/post-main-harness.log",
+      "browser_report": "test-results/integrate-m1/post-main-harness-playwright.json",
+      "browser_passed": 5,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    }
+  },
+  "E16": {
+    "merged_main": "09945b75eb671c8ede6ef20e87b4b1745e5bb90b",
+    "verify": 0,
+    "node": 15,
+    "browser": 64,
+    "api_version": "1.8.0",
+    "late_source_registration_owner": "central orchestrator reconcile"
+  },
+  "post_main_checks": {
+    "typecheck": {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-typecheck.log"
+    },
+    "lint": {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-lint.log"
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-build.log"
+    },
+    "unit": {
+      "command": [
+        "npm",
+        "run",
+        "test:unit"
+      ],
+      "exit_code": 1,
+      "saved_log": "test-results/integrate-m1/logs/post-main-unit.log",
+      "passed": 95,
+      "failed": 1,
+      "exception": "Unregistered late bld.dugout source; central reconcile owns new asset registration",
+      "permitted_by_orchestrator": true
+    },
+    "sim": {
+      "command": [
+        "npm",
+        "run",
+        "test:sim"
+      ],
+      "exit_code": 0,
+      "saved_log": "test-results/integrate-m1/logs/post-main-sim.log",
+      "passed": 239
+    },
+    "smoke": {
+      "command": [
+        "npm",
+        "run",
+        "test:smoke",
+        "--",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 48.68,
+      "saved_log": "test-results/integrate-m1/logs/post-main-smoke.log",
+      "browser_report": "test-results/integrate-m1/post-main-smoke-playwright.json",
+      "browser_passed": 19,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    },
+    "verify-E16": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E16"
+      ],
+      "exit_code": 0,
+      "seconds": 219.73,
+      "saved_log": "test-results/integrate-m1/logs/post-main-verify-E16.log",
+      "browser_report": "test-results/integrate-m1/post-main-verify-E16-playwright.json",
+      "browser_passed": 64,
+      "browser_failed": 0,
+      "browser_skipped": 0,
+      "node_passed": 15
+    },
+    "verify-E15": {
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E15"
+      ],
+      "exit_code": 0,
+      "seconds": 439.34,
+      "saved_log": "test-results/integrate-m1/logs/post-main-verify-E15.log",
+      "browser_report": "test-results/integrate-m1/post-main-verify-E15-playwright.json",
+      "browser_passed": 34,
+      "browser_failed": 0,
+      "browser_skipped": 0,
+      "node_passed": 15
+    },
+    "native-E06": {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e:webgpu",
+        "--",
+        "--grep",
+        "@E06",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 12.62,
+      "saved_log": "test-results/integrate-m1/logs/post-main-native-E06.log",
+      "browser_report": "test-results/integrate-m1/post-main-native-E06-playwright.json",
+      "browser_passed": 1,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    },
+    "harness": {
+      "command": [
+        "npm",
+        "run",
+        "test:e2e",
+        "--",
+        "tests/e2e/harness.spec.ts",
+        "--workers=2"
+      ],
+      "exit_code": 0,
+      "seconds": 32.23,
+      "saved_log": "test-results/integrate-m1/logs/post-main-harness.log",
+      "browser_report": "test-results/integrate-m1/post-main-harness-playwright.json",
+      "browser_passed": 5,
+      "browser_failed": 0,
+      "browser_skipped": 0
+    }
+  },
+  "final_main": {
+    "merged_head": "09945b75eb671c8ede6ef20e87b4b1745e5bb90b",
+    "reason": "Explicit final E16 merge request",
+    "later_source_only_main": "7def6c7f52b862009112257d9a1a37d2519f34bd",
+    "later_source_only_commits": [
+      "38eca44",
+      "7def6c7"
+    ],
+    "late_registrations_or_exports": false,
+    "merge_commit": "6a3945960f497e3c788e7f4ce2e7241664410cfd"
+  },
+  "empty_pool_render_fix": {
+    "file": "src/render/vfx/FxPool.ts",
+    "behavior": "Empty pools skip GPU draws and viewport depth copies; spawn/expiry/removal/reset restore visibility correctly",
+    "music_deadline_ms": 4500,
+    "music_check_passed": true,
+    "post_main_E15_verify": 0,
+    "native_E06_passed": 1
+  },
+  "done": true,
+  "mergeability": {
+    "integration_head": "6a3945960f497e3c788e7f4ce2e7241664410cfd",
+    "main_head": "7def6c7f52b862009112257d9a1a37d2519f34bd",
+    "clean_merge": true,
+    "exit_code": 0,
+    "output": "2593e2b74d812bc2f3d7d7a8956b092c4db7ec65",
+    "stderr": "",
+    "ancestor_checks": {
+      "lane/e12-epic": true,
+      "lane/e11-epic": true,
+      "lane/e09-epic": true,
+      "lane/e15-epic": true,
+      "09945b75eb671c8ede6ef20e87b4b1745e5bb90b": true
+    },
+    "actual_final_main_merge": "09945b75eb671c8ede6ef20e87b4b1745e5bb90b",
+    "later_source_only_main_not_merged": true,
+    "worktree_clean_before_audit": true
+  },
+  "commits": {
+    "E12": "2a44e3f",
+    "E11": "8738dbd",
+    "E09": "686e4c2",
+    "E15": "6c0b626",
+    "environment_feedback_fix": "67246b0",
+    "late_registration_scope_fix": "ea63794",
+    "native_compile_fix": "61141f4",
+    "pre_main_evidence": "4e1e179",
+    "main_E16_merge": "6a3945960f497e3c788e7f4ce2e7241664410cfd"
+  }
+}
