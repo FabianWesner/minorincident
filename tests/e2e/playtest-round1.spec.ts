@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { expect, test } from './fixtures';
 import { menuStart, menuUrl } from './ui-helpers';
+// L1 v2 replaced the diner/hardware story these checks assume; the L1 v2 playthrough is tests/e2e/levels/L1.spec.ts.
+test.beforeEach(() => { test.fixme(true, 'old L1 diner flow retired (L1 v2)'); });
 
 // Opt-in exploration: five minutes in L1 plus live AI combat per viewport.
 // PLAYTEST_ROUND1=1 E2E_PORT=3334 npm run test:e2e -- tests/e2e/playtest-round1.spec.ts --workers=2

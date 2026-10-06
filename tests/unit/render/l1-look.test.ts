@@ -32,7 +32,7 @@ test('@E19 @M1-14 L1 streets retain anchors, narrower lanes and continuous small
   }
 });
 test('@E19 @M1-14 solid dressing reaches L1 navigation without blocking mission anchors', () => {
-  const world = new DistrictWorld(compositions.L1, ['D-RES', 'D-MAIN', 'D-SHOP'].map(layout), 1);
+  const world = new DistrictWorld(compositions['L1-M1'], ['D-RES', 'D-MAIN', 'D-SHOP'].map(layout), 1);
   for (const district of world.districts) {
     const dressing = district.decay.colliders.filter(c => c.id.startsWith('dressing:'));
     expect(dressing.length).toBeGreaterThan(15);

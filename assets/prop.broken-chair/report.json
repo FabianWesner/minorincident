@@ -1,0 +1,63 @@
+{
+  "id": "prop.broken-chair",
+  "triangles": {
+    "lod0": 2624,
+    "lod1": 312,
+    "lod2": 76
+  },
+  "dimensions_blender": [
+    0.6533132791519165,
+    0.6329444646835327,
+    1.0363051891326904
+  ],
+  "draw_calls": 3,
+  "materials": [
+    "pal_woodWarm",
+    "pal_uiDark",
+    "pal_leatherShadow"
+  ],
+  "nodes": [
+    "root",
+    "front",
+    "col:body"
+  ],
+  "backface_culling": true,
+  "rounds": 3,
+  "webgpu_ok": false,
+  "webgl2_ok": true,
+  "gaps": [
+    "WebGPU manual check pending; manifest registration intentionally deferred."
+  ],
+  "delivery": {
+    "model.glb": {
+      "bytes": 81416,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod1.glb": {
+      "bytes": 14516,
+      "meshopt": true,
+      "quantized": true
+    },
+    "model.lod2.glb": {
+      "bytes": 8860,
+      "meshopt": true,
+      "quantized": true
+    }
+  },
+  "lod_ratios": {
+    "lod1": 0.11890243902439024,
+    "lod2": 0.028963414634146343
+  },
+  "within_budget": true,
+  "nodes_ok": true,
+  "determinism": {
+    "id": "prop.broken-chair",
+    "geometry_hash": "667b96e36f7fe3917d0d06f17d79eea2036a66fecf7799a9795cfa32d3b32c64",
+    "second_geometry_hash": "667b96e36f7fe3917d0d06f17d79eea2036a66fecf7799a9795cfa32d3b32c64",
+    "geometry_identical": true,
+    "raw_byte_identical": true
+  },
+  "matches_reference": true,
+  "done": true
+}

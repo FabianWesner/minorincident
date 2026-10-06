@@ -28,13 +28,25 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
   let end: string;
   switch (id) {
     case 'L1': {
-      const diner = anchor('diner','D-MAIN','diner-door'), hardware = anchor('hardware','D-MAIN','hardware-display'), pharmacy = anchor('pharmacy','D-SHOP','pharmacy-door');
-      reach('breakfast', "Go to Joe’s Diner for breakfast", diner).onComplete = [{ kind: 'tier', tier: 1 }];
-      reach('escape', 'Get away! Reach the hardware store.', hardware);
-      const pickup = interact('melee','Pick up a melee weapon',hardware); def.items.push('melee'); pickup.onComplete = [{ kind: 'grant', item: 'melee' }]; checkpoint(pickup);
-      for (let i=1;i<=3;i++) reach(`trail-${i}`,`Follow the trail of incidents (${i}/3)`,anchor(`trail-${i}`,i<3?'D-MAIN':'D-SHOP',i===1?'arrival':i===2?'exit':'arrival'));
-      const boss = actor('patient-zero',pharmacy,'infected',600,true), kill = step('source','kill','Defeat Patient Zero',pharmacy,{ kind: 'kills', actors: [boss] }); kill.onStart = [{ kind: 'spawn', group: boss }]; checkpoint(kill);
-      end = interact('seal','Seal the cooler room',pharmacy,3).id; break;
+      // L1 v2 (specs/epic-19 section 3): courier job, hand-over, accident, systemic spread, bat, fire station.
+      def.l1 = true;
+      for (const name of ['player-start', 'parcel-counter', 'lab-door', 'lab-gate', 'lab-exit-front', 'lab-exit-side', 'lab-exit-window', 'lab-smoke-vent', 'lab-smoke-window', 'lab-tech-spawn', 'garage-door', 'garage-bat', 'fire-bay-door', 'fire-bay-trigger', 'elm-horde-entry']) anchor(name, 'D-GROVE', name);
+      // Click-to-move stops ~2 m from its target: the reach volume must be forgiving.
+      def.anchors['fire-bay-trigger'].radius = 3;
+      def.items.push('parcel', 'bat'); def.states.push('delivered', 'exited', 'away'); def.checkpoints.push('accident', 'bat');
+      def.gates['fire-shutter'] = { anchor: 'fire-bay-door', open: true };
+      const pickup = interact('pickup', 'Pick up the package at the courier depot', 'parcel-counter', 1);
+      pickup.onComplete = [{ kind: 'grant', item: 'parcel' }, { kind: 'radio', id: 'L1.pickedUp' }];
+      // Completes when the technician has taken the box and walked back in (LevelOneOutbreak drives `delivered`).
+      step('deliver', 'interact', 'Deliver the package to the Medical Annex', 'lab-door', { kind: 'state', key: 'delivered', equals: true });
+      // Beat 5 leaves no objective for 4 to 6 s; the objective below starts when the infected exit.
+      const escape = step('escape', 'custom', 'Get away from the facility', 'garage-door', { kind: 'state', key: 'away', equals: true }, []);
+      escape.start = { kind: 'state', key: 'exited', equals: true }; escape.onStart = [{ kind: 'radio', id: 'L1.bang' }];
+      const bat = interact('weapon', 'Find something to defend yourself', 'garage-bat', 0.6);
+      bat.onComplete = [{ kind: 'grant', item: 'bat' }, { kind: 'checkpoint', id: 'bat' }];
+      const fire = reach('firestation', 'Reach the fire station', 'fire-bay-trigger');
+      fire.onStart = [{ kind: 'radio', id: 'L1.fire' }]; fire.onComplete = [{ kind: 'gate', id: 'fire-shutter', open: false }];
+      end = fire.id; break;
     }
     case 'L2': {
       const home = anchor('home','D-RES','safe-house-door'), school = anchor('school','D-SCHOOL','gym-door'), buses = anchor('buses','D-PARK','safe-point');
@@ -86,7 +98,7 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
     }
   }
   def.finish = [end]; const at = def.anchors[def.steps.at(-1)!.anchor];
-  def.cinematics.twist = { seconds: 20, caption: dialogue[`${id}.twist`], position: [at.x+18,22,at.z+18], target: [at.x,0,at.z], actions: [{ kind: 'radio', id: `${id}.twist` }] };
+  def.cinematics.twist = { seconds: id === 'L1' ? 8 : 20, caption: dialogue[`${id}.twist`], position: [at.x+18,22,at.z+18], target: [at.x,0,at.z], actions: [{ kind: 'radio', id: `${id}.twist` }] };
   return def;
 }
 /** Missing loaded anchors are authoring errors, never silently replaced with coordinates. */
