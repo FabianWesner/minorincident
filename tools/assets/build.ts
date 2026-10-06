@@ -45,7 +45,7 @@ export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'l
         const generatedRatio = def.generatedLodRatios?.[lod];
         const generated = existsSync(supplied) && (await io.read(supplied)).getRoot().listScenes().some(scene => scene.getExtras().deliveryLodGenerated === true);
         const useSupplied = !options.decay && !generated && generatedRatio === undefined && existsSync(supplied);
-        await optimizeAsset(useSupplied ? supplied : raw, staged, def, useSupplied ? 1 : generatedRatio ?? (lod === 'lod1' && def.category === 'infected' ? .10 : ratio));
+        await optimizeAsset(useSupplied ? supplied : raw, staged, def, useSupplied ? 1 : generatedRatio ?? (lod === 'lod1' && def.category === 'infected' ? .10 : ratio), useSupplied ? undefined : def.lodPrepass?.[lod]);
         const validation = validateDocument(await io.read(staged), def, readFileSync(staged).length, lod === 'lod1' ? 1 : 2);
         if (validation.errors.length) throw new Error(`${lod} invalid: ${validation.errors.join('; ')}`);
         outputs.push([staged,output]);
