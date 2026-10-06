@@ -106,6 +106,7 @@ export class Vfx extends Group {
       this.targets.vehicle?.(vehicle, this.enabled && this.gore !== 'Off');
     }
     if (!this.enabled) return;
+    if (event.type === 'combat.hit' || event.type === 'combat.kill') { const target = this.world.entities.get(event.targetId); if (target?.faction === 'environment' || target?.vehicle) return; }
     if (event.type === 'combat.hit' && event.amount > 0) {
       this.blood(event.position.x, event.position.z, false);
       this.pulse(event.targetId);
