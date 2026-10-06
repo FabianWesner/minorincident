@@ -11,7 +11,7 @@ export default defineConfig({
   build: {
     target: 'es2022',
     assetsDir: 'build',
-    chunkSizeWarningLimit: 1200,
+    chunkSizeWarningLimit: 2000,
     rollupOptions: {
       input: ['index.html', 'preview/index.html'],
       output: {

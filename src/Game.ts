@@ -51,6 +51,8 @@ export class Game {
   private loading = false;
   private renderedDistricts: SimWorld['districts'] = null;
   private levelQueue: Promise<void> = Promise.resolve();
+  /** Boot-time sound bank load that runs after the title is shown; awaited before the next audio reset. */
+  private audioLoad: Promise<void> = Promise.resolve();
   constructor(readonly params: URLSearchParams) {
     const requested = params.get('quality') ?? 'auto';
     if (!['auto', 'high', 'low'].includes(requested)) throw new RangeError('Invalid quality setting');
@@ -75,7 +77,8 @@ export class Game {
   async init(): Promise<void> {
     await this.services.init();
     this.campaignUI = new CampaignUI(this);
-    await this.loadScenario(this.params.get('test') === '1' ? 'empty' : 'survivor', Number(this.params.get('seed') ?? 1));
+    // The title backdrop does not wait for sound banks: they stream while the player reads the menu.
+    await this.loadScenario(this.params.get('test') === '1' ? 'empty' : 'survivor', Number(this.params.get('seed') ?? 1), this.params.get('test') !== '1');
     this.world.player?.select(this.params.get('survivor') === 'male' ? 'male' : 'female', 0);
     this.view.update(1);
     this.ui.init();
@@ -101,16 +104,17 @@ export class Game {
     this.ticker.init();
   }
   /** Serialize native-world changes so overlapping API loads cannot leak resources. */
-  loadScenario(name: string | null, seed = 1): Promise<void> {
+  loadScenario(name: string | null, seed = 1, deferAudio = false): Promise<void> {
     if (name && performanceLevels[name]) return this.loadLevel(performanceLevels[name].level, { seed }, name);
     const load = this.levelQueue.then(async () => {
       this.loading = true; this.restoredWhilePaused = false;
       try {
-        this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
+        await this.audioLoad; this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
         if (name !== null) { this.world.loadScenario(name, seed); this.quality.startLevel(); this.applyQuality(); if (name === 'mission-sandbox') this.world.loadMission(missionSandbox()); await this.view.load(); }
         else this.view.update();
         this.renderedDistricts=this.world.districts;
-        await this.audio.load(); this.ui.loaded();
+        if (deferAudio) this.audioLoad = this.audio.load().catch(error => console.error(error)); else await this.audio.load();
+        this.ui.loaded();
       } finally { this.loading = false; this.ticker.reset(); }
     });
     this.levelQueue = load.catch(() => {}); return load;
@@ -127,7 +131,7 @@ export class Game {
         const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(assetUrl(url));if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
         const data=loadMeasure('level:layouts',start);
         const cosmetic=this.world.entities.get(1)?.survivor;
-        this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
+        await this.audioLoad; this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);

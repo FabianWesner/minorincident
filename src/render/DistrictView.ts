@@ -345,10 +345,22 @@ export class DistrictView extends Group {
     this.batches[this.batches.indexOf(old)] = replacement; entry.hero = replacement; entry.loaded = true;
     old.removeFromParent(); old.dispose();
   }
-  /** L1's entire route is resident before start, including detailed close-view prototypes. */
-  async prepare(): Promise<void> {
+  /** Make the route's detailed close-view prototypes resident. With a focus, nearest placements
+   * load first through a small download window (background streaming after the level started). */
+  async prepare(focus?: { x: number; z: number }, cancelled = () => false): Promise<void> {
     await this.ready();
-    await Promise.all(this.lodBatches.filter(entry => !entry.loaded).map(entry => this.loadHero(entry)));
+    const entries = this.lodBatches.filter(entry => !entry.loaded);
+    if (!focus) { await Promise.all(entries.map(entry => this.loadHero(entry))); return; }
+    const distance = (entry: LodBatch) => Math.min(...entry.refs.map(ref => Math.hypot(ref.position.x + entry.origin[0] - focus.x, ref.position.z + entry.origin[1] - focus.z)));
+    const queue = entries.map(entry => ({ entry, distance: distance(entry) })).sort((a, b) => a.distance - b.distance).map(({ entry }) => entry);
+    const worker = async () => {
+      for (let entry = queue.shift(); entry && !cancelled() && !this.disposed; entry = queue.shift()) {
+        if (entry.loaded) continue;
+        const pending = this.pending.get(entry) ?? this.loadHero(entry);
+        this.pending.set(entry, pending); await pending.finally(() => this.pending.delete(entry));
+      }
+    };
+    await Promise.all(Array.from({ length: 4 }, worker));
   }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   /** Probe-only mask; render normal view immediately afterwards so it cannot leak across frames. */

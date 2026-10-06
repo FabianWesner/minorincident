@@ -11,7 +11,7 @@ await page.addInitScript(() => {
   g.__gpu = { pipelines: 0, asyncPipelines: 0, modules: 0, moduleChars: 0, syncMs: 0 };
   if (g.GPUDevice) {
     const proto = g.GPUDevice.prototype, rp = proto.createRenderPipeline, rpa = proto.createRenderPipelineAsync, sm = proto.createShaderModule;
-    proto.createRenderPipeline = function (this: unknown, ...a: unknown[]) { g.__gpu.pipelines++; const t = performance.now(); const r = rp.apply(this, a); g.__gpu.syncMs += performance.now() - t; return r; };
+    proto.createRenderPipeline = function (this: unknown, ...a: unknown[]) { g.__gpu.pipelines++; (g as unknown as { __pt: number[] }).__pt ??= []; (g as unknown as { __pt: number[] }).__pt.push(performance.now()); const t = performance.now(); const r = rp.apply(this, a); g.__gpu.syncMs += performance.now() - t; return r; };
     proto.createRenderPipelineAsync = function (this: unknown, ...a: unknown[]) { g.__gpu.asyncPipelines++; return rpa.apply(this, a); };
     proto.createShaderModule = function (this: unknown, ...a: unknown[]) { g.__gpu.modules++; g.__gpu.moduleChars += String((a[0] as { code: string }).code).length; return sm.apply(this, a); };
   }
@@ -32,6 +32,8 @@ const { profile } = await cdp.send('Profiler.stop');
 const self = new Map<string, number>(); const dt = new Map<number, number>();
 profile.samples!.forEach((id, i) => dt.set(id, (dt.get(id) ?? 0) + (profile.timeDeltas![i] ?? 0)));
 for (const node of profile.nodes) { const f = node.callFrame; const key = `${f.functionName || '(anon)'} ${f.url.split('/').pop()}:${f.lineNumber}`; self.set(key, (self.get(key) ?? 0) + (dt.get(node.id) ?? 0) / 1000); }
+const windows = await page.evaluate(() => { const pt = (window as unknown as { __pt?: number[] }).__pt ?? []; return performance.getEntriesByType('measure').filter(m => m.name.startsWith('L1 ')).map(m => `${m.name}: ${pt.filter(t => t >= m.startTime && t <= m.startTime + m.duration).length} pipelines`); });
+console.log(windows.join(' | '));
 console.log(`L1 load ${Math.round(ms)} ms`, JSON.stringify(await page.evaluate(() => (window as unknown as { __gl: unknown }).__gl)), JSON.stringify(await page.evaluate(() => (window as unknown as { __gpu: unknown }).__gpu)), JSON.stringify(await page.evaluate(() => performance.getEntriesByType('measure').map(m => `${m.name}=${Math.round(m.duration)}`))));
 for (const [k, v] of [...self].sort((a, b) => b[1] - a[1]).slice(0, Number(top))) console.log(`${v.toFixed(0).padStart(7)} ms  ${k}`);
 await browser.close();

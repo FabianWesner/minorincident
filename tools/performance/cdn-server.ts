@@ -31,7 +31,7 @@ export function parseHeaders(text: string): Rule[] {
   return rules;
 }
 
-export function startCdnServer(options: { root: string; port: number; cert?: string; key?: string }): Promise<() => Promise<void>> {
+export function startCdnServer(options: { root: string; port: number; cert?: string; key?: string }): Promise<{ port: number; stop: () => Promise<void> }> {
   const rules = existsSync(join(options.root, '_headers')) ? parseHeaders(readFileSync(join(options.root, '_headers'), 'utf8')) : [];
   const compressed = new Map<string, Buffer>();
   const handler = (req: IncomingMessage | Http2ServerRequest, res: ServerResponse | Http2ServerResponse): void => {
@@ -56,10 +56,13 @@ export function startCdnServer(options: { root: string; port: number; cert?: str
   const server = options.cert && options.key
     ? createSecureServer({ cert: readFileSync(options.cert), key: readFileSync(options.key), allowHTTP1: true }, handler)
     : createServer(handler);
-  return new Promise(resolve => server.listen(options.port, '127.0.0.1', () => resolve(() => new Promise(done => server.close(() => done())))));
+  return new Promise(resolve => server.listen(options.port, '127.0.0.1', () => {
+    const address = server.address();
+    resolve({ port: typeof address === 'object' && address ? address.port : options.port, stop: () => new Promise(done => server.close(() => done())) });
+  }));
 }
 
 if (process.argv[1]?.endsWith('cdn-server.ts')) {
   const [root = 'dist', port = '3362', cert, key] = process.argv.slice(2);
-  void startCdnServer({ root, port: Number(port), cert, key }).then(() => console.log(`cdn-server ${root} on ${cert ? 'https' : 'http'}://127.0.0.1:${port}`));
+  void startCdnServer({ root, port: Number(port), cert, key }).then(server => console.log(`cdn-server ${root} on ${cert ? 'https' : 'http'}://127.0.0.1:${server.port}`));
 }
