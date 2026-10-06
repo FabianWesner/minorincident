@@ -36,7 +36,7 @@ test('T-E03-02 @E03 @E03-AC02 mouse buttons preserve down held up and prevent co
 });
 
 test('T-E03-03 @E03 @E03-AC03 wheel notches pulse once and trackpads debounce 120ms', async ({ page }) => {
-  await page.clock.install(); await page.clock.pauseAt(new Date()); await boot(page); await page.mouse.move(800, 450);
+  await boot(page); await page.clock.install(); await page.clock.pauseAt(new Date()); await page.mouse.move(800, 450);
   await page.mouse.wheel(0, -100); expect((await tick(page)).selector).toBe(-1);
   expect((await tick(page)).selector).toBe(0);
   await page.mouse.wheel(0, 100); expect((await tick(page)).selector).toBe(1);
