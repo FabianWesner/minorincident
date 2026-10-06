@@ -5,7 +5,7 @@ import type { CharacterRig } from './rig';
 
 /** Blender GLB samplers compiled by tools/assets/animation-library.ts. */
 export const authoredClips = new Map(library.map(clip => [clip.name, clip]));
-export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'corgi-walk': .55, 'corgi-trot': .85 };
+export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'corgi-walk': .55, 'corgi-trot': .8 };
 const worldScale = new Vector3(), worldOrigin = new Vector3();
 /** Optimized character GLBs scale the shared hierarchy to their catalog height. */
 export function strideScale(root: Object3D): number { return root.getWorldScale(worldScale).y; }
