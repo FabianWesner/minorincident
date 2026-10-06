@@ -1,9 +1,11 @@
 import { BufferAttribute, BufferGeometry, Group, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
+import { attribute } from 'three/tsl';
+import type { Materials } from '../render/Materials';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
 /** District placements never animate their parts. Fold their diffuse swatches into
  * vertex colors, keeping glowing windows separate for power and the window mask. */
-export function staticBatch(source: Object3D, lit: boolean): Group {
+export function staticBatch(source: Object3D, lit: boolean, materials?: Materials, foliage = false): Group {
   source.updateMatrixWorld(true);
   const buckets = new Map<boolean, BufferGeometry[]>();
   source.traverse(node => {
@@ -40,7 +42,7 @@ export function staticBatch(source: Object3D, lit: boolean): Group {
     }
     const geometry = mergeGeometries(geometries)!;
     for (const g of geometries) g.dispose();
-    const material = emissive && lit ? new MeshBasicNodeMaterial({ vertexColors: true }) : new MeshLambertNodeMaterial({ vertexColors: true });
+    const material = emissive && lit ? new MeshBasicNodeMaterial({ vertexColors: true }) : materials ? foliage ? materials.foliage() : materials.shaded(attribute('color', 'vec3')) : new MeshLambertNodeMaterial({ vertexColors: true });
     material.name = emissive ? 'emi_static-windows' : 'pal_static-colors';
     const mesh = new Mesh(geometry, material); mesh.name = emissive ? 'window-light' : 'static-body';
     mesh.castShadow = !emissive; mesh.receiveShadow = true; result.add(mesh);

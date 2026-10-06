@@ -110,7 +110,7 @@ test('T-E02-dof @E02 optional tilt-shift changes the edges and preserves the cen
   await page.evaluate(() => window.__SS__!.settings.set({ cheapDof: true }));
   const blurred = await capture(page, 'cheap-dof-on');
   const { default: pixelmatch } = await import('pixelmatch');
-  const top = Math.floor(sharp.height * 0.2), height = Math.floor(sharp.height * 0.6), stride = sharp.width * 4;
+  const top = Math.floor(sharp.height * 0.3), height = Math.floor(sharp.height * 0.4), stride = sharp.width * 4;
   expect(pixelmatch(sharp.data.subarray(top * stride, (top + height) * stride), blurred.data.subarray(top * stride, (top + height) * stride), undefined, sharp.width, height, { threshold: 0.01 })).toBe(0);
   expect(pixelmatch(sharp.data, blurred.data, undefined, sharp.width, sharp.height, { threshold: 0.01 })).toBeGreaterThan(100);
 });

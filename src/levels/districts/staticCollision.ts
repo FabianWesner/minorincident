@@ -6,7 +6,11 @@ import type { Placement, StaticCollider, Aabb } from './types';
  * manifest footprint (which includes roofs/canopies and open forecourts). */
 export function placementColliders(placements: Placement[], fallback: StaticCollider[]): StaticCollider[] {
   const sources = staticCollision;
-  return placements.flatMap(p => {
+  const placementIds = new Set(placements.map(p => p.id));
+  // District-authored solids (such as merged planters) have no asset placement.
+  // Keep them while replacing only placement footprints with GLB geometry.
+  const authored = fallback.filter(c => !placementIds.has(c.id));
+  return authored.concat(placements.flatMap(p => {
     const shape = sources[p.assetId];
     if (!shape) return fallback.filter(c => c.id === p.id);
     return shape.boxes.map((box, index) => {
@@ -18,5 +22,5 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
       }
       return { id: `${p.id}/geometry-${index}`, aabb, walkable: box.max[1] < .45, minTier: p.minTier, maxTier: p.maxTier };
     });
-  });
+  }));
 }

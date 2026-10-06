@@ -1,11 +1,12 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from folio-2025 Rendering.js / Passes/cheapDOF.js by Bruno Simon (MIT), commit 41046b5.
 import { RenderPipeline, type Camera, type Scene, type WebGPURenderer, type RenderTarget } from 'three/webgpu';
-import { pass, uv, uniform, mix } from 'three/tsl';
+import { pass, uv, uniform, mix, vec2 } from 'three/tsl';
 import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 import { hashBlur } from 'three/addons/tsl/display/hashBlur.js';
+import { worldLook } from '../data/worldLook';
 
-/** HDR bloom; optional cheap tilt-shift restricted to the top/bottom 15%, never the play area. */
+/** HDR bloom, soft vignette and optional miniature blur; central 40% stays sharp. */
 export class PostFx {
   readonly pipeline: RenderPipeline;
   readonly bloomEnabled = uniform(1);
@@ -20,10 +21,12 @@ export class PostFx {
     (this.bloomPass as typeof this.bloomPass & { _nMips: number })._nMips = qualityBudgets[tier].bloomMips;
     // Current Three composites all five texture slots; inactive mips contribute zero.
     this.bloomPass.bloomTintColors.forEach((color, i) => color.setScalar(i < qualityBudgets[tier].bloomMips ? 1 : 0));
-    const strength = uv().y.sub(0.5).abs().smoothstep(0.35, 0.5);
-    const blur = hashBlur(source, strength.mul(0.003), { repeats: 8, premultipliedAlpha: true });
-    this.sharpOutput = source.add(this.bloomPass.mul(this.bloomEnabled));
-    this.blurredOutput = mix(source, blur, strength).add(this.bloomPass.mul(this.bloomEnabled));
+    const protectedArea = uv().sub(.5).div(vec2(.18, .35)).length().smoothstep(1, 1.3);
+    const strength = uv().y.sub(0.5).abs().smoothstep(worldLook.dofStart, worldLook.dofEnd).mul(protectedArea);
+    const blur = hashBlur(source, strength.mul(worldLook.dofAmount), { repeats: 8, premultipliedAlpha: true });
+    const vignette = uv().sub(.5).length().smoothstep(.25, .7).mul(worldLook.vignette).oneMinus();
+    this.sharpOutput = source.add(this.bloomPass.mul(this.bloomEnabled)).mul(vignette);
+    this.blurredOutput = mix(source, blur, strength).add(this.bloomPass.mul(this.bloomEnabled)).mul(vignette);
     this.pipeline = new RenderPipeline(renderer, this.sharpOutput);
   }
   private tier: QualityTier = 'high';
