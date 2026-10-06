@@ -178,7 +178,7 @@ def merge_clumps(clumps, count):
     return [tuple(c) for c in merged]
 
 
-def build_clumps(name, clumps, materials, seg=12, rings=9, core_step=.2):
+def build_clumps(name, clumps, materials, seg=12, rings=9, core_step=.2, hidden=.7):
     """Lumpy leaf clumps around an inset core; faces hidden inside neighbours are culled."""
     verts, normals, faces, shades = [], [], [], []
     frames = []
@@ -190,7 +190,9 @@ def build_clumps(name, clumps, materials, seg=12, rings=9, core_step=.2):
             if k == skip:
                 continue
             d = p - o
-            if (d.dot(t)/r)**2 + (d.dot(b)/r)**2 + (d.dot(n)/h)**2 < .94:
+            # Conservative: neighbour surfaces dent up to ~13% (noise) plus chord sag,
+            # so only faces well inside the ideal ellipsoid are culled (no see-through gaps).
+            if (d.dot(t)/r)**2 + (d.dot(b)/r)**2 + (d.dot(n)/h)**2 < hidden:
                 return True
         return False
     core_verts, core_normals, core_faces = form_grid(core_step, lambda p, n: p - n*.03)
@@ -278,7 +280,7 @@ for tier, step, path in tiers:
     if tier == 'model':
         objects = build_clumps(tier, clumps, materials)
     elif tier == 'lod1':
-        objects = build_clumps(tier, merge_clumps(clumps, 26), materials, 8, 6, .3)
+        objects = build_clumps(tier, merge_clumps(clumps, 22), materials, 8, 6, .3, .6)
     else:
         objects = build_lod(tier, step, clumps, materials)
     for obj in objects:
