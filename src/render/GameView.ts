@@ -70,6 +70,7 @@ export class GameView implements Lifecycle {
   private windowMask=false;
   private foliageMask: boolean | 'crowns'=false;
   private readonly foliageMasks = new Map<Material, MeshBasicNodeMaterial>();
+  private readonly foliageIdMasks = new Map<Material, MeshBasicNodeMaterial>();
   private lookdev: Lookdev | null = null;
   private postFx: PostFx | null = null;
   private dofEnabled = false;
@@ -212,7 +213,12 @@ export class GameView implements Lifecycle {
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
     const reviewSpot = lookViewpoints.find(spot => spot.id === name);
-    if (reviewSpot) { this.view.reset(reviewSpot); this.update(1); return; }
+    if (reviewSpot) {
+      this.view.reset(reviewSpot);
+      // Crowd physics may push the survivor; the stress fixture must still measure the fixed worst view.
+      if (this.world.scenario === 'perf-l1-foliage-200') this.view.preset(name, { position: [this.camera.position.x, this.camera.position.y, this.camera.position.z], target: [reviewSpot.x, 0, reviewSpot.z] });
+      this.update(1); return;
+    }
     if (name === 'hud-golden') {
       const player = this.world.entities.get(1)!.transform;
       this.view.preset(name, { position: [player.x + 15, 18, player.z + 15], target: [player.x, .4, player.z] }); this.update(1); return;
@@ -243,7 +249,7 @@ export class GameView implements Lifecycle {
     this.view.preset(name, pose); this.update(1);
   }
   /** Render settings only; persistence and gameplay accessibility remain owned by E14. */
-  settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean; windowMask?: boolean; foliageMask?: boolean | 'crowns'; foliageReveal?: boolean } & VfxSettings): void {
+  settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean; windowMask?: boolean; foliageMask?: boolean | 'crowns'; foliageReveal?: boolean; foliageVisible?: boolean } & VfxSettings): void {
     this.vfx?.set(patch);
     if (patch.gore !== undefined || patch.vfx !== undefined) this.crowd?.setGoreEnabled(this.vfx?.snapshot().enabled === true && this.vfx.snapshot().gore === 'Full');
     if (patch.colorblind !== undefined) this.vfxSettings.colorblind = patch.colorblind;
@@ -259,6 +265,7 @@ export class GameView implements Lifecycle {
     if(patch.windowMask!==undefined)this.windowMask=patch.windowMask;
     if(patch.foliageMask!==undefined)this.foliageMask=patch.foliageMask;
     if(patch.foliageReveal!==undefined)this.districts?.setFoliageReveal(patch.foliageReveal);
+    if(patch.foliageVisible!==undefined)this.districts?.setFoliageVisible(patch.foliageVisible);
     if (patch.idPass !== undefined) this.idPass = patch.idPass;
     this.update(1);
   }
@@ -356,7 +363,11 @@ export class GameView implements Lifecycle {
       this.scene.traverse((child) => {
         if (child instanceof Mesh) { this.savedMaterials.set(child, child.material); let hero = this.lookdev?.playerMeshes.includes(child) ?? false;
           if (this.character) for (let parent = child.parent; parent; parent = parent.parent) if (parent === this.character) { hero = true; break; }
-          child.material = hero ? this.idPlayer : this.idBackground; }
+          const source = child.material as PaletteMaterial;
+          if (!hero && source.name === 'pal_leaf-card-crown') {
+            if (!this.foliageIdMasks.has(source)) this.foliageIdMasks.set(source, new MeshBasicNodeMaterial({ color: '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode }));
+            child.material = this.foliageIdMasks.get(source)!;
+          } else child.material = hero ? this.idPlayer : this.idBackground; }
       });
       this.idPlayer.depthTest = !this.occlusion.getState().some((building) => building.blocked);
       this.renderer.render(this.scene, this.camera);
@@ -377,6 +388,7 @@ export class GameView implements Lifecycle {
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
     this.windowMask=false; this.foliageMask=false;
     for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();
+    for (const material of this.foliageIdMasks.values()) material.dispose(); this.foliageIdMasks.clear();
     this.postFx?.dispose();this.postFx = null; this.dofEnabled = false;
     if(this.districts){this.scene.remove(this.districts);this.districts.dispose();this.districts=null;}
     this.frozenStarted = -1; this.frozenPose = null;

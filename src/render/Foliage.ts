@@ -12,16 +12,16 @@ import type { windPhase } from './Grass';
 export function leafClusterSdf(size = 128): Uint8Array {
   const rng = new Rng(71, 'own-leaf-cluster');
   const leaves = Array.from({ length: 64 }, (_, i) => {
-    const angle = i * 2.399963, radius = .39 * Math.sqrt(i / 64);
-    return { x: .5 + Math.cos(angle) * radius, y: .5 + Math.sin(angle) * radius, a: angle + rng.next(), r: .047 + rng.next() * .02 };
+    const angle = i * 2.399963, radius = .39 * Math.sqrt(i / 64), turn = angle + rng.next();
+    return { x: .5 + Math.cos(angle) * radius, y: .5 + Math.sin(angle) * radius, cos: Math.cos(turn), sin: Math.sin(turn), r: .047 + rng.next() * .02 };
   });
   const data = new Uint8Array(size * size * 4);
   for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
     let distance = -1;
     for (const leaf of leaves) {
       const dx = (x + .5) / size - leaf.x, dy = (y + .5) / size - leaf.y;
-      const u = (dx * Math.cos(leaf.a) + dy * Math.sin(leaf.a)) / leaf.r;
-      const v = (-dx * Math.sin(leaf.a) + dy * Math.cos(leaf.a)) / (leaf.r * .58);
+      const u = (dx * leaf.cos + dy * leaf.sin) / leaf.r;
+      const v = (-dx * leaf.sin + dy * leaf.cos) / (leaf.r * .58);
       distance = Math.max(distance, (1 - Math.sqrt(u * u + v * v) - .13 * Math.abs(u * v)) * leaf.r);
     }
     const value = Math.round(Math.max(0, Math.min(1, .5 + distance * 9)) * 255);
@@ -106,12 +106,16 @@ export class Foliage extends Group {
   }
   /** Reveal only foliage between the camera and the live combat subjects. Screen UV has a top-left origin. */
   update(view: View, player?: { x: number; y: number; z: number }, target?: { x: number; y: number; z: number }): void {
+    const actorScale = view.camera.aspect < 1 ? 1.25 : 1;
     for (const [entity, center, depth] of [[player, this.player, this.playerDepth], [target, this.target, this.targetDepth]] as const) {
       if (!entity || !this.reveal) { center.value.set(-10, -10); depth.value = 0; continue; }
-      this.point.set(entity.x, entity.y + .35, entity.z).applyMatrix4(view.camera.matrixWorldInverse); depth.value = this.point.z;
-      this.point.set(entity.x, entity.y + .35, entity.z).project(view.camera); center.value.set(this.point.x * .5 + .5, .5 - this.point.y * .5);
+      // A card behind the chest can still occlude the legs: gate at the actor's
+      // farthest body depth (feet plus shoe/backpack extent), independently of
+      // the projected hole centre. The margin includes corners behind the root.
+      this.point.set(entity.x, entity.y - .7, entity.z).applyMatrix4(view.camera.matrixWorldInverse); depth.value = this.point.z - .65;
+      this.point.set(entity.x, entity.y - .7 + 1.15 * actorScale, entity.z).project(view.camera); center.value.set(this.point.x * .5 + .5, .5 - this.point.y * .5);
     }
-    this.holeRadius.value = Math.min(.22, 1.8 / view.radius);
+    this.holeRadius.value = Math.min(.22, 3.25 * actorScale / view.radius);
     this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     for (const { mesh, references } of this.batches) {
       let count = 0;

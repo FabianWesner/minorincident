@@ -37,6 +37,15 @@ export function installPerformanceLevel(world: SimWorld, tier: QualityTier, name
   world.previousPlayer = { ...player.transform }; world.spatial.set(1, player.transform.x, player.transform.z); world.physics.playerBody!.setTranslation(player.transform, true);
   world.missions?.begin();
   if (name === 'perf-l1-foliage-200') {
+    world.scenario = name;
+    // Hold the stress load at V5: overlapping crowd capsules must not push the
+    // survivor and the entire attacking crowd out of the measurement frustum.
+    world.events.on('sim.tick', () => {
+      Object.assign(player.transform, { x: district.origin[0], y: .705, z: district.origin[1] });
+      world.physics.playerBody!.setTranslation(player.transform, true);
+      world.physics.playerBody!.setLinvel({ x: 0, y: 0, z: 0 }, true);
+      world.spatial.set(1, player.transform.x, player.transform.z);
+    }, SimPhase.input);
     // Deliberately stress both render tiers with 200 nearby actors, beyond the campaign's low-tier cap.
     const points = [];
     for (let z = -3; z <= 3; z += .45) for (let x = -7; x <= 7; x += .45) points.push({ x: x + player.transform.x, z: z + player.transform.z });
