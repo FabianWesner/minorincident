@@ -60,6 +60,8 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
       throw new Error(`Live walk failed ${x},${z}`);
     };
     await walk(-14, -4); await walk(0, 0); await walk(42, 0);
+    const loading = await page.evaluate(() => ({ ...window.__SS__!.perf().loadTiming, warmUp: performance.getEntriesByType('measure').filter(e => e.name.startsWith('L1 ')).map(e => ({ name: e.name, ms: e.duration })) }));
+    console.log(`${phase} ${mode} loading ${JSON.stringify(loading)}`);
     await measure('diner', () => walkLive(42, -6.5), 15_000);
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.completedObjectives)).toContain('breakfast');
     if (process.env.HITCH_DINER_ONLY === '1') return;
@@ -96,7 +98,7 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
     await measure('restart', () => page.getByRole('button', { name: 'Restart', exact: true }).click(), 1_000);
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.completedObjectives)).toEqual([]);
     const proof = await page.evaluate(() => { const a = window.__SS__!, gl = document.querySelector('canvas')!.getContext('webgl2')!, ext = gl.getExtension('WEBGL_debug_renderer_info'); return { gpu: ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) as string : null, mission: a.missions.state(), perf: a.perf() }; });
-    writeFileSync(`${output}/${phase}-${mode}.json`, JSON.stringify({ samples, ...proof }, null, 2));
+    writeFileSync(`${output}/${phase}-${mode}.json`, JSON.stringify({ samples, loading, ...proof }, null, 2));
     expect(proof.gpu).not.toMatch(/swiftshader|llvmpipe|software/i);
     if (phase !== 'before') for (const [label, sample] of Object.entries(samples)) expect(sample.max, `${mode} ${label} max frame ms`).toBeLessThanOrEqual(50);
   });

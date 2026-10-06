@@ -77,7 +77,9 @@ export class NavGrid {
   }
   /** E11 doors and broken props invalidate only their affected cells and cached searches. */
   setBlocker(id: number, wall: Wall, blocked: boolean): void {
+    const previous = this.blockers.get(id);
     if (blocked) this.blockers.set(id, wall); else this.blockers.delete(id);
+    if (previous && previous !== wall) this.updateBlockerCells(previous);
     this.updateBlockerCells(wall);
     this.target = -1; this.searching = false;
   }

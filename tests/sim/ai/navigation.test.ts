@@ -87,5 +87,6 @@ test('@E19 prepared tier occupancy matches a full rebake after dynamic blockers 
   const baked = grid.prepare(walls);
   grid.setBlocker(1, door, false); grid.setBlocker(2, cart, true); full.setBlocker(2, cart, true);
   grid.rebake(baked); full.rebake(); expect(grid.blocked).toEqual(full.blocked);
-  grid.setBlocker(2, cart, false); full.setBlocker(2, cart, false); expect(grid.blocked).toEqual(full.blocked);
+  grid.setBlocker(2, door, true); full.setBlocker(2, door, true); full.rebake(); expect(grid.blocked).toEqual(full.blocked);
+  grid.setBlocker(2, door, false); full.setBlocker(2, door, false); full.rebake(); expect(grid.blocked).toEqual(full.blocked);
 });
