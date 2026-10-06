@@ -9,10 +9,10 @@ import { batchRigidParts } from './batchRigidParts';
 import type { GearTier, SurvivorState, SurvivorVariant } from '../../data/survivor';
 import type { Materials } from '../Materials';
 import type { PaletteMaterial } from '../PaletteMaterial';
-import { ProceduralAnimator } from './ProceduralAnimator';
+import { KeyframeAnimator } from './KeyframeAnimator';
 import { disposeCharacter, loadCharacter } from './rig';
 
-type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { animator: ProceduralAnimator; gear: Group[]; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
+type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { animator: KeyframeAnimator; gear: Group[]; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
 export class CharacterView extends Group {
   private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
@@ -73,7 +73,7 @@ export class CharacterView extends Group {
       attachment(3, character.rig.head, [0.23, 0.055, 0.4], [0, 0.14, 0], 'survivorRed');
       attachment(4, character.rig.torso, [0.14, 0.25, 0.37], [0.16, 0.08, 0], 'policeBlue');
       attachment(4, character.rig.head, [0.08, 0.11, 0.16], [0.18, 0.005, 0], 'uiDark');
-      this.characters.set(variant, { ...character, animator: new ProceduralAnimator(character.rig), gear, sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      this.characters.set(variant, { ...character, animator: new KeyframeAnimator(character.rig), gear, sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
   }
   update(pose: SurvivorState, tick: number, alpha: number): void {
@@ -89,7 +89,7 @@ export class CharacterView extends Group {
   socket(side: 'LEFT' | 'RIGHT') { return this.characters.get(this.variant)!.sockets[side]; }
   getState() {
     const character = this.characters.get(this.variant);
-    return { bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, missingClips: character?.animator.missingClips ?? 0,
+    return { bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
       evaluations: character?.animator.evaluations ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
   }
   dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.characters.clear(); this.bloodMaterials.length = 0; this.clear(); }

@@ -1,25 +1,59 @@
+import { AnimationClip, AnimationMixer, Quaternion, QuaternionKeyframeTrack, VectorKeyframeTrack, LoopOnce, type Object3D } from 'three';
 import type { AnimationState } from '../../data/survivor';
+import library from './library.json';
 import type { CharacterRig } from './rig';
+
+/** Blender GLB samplers compiled by tools/assets/animation-library.ts. */
+export const authoredClips = new Map(library.map(clip => [clip.name, clip]));
+export const strides: Record<string, number> = { walk: .9, run: 1.8, shamble: .72, 'infected-run': 1.5, 'npc-walk': .9, 'npc-walk-relaxed': .85, 'corgi-walk': .55, 'corgi-trot': .85 };
+const groundClips = /^(die|death-|knockdown|flung|get-up|crawl)/;
+const upperBody = /^(torso|head|arm|foreArm|hand)/;
+
+/** Retarget by name, preserving model rest TRS. Additive clips contain upper-body
+ * offsets so the locomotion action retains control of planted feet. */
+export function retargetClip(root: Object3D, name: string, additive = false): AnimationClip {
+  const source = authoredClips.get(name);
+  if (!source) throw new Error(`Missing authored clip ${name}`);
+  const tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[] = [], q = new Quaternion();
+  const hipHeight = root.getObjectByName('hip')?.position.y ?? .705;
+  const contract = name.startsWith('corgi-') ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR'] : ['root','hip','torso','head','armL','armR','foreArmL','foreArmR','handL','handR','legL','legR','shinL','shinR','footL','footR','backpackSocket'];
+  for (const nodeName of contract) {
+    const node = root.getObjectByName(nodeName);
+    if (!node || additive && !upperBody.test(nodeName)) continue;
+    for (const path of ['rotation', 'translation'] as const) {
+      const track = source.tracks.find(t => t.node === nodeName && t.path === path), times = track?.times ?? [0, source.duration];
+      const values: number[] = [];
+      if (path === 'rotation') {
+        for (let i = 0; i < times.length; i++) {
+          q.set(0, 0, 0, 1); if (track) q.fromArray(track.values, i * 4);
+          if (!additive) q.premultiply(node.quaternion);
+          values.push(q.x, q.y, q.z, q.w);
+        }
+        tracks.push(new QuaternionKeyframeTrack(`${nodeName}.quaternion`, times, values));
+      } else {
+        for (let i = 0; i < times.length; i++) for (let c = 0; c < 3; c++) {
+          let delta = track?.values[i * 3 + c] ?? 0;
+          if (c === 1 && nodeName === 'hip' && groundClips.test(name)) delta *= Math.max(0, hipHeight - .15) / .55;
+          values.push(delta + (additive ? 0 : node.position.getComponent(c)));
+        }
+        tracks.push(new VectorKeyframeTrack(`${nodeName}.position`, times, values));
+      }
+    }
+  }
+  return new AnimationClip(name, source.duration, tracks);
+}
+
+/** Deterministic sampler for crowd baking; reset actions to avoid accumulating poses. */
+const samplers = new WeakMap<Object3D, { mixer: AnimationMixer; clips: Map<string, AnimationClip> }>();
+export function sampleClip(root: Object3D, name: string, seconds: number): void {
+  let sampler = samplers.get(root);
+  if (!sampler) { sampler = { mixer: new AnimationMixer(root), clips: new Map() }; samplers.set(root, sampler); }
+  let clip = sampler.clips.get(name);
+  if (!clip) { sampler.mixer.stopAllAction(); clip = retargetClip(root, name); sampler.clips.set(name, clip); }
+  sampler.mixer.stopAllAction();
+  const action = sampler.mixer.clipAction(clip).reset().setLoop(LoopOnce, 1); action.clampWhenFinished = true; action.play();
+  sampler.mixer.setTime(Math.max(0, Math.min(clip.duration, seconds)));
+}
 export type Clip = (rig: CharacterRig, seconds: number) => void;
-const stride = (rig: CharacterRig, seconds: number, amplitude: number, frequency: number): void => {
-  const phase = seconds * Math.PI * frequency, swing = Math.sin(phase) * amplitude;
-  rig.legL.rotation.z += swing; rig.legR.rotation.z -= swing;
-  rig.shinL.rotation.z -= Math.max(0, -Math.sin(phase)) * amplitude; rig.shinR.rotation.z -= Math.max(0, Math.sin(phase)) * amplitude;
-  rig.armL.rotation.z -= swing * 0.7; rig.armR.rotation.z += swing * 0.7;
-  rig.foreArmL.rotation.z += 0.15; rig.foreArmR.rotation.z += 0.15;
-  rig.hip.position.y += Math.abs(Math.sin(phase)) * amplitude * 0.025;
-};
-/** Complete sim → clip table. Angles rotate rigid joints; weapons remain on hand sockets. */
-export const clips: Record<AnimationState, Clip> = {
-  idle: (r, t) => { r.torso.rotation.z += Math.sin(t * 2.5) * 0.018; },
-  walk: (r, t) => stride(r, t, 0.3, 3),
-  run: (r, t) => { stride(r, t, 0.65, 5); r.torso.rotation.z -= 0.1; },
-  hurt: (r, t) => { r.torso.rotation.z += Math.sin(Math.min(1, t / 0.3) * Math.PI) * 0.3; r.head.rotation.z -= 0.15; },
-  die: (r, t) => { const phase = Math.min(1, t / 0.6); r.hip.rotation.z += phase * Math.PI / 2; r.hip.position.y -= phase * 0.4; },
-  swing: (r, t) => { const p = Math.min(1, t / 0.5); r.torso.rotation.y += Math.sin(p * Math.PI) * 0.35; r.armR.rotation.z += Math.sin(p * Math.PI * 1.5) * 1.8; r.foreArmR.rotation.z += 0.5; },
-  shoot: (r, t) => { r.armR.rotation.z += Math.PI / 2 - Math.sin(Math.min(1, t / 0.2) * Math.PI) * 0.15; r.foreArmR.rotation.z += 0.1; },
-  throw: (r, t) => { const p = Math.min(1, t / 0.6); r.armR.rotation.z += (1 - p) * 2.5; r.foreArmR.rotation.z += Math.sin(p * Math.PI) * 1.2; },
-  kick: (r, t) => { r.legR.rotation.z += Math.sin(Math.min(1, t / 0.5) * Math.PI) * 1.3; r.torso.rotation.z += 0.15; },
-  interact: (r, t) => { r.torso.rotation.z -= 0.15; r.armL.rotation.z += 0.8 + Math.sin(t * 12) * 0.08; r.armR.rotation.z += 0.8; },
-  'enter-car': (r, t) => { const p = Math.min(1, t); r.hip.position.y -= p * 0.2; r.legL.rotation.z += p * 1.4; r.legR.rotation.z += p * 1.4; r.shinL.rotation.z -= p * 1.4; r.shinR.rotation.z -= p * 1.4; },
-};
+/** Complete sim-state contract; every evaluation uses authored glTF keyframes. */
+export const clips: Record<AnimationState, Clip> = Object.fromEntries(['idle','walk','run','hurt','die','swing','shoot','throw','kick','interact','enter-car'].map(name => [name, (rig: CharacterRig, seconds: number) => sampleClip(rig.root, name, seconds)])) as Record<AnimationState, Clip>;

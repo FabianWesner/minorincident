@@ -6,6 +6,8 @@ import { AssetRegistry } from '../../assets/registry';
 import { civilianRoles } from '../../data/npcs';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { bakeInfected, framesPerClip, infectedClips } from '../characters/bakeInfected';
+import { MotionPhase } from '../characters/MotionPhase';
+import { authoredClips, strides } from '../characters/clips';
 import { disposeCharacter } from '../characters/rig';
 import { createCivilianPlaceholder } from './placeholders';
 /** One human crowd draw regardless of density; poses, veins, eyes and clothing vary per instance. */
@@ -14,6 +16,7 @@ class CivilianBatch extends Group {
   private texture!: DataTexture;
   private readonly childScale = new Vector3(.7, .7, .7);
   private readonly transform = new Matrix4();
+  private readonly motion = new MotionPhase();
   private readonly colors = civilianRoles.map(d => new Color(d.color));
   private readonly frame = new InstancedBufferAttribute(new Float32Array(128), 1);
   private readonly tint = new InstancedBufferAttribute(new Float32Array(128 * 3), 3);
@@ -50,10 +53,12 @@ class CivilianBatch extends Group {
       const female = ['inf.suburban-mom','inf.bathrobe-neighbor'].includes(c.variant); if (female !== this.female) continue;
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
       const rising = c.state === 'rising';
-      const clip = down || rising ? 'die' : c.state === 'grabbed' || c.state === 'bitten' ? 'hurt' : c.state === 'flee' ? 'run' : c.state === 'hide' || !c.adult || this.world.tick < c.pauseUntil ? 'idle' : 'run';
-      const phase = down ? 23 : rising ? Math.max(0, 23 - Math.floor((this.world.tick - c.entered) / 72 * 23)) : Math.floor((this.world.tick + e.id * 7) % 60 / 60 * 24);
+      const motion = this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
+      const clip = down ? 'death-side' : rising ? 'get-up' : c.state === 'grabbed' || c.state === 'bitten' ? 'hurt' : motion.speed > 2.5 ? 'run' : motion.speed > .06 ? e.id % 2 ? 'npc-walk' : 'npc-walk-relaxed' : 'idle';
+      const duration = authoredClips.get(clip)!.duration;
+      const phase = down ? 1 : rising ? Math.min(1, (this.world.tick - c.entered) / 72) : strides[clip] ? motion.distance / strides[clip] % 1 : (this.world.tick / 60 + e.id * .137) / duration % 1;
       this.transform.makeRotationY(e.transform.yaw + (down && c.state !== 'finished' ? Math.sin(this.world.tick * .9) * c.veins * .012 : 0)); if (!c.adult) this.transform.scale(this.childScale); this.transform.setPosition(e.transform.x, 0, e.transform.z);
-      this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, infectedClips.indexOf(clip) * framesPerClip + phase);
+      this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1));
       const role = civilianRoles.findIndex(d => d.variant === c.variant), color = this.colors[Math.max(0, role)]; this.tint.setXYZ(index, color.r, color.g, color.b); this.glow.setX(index, Number(c.eyesGlow)); this.decay.setX(index, c.veins); index++;
     }
     this.mesh.count = index; this.mesh.instanceMatrix.needsUpdate = true; this.frame.needsUpdate = this.tint.needsUpdate = this.glow.needsUpdate = this.decay.needsUpdate = true;

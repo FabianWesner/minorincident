@@ -15,6 +15,8 @@ export type AnimationState = 'idle' | 'walk' | 'run' | 'hurt' | 'die' | ActionSt
 /** Action duration is presentation intent; damage/charges remain owned by E05/E06. */
 export const actionTicks: Record<ActionState, number> = { swing: 30, shoot: 12, throw: 36, kick: 30, interact: 45, 'enter-car': 60 };
 export interface SurvivorState {
+  /** Plain combat timing for authored clips and trails. */
+  attack?: { actionId: string; combo: number; started: number; activeAt: number; recoveryAt: number; endsAt: number };
   variant: SurvivorVariant; gearTier: GearTier; animation: AnimationState; animationTick: number;
   velocity: { x: number; z: number }; grounded: boolean; invulnerableUntil: number;
   checkpoint: { x: number; y: number; z: number }; diedAt: number | null;
