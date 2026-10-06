@@ -1,8 +1,9 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
 import { BoxGeometry, BufferGeometry, CircleGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3 } from 'three/webgpu';
-import { attribute, instancedBufferAttribute, mat4, normalGeometry, positionGeometry, mix, vec4, float } from 'three/tsl';
+import { attribute, instancedBufferAttribute, mat4, normalGeometry, positionGeometry, mix, vec4, float, cameraViewMatrix } from 'three/tsl';
 import { clipTexture, crowdMatrix, crowdPosition } from '../assets/crowd';
+import type { Materials } from './Materials';
 import { AssetRegistry } from '../assets/registry';
 import manifest from '../assets/manifest.json';
 import { infectedDefinitions } from '../data/infected';
@@ -32,7 +33,7 @@ export class CrowdView extends Group {
   private cullDistance = 60;
   setQuality(tier: QualityTier): void { this.cullDistance = qualityBudgets[tier].cullDistance; this.low = tier === 'low'; }
   private readonly logs: { id: string; reason: string }[] = [];
-  constructor(private readonly world: SimWorld, private low = false) {
+  constructor(private readonly world: SimWorld, private low = false, private readonly shading?: Materials) {
     super(); this.name = 'infected-crowd';
     this.caps.frustumCulled = false; this.caps.count = 0; this.add(this.caps);
     this.registry = new AssetRegistry((event) => this.logs.push(event));
@@ -67,7 +68,8 @@ export class CrowdView extends Group {
       const state = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
       baked.geometry.setAttribute('_state', state); baked.geometry.setAttribute('_variant', tint);
       const feedbackState = attribute('_state', 'vec4');
-      const material = Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float')), emissiveNode: attribute('color', 'vec3').mul(attribute('_emissive', 'float')).mul(3).add(feedbackState.w) });
+      const base = mix(attribute('color', 'vec3'), attribute('_variant', 'vec3'), attribute('_shirt', 'float')), glow = attribute('color', 'vec3').mul(attribute('_emissive', 'float')).mul(3).add(feedbackState.w);
+      const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       const matrix = crowdMatrix(texture, attribute('_part_index', 'float'), feedbackState.x);
       const part = attribute('_part_index', 'float'), leg = baked.clip.parts.indexOf('legL'), shin = baked.clip.parts.indexOf('shinL'), foot = baked.clip.parts.indexOf('footL');
       let visible = part.equal(leg).or(part.equal(shin)).or(part.equal(foot)).select(feedbackState.y.oneMinus(), 1);
@@ -87,7 +89,7 @@ export class CrowdView extends Group {
       const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset);
       const instance = mat4(column(0), column(4), column(8), column(12));
       material.positionNode = crowdPosition(instance, texture, part, feedbackState.x, positionGeometry.mul(visible));
-      material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.normalize();
+      material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
       this.batches.set(`${def.id}:${lod}`, { lod, role: def.id, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }

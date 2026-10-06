@@ -4,11 +4,12 @@ import { Color, DirectionalLight, Fog, HemisphereLight, Scene, Vector3 } from 't
 import { uniform } from 'three/tsl';
 import { timeOfDay, type TimeOfDay } from '../data/timeOfDay';
 import type { View } from './View';
+import { worldLook } from '../data/worldLook';
 
 /** One sun, a hemisphere and shared stylized lighting uniforms. Shadows follow the visible ground region. */
 export class Lighting {
   readonly sun = new DirectionalLight(0xffffff, 1);
-  readonly hemisphere = new HemisphereLight('#c5d6ff', '#b0703f', 0.5);
+  readonly hemisphere = new HemisphereLight(worldLook.skyAmbient, worldLook.groundAmbient, 0.5);
   readonly direction = uniform(new Vector3());
   readonly color = uniform(new Color());
   readonly intensity = uniform(1);
@@ -18,7 +19,7 @@ export class Lighting {
   readonly fogColor = uniform(new Color());
   readonly fogNear = uniform(55);
   readonly fogFar = uniform(140);
-  readonly bounce = uniform(new Color('#6f8f3a'));
+  readonly bounce = uniform(new Color(worldLook.bounce));
   preset: TimeOfDay = 'golden';
   constructor(private readonly scene: Scene) {
     this.sun.castShadow = true; this.sun.shadow.mapSize.set(1024, 1024);

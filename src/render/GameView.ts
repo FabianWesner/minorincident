@@ -69,10 +69,10 @@ export class GameView implements Lifecycle {
   private windowMask=false;
   private lookdev: Lookdev | null = null;
   private postFx: PostFx | null = null;
+  private dofEnabled = false;
   private readonly occlusion = new Occlusion();
   private readonly playerPosition = new Vector3();
   private readonly projection = new Vector3();
-  private readonly cullFocus = new Vector3();
   private idPass = false;
   private readonly flashOverlay = document.createElement('div');
   private readonly idBackground = new MeshBasicNodeMaterial({ color: '#000000' });
@@ -102,7 +102,7 @@ export class GameView implements Lifecycle {
   /** Apply inexpensive tier controls without rebuilding the level or interrupting its simulation. */
   setQuality(tier: QualityTier): void {
     const changed = this.quality !== tier; this.quality = tier; this.resize();
-    if (changed && this.postFx) { const enabled = this.postFx.bloomEnabled.value; this.postFx.dispose(); this.postFx = new PostFx(this.renderer, this.scene, this.camera, tier); this.postFx.bloomEnabled.value = enabled; }
+    if (changed && this.postFx) { const enabled = this.postFx.bloomEnabled.value; this.postFx.dispose(); this.postFx = new PostFx(this.renderer, this.scene, this.camera, tier); this.postFx.bloomEnabled.value = enabled; this.postFx.setDof(this.dofEnabled); }
     this.lighting?.setQuality(tier); this.districts?.setQuality(tier);
     this.vfx?.set({ quality: tier }); this.crowd?.setQuality(tier);
   }
@@ -122,12 +122,13 @@ export class GameView implements Lifecycle {
     if (this.world.districts) {
       this.renderer.shadowMap.enabled=true;
       if(!this.districtResources){
-        const lighting=new Lighting(this.scene),materials=new Materials(lighting),registry=new DistrictAssets(materials,this.renderer),phase=windPhase();
+        const lighting=new Lighting(this.scene),materials=new Materials(lighting),registry=new DistrictAssets(materials,this.renderer),phase=materials.wind;
         this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
       }
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low');await this.districts.load(1);
       this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality);
+      this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
 
       this.character=new CharacterView();await this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low');this.scene.add(this.character);
     } else if (this.world.player) {
@@ -158,10 +159,10 @@ export class GameView implements Lifecycle {
       this.meshes.push(this.destination); this.scene.add(this.destination);
     }
     if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials); await this.npcs.init(); this.scene.add(this.npcs); }
-    if (this.character) { this.entityAssets = new EntityAssets(this.world, this.quality === 'low'); await this.entityAssets.init(this.view); this.scene.add(this.entityAssets); }
+    if (this.character) { this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!); await this.entityAssets.init(this.view); this.scene.add(this.entityAssets); }
     if (this.world.combat && this.character) { this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer); await this.actions.init(); this.actions.update(); this.scene.add(this.actions); }
     if (this.world.missions) { this.marker = new ObjectiveMarker(this.world); this.scene.add(this.marker); }
-    if (this.character && this.world.combat) { this.crowd = new CrowdView(this.world, this.quality === 'low'); await this.crowd.init(); this.scene.add(this.crowd); }
+    if (this.character && this.world.combat) { this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!); await this.crowd.init(); this.scene.add(this.crowd); }
     if (this.world.interactables && this.materials) {
       this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); await this.interactions.synchronize();
     }
@@ -247,7 +248,7 @@ export class GameView implements Lifecycle {
     if (patch.quality !== undefined) this.vfxSettings.quality = patch.quality;
     if (patch.cameraShake !== undefined) { this.view.cameraShake = patch.cameraShake; this.advance(0); }
     if (patch.bloom !== undefined && this.postFx) this.postFx.bloomEnabled.value = Number(patch.bloom);
-    if (patch.cheapDof !== undefined && this.postFx) this.postFx.setDof(patch.cheapDof);
+    if (patch.cheapDof !== undefined) { this.dofEnabled = patch.cheapDof; this.postFx?.setDof(this.dofEnabled); }
     if (patch.timeOfDay !== undefined) this.lighting?.set(patch.timeOfDay);
     if (patch.occludersVisible !== undefined) this.occlusion.visible = patch.occludersVisible;
     if(patch.windowMask!==undefined)this.windowMask=patch.windowMask;
@@ -317,12 +318,7 @@ export class GameView implements Lifecycle {
     this.interactions?.update(this.camera); this.npcs?.update(this.camera);
     this.flashOverlay.style.opacity = String(this.vfx?.flash ?? 0);
     this.lighting?.update(this.view); this.districts?.updateLods(this.view);
-    if (this.districts) {
-      this.camera.getWorldDirection(this.cullFocus);
-      if (Math.abs(this.cullFocus.y) > .0001) this.cullFocus.multiplyScalar(-this.camera.position.y / this.cullFocus.y).add(this.camera.position);
-      else this.cullFocus.copy(this.view.focus);
-      this.districts.cull(this.cullFocus, this.quality);
-    }
+    this.districts?.cull(this.view, this.quality);
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;
@@ -355,7 +351,7 @@ export class GameView implements Lifecycle {
     if (this.entityAssets) { this.scene.remove(this.entityAssets); this.entityAssets.dispose(); this.entityAssets = null; }
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
     this.windowMask=false;
-    this.postFx?.dispose();this.postFx = null;
+    this.postFx?.dispose();this.postFx = null; this.dofEnabled = false;
     if(this.districts){this.scene.remove(this.districts);this.districts.dispose();this.districts=null;}
     this.frozenStarted = -1; this.frozenPose = null;
     if (this.crowd) { this.scene.remove(this.crowd); this.crowd.dispose(); this.crowd = null; }
