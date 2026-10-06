@@ -12,7 +12,7 @@ export as prototype survivor. `paused=1` installs a deterministic stepping API:
 `window.__MOTIONLAB__.step(720)`, `.metrics()`, `.resume()`, `.pause()`.
 All animations stay render-only; lab scenes own and dispose their resources.
 
-Capture serially and headlessly, taking the machine-wide browser lock once. The
+Capture serially and headlessly, using the machine-wide browser slot limiter. The
 harness starts and retires its own Vite server on 3352 if no server is present:
 
 ```sh
