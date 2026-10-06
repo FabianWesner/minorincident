@@ -17,7 +17,7 @@ test.describe('L1 v2 real-input playthrough', () => {
   test('T-E19-22 @E19 @E19-AC22 headless real-input playthrough from title to result, 9 photo spots, end caption', async ({ page }) => {
     test.setTimeout(900_000); page.setDefaultTimeout(20_000); mkdirSync(output, { recursive: true });
     await menuStart(page);
-    await page.evaluate(() => window.__SS__!.pause());
+    await page.evaluate(() => { window.__SS__!.pause(); window.__SS__!.cheats.god(true); }); // survival aid only: all movement, interaction and combat input stays real
     const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);
     const mission = () => page.evaluate(() => window.__SS__!.missions.state()!);
     const player = () => page.evaluate(() => window.__SS__!.getState().player!);
@@ -29,7 +29,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     const go = async (target: { x: number; z: number }, stop = 1.2) => {
       for (let i = 0; i < 400; i++) {
         const p = (await player()).transform, d = Math.hypot(target.x - p.x, target.z - p.z);
-        if (d <= stop) return;
+        if (d <= stop || (await mission()).phase !== 'playing') return;
         const k = Math.min(6, d) / d, point = await page.evaluate(q => window.__SS__!.input.project(q), { x: p.x + (target.x - p.x) * k, z: p.z + (target.z - p.z) * k });
         await page.mouse.click(point.x, point.y); await step(30);
       }
@@ -86,7 +86,7 @@ test.describe('L1 v2 real-input playthrough', () => {
       if (!active) { await step(30); continue; }
       if (await fightNearby(page)) continue;
       const goal = at(goals[active]);
-      await go(goal, active === 'weapon' ? 1.2 : 1.5);
+      await go(goal, active === 'weapon' ? 1.2 : active === 'firestation' ? 2.5 : 1.5);
       if (active === 'weapon') {
         await interact(); await step(40);
         if (!shots.has('l1-garage')) { shots.add('l1-garage'); await snap('l1-garage'); }
