@@ -1,19 +1,36 @@
 {
   "epic": "E03",
-  "criteria": 13,
+  "criteria": 21,
   "coverage": {
     "E03-AC01": [
       {
         "runner": "playwright",
-        "title": "T-E03-01 @E03 @E03-AC01 mouse dead zone and linear distance steering",
+        "title": "T-E03-01 @E03 @E03-AC01 cursor aims without moving",
         "project": "chromium",
         "status": "passed"
       }
     ],
     "E03-AC02": [
       {
+        "runner": "vitest",
+        "title": "@E03-AC02 saved old mouse mirror migrates RMB from attack to cycle",
+        "status": "passed"
+      },
+      {
         "runner": "playwright",
         "title": "T-E03-02 @E03 @E03-AC02 mouse buttons preserve down held up and prevent context menus",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-chord @E03 @E03-AC02 @E03-AC13 releasing LMB before RMB clears both independently",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E03 @E03-AC02 queued RMB presses retain one active cycle pulse each",
         "project": "chromium",
         "status": "passed"
       }
@@ -21,13 +38,48 @@
     "E03-AC03": [
       {
         "runner": "vitest",
+        "title": "@E02-AC03 @E03-AC03 zoom smooths, clamps, preserves angle/follow and resets to close default",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
         "title": "T-E03-wheel @E03 @E03-AC03 trackpad threshold and exact 120ms debounce preserve wheel directions",
         "status": "passed"
       },
       {
         "runner": "playwright",
-        "title": "T-E03-03 @E03 @E03-AC03 wheel notches pulse once and trackpads debounce 120ms",
+        "title": "T-E03-03 @E03 @E03-AC03 @E02-AC03 wheel zooms smoothly and never cycles weapons",
         "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E03-AC03 @E02-AC03 M1-05 two-finger pinch zooms without movement or weapon actions",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E03-AC03 @E02-AC03 M1-05 two-finger pinch zooms without movement or weapon actions",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E03-AC03 @E02-AC03 M1-05 two-finger pinch zooms without movement or weapon actions",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E03-AC03 @E02-AC03 M1-05 two-finger pinch zooms without movement or weapon actions",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E03-AC03 @E02-AC03 M1-05 two-finger pinch zooms without movement or weapon actions",
+        "project": "iphone-14-landscape",
         "status": "passed"
       }
     ],
@@ -41,13 +93,47 @@
     ],
     "E03-AC05": [
       {
+        "runner": "vitest",
+        "title": "@E03-AC05 direct slots select only the requested side and preserve rack timers",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "@E03-AC05 active numbers select unarmed first across one-slot L1 racks",
+        "status": "passed"
+      },
+      {
         "runner": "playwright",
         "title": "T-E03-05 @E03 @E03-AC05 keyboard aim turns at 360deg/s, taps snap and action mirrors fire",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-05-assist @E03 @E03-AC05 keyboard WASD J K Q F with nearest infected in facing direction",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E03-AC05 @E03-AC17 M1-05 numbers and HUD clicks select either rack; Shift never attacks",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E03 @E03-AC05 mouse-mode numbers directly select the unarmed-first carried list",
         "project": "chromium",
         "status": "passed"
       }
     ],
     "E03-AC06": [
+      {
+        "runner": "playwright",
+        "title": "@E03 @E03-AC06 @E03-AC18 real L1 touch stick and LEFT RIGHT ACTION",
+        "project": "chromium",
+        "status": "passed"
+      },
       {
         "runner": "playwright",
         "title": "T-E03-06 @E03 @E03-AC06 floating stick clamps a 60px drag and releases within one tick",
@@ -124,6 +210,12 @@
       },
       {
         "runner": "playwright",
+        "title": "T-E03-upward-aim @E03 @E03-AC07 a held upward drag aims rather than switching weapons",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
         "title": "T-E03-07 @E03 @E03-AC07 action drag aims and fires only on release, tap uses assist",
         "project": "pixel-7",
         "status": "passed"
@@ -131,6 +223,12 @@
       {
         "runner": "playwright",
         "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-upward-aim @E03 @E03-AC07 a held upward drag aims rather than switching weapons",
         "project": "pixel-7",
         "status": "passed"
       },
@@ -143,6 +241,12 @@
       {
         "runner": "playwright",
         "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-upward-aim @E03 @E03-AC07 a held upward drag aims rather than switching weapons",
         "project": "pixel-7-landscape",
         "status": "passed"
       },
@@ -155,6 +259,12 @@
       {
         "runner": "playwright",
         "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-upward-aim @E03 @E03-AC07 a held upward drag aims rather than switching weapons",
         "project": "iphone-14",
         "status": "passed"
       },
@@ -167,6 +277,12 @@
       {
         "runner": "playwright",
         "title": "T-E03-multitouch @E03 @E03-AC06 @E03-AC07 independent stick and action contacts, cancellation never fires",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-upward-aim @E03 @E03-AC07 a held upward drag aims rather than switching weapons",
         "project": "iphone-14-landscape",
         "status": "passed"
       }
@@ -225,12 +341,23 @@
     "E03-AC10": [
       {
         "runner": "vitest",
+        "title": "T-E03-command-replay @E03 @E03-AC10 @E03-AC15 held target command reaches range, repeats and replays deterministically",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
         "title": "T-E03-10 @E03 @E03-AC10 serialized recording replays identical sim state hashes at every tick",
         "status": "passed"
       },
       {
         "runner": "playwright",
-        "title": "T-E03-recorder-browser @E03 @E03-AC10 real device frames replay through the browser input phase",
+        "title": "T-E03-recorder-browser @E03 @E03-AC10 @E09 real device frames replay through the browser input phase",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-recorder-clicks @E03 @E03-AC10 real click destinations survive recording and replay",
         "project": "chromium",
         "status": "passed"
       }
@@ -245,13 +372,30 @@
     "E03-AC12": [
       {
         "runner": "playwright",
-        "title": "T-E03-12 @E03 @E03-AC12 middle-click and E interact without browser autoscroll",
+        "title": "T-E03-12 @E03 @E03-AC12 middle-click F and E interact without browser autoscroll",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-12-car @E03 @E03-AC12 middle-click near car immediately enters; F exits",
         "project": "chromium",
         "status": "passed"
       }
     ],
     "E03-AC13": [
       {
+        "runner": "vitest",
+        "title": "T-E03-pause-clear @E03 @E03-AC13 repeated pause cleanup preserves one release; level reset stays neutral",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-chord @E03 @E03-AC02 @E03-AC13 releasing LMB before RMB clears both independently",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
         "runner": "playwright",
         "title": "T-E03-13-blur @E03 @E03-AC13 focus loss releases W LMB and held stick without stale input",
         "project": "chromium",
@@ -341,6 +485,405 @@
         "project": "iphone-14-landscape",
         "status": "passed"
       }
+    ],
+    "E03-AC14": [
+      {
+        "runner": "playwright",
+        "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-14 @E03 @E03-AC14 click ground walks, retargets, stops and held ground follows cursor",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E03-AC15": [
+      {
+        "runner": "vitest",
+        "title": "T-E03-command-replay @E03 @E03-AC10 @E03-AC15 held target command reaches range, repeats and replays deterministically",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "T-E03-target-swap @E03 @E03-AC15 @E03-AC17 a weapon swap does not consume a pending one-click target attack",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-15-left @E03 @E03-AC15 target click approaches then attacks left",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-15-held @E03 @E03-AC15 held LMB target repeats and target death stops approach",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-17-pending @E03 @E03-AC15 @E03-AC17 Q during target command waits for swap then attacks once",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-15-live @E03 @E03-AC15 real LMB follows a moving infected and attacks it",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E03 @E03-AC15 mouse LMB uses active action even in RIGHT rack",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E03 @E03-AC15 held target death cancels attacks even before LMB release",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E03-AC16": [
+      {
+        "runner": "playwright",
+        "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-16 @E03 @E03-AC16 Shift LMB distant ground swings stationary and cancels destination",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E03-AC17": [
+      {
+        "runner": "vitest",
+        "title": "T-E03-target-swap @E03 @E03-AC15 @E03-AC17 a weapon swap does not consume a pending one-click target attack",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "@E03-AC17 carried cycle deduplicates unarmed and preserves active timers",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "@E03-AC17 rapid active cycling advances each press during the swap delay",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-17 @E03 @E03-AC17 RMB and Q cycle carried actions without attacking",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-17-pending @E03 @E03-AC15 @E03-AC17 Q during target command waits for swap then attacks once",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E03-AC05 @E03-AC17 M1-05 numbers and HUD clicks select either rack; Shift never attacks",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-18 @E03 @E03-AC18 @E03-AC17 three mobile buttons, ACTION proximity, and upward side swipes",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-18 @E03 @E03-AC18 @E03-AC17 three mobile buttons, ACTION proximity, and upward side swipes",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-18 @E03 @E03-AC18 @E03-AC17 three mobile buttons, ACTION proximity, and upward side swipes",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-18 @E03 @E03-AC18 @E03-AC17 three mobile buttons, ACTION proximity, and upward side swipes",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-18 @E03 @E03-AC18 @E03-AC17 three mobile buttons, ACTION proximity, and upward side swipes",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      }
+    ],
+    "E03-AC18": [
+      {
+        "runner": "playwright",
+        "title": "@E03 @E03-AC06 @E03-AC18 real L1 touch stick and LEFT RIGHT ACTION",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-18 @E03 @E03-AC18 @E03-AC17 three mobile buttons, ACTION proximity, and upward side swipes",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-18 @E03 @E03-AC18 @E03-AC17 three mobile buttons, ACTION proximity, and upward side swipes",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-18 @E03 @E03-AC18 @E03-AC17 three mobile buttons, ACTION proximity, and upward side swipes",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-18 @E03 @E03-AC18 @E03-AC17 three mobile buttons, ACTION proximity, and upward side swipes",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "T-E03-18 @E03 @E03-AC18 @E03-AC17 three mobile buttons, ACTION proximity, and upward side swipes",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 412x915",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 390x844",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 915x412",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 412x915",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 390x844",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 915x412",
+        "project": "chromium",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 412x915",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 390x844",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 915x412",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 412x915",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 390x844",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 915x412",
+        "project": "pixel-7",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 412x915",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 390x844",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 915x412",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 412x915",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 390x844",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 915x412",
+        "project": "pixel-7-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 412x915",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 390x844",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 915x412",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 412x915",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 390x844",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 915x412",
+        "project": "iphone-14",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 412x915",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 390x844",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD hud 915x412",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 412x915",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 390x844",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 915x412",
+        "project": "iphone-14-landscape",
+        "status": "passed"
+      }
+    ],
+    "E03-AC19": [
+      {
+        "runner": "vitest",
+        "title": "@E03-AC19 Shift melee never finishes a civilian in the glowing-eye state",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E03 @E03-AC19 Shift swings annoy adults harmlessly and pass through children",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E03-AC20": [
+      {
+        "runner": "vitest",
+        "title": "@E03-AC20 unarmed retains varied moves across pauses, equal damage, slight kick knockback",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "@E03-AC20 seven authored unarmed silhouettes have sequenced anticipation, strike and follow-through",
+        "status": "passed"
+      },
+      {
+        "runner": "playwright",
+        "title": "@E03 @E03-AC20 seven unarmed moves play through real Shift LMB without moving",
+        "project": "chromium",
+        "status": "passed"
+      }
+    ],
+    "E03-AC21": [
+      {
+        "runner": "playwright",
+        "title": "@E03 @E03-AC21 mouse HUD shows active and next and L1 hints describe switching",
+        "project": "chromium",
+        "status": "passed"
+      }
     ]
-  }
+  },
+  "scope": "Earlier complete E03 browser run plus selected simulation checks; final resumed validation uses smoke and one focused unarmed browser test per orchestrator instruction."
 }

@@ -42,7 +42,7 @@ for (const mode of ['desktop', 'iphone-portrait'] as const) test.describe(mode, 
     if (mode === 'desktop') {
       // A single genuine ground click must route around the visible hedge.
       const point = await page.evaluate(() => window.__SS__!.input.project({ x: -15, z: -6.3 }));
-      await page.mouse.click(point.x, point.y); await step(240);
+      await page.mouse.click(point.x, point.y); await step(360);
       const p = await page.evaluate(() => window.__SS__!.getState().player!.transform); expect(Math.hypot(p.x + 15, p.z + 6.3)).toBeLessThan(.2);
     } else {
       // Direct joystick input collides instead of passing through the hedge.

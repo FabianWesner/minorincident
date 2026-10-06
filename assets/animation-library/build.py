@@ -147,6 +147,32 @@ gait('shamble',1.1,.72,False,True)
 gait('infected-run',.64,1.5,True,True)
 gait('npc-walk',.9,.9)
 gait('npc-walk-relaxed',1,.85)
+
+# Morning activities: feet stay planted; arm/head motion has a purpose and a held prop.
+seated=p(hip=hip(y=-.22),legL=z(88),legR=z(88),shinL=z(-88),shinR=z(-88),foreArmL=z(35),foreArmR=z(75),armR=z(15))
+half_seated=p(hip=hip(y=-.12),torso=z(-12),legL=z(40),legR=z(40),shinL=z(-65),shinR=z(-65),foreArmR=z(65))
+action('npc-sit-down',.6,[(0,p(foreArmR=z(65))),(.5,half_seated),(1,seated)])
+action('npc-stand-up',.6,[(0,seated),(.5,half_seated),(1,p(foreArmR=z(65)))])
+action('npc-sit',4,[(0,seated),(.25,{**seated,'foreArmR':z(118),'armR':z(38),'head':z(7)}),(.5,seated),(.75,{**seated,'head':(0,-18,0),'torso':(0,-5,0)}),(1,seated)])
+action('npc-gesture',3,[(0,p(foreArmL=z(22),foreArmR=z(28))),(.22,p(armR=(0,-20,32),foreArmR=z(75),head=(0,8,0))),(.48,p(armL=(0,12,25),foreArmL=z(52),armR=z(12),foreArmR=z(30),head=z(4))),(.75,p(armR=(0,25,20),foreArmR=z(55))),(1,p(foreArmL=z(22),foreArmR=z(28)))])
+action('npc-look-around',2.5,[(0,p(foreArmR=z(16))),(.3,p(head=(0,-25,2),torso=(0,-7,0),foreArmR=z(16))),(.65,p(head=(0,22,-2),torso=(0,5,0),foreArmR=z(16))),(1,p(foreArmR=z(16)))])
+action('npc-water',3,[(0,p(armR=z(20),foreArmR=z(30))),(.25,p(torso=z(-9),armR=z(52),foreArmR=z(20),handR=(0,0,-28),head=z(-10))),(.7,p(torso=z(-9),armR=z(52),foreArmR=z(20),handR=(0,0,-28),head=z(-10))),(1,p(armR=z(20),foreArmR=z(30)))])
+# Carry reuses the authored contact poses, fixing the right arm around the prop.
+# Cane shares a restrained gait while the left arm balances the step.
+for name in ['npc-carry','npc-cane']:
+    poses=[]
+    for i in range(9):
+        y=[-.064,-.038,-.027,-.045,-.064,-.038,-.027,-.045,-.064][i]
+        pose=p(hip=hip(y=y),torso=z(-2),foreArmR=z(12 if name=='npc-carry' else 22),armR=z(4 if name=='npc-carry' else 18))
+        for side,index in [('L',i),('R',(i+4)%8)]:
+            targets=[(.225,0),(.11,0),(-.01,0),(-.12,0),(-.225,.015),(-.14,.12),(.015,.16),(.19,.10),(.225,0)]
+            thigh,knee=leg_pose(*targets[index],y)
+            pose['leg'+side]=z(thigh);pose['shin'+side]=z(knee)
+            pose['foot'+side]=z(-thigh-knee+[-8,0,0,10,20,-12,-18,-10,-8][index])
+        pose['armL']=z([-18,-9,0,9,18,9,0,-9,-18][i]);pose['foreArmL']=z(18)
+        poses.append((i/8,pose))
+    action(name,1,poses)
+
 action('start',.18,[(0,p()),(.4,p(hip=hip(y=-.055),torso=z(-10),legL=z(15),shinL=z(-28),armR=z(15))),
     (1,p(torso=z(-8),legL=z(25),shinL=z(-30),legR=z(-15),foreArmL=z(55),foreArmR=z(55)))])
 action('stop',.22,[(0,p(torso=z(-8),legL=z(20),shinL=z(-25))),(.45,p(hip=hip(y=-.045),torso=z(5),legL=z(12),shinL=z(-20))), (1,p())])
@@ -330,6 +356,32 @@ bat('bat-3',[(.12,p(hip=hip(y=-.08),torso=(0,-10,22),head=z(-8),armR=(0,-10,162)
     (.3,p(hip=hip(x=.15,y=-.125),torso=(0,10,-44),head=z(22),armR=(0,10,36),foreArmR=z(4),armL=(0,-10,34),foreArmL=z(6),legL=z(36),shinL=z(-54),legR=z(-26),shinR=z(-22),footR=z(18))),
     (.44,p(hip=hip(x=.15,y=-.12),torso=(0,8,-42),head=z(16),armR=(0,10,38),foreArmR=z(6),armL=(0,-10,36),foreArmL=z(8),legL=z(35),shinL=z(-52),legR=z(-26),shinR=z(-22))),
     (.7,p(hip=hip(x=.06,y=-.06),torso=(0,0,-14),armR=(0,-10,50),foreArmR=z(50),legL=z(18),shinL=z(-26)))])
+# Unified unarmed style: .4s game timing, 50ms hand/foot strike (phase .075 -> .20),
+# pelvis leads chest, then distal joints. Distinct silhouettes, quiet planted support.
+# Seven beats; the spinning backfist is the occasional flashy finish, equal damage.
+guard=p(hip=hip(y=-.025),armL=z(38),foreArmL=z(95),armR=z(42),foreArmR=z(95),
+        legL=z(7),shinL=z(-14),legR=z(-5),shinR=z(-10))
+unarmed=[
+    ('jab',p(armL=z(35),foreArmL=z(110)),p(armL=z(92),foreArmL=z(4)),p(armL=z(100),foreArmL=z(18)),12),
+    ('cross',p(armR=(0,-20,25),foreArmR=z(112)),p(armR=(0,18,94),foreArmR=z(6)),p(armR=(0,40,102),foreArmR=z(22)),25),
+    ('front-kick',p(legR=z(58),shinR=z(-110),torso=z(8)),p(legR=z(95),shinR=z(-8),footR=z(-18),torso=z(12),armR=z(-25)),p(legR=z(74),shinR=z(-35),torso=z(8)),8),
+    ('roundhouse-kick',p(legR=(12,-25,50),shinR=z(-100)),p(legR=(38,45,98),shinR=z(-8),torso=(0,20,12),armL=z(65)),p(legR=(25,80,70),shinR=z(-30),torso=(0,35,8)),38),
+    ('uppercut',p(hip=hip(y=-.065),armR=z(8),foreArmR=z(100)),p(armR=(0,15,134),foreArmR=z(38),torso=z(-8)),p(armR=(0,28,142),foreArmR=z(48),torso=z(-5)),18),
+    ('knee',p(legR=z(28),shinR=z(-115),armL=z(65),armR=z(65)),p(legR=z(108),shinR=z(-130),torso=z(-14),foreArmL=z(60),foreArmR=z(60)),p(legR=z(86),shinR=z(-115),torso=z(-8)),12),
+    ('spinning-backfist',p(armR=(0,-65,65),foreArmR=z(75)),p(armR=(0,-110,100),foreArmR=z(12)),p(armR=(0,-125,88),foreArmR=z(20)),110),
+]
+for name,wind,strike,follow,twist in unarmed:
+    anticipation={**guard,**wind,'hip':hip(y=-.04,twist=-twist*.35),'torso':(0,-twist*.65,5),'head':(0,twist*.35,-3)}
+    contact={**guard,**strike,'hip':hip(y=-.02,twist=twist*.45),'torso':strike.get('torso',(0,twist*.5,-7)),'head':(0,-twist*.3,5)}
+    through={**guard,**follow,'hip':hip(y=-.025,twist=twist*.65),'torso':follow.get('torso',(0,twist*.8,-4)),'head':(0,-twist*.4,3)}
+    def limb_blend(t):
+        return {node:tuple(a+(b-a)*t for a,b in zip(anticipation.get(node,(0,0,0)),contact.get(node,(0,0,0))))
+                for node in set(anticipation)|set(contact) if node.startswith(('arm','foreArm','leg','shin','foot'))}
+    action('unarmed-'+name,1,[(0,guard),(.035,{**guard,'hip':anticipation['hip']}),
+        (.05,{**guard,'hip':anticipation['hip'],'torso':anticipation['torso'],'head':anticipation['head']}),
+        (.075,anticipation),(.125,{**anticipation,**limb_blend(.4),'hip':contact['hip']}),
+        (.15,{**contact,**limb_blend(.6)}),(.20,contact),(.36,through),
+        (.66,{**guard,'torso':(0,twist*.12,0)}),(1,guard)])
 
 action('swing',.5,[(0,p()),(.1,p(armR=z(-30),torso=(0,-30,5))),(.2,p(armR=(0,55,100),foreArmR=z(8),torso=(0,35,-10))),(.5,p(armR=(0,85,100),torso=(0,45,-5))),(1,p())])
 action('kick',.65,[(0,p(armL=z(35),foreArmL=z(50))),(.12,p(hip=hip(y=-.03),legR=z(68),shinR=z(-110),torso=z(12))),

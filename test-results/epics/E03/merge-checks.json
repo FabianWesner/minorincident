@@ -1,57 +1,107 @@
-[
-  {
-    "name": "unit",
-    "command": [
-      "npm",
+{
+  "job": "m1-controls3-3",
+  "merge": "2ececbf",
+  "main": "bc7e801",
+  "animations": {
+    "regeneratedWith": "experiment/tools/blender_run.py + tools/assets/animation-library.ts",
+    "mainClips": 51,
+    "unarmedClips": 7,
+    "total": 58,
+    "movingTracks": 569,
+    "allMainClipsRetained": true,
+    "names": [
+      "idle",
+      "walk",
       "run",
-      "test:unit",
-      "--",
-      "--reporter=default",
-      "--reporter=json",
-      "--outputFile=test-results/epics/E03/unit.json"
-    ],
-    "exitCode": 0
+      "shamble",
+      "infected-run",
+      "npc-walk",
+      "npc-walk-relaxed",
+      "start",
+      "stop",
+      "turn-left",
+      "turn-right",
+      "fists-1",
+      "fists-2",
+      "fists-3",
+      "bat-1",
+      "bat-2",
+      "bat-3",
+      "crowbar-1",
+      "crowbar-2",
+      "crowbar-3",
+      "machete-1",
+      "machete-2",
+      "machete-3",
+      "unarmed-jab",
+      "unarmed-cross",
+      "unarmed-front-kick",
+      "unarmed-roundhouse-kick",
+      "unarmed-uppercut",
+      "unarmed-knee",
+      "unarmed-spinning-backfist",
+      "swing",
+      "kick",
+      "spin-kick",
+      "stagger-left",
+      "stagger-right",
+      "hurt",
+      "die",
+      "death-back",
+      "death-side",
+      "death-crumple",
+      "knockdown",
+      "flung",
+      "infection-stagger",
+      "infection-collapse",
+      "infection-rise",
+      "get-up",
+      "crawl",
+      "windup",
+      "shoot",
+      "throw",
+      "interact",
+      "enter-car",
+      "corgi-idle",
+      "corgi-walk",
+      "corgi-trot",
+      "corgi-sit",
+      "infected-flight",
+      "animal-death"
+    ]
   },
-  {
-    "name": "smoke",
-    "command": [
-      "npm",
-      "run",
-      "test:smoke"
-    ],
-    "exitCode": 0
-  },
-  {
-    "name": "regression-E01",
-    "command": [
-      "npm",
-      "run",
-      "verify",
-      "--",
-      "E01"
-    ],
-    "exitCode": 0
-  },
-  {
-    "name": "regression-E02",
-    "command": [
-      "npm",
-      "run",
-      "verify",
-      "--",
-      "E02"
-    ],
-    "exitCode": 0
-  },
-  {
-    "name": "verify",
-    "command": [
-      "npm",
-      "run",
-      "verify",
-      "--",
-      "E03"
-    ],
-    "exitCode": 0
-  }
-]
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run test:unit",
+      "exitCode": 0,
+      "passed": 181
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0
+    },
+    {
+      "command": "E2E_PORT=3348 npm run test:smoke",
+      "exitCode": 0,
+      "status": "passed",
+      "passed": {
+        "simulation": 3,
+        "browser": 22
+      }
+    },
+    {
+      "command": "E2E_PORT=3348 sh tools/e2e-lock.sh npx playwright test tests/e2e/input-unarmed.spec.ts --grep \"seven unarmed moves\" --project=chromium --workers=1",
+      "exitCode": 0,
+      "status": "passed",
+      "passed": 1
+    }
+  ]
+}

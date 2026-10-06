@@ -5,7 +5,7 @@ import { comboDefinition, meleeChains } from '../../data/meleeCombos';
 export interface Attack {
   id: number; sourceId: number; side: Side; def: ActionDef; aim: Vec2; aimPoint: Vec2 | null;
   started: number; activeAt: number; recoveryAt: number; endsAt: number; resolved: boolean; hit: Set<number>;
-  combo: number;
+  combo: number; inPlace: boolean;
 }
 /** Fixed-tick phases; each active action resolves once, independent of render rate. */
 export class ActionRunner {
@@ -22,14 +22,18 @@ export class ActionRunner {
       if (attack && tick >= attack.endsAt) { delete this.running[side]; attack = undefined; }
       const button = side === 'LEFT' ? frame.left : frame.right;
       let def = this.loadout.definition(this.loadout.current(side).id);
+      if (frame.mouseAttack && def.id === 'weapon.kick') def = this.loadout.definition('weapon.fists');
       if (!attack && (button.down || (button.held && (def.category === 'melee' || def.category === 'ranged'))) && this.loadout.usable(side, tick)) {
         this.loadout.state.selectedSide = side;
         const state = this.loadout.state[side];
         const previous = this.chains[side], count = meleeChains[def.id]?.length ?? 1;
-        const combo = previous?.actionId === def.id && tick <= previous.until ? (previous.combo + 1) % count : 0;
+        const unarmedOrder = [0, 1, 2, 4, 5, 3, 6];
+        const combo = def.id === 'weapon.fists'
+          ? previous?.actionId === def.id ? unarmedOrder[(unarmedOrder.indexOf(previous.combo) + 1) % unarmedOrder.length] : 0
+          : previous?.actionId === def.id && tick <= previous.until ? (previous.combo + 1) % count : 0;
         def = comboDefinition(def, combo);
         this.chains[side] = { actionId: def.id, combo, until: tick + ticks(def.cooldown) + 48 };
-        attack = { id: ++this.sequence, sourceId: this.sourceId, side, def, combo, aim: { ...state.aim }, aimPoint: state.aimPoint ? { ...state.aimPoint } : null, started: tick, activeAt: tick + ticks(def.windup), recoveryAt: tick + ticks(def.windup + def.active), endsAt: tick + ticks(def.windup + def.active + def.recovery), resolved: false, hit: new Set() };
+        attack = { id: ++this.sequence, sourceId: this.sourceId, side, def, combo, inPlace: !!frame.attackInPlace, aim: { ...state.aim }, aimPoint: state.aimPoint ? { ...state.aimPoint } : null, started: tick, activeAt: tick + ticks(def.windup), recoveryAt: tick + ticks(def.windup + def.active), endsAt: tick + ticks(def.windup + def.active + def.recovery), resolved: false, hit: new Set() };
         this.running[side] = attack; this.loadout.spend(side, tick, def, this.infiniteCharges); started(attack);
       }
       if (attack && !attack.resolved && tick >= attack.activeAt) { attack.resolved = true; resolve(attack); }

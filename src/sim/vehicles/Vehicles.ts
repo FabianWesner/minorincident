@@ -4,6 +4,7 @@ import { survivor } from '../../data/survivor';
 import type { InputFrame, Scheme } from '../../input/InputFrame';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
+import { Bicycle } from './Bicycle';
 import { Obstacles } from './Obstacles';
 import { VehicleBody } from './VehicleBody';
 /** Serialized vehicle component. Native handles live only in Vehicles.cars. */
@@ -20,10 +21,12 @@ export class Vehicles {
   progressionArmor = 0;
   progressionBoost = 1;
   readonly obstacles: Obstacles;
+  /** L1 v2 courier bicycle (lane F); inert until `bicycle.spawn`. */
+  readonly bicycle: Bicycle;
   private readonly exitShape = new RAPIER.Capsule(survivor.height / 2 - survivor.radius, survivor.radius);
   private readonly identity = { x: 0, y: 0, z: 0, w: 1 };
   private readonly position = { x: 0, y: survivor.height / 2 + .02, z: 0 };
-  constructor(private readonly world: SimWorld) { this.obstacles = new Obstacles(world); }
+  constructor(private readonly world: SimWorld) { this.obstacles = new Obstacles(world); this.bicycle = new Bicycle(world); }
   spawn(id: string, pos: { x: number; z: number }, yaw = 0): number {
     if (![pos.x, pos.z, yaw].every(Number.isFinite)) throw new RangeError('Vehicle position must be finite');
     const def = vehicleDef(id), physics = new VehicleBody(def, this.world.physics.world!, pos, yaw);
@@ -205,6 +208,7 @@ export class Vehicles {
     for (const id of state.attached) { const target = this.world.entities.get(id); if (target) { Object.assign(target.transform, p); const side = id % 2 ? 1 : -1; target.transform.x += Math.sin(p.yaw) * side * car.physics.def.width / 2; target.transform.z += Math.cos(p.yaw) * side * car.physics.def.width / 2; this.world.spatial.set(id, target.transform.x, target.transform.z); } }
   }
   postPhysics(): void {
+    this.bicycle.postPhysics();
     for (const car of this.cars.values()) {
       const beforeSpeed = car.physics.speed;
       car.physics.postPhysics();

@@ -13,14 +13,17 @@ function rng(seed: number): () => number {
   return () => { s = (s + 0x6d2b79f5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 }
 
-export async function duel(seed: number, count: number, policy: DuelPolicy, weapon = 'weapon.fists', archetype = 'infected.runner', limitSeconds = 60): Promise<DuelResult> {
+export async function duel(seed: number, count: number, policy: DuelPolicy, weapon = 'weapon.fists', archetype = 'infected.runner', limitSeconds = 60, l1 = true): Promise<DuelResult> {
   const w = new SimWorld();
   try {
     await w.init(); w.loadScenario('horde-arena', seed); w.combat!.setLoadout([weapon], [weapon]);
-    const random = rng(seed), base = random() * Math.PI * 2, ids: number[] = [];
+    if (l1) w.infected!.configureL1v2();
+    const random = rng(seed), base = random() * Math.PI * 2, ids: number[] = [], tiers = ['frail', 'average', 'athletic'] as const;
     for (let i = 0; i < count; i++) {
       const angle = base + (i / count) * Math.PI * 2 + (random() - .5) * .6, distance = 5 + random() * 3;
-      ids.push(w.infected!.spawn(archetype, { x: Math.cos(angle) * distance, z: Math.sin(angle) * distance }, { state: 'chase' }));
+      const id = w.infected!.spawn(archetype, { x: Math.cos(angle) * distance, z: Math.sin(angle) * distance }, { state: 'chase', ...(l1 ? { tier: tiers[(seed + i) % 3] } : {}) });
+      // Spawned facing the player: the L1 brain is vision-only (E19 §5.2); the duel starts at first sight.
+      const e = w.entities.get(id)!; e.transform.yaw = Math.atan2(e.transform.z, -e.transform.x); ids.push(id);
     }
     const frame = emptyInput(); frame.aimSource = 'keyboard';
     let target = 0, hits = 0, kills = 0;
