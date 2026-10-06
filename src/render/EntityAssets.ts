@@ -20,7 +20,7 @@ const actorAssets: Record<string, string> = {
  * Async loads participate in screenshotReady; no visual transform changes the sim. */
 export class EntityAssets extends Group {
   private readonly logs: { id: string; reason: string }[] = [];
-  private readonly registry = new AssetRegistry(event => this.logs.push(event));
+  private readonly registry: AssetRegistry;
   private readonly records = new Map<number, { model: Object3D; lod: AssetQuality }>();
   private view?: View;
   private readonly prototypes = new Map<string, Promise<Group>>();
@@ -29,7 +29,7 @@ export class EntityAssets extends Group {
   private readonly pending = new Map<number, Promise<void>>();
   private companion?: Object3D;
   private disposed = false;
-  constructor(private readonly world: SimWorld, private readonly low = false, private readonly shading?: Materials) { super(); }
+  constructor(private readonly world: SimWorld, private readonly low = false, private readonly shading?: Materials) { super(); this.registry = new AssetRegistry(event => this.logs.push(event), { materials: shading }); }
   async init(view: View): Promise<void> {
     this.view = view;
     if (!this.world.npcs) { this.companion = await this.registry.loadAsset('char.corgi', this.low ? 'lod1' : 'high'); this.add(this.companion); }

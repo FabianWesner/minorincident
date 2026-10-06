@@ -136,6 +136,7 @@ export class Npcs {
       if (c) { c.entered += delta; for (const key of ['until', 'pauseUntil', 'knockedUntil'] as const) if (c[key]) c[key] += delta; }
       if (e.companion) { if (e.companion.until) e.companion.until += delta; if (e.companion.barkAt) e.companion.barkAt += delta; if (e.companion.hurtAt) e.companion.hurtAt += delta; }
       if (e.escort) { e.escort.downedAt += delta; if (e.escort.attackAt) e.escort.attackAt += delta; }
+      if (e.infectionRise) { e.infectionRise.started += delta; e.infectionRise.until += delta; }
       if (e.infected) for (const key of ['until', 'cooldown', 'activeUntil', 'grabUntil', 'grabNextTick', 'scatterUntil'] as const) if (e.infected[key]) e.infected[key] += delta;
     }
     this.civilians.restore();

@@ -455,6 +455,7 @@ export class AudioService implements Lifecycle {
             return;
         }
         if (event.type === 'civilian.state') {
+            if (event.state === 'rising') this.play('infected.vocal', { position, gain: .45 }, source);
             if (event.state === 'bitten' || event.state === 'down') this.play('bark.female.hurt', { position, gain: .4 }, source);
             return; // Gasp once, then silence until the eyes-phase growl.
         }
