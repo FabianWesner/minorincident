@@ -1,3 +1,4 @@
+import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from folio-2025 Ligthing.js / Fog.js by Bruno Simon (MIT), commit 41046b5.
 import { Color, DirectionalLight, Fog, HemisphereLight, Scene, Vector3 } from 'three/webgpu';
 import { uniform } from 'three/tsl';
@@ -24,6 +25,11 @@ export class Lighting {
     this.sun.shadow.bias = -0.0005; this.sun.shadow.normalBias = 0.04; this.sun.shadow.radius = 3;
     this.scene.add(this.sun, this.sun.target, this.hemisphere); this.set('golden');
   }
+  setQuality(tier: QualityTier): void {
+    const size = qualityBudgets[tier].shadowSize;
+    if (this.sun.shadow.mapSize.x === size) return;
+    this.sun.shadow.map?.dispose(); this.sun.shadow.map = null; this.sun.shadow.mapSize.set(size, size); this.sun.shadow.needsUpdate = true;
+  }
   set(name: TimeOfDay): void {
     if (!(name in timeOfDay)) throw new Error(`Unknown time-of-day preset: ${name}`);
     this.preset = name; const p = timeOfDay[name];
@@ -39,7 +45,8 @@ export class Lighting {
     // Portrait framing pulls the camera back to retain the playable circle.
     // Fog must follow that offset so it still starts beyond the nearby action.
     const p = timeOfDay[this.preset];
-    const fogOffset = Math.max(0, view.camera.position.distanceTo(view.focus) - 35);
+    // Use the follow framing radius: authored cinematic positions must retain distance fog.
+    const fogOffset = Math.max(0, view.radius * (view.driving ? 1.15 : 1) - 19);
     this.fogNear.value = p.fogNear + fogOffset; this.fogFar.value = p.fogFar + fogOffset;
     if (this.scene.fog instanceof Fog) { this.scene.fog.near = this.fogNear.value; this.scene.fog.far = this.fogFar.value; }
     // Bound the view's ground-plane corners, then enclose that area in the light's orthographic frustum.
@@ -54,7 +61,7 @@ export class Lighting {
   /** Includes live fog ranges so viewport changes can be checked without shader inspection. */
   getState() {
     const p = timeOfDay[this.preset];
-    return { preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: p.sun, sky: p.sky, fog: p.fog, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: p.intensity };
+    return { shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: p.sun, sky: p.sky, fog: p.fog, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: p.intensity };
   }
   dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); }
 }

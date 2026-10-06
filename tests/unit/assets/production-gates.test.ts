@@ -6,9 +6,10 @@ import { pendingMilestone } from '../../../tools/assets/milestone';
 import { reviewErrors, needsHuman } from '../../../tools/assets/review';
 import { fixture } from './fixture';
 
-test('T-E17-09 @E17-AC09 production gate rejects pending P0 art (milestone production is deferred)', () => {
+test('T-E17-09 @E17-AC09 production gate accepts integrated art and rejects missing exports', () => {
   const assets=manifest as AssetDef[];
-  expect(pendingMilestone(assets,['char.survivor-female','inf.common-worker'])).toEqual(['char.survivor-female','inf.common-worker']);
+  expect(pendingMilestone(assets,['char.survivor-female','inf.common-worker'])).toEqual([]);
+  expect(pendingMilestone(assets,['util.radio','veh.fuel-truck'])).toEqual(['util.radio','veh.fuel-truck']);
   expect(pendingMilestone(assets,['veh.fire-engine'])).toEqual([]);
   expect(pendingMilestone(assets,['missing.asset'])).toEqual(['missing.asset']);
 });

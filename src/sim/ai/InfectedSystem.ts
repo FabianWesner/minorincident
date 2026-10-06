@@ -121,6 +121,7 @@ export class InfectedSystem {
     if (this.active.length > 20) this.navigation.flow(player.transform, 1500);
     this.crowd.length = 0;
     for (const e of this.active) {
+      if (this.world.npcs?.civilians.holds(e.id)) { e.combat!.attacking = false; continue; }
       const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
       const lure = e.noiseTarget && this.world.tick < e.noiseTarget.until ? this.world.entities.get(e.noiseTarget.id) : undefined;
@@ -287,7 +288,7 @@ export class InfectedSystem {
     }
     if (b.special === 'explode' && this.world.tick === b.until) {
       for (const target of this.world.entities.iterate()) {
-        if (target === e || target.health.current <= 0 || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > 3 || !this.world.combat!.query.visible(e.transform, target.transform)) continue;
+        if (target.civilian?.adult === false || target.escort?.child || target === e || target.health.current <= 0 || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > 3 || !this.world.combat!.query.visible(e.transform, target.transform)) continue;
         const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId: target.id, origin: e.transform, direction: { x: 0, z: 0 }, base: 35, multiplier: 1, type: 'explosive', radius: 3, knockback: 0, stagger: 0 });
         this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId: target.id, special: 'explode', amount });
       }

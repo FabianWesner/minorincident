@@ -1,4 +1,7 @@
 import { ControlIntent } from '../entities/ControlIntent';
+import { installCampaignNpcs, rebuildNpcNavigation } from '../npc/install';
+import { Npcs } from '../npc/Npcs';
+import { populateHorde } from '../../../tests/fixtures/scenarios/performance';
 import { InfectedSystem } from '../ai/InfectedSystem';
 import { Mission } from '../missions/Mission';
 import type { MissionDef } from '../missions/types';
@@ -32,6 +35,7 @@ export class SimWorld implements Lifecycle {
   player: Player | null = null;
   combat: Combat | null = null;
   infected: InfectedSystem | null = null;
+  npcs: Npcs | null = null;
   interactables: Interactables | null = null;
   hazards: Hazards | null = null;
   pickups: Pickups | null = null;
@@ -80,13 +84,14 @@ export class SimWorld implements Lifecycle {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
       if (this.vehicles?.active != null) return;
-      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
+      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
       body.setLinvel({ x: this.effectiveInput.move.x * 5, y: body.linvel().y, z: this.effectiveInput.move.z * 5 }, true);
     }, SimPhase.intent);
     this.events.on('sim.tick', () => this.combat?.effects.moveListeners(), SimPhase.ai);
     if (definition.infected) { this.infected = new InfectedSystem(this, definition); this.events.on('sim.tick', () => this.infected!.update(), SimPhase.ai); }
+    if (definition.infected) { this.npcs = new Npcs(this); this.events.on('sim.tick', () => this.npcs?.update(), SimPhase.ai); if (definition.npcs) { this.npcs.configure(definition.npcs.level ?? 1, definition.npcs.tier, definition.npcs.ambient); if (definition.npcs.companion) this.npcs.companion.spawn(); } }
     this.placeInteractions(definition);
     this.events.on('sim.tick', () => this.physics.update(), SimPhase.physics);
     this.events.on('sim.tick', () => {
@@ -109,6 +114,9 @@ export class SimWorld implements Lifecycle {
       this.spatial.set(1, p.x, p.z);
     }, SimPhase.cleanup);
     installVfxScenario(this);
+    if (name === 'perf-horde-200' || name === 'perf-horde-100') {
+      this.infected!.director.tier = name === 'perf-horde-100' ? 'low' : 'high'; populateHorde(this, name === 'perf-horde-100' ? 100 : 200);
+    }
     this.events.emit({ tick: 0, type: 'scenario.loaded', name, seed });
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
@@ -124,6 +132,7 @@ export class SimWorld implements Lifecycle {
     for (const d of districts.districts) {
       this.placeInteractions(d.gameplay.interactions ?? {}, d.origin);
     }
+    installCampaignNpcs(this);
     this.events.on('sim.tick',()=>{
       if(this.tick%60!==0)return;
       const player=this.entities.get(1)!;
@@ -152,7 +161,7 @@ export class SimWorld implements Lifecycle {
     for(const d of next.districts)for(const aabb of d.decay.colliders.map(c=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
     this.vehicles?.rebuild(true);
     this.hazards?.debris.reset(true); this.interactables?.rebuildBlockers(next.nav, true);
-    this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step();
+    this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step(); rebuildNpcNavigation(this);
   }
   setInput(patch: Partial<InputFrame>): void {
     const next = { ...this.input, ...structuredClone(patch) };
@@ -204,7 +213,7 @@ export class SimWorld implements Lifecycle {
   }
   reset(): void {
     this.vehicles?.dispose(); this.vehicles = null;
-    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.pickups = null; this.hazards = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }
   dispose(): void { this.reset(); }

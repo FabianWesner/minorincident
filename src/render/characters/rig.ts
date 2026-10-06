@@ -1,21 +1,26 @@
-import { Box3, Group, type Object3D } from 'three';
+import { Box3, Group, Vector3, type Object3D } from 'three';
 import { characterNodes, type CharacterNode, type SurvivorVariant } from '../../data/survivor';
 import { createSurvivorPlaceholder } from './placeholder';
 export type CharacterRig = Record<CharacterNode, Object3D>;
 /** Validate loaded assets and the code fallback through the same runtime contract. */
-export function resolveRig(model: Group): CharacterRig {
+export function resolveRig(model: Group, expectedHeight = 1.4): CharacterRig {
   const nodes = {} as CharacterRig;
   for (const name of characterNodes) { const node = model.getObjectByName(name); if (!node) throw new Error(`Missing character node ${name}`); nodes[name] = node; }
   // Exported palm sockets can lie beyond the hand-node tolerance; preserve direction, cap offset.
-  for (const side of ['L', 'R'] as const) { const socket = nodes[`weaponSocket${side}`]; if (socket.position.length() > 0.045) socket.position.setLength(0.045); }
+  model.updateMatrixWorld(true);
+  for (const side of ['L', 'R'] as const) {
+    const socket = nodes[`weaponSocket${side}`], scale = socket.parent!.getWorldScale(new Vector3());
+    const limit = .045 / Math.max(scale.x, scale.y, scale.z);
+    if (socket.position.length() > limit) socket.position.setLength(limit);
+  }
   const bounds = new Box3().setFromObject(model), height = bounds.max.y - bounds.min.y;
-  if (Math.abs(height - 1.4) > 0.07) throw new Error(`Invalid character height ${height}`);
+  if (Math.abs(height - expectedHeight) > 0.07) throw new Error(`Invalid character height ${height}, expected ${expectedHeight}`);
   return nodes;
 }
 /** Assets may fail independently. Never block gameplay on art; caller exposes the source/reason to tests. */
-export async function loadCharacter(variant: SurvivorVariant, load: () => Promise<Group>): Promise<{ model: Group; rig: CharacterRig; source: 'glb' | 'placeholder'; reason: string | null }> {
+export async function loadCharacter(variant: SurvivorVariant, load: () => Promise<Group>, expectedHeight = 1.4): Promise<{ model: Group; rig: CharacterRig; source: 'glb' | 'placeholder'; reason: string | null }> {
   let model: Group | undefined;
-  try { model = await load(); return { model, rig: resolveRig(model), source: 'glb', reason: null }; }
+  try { model = await load(); return { model, rig: resolveRig(model, expectedHeight), source: 'glb', reason: null }; }
   catch (error) {
     if (model) disposeCharacter(model);
     model = createSurvivorPlaceholder(variant);
