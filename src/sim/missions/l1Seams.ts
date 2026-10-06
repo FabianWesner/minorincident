@@ -22,7 +22,9 @@ const names = ['bicycle', 'toys', 'outbreak'] as const;
 /** The real outbreak layer (lane D) is `world.npcs.civilians.outbreak`; its state is snapshot()/load(). */
 function resolve(world: SimWorld, name: typeof names[number]): SnapshotSeam | undefined {
   if (name === 'outbreak') { const o = world.npcs?.civilians.outbreak; return o ? { snapshot: () => o.snapshot(), restore: s => o.load(s as ReturnType<typeof o.snapshot>) } : undefined; }
-  return l1Seams(world)[name];
+  // Real lane objects (e.g. world.toys) without snapshot() are persisted through entities; only duck-typed seams count here.
+  const seam = l1Seams(world)[name];
+  return typeof seam?.snapshot === 'function' ? seam : undefined;
 }
 export function l1Seams(world: SimWorld): L1Seams { return world as unknown as L1Seams; }
 export function captureSeams(world: SimWorld): Record<string, unknown> {
