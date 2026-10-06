@@ -3,7 +3,7 @@ import { boot, expect, test } from '../fixtures';
 import { infectedDefinitions } from '../../../src/data/infected';
 import { audioCues, explosionBeats, propMaterials } from '../../../src/data/audioCues';
 import type { GameEvent } from '../../../src/sim/world/types';
-import imports from '../../../assets/audio/imports.json';
+import imports from '../../../assets/audio/imports.json' with { type: 'json' };
 const root = 'test-results/epics/E16';
 function artifact(name: string, data: unknown) { mkdirSync(root, { recursive: true }); writeFileSync(`${root}/${name}.json`, JSON.stringify(data, null, 2) + '\n'); }
 async function start(page: import('@playwright/test').Page, scenario = 'horde-arena') {
@@ -128,6 +128,20 @@ test('T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; 
     for (const t of data.transitions!)
         expect(Math.abs(t.time - Math.round(t.time / 2) * 2)).toBeLessThanOrEqual(0.02);
     artifact('music', data);
+});
+test('@E16 a canceled first alert keeps the streamed score aligned with the calm director', async ({ page }) => {
+    await start(page, 'survivor');
+    await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.streamed.state)).toBe('calm');
+    await page.evaluate(() => {
+        const a = window.__SS__!;
+        a.audio.emit({ type: 'music.intensity', tick: 0, alerted: 20, damage: 0, phase: 'normal', vehicleSpeed: 0 });
+        a.audio.emit({ type: 'music.intensity', tick: 0, alerted: 0, damage: 0, phase: 'normal', vehicleSpeed: 0 });
+    });
+    await page.waitForTimeout(3000);
+    const music = await page.evaluate(() => window.__SS__!.audio.snapshot().music);
+    expect(music.state).toBe('calm');
+    expect(music.streamed.state).toBe('calm');
+    expect(music.streamed.decks.filter(d => d.state !== 'calm').every(d => d.gain < 0.001)).toBe(true);
 });
 test('T-E16-12 @E16 @E16-AC12 positional jukebox/jingle variants and radio lowpass/emergency duck', async ({ page }) => {
     await start(page);

@@ -7,7 +7,7 @@ import { audioCues, noiseCues, eventCues, telegraphCues, ambienceTiers, musicLay
 import { AudioGraph, type GraphVoice, type PlayOptions } from './AudioGraph';
 import { AudioRegistry } from './AudioRegistry';
 import { fromDistricts, surfaceAt, zoneAt, dbGain } from './acoustics';
-import { MusicDirector, type MusicIntensity } from './MusicDirector';
+import { MusicDirector, type MusicIntensity, type MusicTransition } from './MusicDirector';
 import { HordeClusters, type HordePoint } from './HordeClusters';
 import { AmbienceSchedule } from './AmbienceSchedule';
 import { StreamedMusic } from './StreamedMusic';
@@ -84,7 +84,7 @@ export class AudioService implements Lifecycle {
     private quietMusicUntil = 0;
     private lastDamageTick = -1000;
     private lastDamage = 0;
-    private scheduledTransition: object | null = null;
+    private scheduledTransition: MusicTransition | null = null;
     private externalIntensity: MusicIntensity | null = null;
     private vehicleSpeed = 0;
     private incident = false;
@@ -432,8 +432,10 @@ export class AudioService implements Lifecycle {
         const t = this.context.currentTime;
         this.score.update();
         this.music.update(t, { ...input, incident: this.incident, complete: this.complete });
-        const transition = this.music.pending ?? this.music.transitions.at(-1);
-        if (transition && transition !== this.scheduledTransition) {
+        const transition = this.music.pending ?? this.music.transitions.at(-1) ?? { time: t, state: this.music.state, layers: this.music.layers };
+        // A transient alert can cancel the first pending change before its bar.
+        // Restore the committed state even when the director has no history yet.
+        if (!this.scheduledTransition || transition.state !== this.scheduledTransition.state || transition.layers.join() !== this.scheduledTransition.layers.join()) {
             this.scheduledTransition = transition;
             void this.score.transition(transition.state, transition.time, this.musicEpoch, this.music.bar);
             for (const [layer, v] of this.stemVoices) {
