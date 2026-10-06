@@ -172,11 +172,15 @@ def dress(l,residential=False):
         for side in [-1,1]:
             l.place('prop.garden-bush',[x+side*3.8,0,front+2.2])
             if front<0: l.place('prop.garden-bush',[x+side*4.5,0,max(front+3.7,-4.4)],scale=(1.25,1.25,1.25))
-    if not residential:
-        for x,z in [(-5.3,-5.3),(5.3,5.3),(-5.3,5.3),(5.3,-5.3)]:
+    if residential:
+        l.place('prop.street-tree',[-21,0,-13.5])
+    else:
+        for x,z in [(-5.8,-5.8),(5.8,5.8),(-5.8,5.8),(5.8,-5.8)]:
             l.place('prop.street-tree' if x*z>0 else 'prop.street-tree-blossom',[x,0,z])
         for x,z in [(-21,-6.7),(-8,-7.4),(-21,7), (9,-6.7)]:
             l.place('prop.street-tree-blossom' if x<0 else 'prop.street-tree',[x,0,z])
+        if l.data['district']=='D-MAIN':
+            l.place('prop.street-tree',[-21,0,-13.5])
     leaf_vertices=[];leaf_faces=[];leaf_colors=[]
     # Staggered compositions along the entire route, including district joins.
     for i,x in enumerate(range(-24,28,6)):

@@ -40,7 +40,7 @@ def build(asset_id, glb, segments=12):
     dims=definition['dimensions'];bpy.ops.mesh.primitive_uv_sphere_add(segments=16,ring_count=10,radius=1,location=(0,0,dims['y']/2))
     o=bpy.context.object;o.name='crownProxy';o.parent=root;o['foliageProxy']=True;o.data.materials.append(mat('foliage'))
     if tree:
-        o.location.z=3.65;o.scale=(dims['x']/2,dims['z']/2,dims['y']-3.65)
+        o.location.z=(dims['y']+1.9)/2;o.scale=(dims['x']/2,dims['z']/2,(dims['y']-1.9)/2)
     else:o.scale=(dims['x']/2,dims['z']/2,dims['y']/2)
     # The leaf fringe extends beyond the dense hedge body. Keep the physical
     # body slightly inset so the existing porch/diner corner routes stay open.
