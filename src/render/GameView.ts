@@ -26,6 +26,7 @@ import { DistrictAssets } from '../assets/DistrictAssets';
 import { Grass, windPhase } from './Grass';
 import { DistrictView } from './DistrictView';
 import { PaletteMaterial } from './PaletteMaterial';
+import { InteractionView } from './InteractionView';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 export class GameView implements Lifecycle {
@@ -40,6 +41,7 @@ export class GameView implements Lifecycle {
   private actions: ActionView | null = null;
   private combat: CombatView | null = null;
   private crowd: CrowdView | null = null;
+  private interactions: InteractionView | null = null;
   private stopHitStop: (() => void) | null = null;
   private hitStopUntil = 0;
   private hitStopTick = 0;
@@ -127,6 +129,9 @@ export class GameView implements Lifecycle {
     if (this.world.combat && this.character) { this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer); await this.actions.init(); this.actions.update(); this.scene.add(this.actions); }
     if (this.world.missions) { this.marker = new ObjectiveMarker(this.world); this.scene.add(this.marker); }
     if (this.world.districts && this.world.combat) { this.combat = new CombatView(this.world, this.materials!); this.scene.add(this.combat); }
+    if (this.world.interactables && this.materials) {
+      this.interactions = new InteractionView(this.world, this.materials); this.scene.add(this.interactions); await this.interactions.synchronize();
+    }
     if (import.meta.env.DEV && this.params.has('debug')) {
       this.wireframe = new PhysicsWireframe(this.world.physics); this.scene.add(this.wireframe.lines);
     }
@@ -145,6 +150,10 @@ export class GameView implements Lifecycle {
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
     if (name === 'horde-readability' && this.crowd) { this.view.preset(name, { position: [15, 15, 19], target: [0, 0.5, -1] }); this.update(1); return; }
+    if (name === 'interact-ui' && this.world.interactables) {
+      const p = this.world.entities.get(1)!.transform;
+      this.view.preset(name, { position: [p.x + 15, 18, p.z + 15], target: [p.x, .4, p.z] }); this.update(1); return;
+    }
     if (this.world.combat && name === 'aim') { this.view.preset(name, combatPhotoSpots.aim); this.update(1); return; }
     if(this.districts){const pose=this.districts.spots.get(name);if(!pose)throw new Error(`Unknown district photo spot: ${name}`);this.view.preset(name,pose);this.update(1);return;}
     if (this.character) {
@@ -206,6 +215,7 @@ export class GameView implements Lifecycle {
     }
     this.marker?.update(); this.missionUI?.update(this.camera,innerWidth,innerHeight);
     this.combat?.update(); this.crowd?.update(); this.actions?.update();
+    this.interactions?.update(this.camera);
     this.lighting?.update(this.view);
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
@@ -229,6 +239,7 @@ export class GameView implements Lifecycle {
   }
   reset(): void {
     this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;}
+    if (this.interactions) { this.scene.remove(this.interactions); this.interactions.dispose(); this.interactions = null; }
     this.windowMask=false;
     this.postFx?.dispose();this.postFx = null;
     if(this.districts){this.scene.remove(this.districts);this.districts.dispose();this.districts=null;}
@@ -248,5 +259,7 @@ export class GameView implements Lifecycle {
     this.meshes.length = 0; this.cube = null;
     if (this.wireframe) { this.scene.remove(this.wireframe.lines); this.wireframe.dispose(); this.wireframe = null; }
   }
+  /** Newly spawned E11 objects are loaded before screenshot/shader readiness resolves. */
+  async synchronizeInteractions(): Promise<void> { await this.interactions?.synchronize(); }
   dispose(): void { this.reset(); this.missionUI?.dispose(); this.missionUI=null;this.districtResources?.registry.dispose();this.districtResources?.grassMaterial.dispose();this.districtResources?.materials.dispose();this.districtResources?.lighting.dispose();this.districtResources=null; window.removeEventListener('resize', this.resize); this.idPlayer.dispose(); this.idBackground.dispose(); this.renderer.dispose(); this.renderer.domElement.remove(); }
 }

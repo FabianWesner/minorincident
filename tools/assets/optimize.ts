@@ -235,8 +235,8 @@ export async function optimizeExports(def: AssetDef): Promise<void> {
     const supplied = `assets/${def.id}/model.${lod}.glb`, output = def.lods?.[lod];
     if (!output) throw new Error(`${def.id}: missing manifest ${lod} path`);
     const handMade = existsSync(supplied);
-    // Reserve the 7 × 56 cap triangles within the LOD1 budget.
-    const targetRatio = lod === 'lod1' && def.category === 'infected' ? .10 : ratio;
+    // Leave room for retained rigid parts and infected stump caps within the LOD1 budget.
+    const targetRatio = lod === 'lod1' && (def.category === 'infected' || def.category === 'character') ? .10 : ratio;
     await optimizeAsset(handMade ? supplied : source, output, def, handMade ? 1 : targetRatio);
   }
 }

@@ -93,7 +93,7 @@ export class ActionView extends Group {
     for (const zone of combat.effects.zones) this.circle(zone.x, zone.z, zone.radius);
     this.geometry.setDrawRange(0, this.offset / 3); this.geometry.getAttribute('position').needsUpdate = true;
     for (let i = 0; i < this.projectiles.length; i++) { const p = combat.projectiles[i], mesh = this.projectiles[i]; mesh.visible = !!p; if (p) mesh.position.set(p.x, p.y, p.z); }
-    for (const entity of this.world.entities.iterate()) if (entity.pickup) {
+    for (const entity of this.world.entities.iterate()) if (entity.pickup && 'actionId' in entity.pickup) {
       let model = this.pickups.get(entity.id); if (!model) { model = this.assets.get(action(entity.pickup.actionId).viewAssetId)!.model.clone(true); this.pickups.set(entity.id, model); this.add(model); }
       model.position.set(entity.transform.x, 0.25, entity.transform.z); model.rotation.z = 0.2;
     }

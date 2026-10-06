@@ -42,6 +42,7 @@ export class InfectedSystem {
   }
   private sequence = 0;
   private budget = 0;
+  private readonly lureTarget = { x: 0, z: 0 };
   private readonly waypoint = { x: 0, z: 0 };
   constructor(readonly world: SimWorld, definition: ScenarioDefinition) {
     this.perches = definition.perches ?? [];
@@ -50,6 +51,12 @@ export class InfectedSystem {
       const brain: InfectedState = { state: 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: 0, until: 0, cooldown: 0, attackId: 0, special: '', hidden: false, deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: 0, packIndex: 0, birds: 0, birdPositions: new Array(60).fill(0), birdAlive: new Array(20).fill(0), scatterUntil: 0, variant: '', path: [], pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: false };
       this.pool.push({ id: 0, kind: 'infected', archetype: '', faction: 'infected', health: { current: 0, max: 0 }, transform: { x: 0, y: 0.7, z: 0, yaw: 0 }, infected: brain, combat: { radius: 0.35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } }); this.counters.allocated++;
     }
+    world.events.on('world.blocker.changed', (event) => {
+      if (event.type !== 'world.blocker.changed') return;
+      this.nav.setBlocker(event.id, event.wall, event.blocked);
+      for (const district of this.navigation.districts) district.grid.setBlocker(event.id, event.wall, event.blocked);
+      for (const entity of this.active) { entity.infected!.goal = -1; entity.infected!.path.length = 0; }
+    });
     world.events.on('noise', (event) => { if (event.type === 'noise') this.noise(event.position, event.radius, event.radius >= 25, event.sourceId); });
     world.events.on('combat.hit', (event) => {
       if (event.type !== 'combat.hit' || event.amount <= 0) return;
@@ -83,6 +90,7 @@ export class InfectedSystem {
     if (this.director.count + weight > this.director.cap) throw new Error('Infected concurrency cap reached');
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || !this.nav.clear(position.x, position.z, def.radius)) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
+    delete entity.noiseTarget;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0;
@@ -113,6 +121,17 @@ export class InfectedSystem {
     this.crowd.length = 0;
     for (const e of this.active) {
       const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }
+      const lure = e.noiseTarget && this.world.tick < e.noiseTarget.until ? this.world.entities.get(e.noiseTarget.id) : undefined;
+      if (lure && b.state !== 'migration' && !Status.stunned(e, this.world.tick)) {
+        b.state = 'chase'; e.combat!.attacking = false;
+        const dx = e.transform.x - lure.transform.x, dz = e.transform.z - lure.transform.z, distance = Math.hypot(dx, dz);
+        const stop = (lure.combat?.radius ?? .6) + this.nav.clearance + this.nav.cellSize;
+        if (distance > stop + .5) {
+          this.lureTarget.x = lure.transform.x + dx / distance * stop; this.lureTarget.z = lure.transform.z + dz / distance * stop;
+          this.seek(e, this.lureTarget);
+        }
+        this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
+      }
       if (b.grabUntil > this.world.tick && ((b.special === 'grab' && b.grabHits >= 3) || (b.special === 'cling' && Math.hypot(player.transform.x - b.grabX, player.transform.z - b.grabZ) >= 3))) b.grabUntil = 0;
       if (b.special === 'dive') {
         updateFlock(e, this.world.tick, player.transform);

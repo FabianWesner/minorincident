@@ -13,7 +13,7 @@ export class Pickups {
   update(): void {
     const player = this.world.entities.get(1)!; if (player.health.current <= 0) return;
     for (const entity of this.world.entities.iterate()) {
-      const pickup = entity.pickup; if (!pickup) continue;
+      const pickup = entity.pickup; if (!pickup || !('actionId' in pickup)) continue;
       const distance = Math.hypot(player.transform.x - entity.transform.x, player.transform.z - entity.transform.z);
       if (!pickup.armed) { if (distance > 0.8) pickup.armed = true; continue; }
       if (distance > 0.6) continue;

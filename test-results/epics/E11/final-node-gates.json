@@ -1,0 +1,49 @@
+{
+  "sourceCommit": "cb91d5941b1df04a9bdb9eeffed3ac3603703241",
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:unit"
+      ],
+      "exitCode": 0,
+      "passed": 66
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:sim",
+        "--",
+        "--maxWorkers=1"
+      ],
+      "exitCode": 0,
+      "passed": 129
+    }
+  ]
+}

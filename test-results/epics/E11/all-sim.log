@@ -1,0 +1,33 @@
+
+> test:sim
+> vitest run tests/sim --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E11/all-sim.json
+
+
+ RUN  v5.0.3 /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e11-epic
+
+ ✓ tests/sim/interact/integration.test.ts (4 tests) 709ms
+   ✓ T-E11-perf @E11 @perf 100 infected and 200 flammable props stay below 6ms sim p95; debris remains <=32 540ms
+ ✓ tests/sim/interact/hazards.test.ts (11 tests) 597ms
+ ✓ tests/sim/interact/pickups.test.ts (3 tests) 308ms
+ ✓ tests/sim/combat/balance.test.ts (3 tests) 4584ms
+   ✓ T-E05-14 T-E06-10 @E05 @E05-AC14 @E06 @E06-AC10 measure every reference weapon × archetype TTK in authored bands 4348ms
+ ✓ tests/sim/determinism.test.ts (3 tests) 640ms
+   ✓ T-E01-04 @E01 @E01-AC04 same seed and script give the same 3600-tick state 371ms
+ ✓ tests/sim/interact/devices.test.ts (5 tests) 215ms
+ ✓ tests/sim/combat/combat.test.ts (19 tests) 316ms
+ ✓ tests/sim/districts.test.ts (2 tests) 4673ms
+   ✓ T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objective from player start at every tier 4433ms
+ ✓ tests/sim/player.test.ts (8 tests) 1800ms
+   ✓ T-E04-02 @E04 @E04-AC02 200-direction capsule sweep never penetrates the static wall ring over 0.02m 1557ms
+ ✓ tests/sim/recorder.test.ts (1 test) 272ms
+ ✓ tests/sim/runner.test.ts (1 test) 1598ms
+   ✓ T-E01-08 @E01 @E01-AC08 npm sim writes a headless JSON report 1597ms
+ ✓ tests/sim/weapons.test.ts (69 tests) 1102ms
+   ✓ T-E06-perf @E06 @perf sustained weapons, fire and 200 reactive infected stay below 4ms sim p95 461ms
+
+ Test Files  12 passed (12)
+      Tests  129 passed (129)
+   Start at  01:05:02
+   Duration  19.04s (tests 93%, import 3%, transform 3%)
+
+JSON report written to /Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e11-epic/test-results/epics/E11/all-sim.json

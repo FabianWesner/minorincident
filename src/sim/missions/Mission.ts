@@ -247,6 +247,7 @@ export class Mission {
     }
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(entityId)) step.kills.push(entityId);
     if (this.state.tier !== null) this.world.setTier(this.state.tier as 0|1|2|3|4|5);
+    this.world.hazards?.debris.reset(); this.world.interactables?.rebuildBlockers();
     for(const [gate,handle]of this.gateHandles)this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[gate]);
     this.zones.forEach(zone => { zone.inside=this.state.volumes[zone.index];zone.entered=zone.exited=false; });
     this.emit({ type: 'checkpoint.restored', id });

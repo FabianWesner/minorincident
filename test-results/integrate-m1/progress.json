@@ -1,8 +1,9 @@
 {
   "merged": [
-    "E12"
+    "E12",
+    "E11"
   ],
-  "pending": "E11",
+  "pending": "E09",
   "manifest_union": 275,
   "asset_registrations": [
     "bld.helipad",
@@ -35,5 +36,18 @@
     "src/sim/world/types.ts": "union mission/infected events",
     "src/assets/manifest.json": "recursive per-ID and per-field union, retained flashbang script",
     "tests/e2e/harness.spec.ts": "check additive API plus implemented killAll/objective error"
+  },
+  "E11": {
+    "manifest_union": 275,
+    "binary": "pilot LOD regenerated",
+    "checks": {
+      "unit": 71,
+      "sim": 220,
+      "verify": 0
+    },
+    "extra_regressions": [
+      "E07 dynamic blockers/alarm/35-damage Bloated",
+      "E12 tier/checkpoint restores E11 blockers/debris"
+    ]
   }
 }
