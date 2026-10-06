@@ -1,8 +1,8 @@
 import { describe,expect,test } from 'vitest';
-import { newCampaign,beginRewards,chooseWeapon,revealCards,pickUpgrades,finishRewards,offer,eligible,powerScore,rackSize,validRacks,preset,gearTier,type CampaignSave,type Level } from '../../../src/sim/progression/Campaign';
+import { newCampaign,beginRewards,chooseWeapon,revealCards,pickUpgrades,finishRewards,offer,eligible,powerScore,rackSize,validRacks,preset,gearTier,weaponChoices,type CampaignSave,type Level } from '../../../src/sim/progression/Campaign';
 import { upgrades } from '../../../src/data/upgrades';
 import { decodeSave,validateSave,SaveStore } from '../../../src/sim/progression/Save';
-function start(save:CampaignSave,level:Level){beginRewards(save,level);if(level===1)chooseWeapon(save,'weapon.bat');revealCards(save);}
+function start(save:CampaignSave,level:Level){beginRewards(save,level);const choices=weaponChoices[level];if(choices)chooseWeapon(save,choices[0]);revealCards(save);}
 describe('campaign',()=>{
   test('T-E13-01 @E13 @E13-AC01 1000 seeds give three distinct prerequisite-valid reproducible offers',()=>{
     for(let seed=0;seed<1000;seed++){
@@ -14,6 +14,9 @@ describe('campaign',()=>{
         pickUpgrades(save,cards.slice(0,2));finishRewards(save,save.racks);
       }
     }
+  });
+  test('@E13 fixed unlock alternatives grant only the chosen weapon and retain guaranteed unlocks',()=>{
+    for(const level of [2,3]as const)for(const id of weaponChoices[level]!){const save=preset(`L${level}-default`);beginRewards(save,level);expect(()=>revealCards(save)).toThrow();chooseWeapon(save,id);revealCards(save);expect(save.ownedActions).toContain(id);expect(save.ownedActions).not.toContain(weaponChoices[level]!.find(other=>other!==id));if(level===2)expect(save.ownedActions).toContain('weapon.molotov');}
   });
   test('@E13 used weapon weights bias offers without changing the save-seeded choice',()=>{
     let neutral=0,weighted=0;
