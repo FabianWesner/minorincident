@@ -10,5 +10,5 @@ export function canonicalJson(value: unknown): string {
 }
 export function stateHash(state: GameStateSnapshot): string {
   const { tick, seed, scenario, entities, mission, progression, rng } = state;
-  return fnv1a(canonicalJson({ tick, seed, scenario, entities, mission, progression, rng, ...(state.combat ? { combat: state.combat } : {}) })).toString(16).padStart(8, '0');
+  return fnv1a(canonicalJson({ tick, seed, scenario, entities, mission, progression, rng, ...(state.combat ? { combat: state.combat } : {}), ...(state.interactions ? { interactions: state.interactions } : {}) })).toString(16).padStart(8, '0');
 }

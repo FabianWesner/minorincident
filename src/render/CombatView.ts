@@ -13,7 +13,7 @@ export class CombatView extends Group {
   update(): void {
     for(const [id,dummy]of this.dummies)if(!this.world.entities.get(id)){this.remove(dummy);this.dummies.delete(id);}
     for (const entity of this.world.entities.iterate()) {
-      if (entity.id === 1 || !entity.combat) continue;
+      if (entity.id === 1 || !entity.combat || entity.faction === 'environment') continue;
       let dummy = this.dummies.get(entity.id);
       if (!dummy) {
         dummy = new Group();
