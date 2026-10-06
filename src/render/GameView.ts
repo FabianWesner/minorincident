@@ -135,6 +135,7 @@ export class GameView implements Lifecycle {
     this.reset();
     const player = this.world.entities.get(1);
     this.view.reset(player?.transform ?? { x: 0, z: 0 });
+    let actors: Promise<unknown> | null = null;
     if (this.world.districts) {
       this.renderer.shadowMap.enabled=true;
       if(!this.districtResources){
@@ -149,7 +150,10 @@ export class GameView implements Lifecycle {
       // L1 objective transitions swap to prepared decay variants without a hitch (M1-22): they load
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
-      await Promise.all([this.districts.load(1), this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low'), ...variants.map(variant => variant.load(1))]);
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low');
+      // Actor models download and bake while the district loads (they do not depend on it).
+      actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
+      await Promise.all([this.districts.load(1), character, ...variants.map(variant => variant.load(1))]);
       loadMeasure('view:districts+character',t);
       if (this.world.scenario === 'L1') {
         this.preparedDistrictViews.set(this.world.districts, this.districts);
@@ -192,16 +196,8 @@ export class GameView implements Lifecycle {
       this.destination.renderOrder = 10; this.destination.rotation.x = -Math.PI / 2; this.destination.visible = false;
       this.meshes.push(this.destination); this.scene.add(this.destination);
     }
-    // Actor views are independent of each other: load them concurrently (one network wave, not six),
-    // then add them in the established scene order.
     let t = performance.now();
-    if (this.world.npcs && this.materials) this.npcs = new NpcView(this.world, this.materials);
-    if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
-    if (this.world.combat && this.character) this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer);
-    if (this.character && this.world.combat) this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!);
-    if (this.world.interactables && this.materials) { this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); }
-    if (this.world.vehicles?.cars.size && this.materials) this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low');
-    await Promise.all([this.npcs?.init(), this.entityAssets?.init(this.view), this.actions?.init(), this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load()]);
+    await (actors ?? this.startActors(Promise.resolve()));
     if (this.npcs) this.scene.add(this.npcs);
     if (this.entityAssets) this.scene.add(this.entityAssets);
     if (this.actions) { this.actions.update(); this.scene.add(this.actions); }
@@ -246,6 +242,18 @@ export class GameView implements Lifecycle {
     loadMeasure('view:warm-up', t);
     this.idPass = this.params.get('idpass') === '1'; this.update(1);
     this.startPreparation();
+  }
+  /** Actor views are independent of each other and of the districts: create them and start their
+   * loads concurrently (one network wave, not six); load() adds them in the established scene order. */
+  private startActors(character: Promise<unknown>): Promise<unknown> {
+    if (this.world.npcs && this.materials) this.npcs = new NpcView(this.world, this.materials);
+    if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
+    if (this.world.combat && this.character) this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer);
+    if (this.character && this.world.combat) this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!);
+    if (this.world.interactables && this.materials) { this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); }
+    if (this.world.vehicles?.cars.size && this.materials) this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low');
+    const actions = this.actions;
+    return Promise.all([this.npcs?.init(), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load()]);
   }
   /** Deferred L1 work: the route's close-view LOD0 prototypes (high tier only; the low tier never
    * draws them), nearest first, after the first playable frames. The load gate slices GLB parsing
