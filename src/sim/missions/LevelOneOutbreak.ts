@@ -1,3 +1,4 @@
+import { dinerCustomer } from '../npc/MorningRoutines';
 import type { Mission } from './Mission';
 import type { EntitySnapshot } from '../world/types';
 
@@ -9,15 +10,9 @@ export class LevelOneOutbreak {
     if (!ai || !npcs) return;
     Object.assign(ai.director.camera, { halfWidth: 10, halfDepth: 12, yaw: Math.PI / 4 });
     // Replace the previous instant-turn stand-in with customers present before the incident.
-    for (const e of world.entities.iterate()) if (e.archetype === 'npc.delivery-driver') { world.entities.delete(e.id); world.spatial.delete(e.id); }
+    for (const e of world.entities.iterate()) if (e.archetype === 'npc.delivery-driver' && !e.civilian?.schedule) { world.entities.delete(e.id); world.spatial.delete(e.id); }
     state.outbreak = { victims: [], released: false };
-    for (const [i, role] of ['cashier', 'suburban-mom', 'bbq-dad'].entries()) {
-      const point = { x: def.anchors.diner.x + (i - 1) * 1.8, z: def.anchors.diner.z + 1.5 };
-      const cell = ai.nav.nearestCell(point.x, point.z), p = ai.nav.clear(point.x, point.z, .65) ? point : { x: ai.nav.x(cell), z: ai.nav.z(cell) };
-      const id = npcs.civilians.spawn(role, p, { waypoints: [p] });
-      world.entities.get(id)!.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER;
-      state.outbreak.victims.push(id);
-    }
+    for (let i = 0; i < 3; i++) state.outbreak.victims.push(dinerCustomer(world, i, def.anchors.diner));
   }
   turned(id: number, infectedId: number): void {
     const { state, world } = this.mission, index = state.outbreak?.victims.indexOf(id) ?? -1;
@@ -32,7 +27,6 @@ export class LevelOneOutbreak {
     const { state, world } = this.mission, outbreak = state.outbreak;
     if (!outbreak || outbreak.released || state.steps.escape.status !== 'active') return;
     const group = Object.entries(state.actors).filter(([name]) => name.startsWith('incident-')).map(([, id]) => world.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0);
-    for (const id of outbreak.victims) { const c = world.entities.get(id)?.civilian; if (c && ['calm','alarmed','flee','hide'].includes(c.state)) c.state = 'calm'; }
     for (const e of group) {
       e.combat!.attacking = world.npcs!.civilians.holds(e.id);
       if (e.combat!.attacking) {
@@ -44,8 +38,11 @@ export class LevelOneOutbreak {
     const victim = outbreak.victims.map(id => world.entities.get(id)).find(e => e?.civilian && ['calm', 'alarmed', 'flee', 'hide', 'grabbed'].includes(e.civilian.state));
     const attacker = group.find(e => !world.npcs!.civilians.holds(e.id) && e.combat!.staggerUntil <= world.tick);
     if (victim && attacker && victim.civilian!.state !== 'grabbed') {
-      // Customers freeze in alarm until the first bite; subsequent attackers form the chain.
-      victim.civilian!.state = 'calm';
+      // Notice interrupts the current activity; selected customers freeze before the bite.
+      const c = victim.civilian!;
+      if (c.state === 'calm' && Math.hypot(attacker.transform.x - victim.transform.x, attacker.transform.z - victim.transform.z) < 6) { c.state = 'alarmed'; c.entered = world.tick; c.until = world.tick + 90; Object.assign(c.threat, attacker.transform); }
+      if (c.state === 'alarmed') c.until = world.tick + 60;
+      if (c.state === 'alarmed') Object.assign(c.threat, attacker.transform);
       world.npcs!.move(attacker, victim.transform, 2.3, attacker.infected!, .8);
       if (Math.hypot(attacker.transform.x - victim.transform.x, attacker.transform.z - victim.transform.z) <= 1.1) {
         attacker.transform.yaw = -Math.atan2(victim.transform.z - attacker.transform.z, victim.transform.x - attacker.transform.x);
