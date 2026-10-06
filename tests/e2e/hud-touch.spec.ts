@@ -4,6 +4,7 @@ import { hudStart } from './ui-helpers';
 test.use({ hasTouch: true });
 test('T-E14-05 @E14 @E14-AC05 portrait/landscape touch targets are 56px and clear of minimap/tracker', async ({ page }) => {
   await hudStart(page);
+  await expect(page.getByTestId('touch-stick')).toBeAttached();
   for (const viewport of [{ width: 390, height: 844 }, { width: 844, height: 390 }]) {
     await page.setViewportSize(viewport);
     await expect(page.getByTestId('touch-controls')).toBeVisible();
