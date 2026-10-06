@@ -1,9 +1,11 @@
-import { BoxGeometry, Group, Mesh, type Material } from 'three/webgpu';
+import { BoxGeometry, Color, Group, Mesh, type Material } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../assets/manifest.json';
 import { atLeast, type AssetDef } from '../../assets/types';
-import { type PaletteToken } from '../../data/palette';
+import { palette, type PaletteToken } from '../../data/palette';
+import { characterNodes } from '../../data/survivor';
+import { batchRigidParts } from './batchRigidParts';
 import type { GearTier, SurvivorState, SurvivorVariant } from '../../data/survivor';
 import type { Materials } from '../Materials';
 import type { PaletteMaterial } from '../PaletteMaterial';
@@ -17,7 +19,7 @@ export class CharacterView extends Group {
   private variant: SurvivorVariant = 'female';
   private tier: GearTier = 0;
   private readonly bloodMaterials: PaletteMaterial[] = [];
-  async init(materials: Materials, bloodFeedback = false): Promise<void> {
+  async init(materials: Materials, bloodFeedback = false, low = false): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     for (const variant of ['female', 'male'] as const) {
       const id = `char.survivor-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
@@ -26,13 +28,22 @@ export class CharacterView extends Group {
           const reason = def ? `status ${def.status}` : 'missing manifest entry';
           throw new Error(reason);
         }
-        return (await loader.loadAsync('/' + def.glb.replace(/^public\//, ''))).scene;
-      });
+        return (await loader.loadAsync('/' + (low ? def.lods?.lod1 ?? def.glb : def.glb).replace(/^public\//, ''))).scene;
+      }, def?.dimensions.y);
       if (character.source === 'placeholder') console.info(JSON.stringify({ type: 'asset.placeholder', id, reason: character.reason }));
+      const vertexMaterial = materials.fromVertexColors(`character:${variant}`);
+      vertexMaterial.bloodCoverage.value = 0; vertexMaterial.userData.sharedPalette = true;
+      if (bloodFeedback) this.bloodMaterials.push(vertexMaterial);
+      const boundaries = [...new Set([...characterNodes, ...(def?.requiredNodes ?? []), ...(def?.animatedNodes ?? []), ...(def?.sockets ?? [])])];
+      batchRigidParts(character.model, boundaries, vertexMaterial, source => {
+        const token = source.name.replace(/^pal_/, '') as PaletteToken;
+        return ['survivorRed', 'backpackTeal', 'picketWhite'].includes(token) ? new Color(palette[token]) : (source as import('three').MeshStandardMaterial).color;
+      });
       const oldMaterials = new Set<Material>(), replacements = new Map<Material, Material>();
       character.model.traverse((object) => {
         if (!(object instanceof Mesh)) return;
         const remap = (source: Material): Material => {
+          if (source === vertexMaterial) return source;
           let replacement = replacements.get(source);
           if (replacement) return replacement;
           const token = source.name.replace(/^pal_/, '') as PaletteToken;

@@ -185,7 +185,7 @@ Hero assets ship an **LOD chain**: LOD0 (hero), LOD1 ≈ side-tier density (≈ 
 
 `placeholder → reference (cropped) → upscaled → scripted (build.py exists, builds) → modeled (GLB passes validate) → integrated (registry + in-game use + turntable) → final (vision review passed, review.md signed off)`
 
-`05-asset-inventory.md` tracks the status per asset. The manifest `status` must match it (`T-E17-06`).
+`05-asset-inventory.md` records a dated production snapshot. Current status is tracked by the manifest and must be at or above the snapshot (`T-E17-06`).
 
 ## 10. Batch production with Codex
 
