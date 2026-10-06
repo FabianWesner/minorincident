@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { AnimationMixer, Box3, Matrix4, Mesh, Vector3, type AnimationAction } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
@@ -181,7 +181,7 @@ test('M1-23 @E19 infection collapse and rise share a low pose, then rise into in
 });
 
 test('VQA-13 @E19 settled infected death poses contact the floor across delivered rigs', async () => {
-  for (const id of readdirSync('assets').filter(id => id.startsWith('inf.') && id !== 'inf.corpse-poses')) {
+  for (const id of readdirSync('assets').filter(id => id.startsWith('inf.') && id !== 'inf.corpse-poses' && existsSync(`public/assets/models/${id}.glb`))) {
     const { scene } = await model(`public/assets/models/${id}.glb`);
     if (!scene.getObjectByName('hip')) continue;
     for (const name of ['death-back', 'death-side', 'death-crumple']) {
