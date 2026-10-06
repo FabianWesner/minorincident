@@ -3139,7 +3139,11 @@
     },
     "sourceGlb": "assets/prop.shopping-cart/model.glb",
     "script": "assets/prop.shopping-cart/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
   },
   {
     "id": "prop.folding-chair",
@@ -3174,6 +3178,10 @@
     "lods": {
       "lod1": "public/assets/models/prop.folding-chair.lod1.glb",
       "lod2": "public/assets/models/prop.folding-chair.lod2.glb"
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
     }
   },
   {
@@ -9519,6 +9527,10 @@
     "lods": {
       "lod1": "public/assets/models/prop.vending-machine.lod1.glb",
       "lod2": "public/assets/models/prop.vending-machine.lod2.glb"
+    },
+    "world": {
+      "token": "survivorRed",
+      "solid": true
     }
   },
   {
@@ -9885,6 +9897,10 @@
     "lods": {
       "lod1": "public/assets/models/prop.bench.lod1.glb",
       "lod2": "public/assets/models/prop.bench.lod2.glb"
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
     }
   },
   {
@@ -9921,6 +9937,10 @@
     "lods": {
       "lod1": "public/assets/models/prop.fire-hydrant.lod1.glb",
       "lod2": "public/assets/models/prop.fire-hydrant.lod2.glb"
+    },
+    "world": {
+      "token": "survivorRed",
+      "solid": true
     }
   },
   {
@@ -10118,6 +10138,10 @@
     "lods": {
       "lod1": "public/assets/models/prop.street-sign.lod1.glb",
       "lod2": "public/assets/models/prop.street-sign.lod2.glb"
+    },
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
     }
   },
   {
@@ -10194,6 +10218,10 @@
     "lods": {
       "lod1": "public/assets/models/prop.trash-bin.lod1.glb",
       "lod2": "public/assets/models/prop.trash-bin.lod2.glb"
+    },
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
     }
   },
   {

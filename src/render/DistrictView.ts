@@ -29,6 +29,7 @@ import { Grass, windPhase } from "./Grass";
 import { resolvePosition } from "../levels/districts/validate";
 import type { CameraPose } from "./View";
 import type { View } from './View';
+import { AmbientLife } from './AmbientLife';
 
 interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; id: string; lit: boolean; loaded: boolean }
 /** Shared static instances; detailed prototypes stream only into the close view. */
@@ -47,7 +48,8 @@ export class DistrictView extends Group {
   private cameraAspect = 0;
 
   private readonly grass: Grass[] = [];
-  private readonly districtRoots: { root: Group; minX: number; maxX: number; minZ: number; maxZ: number }[] = [];
+  private ambient?: AmbientLife;
+  private readonly districtRoots: { root: Group; bounds: Box3 }[] = [];
   private readonly ownedGeometry: BufferGeometry[] = [];
   private readonly ownedMaterials: Material[] = [];
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
@@ -69,6 +71,7 @@ export class DistrictView extends Group {
   }
   async load(seed: number): Promise<void> {
     this.phase.value = 0;
+    if (this.world.composition.id === 'L1') { this.ambient = new AmbientLife(this.materials); this.add(this.ambient); }
     // Backdrop reaches beyond the camera far plane; it is scenery outside the bounded town.
     const terrain = new PlaneGeometry(2400, 2400);
     this.ownedGeometry.push(terrain);
@@ -90,7 +93,10 @@ export class DistrictView extends Group {
         const root = new Group();
         root.name = d.id;
         root.position.set(d.origin[0], 0, d.origin[1]);
-        this.add(root); this.districtRoots.push({ root, minX: d.origin[0] + Math.min(...d.layout.bounds.map(p => p[0])), maxX: d.origin[0] + Math.max(...d.layout.bounds.map(p => p[0])), minZ: d.origin[1] + Math.min(...d.layout.bounds.map(p => p[1])), maxZ: d.origin[1] + Math.max(...d.layout.bounds.map(p => p[1])) });
+        this.add(root); this.districtRoots.push({ root, bounds: new Box3(
+          new Vector3(d.origin[0] + Math.min(...d.layout.bounds.map(p => p[0])), -2, d.origin[1] + Math.min(...d.layout.bounds.map(p => p[1]))),
+          new Vector3(d.origin[0] + Math.max(...d.layout.bounds.map(p => p[0])), Math.max(...d.layout.placements.map(p => p.visualAabb.max[1])) + 2, d.origin[1] + Math.max(...d.layout.bounds.map(p => p[1]))),
+        ) });
         const scenes = await Promise.all(
           Array.from({ length: this.world.composition.tier + 1 }, (_, tier) =>
             this.registry.glb(
@@ -234,17 +240,15 @@ export class DistrictView extends Group {
     const sprite = new Sprite(material); sprite.name = text; sprite.position.fromArray(p); sprite.scale.set(1.8, .36, 1); sprite.visible = false; root.add(sprite);
     this.tags.push({ sprite, entered: null, done: false });
   }
-  /** Cull whole off-camera district slabs on low; Three still frustum-culls their individual batches. */
-  cull(focus: { x: number; z: number }, tier: 'high' | 'low'): void {
-    for (const { root, minX, maxX, minZ, maxZ } of this.districtRoots) {
-      const dx = Math.max(minX - focus.x, 0, focus.x - maxX);
-      const dz = Math.max(minZ - focus.z, 0, focus.z - maxZ);
-      root.visible = tier === 'high' || dx * dx + dz * dz <= 60 * 60;
-    }
+  /** Whole-slab frustum culling avoids submitting invisible merged dressing on mobile. */
+  cull(view: View, tier: 'high' | 'low'): void {
+    this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
+    for (const { root, bounds } of this.districtRoots) root.visible = tier === 'high' || this.frustum.intersectsBox(bounds);
   }
   setQuality(tier: 'high' | 'low'): void {
     if (this.low !== (tier === 'low')) { this.low = tier === 'low'; this.cameraPosition = [Infinity, Infinity, Infinity]; }
-    for (const grass of this.grass) grass.visible = tier === 'high';
+    for (const grass of this.grass) grass.setQuality(tier === 'low');
+    this.ambient?.setQuality(tier === 'low');
     // Measured L6 cost: many small prop meshes render again into the sun shadow map.
     // Low preserves building/vehicle/hero shadows and omits detailed prop shadow casters.
     for (const batch of this.batches) if (worldAssets[batch.name.slice(5)].category === 'prop') batch.traverse(node => {
@@ -256,6 +260,7 @@ export class DistrictView extends Group {
   }
   /** Static matrices are repartitioned only when the camera moves; far props use LOD2. */
   updateLods(view: View): void {
+    this.ambient?.focus.value.set(view.focus.x, view.focus.z);
     for (const tag of this.tags) {
       const position = tag.sprite.getWorldPosition(this.bounds.center);
       if (!tag.done && tag.entered === null && Math.hypot(position.x - view.focus.x, position.z - view.focus.z) < 14) tag.entered = this.labelTime;
@@ -333,12 +338,14 @@ export class DistrictView extends Group {
         0,
       ),
       windPhase: this.phase.value,
+      ambient: this.ambient != null,
       photoSpots: [...this.spots.keys()],
       windowMeshes: this.windows.length,
     };
   }
   dispose(): void {
     this.disposed = true;
+    this.ambient?.dispose();
     for (const b of this.batches) b.dispose();
     for (const g of this.grass) g.dispose();
     for (const g of this.ownedGeometry) g.dispose();

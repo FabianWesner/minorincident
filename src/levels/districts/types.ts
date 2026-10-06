@@ -61,6 +61,8 @@ export interface DistrictLayout {
   colliders: StaticCollider[];
   walkable: { cellSize: number; excluded: Point[][] };
   lawns: { min: Point; max: Point }[];
+  /** Non-solid, baked L1 micro-dressing; retained for density/composition validation. */
+  decorations?: { kind: string; position: [number, number, number] }[];
   lightGroups: { id: string; offAt: Tier }[];
   acousticZones: { id: string; preset: string; polygon: Point[] }[];
   surfaces: {

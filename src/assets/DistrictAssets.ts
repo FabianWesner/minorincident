@@ -94,7 +94,7 @@ export class DistrictAssets {
           const fit = Math.max(straight, turned); asset.scale.set(fit, 1, fit);
           if (turned > straight) asset.rotation.y = Math.PI / 2;
         }
-        const root = this.remember(staticBatch(asset, true));
+        const root = this.remember(staticBatch(asset, true, this.materials, ['prop.tree', 'prop.hedge'].includes(id)));
         root.traverse(node => { if (node instanceof Mesh) this.batchMaterials.add(node.material as Material); });
         return root;
       }));
