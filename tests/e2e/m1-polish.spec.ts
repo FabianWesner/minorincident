@@ -7,7 +7,7 @@ for (const mode of ['desktop', 'portrait'] as const) test.describe(mode, () => {
   test.use({ viewport: mode === 'desktop' ? { width: 1600, height: 900 } : { width: 390, height: 844 }, hasTouch: mode === 'portrait', isMobile: mode === 'portrait', userAgent: mode === 'desktop' ? devices['Desktop Chrome'].userAgent : devices['iPhone 14'].userAgent });
   test(`VQA-08/09/12/13/14 @E19 real-input polish review ${mode}`, async ({ page, context }) => {
     test.setTimeout(240_000); mkdirSync(output, { recursive: true });
-    await boot(page, '/?test=1&renderer=webgl&dpr=1&quality=high&audio=muted&seed=42');
+    await boot(page, `/?test=1&renderer=webgl&dpr=1&quality=${mode === 'desktop' ? 'high' : 'low'}&audio=muted&seed=42`);
     await page.evaluate(async () => { await window.__SS__!.loadLevel('L1', { seed: 42 }); });
     await page.getByTestId('mission-button').click();
     await page.evaluate(() => window.__SS__!.pause());
