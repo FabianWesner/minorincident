@@ -27,7 +27,11 @@ export async function deliveryReport(): Promise<unknown> {
     if (def && existsSync(def.glb)) plannedPaths.add(def.glb);
     if (def && ['integrated', 'final'].includes(def.status)) paths.add(def.glb);
   }
-  for (const id of ['char.survivor-male', 'char.survivor-female']) paths.add(manifest.find(def => def.id === id)!.glb);
+  for (const id of ['char.survivor-male', 'char.survivor-female']) {
+    const def = manifest.find(def => def.id === id)!;
+    plannedPaths.add(def.glb);
+    if (['integrated', 'final'].includes(def.status)) paths.add(def.glb);
+  }
   for (const path of paths) plannedPaths.add(path);
   const bytes = (directory: string): number => readdirSync(directory, { withFileTypes: true }).reduce((sum, entry) => sum + (entry.isDirectory() ? bytes(`${directory}/${entry.name}`) : statSync(`${directory}/${entry.name}`).size), 0);
   const startDistrictBytes = [...paths].reduce((sum, path) => sum + statSync(path).size, 0);

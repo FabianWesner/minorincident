@@ -12,6 +12,7 @@ import type { AssetDef } from '../../src/assets/types';
 import { assetIO } from './io';
 import { compressTextures } from './textures';
 import { consolidateMeshopt } from './compress';
+import { semanticNodeNames } from './delivery';
 import { palette } from '../../src/assets/palette';
 
 /** Rotate the entire assembly, leaving joint-local animation axes and sockets intact. */
@@ -228,7 +229,7 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
     for (let i = 0; i < skin.listJoints().length; i++) matrices.set(new Matrix4().toArray(), i * 16);
     skin.setInverseBindMatrices(document.createAccessor().setType('MAT4').setArray(matrices).setBuffer(document.getRoot().listBuffers()[0]));
   }
-  const protectedNames = new Set([...def.requiredNodes, ...def.animatedNodes, ...def.sockets, ...def.frontNodes]);
+  const protectedNames = new Set([...semanticNodeNames(document), ...def.requiredNodes, ...def.animatedNodes, ...def.sockets, ...def.frontNodes]);
   for (const node of document.getRoot().listNodes()) if (node.getName().includes('stump_')) protectedNames.add(node.getName().replace('stump_', ''));
   for (const animation of document.getRoot().listAnimations()) for (const channel of animation.listChannels()) {
     const target = channel.getTargetNode(); if (target) protectedNames.add(target.getName());
@@ -247,6 +248,7 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
     if (!node.getName().includes('stump_')) pivots.set(node.getName(), node.getWorldTranslation());
     const mesh = node.getMesh();
     if (mesh) {
+      mesh.setName(''); // GLTFLoader must not reserve the gameplay pivot name for its geometry child.
       const child = document.createNode().setMesh(mesh).setSkin(node.getSkin());
       child.setWeights(node.getWeights());
       for (const animation of document.getRoot().listAnimations()) for (const channel of animation.listChannels()) {
@@ -283,6 +285,8 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
     for (const mesh of document.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
       primitive.setAttribute('NORMAL', null);
       const position = primitive.getAttribute('POSITION')!, color = primitive.getAttribute('COLOR_0');
+      const coordinate: number[] = [];
+      for (let i = 0; i < position.getCount(); i++) { position.getElement(i, coordinate); position.setElement(i, coordinate.map(value => Math.round(value * 1e6) / 1e6 || 0)); }
       if (!color) continue;
       // Average corner AO at shared positions so lower LODs can weld hard seams.
       const sums = new Map<string,{sum:number[];count:number}>(), keys: string[] = [], point = [0,0,0], value: number[] = [];
@@ -298,41 +302,69 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
         color.setElement(i,entry.sum.map(v=>v/entry.count));
       }
     }
-    // Disconnected bevelled panels can hit a topology floor. The sloppy pass clusters
-    // positions for distant tiers; retain at least one triangle per material/part.
+    // Each disconnected part has its own scale and a closed-geometry floor.
+    // Whole-assembly error lets a building flatten its roof tiles and floor slabs.
     const lodSimplifier = { ...MeshoptSimplifier, simplify: (...args: Parameters<typeof MeshoptSimplifier.simplify>) => {
-      const [indices, positions, stride, count, error, flags] = args, target = Math.max(3,count);
-      const result = MeshoptSimplifier.simplify(indices,positions,stride,target,error,flags);
-      // A tiny decorative part can collapse completely. Keep its six extrema
-      // faces instead of restoring the entire original part at distant LODs.
-      const keepExtrema = (): [Uint32Array,number] => {
+      const [indices, positions, stride, count, error, flags] = args;
+      if (!def.sourceGlb && !existsSync(`assets/${def.id}/model.glb`)) {
+        // Keep the established build behavior for legacy procedural exports that
+        // have no detailed source file in this delivery inventory.
+        const target = Math.max(3, count), result = MeshoptSimplifier.simplify(indices, positions, stride, target, error, flags);
+        if (result[0].length && result[0].length <= target * 1.25) return result;
+        const clustered = MeshoptSimplifier.simplifySloppy(indices, positions, stride, null, target, error);
+        if (clustered[0].length) return clustered;
         const faces = new Set<number>();
-        for (let axis=0;axis<3;axis++) for (const direction of [-1,1]) {
-          let corner=0;
-          for(let i=1;i<indices.length;i++) if(positions[indices[i]*stride+axis]*direction>positions[indices[corner]*stride+axis]*direction) corner=i;
-          faces.add(Math.floor(corner/3)*3);
+        for (let axis = 0; axis < 3; axis++) for (const direction of [-1, 1]) {
+          let corner = 0;
+          for (let i = 1; i < indices.length; i++) if (positions[indices[i] * stride + axis] * direction > positions[indices[corner] * stride + axis] * direction) corner = i;
+          faces.add(Math.floor(corner / 3) * 3);
         }
-        return [Uint32Array.from([...faces].flatMap(face=>Array.from(indices.slice(face,face+3)))),0];
-      };
-      if (!result[0].length) return keepExtrema();
-      const clustered = result[0].length <= target * 1.25 ? result : MeshoptSimplifier.simplifySloppy(indices,positions,stride,null,target,1);
-      if (!clustered[0].length) return keepExtrema();
-      // Retain silhouette tips (hair, antennae, feet), which may otherwise vanish.
-      const tips: number[] = [];
-      for (let axis = 0; axis < 3; axis++) for (const direction of [-1, 1]) {
-        let corner = 0, retained = -Infinity, minimum = Infinity;
-        for (let i = 0; i < indices.length; i++) {
-          const value = positions[indices[i] * stride + axis] * direction;
-          if (value > positions[indices[corner] * stride + axis] * direction) corner = i;
-          minimum = Math.min(minimum, value);
-        }
-        for (const index of clustered[0]) retained = Math.max(retained, positions[index * stride + axis] * direction);
-        const maximum = positions[indices[corner] * stride + axis] * direction;
-        if (maximum - retained > (maximum - minimum) * .02) {
-          const face = Math.floor(corner / 3) * 3; tips.push(...indices.slice(face, face + 3));
-        }
+        return [Uint32Array.from([...faces].flatMap(face => Array.from(indices.slice(face, face + 3)))), 0] as [Uint32Array, number];
       }
-      return [Uint32Array.from([...clustered[0], ...tips]), clustered[1]];
+      const parents = new Map<number, number>();
+      const find = (vertex: number): number => {
+        if (!parents.has(vertex)) parents.set(vertex, vertex);
+        let parent = vertex;
+        while (parents.get(parent)! !== parent) parent = parents.get(parent)!;
+        while (vertex !== parent) { const next = parents.get(vertex)!; parents.set(vertex, parent); vertex = next; }
+        return parent;
+      };
+      for (let i = 0; i < indices.length; i += 3) {
+        const root = find(indices[i]);
+        parents.set(find(indices[i + 1]), root); parents.set(find(indices[i + 2]), root);
+      }
+      const components = new Map<number, number[]>();
+      for (let i = 0; i < indices.length; i += 3) {
+        const root = find(indices[i]), component = components.get(root) ?? [];
+        component.push(indices[i], indices[i + 1], indices[i + 2]); components.set(root, component);
+      }
+      const output: number[] = []; let maxError = 0;
+      for (const component of components.values()) {
+        if (component.length <= 36) { output.push(...component); continue; }
+        const vertices = [...new Set(component)], remap = new Map(vertices.map((vertex, index) => [vertex, index]));
+        const min = [Infinity, Infinity, Infinity], max = [-Infinity, -Infinity, -Infinity];
+        for (const vertex of vertices) for (let axis = 0; axis < 3; axis++) {
+          min[axis] = Math.min(min[axis], positions[vertex * stride + axis]);
+          max[axis] = Math.max(max[axis], positions[vertex * stride + axis]);
+        }
+        // Normalize each axis independently: millimetre-thick panels keep their thickness.
+        const local = Float32Array.from(vertices.flatMap(vertex => min.map((value, axis) => (positions[vertex * stride + axis] - value) / (max[axis] - value || 1))));
+        const input = Uint32Array.from(component, vertex => remap.get(vertex)!);
+        const target = Math.min(component.length, Math.max(36, Math.floor(component.length * count / indices.length / 3) * 3));
+        const locks = new Uint8Array(vertices.length);
+        for (let axis = 0; axis < 3; axis++) for (const direction of [-1, 1]) {
+          let tip = 0;
+          for (let i = 1; i < vertices.length; i++) if (local[i * 3 + axis] * direction > local[tip * 3 + axis] * direction) tip = i;
+          locks[tip] = 1;
+        }
+        // Static props and architecture have thin curved shells and raised lettering.
+        // Their surface coverage needs a tighter error than articulated bodies.
+        const surfaceError = /^(char|npc|inf)\./.test(def.id) ? (ratio < .05 ? .3 : .2) : (ratio < .05 ? .04 : .02);
+        const result = MeshoptSimplifier.simplifyWithAttributes(input, local, 3, new Float32Array(), 0, [], locks, target, surfaceError, [...(flags ?? []), 'LockBorder']);
+        if (result[0].length < 12) output.push(...component);
+        else { maxError = Math.max(maxError, result[1]); for (const vertex of result[0]) output.push(vertices[vertex]); }
+      }
+      return [Uint32Array.from(output), maxError] as [Uint32Array, number];
     } };
     await document.transform(weld(), simplify({ simplifier: lodSimplifier, ratio, error: ratio < .05 ? .3 : .1 }), normals());
     smoothLodNormals(document);
@@ -346,7 +378,7 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
     const value: number[] = [];
     for (let i = 0; i < color.getCount(); i++) { color.getElement(i, value); color.setElement(i, value.map(v => Math.round(v * 127) / 127)); }
   }
-  await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'high', quantizePosition: 12, quantizeNormal: 8, quantizeColor: 8, cleanup: false }));
+  await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'high', quantizePosition: 16, quantizeNormal: 8, quantizeColor: 8, cleanup: false }));
   removeDegenerateTriangles(document);
   shareVertexStreams(document);
   await document.transform(prune({ keepLeaves: true, keepAttributes: true, keepExtras: true }));

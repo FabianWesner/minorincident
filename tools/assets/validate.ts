@@ -8,7 +8,7 @@ import { atLeast } from '../../src/assets/types';
 import { validMaterial } from '../../src/assets/palette';
 import { assetIO } from './io';
 import { reviewErrors } from './review';
-import { requiredLods } from './delivery';
+import { requiredLods, semanticNodeNames } from './delivery';
 
 export interface Validation { id: string; errors: string[]; triangles: number; materials: number; drawCalls: number; fileKB: number; dimensions: number[]; hash: string }
 export function geometryHash(document: Document): string {
@@ -58,10 +58,15 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
     const expected = def.dimensions[axis as 'x' | 'y' | 'z'];
     if (!Number.isFinite(dimensions[i]) || Math.abs(dimensions[i] - expected) > expected * def.dimensions.tolerance) errors.push(`dimensions.${axis}: ${dimensions[i]} expected ${expected}`);
   }
-  const required = new Set([...def.requiredNodes, ...def.animatedNodes, ...def.sockets]);
+  const required = new Set([...(source ? semanticNodeNames(source) : []), ...def.requiredNodes, ...def.animatedNodes, ...def.sockets]);
   for (const name of required) {
     const found = nodes.filter((n) => n.getName() === name);
     if (found.length !== 1) errors.push(`node ${name}: expected exactly one, found ${found.length}`);
+  }
+  if (source) for (const name of semanticNodeNames(source)) {
+    const original = source.getRoot().listNodes().find(node => node.getName() === name)!, packed = byName.get(name);
+    if (packed && descendants(original).some(node => node.getMesh()) && !descendants(packed).some(node => node.getMesh())) errors.push(`node ${name}: lost source geometry`);
+    if (/socket/i.test(name) && packed && !descendants(original).some(node => node.getMesh()) && descendants(packed).some(node => node.getMesh())) errors.push(`socket ${name}: must be an empty`);
   }
   for (const name of def.animatedNodes) {
     const node = byName.get(name);

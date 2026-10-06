@@ -3,7 +3,7 @@
 `npm run assets:build -- veh.fire-engine` runs Blender 5.2, validates the raw
 export, bakes CPU Cycles AO, optimizes all three hero LODs and validates them
 before replacing runtime outputs. `BLENDER_BIN` overrides the standard macOS
-installation. Builds use three threads, four global process slots and one
+installation. Builds use three threads, three global process slots and one
 Cycles slot, shared with the reference runner when its locks exist.
 
 Shared scripts implement `build(ctx)` and return a root object. The context
@@ -20,6 +20,12 @@ Use an asset ID or category prefix instead of `--all` for an incremental pack.
 Authored tiers are preferred; generated tiers record their provenance and are
 regenerated from LOD0. `--regenerate` rebuilds all selected distance tiers.
 Targets are 12% / 3% of LOD0; retries stop before destroying small rigid parts.
+Simplification measures error per connected component and per axis, preserving
+thin panels in large assemblies. Component extrema stay locked and small parts
+retain their geometry. Static surfaces use tighter error to retain curved shells
+and lettering. Sixteen-bit positions keep millimetre geometry from quantizing flat. Micrometre seam
+rounding allows lower tiers to weld exporter duplicates before simplification.
+Geometry floors that exceed the target remain explicit validation failures.
 Weapons, throwables and pickups above 2,000 triangles require LOD1 only.
 All other hero/side exports require both tiers. Required pivots, sockets, skin
 joints, animation targets and closed infected caps survive every tier.
