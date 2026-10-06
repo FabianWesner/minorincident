@@ -1,0 +1,34 @@
+{
+  "build": {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit_code": 0,
+    "seconds": 2.88,
+    "log": "/tmp/integrate-m1-final-build.log"
+  },
+  "sim": {
+    "command": [
+      "npm",
+      "run",
+      "test:sim"
+    ],
+    "exit_code": 0,
+    "seconds": 8.29,
+    "log": "/tmp/integrate-m1-final-sim.log"
+  },
+  "smoke": {
+    "command": [
+      "npm",
+      "run",
+      "test:smoke",
+      "--",
+      "--workers=2"
+    ],
+    "exit_code": 0,
+    "seconds": 25.43,
+    "log": "/tmp/integrate-m1-final-smoke.log"
+  }
+}

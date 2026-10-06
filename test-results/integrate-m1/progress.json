@@ -5,7 +5,7 @@
     "E09",
     "E15"
   ],
-  "pending": "final-regression",
+  "pending": "final-regression-restart-after-active-browser",
   "manifest_union": 275,
   "asset_registrations": [
     "bld.helipad",
@@ -81,6 +81,20 @@
       "inf.construction-worker",
       "inf.firefighter"
     ],
+    "typecheck": 0,
+    "lint": 0,
+    "unit": 83
+  },
+  "main2": {
+    "head": "bc2011322b08d1dca5ba8686a8d2e5317fb0f1e3",
+    "manifest_union": 275,
+    "registered_sources": [
+      "inf.hazmat",
+      "inf.nurse",
+      "inf.skater",
+      "npc.survivor-group"
+    ],
+    "new_palette_swatches": 11,
     "typecheck": 0,
     "lint": 0,
     "unit": 83
