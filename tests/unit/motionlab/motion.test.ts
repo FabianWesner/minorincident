@@ -7,6 +7,7 @@ test('motion lab bounds NPC jerk and turn increments and reproduces the trace', 
     for (let tick = 1; tick <= 720; tick++) {
       const previous = { ...state }; steer(state, intent(tick), 2.4, true);
       expect(Math.hypot(state.ax - previous.ax, state.az - previous.az) / dt).toBeLessThanOrEqual(48 + 1e-8);
+      expect(Math.abs(state.omega - previous.omega) / dt).toBeLessThanOrEqual(12 + 1e-8);
       expect(Math.abs(angleDelta(previous.yaw, state.yaw))).toBeLessThanOrEqual(4.5 * dt + 1e-8);
       trace.push({ x: state.x, z: state.z, yaw: state.yaw });
     }
