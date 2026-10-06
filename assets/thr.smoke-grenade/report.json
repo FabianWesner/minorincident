@@ -1,0 +1,21 @@
+{
+  "id": "thr.smoke-grenade",
+  "tier": "Side",
+  "triangles": 4852,
+  "draw_calls": 7,
+  "materials": [
+    "pal_grass",
+    "pal_uiDark",
+    "pal_picketWhite",
+    "pal_woodWarm",
+    "pal_sidewalk"
+  ],
+  "nodes_ok": true,
+  "within_budget": true,
+  "rounds": 3,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "gaps": [
+    "Smoke uses opaque mesh billows rather than translucent reference smoke."
+  ]
+}

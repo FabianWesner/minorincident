@@ -6,9 +6,12 @@ from mathutils import Vector
 HERE=Path(__file__).resolve().parent
 p=argparse.ArgumentParser()
 for k in ('render','glb'):p.add_argument('--'+k)
+p.add_argument('--lod',type=int,choices=[0,1,2],default=0)
 p.add_argument('--view',default='ref');p.add_argument('--samples',type=int,default=24)
 p.add_argument('--width',type=int,default=960);p.add_argument('--height',type=int,default=540)
 a=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+SEGMENTS=(24,16,12)[a.lod]
+TAB_SEGMENTS=(16,12,8)[a.lod]
 bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
 M={}
 for token,h,metal in [('policeBlue','2f6bff',.28),('sidewalk','b9a4a0',.78),('picketWhite','f2e6dc',.72),('schoolBusYellow','f2b630',.22),('uiDark','25222c',.35)]:
@@ -22,29 +25,29 @@ body=bpy.data.objects.new('body',None);bpy.context.collection.objects.link(body)
 def mesh(name,v,f,t):
  d=bpy.data.meshes.new(name);d.from_pydata(v,[],f);d.update();o=bpy.data.objects.new(name,d);bpy.context.collection.objects.link(o);o.data.materials.append(M[t]);o.parent=body;return o
 
-def lathe(name,profile,t,n=64):
+def lathe(name,profile,t,n=None):
+ n=n or SEGMENTS
  v=[(r*math.cos(i*2*math.pi/n),r*math.sin(i*2*math.pi/n),z) for r,z in profile for i in range(n)]
  f=[(j*n+i,j*n+(i+1)%n,(j+1)*n+(i+1)%n,(j+1)*n+i) for j in range(len(profile)-1) for i in range(n)]
  o=mesh(name,v,f,t)
  for face in o.data.polygons:face.use_smooth=name!='painted_shell'
  return o
 # Continuous tapered shell and sculpted shoulder / foot, closed through the lid.
-lathe('painted_shell',[(.063,.006),(.067,.010),(.070,.016),(.073,.024),(.075,.034),(.075,.055),(.075,.095),(.075,.14),(.075,.185),(.075,.23),(.075,.275),(.075,.311),(.074,.315),(.065,.336)],'policeBlue')
-lathe('bottom_rolled_seam',[(0,0),(.058,0),(.063,.001),(.067,.004),(.071,.009),(.073,.014),(.075,.019),(.076,.023),(.076,.027),(.075,.031),(.073,.033),(.070,.032),(.067,.028)],'sidewalk')
-lathe('shoulder_metal',[(.0755,.312),(.0755,.318),(.074,.323),(.072,.328),(.069,.333),(.067,.338),(.067,.342)],'sidewalk')
-lathe('top_rolled_rim',[(.064,.336),(.068,.337),(.072,.339),(.074,.342),(.074,.348),(.072,.351),(.068,.352),(.065,.351),(.063,.349),(.062,.346),(.062,.342),(.064,.340),(.064,.336)],'picketWhite')
-lathe('recessed_lid',[(0,.338),(.022,.338),(.040,.338),(.054,.338),(.058,.339),(.061,.341),(.062,.344)],'sidewalk')
-lathe('lid_score',[(.047,.341),(.049,.342),(.051,.341),(.049,.3408),(.047,.341)],'picketWhite')
+lathe('painted_shell',[(.063,.006),(.073,.024),(.075,.034),(.075,.311),(.074,.315),(.065,.336)],'policeBlue')
+lathe('bottom_rolled_seam',[(0,0),(.063,0),(.071,.009),(.076,.023),(.076,.027),(.073,.033),(.067,.028)],'sidewalk')
+lathe('shoulder_metal',[(.0755,.312),(.0755,.318),(.072,.328),(.067,.338),(.067,.342)],'sidewalk')
+lathe('top_rolled_rim',[(.064,.336),(.074,.342),(.074,.348),(.068,.352),(.063,.349),(.062,.342),(.064,.336)],'picketWhite')
+lathe('recessed_lid',[(0,.338),(.054,.338),(.061,.341),(.062,.344)],'sidewalk')
 # Pull-tab: bevelled annulus with a true hole, plus visible rivet and dark drinking aperture.
 def ring(name,cx,cy,rx,ry,innerx,innery,z,t):
  profiles=[(rx-.001,ry-.001,z),(rx,ry,z+.001),(rx,ry,z+.003),(rx-.001,ry-.001,z+.004),(innerx+.001,innery+.001,z+.004),(innerx,innery,z+.003),(innerx,innery,z+.001),(innerx+.001,innery+.001,z)]
- n=64;v=[(cx+x*math.cos(i*2*math.pi/n),cy+y*math.sin(i*2*math.pi/n),zz) for x,y,zz in profiles for i in range(n)]
+ n=TAB_SEGMENTS;v=[(cx+x*math.cos(i*2*math.pi/n),cy+y*math.sin(i*2*math.pi/n),zz) for x,y,zz in profiles for i in range(n)]
  return mesh(name,v,[(j*n+i,j*n+(i+1)%n,((j+1)%8)*n+(i+1)%n,((j+1)%8)*n+i) for j in range(8) for i in range(n)],t)
 # Flattened ellipse under tab reads as the punched opening.
-n=64;v=[(-.031+.017*math.cos(i*2*math.pi/n),.020*math.sin(i*2*math.pi/n),.3415) for i in range(n)]
+n=TAB_SEGMENTS;v=[(-.031+.017*math.cos(i*2*math.pi/n),.020*math.sin(i*2*math.pi/n),.3415) for i in range(n)]
 mesh('drink_aperture',v,[tuple(range(n))],'uiDark')
 ring('pull_tab',-.009,0,.031,.016,.022,.009,.345,'picketWhite')
-lathe('tab_rivet',[(0,.350),(.005,.350),(.006,.352),(.005,.354),(0,.354)],'sidewalk',32)
+lathe('tab_rivet',[(0,.350),(.005,.350),(.006,.352),(.005,.354),(0,.354)],'sidewalk',TAB_SEGMENTS)
 # Wrap each bolt face to the cylindrical shell; offset >=4mm everywhere.
 # Triangulated in the Y/Z plane before cylindrical projection.
 def badge(name,coords,r,t):
@@ -53,7 +56,7 @@ def badge(name,coords,r,t):
  for tri in tris:
   tri=[points[v] if isinstance(v,int) else v for v in tri]
   # Subdivide planar triangles to follow the can without chord intersections.
-  steps=8;indices={}
+  steps=2;indices={}
   for i in range(steps+1):
    for j in range(steps+1-i):
     q=tri[0]+(tri[1]-tri[0])*i/steps+(tri[2]-tri[0])*j/steps
@@ -90,8 +93,9 @@ for o in meshes:
 bpy.context.view_layer.objects.active=meshes[0];bpy.ops.object.bake(type='AO')
 tri=0
 for o in meshes:o.data.calc_loop_triangles();tri+=len(o.data.loop_triangles)
-report={'id':'pick.energy-drink','tier':'Side','triangles':tri,'draw_calls':len(meshes),'materials':sorted(m.name for m in M.values()),'nodes_ok':all(bpy.data.objects.get(n) is not None for n in ('root','body','col:body')),'within_budget':6000<=tri<=12000 and len(meshes)<=30,'rounds':3,'webgpu_ok':False,'webgl2_ok':False,'gaps':['Canonical policeBlue replaces reference violet; palette contains no violet token.']}
-(HERE/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+report={'id':'pick.energy-drink','tier':'Side','triangles':tri,'draw_calls':len(meshes),'materials':sorted(m.name for m in M.values()),'nodes_ok':all(bpy.data.objects.get(n) is not None for n in ('root','body','col:body')),'within_budget':tri<=2500 and len(meshes)<=6,'rounds':4,'webgpu_ok':False,'webgl2_ok':False,'gaps':['Canonical policeBlue replaces reference violet; palette contains no violet token.']}
+if a.lod==0:(HERE/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+else:(HERE/f'geometry.lod{a.lod}.json').write_text(json.dumps({'triangles':tri,'draw_calls':len(meshes)},indent=2)+'\n')
 if a.glb:
  bpy.ops.object.select_all(action='DESELECT')
  for o in asset:o.select_set(True)
@@ -108,3 +112,8 @@ if a.render:
  cam.rotation_euler=(target-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';cam.data.ortho_scale=.74
  scene.cycles.samples=a.samples;scene.cycles.use_denoising=True;scene.render.resolution_x=a.width;scene.render.resolution_y=a.height;scene.view_settings.view_transform='AgX'
  scene.render.filepath=str(Path(a.render).resolve());bpy.ops.render.render(write_still=True);print('RENDER OK')
+
+ if a.view=='ref' and Path(a.render).name=='hero.png':
+  cam.location=(1,-1,1.6);cam.rotation_euler=(target-cam.location).to_track_quat('-Z','Y').to_euler()
+  scene.cycles.samples=24;scene.render.resolution_x=960;scene.render.resolution_y=540
+  scene.render.filepath=str(Path(a.render).resolve().with_name('game.png'));bpy.ops.render.render(write_still=True)

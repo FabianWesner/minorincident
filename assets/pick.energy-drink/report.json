@@ -1,7 +1,7 @@
 {
   "id": "pick.energy-drink",
   "tier": "Side",
-  "triangles": 9518,
+  "triangles": 1682,
   "draw_calls": 5,
   "materials": [
     "pal_picketWhite",
@@ -12,11 +12,25 @@
   ],
   "nodes_ok": true,
   "within_budget": true,
-  "rounds": 3,
+  "rounds": 4,
   "webgpu_ok": true,
   "webgl2_ok": true,
   "gaps": [
     "Canonical policeBlue replaces reference violet; palette contains no violet token.",
     "Viewer /@vite/client returns 404; asset-local capture shim supplies an empty HMR module."
-  ]
+  ],
+  "budget": {
+    "triangles": 2500,
+    "draw_calls": 6
+  },
+  "lods": {
+    "lod1": {
+      "triangles": 1198,
+      "draw_calls": 5
+    },
+    "lod2": {
+      "triangles": 906,
+      "draw_calls": 5
+    }
+  }
 }
