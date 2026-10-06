@@ -70,11 +70,29 @@ export class Civilians {
       this.state(e, 'finished'); c.eyesGlow = false; this.world.events.emit({ type: 'civilian.finished', tick: this.world.tick, id: e.id });
     } else if (type === 'explosive' && mobileStates.has(c.state)) c.knockedUntil = this.world.tick + 90;
   }
+  /** A living adult protests and steps back. This never calls the damage/turn lifecycle. */
+  annoy(e: EntitySnapshot, direction: Point): void {
+    const c = e.civilian!;
+    if (!c.adult || c.pet || !mobileStates.has(c.state)) return;
+    c.annoyedFrom = c.state as 'calm' | 'alarmed' | 'flee' | 'hide';
+    const distance = this.world.combat!.query.clearDistance(e.transform, direction, .4, e.id);
+    const nav = this.world.infected!.nav, p = e.transform;
+    const x = p.x + direction.x * distance, z = p.z + direction.z * distance;
+    const from = { x: p.x, z: p.z };
+    if (nav.clear(x, z, .35)) { p.x = x; p.z = z; this.world.spatial.set(e.id, x, z); }
+    e.combat!.reaction = { index: 0, started: this.world.tick, until: this.world.tick + 24, direction: { ...direction }, from, to: { x: p.x, z: p.z }, heavy: false };
+    this.state(e, 'annoyed', 72);
+    this.world.events.emit({ type: 'civilian.bark', tick: this.world.tick, id: e.id, text: 'Hey!', position: { x: p.x, z: p.z } });
+  }
   update(): void {
     const ai = this.world.infected!, tick = this.world.tick;
     for (const e of this.world.entities.iterate()) {
       const c = e.civilian; if (!c || c.state === 'infected' || c.state === 'finished') continue;
       if (!c.adult) continue;
+      if (c.state === 'annoyed') {
+        if (tick < c.until) continue;
+        this.state(e, c.annoyedFrom ?? 'calm'); delete c.annoyedFrom;
+      }
       if (c.state === 'grabbed') {
         const attacker = this.world.entities.get(c.attacker);
         if (!attacker || attacker.health.current <= 0 || attacker.combat!.staggerUntil > tick || Math.hypot(attacker.transform.x - e.transform.x, attacker.transform.z - e.transform.z) > 1.8) {

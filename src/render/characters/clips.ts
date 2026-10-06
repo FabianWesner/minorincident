@@ -21,7 +21,17 @@ const upperBody = /^(torso|head|arm|foreArm|hand)/;
 
 /** Retarget by name, preserving model rest TRS. Additive clips contain upper-body
  * offsets so the locomotion action retains control of planted feet. */
+const restPoses = new WeakMap<Object3D, { node: Object3D; position: Vector3; quaternion: Quaternion }[]>();
+/** Sampling one action must not become the rest pose of the next action. */
 export function retargetClip(root: Object3D, name: string, additive = false): AnimationClip {
+  let rest = restPoses.get(root);
+  if (!rest) { rest = []; root.traverse(node => rest!.push({ node, position: node.position.clone(), quaternion: node.quaternion.clone() })); restPoses.set(root, rest); }
+  const current = rest.map(({ node }) => ({ node, position: node.position.clone(), quaternion: node.quaternion.clone() }));
+  for (const pose of rest) { pose.node.position.copy(pose.position); pose.node.quaternion.copy(pose.quaternion); }
+  try { return buildRetargetedClip(root, name, additive); }
+  finally { for (const pose of current) { pose.node.position.copy(pose.position); pose.node.quaternion.copy(pose.quaternion); } }
+}
+function buildRetargetedClip(root: Object3D, name: string, additive: boolean): AnimationClip {
   const source = authoredClips.get(name);
   if (!source) throw new Error(`Missing authored clip ${name}`);
   const tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[] = [], q = new Quaternion();
@@ -63,7 +73,9 @@ function plantLocomotion(root: Object3D, name: string, duration: number, tracks:
   const hipTrack = tracks.find(t => t.name === 'hip.position')!;
   const position = hipTrack.InterpolantFactoryMethodLinear();
   const rotation = tracks.find(t => t.name === 'hip.quaternion')!.InterpolantFactoryMethodLinear();
-  const stance = name === 'run' ? .5 : .6, stride = strides[name];
+  const shin = root.getObjectByName('shinL'), foot = root.getObjectByName('footL');
+  const leg = shin && foot ? -(shin.position.y + foot.position.y) : libraryLeg;
+  const stance = name === 'run' ? .5 : .6, stride = strides[name] * (leg > .2 && leg < libraryLeg ? leg / libraryLeg : 1);
   const footTarget = (phase: number): Vector3 => {
     if (phase <= stance) return new Vector3(stride * (stance / 2 - phase), 0, 0);
     const t = (phase - stance) / (1 - stance);

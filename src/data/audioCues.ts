@@ -82,6 +82,7 @@ for (const [id, text] of [['radio', 'Emergency broadcast: proceed to the safe zo
     cue(`dialogue.${id}`, 'dialogue', 'vocal', 3, 185, { gain: 1, antiSpam: 0, rateSpread: 0, caption: text });
 for (const id of ['click', 'switch', 'pickup', 'respawn', 'death', 'tick'])
     cue(`ui.${id}`, 'ui', 'tone', 0.1, 700, { gain: id === 'tick' ? 0 : 0.1 });
+cue('civilian.hey', 'barks', 'vocal', .4, 200, { gain: .5, antiSpam: .3, caption: 'Hey!' });
 cue('infected.vocal', 'barks', 'vocal', 0.6, 130, { gain: 0.12, antiSpam: 0.9 });
 cue('horde.loop', 'ambience', 'bed', 2, 150, { loop: true, gain: 0.3, antiSpam: 0 });
 for (const [i, surface] of surfaces.entries())
@@ -113,7 +114,7 @@ for (const kind of ['jukebox', 'ice-cream', 'car-radio', 'school-bell', 'pa', 'm
 /** Explicit coverage includes silent control events; these still resolve to a decodable cue. */
 export const eventCues = {
     'level.started': 'ui.tick', 'sim.tick': 'ui.tick', 'scenario.loaded': 'ui.tick', 'scenario.unloaded': 'ui.tick',
-    'civilian.state': 'ui.tick', 'civilian.eyes': 'infected.vocal', 'civilian.saved': 'stinger.objective', 'civilian.finished': 'ui.tick', 'civilian.turned': 'infected.vocal',
+    'civilian.bark': 'civilian.hey', 'civilian.state': 'ui.tick', 'civilian.eyes': 'infected.vocal', 'civilian.saved': 'stinger.objective', 'civilian.finished': 'ui.tick', 'civilian.turned': 'infected.vocal',
     'corgi.bark': 'corgi.warning', 'corgi.fetched': 'ui.pickup', 'escort.order': 'ui.switch', 'escort.downed': 'ui.tick', 'escort.revived': 'stinger.objective',
     'civilian.grabbed': 'telegraph.civilian', 'infected.prop-thrown': 'prop.wood', 'telegraph': 'telegraph.runner',
     'infected.attack': 'infected.vocal', 'infected.revived': 'telegraph.nurse', 'infected.leg-lost': 'gore.bone',

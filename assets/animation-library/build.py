@@ -175,6 +175,27 @@ for weapon in ['fists','bat','crowbar','machete']:
             strike[arm]=(sign*28,sign*72,88 if combo<2 else 125)
         follow={**guard,'hip':hip(x=.09,y=-.025,twist=sign*16),'torso':(0,sign*50,-9),arm:(sign*12,sign*90,48 if overhead else 110),fore:z(22),'head':(0,-sign*22,6), 'legL':z(14),'shinL':z(-20)}
         action(weapon+'-'+str(combo+1),1,[(0,guard),(.10,wind),(.20,strike),(.36,follow),(.68,{**guard,'torso':(0,sign*8,-2)}),(1,guard)])
+# Unified unarmed style: .4s game timing, 50ms hand/foot strike (phase .075 -> .20),
+# pelvis leads chest, then distal joints. Distinct silhouettes, quiet planted support.
+# Seven beats; the spinning backfist is the occasional flashy finish, equal damage.
+guard=p(hip=hip(y=-.025),armL=z(38),foreArmL=z(95),armR=z(42),foreArmR=z(95),
+        legL=z(7),shinL=z(-14),legR=z(-5),shinR=z(-10))
+unarmed=[
+    ('jab',p(armL=z(35),foreArmL=z(110)),p(armL=z(92),foreArmL=z(4)),p(armL=z(100),foreArmL=z(18)),12),
+    ('cross',p(armR=(0,-20,25),foreArmR=z(112)),p(armR=(0,18,94),foreArmR=z(6)),p(armR=(0,40,102),foreArmR=z(22)),25),
+    ('front-kick',p(legR=z(58),shinR=z(-110),torso=z(8)),p(legR=z(95),shinR=z(-8),footR=z(-18),torso=z(12),armR=z(-25)),p(legR=z(74),shinR=z(-35),torso=z(8)),8),
+    ('roundhouse-kick',p(legR=(12,-25,50),shinR=z(-100)),p(legR=(38,45,98),shinR=z(-8),torso=(0,20,12),armL=z(65)),p(legR=(25,80,70),shinR=z(-30),torso=(0,35,8)),38),
+    ('uppercut',p(hip=hip(y=-.065),armR=z(8),foreArmR=z(100)),p(armR=(0,15,134),foreArmR=z(38),torso=z(-8)),p(armR=(0,28,142),foreArmR=z(48),torso=z(-5)),18),
+    ('knee',p(legR=z(28),shinR=z(-115),armL=z(65),armR=z(65)),p(legR=z(108),shinR=z(-130),torso=z(-14),foreArmL=z(60),foreArmR=z(60)),p(legR=z(86),shinR=z(-115),torso=z(-8)),12),
+    ('spinning-backfist',p(armR=(0,-65,65),foreArmR=z(75)),p(armR=(0,65,100),foreArmR=z(12)),p(armR=(0,95,88),foreArmR=z(20)),110),
+]
+for name,wind,strike,follow,twist in unarmed:
+    anticipation={**guard,**wind,'hip':hip(y=-.04,twist=-twist*.35),'torso':(0,-twist*.65,5),'head':(0,twist*.35,-3)}
+    contact={**guard,**strike,'hip':hip(y=-.02,twist=twist*.45),'torso':strike.get('torso',(0,twist*.5,-7)),'head':(0,-twist*.3,5)}
+    through={**guard,**follow,'hip':hip(y=-.025,twist=twist*.65),'torso':follow.get('torso',(0,twist*.8,-4)),'head':(0,-twist*.4,3)}
+    action('unarmed-'+name,1,[(0,guard),(.035,{**guard,'hip':anticipation['hip']}),
+        (.075,anticipation),(.20,contact),(.36,through),(.66,{**guard,'torso':(0,twist*.12,0)}),(1,guard)])
+
 action('swing',.5,[(0,p()),(.1,p(armR=z(-30),torso=(0,-30,5))),(.2,p(armR=(0,55,100),foreArmR=z(8),torso=(0,35,-10))),(.5,p(armR=(0,85,100),torso=(0,45,-5))),(1,p())])
 action('kick',.65,[(0,p(armL=z(35),foreArmL=z(50))),(.12,p(hip=hip(y=-.03),legR=z(68),shinR=z(-110),torso=z(12))),
     (.20,p(hip=hip(x=.06,y=.02),legR=z(98),shinR=z(-8),footR=z(-25),torso=z(18),armL=z(55),armR=z(-35),legL=z(-8))),

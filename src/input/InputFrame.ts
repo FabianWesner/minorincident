@@ -10,6 +10,11 @@ export interface InputFrame {
   brake?: boolean;
   /** Explicit pointer commands; absent means keep the current command. */
   moveTarget?: Vec2;
+  /** Mouse LMB fires the active carried action; Shift locks feet for the swing. */
+  mouseAttack?: boolean;
+  attackInPlace?: boolean;
+  /** RMB/Q cycle the carried actions across racks, deduplicating unarmed. */
+  selectorActive?: boolean;
   attackTarget?: { id: number; side: 'LEFT' | 'RIGHT' };
   /** Cancel any pending destination or target attack. */
   cancelMove?: boolean;

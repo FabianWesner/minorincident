@@ -123,7 +123,7 @@ export class Mission {
   }
   private complete(def: ObjectiveDef): void {
     this.state.steps[def.id].status = 'completed'; this.state.completedObjectives.push(def.id);
-    if (this.def.slice && def.id === 'breakfast') this.world.combat!.setLoadout(['weapon.fists'], ['weapon.kick']);
+    if (this.def.slice && def.id === 'breakfast') this.world.combat!.setLoadout(['weapon.fists'], ['weapon.fists']);
     // Crossing the hardware entrance closes the first chase; the weapon display is a safe beat.
     if (this.def.slice && def.id === 'escape') {
       this.outbreak.end();
@@ -132,7 +132,7 @@ export class Mission {
       }
       this.world.player!.restoreVitals(this.world.tick);
     }
-    if (this.def.slice && def.id === 'melee') this.world.combat!.setLoadout([this.meleeChoice], ['weapon.kick']);
+    if (this.def.slice && def.id === 'melee') this.world.combat!.setLoadout([this.meleeChoice, 'weapon.fists'], ['weapon.fists']);
     if (def.optional && !this.state.stats.optionalObjectives.includes(def.id)) this.state.stats.optionalObjectives.push(def.id);
     if (def.choice) for (const sibling of this.def.steps) if (sibling.id !== def.id && sibling.choice === def.choice) this.state.steps[sibling.id].status = 'cancelled';
     if (def.type === 'escort' && def.complete.kind === 'escort') this.rescue(this.state.actors[def.complete.actor]);

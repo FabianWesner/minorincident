@@ -19,15 +19,14 @@ test('T-E03-01 @E03 @E03-AC01 cursor aims without moving', async ({ page }) => {
 
 test('T-E03-02 @E03 @E03-AC02 mouse buttons preserve down held up and prevent context menus', async ({ page }) => {
   await boot(page); await page.mouse.move(800, 450);
-  for (const [button, action] of [['left', 'left'], ['right', 'right']] as const) {
-    await page.mouse.down({ button });
-    expect((await tick(page))[action]).toEqual({ down: true, held: true, up: false });
-    expect((await tick(page))[action]).toEqual({ down: false, held: true, up: false });
-    await page.mouse.up({ button });
-    expect((await tick(page))[action]).toEqual({ down: false, held: false, up: true });
-    await page.mouse.click(800, 450, { button });
-    expect((await tick(page))[action]).toEqual({ down: true, held: false, up: true });
-  }
+  await page.mouse.down();
+  expect((await tick(page)).left).toEqual({ down: true, held: true, up: false });
+  expect((await tick(page)).left).toEqual({ down: false, held: true, up: false });
+  await page.mouse.up(); expect((await tick(page)).left.up).toBe(true);
+  await page.mouse.down({ button: 'right' });
+  let frame = await tick(page); expect(frame.selector).toBe(1); expect(frame.right.down).toBe(false);
+  frame = await tick(page); expect(frame.selector).toBe(0); expect(frame.right.held).toBe(false);
+  await page.mouse.up({ button: 'right' }); expect((await tick(page)).right.up).toBe(false);
   expect(await page.locator('canvas').evaluate((canvas) => {
     const event = new MouseEvent('contextmenu', { button: 2, bubbles: true, cancelable: true });
     canvas.dispatchEvent(event); return event.defaultPrevented;
@@ -84,7 +83,7 @@ test('T-E03-14 @E03 @E03-AC14 click ground walks, retargets, stops and held grou
   expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'))).toEqual([]);
 });
 
-for (const button of ['left', 'right'] as const) test(`T-E03-15-${button} @E03 @E03-AC15 target click approaches then attacks ${button}`, async ({ page }) => {
+for (const button of ['left'] as const) test(`T-E03-15-${button} @E03 @E03-AC15 target click approaches then attacks ${button}`, async ({ page }) => {
   await arena(page);
   const id = await page.evaluate(() => window.__SS__!.spawn('infected.dummy', { x: 5, z: 0 }, { hp: 1000 }));
   const target = await point(page, 5); await page.mouse.click(target.x, target.y, { button });
@@ -99,29 +98,31 @@ for (const button of ['left', 'right'] as const) test(`T-E03-15-${button} @E03 @
   expect(events.filter(e => e.type === 'combat.attack')).toHaveLength(1);
 });
 
-test('T-E03-16 @E03 @E03-AC16 RMB distant ground attacks without movement and cancels click destination', async ({ page }) => {
-  await arena(page); const start = await position(page), dest = await point(page, 7);
-  await page.mouse.click(dest.x, dest.y, { button: 'right' });
-  const otherAim = await point(page, -5); await page.mouse.move(otherAim.x, otherAim.y); await tick(page, 120);
+test('T-E03-16 @E03 @E03-AC16 Shift LMB distant ground swings stationary and cancels destination', async ({ page }) => {
+  await arena(page); const dest = await point(page, 7);
+  await page.mouse.click(dest.x, dest.y); await tick(page, 10);
+  const start = await position(page);
+  await page.keyboard.down('Shift'); await page.keyboard.down('w');
+  await page.mouse.move(dest.x, dest.y); await page.mouse.down(); const frame = await tick(page, 60);
+  expect(frame.attackInPlace).toBe(true);
   expect(Math.hypot((await position(page)).x - start.x, (await position(page)).z - start.z)).toBeLessThan(.01);
-  const attack = await page.evaluate(() => window.__SS__!.events().find(e => e.type === 'combat.attack' && e.side === 'RIGHT'));
-  expect(attack?.type).toBe('combat.attack');
-  if (attack?.type === 'combat.attack') { expect(attack.direction.x).toBeCloseTo(1); expect(attack.direction.z).toBeCloseTo(0); }
-  await page.mouse.move(dest.x, dest.y); await page.mouse.down(); await tick(page, 12);
-  const far = await point(page, -5); await page.mouse.click(far.x, far.y, { button: 'right' }); await tick(page, 20);
-  const stopped = await position(page); await tick(page, 120);
-  expect(Math.hypot((await position(page)).x - stopped.x, (await position(page)).z - stopped.z)).toBeLessThan(.01);
-  expect(await page.evaluate(() => window.__SS__!.events().some(e => e.type === 'combat.attack' && e.side === 'LEFT'))).toBe(false);
   await page.mouse.up();
+  await page.keyboard.up('w'); await page.keyboard.up('Shift');
+  const attacks = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'));
+  expect(attacks.length).toBeGreaterThan(1);
+  expect(attacks[0]).toMatchObject({ side: 'LEFT', position: { x: start.x, z: start.z } });
 });
 
-test('T-E03-17 @E03 @E03-AC17 Q after RMB switches RIGHT, ground LMB does not select LEFT', async ({ page }) => {
+test('T-E03-17 @E03 @E03-AC17 RMB and Q cycle carried actions without attacking', async ({ page }) => {
   await arena(page); const dest = await point(page, 7);
-  await page.mouse.click(dest.x, dest.y, { button: 'right' }); await tick(page);
-  await page.mouse.click(dest.x, dest.y); await tick(page);
-  await page.keyboard.press('q'); await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))); await tick(page);
-  const weapons = await page.evaluate(() => window.__SS__!.getState().player!.weapons!);
-  expect(weapons.selectedSide).toBe('RIGHT'); expect(weapons.RIGHT.index).toBe(1); expect(weapons.LEFT.index).toBe(0);
+  await page.mouse.click(dest.x, dest.y, { button: 'right' }); await tick(page, 20);
+  let weapons = await page.evaluate(() => window.__SS__!.getState().player!.weapons!);
+  expect(weapons.selectedSide).toBe('LEFT'); expect(weapons.LEFT.index).toBe(1);
+  await page.mouse.click(dest.x, dest.y); await tick(page, 20);
+  await page.keyboard.press('q'); await tick(page, 20);
+  weapons = await page.evaluate(() => window.__SS__!.getState().player!.weapons!);
+  expect(weapons.selectedSide).toBe('RIGHT'); expect(weapons.RIGHT.index).toBe(1);
+  expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'))).toEqual([]);
 });
 
 test('T-E03-12-car @E03 @E03-AC12 middle-click near car immediately enters; F exits', async ({ page }) => {
@@ -135,7 +136,8 @@ test('T-E03-12-car @E03 @E03-AC12 middle-click near car immediately enters; F ex
 test('T-E03-15-held @E03 @E03-AC15 held LMB target repeats and target death stops approach', async ({ page }) => {
   await arena(page);
   const id = await page.evaluate(() => window.__SS__!.spawn('infected.dummy', { x: 4, z: 0 }, { hp: 1000 }));
-  const target = await point(page, 4); await page.mouse.move(target.x, target.y); await page.mouse.down(); await tick(page, 180);
+  const target = await point(page, 4); await page.mouse.move(target.x, target.y); await page.mouse.down(); await tick(page, 80);
+  const away = await point(page, -4, 3); await page.mouse.move(away.x, away.y); await tick(page, 100);
   expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack').length)).toBeGreaterThan(2);
   await page.mouse.up(); await tick(page, 40);
   const count = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack').length);
@@ -181,11 +183,11 @@ test('T-E03-chord @E03 @E03-AC02 @E03-AC13 releasing LMB before RMB clears both 
   await page.mouse.move(1200, 350); await page.mouse.down({ button: 'left' });
   expect((await tick(page)).left.held).toBe(true);
   await page.mouse.down({ button: 'right' });
-  const both = await tick(page); expect(both.left.held).toBe(true); expect(both.right.down).toBe(true); expect(both.right.held).toBe(true);
+  const both = await tick(page); expect(both.left.held).toBe(true); expect(both.selector).toBe(1); expect(both.right.held).toBe(false);
   await page.mouse.up({ button: 'left' });
-  const partial = await tick(page); expect(partial.left.up).toBe(true); expect(partial.left.held).toBe(false); expect(partial.right.held).toBe(true);
+  const partial = await tick(page); expect(partial.left.up).toBe(true); expect(partial.left.held).toBe(false); expect(partial.right.held).toBe(false);
   await page.mouse.up({ button: 'right' });
-  const released = await tick(page); expect(released.right.up).toBe(true); expect(released.right.held).toBe(false); expect(released.left.held).toBe(false);
+  const released = await tick(page); expect(released.right.up).toBe(false); expect(released.right.held).toBe(false); expect(released.left.held).toBe(false);
   const idle = await tick(page, 60); expect(idle.left).toEqual({ down: false, held: false, up: false }); expect(idle.right).toEqual({ down: false, held: false, up: false });
 });
 

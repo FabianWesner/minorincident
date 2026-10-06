@@ -32,3 +32,13 @@ uses the quadruped idle, walk, diagonal trot and sit actions with distance-drive
 
 Regression checks live in `tests/unit/render/authored-animation.test.ts`,
 `tests/sim/combat/m1-feel.test.ts` and `tests/e2e/m1-animation.spec.ts`.
+
+The unarmed style uses seven `unarmed-*` clips (jab, cross, front kick,
+roundhouse kick, uppercut, knee and spinning backfist). These are authored at
+normalized duration 1 and played over 0.4 seconds: hips lead at phase .035,
+chest/limb anticipation at .075, contact at .20 (50 ms strike), follow-through
+at .36 and recovery at .66–1. The finisher appears once per seven attacks;
+all moves retain equal damage. Legacy fists/kick clips remain for older fixtures.
+
+Game-camera frame sequences from real Shift+LMB input are saved under
+`test-results/epics/E03/unarmed/`; the review is in `test-results/epics/E03/review.md`.
