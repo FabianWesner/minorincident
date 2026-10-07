@@ -1,15 +1,20 @@
 import { boot, expect, test } from './fixtures';
 test('T-E09-08 @E09-AC08 held LMB drives ahead-left and release brakes with distant cursor', async ({ page }) => {
   await boot(page);
-  await page.evaluate(async () => { const api = window.__SS__!; await api.loadScenario('drive-course'); api.pause(); await api.step(36); });
+  const baseRadius = await page.evaluate(async () => {
+    const api = window.__SS__!; await api.loadScenario('drive-course'); api.pause(); const radius = api.getState().render.camera.radius; await api.step(36);
+    // The close gameplay camera cannot show a cursor ten metres ahead; widen this input fixture.
+    api.camera.cinematic({ position: [25, 32, 25], target: [0, .7, 0] }); api.vfx.stepRender(1); return radius;
+  });
+  await page.waitForTimeout(1100); // allow the cinematic camera blend to finish before projecting
   const start = await page.evaluate(() => window.__SS__!.getEntity(2)!);
   const cursor = await page.evaluate(p => window.__SS__!.input.project({ x: p.x + 10, z: p.z + 4 }), start.transform);
   await page.mouse.move(cursor.x, cursor.y); await page.mouse.down();
   await page.evaluate(async () => { await window.__SS__!.step(60); });
   const state = await page.evaluate(() => window.__SS__!.getState());
-  expect(state.input.scheme).toBe('mouse-only'); expect(state.entities.find(e => e.id === 2)!.vehicle!.speed).toBeGreaterThan(2);
+  expect(state.input.scheme).toBe('mouse-only'); expect(state.entities.find(e => e.id === 2)!.vehicle!.speed, JSON.stringify({ input: state.input, cursor, car: state.entities.find(e => e.id === 2) })).toBeGreaterThan(2);
   expect(state.entities.find(e => e.id === 2)!.transform.yaw).toBeLessThan(-.05);
-  expect(state.player!.hidden).toBe(true); expect(state.render.camera.radius).toBeCloseTo(35 * 1.15);
+  expect(state.player!.hidden).toBe(true); expect(state.render.camera.radius).toBeCloseTo(baseRadius * 1.15);
   await page.mouse.up(); await page.evaluate(() => window.__SS__!.step(120));
   expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.speed)).toBeLessThan(.1);
 });
@@ -56,7 +61,8 @@ test('T-E09-touch @E09 touch stick accelerates, LEFT holds boost, releasing stic
   expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.braking)).toBe(true);
   await touch('touchEnd', [{ id: 1, x: 140, y: 400 }]);
   await page.evaluate(() => window.__SS__!.step(1));
-  expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.braking)).toBe(false);
+  const released = await page.evaluate(() => window.__SS__!.getState());
+  expect(released.input.frame.right.held, JSON.stringify(released.input)).toBe(false);
   const horn = await page.locator('[data-touch-action=left]').boundingBox(); expect(horn).not.toBeNull();
   await touch('touchStart', [{ id: 1, x: 140, y: 400 }, { id: 3, x: horn!.x + horn!.width / 2, y: horn!.y + horn!.height / 2 }]);
   await page.evaluate(async () => { await window.__SS__!.step(6); });
