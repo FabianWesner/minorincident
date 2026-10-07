@@ -7,6 +7,7 @@ const output = `test-results/epics/E07/crowd-feel/${stage}`;
 test.use({ video: { mode: 'on', size: { width: 1280, height: 720 } } });
 
 test('crowd draw visibility stays continuous for 60 seconds after the L1 outbreak @E07', async ({ page }) => {
+  const videoStarted = Date.now();
   test.setTimeout(240_000); mkdirSync(output, { recursive: true });
   await boot(page);
   await page.evaluate(async () => {
@@ -16,6 +17,7 @@ test('crowd draw visibility stays continuous for 60 seconds after the L1 outbrea
     for (const [i, c] of a.query({ kind: 'civilian' }).filter(e => !e.hidden && e.health.current > 0).slice(0, 12).entries()) a.teleport(c.id, { x: 51 + i % 4, z: -8 + Math.floor(i / 4) });
     await a.step(120); await a.screenshotReady();
   });
+  const videoOffset = (Date.now() - videoStarted) / 1000;
   const capture = page.evaluate(async () => {
     const a = window.__SS__!;
     const histories = new Map<number, { missing: number; seen: boolean }>();
@@ -69,7 +71,7 @@ test('crowd draw visibility stays continuous for 60 seconds after the L1 outbrea
   writeFileSync(`${output}/visibility.json`, JSON.stringify(result, null, 2));
   const video = page.video()!; await page.close();
   const raw = await video.path();
-  execFileSync('ffmpeg', ['-y', '-sseof', '-15', '-i', raw, '-t', '15', '-vf', 'scale=1280:-2', '-c:v', 'libvpx-vp9', '-threads', '2', '-deadline', 'realtime', '-cpu-used', '8', '-an', `${output}/outbreak.webm`], { stdio: 'ignore' });
+  execFileSync('ffmpeg', ['-y', '-ss', String(videoOffset), '-i', raw, '-t', '15', '-vf', 'scale=1280:-2', '-c:v', 'libvpx-vp9', '-threads', '2', '-deadline', 'realtime', '-cpu-used', '8', '-an', `${output}/outbreak.webm`], { stdio: 'ignore' });
   rmSync(raw, { force: true });
   expect(result.onScreenSamples).toBeGreaterThan(1000);
   expect(result.movingInfectedSamples).toBeGreaterThan(100);
@@ -96,6 +98,7 @@ test('20 infected corpses remain drawn after travelling 60 m away and returning 
   });
   expect(proof).toEqual({ first: 20, final: 20, retained: 20 });
   mkdirSync(output, { recursive: true }); writeFileSync(`${output}/permanence.json`, JSON.stringify(proof, null, 2));
+  await page.locator('canvas').screenshot({ path: `${output}/corpse-return.png` });
   await page.close(); rmSync(await page.video()!.path(), { force: true });
 });
 
