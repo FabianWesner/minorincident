@@ -88,7 +88,7 @@ test.describe('L1 v2 real-input playthrough', () => {
         if (!assisted && (await player()).weapons && await fightNearby(page)) await clickDestination();
         else if (i % 12 === 11) await clickDestination();
       }
-      throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify(await player())}`);
+      throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify(await player())}; bicycle=${JSON.stringify(await page.evaluate(() => window.__SS__!.query({ kind: 'bicycle' })))} `);
     };
     const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(1); };
     const fightNearby = async (page: Page) => {
