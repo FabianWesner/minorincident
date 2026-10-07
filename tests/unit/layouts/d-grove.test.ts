@@ -228,4 +228,21 @@ describe('D-GROVE layout', () => {
       expect(best, `alarm-car-${n}`).toBeLessThanOrEqual(2.4);
     }
   });
+  test('T-E19-04 @E19 @E19-AC04 no footprint overlaps between buildings, vehicles, props and tree trunks (asset QA P1-P9)', () => {
+    const P = layout.placements, hits: string[] = [];
+    const isBig = (a: string) => a.startsWith('bld.') || a.startsWith('veh.');
+    const isTree = (a: string) => a.startsWith('prop.street-tree');
+    const isSmall = (a: string) => a.startsWith('prop.') && !isTree(a) && !/^prop\.(hedge|privacy-fence|picket-fence|yard-gate|street-lamp|flower|bike-rack|lab-signs)/.test(a);
+    const ov = (p: (typeof P)[number], q: (typeof P)[number]) => Math.min(p.visualAabb.max[0], q.visualAabb.max[0]) - Math.max(p.visualAabb.min[0], q.visualAabb.min[0]) > 0.15 && Math.min(p.visualAabb.max[2], q.visualAabb.max[2]) - Math.max(p.visualAabb.min[2], q.visualAabb.min[2]) > 0.15;
+    const inside = (t: (typeof P)[number], q: (typeof P)[number]) => t.position[0] > q.visualAabb.min[0] - 0.2 && t.position[0] < q.visualAabb.max[0] + 0.2 && t.position[2] > q.visualAabb.min[2] - 0.2 && t.position[2] < q.visualAabb.max[2] + 0.2;
+    for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++) {
+      const a = P[i], b = P[j];
+      const [x, y] = isBig(a.assetId) || !isBig(b.assetId) ? [a, b] : [b, a];
+      if (isBig(x.assetId) && isBig(y.assetId) && ov(x, y)) hits.push(`${x.id} / ${y.id}`);
+      else if (isBig(x.assetId) && isTree(y.assetId) && inside(y, x)) hits.push(`trunk ${y.id} in ${x.id}`);
+      else if (x.assetId.startsWith('veh.') && isSmall(y.assetId) && ov(x, y)) hits.push(`${x.id} / ${y.id}`);
+      else if (x.assetId.startsWith('bld.') && !x.assetId.startsWith('bld.house') && isSmall(y.assetId) && ov(x, y)) hits.push(`${x.id} / ${y.id}`);
+    }
+    expect(hits.slice(0, 20)).toEqual([]);
+  });
 });
