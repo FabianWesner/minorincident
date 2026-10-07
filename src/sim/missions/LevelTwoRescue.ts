@@ -450,9 +450,9 @@ export class LevelTwoRescue {
     if (s.gateClosedAt && tick - s.gateClosedAt >= ticks(l2.checkpoint.holdS) && !this.mission.state.states.crossed) { s.phase = 'done'; this.mission.setState('crossed', true); }
   }
 
-  /** Cheat/test path (`completeObjective` in the gap after the doors): fires the radio now. Never used by gameplay or bots. */
+  /** Cheat/test path (`completeObjective` in the gap after the doors, the only step without an active objective): fires the radio now. Never used by gameplay or bots. */
   advance(): boolean {
-    const s = this.mission.state.l2; if (!s || !s.doorsOpenAt || s.radioAt) return false;
+    const s = this.mission.state.l2; if (!s || s.radioAt) return false;
     const tick = this.world.tick; s.radioAt = tick; s.phase = 'escape'; this.world.events.emit({ type: 'l2.radio', tick }); this.mission.radio('L2.radio');
     this.mission.setState('radio', true); this.mission.requestCheckpoint('escape'); return true;
   }
