@@ -14,6 +14,7 @@ import { Combat } from '../combat/Combat';
 import { Interactables } from '../interact/Interactables';
 import { Toys } from '../interact/Toys';
 import { Hazards } from '../interact/Hazards';
+import { Explosions } from '../combat/Explosions';
 import { Pickups } from '../interact/Pickups';
 import { Barricades } from '../interact/Barricades';
 import { campaignBarricadeSlots } from '../../levels/barricadeSlots';
@@ -58,6 +59,8 @@ export class SimWorld implements Lifecycle {
   /** L1 v2 toys (gates, dumpsters, car alarms, car wash) and the LOS blocker registry; null outside D-GROVE. */
   toys: Toys | null = null;
   hazards: Hazards | null = null;
+  /** E27 blasts: curve damage, delayed radial impulses, chains, car parts, aftermath fires, slow-mo events. */
+  explosions: Explosions | null = null;
   /** PO #15 pushable small props (dynamic Rapier bodies); null outside district compositions. */
   props: PropSystem | null = null;
   barricades: Barricades | null = null;
@@ -113,6 +116,7 @@ export class SimWorld implements Lifecycle {
     if (this.player) this.interactables = new Interactables(this);
     if (definition.combat) this.combat = new Combat(this, definition);
     if (this.player) this.hazards = new Hazards(this);
+    if (this.player) this.explosions = new Explosions(this);
     if (this.player) this.pickups = new Pickups(this);
     if (this.player) this.barricades = new Barricades(this);
     if (definition.survivor) this.vehicles = new Vehicles(this);
@@ -236,7 +240,7 @@ export class SimWorld implements Lifecycle {
     for (const boundary of next.boundaries) this.physics.addStatic(boundary, [0, 0]);
     this.props?.install(next, props);
     this.vehicles?.rebuild(true);
-    this.hazards?.debris.reset(true); this.interactables?.rebuildBlockers(next.nav, true);
+    this.hazards?.debris.reset(true); this.explosions?.reset(true); this.interactables?.rebuildBlockers(next.nav, true);
     this.barricades?.rebuild(); this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step(); rebuildNpcNavigation(this);
   }
   setInput(patch: Partial<InputFrame>): void {
@@ -293,7 +297,7 @@ export class SimWorld implements Lifecycle {
   }
   reset(): void {
     this.vehicles?.dispose(); this.vehicles = null;
-    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }

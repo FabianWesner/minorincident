@@ -22,6 +22,9 @@ export class PropSystem {
   private rebuildingIds = new Map<string, number>();
   /** Fixture-only stress override; production keeps the established 12-body cap. */
   awakeBudget = MAX_AWAKE_PROPS;
+  private burstUntil = 0;
+  /** E27: a blast lets launched props fly (up to the spec 07 §8 low-tier cap of 60) instead of freezing mid-air at 12. */
+  burst(untilTick: number): void { this.burstUntil = Math.max(this.burstUntil, untilTick); }
   readonly items: PushProp[] = [];
   private readonly nearby: number[] = [];
   constructor(private readonly world: SimWorld) {
@@ -127,10 +130,11 @@ export class PropSystem {
       }
       this.mirror(item);
     }
-    if (awake <= this.awakeBudget || !player) return;
+    const budget = this.world.tick < this.burstUntil ? Math.max(this.awakeBudget, 60) : this.awakeBudget;
+    if (awake <= budget || !player) return;
     const ranked = this.items.filter(i => i.awake).map(i => ({ i, d: (i.pose.p[0] - player.x) ** 2 + (i.pose.p[2] - player.z) ** 2 }))
       .sort((a, b) => b.d - a.d || (a.i.id < b.i.id ? -1 : 1));
-    for (let n = 0; n < awake - this.awakeBudget; n++) { const item = ranked[n].i; item.body.setLinvel({ x: 0, y: 0, z: 0 }, false); item.body.setAngvel({ x: 0, y: 0, z: 0 }, false); item.body.sleep(); item.awake = false; }
+    for (let n = 0; n < awake - budget; n++) { const item = ranked[n].i; item.body.setLinvel({ x: 0, y: 0, z: 0 }, false); item.body.setAngvel({ x: 0, y: 0, z: 0 }, false); item.body.sleep(); item.awake = false; }
   }
   /** Upgrade seam; false by default. Heavy props retain collision until unlocked. */
   shoulderPush = false;

@@ -31,6 +31,16 @@ export class ActionEffects {
   }
   private contains(zone: ActionZone, position: Vec2): boolean { return (position.x - zone.x) ** 2 + (position.z - zone.z) ** 2 <= zone.radius ** 2; }
   inSmoke(position: Vec2): boolean { return this.zones.some((z) => z.kind === 'smoke' && this.contains(z, position) && z.expires > this.world.tick); }
+  /** E27-AC08: a live smoke cloud covers either end or crosses the segment (sight line) between them. */
+  smokeBlocks(from: Vec2, to: Vec2): boolean {
+    for (const z of this.zones) {
+      if (z.kind !== 'smoke' || z.expires <= this.world.tick) continue;
+      const dx = to.x - from.x, dz = to.z - from.z, length2 = dx * dx + dz * dz;
+      const t = length2 ? Math.max(0, Math.min(1, ((z.x - from.x) * dx + (z.z - from.z) * dz) / length2)) : 0;
+      if ((from.x + dx * t - z.x) ** 2 + (from.z + dz * t - z.z) ** 2 <= z.radius ** 2) return true;
+    }
+    return false;
+  }
   shielded(position: Vec2): boolean { return this.zones.some((z) => z.kind === 'shield' && this.contains(z, position) && z.expires > this.world.tick); }
   get speedMultiplier(): number { return this.zones.some((z) => z.kind === 'adrenaline' && z.expires > this.world.tick) ? 1.5 : 1; }
   /** Reuses zone/entity buffers. Persistent DoT refreshes once per second, never per render frame. */

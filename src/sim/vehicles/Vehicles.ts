@@ -1,5 +1,6 @@
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { vehicleDef } from '../../data/vehicles';
+import { vehicleExplosion } from '../../data/explosions';
 import { survivor } from '../../data/survivor';
 import type { InputFrame, Scheme } from '../../input/InputFrame';
 import type { SimWorld } from '../world/SimWorld';
@@ -172,16 +173,9 @@ export class Vehicles {
     if (state.explodeAt !== null && this.world.tick >= state.explodeAt) {
       state.damage = 'exploded';
       this.eject(car);
-      // Bruno's mass-scaled upward explosion impulse; splash stays in the existing combat resolver.
-      car.physics.body.applyImpulse({ x: 0, y: car.physics.def.mass * 4, z: 0 }, true);
       this.world.events.emit({ type: 'vehicle.exploded', tick: this.world.tick, sourceId: car.entity.id });
-      for (const target of this.world.entities.iterate()) {
-        if (target.id === car.entity.id || !['infected', 'player', 'vehicle'].includes(target.kind) || target.health.current <= 0 || target.hidden || target.attachedTo) continue;
-        const dx = target.transform.x - car.entity.transform.x, dz = target.transform.z - car.entity.transform.z, distance = Math.hypot(dx, dz);
-        if (distance >= 6) continue;
-        if (target.vehicle) this.damage(target.id, 120 * (1 - distance / 6));
-        else this.world.combat?.damage.apply({ attackId: this.world.tick, actionId: 'vehicle.explosion', sourceId: car.entity.id, targetId: target.id, origin: car.entity.transform, direction: { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }, base: 120 * (1 - distance / 6), multiplier: 1, type: 'explosive', knockback: 2 * (1 - distance / 6), stagger: .5 });
-      }
+      // E27 large blast: the wreck jumps (its own delayed upward impulse), doors/hood detach, curve damage and fires.
+      this.world.explosions?.blast(vehicleExplosion, car.entity.transform, { sourceId: car.entity.id });
     }
   }
   private release(car: Car): void {
