@@ -50,6 +50,8 @@ export class CharacterView extends Group {
   private readonly appliedRotation = new Quaternion();
   cpuMs = 0;
   get skinActive(): boolean { return this.riders.has(this.variant); }
+  /** Held gear remains stowed until the hands have released the bicycle. */
+  get rideWeight(): number { return this.characters.get(this.variant)?.animator.rideWeight ?? 0; }
   async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     for (const variant of ['female', 'male'] as const) {

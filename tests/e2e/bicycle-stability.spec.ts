@@ -12,6 +12,7 @@ for (const skin of [0, 1]) test(`bike skin=${skin} mounts level on the start sid
   await page.evaluate(() => window.__SS__!.pause());
   const mounted = await page.evaluate(async () => {
     const a = window.__SS__!;
+    a.setLoadout(['weapon.bat'], ['weapon.fists']);
     const bike = a.getState().entities.find(e => e.bicycle)!;
     a.teleport('player', { x: bike.transform.x + .9, z: bike.transform.z }); a.input.set({ interact: true }); await a.step(1); a.input.set({ interact: false }); await a.step(40);
     return a.getState();
@@ -19,6 +20,7 @@ for (const skin of [0, 1]) test(`bike skin=${skin} mounts level on the start sid
   expect(mounted.entities.find(e => e.bicycle)!.bicycle!.mounted).toBe(true);
   expect(mounted.render.character!.clip).toBe('ride');
   expect(mounted.render.character!.skinned).toBe(skin === 1);
+  expect(mounted.render.actions!.attachments.find(a => a.actionId === 'weapon.bat')!.visible).toBe(false);
   const bike = mounted.render.bicycle!;
   expect(layout.surfaces.some(s => s.surface === 'tile' && bike.wheels.every(p => p && inside([p[0], p[2]], s.polygon)))).toBe(true);
   for (const p of bike.wheels) expect(p![1]).toBeCloseTo(.13, 3);
@@ -55,6 +57,13 @@ for (const skin of [0, 1]) test(`bike skin=${skin} mounts level on the start sid
     expect(Math.hypot(hip[0] - seat[0], hip[1] - seat[1] + .04, hip[2] - seat[2])).toBeLessThan(.01);
   }
   console.log('bike turn measurement', JSON.stringify({ skin, fixedFrames: frames.length, liveFrames: live.length, yawChangeDegrees: Math.abs(frames.at(-1)!.bike.transform.yaw - frames[0].bike.transform.yaw) * 180 / Math.PI, maxFrameMismatchDegrees: Math.max(...frames.map(f => new Quaternion().fromArray(f.rider.orientation).angleTo(new Quaternion().fromArray(f.view.orientation)) * 180 / Math.PI)), maxLiveFrameMismatchDegrees: Math.max(...live.map(f => new Quaternion().fromArray(f.rider.orientation).angleTo(new Quaternion().fromArray(f.bike.orientation)) * 180 / Math.PI)) }));
+  const dismounted = await page.evaluate(async () => {
+    const a = window.__SS__!; a.input.clear(); a.input.set({ interact: true }); await a.step(1); a.input.set({ interact: false });
+    const releasing = a.getState(); await a.step(30); return { releasing, settled: a.getState() };
+  });
+  expect(dismounted.releasing.player!.riding).toBeUndefined();
+  if (skin) expect(dismounted.releasing.render.actions!.attachments.find(a => a.actionId === 'weapon.bat')!.visible).toBe(false);
+  expect(dismounted.settled.render.actions!.attachments.find(a => a.actionId === 'weapon.bat')!.visible).toBe(true);
 });
 
 test.describe('bike ACTION after the garage bat', () => {
