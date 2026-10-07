@@ -328,10 +328,14 @@ describe('L1 v2 infected perception', () => {
       }
       if (!lure) throw new Error('no searching infected with a clear view');
       humans.add(600, 'civilian', spot!.x, spot!.z);
-      step(w, 16); expect(brain(lure).mode).toBe('chase'); expect(brain(lure).targetId).toBe(600); humans.remove(600);
+      // Every infected that saw the lure human also left the alarm (a visible human overrides it, possibly via the herd cue);
+      // one that reached it bites, and after a bite an infected looks around and wanders (endBite), it does not resume the alarm.
+      const pulled = new Set<EntitySnapshot>();
+      for (let i = 0; i < 16; i++) { w.update(); for (const e of near) if (brain(e).targetId === 600 || brain(e).biteTargetId === 600) pulled.add(e); }
+      expect(brain(lure).mode).toBe('chase'); expect(brain(lure).targetId).toBe(600); humans.remove(600);
       // Others keep searching around the car during the alarm, then wander within alarm + 8 s.
       step(w, until - w.tick);
-      expect(near.slice(1).every((e) => brain(e).mode === 'search' || brain(e).mode === 'chase')).toBe(true);
+      expect(near.slice(1).filter(e => !pulled.has(e)).every((e) => brain(e).mode === 'search' || brain(e).mode === 'chase'), `seed ${seed}`).toBe(true);
       step(w, 8 * 60 + 2);
       // Attraction over: nobody is still held by this alarm (others may chase or search humans they saw meanwhile).
       for (const e of near) expect(brain(e).distractionId).toBe(0);
