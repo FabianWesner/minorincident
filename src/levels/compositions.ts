@@ -55,6 +55,8 @@ compositions.L3.districts = [
 ];
 compositions.L3.timeOfDay = 'L3';
 for (const district of compositions.L3.districts) district.overrides = { spawns: [{ anchor: 'arrival' }, { x: 0, z: -20 }] };
+/** E25 `night-street` / perf: L1's town (W0, all blocks powered) at night. */
+compositions["night-street"] = { ...compositions[groveDistrictId], id: "night-street", timeOfDay: "night" };
 /** The retired M1 map (diner, hardware store, gas forecourt): kept only for its geometry/physics regression suites. */
 compositions["L1-M1"] = {
   id: "L1",

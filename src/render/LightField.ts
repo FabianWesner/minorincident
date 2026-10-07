@@ -28,7 +28,9 @@ const color = new Color();
 const linear = (token: LightToken | string): Color => color.set(token in lightPalette ? lightPalette[token as LightToken] : token);
 
 /** The survivor's small night aura (specs/06 §2 readability rule), scaled by the preset's `aura`. */
-export const auraLight = (x: number, z: number, aura: number): FieldLight => footprint({ type: 'point', color: 'light_led_white', intensity: aura * 2, range: 2.6, flicker: 'none', position: [x, 1, z], direction: [0, -1, 0] });
+export const auraLight = (x: number, z: number, aura: number): FieldLight => footprint({ type: 'point', color: 'light_led_white', intensity: aura, range: 2.6, flicker: 'none', position: [x, 1, z], direction: [0, -1, 0] });
+/** Night glint under a pickup (readability: loot stays findable away from practical lights). */
+export const pickupLight = (x: number, z: number): FieldLight => footprint({ type: 'point', color: 'light_fluorescent', intensity: 3, range: 1.1, flicker: 'none', position: [x, .5, z], direction: [0, -1, 0] });
 /** Convert an authored anchor (already in world space) to its ground footprint. */
 export function footprint(anchor: Pick<LightAnchor, 'type' | 'color' | 'intensity' | 'range' | 'angle' | 'flicker' | 'strobe'> & Partial<Pick<LightAnchor, 'shadow'>> & { position: [number, number, number]; direction: [number, number, number] }, ground = 0, seed = 0): FieldLight {
   const [x, y, z] = anchor.position, [dx, dy, dz] = anchor.direction, height = Math.max(.3, y - ground);
