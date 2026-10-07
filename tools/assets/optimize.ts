@@ -399,7 +399,7 @@ export async function optimizeAsset(raw: string, output: string, def: AssetDef, 
   await optimizeDocument(document, def, ratio);
   if (ratio < 1) for (const scene of document.getRoot().listScenes()) scene.setExtras({ ...scene.getExtras(), deliveryLodGenerated: true });
   mkdirSync(dirname(output), { recursive: true });
-  writeFileSync(output, await consolidateMeshopt(await io.writeBinary(document)));
+  writeFileSync(output, await consolidateMeshopt(await io.writeBinary(document), def.compactMeshopt));
 }
 
 /** Process existing exports without invoking Blender; supplied LODs remain authoritative. */
@@ -412,8 +412,8 @@ export async function optimizeExports(def: AssetDef): Promise<void> {
     const supplied = existsSync(canonical) ? canonical : `assets/${def.id}/model.${lod}.glb`, output = def.lods?.[lod];
     if (!output) throw new Error(`${def.id}: missing manifest ${lod} path`);
     const generatedRatio = def.generatedLodRatios?.[lod];
-    if (def.authoredLodRatios && !existsSync(supplied)) throw new Error(`${def.id}: missing authored ${lod}`);
-    const handMade = (def.authoredLodRatios !== undefined || generatedRatio === undefined) && existsSync(supplied);
+    if ((def.authoredLodRatios || def.authoredLodTriangles) && !existsSync(supplied)) throw new Error(`${def.id}: missing authored ${lod}`);
+    const handMade = (def.authoredLodRatios !== undefined || def.authoredLodTriangles !== undefined || generatedRatio === undefined) && existsSync(supplied);
     // Leave room for retained rigid parts and infected stump caps within the LOD1 budget.
     const targetRatio = lod === 'lod1' && (def.category === 'infected' || def.category === 'character') ? .10 : ratio;
     await optimizeAsset(handMade ? supplied : source, output, def, handMade ? 1 : generatedRatio ?? targetRatio);

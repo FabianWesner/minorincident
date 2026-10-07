@@ -5,6 +5,13 @@ All static meshes merge by material; moving assemblies retain joint-origin empti
 import bpy, bmesh, math, sys
 from pathlib import Path
 from mathutils import Vector, Matrix
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
+if '--lod-only' in sys.argv:
+    build_native_lods(__file__)
+    sys.exit(0)
+
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / 'tools/blender'))
 from sslib import palette, ao
@@ -27,6 +34,7 @@ def empty(name,loc=(0,0,0),parent=None):
 root=empty('veh.fuel-truck'); body=empty('body',parent=root)
 root['ss_physics']={'class':'heavy','mass':14000,'friction':.7,'restitution':.03,'pushable':False,'kickable':False,'flammable':True,'centerOfMass':[0,1.4,0]}
 def finish(o,k,g=body,bev=0):
+    if DISTANCE: bev = 0
     bm=bmesh.new(); bm.from_mesh(o.data); bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces)); bm.to_mesh(o.data); bm.free()
     o.data.materials.append(M[k]); bpy.context.view_layer.objects.active=o
     if bev:
@@ -42,6 +50,7 @@ def box(n,c,s,k='silver',g=body,b=.025,rot=None):
     if rot: o.rotation_euler=rot
     return finish(o,k,g,min(b,min(s)*.3))
 def cyl(n,c,r,d,k='silver',axis='Z',g=body,v=32):
+    if DISTANCE: v = min(v, 12 if DISTANCE == 1 else 6)
     bpy.ops.mesh.primitive_cylinder_add(vertices=v,radius=r,depth=d,location=c); o=bpy.context.object; o.name=n
     o.rotation_euler=(math.pi/2,0,0) if axis=='Y' else ((0,math.pi/2,0) if axis=='X' else (0,0,0))
     for p in o.data.polygons: p.use_smooth=len(p.vertices)==4
@@ -63,8 +72,9 @@ for x in [4.15,1.05,-2.8,-4.2]:
         g=empty(name,(x,s*1.11,.67),root); bpy.context.view_layer.update()
         # revolved tyre profile with round shoulders and a recessed rim opening
         profile=[(.45,-.22),(.56,-.22),(.63,-.18),(.67,-.10),(.67,.10),(.63,.18),(.56,.22),(.45,.22)]
-        verts=[(x+r*math.sin(j*math.tau/48),s*1.11+dy,.67+r*math.cos(j*math.tau/48)) for r,dy in profile for j in range(48)]
-        faces=[(i*48+j,i*48+(j+1)%48,((i+1)%len(profile))*48+(j+1)%48,((i+1)%len(profile))*48+j) for i in range(len(profile)) for j in range(48)]
+        wheel_samples = (12 if DISTANCE == 1 else 8) if DISTANCE else 48
+        verts=[(x+r*math.sin(j*math.tau/wheel_samples),s*1.11+dy,.67+r*math.cos(j*math.tau/wheel_samples)) for r,dy in profile for j in range(wheel_samples)]
+        faces=[(i*wheel_samples+j,i*wheel_samples+(j+1)%wheel_samples,((i+1)%len(profile))*wheel_samples+(j+1)%wheel_samples,((i+1)%len(profile))*wheel_samples+j) for i in range(len(profile)) for j in range(wheel_samples)]
         me=bpy.data.meshes.new('tyre'); me.from_pydata(verts,[],faces); me.update()
         o=bpy.data.objects.new('tyre',me); scene.collection.objects.link(o)
         for face in me.polygons: face.use_smooth=True
@@ -135,13 +145,14 @@ for y in [-.82,-.41,0,.41,.82]:
 # elliptical capsule tank, dome ends built as rings for a single smooth skin
 vs=[]; fs=[]; rings=[]
 profile=[(-5.34,0.08),(-5.30,.38),(-5.15,.73),(-4.93,.93),(-4.66,1), (1.22,1),(1.49,.93),(1.71,.73),(1.86,.38),(1.9,.08)]
+tank_samples = (16 if DISTANCE == 1 else 12) if DISTANCE else 64
 for x,r in profile:
     rings.append(len(vs))
-    for j in range(64):
-        a=j*math.tau/64; vs.append((x,1.13*r*math.cos(a),2.65+1.12*r*math.sin(a)))
+    for j in range(tank_samples):
+        a=j*math.tau/tank_samples; vs.append((x,1.13*r*math.cos(a),2.65+1.12*r*math.sin(a)))
 for i in range(len(rings)-1):
-    for j in range(64): fs.append((i*64+j,i*64+(j+1)%64,(i+1)*64+(j+1)%64,(i+1)*64+j))
-fs += [tuple(range(63,-1,-1)),tuple(range(576,640))]
+    for j in range(tank_samples): fs.append((i*tank_samples+j,i*tank_samples+(j+1)%tank_samples,(i+1)*tank_samples+(j+1)%tank_samples,(i+1)*tank_samples+j))
+fs += [tuple(range(tank_samples-1,-1,-1)),tuple(range((len(rings)-1)*tank_samples,len(rings)*tank_samples))]
 me=bpy.data.meshes.new('tank'); me.from_pydata(vs,[],fs); me.update(); o=bpy.data.objects.new('tank',me); scene.collection.objects.link(o)
 for p in me.polygons: p.use_smooth=True
 finish(o,'silver')
@@ -187,7 +198,7 @@ for side in [-1,1]:
     cyl('valve flange',(-2.7,side*1.33,1.07),.16,.06,'silver','Y')
     cyl('valve dark opening',(-2.7,side*1.371,1.07),.09,.027,'uiDark','Y')
     cyl('valve stem',(-2.7,side*1.16,1.29),.033,.21,'silver')
-    bpy.ops.mesh.primitive_torus_add(major_segments=24,minor_segments=8,location=(-2.7,side*1.16,1.40),major_radius=.12,minor_radius=.022)
+    bpy.ops.mesh.primitive_torus_add(major_segments=(16 if DISTANCE == 1 else 12) if DISTANCE else 24,minor_segments=(4 if DISTANCE == 1 else 3) if DISTANCE else 8,location=(-2.7,side*1.16,1.40),major_radius=.12,minor_radius=.022)
     finish(bpy.context.object,'survivorRed')
     for angle in [0,math.pi/2]: rod('valve spoke',(-2.7-.12*math.cos(angle),side*1.16-.12*math.sin(angle),1.4),(-2.7+.12*math.cos(angle),side*1.16+.12*math.sin(angle),1.4),.012,'survivorRed')
     cyl('hose storage',(-3.37,side*.87,1.10),.11,2.0,'uiDark','X')
@@ -226,6 +237,9 @@ for s in [-1,1]:
         e=empty('light:'+n+('L' if s==-1 else 'R'),c,root)
         e.rotation_euler=Vector((1,0,-.12) if n=='headlight' else (-1,0,0)).to_track_quat('-Z','Y').to_euler()
         e['ss_light']={'type':kind,'color':color,'intensity':3,'range':22 if kind=='spot' else 2,'angle':48,'beam':'soft' if kind=='spot' else 'none','shadow':'hero' if kind=='spot' else 'none','emissiveNodes':[mesh+'_emi_'+('windowGlow' if n=='headlight' else 'sirenRed')], 'powerGroup':'self'}
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('rim well', 'leaf spring', 'tank band', 'tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('leaf spring', 'ladder rung', 'fender arch', 'tank saddle', 'placard', 'registration', 'catwalk', 'rim well', 'wheel face', 'wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*', 'tyre'), owners={bpy.data.objects[g]: [o for (owner, token), objects in buckets.items() if owner == g for o in objects] for g, token in buckets})
+
 # Merge by material per moving assembly; bake AO for each exported tier.
 bpy.context.view_layer.update()
 meshes=[]
@@ -295,3 +309,7 @@ if arg('--render'):
     scene.view_settings.view_transform='AgX'; scene.render.filepath=str(Path(arg('--render')).resolve()); bpy.ops.render.render(write_still=True)
     print('RENDER OK')
 print('BUILD OK')
+
+# Every full source export refreshes the native distance tiers.
+if "--glb" in sys.argv and not DISTANCE:
+    build_native_lods(__file__)
