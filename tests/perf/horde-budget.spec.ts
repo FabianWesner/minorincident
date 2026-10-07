@@ -31,7 +31,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     }, tier);
     const dir = 'test-results/epics/E18/horde'; mkdirSync(dir, { recursive: true });
     writeFileSync(`${dir}/${phase}-${tier}-${run}.json`, JSON.stringify(proof, null, 2));
-    await page.locator('canvas').screenshot({ path: `${dir}/${phase}-${tier}-${run}.png` });
+    if (run === 1) await page.locator('canvas').screenshot({ path: `${dir}/${phase}-${tier}-${run}.png`, scale: 'css' });
     console.log(JSON.stringify({ phase, run, tier, p95: proof.frameMsP95, sim: proof.simMsP95, update: proof.updateCpuMsP95, render: proof.renderCpuMsP95, triangles: proof.fixed.triangles, draws: proof.fixed.drawCalls, profile: proof.fixed.profile }));
     expect(proof.gpu).not.toMatch(/swiftshader|llvmpipe|software/i); expect(proof.infected).toBe(tier === 'high' ? 200 : 100); expect(proof.civilians).toBe(40); expect(proof.ticks).toBeGreaterThan(300);
     if (phase !== 'before') { expect(proof.fixed.drawCalls).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(proof.fixed.triangles).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); expect(proof.frameMsP95).toBeLessThanOrEqual(tier === 'high' ? 14 : 1000 / 30); }
