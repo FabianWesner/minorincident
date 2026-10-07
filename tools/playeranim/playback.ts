@@ -1,4 +1,4 @@
-import { AmbientLight, Color, DirectionalLight, GridHelper, Group, Mesh, MeshLambertMaterial, OrthographicCamera, PlaneGeometry, Scene, Vector3, WebGLRenderer, type Object3D } from 'three';
+import { AmbientLight, Color, DirectionalLight, GridHelper, Group, Mesh, MeshLambertMaterial, OrthographicCamera, PerspectiveCamera, PlaneGeometry, Scene, Vector3, WebGLRenderer, type Object3D } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { alignSkeleton } from '../../src/render/characters/skin';
@@ -7,11 +7,12 @@ import type { Recording } from './record';
 
 // Passive playback of recorded production CharacterView poses; no alternate animator.
 const params = new URLSearchParams(location.search), variant = params.get('variant') ?? 'female', scenario = params.get('scenario') ?? 'walk';
+const gameOnly = params.get('camera') === 'game';
 const labels = [params.get('before') ?? 'before', params.get('after') ?? 'after'];
 const renderer = new WebGLRenderer({ antialias: true, preserveDrawingBuffer: true }); renderer.setSize(innerWidth, innerHeight); document.body.append(renderer.domElement);
-const camera = new OrthographicCamera(), loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+const camera = new OrthographicCamera(), gameCamera = new PerspectiveCamera(25, 1, .1, 200), loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 const unpack = (node: Object3D, value: number[]) => { node.position.fromArray(value); node.quaternion.fromArray(value, 3); };
-const sides = await Promise.all(labels.map(async label => {
+const sides = await Promise.all(labels.map(async (label, col) => {
   const data = await (await fetch(`/recordings/${label}/${variant}-${scenario}.json`)).json() as Recording;
   const scene = new Scene(); scene.background = new Color('#bcc8ce'); scene.add(new AmbientLight('#d5d9f0', 2));
   const light = new DirectionalLight('#fff1d5', 2.5); light.position.set(4, 8, 6); scene.add(light);
@@ -23,7 +24,7 @@ const sides = await Promise.all(labels.map(async label => {
   const bike = (await loader.loadAsync('/assets/models/veh.courier-bike.glb')).scene; bike.scale.setScalar(.6); scene.add(bike);
   const bat = (await loader.loadAsync('/assets/models/wpn.baseball-bat.glb')).scene; bat.updateMatrixWorld(true); bat.position.sub(bat.getObjectByName('grip')!.getWorldPosition(new Vector3())); rig.weaponSocketR.add(bat); bat.visible = scenario === 'bat';
   const tags: HTMLElement[] = [];
-  for (let row = 0; row < 2; row++) { const tag = document.createElement('div'); tag.className = 'label'; tag.style.left = `${labels.indexOf(label) * 50}%`; tag.style.top = `${row * 50}%`; document.querySelector('#labels')!.append(tag); tags.push(tag); }
+  for (let row = 0; row < (gameOnly ? 1 : 2); row++) { const tag = document.createElement('div'); tag.className = 'label'; tag.style.left = `${col * 50}%`; tag.style.top = `${row * 50}%`; document.querySelector('#labels')!.append(tag); tags.push(tag); }
   return { data, actor, rig, bike, scene, tags };
 }));
 function frame(index: number) {
@@ -33,13 +34,16 @@ function frame(index: number) {
     unpack(actor, f.actor); for (const [name, v] of Object.entries(f.joints)) unpack(rig[name as keyof typeof rig], v);
     bike.visible = !!f.bike; if (f.bike) { unpack(bike, f.bike); bike.getObjectByName('crank')!.rotation.z = -f.pedal; bike.getObjectByName('handlebar')!.rotation.y = f.steer; }
     const center = actor.position.clone(); center.y = .78;
-    for (let row = 0; row < 2; row++) {
-      const w = innerWidth / 2, h = innerHeight / 2, extent = scenario === 'bike' ? 1.6 : 1.08;
+    for (let row = 0; row < (gameOnly ? 1 : 2); row++) {
+      const w = innerWidth / 2, h = innerHeight / (gameOnly ? 1 : 2), extent = scenario === 'bike' ? 1.6 : 1.08;
       camera.left = -extent * w / h; camera.right = extent * w / h; camera.top = extent; camera.bottom = -extent; camera.near = .1; camera.far = 200; camera.updateProjectionMatrix();
       camera.position.copy(center).add(row === 0 ? new Vector3(0, .08, 10) : new Vector3().setFromSphericalCoords(10, Math.PI * .30, Math.PI / 4)); camera.lookAt(center); camera.updateMatrixWorld();
-      renderer.setViewport(col * w, (1 - row) * h, w, h); renderer.setScissor(col * w, (1 - row) * h, w, h); renderer.render(scene, camera);
+      const y = gameOnly ? 0 : (1 - row) * h;
+      gameCamera.aspect = w / h; gameCamera.position.copy(center).add(new Vector3().setFromSphericalCoords(extent / Math.tan(25 * Math.PI / 360), Math.PI * .30, Math.PI / 4));
+      gameCamera.lookAt(center); gameCamera.updateProjectionMatrix(); gameCamera.updateMatrixWorld();
+      renderer.setViewport(col * w, y, w, h); renderer.setScissor(col * w, y, w, h); renderer.render(scene, gameOnly ? gameCamera : camera);
       const tag = tags[row];
-      tag.textContent = `${data.label} · ${variant} · ${scenario} · ${row ? 'game angle (close)' : 'side'} · ${(f.tick / 60).toFixed(2)} s`;
+      tag.textContent = `${data.label} · ${variant} · ${scenario} · ${gameOnly || row ? 'game camera (close)' : 'side'} · ${(f.tick / 60).toFixed(2)} s`;
     }
   }
 }
