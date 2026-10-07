@@ -220,6 +220,7 @@ class CivilianBatch extends Group {
   private place(e: EntitySnapshot, index: number, alpha: number): boolean {
     const b = e.infected!, tick = this.world.tick;
     if (e.hidden || b.hidden || (e.corpse ? this.distant : (this.distantById.get(e.id) ?? false) !== this.distant)) return false;
+    if (e.corpse && this.corpses.has(e.id)) return false;
     // PO "skating": the sim publishes the actual post-collision ground motion every tick (AgentMotion) - use it, not a
     // per-batch sampler that goes stale when the figure crosses the near/far batch boundary.
     const motion = e.motion ?? this.motion.sample(e.id, tick, e.transform.x, e.transform.z), reaction = e.combat?.reaction, age = reaction ? (tick - reaction.started) / 60 : Infinity;
@@ -236,7 +237,7 @@ class CivilianBatch extends Group {
     this.transform.setPosition(presented.x, presented.y - .7, presented.z);
     let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
     const sourceFrame = frame;
-    const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
+      const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
     if (strides[clip] && motion.speed > .06) { frame = this.poses.correct(e.id, frame, ...blend, pose => this.locomotion.correct(e.id, pose, this.transform, phase, clip, this.strideScale, motion.speed)); blend[1] = 1; } else { this.locomotion.reset(e.id); if (blend[1] < 1) { frame = this.poses.correct(e.id, frame, ...blend, () => {}); blend[1] = 1; } }
     if (e.corpse) {
       this.tintOf(e, index, 1);

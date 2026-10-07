@@ -11,6 +11,7 @@ export class StaticCorpses extends Group {
   private readonly chunks = new Map<string, Chunk[]>();
   private readonly partMatrix = new Matrix4();
   private readonly point = new Vector3();
+  has(id: number): boolean { return this.bodies.has(id); }
   begin(get: (id: number) => EntitySnapshot | undefined): void {
     // Checkpoint restore may remove/revive a body or re-use its ID at a new pose.
     if ([...this.bodies].some(([id, body]) => get(id) !== body)) this.reset();

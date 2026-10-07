@@ -181,6 +181,7 @@ export class CrowdView extends Group {
       if (e.hidden || e.infected?.hidden || !view && distance > this.cullDistance && !e.corpse || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > this.corpseTicks) continue;
       // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
       if (keepsLook(e)) { if (!e.corpse && this.shadows.count < 350) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); } continue; }
+      if (e.corpse && this.staticCorpses.has(e.id)) continue;
       const availableLod = this.low ? 'lod2' : 'lod1';
       const role = this.batches.has(`${e.archetype}:${availableLod}`) ? e.archetype : 'infected.runner';
       const variant = e.infected?.model ?? e.infected?.variant;
