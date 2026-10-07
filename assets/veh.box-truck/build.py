@@ -11,7 +11,14 @@ import bpy
 import bmesh
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import hard_normals, refresh_normals
+
 HERE = Path(__file__).resolve().parent
+if '--normals-only' in sys.argv:
+    refresh_normals(HERE, Path(sys.argv[sys.argv.index('--lod-input-directory') + 1]))
+    sys.exit(0)
+
 p = argparse.ArgumentParser()
 p.add_argument('--lod',type=int,choices=(0,1,2),default=0)
 p.add_argument('--render'); p.add_argument('--glb'); p.add_argument('--view', default='ref')
@@ -265,6 +272,9 @@ def build_scene(lod=0, bake=False):
             mod.ratio=.8 if parent.startswith('door') or mat.endswith('blueTrim') else .27
             mod.use_collapse_triangulate=True; bpy.ops.object.modifier_apply(modifier=mod.name)
         o.data.calc_loop_triangles()
+    if lod:
+        for o in scene.objects:
+            if o.type=='MESH': hard_normals(o)
     # Resolve lamp anchor references to exported emissive meshes.
     for anchor in scene.objects:
         if 'ss_light' in anchor:

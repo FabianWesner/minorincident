@@ -2,6 +2,9 @@
 Palette materials, legacy dimensions, rigid part origins and deterministic export.
 """
 import math
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
 import bmesh
 import bpy
 from mathutils import Matrix, Vector
@@ -586,3 +589,27 @@ def build(ctx):
     bpy.context.view_layer.update()
     export.merge_by_material(root, {'body','wheelFL','wheelFR','wheelRL','wheelRR','ladder','sirenL','sirenR','lightsFront','lightsBrake'})
     return root
+
+
+if __name__ == '__main__':
+    # Standalone source rebuild, using the same shared build(ctx) contract.
+    import argparse
+    from types import SimpleNamespace
+    from sslib import ao
+    from sslib.lod import export_lods, rebuild_from_baked
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--glb', required=True)
+    parser.add_argument('--lod-only', action='store_true')
+    args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
+    output = Path(args.glb).resolve()
+    if args.lod_only:
+        rebuild_from_baked(output)
+    else:
+        bpy.ops.wm.read_factory_settings(use_empty=True)
+        root = build(SimpleNamespace(root=sockets.empty(ASSET['id']), quality='high', seed=17, decay=None))
+        meshes = [o for o in root.children_recursive if o.type=='MESH']
+        ao.bake_all(meshes, samples=32)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        export.glb(root, output)
+        export_lods(output, meshes)
+    print('OK fire engine source/LOD chain', output)
