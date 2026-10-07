@@ -119,6 +119,21 @@ Recordings and original system cues share the sprite files in `public/assets/aud
 every encoded file, SHA256, source URL, author, license URL and per-cue sprite segment.
 Source masters and download hashes are pinned in `assets/audio/imports.json`.
 Original synthesized system cues remain self-made MIT (`src/audio/synthesis.ts`).
+Event stingers use excerpts of bbatv / bbatv1's **comfort in uncertainty**
+(CC-BY 3.0, album attribution below). The L1 outro is one 2.5-second excerpt,
+not a synthesized melody over a second completion cue. Jukebox, ice-cream and
+car-radio music use **Running free** from the same album. UI taps, the low-health
+percussion pulse and ringing decays reuse **Impact Sounds — Kenney**, CC0:
+https://kenney.nl/assets/impact-sounds;
+https://creativecommons.org/publicdomain/zero/1.0/.
+Edits include excerpting, low-pass/high-pass filtering, fixed detuning and fades;
+exact per-cue sources and hashes are in the segment ledgers.
+Radio/PA/megaphone speech ambience reuses **Crowd Shouting/Speaking Ambience —
+StarNinjas** (CC0, attribution below), with a radio-band filter. Civilian reactions
+reuse **Female RPG Voice Starter Pack — cicifyre** (CC0):
+https://opengameart.org/content/female-rpg-voice-starter-pack;
+https://creativecommons.org/publicdomain/zero/1.0/.
+These are human speech ambience/reactions; exact authored messages are in captions.
 No Bruno SFX or John Murphy music, samples or melodies are used.
 
 All third-party recordings below were modified: excerpts, EQ, fades, loudness
