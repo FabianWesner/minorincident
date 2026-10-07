@@ -13,6 +13,8 @@ import { Interactables } from '../interact/Interactables';
 import { Toys } from '../interact/Toys';
 import { Hazards } from '../interact/Hazards';
 import { Pickups } from '../interact/Pickups';
+import { Barricades } from '../interact/Barricades';
+import { campaignBarricadeSlots } from '../../levels/barricadeSlots';
 import { PropSystem } from '../interact/PropSystem';
 import { Status } from '../combat/Status';
 import { Player } from '../entities/Player';
@@ -56,6 +58,7 @@ export class SimWorld implements Lifecycle {
   hazards: Hazards | null = null;
   /** PO #15 pushable small props (dynamic Rapier bodies); null outside district compositions. */
   props: PropSystem | null = null;
+  barricades: Barricades | null = null;
   pickups: Pickups | null = null;
   missions: Mission | null = null;
   get inputFrame(): InputFrame { return this.effectiveInput; }
@@ -67,6 +70,7 @@ export class SimWorld implements Lifecycle {
     if (def.kind === 'vehicle') id = this.vehicles!.spawn(def.archetype, at);
     else if (def.kind === 'device') id = this.interactables!.spawn(def.archetype.slice(7) as import('../interact/Interactables').DeviceKind, at, def.device);
     else if (def.kind === 'pickup') id = this.pickups!.spawn('item', at, def.item);
+    else if (def.kind === 'barricade') id = this.barricades!.spawn({ id: def.archetype, groupId: def.archetype, a: { x: at.x - 1, z: at.z }, b: { x: at.x + 1, z: at.z }, height: 1.4, initialHp: def.hp });
     else if (def.kind === 'prop') id = this.hazards!.spawn(def.archetype.slice(5) as import('../interact/Hazards').DestructibleKind, at, { hp: def.hp });
     else {
       const entity = this.entities.create({ kind: def.kind, archetype: def.archetype, faction: def.faction, transform: { ...at, y: .7, yaw: 0 }, health: { current: def.hp, max: def.hp }, combat: { radius: .4, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
@@ -108,6 +112,7 @@ export class SimWorld implements Lifecycle {
     if (definition.combat) this.combat = new Combat(this, definition);
     if (this.player) this.hazards = new Hazards(this);
     if (this.player) this.pickups = new Pickups(this);
+    if (this.player) this.barricades = new Barricades(this);
     if (definition.survivor) this.vehicles = new Vehicles(this);
     if (name === 'drive-course') {
       this.vehicles!.spawn('vehicle.sedan', { x: 0, z: 0 }); this.vehicles!.spawn('vehicle.police', { x: 0, z: 12 });
@@ -130,7 +135,7 @@ export class SimWorld implements Lifecycle {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
       if (this.vehicles?.active != null) return;
-      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * (this.vehicles?.bicycle.speedScale ?? 1) * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
+      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * (this.props?.pushSpeed(this.effectiveInput) ?? 1) * (this.vehicles?.bicycle.speedScale ?? 1) * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
       body.setLinvel({ x: this.effectiveInput.move.x * 5, y: body.linvel().y, z: this.effectiveInput.move.z * 5 }, true);
@@ -139,6 +144,19 @@ export class SimWorld implements Lifecycle {
     if (definition.infected) { this.infected = new InfectedSystem(this, definition); this.events.on('sim.tick', () => this.infected!.update(), SimPhase.ai); }
     if (definition.infected) { this.npcs = new Npcs(this); this.events.on('sim.tick', () => this.npcs?.update(), SimPhase.ai); if (definition.npcs) { this.npcs.configure(definition.npcs.level ?? 1, definition.npcs.tier, definition.npcs.ambient); if (definition.npcs.companion) this.npcs.companion.spawn(); } }
     this.placeInteractions(definition);
+    if (definition.physicsProps) {
+      this.props = new PropSystem(this);
+      for (const [i, p] of definition.physicsProps.entries()) this.props.spawn({ id: `fixture-${i}`, assetId: p.assetId, position: [p.x, 0, p.z], yaw: p.yaw ?? 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [0, 0, 0], max: [1, 1, 1] } });
+      this.props.settle();
+      this.events.on('sim.tick', () => this.props?.prePhysics(), SimPhase.ai);
+      this.events.on('sim.tick', () => this.props?.postPhysics(), SimPhase.physics);
+    }
+    for (const slot of definition.barricadeSlots ?? []) this.barricades!.spawn(slot);
+    if (name === 'barricade-stress') {
+      this.props!.awakeBudget = 60;
+      for (let i = 0; i < 30; i++) this.infected!.spawn('infected.runner', { x: (i - 15) * .65, z: -1.2 }, { state: 'chase' });
+      this.events.on('sim.tick', () => { for (const p of this.props!.items) { const v = p.body.linvel(); p.body.setLinvel({ x: .1, y: v.y, z: 0 }, true); } }, SimPhase.ai);
+    }
     this.events.on('sim.tick', () => this.physics.update(), SimPhase.physics);
     this.events.on('sim.tick', () => {
       this.vehicles?.postPhysics();
@@ -150,7 +168,7 @@ export class SimWorld implements Lifecycle {
     }, SimPhase.combat);
     this.events.on('sim.tick', () => {
       if (this.player) Object.assign(this.player.entity.transform, this.physics.playerBody!.translation());
-      this.hazards?.update(); this.pickups?.update(); this.interactables?.update(this.effectiveInput);
+      this.hazards?.update(); this.pickups?.update(); this.barricades?.update(); this.interactables?.update(this.effectiveInput);
     }, SimPhase.missions);
     this.events.on('sim.tick', () => {
       if (this.vehicles?.active != null) return;
@@ -183,6 +201,8 @@ export class SimWorld implements Lifecycle {
     for (const d of districts.districts) {
       this.placeInteractions(d.gameplay.interactions ?? {}, d.origin);
     }
+    for (const slot of campaignBarricadeSlots(districts)) this.barricades!.spawn(slot);
+    for (const d of districts.districts) for (const slot of d.gameplay.barricades ?? []) this.barricades!.spawn({ ...slot, a: { x: slot.a.x + d.origin[0], z: slot.a.z + d.origin[1] }, b: { x: slot.b.x + d.origin[0], z: slot.b.z + d.origin[1] } });
     installCampaignNpcs(this);
     if (districts.districts.some(d => d.layout.anchors['bike-start'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
     this.events.on('sim.tick',()=>{
@@ -215,7 +235,7 @@ export class SimWorld implements Lifecycle {
     this.props?.install(next, props);
     this.vehicles?.rebuild(true);
     this.hazards?.debris.reset(true); this.interactables?.rebuildBlockers(next.nav, true);
-    this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step(); rebuildNpcNavigation(this);
+    this.barricades?.rebuild(); this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step(); rebuildNpcNavigation(this);
   }
   setInput(patch: Partial<InputFrame>): void {
     const next = { ...this.input, ...structuredClone(patch) };
@@ -271,7 +291,7 @@ export class SimWorld implements Lifecycle {
   }
   reset(): void {
     this.vehicles?.dispose(); this.vehicles = null;
-    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.props = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
   }

@@ -1,3 +1,4 @@
+import { writePhysicsMetadata } from '../assets/physics-metadata';
 import { createHash } from "node:crypto";
 import {
   existsSync,
@@ -103,6 +104,7 @@ if (
   process.argv[1] &&
   resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
+  writePhysicsMetadata();
   const id = process.argv.slice(2).find((arg) => !arg.startsWith("--"));
   for (const district of id && id !== "--changed" ? [id] : districts)
     console.log(

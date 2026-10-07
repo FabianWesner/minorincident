@@ -14,3 +14,38 @@ Author scenarios with the optional `devices`, `hazards`, and `pickups` arrays in
 The test API's additive E11 surface is version 1.5: `spawn('device.<kind>'|'hazard.<kind>'|'prop.<kind>'|'pickup.<kind>', position, options)`, `interact.giveItem/refuel/barricade/hit`, and `camera.preset('interact-ui')`. `getEntity` exposes the plain components; `getState().interactions` exposes the active ID, chain-budget timers and physics debris. `screenshotReady()` waits for dynamic registry loads. `ActionView` owns weapon pickup models; `InteractionView` owns environmental/consumable registry resources and the prompt; ring meshes bypass depth testing and the DOM panel has fixed, tier-independent contrast.
 
 Acceptance tests live in `tests/sim/interact`, `tests/e2e/interact.spec.ts` and `tests/visual/interact.spec.ts`. Performance and screenshot evidence is written under `test-results/epics/E11/`.
+
+## E26 core (staged)
+
+`tools/assets/physics-metadata.ts` extracts `ss_physics` from production GLBs during
+`layouts:build`, committing the same `physicsAssets.ts` for Node and browser.
+Movable environment props use authored mass, collision bounds, friction,
+restitution, center of mass, class, push permission and break/barricade HP.
+They spawn sleeping. The production awake upper bound remains 12. The dedicated
+`barricade-stress` fixture overrides it to 60 for headroom measurement only.
+Medium pushing uses 55% speed; `PropSystem.shoulderPush` is the upgrade seam for
+heavy pushing at 25% speed (campaign upgrade-card integration is a later increment).
+
+Author local rails in `DistrictGameplay.barricades` (also supported by composition
+overrides), with stable `id`, `groupId`, endpoints `a`/`b`, required `height`,
+optional `depth`, `boardUp`, `inward`, and `initialHp`. Campaign defaults resolve
+L2/L4/L5 building anchors in `levels/barricadeSlots.ts`; level content can add more
+rails. Axis-aligned rails are recommended because collision/nav use conservative
+AABBs. Overlapping projected prop intervals count once, weighted by the authored
+`barricadeValue`. At >=80% coverage, standing still braces in 1.5 s (E/middle-click
+is instant). Board-up and repair each require 2 s standing still; boards have 200
+HP and repair restores 25% of maximum HP. There is no material inventory cost in
+spec 07. Braced props become kinematic, then fly inward on break. HP and membership
+live on entities; checkpoint and tier rebuilds reconcile colliders and nav.
+
+Mission API: `world.barricades.barricadeIntact(slotId)` and
+`allBarricaded(groupId)` return false for unknown/empty IDs. Events
+`barricade.built`, `barricade.broken`, `barricade.repaired` include `id`, `slotId`,
+`groupId`, and `tick`. Existing `barricade.sound` cues and `vfx.effect` hooks provide
+presentation feedback. Infected use their authored windup/damage plus 1 s cooldown;
+Brute damage is 5x and Butcher damage 8x. Short detours are preferred to attacks.
+
+Test API version 1.11.0 adds `barricades.intact/all/slots` and `perf().awakeProps/propUploads`.
+Fixtures: `prop-yard` (300 sleeping props), `barricade-lab` (brace and board-up),
+`barricade-stress` (60 awake bodies and 30 attacking runners). Fixture props are
+instanced code boxes; campaign props retain their production GLB batches.

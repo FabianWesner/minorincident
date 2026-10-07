@@ -64,11 +64,12 @@ export class InfectedSystem {
       const brain: InfectedState = { state: 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: 0, until: 0, cooldown: 0, attackId: 0, special: '', hidden: false, deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: 0, packIndex: 0, birds: 0, birdPositions: new Array(60).fill(0), birdAlive: new Array(20).fill(0), scatterUntil: 0, variant: '', path: [], pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: false };
       this.pool.push({ id: 0, kind: 'infected', archetype: '', faction: 'infected', health: { current: 0, max: 0 }, transform: { x: 0, y: 0.7, z: 0, yaw: 0 }, infected: brain, combat: { radius: 0.35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } }); this.counters.allocated++;
     }
+    for (const wall of world.interactables?.walls ?? []) if (wall.entityId !== undefined) { this.nav.setBlocker(wall.entityId, wall, true); for (const d of this.navigation.districts) d.grid.setBlocker(wall.entityId, wall, true); }
     world.events.on('world.blocker.changed', (event) => {
       if (event.type !== 'world.blocker.changed') return;
       this.nav.setBlocker(event.id, event.wall, event.blocked);
       for (const district of this.navigation.districts) district.grid.setBlocker(event.id, event.wall, event.blocked);
-      for (const entity of this.active) { entity.infected!.goal = -1; entity.infected!.path.length = 0; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical; }
+      for (const entity of this.active) { entity.infected!.goal = -1; entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical; }
     });
     world.events.on('noise', (event) => { if (event.type === 'noise') this.noise(event.position, event.radius, event.radius >= 25, event.sourceId); });
     world.events.on('outbreak.distraction', (event) => { if (event.type === 'outbreak.distraction') this.distraction(event); });
@@ -110,7 +111,7 @@ export class InfectedSystem {
     entity.archetype = id; entity.health.current = entity.health.max = def.hp;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
-    Object.assign(entity.infected!, { state: opts.state ?? 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
+    Object.assign(entity.infected!, { state: opts.state ?? 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
     for (let bird = 0; bird < 20; bird++) { entity.infected!.birdAlive[bird] = Number(bird < entity.infected!.birds); entity.infected!.birdPositions[bird * 3] = position.x + Math.cos(bird * 2.399963) * 2; entity.infected!.birdPositions[bird * 3 + 1] = 3; entity.infected!.birdPositions[bird * 3 + 2] = position.z + Math.sin(bird * 2.399963) * 2; }
     if (id === 'infected.crow') entity.health.current = entity.health.max = entity.infected!.birds;
     if (this.l1 && def.special === 'lunge') this.initL1(entity, opts.tier ?? l1SpeedTier(entity.infected!.variant)); else delete entity.infected!.l1;
@@ -186,10 +187,14 @@ export class InfectedSystem {
         continue;
       }
       if (b.state === 'chase') {
-        if (this.world.tick >= b.cooldown) {
-          let obstacle: EntitySnapshot | undefined;
-          for (const target of this.barricades) if (target.health.current > 0 && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2) { obstacle = target; break; }
-          if (obstacle) { this.windup(e); b.targetId = obstacle.id; continue; }
+        let obstacle = this.world.barricades?.attackTarget(e, player.transform);
+        for (const target of this.barricades) if (!obstacle && !target.barricade && target.health.current > 0 && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2) { obstacle = target; break; }
+        // Hold at an obstructing brace during cooldown. Seeking an unreachable goal here
+        // makes the nearest-cell fallback pull attackers away between their hits.
+        if (obstacle) {
+          if (obstacle.barricade && !this.world.barricades!.withinReach(e, obstacle)) { this.seek(e, this.world.barricades!.approach(e, obstacle)); this.world.spatial.set(e.id, e.transform.x, e.transform.z); }
+          else if (this.world.tick >= b.cooldown) { this.windup(e); b.targetId = obstacle.id; }
+          continue;
         }
         const def = infectedDef(e.archetype);
         let range = def.range;
@@ -259,7 +264,7 @@ export class InfectedSystem {
     const b = e.infected!, player = this.world.entities.get(1)!, def = infectedDef(e.archetype);
     if (b.targetId) {
       const target = this.world.entities.get(b.targetId); b.targetId = 0;
-      if (target && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2) {
+      if (target && target.health.current > 0 && (target.barricade ? this.world.barricades!.withinReach(e, target) : Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2)) {
         const amount = this.world.combat!.damage.apply({ sourceId: e.id, targetId: target.id, attackId: b.attackId, actionId: e.archetype, origin: e.transform, direction: { x: 0, z: 0 }, base: this.barricadeDamage(e.id, def.damage), multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
         this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, targetId: target.id, attackId: b.attackId, special: 'barricade', amount });
       }
@@ -635,7 +640,7 @@ export class InfectedSystem {
     return { rng: this.rng.snapshot(), pool: { ...this.counters, available: this.pool.length }, cap: this.director.cap, count: this.director.count, queued: this.director.queue.map((q) => ({ archetype: q.archetype, position: q.position, options: q.options, turning: q.turning ?? false })), migrations: this.director.migrations.map((m) => ({ started: m.started, arrived: m.arrived, expectedSeconds: m.expectedSeconds, members: m.members })) };
   }
   /** E26 uses the same authored attack damage when resolving barricades. */
-  barricadeDamage(sourceId: number, base: number): number { return base * (this.world.entities.get(sourceId)?.archetype === 'infected.gorilla' ? 6 : this.world.entities.get(sourceId)?.archetype === 'infected.brute' ? 5 : 1); }
+  barricadeDamage(sourceId: number, base: number): number { return base * (this.world.entities.get(sourceId)?.archetype === 'infected.gorilla' ? 6 : this.world.entities.get(sourceId)?.archetype === 'infected.brute' ? 5 : this.world.entities.get(sourceId)?.archetype === 'infected.butcher' ? 8 : 1); }
   /**
    * L1 steering under the motion limits: straight when the goal is in clear view (re-checked every 6 ticks or when the
    * goal moved), else a budgeted A* route (at most 4 new routes per tick; moving goals re-route every 0.25 s), or the

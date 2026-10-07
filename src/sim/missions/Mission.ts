@@ -48,7 +48,7 @@ export class Mission {
       else if (event.type === 'outbreak.bite' && event.turns) this.l1?.noteTurned(event.targetId);
       else if (event.type === 'outbreak.civilian-escaped') this.l1?.noteEscaped(event.id);
     }, SimPhase.missions));
-    for (const type of ['combat.kill', 'player.damaged', 'player.died', 'player.respawned', 'mission.signal', 'mission.failed', 'pickup.collected', 'vehicle.entered', 'vehicle.exited', 'interact.completed', 'prop.broken'] as const) this.stops.push(world.events.on(type, event => this.event(event), SimPhase.missions));
+    for (const type of ['combat.kill', 'player.damaged', 'player.died', 'player.respawned', 'mission.signal', 'mission.failed', 'pickup.collected', 'vehicle.entered', 'vehicle.exited', 'interact.completed', 'prop.broken', 'barricade.built', 'barricade.broken', 'barricade.repaired'] as const) this.stops.push(world.events.on(type, event => this.event(event), SimPhase.missions));
     this.emit({ type: 'mission.briefing', id: def.id, text: def.briefing });
   }
   private emit(event: Unticked<import('./events').MissionEvent>): void {
@@ -183,7 +183,7 @@ export class Mission {
       for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(event.targetId)) step.kills.push(event.targetId);
     }
     const type = event.type === 'mission.signal' ? event.name : event.type;
-    const actor = event.type === 'combat.kill' ? event.targetId : event.type === 'mission.signal' ? event.actorId : event.type === 'vehicle.entered' || event.type === 'vehicle.exited' ? event.sourceId : event.type === 'interact.completed' || event.type === 'prop.broken' ? event.id : undefined;
+    const actor = event.type === 'combat.kill' ? event.targetId : event.type === 'mission.signal' ? event.actorId : event.type === 'vehicle.entered' || event.type === 'vehicle.exited' ? event.sourceId : event.type === 'interact.completed' || event.type === 'prop.broken' || event.type === 'barricade.built' || event.type === 'barricade.broken' || event.type === 'barricade.repaired' ? event.id : undefined;
     for (const step of Object.values(this.state.steps)) if (step.status === 'active') {
       step.events[`${type}:*`] = (step.events[`${type}:*`] ?? 0) + 1;
       if (actor) for (const [id, entity] of Object.entries(this.state.actors)) if (entity === actor) step.events[`${type}:${id}`] = (step.events[`${type}:${id}`] ?? 0) + 1;
@@ -309,7 +309,7 @@ export class Mission {
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(entityId)) step.kills.push(entityId);
     if (this.state.tier !== null) this.world.setTier(this.state.tier as 0|1|2|3|4|5);
     this.world.vehicles?.rebuild();
-    this.world.hazards?.debris.reset(); this.world.interactables?.rebuildBlockers();
+    this.world.hazards?.debris.reset(); this.world.interactables?.rebuildBlockers(); this.world.barricades?.rebuild();
     for(const [gate,handle]of this.gateHandles)this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[gate]);
     this.zones.forEach(zone => { zone.inside=this.state.volumes[zone.index];zone.entered=zone.exited=false; });
     this.emit({ type: 'checkpoint.restored', id });
