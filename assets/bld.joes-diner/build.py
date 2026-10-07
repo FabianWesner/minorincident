@@ -8,20 +8,10 @@ import bpy, bmesh
 from mathutils import Vector
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
-from sslib.lod import simplify as simplify_lod
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE = Path(__file__).resolve().parent
-def export_lods(meshes, path, roof):
-    # Exact neon glyph outlines; other closed solids lose bevel detail first.
-    high={o:o.data for o in meshes}
-    for level,ratio in [(1,.55),(2,.25)]:
-        for o,data in high.items():
-            o.data=data.copy()
-            simplify_lod(o, ratio, planar_only=o.parent == roof and o.data.materials[0].name.startswith('emi_'))
-        bpy.ops.object.select_all(action='SELECT')
-        bpy.ops.export_scene.gltf(filepath=str(path.with_name(path.stem+'.lod'+str(level)+path.suffix)),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
-        for o,data in high.items():
-            low=o.data;o.data=data;bpy.data.meshes.remove(low)
 
 parser = argparse.ArgumentParser()
 for key in ['render', 'glb']: parser.add_argument('--'+key)
@@ -33,10 +23,7 @@ parser.add_argument('--height', type=int, default=540)
 args = parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
 if args.lod_only:
-    path=Path(args.glb).resolve()
-    bpy.ops.import_scene.gltf(filepath=str(path))
-    export_lods([o for o in bpy.context.scene.objects if o.type=='MESH'], path, bpy.data.objects['roof'])
-    print('OK authored LODs from baked source', path)
+    build_native_lods(__file__)
     sys.exit(0)
 
 rng=random.Random(284)
@@ -70,6 +57,7 @@ roof=empty('roof',parent=root); interior=empty('interior',parent=root)
 door=empty('door_front',(2.81,-1.13,.33),root)
 door_service=empty('door_service',(-2.81,.97,.33),root)
 def finish(o,name,mat,parent,bevel=0):
+    if DISTANCE: bevel = 0
     o.name=name; o.data.materials.clear(); o.data.materials.append(M[mat if mat in M else 'pal_'+mat])
     if bevel:
         mod=o.modifiers.new('soft edges','BEVEL'); mod.width=bevel; mod.segments=2 if bevel>=.02 else 1
@@ -79,18 +67,20 @@ def finish(o,name,mat,parent,bevel=0):
     return o
 
 def box(name,loc,size,mat,parent=root,bevel=.025):
+    if DISTANCE: bevel = 0
     bpy.ops.mesh.primitive_cube_add(size=1,location=loc); o=bpy.context.object; o.dimensions=size
     bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
     return finish(o,name,mat,parent,min(bevel,min(size)*.3))
 
 def cyl(name,loc,r,depth,mat,parent=root,n=16,axis='z'):
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 8)
     bpy.ops.mesh.primitive_cylinder_add(vertices=n,radius=r,depth=depth,location=loc); o=bpy.context.object
     if axis=='x':o.rotation_euler.y=math.pi/2
     if axis=='y':o.rotation_euler.x=math.pi/2
     return finish(o,name,mat,parent,.008)
 
 def tube(name,pts,r,mat,parent=root,closed=False):
-    c=bpy.data.curves.new(name,'CURVE'); c.dimensions='3D'; c.resolution_u=1; c.bevel_depth=r; c.bevel_resolution=2
+    c=bpy.data.curves.new(name,'CURVE'); c.dimensions='3D'; c.resolution_u=1; c.bevel_depth=r; c.bevel_resolution=0 if DISTANCE else 2
     s=c.splines.new('POLY'); s.points.add(len(pts)-1)
     for p,v in zip(s.points,pts):p.co=(*v,1)
     s.use_cyclic_u=closed
@@ -99,6 +89,7 @@ def tube(name,pts,r,mat,parent=root,closed=False):
     return finish(o,name,mat,parent)
 
 def extrude(name, yz, x, depth, mat, parent=roof, bevel=.035):
+    if DISTANCE: bevel = 0
     n=len(yz); verts=[(xx,y,z) for xx in [x-depth/2,x+depth/2] for y,z in yz]
     faces=[tuple(range(n-1,-1,-1)),tuple(range(n,2*n))]+[(i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n)]
     mesh=bpy.data.meshes.new(name); mesh.from_pydata(verts,[],faces); mesh.update()
@@ -110,7 +101,7 @@ def text(word,loc,w,h,mat,parent=root,font='bold',name='lettering'):
     bpy.ops.object.select_all(action='DESELECT')
     bpy.ops.object.text_add(location=loc,rotation=(math.pi/2,0,math.pi/2)); o=bpy.context.object
     o.data.body=word; o.data.font=fonts[font]; o.data.align_x='CENTER'; o.data.align_y='CENTER'; o.data.size=1
-    o.data.extrude=.009; o.data.bevel_depth=.004; o.data.bevel_resolution=0; o.data.resolution_u=3
+    o.data.extrude=0 if DISTANCE else (.009); o.data.bevel_depth=0 if DISTANCE else (.004); o.data.bevel_resolution=0; o.data.resolution_u=2 if DISTANCE else (3)
     bpy.ops.object.convert(target='MESH'); o=bpy.context.object
     xs=[v.co.x for v in o.data.vertices]; ys=[v.co.y for v in o.data.vertices]
     cx=(max(xs)+min(xs))/2; cy=(max(ys)+min(ys))/2
@@ -120,8 +111,9 @@ def text(word,loc,w,h,mat,parent=root,font='bold',name='lettering'):
 def rounded_xy(xc,yc,hx,hy,r,z):
     pts=[]
     for cx,cy,start in [(xc+hx-r,yc+hy-r,0),(xc-hx+r,yc+hy-r,90),(xc-hx+r,yc-hy+r,180),(xc+hx-r,yc-hy+r,270)]:
-        for i in range(9):
-            a=math.radians(start+i*90/8); pts.append((cx+r*math.cos(a),cy+r*math.sin(a),z))
+        steps=(4 if DISTANCE==1 else 2) if DISTANCE else 8
+        for i in range(steps+1):
+            a=math.radians(start+i*90/steps); pts.append((cx+r*math.cos(a),cy+r*math.sin(a),z))
     return pts
 
 # Raised lot, individually rounded kerbstones and paving slabs.
@@ -349,6 +341,9 @@ box('planter_soil',(2.28,-3.11,.77),(.42,.29,.035),'asphalt')
 
 # Stylized individually oriented leaves and yellow flowers, seeded for repeatability.
 def shrub(x,y,z,rad,count):
+    if DISTANCE:
+        bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=1,radius=1,location=(x,y,z+.2))
+        o=bpy.context.object; o.scale=(rad,rad,.22); finish(o,'distance shrub','foliage',root); return
     for i in range(count):
         ang=rng.uniform(0,math.tau); rr=rad*math.sqrt(rng.random()); xx=x+rr*math.cos(ang); yy=y+rr*math.sin(ang); zz=z+rng.uniform(.03,.35)
         bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=1,radius=1,location=(xx,yy,zz))
@@ -368,6 +363,11 @@ for y,w in [(-3.39,.42),(-1.42,.36),(.03,.40),(3.36,.52)]:
         box('stucco_chip',(2.729,yy,z),(.013,rng.uniform(.024,.065),rng.uniform(.045,.12)),'sidewalk',bevel=.007)
 for x in [-2.5,-.91,.85,2.49]:
     for j in range(4):box('stucco_chip',(x+rng.uniform(-.07,.07),-3.629,rng.uniform(1.6,2.75)),(.04,.012,.07),'sidewalk',bevel=.006)
+
+if DISTANCE==2:
+    box('distance forecourt',(0,-.13,.265),(6.5,8.42,.13),'sidewalk',bevel=0)
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('stucco_chip',), far_omit=('slogan_lettering','chalk_cup','paving','front_brick','side_brick','checker_tile','leaf', 'flower', 'cup', 'plate', 'utensil', 'stool', 'pebble','louver','pipe_clamp','sign_border','access_screw','planter_brick','sign_garden_kerb'))
 
 # Merge by palette within each independently controlled group, retaining pivots.
 for parent in [root,roof,interior,door,door_service]:
@@ -423,7 +423,6 @@ if args.glb:
     def export_glb(path):
         bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
     path=Path(args.glb).resolve(); export_glb(path)
-    export_lods(meshes, path, roof)
 
 print('BUILD OK',tri,'triangles',len(meshes),'draw calls')
 if args.render:
@@ -451,3 +450,6 @@ if args.render:
         paired='game.png' if render_path.name=='hero.png' else render_path.stem.replace('-ref','')+'-game.png'
         scene.render.filepath=str(render_path.with_name(paired));bpy.ops.render.render(write_still=True)
     print('RENDER OK')
+
+if args.glb and not DISTANCE:
+    build_native_lods(__file__)
