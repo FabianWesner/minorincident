@@ -70,3 +70,81 @@ test('T-E27-03 @E27 @E27-AC03 medium blast seven beats in order at fixed ticks: 
   const state = await page.evaluate(() => window.__SS__!.getState().render.vfx!.blasts);
   expect(state.scorch).toBeGreaterThanOrEqual(1);
 });
+
+const meanLuminance = (png: PNG) => { let s = 0, n = 0; for (let i = 0; i < png.data.length; i += 16) { s += lum(png.data, i); n++; } return s / n; };
+test('T-E27-07 @E27 @E27-AC07 flash reduction keeps the full-screen luminance delta per frame ≤ 20 % for every blast class', async ({ page }) => {
+  test.setTimeout(180_000);
+  const result: Record<string, number> = {};
+  for (const [cls, id] of [['small', 'explosion.pipe-bomb'], ['medium', 'explosion.propane'], ['large', 'explosion.car'], ['mega', 'explosion.gas-tanks']] as const) {
+    await lab(page, { flashReduction: true });
+    let previous = meanLuminance(await shot(page)), worst = 0;
+    await page.evaluate(id => window.__SS__!.explosions.blast(id, { x: 0, z: 0 }), id);
+    for (let frame = 0; frame < 14; frame++) {
+      await page.evaluate(async f => { const a = window.__SS__!; if (f) { await a.step(1); a.vfx.stepRender(1 / 60); } await a.screenshotReady(); }, frame);
+      const png = await shot(page, frame === 3 ? `${out}/ac07-${cls}-reduced.png` : undefined), l = meanLuminance(png);
+      worst = Math.max(worst, Math.abs(l - previous)); previous = l;
+    }
+    result[cls] = worst;
+  }
+  writeFileSync(`${out}/ac07-flash.json`, JSON.stringify(result, null, 2));
+  for (const [cls, delta] of Object.entries(result)) expect(delta, cls).toBeLessThanOrEqual(.2);
+});
+
+test('T-E27-05v @E27 @E27-AC05 car explosion: wreck jumps, panels fly, burned variant, smoke column persists ≥ 20 s', async ({ page }) => {
+  test.setTimeout(120_000);
+  await lab(page);
+  await page.evaluate(async () => {
+    const a = window.__SS__!, id = a.query({ kind: 'vehicle' })[0].id; a.teleport('player', { x: -8, z: 10 }); a.camera.preset('blast-car');
+    a.explosions.wreck(id); await a.step(180); for (let i = 0; i < 8; i++) { await a.step(1); a.vfx.stepRender(1 / 60); } await a.screenshotReady();
+  });
+  await page.screenshot({ path: `${out}/ac05-car-blast.png` });
+  const mid = await page.evaluate(async () => { const a = window.__SS__!; for (let i = 0; i < 40; i++) { await a.step(1); a.vfx.stepRender(1 / 60); } await a.screenshotReady(); return { parts: a.explosions.state()!.parts.length, damage: a.getEntity(a.query({ kind: 'vehicle' })[0].id)!.vehicle!.damage }; });
+  await page.screenshot({ path: `${out}/ac05-car-parts.png` });
+  expect(mid.parts).toBeGreaterThanOrEqual(2); expect(mid.damage).toBe('exploded');
+  // 20 s later the wreck still burns and its column still rises.
+  const late = await page.evaluate(async () => { const a = window.__SS__!; a.camera.preset('blast-car'); for (let i = 0; i < 20 * 15; i++) { await a.step(4); a.vfx.stepRender(4 / 60); } await a.screenshotReady(); return a.getState().render.vfx!.blasts; });
+  await page.screenshot({ path: `${out}/ac05-wreck-20s.png` });
+  expect(late.columns).toBeGreaterThanOrEqual(1); expect(late.puffs).toBeGreaterThan(20);
+});
+
+test('T-E27-08v @E27 @E27-AC08 smoke grenade cloud reads at the game camera and dissipates with the zone', async ({ page }) => {
+  test.setTimeout(90_000);
+  await boot(page);
+  const state = await page.evaluate(async () => {
+    const a = window.__SS__!; await a.loadScenario('smoke-lab', { seed: 1 }); a.pause(); a.cheats.god(true); a.settings.set({ cameraShake: false, aimAssist: 'Off', vfx: true });
+    for (let i = 0; i < 6; i++) a.spawn('infected.runner', { x: 3 + i * .5, z: -2 + i * .4 }, { state: 'chase' });
+    a.setLoadout(['weapon.pistol'], ['weapon.smoke-grenade']);
+    a.input.set({ aim: { x: 1, z: 0 }, aimPoint: { x: 1.5, z: 0 }, right: { down: true, held: true, up: false } }); await a.step(1); a.input.clear();
+    a.camera.preset('blast'); for (let i = 0; i < 90; i++) { await a.step(1); a.vfx.stepRender(1 / 60); } await a.screenshotReady();
+    return { blasts: a.getState().render.vfx!.blasts, lost: a.events(0).filter(e => e.type === 'ai.lostTarget').length };
+  });
+  await page.screenshot({ path: `${out}/ac08-smoke-cloud.png` });
+  expect(state.blasts.clouds).toBe(1); expect(state.blasts.puffs).toBeGreaterThan(15); expect(state.lost).toBeGreaterThanOrEqual(6);
+  const after = await page.evaluate(async () => { const a = window.__SS__!; for (let i = 0; i < 20; i++) { await a.step(60); a.vfx.stepRender(1); } await a.screenshotReady(); return a.getState().render.vfx!.blasts; });
+  expect(after.clouds).toBe(0); expect(after.puffs).toBe(0);
+});
+
+test('T-E27-14 @E27 @E27-AC14 mega + chain stays within particle/puff/debris caps and pools return to baseline 30 s after the last flame', async ({ page }) => {
+  test.setTimeout(150_000);
+  await lab(page, {}, 'blast-wide');
+  const result = await page.evaluate(async () => {
+    const a = window.__SS__!, base = a.getState().render.vfx!;
+    for (let i = 0; i < 6; i++) a.spawn('hazard.propane', { x: -12 + i * 2.4, z: -27 }); // clear of the parked car: its wreck would burn on
+    a.explosions.blast('explosion.gas-station', { x: -6, z: -22 }); let peak = { particles: 0, puffs: 0, fireballs: 0, debris: 0, parts: 0 };
+    for (let i = 0; i < 90; i++) { await a.step(2); a.vfx.stepRender(2 / 60); const v = a.getState().render.vfx!, s = a.getState();
+      peak = { particles: Math.max(peak.particles, v.particles), puffs: Math.max(peak.puffs, v.blasts.puffs), fireballs: Math.max(peak.fireballs, v.blasts.fireballs), debris: Math.max(peak.debris, s.interactions?.debris.length ?? 0), parts: Math.max(peak.parts, a.explosions.state()!.parts.length) }; }
+    await a.screenshotReady();
+    const caps = a.getState().render.vfx!;
+    for (let i = 0; i < 120; i++) { await a.step(60); a.vfx.stepRender(1); }
+    await a.screenshotReady();
+    const end = a.getState().render.vfx!;
+    return { base, peak, caps: { particleCap: caps.particleCap, puffCap: caps.blasts.puffCap, fireballCap: caps.blasts.fireballCap }, explosions: a.events(0).filter(e => e.type === 'explosion').length, end, fires: a.query({ archetype: 'hazard.fire' }).filter(e => a.tick() < e.hazard!.activeUntil).length };
+  });
+  writeFileSync(`${out}/ac14-budgets.json`, JSON.stringify(result, null, 2));
+  expect(result.explosions).toBeGreaterThanOrEqual(5);
+  expect(result.peak.particles).toBeLessThanOrEqual(result.caps.particleCap); expect(result.peak.puffs).toBeLessThanOrEqual(result.caps.puffCap);
+  expect(result.peak.particles + result.peak.puffs).toBeLessThanOrEqual(6000); expect(result.peak.debris).toBeLessThanOrEqual(120); expect(result.peak.parts).toBeLessThanOrEqual(12);
+  expect(result.fires).toBe(0);
+  for (const key of ['particles', 'gibs'] as const) expect(result.end[key], key).toBeLessThanOrEqual(result.base[key]);
+  expect(result.end.blasts).toMatchObject({ puffs: 0, fireballs: 0, flames: 0, glows: 0, columns: 0, clouds: 0, parts: 0 });
+});

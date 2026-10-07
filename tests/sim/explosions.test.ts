@@ -117,3 +117,11 @@ test('T-E27-fires @E27 aftermath fires damage, spread once under the cap and bur
   step(w, 18 * 30 + 2); expect(fires().length).toBeGreaterThan(3); expect(w.entities.get(victim)!.health.current).toBeLessThan(500);
   step(w, 30 * 60); expect(fires()).toHaveLength(0);
 });
+
+// Later E27 increments (staging §6: core first). Kept as named placeholders so the criteria stay traceable.
+test.skip('T-E27-09 @E27-AC09 deferred: toxic and tear gas variants (DoT, Hazmat immunity, 30 % / 15 % slows)', () => {});
+test.skip('T-E27-10 @E27-AC10 deferred: fire extinguisher prop burst (extinguish within 3 m, 1 s cone stun)', () => {});
+test.skip('T-E27-11 @E27-AC11 deferred: night smoke lit by the E25 light field and siren strobes (needs E25 light field)', () => {});
+test.skip('T-E27-12 @E27-AC12 deferred: player rim silhouette under smoke; core only dims puffs in the shared see-through hole', () => {});
+test.skip('T-E27-13 @E27-AC13 deferred: L6 l6-overview columns and column shadow strips (needs L6 content)', () => {});
+test.skip('T-E27-15 @E27-AC15 deferred: vision checklist H review (orchestrator)', () => {});
