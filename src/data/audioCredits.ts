@@ -146,5 +146,12 @@ export const audioCredits = [
         "url": "https://opengameart.org/content/car-sound-effects-pack-low-quality",
         "license": "CC0",
         "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    {
+        "title": "Female RPG Voice Starter Pack",
+        "author": "cicifyre",
+        "url": "https://opengameart.org/content/female-rpg-voice-starter-pack",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
     }
 ] as const;
