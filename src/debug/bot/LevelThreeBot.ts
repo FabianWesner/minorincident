@@ -33,7 +33,7 @@ export class LevelThreeBot {
       if (!drive || state.driveArrived && drive.exit) { frame.brake = true; frame.interact = car.physics.speed < .5; return frame; }
       const c = car.entity.transform, a = m.def.anchors;
       const x = a.sedan.x, z = a.market.z, west = a.park.x, south = a.approach.z;
-      // Sedan steering (.27 rad, 2.7 m wheelbase) needs ~10 m corner radii.
+      // Ten-metre corner radii leave room for the sedan's speed-scaled steering.
       // Quarter-circle road waypoints begin before the junction, not at its centre.
       const mainTurn = [{ x, z: z+10 }, { x: x-.76, z: z+6.17 }, { x: x-2.93, z: z+2.93 }, { x: x-6.17, z: z+.76 }, { x: x-10, z }];
       const shopTurn = [{ x: west+10, z }, { x: west+6.17, z: z+.76 }, { x: west+2.93, z: z+2.93 }, { x: west+.76, z: z+6.17 }, { x: west, z: z+10 }];
