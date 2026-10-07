@@ -7,8 +7,6 @@ import json
 import math
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import prepare_export_lod
 import bpy
 import bmesh
 from mathutils import Vector
@@ -94,10 +92,10 @@ def mesh(name, verts, faces, token, parent=body, bevel=.018, segments=2):
     o.data.materials.append(M[token])
     o.parent = parent
     o.matrix_parent_inverse = parent.matrix_world.inverted()
-    if bevel >= .01:
+    if bevel:
         mod = o.modifiers.new('Soft edges', 'BEVEL')
         mod.width = bevel
-        mod.segments = 1 if bevel < .05 else 2
+        mod.segments = segments
         mod.limit_method = 'ANGLE'
         mod.harden_normals = True
         wn = o.modifiers.new('Weighted normals', 'WEIGHTED_NORMAL')
@@ -149,7 +147,7 @@ def cylinder(name, c, radius, depth, token, parent=body, axis='Z', vertices=24):
     o.data.materials.append(M[token])
     o.parent = parent
     o.matrix_parent_inverse = parent.matrix_world.inverted()
-    be = o.modifiers.new('Rim bevel','BEVEL'); be.width=.008; be.segments=1
+    be = o.modifiers.new('Rim bevel','BEVEL'); be.width=.008; be.segments=2
     o.modifiers.new('Weighted normals','WEIGHTED_NORMAL')
     return o
 
@@ -548,7 +546,7 @@ print('BUILD OK',json.dumps(report))
 def export(path):
     bpy.ops.object.select_all(action='DESELECT')
     for o in asset.objects: o.select_set(True)
-    prepare_export_lod(list(bpy.context.scene.objects), str(Path(path).resolve())); bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',
+    bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',
        use_selection=True,export_apply=True,export_yup=True,export_extras=True,
        export_lights=False,export_cameras=False,export_materials='EXPORT')
     print('GLB OK',path)
