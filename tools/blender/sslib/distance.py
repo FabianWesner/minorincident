@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 import bpy
 import bmesh
-from mathutils import Vector
+from mathutils import Matrix, Vector
 from mathutils.bvhtree import BVHTree
 from .lod import hard_normals, triangles
 
@@ -27,7 +27,7 @@ def tier_argument():
     return tier
 
 
-def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_parts=()):
+def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_parts=(), fit_dimensions=False):
     directory = Path(directory).resolve()
     bpy.context.view_layer.update()
     # Source C groups unparented primitives explicitly before its normal merge.
@@ -60,13 +60,13 @@ def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_part
         if obj.type not in {'MESH', 'FONT', 'CURVE'}:
             continue
         name = obj.name.lower()
-        if obj.type=='MESH' and not obj.data.materials:
+        if obj.type=='MESH' and (not obj.data.materials or not obj.data.materials[0]):
             bpy.data.objects.remove(obj, do_unlink=True); continue
         small = False
         if directory.name.startswith('veh.'):
             bpy.context.view_layer.update()
             size = obj.dimensions
-            important = any(word in name for word in ('tyre','tire','mirror','lamp','light','beacon','signal','indicator','pillar','shell','windshield','window','roof','hood','chassis','tailgate','rack')) or any(m.name.startswith('emi_') for m in obj.data.materials)
+            important = any(word in name for word in ('tyre','tire','mirror','lamp','light','beacon','signal','indicator','pillar','shell','windshield','window','roof','hood','chassis','tailgate','rack')) or any(m and m.name.startswith('emi_') for m in obj.data.materials)
             small = not important and max(size) < (.45 if tier==1 else .75)
         if small or ('interior' in ancestry and 'floor' not in name) or any(word.lower() in name for word in (*omit, *(far_omit if tier == 2 else ()))):
             removed.append(obj.name); bpy.data.objects.remove(obj, do_unlink=True)
@@ -99,13 +99,43 @@ def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_part
         points = [o.matrix_world @ v.co for o in objects if o.type == 'MESH' for v in o.data.vertices]
         return [min(v[k] for v in points) for k in range(3)], [max(v[k] for v in points) for k in range(3)]
     low, high = bounds(native); rlow, rhigh = bounds(reference)
+    if fit_dimensions:
+        scale = Vector(tuple((rhigh[k]-rlow[k])/(high[k]-low[k]) for k in range(3)))
+        transform = Matrix.Diagonal((*scale, 1))
+        for obj in native:
+            if obj.parent is None: obj.matrix_world = transform @ obj.matrix_world
+        low, high = bounds(native)
+    batch_names = {}
+    light_targets = {}
+    for obj in reference:
+        if obj.type != 'MESH' or not obj.parent or not obj.data.materials: continue
+        owner = re.sub(r'\.\d{3}$', '', obj.parent.name)
+        material = re.sub(r'\.\d{3}$', '', obj.data.materials[0].name)
+        batch_names[(owner, material)] = re.sub(r'\.\d{3}$', '', obj.name)
+        light_targets[re.sub(r'\.\d{3}$', '', obj.name)] = (owner, material)
     shift = Vector(((rlow[0]+rhigh[0]-low[0]-high[0])/2,
                     (rlow[1]+rhigh[1]-low[1]-high[1])/2, rlow[2]-low[2]))
     for obj in native:
         if obj.parent is None: obj.location += shift
     roots = [o for o in native if o.type == 'EMPTY' and o.parent is None]
     root = roots[0]
+    # Unfurnished distance interiors still need a closed floor under roof-off views.
+    for interior in [o for o in native if o.type == 'EMPTY' and o.name == 'interior']:
+        if any(o.type == 'MESH' for o in interior.children_recursive): continue
+        original = next((o for o in reference if re.sub(r'\.\d{3}$', '', o.name) == 'interior'), None)
+        children = original.children_recursive if original else []
+        if not any(o.type == 'MESH' for o in children): continue
+        ilow, ihigh = bounds(children)
+        material = next((m for o in meshes for m in o.data.materials if m and m.name in ('pal_woodWarm', 'pal_asphalt', 'pal_picketWhite')), meshes[0].data.materials[0])
+        bpy.ops.mesh.primitive_cube_add(size=1, location=((ilow[0]+ihigh[0])/2, (ilow[1]+ihigh[1])/2, ilow[2]+.01))
+        floor = bpy.context.object; floor.name = 'distance_interior_floor'
+        floor.dimensions = (ihigh[0]-ilow[0], ihigh[1]-ilow[1], .02)
+        bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+        floor.data.materials.append(material)
+        world = floor.matrix_world.copy(); floor.parent = interior; floor.matrix_world = world
+        native.add(floor); meshes.append(floor)
     # Copy late-created empty sockets/light metadata from the detailed source.
+    copied_names = []
     for obj in reference:
         if obj.type != 'EMPTY': continue
         name = re.sub(r'\.\d{3}$', '', obj.name)
@@ -113,8 +143,11 @@ def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_part
         if target is None:
             target = bpy.data.objects.new(name, None); bpy.context.scene.collection.objects.link(target)
             target.parent = root; target.matrix_world = obj.matrix_world.copy(); native.add(target)
+            copied_names.append((target, name))
         for key in obj.keys(): target[key] = obj[key]
     for obj in reference: bpy.data.objects.remove(obj, do_unlink=True)
+    # Reference objects occupied the names while their sockets were copied.
+    for target, name in copied_names: target.name = name
     bpy.context.view_layer.update()
     buckets = {}
     for obj in meshes:
@@ -125,7 +158,7 @@ def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_part
         bpy.ops.object.select_all(action='DESELECT')
         for obj in objects: obj.select_set(True)
         bpy.context.view_layer.objects.active = objects[0]; bpy.ops.object.join()
-        obj = bpy.context.object; obj.name = (owner.name if owner else root.name) + '_' + material.name
+        obj = bpy.context.object; obj.name = batch_names.get((owner.name if owner else root.name, material.name), (owner.name if owner else root.name) + '_' + material.name)
         bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
         # Planar dissolve removes font tessellation, without changing any outline.
         bm = bmesh.new(); bm.from_mesh(obj.data)
@@ -163,9 +196,12 @@ def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_part
         for name in light.get('emissiveNodes', []):
             exact = next((o for o in meshes if o.name == name), None)
             if exact: resolved.append(exact.name); continue
-            if '_emi_' not in name: continue
-            owner, token = name.split('_emi_', 1)
-            candidates = [o for o in meshes if any(m.name == 'emi_'+token for m in o.data.materials)]
+            if '_emi_' in name:
+                owner, token = name.split('_emi_', 1)
+            elif name in light_targets and light_targets[name][1].startswith('emi_'):
+                owner, material = light_targets[name]; token = material[4:]
+            else: continue
+            candidates = [o for o in meshes if any(m and m.name == 'emi_'+token for m in o.data.materials)]
             scoped = []
             for candidate in candidates:
                 parent = candidate.parent

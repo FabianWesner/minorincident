@@ -3299,6 +3299,10 @@
     "world": {
       "token": "survivorRed",
       "solid": true
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3355,6 +3359,10 @@
     "world": {
       "token": "policeBlue",
       "solid": false
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3468,7 +3476,11 @@
     },
     "decayVariants": [],
     "sourceForward": "+X",
-    "sourceScale": 0.91666669
+    "sourceScale": 0.91666669,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    }
   },
   {
     "id": "veh.suv-dark",
@@ -3524,6 +3536,10 @@
     "world": {
       "token": "uiDark",
       "solid": false
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3580,6 +3596,10 @@
     "world": {
       "token": "survivorRed",
       "solid": false
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3639,6 +3659,10 @@
     "world": {
       "token": "picketWhite",
       "solid": false
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3698,6 +3722,10 @@
     "world": {
       "token": "foliageDark",
       "solid": false
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3813,7 +3841,11 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    }
   },
   {
     "id": "veh.police-suv",
@@ -3862,6 +3894,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.police-suv.lod1.glb",
       "lod2": "public/assets/models/veh.police-suv.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3967,6 +4003,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.jeep-red.lod1.glb",
       "lod2": "public/assets/models/veh.jeep-red.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -7302,6 +7342,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.helicopter.lod1.glb",
       "lod2": "public/assets/models/veh.helicopter.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -7351,6 +7395,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.train-freight.lod1.glb",
       "lod2": "public/assets/models/veh.train-freight.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -8552,6 +8600,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.fuel-truck.lod1.glb",
       "lod2": "public/assets/models/veh.fuel-truck.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -10644,6 +10696,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.sedan-green.lod1.glb",
       "lod2": "public/assets/models/veh.sedan-green.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -12558,7 +12614,11 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/veh.courier-bike/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    }
   },
   {
     "id": "prop.package-courier",
@@ -13028,7 +13088,7 @@
     "id": "bld.house-d",
     "category": "building",
     "status": "integrated",
-    "tier": "side",
+    "tier": "hero",
     "glb": "public/assets/models/bld.house-d.glb",
     "dimensions": {
       "x": 9,
@@ -13063,13 +13123,17 @@
     "lods": {
       "lod1": "public/assets/models/bld.house-d.lod1.glb",
       "lod2": "public/assets/models/bld.house-d.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
     "id": "bld.house-e",
     "category": "building",
     "status": "integrated",
-    "tier": "side",
+    "tier": "hero",
     "glb": "public/assets/models/bld.house-e.glb",
     "dimensions": {
       "x": 8.569,
@@ -13104,6 +13168,10 @@
     "lods": {
       "lod1": "public/assets/models/bld.house-e.lod1.glb",
       "lod2": "public/assets/models/bld.house-e.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {

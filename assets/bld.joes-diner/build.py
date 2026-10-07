@@ -367,7 +367,7 @@ for x in [-2.5,-.91,.85,2.49]:
 if DISTANCE==2:
     box('distance forecourt',(0,-.13,.265),(6.5,8.42,.13),'sidewalk',bevel=0)
 if DISTANCE:
-    export_variant(Path(__file__).parent, DISTANCE, omit=('stucco_chip',), far_omit=('slogan_lettering','chalk_cup','paving','front_brick','side_brick','checker_tile','leaf', 'flower', 'cup', 'plate', 'utensil', 'stool', 'pebble','louver','pipe_clamp','sign_border','access_screw','planter_brick','sign_garden_kerb'))
+    export_variant(Path(__file__).parent, DISTANCE, omit=('stucco_chip',), far_omit=('floor_tile', 'slogan_lettering','chalk_cup','paving','front_brick','side_brick','checker_tile','leaf', 'flower', 'cup', 'plate', 'utensil', 'stool', 'pebble','louver','pipe_clamp','sign_border','access_screw','planter_brick','sign_garden_kerb'))
 
 # Merge by palette within each independently controlled group, retaining pivots.
 for parent in [root,roof,interior,door,door_service]:

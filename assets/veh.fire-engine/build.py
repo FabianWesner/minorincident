@@ -141,7 +141,7 @@ def build(ctx):
 
 
     def lathe(name, profile, center, axis, mat, parent=None, segs=28, smooth=True):
-        if DISTANCE: segs=min(segs,12 if DISTANCE==1 else 8)
+        if DISTANCE: segs=min(segs,12 if DISTANCE==1 else 6)
         """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
         bm = bmesh.new()
         rings = []
@@ -173,7 +173,7 @@ def build(ctx):
 
 
     def cylinder(name, center, r, depth, axis, mat, parent=None, segs=20, bevel=0.0):
-        if DISTANCE: bevel=0; segs=min(segs,12 if DISTANCE==1 else 8)
+        if DISTANCE: bevel=0; segs=min(segs,12 if DISTANCE==1 else 6)
         prof = [(1e-4, -depth / 2), (r, -depth / 2), (r, depth / 2), (1e-4, depth / 2)]
         o = lathe(name, prof, center, axis, mat, parent, segs)
         if bevel:
@@ -234,7 +234,7 @@ def build(ctx):
 
     def raw_cyl(name, center, r, depth, axis='y', segs=24):
         if DISTANCE: segs=min(segs, 12 if DISTANCE==1 else 6)
-        if DISTANCE: segs=min(segs,12 if DISTANCE==1 else 8)
+        if DISTANCE: segs=min(segs,12 if DISTANCE==1 else 6)
         bm = bmesh.new()
         bmesh.ops.create_cone(bm, cap_ends=True, segments=segs, radius1=r, radius2=r, depth=depth)
         rot = {'y': Matrix.Rotation(PI / 2, 4, 'X'), 'x': Matrix.Rotation(PI / 2, 4, 'Y'), 'z': Matrix.Identity(4)}[axis]
@@ -603,7 +603,7 @@ def build(ctx):
     root.location.y=-(minimum.y+maximum.y)/2*root.scale.y
     bpy.context.view_layer.update()
     if DISTANCE:
-        export_variant(Path(__file__).parent, DISTANCE, omit=('rivet','tread_block','lug','pump_hose','gauge','coupling','pump_valve','pump_fan','arch_trim','cab_door_seam','body_reflector','rear_door_frame','body_door_frame','cab_text','rear_text','grille','body_door_seam'), flat_parts=('wheel*_rim',), far_omit=('gauge','hose','handle','step_grip','bolt','wiper','seat','fire_text','cab_text','flame','mirror_arm','slat','pump_bay_rail','body_sill','body_roof_trim','rim','hub','ladder_turntable','front_text','body_roof_trim','cab_sill','body_sill','mirror_glass','ladder0_upright','ladder1_upright'))
+        export_variant(Path(__file__).parent, DISTANCE, omit=('rivet','tread_block','lug','pump_hose','gauge','coupling','pump_valve','pump_fan','arch_trim','cab_door_seam','body_reflector','rear_door_frame','body_door_frame','cab_text','rear_text','grille','body_door_seam'), flat_parts=('wheel*_rim',), far_omit=('shutter_rail', 'shutter_bar', 'shutter_lip', 'shutter_post', 'pump_panel_ledge', 'roof_grab', 'gantry_base', 'side_marker', 'cab_marker', 'cab_roof_marker', 'rear_ladder_step', 'pump_bay_step', 'cab_step', 'front_bumper_step', 'rear_step', 'cab_light', 'reflector', 'roof_rail', 'rail_support', 'gauge','hose','handle','step_grip','bolt','wiper','seat','fire_text','cab_text','flame','mirror_arm','slat','pump_bay_rail','body_sill','body_roof_trim','rim','hub','ladder_turntable','front_text','body_roof_trim','cab_sill','body_sill','mirror_glass','ladder0_upright','ladder1_upright'))
     export.merge_by_material(root, {'body','wheelFL','wheelFR','wheelRL','wheelRR','ladder','sirenL','sirenR','lightsFront','lightsBrake'})
     return root
 

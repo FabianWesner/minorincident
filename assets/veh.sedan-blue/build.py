@@ -11,6 +11,13 @@ import bpy
 import bmesh
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
+if '--lod-only' in sys.argv:
+    build_native_lods(__file__)
+    sys.exit(0)
+
 HERE = Path(__file__).resolve().parent
 p = argparse.ArgumentParser()
 p.add_argument('--lod', type=int, default=0)
@@ -58,6 +65,7 @@ root['ss_physics']=json.dumps({'class':'heavy','mass':1150,'friction':.8,'restit
 body=empty('body',parent=root)
 
 def finish(o, token, group='body', bevel=.015):
+    if DISTANCE: bevel = 0
     o.data.materials.append(M[token]); scene.collection.objects.link(o)
     if bevel:
         b=o.modifiers.new('soft edges','BEVEL'); b.width=bevel; b.segments=3
@@ -103,6 +111,7 @@ def beam(name,start,end,width,token,group='body'):
     o.location=mid; o.rotation_euler=(Vector(end)-Vector(start)).to_track_quat('Z','Y').to_euler(); return o
 
 def lathe(name,x,y,z,profile,token,group,segments=48):
+    if DISTANCE: segments = min(segments, 12 if DISTANCE == 1 else 6)
     vs=[(x+r*math.cos(k*math.tau/segments),y+d,z+r*math.sin(k*math.tau/segments)) for r,d in profile for k in range(segments)]
     fs=[(j*segments+k,j*segments+(k+1)%segments,(j+1)*segments+(k+1)%segments,(j+1)*segments+k) for j in range(len(profile)-1) for k in range(segments)]
     return mesh(name,vs,fs,token,group,0)
@@ -226,13 +235,16 @@ box('rear bench',(-.88,0,1.2),(.25,1.35,.35),'asphalt',bevel=.05)
 box('dashboard',(.77,0,1.14),(.25,1.43,.17),'uiDark')
 beam('steering column',(.7,-.37,1.19),(.50,-.37,1.31),.045,'uiDark')
 # Steering ring is an actual torus oriented toward driver.
-bpy.ops.mesh.primitive_torus_add(major_radius=.13,minor_radius=.018,major_segments=32,minor_segments=8,location=(.50,-.37,1.32),rotation=(0,math.pi/2,0))
+bpy.ops.mesh.primitive_torus_add(major_radius=.13,minor_radius=.018,major_segments=(16 if DISTANCE == 1 else 12) if DISTANCE else 32,minor_segments=(4 if DISTANCE == 1 else 3) if DISTANCE else 8,location=(.50,-.37,1.32),rotation=(0,math.pi/2,0))
 o=bpy.context.object
 for c in list(o.users_collection): c.objects.unlink(o)
 finish(o,'uiDark',bevel=0)
 box('rearview mirror',(.78,0,1.48),(.07,.20,.08),'asphalt')
 for name,loc in [('driverSeat',(.05,-.38,.96)),('exitL',(.1,-1.25,0)),('exitR',(.1,1.25,0))]: empty(name,loc,root)
 c=empty('col:body',(0,0,.84),root); c['collider']='cuboid'; c['shape']='cuboid'; c['size']=[4.35,1.75,1.65]
+
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*',), owners={groups[g]: [o for (owner, token), objects in parts.items() if owner == g for o in objects] for g in groups})
 
 # Apply once then merge by material within each motion assembly.
 for (group,token),objects in parts.items():
@@ -292,3 +304,7 @@ if a.render:
     scene.cycles.device='GPU'; scene.view_settings.view_transform='AgX'
     scene.render.resolution_x=a.width; scene.render.resolution_y=a.height; scene.render.resolution_percentage=100
     scene.render.filepath=str(Path(a.render).resolve()); bpy.ops.render.render(write_still=True); print('RENDER OK')
+
+# Every full source export refreshes the native distance tiers.
+if "--glb" in sys.argv and not DISTANCE:
+    build_native_lods(__file__)

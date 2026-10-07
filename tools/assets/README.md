@@ -118,3 +118,15 @@ exact omissions and raw triangle counts.
 (level 3, bitstream version 0 or 1); geometry, AO, normals and quantization
 precision remain identical. It brings mainstreet-brick and school-elementary
 LOD0 below 1500 KiB. The game decoder is verified by contact-sheet loading.
+
+House and vehicle distance caps are absolute: houses LOD1 ≤ 12,000 / LOD2
+≤ 4,000 triangles; every manifest vehicle LOD1 ≤ 6,000 / LOD2 ≤ 2,000.
+Validation enforces these independently of declared budgets and authored ratios,
+including pending registrations that already have production GLBs.
+Native exports preserve detailed-source batch names and late sockets. Sources
+that fit their hero geometry to manifest dimensions also fit their native tiers.
+
+For five-angle side-by-side LOD0/1/2 sheets using shipped geometry:
+`E2E_PORT=3349 sh tools/e2e-lock.sh npm run assets:turntable -- <id>,<id> --lod-contact --output test-results/asset-fix-2`
+Each asset gets `<output>/<id>/lod-contact.png`. This mode needs no reference
+image, fails on placeholders, and uses one headless Chromium process with Metal.
