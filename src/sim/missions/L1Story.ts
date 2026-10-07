@@ -10,17 +10,17 @@ export const storyLines: Record<string, string> = {
   'pickup.clerk': 'Morning! Cold-chain, handle with care.',
   'handover.tech': '…Thanks. Don’t hang around.',
   'garage.courier': 'This’ll do.',
-  'firestation.firefighter': 'In here! Quick!',
+  'firestation.firefighter': 'Get in!',
   'firestation.caption': 'Delivery complete. Outbreak: not contained.',
 };
 /** PO: reading time per bubble, max(2.5 s, 1 s + 70 ms per character), in ticks. */
 export const readTicks = (text: string): number => Math.ceil(Math.max(2.5, 1 + .07 * [...text].length) * TICKS);
 /** Beat timing in ticks (deterministic; all from the mission tick). */
-const beat = { clerkWalkMs: 1.6, giveTicks: 54, contactTicks: 26, byeTicks: 40, garageTicks: 120, fireTicks: 6 * TICKS, fireTriggerM: 14 };
+const beat = { clerkWalkMs: 1.6, giveTicks: 54, contactTicks: 26, byeTicks: 40, garageTicks: 120, fireTriggerM: 14 };
 
 /**
  * PO UAT story beats for L1 (in-engine, no hard cuts): the depot clerk hands over the parcel, the technician signs
- * for it, the courier grabs the bat off the garage rack and a firefighter waves her into the bay. Each beat locks
+ * for it and the courier grabs the bat off the garage rack. These three beats lock
  * player input for 2–5 s (any press skips), frames the camera (render reads `l1.beat`) and says one line. The beats
  * are mission state driven by the tick, so bots and checkpoints stay deterministic.
  */
@@ -101,10 +101,7 @@ export class L1Story {
     // The courier visibly carries the parcel (render: carry arm pose + box) while the story holds it.
     const pose = world.entities.get(1)?.survivor; if (pose) { if (l1.carrying) pose.carrying = 'prop.package-courier'; else delete pose.carrying; }
     const fire = this.mission.state.steps.firestation, player = world.entities.get(1)!;
-    if (!l1.beat && fire?.status === 'active' && !l1.beatsDone?.includes('firestation')) {
-      const trigger = this.anchor('fire-bay-trigger');
-      if (Math.hypot(player.transform.x - trigger.x, player.transform.z - trigger.z) <= beat.fireTriggerM && player.health.current > 0) this.firestation();
-    }
+    if (!l1.beat && fire?.status === 'active' && player.health.current > 0) this.firestation();
     const b = l1.beat; if (!b) return;
     const lock = world.storyLock;
     // A press while a bubble still reads completes the bubble; the next press skips the beat.
@@ -113,7 +110,6 @@ export class L1Story {
     const t = tick - b.start;
     if (b.id === 'pickup') this.updatePickup(t, !!lock?.skip);
     else if (b.id === 'garage') { if (t >= beat.garageTicks && !this.reading || lock?.skip) this.finish(); }
-    else if (b.id === 'firestation') this.updateFire(t, !!lock?.skip);
     else if (b.id === 'handover') { if (lock?.skip) this.finish(); }
     if (l1.beat && tick >= l1.beat.until && !this.reading) this.finish();
   }
@@ -140,60 +136,23 @@ export class L1Story {
     } else { clerk.hidden = true; if (clerk.civilian) clerk.civilian.story = null; this.place(clerk, home.x, home.z, home); l1.clerkId = 0; this.finish(); }
   }
 
-  /** Beat 4 (the ending): a firefighter waves from the open bay; the courier and the corgi run inside on a scripted
-   * path (input locked, chasers closing behind), the shutter slams, infected bang on it, a caption, a fade, then the
-   * result (the objective completes on `safe`). */
+  /** A doorway invitation, never a beat: controls and infected AI remain live until actual entry. */
   private firestation(): void {
-    const door = this.anchor('fire-bay-door'), trigger = this.anchor('fire-bay-trigger'), player = this.world.entities.get(1)!;
-    const dx = door.x - trigger.x, dz = door.z - trigger.z, d = Math.hypot(dx, dz) || 1;
-    const inside = { x: door.x + dx / d * 2.6, z: door.z + dz / d * 2.6 }, waving = { x: door.x - dz / d * 1.6 + dx / d * .4, z: door.z + dx / d * 1.6 + dz / d * .4 };
-    const id = this.pedestrian(waving, 'npc.firefighter-alive', 'firefighter', '#b5332b');
-    this.l1.firefighterId = id;
-    this.start('firestation', id, door);
-    const b = this.l1.beat!; b.until = this.world.tick + 30 * TICKS;
-    // Frame the open bay itself (the run-in happens there), not the midpoint of the approach.
-    b.fx = door.x - dx / d * 2; b.fz = door.z - dz / d * 2; b.ax = door.x; b.az = door.z; b.mx = inside.x; b.mz = inside.z; b.sx = player.transform.x; b.sz = player.transform.z;
-    const ff = this.world.entities.get(id); if (ff) this.place(ff, waving.x, waving.z, trigger);
-    this.present(ff, 'npc-wave-in'); this.say(id, 'firestation.firefighter');
-  }
-  private updateFire(t: number, skip: boolean): void {
-    const world = this.world, b = this.l1.beat!, tick = world.tick, player = world.entities.get(1)!, trigger = this.anchor('fire-bay-trigger');
-    const ff = world.entities.get(this.l1.firefighterId ?? 0), corgi = [...world.entities.iterate()].find(e => e.companion);
-    const path = [{ x: b.sx ?? player.transform.x, z: b.sz ?? player.transform.z }, { x: trigger.x, z: trigger.z }, { x: b.ax, z: b.az }, { x: b.mx, z: b.mz }];
-    const lengths = path.slice(1).map((p, i) => Math.hypot(p.x - path[i].x, p.z - path[i].z)), total = lengths.reduce((a, c) => a + c, 0);
-    const at = (m: number) => { let rest = Math.max(0, Math.min(total, m)); for (let i = 0; i < lengths.length; i++) { if (rest <= lengths[i] || i === lengths.length - 1) { const k = lengths[i] ? Math.min(1, rest / lengths[i]) : 1; return { x: path[i].x + (path[i + 1].x - path[i].x) * k, z: path[i].z + (path[i + 1].z - path[i].z) * k }; } rest -= lengths[i]; } return path[path.length - 1]; };
-    const lead = 24, runTicks = lead + Math.ceil(total / 4.6 * TICKS);
-    if (skip && !b.slam) { b.start -= Math.max(0, runTicks + 20 - t); t = runTicks + 20; }
-    // The firefighter keeps waving (courier waiting) until the call has been read.
-    else if (t === lead && this.reading) { b.start++; t--; }
-    if (player.survivor) player.survivor.invulnerableUntil = tick + 30;
-    // The firefighter waves first, then turns in ahead of the courier.
-    if (ff && !ff.hidden) { if (t < runTicks - 20) this.present(ff, 'npc-wave-in'); else { ff.hidden = true; if (ff.civilian) ff.civilian.story = null; } }
-    if (t >= lead && t <= runTicks) {
-      const m = (t - lead) / TICKS * 4.6, p = at(m), q = at(m + .3);
-      this.move(player, p.x, p.z, q);
-      if (corgi && !corgi.hidden) { const c = at(m - 1.3), cq = at(m - 1); this.move(corgi, c.x, c.z, cq); }
+    const door = this.anchor('fire-bay-door'), trigger = this.anchor('fire-bay-trigger'), world = this.world;
+    const player = world.entities.get(1)!;
+    if (Math.hypot(player.transform.x - door.x, player.transform.z - door.z) > beat.fireTriggerM) return;
+    const dx = trigger.x - door.x, dz = trigger.z - door.z, d = Math.hypot(dx, dz) || 1;
+    const waving = { x: door.x - dz / d * 1.45 - dx / d * .6, z: door.z + dx / d * 1.45 - dz / d * .6 };
+    if (!this.l1.firefighterId) this.l1.firefighterId = this.pedestrian(waving, 'npc.firefighter-alive', 'firefighter', '#b5332b');
+    const ff = world.entities.get(this.l1.firefighterId ?? 0);
+    if (!ff) return;
+    this.place(ff, waving.x, waving.z, player.transform); this.present(ff, 'npc-wave-in');
+    const last = this.l1.say;
+    if (last?.id !== ff.id || world.tick - last.at >= 4 * TICKS) {
+      this.say(ff.id, 'firestation.firefighter');
+      // The delivered human bark is available; no recorded "Get in!" voice exists yet.
+      world.events.emit({ type: 'civilian.bark', tick: world.tick, id: ff.id, text: 'Hey!', position: { x: ff.transform.x, z: ff.transform.z } });
     }
-    if (t > runTicks && !player.hidden) { player.hidden = true; if (corgi) corgi.hidden = true; }
-    if (!b.slam && t >= runTicks + 20) {
-      b.slam = tick;
-      world.events.emit({ type: 'gate.changed', tick, id: 'fire-shutter', open: false });
-    }
-    if (b.slam) {
-      const since = tick - b.slam;
-      if (since === 40 || since === 70 || since === 95) {
-        const door = this.anchor('fire-bay-door');
-        world.events.emit({ type: 'story.thud', tick, position: { x: door.x, z: door.z } });
-      }
-      if (since === 30) this.say(0, 'firestation.caption');
-      // Fade to black once the caption has been read, then the result.
-      if (since > 30 && b.fadeAt === undefined && !this.reading) b.fadeAt = tick;
-      if (b.fadeAt !== undefined && tick >= b.fadeAt + 70) { this.mission.setState('safe', true); this.finish(); }
-    }
-  }
-  private move(e: EntitySnapshot, x: number, z: number, face: { x: number; z: number }): void {
-    this.place(e, x, z, face);
-    if (e.id === 1) { this.world.physics.playerBody!.setTranslation(e.transform, true); }
   }
 
   /** Beat 2 presentation hooks, called from the existing technician choreography. */
