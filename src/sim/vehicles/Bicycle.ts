@@ -30,6 +30,7 @@ const inPolygon = (p: Vec2, poly: readonly Vec2[]): boolean => {
  * crowds collide exactly like on foot. It deals no damage; touching an infected stops it and dismounts the rider.
  */
 export class Bicycle {
+  private claimedAt = -Infinity;
   readonly noBikeZones: NoBikeZone[] = [];
   private id = -1;
   private lastOutside: Vec2 = { x: 0, z: 0 };
@@ -79,7 +80,10 @@ export class Bicycle {
     if (!alive) { this.dismount(bike, player); return frame; }
     // Interact priority: an objective or device in reach takes the press; dismount only if nothing else does.
     const claimed = this.world.missions?.interactionAvailable() || this.world.interactables?.activeId != null;
-    if (frame.interact && !claimed) { this.dismount(bike, player); return { ...frame, interact: false }; }
+    if (claimed) this.claimedAt = this.world.tick;
+    // A ring that just completed by standing in it (stand-to-interact) still owns a late `E` for 1.5 s:
+    // the press the player meant for the counter must not also drop them off the bicycle (QA1-01).
+    if (frame.interact && !claimed && this.world.tick - this.claimedAt > 90) { this.dismount(bike, player); return { ...frame, interact: false }; }
     // Contact with an infected stops the bicycle and dismounts the rider (no damage, no knockback).
     for (const e of this.world.entities.iterate()) {
       if (!e.infected || e.health.current <= 0 || e.hidden || e.infected.hidden) continue;
@@ -90,6 +94,17 @@ export class Bicycle {
     // Speed actually achieved last tick: walls and props stop the bicycle.
     const loco = this.world.player!.locomotion, actual = Math.hypot(loco.displacement.x, loco.displacement.z) / FIXED_DT;
     if (actual < b.speed * .5) b.speed = actual;
+    // QA1-02: click-to-move rides exactly like walking (same nav route, steering and corner clearance), only
+    // faster (speedScale); the bicycle's own heading model is for direct WASD/stick steering. The steering-
+    // model version pinned itself on fence corners where the route turns tighter than the bike can.
+    if (frame.navigation) {
+      const v = loco.velocity, speed = Math.hypot(v.x, v.z);
+      if (speed > .2) { const desired = Math.atan2(v.z, v.x), err = Math.atan2(Math.sin(desired - b.heading), Math.cos(desired - b.heading)); b.steer = Math.max(-1, Math.min(1, err * 2)); b.heading = desired; } else b.steer = 0;
+      b.speed = actual; b.pedal += b.speed * FIXED_DT * 1.8;
+      const off = { down: false, held: false, up: false };
+      const routed: InputFrame = { ...frame, left: off, right: { ...off }, selector: 0, interact: !!claimed && frame.interact };
+      delete routed.attackTarget; return routed;
+    }
     const want = Math.min(1, Math.hypot(frame.move.x, frame.move.z));
     let target = 0;
     if (want > 0) {
@@ -116,6 +131,12 @@ export class Bicycle {
   postPhysics(): void {
     const bike = this.entity, b = bike?.bicycle, player = this.world.entities.get(1);
     if (!bike || !b || !player) return;
+    // QA2-01: the parked bicycle is solid for the rider's capsule (two circles along the frame), so pushes such
+    // as the lab blast can never leave the courier standing inside it.
+    if (this.world.player) {
+      const yaw = bike.transform.yaw, fx = Math.cos(yaw), fz = -Math.sin(yaw);
+      this.world.player.locomotion.props = b.mounted ? [] : [-.6, .1, .7].map(along => ({ transform: { x: bike.transform.x + fx * along, z: bike.transform.z + fz * along }, radius: .3 }));
+    }
     if (b.mounted) { Object.assign(bike.transform, { x: player.transform.x, z: player.transform.z, yaw: -b.heading }); player.riding = bike.id; }
     else delete player.riding;
   }
