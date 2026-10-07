@@ -29,15 +29,15 @@ const kind = (url: string, mime: string): string => {
   return 'other';
 };
 
-type Req = { url: string; kind: string; bytes: number; status: number; cached: boolean; phase: 'boot' | 'menu' | 'level' | 'background'; start: number; end: number; wall: number };
+type Req = { url: string; kind: string; bytes: number; status: number; cached: boolean; compressed: boolean; phase: 'boot' | 'menu' | 'level' | 'background'; start: number; end: number; wall: number; transfers: { at: number; bytes: number; decoded: number }[] };
 export type LoadRun = {
   profile: string; cache: 'cold' | 'warm'; firstPaintMs: number; titleMs: number; playableMs: number; startToPlayableMs: number; startToBeginMs: number; beginToPlayableMs: number; clickToPlayableExcludingReadingMs: number; firstFramesMaxMs: number; firstFramesOver50: number; menuLongTaskMaxMs: number; menuInpMs: number;
-  requests: number; bytes: number; bootBytes: number; menuBytes: number; levelBytes: number; criticalBytes: number; uniqueCriticalBytes: number; criticalRequests: number; backgroundBytes: number; byKind: Record<string, { requests: number; bytes: number }>;
+  requests: number; bytes: number; bootBytes: number; menuBytes: number; levelBytes: number; criticalBytes: number; uniqueCriticalBytes: number; criticalBodyBytes: number; criticalRequests: number; backgroundBytes: number; byKind: Record<string, { requests: number; bytes: number }>;
   levelByKind: Record<string, { requests: number; bytes: number }>;
   longTasks: { count: number; totalMs: number; maxMs: number; over50AfterStart: number; top: { start: number; ms: number }[] };
   measures: { name: string; ms: number; at: number }[]; backend: string; errors: string[]; loadAverage: number; playerMoved?: boolean;
   slowest: { url: string; kind: string; bytes: number; ms: number }[];
-  files: { url: string; bytes: number; phase: string }[];
+  files: { url: string; bytes: number; beforePlayableBytes: number; phase: string }[];
 };
 
 async function throttle(cdp: CDPSession, profile: ProfileName): Promise<void> {
@@ -71,15 +71,21 @@ const init = `(() => {
 
 export async function measureOnce(page: Page, cdp: CDPSession, base: string, profile: ProfileName, cache: 'cold' | 'warm'): Promise<LoadRun> {
   const reqs = new Map<string, Req>(); let phase: Req['phase'] = 'boot'; const errors: string[] = [];
-  page.on('pageerror', e => errors.push(`pageerror ${e.message}`)); page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') errors.push(`${m.type()} ${m.text().slice(0, 200)}`); });
-  cdp.on('Network.requestWillBeSent', e => { reqs.set(e.requestId, { url: e.request.url, kind: kind(e.request.url, ''), bytes: 0, status: 0, cached: false, phase, start: e.timestamp, end: e.timestamp, wall: e.wallTime * 1000 }); });
-  cdp.on('Network.responseReceived', e => { const r = reqs.get(e.requestId); if (r) { r.status = e.response.status; r.cached = e.response.fromDiskCache || e.response.fromServiceWorker || e.response.status === 304; r.kind = kind(e.response.url, e.response.mimeType); } });
+  const progress = (message: string) => { if (process.env.LOAD_VERBOSE === '1') console.log(`${profile} ${cache}: ${message}`); };
+  page.on('pageerror', e => { errors.push(`pageerror ${e.message}`); progress(`pageerror ${e.message}`); }); page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') { errors.push(`${m.type()} ${m.text().slice(0, 200)}`); progress(`${m.type()} ${m.text().slice(0, 200)}`); } });
+  cdp.on('Network.requestWillBeSent', e => { reqs.set(e.requestId, { url: e.request.url, kind: kind(e.request.url, ''), bytes: 0, status: 0, cached: false, compressed: false, phase, start: e.timestamp, end: e.timestamp, wall: e.wallTime * 1000, transfers: [] }); });
+  // Count partial/in-flight bodies at the playable mark too: loadingFinished alone would
+  // undercount music streams, or include bytes downloaded during the later settle window.
+  cdp.on('Network.dataReceived', e => { const r = reqs.get(e.requestId); if (r) r.transfers.push({ at: r.wall + (e.timestamp - r.start) * 1000, bytes: e.encodedDataLength, decoded: e.dataLength }); });
+  cdp.on('Network.responseReceived', e => { const r = reqs.get(e.requestId); if (r) { r.status = e.response.status; r.cached = e.response.fromDiskCache || e.response.fromServiceWorker || e.response.status === 304; r.compressed = Object.keys(e.response.headers).some(name => name.toLowerCase() === 'content-encoding'); r.kind = kind(e.response.url, e.response.mimeType); } });
   cdp.on('Network.requestServedFromCache', e => { const r = reqs.get(e.requestId); if (r) r.cached = true; });
   cdp.on('Network.loadingFinished', e => { const r = reqs.get(e.requestId); if (r) { r.bytes = e.encodedDataLength; r.end = e.timestamp; } });
   await page.goto(base, { waitUntil: 'commit', timeout: 120_000 });
+  progress('document committed');
   await page.waitForSelector('[data-menu-screen=title]:not([hidden])', { timeout: 180_000 });
   await page.waitForFunction(() => (window as unknown as { __title?: number }).__title !== undefined);
   const titleMs = await page.evaluate(() => (window as unknown as { __title: number }).__title);
+  progress(`title ${Math.round(titleMs)} ms`);
   phase = 'menu'; // requests from here to the L1 click: deferred boot audio and the level prefetch
   await page.click('[data-testid=start-game]');
   await page.click('[data-testid=character-female]');
@@ -89,7 +95,9 @@ export async function measureOnce(page: Page, cdp: CDPSession, base: string, pro
   for (const until = Date.now() + menuMs; Date.now() < until;) { await page.click('[data-testid=levels-back]'); await page.click('[data-testid=character-female]'); await page.waitForTimeout(400); }
   phase = 'level';
   await page.click('[data-testid=level-L1]');
+  progress('L1 selected');
   await page.waitForFunction(() => (window as unknown as { __begin?: number }).__begin !== undefined, undefined, { timeout: 300_000, polling: 16 });
+  progress('briefing ready');
   // Optional briefing reading time before pressing Begin (default 0: press immediately).
   const briefingMs = Number(process.env.LOAD_BRIEFING_MS ?? 0); if (briefingMs) await page.waitForTimeout(briefingMs);
   await page.getByRole('button', { name: 'Begin mission' }).click();
@@ -106,6 +114,7 @@ export async function measureOnce(page: Page, cdp: CDPSession, base: string, pro
   await page.waitForTimeout(Number(process.env.LOAD_SETTLE_MS ?? 1500));
   const settled = [...reqs.values()];
   const wall = (ms: number) => result.origin + ms;
+  const criticalBody = (r: Req) => r.cached ? 0 : r.bytes && r.wall + (r.end - r.start) * 1000 <= wall(result.playable) ? r.bytes : r.transfers.filter(t => t.at <= wall(result.playable)).reduce((n, t) => n + (t.bytes || (!r.compressed ? t.decoded : 0)), 0);
   for (const r of settled) r.phase = r.wall < wall(result.title) ? 'boot' : r.wall < wall(result.start) ? 'menu' : r.wall <= wall(result.playable) ? 'level' : 'background';
   const sum = (list: Req[]) => { const out: Record<string, { requests: number; bytes: number }> = {}; for (const r of list) { (out[r.kind] ??= { requests: 0, bytes: 0 }); out[r.kind].requests++; out[r.kind].bytes += r.bytes; } return out; };
   const lt = result.lt;
@@ -113,9 +122,10 @@ export async function measureOnce(page: Page, cdp: CDPSession, base: string, pro
     profile, cache, firstPaintMs: Math.round(result.firstPaint), titleMs: Math.round(titleMs), playableMs: Math.round(result.playable), startToPlayableMs: Math.round(result.playable - result.start), startToBeginMs: Math.round(result.begin - result.start), beginToPlayableMs: Math.round(result.playable - result.beginClick), clickToPlayableExcludingReadingMs: Math.round(result.playable - result.start - (result.beginClick - result.begin)), firstFramesMaxMs: Math.round(Math.max(...result.frames)), firstFramesOver50: result.frames.filter(f => f > 50).length, menuLongTaskMaxMs: Math.round(Math.max(0, ...result.lt.filter(t => t.start > result.title && t.start < result.start).map(t => t.ms))), menuInpMs: Math.round(Math.max(0, ...result.ev.filter(e => e.start > result.title && e.start <= result.start).map(e => e.ms))),
     requests: settled.length, bytes: settled.reduce((n, r) => n + r.bytes, 0), bootBytes: settled.filter(r => r.phase === 'boot').reduce((n, r) => n + r.bytes, 0), menuBytes: settled.filter(r => r.phase === 'menu').reduce((n, r) => n + r.bytes, 0), levelBytes: settled.filter(r => r.phase === 'level').reduce((n, r) => n + r.bytes, 0), criticalBytes: settled.filter(r => r.phase !== 'background').reduce((n, r) => n + r.bytes, 0), uniqueCriticalBytes: [...settled.filter(r => r.phase !== 'background').reduce((map, r) => map.set(r.url, Math.max(map.get(r.url) ?? 0, r.bytes)), new Map<string, number>()).values()].reduce((n, b) => n + b, 0), criticalRequests: settled.filter(r => r.phase !== 'background').length, backgroundBytes: settled.filter(r => r.phase === 'background').reduce((n, r) => n + r.bytes, 0),
     byKind: sum(settled), levelByKind: sum(settled.filter(r => r.phase === 'level')),
+    criticalBodyBytes: settled.reduce((n, r) => n + criticalBody(r), 0),
     longTasks: { count: lt.length, totalMs: Math.round(lt.reduce((n, t) => n + t.ms, 0)), maxMs: Math.round(Math.max(0, ...lt.map(t => t.ms))), over50AfterStart: lt.filter(t => t.start > result.playable).length, top: [...lt].sort((a, b) => b.ms - a.ms).slice(0, 8).map(t => ({ start: Math.round(t.start), ms: Math.round(t.ms) })) },
     measures: result.measures, backend: '', errors, loadAverage: loadavg()[0],
-    files: settled.map(r => ({ url: new URL(r.url).pathname, bytes: r.bytes, phase: r.phase })),
+    files: settled.map(r => ({ url: new URL(r.url).pathname, bytes: r.bytes, beforePlayableBytes: criticalBody(r), phase: r.phase })),
     slowest: settled.filter(r => !r.cached).sort((a, b) => b.bytes - a.bytes).slice(0, 12).map(r => ({ url: new URL(r.url).pathname, kind: r.kind, bytes: r.bytes, ms: Math.round((r.end - r.start) * 1000) })),
   };
 }
@@ -148,8 +158,13 @@ if (process.argv[1]?.endsWith('load-measure.ts')) {
   const spki = process.env.LOAD_SPKI ? [`--ignore-certificate-errors-spki-list=${process.env.LOAD_SPKI}`] : [];
   const browser = await chromium.launch({ headless: true, args: [...launchArgs, ...spki] });
   const all: LoadRun[] = [];
-  for (const profile of list.split(',') as ProfileName[]) all.push(...await measure(browser, base, profile, (process.env.LOAD_CACHES ?? 'cold,warm').split(',') as ('cold' | 'warm')[]));
-  await browser.close();
+  try {
+    for (const profile of list.split(',') as ProfileName[]) {
+      all.push(...await measure(browser, base, profile, (process.env.LOAD_CACHES ?? 'cold,warm').split(',') as ('cold' | 'warm')[]));
+      // Keep completed samples when a later run fails (or the shared Mac interrupts a batch).
+      if (out) writeFileSync(out, JSON.stringify({ base, at: new Date().toISOString(), runs: all }, null, 2));
+    }
+  } finally { await browser.close(); }
   const json = JSON.stringify({ base, at: new Date().toISOString(), runs: all }, null, 2);
   if (out) writeFileSync(out, json); else console.log(json);
   for (const r of all) console.log(`${r.profile.padEnd(8)} ${r.cache.padEnd(5)} FCP ${r.firstPaintMs} title ${r.titleMs} L1->Begin ${r.startToBeginMs} Begin->playable ${r.beginToPlayableMs} total ${r.startToPlayableMs} ms (excl. briefing reading ${r.clickToPlayableExcludingReadingMs}), first 3 s frames max ${r.firstFramesMaxMs} (>50: ${r.firstFramesOver50}), menu long task max ${r.menuLongTaskMaxMs} INP ${r.menuInpMs} | ${r.requests} req ${(r.bytes / 1e6).toFixed(2)} MB (boot ${(r.bootBytes / 1e6).toFixed(2)}, menu ${(r.menuBytes / 1e6).toFixed(2)}, level ${(r.levelBytes / 1e6).toFixed(2)}, critical ${(r.criticalBytes / 1e6).toFixed(2)} in ${r.criticalRequests} req, background ${(r.backgroundBytes / 1e6).toFixed(2)}) | long tasks ${r.longTasks.count} / ${r.longTasks.totalMs} ms, max ${r.longTasks.maxMs} | load ${r.loadAverage.toFixed(1)}\n   ${r.measures.filter(m => m.at >= 0).map(m => `${m.name}=${m.ms}@${m.at}`).join(' ')}${r.errors.length ? `\n   errors: ${r.errors.slice(0, 5).join(' | ')}` : ''}`);
