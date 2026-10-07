@@ -5,28 +5,32 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { expect, test } from 'vitest';
 import { QuadrupedAnimator } from '../../../src/render/characters/QuadrupedAnimator';
 import { PawContacts } from '../../../src/render/characters/PawContacts';
-import { cadenceStride, strideScale } from '../../../src/render/characters/clips';
+import { authoredClips, cadenceStride, sampleClip, strideScale } from '../../../src/render/characters/clips';
 
 test('corgi paws remain planted below the cadence cap in walk, trot and gallop', async () => {
   const results = [];
   for (const speed of [1.4, 3.8, 7]) {
     const bytes = readFileSync('public/assets/models/char.corgi.glb');
     const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+    const raw = scene.clone(true), rawProbe = new PawContacts(raw);
     const probe = new PawContacts(scene), animator = new QuadrupedAnimator(scene);
     animator.update(0, 0, 0); animator.update(1, speed, 0);
     const gait = animator.clip, stance = probe.stance(cadenceStride(gait, strideScale(scene), speed));
-    let first: Vector3 | undefined, last = 1, maxCm = 0, samples = 0;
+    let first: Vector3 | undefined, rawFirst: Vector3 | undefined, last = 1, maxCm = 0, beforeCm = 0, samples = 0;
     for (let i = 0; i < 600; i++) {
       const distance = speed * i / 240; scene.position.x = distance;
       animator.update(1 + i / 240, speed, distance);
       const phase = animator.gaitPhase, paw = new Vector3().fromArray(probe.points()[0]);
+      raw.position.x = distance; sampleClip(raw, gait, phase * authoredClips.get(gait)!.duration);
+      const original = new Vector3().fromArray(rawProbe.points()[0]);
       if (phase <= stance) {
-        if (!first || phase < last) first = paw.clone();
+        if (!first || phase < last) { first = paw.clone(); rawFirst = original.clone(); }
         maxCm = Math.max(maxCm, first.distanceTo(paw) * 100); samples++;
+        beforeCm = Math.max(beforeCm, rawFirst!.distanceTo(original) * 100);
       } else first = undefined;
       last = phase;
     }
-    results.push({ gait, speed, stance, samples, maxCm }); expect(samples).toBeGreaterThan(10); expect(maxCm).toBeLessThanOrEqual(3);
+    results.push({ gait, speed, stance, samples, beforeCm, maxCm }); expect(samples).toBeGreaterThan(10); expect(maxCm).toBeLessThanOrEqual(3);
   }
   mkdirSync('test-results/crowd-feel', { recursive: true }); writeFileSync('test-results/crowd-feel/corgi-feet.json', JSON.stringify(results, null, 2));
 });
