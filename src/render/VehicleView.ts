@@ -1,7 +1,7 @@
 import { modelLod } from './lodPolicy';
 import { paletteTokens } from '../data/palette';
 // Adapted from Bruno Simon folio-2025 VisualVehicle.js (MIT, 41046b5): wheel pivots/suspension and lamps.
-import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, type Object3D } from 'three/webgpu';
+import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
 import { productionObstacleAssets } from './EntityAssets';
 import { AssetRegistry } from '../assets/registry';
 import { atLeast } from '../assets/types';
@@ -14,6 +14,9 @@ import type { View } from './View';
 import type { AssetQuality } from '../assets/types';
 import type { Materials } from './Materials';
 import { lerp } from '../core/maths';
+import { anchorsFor } from './WorldLights';
+import { footprint, type LightField } from './LightField';
+const lampPosition = new Vector3(), lampDirection = new Vector3();
 interface Record { lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean }
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
 export class VehicleView extends Group {
@@ -109,6 +112,22 @@ export class VehicleView extends Group {
       const d = this.world.vehicles!.obstacles.debris[i]; let mesh = this.debris[i];
       if (!mesh) { mesh = new Mesh(this.propGeometry, this.materials.get('woodWarm')); mesh.scale.setScalar(.24); this.debris.push(mesh); this.add(mesh); }
       mesh.visible = d.expires > this.world.tick; if (mesh.visible) { mesh.position.copy(d.body.translation()); mesh.quaternion.copy(d.body.rotation()); }
+    }
+  }
+  /** E25: the driven car's headlights/brake lights and emergency light bars, from the asset's authored anchors. */
+  pushLights(field: LightField): void {
+    for (const [id, car] of this.world.vehicles!.cars) {
+      const record = this.records.get(id), driven = this.world.vehicles!.active === id;
+      if (!record || car.entity.health.current <= 0 || !(driven || car.physics.def.emergency)) continue;
+      record.model.updateWorldMatrix(true, false);
+      for (const a of anchorsFor(car.physics.def.asset)) {
+        const beacon = a.type === 'beacon' || !!a.strobe;
+        if (!a.pool && !beacon || !driven && !beacon) continue;
+        lampPosition.fromArray(a.position).applyMatrix4(record.model.matrixWorld); lampDirection.fromArray(a.direction).transformDirection(record.model.matrixWorld);
+        const light = footprint({ ...a, position: lampPosition.toArray(), direction: lampDirection.toArray() }, this.world.districts?.groundHeight(lampPosition.x, lampPosition.z) ?? 0, id * 3.1);
+        if (/brake/i.test(a.name) && !car.entity.vehicle!.braking) { light.r *= .3; light.g *= .3; light.b *= .3; }
+        field.push(light);
+      }
     }
   }
   feedback(event: VehicleFeedbackEvent, enabled: boolean): void {

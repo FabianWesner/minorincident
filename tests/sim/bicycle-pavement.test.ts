@@ -69,3 +69,20 @@ test('garage bat pickup permits walking back to the parked bike, ACTION remount 
     expect(b.riding).toBe(true); expect(Math.hypot(p.transform.x - start.x, p.transform.z - start.z)).toBeGreaterThan(29.8);
   } finally { w.dispose(); }
 });
+
+
+test('annex auto-parking leaves a clear rider start and a walking route through the gate @E19 @E19-AC16', async () => {
+  const { world: w } = await loadL1(1);
+  try {
+    const b = w.vehicles!.bicycle, p = w.entities.get(1)!;
+    b.entity!.bicycle!.mounted = true; b.entity!.bicycle!.heading = -1.635412228164495; p.riding = b.entity!.id;
+    teleport(w, 66.25, -10.25); step(w, 1);
+    teleport(w, 66.25, -10.35); step(w, 2);
+    expect(b.riding).toBe(false); assertPavement(w);
+    expect(w.infected!.nav.clear(p.transform.x, p.transform.z, .4), JSON.stringify({ rider: p.transform, bike: b.entity!.transform })).toBe(true);
+    const door = { x: 66, z: -12.3 };
+    w.setInput({ moveTarget: door }); step(w, 1); w.setInput({ moveTarget: undefined });
+    for (let i = 0; i < 600 && Math.hypot(p.transform.x - door.x, p.transform.z - door.z) > 1.2; i++) step(w, 1);
+    expect(Math.hypot(p.transform.x - door.x, p.transform.z - door.z)).toBeLessThanOrEqual(1.2);
+  } finally { w.dispose(); }
+});

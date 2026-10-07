@@ -10,9 +10,11 @@ import { seeThroughHole } from '../SeeThrough';
 import { FxPool } from './FxPool';
 
 type Blast = Extract<GameEvent, { type: 'explosion' }>;
-interface Column { x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number }
+interface Column { x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null }
 interface Glow { x: number; z: number; radius: number; color: number; intensity: number; born: number; life: number }
-export interface BlastHost { particles: FxPool; shake(strength: number): void; roll?(strength: number): void; focus?(): { x: number; z: number } }
+/** E25 light-field pool (LightField.addTransient): intensity on the §6 0..10 scale; ttl seconds (Infinity until removed). */
+export type BlastLight = (x: number, z: number, hex: string, intensity: number, radius: number, ttl: number, flicker: boolean) => { remove(): void } | null;
+export interface BlastHost { particles: FxPool; shake(strength: number): void; roll?(strength: number): void; focus?(): { x: number; z: number }; light?: BlastLight }
 
 /** Spec 07 §8 budgets: smoke puffs 400 high / 120 low; fireball spheres; flame cards; ground light pools. */
 const PUFFS = 400, PUFFS_LOW = 120, FIREBALLS = 48, FLAMES = 128, GLOWS = 40, PARTS = 12;
@@ -178,6 +180,10 @@ export class Blasts extends Group {
     // Beat 2 flash: screen flash (capped by flash reduction) + a strong, short ground light pool.
     this.flashPeak = Math.max(this.flash, this.flashReduction ? Math.min(.12, fx.flash) : fx.flash); this.flashAt = now;
     this.glow(x, z, r * 2.2, fx.light.color, (this.flashReduction ? .45 : 1) * Math.min(2.2, fx.light.intensity / 100), fx.light.seconds);
+    const hex = `#${fx.light.color.toString(16).padStart(6, '0')}`;
+    this.host.light?.(x, z, hex, Math.min(10, fx.light.intensity / 20) * (this.flashReduction ? .5 : 1), fx.light.range, fx.light.seconds, true);
+    // Mega blasts tint the whole town's light field orange for 5 s (spec 07 §5).
+    if (event.cls === 'mega') this.host.light?.(x, z, '#ff7a30', 4, 90, 5, false);
     // Beat 3 fireball: overlapping noise spheres around the centre, staggered by up to 0.12 s.
     const count = low ? Math.ceil(fx.fireball.count / 2) : fx.fireball.count;
     for (let i = 0; i < count; i++) {
@@ -262,10 +268,10 @@ export class Blasts extends Group {
       if (!burningFire && !burningProp && !car) continue;
       seen.add(e.id);
       let c = this.fireColumns.get(e.id);
-      if (!c) { c = { x: e.transform.x, z: e.transform.z, until: Infinity, rate: (car ? 3 : 1.6) * (low ? .5 : 1), size: car ? 1.8 : 1.1, heat: 1, acc: this.rng.next(), shade: car ? .14 : .2, cloud: 0 }; this.fireColumns.set(e.id, c); }
+      if (!c) { c = { x: e.transform.x, z: e.transform.z, until: Infinity, rate: (car ? 3 : 1.6) * (low ? .5 : 1), size: car ? 1.8 : 1.1, heat: 1, acc: this.rng.next(), shade: car ? .14 : .2, cloud: 0 }; c.light = this.host.light?.(c.x, c.z, '#ff8a3a', car ? 5 : 3, (e.hazard?.radius ?? 1.4) * 4, Infinity, true) ?? null; this.fireColumns.set(e.id, c); }
       c.x = e.transform.x; c.z = e.transform.z;
     }
-    for (const id of this.fireColumns.keys()) if (!seen.has(id)) this.fireColumns.delete(id);
+    for (const [id, c] of this.fireColumns) if (!seen.has(id)) { c.light?.remove(); this.fireColumns.delete(id); }
     for (const zone of this.world.combat?.effects.zones ?? []) {
       if (zone.kind !== 'smoke' || zone.expires <= this.world.tick) continue;
       clouds.add(zone.created);
@@ -332,6 +338,7 @@ export class Blasts extends Group {
     this.partMatrix.makeTranslation(x, 1, z); this.parts.setMatrixAt(0, this.partMatrix); this.parts.count = 1;
   }
   reset(): void {
+    for (const c of this.fireColumns.values()) c.light?.remove();
     this.fbExpiry.fill(0); this.puffExpiry.fill(0); this.columns.length = 0; this.fireColumns.clear(); this.cloudColumns.clear(); this.glowList.length = 0;
     for (const attr of [this.fb.fbParams, this.pf.pMotion]) { attr.array.fill(0); attr.needsUpdate = true; }
     this.scorch.reset(this.time); this.fireballs.visible = this.puffs.visible = this.flames.visible = this.glows.visible = false; this.parts.count = 0;

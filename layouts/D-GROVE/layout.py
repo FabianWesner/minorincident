@@ -400,12 +400,12 @@ fdx, fdy, fdz = dims(fs)
 FS_X = -73.2
 FS_Z = SFRONT + fdx / 2 + 2.5          # apron margin: the trigger sits outside the visual footprint
 FS_PID = g.place(fs, FS_X, FS_Z, FACE_YAW['N'])
-# model local +X is the apron/door side: door and trigger sit on the apron in front of the bay
-fx, fz = rot(FACE_YAW['N'], 3.9, 0)
+# The right bay aperture is local X=1.6, Z=-1.23. Completion is 1.2 metres inside.
+fx, fz = rot(FACE_YAW['N'], 1.6, -1.23)
 anchors['fire-bay-door'] = (FS_X + fx, FS_Z + fz)
-fx, fz = rot(FACE_YAW['N'], 6.6, 0)
+fx, fz = rot(FACE_YAW['N'], .4, -1.23)
 anchors['fire-bay-trigger'] = (FS_X + fx, FS_Z + fz)
-doors.append(anchors['fire-bay-trigger'])
+doors.append(anchors['fire-bay-door'])
 g.place('prop.fire-hydrant', -68.2, 36.2, 0, .8, soft=True)
 
 # Fire Station 3 interior: muffled interior + outro sting (lane H). Polygon = collision shell (local x -5.7..3.1, z +-6.1), facing north.

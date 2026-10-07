@@ -1,0 +1,201 @@
+{
+  "lane": "art-l2l3",
+  "assets": [
+    {
+      "id": "int.fire-station-bay",
+      "triangles": {
+        "lod0": 2812,
+        "lod1": 768,
+        "lod2": 468
+      },
+      "contactSheet": "test-results/art-l2l3/int.fire-station-bay/lod-contact.png"
+    },
+    {
+      "id": "prop.axe-rack",
+      "triangles": {
+        "lod0": 396,
+        "lod1": 60,
+        "lod2": 60
+      },
+      "contactSheet": "test-results/art-l2l3/prop.axe-rack/lod-contact.png"
+    },
+    {
+      "id": "wpn.halligan",
+      "triangles": {
+        "lod0": 220,
+        "lod1": 60,
+        "lod2": 60
+      },
+      "contactSheet": "test-results/art-l2l3/wpn.halligan/lod-contact.png"
+    },
+    {
+      "id": "prop.checkpoint-gate",
+      "triangles": {
+        "lod0": 396,
+        "lod1": 108,
+        "lod2": 108
+      },
+      "contactSheet": "test-results/art-l2l3/prop.checkpoint-gate/lod-contact.png"
+    },
+    {
+      "id": "prop.jersey-barrier",
+      "triangles": {
+        "lod0": 160,
+        "lod1": 64,
+        "lod2": 28
+      },
+      "contactSheet": "test-results/art-l2l3/prop.jersey-barrier/lod-contact.png"
+    },
+    {
+      "id": "prop.crowd-fence",
+      "triangles": {
+        "lod0": 572,
+        "lod1": 156,
+        "lod2": 108
+      },
+      "contactSheet": "test-results/art-l2l3/prop.crowd-fence/lod-contact.png"
+    },
+    {
+      "id": "prop.armory-table",
+      "triangles": {
+        "lod0": 440,
+        "lod1": 120,
+        "lod2": 96
+      },
+      "contactSheet": "test-results/art-l2l3/prop.armory-table/lod-contact.png"
+    },
+    {
+      "id": "veh.evac-bus",
+      "triangles": {
+        "lod0": 3306,
+        "lod1": 1354,
+        "lod2": 1066
+      },
+      "contactSheet": "test-results/art-l2l3/veh.evac-bus/lod-contact.png"
+    },
+    {
+      "id": "kit.army-checkpoint",
+      "triangles": {
+        "lod0": 15576,
+        "lod1": 3864,
+        "lod2": 696
+      },
+      "contactSheet": "test-results/art-l2l3/kit.army-checkpoint/lod-contact.png"
+    },
+    {
+      "id": "decay.looted-store",
+      "triangles": {
+        "lod0": 792,
+        "lod1": 216,
+        "lod2": 156
+      },
+      "contactSheet": "test-results/art-l2l3/decay.looted-store/lod-contact.png"
+    },
+    {
+      "id": "decay.damaged-sign",
+      "triangles": {
+        "lod0": 264,
+        "lod1": 72,
+        "lod2": 36
+      },
+      "contactSheet": "test-results/art-l2l3/decay.damaged-sign/lod-contact.png"
+    },
+    {
+      "id": "decay.makeshift-barricade",
+      "triangles": {
+        "lod0": 440,
+        "lod1": 120,
+        "lod2": 120
+      },
+      "contactSheet": "test-results/art-l2l3/decay.makeshift-barricade/lod-contact.png"
+    },
+    {
+      "id": "decay.broken-glass",
+      "triangles": {
+        "lod0": 120,
+        "lod1": 120,
+        "lod2": 120
+      },
+      "contactSheet": "test-results/art-l2l3/decay.broken-glass/lod-contact.png"
+    },
+    {
+      "id": "decay.boarded-windows",
+      "triangles": {
+        "lod0": 688,
+        "lod1": 96,
+        "lod2": 96
+      },
+      "contactSheet": "test-results/art-l2l3/decay.boarded-windows/lod-contact.png"
+    },
+    {
+      "id": "decay.dropped-belongings",
+      "triangles": {
+        "lod0": 352,
+        "lod1": 96,
+        "lod2": 60
+      },
+      "contactSheet": "test-results/art-l2l3/decay.dropped-belongings/lod-contact.png"
+    },
+    {
+      "id": "veh.sedan-red.wrecked",
+      "triangles": {
+        "lod0": 3392,
+        "lod1": 3332,
+        "lod2": 1368
+      },
+      "contactSheet": "test-results/art-l2l3/veh.sedan-red.wrecked/lod-contact.png"
+    },
+    {
+      "id": "veh.sedan-blue.wrecked",
+      "triangles": {
+        "lod0": 3328,
+        "lod1": 3268,
+        "lod2": 1956
+      },
+      "contactSheet": "test-results/art-l2l3/veh.sedan-blue.wrecked/lod-contact.png"
+    },
+    {
+      "id": "veh.police-sedan.wrecked",
+      "triangles": {
+        "lod0": 3665,
+        "lod1": 3605,
+        "lod2": 1799
+      },
+      "contactSheet": "test-results/art-l2l3/veh.police-sedan.wrecked/lod-contact.png"
+    }
+  ],
+  "validationChecks": 721,
+  "validationErrors": [],
+  "commits": [
+    "14d9bbc8",
+    "09a68a75"
+  ],
+  "validation": {
+    "assets": {
+      "passed": 721,
+      "failed": 0
+    },
+    "typecheck": "pass",
+    "lint": "pass",
+    "unit": {
+      "filesPassed": 87,
+      "passed": 284,
+      "failed": 0
+    },
+    "lights": {
+      "anchors": 291,
+      "assets": 72,
+      "errors": 0
+    },
+    "verifyE17": {
+      "nodePassed": 41,
+      "nodeSkipped": 684,
+      "nodeFailed": 0,
+      "browser": {
+        "passed": 39,
+        "failed": 0
+      },
+      "result": "pass"
+    }
+  }
+}

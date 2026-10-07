@@ -187,7 +187,7 @@ export class Game {
         this.quality.startLevel();this.applyQuality();
         if (performanceScenario) installPerformanceLevel(this.world, this.quality.tier, performanceScenario);
         const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); }
-        if (performanceScenario) this.view.preset(performanceLevels[performanceScenario].spot);
+        if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
       }catch(error){ this.view.unfreeze(); this.view.missionHidden = false; throw error; }
       finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
@@ -273,7 +273,7 @@ export class Game {
    * they are not GPU timer queries. Without profiling, the extra timers stay zero. */
   perf() {
     const info = this.view.renderer.info;
-    return { profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null };
+    return { profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null, lighting: this.view.lightingPerf() };
   }
   /** Debug-only synthetic GPU cost. It changes the quality observation, never sim time. */
   simulateFrameCost(ms: number): void { if (!Number.isFinite(ms) || ms < 0) throw new RangeError('Invalid frame cost'); this.simulatedFrameMs = ms; }
