@@ -11,6 +11,9 @@ test('S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserv
     await page.mouse.click(200, 250);
     // Further gestures must not restart the first-unlock fade.
     expect(await page.evaluate(() => window.__SS__!.audio.snapshot().master)).toBeCloseTo(2, 3);
+    // Startup banks now decode after gameplay is ready. Settle the initial music
+    // before checking that a later suspend/resume replays no queued cues.
+    await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.position)).toBeGreaterThan(0);
     const rows = [];
     for (const trigger of ['visibilitychange', 'blur', 'pagehide'] as const)
         for (const muted of [false, true]) {

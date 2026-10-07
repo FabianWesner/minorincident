@@ -451,9 +451,7 @@ export class AudioService implements Lifecycle {
             const generation = this.generation;
             void Promise.all(['ambience', `music-${this.level}`].map(category => this.registry.load(category))).then(() => {
                 if (generation !== this.generation || this.disposed) return;
-                // The next foreground tick/gesture starts playback. A decode completing
-                // during a suspend/resume transition must not introduce queued cues.
-                this.starting = false;
+                this.starting = false; this.startBedsAndMusic();
             }).catch(error => { if (generation === this.generation) { this.starting = false; this.registry.errors.push(String(error)); } });
             return;
         }
