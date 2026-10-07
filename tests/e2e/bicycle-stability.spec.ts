@@ -7,8 +7,11 @@ import { boot, test, expect, testUrl } from './fixtures';
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as DistrictLayout;
 for (const skin of [0, 1]) test(`bike skin=${skin} mounts level on the start sidewalk and rider follows a 90 degree turn @E19`, async ({ page }, info) => {
   await boot(page, `${testUrl}&skin=${skin}`);
+  await page.evaluate(() => window.__SS__!.loadLevel('L1', { seed: 1 }));
+  await page.getByRole('button', { name: 'Begin mission' }).click();
+  await page.evaluate(() => window.__SS__!.pause());
   const mounted = await page.evaluate(async () => {
-    const a = window.__SS__!; await a.loadLevel('L1', { seed: 1 }); a.pause();
+    const a = window.__SS__!;
     const bike = a.getState().entities.find(e => e.bicycle)!;
     a.teleport('player', { x: bike.transform.x + .9, z: bike.transform.z }); a.input.set({ interact: true }); await a.step(1); a.input.set({ interact: false }); await a.step(40);
     return a.getState();
