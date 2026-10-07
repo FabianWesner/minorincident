@@ -80,6 +80,10 @@ for (const weapon of ['weapon.fists', 'weapon.bat']) {
         return a.input.project({ x: t.x, z: t.z });
       }, id);
       await page.mouse.click(point.x, point.y); await page.evaluate(() => window.__SS__!.step(12));
+      if (click === 0) {
+        await page.evaluate(() => window.__SS__!.screenshotReady());
+        await page.screenshot({ path: `${output}/ground-hit-${weapon.split('.')[1]}.png` });
+      }
     }
     const result = await page.evaluate(id => ({ health: window.__SS__!.getEntity(id)!.health.current,
       hits: window.__SS__!.events().filter(e => e.type === 'combat.hit' && e.targetId === id && e.actionId !== 'weapon.kick') }), id);
