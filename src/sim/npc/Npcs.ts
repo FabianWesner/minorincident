@@ -37,11 +37,12 @@ export class Npcs {
     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }
   }
   /** Place collision-safe rectangular routines from authored navigation, never inside buildings. */
-  populate(count: number): void {
+  populate(count: number, offscreen = false): void {
     const nav = this.world.infected!.nav; let placed = 0;
     for (let z = nav.center.z - nav.ground.depth / 2 + 3; z < nav.center.z + nav.ground.depth / 2 - 6 && placed < count; z += 6) {
       for (let x = nav.center.x - nav.ground.width / 2 + 3; x < nav.center.x + nav.ground.width / 2 - 6 && placed < count; x += 6) {
         const points = [{ x, z }, { x: x + 3, z }, { x: x + 3, z: z + 3 }, { x, z: z + 3 }];
+        if (offscreen && !this.world.infected!.director.offscreen(points[0])) continue;
         if (!points.every((p, i) => nav.visible(p, points[(i + 1) % 4], .65))) continue;
         const role = civilianRoles[placed % civilianRoles.length];
         const id = this.civilians.spawn(role.role, points[0], { waypoints: points, ambient: true });
@@ -49,7 +50,7 @@ export class Npcs {
         placed++;
       }
     }
-    if (placed !== count) throw new Error('Insufficient safe civilian routines');
+    if (!offscreen && placed !== count) throw new Error('Insufficient safe civilian routines');
   }
   /** Per-level campaign authoring entry point; density is quality-scaled and pets are separate. */
   configure(level: number, tier: 'high' | 'low' = 'high', count = npcs.density[level - 1] * (tier === 'low' ? .6 : 1)): void {
@@ -94,7 +95,7 @@ export class Npcs {
     for (const e of ai.active) ai.pool.push(e);
     ai.active.length = 0; ai.director.queue.length = 0;
     for (const e of this.world.entities.iterate()) {
-      if (e.infected) { ai.pool.pop(); ai.active.push(e); }
+      if (e.infected && !e.corpse) { ai.pool.pop(); ai.active.push(e); }
       const c = e.civilian;
       if (c) { c.entered += delta; for (const key of ['until', 'pauseUntil', 'knockedUntil', 'activityUntil', 'activityStarted'] as const) if (c[key]) c[key]! += delta; if (c.lastTravelProgress !== undefined) c.lastTravelProgress += delta; }
       if (e.companion) { if (e.companion.until) e.companion.until += delta; if (e.companion.barkAt) e.companion.barkAt += delta; if (e.companion.hurtAt) e.companion.hurtAt += delta; }
@@ -112,21 +113,18 @@ export class Npcs {
   setQuality(tier: 'high' | 'low'): void {
     if(this.slice)return;
     if (this.civilians.outbreak) { this.world.infected!.director.tier = tier; return; }
-    for (const e of this.world.entities.iterate()) if (e.civilian?.ambient) { this.world.spatial.delete(e.id); this.world.entities.delete(e.id); }
-    this.configure(this.civilians.level, tier);
+    this.world.infected!.director.setTier(tier);
+    this.ambientTarget = npcs.density[this.civilians.level - 1] * (tier === 'low' ? .6 : 1);
   }
   private density(): void {
     if (!this.ambientTarget || this.world.tick % 60 !== 0) return;
     // Fractional low-tier targets (e.g. L5=3.6) alternate counts over ten seconds, preserving the average.
     const floor = Math.floor(this.ambientTarget), fraction = this.ambientTarget - floor;
     const desired = floor + Number(fraction > 0 && this.world.tick % 600 >= Math.round((1 - fraction) * 600));
-    let count = 0, removable: EntitySnapshot | undefined;
-    for (const e of this.world.entities.iterate()) if (e.civilian?.ambient && !e.civilian.pet && !e.hidden && e.civilian.state !== 'finished') { count++; if (e.civilian.state === 'calm') removable = e; }
-    if (count < desired) this.populate(desired - count);
-    else if (count > desired && removable) {
-      this.world.entities.delete(removable.id); this.world.spatial.delete(removable.id);
-      for (const e of this.world.entities.iterate()) if (e.civilian?.owner === removable.id && e.civilian.state === 'calm') { this.world.entities.delete(e.id); this.world.spatial.delete(e.id); }
-    }
+    let count = 0;
+    for (const e of this.world.entities.iterate()) if (e.civilian?.ambient && !e.civilian.pet && !e.hidden && e.civilian.state !== 'finished') count++;
+    // Density and quality cap future arrivals; existing people keep their IDs.
+    if (count < desired) this.populate(desired - count, true);
   }
   update(): void { this.density(); this.civilians.update(); this.companion.update(); this.escorts.update(); this.traffic.update(); }
 }

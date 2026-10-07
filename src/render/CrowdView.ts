@@ -1,7 +1,15 @@
+import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
+import { CrowdVisibility } from './CrowdVisibility';
+import { simplifyCrowdLod } from './characters/crowdLodGeometry';
+import { crowdLod } from './lodPolicy';
+import { StaticCorpses } from './characters/StaticCorpses';
+import { CrowdLocomotion } from './characters/CrowdLocomotion';
+import { GaitPhase } from './characters/GaitPhase';
+import { CrowdFigureProbe } from './characters/CrowdFigureProbe';
 import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
-import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3 } from 'three/webgpu';
+import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, ConeGeometry, DoubleSide, FrontSide, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
 import { attribute, instancedBufferAttribute, mat4, normalGeometry, vec3, positionGeometry, mix, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform } from 'three/tsl';
 import { crowdBlendedMatrix, packCrowdParts } from '../assets/crowd';
 import type { Materials } from './Materials';
@@ -15,13 +23,13 @@ import { createInfectedPlaceholder } from './characters/infectedPlaceholder';
 import type { View } from './View';
 import { bakeInfected, framesPerClip, infectedClips } from './characters/bakeInfected';
 import { loadGate } from '../assets/loadGate';
-import { authoredClips, cadenceStride, strides } from './characters/clips';
+import { authoredClips, strides } from './characters/clips';
 import { CrowdPosePalette } from './characters/CrowdPosePalette';
 import { MotionPresentation } from './characters/MotionPresentation';
 import { MotionPhase } from './characters/MotionPhase';
 import { loadMeasure } from '../assets/loadTiming';
 import { keepsLook } from '../sim/outbreak/appearance';
-interface Batch { poses: CrowdPosePalette; mesh: InstancedMesh; state: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
+interface Batch { locomotion: CrowdLocomotion; probe: CrowdFigureProbe; poses: CrowdPosePalette; mesh: InstancedMesh; state: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
 const variantShirts: Record<string, Color> = { 'inf.jogger': new Color('#3178ac'), 'inf.cashier': new Color('#e5d9b9'), 'inf.delivery-driver': new Color('#d4ad32'), 'inf.suburban-mom': new Color('#79865b'), 'inf.bbq-dad': new Color('#a86645'), 'inf.bathrobe-neighbor': new Color('#ac7a91') };
 /** One instanced, rigid-part GPU batch per archetype. Scene graph size never grows with infected population. */
 /** E19 §5.4: the speed tier must read from the silhouette. Prefer the sim's tier,
@@ -36,6 +44,13 @@ export class CrowdView extends Group {
   private readonly definitions = new Map<string, { id: string; asset: string; windup: number }>();
   private readonly pending = new Map<string, Promise<void>>();
   private readonly heroSlots = new Map<string, InstancedMesh>();
+  private readonly visibility = new CrowdVisibility();
+  private readonly heroIds = new Set<number>();
+  private readonly previousHeroes = new Set<number>();
+  private readonly nearest: { id: number; distance: number }[] = [];
+  private readonly heroBands = new Map<number, boolean>();
+  private readonly rolePixels = new Map<string, number>();
+  private readonly roleLods = new Map<string, 'lod1' | 'lod2'>();
   private readonly frustum = new Frustum();
   private readonly projection = new Matrix4();
   private readonly bounds = new Sphere(new Vector3(), 1);
@@ -44,8 +59,10 @@ export class CrowdView extends Group {
   private readonly transform = new Matrix4();
   private readonly presentation = new MotionPresentation();
   private readonly motion = new MotionPhase();
-  /** L1 v2: corpses persist (pause/resume, checkpoint restore) until the sim's corpse cap recycles the oldest; other levels fade at 9 s. */
-  private get corpseTicks(): number { return this.world.infected?.l1 ? Infinity : 540; }
+  private readonly gait = new GaitPhase();
+  /** Corpses persist until a level/checkpoint resets their sim IDs. */
+  private get corpseTicks(): number { return Infinity; }
+  private readonly staticCorpses = new StaticCorpses();
   private readonly corpses = new Map<number, { x: number; z: number; sourceX: number; sourceZ: number; deadAt: number }>();
   private readonly telegraphs: InstancedMesh[] = [];
   private readonly shadows: InstancedMesh;
@@ -56,7 +73,7 @@ export class CrowdView extends Group {
   setQuality(tier: QualityTier): void { this.cullDistance = qualityBudgets[tier].cullDistance; this.low = tier === 'low'; }
   private readonly logs: { id: string; reason: string }[] = [];
   constructor(private readonly world: SimWorld, private low = false, private readonly shading?: Materials) {
-    super(); this.name = 'infected-crowd';
+    super(); this.name = 'infected-crowd'; this.add(this.staticCorpses);
     this.caps.frustumCulled = false; this.caps.count = 0; this.add(this.caps);
     this.registry = new AssetRegistry((event) => this.logs.push(event));
     const ring = new RingGeometry(0.7, 0.8, 24); ring.rotateX(-Math.PI / 2);
@@ -95,11 +112,21 @@ export class CrowdView extends Group {
       if (this.disposed) return;
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback), capacity = role === 'crow' ? 800 : 350;
+      const locomotion = new CrowdLocomotion(model, baked.clip);
+      const probe = new CrowdFigureProbe();
+      // Baking expands rigid parts to triangle soup. Index identical vertices before
+      // instanced attributes are attached: same surfaces, fewer animated vertices.
+      deinterleaveGeometry(baked.geometry);
+      const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
+      if (lod === 'lod2' && !fallback) {
+        await simplifyCrowdLod(baked.geometry);
+        if (this.disposed) { baked.geometry.dispose(); return; }
+      }
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
       packCrowdParts(baked.geometry);
-      const tint = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
+      const tint = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4).setUsage(StreamDrawUsage);
       // Pack frame, detached leg, gore mask and flash into one slot: WebGL2 guarantees 16 attributes.
-      const state = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
+      const state = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4).setUsage(StreamDrawUsage);
       baked.geometry.setAttribute('_state', state); baked.geometry.setAttribute('_variant', tint);
       const feedbackState = attribute('_state', 'vec4'), parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
       const opacity = feedbackState.w.div(2).floor().div(255).oneMinus();
@@ -114,6 +141,7 @@ export class CrowdView extends Group {
       const threshold = bayer2(pixel).mul(4).add(bayer2(pixel.div(2).floor())).add(.5).div(16);
       material.maskNode = opacity.greaterThan(threshold);
       material.depthTest = material.depthWrite = true;
+      material.side = baked.doubleSided ? DoubleSide : FrontSide;
       const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
       const matrix = crowdBlendedMatrix(texture, parts.x, feedbackState.x, outgoing, weight);
       // Part indices are uniforms, not shader constants: every archetype/LOD compiles to the same program (one shared
@@ -129,64 +157,89 @@ export class CrowdView extends Group {
       });
       const slot = lod === 'lod0' ? this.heroSlots.get(def.id) : undefined;
       const mesh = slot ?? new InstancedMesh(baked.geometry, material, capacity);
+      mesh.instanceMatrix.setUsage(StreamDrawUsage);
       if (slot) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.geometry = baked.geometry; mesh.material = material; this.heroSlots.delete(def.id); } mesh.userData.preRenderSolo = true; mesh.name = def.id; mesh.frustumCulled = false; mesh.count = 0;
       // E17's explicit instance * part order: positionNode runs after default instancing.
-      const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1);
-      mesh.onBeforeRender = () => { matrices.version = mesh.instanceMatrix.version; };
+      const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
+      mesh.onBeforeRender = () => { matrices.version = mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, mesh.count * 16); };
       const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset);
       const instance = mat4(column(0), column(4), column(8), column(12));
       material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry.mul(visible), 1))).xyz;
       material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
-      this.batches.set(`${def.id}:${lod}`, { poses, lod, role: def.id, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
+      mesh.onAfterRender = () => probe.draw();
+      this.batches.set(`${def.id}:${lod}`, { locomotion, probe, poses, lod, role: def.id, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
+  private hasRole(id: string): boolean { return this.batches.has(`${id}:lod1`) || this.batches.has(`${id}:lod2`); }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   update(view?: View, alpha = 1): void {
+    this.staticCorpses.begin(id => this.world.entities.get(id));
     for (const [id, pose] of this.corpses) if (!this.world.entities.get(id)?.infected || this.world.entities.get(id)!.health.current > 0 || this.world.tick - pose.deadAt > this.corpseTicks) this.corpses.delete(id);
-    for (const batch of this.batches.values()) batch.count = 0;
+    for (const batch of this.batches.values()) { batch.count = 0; batch.probe.begin(); }
     for (const mesh of this.telegraphs) mesh.count = 0; this.shadows.count = 0; this.caps.count = 0;
     for (const [id, feedback] of this.feedback) { const e = this.world.entities.get(id); if (!e?.combat || e.hidden || e.infected?.hidden) this.feedback.delete(id); else if (e.health.current > 0) feedback.mask = 0; }
     const player = this.world.entities.get(1)!;
     const focus = view?.cameraTarget ?? player.transform;
     if (view) this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
-    const heroes = new Set<number>();
-    if (!this.low) {
-      const nearest = [...this.world.entities.iterate()].filter(e => e.faction === 'infected' && e.combat && (e.health.current > 0 || this.world.tick - (e.infected?.deadAt ?? 0) < this.corpseTicks) && !e.hidden && !e.infected?.hidden && e.archetype !== 'infected.crow')
-        .map(e => ({ e, distance: Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z) }))
-        .filter(({ e, distance }) => {
-          if (distance > 12) return false;
-          if (!view) return true;
-          const variant = e.infected?.model ?? e.infected?.variant, key = variant && this.definitions.has(variant) ? variant : this.definitions.has(e.archetype) ? e.archetype : 'infected.runner';
-          const dimensions = this.registry.definition(this.definitions.get(key)!.asset).dimensions;
-          this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);
-          this.bounds.radius = Math.hypot(dimensions.x, dimensions.y, dimensions.z) / 2;
-          return this.frustum.intersectsSphere(this.bounds);
-        }).sort((a, b) => a.distance - b.distance).slice(0, 8);
-      for (const { e } of nearest) heroes.add(e.id);
+    this.visibility.begin(view?.camera, typeof innerHeight === 'number' ? innerHeight : 900);
+    const heroes = this.heroIds; this.previousHeroes.clear();
+    for (const id of heroes) this.previousHeroes.add(id);
+    heroes.clear(); this.nearest.length = 0; this.rolePixels.clear();
+    if (!this.low) for (const e of this.world.entities.iterate()) {
+      if (e.faction !== 'infected' || !e.combat || e.hidden || e.infected?.hidden || e.archetype === 'infected.crow' || e.corpse || keepsLook(e)) continue;
+      if (e.health.current <= 0 && this.world.tick - (e.infected?.deadAt ?? 0) >= this.corpseTicks) continue;
+      const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
+      if (distance > this.cullDistance) continue;
+      const variant = e.infected?.model ?? e.infected?.variant;
+      const role = this.hasRole(e.archetype) ? e.archetype : 'infected.runner';
+      const key = variant && this.hasRole(variant) ? variant : role;
+      const d = this.registry.definition(this.definitions.get(key)!.asset).dimensions;
+      if (!this.visibility.visible(e.transform.x, e.transform.y - .7 + d.y / 2, e.transform.z, Math.hypot(d.x, d.y, d.z) / 2 + .75)) continue;
+      const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, d.y);
+      this.rolePixels.set(key, Math.max(this.rolePixels.get(key) ?? 0, pixels));
+      if (distance > (this.previousHeroes.has(e.id) ? 13 : 12)) continue;
+      const hero = !view || pixels > (this.heroBands.get(e.id) ? 164 : 196);
+      this.heroBands.set(e.id, hero); if (!hero) continue;
+      // Hold an existing hero until a replacement is clearly closer.
+      const score = distance - (this.previousHeroes.has(e.id) ? .75 : 0);
+      let at = 0; while (at < this.nearest.length && this.nearest[at].distance <= score) at++;
+      if (at < 8) { this.nearest.splice(at, 0, { id: e.id, distance: score }); if (this.nearest.length > 8) this.nearest.pop(); }
     }
+    // One background tier per role protects the largest visible silhouette and
+    // avoids a third active draw for every archetype in a mixed horde.
+    for (const [role, pixels] of this.rolePixels) this.roleLods.set(role, crowdLod(pixels, this.roleLods.get(role), false));
+    for (const e of this.nearest) heroes.add(e.id);
     for (const e of this.world.entities.iterate()) {
       if (e.id === 1 || e.faction !== 'infected' || !e.combat) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
-      if (e.hidden || e.infected?.hidden || distance > this.cullDistance || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > this.corpseTicks) continue;
+      if (e.hidden || e.infected?.hidden || !view && distance > this.cullDistance && !e.corpse || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > this.corpseTicks) continue;
       // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
-      if (keepsLook(e)) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); continue; }
+      if (keepsLook(e)) { if (!e.corpse && this.shadows.count < 350) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); } continue; }
+      if (e.corpse && this.staticCorpses.has(e.id)) continue;
       const availableLod = this.low ? 'lod2' : 'lod1';
-      const role = this.batches.has(`${e.archetype}:${availableLod}`) ? e.archetype : 'infected.runner';
+      const role = this.hasRole(e.archetype) ? e.archetype : 'infected.runner';
       const variant = e.infected?.model ?? e.infected?.variant;
-      const key = variant && this.batches.has(`${variant}:${availableLod}`) ? variant : role;
+      const key = variant && this.hasRole(variant) ? variant : role;
       const def = this.definitions.get(key)!;
       const dimensions = this.registry.definition(def.asset).dimensions;
       this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);
-      this.bounds.radius = Math.hypot(dimensions.x, dimensions.y, dimensions.z) / 2;
-      if (view && !this.frustum.intersectsSphere(this.bounds)) continue;
-      let lod = this.low || distance > 30 ? 'lod2' : 'lod1';
+      this.bounds.radius = Math.hypot(dimensions.x, dimensions.y, dimensions.z) / 2 + .75;
+      if (e.archetype === 'infected.crow' && e.infected) for (let bird = 0; bird < 20; bird++) {
+        if (!e.infected.birdAlive[bird] && !((e.infected.birdDeadMask ?? 0) & 1 << bird)) continue;
+        const p = e.infected.birdPositions;
+        this.bounds.radius = Math.max(this.bounds.radius, Math.hypot(p[bird * 3] - this.bounds.center.x, p[bird * 3 + 1] - this.bounds.center.y, p[bird * 3 + 2] - this.bounds.center.z) + .5);
+      }
+      if (view && !e.corpse && !this.frustum.intersectsSphere(this.bounds)) continue;
+      let lod: 'lod0' | 'lod1' | 'lod2' = this.low ? 'lod2' : this.roleLods.get(key) ?? 'lod2';
       if (heroes.has(e.id)) {
         if (this.batches.has(`${key}:lod0`)) lod = 'lod0';
         else if (!this.pending.has(key)) {
           this.pending.set(key, this.loadBatch(def, 'lod0').finally(() => this.pending.delete(key)));
         }
       }
-      const batch = this.batches.get(`${key}:${lod}`)!;
+      // Quality changes/streaming may not have the requested tier yet. Keep the loaded figure.
+      const batch = this.batches.get(`${key}:${lod}`) ?? this.batches.get(`${key}:${availableLod}`) ?? this.batches.get(`${key}:lod2`) ?? this.batches.get(`${key}:lod1`);
+      if (!batch) continue;
       const b = e.infected ?? { state: e.health.current <= 0 ? 'dead' : e.combat.attacking ? 'attack' : 'idle', until: 0, deadAt: 0, legLost: false, special: '', detached: false, variant: '', birdAlive: [], birdPositions: [], dx: 0, dz: 0 };
       const feedback = this.feedback.get(e.id);
       const renderTick = Math.max(0, this.world.tick + alpha - 1);
@@ -194,24 +247,36 @@ export class CrowdView extends Group {
       const motion = e.motion ?? this.motion.sample(e.id, tick, e.transform.x, e.transform.z), gaitDistance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), reaction = e.combat.reaction;
       const age = reaction ? (this.world.tick - reaction.started) / 60 : Infinity;
       const death = e.archetype === 'infected.crawler' ? 'death-side' : 'death-back';
-      let clip: typeof infectedClips[number] = b.state === 'dead' ? death : b.legLost || e.archetype === 'infected.crawler' ? 'crawl' : b.state === 'attack' && motion.speed < 1.2 ? this.world.tick < b.until ? 'windup' : 'swing' : motion.speed > 2 ? tierGait(b as { speed?: number; tier?: string; l1?: { tier: string } }) : motion.speed > .2 ? 'shamble' : (b.state as string) === 'search' || (b.state as string) === 'attracted' ? 'infected-search' : 'infected-idle';
-      if (reaction && tick < reaction.until && b.state !== 'dead') clip = reaction.heavy ? age < .48 ? reaction.index % 2 ? 'knockdown' : 'flung' : age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
+      let clip: typeof infectedClips[number] = b.state === 'dead' ? death : (b.legLost || e.archetype === 'infected.crawler') && motion.speed <= .06 ? 'crawl' : b.state === 'attack' && motion.speed <= .06 ? this.world.tick < b.until ? 'windup' : 'swing' : motion.speed > 2 ? tierGait(b as { speed?: number; tier?: string; l1?: { tier: string } }) : motion.speed > .06 ? 'shamble' : (b.state as string) === 'search' || (b.state as string) === 'attracted' ? 'infected-search' : 'infected-idle';
+      if (reaction && tick < reaction.until && b.state !== 'dead' && motion.speed <= .06) clip = reaction.heavy ? age < .48 ? reaction.index % 2 ? 'knockdown' : 'flung' : age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
       if (e.infectionRise) clip = 'infection-rise';
       if (b.special === 'dive') clip = 'run';
       const duration = authoredClips.get(clip)!.duration;
-      const phase = e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration) : clip === 'windup' ? Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? gaitDistance / cadenceStride(clip, batch.strideScale, motion.speed) % 1 : (renderTick / 60 + e.id * .137) / duration % 1;
-      const frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1), tint = variantShirts[b.variant] ?? batch.shirt;
-      const flight = reaction ? Math.max(0, 1 - age / (reaction.heavy ? .28 : Math.min(.2, (reaction.until - reaction.started) / 60))) : 0;
+      const phase = e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration) : clip === 'windup' ? Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, batch.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
+      let frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
+      const tint = variantShirts[b.variant] ?? batch.shirt;
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       const resting = b.state === 'dead' ? this.corpsePosition(e, b.deadAt) : e.transform;
-      const settle = b.state === 'dead' ? Math.min(1, (this.world.tick - b.deadAt) / 60) : 0;
-      const x = presented.x + (resting.x - e.transform.x) * settle + (reaction ? (reaction.from.x - reaction.to.x) * flight * flight : 0), z = presented.z + (resting.z - e.transform.z) * settle + (reaction ? (reaction.from.z - reaction.to.z) * flight * flight : 0);
+      const settle = b.state === 'dead' ? reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60) : 0;
+      const x = presented.x + (resting.x - e.transform.x) * settle, z = presented.z + (resting.z - e.transform.z) * settle;
       const blend = batch.poses.sample(e.id, clip, frame, renderTick / 60);
-      const fade = b.state === 'dead' ? Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 360) / 180)) : 0;
+      const fade = 0;
       if (e.archetype === 'infected.crow') {
+        for (let bird = 0; bird < 20; bird++) if ((e.infected?.birdDeadMask ?? 0) & 1 << bird) {
+          const x = b.birdPositions[bird * 3], z = b.birdPositions[bird * 3 + 2]; this.transform.makeTranslation(x, this.world.districts?.groundHeight(x, z) ?? 0, z);
+          this.staticCorpses.place(e, `${key}:bird`, batch.mesh.geometry, batch.mesh.material as MeshLambertNodeMaterial, batch.poses.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], `${e.id}/${bird}`);
+        }
         for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZW(batch.count, tint.r, tint.g, tint.b, blend[0] * 2 + blend[1]); batch.state.setXYZW(batch.count++, frame, 0, 0, feedback?.strength ?? 0); }
       } else {
         this.transform.makeRotationY(presented.yaw); this.transform.setPosition(x, presented.y - 0.7 + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
+        if (e.corpse) {
+          const mask = (feedback?.mask ?? 0) | (b.detached && this.goreEnabled ? 4 : 0);
+          const hiddenParts = [['armL', 'foreArmL', 'handL'], ['armR', 'foreArmR', 'handR'], ['legL', 'shinL', 'footL'], ['legR', 'shinR', 'footR'], ['head']].flatMap((parts, bit) => mask & 1 << bit ? parts : []);
+          this.staticCorpses.place(e, `${key}:${death}:${mask}`, batch.mesh.geometry, batch.mesh.material as MeshLambertNodeMaterial, batch.poses.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], String(e.id), hiddenParts);
+          continue;
+        }
+        if (strides[clip] && motion.speed > .06) { frame = batch.poses.correct(e.id, frame, ...blend, pose => batch.locomotion.correct(e.id, pose, this.transform, phase, clip, batch.strideScale, motion.speed)); blend[1] = 1; } else { batch.locomotion.reset(e.id); if (blend[1] < 1) { frame = batch.poses.correct(e.id, frame, ...blend, () => {}); blend[1] = 1; } }
+        batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend);
         batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZW(batch.count, tint.r, tint.g, tint.b, blend[0] * 2 + blend[1]); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), feedback?.mask ?? 0, (feedback?.strength ?? 0) + Math.round(fade * 255) * 2);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); }
       }
@@ -220,7 +285,15 @@ export class CrowdView extends Group {
         const mesh = this.telegraphs[b.special === 'charge' || b.special === 'pin' || b.special === 'pounce' ? 1 : 0]; if (b.special === 'explode') this.transform.makeScale(3.75, 1, 3.75); else this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); this.transform.setPosition(e.transform.x, 0.06, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
       }
     }
-    for (const batch of this.batches.values()) { batch.mesh.count = batch.count; batch.mesh.visible = batch.count > 0; if (batch.count) { batch.mesh.instanceMatrix.needsUpdate = true; batch.state.needsUpdate = true; batch.tint.needsUpdate = true; } }
+    for (const batch of this.batches.values()) {
+      batch.mesh.count = batch.count; batch.mesh.visible = batch.count > 0;
+      if (batch.count) {
+        batch.mesh.instanceMatrix.clearUpdateRanges(); batch.mesh.instanceMatrix.addUpdateRange(0, batch.count * 16); batch.mesh.instanceMatrix.needsUpdate = true;
+        for (const attribute of [batch.state, batch.tint]) { attribute.clearUpdateRanges(); attribute.addUpdateRange(0, batch.count * 4); attribute.needsUpdate = true; }
+        const first = batch.poses.clip.frames * batch.texture.image.width * 4;
+        batch.texture.clearUpdateRanges(); batch.texture.addUpdateRange(first, batch.texture.image.data!.length - first);
+      }
+    }
     for (const mesh of this.telegraphs) { mesh.visible = mesh.count > 0; if (mesh.count) mesh.instanceMatrix.needsUpdate = true; }
     this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0;
     if (this.caps.count) this.caps.instanceMatrix.needsUpdate = true;
@@ -256,16 +329,16 @@ export class CrowdView extends Group {
     const position = this.limbPosition(id, limb); if (!position) return;
     const feedback = this.feedback.get(id) ?? { mask: 0, strength: 0 }; feedback.mask |= 1 << limb; this.feedback.set(id, feedback); return position;
   }
-  clearGore(): void { for (const feedback of this.feedback.values()) feedback.mask = 0; }
-  setGoreEnabled(enabled: boolean): void { this.goreEnabled = enabled; }
+  clearGore(): void { for (const feedback of this.feedback.values()) feedback.mask = 0; this.staticCorpses.reset(); }
+  setGoreEnabled(enabled: boolean): void { if (this.goreEnabled !== enabled) this.staticCorpses.reset(); this.goreEnabled = enabled; }
   getGoreState() { return [...this.feedback].map(([id, f]) => ({ id, detached: ['armL', 'armR', 'legL', 'legR', 'head'].filter((_, i) => f.mask & (1 << i)), caps: ['armL_cap', 'armR_cap', 'legL_cap', 'legR_cap', 'head_cap'].filter((_, i) => f.mask & (1 << i)), visible: !this.world.entities.get(id)?.infected?.hidden })); }
   getState() {
     let instances = 0, draws = 0, objects = 0, nonInstanced = 0;
     this.traverse((node) => { if (node !== this) objects++; if (node instanceof InstancedMesh) { instances += node.count; if (node.count) draws++; } else if (node instanceof Mesh) nonInstanced++; });
-    return { instances, meshDrawCalls: draws, objects, nonInstancedMeshes: nonInstanced, caps: this.caps.count, flashes: [...this.feedback.values()].filter(f => f.strength > 0).length, batches: [...this.batches.values()].map((b) => ({ id: b.role, lod: b.lod, instances: b.count, source: b.placeholders ? 'placeholder' : 'glb' })).concat([...this.heroSlots.keys()].map(id => ({ id, lod: 'lod0', instances: 0, source: 'pending' }))), assets: this.logs };
+    return { figures: [...this.batches.values()].flatMap(b => b.probe.figures).concat(this.staticCorpses.snapshot().figures), instances, meshDrawCalls: draws, objects, nonInstancedMeshes: nonInstanced, caps: this.caps.count, flashes: [...this.feedback.values()].filter(f => f.strength > 0).length, batches: [...this.batches.values()].map((b) => ({ id: b.role, lod: b.lod, instances: b.count, source: b.placeholders ? 'placeholder' : 'glb' })).concat([...this.heroSlots.keys()].map(id => ({ id, lod: 'lod0', instances: 0, source: 'pending' }))), assets: this.logs };
   }
   dispose(): void {
-    this.disposed = true;
+    this.disposed = true; this.staticCorpses.dispose();
     for (const mesh of this.heroSlots.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); }
     this.heroSlots.clear();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); (batch.mesh.material as MeshLambertNodeMaterial).dispose(); batch.mesh.dispose(); batch.texture.dispose(); }

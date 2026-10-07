@@ -4,7 +4,17 @@ import { createHash } from 'node:crypto';
 import { audioCues, audioCategories, audioFile, eventCues, telegraphCues } from '../../../src/data/audioCues';
 import { infectedDefinitions } from '../../../src/data/infected';
 import imports from '../../../assets/audio/imports.json';
-import { audioCredits } from '../../../src/data/audioCredits';
+import { audioCredits } from '../../../src/data/credits';
+test('@E16 event stingers and audible UI cues use recorded sources', () => {
+    const recipes = imports.cues as Record<string, { source: string }>;
+    const naturalEvents = Object.values(audioCues).filter(c => c.id.startsWith('stinger.') || c.bus === 'ui' && c.gain > 0 || c.id === 'l1.outro.sting' || c.id === 'l1.ringing' || c.id === 'tinnitus' || c.id.startsWith('diegetic.') || c.id.startsWith('dialogue.') || c.id.startsWith('civilian.hey'));
+    for (const cue of naturalEvents) {
+        expect(recipes[cue.id], cue.id).toBeDefined();
+        expect(recipes[cue.id].source, cue.id).not.toBe('blinding');
+    }
+    expect(recipes['stinger.low-hp'].source).toBe(recipes['impact.thump'].source);
+    expect(recipes['l1.outro.sting'].source).toBe('aftermath');
+});
 test('T-E16-01a @E16 @E16-AC01 every sim event and archetype resolves to a real sprite cue', () => {
     const source = readFileSync('src/sim/world/types.ts', 'utf8') + readFileSync('src/data/audioEvents.ts', 'utf8');
     const types = [...source.matchAll(/type:\s*((?:'[^']+'\s*\|\s*)*'[^']+')/g)].flatMap(m => [...m[1].matchAll(/'([^']+)'/g)].map(t => t[1]));

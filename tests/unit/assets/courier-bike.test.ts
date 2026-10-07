@@ -23,7 +23,7 @@ const positions: Record<string, number[]> = {
 };
 test('@load courier bike disposes the parcel and glint resources it creates', async () => {
   const model = new Group(), wheel = new Group(); wheel.name = 'wheel_front'; model.add(wheel);
-  const world = { tick: 0, vehicles: { bicycle: { entity: { bicycle: { mounted: false, speed: 0, steer: 0, pedal: 0 }, transform: { x: 0, z: 0, yaw: 0 } } } }, entities: { get: () => ({ transform: { x: 0, z: 0 }, survivor: {} }) } } as unknown as SimWorld;
+  const world = { tick: 0, vehicles: { bicycle: { entity: { bicycle: { mounted: false, speed: 0, steer: 0, pedal: 0 }, transform: { x: 0, y: 0, z: 0, yaw: 0 } } } }, entities: { get: () => ({ transform: { x: 0, z: 0 }, survivor: {} }) } } as unknown as SimWorld;
   vi.stubGlobal('document', { createElement: () => ({ dataset: {}, style: {}, remove: () => {} }), querySelector: () => null });
   vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockResolvedValue(model);
   const view = new BicycleView(world, {} as Materials);
@@ -73,7 +73,7 @@ test('courier bike riding retracts the stand and aligns the saddle with the ride
   const model = new Group();
   for (const node of document.getRoot().listScenes()[0].listChildren()) model.add(assemble(node));
   const bicycle = { mounted: false, speed: 0, steer: 0, pedal: 0 };
-  const world = { tick: 0, vehicles: { bicycle: { entity: { bicycle, transform: { x: 0, z: 0, yaw: 0 } } } },
+  const world = { tick: 0, vehicles: { bicycle: { entity: { bicycle, transform: { x: 0, y: .13, z: 0, yaw: 0 } } } },
     entities: { get: () => ({ transform: { x: 0, z: 0 }, survivor: { carrying: 'parcel' } }) } } as unknown as SimWorld;
   vi.stubGlobal('document', { createElement: () => ({ dataset: {}, style: {}, remove: () => {} }), querySelector: () => null });
   vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockResolvedValue(model);
@@ -84,6 +84,7 @@ test('courier bike riding retracts the stand and aligns the saddle with the ride
     bicycle.mounted = true;
     for (let i = 0; i < 60; i++) view.update();
     view.updateMatrixWorld(true);
+    for (const [name, radius] of [['wheel_front', .335], ['wheel_rear', .405]] as const) expect(model.getObjectByName(name)!.getWorldPosition(new Vector3()).y - radius * .6).toBeCloseTo(.13, 5);
     expect(model.getObjectByName('kickstand')!.rotation.z).toBeCloseTo(Math.PI / 2);
     // The rider's pelvis is placed on the measured saddle position every frame (GameView.seatPelvis): the view reports the seat node's world position.
     const saddle = new Vector3(); expect(view.seatWorld(saddle)).toBe(true);

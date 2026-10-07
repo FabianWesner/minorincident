@@ -5,6 +5,9 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 /** Plain components only; physics handles and render objects are never serialized. */
 export interface EntitySnapshot {
   id: number;
+  /** Settled persistent body: no brain, collision obstacle or physics updates. */
+  corpse?: boolean;
+  droppedProp?: import('../npc/types').CivilianProp;
   /** Actual fixed-step motion, including collision/avoidance, for NPC locomotion clips. */
   locomotion?: import('../locomotion/MotionResponse').MotionResponse;
   motion?: { velocity: { x: number; z: number }; speed: number; moving: boolean; distance: number };

@@ -83,8 +83,7 @@ export class Toys {
         const dx = bike.x - (start?.x ?? bike.x), dz = bike.z - (start?.z ?? bike.z), d = Math.hypot(dx, dz);
         const at0 = start && d > 3.3 ? { x: start.x + dx / d * 3.3, z: start.z + dz / d * 3.3 } : bike;
         // Stand on the walkable apron in front of the rack, not inside its bars (no route from an unwalkable start cell).
-        const apron = w.vehicles?.bicycle.clearSpot(at0.x, at0.z, -bike.yaw, [0, .6, 1.2, 1.8, 2.4, 3]) ?? at0;
-        w.vehicles?.bicycle.spawn(apron, -bike.yaw);
+        w.vehicles?.bicycle.spawn(at0, -bike.yaw);
       }
       for (const [id, poly] of Object.entries(d.layout.zones ?? {})) {
         const pts = poly.map(p => ({ x: p[0] + d.origin[0], z: p[1] + d.origin[1] }));

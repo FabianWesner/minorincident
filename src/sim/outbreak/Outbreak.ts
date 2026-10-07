@@ -179,7 +179,12 @@ export class Outbreak {
     const yaw = -Math.atan2(p.z - e.transform.z, p.x - e.transform.x), delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));
     e.transform.yaw += Math.max(-rate, Math.min(rate, delta));
   }
-  private dropProp(e: EntitySnapshot): void { if (e.appearance) e.appearance.handProp = null; }
+  private dropProp(e: EntitySnapshot): void {
+    const prop = e.appearance?.handProp;
+    if (!prop) return;
+    this.world.entities.create({ kind: 'dropped-prop', archetype: `prop.${prop}`, faction: 'environment', health: { current: 1, max: 1 }, transform: { ...e.transform, y: e.transform.y - .7 }, droppedProp: prop as CivilianProp });
+    e.appearance!.handProp = null;
+  }
 
   /**
    * Calm life on the m1-civlife schedule (walk, sit, chat, water, look, door, inside): walk to each step at the

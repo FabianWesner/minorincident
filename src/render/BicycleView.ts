@@ -1,14 +1,15 @@
-import { Box3, BoxGeometry, Camera, Group, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
+import { Box3, BoxGeometry, Camera, Group, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, Quaternion, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
 import '../render/interaction.css';
 import { AssetRegistry } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
 import { RiderContacts } from './characters/RiderContacts';
+import { bicycleGeometry } from '../data/bicycleGeometry';
 import { bicycleHandling } from '../data/vehicles';
 import { l1v2 } from '../data/l1v2';
 
 /** The delivered cargo bike is courier-sized (2.8 m); the game courier is chibi (1.4 m), so the bike is drawn at toy scale: saddle at the hips, cargo box below the rider's chest. */
-const ASSET = 'veh.courier-bike', WHEEL_R = { F: .335, R: .405 }, SCALE = .6;
+const ASSET = 'veh.courier-bike', WHEEL_R = { F: .335, R: .405 }, SCALE = bicycleGeometry.scale;
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 /** Code placeholder with the animated-node contract (wheelF/R, handlebar, crank, pedals) until the production GLB is registered. */
 function bicyclePlaceholder(): Group {
@@ -82,6 +83,19 @@ export class BicycleView extends Group {
     rig.root.updateMatrixWorld(true); rig.seat.getWorldPosition(out); return true;
   }
   private readonly contacts = new RiderContacts();
+  frameOrientation(out: Quaternion): boolean {
+    if (!this.rig) return false;
+    this.rig.root.updateMatrixWorld(true); this.rig.lean.getWorldQuaternion(out); return true;
+  }
+  snapshot() {
+    const rig = this.rig; if (!rig) return null;
+    rig.root.updateMatrixWorld(true);
+    const wheels = [rig.wheelR, rig.wheelF].map((wheel, i) => {
+      const p = wheel?.getWorldPosition(new Vector3()); if (!p) return null;
+      p.y -= (i === 0 ? WHEEL_R.R : WHEEL_R.F) * SCALE; return p.toArray();
+    });
+    return { position: rig.root.position.toArray(), orientation: rig.lean.getWorldQuaternion(new Quaternion()).toArray(), seat: rig.seat?.getWorldPosition(new Vector3()).toArray() ?? null, wheels };
+  }
   private riderNodes: { handL: Object3D; handR: Object3D; footL: Object3D; footR: Object3D } | undefined;
   /** Sample the model's named attachment nodes after its crank/steer/lean update.
    * No anatomy or saddle coordinates are duplicated in the rider. */
@@ -114,7 +128,7 @@ export class BicycleView extends Group {
     if (!this.rig) { void this.build(); return; }
     const rig = this.rig, b = bike.bicycle, t = bike.transform;
     rig.model.position.x = b.mounted ? rig.offset : 0;
-    const ground = b.mounted ? (this.world.entities.get(1)?.transform.y ?? .705) - .705 : 0; // ride over curbs and steps with the rider
+    const ground = t.y;
     rig.root.visible = true; rig.root.position.set(t.x, Math.max(0, ground), t.z); rig.root.rotation.y = t.yaw;
     if (rig.last) { const d = Math.hypot(t.x - rig.last.x, t.z - rig.last.z); rig.wheelAngle += d; }
     rig.last = { x: t.x, z: t.z };

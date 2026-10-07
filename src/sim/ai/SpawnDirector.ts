@@ -27,19 +27,11 @@ export class SpawnDirector {
   constructor(readonly ai: InfectedSystem) {
     for (let i = 0; i < 16; i++) this.spawnPoints.push({ x: Math.cos(i * Math.PI / 8) * 52, z: Math.sin(i * Math.PI / 8) * 52 });
   }
-  /** E18 transition: keep mission actors and the nearest threats; defer excess ambient spawns.
-   * Population reduction is a despawn, never a kill or objective completion. */
+  /** Defer future ambient spawns when quality lowers the living population cap. */
   setTier(tier: 'high' | 'low'): void {
-    this.tier = tier; if (this.count <= this.cap) return;
-    const player = this.ai.world.entities.get(1)!.transform;
-    const actors = new Set(Object.values(this.ai.world.missions?.state.actors ?? {}));
-    const excess = this.ai.active.filter(e => e.health.current > 0 && !actors.has(e.id));
-    excess.sort((a, b) => Math.hypot(b.transform.x - player.x, b.transform.z - player.z) - Math.hypot(a.transform.x - player.x, a.transform.z - player.z));
-    for (const entity of excess) {
-      if (this.count <= this.cap) break;
-      this.request(entity.archetype, entity.transform, { state: 'chase', variant: entity.infected!.variant, birds: entity.infected!.birds || undefined });
-      this.ai.release(entity);
-    }
+    // Quality changes affect future spawns. Existing figures retain identity and
+    // appearance; the new cap takes effect as the living population falls.
+    this.tier = tier;
   }
   get cap(): number { return this.tier === 'low' ? Math.floor(this.levelCap / 2) : this.levelCap; }
   get count(): number {
