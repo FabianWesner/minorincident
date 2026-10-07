@@ -1,0 +1,44 @@
+
+> test:smoke
+> vitest run -t @smoke --maxWorkers=2 && sh tools/e2e-lock.sh playwright test --grep @smoke
+
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel
+
+
+ Test Files  4 passed | 121 skipped (125)
+      Tests  5 passed | 650 skipped (655)
+   Start at  13:51:49
+   Duration  18.00s (import 58%, transform 33%, tests 7%, worker 2%)
+
+     Import  381 modules were evaluated 6434 times · 13.46s total, 58% of tracked time
+             ~6.13s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+
+Running 22 tests using 2 workers
+
+  ✓   2 [chromium] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (5.9s)
+  ✓   3 [chromium] › tests/e2e/driving.spec.ts:16:1 › S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit (2.5s)
+  ✓   4 [chromium] › tests/e2e/menus-mouse.spec.ts:3:1 › T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only (8.4s)
+  ✓   1 [chromium] › tests/e2e/controls-playtest.spec.ts:8:1 › S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB (17.1s)
+  ✓   6 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (627ms)
+  ✓   7 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (592ms)
+  ✓   5 [chromium] › tests/e2e/save.spec.ts:35:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly (8.0s)
+  ✓   8 [pixel-7] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.4s)
+  ✓   9 [pixel-7] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (671ms)
+  ✓  10 [pixel-7] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (648ms)
+  ✓  12 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (722ms)
+  ✓  13 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (505ms)
+  ✓  11 [pixel-7-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.1s)
+  ✓  15 [iphone-14] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (631ms)
+  ✓  14 [iphone-14] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (5.9s)
+  ✓  16 [iphone-14] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (507ms)
+  ✓  18 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (769ms)
+  ✓  19 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (578ms)
+  ✓  17 [iphone-14-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.3s)
+  ✓  21 [webkit] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.8s)
+  ✓  20 [webkit] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (8.4s)
+  ✓  22 [webkit] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.8s)
+
+  22 passed (48.3s)

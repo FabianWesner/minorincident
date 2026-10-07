@@ -7,7 +7,7 @@ export interface DamageEvent {
   part?: 'leg'; radius?: number; spread?: number;
   base: number; multiplier: number; type: 'melee' | 'bullet' | 'explosive' | 'status' | 'vehicle'; knockback: number; stagger: number;
   /** Authored melee impact freeze (render-only); absent = 50 ms. */
-  hitStopMs?: number;
+  hitStopMs?: number; knockdown?: boolean;
 }
 /** Directional shields only stop front bullets; splash is radial and ignores shields. */
 export function damageAmount(hit: DamageEvent, target: EntitySnapshot): number {
@@ -44,25 +44,33 @@ export class Damage {
     if (target.id === 1 && this.god) amount = 0;
     if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick);
     else { amount = Math.min(amount, target.health.current); target.health.current -= amount; }
-    const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback: hit.knockback, amount, damageType: hit.type, ...(hit.type === 'vehicle' ? { cause: 'vehicle' as const } : {}) };
+    // Keep ordinary player melee in reach even after knockback upgrades. Special
+    // kicks/ground slam retain their authored shove; raw damage is never a finisher.
+    const special = hit.knockdown || hit.actionId === 'weapon.kick' || hit.actionId === 'ability.ground-slam';
+    const normal = source.id === 1 && hit.type === 'melee' && !special;
+    const knockback = normal ? Math.min(.4, hit.knockback) : hit.knockback;
+    const stagger = normal ? Math.min(.25, hit.stagger) : hit.stagger;
+    const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback, amount, damageType: hit.type, ...(hit.type === 'vehicle' ? { cause: 'vehicle' as const } : {}) };
     this.world.events.emit({ ...event, type: 'combat.hit' });
     if (amount > 0) {
-      if (target.combat && hit.stagger > 0) { target.combat.staggerUntil = this.world.tick + Math.ceil(hit.stagger * 60); target.combat.attacking = false; }
+      if (target.combat && stagger > 0) { target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + Math.ceil(stagger * 60)); target.combat.attacking = false; }
       const from = { x: target.transform.x, z: target.transform.z };
-      if (hit.knockback > 0 && target.faction !== 'environment') this.world.knockback(target, hit.direction, hit.knockback);
+      if (knockback > 0 && target.faction !== 'environment') this.world.knockback(target, hit.direction, knockback);
       if (target.combat && target.faction === 'infected') {
-        const heavy = hit.actionId === 'weapon.kick' || hit.knockback >= .9 || amount >= 35;
+        const heavy = target.health.current === 0 || !!special || (!normal && (hit.type === 'explosive' || hit.type === 'vehicle'));
+        const downed = target.combat.reaction?.heavy && target.combat.reaction.until > this.world.tick;
         const previous = target.combat.reaction?.index ?? target.id % 3;
-        target.combat.reaction = { index: (previous + 1) % 6, started: this.world.tick, until: this.world.tick + (heavy ? 80 : 26), direction: { ...hit.direction }, from, to: { x: target.transform.x, z: target.transform.z }, heavy };
+        if (downed && target.health.current === 0) target.combat.reaction!.groundDeath = true;
+        else if (!downed || heavy) target.combat.reaction = { index: (previous + 1) % 6, started: this.world.tick, until: this.world.tick + (heavy ? 80 : Math.max(1, Math.ceil(stagger * 60))), direction: { ...hit.direction }, from, to: { x: target.transform.x, z: target.transform.z }, heavy };
         if (heavy) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + 80);
         // A kicked body sweeps its existing knockback corridor and staggers the next
         // infected it tumbles into. No new physics bodies or navigation rules.
-        if ((hit.actionId === 'weapon.kick' || (hit.type === 'melee' && hit.knockback >= 1.5)) && hit.knockback > 0) {
+        if (heavy && hit.type === 'melee' && knockback >= 1.2) {
           for (const other of this.world.entities.iterate()) {
             if (other.id === target.id || other.faction !== 'infected' || other.health.current <= 0 || !other.combat) continue;
             const dx = other.transform.x - from.x, dz = other.transform.z - from.z;
             const along = dx * hit.direction.x + dz * hit.direction.z, cross = Math.abs(dx * hit.direction.z - dz * hit.direction.x);
-            if (along <= 0 || along > hit.knockback + .6 || cross > target.combat.radius + other.combat.radius) continue;
+            if (along <= 0 || along > knockback + .6 || cross > target.combat.radius + other.combat.radius) continue;
             const otherFrom = { x: other.transform.x, z: other.transform.z };
             this.world.knockback(other, hit.direction, .5);
             other.combat.staggerUntil = Math.max(other.combat.staggerUntil, this.world.tick + 54); other.combat.attacking = false;

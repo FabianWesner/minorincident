@@ -4,7 +4,7 @@ import { action } from '../../../src/data/actions/fixtures';
 import { Status } from '../../../src/sim/combat/Status';
 import { action as rosterAction } from '../../../src/data/actions/catalog';
 import { comboDefinition } from '../../../src/data/meleeCombos';
-/** The roster bat's opening beat (E19 §5.6 forehand: 22 damage, 2.6 m knockback). */
+/** The roster bat's opening beat (E19 §5.6 forehand: 22 damage, 0.25 m knockback). */
 const forehand = () => comboDefinition(rosterAction('weapon.bat'), 0);
 
 test('T-E05-01 @E05 @E05-AC01 MG, rotate, grenade, rotate retain independent side aims', async () => {
