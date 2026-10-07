@@ -37,7 +37,7 @@
           2.5
         ],
         [
-          0.0,
+          0,
           4.309999942779541
         ]
       ],
@@ -78,7 +78,7 @@
           2.5
         ],
         [
-          0.0,
+          0,
           4.309999942779541
         ]
       ],
@@ -117,7 +117,7 @@
           2.5
         ],
         [
-          0.0,
+          0,
           4.309999942779541
         ]
       ],
@@ -127,7 +127,150 @@
   },
   "renderer": "Eevee",
   "backface_culling": true,
-  "script_hash": "6b10ef0ffcf10805f0e1d2a45840da17efd330160a1c6797f57d4eb7488ab033",
+  "script_hash": "3b291c1e416876f0e0e9544d3017fd962b26c75e49aa5d1542d223af1b2bbd15",
   "webgpu_ok": null,
-  "webgl2_ok": false
+  "webgl2_ok": true,
+  "deterministic_rebuild": true,
+  "draw_calls": [
+    {
+      "static": 36,
+      "animated": 5,
+      "total": 41
+    },
+    {
+      "static": 33,
+      "animated": 4,
+      "total": 37
+    },
+    {
+      "static": 23,
+      "animated": 2,
+      "total": 25
+    }
+  ],
+  "delivery": [
+    {
+      "id": "bld.courier-depot",
+      "errors": [],
+      "triangles": 94686,
+      "materials": 19,
+      "drawCalls": 41,
+      "fileKB": 704.6953125,
+      "dimensions": [
+        4.550019635917553,
+        4.309925406555503,
+        5.265982389450073
+      ],
+      "hash": "0576b4af2e42485f7584e5e273a5b6c2a8757dc47d9e999f19791ba5a3070e95"
+    },
+    {
+      "id": "bld.courier-depot",
+      "errors": [],
+      "triangles": 11870,
+      "materials": 18,
+      "drawCalls": 37,
+      "fileKB": 119.0625,
+      "dimensions": [
+        4.549952885685985,
+        4.309993002628405,
+        5.270000219345093
+      ],
+      "hash": "89851f9345f97b8a8b850bd8efec51004585a5f14300be57157b63d2689d4800"
+    },
+    {
+      "id": "bld.courier-depot",
+      "errors": [],
+      "triangles": 2052,
+      "materials": 16,
+      "drawCalls": 25,
+      "fileKB": 37.44140625,
+      "dimensions": [
+        4.549952885685985,
+        4.309993002628405,
+        5.270000219345093
+      ],
+      "hash": "9b47fba0163f0102094473b9bb47ec817092b1b3d569941ac5471eff2d09c82e"
+    }
+  ],
+  "lod_ratios": {
+    "lod1": 0.12536172190186512,
+    "lod2": 0.021671630441670364
+  },
+  "delivery_ok": true,
+  "webgl2_checks": [
+    {
+      "level": 0,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 41,
+        "triangles": 94686,
+        "size": [
+          4.55,
+          4.31,
+          5.266
+        ]
+      },
+      "errors": []
+    },
+    {
+      "level": 1,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 37,
+        "triangles": 11870,
+        "size": [
+          4.55,
+          4.31,
+          5.27
+        ]
+      },
+      "errors": []
+    },
+    {
+      "level": 2,
+      "backend": "WebGL2",
+      "stats": {
+        "meshes": 25,
+        "triangles": 2052,
+        "size": [
+          4.55,
+          4.31,
+          5.27
+        ]
+      },
+      "errors": []
+    }
+  ],
+  "preview_decoder_injection": "Production MeshoptDecoder wired in served preview response by task-local capture.mjs; preview files unchanged.",
+  "webgpu_note": "Manual WebGPU review pending, per repository headless-browser guidance.",
+  "determinism_audit": {
+    "max_vertex_delta": 0.0,
+    "matrices_equal": true,
+    "original_cached_order_mismatch": [
+      "body_pal_picketWhite",
+      "body_pal_schoolBusYellow",
+      "body_pal_grass",
+      "body_pal_foliage"
+    ]
+  },
+  "triangles": {
+    "lod0": 94686,
+    "lod1": 11870,
+    "lod2": 2052
+  },
+  "rounds": 3,
+  "matches_reference": true,
+  "done": true,
+  "visual_review": "PASS",
+  "review": "review.md",
+  "integration": "Manifest/public registration untouched; manual WebGPU check pending per AGENTS.md.",
+  "renders": [
+    "comparison.png",
+    "game.png",
+    "hero.png",
+    "night.png",
+    "pose-test.png",
+    "turnaround.png",
+    "webgl2-lods.png"
+  ]
 }
