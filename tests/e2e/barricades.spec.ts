@@ -6,7 +6,7 @@ test('T-E26-02-browser @E26-AC02 sleeping prop-yard has zero matrix updates afte
   });
   expect(result.count).toBe(300); expect(result.perf.awakeProps).toBe(0); expect(result.perf.propUploads).toBe(0);
 });
-test('E26 core browser wiring builds, repairs and breaks a real barricade', async ({ page }) => {
+test('@E26 core browser wiring builds, repairs and breaks a real barricade', async ({ page }) => {
   await boot(page); await page.evaluate(async () => {
     const a = window.__SS__!; await a.loadScenario('barricade-lab'); a.pause(); a.teleport('player', { x: 0, z: 1.3 }); await a.step(90); await a.screenshotReady();
   });

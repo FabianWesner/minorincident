@@ -167,7 +167,7 @@ export class PropSystem {
     item.pose = { p: [...pose.p], q: [...pose.q] };
     item.body.setTranslation({ x: pose.p[0], y: pose.p[1], z: pose.p[2] }, false);
     item.body.setRotation({ x: pose.q[0], y: pose.q[1], z: pose.q[2], w: pose.q[3] }, false);
-    item.body.setLinvel({ x: 0, y: 0, z: 0 }, false); item.body.setAngvel({ x: 0, y: 0, z: 0 }, false); item.body.sleep(); item.awake = false;
+    item.body.setLinvel({ x: 0, y: 0, z: 0 }, false); item.body.setAngvel({ x: 0, y: 0, z: 0 }, false); item.body.sleep(); item.awake = false; this.mirror(item);
   }
   /** Displaced props only (home poses are implied by the layout), in placement order. */
   snapshot(): PropSnapshot {

@@ -170,6 +170,7 @@ export class InteractionView extends Group {
       const plank = new Mesh(this.box, this.materials.get('woodWarm')); plank.scale.set(width, .16, .12); plank.position.y = y; plank.castShadow = true; brace.add(plank);
     }
     const crack = new Mesh(this.box, this.materials.get('uiDark')); crack.name = 'slot-crack'; crack.scale.set(.04, s.height * .75, .14); crack.position.y = s.height / 2; crack.rotation.z = .35; brace.add(crack);
+    if (s.boardUp) for (let row = 0; row < 4; row++) { const plank = new Mesh(this.box, this.materials.get('woodWarm')); plank.scale.set(1, .08, .3); plank.position.set(width / 2 + .7, .05 + row * .08, .2); g.add(plank); }
     g.add(ghost, brace); return g;
   }
   update(camera: Camera): void {

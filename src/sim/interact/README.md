@@ -18,7 +18,7 @@ Acceptance tests live in `tests/sim/interact`, `tests/e2e/interact.spec.ts` and 
 ## E26 core (staged)
 
 `tools/assets/physics-metadata.ts` extracts `ss_physics` from production GLBs during
-`layouts:build`, committing the same `physicsAssets.json` for Node and browser.
+`layouts:build`, committing the same `physicsAssets.ts` for Node and browser.
 Movable environment props use authored mass, collision bounds, friction,
 restitution, center of mass, class, push permission and break/barricade HP.
 They spawn sleeping. The production awake upper bound remains 12. The dedicated

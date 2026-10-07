@@ -177,7 +177,7 @@ export const eventCues = {
     'loadout.switched': 'ui.switch', 'combat.landed': 'gore.splat', 'combat.exploded': 'explosion.boom',
     'player.died': 'ui.death', 'player.respawned': 'ui.respawn', 'player.damaged': 'bark.female.hurt',
     footstep: 'footstep.survivor.asphalt', 'light.generator': 'generator.pull', 'light.lamp': 'lamp.hum', 'light.power': 'lamp.power-on',
-    'prop.impact': 'prop.wood', 'prop.motion': 'prop.roll', 'barricade.sound': 'prop.creak', 'barricade.built': '', 'barricade.broken': '', 'barricade.repaired': '', 'explosion.beat': 'explosion.boom',
+    'prop.impact': 'prop.wood', 'prop.motion': 'prop.roll', 'barricade.sound': 'prop.creak', 'barricade.built': 'ui.tick', 'barricade.broken': 'ui.tick', 'barricade.repaired': 'ui.tick', 'explosion.beat': 'explosion.boom',
     'vehicle.sound': 'vehicle.engine-low', diegetic: 'diegetic.jukebox', dialogue: 'dialogue.radio',
     'music.stinger': 'stinger.twist', 'music.intensity': 'ui.tick', 'corgi.sound': 'corgi.warning', 'survivor.bark': 'bark.female.effort', 'gore.sound': 'gore.squelch',
     // Integrated mission, interaction, vehicle and VFX events reuse the shipped sprites.
