@@ -49,7 +49,8 @@ try {
       if (scenario === 'start-stop') targetSpeed = t < .5 || t >= 3 ? 0 : t < 1.6 ? 2 : 4.5;
       if (scenario === 'bike') targetSpeed = t >= 1.5 && t < 4.5 ? 4.5 : 0;
       if (t < .5) targetSpeed = 0;
-      speed += Math.sign(targetSpeed - speed) * Math.min(Math.abs(targetSpeed - speed), (targetSpeed > speed ? 36 : 54) / 60);
+      // Sim-like acceleration (playerMotionLimits: 9 m/s², run speed in ~0.5 s).
+      speed += Math.sign(targetSpeed - speed) * Math.min(Math.abs(targetSpeed - speed), 9 / 60);
       // Turns follow the sim: click-to-move yaw turns at 4.5 rad/s (keyboard 180° while running at 6 rad/s), travel follows the yaw.
       const turnTarget = scenario.startsWith('turn') && t >= 2.5 ? scenario === 'turn90' ? Math.PI / 2 : Math.PI : scenario === 'pivot180' && t >= 1 ? Math.PI : scenario === 'run-turn180' && t >= 2.5 ? Math.PI : 0;
       const turnRate = scenario === 'run-turn180' ? 6 : 4.5;

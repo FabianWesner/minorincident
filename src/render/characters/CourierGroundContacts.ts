@@ -169,7 +169,8 @@ export class CourierGroundContacts {
         if (landed) {
           // The heel contact stays where the swing put it: the plant is that heel's flat-foot ankle.
           if (foot.pitch > 0) foot.target.sub(strikeDelta(foot.pitch, this.delta).applyQuaternion(this.footFrame.setFromAxisAngle(this.up, landYaw)));
-          lock(foot, landYaw); if (!moving) foot.pitch = 0; this.lastLanding = this.time;
+          // Plant on the yaw the foot arrived with (a fast turn keeps rotating during the last frames).
+          lock(foot, foot.yaw); if (!moving) foot.pitch = 0; this.lastLanding = this.time;
         }
       }
       if (foot.locked) {
