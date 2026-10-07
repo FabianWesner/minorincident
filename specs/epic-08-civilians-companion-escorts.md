@@ -15,6 +15,8 @@ E07 / E19, E20, E23.
     | --- | --- | --- | --- | --- | --- |
     | 60 | 40 | 24 | 12 | 6 | 2–3 stragglers |
 
+    > **Level 2–6 redesign (PO, 2026-10-07):** the L2–L6 cast counts are now set by the level epics (L2 ≈ 30 trapped + ~10 street civilians; L3 few stragglers plus police allies; L4 ≈ 50 crowd civilians, many armed, plus ≈ 20 soldiers; L5 5 survivors; L6 20–30 shelter survivors). The L2–L6 columns above and the E08-AC11 fixture are updated when each redesigned level is built (E20–E24 notes). Escorts in the redesign never fail the mission on death (`failOnDeath: false`).
+
   - **The turning cycle** (the outbreak spreads in front of the player; all timings come from data and are seeded):
     1. **Grab** (1.5 s): an infected grabs a civilian, who screams and struggles. **Rescue window:** killing or knocking back the attacker during the grab saves the civilian (they flee; `civilian.saved`, counted in the level result and in an optional objective).
     2. **Bite → stagger** (1–2 s): the civilian stumbles away and clutches the wound.

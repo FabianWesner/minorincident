@@ -73,7 +73,7 @@ export interface SSTestApi {
   cheats: { god(on: boolean): void; infiniteCharges(on: boolean): void; killAll(): void; completeObjective(id?: string): void };
   bot: { start(policy?: 'complete' | 'newbie' | 'idle' | 'aggressive' | 'driver', options?: { route?: LevelThreeRoute }): void; stop(): void; status(): BotStatus };
   /** E02: scenario photo spots, follow, bounded shake, cinematic blend, and NDC world projection. */
-  camera: { preset(name: string): void; follow(): void; shake(intensity: number): void; project(x: number, y: number, z: number): number[]; cinematic(pose: import('../render/View').CameraPose): void };
+  camera: { preset(name: string): void; follow(): void; shake(intensity: number): void; project(x: number, y: number, z: number): number[]; cinematic(pose: import('../render/View').CameraPose, instant?: boolean): void };
   /** E02 presentation patch: cameraShake, bloom, cheapDof, timeOfDay; idPass/occludersVisible are test probes. */
   settings: { set(patch: Partial<Settings>): void };
   /** E15 render-only clock/event probes. stepRender never advances simulation or its RNG; the next render consumes the new time. */
@@ -81,6 +81,7 @@ export interface SSTestApi {
   /** E16: graph active with output muted in test mode. emit() uses the production sim event bus.
    * render() returns a native OfflineAudioContext PCM WAV, for independent measurement. */
   audio: {
+    /** Also loads the lazy sprite banks so the first play of every cue is deterministic. */
     unlock():Promise<void>;snapshot():ReturnType<Game['audio']['snapshot']>;
     play(id:string,options?:import('../audio/AudioGraph').PlayOptions,sourceId?:number):number|null;
     emit(event:GameEvent):void;clearLog():void;
@@ -99,6 +100,8 @@ export interface SSTestApi {
   debug: { simulateFrameCost(ms: number): void; renderQuality(tier: 'high' | 'low'): void };
   perf(): ReturnType<Game['perf']>;
   screenshotReady(): Promise<void>;
+  /** E25 light field: the E27 transient hook and its counters (null outside lit scenes). */
+  lights: { addTransient(position: { x: number; z: number }, color: string, intensity: number, radius: number, ttl: number): void; state(): ReturnType<import('../render/LightField').LightField['snapshot']> | null };
 }
 declare global { interface Window { __SS__?: SSTestApi } }
 
@@ -117,6 +120,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     campaign: {state:()=>structuredClone(game.campaign),menu:()=>game.campaignUI.showMenu(game.saves.load()),save:()=>game.saveCampaign(),restore:save=>{if(!validateSave(save))throw new Error('Invalid campaign');game.campaign=structuredClone(save);game.applyCampaign();}},
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
+    lights: { addTransient: (position, color, intensity, radius, ttl) => { game.view.lightField?.addTransient(position, color, intensity, radius, ttl); }, state: () => game.view.lightField?.snapshot() ?? null },
     loadLevel: (id, opts) => {
       return game.loadLevel(id, opts);
     },
@@ -176,14 +180,14 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     setLoadout: (left, right) => { if (!game.world.combat) throw new Error('Load combat-arena before setting loadout'); game.world.combat.setLoadout(left, right); },
     cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) e.health.current = 0; }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
     bot: { start: (policy, options) => { if (game.world.scenario === 'L3' && (policy === 'complete' || policy === 'newbie')) { game.driver = new LevelThreeBot(game.world, policy, options?.route); return; } if (policy !== 'driver' || game.world.scenario !== 'drive-course') pending('E19', 'bot.start'); game.driver = new Driver(game.world); }, stop: () => { game.driver = null; }, status: () => ({ running: !!game.driver && !game.driver.finished, policy: game.driver instanceof LevelThreeBot ? game.driver.policy : game.driver ? 'driver' : null }) },
-    camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose) => game.view.view.cinematic(pose) },
+    camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose, instant) => game.view.view.cinematic(pose, instant) },
     settings: { set: (patch) => { if (patch.textSize !== undefined || patch.colorblind !== undefined || patch.quality !== undefined) { game.ui.settings.patch(patch); game.ui.applySettings(); } if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.audio.set(patch); if (patch.quality !== undefined) game.setQuality(patch.quality); const quality = patch.quality !== undefined ? game.quality.tier : undefined; game.view.settings({ ...patch, quality }); const keys=['cameraShake','flashReduction','gore','quality','muted','captions','noiseRings','mono','haptics','tinnitus','bloom','cheapDof','vfx','aimAssist','textSize','colorblind'];game.campaignSettings(Object.fromEntries(Object.entries(patch).filter(([key])=>keys.includes(key))) as CampaignSettings); } },
     vfx: {
       stepRender: (seconds) => game.view.frame(seconds),
       emit: (event) => { game.world.events.emit({ ...event, tick: game.world.tick } as GameEvent); game.view.update(1); },
     },
     audio: {
-      unlock:()=>game.audio.unlock(),snapshot:()=>game.audio.snapshot(),
+      unlock:async()=>{ await game.audio.unlock(); await game.audio.registry.preloadLazy(); },snapshot:()=>game.audio.snapshot(),
       play:(id,opts,sourceId)=>game.audio.play(id,opts,sourceId)?.id??null,
       emit:event=>game.world.events.emit(event),clearLog:()=>{game.audio.log.length=0;},
       map:map=>{game.audio.graph.map=map;},

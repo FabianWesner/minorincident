@@ -235,7 +235,9 @@ test('T-E16-15 @E16 @E16-AC15 light-lab, prop-yard and blast-lab use real bus ev
     for (const material of propMaterials) {
         const gains = data.cues.filter(c => c.cue === `prop.${material}`).map(c => c.gain);
         expect(gains).toHaveLength(2);
-        expect(gains[1] / gains[0]).toBeCloseTo(10, 3);
+        // The 10x impulse ratio is exact before the registry's deliberate independent +-1 dB gain jitter per play (+-2 dB on the ratio).
+        const ratioDb = 20 * Math.log10(gains[1] / gains[0] / 10);
+        expect(Math.abs(ratioDb)).toBeLessThanOrEqual(2.001);
     }
     const creaks = data.cues.filter(c => c.cue === 'prop.creak').map(c => c.rate);
     expect(creaks[1]).toBeGreaterThan(creaks[0]);

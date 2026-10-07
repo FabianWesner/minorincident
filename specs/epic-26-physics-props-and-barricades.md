@@ -4,7 +4,7 @@
 A town full of **movable objects** (Bruno-style sleeping, instanced Rapier bodies) that the player can nudge, push, and kick, that cars bulldoze, and that explosions launch. Props become **gameplay**: projectiles, obstacles, and **barricades** braced into slots that infected must path around, vault, or tear down. Concept: [07-physics-props-explosions-smoke.md](07-physics-props-explosions-smoke.md) §1–4, §7–8.
 
 ## Depends on / Enables
-E04, E05, E07, E09, E10, E11 / E19 (kick and cone tutorial), E20 (board-up, gym), E23 (prep phases), E24 (final stand).
+E04, E05, E07, E09, E10, E11 / E19 (gates, dumpsters), E20/E21 (street barricades, checkpoint gates), E22 (army sandbag lines), E24 (subway service gates and braced chokepoints).
 
 ## Scope
 **In:** the `PropSystem` (dynamic bodies from GLB `ss_physics` extras + collider empties; sleeping by default; instanced visual sync for awake bodies only; reset when fallen below the ground; the awake budget with freezing); light, medium, heavy, and fixed classes; player nudge and push (speed penalties), the kick action as a prop launcher, momentum damage; vehicle push and launch; crowd shoving; dynamic nav obstacles (footprints of resting medium and heavy props update the nav grid at 2 Hz); **barricade slots** (TS data), coverage computation, brace interaction, the barricade entity (HP, nav block, visual bracing overlay, damage states, break → props become dynamic again and fly inward), board-up points, car barricades, sandbag walls (vaultable cover), vaulting, repair; the `prop-yard` and `barricade-lab` scenarios.

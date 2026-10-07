@@ -156,8 +156,17 @@ export class Civilians {
       } else if (c.state === 'calm' && c.schedule) {
         updateRoutine(this.world, e);
       } else if (c.state === 'calm' && tick >= c.pauseUntil) {
-        const target = c.owner ? this.world.entities.get(c.owner)?.transform : c.waypoints[c.waypoint];
-        if (target) this.world.npcs!.move(e, target, c.routine === 'jog' ? 2.5 : npcs.routineSpeed, c, c.owner ? 1 : .15);
+        const owner = c.owner ? this.world.entities.get(c.owner) : undefined;
+        let target: Point | undefined = c.owner ? owner?.transform : c.waypoints[c.waypoint];
+        const dogWalker = c.pet && owner?.civilian?.l1;
+        if (dogWalker) {
+          // Following the owner's centre can leave a dog stopped ahead, body-blocking the walker forever.
+          // Stay beside and behind the owner; the lateral gap clears their existing body circles.
+          const p = owner!.transform, cell = ai.nav.nearestCell(p.x - Math.cos(p.yaw) * 1.4 + Math.sin(p.yaw) * .95, p.z + Math.sin(p.yaw) * 1.4 + Math.cos(p.yaw) * .95, .35);
+          if (cell >= 0) target = { x: ai.nav.x(cell), z: ai.nav.z(cell) };
+        }
+        const speed = dogWalker ? Math.max(npcs.routineSpeed, dogWalker.walkSpeed + .4) : c.routine === 'jog' ? 2.5 : npcs.routineSpeed;
+        if (target) this.world.npcs!.move(e, target, speed, c, dogWalker ? .25 : c.owner ? 1 : .15);
         if (!c.owner && target && Math.hypot(e.transform.x - target.x, e.transform.z - target.z) < .2) {
           c.waypoint = (c.waypoint + 1) % c.waypoints.length;
           c.pauseUntil = tick + this.duration(c.routine === 'chat' || c.routine === 'bus-stop' ? [120, 240] : [45, 120]);

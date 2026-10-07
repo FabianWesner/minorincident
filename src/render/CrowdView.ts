@@ -132,6 +132,8 @@ export class CrowdView extends Group {
       const opacity = feedbackState.w.div(2).floor().div(255).oneMinus();
       const base = mix(attribute('color', 'vec3'), variant.xyz, parts.y.max(0)), glow = attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(parts.z).mul(1.2).add(feedbackState.w.mod(2));
       const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
+      // E25 night readability: crowd silhouettes take the preset's moonlit rim.
+      if ('figureRim' in material) material.figureRim.value = 1;
       // Instances cannot be sorted independently in the transparent render list.
       // A shared 4x4 screen-door threshold keeps every surface of a corpse at
       // a pixel together, unlike a 3D hash that exposes its deeper body parts.

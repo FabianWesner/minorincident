@@ -115,6 +115,7 @@ export class Hud {
   }
   private readonly event = (event: GameEvent): void => {
     if (event.type === 'civilian.bark') {
+      if (this.game.world.missions?.state.l1?.say?.id === event.id) return; // The story bubble already captions this bark.
       const p = this.game.view.project(event.position.x, 1.8, event.position.z);
       this.civilianBark.style.left = `${(p[0] + 1) * 50}%`; this.civilianBark.style.top = `${(1 - p[1]) * 50}%`;
       this.civilianBarkUntil = this.game.world.tick + 72;

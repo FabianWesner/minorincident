@@ -25,7 +25,8 @@ export const compositions: Record<string, LevelComposition> =
       {
         id: `L${i + 1}`,
         tier: i as LevelComposition["tier"],
-        timeOfDay: i < 3 ? "L1" : i < 5 ? "L4" : "L6",
+        // E25 level moods (specs/06 §2): L1 morning, L2 midday, L3 afternoon (below), L4 golden hour, L5 dusk, L6 night.
+        timeOfDay: (["L1", "L2", "L1", "L4", "L5", "L6"] as const)[i],
         districts: districts.map((id) => ({ id, origin: districtOrigins[id] })),
       },
     ]),
@@ -54,6 +55,8 @@ compositions.L3.districts = [
 ];
 compositions.L3.timeOfDay = 'L3';
 for (const district of compositions.L3.districts) district.overrides = { spawns: [{ anchor: 'arrival' }, { x: 0, z: -20 }] };
+/** E25 `night-street` / perf: L1's town (W0, all blocks powered) at night. */
+compositions["night-street"] = { ...compositions[groveDistrictId], id: "night-street", timeOfDay: "night" };
 /** The retired M1 map (diner, hardware store, gas forecourt): kept only for its geometry/physics regression suites. */
 compositions["L1-M1"] = {
   id: "L1",

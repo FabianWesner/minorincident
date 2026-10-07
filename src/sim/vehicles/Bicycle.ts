@@ -235,7 +235,15 @@ export class Bicycle {
   private parkingSpot(x: number, z: number, heading: number, radii: readonly number[] = [.9, 1.2, 1.4, 2, 3, 4, 5, 6, 8]): (Vec2 & { heading: number }) | null {
     for (const radius of radii) for (const direction of [heading, heading + Math.PI / 2]) {
       const spot = this.clearSpot(x, z, direction, [radius]);
-      if (spot) return { ...spot, heading: direction };
+      if (spot) {
+        // Installing the parked frame's nav blocker must leave the dismounted rider a clear start.
+        // A safe frame behind the rider can still overlap their capsule and trap every routed step.
+        const rider = this.world.entities.get(1)?.transform, fx = Math.cos(direction), fz = Math.sin(direction);
+        const margin = survivor.radius + .1;
+        if (rider && Math.abs(rider.x - spot.x - fx * .05) < Math.abs(fx) * .65 + .3 + margin
+          && Math.abs(rider.z - spot.z - fz * .05) < Math.abs(fz) * .65 + .3 + margin) continue;
+        return { ...spot, heading: direction };
+      }
     }
     return null;
   }

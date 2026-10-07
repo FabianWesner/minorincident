@@ -8,13 +8,15 @@ A weather system that changes how levels **look, sound, and play**. The states a
 | Level | Weather timeline | Story / gameplay purpose |
 | --- | --- | --- |
 | L1 | clear sun, light breeze | the perfect normal morning |
-| L2 | sunny with drifting clouds and gusts (wind lines) | rising unease |
-| L3 | overcast, then a **short shower** in the last third (the streets get wet: first reflections) | the chase, slippery roads |
-| L4 | clearing to golden hour; **smoke haze** and wind carrying embers | the signature look, god rays |
-| L5 | **dusk thunderstorm**: heavy rain, lightning, gusts; rain masks noise | the defense in the storm: wet streets reflecting sirens and floodlights |
-| L6 | rain stops → **ground fog** and **ash fall** (looks like snow, mixed with embers) at night → a clear dawn | the fallen town, eerie quiet, then a hopeful sunrise |
+| L2 | clear midday sun, light gusts | organized help, then the rescue collapses |
+| L3 | hazy late afternoon; **smoke haze** and gusts carrying ash | the city visibly collapsing |
+| L4 | **perfectly clear** late afternoon (false safety); smoke builds from the battle | the safe city, then war |
+| L5 | still air at sunset, **light ash fall** and embers drifting from the fires | silent aftermath |
+| L6 | none underground (tunnel haze only); light **ground fog** at the night exit | confinement, then the open night |
 
-**Snow:** the campaign day is late summer, so snow is not in the main story. It is available as a **weather override** when replaying completed levels (level select) and in the photo mode (decision W1, changeable). L6's ash fall reuses the snow system (gray-white flakes, ash accumulation on surfaces).
+> Rows rewritten for the PO's Level 2–6 redesign (2026-10-07). Weather is optional in the redesigned campaign: rain and the thunderstorm are no longer scheduled in a level (they remain in `weather-lab`, `storm-street` and the replay override) — orchestrator default, PO may change.
+
+**Snow:** the campaign day is late summer, so snow is not in the main story. It is available as a **weather override** when replaying completed levels (level select) and in the photo mode (decision W1, changeable). L5's ash fall reuses the snow system (gray-white flakes, ash accumulation on surfaces).
 
 ## Systemic effects (data-driven, deterministic sim state)
 
@@ -26,7 +28,7 @@ A weather system that changes how levels **look, sound, and play**. The states a
 | Rain | noise radii ×0.8 (rain masks sound); fire zones last ×0.6 and spread slower; vehicle grip ×0.85 | rain streaks, splashes, **wetness accumulates** (reflections, E25), puddles grow, characters get a wet sheen | rain bed by intensity, rain on metal and cars, wet footsteps |
 | Thunderstorm | + lightning: a flash briefly reveals all infected within 40 m (minimap ping, 0.5 s); scripted strikes on tall props (transformers, trees) cause fires or blackouts; infected sight ×0.85 | lightning flash (light-field + sky flash, exposure pump capped by flash reduction), bolts | thunder delayed by distance (340 m/s) |
 | Fog | infected sight ×0.6 and the player's view range reduced; telegraph sounds become more important | height fog, strong lit haze around lights (E25) | damped high frequencies, closer reverb |
-| Snow (override) / ash fall (L6) | **footprints** of the player and infected (tracks reveal infected paths); vehicle grip ×0.6 (snow) / ×0.9 (ash); player speed ×0.95 (snow) | flakes, accumulation on up-facing surfaces (roofs, cars, ground), breath vapor (snow) | muffled acoustics (reverb damping), crunchy footsteps (snow) |
+| Snow (override) / ash fall (L5) | **footprints** of the player and infected (tracks reveal infected paths); vehicle grip ×0.6 (snow) / ×0.9 (ash); player speed ×0.95 (snow) | flakes, accumulation on up-facing surfaces (roofs, cars, ground), breath vapor (snow) | muffled acoustics (reverb damping), crunchy footsteps (snow) |
 
 Weather never hides the player: precipitation and fog are dithered near the camera-to-player ray, and the player keeps their readability rim (E25 night rules).
 
@@ -63,6 +65,6 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E28-AC07 | Snow / ash: the player and infected leave footprints (track texture coverage grows along their paths); accumulation on up-facing surfaces reaches visible coverage (≥ 60% of the roof and car-top pixels whitened in `weather-lab`); vehicle grip modifiers apply | visual/sim |
 | E28-AC08 | Override: completed levels can be replayed with any weather from level select; the override changes only the weather, not mission logic (graph walk passes with every override) | e2e/sim |
 | E28-AC09 | Audio coupling: rain bed level follows intensity; snow and fog apply reverb damping (offline render RT60 shorter than clear); wind gust one-shots fire with gusts (event → cue log) | e2e (offline) |
-| E28-AC10 | Performance: the heaviest weather (storm at the L5 bridge peak, ash at the L6 Main Street run) stays within the E18 budgets (rain/snow particles: 20k high / 6k low) | perf |
+| E28-AC10 | Performance: the heaviest weather (the storm in `storm-street`, ash at the L5 `pair-plaza`) stays within the E18 budgets (rain/snow particles: 20k high / 6k low) | perf |
 | E28-AC11 | Readability: precipitation within 6 m of the camera-to-player ray is dithered; the HUD weather icon shows the current state | visual/e2e |
 | E28-AC12 | Vision: `weather-lab` frames for clear, overcast, golden-hour haze, storm, fog, and snow pass checklist G (lighting) + a weather-mood check against `initial-drafts/weather-and-time-of-day-moods.png` | vision |
