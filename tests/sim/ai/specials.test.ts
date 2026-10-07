@@ -36,10 +36,13 @@ test('T-E07-06f @E07 @E07-AC06 crawler slow ends after 3 hits or 1.5 s', async (
   const w = await arena(), crawler = spawn(w, 'crawler', 1); step(w, 22); expect(w.infected!.playerSpeedScale()).toBe(0.5); hit(w, crawler.id); hit(w, crawler.id); hit(w, crawler.id); step(w, 1); expect(w.infected!.playerSpeedScale()).toBe(1);
   crawler.infected!.cooldown = w.tick; step(w, 22); expect(w.infected!.playerSpeedScale()).toBe(0.5); crawler.infected!.cooldown = w.tick + 200; step(w, 90); expect(w.infected!.playerSpeedScale()).toBe(1);
 });
-test('T-E07-14 @E07 @E07-AC14 corpses remain 45 seconds, sink, and oldest first cap is 100', async () => {
-  const w = await arena(), e = spawn(w, 'runner', 10, 0, 'idle'); e.health.current = 0; step(w, 2700); expect(w.entities.get(e.id)).toBe(e); expect(e.transform.y).toBe(0.7); step(w, 30); expect(e.transform.y).toBeLessThan(0.7); step(w, 31); expect(w.entities.get(e.id)).toBeUndefined();
-  const ids: number[] = []; for (let i = 0; i < 101; i++) { const corpse = spawn(w, 'runner', i % 20 - 10, 10 + Math.floor(i / 20), 'idle'); ids.push(corpse.id); corpse.health.current = 0; step(w, 1); }
-  expect(w.infected!.active).toHaveLength(100); expect(w.entities.get(ids[0])).toBeUndefined(); expect(w.entities.get(ids[1])).toBeDefined();
+test('T-E07-14 @E07 @E07-AC14 settled corpses persist past 60 seconds and beyond 100 bodies', async () => {
+  const w = await arena(), e = spawn(w, 'runner', 10, 0, 'idle'), id = e.id; e.health.current = 0;
+  step(w, 3601); expect(w.entities.get(id)).toMatchObject({ corpse: true, transform: { y: .7 }, infected: { state: 'dead' } });
+  const ids: number[] = [];
+  for (let i = 0; i < 101; i++) { const corpse = spawn(w, 'runner', i % 20 - 10, 10 + Math.floor(i / 20), 'idle'); ids.push(corpse.id); corpse.health.current = 0; }
+  step(w, 121); expect(w.infected!.active).toHaveLength(0);
+  for (const corpseId of [id, ...ids]) expect(w.entities.get(corpseId)?.corpse).toBe(true);
 });
 test('T-E07-15 @E07 @E07-AC15 leg-targeted explosions make surviving runners crawl with identical gameplay in every gore mode', async () => {
   for (const gore of ['Full', 'Reduced', 'Off'] as const) {

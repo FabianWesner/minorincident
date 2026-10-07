@@ -44,6 +44,7 @@ export interface SSTestApi {
   loadScenario(name: string, opts?: { seed?: number }): Promise<void>;
   /** Additive E01 harness hook: unload all scenario-owned sim and GPU resources. */
   unloadScenario(): Promise<void>;
+  crowdFigures(): ReturnType<Game['view']['crowdFigures']>;
   getState(): GameStateSnapshot & { districts?:ReturnType<import('../sim/world/DistrictWorld').DistrictWorld['getState']>|null; render: ReturnType<Game['view']['getState']> };
   getEntity(id: number): EntitySnapshot | null;
   query(filter: EntityFilter): EntitySnapshot[];
@@ -120,6 +121,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     },
     loadScenario: (name, opts) => game.loadScenario(name, opts?.seed),
     unloadScenario: () => game.loadScenario(null),
+    crowdFigures: () => game.view.crowdFigures(),
     getState: () => ({ ...game.world.getState(), ...(game.world.districts?{districts:game.world.districts.getState()}:{}), render: game.view.getState() }), getEntity: (id) => game.world.getEntity(id),
     query: (filter) => game.world.query(filter), events: (since) => game.world.events.events(since),
     input: {
