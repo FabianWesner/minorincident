@@ -202,7 +202,11 @@ describe('L1 v2 mission', () => {
       for (const id of mission.state.l1?.house?.ids ?? []) if (!appear.has(id)) { const t = w.entities.get(id)!.transform; appear.set(id, { tick: w.tick, x: t.x, z: t.z }); }
       if (mission.state.l1?.house) nearMax = Math.max(nearMax, near());
     });
-    runL1(w, mission, 'complete', { seed: 2, stopWhen: m => (m.state.l1!.house?.ids.length ?? 0) >= l1v2.house.count });
+    // ...until the house opens; then the (immortal) courier waits on the street so the level does not end first.
+    runL1(w, mission, 'complete', { seed: 2, stopWhen: m => !!m.state.l1!.house });
+    w.clearInput();
+    for (let i = 0; i < 60 * 60 && mission.state.l1!.house!.ids.length < l1v2.house.count; i++) w.update();
+    for (let i = 0; i < 120; i++) w.update(); // the last one is noted on the next tick and the crowd gathers
     const house = mission.state.l1!.house!;
     expect(house.door).toBeGreaterThan(0);
     expect(Math.hypot(house.x - g.x, house.z - g.z)).toBeLessThanOrEqual(l1v2.house.doorM[1]);
@@ -216,7 +220,7 @@ describe('L1 v2 mission', () => {
     }
     // Each one appears within 3 m of that door, on its door-open tick, with a pedestrian look.
     for (const [i, id] of house.ids.entries()) {
-      const a = appear.get(id)!; expect(a.tick).toBe(doors[i].tick);
+      const a = appear.get(id)!; expect(a.tick - doors[i].tick).toBeGreaterThanOrEqual(0); expect(a.tick - doors[i].tick).toBeLessThanOrEqual(1); // noted on the next sim.tick
       expect(Math.hypot(a.x - house.x, a.z - house.z)).toBeLessThanOrEqual(3);
       expect(w.entities.get(id)?.appearance?.entityId).toBe(id);
     }
