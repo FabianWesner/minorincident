@@ -82,7 +82,7 @@ export class GroundContacts {
         if (turning) {
           // Small alternating lift while turning; feet stay directly under the body.
           foot.target.lerp(neutral, 1 - this.turnBlend);
-          foot.target.y += Math.abs(Math.sin((phase + index * .5) * Math.PI * 2)) * .008 * this.scale.y;
+          foot.target.y += Math.max(0, Math.sin((phase + index * .5) * Math.PI * 2)) ** 2 * .018 * this.scale.y;
         }
         foot.phase = p;
       }
@@ -93,9 +93,10 @@ export class GroundContacts {
       }
       // Release a stale plant before it can create a lunge, including a teleported root.
       const maximum = (foot.a + foot.b) * this.scale.y * (moving && !turning && p > stance ? .8 : .55);
-      const along = this.offset.copy(foot.target).sub(neutral).dot(this.forward);
-      if (Math.abs(along) > maximum) {
-        foot.target.addScaledVector(this.forward, Math.sign(along) * maximum - along);
+      this.offset.copy(foot.target).sub(neutral); this.offset.y = 0;
+      const radius = this.offset.length();
+      if (radius > maximum) {
+        foot.target.addScaledVector(this.offset, maximum / radius - 1);
         foot.planted.copy(foot.target);
       }
     }
@@ -108,7 +109,7 @@ export class GroundContacts {
       foot.ik.upper.getWorldPosition(this.joint);
       const dx = foot.target.x - this.joint.x, dz = foot.target.z - this.joint.z;
       const compression = support ? Math.sin(Math.PI * Math.max(0, foot.phase) / stance) ** 2 : 0;
-      const supportKnee = (10 + 35 * run * compression) * Math.PI / 180;
+      const supportKnee = (10 + 15 * run + 20 * run * compression) * Math.PI / 180;
       const length = Math.sqrt(foot.a ** 2 + foot.b ** 2 + 2 * foot.a * foot.b * Math.cos(supportKnee)) * this.scale.y;
       const desired = foot.target.y + Math.sqrt(Math.max(.001, length * length - dx * dx - dz * dz));
       const offset = this.joint.y - rig.hip.getWorldPosition(this.delta).y;
@@ -122,7 +123,8 @@ export class GroundContacts {
       // During running flight neither ankle supports the pelvis. Lowering it
       // to reach both swing targets made the pilot drop on every toe-off.
       const u = ((phase % .5) - stance) / (.5 - stance);
-      const foot = this.feet[0], reach = (foot.a + foot.b) * this.scale.y * .996;
+      const foot = this.feet[0], knee = (10 + 15 * run) * Math.PI / 180;
+      const reach = Math.sqrt(foot.a ** 2 + foot.b ** 2 + 2 * foot.a * foot.b * Math.cos(knee)) * this.scale.y;
       const half = Math.min(reach * .8, stride * stance / 2);
       height = this.origin.y + this.sole * this.scale.y - foot.rest.y * this.scale.y
         + this.hipRest * this.scale.y + Math.sqrt(reach * reach - half * half)
@@ -143,7 +145,7 @@ export class GroundContacts {
         // Prescribe a smooth knee arc, then solve vertical ankle clearance from
         // the fitted bone lengths. This avoids hitting the IK straight-leg
         // singularity twice per swing (a visible knee snap in the pilot).
-        const knee = (10 + (15 + 20 * run) * Math.sin(Math.PI * u) ** 2) * Math.PI / 180;
+        const knee = (10 + 15 * run + (15 + 5 * run) * Math.sin(Math.PI * u) ** 2) * Math.PI / 180;
         const length = Math.sqrt(foot.a ** 2 + foot.b ** 2 + 2 * foot.a * foot.b * Math.cos(knee)) * this.scale.y;
         this.delta.copy(foot.target).sub(this.joint);
         foot.target.y = Math.max(this.origin.y + this.sole * this.scale.y,

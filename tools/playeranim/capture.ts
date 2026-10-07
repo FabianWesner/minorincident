@@ -29,4 +29,4 @@ try {
   }
   writeFileSync(`${out}/${after}-capture.json`, JSON.stringify({ errors, renderer: 'headless Chromium ANGLE Metal / WebGL2, neutral studio lighting, production recorded poses', fps: 15, camera: 'side + game angle; all frames, fixed 60/120/180/240-tick stills' }, null, 2));
   if (errors.length) throw new Error(errors.join('\n'));
-} finally { await close(); }
+} catch (error) { console.log(error); throw error; } finally { await close(); }

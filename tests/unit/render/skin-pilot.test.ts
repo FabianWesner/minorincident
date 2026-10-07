@@ -25,6 +25,17 @@ test('skin rollout retains explicit A/B overrides', () => {
   expect(useSkinnedCourier(new URLSearchParams('skin=0'))).toBe(false);
 });
 
+test('courier facing ignores sub-degree arrival noise across the yaw wrap @E04', () => {
+  const character = new CharacterView(); character.face(Math.PI - .001, 1);
+  const rotation = character.quaternion.clone();
+  for (let i = 1; i <= 120; i++) {
+    character.face(i % 2 ? -Math.PI + .001 : Math.PI - .001, 1 + i / 60);
+    expect(character.quaternion.angleTo(rotation)).toBeLessThan(1e-7);
+  }
+  character.face(Math.PI - .4, 4, true);
+  expect(character.quaternion.angleTo(rotation)).toBeGreaterThan(.3);
+});
+
 test.each(['female', 'male'] as const)('skin rollout plants %s stance feet with capped cadence @E04', async variant => { for (const speed of [2, 4.5]) {
   const scene = await model(`public/assets/models/char.courier-${variant}.skin.glb`);
   expect(alignSkeleton(scene)).toHaveLength(1);
