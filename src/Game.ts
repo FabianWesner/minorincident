@@ -88,7 +88,9 @@ export class Game {
       this.frameMs = seconds * 1000;
       if (!this.loading) this.campaignUI.update();
       if (!this.loading && this.renderedDistricts !== this.world.districts) this.refreshView();
-      if (!this.loading && !this.view.contextLost) {
+      // While the L1 warm-up runs behind the briefing only the mission UI updates; the clock waits.
+      if (!this.loading && !this.view.contextLost && this.view.warming) this.view.update(1);
+      else if (!this.loading && !this.view.contextLost) {
         if (document.hidden) this.clock.pause();
         if (!this.clock.paused) this.quality.observe(Math.max(this.frameMs, this.simulatedFrameMs), seconds, Boolean(this.world.missions?.state.cinematic));
         if (!this.clock.paused) this.view.frame(seconds);
