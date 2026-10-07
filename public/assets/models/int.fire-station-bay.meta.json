@@ -1,29 +1,29 @@
 {
   "id": "int.fire-station-bay",
   "errors": [],
-  "triangles": 2812,
-  "materials": 8,
-  "drawCalls": 9,
-  "fileKB": 224.94921875,
+  "triangles": 15096,
+  "materials": 12,
+  "drawCalls": 16,
+  "fileKB": 1113.625,
   "dimensions": [
-    12,
+    12.027999877929688,
     4.300000190734863,
     10
   ],
-  "hash": "f08f31af58880f387f7ca5d5c996f9d1f4b302ae5a3b077d268e5e35574509e4",
+  "hash": "9a462ee57375c1d844ea0da458017133c3f4dd53bd01f66ce02b3bb9bde10de0",
   "runtime": {
     "id": "int.fire-station-bay",
     "errors": [],
-    "triangles": 2812,
-    "materials": 8,
-    "drawCalls": 8,
-    "fileKB": 52.32421875,
+    "triangles": 15096,
+    "materials": 12,
+    "drawCalls": 12,
+    "fileKB": 230.39453125,
     "dimensions": [
-      12,
-      4.300180059205907,
-      10.000061037018952
+      12.027999877929688,
+      4.299935623342641,
+      9.999901506837993
     ],
-    "hash": "bbda54d079ccf408f6c00d9ef7a18eb901121bfbf93bb4f26c1d717d9a4b5761"
+    "hash": "0b4775b899cf18168290575e55ddb4fd5c8167cf261bb549032622f050d2a97f"
   },
   "nodes": [
     {
@@ -67,7 +67,23 @@
       ]
     },
     {
+      "name": "body_pal_khaki",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
       "name": "body_pal_picketWhite",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "body_pal_policeBlue",
       "pivot": [
         0,
         0,
@@ -107,6 +123,14 @@
       ]
     },
     {
+      "name": "body_pal_windowGlow",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
       "name": "body_pal_woodWarm",
       "pivot": [
         0,
@@ -116,6 +140,70 @@
     },
     {
       "name": "body",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "ceiling1.7-3Mount_emi_windowGlow",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "ceiling1.7-3Mount",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "ceiling1.73Mount_emi_windowGlow",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "ceiling1.73Mount",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "ceiling-3-3Mount_emi_windowGlow",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "ceiling-3-3Mount",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "ceiling-33Mount_emi_windowGlow",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "ceiling-33Mount",
       "pivot": [
         0,
         0,
@@ -149,7 +237,7 @@
     {
       "name": "front",
       "pivot": [
-        6,
+        6.0279998779296875,
         0,
         0
       ]
@@ -168,6 +256,38 @@
         5.550000190734863,
         3.5,
         3.200000047683716
+      ]
+    },
+    {
+      "name": "light:ceiling1.7-3",
+      "pivot": [
+        1.7000000476837158,
+        4,
+        3
+      ]
+    },
+    {
+      "name": "light:ceiling1.73",
+      "pivot": [
+        1.7000000476837158,
+        4,
+        -3
+      ]
+    },
+    {
+      "name": "light:ceiling-3-3",
+      "pivot": [
+        -3,
+        4,
+        3
+      ]
+    },
+    {
+      "name": "light:ceiling-33",
+      "pivot": [
+        -3,
+        4,
+        -3
       ]
     },
     {

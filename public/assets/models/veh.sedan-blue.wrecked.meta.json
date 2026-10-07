@@ -1,29 +1,29 @@
 {
   "id": "veh.sedan-blue",
   "errors": [],
-  "triangles": 3328,
-  "materials": 7,
-  "drawCalls": 36,
-  "fileKB": 432.97265625,
+  "triangles": 2964,
+  "materials": 8,
+  "drawCalls": 38,
+  "fileKB": 380.58203125,
   "dimensions": [
-    4.448000192642212,
+    4.456200167841233,
     1.6432058811187744,
-    2.1795000503771007
+    2.1800000965595245
   ],
-  "hash": "4bb865da55864ec5811d0c55664f4bdb68b501da0a4ea846b626cc5f1934d4d6",
+  "hash": "ab545c8077fc1b2026b745234ba7ab8276625c02f59df79d4371707c678281b2",
   "runtime": {
     "id": "veh.sedan-blue",
     "errors": [],
-    "triangles": 3328,
-    "materials": 7,
+    "triangles": 2964,
+    "materials": 8,
     "drawCalls": 20,
-    "fileKB": 54.03125,
+    "fileKB": 51.1171875,
     "dimensions": [
-      4.448000192642212,
+      4.456200122833252,
       1.6432079440203047,
-      2.179475740819308
+      2.1800185381760437
     ],
-    "hash": "c39ba6d51128e7ff99764dcefd9907218f9ff4805df948b1eda108cff87a756b"
+    "hash": "5039656277c6102302a334101a0ae7bba96eaab1c32615bedc3164cab815a7ca"
   },
   "nodes": [
     {
@@ -83,34 +83,10 @@
       ]
     },
     {
-      "name": "doorL_pal_asphalt",
+      "name": "detachedBumper",
       "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "name": "doorL_pal_policeBlue",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "name": "doorL_pal_sidewalk",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "name": "doorL_pal_uiDark",
-      "pivot": [
-        0,
-        0,
+        2.194000005722046,
+        0.15000000596046448,
         0
       ]
     },
@@ -163,30 +139,6 @@
       ]
     },
     {
-      "name": "doorRearL_pal_asphalt",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "name": "doorRearL_pal_policeBlue",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "name": "doorRearL_pal_uiDark",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
-    {
       "name": "doorRearL",
       "pivot": [
         -0.12999999523162842,
@@ -227,6 +179,14 @@
       ]
     },
     {
+      "name": "doorScorch",
+      "pivot": [
+        -0.5337600111961365,
+        0.33000001311302185,
+        0.9600000381469727
+      ]
+    },
+    {
       "name": "driverSeat",
       "pivot": [
         0.05000000074505806,
@@ -248,6 +208,54 @@
         0.10000000149011612,
         0,
         -1.25
+      ]
+    },
+    {
+      "name": "exposedCabin",
+      "pivot": [
+        0,
+        1.0583999156951904,
+        0
+      ]
+    },
+    {
+      "name": "glassShard0",
+      "pivot": [
+        0.4448000192642212,
+        0.10000000149011612,
+        0.9300000667572021
+      ]
+    },
+    {
+      "name": "glassShard1",
+      "pivot": [
+        0.5648000240325928,
+        0.10000000149011612,
+        0.9300000667572021
+      ]
+    },
+    {
+      "name": "glassShard2",
+      "pivot": [
+        0.6848000288009644,
+        0.10000000149011612,
+        0.9300000667572021
+      ]
+    },
+    {
+      "name": "glassShard3",
+      "pivot": [
+        0.8048000335693359,
+        0.10000000149011612,
+        0.9300000667572021
+      ]
+    },
+    {
+      "name": "glassShard4",
+      "pivot": [
+        0.9248000383377075,
+        0.10000000149011612,
+        0.9300000667572021
       ]
     },
     {
@@ -371,19 +379,27 @@
       ]
     },
     {
-      "name": "wheelFL_pal_sidewalk",
+      "name": "scorchedHood",
       "pivot": [
-        0,
-        0,
+        1.0180400609970093,
+        0.974399983882904,
         0
       ]
     },
     {
-      "name": "wheelFL_pal_uiDark",
+      "name": "tornDoor",
       "pivot": [
-        0,
-        0,
-        0
+        -0.5337600111961365,
+        0.2800000011920929,
+        0.9500000476837158
+      ]
+    },
+    {
+      "name": "exposedAxleHub",
+      "pivot": [
+        1.340000033378601,
+        0.41499999165534973,
+        0.8100000023841858
       ]
     },
     {
