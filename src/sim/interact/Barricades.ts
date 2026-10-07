@@ -135,8 +135,7 @@ export class Barricades {
   attackTarget(attacker: EntitySnapshot, goal: { x: number; z: number }): EntitySnapshot | undefined {
     for (const e of this.world.entities.iterate()) {
       if (!e.barricade?.intact) continue;
-      const wall = this.wall(e), distance = Math.hypot(Math.max(0, Math.abs(attacker.transform.x - wall.x) - wall.halfX), Math.max(0, Math.abs(attacker.transform.z - wall.z) - wall.halfZ));
-      if (distance > 1.5) continue;
+      const wall = this.wall(e);
       const dx = goal.x - attacker.transform.x, dz = goal.z - attacker.transform.z, length = Math.hypot(dx, dz);
       const projection = ((wall.x - attacker.transform.x) * dx + (wall.z - attacker.transform.z) * dz) / Math.max(.01, length * length);
       const cross = Math.abs((wall.x - attacker.transform.x) * dz - (wall.z - attacker.transform.z) * dx) / Math.max(.01, length);
@@ -149,6 +148,19 @@ export class Barricades {
       this.decisions.set(attacker.id, { id: e.id, until: this.world.tick + 60, attack, goalX: goal.x, goalZ: goal.z });
       if (attack) return e;
     }
+  }
+  /** Combat distance to the rail face, rather than its midpoint (wide gates remain attackable). */
+  withinReach(attacker: EntitySnapshot, target: EntitySnapshot): boolean {
+    const w = this.wall(target);
+    return Math.hypot(Math.max(0, Math.abs(attacker.transform.x - w.x) - w.halfX), Math.max(0, Math.abs(attacker.transform.z - w.z) - w.halfZ)) <= 1.5;
+  }
+  /** Approach the near face when crowd spacing pushes an attacker out of reach. */
+  approach(attacker: EntitySnapshot, target: EntitySnapshot): { x: number; z: number } {
+    const w = this.wall(target), pad = (this.world.infected?.nav.clearance ?? .65) + .4;
+    const x = Math.max(w.x - w.halfX, Math.min(w.x + w.halfX, attacker.transform.x));
+    const z = Math.max(w.z - w.halfZ, Math.min(w.z + w.halfZ, attacker.transform.z));
+    const dx = attacker.transform.x - x, dz = attacker.transform.z - z, length = Math.hypot(dx, dz);
+    return { x: x + (length ? dx / length : 0) * pad, z: z + (length ? dz / length : -1) * pad };
   }
   /** Defined E07 attack cadence: one hit after windup followed by a one-second cooldown. */
   dps(archetype: string): number { const d = infectedDef(archetype); return d.damage * (archetype === 'infected.brute' ? 5 : archetype === 'infected.butcher' ? 8 : 1) / (d.windup + 1); }

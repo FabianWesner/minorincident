@@ -32,17 +32,19 @@ test('T-E26-09 @E26-AC09 coverage rejects overlaps and low fill; 1.5s brace pins
   expect(w.barricades!.barricadeIntact('door')).toBe(true); expect(e.health.max).toBe(p.metadata.barricadeHP); expect(p.body.isKinematic()).toBe(true);
   expect(w.infected!.nav.clear(0, 0, .2)).toBe(false); expect(w.barricades!.allBarricaded('defense')).toBe(false);
 });
-test('T-E26-10 @E26-AC10 10 runners deal authored volleys; Brute is fivefold; break releases props and nav synchronously', async () => {
-  const w = await world(); teleport(w, 0, 1.3); step(w, 90); teleport(w, 0, 8);
-  const e = slot(w); e.health = { current: 400, max: 400 };
-  for (let i = 0; i < 10; i++) w.infected!.spawn('infected.runner', { x: (i % 5 - 2) * .35, z: -1 - Math.floor(i / 5) * .2 }, { state: 'chase' });
-  step(w, Math.ceil(infectedDef('infected.runner').windup * 60) + 1);
-  expect(e.health.current).toBeCloseTo(400 - 10 * infectedDef('infected.runner').damage, 5);
+test('T-E26-10 @E26-AC10 ten spaced runners deal defined DPS; Brute fivefold; breaking releases props and nav in the same tick', async () => {
+  const w = await world(); teleport(w, 0, 1.3); step(w, 90);
+  const e = slot(w), siege = await world('horde-arena'); teleport(siege, 0, 8);
+  const railId = siege.barricades!.spawn({ id: 'wide-gate', groupId: 'siege', a: { x: -60, z: 0 }, b: { x: 60, z: 0 }, height: 1, initialHp: 400 });
+  const rail = siege.entities.get(railId)!;
+  for (let i = 0; i < 10; i++) siege.infected!.spawn('infected.runner', { x: (i - 4.5) * .8, z: -1.2 }, { state: 'chase' });
+  step(siege, Math.ceil(infectedDef('infected.runner').windup * 60) + 1);
+  expect(rail.health.current).toBeCloseTo(400 - 10 * infectedDef('infected.runner').damage, 5);
   const period = 60 + Math.ceil(infectedDef('infected.runner').windup * 60) + 1;
-  step(w, period * 2);
-  expect(e.health.current).toBeCloseTo(400 - 30 * infectedDef('infected.runner').damage, 5);
-  step(w, period);
-  const brute = w.infected!.spawn('infected.brute', { x: 0, z: -1 }, { state: 'chase' }); expect(w.infected!.barricadeDamage(brute, 10)).toBe(50);
+  step(siege, period * 2); expect(rail.health.current).toBeCloseTo(400 - 30 * infectedDef('infected.runner').damage, 5);
+  step(siege, period); expect(siege.barricades!.barricadeIntact('wide-gate')).toBe(false);
+  const brute = siege.infected!.spawn('infected.brute', { x: 0, z: -1 }, { state: 'chase' }); expect(siege.infected!.barricadeDamage(brute, 10)).toBe(50);
+  w.hazards!.hit(e.id, 400, 'bullet');
   expect(w.barricades!.barricadeIntact('door')).toBe(false); expect(w.infected!.nav.clear(0, 0, .2)).toBe(true);
   expect(w.props!.items[0].body.isDynamic()).toBe(true); expect(w.props!.items[0].body.linvel().z).toBeGreaterThan(0); expect(w.props!.items[0].body.linvel().y).toBeGreaterThan(0);
   expect(w.events.events().filter(e => e.type === 'barricade.broken')).toHaveLength(1);
