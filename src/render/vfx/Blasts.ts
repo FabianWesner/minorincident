@@ -77,7 +77,7 @@ export class Blasts extends Group {
       fbMaterial.outputNode = Fn(() => {
         const n = mx_noise_float(positionGeometry.mul(2.3).add(seed).add(vec3(0, clock.mul(-2), 0))).mul(.5).add(.5);
         n.lessThan(progress.mul(.95).sub(.05)).or(alive.lessThan(.5)).discard();
-        const h = n.mul(float(1).sub(progress)).mul(1.7);
+        const h = n.mul(float(1).sub(progress)).mul(1.4);
         const soot = vec3(.07, .055, .05), red = vec3(.85, .16, .04), orange = vec3(1, .45, .08), yellow = vec3(1, .82, .32), white = vec3(1, .97, .85);
         let c = mix(soot, red, smoothstep(.05, .2, h));
         c = mix(c, orange, smoothstep(.2, .42, h)); c = mix(c, yellow, smoothstep(.42, .7, h)); c = mix(c, white, smoothstep(.7, 1, h));
@@ -104,13 +104,13 @@ export class Blasts extends Group {
         const sun = normalWorld.dot(vec3(.45, .78, .43)).mul(.5).add(.5);
         const base = vec3(st.w).mul(mix(.62, 1.12, sun));
         // Lit from below by the fire: low, young puffs glow orange on their undersides (spec 07 §6).
-        const ember = st.z.mul(float(1).sub(progress).pow(1.5)).mul(smoothstep(7, .8, positionWorld.y)).mul(normalWorld.y.negate().mul(.35).add(.75));
-        const color = mix(base, vec3(1, .42, .12).mul(1.35), ember.clamp(0, .85));
+        const ember = st.z.mul(float(1).sub(progress).pow(2.5)).mul(smoothstep(4.5, .6, positionWorld.y)).mul(normalWorld.y.negate().mul(.35).add(.75));
+        const color = mix(base, vec3(1, .42, .12).mul(1.2), ember.clamp(0, .6));
         const edge = normalView.z.abs().smoothstep(.05, .7);
         const grain = mx_noise_float(positionWorld.mul(.9).add(seed)).mul(.25).add(.85);
         const fade = age.div(.45).min(1).mul(float(1).sub(progress).pow(1.3));
         // Readability: smoke on the camera-to-player ray dims to ≤ 40 % (shared see-through hole).
-        return vec4(color, edge.mul(grain).mul(fade).mul(.88).mul(alive).mul(mix(.38, 1, seeThroughHole(1.15))));
+        return vec4(color, edge.mul(grain).mul(fade).mul(.97).mul(alive).mul(mix(.38, 1, seeThroughHole(1.15))));
       })();
       this.puffs.renderOrder = 3;
     }
@@ -131,7 +131,7 @@ export class Blasts extends Group {
         const width = float(1).sub(y).pow(.75).mul(.85).add(n.mul(.22)).sub(.08);
         const mask = smoothstep(width, width.mul(.55), x.abs()).mul(smoothstep(1, .55, y.add(n.mul(.25)))).mul(smoothstep(0, .08, y));
         const core = mask.pow(2);
-        const color = mix(vec3(.95, .22, .04), vec3(1, .78, .3), core).mul(mix(1.2, 2.4, core)).mul(st.z).mul(heat);
+        const color = mix(vec3(.9, .2, .03), vec3(1, .7, .25), core).mul(mix(.85, 1.5, core)).mul(st.z).mul(heat);
         return vec4(color, mask.mul(st.w));
       })();
       this.flames.renderOrder = 4;
@@ -197,7 +197,7 @@ export class Blasts extends Group {
       this.host.particles.spawn(now, burning ? 1.6 + this.rng.next() : .5 + this.rng.next() * .6, x, .8, z, Math.cos(a) * out, 4 + this.rng.next() * (burning ? 6 : 9), Math.sin(a) * out, burning ? .16 : .07, 0, burning ? 0xff7a26 : 0xffe9a8, 9.81);
     }
     // Beat 6 smoke column, beat 7 scorch decal (persists to the end of the level; independent of the gore setting).
-    if (fx.smoke.seconds > 0) this.columns.push({ x, z, until: now + fx.smoke.seconds, rate: fx.smoke.rate * (low ? .5 : 1), size: fx.smoke.size, heat: fx.smoke.heat, acc: 2, shade: .26, cloud: 0 });
+    if (fx.smoke.seconds > 0) this.columns.push({ x, z, until: now + fx.smoke.seconds, rate: fx.smoke.rate * (low ? .5 : 1), size: fx.smoke.size, heat: fx.smoke.heat, acc: 2, shade: .17, cloud: 0 });
     if (fx.scorch > 0) this.scorch.spawn(now, 900, x, .014, z, this.rng.next() * Math.PI, 0, 0, r * fx.scorch * 2, 0, 0x16110f);
     // Camera: shake by size, Bruno's roll kick by distance from the focus.
     const focus = this.host.focus?.(), distance = focus ? Math.hypot(focus.x - x, focus.z - z) : 0;
@@ -248,8 +248,8 @@ export class Blasts extends Group {
       if (c.cloud) {
         // Smoke grenade cloud: low, thick, slow, filling the authored radius.
         const a = this.rng.next() * Math.PI * 2, d = Math.sqrt(this.rng.next()) * c.cloud * .8;
-        this.puff(c.x + Math.cos(a) * d, .4 + this.rng.next() * .8, c.z + Math.sin(a) * d, j() * .3, .18 + this.rng.next() * .2, j() * .3, 4 + this.rng.next() * 1.5, c.size * .7, c.size * (1.6 + this.rng.next() * .6), 0, c.shade + j() * .08);
-      } else this.puff(c.x + j() * .5 * c.size, .5 + this.rng.next() * .4, c.z + j() * .5 * c.size, j() * .3, 1.5 + this.rng.next() * .9, j() * .3, 7 + this.rng.next() * 2.5, c.size * .55, c.size * (2 + this.rng.next() * .8), c.heat, c.shade + j() * .08);
+        this.puff(c.x + Math.cos(a) * d, .4 + this.rng.next() * .8, c.z + Math.sin(a) * d, j() * .3, .18 + this.rng.next() * .2, j() * .3, 4 + this.rng.next() * 1.5, c.size * .45, c.size * (.9 + this.rng.next() * .35), 0, c.shade + j() * .08);
+      } else this.puff(c.x + j() * .5 * c.size, .5 + this.rng.next() * .4, c.z + j() * .5 * c.size, j() * .3, 1.5 + this.rng.next() * .9, j() * .3, 7 + this.rng.next() * 2.5, c.size * .3, c.size * (.85 + this.rng.next() * .45), c.heat, c.shade + j() * .08);
     }
   }
   /** Fires, burning props/cars and smoke-grenade zones drive persistent emitters. */

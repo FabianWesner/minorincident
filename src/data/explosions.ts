@@ -77,11 +77,11 @@ export const explosionDefs: Readonly<Record<string, ExplosionDef>> = Object.from
 
 const preset = (id: string, p: Omit<BlastFxPreset, 'id'>): BlastFxPreset => ({ id, ...p });
 export const blastFxPresets: Readonly<Record<string, BlastFxPreset>> = Object.fromEntries([
-  preset('blast.small', { flash: .35, light: { color: 0xffb060, intensity: 60, range: 12, seconds: .45 }, fireball: { count: 6, size: 1.4, seconds: .7, rise: 1.2 }, sparks: 40, dust: 18, smoke: { seconds: 3, rate: 4, size: 1.4, heat: .5 }, scorch: .6, shake: .18, roll: .5 }),
-  preset('blast.medium', { flash: .5, light: { color: 0xffa050, intensity: 120, range: 18, seconds: .7 }, fireball: { count: 10, size: 2.1, seconds: .9, rise: 2 }, sparks: 64, dust: 26, smoke: { seconds: 14, rate: 5, size: 1.9, heat: .8 }, scorch: .7, shake: .28, roll: .8 }),
-  preset('blast.large', { flash: .6, light: { color: 0xff9a40, intensity: 220, range: 24, seconds: .9 }, fireball: { count: 14, size: 2.8, seconds: 1.1, rise: 2.6 }, sparks: 90, dust: 34, smoke: { seconds: 30, rate: 6, size: 2.4, heat: 1 }, scorch: .75, shake: .36, roll: 1 }),
-  preset('blast.mega', { flash: .7, light: { color: 0xff8a30, intensity: 420, range: 40, seconds: 1.4 }, fireball: { count: 20, size: 4.5, seconds: 1.6, rise: 4 }, sparks: 140, dust: 48, smoke: { seconds: 45, rate: 8, size: 3.6, heat: 1 }, scorch: .8, shake: .4, roll: 1.4 }),
-  preset('blast.incendiary', { flash: .12, light: { color: 0xff8a30, intensity: 50, range: 10, seconds: 1 }, fireball: { count: 4, size: 1.2, seconds: .6, rise: .6 }, sparks: 16, dust: 0, smoke: { seconds: 6, rate: 3, size: 1.3, heat: .9 }, scorch: .8, shake: .05, roll: 0 }),
+  preset('blast.small', { flash: .35, light: { color: 0xffb060, intensity: 60, range: 12, seconds: .45 }, fireball: { count: 6, size: 1.4, seconds: .7, rise: 1.2 }, sparks: 40, dust: 18, smoke: { seconds: 3, rate: 4, size: 1.4, heat: .5 }, scorch: .3, shake: .18, roll: .5 }),
+  preset('blast.medium', { flash: .5, light: { color: 0xffa050, intensity: 120, range: 18, seconds: .7 }, fireball: { count: 10, size: 2.1, seconds: .9, rise: 2 }, sparks: 64, dust: 26, smoke: { seconds: 14, rate: 5, size: 1.9, heat: .8 }, scorch: .32, shake: .28, roll: .8 }),
+  preset('blast.large', { flash: .6, light: { color: 0xff9a40, intensity: 220, range: 24, seconds: .9 }, fireball: { count: 14, size: 2.8, seconds: 1.1, rise: 2.6 }, sparks: 90, dust: 34, smoke: { seconds: 30, rate: 6, size: 2.4, heat: 1 }, scorch: .32, shake: .36, roll: 1 }),
+  preset('blast.mega', { flash: .7, light: { color: 0xff8a30, intensity: 420, range: 40, seconds: 1.4 }, fireball: { count: 20, size: 4.5, seconds: 1.6, rise: 4 }, sparks: 140, dust: 48, smoke: { seconds: 45, rate: 8, size: 3.6, heat: 1 }, scorch: .3, shake: .4, roll: 1.4 }),
+  preset('blast.incendiary', { flash: .12, light: { color: 0xff8a30, intensity: 50, range: 10, seconds: 1 }, fireball: { count: 4, size: 1.2, seconds: .6, rise: .6 }, sparks: 16, dust: 0, smoke: { seconds: 6, rate: 3, size: 1.3, heat: .9 }, scorch: .4, shake: .05, roll: 0 }),
 ].map(p => [p.id, p]));
 
 /** Every explosive placement references a def: E11 hazard kinds, throwables/projectiles and scripted blasts. */
