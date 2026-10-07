@@ -1,0 +1,4 @@
+1. review1 vs reference: camera clipped body and feet; opposite side shown; main logo too short; delivery hatch exposed blue core; edge flecks floated. Fixed camera, logo proportions, chips, and bored hatch through cabinet.
+2. review2 vs reference: Brush Script differed from Fizz brand; enamel finish too glossy; backdrop dark. Replaced main and can labels with traced geometry; increased roughness, adjusted camera and backdrop.
+3. review3 vs reference: logo matches, side/lid too pale and clean; logo slightly high. Darkened violet side/lid, lowered and enlarged logo, added fine paint wear; consolidated static decoration by material.
+4. review4 vs reference: silhouette and layout match, weather remains simpler than reference. Three.js close views exposed coplanar can lettering and chips above curved edges. Conformed lettering to can radius and chips to cabinet bevel surfaces; final hero/export follows.
