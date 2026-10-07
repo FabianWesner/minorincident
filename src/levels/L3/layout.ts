@@ -20,12 +20,13 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     }
     const add = (assetId: string, x: number, z: number, yaw = 0): void => {
       const p: Placement = { id: `l3-${layout.placements.length}`, assetId, position: [x, 0, z], yaw, scale: [1, 1, 1], minTier: 2, maxTier: 2, allowRoad: true, lightGroup: 'l3-emergency', visualAabb: { min: [x-.5, 0, z-.5], max: [x+.5, 1, z+.5] } };
+      if (assetId.startsWith('decal.')) { p.position[1] = .06; p.scale = [1.6, 1, 2.8]; }
       layout.placements.push(p);
     };
     layout.lightGroups.push({ id: 'l3-emergency', offAt: 3 });
     if (layout.district === 'D-MAIN') for (let i = 0; i < 4; i++) {
       add('prop.traffic-cone', 5.5, 14-i*5); add('prop.barricade', -11, 17-i*3, Math.PI/2);
-      add('prop.trash-bags', 7, 17-i*6); add('decal.blood-trail', -5, 15-i*4, Math.PI/2);
+      add('prop.trash-bags', 7, 17-i*6); add('decal.blood-trail', -1.5, 15-i*4, Math.PI/2);
     }
     if (layout.district === 'D-SHOP') { add('prop.barricade', -5, -2, Math.PI/2); add('veh.police-sedan', -8, -2, Math.PI/2); }
     if (layout.district === 'D-CIVIC') {
