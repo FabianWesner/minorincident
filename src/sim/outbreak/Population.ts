@@ -47,20 +47,27 @@ export function populateGrove(outbreak: Outbreak, count = 56): number[] {
   const prop = (p: string | null | undefined) => (p ?? undefined) as CivilianProp | undefined;
   const look = (target: Point, facing: Point, p?: string | null, s: [number, number] = [3, 8]): CivilianActivity => ({ activity: 'look', anchor: 'l1/look', target, facing, ticks: t(...s), prop: prop(p) });
   const walk = (target: Point, p?: string | null): CivilianActivity => ({ activity: 'walk', anchor: 'l1/walk', target, ticks: 1, prop: prop(p) });
+  // QA1-11: interaction rings, vehicles, toys and gates stay clear - nobody stands or sits within 4 m of them.
+  const keepClear = ['bike-start', 'parcel-counter', 'parcel-door', 'lab-bike-rack', 'lab-gate', 'lab-door', 'garage-door', 'garage-bat', 'fire-bay-door', 'fire-bay-trigger', 'carwash-start',
+    ...Object.keys(layout.anchors).filter(n => /^(gate|dumpster|alarm-car)-/.test(n))].map(anchor).filter((p): p is Point => !!p);
+  const free = (p: Point | null): Point | null => p && keepClear.every(c => Math.hypot(c.x - p.x, c.z - p.z) >= 4) ? p : null;
   // Seats from the layout (benches, patio and garden sets) for sit/stand routines with coffee.
-  const seats = layout.placements.filter(q => /^prop\.(bench|cafe-patio-set|garden-set)$/.test(q.assetId)).map(q => {
+  const seats = layout.placements.filter(q => /^prop\.(bench|cafe-patio-set|garden-set|lawn-chair-[ab])$/.test(q.assetId)).map(q => {
     const seat = { x: q.position[0] + ox, z: q.position[2] + oz }, front = { x: Math.cos(q.yaw), z: -Math.sin(q.yaw) };
     return { seat, target: snap({ x: seat.x + front.x * .9, z: seat.z + front.z * .9 }, 1.5), facing: { x: seat.x + front.x * 3, z: seat.z + front.z * 3 }, used: false };
-  }).filter((q): q is { seat: Point; target: Point; facing: Point; used: boolean } => !!q.target);
+  }).filter((q): q is { seat: Point; target: Point; facing: Point; used: boolean } => !!free(q.target));
   const seatNear = (p: Point | null, radius: number) => p ? seats.find(q => !q.used && Math.hypot(q.seat.x - p.x, q.seat.z - p.z) <= radius) : undefined;
   /** A facing circle of 2-3 people chatting (gestures) around `center`. */
   const circle = (center: Point | null, n: number, props: (string | null)[], role?: string) => {
     if (!center) return;
     const spin = rng.next() * Math.PI * 2;
     for (let i = 0; i < n; i++) {
-      const angle = spin + i * Math.PI * 2 / n, at = snap({ x: center.x + Math.cos(angle) * .9, z: center.z + Math.sin(angle) * .9 }, 2);
+      const angle = spin + i * Math.PI * 2 / n, at = free(snap({ x: center.x + Math.cos(angle) * .9, z: center.z + Math.sin(angle) * .9 }, 2));
+      // Chats end: each partner strolls a few metres and comes back, so groups move instead of standing all morning.
+      const stroll = at && free(snap({ x: at.x + Math.cos(angle) * 6, z: at.z + Math.sin(angle) * 6 }, 3));
       if (at) plans.push({ at, role, handProp: props[i % props.length], yaw: -Math.atan2(center.z - at.z, center.x - at.x),
-        schedule: [{ activity: 'chat', anchor: 'l1/chat', target: at, facing: center, ticks: t(6, 12), prop: prop(props[i % props.length]) }, look(at, center, props[i % props.length], [1.5, 3])] });
+        schedule: [{ activity: 'chat', anchor: 'l1/chat', target: at, facing: center, ticks: t(6, 12), prop: prop(props[i % props.length]) }, look(at, center, props[i % props.length], [1.5, 3]),
+          ...stroll ? [walk(stroll, props[i % props.length]), walk(at, props[i % props.length])] : []] });
     }
   };
   /** Sit with a coffee on a nearby seat, stand, stretch the legs, come back. */
@@ -86,40 +93,41 @@ export function populateGrove(outbreak: Outbreak, count = 56): number[] {
     }
   };
   // Hubs first (seated, chatting, queueing, gardening): everyone faces something.
+  // P2 morning: Maple Corner and the cafe patio are busy - coffee sitters on nearby seats and two chat groups.
   const patio = anchor('cafe-patio');
-  if (patio) { if (!sitter(patio)) circle({ x: patio.x - 1.5, z: patio.z }, 3, ['coffee', 'phone', null]); if (!sitter(patio)) circle({ x: patio.x + 2, z: patio.z + 1 }, 2, ['coffee', 'coffee']); }
-  for (let i = 0; i < 4; i++) sitter(patio && { x: patio.x + i * 20, z: patio.z });
+  for (let i = 0; i < 4; i++) sitter(patio);
+  if (patio) { circle(free(snap({ x: patio.x - 3, z: patio.z + 2 }, 3)), 3, ['coffee', 'phone', null]); circle(free(snap({ x: patio.x + 4, z: patio.z + 3 }, 3)), 2, ['coffee', 'coffee']); }
+  for (let i = 1; i < 4; i++) sitter(patio && { x: patio.x + i * 25, z: patio.z });
   const bus = anchor('bus-stop');
-  line(bus && snap(bus, 3), bus && { x: bus.x, z: bus.z - 4 }, 3, ['phone', 'bag', null]);
-  const counter = anchor('parcel-counter'), depotDoor = anchor('parcel-door');
-  if (depotDoor) circle(snap({ x: depotDoor.x + 2.5, z: depotDoor.z + 2 }, 3), 2, ['phone', null]);
-  line(counter && snap({ x: counter.x + 3, z: counter.z + 2 }, 3), counter, 2, ['bag', null], depotDoor);
+  line(bus && free(snap(bus, 3)), bus && { x: bus.x, z: bus.z - 4 }, 2, ['phone', 'bag']);
   // At most ~8 doorstep hubs spread over the map (the full layout has 50+ refuge doors).
   const hubDoors = doors.filter((_, i) => i % Math.max(1, Math.ceil(doors.length / 8)) === 0);
   for (const [i, door] of hubDoors.entries()) {
-    if (i % 3 === 0) circle(snap({ x: door.x + 1.5, z: door.z + (door.z < 0 ? 2 : -2) }, 3), 2, [null, 'phone']);
+    if (i % 3 === 0) circle(free(snap({ x: door.x + 2, z: door.z + (door.z < 0 ? 3.2 : -3.2) }, 3)), 2, [null, 'phone']);
     else if (i % 3 === 1) {
       // Gardener: water two flower spots beside the door, facing them.
-      const a = snap({ x: door.x - 1.6, z: door.z + (door.z < 0 ? 1.4 : -1.4) }, 2), b = a && snap({ x: a.x + 3.2, z: a.z }, 1.5);
+      const a = free(snap({ x: door.x - 2.4, z: door.z + (door.z < 0 ? 1.4 : -1.4) }, 2)), b = a && free(snap({ x: a.x - 3.2, z: a.z }, 1.5));
       if (a && b) plans.push({ at: a, handProp: 'watering-can', role: 'bathrobe-neighbor', yaw: 0, schedule: [
         { activity: 'water', anchor: 'l1/flowers', target: a, facing: { x: a.x, z: door.z }, ticks: t(5, 8), prop: 'watering-can' }, walk(b, 'watering-can'),
         { activity: 'water', anchor: 'l1/flowers', target: b, facing: { x: b.x, z: door.z }, ticks: t(4, 7), prop: 'watering-can' }, walk(a, 'watering-can')] });
     }
   }
-  for (const name of ['carwash-start', 'garage-door', 'alarm-car-2', 'gate-1', 'gate-3']) {
-    const p = anchor(name), at = p && snap({ x: p.x + 2, z: p.z + 2 }, 4);
-    if (at && p) { const h = pick(['coffee', 'phone', 'bag']); plans.push({ at, handProp: h, schedule: [look(at, p, h, [6, 12]), look(at, { x: p.x + 3, z: p.z - 2 }, h, [2, 4])] }); }
-  }
-  // Stationary groups take at most 55 %: the rest walk, so the streets stay alive and the outbreak meets people.
-  plans.splice(Math.round(count * .55));
+  // Stationary groups take at most 40 %: the rest walk routes, so the streets stay alive and the outbreak meets people.
+  plans.splice(Math.round(count * .4));
   // Fill with grocery walkers, phone walkers, joggers, dog walkers and elderly cane strollers on every sidewalk run.
   let r = Math.floor(rng.next() * Math.max(1, runs.length)), dogs = 0;
   // Larch Street stays busy: the first walkers use the sidewalks near the facility (section 3, beats 3-7), so the
   // outbreak meets pedestrians there instead of an empty street.
   const lab = anchor('lab-door'), nearLab = lab ? runs.filter(run => run.some(q => Math.hypot(q.x - lab.x, q.z - lab.z) < 45)) : [];
-  let larch = Math.min(10, nearLab.length * 3);
+  let larch = Math.min(8, nearLab.length * 3);
+  // ...and Maple Corner (the start) gets the first eight walkers.
+  const hub = anchor('player-start') ?? patio, nearStart = hub ? runs.filter(run => run.some(q => Math.hypot(q.x - hub.x, q.z - hub.z) < 18)) : [];
+  let maple = Math.min(8, nearStart.length * 3);
   for (let guard = 0; plans.length < count && runs.length && guard < count * 8; guard++) {
-    const run = larch-- > 0 ? nearLab[larch % nearLab.length] : runs[r++ % runs.length], start = Math.floor(rng.next() * run.length), kind = rng.next();
+    const atStart = maple-- > 0, run = atStart ? nearStart[maple % nearStart.length] : larch-- > 0 ? nearLab[larch % nearLab.length] : runs[r++ % runs.length], kind = rng.next();
+    // Start-area walkers begin within a few metres of the courier so the opening frame is busy.
+    const closest = hub ? run.reduce((best, q, i) => Math.hypot(q.x - hub.x, q.z - hub.z) < Math.hypot(run[best].x - hub.x, run[best].z - hub.z) ? i : best, 0) : 0;
+    const start = atStart ? Math.max(0, closest - Math.floor(rng.next() * 3)) : Math.floor(rng.next() * run.length);
     const span = kind < .2 ? run.length : 2 + Math.floor(rng.next() * 4), points: Point[] = [];
     for (let i = 0; i < span && start + i < run.length; i++) points.push(run[start + i]);
     if (points.length < 2) { const back = run.slice(Math.max(0, start - 3), start + 1); if (back.length < 2) continue; points.splice(0, points.length, ...back); }
