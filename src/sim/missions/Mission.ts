@@ -290,7 +290,7 @@ export class Mission {
     if (!this.world.npcs && this.world.infected) {
       const ai=this.world.infected;
       ai.active.length=0; ai.director.queue.length=0;
-      for (const entity of this.world.entities.iterate()) if (entity.infected) { if(entity.infected.until)entity.infected.until+=delta;if(entity.infected.cooldown)entity.infected.cooldown+=delta;entity.infected.path.length=0;ai.active.push(entity); }
+      for (const entity of this.world.entities.iterate()) if (entity.infected) { if(entity.infected.until)entity.infected.until+=delta;if(entity.infected.cooldown)entity.infected.cooldown+=delta;entity.infected.path.length=0;if (!entity.corpse) ai.active.push(entity); }
       this.world.player!.locomotion.crowd=[];
     } this.world.spatial.reset();
     for (const entity of this.world.entities.iterate()) this.world.spatial.set(entity.id, entity.transform.x, entity.transform.z);

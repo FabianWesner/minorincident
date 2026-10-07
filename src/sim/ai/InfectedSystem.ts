@@ -107,7 +107,7 @@ export class InfectedSystem {
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || !this.nav.clear(position.x, position.z, def.radius)) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
     entity.locomotion = motionResponse(); delete entity.motion;
-    delete entity.infected!.model; delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden;
+    delete entity.infected!.model; delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
@@ -217,14 +217,16 @@ export class InfectedSystem {
         } else this.seek(e, player.transform); this.separate(e); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
       }
     }
-    let corpses = 0;
-    for (const e of this.active) if (e.health.current <= 0) corpses++;
-    while (corpses > 100) {
-      let oldest: EntitySnapshot | undefined;
-      for (const e of this.active) if (e.health.current <= 0 && (!oldest || e.infected!.deadAt < oldest.infected!.deadAt)) oldest = e;
-      if (oldest) this.release(oldest); corpses--;
+    // Once the death/explosion animation settles, keep a static identity record
+    // and return the costly brain to the warm pool. Bodies live until level unload.
+    for (let i = this.active.length - 1; i >= 0; i--) {
+      const e = this.active[i];
+      if (e.health.current > 0 || this.world.tick - e.infected!.deadAt < 120) continue;
+      const body = structuredClone(e); body.corpse = true;
+      delete body.locomotion; delete body.motion; delete body.combat!.reaction;
+      delete body.infected!.l1; body.infected!.path.length = 0;
+      this.release(e); this.world.entities.replace(body);
     }
-    for (let i = this.active.length - 1; i >= 0; i--) if (!this.l1 && this.active[i].health.current <= 0 && this.world.tick - this.active[i].infected!.deadAt >= 2760) this.release(this.active[i]);
     // The player consumes borrowed transform references, never renderer state.
     for (const e of this.active) if (e.health.current > 0) this.crowd.push(this.obstacle(e));
     if (this.world.player) this.world.player.locomotion.crowd = this.crowd;
@@ -258,7 +260,8 @@ export class InfectedSystem {
     this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: b.special, duration: def.windup });
   }
   private revivable(e: EntitySnapshot): EntitySnapshot | undefined {
-    return this.active.find((other) => other.archetype === 'infected.runner' && other.health.current <= 0 && !other.infected!.revived && Math.hypot(e.transform.x - other.transform.x, e.transform.z - other.transform.z) <= 6);
+    for (const other of this.world.entities.iterate()) if (other.archetype === 'infected.runner' && other.health.current <= 0 && !other.infected!.revived && this.world.tick - other.infected!.deadAt <= 2700 && Math.hypot(e.transform.x - other.transform.x, e.transform.z - other.transform.z) <= 6) return other;
+    return undefined;
   }
   private resolve(e: EntitySnapshot): boolean {
     const b = e.infected!, player = this.world.entities.get(1)!, def = infectedDef(e.archetype);
@@ -272,8 +275,17 @@ export class InfectedSystem {
     }
     if (b.special === 'scream') { this.world.events.emit({ type: 'noise', tick: this.world.tick, sourceId: e.id, actionId: e.archetype, position: { ...e.transform }, ...noise.scream, kind: 'scream' }); return true; }
     if (b.special === 'revive' && !b.reviveUsed) {
-      const downed = this.revivable(e);
-      if (downed && this.director.count + 1 <= this.director.cap) { downed.health.current = downed.health.max; downed.infected!.revived = true; downed.infected!.deadAt = -1; downed.infected!.state = 'chase'; b.reviveUsed = true; this.world.events.emit({ type: 'infected.revived', tick: this.world.tick, sourceId: e.id, targetId: downed.id }); return true; }
+      let downed = this.revivable(e);
+      if (downed && this.director.count + 1 <= this.director.cap && (!downed.corpse || this.pool.length)) {
+        if (downed.corpse) {
+          const record = this.pool.pop()!;
+          Object.assign(record, structuredClone(downed)); delete record.corpse;
+          record.locomotion = motionResponse(); delete record.motion;
+          this.world.entities.replace(record); this.active.push(record); this.counters.reused++;
+          this.world.spatial.set(record.id, record.transform.x, record.transform.z); downed = record;
+        }
+        downed.health.current = downed.health.max; downed.infected!.revived = true; downed.infected!.deadAt = -1; downed.infected!.state = 'chase'; b.reviveUsed = true; this.world.events.emit({ type: 'infected.revived', tick: this.world.tick, sourceId: e.id, targetId: downed.id }); return true;
+      }
     }
     if (b.special === 'prop-throw' && this.props.launch(e, b.attackId)) return true;
     if (b.special === 'dive') {
@@ -318,7 +330,6 @@ export class InfectedSystem {
         this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId: target.id, special: 'explode', amount });
       }
     }
-    if (!this.l1 && this.world.tick - b.deadAt >= 2700) e.transform.y = 0.7 - (this.world.tick - b.deadAt - 2700) / 60;
   }
   /** Gameplay conversion is independent of gore; renderer reads only the detached flag. */
   loseLeg(id: number, gore: 'Full' | 'Reduced' | 'Off'): void {

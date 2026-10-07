@@ -1,5 +1,5 @@
 // Runtime adaptation of E17 bake-crowd.ts and Bruno InstancedGroup.js (MIT).
-import { BufferAttribute, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, type Group, type Object3D, type MeshBasicMaterial } from 'three';
+import { BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, type Group, type Object3D, type MeshBasicMaterial } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { characterNodes } from '../../data/survivor';
 import { authoredClips, sampleClip, strideScale } from './clips';
@@ -35,6 +35,7 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
   root.updateMatrixWorld(true);
   const geometries: import('three').BufferGeometry[] = [], relative = new Matrix4();
   let shirtColor: import('three').Color | undefined;
+  let doubleSided = false;
   root.traverse((node) => {
     if (!(node instanceof Mesh)) return;
     for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if (!ancestor.visible || ancestor.name.startsWith('stump_')) return;
@@ -55,6 +56,7 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     geometry.applyMatrix4(relative);
     // Every source material is folded into vertex colors, yielding one draw per role.
     const material = (Array.isArray(node.material) ? node.material[0] : node.material) as MeshBasicMaterial;
+    doubleSided ||= material.side === DoubleSide;
     const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), emissive = new Float32Array(count), indices = new Float32Array(count), shirt = new Float32Array(count);
     const clothing = material.name === 'pal_infectedShirt'; if (clothing) shirtColor = material.color.clone();
     const sourceColor = geometry.getAttribute('color');
@@ -83,5 +85,5 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     offset += attribute.itemSize;
   }
   const clip: CrowdClip = { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
-  return { geometry, clip, shirtColor, strideScale: strideScale(root) };
+  return { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root) };
 }

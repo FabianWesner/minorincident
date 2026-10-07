@@ -1,4 +1,4 @@
-import { BoxGeometry, BufferAttribute, Color, CylinderGeometry, Group, InstancedMesh, Matrix4, MeshLambertNodeMaterial, TorusGeometry, type BufferGeometry } from 'three/webgpu';
+import { Box3, BoxGeometry, BufferAttribute, Color, CylinderGeometry, Group, InstancedMesh, Matrix4, MeshLambertNodeMaterial, TorusGeometry, type BufferGeometry } from 'three/webgpu';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { attribute } from 'three/tsl';
 import type { Materials } from '../Materials';
@@ -32,7 +32,22 @@ export class RoutineProps extends Group {
     }
   }
   begin(): void { for (const mesh of this.meshes.values()) mesh.count = 0; }
-  place(prop: CivilianProp, matrix: Matrix4): void { const mesh = this.meshes.get(prop)!; mesh.setMatrixAt(mesh.count++, matrix); }
+  place(prop: CivilianProp, matrix: Matrix4): void {
+    let mesh = this.meshes.get(prop)!;
+    if (mesh.count === mesh.instanceMatrix.count) {
+      const grown = new InstancedMesh(mesh.geometry, mesh.material, mesh.count * 2);
+      grown.instanceMatrix.array.set(mesh.instanceMatrix.array); grown.count = mesh.count;
+      grown.frustumCulled = false; grown.castShadow = true;
+      this.remove(mesh); mesh.dispose(); this.add(grown); this.meshes.set(prop, grown); mesh = grown;
+    }
+    mesh.setMatrixAt(mesh.count++, matrix);
+  }
+  dropped(prop: CivilianProp, at: { x: number; y: number; z: number; yaw: number }): void {
+    const mesh = this.meshes.get(prop)!, pose = new Matrix4().makeRotationY(at.yaw).multiply(new Matrix4().makeRotationZ(-Math.PI / 2));
+    if (!mesh.geometry.boundingBox) mesh.geometry.computeBoundingBox();
+    const floor = new Box3().copy(mesh.geometry.boundingBox!).applyMatrix4(pose).min.y;
+    pose.setPosition(at.x, at.y - floor + .015, at.z); this.place(prop, pose);
+  }
   finish(): void { for (const mesh of this.meshes.values()) if (mesh.count) mesh.instanceMatrix.needsUpdate = true; }
   dispose(): void { for (const mesh of this.meshes.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); } this.clear(); }
 }
