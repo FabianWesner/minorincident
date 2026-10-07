@@ -83,7 +83,7 @@ test('T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the surviv
   await boot(page);
   const probe = await page.evaluate(async (spot) => {
     const a = window.__SS__!; await a.loadLevel('night-street'); a.pause(); a.cheats.god(true);
-    a.teleport('player', spot); a.camera.follow(); await a.step(20); await a.screenshotReady();
+    a.teleport('player', spot); a.camera.follow(); await a.step(90); await a.screenshotReady();
     const lighting = a.getState().render.lighting!, p = a.getEntity(1)!.transform, d = lighting.shadowDirection as number[];
     const h = Math.hypot(d[0], d[2]), ax = -d[0] / h, az = -d[2] / h;
     // Behind: along the cast direction, past the feet. Beside: the same distance, perpendicular, still inside the pool.

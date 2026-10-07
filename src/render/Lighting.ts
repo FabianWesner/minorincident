@@ -64,6 +64,8 @@ export class Lighting {
   readonly heroFillColor = uniform(new Color('#ffe9cf'));
   /** Weight of the sun/moon shadow map on light-field pools (hero shadows at night). */
   readonly fieldShadow = uniform(0);
+  /** The preset shadow colour at full brightness: the hue light-field pools keep inside hero shadows. */
+  readonly shadowHue = uniform(new Color());
   /** Direction towards the shadow-casting light: the sun/moon, or the promoted hero lamp at night. */
   private readonly shadowDirection = new Vector3(0, 1, 0);
   private readonly heroTarget = new Vector3();
@@ -109,6 +111,7 @@ export class Lighting {
     this.color.value.set((this.look.has('sun') || this.preset === 'L1') ? v.sun : p.sun); this.sun.color.copy(this.color.value);
     this.intensity.value = (this.look.has('sunIntensity') || this.preset === 'L1') ? v.sunIntensity : p.intensity; this.sun.intensity = this.intensity.value;
     this.shadow.value.set((this.look.has('shadow') || this.preset === 'L1') ? v.shadow : p.shadow);
+    const s = this.shadow.value; this.shadowHue.value.copy(s).multiplyScalar(1 / Math.max(s.r, s.g, s.b, 1e-3));
     this.skyAmbient.value.set(v.skyAmbient); this.groundAmbient.value.set(v.groundAmbient); this.hemisphere.intensity = v.hemisphereIntensity;
     this.fogColor.value.set((this.look.has('fog') || this.preset === 'L1') ? v.fog : p.fog);
     this.fogA.value.set(this.look.has('fog') && !this.look.has('fogA') ? v.fog : this.look.has('sky') && !this.look.has('fogA') ? v.sky : (this.look.has('fogA') || this.preset === 'L1') ? v.fogA : p.sky);
