@@ -3,11 +3,21 @@ import { LoadGate } from '../../../src/assets/loadGate';
 import { assetUrl } from '../../../src/assets/assetUrl';
 import { districtAssetUrls } from '../../../src/assets/DistrictAssets';
 import type { AssetDef } from '../../../src/assets/types';
+import { EntityAssets } from '../../../src/render/EntityAssets';
+import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import { assetVersions, versionedDirs } from '../../../tools/build/load-plugins';
 import { parseHeaders } from '../../../tools/performance/cdn-server';
 import { readFileSync } from 'node:fs';
 
 afterEach(() => { vi.unstubAllGlobals(); });
+
+test('@load the generic actor view leaves the animated bicycle to BicycleView', async () => {
+  const world = { entities: { *iterate() { yield { id: 3, bicycle: {} }; } } } as unknown as SimWorld;
+  const view = new EntityAssets(world);
+  await view.ready();
+  expect(view.getState().actors).toEqual([]);
+  view.dispose();
+});
 
 test('@load prefetch requests only the selected district tiers and deduplicates fallback models', () => {
   const def = { id: 'bld.house-a', status: 'integrated', glb: 'public/assets/models/house.glb', lods: { lod1: 'public/assets/models/house.lod1.glb', lod2: 'public/assets/models/house.lod2.glb' } } as AssetDef;
