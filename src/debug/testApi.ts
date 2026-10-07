@@ -81,6 +81,7 @@ export interface SSTestApi {
   /** E16: graph active with output muted in test mode. emit() uses the production sim event bus.
    * render() returns a native OfflineAudioContext PCM WAV, for independent measurement. */
   audio: {
+    /** Also loads the lazy sprite banks so the first play of every cue is deterministic. */
     unlock():Promise<void>;snapshot():ReturnType<Game['audio']['snapshot']>;
     play(id:string,options?:import('../audio/AudioGraph').PlayOptions,sourceId?:number):number|null;
     emit(event:GameEvent):void;clearLog():void;
@@ -183,7 +184,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       emit: (event) => { game.world.events.emit({ ...event, tick: game.world.tick } as GameEvent); game.view.update(1); },
     },
     audio: {
-      unlock:()=>game.audio.unlock(),snapshot:()=>game.audio.snapshot(),
+      unlock:async()=>{ await game.audio.unlock(); await game.audio.registry.preloadLazy(); },snapshot:()=>game.audio.snapshot(),
       play:(id,opts,sourceId)=>game.audio.play(id,opts,sourceId)?.id??null,
       emit:event=>game.world.events.emit(event),clearLog:()=>{game.audio.log.length=0;},
       map:map=>{game.audio.graph.map=map;},

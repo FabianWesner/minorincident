@@ -43,6 +43,8 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
     let maxVoices = 0;
     let scoreVoices = 0;
     await registry.prepare(request.level ?? 'L1');
+    // Weapons, vehicles, dialogue and telegraphs are lazy banks in the live game; the offline render needs them up front.
+    await registry.preloadLazy();
     // Offline renders schedule all sources before startRendering; retire finished handles against the
     // scheduled time so the same limiter models simultaneous voices rather than all events in 60s.
     const play = (id: string, time = 0, options: Parameters<AudioGraph['play']>[2] = {}) => {
