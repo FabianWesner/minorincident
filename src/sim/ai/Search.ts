@@ -47,6 +47,8 @@ export interface L1Brain {
   direct: boolean; directTick: number; directX: number; directZ: number;
   /** Where it spawned (or rose): wander drifts away from here. */
   homeX: number; homeZ: number;
+  /** Herd cue: turning toward a seen attacker's heading until `cueUntil` (0 = none), from infected `cueSource`. */
+  cueUntil: number; cueYaw: number; cueSource: number;
 }
 export function searchPlan(): SearchPlan {
   return { startTick: 0, until: 0, originX: 0, originZ: 0, probes: [], doubleBackAt: -1, next: -1, visited: 0, doubledBack: false, legTicks: 0 };
