@@ -4,7 +4,12 @@ const output = 'test-results/epics/E21';
 const policy = process.env.L3_BOT_POLICY === 'newbie' ? 'newbie' : 'complete';
 for (const route of ['market', 'park'] as const) test(`@E21 @E21-AC08 @E21-AC09 browser bot via ${route}, driving at timescale 2 and four photo spots`, async ({ page }) => {
   test.setTimeout(600_000); const consoleErrors = attachErrorGuard(page).errors; mkdirSync(output, { recursive: true });
-  await boot(page); await page.evaluate(() => window.__SS__!.loadLevel('L3', { seed: 1, progression: 'L3-default' }));
+  await boot(page);
+  // Same seed, camera and lighting at W0 provide the decay comparison for vision review.
+  await page.evaluate(() => window.__SS__!.loadLevel('L3', { seed: 1, tier: 0, progression: 'L3-default' }));
+  await page.evaluate(() => { const api = window.__SS__!; api.pause(); api.missions.begin(); api.camera.preset('l3-mainstreet-w2'); });
+  await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${output}/l3-mainstreet-w0-${route}.png` });
+  await page.evaluate(() => window.__SS__!.loadLevel('L3', { seed: 1, progression: 'L3-default' }));
   await page.evaluate(({ route, policy }) => { const api = window.__SS__!; api.pause(); api.missions.begin(); api.setTimeScale(2); api.bot.start(policy, { route }); }, { route, policy } as const);
   const captured = new Set<string>();
   const snap = async (name: string) => {
