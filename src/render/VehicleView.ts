@@ -17,7 +17,7 @@ import { lerp } from '../core/maths';
 import { anchorsFor } from './WorldLights';
 import { footprint, type LightField } from './LightField';
 const lampPosition = new Vector3(), lampDirection = new Vector3();
-interface Record { lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number }
+interface Record { lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean }
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
 export class VehicleView extends Group {
   private readonly registry: AssetRegistry;
@@ -54,10 +54,10 @@ export class VehicleView extends Group {
           (copy as PaletteMaterial).fade.value = material.fade.value;
         }
         else {
-          const owned = Object.assign(material.clone(), { bloodCoverage: uniform(0) });
+          const owned = Object.assign(material.clone(), { bloodCoverage: uniform(0), char: uniform(0) });
           const grain = sin(positionGeometry.x.mul(127.1).add(positionGeometry.y.mul(311.7)).add(positionGeometry.z.mul(74.7))).mul(43758.5453).fract();
           // Retain imported color, vertex colors and lighting while adding the surface mask.
-          owned.colorNode = mix(uniform(owned.color), color('#b3121f'), grain.lessThan(owned.bloodCoverage).select(1, 0)); copy = owned;
+          owned.colorNode = mix(mix(uniform(owned.color), color('#b3121f'), grain.lessThan(owned.bloodCoverage).select(1, 0)), color('#1d1a18'), owned.char); copy = owned;
         }
         copies.set(material, copy); paint.push(copy);
       }
@@ -75,7 +75,7 @@ export class VehicleView extends Group {
     for (let i = 0; i < 5; i++) { const mesh = new Mesh(this.puffGeometry, this.smokeMaterial); mesh.position.set(def.length * .3, 1 + i * .32, (i % 2 ? 1 : -1) * .12); mesh.scale.setScalar(1 + i * .25); smoke.add(mesh); }
     const fire = new Mesh(this.puffGeometry, this.fireMaterial); fire.position.set(def.length * .3, .9, 0); fire.scale.set(1.8, 2.8, 1.3); parent.add(fire);
     const previous = this.records.get(id); if (previous) { previous.parent.removeFromParent(); this.releaseRecord(previous); }
-    this.records.set(id, { lod, parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0 });
+    this.records.set(id, { lod, parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0, charred: false });
     const feedback = this.feedbackEvents.get(id); if (feedback) this.feedback(feedback, this.bloodEnabled);
   }
   update(alpha: number): void {
@@ -97,6 +97,8 @@ export class VehicleView extends Group {
       for (let i = 0; i < record.sirens.length; i++) record.sirens[i].color.set(i === 0 ? '#ff2d2d' : '#2f6bff').multiplyScalar((Math.floor(this.world.tick / 30) % 2 === i) ? 4 : .1);
       record.door.position.y = .025 + body.def.suspension + body.def.wheelRadius + .15 - p.y;
       record.door.visible = this.world.vehicles!.active === null && car.entity.health.current > 0;
+      // E27 burned variant: an exploded car chars to soot once (shared paint copies, no new materials).
+      if ((state.damage === 'exploded') !== record.charred) { record.charred = state.damage === 'exploded'; for (const m of record.paint) if ('char' in m) (m as unknown as { char: { value: number } }).char.value = record.charred ? .88 : 0; }
       record.smoke.visible = state.damage !== 'normal'; record.fire.visible = state.damage === 'burning' || state.damage === 'exploded';
       record.smoke.position.y = (this.world.tick % 60) / 120;
     }

@@ -29,7 +29,7 @@ export const codeCredits: readonly Credit[] = [
         "url": "https://github.com/brunosimon/folio-2025",
         "license": "MIT",
         "licenseUrl": "https://spdx.org/licenses/MIT.html",
-        "detail": "Engine, input, UI, rendering, vehicle and audio patterns; no art, meshes, textures or audio reused."
+        "detail": "Engine, input, UI, rendering, vehicle, explosion (impulse, fireball, roll kick, bullet time) and audio patterns; no art, meshes, textures or audio reused."
     },
     {
         "title": "Mesh2Motion human rig and animation clips",

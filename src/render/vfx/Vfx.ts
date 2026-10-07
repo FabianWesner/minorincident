@@ -8,10 +8,11 @@ import { FxPool } from './FxPool';
 import { GibPool } from './GibPool';
 import type { VehicleFeedbackEvent } from './VehicleFeedback';
 import { HitStop } from './HitStop';
+import { Blasts } from './Blasts';
 
 export type Gore = 'Full' | 'Reduced' | 'Off';
 export type { EffectKind, TelegraphKind } from '../../sim/world/types';
-export interface VfxSettings { vfx?: boolean; gore?: Gore; flashReduction?: boolean; colorblind?: boolean; quality?: 'high' | 'low' }
+export interface VfxSettings { vfx?: boolean; gore?: Gore; flashReduction?: boolean; colorblind?: boolean; quality?: 'high' | 'low'; slowMotion?: boolean }
 export interface VfxTargets {
   flash(id: number, strength: number): void;
   detach(id: number, limb: number): { x: number; y: number; z: number } | void;
@@ -20,8 +21,13 @@ export interface VfxTargets {
   vehicleBloodEnabled?(enabled: boolean): void;
   clearGore(): void;
   shake(strength: number): void;
+  /** E27 camera roll kick (Bruno View.roll.kick) and the follow focus used for distance falloff. */
+  roll?(strength: number): void;
+  focus?(): { x: number; z: number };
+  /** E25 light field transient pools (fires, blast flashes, mega tint). */
+  light?: import('./Blasts').BlastLight;
 }
-const eventTypes = ['combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'outbreak.infection'] as const;
+const eventTypes = ['combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
 const limbs = 5;
 const heavyBlade = /machete|axe|katana|shovel/;
 const telegraphShapes = { lunge: 3, charge: 2, splash: 1, bloated: 4 } as const;
@@ -36,6 +42,9 @@ export class Vfx extends Group {
   readonly waves = new FxPool(16, 'ground');
   readonly gibs: GibPool;
   readonly hitStop = new HitStop();
+  /** E27 seven-beat blasts, fires, smoke columns/clouds, car parts and bullet time. */
+  readonly blasts: Blasts;
+  private readonly e15Blast = { tick: -1, x: 0, z: 0 };
   private readonly rng: Rng;
   private readonly goreRng: Rng;
   private flashUntil = 0;
@@ -64,12 +73,14 @@ export class Vfx extends Group {
   constructor(private readonly world: SimWorld, private readonly targets: VfxTargets, geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
     super(); this.rng = new Rng(world.seed, 'vfx'); this.goreRng = new Rng(world.seed, 'dismemberment');
     this.gibs = new GibPool(geometries);
-    this.add(this.gibs.heads, this.particles.mesh, this.decals.mesh, this.surfaceSplats.mesh, this.telegraphs.mesh, this.waves.mesh, this.gibs.mesh);
+    this.blasts = new Blasts(world, { particles: this.particles, shake: s => targets.shake(s), roll: s => targets.roll?.(s), focus: () => targets.focus?.() ?? world.entities.get(1)?.transform ?? { x: 0, z: 0 }, light: (...args) => targets.light?.(...args) ?? null });
+    this.add(this.blasts, this.gibs.heads, this.particles.mesh, this.decals.mesh, this.surfaceSplats.mesh, this.telegraphs.mesh, this.waves.mesh, this.gibs.mesh);
     for (const type of eventTypes) this.stops.push(world.events.on(type, this.receive));
   }
   /** Exercise visible pooled geometry during loading; restore empty slots without sim events. */
   prewarm(x: number, z: number): () => void {
     for (const pool of this.pools) pool.spawn(this.time, 1, x, pool.mode === 'particle' ? 1 : .03, z, 0, 0, 0, 2, 0, 0xffffff);
+    this.blasts.prewarm(x, z);
     return () => this.resetPools();
   }
   set(patch: VfxSettings): void {
@@ -81,6 +92,7 @@ export class Vfx extends Group {
     }
     if (patch.vfx !== undefined) this.enabled = patch.vfx;
     if (patch.flashReduction !== undefined) this.flashReduction = patch.flashReduction;
+    this.blasts.set(patch);
     if (patch.quality !== undefined && patch.quality !== this.quality) { this.quality = patch.quality; this.gibs.setQuality(this.quality); this.particles.reset(this.time); this.particles.budget = this.quality === 'low' ? 512 : 2048; this.particles.mesh.count = this.particles.budget; }
     if (patch.gore !== undefined && patch.gore !== this.gore) {
       this.gore = patch.gore; this.particles.reset(this.time); this.decals.reset(this.time); this.surfaceSplats.reset(this.time); for (const landing of this.landings) landing.at = Infinity; this.gibs.reset(); this.targets.clearGore();
@@ -95,7 +107,7 @@ export class Vfx extends Group {
     } else this.targets.blood(this.gore === 'Off' ? 0 : this.coverage);
   }
   private telegraphColor(kind: TelegraphKind): number { return this.colorblind ? kind === 'bloated' ? 0xffb347 : 0xffffff : kind === 'bloated' ? 0xffe45b : 0x59e8ff; }
-  private resetPools(): void { for (const pool of this.pools) pool.reset(this.time); this.gibs.reset(); this.tells.clear(); this.hitCount = this.hitCursor = 0; }
+  private resetPools(): void { this.blasts.reset(); for (const pool of this.pools) pool.reset(this.time); this.gibs.reset(); this.tells.clear(); this.hitCount = this.hitCursor = 0; }
   private pulse(id: number): void {
     let slot = 0;
     while (slot < this.hitCount && this.hitIds[slot] !== id) slot++;
@@ -154,6 +166,7 @@ export class Vfx extends Group {
       else { vehicle.healthFraction = event.healthFraction; vehicle.blood = event.blood; vehicle.position.x = event.position.x; vehicle.position.z = event.position.z; vehicle.yaw = event.yaw; }
       this.targets.vehicle?.(vehicle, this.enabled && this.gore !== 'Off');
     }
+    if (event.type === 'explosion.slowmo') { this.blasts.slowmo(event); return; }
     if (!this.enabled) return;
     if (event.type === 'combat.hit' || event.type === 'combat.kill') { const target = this.world.entities.get(event.targetId); if (target?.faction === 'environment' || target?.vehicle) return; }
     if (event.type === 'combat.hit' && event.amount > 0) {
@@ -191,7 +204,9 @@ export class Vfx extends Group {
         if (this.quality === 'high') this.burst(p.x, 0.9, p.z, 0xd7af65, 1, 0.08, 2);
       }
     } else if (event.type === 'combat.exploded') {
-      if (event.radius > 0) this.effect('explosion', event.position.x, event.position.z, event.radius);
+      if (event.radius > 0) this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
+    } else if (event.type === 'explosion') {
+      this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius); this.blasts.play(event);
     } else if (event.type === 'combat.effect') {
       if (event.kind === 'fire' || event.kind === 'smoke') this.effect(event.kind, event.position.x, event.position.z, event.radius);
     } else if (event.type === 'telegraph') {
@@ -211,8 +226,8 @@ export class Vfx extends Group {
       this.tells.set(event.attackId, { slot, kind, spawned: this.time, ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
     } else if (event.type === 'attack.resolved') {
       const tell = this.tells.get(event.attackId); if (tell) { this.telegraphs.remove(tell.slot); this.tells.delete(event.attackId); }
-    } else if (event.type === 'hazard.exploded') this.effect('explosion', event.position.x, event.position.z, event.radius);
-    else if (event.type === 'vehicle.exploded') { const p = this.world.entities.get(event.sourceId)?.transform; if (p) this.effect('explosion', p.x, p.z, 6); }
+    } else if (event.type === 'hazard.exploded') this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
+    else if (event.type === 'vehicle.exploded') { const p = this.world.entities.get(event.sourceId)?.transform; if (p) this.explosionOnce(event.tick, p.x, p.z, 6); }
     else if (event.type === 'noise' && event.kind === 'scream') this.effect('screamer', event.position.x, event.position.z, event.radius);
     else if (event.type === 'hazard.electrified' || event.type === 'prop.ignited') { const p = this.world.entities.get(event.id)?.transform; if (p) this.effect(event.type === 'hazard.electrified' ? 'electric' : 'fire', p.x, p.z, 1); }
     // E19 section 5.7: the turning reads at the game camera - sickly wisps when the eyes ignite, a puff as the person rises.
@@ -226,6 +241,12 @@ export class Vfx extends Group {
   private updateVehicle(id: number, blood = this.vehicles.get(id)?.blood ?? 0): void {
     const e = this.world.entities.get(id); if (!e?.vehicle) return;
     this.receive({ tick: this.world.tick, type: 'vehicle.feedback', id, position: { x: e.transform.x, z: e.transform.z }, yaw: e.transform.yaw, healthFraction: e.health.current / e.health.max, blood });
+  }
+  /** One E15 base burst per blast: legacy hazard/combat/vehicle events and the E27 explosion event arrive together. */
+  private explosionOnce(tick: number, x: number, z: number, radius: number): void {
+    const last = this.e15Blast;
+    if (last.tick === tick && Math.hypot(last.x - x, last.z - z) < .75) return;
+    last.tick = tick; last.x = x; last.z = z; this.effect('explosion', x, z, radius);
   }
   /** Radius is in metres. Shockwave max diameter is exactly 2 × splash radius. */
   effect(kind: EffectKind, x: number, z: number, radius = 2): void {
@@ -265,6 +286,7 @@ export class Vfx extends Group {
     }
     for (const id of this.world.vehicles?.cars.keys() ?? []) this.updateVehicle(id);
     for (const pool of this.pools) pool.advance(this.time);
+    if (this.enabled) this.blasts.advance(this.time, seconds);
     this.gibs.advance(this.time, seconds);
     for (let i = 0; i < this.hitCount;) {
       this.targets.flash(this.hitIds[i], Math.max(0, (this.hitUntil[i] - this.time) * 4.5));
@@ -278,7 +300,8 @@ export class Vfx extends Group {
         if (vehicle.healthFraction < 0.15) this.effect('vehicle-fire', vehicle.position.x, vehicle.position.z, 0.6);
       }
       for (const e of this.world.entities.iterate()) { const h = e.hazard; if (h && this.world.tick < h.activeUntil && ['fire', 'toxic', 'live-wire'].includes(h.kind)) this.effect(h.kind === 'live-wire' ? 'electric' : h.kind as 'fire' | 'toxic', e.transform.x, e.transform.z, h.radius); }
-      for (const zone of this.world.combat?.effects.zones ?? []) if (zone.kind === 'fire' || zone.kind === 'smoke') this.effect(zone.kind, zone.x, zone.z, zone.radius);
+      // Smoke-grenade clouds are E27 puff volumes (Blasts); fire zones keep the E15 ember bursts.
+      for (const zone of this.world.combat?.effects.zones ?? []) if (zone.kind === 'fire') this.effect(zone.kind, zone.x, zone.z, zone.radius);
     }
     // Wounded-infected droplets are based on visual time, never extra sim events or damage.
     if (Math.floor(this.time * 2) !== Math.floor((this.time - seconds) * 2) && this.enabled && this.gore !== 'Off') {
@@ -286,12 +309,12 @@ export class Vfx extends Group {
       for (const e of this.world.entities.iterate()) if (e.faction === 'infected' && e.health.current > 0 && e.health.current < e.health.max * 0.5 && emitted++ < 32) this.decals.spawn(this.time, 120, e.transform.x, 0.016, e.transform.z, 0, 0, 0, 0.25, 7, 0xb3121f);
     }
   }
-  get flash(): number { return this.enabled ? Math.max(0, (this.flashUntil - this.time) / 0.1) * (this.flashReduction ? 0.12 : 0.6) : 0; }
+  get flash(): number { return this.enabled ? Math.max(Math.max(0, (this.flashUntil - this.time) / 0.1) * (this.flashReduction ? 0.12 : 0.6), this.blasts.flash) : 0; }
   snapshot() {
     return { enabled: this.enabled, colorblind: this.colorblind, gore: this.gore, quality: this.quality, flashReduction: this.flashReduction, time: this.time,
       lastSpray: this.lastSpray, surfaceSplats: this.surfaceSplats.count, pendingSplats: this.landings.filter(l => l.at < Infinity).length, particles: this.particles.count, particleCap: this.particles.budget, decals: this.decals.count, decalCap: this.decals.cap, gibs: this.gibs.count, gibCap: this.gibs.budget,
       telegraphs: [...this.tells].map(([attackId, tell]) => ({ attackId, ...tell })), hitStop: { active: this.hitStop.active(this.time), until: this.hitStop.until, started: this.hitStop.started, suppressed: this.hitStop.suppressed },
-      flash: this.flash, coverage: this.coverage, detached: this.detached, dismemberedKills: this.dismemberedKills, kills: this.kills, explosionRadius: this.lastExplosionRadius };
+      flash: this.flash, blasts: this.blasts.snapshot(), coverage: this.coverage, detached: this.detached, dismemberedKills: this.dismemberedKills, kills: this.kills, explosionRadius: this.lastExplosionRadius };
   }
-  dispose(): void { for (const stop of this.stops) stop(); this.stops.length = 0; for (const pool of this.pools) pool.dispose(); this.gibs.dispose(); this.clear(); }
+  dispose(): void { for (const stop of this.stops) stop(); this.stops.length = 0; for (const pool of this.pools) pool.dispose(); this.gibs.dispose(); this.blasts.dispose(); this.clear(); }
 }
