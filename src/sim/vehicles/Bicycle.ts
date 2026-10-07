@@ -32,6 +32,9 @@ const inPolygon = (p: Vec2, poly: readonly Vec2[]): boolean => {
 export class Bicycle {
   private claimedAt = -Infinity;
   readonly noBikeZones: NoBikeZone[] = [];
+  /** Points where an empty-handed rider dismounts and parks the bike in view (the depot: the parcel is carried afterwards). */
+  readonly parkPoints: { x: number; z: number; radius: number; spot?: Vec2 }[] = [];
+  private mountedInPark = false;
   private id = -1;
   private lastOutside: Vec2 = { x: 0, z: 0 };
   constructor(private readonly world: SimWorld) {}
@@ -72,11 +75,20 @@ export class Bicycle {
         const spot = this.clearSpot(player.transform.x, player.transform.z, -bike.transform.yaw); if (spot) { bike.transform.x = spot.x; bike.transform.z = spot.z; }
       }
       const still = Math.hypot(frame.move.x, frame.move.z) < .05;
-      b.standTicks = d <= MOUNT_RANGE && still && b.armed ? b.standTicks + 1 : 0;
+      // At the depot the courier waits for the parcel, rather than immediately auto-mounting the parked bike.
+      const waitingAtDepot = !player.survivor?.carrying && this.parkPoints.some(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);
+      b.standTicks = d <= MOUNT_RANGE && still && b.armed && !waitingAtDepot ? b.standTicks + 1 : 0;
       const free = alive && d <= MOUNT_RANGE && this.world.tick >= b.lockUntil && !this.atNoBikeZone(player.transform) && !this.world.vehicles?.active;
-      if (free && (frame.interact || b.standTicks >= mountInteractS * 60)) {
+      if (free && !this.world.missions?.interactionAvailable() && (frame.interact || b.standTicks >= mountInteractS * 60)) {
         b.mounted = true; b.standTicks = 0; player.riding = bike.id; b.heading = -player.transform.yaw;
+        // A rider standing on a blocked nav cell (inside the rack's bars) would have no route: step to the nearest walkable cell.
+        const nav = this.world.infected?.nav;
+        if (nav && !nav.clear(player.transform.x, player.transform.z, survivor.radius + .1)) {
+          const spot = this.clearSpot(player.transform.x, player.transform.z, b.heading, [.3, .6, .9, 1.2, 1.6, 2.2]);
+          if (spot) { Object.assign(player.transform, spot); this.world.physics.playerBody?.setTranslation(player.transform, true); this.world.player?.locomotion.reset(); this.world.spatial.set(1, spot.x, spot.z); }
+        }
         this.lastOutside = { x: player.transform.x, z: player.transform.z };
+        this.mountedInPark = this.parkPoints.some(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);
         return { ...frame, interact: false };
       }
       return frame;
@@ -94,6 +106,18 @@ export class Bicycle {
       if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= BUMP_RANGE) { this.dismount(bike, player); return frame; }
     }
     if (this.atNoBikeZone(player.transform)) { this.dismount(bike, player, this.lastOutside); return frame; }
+    // Arriving at the depot without the parcel: she hops off and the bike is parked visibly right there.
+    const park = this.parkPoints.find(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);
+    const inPark = !!park;
+    if (!inPark) this.mountedInPark = false;
+    else if (!this.mountedInPark && !player.survivor?.carrying) {
+      this.dismount(bike, player);
+      // The depot has a clear curb spot beside the counter approach, within remount reach after hand-over.
+      if (park?.spot && this.clearAt(park.spot.x, park.spot.z, Math.PI / 2)) {
+        Object.assign(bike.transform, park.spot, { yaw: -Math.PI / 2 }); b.heading = Math.PI / 2;
+      }
+      return frame;
+    }
     this.lastOutside = { x: player.transform.x, z: player.transform.z };
     // Speed actually achieved last tick: walls and props stop the bicycle.
     const loco = this.world.player!.locomotion, actual = Math.hypot(loco.displacement.x, loco.displacement.z) / FIXED_DT;
@@ -121,7 +145,10 @@ export class Bicycle {
     }
     b.steer += (steerTarget - b.steer) * Math.min(1, 8 * FIXED_DT);
     const radius = 1.6 + (6 - 1.6) * r;
-    b.heading += b.steer * (b.speed / radius) * FIXED_DT;
+    // At an obstacle, the rider can still walk the front wheel round to pull away.
+    // Using only achieved speed here locks the heading forever when the capsule is stopped.
+    const steeringSpeed = want > 0 ? Math.max(b.speed, .8) : b.speed;
+    b.heading += b.steer * (steeringSpeed / radius) * FIXED_DT;
     const accel = accelToMs / accelS, change = target > b.speed ? accel * FIXED_DT : (want > 0 ? 9 : 3) * FIXED_DT;
     b.speed += Math.max(-change, Math.min(change, target - b.speed));
     if (want > 0) b.pedal += b.speed * FIXED_DT * 1.8; // cadence follows speed; freewheeling while coasting
@@ -149,11 +176,11 @@ export class Bicycle {
   private clearAt(x: number, z: number, heading: number): boolean {
     const nav = this.world.infected?.nav; if (!nav) return true;
     const fx = Math.cos(heading), fz = Math.sin(heading);
-    return [-.8, 0, .8].every(a => nav.clear(x + fx * a, z + fz * a, .4));
+    return [-.8, 0, .8].every(a => nav.clear(x + fx * a, z + fz * a, survivor.radius + .1));
   }
   /** Nearest reachable parking spot around (px, pz): clear frame, never in prop clusters or doorways, within mount range (1.5 m) of the rider. */
-  clearSpot(px: number, pz: number, heading: number): Vec2 | null {
-    for (const radius of [.9, 1.2, 1.4]) for (let i = 0; i < 8; i++) {
+  clearSpot(px: number, pz: number, heading: number, radii: readonly number[] = [.9, 1.2, 1.4]): Vec2 | null {
+    for (const radius of radii) for (let i = 0; i < 8; i++) {
       // left of the rider first, then right, behind, ahead
       const a = heading + Math.PI / 2 + [0, Math.PI, Math.PI / 2, -Math.PI / 2, Math.PI / 4, -Math.PI / 4, 3 * Math.PI / 4, -3 * Math.PI / 4][i];
       const x = px + Math.cos(a) * radius, z = pz + Math.sin(a) * radius;
