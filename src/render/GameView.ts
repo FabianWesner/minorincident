@@ -224,7 +224,7 @@ export class GameView implements Lifecycle {
         shake: strength => this.view.shake(strength),
       });
       this.vfx.set({ ...this.vfxSettings, quality: this.quality }); this.scene.add(this.vfx);
-      if (this.world.scenario === 'L1') { this.labAccident = new LabAccidentFx(this.world, this.vfx, labAccidentTargets(this.scene, s => this.view.shake(s), (x, z, w) => this.view.pull(x, z, w)), anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; }
+      if (this.world.scenario === 'L1') { this.labAccident = new LabAccidentFx(this.world, this.vfx, labAccidentTargets(this.scene, s => this.view.shake(s), (x, z, w) => this.view.pull(x, z, w)), anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; this.labAccident.facing = this.camera.quaternion; this.scene.add(this.labAccident.column); }
       this.crowd?.setGoreEnabled(this.vfx.snapshot().enabled && this.vfx.snapshot().gore === 'Full');
       const survivor = this.world.entities.get(1)?.survivor;
       this.frozenPose = survivor ? structuredClone(survivor) : null;
@@ -507,7 +507,7 @@ export class GameView implements Lifecycle {
     this.generation++; this.pendingPreparation = null; this.preparation = null; loadGate.setPaced(false);
     this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;
     if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }
-    this.labAccident?.dispose(); this.labAccident = null;
+    if (this.labAccident) { this.scene.remove(this.labAccident.column); this.labAccident.dispose(); this.labAccident = null; }
     if (this.vfx) { this.scene.remove(this.vfx); this.vfx.dispose(); this.vfx = null; }
     if (this.vehicleFeedback) { this.scene.remove(this.vehicleFeedback); this.vehicleFeedback.dispose(); this.vehicleFeedback = null; }
     this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;}
