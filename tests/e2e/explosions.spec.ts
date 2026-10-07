@@ -13,6 +13,26 @@ function hsv(d: Buffer, i: number): [number, number, number] {
   const h = c === 0 ? 0 : max === r ? 60 * (((g - b) / c) % 6) : max === g ? 60 * ((b - r) / c + 2) : 60 * ((r - g) / c + 4);
   return [(h + 360) % 360, max ? c / max : 0, max];
 }
+/** High-pass luminance at half resolution (box blur via an integral image): ring/dust/debris edges survive, the smooth
+ * light-field pool and flash wash do not. */
+function highPass(png: PNG, k = 6): Float32Array {
+  const w = png.width >> 1, h = png.height >> 1, l = new Float32Array(w * h), sum = new Float64Array((w + 1) * (h + 1)), out = new Float32Array(w * h);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) l[y * w + x] = lum(png.data, ((y * 2) * png.width + x * 2) * 4);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) sum[(y + 1) * (w + 1) + x + 1] = l[y * w + x] + sum[y * (w + 1) + x + 1] + sum[(y + 1) * (w + 1) + x] - sum[y * (w + 1) + x];
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const x0 = Math.max(0, x - k), x1 = Math.min(w, x + k + 1), y0 = Math.max(0, y - k), y1 = Math.min(h, y + k + 1);
+    out[y * w + x] = l[y * w + x] - (sum[y1 * (w + 1) + x1] - sum[y0 * (w + 1) + x1] - sum[y1 * (w + 1) + x0] + sum[y0 * (w + 1) + x0]) / ((x1 - x0) * (y1 - y0));
+  }
+  return out;
+}
+/** Shockwave/dust extent: 90th-percentile distance of new high-frequency detail on the ground in front of the blast. */
+function ring(frame: PNG, base: PNG, cx: number, cy: number, radius: number): number {
+  const a = highPass(frame), b = highPass(base), w = frame.width >> 1, d: number[] = [];
+  for (let y = Math.ceil(cy / 2); y < frame.height >> 1; y++) for (let x = 0; x < w; x++) {
+    const r = Math.hypot(x * 2 - cx, y * 2 - cy); if (r < radius && Math.abs(a[y * w + x] - b[y * w + x]) > .06) d.push(r);
+  }
+  d.sort((p, q) => p - q); return d.length ? d[Math.floor(d.length * .9)] : 0;
+}
 /** Per-frame detectors over the whole frame and a disc around the projected blast centre. */
 function measure(frame: PNG, base: PNG, cx: number, cy: number, radius: number) {
   let luminance = 0, fire = 0, gray = 0, n = 0, changed = 0, decalDark = 0, decalN = 0, sparks = 0; const distances: number[] = [];
@@ -57,13 +77,13 @@ test('T-E27-03 @E27 @E27-AC03 medium blast seven beats in order at fixed ticks: 
     await page.evaluate(async n => { const a = window.__SS__!; if (n) { await a.step(n); a.vfx.stepRender(n / 60); } await a.screenshotReady(); }, tick - at);
     at = tick; frames.push({ tick, png: await shot(page, `${out}/ac03-t${String(tick).padStart(3, '0')}.png`) });
   }
-  const radius = 600, m = frames.map(f => ({ tick: f.tick, ...measure(f.png, base, center.x, center.y, radius) })), b = measure(base, base, center.x, center.y, radius);
+  const radius = 600, m = frames.map(f => ({ tick: f.tick, ring: ring(f.png, base, center.x, center.y, radius), ...measure(f.png, base, center.x, center.y, radius) })), b = measure(base, base, center.x, center.y, radius);
   writeFileSync(`${out}/ac03-detectors.json`, JSON.stringify({ center, baseline: b, frames: m }, null, 2));
   const [t0, t2, t6, t15, t40, t180, t900] = m;
   expect(t0.luminance - b.luminance, 'flash luminance spike').toBeGreaterThan(.08);       // beat 2 flash
   expect(Math.max(t2.fire, t6.fire), 'fireball fire-hue area').toBeGreaterThan(400);       // beat 3 fireball
   // The flash overlay changes every pixel until ~10 ticks; the ring is measured once it has cleared.
-  expect(t40.spread, 'shockwave/dust ring grows').toBeGreaterThan(t15.spread);           // beat 4 shockwave
+  expect(t40.ring, 'shockwave/dust ring grows').toBeGreaterThan(Math.max(t6.ring, t15.ring) + 30); // beat 4 shockwave
   expect(t15.sparks, 'debris sparks outside the fireball').toBeGreaterThan(200);           // beat 5 debris
   expect(t180.gray, 'smoke column gray area grows').toBeGreaterThan(t40.gray);             // beat 6 smoke
   expect(t900.decalDelta, 'scorch decal darkens the centre').toBeLessThan(-.05);           // beat 7 scorch
@@ -147,4 +167,18 @@ test('T-E27-14 @E27 @E27-AC14 mega + chain stays within particle/puff/debris cap
   expect(result.fires).toBe(0);
   for (const key of ['particles', 'gibs'] as const) expect(result.end[key], key).toBeLessThanOrEqual(result.base[key]);
   expect(result.end.blasts).toMatchObject({ puffs: 0, fireballs: 0, flames: 0, glows: 0, columns: 0, clouds: 0, parts: 0 });
+});
+
+test('T-E27-night @E27 fires and blasts light the night through the E25 light field', async ({ page }) => {
+  test.setTimeout(90_000);
+  await lab(page, { timeOfDay: 'night' });
+  const dark = meanLuminance(await shot(page));
+  const state = await page.evaluate(async () => {
+    const a = window.__SS__!; a.explosions.blast('explosion.barrel', { x: 0, z: 0 });
+    for (let i = 0; i < 240; i++) { await a.step(1); a.vfx.stepRender(1 / 60); } await a.screenshotReady();
+    return a.getState().render.vfx!.blasts;
+  });
+  const lit = await shot(page, `${out}/night-fires.png`);
+  writeFileSync(`${out}/night-fires.json`, JSON.stringify({ dark, lit: meanLuminance(lit), state }, null, 2));
+  expect(state.flames).toBeGreaterThan(0); expect(meanLuminance(lit)).toBeGreaterThan(dark);
 });
