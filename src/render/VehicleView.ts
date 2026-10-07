@@ -1,3 +1,4 @@
+import { modelLod } from './lodPolicy';
 import { paletteTokens } from '../data/palette';
 // Adapted from Bruno Simon folio-2025 VisualVehicle.js (MIT, 41046b5): wheel pivots/suspension and lamps.
 import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, SphereGeometry, TorusGeometry, type Object3D } from 'three/webgpu';
@@ -33,7 +34,7 @@ export class VehicleView extends Group {
   private async addCar(id: number): Promise<void> {
     const car = this.world.vehicles!.cars.get(id)!, def = car.physics.def;
     const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
-    const lod = distance > 30 ? 'lod2' : this.low || distance > 12 ? 'lod1' : 'lod0';
+    const lod = modelLod(distance, this.records.get(id)?.lod, this.low);
     const model = atLeast(this.registry.definition(def.asset).status, 'integrated') ? await this.registry.loadAsset(def.asset, lod) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
     if (this.disposed) return;
     const paint: Record['paint'] = [], copies = new Map<import('three').Material, Record['paint'][number]>();
@@ -77,7 +78,7 @@ export class VehicleView extends Group {
     for (const [id, car] of this.world.vehicles!.cars) {
       const record = this.records.get(id);
       const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
-      const lod = distance > 30 ? 'lod2' : this.low || distance > 12 ? 'lod1' : 'lod0';
+      const lod = modelLod(distance, record?.lod, this.low);
       if (!record || record.lod !== lod) { if (!this.pending.has(id)) { this.pending.set(id, this.addCar(id).finally(() => { this.pending.delete(id); })); } if (!record) continue; }
       const body = car.physics, p = body.transform, prev = body.previous, state = car.entity.vehicle!;
       record.parent.position.set(lerp(prev.x, p.x, alpha), lerp(prev.y, p.y, alpha), lerp(prev.z, p.z, alpha));
