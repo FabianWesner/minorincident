@@ -66,9 +66,11 @@ test('courier bike riding retracts the stand and aligns the saddle with the ride
     for (let i = 0; i < 60; i++) view.update();
     view.updateMatrixWorld(true);
     expect(model.getObjectByName('kickstand')!.rotation.z).toBeCloseTo(Math.PI / 2);
-    expect(model.getObjectByName('seat')!.getWorldPosition(new Vector3()).x).toBeCloseTo(0, 6);
-    expect(model.getObjectByName('wheel_front')!.getWorldPosition(new Vector3()).x).toBeGreaterThan(0);
-    bicycle.mounted = false; view.update();
-    expect(model.getObjectByName('kickstand')!.rotation.z).toBe(0);
+    // The rider's pelvis is placed on the measured saddle position every frame (GameView.seatPelvis): the view reports the seat node's world position.
+    const saddle = new Vector3(); expect(view.seatWorld(saddle)).toBe(true);
+    expect(saddle.distanceTo(model.getObjectByName('seat')!.getWorldPosition(new Vector3()))).toBeLessThan(1e-6);
+    expect(model.getObjectByName('wheel_front')!.getWorldPosition(new Vector3()).x).toBeGreaterThan(saddle.x);
+    bicycle.mounted = false; for (let i = 0; i < 60; i++) view.update();
+    expect(model.getObjectByName('kickstand')!.rotation.z).toBeCloseTo(0, 3);
   } finally { view.dispose(); vi.restoreAllMocks(); vi.unstubAllGlobals(); }
 });

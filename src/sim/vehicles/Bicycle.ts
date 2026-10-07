@@ -79,6 +79,12 @@ export class Bicycle {
       const free = alive && d <= MOUNT_RANGE && this.world.tick >= b.lockUntil && !this.atNoBikeZone(player.transform) && !this.world.vehicles?.active;
       if (free && (frame.interact || b.standTicks >= mountInteractS * 60)) {
         b.mounted = true; b.standTicks = 0; player.riding = bike.id; b.heading = -player.transform.yaw;
+        // A rider standing on a blocked nav cell (inside the rack's bars) would have no route: step to the nearest walkable cell.
+        const nav = this.world.infected?.nav;
+        if (nav && !nav.clear(player.transform.x, player.transform.z, .35)) {
+          const spot = this.clearSpot(player.transform.x, player.transform.z, b.heading, [.3, .6, .9, 1.2, 1.6, 2.2]);
+          if (spot) { Object.assign(player.transform, spot); this.world.physics.playerBody?.setTranslation(player.transform, true); this.world.player?.locomotion.reset(); this.world.spatial.set(1, spot.x, spot.z); }
+        }
         this.lastOutside = { x: player.transform.x, z: player.transform.z };
         this.mountedInPark = this.parkPoints.some(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);
         return { ...frame, interact: false };
@@ -160,8 +166,8 @@ export class Bicycle {
     return [-.8, 0, .8].every(a => nav.clear(x + fx * a, z + fz * a, .4));
   }
   /** Nearest reachable parking spot around (px, pz): clear frame, never in prop clusters or doorways, within mount range (1.5 m) of the rider. */
-  clearSpot(px: number, pz: number, heading: number): Vec2 | null {
-    for (const radius of [.9, 1.2, 1.4]) for (let i = 0; i < 8; i++) {
+  clearSpot(px: number, pz: number, heading: number, radii: readonly number[] = [.9, 1.2, 1.4]): Vec2 | null {
+    for (const radius of radii) for (let i = 0; i < 8; i++) {
       // left of the rider first, then right, behind, ahead
       const a = heading + Math.PI / 2 + [0, Math.PI, Math.PI / 2, -Math.PI / 2, Math.PI / 4, -Math.PI / 4, 3 * Math.PI / 4, -3 * Math.PI / 4][i];
       const x = px + Math.cos(a) * radius, z = pz + Math.sin(a) * radius;
