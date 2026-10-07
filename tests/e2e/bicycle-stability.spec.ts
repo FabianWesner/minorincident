@@ -57,7 +57,7 @@ test.describe('bike ACTION after the garage bat', () => {
       for (const id of ['pickup', 'deliver', 'escape']) a.missions.completeObjective(id);
       a.teleport('player', { x: 23.1, z: 38.289 }); a.input.set({ interact: true }); await a.step(1); a.input.set({ interact: false }); await a.step(360);
       const bike = a.getState().entities.find(e => e.bicycle)!;
-      a.teleport('player', { x: bike.transform.x + .9, z: bike.transform.z }); await a.step(1);
+      a.teleport('player', { x: bike.transform.x + .9, z: bike.transform.z }); await a.step(1); a.input.clear();
     });
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.steps.weapon.status)).toBe('completed');
     await expect(page.getByTestId('touch-interact')).toBeEnabled();
