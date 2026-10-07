@@ -30,3 +30,4 @@ Before dispatching, classify the task: judgement/hard bug → Opus; crisp goal +
 - Tell a lane to stop a slow verification and hand it to the follow-up lane rather than waiting (l1v2-f).
 - Bot time bands: never pad, never shrink the band to fit a thin level — add the missing content.
 - PROD (minor-incident.com) is the public beta: deploy after each green batch (typecheck, unit, build, smoke) straight to PROD after the orchestrator's own QA. QA env (`BRANCH=qa`) only when the PO must test before a merge (PO rule 10-07). Every deploy gets an entry in `epics-pipeline/deploylog.json` → `deploylog.py` → deploy-log artifact.
+- Smoke/verify had no check that crowd figures are actually drawn on screen; a merge made all pedestrians invisible on PROD (10-07). Every crowd/render merge needs a visible-figures guard before deploy.
