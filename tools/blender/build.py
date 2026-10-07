@@ -25,6 +25,8 @@ output = Path(args.output).resolve()
 output.parent.mkdir(parents=True, exist_ok=True)
 # Standalone scripts consume --glb; shared scripts return a root from build(ctx).
 sys.argv = [str(script), '--', '--glb', str(output), '--quality', args.quality]
+if args.decay:
+    sys.argv += ['--decay', args.decay]
 bpy.ops.wm.read_factory_settings(use_empty=True)
 namespace = runpy.run_path(str(script))
 if callable(namespace.get('build')):
