@@ -7,7 +7,7 @@ test('desktop horde CPU sampling @profile', async ({ page, context }) => {
   test.setTimeout(120_000); await boot(page, '/?test=1&renderer=webgl&quality=high&audio=muted&dpr=1&profile');
   await page.evaluate(async () => {
     const a = window.__SS__!; await a.loadScenario('perf-horde-200'); a.cheats.god(true); a.camera.preset('perf-horde');
-    for (let i = 0; i < 40; i++) a.npcs.civilian('jogger', { x: i % 10 * 1.2 - 6, z: 6 + Math.floor(i / 10) * 1.2 }, { waypoints: [{ x: i % 10 * 1.2 - 6, z: 6 + Math.floor(i / 10) * 1.2 }] });
+    for (let i = 0; i < 40; i++) a.npcs.civilian('jogger', { x: i % 10 * 1.2 - 6, z: -20 + Math.floor(i / 10) * 1.2 }, { panicReaction: 'freeze', waypoints: [{ x: i % 10 * 1.2 - 6, z: -20 + Math.floor(i / 10) * 1.2 }] });
     await a.screenshotReady(); a.resume();
   });
   const cdp = await context.newCDPSession(page); await cdp.send('Profiler.enable'); await cdp.send('Profiler.setSamplingInterval', { interval: 1000 }); await cdp.send('Profiler.start');
