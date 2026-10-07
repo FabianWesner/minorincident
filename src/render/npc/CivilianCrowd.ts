@@ -1,3 +1,5 @@
+import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
+import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { Color, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, type DataTexture } from 'three/webgpu';
 import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance } from 'three/tsl';
@@ -72,7 +74,7 @@ class CivilianBatch extends Group {
   private readonly shirt = new Color();
   private readonly registry = new AssetRegistry(() => {});
   source = 'placeholder';
-  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly shading?: Materials, private readonly props?: RoutineProps) { super(); this.name = 'civilian-crowd'; }
+  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps) { super(); this.name = 'civilian-crowd'; }
   async init(): Promise<void> {
     const loaded = await this.registry.loadAsset(this.model, this.distant ? 'lod2' : 'lod1');
     await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
@@ -107,6 +109,8 @@ class CivilianBatch extends Group {
       else if (p === head && shirtOf.getX(i) < 0 && rel(0, i, 0) > .55 && rel(0, i, 1) > .45 && rel(0, i, 1) < .75) veins[i] = 3;
     }
     baked.geometry.setAttribute('_vein', new BufferAttribute(veins, 1));
+    deinterleaveGeometry(baked.geometry);
+    const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
     this.poses = new CrowdPosePalette(baked.clip, 128); this.texture = this.poses.texture;
@@ -132,7 +136,7 @@ class CivilianBatch extends Group {
     // A faint ash-green self-glow on infected skin so the colour shift survives building shadow (far below bloom).
     const glow = eyeColor.mul(eye.mul(2.2).add(socket.mul(.75))).mul(overlay.y).add(vec3(.05, .1, .03).mul(skinShift).mul(overlay.z));
     const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
-    this.mesh = new InstancedMesh(baked.geometry, material, 128); this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = this.mesh.receiveShadow = true;
+    this.mesh = new InstancedMesh(baked.geometry, material, 128); this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = !this.distant; this.mesh.receiveShadow = true;
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1); this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; };
     const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset), instance = mat4(column(0), column(4), column(8), column(12)), part = parts.x;
     const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
@@ -141,14 +145,18 @@ class CivilianBatch extends Group {
     material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
-  update(alpha = 1): void {
-    if (!this.mesh) return; let index = 0;
-    const player = this.world.entities.get(1)!.transform, renderTick = Math.max(0, this.world.tick + alpha - 1);
+  update(alpha = 1, low = false): void {
+    if (!this.mesh) return; let index = 0, shadowPixels = 0;
+    const renderTick = Math.max(0, this.world.tick + alpha - 1);
     for (const e of this.world.entities.iterate()) {
       if (index >= 128) break;
-      if (!e.civilian && e.infected && keepsLook(e)) { if (e.appearance!.asset === this.model && this.place(e, index, player, alpha)) index++; continue; }
+      // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
+      if (!this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
+      const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
+      if ((this.visibility.lod(e.id, pixels, low) === 'lod2') !== this.distant) continue;
+      if (!e.civilian && e.infected && keepsLook(e)) { if (e.appearance!.asset === this.model && this.place(e, index, alpha)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
       const c = e.civilian; if (!c || c.pet || e.hidden || c.state === 'infected') continue;
-      if((Math.hypot(e.transform.x-player.x,e.transform.z-player.z)>30)!==this.distant)continue;
+
       if ((e.appearance?.asset ?? c.model ?? (['inf.suburban-mom','inf.bathrobe-neighbor'].includes(c.variant) ? 'npc.civilian-woman-a' : 'npc.civilian-man-a')) !== this.model) continue;
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
       const rising = c.state === 'rising', startle = c.state === 'alarmed' && !!c.l1;
@@ -191,9 +199,13 @@ class CivilianBatch extends Group {
       }
       this.tintOf(e, index, blend[0] * 2 + blend[1]);
       const glow = c.eyesGlow ? e.infection ? Math.min(1, (this.world.tick - (e.infection.endsTick - 78)) / 30) : Math.min(1, Math.max(0, (c.veins - .12) / .65)) : 0;
-      this.overlay.setXYZ(index, c.veins, Math.max(0, glow), e.infection ? Math.min(1, Math.max(0, (e.infection.progress - .35) / .4)) : 0); index++;
+      this.overlay.setXYZ(index, c.veins, Math.max(0, glow), e.infection ? Math.min(1, Math.max(0, (e.infection.progress - .35) / .4)) : 0); index++; shadowPixels = Math.max(shadowPixels, pixels);
     }
-    this.mesh.count = index; this.mesh.instanceMatrix.needsUpdate = true; this.frame.needsUpdate = this.tint.needsUpdate = this.overlay.needsUpdate = true;
+    // Full sun silhouettes matter in the close game camera. Wider views retain
+    // the shared contact shadows; hysteresis prevents caster toggling at an edge.
+    this.mesh.castShadow = !this.distant && shadowPixels > (this.mesh.castShadow ? 128 : 156);
+    this.mesh.count = index; this.mesh.visible = index > 0;
+    if (index) { this.mesh.instanceMatrix.needsUpdate = true; this.frame.needsUpdate = this.tint.needsUpdate = this.overlay.needsUpdate = true; }
   }
   private tintOf(e: EntitySnapshot, index: number, blend: number): void {
     if (e.appearance) this.shirt.set(e.appearance.tint);
@@ -201,9 +213,9 @@ class CivilianBatch extends Group {
     this.tint.setXYZW(index, this.shirt.r, this.shirt.g, this.shirt.b, blend);
   }
   /** A pedestrian who rose infected: same model and tint, full overlay, infected locomotion and fight clips. */
-  private place(e: EntitySnapshot, index: number, player: { x: number; z: number }, alpha: number): boolean {
-    const b = e.infected!, tick = this.world.tick, distance = Math.hypot(e.transform.x - player.x, e.transform.z - player.z);
-    if (e.hidden || b.hidden || (distance > 30) !== this.distant || b.state === 'dead' && tick - b.deadAt > 540) return false;
+  private place(e: EntitySnapshot, index: number, alpha: number): boolean {
+    const b = e.infected!, tick = this.world.tick;
+    if (e.hidden || b.hidden || b.state === 'dead' && tick - b.deadAt > 540) return false;
     // PO "skating": the sim publishes the actual post-collision ground motion every tick (AgentMotion) - use it, not a
     // per-batch sampler that goes stale when the figure crosses the near/far batch boundary.
     const motion = e.motion ?? this.motion.sample(e.id, tick, e.transform.x, e.transform.z), reaction = e.combat?.reaction, age = reaction ? (tick - reaction.started) / 60 : Infinity;
@@ -231,9 +243,12 @@ class CivilianBatch extends Group {
 export class CivilianCrowd extends Group {
   private readonly batches: CivilianBatch[];
   private readonly props: RoutineProps;
-  constructor(world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.batches=['npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly','npc.depot-clerk','npc.firefighter-alive'].flatMap(model=>[new CivilianBatch(world,model,false,shading,this.props),new CivilianBatch(world,model,true,shading,this.props)]); this.add(...this.batches); }
+  private readonly visibility = new CrowdVisibility();
+  private low = false;
+  setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; }
+  constructor(world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.batches=['npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly','npc.depot-clerk','npc.firefighter-alive'].flatMap(model=>[new CivilianBatch(world,model,false,this.visibility,shading,this.props),new CivilianBatch(world,model,true,this.visibility,shading,this.props)]); this.add(...this.batches); }
   async init(): Promise<void> { const started = performance.now(); await Promise.all(this.batches.map(b=>b.init())); loadMeasure('view:civilian-crowd', started); this.update(); }
-  update(alpha = 1): void { this.props.begin(); this.batches.forEach(b=>b.update(alpha)); this.props.finish(); }
+  update(alpha = 1, camera?: import('three').Camera): void { this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); this.props.finish(); }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
   dispose(): void { this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
 }
