@@ -222,8 +222,12 @@ describe('L1 v2 corgi', () => {
   test('T-E19-17c @E19 @E19-AC17 the corgi keeps up with the bicycle (speed cap 7.5 m/s while riding)', async () => {
     await dogWorld(); const dog = [...world.entities.iterate()].find(e => e.companion)!;
     world.vehicles!.bicycle.spawn({ x: 0, z: 0.5 }, 0); const b = world.vehicles!.bicycle;
-    world.setInput({ move: { x: 1, z: 0 } }); for (let i = 0; i < 20; i++) world.update();
-    world.setInput({ interact: true }); world.update(); world.setInput({ interact: false, move: { x: 1, z: 0 } });
+    // safe parking may move the bike off the requested spot: walk to wherever it actually stands
+    for (let i = 0; i < 120 && Math.hypot(b.entity!.transform.x - world.entities.get(1)!.transform.x, b.entity!.transform.z - world.entities.get(1)!.transform.z) > 1; i++) {
+      const bt = b.entity!.transform, pt = world.entities.get(1)!.transform, d = Math.hypot(bt.x - pt.x, bt.z - pt.z);
+      world.setInput({ move: { x: (bt.x - pt.x) / d, z: (bt.z - pt.z) / d } }); world.update();
+    }
+    world.setInput({ move: { x: 0, z: 0 }, interact: true }); world.update(); world.setInput({ interact: false, move: { x: 1, z: 0 } });
     expect(b.riding).toBe(true);
     let gap = 0; for (let i = 0; i < 480; i++) { world.update(); const p = world.entities.get(1)!.transform; gap = Math.max(gap, i > 300 && i < 400 ? Math.hypot(dog.transform.x - p.x, dog.transform.z - p.z) : 0); }
     expect(gap).toBeLessThan(5); // after the start-up lag it keeps pace at the 7.5 m/s cap
