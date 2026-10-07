@@ -25,6 +25,7 @@ import { SimWorld } from './sim/world/SimWorld';
 import { loadMeasure } from './assets/loadTiming';
 import { assetUrl } from './assets/assetUrl';
 import { prefetchLevel } from './assets/prefetch';
+import { loadGate } from './assets/loadGate';
 
 /** Injected composition root, with staged initialization adapted from Bruno Game.js. */
 export class Game {
@@ -51,6 +52,9 @@ export class Game {
   private loading = false;
   private renderedDistricts: SimWorld['districts'] = null;
   private levelQueue: Promise<void> = Promise.resolve();
+  /** Level loaded behind the title/menus (load lane): consumed by the matching loadLevel. */
+  private speculative: { id: string; seed: number } | null = null;
+  private speculativeRunning = false;
   /** Boot-time sound bank load that runs after the title is shown; awaited before the next audio reset. */
   private audioLoad: Promise<void> = Promise.resolve();
   constructor(readonly params: URLSearchParams) {
@@ -88,7 +92,9 @@ export class Game {
       this.frameMs = seconds * 1000;
       if (!this.loading) this.campaignUI.update();
       if (!this.loading && this.renderedDistricts !== this.world.districts) this.refreshView();
-      if (!this.loading && !this.view.contextLost) {
+      // While the L1 warm-up runs behind the briefing only the mission UI updates; the clock waits.
+      if (!this.loading && !this.view.contextLost && this.view.warming) this.view.update(1);
+      else if (!this.loading && !this.view.contextLost) {
         if (document.hidden) this.clock.pause();
         if (!this.clock.paused) this.quality.observe(Math.max(this.frameMs, this.simulatedFrameMs), seconds, Boolean(this.world.missions?.state.cinematic));
         if (!this.clock.paused) this.view.frame(seconds);
@@ -103,12 +109,16 @@ export class Game {
     if (this.params.has('perf')) this.overlay = new PerfOverlay(this);
     this.ticker.init();
     // While the player reads the menus, warm the HTTP cache with the level they will most likely start.
-    if (this.params.get('test') !== '1') void this.audioLoad.then(() => prefetchLevel(`L${saved.status === 'ok' ? saved.save.unlockedLevel : 1}`));
+    // While the player reads the menus, load the level they will most likely start (L1 for a new or
+    // L1 campaign) behind the title; other levels only warm the HTTP cache.
+    const next = `L${saved.status === 'ok' ? saved.save.unlockedLevel : 1}`;
+    if (this.params.get('test') !== '1') void this.audioLoad.then(() => next === 'L1' && this.params.get('preload') !== '0' ? (this.speculativeRunning = true, this.loadLevel('L1', { seed: Number(this.params.get('seed') ?? 1) }, undefined, true).catch(error => console.warn('Speculative L1 load failed', error)).finally(() => { this.speculativeRunning = false; })) : prefetchLevel(next));
   }
   /** Serialize native-world changes so overlapping API loads cannot leak resources. */
   loadScenario(name: string | null, seed = 1, deferAudio = false): Promise<void> {
     if (name && performanceLevels[name]) return this.loadLevel(performanceLevels[name].level, { seed }, name);
     const load = this.levelQueue.then(async () => {
+      this.speculative = null; this.view.missionHidden = false; this.view.unfreeze();
       this.loading = true; this.restoredWhilePaused = false;
       try {
         await this.audioLoad; this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
@@ -122,18 +132,39 @@ export class Game {
     this.levelQueue = load.catch(() => {}); return load;
   }
   /** E10 composition plus E12 mission briefing; checkpoints restore reached state or reconstruct an authored graph prefix. */
-  loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string;progression?:ProgressionPreset}, performanceScenario?: string):Promise<void>{
+  loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string;progression?:ProgressionPreset}, performanceScenario?: string, speculative = false):Promise<void>{
+    // The player picked a level while one loads behind the menus: finish it at full speed.
+    if (!speculative && this.view.background) {
+      this.view.background = false; loadGate.background = false;
+      // Still loading or warming: release the pacing; LOD0 streaming (after load) keeps its pacing.
+      if (this.speculativeRunning || this.view.warming) loadGate.setPaced(false);
+    }
     const load=this.levelQueue.then(async()=>{
+      // A level already loaded behind the menus only needs the campaign, audio and UI steps it skipped.
+      const ready = this.speculative;
+      if (!speculative && ready && ready.id === id && (opts?.seed ?? 1) === ready.seed && !opts?.tier && !opts?.checkpoint && !opts?.progression && !performanceScenario && this.world.missions?.def.id === id) {
+        this.speculative = null;
+        const quality = this.campaign?.settings.quality ?? this.params.get('quality');
+        if (quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
+        if (this.campaign) { this.applyCampaign(); if (id === 'L1') this.world.combat?.clearLoadout(); this.watchCampaign(); }
+        this.quality.startLevel(); this.applyQuality();
+        this.view.missionHidden = false;
+        await this.audio.load(); this.ui.loaded(); this.view.update(1);
+        return;
+      }
+      this.speculative = null;
       this.loading=true; this.restoredWhilePaused = false;
       try{
         if(opts?.progression)this.campaign=preset(opts.progression);
         if(opts?.checkpoint && this.world.missions?.def.id === id) { this.world.missions.loadCheckpoint(opts.checkpoint); this.view.update(1); return; }
-        this.campaignUI.reset();
+        if (!speculative) this.campaignUI.reset();
+        // Keep the current picture (title backdrop) on screen while the level loads and warms up.
+        if (id === 'L1' && this.params.get('test') !== '1') this.view.freeze();
         const start=performance.now();
         const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(assetUrl(url));if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
         const data=loadMeasure('level:layouts',start);
         const cosmetic=this.world.entities.get(1)?.survivor;
-        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
+        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative; this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
@@ -148,9 +179,10 @@ export class Game {
         if(this.campaign)this.watchCampaign();
         this.quality.startLevel();this.applyQuality();
         if (performanceScenario) installPerformanceLevel(this.world, this.quality.tier, performanceScenario);
-        const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded();
+        const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); }
         if (performanceScenario) this.view.preset(performanceLevels[performanceScenario].spot);
-      }finally{this.loading=false;this.ticker.reset();}
+      }catch(error){ this.view.unfreeze(); this.view.missionHidden = false; throw error; }
+      finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
   }
   async startCampaign(character:SurvivorVariant):Promise<void> {

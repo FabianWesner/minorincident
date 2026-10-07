@@ -296,6 +296,10 @@ g.place(clinic, ax_, az_, FACE_YAW['S'])
 FENCE_Z = -10.9    # compound front line close to the facade: the follow camera keeps the building in frame during hand-over and accident
 if g.placeholder(clinic):
     g.shell('annex', ax_, az_, 'S', kdx, kdz, [('front', 0, 2.4), ('left', kdx / 2 - 3.5, 2.0)])
+# The Annex is not enterable: its door apertures are 0.2-0.5 m slits in the baked collision that become reachable pockets on the nav grid
+# (bots wedge on the threshold). Seal the facade across its whole width, 1.2 m deep, on the model's own footprint.
+_fz = az_ + 2.58 + 0.2             # just in front of the facade plane (local x 2.58): covers the door-frame slits
+g.collide_only('annex-door-seal', [kdz - .3, 2.2, .8], [ax_, 1.1, _fz + .2])
 # security compound: chain-link style fence with a 3 m gate gap, side/back fences, paved forecourt, signage, unmarked white pickup
 CX0, CX1, CZ0 = 58.5, 73.5, -26.5
 G.security_fence(g, CX0, FENCE_Z, CX1, FENCE_Z, gaps=[(ax_, 3.0)])
