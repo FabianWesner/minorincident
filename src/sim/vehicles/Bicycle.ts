@@ -32,6 +32,9 @@ const inPolygon = (p: Vec2, poly: readonly Vec2[]): boolean => {
 export class Bicycle {
   private claimedAt = -Infinity;
   readonly noBikeZones: NoBikeZone[] = [];
+  /** Points where an empty-handed rider dismounts and parks the bike in view (the depot: the parcel is carried afterwards). */
+  readonly parkPoints: { x: number; z: number; radius: number }[] = [];
+  private mountedInPark = false;
   private id = -1;
   private lastOutside: Vec2 = { x: 0, z: 0 };
   constructor(private readonly world: SimWorld) {}
@@ -77,6 +80,7 @@ export class Bicycle {
       if (free && (frame.interact || b.standTicks >= mountInteractS * 60)) {
         b.mounted = true; b.standTicks = 0; player.riding = bike.id; b.heading = -player.transform.yaw;
         this.lastOutside = { x: player.transform.x, z: player.transform.z };
+        this.mountedInPark = this.parkPoints.some(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);
         return { ...frame, interact: false };
       }
       return frame;
@@ -94,6 +98,10 @@ export class Bicycle {
       if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= BUMP_RANGE) { this.dismount(bike, player); return frame; }
     }
     if (this.atNoBikeZone(player.transform)) { this.dismount(bike, player, this.lastOutside); return frame; }
+    // Arriving at the depot without the parcel: she hops off and the bike is parked visibly right there.
+    const inPark = this.parkPoints.some(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);
+    if (!inPark) this.mountedInPark = false;
+    else if (!this.mountedInPark && !player.survivor?.carrying) { this.dismount(bike, player); return frame; }
     this.lastOutside = { x: player.transform.x, z: player.transform.z };
     // Speed actually achieved last tick: walls and props stop the bicycle.
     const loco = this.world.player!.locomotion, actual = Math.hypot(loco.displacement.x, loco.displacement.z) / FIXED_DT;

@@ -89,6 +89,7 @@ export class Toys {
         if (id.endsWith('nobike-zone')) w.vehicles?.bicycle.addNoBikeZone({ id, polygon: pts });
         if (id === 'carwash-bay') this.bay = pts;
       }
+      const depot = at('parcel-door'); if (depot) w.vehicles?.bicycle.parkPoints.push({ x: depot.x, z: depot.z, radius: 5 });
       for (let i = 1; i <= l1v2.toys.yardGates; i++) { const a = at(`gate-${i}`); if (a) this.gate(`gate-${i}`, a); }
       for (let i = 1; i <= l1v2.toys.dumpsters; i++) { const a = at(`dumpster-${i}`), end = at(`dumpster-${i}-end`); if (a && end) this.dumpster(a, end); }
       for (let i = 1; i <= l1v2.toys.carAlarm.cars; i++) { const a = at(`alarm-car-${i}`); if (a) this.alarm(a); }
