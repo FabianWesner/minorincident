@@ -44,7 +44,7 @@ export interface EntitySnapshot {
   weapons?: import('../combat/Loadout').LoadoutState;
   combat?: { radius: number; armor: number; shield: boolean; staggerUntil: number; attacking: boolean; damageMultiplier: number; statuses: import('../combat/Status').StatusState[];
     /** Authored reaction intent and swept knockback endpoints; presentation only. */
-    reaction?: { index: number; started: number; until: number; direction: { x: number; z: number }; from: { x: number; z: number }; to: { x: number; z: number }; heavy: boolean } };
+    reaction?: { index: number; started: number; until: number; direction: { x: number; z: number }; from: { x: number; z: number }; to: { x: number; z: number }; heavy: boolean; groundDeath?: boolean } };
   /** Reactive fixture hearing; E07 brains consume the same noise contract. */
   hearing?: { mode: 'idle' | 'investigate' | 'lured'; target: { x: number; z: number }; lureUntil: number };
   kind: string;
