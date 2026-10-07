@@ -140,7 +140,7 @@ def row(name, x0, x1, facing, line, rear, kinds, drives=None, gate_at=None):
         g.place(asset, hx, hz, yaw, scale, tint=next_tint())
         ox, oz = rot(yaw, dx_door, dz_door)
         door = (hx + ox, hz + oz)
-        doors.append(door)
+        doors.append((door[0], line - sgn * .5))   # refuge point on the pavement at the gate, never inside the closed yard
         out.append(dict(x=hx, z=hz, door=door, lot=(lx0, lx1)))
         # front picket fence with a gap at the door path and one at the driveway
         gaps = [(door[0], 1.7)]
@@ -226,8 +226,8 @@ g.place(cafe, cafe_x, cafe_z, FACE_YAW['E'])
 if g.placeholder(cafe):
     g.shell('cafe', cafe_x, cafe_z, 'E', cdx, cdz, [('front', 0, 2.4)])
 anchors['cafe-patio'] = (CAFE_FRONT_X + 1.0, cafe_z)
-anchors['bike-start'] = (-72.4, 3.8)
-g.place('prop.bike-rack', -72.4, 5.5, PI / 2)
+anchors['bike-start'] = (-68.1, 7.2)      # the bike stands in the rack, 2.4 m from the courier spawn: both in the first frame
+g.place('prop.bike-rack', -68.1, 7.2, 0.0)
 anchors['player-start'] = (-66.4, 9.0)
 doors.append((CAFE_FRONT_X + 1.0, cafe_z))
 # patio dressing on the sidewalk side: planters, a bench facing the street, bin
@@ -490,8 +490,7 @@ lamps()
 for (cx, cz) in [(XW, Z0), (X2, Z0), (X3, Z0), (X4, Z0), (XW, ZS), (X2, ZS), (X3, ZS), (X4, ZS), (XW, ZN), (X2, ZN), (X3, ZN), (X4, ZN)]:
     g.place('prop.street-sign', cx + 3.5, cz + 3.5, 0, .8, soft=True)
     g.place('prop.fire-hydrant', cx - 3.5, cz - 3.5, 0, .8, soft=True)
-for x, z in [(-47, -3.6), (-9, 3.6), (31, -3.6), (68, 3.6), (-20, ZS - 3.6), (36, ZS + 3.6)]:
-    g.place('prop.utility-pole', x, z, PI / 2, 1.0, soft=True)
+# no utility poles: their baked wires dangle unconnected (PO #8)
 DUMPSTERS = {'dumpster-1': (-52.0, -15.5), 'dumpster-1-end': (-58.5, -15.5), 'dumpster-2': (36.0, 15.0), 'dumpster-2-end': (27.0, 15.0)}
 
 ALLEY_ITEMS = ['prop.trash-bags', 'prop.recycling-bin', 'prop.crates', 'prop.broken-chair', 'prop.carpet', 'prop.trash-bin']
