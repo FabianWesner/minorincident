@@ -355,9 +355,9 @@ export class InfectedSystem {
     // Per-tier golden-ratio sequence from a seeded start: jitter is uniform over the run, fixed per entity, and
     // infected of one tier spawned together never share a speed (no synchronized group).
     const u = (this.tierStart[tier] + this.tierCount[tier]++ * 0.6180339887498949) % 1, rng = this.l1Rng!;
-    const brain: L1Brain = e.infected!.l1 ?? { mode: 'wander', tier, runSpeed: 0, wanderSpeed: 0, targetId: 0, seenX: 0, seenZ: 0, seenTick: 0, headingX: 0, headingZ: 0, looking: false, lookYaw: 0, pauseUntil: 0, goalX: 0, goalZ: 0, hasGoal: false, search: searchPlan(), episodes: 0, distractionId: 0, biteTargetId: 0, direct: false, directTick: -1, directX: 0, directZ: 0, homeX: 0, homeZ: 0, cueUntil: 0, cueYaw: 0, cueSource: 0 };
+    const brain: L1Brain = e.infected!.l1 ?? { mode: 'wander', tier, runSpeed: 0, wanderSpeed: 0, targetId: 0, seenX: 0, seenZ: 0, seenTick: 0, headingX: 0, headingZ: 0, looking: false, lookYaw: 0, pauseUntil: 0, goalX: 0, goalZ: 0, hasGoal: false, search: searchPlan(), episodes: 0, distractionId: 0, biteTargetId: 0, direct: false, directTick: -1, directX: 0, directZ: 0, homeX: 0, homeZ: 0, cueUntil: 0, cueYaw: 0, cueSource: 0, stuckX: 0, stuckZ: 0, stuckTick: 0, stuckCount: 0, ignoreId: 0, ignoreUntil: 0 };
     const [low, high] = l1v2.infected.wanderSpeed;
-    Object.assign(brain, { mode: 'wander', tier, runSpeed: l1TierSpeed(tier, u), wanderSpeed: low + rng.next() * (high - low), targetId: 0, headingX: 0, headingZ: 0, looking: true, lookYaw: e.transform.yaw, pauseUntil: this.world.tick + 20 + Math.floor(rng.next() * 40), hasGoal: false, episodes: 0, distractionId: 0, biteTargetId: 0, directTick: -1, homeX: e.transform.x, homeZ: e.transform.z, cueUntil: 0 });
+    Object.assign(brain, { mode: 'wander', tier, runSpeed: l1TierSpeed(tier, u), wanderSpeed: low + rng.next() * (high - low), targetId: 0, headingX: 0, headingZ: 0, looking: true, lookYaw: e.transform.yaw, pauseUntil: this.world.tick + 20 + Math.floor(rng.next() * 40), hasGoal: false, episodes: 0, distractionId: 0, biteTargetId: 0, directTick: -1, homeX: e.transform.x, homeZ: e.transform.z, cueUntil: 0, stuckTick: this.world.tick, stuckCount: 0, ignoreId: 0, ignoreUntil: 0 });
     brain.search.until = 0;
     e.infected!.l1 = brain; e.infected!.speed = brain.runSpeed; e.infected!.state = 'wander';
   }
@@ -421,7 +421,7 @@ export class InfectedSystem {
   }
   /** Re-evaluates the closest visible human (0.25 s cadence); losing every human while chasing starts a search. */
   private perceive(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
-    const seen = this.l1!.closest(e, brain.mode === 'chase' ? brain.targetId : 0);
+    const seen = this.l1!.closest(e, brain.mode === 'chase' ? brain.targetId : 0, this.world.tick < brain.ignoreUntil ? brain.ignoreId : 0);
     if (seen) { this.sight(e, b, brain, seen); return; }
     if (brain.mode === 'chase') this.startSearch(b, brain, { x: brain.seenX, z: brain.seenZ }, { x: brain.headingX, z: brain.headingZ });
     else this.herdCue(e, brain);
@@ -448,7 +448,7 @@ export class InfectedSystem {
     e.transform.yaw += Math.abs(delta) <= step ? delta : Math.sign(delta) * step;
     if (Math.abs(delta) > step && tick < brain.cueUntil) return;
     brain.cueUntil = 0;
-    const seen = this.l1!.closest(e, 0);
+    const seen = this.l1!.closest(e, 0, this.world.tick < brain.ignoreUntil ? brain.ignoreId : 0);
     if (seen) { this.sight(e, b, brain, seen); return; }
     if (brain.distractionId !== 0) return; // a car alarm outranks a cue that showed no human (visible human > distraction > wander)
     const rng = this.l1Rng!, run = 8 + rng.next() * 4, fx = Math.cos(brain.cueYaw), fz = -Math.sin(brain.cueYaw);
@@ -480,9 +480,11 @@ export class InfectedSystem {
     brain.looking = false;
     const distance = Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z), lunge = l1v2.infected.lungeRangeM;
     if (target.kind === 'player') {
-      if (distance <= lunge && this.world.tick >= b.cooldown && this.l1!.lineOfSight(e.transform, target.position)) { b.combo = 0; this.windup(e); return; }
+      // Strike with clear sight, or at arm's reach even past a thin post/lamp (PO-QA #13: no frozen stand-off).
+      const strikable = this.l1!.lineOfSight(e.transform, target.position) || distance <= 1.6;
+      if (distance <= lunge && this.world.tick >= b.cooldown && strikable) { b.combo = 0; this.windup(e); return; }
       // QA2-04: hold at arm's reach between swings instead of walking into the courier's body.
-      if (distance < 1.3) { e.transform.yaw = -Math.atan2(target.position.z - e.transform.z, target.position.x - e.transform.x); return; }
+      if (distance < 1.3 && strikable) { brain.stuckTick = this.world.tick; brain.stuckX = e.transform.x; brain.stuckZ = e.transform.z; e.transform.yaw = -Math.atan2(target.position.z - e.transform.z, target.position.x - e.transform.x); return; }
       this.steerL1(e, brain, target.position, brain.runSpeed, true, true);
       return;
     }
@@ -668,6 +670,27 @@ export class InfectedSystem {
     const remaining = x === target.x && z === target.z ? distance - (pursue ? radius + 0.36 : 0) : distance;
     if (remaining < 0.02) return;
     const velocity = Math.min(speed, remaining * (pursue ? 60 : 2)); moveAgent(e, dx / distance * velocity, dz / distance * velocity, this.nav, tick);
+    if (velocity > 0.5) this.watchStuck(e, brain);
+  }
+  /**
+   * PO-QA #12: an infected pressing against a fence (no route, nav pocket) makes no progress. After 1.5 s without
+   * progress it gives up: a chased human is ignored for 6 s (search/wander instead), a probe or wander goal is dropped.
+   */
+  private watchStuck(e: EntitySnapshot, brain: L1Brain): void {
+    const tick = this.world.tick;
+    if (tick - brain.stuckTick < 45) return;
+    if (tick - brain.stuckTick > 90) { brain.stuckTick = tick; brain.stuckX = e.transform.x; brain.stuckZ = e.transform.z; brain.stuckCount = 0; return; } // was standing: fresh window
+    const moved = Math.hypot(e.transform.x - brain.stuckX, e.transform.z - brain.stuckZ);
+    brain.stuckTick = tick; brain.stuckX = e.transform.x; brain.stuckZ = e.transform.z;
+    brain.stuckCount = moved < 0.35 ? brain.stuckCount + 1 : 0;
+    if (brain.stuckCount < 2) return;
+    brain.stuckCount = 0; e.infected!.path.length = 0; e.infected!.goal = -1; brain.directTick = -1;
+    if (brain.mode === 'chase') {
+      brain.ignoreId = brain.targetId; brain.ignoreUntil = tick + l1Ticks(6);
+      this.startSearch(e.infected!, brain, { x: e.transform.x, z: e.transform.z }, { x: 0, z: 0 });
+    } else if (brain.mode === 'search') { brain.search.next++; brain.search.legTicks = 0; }
+    else if (brain.mode === 'attracted') this.startSearch(e.infected!, brain, { x: e.transform.x, z: e.transform.z }, { x: 0, z: 0 });
+    else brain.hasGoal = false;
   }
   private seek(e: EntitySnapshot, target: { x: number; z: number }): void {
     const grid = this.navigation.district(e.transform), b = e.infected!;

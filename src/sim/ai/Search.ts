@@ -49,6 +49,10 @@ export interface L1Brain {
   homeX: number; homeZ: number;
   /** Herd cue: turning toward a seen attacker's heading until `cueUntil` (0 = none), from infected `cueSource`. */
   cueUntil: number; cueYaw: number; cueSource: number;
+  /** Stuck watch: position at `stuckTick`; consecutive 0.75 s windows without progress while trying to move. */
+  stuckX: number; stuckZ: number; stuckTick: number; stuckCount: number;
+  /** A human given up as unreachable (fenced yard, no route) is ignored until `ignoreUntil`. */
+  ignoreId: number; ignoreUntil: number;
 }
 export function searchPlan(): SearchPlan {
   return { startTick: 0, until: 0, originX: 0, originZ: 0, probes: [], doubleBackAt: -1, next: -1, visited: 0, doubledBack: false, legTicks: 0 };
