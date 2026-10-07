@@ -80,26 +80,14 @@ export function populateGrove(outbreak: Outbreak, count = 56): number[] {
       walk(stroll, 'coffee'), look(stroll, q.seat, 'coffee', [2, 4]), walk(q.target, 'coffee')] });
     return true;
   };
-  /** A line facing `face` (bus stop, counter queue); the first in the queue goes in and out of `door`. */
-  const line = (start: Point | null, face: Point | null, n: number, props: (string | null)[], door?: Point | null) => {
-    if (!start || !face) return;
-    const dx = face.x - start.x, dz = face.z - start.z, d = Math.hypot(dx, dz) || 1;
-    for (let i = 0; i < n; i++) {
-      const at = snap({ x: start.x - dz / d * (i * 1.1 - .5), z: start.z + dx / d * (i * 1.1 - .5) }, 2); if (!at) continue;
-      const entrance = i === 0 && door ? snap(door, 3) : null;
-      plans.push({ at, handProp: props[i % props.length], yaw: -Math.atan2(dz, dx), schedule: entrance
-        ? [look(at, face, props[i], [5, 10]), { activity: 'door', anchor: 'l1/door', target: entrance, facing: door!, ticks: 45, prop: prop(props[i]) }, { activity: 'inside', anchor: 'l1/door', target: entrance, ticks: t(4, 8), prop: prop(props[i]) }, walk(at, props[i])]
-        : [look(at, face, props[i % props.length], [6, 12]), look(at, { x: face.x + dz / d * 3, z: face.z - dx / d * 3 }, props[i % props.length], [1.5, 3])] });
-    }
-  };
+
   // Hubs first (seated, chatting, queueing, gardening): everyone faces something.
   // P2 morning: Maple Corner and the cafe patio are busy - coffee sitters on nearby seats and two chat groups.
   const patio = anchor('cafe-patio');
   for (let i = 0; i < 4; i++) sitter(patio);
   if (patio) { circle(free(snap({ x: patio.x - 3, z: patio.z + 2 }, 3)), 3, ['coffee', 'phone', null]); circle(free(snap({ x: patio.x + 4, z: patio.z + 3 }, 3)), 2, ['coffee', 'coffee']); }
   for (let i = 1; i < 4; i++) sitter(patio && { x: patio.x + i * 25, z: patio.z });
-  const bus = anchor('bus-stop');
-  line(bus && free(snap(bus, 3)), bus && { x: bus.x, z: bus.z - 4 }, 2, ['phone', 'bag']);
+  // QA1-11: no standing group at the bus stop; walkers pass it instead (see the fill below).
   // At most ~8 doorstep hubs spread over the map (the full layout has 50+ refuge doors).
   const hubDoors = doors.filter((_, i) => i % Math.max(1, Math.ceil(doors.length / 8)) === 0);
   for (const [i, door] of hubDoors.entries()) {
