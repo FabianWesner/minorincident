@@ -48,7 +48,7 @@ test.describe('L1 v2 real-input playthrough', () => {
       if (focus) await page.evaluate(({ p, reverse, name }) => {
         const a = window.__SS__!;
         const offset = name === 'l1-spread' ? 12 : 22;
-        a.camera.cinematic({ position: [p.x + (reverse ? -offset : offset), 26, p.z + (reverse ? -offset : offset)], target: [p.x, 0, p.z] });
+        a.camera.cinematic({ position: [p.x + (reverse ? -offset : offset), 26, p.z + (reverse ? -offset : offset)], target: [p.x, 0, p.z] }, true);
       }, { p: focus, reverse, name });
       await page.evaluate(() => window.__SS__!.screenshotReady());
       await page.screenshot({ path: `${output}/${name}.png` }); await page.evaluate(() => window.__SS__!.camera.follow()); await step(1);
@@ -56,33 +56,39 @@ test.describe('L1 v2 real-input playthrough', () => {
     const waitBeat = async () => {
       for (let i = 0; i < 120 && (await mission()).l1!.beat; i++) await step(30);
     };
-    /** Click the actual destination once; nearby intermediate clicks can select the near side of a whole block. */
+    /** Click the actual destination; reissue it after combat or respawn clears the movement target. */
     const go = async (target: { x: number; z: number }, stop = 1.2) => {
       await waitBeat();
       const activeBefore = Object.entries((await mission()).steps).find(([, s]) => s.status === 'active')?.[0];
       const start = (await player()).transform;
       if (Math.hypot(target.x - start.x, target.z - start.z) <= stop) return;
-      // Frame both ends for a real ground click. This changes presentation only; routing remains the game's own.
-      await page.evaluate(({ start, target }) => {
-        const a = window.__SS__!, x = (start.x + target.x) / 2, z = (start.z + target.z) / 2;
-        const radius = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
-        a.camera.preset('D-GROVE/W0/l1-morning');
-        a.camera.cinematic({ position: [x + radius, radius * 1.2, z + radius], target: [x, 0, z] });
-      }, { start, target });
-      const point = await page.evaluate(q => window.__SS__!.input.project(q), target);
-      const view = page.viewportSize()!;
-      expect(point.x).toBeGreaterThan(20); expect(point.x).toBeLessThan(view.width - 20);
-      expect(point.y).toBeGreaterThan(20); expect(point.y).toBeLessThan(view.height - 20);
-      await page.mouse.click(point.x, point.y);
-      await page.evaluate(() => window.__SS__!.camera.follow());
+      const clickDestination = async () => {
+        const start = (await player()).transform;
+        // Frame both ends for a real ground click. This changes presentation only; routing remains the game's own.
+        await page.evaluate(({ start, target }) => {
+          const a = window.__SS__!, x = (start.x + target.x) / 2, z = (start.z + target.z) / 2;
+          const radius = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
+          a.camera.preset('D-GROVE/W0/l1-morning');
+          a.camera.cinematic({ position: [x + radius, radius * 1.2, z + radius], target: [x, 0, z] }, true);
+        }, { start, target });
+        const point = await page.evaluate(q => window.__SS__!.input.project(q), target);
+        const view = page.viewportSize()!;
+        expect(point.x).toBeGreaterThan(20); expect(point.x).toBeLessThan(view.width - 20);
+        expect(point.y).toBeGreaterThan(20); expect(point.y).toBeLessThan(view.height - 20);
+        await page.mouse.click(point.x, point.y);
+        await page.evaluate(() => window.__SS__!.camera.follow());
+      };
+      await clickDestination();
       for (let i = 0; i < 400; i++) {
         await step(30);
         const p = (await player()).transform;
         const m = await mission();
         // An objective trigger can stop movement and start a beat before the requested stop radius.
         if (Math.hypot(target.x - p.x, target.z - p.z) <= stop || m.phase !== 'playing' || (activeBefore && m.steps[activeBefore].status === 'completed')) return;
+        if (!assisted && (await player()).weapons && await fightNearby(page)) await clickDestination();
+        else if (i % 12 === 11) await clickDestination();
       }
-      throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
+      throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify(await player())}`);
     };
     const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(1); };
     const fightNearby = async (page: Page) => {
@@ -163,6 +169,7 @@ test.describe('L1 v2 real-input playthrough', () => {
       }
       if (active === 'firestation') {
         const door = at('fire-bay-door');
+        if (!assisted && Math.hypot((await player()).transform.x - at('garage-bat').x, (await player()).transform.z - at('garage-bat').z) < 8) await go(at('garage-door'), 1.2);
         await go({ x: door.x, z: door.z - 5 }, 1);
         await step(20);
         expect((await mission()).phase).toBe('playing');
@@ -170,7 +177,7 @@ test.describe('L1 v2 real-input playthrough', () => {
         expect((await mission()).gates['fire-shutter']).toBe(true);
         expect((await mission()).l1!.say?.text).toBe('Get in!');
         if (assisted) {
-          await page.evaluate(p => window.__SS__!.camera.cinematic({ position: [p.x - 18, 20, p.z - 18], target: [p.x, 0, p.z] }), door);
+          await page.evaluate(p => window.__SS__!.camera.cinematic({ position: [p.x - 18, 20, p.z - 18], target: [p.x, 0, p.z] }, true), door);
           await page.evaluate(() => window.__SS__!.screenshotReady());
           await page.screenshot({ path: `${output}/firestation-invitation.png` });
           await page.evaluate(() => window.__SS__!.camera.follow());
