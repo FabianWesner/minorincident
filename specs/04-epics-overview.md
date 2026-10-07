@@ -78,3 +78,13 @@ An epic is done only when **all** of these hold:
 - Write the test first where the criterion is mechanical (sim/unit). For visual criteria, build the scenario and screenshot spot first.
 - Never weaken an acceptance criterion to make it pass. If one is wrong, change the spec in the same PR and explain why in the epic report.
 - Keep `src/sim` free of DOM and renderer imports (`T-E01-03` enforces this).
+
+## 6. Staging decisions (orchestrator, 2026-10-07)
+
+From the remaining-scope gap audit. Nothing is cut; the order changes so that every level is playable before the expensive extras land.
+
+- **Order:** (0) close L1 acceptance, register the 25 finished art exports, campaign foundation (real vehicle/device mission adapters, per-level runners) → (1) E26 core barricades, E25 light pools + night readability, L2/L3 content, campaign bots → (2) E27 core blasts/fire/smoke, finish L2/L3 (M2) → (3) L4 + zoo, E28 rain/wind/fog/ash, E25 shadows + cheap reflections → (4) L5, L6 + ending, mega spectacle, decay W4/W5 → (5) release closure: balance, visual reviews, performance, then the extras (SSR/GTAO/planar water, snow override, unused gas variants, freeform construction).
+- **Bot timing:** level time bands are calibrated against the `newbie` bot and human play; levels are never padded with idle delays to hit a band.
+- **Budgets** (awake props, particles, lights) are upper bounds, not targets.
+- **WebGPU** is checked manually; automated browser runs are headless WebGL2 (repo rule overrides the headed WebGPU wording in 90/91).
+- **Campaign flow:** no reward screens between levels (PO decision); rewards auto-apply.

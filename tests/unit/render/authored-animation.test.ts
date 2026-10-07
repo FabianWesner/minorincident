@@ -3,7 +3,7 @@ import { AnimationMixer, Box3, Matrix4, Mesh, Vector3, type AnimationAction } fr
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { expect, test, vi } from 'vitest';
-import { authoredClips, retargetClip, sampleClip, strides, strideScale } from '../../../src/render/characters/clips';
+import { authoredClips, cadenceStride, retargetClip, sampleClip, strides, strideScale } from '../../../src/render/characters/clips';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
 import { MotionPhase } from '../../../src/render/characters/MotionPhase';
 import { resolveRig } from '../../../src/render/characters/rig';
@@ -162,6 +162,14 @@ test.each([
   const before = run.time / run.getClip().duration; parent.position.x += 4.5 / 60; animator.update(pose,91);
   expect(((run.time / run.getClip().duration - before) % 1 + 1) % 1).toBeCloseTo(4.5 / 60 / Math.max(strides.run * strideScale(rig.root), 4.5 / 2.7), 2);
   actionCalls.mockRestore();
+});
+
+test('@E19 gait cadence caps fast short-stride figures while preserving slow authored strides', () => {
+  expect(cadenceStride('npc-walk', .7, .7)).toBe(strides['npc-walk'] * .7);
+  expect(cadenceStride('run', .55, 4)).toBeCloseTo(4 / 2.7);
+  expect(cadenceStride('infected-frail', .5, 4)).toBeCloseTo(4 / 2);
+  expect(cadenceStride('corgi-walk', .7, 3)).toBeCloseTo(3 / 2);
+  expect(cadenceStride('corgi-gallop', .7, 7)).toBeCloseTo(7 / 2.7);
 });
 
 test('@E03-AC20 seven authored unarmed silhouettes have sequenced anticipation, strike and follow-through', () => {

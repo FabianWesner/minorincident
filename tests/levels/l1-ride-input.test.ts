@@ -4,8 +4,8 @@ import { loadL1 } from '../../tools/sim-runner/l1Bots';
 
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
-async function mounted() {
-  const l = await loadL1(1); world = l.world; const w = l.world, bike = w.vehicles!.bicycle.entity!;
+async function mounted(seed = 1) {
+  const l = await loadL1(seed); world = l.world; const w = l.world, bike = w.vehicles!.bicycle.entity!;
   const at = { x: bike.transform.x, z: bike.transform.z };
   const player = w.entities.get(1)!; Object.assign(player.transform, { x: at.x, z: at.z }); w.physics.playerBody!.setTranslation(player.transform, true);
   w.setInput({ interact: true }); w.update(); w.clearInput(); w.update();
@@ -13,27 +13,24 @@ async function mounted() {
   return l;
 }
 
-test('E19 @E19 QA1-01 E at the parcel counter while riding picks up the parcel and keeps the courier on the bicycle', async () => {
+test('E19 @E19 QA1-01 arriving at the depot counter on the bicycle without the parcel parks the bike; E picks up the parcel', async () => {
   const { world: w, mission } = await mounted();
   const step = mission.def.steps.find(s => s.id === 'pickup')!, anchor = mission.def.anchors[(step.complete as { anchor: string }).anchor];
-  const player = w.entities.get(1)!; Object.assign(player.transform, { x: anchor.x, z: anchor.z }); w.physics.playerBody!.setTranslation(player.transform, true); w.update();
-  expect(w.vehicles!.bicycle.riding).toBe(true);
+  const player = w.entities.get(1)!; Object.assign(player.transform, { x: anchor.x, z: anchor.z }); w.physics.playerBody!.setTranslation(player.transform, true); w.update(); w.update();
+  expect(w.vehicles!.bicycle.riding).toBe(false); // the courier hops off at the depot (PO: bike parked visibly by the checkpoint)
+  const bike = w.vehicles!.bicycle.entity!.transform; expect(Math.hypot(bike.x - anchor.x, bike.z - anchor.z)).toBeLessThan(8);
   w.setInput({ interact: true }); w.update(); w.clearInput(); w.update();
   expect(mission.state.steps.pickup.status).toBe('completed');
-  expect(w.vehicles!.bicycle.riding).toBe(true);
-  w.setInput({ interact: true }); w.update(); w.clearInput(); w.update();
-  expect(w.vehicles!.bicycle.riding).toBe(true); // a late E right after the pickup still belongs to the counter
-  for (let i = 0; i < 100; i++) w.update();
-  w.setInput({ interact: true }); w.update(); w.clearInput(); w.update();
-  expect(w.vehicles!.bicycle.riding).toBe(false); // nothing else claims the next press: dismount
+  for (let i = 0; i < 900 && !player.survivor!.carrying; i++) w.update();
+  expect(player.survivor!.carrying).toBeTruthy();
 });
 
-test('E19 @E19 QA1-02 click-to-move on the bicycle follows the walking route to the parcel counter', async () => {
-  const { world: w, mission } = await mounted();
+test.each([[1], [2], [3], [4], [5]])('E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed %i)', async (seed) => {
+  const { world: w, mission } = await mounted(seed);
   const step = mission.def.steps.find(s => s.id === 'pickup')!, anchor = mission.def.anchors[(step.complete as { anchor: string }).anchor];
   let ticks = 0; const p = () => w.entities.get(1)!.transform;
   w.setInput({ moveTarget: { x: anchor.x, z: anchor.z } }); w.update(); w.setInput({ moveTarget: undefined }); ticks++;
-  while (Math.hypot(p().x - anchor.x, p().z - anchor.z) > 2.5 && ticks < 60 * 60) { w.update(); ticks++; }
+  while (Math.hypot(p().x - anchor.x, p().z - anchor.z) > 2.5 && ticks < 90 * 60) { w.update(); ticks++; }
   console.info('G-RIDE-ROUTE', ticks / 60, Math.hypot(p().x - anchor.x, p().z - anchor.z).toFixed(1));
   expect(Math.hypot(p().x - anchor.x, p().z - anchor.z)).toBeLessThanOrEqual(2.5);
 });

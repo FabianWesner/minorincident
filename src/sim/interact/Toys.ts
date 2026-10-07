@@ -82,12 +82,18 @@ export class Toys {
         // Present at the start (PO QA #5): the bike stands on the rack side of the courier's spawn, within 3.3 m, never hidden at the screen edge.
         const dx = bike.x - (start?.x ?? bike.x), dz = bike.z - (start?.z ?? bike.z), d = Math.hypot(dx, dz);
         const at0 = start && d > 3.3 ? { x: start.x + dx / d * 3.3, z: start.z + dz / d * 3.3 } : bike;
-        w.vehicles?.bicycle.spawn(at0, -bike.yaw);
+        // Stand on the walkable apron in front of the rack, not inside its bars (no route from an unwalkable start cell).
+        const apron = w.vehicles?.bicycle.clearSpot(at0.x, at0.z, -bike.yaw, [0, .6, 1.2, 1.8, 2.4, 3]) ?? at0;
+        w.vehicles?.bicycle.spawn(apron, -bike.yaw);
       }
       for (const [id, poly] of Object.entries(d.layout.zones ?? {})) {
         const pts = poly.map(p => ({ x: p[0] + d.origin[0], z: p[1] + d.origin[1] }));
         if (id.endsWith('nobike-zone')) w.vehicles?.bicycle.addNoBikeZone({ id, polygon: pts });
         if (id === 'carwash-bay') this.bay = pts;
+      }
+      const depot = at('parcel-door'); if (depot && w.vehicles) {
+        const spot = w.vehicles.bicycle.clearSpot(depot.x, depot.z + 1, Math.PI / 2);
+        w.vehicles.bicycle.parkPoints.push({ x: depot.x, z: depot.z, radius: 5, ...(spot ? { spot } : {}) });
       }
       for (let i = 1; i <= l1v2.toys.yardGates; i++) { const a = at(`gate-${i}`); if (a) this.gate(`gate-${i}`, a); }
       for (let i = 1; i <= l1v2.toys.dumpsters; i++) { const a = at(`dumpster-${i}`), end = at(`dumpster-${i}-end`); if (a && end) this.dumpster(a, end); }

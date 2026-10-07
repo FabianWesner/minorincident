@@ -63,6 +63,8 @@ export class GameView implements Lifecycle {
   private vehicles: VehicleView | null = null;
   private bicycle: BicycleView | null = null;
   private readonly seat = new Vector3();
+  private readonly gripL = new Vector3();
+  private readonly gripR = new Vector3();
   private actions: ActionView | null = null;
   private contactShadows: ContactShadows | null = null;
   private crowd: CrowdView | null = null;
@@ -529,7 +531,10 @@ export class GameView implements Lifecycle {
         riding === undefined ? undefined : { pedal: bike?.pedal ?? this.world.tick * .12, steer: bike?.steer ?? 0 });
       // Riding: the pelvis sits on the saddle, measured from the bike's `seat` node every frame (any heading, lean or turn).
       if (this.character.skinActive) this.character.applyRideContacts(riding !== undefined ? this.bicycle?.riderContacts() : undefined);
-      else if (riding !== undefined && this.bicycle?.seatWorld(this.seat)) this.character.seatPelvis(this.seat, -.04);
+      else if (riding !== undefined && this.bicycle?.seatWorld(this.seat)) {
+        this.character.seatPelvis(this.seat, -.04);
+        if (this.bicycle.gripsWorld(this.gripL, this.gripR)) this.character.holdHandlebar(this.gripL, this.gripR);
+      }
     }
     if (this.cube && current) {
       this.cube.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha), lerp(previous?.z ?? current.z, current.z, alpha));
