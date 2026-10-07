@@ -1,8 +1,14 @@
 {
   "live": {
     "level": "L1",
+    "state": "combat",
+    "streamed": {
+      "state": null,
+      "transitions": [],
+      "decks": []
+    },
     "paused": false,
-    "position": 4.188,
+    "position": 2.0786666666666664,
     "layers": [
       "base",
       "pulse",
@@ -11,12 +17,13 @@
     "score": 0.5,
     "transitions": [
       {
-        "time": 4.852,
+        "time": 5.454666666666666,
         "layers": [
           "base",
           "pulse",
           "drive"
-        ]
+        ],
+        "state": "combat"
       }
     ]
   },
@@ -27,13 +34,15 @@
         "base",
         "pulse",
         "drive"
-      ]
+      ],
+      "state": "combat"
     },
     {
       "time": 12,
       "layers": [
         "base"
-      ]
+      ],
+      "state": "aftermath"
     },
     {
       "time": 14,
@@ -41,7 +50,8 @@
         "base",
         "pulse",
         "drive"
-      ]
+      ],
+      "state": "combat"
     }
   ]
 }
