@@ -86,6 +86,67 @@ def recipe(s):
         s.box('fridge',(-.15,-4.3,1.03),(.85,.9,2.06),'picketWhite')
         for x in (1.3,3.4):s.table(x,3.2,.5,1.8)
         for y in (-3.2,3.2):s.lamp('alarm'+str(y),(5.55,y,3.5),True,True)
+        # Authored station equipment lives around the clear truck aisle.
+        for x in (-4.8,-3.9,-3,-2.1,-1.2,0):
+            s.box('lockerOpening',(x,4.065,1.23),(.62,.035,1.78),'uiDark')
+            s.box('turnoutJacket',(x,3.99,1.22),(.40,.20,.65),'khaki')
+            for dx in (-.24,.24):s.box('jacketSleeve',(x+dx,3.99,1.25),(.13,.18,.52),'khaki',angle=dx)
+            s.box('reflectiveBand',(x,3.87,1.08),(.42,.025,.065),'schoolBusYellow')
+            s.tube('helmet',(x,4.0,2.00),.23,.16,'schoolBusYellow')
+            s.box('helmetBrim',(x,3.98,1.94),(.51,.37,.04),'schoolBusYellow')
+            for dx in (-.13,.13):s.box('boot',(x+dx,3.98,.38),(.19,.36,.35),'uiDark')
+        for x in (-4.6,-3.8,-3.0):
+            s.box('hoseRack',(x,4.25,2.9),(.7,.35,.12),'uiDark')
+            for n in range(2 if L==0 else 1):
+                # Closed low-sided hose rings, authored at each tier.
+                bpy.ops.mesh.primitive_torus_add(major_segments=16 if L==0 else 10,minor_segments=6 if L==0 else 4,location=(x,4.02-n*.12,2.7),major_radius=.26,minor_radius=.065,rotation=(math.pi/2,0,0))
+                hose=bpy.context.object;hose.name='coiledHose';hose.parent=s.body;hose.data.materials.append(palette.mat('survivorRed'))
+        s.tube('slidePole',(-5.15,1.85,2.18),.085,4.03,'schoolBusYellow')
+        s.tube('poleFoot',(-5.15,1.85,.22),.38,.12,'uiDark')
+        s.box('toolBoard',(-5.73,-.1,2.0),(.09,2.9,1.4),'woodWarm')
+        s.table(-5.1,-.1,.9,1.2)
+        for y in (-1,-.5,0,.5,1):
+            s.beam('wallTool',(-5.61,y,1.6),(-5.61,y,2.45),.055,'sidewalk')
+            s.box('toolHead',(-5.60,y,2.43),(.10,.26,.14),'uiDark')
+        for y in (1,1.5,2):
+            s.tube('SCBA',(-5.47,y,.85),.16,.95,'schoolBusYellow')
+            s.box('SCBAHarness',(-5.25,y,.88),(.10,.36,.7),'uiDark')
+        s.box('SCBARack',(-5.47,1.5,.28),(.62,1.8,.16),'uiDark')
+        for x in (-5.05,-4.45):
+            s.box('dispatchScreen',(x,-3.20,1.44),(.51,.10,.39),'uiDark')
+            s.box('screenGlass',(x,-3.265,1.44),(.44,.025,.31),'backpackTeal')
+            s.box('screenStand',(x,-3.2,1.16),(.08,.08,.25),'uiDark')
+            if L==0:
+                for z in (1.35,1.43,1.51):s.box('screenReadout',(x,-3.282,z),(.34,.008,.016),'windowGlow')
+        s.box('keyboard',(-4.8,-3.60,.94),(.58,.20,.035),'uiDark')
+        s.box('dispatchChair',(-4.5,-2.85,.58),(.6,.5,.14),'policeBlue')
+        s.box('chairBack',(-4.5,-2.65,.95),(.6,.10,.65),'policeBlue')
+        s.table(1.9,-3.55,.85,1.6)
+        for x in (1.3,2.5):
+            for y in (-4.25,-2.9):
+                s.box('kitchenChair',(x,y,.48),(.45,.45,.10),'woodWarm')
+                s.box('chairBack',(x,y+(.19 if y<-3.5 else -.19),.8),(.45,.08,.60),'woodWarm')
+                for dx in (-.16,.16):s.box('chairLeg',(x+dx,y,.25),(.06,.32,.5),'uiDark')
+        s.box('coffeeMachine',(-1.5,-4.35,1.31),(.32,.35,.42),'uiDark')
+        s.box('noticeBoard',(-2.0,4.77,3.22),(2.25,.08,.66),'woodWarm')
+        for i in range(7 if L==0 else 3):s.box('notice',(-2.9+i*.28,4.718,3.22),(.20,.014,.38),'picketWhite',angle=.04*i)
+        # Closed rear door and rolled-open truck door, with visible individual slats.
+        s.box('closedBayDoor',(-5.73,-3.5,2.0),(.08,2.2,3.5),'uiDark')
+        for z in ([.45+i*.24 for i in range(14)] if L==0 else [.5+i*.5 for i in range(7)]):s.box('doorSlat',(-5.67,-3.5,z),(.035,2.13,.035),'sidewalk')
+        s.tube('rolledDoor',(5.67,0,4.05),.23,5.85,'sidewalk',(math.pi/2,0,0))
+        for y in (-2.95,2.95):s.box('doorTrack',(5.62,y,2.05),(.09,.09,3.85),'uiDark')
+        s.box('floorDrain',(0,0,.165),(5.3,.23,.01),'uiDark')
+        for x in ([i*.22-2.5 for i in range(24)] if L==0 else [-2,-1,0,1,2]):s.box('drainGrate',(x,0,.174),(.035,.23,.012),'sidewalk')
+        for x in (-3,1.7):
+            for y in (-3,3):
+                s.box('ceilingRail',(x,y,4.07),(2.1,.22,.10),'uiDark')
+                s.lamp('ceiling'+str(x)+str(y),(x,y,4.0))
+        # Geometry text keeps signage independent of textures.
+        for text,loc,size in [('STATION 02',(.5,4.74,3.45),.34),('RESCUE',(6.025,-1.4,3.9),.26)]:
+            if L==2 and text=='RESCUE':continue
+            curve=bpy.data.curves.new(text,'FONT');curve.body=text if L<2 else '02';curve.size=size;curve.extrude=.003
+            obj=bpy.data.objects.new(text,curve);bpy.context.collection.objects.link(obj);obj.parent=s.body;obj.location=loc;obj.rotation_euler=(math.pi/2,0,math.pi/2 if text=='RESCUE' else 0);curve.materials.append(palette.mat('survivorRed'))
+            bpy.context.view_layer.objects.active=obj;obj.select_set(True);bpy.ops.object.convert(target='MESH');obj.select_set(False)
         s.physics()
         for name,pos,size in [('rear',(-5.9,0,2.15),(.2,10,4.3)),('back',(0,4.9,2.15),(12,.2,4.3)),('floor',(0,0,.08),(12,10,.16))]:colliders.cuboid(name,size,pos,s.root)
         sockets.empty('truckParking',(0,0,.17),s.root)
@@ -209,13 +270,53 @@ def recipe(s):
         s.box('speakerPole',(-5.5,3,2),(.12,.12,4),'uiDark')
         s.box('loudspeaker',(-5.5,3,4),(.55,.4,.4),'picketWhite')
         s.box('speakerMouth',(-5.20,3,4),(.045,.33,.33),'uiDark')
+        for y in (-4.2,4.2):
+            s.box('extraTwall',(-7,y,1.1),(2.8,.4,2.2))
+            s.box('extraTfoot',(-7,y,.12),(2.8,1.2,.24))
+            colliders.cuboid('extraWall'+str(y),(2.8,.4,2.2),(-7,y,1.1),s.root)
+        for cy in (-2.6,2.6):
+            for layer in range(3 if L<2 else 2):
+                for i in range(10 if L<2 else 6):
+                    angle=i*math.tau/(10 if L<2 else 6)
+                    s.box('ringSandbag',(-3.7+1.02*math.cos(angle),cy+.84*math.sin(angle),.23+layer*.25),(.57,.42,.28),'khaki',angle=angle+math.pi/2)
+            s.tube('MGpost',(-3.7,cy,.75),.065,1.3,'uiDark')
+            s.box('mountedMG',(-3.5,cy,1.32),(.65,.17,.19),'uiDark')
+            s.beam('MGbarrel',(-3.2,cy,1.35),(-2.5,cy,1.35),.07,'uiDark')
+            s.box('ammoBox',(-3.6,cy+.24,1.25),(.28,.25,.27),'khaki')
+        s.box('boomMotor',(-6,-1.8,.6),(.55,.55,1.2),'khaki')
+        gate=s.joint('gateArm',(-6,-1.8,1.18))
+        s.box('boom',(0,1.8,0),(.16,3.7,.18),'picketWhite',gate)
+        for y in (.3,1.1,1.9,2.7,3.4):s.box('gateStripe',(.091,y,0),(.025,.3,.19),'survivorRed',gate)
+        colliders.cuboid('boom',(.16,3.7,.18),(0,1.8,0),gate)
+        for x in (-6,3):
+            s.box('extraFloodPole',(x,-3.7,2.5),(.13,.13,5),'uiDark');s.lamp('extraFlood'+str(x),(x,-3.7,5))
+        # Canvas tent outside the checkpoint corridor, closed triangulated roof panels.
+        s.box('tentWall',(-.8,-6.6,1.0),(3.6,2.6,2),'khaki')
+        vs=[(x,y,z) for x in (-2.7,1.1) for y,z in [(-8,2),(-6.6,3),(-5.2,2)]]
+        s.mesh('tentRoof',vs,[(0,3,4,1),(1,4,5,2),(0,1,2),(3,5,4)],'khaki')
+        s.box('tentOpening',(1.112,-6.6,1.0),(.025,1.3,1.9),'uiDark')
+        for y in (-7.65,-5.55):s.box('tentSeam',(1.135,y,1),(.03,.03,2),'woodWarm')
+        colliders.cuboid('tent',(3.6,2.6,2),(-.8,-6.6,1),s.root)
         s.physics()
     elif a=='decay.looted-store':
+        # Plain closed boxes buy the small prop budget for unmistakable scatter.
+        def plain(name,pos,size,token,angle=0):
+            obj=s.box(name,pos,size,token,angle=angle)
+            if 'bevel' in obj.modifiers:obj.modifiers.remove(obj.modifiers['bevel'])
+            return obj
         for y in (-.65,.65):
-            for x in (-.95,.95):s.box('shelfPost',(x,y,1),(.055,.08,2),'uiDark')
-            for z in (.2,.9,1.6):s.box('emptyShelf',(0,y,z),(2,.48,.07),'picketWhite')
-        for i in range(3 if L==2 else 8):
-            s.box('merchandise',(-.9+i*.24,-.1+math.sin(i)*.35,.065),(.18,.14,.13),['schoolBusYellow','survivorRed','backpackTeal'][i%3],angle=i*.8)
+            for x in (-.95,.95):plain('shelfPost',(x,y,1),(.055,.08,2),'uiDark')
+            for z in (.2,.9,1.6):plain('emptyShelf',(0,y,z),(2,.48,.07),'picketWhite')
+        plain('toppledShelf',(.2,-1.25,.16),(1.7,.54,.12),'picketWhite',.35)
+        if L<2:
+            for x in (-.6,.9):plain('toppledLeg',(x,-1.2,.22),(.055,.65,.08),'uiDark',.35)
+        for i in range([16,12,4][L]):
+            plain('scatteredBox',(-.9+(i%5)*.42,-1.6+(i//5)*.68,.10+(.1 if i==5 else 0)),(.23,.18,.20),['schoolBusYellow','survivorRed','backpackTeal'][i%3],i*.8)
+        if L<2:
+            for i in range(10 if L==0 else 4):
+                x=-.85+i*.18;y=-.05+math.sin(i)*.35
+                s.tube('spilledCan',(x,y,.07),.055,.14,'sidewalk')
+                s.tube('bottle',(x+.07,y+.14,.12),.045,.23,'backpackTeal')
         s.physics('heavy',100)
     elif a=='decay.damaged-sign':
         s.box('signPost',(-.35,0,1),(.09,.09,2),'uiDark',angle=.13)
