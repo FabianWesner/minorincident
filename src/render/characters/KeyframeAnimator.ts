@@ -32,6 +32,7 @@ export class KeyframeAnimator {
   private locoSpeed = 0;
   private locoWeight = 1;
   private lunge = 0;
+  private lungeOffset = 0;
   private readonly scaleScratch = new Vector3();
   private readonly carryPose: [Object3D, Quaternion][] = [];
   state: AnimationState = 'idle';
@@ -154,6 +155,9 @@ export class KeyframeAnimator {
       this.lunge = phase < .2 ? phase / .2 : phase < .4 ? 1 : Math.max(0, 1 - (phase - .4) / .5);
     } else this.lunge = 0;
     this.attackTick = strike ? pose.animationTick : -1;
+    // Constant clip translations may be skipped by mixer bindings. Undo the
+    // pilot's last lunge before sampling so a kick cannot accumulate root drift.
+    if (this.skin) { this.rig.hip.position.x -= this.lungeOffset; this.lungeOffset = 0; }
     this.ground?.restore();
     this.mixer.update(dt);
     if (this.ground) {
@@ -164,7 +168,7 @@ export class KeyframeAnimator {
     const holding = !!pose.carrying && !strike && name !== 'hand-over' && name !== 'ride';
     this.carryWeight = Math.max(0, Math.min(1, this.carryWeight + (holding ? 1 : -1) * dt / .15));
     if (this.carryWeight > 0) for (const [node, target] of this.carryPose) node.quaternion.slerp(target, this.carryWeight);
-    if (this.lunge > 0 && !upper) { const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1; this.rig.hip.position.x += .14 / scale * this.lunge * this.lunge * (3 - 2 * this.lunge); }
+    if (this.lunge > 0 && !upper) { const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1; const offset = .14 / scale * this.lunge * this.lunge * (3 - 2 * this.lunge); this.rig.hip.position.x += offset; if (this.skin) this.lungeOffset = offset; }
     for (const node of Object.values(this.rig)) node.quaternion.normalize();
     if (pose.animation === 'die') settleGroundPose(this.rig.root);
     const target = this.rig.torso.rotation.z * -.3;
