@@ -19,7 +19,7 @@ export function missionSandbox(type: ObjectiveType = 'reach'): MissionDef {
       escort: { kind: 'escort', faction: 'escort', archetype: 'escort.neighbor', anchor: 'spawn', hp: 100 },
       car: { kind: 'vehicle', faction: 'survivor', archetype: 'vehicle.sedan', anchor: 'spawn', hp: 100 },
       target: { kind: 'defend', faction: 'survivor', archetype: 'convoy.bus', anchor: 'spawn', hp: 200 },
-    }, groups: { actors: ['boss', 'runner', 'escort', 'car', 'target'] }, gates: { exit: { anchor: 'goal', open: false } },
+    }, groups: { actors: ['boss', 'runner', 'escort', 'car', 'target'] }, gates: { exit: { anchor: 'goal', open: type === 'drive' } },
     items: ['fuse', 'keys'], states: ['driving:car', 'power'], counters: ['breakers'], checkpoints: ['C'],
     cinematics: { twist: { seconds: 2, caption: 'Mission successful. Outbreak not contained.', position: [12, 15, 12], target: [5, 0, 0], actions: [{ kind: 'grant', item: 'keys' }, { kind: 'gate', id: 'exit', open: true }] } },
     steps: [{ id: type, type, text: `Complete ${type}`, anchor: 'goal', start: { kind: 'start' }, complete: completions[type], fail: type === 'escort' ? [{ trigger: { kind: 'dead', actor: 'escort' }, reason: 'escort-died' }] : type === 'defend' ? [{ trigger: { kind: 'dead', actor: 'target' }, reason: 'target-destroyed' }] : [] }],

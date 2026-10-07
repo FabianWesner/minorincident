@@ -1,3 +1,4 @@
+import type { DeviceOptions } from '../interact/Interactables';
 import type { TimeOfDay } from '../../data/timeOfDay';
 import type { EntitySnapshot } from '../world/types';
 
@@ -9,11 +10,14 @@ export type Trigger =
   | { kind: 'start' }
   | { kind: 'objectives'; ids: string[]; mode: 'all' | 'any' }
   | { kind: 'volume'; anchor: string; edge: 'inside' | 'enter' | 'exit'; actor?: string }
-  | { kind: 'interact'; anchor: string; seconds: number }
+  | { kind: 'interact'; anchor: string; seconds: number; actor?: string }
   | { kind: 'kills'; actors: string[]; count?: number }
   | { kind: 'timer'; seconds: number }
   | { kind: 'dead'; actor: string }
-  | { kind: 'escort' | 'drive'; anchor: string; actor: string }
+  | { kind: 'escort'; anchor: string; actor: string }
+  | { kind: 'drive'; anchor: string; actor: string; exit?: boolean }
+  | { kind: 'hold'; anchor: string; seconds: number }
+  | { kind: 'destroy'; actor: string }
   | { kind: 'items'; ids: string[] }
   | { kind: 'state'; key: string; equals: boolean }
   | { kind: 'count'; key: string; atLeast: number }
@@ -41,7 +45,7 @@ export interface ObjectiveDef {
   onStart?: ScriptAction[]; onComplete?: ScriptAction[]; onFail?: ScriptAction[];
 }
 export type FailReason = 'timeout' | 'escort-died' | 'target-destroyed' | 'player-died';
-export interface ActorDef { archetype: string; kind: string; faction: string; anchor: string; hp: number; boss?: boolean }
+export interface ActorDef { archetype: string; kind: string; faction: string; anchor: string; hp: number; boss?: boolean; device?: DeviceOptions; item?: string }
 export interface CinematicDef {
   seconds: number; caption: string;
   position: [number, number, number]; target: [number, number, number];
@@ -51,6 +55,8 @@ export interface CinematicDef {
 export interface MissionDef {
   /** L1 v2 story controller (technician, accident sequence, infected exits); see LevelOneOutbreak. */
   l1?: boolean;
+  /** Global gameplay deadline; checkpoints capture the remaining ticks. */
+  deadline?: { seconds: number; retryGraceSeconds: number };
   id: string; briefing: string; anchors: Record<string, Anchor>; actors: Record<string, ActorDef>;
   groups: Record<string, string[]>; gates: Record<string, { anchor: string; open: boolean }>;
   items: string[]; states: string[]; counters: string[]; checkpoints: string[];
@@ -81,11 +87,13 @@ export interface L1State {
   say?: { id: number; text: string; at: number; until: number } | null;
   beatsDone?: string[]; clerkId?: number; firefighterId?: number;
 }
-export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number }
+export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number; driveArrived?: boolean; holds?: Record<string, number> }
 export interface MissionState {
   /** L1 v2 story state (technician, accident timeline, infected exits, result counters). */
   l1?: L1State;
   id: string; phase: 'briefing' | 'playing' | 'cinematic' | 'retry' | 'result' | 'progression';
+  /** Remaining global gameplay time (cinematics and retry screens pause it). */
+  deadlineTicks: number | null;
   volumes: boolean[]; killedBosses: string[];
   completedObjectives: string[]; steps: Record<string, StepState>; actors: Record<string, number>;
   items: string[]; states: Record<string, boolean>; counters: Record<string, number>; gates: Record<string, boolean>;

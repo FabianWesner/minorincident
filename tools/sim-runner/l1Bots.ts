@@ -32,7 +32,7 @@ export async function loadL1(seed: number): Promise<{ world: SimWorld; mission: 
 }
 
 const dist = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
-class Walker {
+export class Walker {
   private route = { path: [] as number[], goal: -1, pathIndex: 0 };
   private key = '';
   private readonly wp = { x: 0, z: 0 };

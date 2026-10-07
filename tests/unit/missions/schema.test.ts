@@ -14,3 +14,9 @@ test('T-E12-01 @E12 @E12-AC01 rejects broken graphs, unknown IDs, and missing tr
   const duplicate = minimalMission(); duplicate.steps.push(structuredClone(duplicate.steps[0])); expect(validateMission(duplicate).join()).toMatch(/Duplicate/);
   const timer = minimalMission(); timer.steps[0].timer = NaN; expect(validateMission(timer)).toContain('Invalid objective timer');
 });
+
+test('@E12 adapter triggers and global deadline reject invalid references and durations', () => {
+  const def = minimalMission(); def.deadline = { seconds: NaN, retryGraceSeconds: -1 };
+  def.steps[0].complete = { kind: 'all', triggers: [{ kind: 'interact', anchor: 'goal', actor: 'missing', seconds: 1 }, { kind: 'destroy', actor: 'missing' }, { kind: 'hold', anchor: 'missing', seconds: 0 }] };
+  expect(validateMission(def)).toEqual(expect.arrayContaining(['Invalid mission deadline', 'Invalid retry grace', 'Unknown actor: missing', 'Unknown anchor: missing', 'Invalid hold duration']));
+});
