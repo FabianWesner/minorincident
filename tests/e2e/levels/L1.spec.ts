@@ -185,6 +185,7 @@ test.describe('L1 v2 real-input playthrough', () => {
         if (assisted) {
           // Capture a fresh repeated invitation, rather than an expired bubble between calls.
           for (let i = 0; i < 8 && await page.evaluate(() => window.__SS__!.tick() - window.__SS__!.missions.state()!.l1!.say!.at > 30); i++) await step(30);
+          await step(10); // Let the normal ten-tick speech fade-in finish.
           await expect(page.getByText('Get in!', { exact: true }).first()).toBeVisible();
           await page.evaluate(p => window.__SS__!.camera.cinematic({ position: [p.x - 18, 20, p.z - 18], target: [p.x, 0, p.z] }, true), door);
           await page.evaluate(() => window.__SS__!.screenshotReady());
