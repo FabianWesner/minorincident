@@ -26,6 +26,11 @@ export class View {
   private readonly target = new Vector3();
   private readonly offset = new Vector3();
   private readonly cinematicCamera = new PerspectiveCamera();
+  /** Story pull (accident): shifts the framing toward a world point by weight 0..1 without moving the player. */
+  private pullX = 0;
+  private pullZ = 0;
+  private pullWeight = 0;
+  pull(x: number, z: number, weight: number): void { this.pullX = x; this.pullZ = z; this.pullWeight = Math.max(0, Math.min(1, weight)); }
   private blend = 0;
   private blendTarget = 0;
   private shakeStrength = 0;
@@ -39,7 +44,7 @@ export class View {
   }
   reset(player: { x: number; z: number }): void {
     this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
-    this.driving = false; this.focus.set(player.x, 0, player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0;
+    this.driving = false; this.focus.set(player.x, 0, player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.pullWeight = 0;
     this.update(player, 0);
   }
   /** Named deterministic photo pose (instant); cinematic poses can blend over 1 s. */
@@ -64,8 +69,8 @@ export class View {
     this.focus.x += (player.x - this.focus.x) * (1 - Math.exp(-10 * seconds));
     this.focus.z += (player.z - this.focus.z) * (1 - Math.exp(-10 * seconds));
     this.offset.setFromSphericalCoords(this.radius * (this.driving ? 1.15 : 1), this.polar, this.azimuth);
-    this.cameraTarget.copy(this.focus);
-    this.camera.position.copy(this.focus).add(this.offset); this.camera.lookAt(this.focus);
+    const pulled = this.pullWeight > 0 ? this.cameraTarget.set(this.focus.x + (this.pullX - this.focus.x) * this.pullWeight, 0, this.focus.z + (this.pullZ - this.focus.z) * this.pullWeight) : this.cameraTarget.copy(this.focus);
+    this.camera.position.copy(pulled).add(this.offset); this.camera.lookAt(pulled);
     this.blend += Math.sign(this.blendTarget - this.blend) * Math.min(Math.abs(this.blendTarget - this.blend), seconds);
     if (this.blend > 0) {
       const t = this.blend * this.blend * (3 - 2 * this.blend);

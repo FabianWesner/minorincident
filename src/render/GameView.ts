@@ -224,7 +224,7 @@ export class GameView implements Lifecycle {
         shake: strength => this.view.shake(strength),
       });
       this.vfx.set({ ...this.vfxSettings, quality: this.quality }); this.scene.add(this.vfx);
-      if (this.world.scenario === 'L1') { this.labAccident = new LabAccidentFx(this.world, this.vfx, labAccidentTargets(this.scene, s => this.view.shake(s)), anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; }
+      if (this.world.scenario === 'L1') { this.labAccident = new LabAccidentFx(this.world, this.vfx, labAccidentTargets(this.scene, s => this.view.shake(s), (x, z, w) => this.view.pull(x, z, w)), anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; }
       this.crowd?.setGoreEnabled(this.vfx.snapshot().enabled && this.vfx.snapshot().gore === 'Full');
       const survivor = this.world.entities.get(1)?.survivor;
       this.frozenPose = survivor ? structuredClone(survivor) : null;
@@ -452,7 +452,7 @@ export class GameView implements Lifecycle {
     this.crowd?.update(this.view, alpha); this.contactShadows?.update(); this.actions?.update();
     this.entityAssets?.update();
     this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha);
-    this.flashOverlay.style.opacity = String(this.vfx?.flash ?? 0);
+    this.flashOverlay.style.opacity = String(Math.max(this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
     this.lighting?.update(this.view); this.districts?.updateLods(this.view);
     this.districts?.cull(this.view, this.quality);
     const locked = this.world.controls.snapshot()?.attack;
