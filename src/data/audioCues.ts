@@ -25,7 +25,7 @@ export interface AudioCue {
 }
 export const audioCues: Record<string, AudioCue> = {};
 /** Banks nothing needs at the first frame: loaded in the background shortly after the level starts (AudioService.load). */
-export const lazyCategories = new Set(['props', 'vehicles', 'dialogue', 'music', 'telegraph', 'weapons', 'gore']);
+export const lazyCategories = new Set(['props', 'vehicles', 'dialogue', 'music', 'telegraph', 'weapons', 'gore', 'infected']);
 const offsets = new Map<string, number>();
 function cue(id: string, bus: AudioBus, shape: SoundShape, duration = 0.3, frequency = 250, options: Partial<AudioCue> = {}): void {
     const category = options.category ?? bus;
@@ -84,8 +84,11 @@ for (const [id, text] of [['radio', 'Emergency broadcast: proceed to the safe zo
     cue(`dialogue.${id}`, 'dialogue', 'vocal', 3, 185, { gain: 1, antiSpam: 0, rateSpread: 0, caption: text });
 for (const id of ['click', 'switch', 'pickup', 'respawn', 'death', 'tick'])
     cue(`ui.${id}`, 'ui', 'tone', 0.1, 700, { gain: id === 'tick' ? 0 : 0.1 });
-cue('civilian.hey', 'barks', 'vocal', .4, 200, { gain: .5, antiSpam: .3, caption: 'Hey!' });
-cue('infected.vocal', 'barks', 'vocal', 0.6, 130, { gain: 0.12, antiSpam: 0.9 });
+cue('civilian.hey', 'barks', 'vocal', .75, 200, { gain: .5, antiSpam: .3, caption: 'Hey!' });
+cue('infected.vocal', 'barks', 'vocal', 1.5, 130, { gain: 0.12, antiSpam: 0.9, rateSpread: 0.12 });
+/** Recorded infected voices (lazy bank): alert snarl, hit pain, death, bite on a landed attack. Humanoid archetypes only. */
+for (const [id, duration, gain, antiSpam] of [['alert', 0.55, 0.3, 0.2], ['hurt', 0.5, 0.22, 0.3], ['death', 0.85, 0.3, 0.1], ['bite', 0.6, 0.45, 0.25]] as const)
+    cue(`infected.${id}`, 'barks', 'vocal', duration, 140, { category: 'infected', gain, antiSpam, rateSpread: 0.14 });
 cue('horde.loop', 'ambience', 'bed', 2, 150, { loop: true, gain: 0.3, antiSpam: 0 });
 for (const [i, surface] of surfaces.entries())
     cue(`horde.loop.${surface}`, 'ambience', 'bed', 2, 110 + i * 90, { loop: true, gain: 0.3, antiSpam: 0 });
@@ -131,7 +134,7 @@ for (const c of Object.values(audioCues)) if (variedFamilies.test(c.id) && !c.lo
 /** Four independent sprite slices per repeated one-shot; selection never repeats its last slice. */
 export const audioVariationPools: Record<string, string[]> = {};
 for (const original of Object.values(audioCues)) {
-    if (original.loop || !(/^(footstep\.|flesh\.|gore\.|corgi\.|civilian\.|infected\.vocal|telegraph\.|screamer\.scream|ambient\.(shout|scream)|ui\.(click|switch|pickup)|impact\.|prop\.(wood|metal|plastic|glass|rubber|sandbag|break|creak|brace)|lamp\.(break|power|flicker)|bark\.|door\.|bike\.|explosion\.(crack|boom|debris)|vehicle\.(crash|grab))/.test(original.id))) continue;
+    if (original.loop || !(/^(footstep\.|flesh\.|gore\.|corgi\.|civilian\.|infected\.(vocal|alert|hurt|death|bite)|telegraph\.|screamer\.scream|ambient\.(shout|scream)|ui\.(click|switch|pickup)|impact\.|prop\.(wood|metal|plastic|glass|rubber|sandbag|break|creak|brace)|lamp\.(break|power|flicker)|bark\.|door\.|bike\.|explosion\.(crack|boom|debris)|vehicle\.(crash|grab))/.test(original.id))) continue;
     const ids = [original.id];
     for (let variant = 1; variant < 4; variant++) {
         const id = `${original.id}.v${variant}`;

@@ -43,13 +43,14 @@ function master(id: string): string {
     if (hash(path) !== source.sha256) throw new Error(`Recording master hash changed: ${id}`);
     return path;
 }
-interface Recipe { source: string; start: number; filter?: string; }
+/** `level`: active-part RMS target in dBFS for voice pools; a gentle compressor evens crest factors first, and the slice peak stays below the sprite ceiling. */
+interface Recipe { source: string; start: number; filter?: string; level?: number; }
 function recording(recipe: Recipe, duration: number, loop = false, music = false): Float32Array {
-    const key = `${recipe.source}:${recipe.start}:${duration}:${recipe.filter ?? ''}:${music}`;
+    const key = `${recipe.source}:${recipe.start}:${duration}:${recipe.filter ?? ''}:${recipe.level ?? ''}:${music}`;
     if (!pcmCache.has(key)) {
         // Sample trimming also works for older tiny FLACs whose seek tables are broken.
         const raw = run(['-i', master(recipe.source), '-t', String(duration),
-            '-af', `atrim=start=${recipe.start}:duration=${duration},asetpts=PTS-STARTPTS,${recipe.filter ? `${recipe.filter},` : ''}${music ? 'loudnorm=I=-18:TP=-2:LRA=9,' : ''}apad,atrim=duration=${duration}`,
+            '-af', `atrim=start=${recipe.start}:duration=${duration},asetpts=PTS-STARTPTS,${recipe.filter ? `${recipe.filter},` : ''}${recipe.level !== undefined ? 'acompressor=threshold=0.06:ratio=3:attack=5:release=80,' : ''}${music ? 'loudnorm=I=-18:TP=-2:LRA=9,' : ''}apad,atrim=duration=${duration}`,
             '-ac', '1', '-ar', String(rate), '-f', 'f32le', '-']);
         let samples = new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.byteLength));
         // Short recordings (single hits) are zero-padded to the cue length; only an empty decode is an error.
@@ -57,7 +58,15 @@ function recording(recipe: Recipe, duration: number, loop = false, music = false
         let peak = 0;
         for (const value of samples) peak = Math.max(peak, Math.abs(value));
         if (peak < 0.00001) throw new Error(`Recording slice is silent: ${recipe.source} at ${recipe.start}s`);
-        const trim = music ? 1 : peak > 0 ? 0.5 / peak : 1;
+        let trim = music ? 1 : peak > 0 ? 0.5 / peak : 1;
+        if (recipe.level !== undefined) {
+            // Mean power of the 50 ms windows within 20 dB of the loudest one (the audible part, not the padding).
+            const win = rate / 20, powers: number[] = [];
+            for (let i = 0; i + win <= samples.length; i += win) { let sum = 0; for (let j = i; j < i + win; j++) sum += (samples[j] * trim) ** 2; powers.push(sum / win); }
+            const loudest = Math.max(...powers), active = powers.filter(p => p > loudest / 100);
+            const rms = 10 * Math.log10(active.reduce((a, b) => a + b, 0) / active.length);
+            trim *= Math.min(10 ** ((recipe.level - rms) / 20), 0.59 / 0.5);
+        }
         const fade = Math.min(Math.round((loop ? 0.04 : 0.004) * rate), Math.floor(samples.length / 8));
         for (let i = 0; i < samples.length; i++)
             samples[i] *= trim * Math.min(1, i / Math.max(1, fade), (samples.length - 1 - i) / Math.max(1, fade));
