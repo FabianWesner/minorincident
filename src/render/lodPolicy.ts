@@ -9,7 +9,9 @@ export const lodPolicy = { lod1From: 45, lod2From: 90, hysteresis: 4 } as const;
 export const lowLodPolicy = { lod1From: 0, lod2From: 16, hysteresis: 2 } as const;
 /** Initial phone download: props only draw LOD2; LOD1 is needed only around the spawn.
  * Other buildings start with LOD2 and acquire their close tier after play starts. */
-export function initialDistrictLods(low: boolean, prop: boolean, distance: number): Lod[] {
+export function initialDistrictLods(low: boolean, prop: boolean, distance: number, streamingHigh = false): Lod[] {
+  // L1 high warms its spawn's LOD0 before play. Its unused intermediate tier streams later.
+  if (!low && streamingHigh) return ['lod2'];
   return low && (prop || distance > lowLodPolicy.lod2From) ? ['lod2'] : ['lod1', 'lod2'];
 }
 const rank: Record<Lod, number> = { lod0: 0, lod1: 1, lod2: 2 };

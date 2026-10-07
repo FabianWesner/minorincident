@@ -42,6 +42,7 @@ import { InteractionView } from './InteractionView';
 import { EntityAssets } from './EntityAssets';
 import { loadMeasure } from '../assets/loadTiming';
 import { loadGate } from '../assets/loadGate';
+import { lodPolicy } from './lodPolicy';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 export class GameView implements Lifecycle {
@@ -195,12 +196,10 @@ export class GameView implements Lifecycle {
       if (this.world.scenario === 'L1') {
         this.preparedDistrictViews.set(this.world.districts, this.districts);
         for (const variant of variants) { variant.visible = false; this.preparedDistrictViews.set(variant.world, variant); this.scene.add(variant); }
-        // Close-view LOD0 prototypes (high tier only; the low tier never draws them). WebGPU streams
-        // them after the level is playable (startPreparation; measured hitch-free). On WebGL, ANGLE
-        // specializes each new batch on its first draw (~100 ms frames measured), so they stay in
-        // the loading screen and its warm-up, as before.
-        if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare())); loadMeasure('view:hero-lod0', p); }
-        else this.pendingPreparation = { shared, instanceCapacity };
+        // WebGL warms the spawn's close-view LOD0 before play (ANGLE specializes first draws).
+        // The rest of the route and its unused LOD1 tier stream after the mission begins.
+        if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, lodPolicy.lod1From))); loadMeasure('view:hero-lod0', p); }
+        this.pendingPreparation = { shared, instanceCapacity };
       }
       this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
       this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
@@ -312,7 +311,7 @@ export class GameView implements Lifecycle {
     const actions = this.actions;
     return Promise.all([this.npcs?.init(), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
   }
-  /** Deferred L1 work: close-view LOD0 on high, distant buildings' LOD1 on low,
+  /** Deferred L1 work: distant LOD0 and intermediate LOD1 on high, distant buildings' LOD1 on low,
    * nearest first, after the first playable frames. The load gate slices GLB parsing
    * and static batching to one short step per frame, so streaming stays within the frame budget. */
   private startPreparation(): void {
@@ -328,7 +327,7 @@ export class GameView implements Lifecycle {
       if (stale()) return;
       // A preload may finish while a briefing is still open. Downloads start only after
       // gameplay has advanced; test mode keeps readiness even with a paused sim.
-      while (this.playSeconds === 0 && this.params.get('test') !== '1') { await frame(); if (stale()) return; }
+      while (this.world.missions?.state.phase === 'briefing' || this.playSeconds === 0 && this.params.get('test') !== '1') { await frame(); if (stale()) return; }
       loadGate.setPaced(true);
       for (const view of this.preparedDistrictViews.values()) { view.warmHero = batch => this.warmHidden(batch); view.swapSlot = () => this.swapSlot(); }
       const start = performance.now();
@@ -389,6 +388,8 @@ export class GameView implements Lifecycle {
   frame(seconds: number): void { const dt = Math.min(1, seconds); this.playSeconds += dt; this.vfx?.advance(dt); this.labAccident?.advance(dt); }
   /** Seconds of running play since the level loaded (menus/briefing/pause excluded). */
   private playSeconds = 0;
+  /** Network-only extras wait until the first playable frames have been presented. */
+  get backgroundReady(): boolean { return this.params.get('test') === '1' || !this.warming && !this.background && this.playSeconds > .25; }
   /** LOD0 swaps wait for the first seconds of play to pass (no hitch while the player starts moving),
    * then run one per frame through the load gate. */
   private async swapSlot(): Promise<void> {
@@ -604,6 +605,9 @@ export class GameView implements Lifecycle {
   }
   async ready(): Promise<void> {
     await this.warming;
+    // Once a test has begun the mission, snapshots/heap checks settle the same streamed
+    // residency on every load. A briefing snapshot waits only for its visible assets.
+    if (this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
   reset(): void {
