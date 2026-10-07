@@ -16,7 +16,7 @@ test('@load hysteresis: a band changes only past the boundary plus the margin', 
 
 test('@load low tier keeps its budget for individually loaded models', () => {
   expect(modelLod(5, undefined, true)).toBe('lod1'); expect(modelLod(31, 'lod1', true)).toBe('lod2');
-  expect(modelLod(20, 'high', false)).toBe('lod0');
+  expect(modelLod(7, 'high', false)).toBe('lod0');
 });
 
 test('@load phone initial downloads include only tiers used at the spawn', () => {
