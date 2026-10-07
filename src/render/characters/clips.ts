@@ -14,7 +14,7 @@ export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .
   'infected-frail': .95, 'infected-lurch': 1.25, 'infected-sprint': 1.75, 'civ-flee': 1.25, 'corgi-gallop': 1.1, ride: 3.2 };
 /** Skin pilot gait: longer strides at a calmer cadence (the library run cycles ~5×/s at 4.5 m/s on
  * chibi legs and reads as scurrying/vibration); raw strides before the rig's leg proportion. */
-export const skinGait: Record<string, { stride: number; stance: number; lift: number }> = { walk: { stride: 1.05, stance: .55, lift: .06 }, run: { stride: 1.75, stance: .32, lift: .1 } };
+export const skinGait: Record<string, { stride: number; stance: number; lift: number }> = { walk: { stride: .9, stance: .5, lift: .008 }, run: { stride: 1.45, stance: .25, lift: .028 } };
 /** Keep short authored strides from buzzing at speed; longer strides preserve planted feet as speed rises. */
 export function cadenceStride(name: string, scale: number, speed: number): number {
   const authored = (strides[name] ?? 0) * scale;
@@ -94,7 +94,7 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
       }
     }
   }
-  if (!additive && (gait || gaitShape[name])) plantLocomotion(root, name, source.duration, tracks, gait);
+  if (!additive && !gait && gaitShape[name]) plantLocomotion(root, name, source.duration, tracks, gait);
   return new AnimationClip(name, source.duration, tracks);
 }
 

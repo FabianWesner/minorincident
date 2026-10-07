@@ -123,10 +123,10 @@ export class KeyframeAnimator {
     {
       const s = this.locoSpeed, move = smooth(.04, .55, s), run = smooth(1.9, 3.3, s);
       // PO 27 (walk micro-vibration): stride-matching the short chibi legs gave 9 steps/s walking and up to 15 steps/s
-      // running, which reads as the figure vibrating. Cadence is capped (walk 2.0, run 2.7 cycles/s = 4-5.4 steps/s);
+      // running, which reads as the figure vibrating. Cadence is capped (rigid walk/run 2.0/2.7, fitted skin 2.5/3.2 cycles/s);
       // above that the stride lengthens instead (small slide at the game camera beats a buzzing gait).
-      const stride = Math.max((this.strides.walk + (this.strides.run - this.strides.walk) * run) * strideScale(this.rig.root), s / (2 + .7 * run));
-      groundStride = stride; groundRun = run; groundWeight = move * this.locoWeight;
+      const stride = Math.max((this.strides.walk + (this.strides.run - this.strides.walk) * run) * strideScale(this.rig.root), s / (this.skin ? 2.5 + .7 * run : 2 + .7 * run));
+      groundStride = stride; groundRun = run; groundWeight = this.skin ? this.locoWeight : move * this.locoWeight;
       if (s > .01) this.phase = (this.phase + (this.skin ? speed : s) * dt / stride) % 1;
       const weights: [string, number][] = [['idle', 1 - move], ['walk', move * (1 - run)], ['run', move * run]];
       for (const [clip, w] of weights) {
@@ -166,7 +166,7 @@ export class KeyframeAnimator {
     this.mixer.update(dt);
     if (this.skin) { this.torsoPose.copy(this.rig.torso.quaternion); this.headPose.copy(this.rig.head.quaternion); }
     if (this.ground) {
-      if (loco && !ride && groundWeight > .05) this.ground.update(this.phase, groundStride, groundRun, groundWeight);
+      if (loco && !ride && groundWeight > .05) this.ground.update(this.phase, groundStride, groundRun, groundWeight, speed, dt);
       else this.ground.reset();
     }
     // Parcel carry: arms hold the box over any lower-body motion, eased in/out over 150 ms.
