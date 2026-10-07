@@ -1,11 +1,20 @@
 import { afterEach, expect, test, vi } from 'vitest';
 import { LoadGate } from '../../../src/assets/loadGate';
 import { assetUrl } from '../../../src/assets/assetUrl';
+import { districtAssetUrls } from '../../../src/assets/DistrictAssets';
+import type { AssetDef } from '../../../src/assets/types';
 import { assetVersions, versionedDirs } from '../../../tools/build/load-plugins';
 import { parseHeaders } from '../../../tools/performance/cdn-server';
 import { readFileSync } from 'node:fs';
 
 afterEach(() => { vi.unstubAllGlobals(); });
+
+test('@load prefetch requests only the selected district tiers and deduplicates fallback models', () => {
+  const def = { id: 'bld.house-a', status: 'integrated', glb: 'public/assets/models/house.glb', lods: { lod1: 'public/assets/models/house.lod1.glb', lod2: 'public/assets/models/house.lod2.glb' } } as AssetDef;
+  expect(districtAssetUrls(def.id, () => def, ['lod2'])).toEqual(['/assets/models/house.lod2.glb']);
+  expect(districtAssetUrls(def.id, () => def)).toEqual(['/assets/models/house.lod1.glb', '/assets/models/house.lod2.glb']);
+  expect(districtAssetUrls(def.id, () => ({ ...def, lods: undefined }))).toEqual(['/assets/models/house.glb']);
+});
 
 test('@load open gate passes immediately; paced gate releases one heavy step per frame', async () => {
   const frames: FrameRequestCallback[] = [];

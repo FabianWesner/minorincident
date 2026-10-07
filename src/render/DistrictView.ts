@@ -105,7 +105,7 @@ export class DistrictView extends Group {
       if (p.minTier > this.world.composition.tier || p.maxTier < this.world.composition.tier) continue;
       const distance = focus ? Math.hypot(p.position[0] + d.origin[0] - focus.x, p.position[2] + d.origin[1] - focus.z) : 0;
       const lods = initialLods.get(p.assetId) ?? new Set<Lod>();
-      for (const lod of initialDistrictLods(this.low, worldAssets[p.assetId]?.category === 'prop', distance)) lods.add(lod);
+      for (const lod of initialDistrictLods(this.low, worldAssets[p.assetId]?.category === 'prop', distance, focus !== undefined)) lods.add(lod);
       initialLods.set(p.assetId, lods);
     }
     for (const [id, lods] of initialLods) for (const lod of lods) this.registry.prefetch(id, lod);
@@ -436,17 +436,20 @@ export class DistrictView extends Group {
   }
   /** Make the route's close tier resident (LOD0 high, LOD1 low). Props never need LOD1 on low.
    * With a focus, nearest placements load first through a small background download window. */
-  async prepare(focus?: { x: number; z: number }, cancelled = () => false): Promise<void> {
+  async prepare(focus?: { x: number; z: number }, cancelled = () => false, maximumDistance = Infinity): Promise<void> {
     await this.ready();
     const lod = this.low ? 'lod1' : 'lod0';
-    const entries = this.lodBatches.filter(entry => this.low ? !entry.nearLoaded && worldAssets[entry.id].category !== 'prop' : !entry.loaded);
+    const entries = this.lodBatches.filter(entry => this.low ? !entry.nearLoaded && worldAssets[entry.id].category !== 'prop' : !entry.loaded || !entry.nearLoaded && maximumDistance === Infinity);
     if (!focus) { await Promise.all(entries.map(entry => this.loadHero(entry, lod))); return; }
     const distance = (entry: LodBatch) => Math.min(...entry.refs.map(ref => Math.hypot(ref.position.x + entry.origin[0] - focus.x, ref.position.z + entry.origin[1] - focus.z)));
-    const queue = entries.map(entry => ({ entry, distance: distance(entry) })).sort((a, b) => a.distance - b.distance).map(({ entry }) => entry);
+    const queue = entries.map(entry => ({ entry, distance: distance(entry) })).filter(item => item.distance <= maximumDistance).sort((a, b) => a.distance - b.distance).map(({ entry }) => entry);
     const worker = async () => {
       for (let entry = queue.shift(); entry && !cancelled() && !this.disposed; entry = queue.shift()) {
-        if (lod === 'lod0' ? entry.loaded : entry.nearLoaded) continue;
-        const pending = this.pending.get(entry) ?? this.loadHero(entry, lod);
+        await this.pending.get(entry);
+        const pending = (async () => {
+          if (!entry.nearLoaded && maximumDistance === Infinity) await this.loadHero(entry, 'lod1');
+          if (lod === 'lod0' && !entry.loaded) await this.loadHero(entry);
+        })();
         this.pending.set(entry, pending); await pending.finally(() => this.pending.delete(entry));
       }
     };
