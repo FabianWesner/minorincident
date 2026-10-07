@@ -21,7 +21,7 @@ export interface VfxTargets {
   clearGore(): void;
   shake(strength: number): void;
 }
-const eventTypes = ['combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected'] as const;
+const eventTypes = ['combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'outbreak.infection'] as const;
 const limbs = 5;
 const heavyBlade = /machete|axe|katana|shovel/;
 const telegraphShapes = { lunge: 3, charge: 2, splash: 1, bloated: 4 } as const;
@@ -108,6 +108,14 @@ export class Vfx extends Group {
   private burst(x: number, y: number, z: number, color: number, count: number, size = 0.18, life = 0.7, gravity = 9.81): void {
     const n = this.quality === 'low' ? Math.ceil(count / 4) : count;
     for (let i = 0; i < n; i++) this.particles.spawn(this.time, life, x, y, z, (this.rng.next() - 0.5) * 4, this.rng.next() * 3, (this.rng.next() - 0.5) * 4, size, 0, color, gravity);
+  }
+  /** Slow, rising ash-green wisps around a body (render RNG only). */
+  private sickPuff(x: number, z: number, count: number, size: number, y: number): void {
+    const n = this.quality === 'low' ? Math.ceil(count / 2) : count;
+    for (let i = 0; i < n; i++) {
+      const a = this.rng.next() * Math.PI * 2, r = .25 + this.rng.next() * .35;
+      this.particles.spawn(this.time, .9 + this.rng.next() * .5, x + Math.cos(a) * r, y + this.rng.next() * .6, z + Math.sin(a) * r, Math.cos(a) * .5, .5 + this.rng.next() * .7, Math.sin(a) * .5, size * (.7 + this.rng.next() * .6), 0, 0x9fc46a, -.4);
+    }
   }
   private blood(event: Extract<GameEvent, { type: 'combat.hit' | 'combat.kill' }>, kill: boolean): void {
     const { x, z } = event.position, source = this.world.entities.get(event.sourceId);
@@ -207,7 +215,11 @@ export class Vfx extends Group {
     else if (event.type === 'vehicle.exploded') { const p = this.world.entities.get(event.sourceId)?.transform; if (p) this.effect('explosion', p.x, p.z, 6); }
     else if (event.type === 'noise' && event.kind === 'scream') this.effect('screamer', event.position.x, event.position.z, event.radius);
     else if (event.type === 'hazard.electrified' || event.type === 'prop.ignited') { const p = this.world.entities.get(event.id)?.transform; if (p) this.effect(event.type === 'hazard.electrified' ? 'electric' : 'fire', p.x, p.z, 1); }
-    else if (event.type === 'civilian.turned' && this.enabled) this.burst(event.position.x, .9, event.position.z, 0x96b76a, 8, .045, .4, 1);
+    // E19 section 5.7: the turning reads at the game camera - sickly wisps when the eyes ignite, a puff as the person rises.
+    else if (event.type === 'outbreak.infection' && (event.phase === 'eyes' || event.phase === 'rise')) {
+      const p = this.world.entities.get(event.entityId)?.transform, rise = event.phase === 'rise';
+      if (p) this.sickPuff(p.x, p.z, rise ? 18 : 10, rise ? .2 : .14, rise ? .7 : .3);
+    }
     else if (event.type === 'pickup.collected') { const e = this.world.entities.get('id' in event ? event.id : event.sourceId); if (e) this.effect('pickup', e.transform.x, e.transform.z, 1); }
     else if (event.type === 'vfx.effect') this.effect(event.kind, event.position.x, event.position.z, event.radius);
   };
