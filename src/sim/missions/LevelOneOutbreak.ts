@@ -68,8 +68,10 @@ export class LevelOneOutbreak {
   completed(id: string): void {
     const { world } = this.mission, l1 = this.l1;
     // The parcel changes hands inside the clerk beat (matched hand-to-hand), not at the objective tick.
-    if (id === 'pickup') { if (world.npcs?.civilians.outbreak) this.story.pickup(); else l1.carrying = true; }
-    if (id === 'weapon') { world.combat?.setLoadout(['weapon.bat'], ['weapon.fists']); this.story.garage(); }
+    // Checkpoint restores replay completed objectives: only a live, in-order completion plays its beat.
+    const live = (anchor: string, m = 4) => { const a = this.anchor(anchor), p = world.entities.get(1)?.transform; return !!p && Math.hypot(p.x - a.x, p.z - a.z) <= Math.max(m, a.radius + 1); };
+    if (id === 'pickup') { if (world.npcs?.civilians.outbreak && l1.phase === 'morning' && !l1.delivered && live('parcel-counter')) this.story.pickup(); else l1.carrying = !l1.delivered; }
+    if (id === 'weapon') { world.combat?.setLoadout(['weapon.bat'], ['weapon.fists']); if (live('garage-bat')) this.story.garage(); }
     if (id === 'firestation') {
       // The shutter closes behind the player (the gate action blocks the player collider): infected outside cannot pass either.
       const door = this.anchor('fire-bay-door');
