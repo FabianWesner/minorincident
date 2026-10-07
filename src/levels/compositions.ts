@@ -46,6 +46,14 @@ compositions[groveDistrictId] = {
   districts: [{ id: groveDistrictId, origin: [0, 0] }],
 };
 compositions.L1 = { ...compositions[groveDistrictId], id: "L1" };
+// L3 road loop: Main → supermarket → park → Civic. Override only this
+// composition; the other campaigns retain their original district placement.
+compositions.L3.districts = [
+  { id: 'D-MAIN', origin: [56, 56] }, { id: 'D-SHOP', origin: [0, 56] },
+  { id: 'D-PARK', origin: [0, 112] }, { id: 'D-CIVIC', origin: [56, 112] },
+];
+compositions.L3.timeOfDay = 'L3';
+for (const district of compositions.L3.districts) district.overrides = { spawns: [{ anchor: 'arrival' }, { x: 0, z: -20 }] };
 /** The retired M1 map (diner, hardware store, gas forecourt): kept only for its geometry/physics regression suites. */
 compositions["L1-M1"] = {
   id: "L1",

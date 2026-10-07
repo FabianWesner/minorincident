@@ -12,7 +12,7 @@ slots="${SIM_SLOTS:-2}"
 while :; do
   i=0
   while [ "$i" -lt "$slots" ]; do
-    # Keep the inode: lockf's default unlink breaks ordering for waiting lanes.
+    # Keep the inode: unlinking a lock file splits queued and newly arriving users.
     lockf -k -t "${SIM_WAIT:-0}" "$base.$i" "$@" 2>/dev/null; rc=$?
     [ "$rc" -ne 75 ] && exit "$rc"   # 75 = slot busy (EX_TEMPFAIL); anything else is the command's result
     i=$((i + 1))
