@@ -199,4 +199,5 @@ Bots: `complete` (uses the bicycle, the shortest route), `newbie` (handicapped p
 ## 10. Notes for implementers
 - Old tests tagged `@E19-AC01/04/05/06` (diner slice) must be re-tagged to the new IDs or removed together with the slice (`src/levels/levelOneSlice.ts`); `@E19` epic tags on render/look tests stay valid.
 - The previous Patient-Zero boss, cooler sealing, hardware-store weapon choice and kick-a-cone tutorial are out of L1 (assets stay for later levels).
+- **PO decision 2026-10-07:** no upgrade/rack screens after L1 (see epic 13); the result screen continues straight to the next step. Beat 7 shows the weapon objective and its marker at the garage door right after the exits; zombies stay active, corpses persist.
 - Campaign unlock after L1: the **baseball bat** (crowbar and machete stay findable in later levels).
