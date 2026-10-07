@@ -13,7 +13,7 @@ export function initialDistrictLods(low: boolean, prop: boolean, distance: numbe
   // WebGL warms spawn LOD0 before play; WebGPU keeps the original nearby LOD1
   // until its hero swaps. Intermediate tiers outside the spawn stream later.
   if (!low && streamingHigh && (heroAtSpawn || distance > lodPolicy.lod1From)) return ['lod2'];
-  return low && (prop || distance > lowLodPolicy.lod2From) ? ['lod2'] : ['lod1', 'lod2'];
+  return low ? prop || distance > lowLodPolicy.lod2From ? ['lod2'] : streamingHigh ? ['lod1'] : ['lod1', 'lod2'] : ['lod1', 'lod2'];
 }
 const rank: Record<Lod, number> = { lod0: 0, lod1: 1, lod2: 2 };
 const bands: Lod[] = ['lod0', 'lod1', 'lod2'];
