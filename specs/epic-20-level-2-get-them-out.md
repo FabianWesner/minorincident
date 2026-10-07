@@ -37,5 +37,5 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E20-AC08 | The `defend` step at the bus lasts 60 s ±1 tick; failure only if the player dies (the escorts are inside the bus, invulnerable) | sim |
 | E20-AC09 | Full-browser bot playthrough with screenshots at the L2 photo spots; no console errors | e2e |
 | E20-AC10 | Vision: `l2-panic-street` (W1 panic reads: traffic jam, police, fleeing people vs the W0 L1 spot), `l2-school-gym`, `l2-baseball-evac` pass §7.1/§7.4/§7.5 | vision |
-| E20-AC11 | End-of-level flow: unlock reveal (pistol/shotgun choice + Molotov) → upgrade cards → rack setup (2/2) works | e2e |
+| E20-AC11 | End-of-level flow (PO decision 2026-10-07: no reward screens between levels): completing L2 auto-applies the unlocks (default pistol/shotgun choice + Molotov), 2 upgrades and racks (2/2) via `autoRewards`, saves, and continues straight into L3 | e2e |
 | E20-AC12 | Barricades: Mrs. Alvarez's house uses a board-up point; in the gym, lockers and benches can be pushed into the door slot and braced; an A/B sim over 10 seeds shows the braced door delays the Brute's breakthrough by ≥ 10 s vs unbraced | sim |
