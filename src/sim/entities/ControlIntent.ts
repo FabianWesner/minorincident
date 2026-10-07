@@ -78,11 +78,18 @@ export class ControlIntent {
     const p = this.world.entities.get(1)!.transform, nav = this.world.infected?.nav;
     if (this.world.player) this.world.player.locomotion.navigationGrid = nav ?? null;
     // Leave room for the capsule's acceleration while turning a pulled corner.
-    if (nav && !nav.steer(p, target, this.route, survivor.radius + .1, this.waypoint)) {
+    // The player's own route may search the whole district (one agent) and falls back to the closest reachable
+    // cell when a click lands in a fenced yard (QA1-02: riding clicks along the line to a goal stalled).
+    if (nav && !nav.steer(p, target, this.route, survivor.radius + .1, this.waypoint, 40000, true)) {
       // Grid paths omit their starting cell; reconnect from its safe center.
       const cell = nav.nearestCell(p.x, p.z);
       if (cell < 0) { frame.move.x = frame.move.z = 0; return; }
       this.waypoint.x = nav.x(cell); this.waypoint.z = nav.z(cell);
+    }
+    // Arrived as close as the fences allow (fallback route end): stop instead of re-searching every tick.
+    const last = this.route.path[this.route.path.length - 1];
+    if (nav && last !== undefined && this.route.pathIndex >= this.route.path.length - 1 && nav.nearestCell(target.x, target.z) !== last && Math.hypot(p.x - nav.x(last), p.z - nav.z(last)) < .3) {
+      frame.move.x = frame.move.z = 0; if (this.moveTarget === target) this.moveTarget = null; return;
     }
     const destination = nav ? this.waypoint : target, dx = destination.x - p.x, dz = destination.z - p.z, distance = Math.hypot(dx, dz);
     if (distance < .02) { frame.move.x = frame.move.z = 0; return; }

@@ -1,3 +1,4 @@
+import { meleeChains } from '../data/meleeCombos';
 import { AdditiveBlending, BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
 import { actionIconUrl } from '../assets/icons';
 import { catalog, action } from '../data/actions/catalog';
@@ -156,11 +157,13 @@ export class ActionView extends Group {
   }
   /** Short ribbon from actual authored weapon-tip history, including overhead planes. */
   private updateTrail(): void {
-    const attack = Object.values(this.world.combat!.runner.running).find(a => a.def.category === 'melee' && !['weapon.fists','weapon.kick'].includes(a.def.id));
+    // Weapon swings trail from grip to tip; unarmed kicks (QA1-06) trail the striking foot so they read at distance.
+    const kick = (a: { def: { id: string }; combo: number }) => a.def.id === 'weapon.kick' || (a.def.id === 'weapon.fists' && /kick/.test(meleeChains['weapon.fists'][a.combo] ?? ''));
+    const attack = Object.values(this.world.combat!.runner.running).find(a => a.def.category === 'melee' && (!['weapon.fists','weapon.kick'].includes(a.def.id) || kick(a)));
     const tick = this.world.tick;
     if (attack && attack.id !== this.trailAttack) { this.trailAttack = attack.id; for (const point of this.trailHistory) point.tick = -Infinity; }
     if (attack && tick !== this.trailTick && tick >= attack.activeAt - 3 && tick < attack.recoveryAt + 8) {
-      const model = this.held[attack.side]?.model, tip = model?.getObjectByName('tip'), grip = model?.getObjectByName('grip');
+      const model = this.held[attack.side]?.model, foot = kick(attack), tip = foot ? this.character.node('footR') : model?.getObjectByName('tip'), grip = foot ? this.character.node('shinR') : model?.getObjectByName('grip');
       if (tip && grip) { this.character.updateMatrixWorld(true); const point = this.trailHistory[this.trailCursor++ % 16]; point.tick = tick; tip.getWorldPosition(point.tip); grip.getWorldPosition(point.grip); }
     }
     this.trailTick = tick; this.trailVertices = 0;

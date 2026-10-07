@@ -19,8 +19,8 @@ export const meleeMoves: Readonly<Record<string, readonly MeleeMove[]>> = {
   'weapon.fists': [
     move('jab', 3, 3, 10, { knockback: .3, stagger: .15, hitStopMs: 45 }),
     move('cross', 4, 4, 10, { knockback: .45, stagger: .2, hitStopMs: 50 }),
-    move('front-kick', 6, 5, 13, { knockback: 2, stagger: .4, range: 1.55, arc: 60, hitStopMs: 60 }),
-    move('roundhouse-kick', 7, 5, 14, { knockback: 1.7, stagger: .4, range: 1.6, arc: 110, maxTargets: 2, hitStopMs: 60 }),
+    move('front-kick', 6, 5, 17, { knockback: 2, stagger: .4, range: 1.55, arc: 60, hitStopMs: 90 }),
+    move('roundhouse-kick', 7, 5, 18, { knockback: 1.7, stagger: .4, range: 1.6, arc: 110, maxTargets: 2, hitStopMs: 90 }),
     move('uppercut', 6, 5, 12, { knockback: .7, stagger: .25, hitStopMs: 50 }),
     move('knee', 4, 4, 10, { knockback: .45, stagger: .2, range: 1.15, hitStopMs: 50 }),
     move('spinning-backfist', 8, 5, 14, { knockback: .7, stagger: .2, range: 1.4, arc: 120, maxTargets: 2, hitStopMs: 60 }),

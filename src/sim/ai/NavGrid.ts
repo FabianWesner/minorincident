@@ -183,7 +183,8 @@ export class NavGrid {
     return cell;
   }
   /** Shared string-pulled route: skip all visible waypoints, so actors do not zig-zag on the grid. */
-  steer(position: { x: number; z: number }, target: { x: number; z: number }, route: { path: number[]; goal: number; pathIndex: number }, radius: number, waypoint: { x: number; z: number }, budget = 1600): boolean {
+  /** `nearest`: when the target is unreachable (a click into a fenced yard), route to the reachable cell closest to it. */
+  steer(position: { x: number; z: number }, target: { x: number; z: number }, route: { path: number[]; goal: number; pathIndex: number }, radius: number, waypoint: { x: number; z: number }, budget = 1600, nearest = false): boolean {
     if (this.visible(position, target, radius)) { route.path.length = 0; route.goal = -1; Object.assign(waypoint, target); return true; }
     const to = this.nearestCell(target.x, target.z, radius);
     if (to !== route.goal || route.pathIndex >= route.path.length) {
@@ -198,7 +199,7 @@ export class NavGrid {
           if (d < distance && this.visible(position, point, radius)) { from = cell; distance = d; }
         }
       }
-      if (!this.path(from, to, route.path, budget)) return false;
+      if (!this.path(from, to, route.path, budget, nearest)) return false;
       // Align with that visible start before rounding the first corner.
       if (from >= 0) route.path.unshift(from);
       route.goal = to; route.pathIndex = 0;
@@ -215,20 +216,27 @@ export class NavGrid {
     route.goal = -1; return false;
   }
   /** Budgeted A*; caller retries later if the tick budget is exhausted. Writes into a reused path array. */
-  path(from: number, to: number, result: number[], budget: number): boolean {
+  private closest = -1;
+  private closestH = Infinity;
+  path(from: number, to: number, result: number[], budget: number, nearest = false): boolean {
     result.length = 0; this.expansions = 0;
     if (from < 0 || to < 0 || this.blocked[from] || this.blocked[to]) return false;
     if (!this.searching || this.searchFrom !== from || this.searchTo !== to) {
       this.searchFrom = from; this.searchTo = to; this.searching = true;
-      this.heap.length = 0; this.push(from, 0);
+      this.heap.length = 0; this.push(from, 0); this.closest = -1; this.closestH = Infinity;
       this.cost.fill(Infinity); this.parent.fill(-1); this.open.fill(0); this.cost[from] = 0; this.open[from] = 1;
     }
     const tx = to % this.width, tz = Math.floor(to / this.width);
     while (this.expansions < budget) {
       let best = -1;
       while (this.heap.length) { const candidate = this.pop(); if (this.open[candidate] === 1) { best = candidate; break; } }
-      if (best < 0) { this.searching = false; return false; }
+      if (best < 0) {
+        this.searching = false;
+        if (!nearest || this.closest < 0 || this.closest === from) return false;
+        for (let cell = this.closest; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true;
+      }
       this.expansions++; this.open[best] = 2;
+      const h = Math.abs(best % this.width - tx) + Math.abs(Math.floor(best / this.width) - tz); if (h < this.closestH) { this.closestH = h; this.closest = best; }
       if (best === to) { this.searching = false; for (let cell = to; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true; }
       for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n]) { this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(n % this.width - tx) + Math.abs(Math.floor(n / this.width) - tz)) * 1.00001); } }
     }
