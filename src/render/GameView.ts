@@ -13,6 +13,7 @@ import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
 import type { SurvivorState } from '../data/survivor';
 import { CharacterView } from './characters/CharacterView';
+import { useSkinnedCourier } from './characters/RiderContacts';
 import { BoxGeometry, Color, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial, type Material } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
@@ -189,7 +190,7 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', this.world.districts.composition.id === 'L1' ? 'courier' : 'survivor');
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', this.world.districts.composition.id === 'L1' ? 'courier' : 'survivor', useSkinnedCourier(this.params));
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       const initialFocus = this.world.scenario === 'L1' ? this.view.cameraTarget : undefined;
@@ -536,7 +537,8 @@ export class GameView implements Lifecycle {
       this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
         riding === undefined ? undefined : { pedal: bike?.pedal ?? this.world.tick * .12, steer: bike?.steer ?? 0 });
       // Riding: the pelvis sits on the saddle, measured from the bike's `seat` node every frame (any heading, lean or turn).
-      if (riding !== undefined && this.bicycle?.seatWorld(this.seat)) {
+      if (this.character.skinActive) this.character.applyRideContacts(riding !== undefined ? this.bicycle?.riderContacts() : undefined);
+      else if (riding !== undefined && this.bicycle?.seatWorld(this.seat)) {
         this.character.seatPelvis(this.seat, -.04);
         if (this.bicycle.gripsWorld(this.gripL, this.gripR)) this.character.holdHandlebar(this.gripL, this.gripR);
       }
