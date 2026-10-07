@@ -36,13 +36,15 @@ export const l2 = {
     groups: [
       [-46, 2, 5], [-12, 2, 4], [30, 2, 4], [-12, -12, 3], [32, -12, 3], [-46, 12, 2], [-10, 12, 2], [70, -20, 2], [-82, 10, 1],
     ] as readonly (readonly [number, number, number])[],
-    leashM: 6, civilians: [[-30, 0], [-45, 30], [5, -31], [30, 30], [50, 5], [-64, -22], [14, 15], [-20, -15], [40, -20]] as readonly P[],
+    /** People still out on the streets (from the alarm on), kept away from the bridge cluster. */
+    leashM: 6, civilians: [[-30, 0], [-45, 30], [5, -31], [-80, -20], [-64, -22], [14, 15], [-20, -15], [40, -20], [0, 20], [20, -14]] as readonly P[],
     caps: { high: 60, low: 30 },
     /** Low tier (phone): ambush, street groups and cluster are halved with the cap. */
     lowScale: .5,
   },
   /** Section 5.5: the dense cluster on the Elm Street approach to the bridge and its two openings. */
-  cluster: { home: [60, 30] as P, count: 13, radiusM: 7, triggerM: 30 },
+  /** Home at the Elm/Larch junction: far enough (> 16 m) from the people behind the line that they never see them. */
+  cluster: { home: [48, 30] as P, count: 13, radiusM: 7, triggerM: 30 },
   /** Section 5.6: the police bridge checkpoint at the east end of Elm Street. */
   /** Officers hold fire until the evacuee is this close to the gate (they do not clear the approach from the line). */
   checkpoint: { gateX: 76, gateZ: [24.6, 35.6] as P, closeWithinS: 1.5, holdS: 2, officers: 4, civilians: 8, policeVehicles: 3, shootM: 15, coverM: 20 },
@@ -77,12 +79,12 @@ export const l2Anchors: Record<string, P> = {
   'l2-forecourt': [-46.5, -38.0],
   'l2-gate': [76, 30],
   'l2-gate-inside': [79.5, 30],
-  'l2-cluster': [60, 30],
-  'l2-cluster-alarm': [48.6, 18.6],
+  'l2-cluster': [48, 30],
+  'l2-cluster-alarm': [48.6, 12.4],
   'l2-side-gate': [81.5, 35.8],
   'photo-l2-station-calm': [-72.5, 44.5], 'photo-l2-alarm': [-72.5, 43], 'photo-l2-truck-ride': [-30, 0],
   'photo-l2-doors-open': [-50, -40], 'photo-l2-collapse': [-48, -36], 'photo-l2-streets-w1': [-37.8, -35.0],
-  'photo-l2-cluster': [60, 28], 'photo-l2-bridge-checkpoint': [78, 30],
+  'photo-l2-cluster': [49, 29], 'photo-l2-bridge-checkpoint': [78, 30],
 };
 /** Truck route (centre line), station apron -> Elm -> Juniper west -> Main Row -> Grove Market forecourt. */
 export const l2TruckRoute: readonly P[] = [[-70.6, 36.7], [-70.6, 30.6], [-30.6, 30.6], [-30.6, -30.4], [-43.0, -30.4]];

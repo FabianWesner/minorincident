@@ -110,11 +110,14 @@ export function wanderGoal(brain: L1Brain, rng: Rng, nav: ProbeTerrain & { visib
   for (let k = 0; k < 6; k++) {
     const angle = rng.next() * Math.PI * 2, r = 6 + rng.next() * 10, x = from.x + Math.cos(angle) * r, z = from.z + Math.sin(angle) * r;
     if (!nav.clear(x, z, agentRadius) || !nav.visible(from, { x, z }, agentRadius)) continue;
+    if (brain.leashM && Math.hypot(x - brain.homeX, z - brain.homeZ) > brain.leashM) continue;
     const open = (nav.clear(x, z, 2) ? 0.5 : 0) + (nav.clear(x, z, 3.5) ? 0.5 : 0);
     const away = Math.max(-1, Math.min(1, (Math.hypot(x - brain.homeX, z - brain.homeZ) - homeDistance) / r)) * (brain.leashM && homeDistance > brain.leashM ? -2 : 1);
     const score = open * 0.9 + away * 0.6 + Math.min(1, crowd(x, z) / 4) * 1.2 + rng.next() * 0.8;
     if (score > best) { best = score; brain.goalX = x; brain.goalZ = z; }
   }
+  // A leashed group member with no candidate inside its leash walks back toward its home block.
+  if (best === -Infinity && brain.leashM && homeDistance > brain.leashM) { brain.goalX = brain.homeX; brain.goalZ = brain.homeZ; best = 0; }
   if (best === -Infinity) return false;
   brain.hasGoal = true; return true;
 }

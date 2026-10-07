@@ -1,5 +1,7 @@
 import type { ScenarioDefinition } from '../../levels/loader';
 type Wall = NonNullable<ScenarioDefinition['walls']>[number];
+/** Coarse look-ahead offsets (path nodes) for budgeted NPC steering. */
+const lookAhead = [40, 30, 22, 15, 10, 6, 3, 1, 0];
 /** 0.5 m collider-baked district grid. Fixed workspaces serve budgeted A* and shared reverse flow fields. */
 export class NavGrid {
   readonly cellSize = 0.5;
@@ -210,6 +212,16 @@ export class NavGrid {
       route.pathIndex++;
     }
     // Look ahead a bounded window: line tests over a whole cross-district path cost ~30 ms per call.
+    // NPC steering (finite budget) samples the window coarsely: forty line tests per agent per tick dominated crowded
+    // scenes (E20 rescue: ~16 ms/tick); bots and vehicles (infinite budget) keep the exact farthest-visible node.
+    if (Number.isFinite(budget)) {
+      for (const k of lookAhead) {
+        const i = Math.min(route.path.length - 1, route.pathIndex + k); if (i < route.pathIndex) continue;
+        waypoint.x = this.x(route.path[i]); waypoint.z = this.z(route.path[i]);
+        if (this.visible(position, waypoint, radius)) { route.pathIndex = i; return true; }
+      }
+      route.goal = -1; return false;
+    }
     for (let i = Math.min(route.path.length - 1, route.pathIndex + 40); i >= route.pathIndex; i--) {
       waypoint.x = this.x(route.path[i]); waypoint.z = this.z(route.path[i]);
       if (this.visible(position, waypoint, radius)) { route.pathIndex = i; return true; }

@@ -221,7 +221,7 @@ export class SimWorld implements Lifecycle {
     const walls = this.districts.districts.flatMap(d => d.decay.colliders.filter(c => !c.walkable).map(c => c.aabb).concat(d.blockers).map(a => ({
       y: (a.min[1]+a.max[1])/2, halfY: (a.max[1]-a.min[1])/2, x: (a.min[0]+a.max[0])/2+d.origin[0], z: (a.min[2]+a.max[2])/2+d.origin[1], halfX: (a.max[0]-a.min[0])/2, halfZ: (a.max[2]-a.min[2])/2,
     })));
-    if (this.combat) (this.combat.query.walls as import('../combat/HitQuery').CoverWall[]).push(...walls);
+    if (this.combat) { (this.combat.query.walls as import('../combat/HitQuery').CoverWall[]).push(...walls); this.combat.query.invalidate(); }
     this.infected = new InfectedSystem(this, { name:'L1', infected:true, ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}}, player:this.entities.get(1)!.transform, walls });
     this.infected.director.levelCap = 15;
     this.events.on('sim.tick', () => this.infected!.update(), SimPhase.ai);

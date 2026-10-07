@@ -182,7 +182,8 @@ export class DistrictView extends Group {
           [...references].map(async ([key, refs]) => {
             const [id, power] = key.split(":");
             if (!worldAssets[id]) {
-              const prototype = await this.registry.asset(id, power === 'true', 'lod0');
+              // Non-world dressing (decals, kits, emergency vehicles) has no LOD bands: the low tier takes its LOD2 when authored.
+              const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0');
               const batch = new InstancedGroup(prototype, refs); this.dressingBatches.push(batch); root.add(batch); return;
             }
             const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;

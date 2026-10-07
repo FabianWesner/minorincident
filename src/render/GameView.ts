@@ -189,7 +189,9 @@ export class GameView implements Lifecycle {
         this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
       }
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
-      const instanceCapacity = this.world.scenario === 'L1' ? this.renderer.attributeInstanceCapacity() : undefined;
+      // L1 and L2 share D-GROVE (E20): the same instancing path, spawn focus and close-view warm-up.
+      const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2';
+      const instanceCapacity = grove ? this.renderer.attributeInstanceCapacity() : undefined;
       const t=performance.now();
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low', instanceCapacity);
       this.character=new CharacterView();
@@ -200,11 +202,11 @@ export class GameView implements Lifecycle {
       const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2'].includes(this.world.districts.composition.id) ? 'courier' : 'survivor', useSkinnedCourier(this.params));
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
-      const initialFocus = this.world.scenario === 'L1' ? this.view.cameraTarget : undefined;
+      const initialFocus = grove ? this.view.cameraTarget : undefined;
       const heroAtSpawn = this.quality === 'high' && this.renderer.selectedBackend === 'webgl';
       await Promise.all([this.districts.load(1, initialFocus, heroAtSpawn), character, ...variants.map(variant => variant.load(1, initialFocus, heroAtSpawn))]);
       loadMeasure('view:districts+character',t);
-      if (this.world.scenario === 'L1') {
+      if (grove) {
         this.preparedDistrictViews.set(this.world.districts, this.districts);
         for (const variant of variants) { variant.visible = false; this.preparedDistrictViews.set(variant.world, variant); this.scene.add(variant); }
         // WebGL warms the spawn's close-view LOD0 before play (ANGLE specializes first draws).
@@ -296,7 +298,9 @@ export class GameView implements Lifecycle {
       this.idPass = this.params.get('idpass') === '1'; this.update(1);
       this.startPreparation();
     };
-    if (this.world.scenario === 'L1' && this.params.get('test') !== '1') {
+    // E20: L2 runs in the same town with the same crowd, so it uses the same full shader warm-up.
+    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2';
+    if (groveTown && this.params.get('test') !== '1') {
       // Load lane: the shader warm-up runs while the mission briefing is up instead of behind the
       // loading screen. Until it finishes the view does not draw and the game clock does not advance
       // (Game checks `warming`), so 'Begin mission' is never blocked and play starts warmed.
@@ -306,7 +310,7 @@ export class GameView implements Lifecycle {
       this.warming = warm().then(() => { done(); if (generation === this.generation) { this.warming = null; finish(); } }, error => { done(); if (generation === this.generation) { this.warming = null; console.error(error); } });
       return;
     }
-    if (this.world.scenario === 'L1') await warm();
+    if (groveTown) await warm();
     else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
     finish();
   }

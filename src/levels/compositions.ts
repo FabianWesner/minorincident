@@ -52,7 +52,7 @@ compositions.L2 = {
   id: "L2", tier: 1, timeOfDay: "L2",
   districts: [{ id: groveDistrictId, origin: [0, 0], overrides: { photoSpots: ([
     ["l2-station-calm", [10, 14, 10]], ["l2-alarm", [10, 14, 10]], ["l2-truck-ride", [24, 28, 24]], ["l2-doors-open", [18, 22, 18]],
-    ["l2-collapse", [20, 24, 20]], ["l2-streets-w1", [18, 22, 18]], ["l2-cluster", [22, 26, 22]], ["l2-bridge-checkpoint", [18, 22, 18]],
+    ["l2-collapse", [16, 19, 16]], ["l2-streets-w1", [18, 22, 18]], ["l2-cluster", [22, 26, 22]], ["l2-bridge-checkpoint", [18, 22, 18]],
   ] as const).map(([name, offset]) => ({ name, target: { anchor: `photo-${name}` }, offset: [...offset] as [number, number, number] })) } }],
 };
 // L3 road loop: Main → supermarket → park → Civic. Override only this
