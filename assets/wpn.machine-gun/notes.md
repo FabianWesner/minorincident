@@ -15,3 +15,7 @@ not visible geometry. Export bakes 32-sample AO to COLOR_0.
 Painted scratches and fine grain from the illustration are simplified to raised
 geometric details; colours use the shared palette rather than painted gradients.
 Review captures include both backends, opposite study angles and gameplay angle.
+
+## Art registration (2026-10-07)
+
+Measured delivered bounds (X/Y/Z, metres): 1.484, 0.408, 0.2385. Source, named pivots/sockets, palette, front marker and delivered tiers are validated by the production validator. Runtime status is integrated. Five-angle LOD contact evidence: `test-results/art-register/wpn.machine-gun/lod-contact.png`.

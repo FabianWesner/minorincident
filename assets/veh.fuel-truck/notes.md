@@ -9,3 +9,7 @@ Static meshes join by palette material. Wheel, door and lamp assemblies retain s
 The asset manifest currently contains generic placeholder dimensions (4.4 × 1.8 × 1.9); integration must replace them with measured production bounds. This task modifies only this asset folder.
 
 AO is baked with deterministic Cycles rays and remapped to 0.55–1.0 for the soft diorama palette. Mesh normals are recalculated outward before beveling and baking.
+
+## Art registration (2026-10-07)
+
+Measured delivered bounds (X/Y/Z, metres): 11.265, 4.1669, 3.1601. Source, named pivots/sockets, palette, front marker and delivered tiers are validated by the production validator. Runtime status is integrated. Five-angle LOD contact evidence: `test-results/art-register/veh.fuel-truck/lod-contact.png`.

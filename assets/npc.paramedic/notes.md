@@ -16,3 +16,8 @@ Final hero and all four views compared again with turnaround. Purposeful details
 retained; CPU render setup simplified. Left shoulder/elbow and right hip pose
 check renders successfully, with carried bag following the left glove.
 Three.js WebGPU and WebGL2 both load with zero errors or warnings.
+
+## Art registration (2026-10-07)
+
+Measured delivered bounds (X/Y/Z, metres): 0.591, 1.8, 1.0941. Source, named pivots/sockets, palette, front marker and delivered tiers are validated by the production validator. Runtime status is integrated. Five-angle LOD contact evidence: `test-results/art-register/npc.paramedic/lod-contact.png`.
+The source assembly is scaled uniformly by 1.25749424 to the standard adult height; joint-local geometry and animation pivots stay together.
