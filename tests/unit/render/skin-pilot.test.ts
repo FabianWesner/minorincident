@@ -46,6 +46,19 @@ test.each([2, 4.5])('skin pilot plants stance feet at actual %s m/s with capped 
   expect(rig.footL.getWorldPosition(new Vector3()).distanceTo(before)).toBeLessThan(1e-6);
 });
 
+test('skin pilot kick lunge recovers without accumulating mixer offsets @E04', async () => {
+  const scene = await model('public/assets/models/char.courier-female.skin.glb'); alignSkeleton(scene);
+  const rig = resolveRig(scene), animator = new KeyframeAnimator(rig, skinClips), state = pose();
+  state.animation = 'kick'; state.animationTick = 1;
+  state.attack = { actionId: 'weapon.kick', combo: 0, started: 1, activeAt: 8, recoveryAt: 12, endsAt: 31 };
+  let farthest = 0;
+  for (let tick = 1; tick <= 60; tick++) {
+    if (tick === 31) { state.animation = 'idle'; delete state.attack; }
+    animator.update(state, tick); farthest = Math.max(farthest, Math.abs(rig.hip.position.x));
+  }
+  expect(farthest).toBeLessThan(.3); expect(Math.abs(rig.hip.position.x)).toBeLessThan(.03);
+});
+
 test('skin pilot hands and soles follow bike sockets under heading, lean, steering and crank rotation @E04', async () => {
   const loader = vi.spyOn(GLTFLoader.prototype, 'loadAsync').mockImplementation(async path => ({ scene: await model(`public${path}`) }) as never);
   const material = () => Object.assign(new MeshLambertMaterial({ vertexColors: true }), { bloodCoverage: { value: 0 } });
