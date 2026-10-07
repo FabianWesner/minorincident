@@ -42,8 +42,8 @@ test('crowd stance ankles travel at most 3 cm at actual walk/run speeds and head
     }
     palette.texture.dispose(); baked.geometry.dispose();
   }
-  mkdirSync('test-results/crowd-feel', { recursive: true });
-  writeFileSync('test-results/crowd-feel/feet.json', JSON.stringify(results, null, 2));
+  mkdirSync('test-results/epics/E07/crowd-feel', { recursive: true });
+  writeFileSync('test-results/epics/E07/crowd-feel/feet.json', JSON.stringify(results, null, 2));
   console.log(JSON.stringify(results));
   for (const r of results) expect(r.afterCm, `${r.asset} ${r.clip}`).toBeLessThanOrEqual(3);
 });

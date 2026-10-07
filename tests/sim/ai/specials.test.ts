@@ -57,6 +57,16 @@ test('T-E07-15 @E07 @E07-AC15 leg-targeted explosions make surviving runners cra
   }
 });
 
+test('@E07 dead flock birds keep their individual corpse positions after brain retirement', async () => {
+  const w = await arena(), flock = spawn(w, 'crow', 10, 0, 'idle'), id = flock.id;
+  expect(flock.infected!.birdAlive.filter(Boolean)).toHaveLength(20);
+  flock.health.current = 0; step(w, 121);
+  const corpse = w.entities.get(id)!;
+  expect(corpse).toMatchObject({ corpse: true, infected: { birdDeadMask: (1 << 20) - 1, birds: 0 } });
+  const positions = [...corpse.infected!.birdPositions]; step(w, 3601);
+  expect(w.entities.get(id)!.infected!.birdPositions).toEqual(positions);
+});
+
 test('T-E07-role-extras @E07 hazmat aura, fire immunity, armor and butcher combo are mechanical roles', async () => {
   const w = await arena(), hazmat = spawn(w, 'hazmat', 2), firefighter = spawn(w, 'firefighter', 10, 0, 'idle');
   const toxic = { kind: 'toxic' as const, duration: 2, dps: 3, maxStacks: 1, slow: 0.25 };

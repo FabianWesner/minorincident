@@ -42,3 +42,16 @@ test('opposing crowd rotations keep full size during clip fades', () => {
   expect(pose.determinant()).toBeCloseTo(1);
   palette.texture.dispose();
 });
+
+test('static bodies preserve flock instances and removed body parts', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial(), e = { id: 9 } as EntitySnapshot;
+  const frame = infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
+  for (let bird = 0; bird < 20; bird++) pool.place(e, 'flock', baked.geometry, material, baked.clip, frame, new Matrix4(), new Color('white'), [0, 0, 0], `9/${bird}`, ['head']);
+  pool.begin(id => id === 9 ? e : undefined);
+  expect(pool.snapshot().instances).toBe(20);
+  expect(new Set(pool.snapshot().figures.map(f => f.instanceKey)).size).toBe(20);
+  const parts = (pool.children[0] as InstancedMesh).geometry.getAttribute('_parts');
+  for (let i = 0; i < parts.count; i++) expect(parts.getX(i)).not.toBe(baked.clip.parts.indexOf('head'));
+  pool.dispose(); baked.geometry.dispose(); material.dispose();
+});

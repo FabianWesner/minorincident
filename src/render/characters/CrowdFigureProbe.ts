@@ -4,7 +4,7 @@ import type { CrowdPosePalette } from './CrowdPosePalette';
 /** Draw-submission and ankle probes, read only by the query-gated test API. */
 export class CrowdFigureProbe {
   private readonly enabled = typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
-  readonly figures: { id: number; clip: string; phase: number; drawn: boolean; feet: number[][] }[] = [];
+  readonly figures: { id: number; instanceKey?: string; clip: string; phase: number; drawn: boolean; feet: number[][] }[] = [];
   private readonly matrix = new Matrix4();
   private readonly point = new Vector3();
   begin(): void { this.figures.length = 0; }
