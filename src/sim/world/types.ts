@@ -14,6 +14,7 @@ export interface EntitySnapshot {
   traffic?: import('../npc/types').Traffic;
   convoy?: import('../npc/types').Convoy;
   infected?: import('../ai/types').InfectedState;
+  barricade?: import('../interact/Barricades').BarricadeState;
   interactable?: import('../interact/Interactables').Interactable;
   inventory?: string[];
   hazard?: import('../interact/Hazards').Hazard;
@@ -55,7 +56,8 @@ export interface EntitySnapshot {
 /** Presentation events contain only plain authored geometry; views never write back. */
 export type TelegraphKind = 'lunge' | 'charge' | 'splash' | 'bloated';
 export type EffectKind = 'explosion' | 'fire' | 'smoke' | 'toxic' | 'electric' | 'screamer' | 'objective' | 'pickup' | 'ash' | 'vehicle-smoke' | 'vehicle-fire';
-export type GameEvent = import('../npc/types').NpcEvent
+export type GameEvent = import('../interact/Barricades').BarricadeEvent
+  | import('../npc/types').NpcEvent
   | { tick: number; type: 'level.started'; id: string }
   | import('../../data/audioEvents').AudioSystemEvent
   | { tick: number; type: 'civilian.grabbed'; sourceId: number; targetId: number; variant: string; rescueUntil: number }
