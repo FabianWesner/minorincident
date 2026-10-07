@@ -344,9 +344,13 @@ describe('L1 v2 infected perception', () => {
     w.enableInfected();
     const ai = w.infected!, player = w.entities.get(1)!.transform;
     expect(ai.l1).not.toBeNull();
-    const yaw = 0; let x = player.x - 9;
-    while (!ai.nav.clear(x, player.z, 0.6) && x > player.x - 15) x -= 0.5;
-    const e = w.entities.get(ai.spawn('infected.runner', { x, z: player.z }, { yaw, variant: 'npc.civilian-elderly' }))!;
+    // First walkable spot 6-12 m from the survivor with clear sight on the real layout, facing the survivor.
+    let spot: { x: number; z: number; yaw: number } | undefined;
+    for (let r = 6; r <= 12 && !spot; r += 1) for (let k = 0; k < 24 && !spot; k++) {
+      const a = k * Math.PI / 12, x = player.x + Math.cos(a) * r, z = player.z + Math.sin(a) * r;
+      if (ai.nav.clear(x, z, 0.6) && ai.l1!.lineOfSight({ x, z }, player)) spot = { x, z, yaw: -Math.atan2(player.z - z, player.x - x) };
+    }
+    const e = w.entities.get(ai.spawn('infected.runner', { x: spot!.x, z: spot!.z }, { yaw: spot!.yaw, variant: 'npc.civilian-elderly' }))!;
     expect(brain(e).tier).toBe('frail'); expect(brain(e).runSpeed).toBeGreaterThan(l1v2.player.runMs);
     for (let i = 0; i < 240 && brain(e).mode !== 'chase'; i++) w.update();
     expect(brain(e).mode).toBe('chase'); expect(brain(e).targetId).toBe(1);

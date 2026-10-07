@@ -355,9 +355,9 @@ export class InfectedSystem {
     // Per-tier golden-ratio sequence from a seeded start: jitter is uniform over the run, fixed per entity, and
     // infected of one tier spawned together never share a speed (no synchronized group).
     const u = (this.tierStart[tier] + this.tierCount[tier]++ * 0.6180339887498949) % 1, rng = this.l1Rng!;
-    const brain: L1Brain = e.infected!.l1 ?? { mode: 'wander', tier, runSpeed: 0, wanderSpeed: 0, targetId: 0, seenX: 0, seenZ: 0, seenTick: 0, headingX: 0, headingZ: 0, looking: false, lookYaw: 0, pauseUntil: 0, goalX: 0, goalZ: 0, hasGoal: false, search: searchPlan(), episodes: 0, distractionId: 0, biteTargetId: 0, direct: false, directTick: -1, directX: 0, directZ: 0 };
+    const brain: L1Brain = e.infected!.l1 ?? { mode: 'wander', tier, runSpeed: 0, wanderSpeed: 0, targetId: 0, seenX: 0, seenZ: 0, seenTick: 0, headingX: 0, headingZ: 0, looking: false, lookYaw: 0, pauseUntil: 0, goalX: 0, goalZ: 0, hasGoal: false, search: searchPlan(), episodes: 0, distractionId: 0, biteTargetId: 0, direct: false, directTick: -1, directX: 0, directZ: 0, homeX: 0, homeZ: 0 };
     const [low, high] = l1v2.infected.wanderSpeed;
-    Object.assign(brain, { mode: 'wander', tier, runSpeed: l1TierSpeed(tier, u), wanderSpeed: low + rng.next() * (high - low), targetId: 0, headingX: 0, headingZ: 0, looking: true, lookYaw: e.transform.yaw, pauseUntil: this.world.tick + 20 + Math.floor(rng.next() * 40), hasGoal: false, episodes: 0, distractionId: 0, biteTargetId: 0, directTick: -1 });
+    Object.assign(brain, { mode: 'wander', tier, runSpeed: l1TierSpeed(tier, u), wanderSpeed: low + rng.next() * (high - low), targetId: 0, headingX: 0, headingZ: 0, looking: true, lookYaw: e.transform.yaw, pauseUntil: this.world.tick + 20 + Math.floor(rng.next() * 40), hasGoal: false, episodes: 0, distractionId: 0, biteTargetId: 0, directTick: -1, homeX: e.transform.x, homeZ: e.transform.z });
     brain.search.until = 0;
     e.infected!.l1 = brain; e.infected!.speed = brain.runSpeed; e.infected!.state = 'wander';
   }
@@ -533,11 +533,16 @@ export class InfectedSystem {
     brain.mode = 'wander'; b.state = 'wander'; brain.hasGoal = false; brain.distractionId = 0;
     brain.looking = true; brain.lookYaw = e.transform.yaw + Math.PI * (this.l1Rng!.next() - 0.5); brain.pauseUntil = this.world.tick + 60 + Math.floor(this.l1Rng!.next() * 60);
   }
+  /** Civilians (never the survivor) within 18 m of a point: wander drifts toward populated blocks. */
+  private readonly crowdAt = (x: number, z: number): number => {
+    let count = 0; for (const h of this.l1!.humans.within({ x, z }, 18)) if (h.kind === 'civilian') count++;
+    return count;
+  };
   private wanderL1(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
     const tick = this.world.tick, rng = this.l1Rng!;
     if (tick < brain.pauseUntil) { this.look(e, brain); return; }
     brain.looking = false;
-    if (!brain.hasGoal) { if (!wanderGoal(brain, rng, this.nav, e.transform)) { brain.pauseUntil = tick + 30; return; } brain.search.legTicks = 0; }
+    if (!brain.hasGoal) { if (!wanderGoal(brain, rng, this.nav, e.transform, this.crowdAt)) { brain.pauseUntil = tick + 30; return; } brain.search.legTicks = 0; }
     const distance = Math.hypot(brain.goalX - e.transform.x, brain.goalZ - e.transform.z);
     if (distance <= 0.8 || ++brain.search.legTicks > 900) {
       brain.hasGoal = false; brain.looking = true; brain.lookYaw = e.transform.yaw + (rng.next() - 0.5) * 2.6;
