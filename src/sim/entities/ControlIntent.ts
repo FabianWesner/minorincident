@@ -48,7 +48,9 @@ export class ControlIntent {
         frame.aim = { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }; frame.aimPoint = { x: t.x, z: t.z };
         frame.selectorSide = attack.side;
         button.down = button.held = false;
-        if (distance > range + .08) this.walk(frame, t, distance - range);
+        // Approach toward 85 % of the reach but strike as soon as the target is inside 95 % of it: the
+        // arrival slowdown plus the bounded locomotion response otherwise creeps for seconds before a swing.
+        if (distance > Math.max(range + .08, def.range * .95)) this.walk(frame, t, distance - range);
         else {
           // Stop at range rather than drifting through the target during wind-up.
           frame.navigation = true; frame.move = { x: 0, z: 0 };
@@ -86,8 +88,12 @@ export class ControlIntent {
     if (distance < .02) { frame.move.x = frame.move.z = 0; return; }
     // Slow near arrival; the controller remains responsible for acceleration and collision.
     frame.navigation = true;
-    const gain = destination.x === target.x && destination.z === target.z ? 1.5 : 3;
-    const speed = Math.min(1, Math.max(0, Math.min(remaining, distance) - .03) * gain / survivor.speed);
+    // Braking profile v = sqrt(2·a·d): full run until the last metre, then a crisp stop. The former
+    // proportional gain (v ∝ d) crept toward targets for seconds (QA: click-to-move / held-target lag).
+    const left = Math.max(0, (destination.x === target.x && destination.z === target.z ? Math.min(remaining, distance) : Math.max(remaining, distance)) - .03);
+    // Brake below the response limit (9 m/s²) and lead by the response lag (~0.17 s at ω = 8) so it stops on the mark.
+    const current = this.world.player?.locomotion.velocity, lag = current ? Math.hypot(current.x, current.z) * .17 : 0;
+    const speed = Math.min(1, Math.sqrt(2 * 4.5 * Math.max(0, left - lag)) / survivor.speed);
     frame.move.x = dx / distance * speed; frame.move.z = dz / distance * speed;
     // Match the grid's corner clearance before Rapier performs the actual sweep.
     if (nav) {

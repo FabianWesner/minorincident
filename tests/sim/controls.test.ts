@@ -17,7 +17,8 @@ test('T-E03-command-replay @E03 @E03-AC10 @E03-AC15 held target command reaches 
       recorder.capture(frame); original.applyInput(frame, 'mouse-only'); original.update(); hashes.push(stateHash(original.getState()));
     }
     const attacks = original.events.events().filter(e => e.type === 'combat.attack');
-    expect(attacks.length).toBeGreaterThanOrEqual(3); expect(attacks[0].tick).toBeLessThan(100);
+    // E19 §5.6 bat knockback (2.6–3.3 m) forces a re-approach after every hit: two swings fit in 180 ticks.
+    expect(attacks.length).toBeGreaterThanOrEqual(2); expect(attacks[0].tick).toBeLessThan(100);
     const stopped = original.getEntity(1)!.transform;
     expect(original.controls.snapshot()).toBeNull();
     recorder.play(recorder.stop());

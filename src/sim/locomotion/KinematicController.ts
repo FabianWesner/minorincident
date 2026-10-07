@@ -1,4 +1,4 @@
-import { faceMotion, motionResponse, resetResponse, respond } from './MotionResponse';
+import { faceMotion, motionResponse, resetResponse, respond, playerMotionLimits } from './MotionResponse';
 import { FIXED_DT } from '../../core/Clock';
 import { survivor } from '../../data/survivor';
 import type { InputFrame } from '../../input/InputFrame';
@@ -29,7 +29,7 @@ export class KinematicController {
     const navigation = enabled && (!!input.navigation || this.navigating && length === 0);
     if (navigation) {
       if (!this.navigating) { this.response.vx = this.velocity.x; this.response.vz = this.velocity.z; this.response.ax = this.response.az = this.response.omega = 0; }
-      respond(this.response, x * magnitude * survivor.speed * this.speedScale, z * magnitude * survivor.speed * this.speedScale);
+      respond(this.response, x * magnitude * survivor.speed * this.speedScale, z * magnitude * survivor.speed * this.speedScale, playerMotionLimits);
       this.velocity.x = this.response.vx; this.velocity.z = this.response.vz;
     } else {
       const dx = x * magnitude * survivor.speed * this.speedScale - this.velocity.x;

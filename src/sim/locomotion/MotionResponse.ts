@@ -9,13 +9,18 @@ export function motionResponse(): MotionResponse { return { vx: 0, vz: 0, ax: 0,
 export function resetResponse(state: MotionResponse): void { Object.assign(state, motionResponse()); }
 export const angleDelta = (from: number, to: number) => Math.atan2(Math.sin(to - from), Math.cos(to - from));
 /** Critically damped velocity, with explicit acceleration and jerk bounds. */
-export function respond(state: MotionResponse, vx: number, vz: number): void {
-  if (vx === 0 && vz === 0 && Math.hypot(state.vx, state.vz, state.ax, state.az) < 1e-6) { state.vx = state.vz = state.ax = state.az = 0; return; }
-  let jx = 36 * (vx - state.vx) - 12 * state.ax, jz = 36 * (vz - state.vz) - 12 * state.az;
-  const jerkScale = Math.min(1, motionLimits.jerk / (Math.hypot(jx, jz) || 1));
+/** The survivor's click-to-move: quicker than the crowds (run speed in ~0.5 s) while staying inside the
+ * stage1 root jerk budget (≤ 50 m/s³ RMS, tests/unit/motionlab/stage1.test.ts). */
+export const playerMotionLimits = { acceleration: 9, jerk: 80, omega: 8 } as const;
+export function respond(state: MotionResponse, vx: number, vz: number, limits: { acceleration: number; jerk: number; omega?: number } = motionLimits): void {
+  // Settle crisply: a stopping body under 3 cm/s with little acceleration left is at rest (no millimetre creep).
+  if (vx === 0 && vz === 0 && Math.hypot(state.vx, state.vz) < .03 && Math.hypot(state.ax, state.az) < .5) { state.vx = state.vz = state.ax = state.az = 0; return; }
+  const w = limits.omega ?? 6;
+  let jx = w * w * (vx - state.vx) - 2 * w * state.ax, jz = w * w * (vz - state.vz) - 2 * w * state.az;
+  const jerkScale = Math.min(1, limits.jerk / (Math.hypot(jx, jz) || 1));
   jx *= jerkScale; jz *= jerkScale;
   state.ax += jx * FIXED_DT; state.az += jz * FIXED_DT;
-  const accelerationScale = Math.min(1, motionLimits.acceleration / (Math.hypot(state.ax, state.az) || 1));
+  const accelerationScale = Math.min(1, limits.acceleration / (Math.hypot(state.ax, state.az) || 1));
   state.ax *= accelerationScale; state.az *= accelerationScale;
   state.vx += state.ax * FIXED_DT; state.vz += state.az * FIXED_DT;
 }
