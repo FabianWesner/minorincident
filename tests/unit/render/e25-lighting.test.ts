@@ -40,7 +40,7 @@ test('T-E25-02b @E25 @E25-AC02 the validator rejects §6 violations: tokens, int
   expect(result.errors.join()).toMatch(/lamp is missing/); expect(result.unreferencedEmissive).toEqual(['glow']);
 });
 
-test('T-E25-03 @E25 layout assembly places authored lights in world space and follows decay power groups', () => {
+test('T-E25-U1 @E25 layout assembly places authored lights in world space and follows decay power groups', () => {
   const layout = JSON.parse(readFileSync('public/assets/layouts/D-MAIN.layout.json', 'utf8')) as DistrictLayout;
   const lamp = anchorsFor('prop.street-lamp')[0];
   expect(lamp).toMatchObject({ type: 'point', color: 'light_sodium', position: [0, 3.18, 0] });
@@ -55,7 +55,7 @@ test('T-E25-03 @E25 layout assembly places authored lights in world space and fo
   expect(w5.filter(l => l.on && l.flicker !== 1).length).toBe(0);
 });
 
-test('T-E25-04 @E25 light field budget, spot footprints and the E27 transient hook', () => {
+test('T-E25-U2 @E25 light field budget, spot footprints and the E27 transient hook', () => {
   const field = new LightField(); field.strength.value = 1;
   const spot = footprint({ type: 'spot', color: 'light_led_white', intensity: 6, range: 24, angle: 48, flicker: 'none', position: [0, 6, 0], direction: [0, -.6, .8] });
   expect(spot.aimZ).toBeGreaterThan(3); expect(spot.stretch).toBeGreaterThan(1); expect(spot.r).toBeCloseTo(6 * fieldGain, 1);
@@ -71,7 +71,7 @@ test('T-E25-04 @E25 light field budget, spot footprints and the E27 transient ho
   field.dispose();
 });
 
-test('T-E25-05 @E25 level moods: morning, midday and afternoon skip the field; dusk and night are lit and readable', () => {
+test('T-E25-U3 @E25 level moods: morning, midday and afternoon skip the field; dusk and night are lit and readable', () => {
   expect(['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].map(id => compositions[id].timeOfDay)).toEqual(['L1', 'L2', 'L3', 'L4', 'L5', 'L6']);
   for (const id of ['L1', 'L2', 'L3'] as const) expect(timeOfDay[id].practical ?? 0).toBe(0);
   for (const id of ['L5', 'L6', 'night'] as const) { expect(timeOfDay[id].practical).toBeGreaterThan(.5); expect(timeOfDay[id].rim).toBeGreaterThan(0); expect(timeOfDay[id].aura).toBeGreaterThan(0); }
