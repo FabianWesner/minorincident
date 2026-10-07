@@ -262,6 +262,7 @@ export class GameView implements Lifecycle {
         vehicleBloodEnabled: enabled => { this.vehicles?.setBloodEnabled(enabled); this.vehicleFeedback?.setBloodEnabled(enabled); },
         clearGore: () => { this.crowd?.clearGore(); },
         shake: strength => this.view.shake(strength),
+        roll: strength => this.view.roll(strength), focus: () => this.view.focus,
       });
       this.vfx.set({ ...this.vfxSettings, quality: this.quality }); this.scene.add(this.vfx);
       if (this.world.scenario === 'L1') { const targets = labAccidentTargets(this.scene, s => this.view.shake(s), (x, z, w) => this.view.pull(x, z, w)); this.labWindows = targets; this.labAccident = new LabAccidentFx(this.world, this.vfx, targets, anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; this.labAccident.facing = this.camera.quaternion; this.labAccident.column.camera = this.camera; this.scene.add(this.labAccident.column); }
@@ -486,6 +487,7 @@ export class GameView implements Lifecycle {
     if (patch.gore !== undefined) this.vfxSettings.gore = patch.gore;
     if (patch.flashReduction !== undefined) { this.vfxSettings.flashReduction = patch.flashReduction; if (this.labAccident) this.labAccident.flashReduction = patch.flashReduction; }
     if (patch.quality !== undefined) this.vfxSettings.quality = patch.quality;
+    if (patch.slowMotion !== undefined) this.vfxSettings.slowMotion = patch.slowMotion;
     if (patch.cameraShake !== undefined) { this.view.cameraShake = patch.cameraShake; this.advance(0); }
     if (patch.bloom !== undefined && this.postFx) this.postFx.bloomEnabled.value = Number(patch.bloom);
     if (patch.cheapDof !== undefined) { this.dofEnabled = patch.cheapDof; this.postFx?.setDof(this.dofEnabled); }

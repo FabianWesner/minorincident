@@ -62,6 +62,8 @@ export interface SSTestApi {
   /** E06 action IDs spawn pickups; E09 vehicle.* IDs spawn drivable vehicles. Infected options include hearing fixtures. */
   spawn(defId: string, pos: { x: number; z: number }, opts?: object): number;
   /** E11 authoring/debug hooks. Spawn opts are DeviceOptions/HazardOptions or {item:string}. */
+  /** E27: fire a data-driven blast (ExplosionDef id) or wreck a vehicle (it explodes 3 s later); state copies sim pools. */
+  explosions: { blast(id: string, pos: { x: number; z: number }): void; wreck(vehicleId: number): void; state(): ReturnType<import('../sim/combat/Explosions').Explosions['snapshot']> | null };
   barricades: { intact(slotId: string): boolean; all(groupId: string): boolean; slots(): { id: number; state: import('../sim/interact/Barricades').BarricadeState }[] };
   interact: { giveItem(id: string): void; refuel(id: number, seconds: number): void; barricade(id: number, on: boolean): void; hit(id: number, amount: number, type: import('../sim/combat/Damage').DamageEvent['type']): number };
   teleport(entityId: number | 'player', pos: { x: number; z: number }): void;
@@ -155,6 +157,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       if (game.world.combat) return game.world.spawnDummy(id, pos, opts);
       throw new Error('Load an infected or combat scenario before spawning');
     },
+    explosions: { blast: (id, pos) => game.world.explosions!.blast(id, pos), wreck: id => game.world.vehicles!.damage(id, 1e6), state: () => structuredClone(game.world.explosions?.snapshot() ?? null) },
     barricades: { intact: id => game.world.barricades?.barricadeIntact(id) ?? false, all: id => game.world.barricades?.allBarricaded(id) ?? false, slots: () => game.world.entities.values().filter(e => e.barricade).map(e => ({ id: e.id, state: structuredClone(e.barricade!) })) },
     interact: {
       giveItem: id => game.world.interactables!.giveItem(id), refuel: (id, seconds) => game.world.interactables!.refuel(id, seconds),
