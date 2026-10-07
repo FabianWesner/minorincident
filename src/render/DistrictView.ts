@@ -39,7 +39,7 @@ import type { PaletteToken } from '../data/palette';
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 // Repeated fence panels dominated V1 (109k faces in each view/shadow pass).
 // Preserve the adjacent panels; farther boards need their silhouette, not fine bevels.
-const privacyFenceLodPolicy = { lod1From: 8, lod2From: 45, hysteresis: 2 };
+const privacyFenceLodPolicy = { lod1From: 6, lod2From: 45, hysteresis: 2 };
 
 interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */

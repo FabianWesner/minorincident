@@ -5,7 +5,7 @@ import { crowdLod } from './lodPolicy';
 import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
-import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3 } from 'three/webgpu';
+import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
 import { attribute, instancedBufferAttribute, mat4, normalGeometry, vec3, positionGeometry, mix, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform } from 'three/tsl';
 import { crowdBlendedMatrix, packCrowdParts } from '../assets/crowd';
 import type { Materials } from './Materials';
@@ -116,9 +116,9 @@ export class CrowdView extends Group {
       }
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
       packCrowdParts(baked.geometry);
-      const tint = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
+      const tint = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4).setUsage(StreamDrawUsage);
       // Pack frame, detached leg, gore mask and flash into one slot: WebGL2 guarantees 16 attributes.
-      const state = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
+      const state = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4).setUsage(StreamDrawUsage);
       baked.geometry.setAttribute('_state', state); baked.geometry.setAttribute('_variant', tint);
       const feedbackState = attribute('_state', 'vec4'), parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
       const opacity = feedbackState.w.div(2).floor().div(255).oneMinus();
@@ -148,10 +148,11 @@ export class CrowdView extends Group {
       });
       const slot = lod === 'lod0' ? this.heroSlots.get(def.id) : undefined;
       const mesh = slot ?? new InstancedMesh(baked.geometry, material, capacity);
+      mesh.instanceMatrix.setUsage(StreamDrawUsage);
       if (slot) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.geometry = baked.geometry; mesh.material = material; this.heroSlots.delete(def.id); } mesh.userData.preRenderSolo = true; mesh.name = def.id; mesh.frustumCulled = false; mesh.count = 0;
       // E17's explicit instance * part order: positionNode runs after default instancing.
-      const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1);
-      mesh.onBeforeRender = () => { matrices.version = mesh.instanceMatrix.version; };
+      const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
+      mesh.onBeforeRender = () => { matrices.version = mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, mesh.count * 16); };
       const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset);
       const instance = mat4(column(0), column(4), column(8), column(12));
       material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry.mul(visible), 1))).xyz;
@@ -255,7 +256,15 @@ export class CrowdView extends Group {
         const mesh = this.telegraphs[b.special === 'charge' || b.special === 'pin' || b.special === 'pounce' ? 1 : 0]; if (b.special === 'explode') this.transform.makeScale(3.75, 1, 3.75); else this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); this.transform.setPosition(e.transform.x, 0.06, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
       }
     }
-    for (const batch of this.batches.values()) { batch.mesh.count = batch.count; batch.mesh.visible = batch.count > 0; if (batch.count) { batch.mesh.instanceMatrix.needsUpdate = true; batch.state.needsUpdate = true; batch.tint.needsUpdate = true; } }
+    for (const batch of this.batches.values()) {
+      batch.mesh.count = batch.count; batch.mesh.visible = batch.count > 0;
+      if (batch.count) {
+        batch.mesh.instanceMatrix.clearUpdateRanges(); batch.mesh.instanceMatrix.addUpdateRange(0, batch.count * 16); batch.mesh.instanceMatrix.needsUpdate = true;
+        for (const attribute of [batch.state, batch.tint]) { attribute.clearUpdateRanges(); attribute.addUpdateRange(0, batch.count * 4); attribute.needsUpdate = true; }
+        const first = batch.poses.clip.frames * batch.texture.image.width * 4;
+        batch.texture.clearUpdateRanges(); batch.texture.addUpdateRange(first, batch.texture.image.data!.length - first);
+      }
+    }
     for (const mesh of this.telegraphs) { mesh.visible = mesh.count > 0; if (mesh.count) mesh.instanceMatrix.needsUpdate = true; }
     this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0;
     if (this.caps.count) this.caps.instanceMatrix.needsUpdate = true;

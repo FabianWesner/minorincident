@@ -1,7 +1,7 @@
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
-import { Color, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, type DataTexture } from 'three/webgpu';
+import { Color, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
 import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance } from 'three/tsl';
 import type { Materials } from '../Materials';
 import { crowdBlendedMatrix, packCrowdParts } from '../../assets/crowd';
@@ -67,10 +67,10 @@ class CivilianBatch extends Group {
   private readonly motion = new MotionPhase();
   private strideScale = 1;
   private readonly colors = civilianRoles.map(d => new Color(d.color));
-  private readonly frame = new InstancedBufferAttribute(new Float32Array(128), 1);
-  private readonly tint = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
+  private readonly frame = new InstancedBufferAttribute(new Float32Array(128), 1).setUsage(StreamDrawUsage);
+  private readonly tint = new InstancedBufferAttribute(new Float32Array(128 * 4), 4).setUsage(StreamDrawUsage);
   /** Infection overlay per instance: x skin blend toward ash-green, y eye glow, z blood (mouth and bite). */
-  private readonly overlay = new InstancedBufferAttribute(new Float32Array(128 * 3), 3);
+  private readonly overlay = new InstancedBufferAttribute(new Float32Array(128 * 3), 3).setUsage(StreamDrawUsage);
   private readonly shirt = new Color();
   private readonly registry = new AssetRegistry(() => {});
   source = 'placeholder';
@@ -137,7 +137,9 @@ class CivilianBatch extends Group {
     const glow = eyeColor.mul(eye.mul(2.2).add(socket.mul(.75))).mul(overlay.y).add(vec3(.05, .1, .03).mul(skinShift).mul(overlay.z));
     const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     this.mesh = new InstancedMesh(baked.geometry, material, 128); this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = !this.distant; this.mesh.receiveShadow = true;
-    const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1); this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; };
+    this.mesh.instanceMatrix.setUsage(StreamDrawUsage);
+    const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
+    this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, this.mesh.count * 16); };
     const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset), instance = mat4(column(0), column(4), column(8), column(12)), part = parts.x;
     const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
     const matrix = crowdBlendedMatrix(this.texture, part, attribute('_clip_frame', 'float'), outgoing, weight);
@@ -209,7 +211,13 @@ class CivilianBatch extends Group {
     // the shared contact shadows; hysteresis prevents caster toggling at an edge.
     this.mesh.castShadow = !this.distant && shadowPixels > (this.mesh.castShadow ? 128 : 156);
     this.mesh.count = index; this.mesh.visible = index > 0;
-    if (index) { this.mesh.instanceMatrix.needsUpdate = true; this.frame.needsUpdate = this.tint.needsUpdate = this.overlay.needsUpdate = true; }
+    if (index) {
+      for (const attribute of [this.mesh.instanceMatrix, this.frame, this.tint, this.overlay]) {
+        attribute.clearUpdateRanges(); attribute.addUpdateRange(0, index * attribute.itemSize); attribute.needsUpdate = true;
+      }
+      const first = this.bakedClip.frames * this.texture.image.width * 4;
+      this.texture.clearUpdateRanges(); this.texture.addUpdateRange(first, this.texture.image.data!.length - first);
+    }
   }
   private tintOf(e: EntitySnapshot, index: number, blend: number): void {
     if (e.appearance) this.shirt.set(e.appearance.tint);
