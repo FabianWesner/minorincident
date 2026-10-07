@@ -39,12 +39,12 @@ test('@E03 @E03-AC20 seven unarmed moves play through real Shift LMB without mov
   const dir = 'test-results/epics/E03/unarmed'; mkdirSync(dir, { recursive: true });
   for (const move of clips) {
     await page.mouse.down(); await tick(page);
-    for (const [label, ticks] of [['anticipation', 1], ['strike', 1], ['contact', 2], ['follow', 4], ['recover', 8]] as const) {
+    for (const [label, ticks] of [['anticipation', 1], ['strike', 1], ['contact', 2], ['follow', 4], ['recover', 6]] as const) { // the E19 jab lasts 16 ticks
       await tick(page, ticks); await page.evaluate(() => window.__SS__!.screenshotReady());
       expect(await page.evaluate(() => window.__SS__!.getState().render.character!.clip)).toBe(`unarmed-${move}`);
       await page.screenshot({ path: `${dir}/${move}-${label}.png` });
     }
-    await page.mouse.up(); await tick(page, 12);
+    await page.mouse.up(); await tick(page, 20); // E19 kicks hold their extension (up to 30 ticks)
   }
   await page.keyboard.up('Shift');
   const state = await page.evaluate(() => window.__SS__!.getState());
