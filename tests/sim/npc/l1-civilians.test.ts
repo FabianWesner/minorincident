@@ -140,4 +140,14 @@ describe('L1 v2 civilians and infection', () => {
     expect(w.entities.get(tech.id)).toBe(tech); expect(tech.infected).toBeDefined(); expect(tech.appearance).toEqual({ ...look, tier: 'average' });
     expect(outbreak.stats.turned).toBe(0); w.dispose();
   });
+
+  test('@E19 @E19-AC18 director/stream spawns get a pedestrian look too (no plain runner in L1)', async () => {
+    const { w } = await groveWorld(6, { civilians: 50 }); park(w);
+    const ai = w.infected!, cell = ai.nav.nearestCell(anchor('elm-horde-entry').x, anchor('elm-horde-entry').z);
+    const id = ai.spawn('infected.runner', { x: ai.nav.x(cell), z: ai.nav.z(cell) }, { state: 'idle', perched: false });
+    step(w, 1);
+    const e = w.entities.get(id)!;
+    expect(keepsLook(e)).toBe(true); expect(e.appearance!.asset).toMatch(/^npc\.civilian-/); expect(e.civilian).toBeUndefined();
+    w.dispose();
+  });
 });
