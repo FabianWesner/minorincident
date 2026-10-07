@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { lodPolicy, modelLod, pickLod } from '../../../src/render/lodPolicy';
+import { initialDistrictLods, lodPolicy, modelLod, pickLod } from '../../../src/render/lodPolicy';
 
 test('@load play view renders LOD0; LOD1 beyond 45 m, LOD2 beyond 90 m', () => {
   expect(pickLod(0)).toBe('lod0'); expect(pickLod(44)).toBe('lod0'); expect(pickLod(46)).toBe('lod1'); expect(pickLod(91)).toBe('lod2');
@@ -18,4 +18,11 @@ test('@load hysteresis: a band changes only past the boundary plus the margin', 
 test('@load low tier keeps its budget for individually loaded models', () => {
   expect(modelLod(5, undefined, true)).toBe('lod1'); expect(modelLod(31, 'lod1', true)).toBe('lod2');
   expect(modelLod(20, 'high', false)).toBe('lod0');
+});
+
+test('@load phone initial downloads include only tiers used at the spawn', () => {
+  expect(initialDistrictLods(true, true, 0)).toEqual(['lod2']);
+  expect(initialDistrictLods(true, false, 16)).toEqual(['lod1', 'lod2']);
+  expect(initialDistrictLods(true, false, 16.01)).toEqual(['lod2']);
+  expect(initialDistrictLods(false, true, 100)).toEqual(['lod1', 'lod2']);
 });
