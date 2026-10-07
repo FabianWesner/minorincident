@@ -4,7 +4,14 @@ from pathlib import Path
 import bpy, bmesh
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import export_lods, rebuild_from_baked
+
 HERE = Path(__file__).resolve().parent
+if '--lod-only' in sys.argv:
+    rebuild_from_baked(HERE/'model.glb')
+    sys.exit(0)
+
 parser = argparse.ArgumentParser()
 for flag in ('render', 'glb'): parser.add_argument('--' + flag)
 parser.add_argument('--view', default='ref', choices=['ref','game','front','side','rear'])
@@ -363,16 +370,8 @@ if args.glb:
     def export(path):
         bpy.ops.export_scene.gltf(filepath=str(path.resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
     export(Path(args.glb))
-    original={o:o.data for o in meshes}; lods=[]
-    for level,ratio in [(1,.14),(2,.035)]:
-        for o in meshes:
-            o.data=original[o].copy(); bpy.context.view_layer.objects.active=o
-            mod=o.modifiers.new('LOD','DECIMATE'); mod.ratio=ratio; bpy.ops.object.modifier_apply(modifier=mod.name)
-        path=Path(args.glb).with_name(Path(args.glb).stem+'.lod%d.glb'%level); export(path)
-        lods.append({'level':level,'triangles':sum(len(o.data.polygons) for o in meshes),'file':path.name})
-        for o in meshes:
-            reduced=o.data; o.data=original[o]; bpy.data.meshes.remove(reduced)
-    (HERE/'lods.json').write_text(json.dumps(lods,indent=2)+'\n')
+    export_lods(Path(args.glb), meshes)
+
 print('BUILD OK',tri,'triangles',len(meshes),'draw calls')
 if args.render:
     scene=bpy.context.scene; scene.render.engine='CYCLES'; scene.cycles.samples=args.samples; scene.cycles.use_denoising=True; scene.cycles.seed=714
