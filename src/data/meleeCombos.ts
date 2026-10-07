@@ -13,16 +13,16 @@ export interface MeleeMove {
 const move = (name: string, windup: number, active: number, recovery: number, extra: Omit<MeleeMove, 'name' | 'windup' | 'active' | 'recovery'> = {}): MeleeMove => ({ name, windup, active, recovery, ...extra });
 
 /** E19 §5.6: unarmed is one 7-move style with equal damage (9 of 9–11 → 5 hits per 40 HP
- * infected, never a one-shot); punches flinch only, kicks shove 1.5–2.5 m with a 0.4 s
+ * infected, never a one-shot); punches flinch (0.15–0.25 s, 0.3–0.7 m so the hit reads), kicks shove 1.5–2.5 m with a 0.4 s
  * stagger. The bat lands 22, its overhead finisher 30 (2 hits) with 2.5–3.5 m knockback. */
 export const meleeMoves: Readonly<Record<string, readonly MeleeMove[]>> = {
   'weapon.fists': [
-    move('jab', 3, 3, 10, { knockback: .12, stagger: 0, hitStopMs: 25 }),
-    move('cross', 4, 4, 10, { knockback: .25, stagger: 0, hitStopMs: 33 }),
+    move('jab', 3, 3, 10, { knockback: .3, stagger: .15, hitStopMs: 45 }),
+    move('cross', 4, 4, 10, { knockback: .45, stagger: .2, hitStopMs: 50 }),
     move('front-kick', 6, 5, 13, { knockback: 2, stagger: .4, range: 1.55, arc: 60, hitStopMs: 60 }),
     move('roundhouse-kick', 7, 5, 14, { knockback: 1.7, stagger: .4, range: 1.6, arc: 110, maxTargets: 2, hitStopMs: 60 }),
-    move('uppercut', 6, 5, 12, { knockback: .45, stagger: .15, hitStopMs: 50 }),
-    move('knee', 4, 4, 10, { knockback: .3, stagger: 0, range: 1.15, hitStopMs: 33 }),
+    move('uppercut', 6, 5, 12, { knockback: .7, stagger: .25, hitStopMs: 50 }),
+    move('knee', 4, 4, 10, { knockback: .45, stagger: .2, range: 1.15, hitStopMs: 50 }),
     move('spinning-backfist', 8, 5, 14, { knockback: .7, stagger: .2, range: 1.4, arc: 120, maxTargets: 2, hitStopMs: 60 }),
   ],
   'weapon.bat': [
