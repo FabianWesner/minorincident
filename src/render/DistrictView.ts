@@ -40,7 +40,7 @@ const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(
 
 /** Assets whose decimated LOD1/LOD2 show torn roofs or panels (asset QA 2026-10-07): their LOD1 band
  * uses LOD0 and their LOD2 band LOD1 until the LODs are regenerated - on the low tier (phones) only: the
- * high tier draws LOD0 within 45 m (lodPolicy), and loading these LOD0s up front cost ~1.6 s per L1 start. */
+ * high tier draws LOD0 within 8 m (lodPolicy), and loading these LOD0s up front cost ~1.6 s per L1 start. */
 const BROKEN_LOD1 = new Set(['bld.house-a', 'bld.house-c', 'bld.mainstreet-brick', 'bld.bus-stop', 'veh.suv-green', 'bld.gas-station']);
 interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; lit: boolean; loaded: boolean; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */
@@ -369,8 +369,10 @@ export class DistrictView extends Group {
       this.bounds.center.set(x, ref.position.y + height / 2, z); this.bounds.radius = radius;
       if (!this.frustum.intersectsSphere(this.bounds)) continue;
       const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
-      // High tier: LOD0 inside the play view (lodPolicy, with hysteresis). Low tier keeps its budget.
-      const band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' ? 'lod2' : 'lod1') : pickLod(distance, entry.bands[index]);
+      // Small props cover fewer pixels: scale their detail radius by the model bounds.
+      // High tier retains nearby hero detail with hysteresis; low tier keeps its measured budget.
+      const detailDistance = distance / (worldAssets[entry.id].category === 'prop' ? Math.min(1, radius / 5) : 1);
+      const band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' ? 'lod2' : 'lod1') : pickLod(detailDistance, entry.bands[index]);
       entry.bands[index] = band;
       (band === 'lod2' ? far : band === 'lod1' ? near : hero).references.push(ref);
     }
@@ -469,6 +471,8 @@ export class DistrictView extends Group {
         assetId: b.name.slice(5),
         instances: b.references.length,
         meshes: b.children.filter((c) => c instanceof InstancedMesh).length,
+        // Submitted geometry per batch, before shadow/post passes (test/perf diagnostics).
+        triangles: b.visible ? b.children.reduce((n, c) => n + (c instanceof InstancedMesh && c.visible ? (c.geometry.index?.count ?? c.geometry.getAttribute('position').count) / 3 * c.count : 0), 0) : 0,
       })),
       grassBlades: this.grass.reduce(
         (n, g) => n + g.geometry.getAttribute("position").count / 3,
