@@ -18,7 +18,7 @@ test('@load open gate passes immediately; paced gate releases one heavy step per
   expect(gate.pending).toBe(3); expect(frames).toHaveLength(1);
   frames.shift()!(0); await Promise.resolve(); expect(released).toEqual([1]);
   frames.shift()!(0); await Promise.resolve(); expect(released).toEqual([1, 2]);
-  gate.setPaced(false); await Promise.resolve(); expect(released).toEqual([1, 2, 3]);
+  gate.setPaced(false); frames.shift()!(0); await Promise.resolve(); expect(released).toEqual([1, 2, 3]);
 });
 
 test('@load asset URLs carry content versions only when the build provides them', () => {

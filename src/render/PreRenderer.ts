@@ -9,7 +9,7 @@ import type { Renderer } from './Renderer';
  * KHR_parallel_shader_compile work on several programs (L1: 7.4 s -> 2.3 s under load). */
 export const compileLanes = 6;
 export type CompilePartitions = (() => void)[];
-export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); }))): Promise<void> {
+export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>): Promise<void> {
   const saved: { object: Object3D; visible: boolean; culled: boolean; count?: number; matrices?: Matrix4[] }[] = [];
   scene.updateMatrixWorld(true);
   const focus = camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(camera.position);
@@ -39,8 +39,22 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     const partitions = Array.from({ length: compileLanes }, (_, lane) => () => { leaves.forEach((leaf, i) => { leaf.visible = i % compileLanes === lane; }); });
     // WebGL only: measured on WebGPU, three's per-object compileAsync costs more than the
     // synchronous pipeline creation of the warm-up draw (L1: 1.6-2.8 s vs +0.2 s).
-    try { if (renderer.selectedBackend === 'webgl') await compile(partitions); } finally { for (const leaf of leaves) leaf.visible = true; }
+    // Background (menu-time) warm-up on WebGPU: three's compileAsync builds node graphs asynchronously,
+    // yielding between objects, so the big material builds do not land in one long task.
+    try { if (renderer.selectedBackend === 'webgl') await compile(partitions); else if (pause) await compile([() => {}]); } finally { for (const leaf of leaves) leaf.visible = true; }
     performance.measure('L1 shader compilation', { start, end: performance.now() });
+    // Background (menu-time) warm-up: draw the leaves in small groups, one group per gate slot, so
+    // node builds and pipeline creation never form one long task; the full draw below is then cheap.
+    if (pause) {
+      const chunk = 16;
+      for (let from = 0; from < leaves.length; from += chunk) {
+        await pause();
+        leaves.forEach((leaf, i) => { leaf.visible = i >= from && i < from + chunk; });
+        try { render(); } finally { for (const leaf of leaves) leaf.visible = true; }
+      }
+      performance.measure('L1 warm-up chunks', { start, end: performance.now() });
+      await pause();
+    }
     const draw = performance.now(); render();
     await renderer.finishWarmUp();
     performance.measure('L1 warm-up draw', { start: draw, end: performance.now() }); let phase = performance.now();

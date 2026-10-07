@@ -68,6 +68,8 @@ export class GameView implements Lifecycle {
   warming: Promise<void> | null = null;
   /** Speculative menu-time level load: keep the mission UI hidden until the player picks the level. */
   missionHidden = false;
+  /** Menu-time (speculative) load: pace heavy steps one per frame and yield to player input. */
+  background = false;
   private frozenFrame: HTMLCanvasElement | null = null;
   /** Show a still copy of the current frame (e.g. the title backdrop) over the canvas while a level
    * loads and warms up behind the menus/briefing; drawing is suspended until unfreeze(). */
@@ -257,11 +259,12 @@ export class GameView implements Lifecycle {
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.districts?.ready()]);
     t = loadMeasure('view:lod-ready', t);
     const warm = async (): Promise<void> => {
+      await loadGate.foreground(); // node builds cannot be sliced: never during the menus
       this.lighting?.update(this.view);
       // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
-      try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); }))); }
+      try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : undefined); }
       finally { restore?.(); }
     };
     const finish = (): void => {
@@ -539,7 +542,8 @@ export class GameView implements Lifecycle {
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
   reset(): void {
-    this.generation++; this.pendingPreparation = null; this.preparation = null; this.warming = null; loadGate.setPaced(false);
+    this.generation++; this.pendingPreparation = null; this.preparation = null; this.warming = null;
+    if (this.background) { loadGate.setPaced(true); loadGate.background = true; } else loadGate.setPaced(false);
     this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;
     if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }
     if (this.labAccident) { this.scene.remove(this.labAccident.column); this.labAccident.dispose(); this.labAccident = null; }
