@@ -7,7 +7,7 @@ import imports from '../../../assets/audio/imports.json';
 import { audioCredits } from '../../../src/data/audioCredits';
 test('@E16 event stingers and audible UI cues use recorded sources', () => {
     const recipes = imports.cues as Record<string, { source: string }>;
-    const naturalEvents = Object.values(audioCues).filter(c => c.id.startsWith('stinger.') || c.bus === 'ui' && c.gain > 0 || c.id === 'l1.outro.sting' || c.id === 'l1.ringing' || c.id === 'tinnitus' || c.id.startsWith('diegetic.') && c.shape === 'music');
+    const naturalEvents = Object.values(audioCues).filter(c => c.id.startsWith('stinger.') || c.bus === 'ui' && c.gain > 0 || c.id === 'l1.outro.sting' || c.id === 'l1.ringing' || c.id === 'tinnitus' || c.id.startsWith('diegetic.') || c.id.startsWith('dialogue.') || c.id.startsWith('civilian.hey'));
     for (const cue of naturalEvents) {
         expect(recipes[cue.id], cue.id).toBeDefined();
         expect(recipes[cue.id].source, cue.id).not.toBe('blinding');
