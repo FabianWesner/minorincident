@@ -161,3 +161,17 @@ body:not(.debug-ui) [data-input-hint]{display:none!important}
 .hud-slot[role=button]{pointer-events:auto;cursor:pointer}
 
 .hud-tracker{background:#18233370;border-width:1px;border-left-width:3px;border-radius:8px;box-shadow:none;padding:6px 10px;line-height:1.3;text-shadow:0 1px 3px #101824}
+
+/* Phone readability (PO UAT: mission text too small): viewport-scaled text, opaque backdrops, clear of the stick and buttons.
+   Objective >= 16 px, captions and prompts >= 15 px at 390x844 and 844x390; safe-area insets come from --hud-* variables. */
+.touch-ui{--hud-text:clamp(16px,4.1vmin,20px);--hud-caption:clamp(15px,3.9vmin,19px)}
+.touch-ui .hud-tracker{height:auto;min-height:56px;font-size:var(--hud-text);line-height:1.3;padding:6px 10px;background:#182333f2;border-width:2px;border-left-width:5px}
+.touch-ui [data-testid=objective-text]{-webkit-line-clamp:3}
+.full-ui.touch-ui .mission-subtitle{font-size:var(--hud-caption);line-height:1.3;padding:8px 12px;background:#182333f5;border:2px solid #bc9c70;left:50%;transform:translateX(-50%);width:min(calc(100vw - var(--hud-left) - var(--hud-right) - 24px),520px);max-width:none;bottom:calc(var(--hud-bottom) + 170px)}
+.touch-ui .onboarding{font-size:var(--hud-caption);line-height:1.3;background:#182333f2;max-width:calc(100vw - var(--hud-left) - var(--hud-right) - 24px)}
+.full-ui.touch-ui .mission-panel{font-size:var(--hud-text);width:min(calc(100vw - 24px),520px);padding:14px 16px}
+@media(orientation:landscape) and (max-height:500px){
+  /* Landscape: captions sit between the stick (left) and the action buttons (right), at the bottom. */
+  .full-ui.touch-ui .mission-subtitle{width:min(calc(100vw - 2 * (var(--hud-left) + 168px)),480px);bottom:var(--hud-bottom)}
+  .touch-ui .hud-tracker{width:min(300px,calc(100vw - var(--hud-left) - var(--hud-right) - var(--hud-map-size) - 76px));right:auto}
+}
