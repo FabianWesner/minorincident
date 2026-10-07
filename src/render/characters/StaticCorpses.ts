@@ -51,7 +51,7 @@ export class StaticCorpses extends Group {
       }
       const state = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
       const colors = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
-      const stains = new InstancedBufferAttribute(new Float32Array(128 * 3), 3);
+      const stains = new InstancedBufferAttribute(new Float32Array(128 * 4), 4); // crowd overlay layout (w: pose row, unused when frozen)
       geometry.setAttribute('_state', state); geometry.setAttribute('_variant', colors); geometry.setAttribute('_overlay', stains);
       const frozen = new MeshLambertNodeMaterial().copy(material); frozen.positionNode = null; frozen.normalNode = null;
       const mesh = new InstancedMesh(geometry, frozen, 128); mesh.count = 0;

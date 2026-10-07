@@ -75,11 +75,12 @@ class CivilianBatch extends Group {
   private readonly motion = new MotionPhase();
   private strideScale = 1;
   private readonly colors = civilianRoles.map(d => new Color(d.color));
-  private readonly poseFrame = new InstancedBufferAttribute(new Float32Array(350), 1).setUsage(StreamDrawUsage);
   private readonly frame = new InstancedBufferAttribute(new Float32Array(350), 1).setUsage(StreamDrawUsage);
   private readonly tint = new InstancedBufferAttribute(new Float32Array(350 * 4), 4).setUsage(StreamDrawUsage);
-  /** Infection overlay per instance: x skin blend toward ash-green, y eye glow, z blood (mouth and bite). */
-  private readonly overlay = new InstancedBufferAttribute(new Float32Array(350 * 3), 3).setUsage(StreamDrawUsage);
+  /** Infection overlay per instance: x skin blend toward ash-green, y eye glow, z blood (mouth and bite); w is the
+   * displayed pose-atlas row. Packed so the draw stays within WebGPU's 8 vertex buffers (a separate `_pose_frame`
+   * buffer made the pipeline invalid: every pedestrian vanished on WebGPU while props and shadows still drew). */
+  private readonly overlay = new InstancedBufferAttribute(new Float32Array(350 * 4), 4).setUsage(StreamDrawUsage);
   private readonly shirt = new Color();
   private readonly registry = new AssetRegistry(() => {});
   source = 'placeholder';
@@ -121,12 +122,12 @@ class CivilianBatch extends Group {
     baked.geometry.setAttribute('_vein', new BufferAttribute(veins, 1));
     deinterleaveGeometry(baked.geometry);
     const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
-    baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_pose_frame', this.poseFrame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
+    baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
     this.poses = new CrowdPosePalette(baked.clip, 350); this.texture = this.poses.texture;
     packCrowdParts(baked.geometry);
     const parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
-    const overlay = attribute('_overlay', 'vec3'), eye = parts.z, vein = parts.w.greaterThan(.5).select(parts.w.lessThan(1.5).select(1, 0), 0), blood = parts.w.greaterThan(1.5).select(parts.w.lessThan(2.5).select(1, 0), 0), socket = parts.w.greaterThan(2.5).select(1, 0), decay = overlay.x;
+    const overlay = attribute('_overlay', 'vec4'), eye = parts.z, vein = parts.w.greaterThan(.5).select(parts.w.lessThan(1.5).select(1, 0), 0), blood = parts.w.greaterThan(1.5).select(parts.w.lessThan(2.5).select(1, 0), 0), socket = parts.w.greaterThan(2.5).select(1, 0), decay = overlay.x;
     // parts.y > 0: tinted garment, value = the shade's brightness relative to the main garment colour.
     const clothing = parts.y.greaterThan(0).select(variant.xyz.mul(parts.y), attribute('color', 'vec3'));
     // Same clothes and body: only the skin blends toward ash-green, blood darkens mouth and bite, eyes ignite.
@@ -153,7 +154,7 @@ class CivilianBatch extends Group {
     this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, this.mesh.count * 16); };
     const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset), instance = mat4(column(0), column(4), column(8), column(12)), part = parts.x;
     const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
-    const matrix = crowdBlendedMatrix(this.texture, part, attribute('_pose_frame', 'float'), outgoing, weight);
+    const matrix = crowdBlendedMatrix(this.texture, part, overlay.w, outgoing, weight);
     material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry.mul(vein.greaterThan(.5).select(decay.greaterThan(.25).select(1, 0), 1)), 1))).xyz;
     material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
     this.mesh.onAfterRender = () => this.probe.draw();
@@ -210,7 +211,7 @@ class CivilianBatch extends Group {
     const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
       if (strides[clip] && speed > .06) { frame = this.poses.correct(e.id, frame, ...blend, pose => this.locomotion.correct(e.id, pose, this.transform, phase, clip, this.strideScale * (c.adult ? 1 : .7), speed)); blend[1] = 1; } else { this.locomotion.reset(e.id); if (blend[1] < 1) { frame = this.poses.correct(e.id, frame, ...blend, () => {}); blend[1] = 1; } }
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
-      this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.poseFrame.setX(index, frame);
+      this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
       // A dropped hand prop (startle, bite) stays dropped: `appearance.handProp` is cleared by the outbreak layer.
       const handProp = c.story ? c.story.prop : activity?.prop;
       if (handProp && c.state === 'calm' && this.props && (c.story || e.appearance?.handProp !== null)) {
@@ -230,7 +231,7 @@ class CivilianBatch extends Group {
     this.mesh.castShadow = !this.distant && shadowPixels > (this.mesh.castShadow ? 128 : 156);
     this.mesh.count = index; this.mesh.visible = index > 0;
     if (index) {
-      for (const attribute of [this.mesh.instanceMatrix, this.frame, this.poseFrame, this.tint, this.overlay]) {
+      for (const attribute of [this.mesh.instanceMatrix, this.frame, this.tint, this.overlay]) {
         attribute.clearUpdateRanges(); attribute.addUpdateRange(0, index * attribute.itemSize); attribute.needsUpdate = true;
       }
       const first = this.bakedClip.frames * this.texture.image.width * 4;
@@ -271,7 +272,7 @@ class CivilianBatch extends Group {
       return false;
     }
     this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
-    this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.poseFrame.setX(index, frame);
+    this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
     this.tintOf(e, index, blend[0] * 2 + blend[1]); this.overlay.setXYZ(index, .4, b.state === 'dead' ? 0 : 1, 1);
     return true;
   }
