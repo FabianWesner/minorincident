@@ -1,6 +1,19 @@
 import { test, expect, vi } from 'vitest';
 import { AudioRegistry } from '../../../src/audio/AudioRegistry';
 import { audioVariationPools } from '../../../src/data/audioCues';
+test('@load initial audio retains gameplay cues and defers ambient beds and music', async () => {
+    const registry = new AudioRegistry({ decodeAudioData: async () => ({} as AudioBuffer) } as unknown as BaseAudioContext, async () => new ArrayBuffer(0));
+    await registry.prepare('L1', false);
+    expect(registry.buffers.has('ui')).toBe(true);
+    expect(registry.buffers.has('impacts')).toBe(true);
+    expect(registry.buffers.has('barks')).toBe(true);
+    expect(registry.buffers.has('l1arc')).toBe(true);
+    expect(registry.buffers.has('ambience')).toBe(false);
+    expect(registry.buffers.has('music-L1')).toBe(false);
+    await registry.prepare('L1');
+    expect(registry.buffers.has('ambience')).toBe(true);
+    expect(registry.buffers.has('music-L1')).toBe(true);
+});
 test('T-E16-19b @E16 @E16-AC19 failed Opus decode falls back to AAC and caches the decoded sprite', async () => {
     const buffer = { length: 48000, duration: 1 } as AudioBuffer;
     const decode = vi.fn().mockRejectedValueOnce(new Error('Codec unsupported')).mockResolvedValue(buffer), read = vi.fn(async () => new ArrayBuffer(12));
