@@ -111,6 +111,10 @@ test('common-worker hierarchy and crowd remain readable at all delivered tiers @
     await page.evaluate(quality => window.__ASSET__!.inspectionView!(quality, Math.PI / 4), quality);
     await page.locator('canvas').screenshot({ path: `${output}/worker-hierarchy-${quality}.png` });
   }
+  for (const azimuth of [45, 135, 225, 315]) {
+    await page.evaluate(azimuth => window.__ASSET__!.inspectionView!('lod1', azimuth), azimuth);
+    await page.locator('canvas').screenshot({ path: `${output}/worker-angle-${azimuth}.png` });
+  }
   await boot(page);
   await page.evaluate(async () => {
     const a = window.__SS__!; await a.loadScenario('perf-horde-200'); a.pause(); a.cheats.god(true); a.camera.preset('perf-horde');
