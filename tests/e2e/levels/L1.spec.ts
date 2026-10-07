@@ -168,7 +168,7 @@ test.describe('L1 v2 real-input playthrough', () => {
       if (m.phase === 'cinematic' || m.phase === 'result') break;
       const active = Object.entries(m.steps).find(([, s]) => s.status === 'active')?.[0];
       if (!active) { await step(30); continue; }
-      if (await fightNearby(page)) continue;
+      if (!assisted && await fightNearby(page)) continue;
       if (assisted && active === 'firestation' && !shots.has('l1-horde')) {
         await waitBeat(); await go(at('photo-l1-horde'), 1.5); await step(1200);
         shots.add('l1-horde'); await snap('l1-horde', (await player()).transform, true);
