@@ -27,6 +27,8 @@ export function districtAssetUrls(id: string, definition: (id: string) => import
   return [...new Set([def.lods?.lod1 ?? def.glb, def.lods?.lod2 ?? def.glb].filter((path): path is string => Boolean(path)).map(path => '/' + path.replace(/^public\//, '')))];
 }
 /** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
+/** Enterable unique buildings: the roof is batched separately and lifted while the player is inside (DistrictView.updateRoofs). */
+export const ROOFED = new Set(['bld.garage-detached', 'bld.courier-depot', 'bld.clinic-annex', 'bld.cafe-corner']);
 export class DistrictAssets {
   private readonly loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
   private readonly cache = new Map<string, Promise<Group>>();
@@ -121,6 +123,7 @@ export class DistrictAssets {
         if (turned > straight) asset.rotation.y = Math.PI / 2;
       }
       // While a level is playable, batching is sliced over frames (one gate slot per slice).
+      if (ROOFED.has(id)) asset.userData.splitRoof = true;
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
       this.share(root);
       if (id === 'bld.joes-diner') {

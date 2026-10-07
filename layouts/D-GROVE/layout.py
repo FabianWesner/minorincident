@@ -348,7 +348,7 @@ g.place(garage, gx, gz_, FACE_YAW['N'])
 if g.placeholder(garage):
     g.shell('garage', gx, gz_, 'N', gdx, gdz, [('front', 0, 2.6)])
 anchors['garage-door'] = (gx, GARAGE_FRONT + .3)          # on the apron, 0.9 m outside the door plane (local x 1.5)
-anchors['garage-bat'] = (gx + .3, gz_ - .85)              # threshold of the lit garage: the nav-reachable point nearest the workbench (interior boxes are solid)
+anchors['garage-bat'] = (gx + .3, gz_ - 1.3)              # threshold of the lit garage: the nav-reachable point nearest the workbench (interior boxes are solid)
 g.path(gx - 1.5, SFRONT, gx + 1.5, GARAGE_FRONT, 'uiDark')
 hd = HOUSE['d']
 henderson = kind('D')
