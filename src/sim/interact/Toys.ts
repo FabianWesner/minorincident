@@ -7,6 +7,8 @@ import type { EntitySnapshot } from '../world/types';
 /** Serialized toy component (dumpster, car alarm, car wash). Gates are plain `interactable` devices. */
 export interface ToyState {
   kind: 'dumpster' | 'car-alarm' | 'carwash';
+  /** Car alarms stay dormant (no prompt) until the outbreak starts (`l1.blast`) or `armAlarms()`. */
+  locked?: boolean;
   /** Alarm or wash running until this tick. */
   until: number;
   /** Next tick the toy can be triggered again. */
@@ -42,7 +44,7 @@ export class LosRegistry implements LosBlockerRegistry {
   get(id: string): LosBlocker | undefined { return this.items.get(id); }
   clear(a: Vec2, b: Vec2): boolean { for (const item of this.items.values()) if (item.active && blocked(item.shape, a, b)) return false; return true; }
 }
-const GATE_HALF = .9, GATE_THICK = .12, DUMPSTER_LONG = 1.1, DUMPSTER_SHORT = .6, PUSH_TICKS = 90;
+const ALARM_RING_M = 3.2, ALARM_KICK_M = 3.6, GATE_HALF = .9, GATE_THICK = .12, DUMPSTER_LONG = 1.1, DUMPSTER_SHORT = .6, PUSH_TICKS = 90;
 const aabb = (x: number, z: number, hx: number, hz: number): LosShape => ({ kind: 'aabb', min: { x: x - hx, z: z - hz }, max: { x: x + hx, z: z + hz } });
 /**
  * L1 v2 interactive toys (spec 5.11), placed from the D-GROVE anchors. Each toy is an `Interactables` device (so the existing
@@ -59,13 +61,14 @@ export class Toys {
   private readonly walls = new Map<number, { x: number; z: number; hx: number; hz: number }>();
   constructor(private readonly world: SimWorld) {
     world.events.on('interact.completed', e => { if (e.type === 'interact.completed') this.completed(e.id); });
+    world.events.on('l1.blast', () => this.armAlarms());
     // Kicking or attacking a parked alarm car (player attack, car within reach and in front) sets it off like interacting.
     world.events.on('combat.attack', e => {
       if (e.type !== 'combat.attack' || e.sourceId !== 1) return;
       for (const id of this.alarmIds) {
         const car = world.entities.get(id); if (!car?.interactable?.enabled) continue;
         const dx = car.transform.x - e.position.x, dz = car.transform.z - e.position.z, d = Math.hypot(dx, dz);
-        if (d <= 2.8 && (d < .5 || (dx * e.direction.x + dz * e.direction.z) / d > 0)) this.completed(id);
+        if (d <= ALARM_KICK_M && (d < .5 || (dx * e.direction.x + dz * e.direction.z) / d > 0)) this.completed(id);
       }
     });
   }
@@ -108,8 +111,9 @@ export class Toys {
     this.walls.set(e.id, { x: from.x, z: from.z, hx, hz }); this.dumpsterIds.push(e.id); this.placeDumpster(e);
   }
   private alarm(a: Vec2): void {
-    const e = this.device('button', a, 'Car alarm', { radius: 2.4 });
-    e.toy = { kind: 'car-alarm', until: 0, rearmAt: 0, from: a, to: a, progress: 0, pushing: false }; this.alarmIds.push(e.id);
+    const e = this.device('button', a, 'Car alarm', { radius: ALARM_RING_M });
+    e.interactable!.enabled = false;
+    e.toy = { kind: 'car-alarm', locked: true, until: 0, rearmAt: 0, from: a, to: a, progress: 0, pushing: false }; this.alarmIds.push(e.id);
   }
   private carwash(a: Vec2): void {
     const e = this.device('button', a, 'Start car wash', { radius: 2.4 });
@@ -134,6 +138,8 @@ export class Toys {
     } else { t.until = tick + l1v2.toys.carWash.durationS * 60; t.rearmAt = t.until + 300; }
     c.completed = false; c.progress = 0; c.enabled = false;
   }
+  /** The outbreak has started: parked cars can now be set off. */
+  armAlarms(): void { for (const id of this.alarmIds) { const e = this.world.entities.get(id); if (e?.toy?.locked) { e.toy.locked = false; e.interactable!.enabled = true; } } }
   /** Speed multiplier for anything standing at (x, z); 0.5 inside the running car wash. Consumed by the infected movement. */
   speedFactorAt(x: number, z: number): number {
     const wash = this.world.entities.get(this.carwashId)?.toy;
@@ -158,7 +164,7 @@ export class Toys {
     }
     for (const id of [...this.alarmIds, this.carwashId]) {
       const e = w.entities.get(id), t = e?.toy; if (!e || !t) continue;
-      if (!e.interactable!.enabled && tick >= t.rearmAt) { e.interactable!.enabled = true; e.interactable!.completed = false; e.interactable!.progress = 0; }
+      if (!t.locked && !e.interactable!.enabled && tick >= t.rearmAt) { e.interactable!.enabled = true; e.interactable!.completed = false; e.interactable!.progress = 0; }
     }
     const wash = w.entities.get(this.carwashId)?.toy;
     this.los.setActive('carwash-curtain', !!wash && tick < wash.until);

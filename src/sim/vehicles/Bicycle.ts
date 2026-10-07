@@ -50,6 +50,13 @@ export class Bicycle {
   get speedScale(): number { return this.riding ? speedMs / survivor.speed : 1; }
   addNoBikeZone(zone: NoBikeZone): void { this.noBikeZones.push(zone); }
   inNoBikeZone(p: Vec2): boolean { return this.noBikeZones.some(z => inPolygon(p, z.polygon)); }
+  /** Inside a zone or within `margin` metres of its edge (a fence on the border stops the rider just outside it). */
+  atNoBikeZone(p: Vec2, margin = .6): boolean {
+    return this.noBikeZones.some(z => inPolygon(p, z.polygon) || z.polygon.some((a, i) => {
+      const b = z.polygon[(i + 1) % z.polygon.length], dx = b.x - a.x, dz = b.z - a.z, t = Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.z - a.z) * dz) / (dx * dx + dz * dz || 1)));
+      return Math.hypot(p.x - a.x - t * dx, p.z - a.z - t * dz) <= margin;
+    }));
+  }
   /** Applies the bicycle to this tick's effective input. Returns the same frame when nothing changes. */
   filter(frame: InputFrame): InputFrame {
     const bike = this.entity, b = bike?.bicycle, player = this.world.entities.get(1);
@@ -61,7 +68,7 @@ export class Bicycle {
       if (d > 2) b.armed = true;
       const still = Math.hypot(frame.move.x, frame.move.z) < .05;
       b.standTicks = d <= MOUNT_RANGE && still && b.armed ? b.standTicks + 1 : 0;
-      const free = alive && d <= MOUNT_RANGE && this.world.tick >= b.lockUntil && !this.inNoBikeZone(player.transform) && !this.world.vehicles?.active;
+      const free = alive && d <= MOUNT_RANGE && this.world.tick >= b.lockUntil && !this.atNoBikeZone(player.transform) && !this.world.vehicles?.active;
       if (free && (frame.interact || b.standTicks >= mountInteractS * 60)) {
         b.mounted = true; b.standTicks = 0; player.riding = bike.id; b.heading = -player.transform.yaw;
         this.lastOutside = { x: player.transform.x, z: player.transform.z };
@@ -76,7 +83,7 @@ export class Bicycle {
       if (!e.infected || e.health.current <= 0 || e.hidden || e.infected.hidden) continue;
       if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= BUMP_RANGE) { this.dismount(bike, player); return frame; }
     }
-    if (this.inNoBikeZone(player.transform)) { this.dismount(bike, player, this.lastOutside); return frame; }
+    if (this.atNoBikeZone(player.transform)) { this.dismount(bike, player, this.lastOutside); return frame; }
     this.lastOutside = { x: player.transform.x, z: player.transform.z };
     // Speed actually achieved last tick: walls and props stop the bicycle.
     const loco = this.world.player!.locomotion, actual = Math.hypot(loco.displacement.x, loco.displacement.z) / FIXED_DT;
