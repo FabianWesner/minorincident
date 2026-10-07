@@ -45,6 +45,8 @@ export interface L1Brain {
   biteTargetId: number;
   /** Steering cache: the goal was in clear straight view at `directTick` (goal position directX/Z). */
   direct: boolean; directTick: number; directX: number; directZ: number;
+  /** Where it spawned (or rose): wander drifts away from here. */
+  homeX: number; homeZ: number;
 }
 export function searchPlan(): SearchPlan {
   return { startTick: 0, until: 0, originX: 0, originZ: 0, probes: [], doubleBackAt: -1, next: -1, visited: 0, doubledBack: false, legTicks: 0 };
@@ -89,12 +91,22 @@ export function planSearch(plan: SearchPlan, rng: Rng, nav: ProbeTerrain, tick: 
     plan.doubleBackAt = 3;
   }
 }
-/** Random wander goal 4-12 m away on walkable ground, or false when none was found this tick. */
-export function wanderGoal(brain: L1Brain, rng: Rng, nav: ProbeTerrain & { visible(from: { x: number; z: number }, to: { x: number; z: number }, radius: number): boolean }, from: { x: number; z: number }): boolean {
-  for (let k = 0; k < 4; k++) {
-    const angle = rng.next() * Math.PI * 2, r = 4 + rng.next() * 8, x = from.x + Math.cos(angle) * r, z = from.z + Math.sin(angle) * r;
+/**
+ * Wander goal 6-16 m away on walkable ground in straight view, or false when none was found this tick. Candidates are
+ * scored toward open ground (streets, sidewalks, squares: long sightlines), away from the infected's spawn area and
+ * toward blocks where civilians are (`crowd`, civilians only, never the survivor), plus noise so drift stays unpredictable.
+ */
+export function wanderGoal(brain: L1Brain, rng: Rng, nav: ProbeTerrain & { visible(from: { x: number; z: number }, to: { x: number; z: number }, radius: number): boolean }, from: { x: number; z: number }, crowd: (x: number, z: number) => number = () => 0): boolean {
+  let best = -Infinity;
+  const homeDistance = Math.hypot(from.x - brain.homeX, from.z - brain.homeZ);
+  for (let k = 0; k < 6; k++) {
+    const angle = rng.next() * Math.PI * 2, r = 6 + rng.next() * 10, x = from.x + Math.cos(angle) * r, z = from.z + Math.sin(angle) * r;
     if (!nav.clear(x, z, agentRadius) || !nav.visible(from, { x, z }, agentRadius)) continue;
-    brain.goalX = x; brain.goalZ = z; brain.hasGoal = true; return true;
+    const open = (nav.clear(x, z, 2) ? 0.5 : 0) + (nav.clear(x, z, 3.5) ? 0.5 : 0);
+    const away = Math.max(-1, Math.min(1, (Math.hypot(x - brain.homeX, z - brain.homeZ) - homeDistance) / r));
+    const score = open * 0.9 + away * 0.6 + Math.min(1, crowd(x, z) / 4) * 1.2 + rng.next() * 0.8;
+    if (score > best) { best = score; brain.goalX = x; brain.goalZ = z; }
   }
-  return false;
+  if (best === -Infinity) return false;
+  brain.hasGoal = true; return true;
 }
