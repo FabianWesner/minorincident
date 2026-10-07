@@ -8,6 +8,8 @@ command -v lockf >/dev/null 2>&1 || exec "$@"
 export MI_E2E_LOCK_HELD=1
 base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"
 slots="${E2E_SLOTS:-1}"
+# Join the wait queue for the usual single slot; polling can starve behind blocking waiters.
+[ "$slots" -eq 1 ] && exec lockf "$base.0" "$@"
 while :; do
   i=0
   while [ "$i" -lt "$slots" ]; do
