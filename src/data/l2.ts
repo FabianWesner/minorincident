@@ -19,6 +19,8 @@ export const l2 = {
     ambushRush: { 'refuge-door-1': [-50, -36], 'refuge-door-17': [-46, -38], 'refuge-door-8': [-48, -34] } as Record<string, P>,
     /** Fleeing people run for town edges at least this far from the market (the nearby houses are locked). */
     refugeMinM: 70,
+    /** Trapped people visible at the open storefront before the release (x, z, yaw): east glass and south glass. */
+    atGlass: [[-52.2, -43.6, 0], [-52.3, -41.6, 0], [-52.2, -39.8, 0], [-57.6, -38.4, -Math.PI / 2], [-55.4, -38.5, -Math.PI / 2], [-53.6, -38.4, -Math.PI / 2]] as readonly (readonly [number, number, number])[],
     radioAfterS: 45, radioAwayM: 25,
   },
   /** Section 5.2: allied fighters v1. */
@@ -41,7 +43,7 @@ export const l2 = {
   cluster: { home: [60, 30] as P, count: 14, radiusM: 7, triggerM: 30 },
   /** Section 5.6: the police bridge checkpoint at the east end of Elm Street. */
   /** Officers hold fire until the evacuee is this close to the gate (they do not clear the approach from the line). */
-  checkpoint: { gateX: 76, gateZ: [24.6, 35.6] as P, closeWithinS: 1.5, holdS: 2, officers: 4, civilians: 8, policeVehicles: 3, shootM: 15, coverM: 30 },
+  checkpoint: { gateX: 76, gateZ: [24.6, 35.6] as P, closeWithinS: 1.5, holdS: 2, officers: 4, civilians: 8, policeVehicles: 3, shootM: 15, coverM: 20 },
   /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle). Starting tuning for the 'fight everything' failure. */
   infectedDamage: 1.8,
   /** Section 4: checkpoints. */
@@ -77,7 +79,7 @@ export const l2Anchors: Record<string, P> = {
   'l2-cluster-alarm': [48.6, 18.6],
   'l2-side-gate': [81.5, 35.8],
   'photo-l2-station-calm': [-72.5, 44.5], 'photo-l2-alarm': [-72.5, 43], 'photo-l2-truck-ride': [-30, 0],
-  'photo-l2-doors-open': [-50, -40], 'photo-l2-collapse': [-48, -36], 'photo-l2-streets-w1': [-38.6, -36.3],
+  'photo-l2-doors-open': [-50, -40], 'photo-l2-collapse': [-48, -36], 'photo-l2-streets-w1': [-37.8, -35.0],
   'photo-l2-cluster': [60, 28], 'photo-l2-bridge-checkpoint': [78, 30],
 };
 /** Truck route (centre line), station apron -> Elm -> Juniper west -> Main Row -> Grove Market forecourt. */

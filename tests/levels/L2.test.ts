@@ -3,7 +3,7 @@ import { afterEach, describe, expect, test } from 'vitest';
 import { l2 } from '../../src/data/l2';
 import { validateMission } from '../../src/sim/missions/schema';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
-import type { L2Opening, L2Profile } from '../../src/debug/bot/LevelTwoBot';
+import { l2Routes, type L2Opening, type L2Profile } from '../../src/debug/bot/LevelTwoBot';
 import { loadL2, runL2, inCheckpointZone, type L2Report } from '../../tools/sim-runner/l2Bots';
 
 /** E20 L2 "The Failed Rescue": mission graph, set piece, outbreak, allies, lesson, escape, cluster, checkpoint (sim ACs). */
@@ -149,6 +149,34 @@ describe('L2 The Failed Rescue', () => {
       expect(r.radio!.chasingPlayer).toBeLessThanOrEqual(.2 * r.radio!.infected);
     }
   }, HEAVY);
+
+  test('T-E20-12b @E20 @E20-AC12 layout: two disjoint routes (< 30 % shared), sight blockers every <= 25 m, alarms and dumpsters on the routes', async () => {
+    const l = await loadL2(1); world = l.world; const w = l.world, nav = w.infected!.nav;
+    const cells = (pts: readonly { x: number; z: number }[]) => {
+      const out: number[] = [];
+      for (let i = 1; i < pts.length; i++) { const path: number[] = []; expect(nav.path(nav.nearestCell(pts[i - 1].x, pts[i - 1].z), nav.nearestCell(pts[i].x, pts[i].z), path, 400000)).toBe(true); out.push(...path); }
+      return out;
+    };
+    const side = cells(l2Routes.side), alarm = cells(l2Routes.alarm);
+    const near = (cell: number, set: Set<number>) => { for (let dz = -3; dz <= 3; dz++) for (let dx = -3; dx <= 3; dx++) if (set.has(cell + dz * nav.width + dx)) return true; return false; };
+    const alarmSet = new Set(alarm);
+    expect(side.filter(c => near(c, alarmSet)).length / side.length).toBeLessThan(.3);
+    // Sight blockers: no 25 m stretch of either route without cover that blocks infected sight (the perception LOS uses
+    // every collider spanning eye height 0.7 m: buildings, walls, fences, parked vehicles) within 8 m.
+    const tall = w.combat!.query.walls.filter(c => c.y - c.halfY <= .7 && c.y + c.halfY >= .7 && Math.max(c.halfX, c.halfZ) >= .5);
+    for (const route of [side, alarm]) {
+      let run = 0;
+      for (let i = 1; i < route.length; i++) {
+        const x = nav.x(route[i]), z = nav.z(route[i]);
+        run = tall.some(c => Math.abs(x - c.x) <= c.halfX + 8 && Math.abs(z - c.z) <= c.halfZ + 8) ? 0 : run + Math.hypot(x - nav.x(route[i - 1]), z - nav.z(route[i - 1]));
+        expect(run, `open stretch ending at ${x.toFixed(1)},${z.toFixed(1)}`).toBeLessThanOrEqual(25);
+      }
+    }
+    const onRoute = (p: { x: number; z: number }) => [...side, ...alarm].some(c => Math.hypot(nav.x(c) - p.x, nav.z(c) - p.z) <= 12);
+    expect(w.toys!.alarmIds.filter(id => onRoute(w.entities.get(id)!.transform)).length).toBeGreaterThanOrEqual(3);
+    expect(w.toys!.dumpsterIds.filter(id => onRoute(w.entities.get(id)!.transform)).length).toBeGreaterThanOrEqual(2);
+    record('layout-routes', { sideM: side.length * nav.cellSize, alarmM: alarm.length * nav.cellSize, alarms: w.toys!.alarmIds.length, dumpsters: w.toys!.dumpsterIds.length });
+  });
 
   test('T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice', async () => {
     const side = await complete(), alarm = await battery('complete', { opening: 'alarm' });

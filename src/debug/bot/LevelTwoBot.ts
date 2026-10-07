@@ -10,7 +10,7 @@ export type L2Profile = 'complete' | 'newbie' | 'no-axe' | 'aggressive' | 'idle'
 export type L2Opening = 'side' | 'alarm';
 type P = { x: number; z: number };
 const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.z - b.z);
-const ROUTES: Record<L2Opening, P[]> = {
+export const l2Routes: Record<L2Opening, readonly P[]> = {
   // Side path: Main Row west, Maple south, Elm to Juniper, alley-s east, the edge strip to the south gate of the checkpoint.
   side: [{ x: -50, z: -32 }, { x: -62, z: -31 }, { x: -64, z: -26 }, { x: -64, z: 2 }, { x: -64, z: 29.5 }, { x: -31, z: 30 }, { x: -30.6, z: 47.8 }, { x: 20, z: 48 }, { x: 60, z: 48 }, { x: 81.6, z: 48 }, { x: 81.8, z: 42 }, { x: 81.5, z: 36.8 }, { x: 81.4, z: 32.4 }],
   // Car alarm: Main Row east, Larch south to the parked car by the cluster, set it off, double back west along alley-r1 and take Elm Street to the main gate.
@@ -79,7 +79,7 @@ export class LevelTwoBot {
     if (!this.retreatAt) this.retreatAt = s.doorsOpenAt + (newbie ? 10 : 6) * 60;
     const leaving = w.tick >= this.retreatAt;
     if (!leaving) { if (near[0] && !skip) strike(near[0]); else go(a['l2-forecourt'], 2.5, 'cover'); return frame; }
-    const route = ROUTES[this.opening];
+    const route = l2Routes[this.opening];
     // After a respawn (checkpoint restore) rejoin the route at its nearest point instead of cutting across blocks.
     if (this.last && dist(this.last, p) > 6) { this.waypoint = route.reduce((best, q, i) => dist(q, p) < dist(route[best], p) ? i : best, 0); this.walker.reset(); this.detour = null; if (this.opening === 'alarm' && this.waypoint <= ALARM_AT) this.alarmed = false; }
     this.last = { x: p.x, z: p.z };

@@ -9,6 +9,7 @@ import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
 import { ObjectiveMarker } from './ObjectiveMarker';
 import { VehicleView } from './VehicleView';
+import { L2Props } from './L2Props';
 import { BicycleView } from './BicycleView';
 import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
@@ -68,6 +69,7 @@ export class GameView implements Lifecycle {
   renderCpuMs = 0;
   private readonly meshes: Mesh[] = [];
   private vehicles: VehicleView | null = null;
+  private l2Props: L2Props | null = null;
   private bicycle: BicycleView | null = null;
   private readonly seat = new Vector3();
   private readonly gripL = new Vector3();
@@ -195,7 +197,7 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', this.world.districts.composition.id === 'L1' ? 'courier' : 'survivor', useSkinnedCourier(this.params));
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2'].includes(this.world.districts.composition.id) ? 'courier' : 'survivor', useSkinnedCourier(this.params));
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       const initialFocus = this.world.scenario === 'L1' ? this.view.cameraTarget : undefined;
@@ -250,6 +252,7 @@ export class GameView implements Lifecycle {
     if (this.crowd) this.scene.add(this.crowd);
     if (this.vehicles) this.scene.add(this.vehicles);
     if (this.bicycle) this.scene.add(this.bicycle);
+    if (this.world.scenario === 'L2' && this.materials) { this.l2Props = new L2Props(this.world, this.materials); this.scene.add(this.l2Props); }
     t = loadMeasure('view:actors', t);
     if (this.world.combat && this.materials) {
       this.vehicleFeedback = new VehicleFeedback(this.materials); this.scene.add(this.vehicleFeedback);
@@ -400,7 +403,8 @@ export class GameView implements Lifecycle {
     this.districts?.advance(seconds);
     const player = this.world.entities.get(1);
     if (player) {
-      this.view.driving = this.world.vehicles?.active != null;
+      // E20: riding the fire truck as a passenger uses the same 15 % zoom-out as driving.
+      this.view.driving = this.world.vehicles?.active != null || !!this.world.missions?.state.l2?.seated;
       // E19 story beats: ease the game camera onto the beat (between courier and the other actor, a little closer),
       // then back to the follow camera; no cut, same isometric angle.
       const beat = this.world.missions?.state.l1?.beat;
@@ -559,7 +563,7 @@ export class GameView implements Lifecycle {
     }
     if (this.character) this.character.visible = !this.world.entities.get(1)?.hidden;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.vehicles); }
-    this.vehicles?.update(alpha);
+    this.vehicles?.update(alpha); this.l2Props?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
     this.crowd?.update(this.view, alpha); this.contactShadows?.update(); this.actions?.update();
@@ -661,6 +665,7 @@ export class GameView implements Lifecycle {
     if (this.interactions) { this.scene.remove(this.interactions); this.interactions.dispose(); this.interactions = null; }
     if (this.entityAssets) { this.scene.remove(this.entityAssets); this.entityAssets.dispose(); this.entityAssets = null; }
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
+    if (this.l2Props) { this.scene.remove(this.l2Props); this.l2Props.dispose(); this.l2Props = null; }
     if (this.bicycle) { this.scene.remove(this.bicycle); this.bicycle.dispose(); this.bicycle = null; }
     this.windowMask=false; this.foliageMask=false;
     for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();

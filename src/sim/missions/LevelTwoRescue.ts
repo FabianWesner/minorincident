@@ -64,7 +64,7 @@ export class LevelTwoRescue {
     world.infected.director.levelCap = l2.escape.caps.high;
     world.npcs.setAmbient(0);
     // L2-default progression: the bat from L1 is in hand (a campaign load has already applied its racks).
-    if (!world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.bat'], ['weapon.fists']);
+    if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.bat'], ['weapon.fists']);
     this.spawnTruck();
     this.spawnStation();
     this.spawnCheckpoint();
@@ -135,8 +135,12 @@ export class LevelTwoRescue {
     for (let i = 0; i < count; i++) {
       const id = o.spawnPedestrian(out, { schedule: this.schedule(out, { x: -44, z: -36 }) });
       const e = this.world.entities.get(id)!;
+      e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; ids.push(id);
+      // The first few stand at the open storefront, banging and waving at the street; the rest wait out of sight inside.
+      const glass = l2.rescue.atGlass[i];
+      if (glass) { Object.assign(e.transform, { x: glass[0], z: glass[1], yaw: glass[2] }); e.civilian!.story = { clip: 'npc-wave', start: this.world.tick + i * 7 }; this.world.spatial.set(id, glass[0], glass[1]); continue; }
       e.hidden = true; e.transform.x = -55.6 + (i % 5 - 2) * 1.2; e.transform.z = -42.2 + (Math.floor(i / 5) % 6 - 2.5) * 1.1;
-      e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; this.world.spatial.delete(id); ids.push(id);
+      this.world.spatial.delete(id);
     }
     return ids;
   }
@@ -154,7 +158,11 @@ export class LevelTwoRescue {
     if (id === 'calm' && this.s.phase === 'calm') this.alarm();
     if (id === 'board') this.board();
     if (id === 'axe') this.takeAxe();
-    if (id === 'ride' && this.s.phase === 'ride') { this.s.rideS = this.routeInfo().length; this.ride(); }
+    if (id === 'ride' && (this.s.phase === 'ride' || this.s.phase === 'alarm')) {
+      for (const c of this.s.crewIds) { const e = this.world.entities.get(c); if (e) { e.hidden = true; this.world.spatial.delete(c); } }
+      if (!this.s.seated) this.board();
+      this.s.phase = 'ride'; this.s.departAt ||= this.world.tick; this.s.rideS = this.routeInfo().length; this.ride();
+    }
     if (id === 'doors' && !this.s.doorsOpenAt) this.openDoors();
   }
   private alarm(): void {
@@ -214,7 +222,7 @@ export class LevelTwoRescue {
     const yaw0 = car.entity.transform.yaw, delta = Math.atan2(Math.sin(want - yaw0), Math.cos(want - yaw0)), yaw = yaw0 + Math.max(-.045, Math.min(.045, delta));
     const y = car.physics.body.translation().y;
     car.physics.body.setNextKinematicTranslation({ x, y, z }); car.physics.body.setNextKinematicRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) });
-    car.entity.vehicle!.speed = s.rideV;
+    car.entity.transform.x = x; car.entity.transform.z = z; car.entity.transform.yaw = yaw; car.entity.vehicle!.speed = s.rideV;
     this.carry(x, z);
     if (s.rideS >= r.length - 1e-6) this.arrive();
   }
@@ -401,13 +409,14 @@ export class LevelTwoRescue {
   private release(tick: number): void {
     const s = this.s, total = s.trappedIds.length;
     if (s.released >= total) return;
+    // `released` counts people through the doors; those waving at the glass were already visible.
     const due = Math.min(total, 1 + Math.floor((tick - s.doorsOpenAt) / (ticks(l2.rescue.releaseOverS) / total)));
     for (; s.released < due; s.released++) {
       const id = s.trappedIds[s.released], e = this.world.entities.get(id); if (!e?.civilian) continue;
       const front = s.released % 2 === 0, k = Math.floor(s.released / 2) % 5;
       const at = this.snap(front ? { x: -50.4, z: -44 + k * .9 } : { x: -57.4 + k * .9, z: -36.8 }, .35);
       Object.assign(e.transform, at); e.transform.yaw = front ? 0 : -Math.PI / 2; e.hidden = false; this.world.spatial.set(id, at.x, at.z);
-      const c = e.civilian; c.pauseUntil = tick; c.scheduleStep = 0; c.activityUntil = 0;
+      const c = e.civilian; c.pauseUntil = tick; c.scheduleStep = 0; c.activityUntil = 0; c.story = null;
       c.schedule = [{ activity: 'walk', anchor: 'l2/out', target: this.snap({ x: -44 + (s.released % 4) * 1.4, z: -36 + Math.floor(s.released / 4) % 3 * 1.2 }, .35), ticks: 1 },
         { activity: 'look', anchor: 'l2/out', target: this.snap({ x: -43, z: -34 }, .35), facing: this.anchor('l2-truck-stop'), ticks: 600 }];
     }
@@ -427,6 +436,12 @@ export class LevelTwoRescue {
     if (s.gateClosedAt && tick - s.gateClosedAt >= ticks(l2.checkpoint.holdS) && !this.mission.state.states.crossed) { s.phase = 'done'; this.mission.setState('crossed', true); }
   }
 
+  /** Cheat/test path (`completeObjective` in the gap after the doors): fires the radio now. Never used by gameplay or bots. */
+  advance(): boolean {
+    const s = this.mission.state.l2; if (!s || !s.doorsOpenAt || s.radioAt) return false;
+    const tick = this.world.tick; s.radioAt = tick; s.phase = 'escape'; this.world.events.emit({ type: 'l2.radio', tick }); this.mission.radio('L2.radio');
+    this.mission.setState('radio', true); this.mission.requestCheckpoint('escape'); return true;
+  }
   /** Checkpoint restore: shift the timeline, re-seat or re-park the truck, rebuild the walls from state. */
   restore(delta: number): void {
     const s = this.mission.state.l2; if (!s) return;
