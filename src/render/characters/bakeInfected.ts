@@ -64,7 +64,8 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
       const color = material.color?.toArray() ?? [0.4, 0.3, 0.25];
       if (material.vertexColors && sourceColor) { color[0] *= sourceColor.getX(i); color[1] *= sourceColor.getY(i); color[2] *= sourceColor.getZ(i); }
       colors.set(color, i * 3); // Civilian GLBs use dark pupils rather than emissive eye materials.
-      const pupil = owner === rig.head && /^(pal_)?(eyeBrown|uiDark)$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
+      // uiDark also owns hair, brows and collars: height cannot identify pupils.
+      const pupil = owner === rig.head && /^(pal_)?eyeBrown$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
       emissive[i] = Number(material.name.startsWith('emi_') || pupil); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) ? -1 : Number(clothing);
     }
     geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1)); geometry.deleteAttribute('uv');
