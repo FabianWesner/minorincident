@@ -18,6 +18,8 @@ export class KinematicController {
   navigationGrid: NavGrid | null = null;
   speedScale = 1;
   crowd: readonly CrowdObstacle[] = [];
+  /** Solid props without a static collider (the parked bicycle): always pushed out of, at up to 4 m/s. */
+  props: readonly CrowdObstacle[] = [];
   groundHeight: ((x: number, z: number) => number) | null = null;
   constructor(private readonly physics: Physics) {}
   move(input: InputFrame, transform: Transform, enabled: boolean): void {
@@ -54,6 +56,15 @@ export class KinematicController {
       const ground = Math.max(support(supportX, supportZ), support(transform.x + this.displacement.x, transform.z + this.displacement.z), support((supportX + transform.x) / 2, (supportZ + transform.z) / 2));
       const clearance = ground > .01 || navigation ? .02 : magnitude > 0 ? .01 : .005;
       this.displacement.y = Math.max(this.displacement.y, Math.min(.06, ground + survivor.height / 2 + clearance - transform.y));
+    }
+    if (enabled) {
+      let px = 0, pz = 0;
+      for (const prop of this.props) {
+        const dx = transform.x - prop.transform.x, dz = transform.z - prop.transform.z, distance = Math.hypot(dx, dz), overlap = survivor.radius + prop.radius - distance;
+        if (overlap > 0) { px += (distance > 1e-6 ? dx / distance : 1) * overlap; pz += (distance > 1e-6 ? dz / distance : 0) * overlap; }
+      }
+      const length = Math.hypot(px, pz);
+      if (length > 0) { const scale = Math.min(1, 4 * FIXED_DT / length); this.displacement.x += px * scale; this.displacement.z += pz * scale; }
     }
     let pushX = 0, pushZ = 0, overlaps = 0;
     if (enabled && !input.attackInPlace) for (const neighbor of this.crowd) {
