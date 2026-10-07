@@ -51,6 +51,8 @@ Measured straight locomotion, at 2.0 / 4.5 m/s (every frame, ticks 91–289):
 
 The female walk exceeds a literal 25° cap by 1.1° at its peak; the requested limit was approximate. Male walking has more cyclic pelvis travel than the rigid baseline, because the revised gait preserves leg extension and planted feet. The range is periodic, not arrival vibration. The old pilot's planted-foot accuracy was already good; the improvement is posture, reach and continuity while retaining that accuracy.
 
+The fixed settled-stop window (ticks 240–300, one second after braking) stays in `idle` for both variants. Maximum ankle frame displacement is below 0.000001 cm; pelvis range is 0.0566 cm female / 0.0558 cm male. `settled-stop.json` records this presentation-only measurement; it does not claim to validate navigation arrival.
+
 The isolated CPU probe covers 28 variant/skin/pose cases. The highest skinned p95 is **0.161 ms female riding / 0.119 ms male riding**, including matrix propagation and both loaded skeleton palettes, under the requested ~0.5 ms budget. Median riding values are 0.105 / 0.043 ms. An earlier probe measured 0.310 / 0.183 ms p95; both runs remained below budget. These are wall-clock measurements on the shared Apple M4, not an OS scheduling bound.
 
 Visual review of the fixed-time comparison frames: both revised couriers remain upright in walking and running, retain hip-width foot placement, and no longer reach into the pilot's deep trailing-foot lunge after a 180° turn. Bat follow-through and hit reaction keep a grounded lower body. Bicycle hands/feet maintain the existing socket contacts, now for both bodies. The paired videos retain the full motion for the orchestrator's cadence/transition review. Existing bulky sole and bag-strap geometry is visible in the close crops; this lane does not remesh that art.
@@ -72,7 +74,9 @@ Validation logs and machine-readable results are in `test-results/player-anim/` 
 | `npx vitest run tests/unit/render/skin-pilot.test.ts --maxWorkers=2` | 14 passed; 0 failed |
 | `E2E_SKIN=0 E2E_PORT=3369 npm run test:smoke` | 5 simulation + 22 browser passed; 0 failed |
 | `E2E_SKIN=1 E2E_PORT=3369 npm run test:smoke` | 5 simulation + 22 browser passed; 0 failed |
-| `SIM_WAIT=60 E2E_SKIN=1 E2E_PORT=3368 npm run verify -- E04` | Final run pending |
+| `SIM_WAIT=60 E2E_SKIN=1 E2E_PORT=3368 npm run verify -- E04` | 43 unit/simulation + 27 browser passed; 0 failed |
+
+All final runs have zero failures/flakes. The saved validation summary identifies the tested implementation (`f31df286`) and integrated main (`6dee9147`).
 
 The smoke and verify commands use their own browser locks; they were not wrapped in another lock. Headless browser validation uses Chromium/ANGLE Metal, four mobile orientations and WebKit, with at most two workers.
 
@@ -83,3 +87,15 @@ Two initial smoke attempts each had 21 browser passes and one failure from trans
 The references `living-civilians-and-story-npcs.png`, `survivor-gear-tiers-and-action-poses.png` and `survivors-corgi-and-equipment.png` were inspected read-only. Their upright walking silhouettes and clear action poses guide this change; no character art was redesigned.
 
 The small courier legs still require a brisk cadence at 4.5 m/s. Walking retains normal cyclic pelvis rise and fall rather than a perfectly flat pelvis. Turns use procedural contact release, and mount/dismount still use the authored transition clips; these are not newly captured human motion. WebGPU parity requires the repository's manual check.
+
+## Main implementation commits
+
+- `29ef14c4`: reuse male skin/fitting and establish every-frame comparison capture.
+- `82c69bc4`: continuous foot arcs, grounded attacks and stable procedural inputs.
+- `2d6f6a19`: bounded pelvis across gait speeds/transitions.
+- `8b46ff9d`: contact-tick and arrival-heading regressions.
+- `20d3a85e`: enable both courier skins by default, retain explicit fallback.
+- `f31df286`: repair authored kick/knee anticipation without moving contact.
+- `671ac8d8`: review report, durable measurement files and comparison stills.
+
+No specification criteria were edited. Main's later audio-only merge is outside this validated integration base; the orchestrator owns the final main merge and subjective motion review. Arrival/navigation simulation changes remain in their owning lane.
