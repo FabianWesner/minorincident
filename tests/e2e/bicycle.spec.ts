@@ -12,8 +12,6 @@ test('T-E19-16h @E19 @E19-AC16 courier sits on the bike with hands on the handle
   await tick(page, 60);
   expect(await page.evaluate(() => window.__SS__!.getState().entities.find(e => e.bicycle)!.bicycle!.mounted)).toBe(true);
   expect(await page.evaluate(() => window.__SS__!.getState().render.character!.clip)).toBe('ride');
-  await page.evaluate(p => window.__SS__!.camera.cinematic({ target: [p.x, .7, p.z], position: [p.x, 2.5, p.z + 4] }), bike);
-  await page.evaluate(() => window.__SS__!.vfx.stepRender(1)); // Settle the camera blend while the sim stays paused.
   await page.evaluate(() => window.__SS__!.screenshotReady());
   mkdirSync('test-results/epics/E19', { recursive: true });
   await page.screenshot({ path: 'test-results/epics/E19/courier-bike-rider.png' });
