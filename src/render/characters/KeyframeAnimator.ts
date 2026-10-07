@@ -25,6 +25,8 @@ export class KeyframeAnimator {
   private readonly backpack: Object3D | undefined;
   private readonly backpackRest: number;
   private carryWeight = 0;
+  private lunge = 0;
+  private readonly scaleScratch = new Vector3();
   private readonly carryPose: [Object3D, Quaternion][] = [];
   state: AnimationState = 'idle';
   clip = 'idle';
@@ -107,13 +109,17 @@ export class KeyframeAnimator {
       const u = tick + alpha - 1 - combat.started, a = Math.max(1, combat.activeAt - combat.started - 1), e = Math.max(a + 1, combat.endsAt - combat.started - 1);
       const phase = u < a ? .2 * Math.max(0, u) / a : Math.min(1, .2 + .8 * (u - a) / (e - a));
       struck.time = phase * struck.getClip().duration; struck.setEffectiveTimeScale(0);
-    }
+      // Lunge step into the target (research §5: attacker step 0.10–0.25 m) so strikes read at the
+      // game camera: in over the anticipation, held through contact, eased back in recovery.
+      this.lunge = phase < .2 ? phase / .2 : phase < .4 ? 1 : Math.max(0, 1 - (phase - .4) / .5);
+    } else this.lunge = 0;
     this.attackTick = strike ? pose.animationTick : -1;
     this.mixer.update(dt);
     // Parcel carry: arms hold the box over any lower-body motion, eased in/out over 150 ms.
     const holding = !!pose.carrying && !strike && name !== 'hand-over' && name !== 'ride';
     this.carryWeight = Math.max(0, Math.min(1, this.carryWeight + (holding ? 1 : -1) * dt / .15));
     if (this.carryWeight > 0) for (const [node, target] of this.carryPose) node.quaternion.slerp(target, this.carryWeight);
+    if (this.lunge > 0 && !upper) { const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1; this.rig.hip.position.x += .2 / scale * this.lunge * this.lunge * (3 - 2 * this.lunge); }
     for (const node of Object.values(this.rig)) node.quaternion.normalize();
     if (pose.animation === 'die') settleGroundPose(this.rig.root);
     const target = this.rig.torso.rotation.z * -.3;

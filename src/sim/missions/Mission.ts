@@ -70,6 +70,11 @@ export class Mission {
   private inside(anchor: string, entity: EntitySnapshot | null | undefined = this.world.entities.get(1)): boolean {
     const a = this.def.anchors[anchor]; return !!entity && (entity.transform.x - a.x) ** 2 + (entity.transform.z - a.z) ** 2 <= a.radius ** 2;
   }
+  /** True while the player stands in an active step's interact ring: an `E` press belongs to the objective
+   * (E19 QA1-01: pick up the parcel without also leaving the bicycle). */
+  interactionAvailable(): boolean {
+    return this.state.phase === 'playing' && this.def.steps.some(def => this.state.steps[def.id].status === 'active' && def.complete.kind === 'interact' && this.inside(def.complete.anchor));
+  }
   private satisfied(t: Trigger, step?: StepState): boolean {
     switch (t.kind) {
       case 'start': return true;
