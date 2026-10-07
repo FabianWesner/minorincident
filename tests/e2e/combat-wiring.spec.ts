@@ -70,7 +70,8 @@ for (const weapon of ['weapon.fists', 'weapon.bat']) {
       a.input.set({ right: { down: true, held: false, up: true }, aim: { x: 1, z: 0 } });
       await a.step(10); a.input.clear();
       // Keep the kicked target within reach while it is down; damage/pose remain real.
-      a.teleport(id, { x: 1.2, z: 0 }); return id;
+      a.teleport(id, { x: 1.2, z: 0 });
+      a.setLoadout([weapon], ['weapon.kick']); return id;
     }, weapon);
     for (let click = 0; click < 10; click++) {
       const target = await page.evaluate(id => window.__SS__!.getEntity(id), id);
