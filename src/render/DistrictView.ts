@@ -167,7 +167,7 @@ export class DistrictView extends Group {
         });
         // L3 authors parking and emergency dressing in its loaded layout. Its
         // references must use those positions, rather than the unchanged baked GLB.
-        if (this.world.composition.id === 'L3') {
+        if (this.world.composition.id === 'L3' || this.world.composition.id === 'L2') {
           references.clear();
           for (const p of d.decay.placements) {
             const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}`;

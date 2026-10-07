@@ -376,7 +376,7 @@ export class InfectedSystem {
     const u = (this.tierStart[tier] + this.tierCount[tier]++ * 0.6180339887498949) % 1, rng = this.l1Rng!;
     const brain: L1Brain = e.infected!.l1 ?? { mode: 'wander', tier, runSpeed: 0, wanderSpeed: 0, targetId: 0, seenX: 0, seenZ: 0, seenTick: 0, headingX: 0, headingZ: 0, looking: false, lookYaw: 0, pauseUntil: 0, goalX: 0, goalZ: 0, hasGoal: false, search: searchPlan(), episodes: 0, distractionId: 0, biteTargetId: 0, direct: false, directTick: -1, directX: 0, directZ: 0, homeX: 0, homeZ: 0, cueUntil: 0, cueYaw: 0, cueSource: 0, stuckX: 0, stuckZ: 0, stuckTick: 0, stuckCount: 0, ignoreId: 0, ignoreUntil: 0 };
     const [low, high] = l1v2.infected.wanderSpeed;
-    Object.assign(brain, { mode: 'wander', tier, runSpeed: l1TierSpeed(tier, u), wanderSpeed: low + rng.next() * (high - low), targetId: 0, headingX: 0, headingZ: 0, looking: true, lookYaw: e.transform.yaw, pauseUntil: this.world.tick + 20 + Math.floor(rng.next() * 40), hasGoal: false, episodes: 0, distractionId: 0, biteTargetId: 0, directTick: -1, homeX: e.transform.x, homeZ: e.transform.z, cueUntil: 0, stuckTick: this.world.tick, stuckCount: 0, ignoreId: 0, ignoreUntil: 0 });
+    Object.assign(brain, { mode: 'wander', leashM: 0, tier, runSpeed: l1TierSpeed(tier, u), wanderSpeed: low + rng.next() * (high - low), targetId: 0, headingX: 0, headingZ: 0, looking: true, lookYaw: e.transform.yaw, pauseUntil: this.world.tick + 20 + Math.floor(rng.next() * 40), hasGoal: false, episodes: 0, distractionId: 0, biteTargetId: 0, directTick: -1, homeX: e.transform.x, homeZ: e.transform.z, cueUntil: 0, stuckTick: this.world.tick, stuckCount: 0, ignoreId: 0, ignoreUntil: 0 });
     brain.search.until = 0;
     e.infected!.l1 = brain; e.infected!.speed = brain.runSpeed; e.infected!.state = 'wander';
   }
@@ -629,7 +629,8 @@ export class InfectedSystem {
     const tick = this.world.tick, rng = this.l1Rng!;
     if (tick < brain.pauseUntil) { this.look(e, brain); return; }
     brain.looking = false;
-    const flow = tick < this.flowUntil;
+    // E20: leashed street groups keep to their block; the panic flow pulls only free wanderers.
+    const flow = tick < this.flowUntil && !brain.leashM;
     if (!brain.hasGoal) {
       if (!(flow ? this.panicGoal(e, brain) : wanderGoal(brain, rng, this.nav, e.transform, this.crowdAt))) { brain.pauseUntil = tick + 30; return; }
       brain.search.legTicks = 0;

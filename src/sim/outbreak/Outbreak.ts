@@ -7,6 +7,7 @@ import type { EntitySnapshot } from '../world/types';
 import type { CivilianActivity, CivilianProp, CivilianState, Point } from '../npc/types';
 import { keepsLook, type Appearance } from './appearance';
 import { HumanTargets } from './humans';
+import { updateAlly } from './Allies';
 import type { BiteEvent, InfectionPhase, LosBlockerRegistry, SpeedTier, Vec2 } from './types';
 
 const ticks = (seconds: number) => Math.round(seconds * 60);
@@ -27,6 +28,8 @@ export interface OutbreakOptions {
   /** Named positions for anchor-only accident events (`l1.blast` at `lab-door`, ...). */
   anchors?: Record<string, Vec2>;
   tier?: 'high' | 'low';
+  /** Section 5.9 civilian top-up from the edges (L1). L2 disables it: its population is authored. */
+  topUp?: boolean;
 }
 export interface PedestrianOptions {
   role?: string; model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: SpeedTier;
@@ -159,6 +162,8 @@ export class Outbreak {
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
       if (c.state === 'finished' || c.state === 'infected') continue;
+      // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
+      if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
       if ((tick + e.id) % 6 === 0 || this.heard.length) this.perceive(e);
       if (c.state === 'calm') this.routine(e);
       else if (c.state === 'alarmed') {
@@ -421,7 +426,7 @@ export class Outbreak {
   /** Section 5.9: walkers enter from off-screen edges while fewer than 25 remain, until 3:30 into the outbreak. */
   private topUp(): void {
     const tick = this.world.tick, d = l1v2.director;
-    if (this.started < 0 || tick < this.topUpAt || tick - this.started > ticks(d.topUpUntilS) || !this.entries.length) return;
+    if (this.options.topUp === false || this.started < 0 || tick < this.topUpAt || tick - this.started > ticks(d.topUpUntilS) || !this.entries.length) return;
     this.topUpAt = tick + ticks(l1Pedestrians.topUpEveryS);
     if (this.liveCivilians() >= d.topUpBelowCivilians) return;
     const director = this.world.infected!.director;
