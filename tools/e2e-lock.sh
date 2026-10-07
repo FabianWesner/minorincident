@@ -8,6 +8,10 @@ command -v lockf >/dev/null 2>&1 || exec "$@"
 export MI_E2E_LOCK_HELD=1
 base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"
 slots="${E2E_SLOTS:-1}"
+# Wait in the kernel for the single shared slot; polling can starve a lane behind repeated runs.
+if [ "$slots" -eq 1 ]; then
+  exec lockf "$base.0" "$@"
+fi
 while :; do
   i=0
   while [ "$i" -lt "$slots" ]; do
