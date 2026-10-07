@@ -38,7 +38,7 @@ import type { PaletteToken } from '../data/palette';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 
-interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; lit: boolean; loaded: boolean; nearLoaded: boolean; bands: (Lod | undefined)[] }
+interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */
 export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
@@ -164,7 +164,8 @@ export class DistrictView extends Group {
           [...references].map(async ([key, refs]) => {
             const [id, power] = key.split(":");
             const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;
-            const prototypes = await Promise.all([nearLoaded ? 'lod1' : 'lod2', 'lod2'].map(lod => this.registry.asset(id, power === 'true', lod as 'lod1' | 'lod2')));
+            const farLoaded = initialLods.get(id)?.has('lod2') ?? true;
+            const prototypes = await Promise.all([nearLoaded ? 'lod1' : 'lod2', farLoaded ? 'lod2' : 'lod1'].map(lod => this.registry.asset(id, power === 'true', lod as 'lod1' | 'lod2')));
             // L1 uses the shared vertex-attribute instancing path; live counts stay
             // unchanged while shader code no longer depends on placement capacity.
             const capacity = Math.max(refs.length, this.instanceCapacity ?? refs.length);
@@ -176,7 +177,7 @@ export class DistrictView extends Group {
               batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
             }
             const dimensions = new Box3().setFromObject(prototypes[0]).getSize(new Vector3());
-            this.lodBatches.push({ hero, near, far, refs, id, lit: power === 'true', loaded: false, nearLoaded, bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
+            this.lodBatches.push({ hero, near, far, refs, id, lit: power === 'true', loaded: false, nearLoaded, farLoaded, bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
           }),
         );
         // Dynamic nav-blockers use the same positions/extents as their Rapier colliders.
@@ -414,11 +415,11 @@ export class DistrictView extends Group {
   warmHero: ((batch: InstancedGroup) => Promise<void>) | null = null;
   /** Set with warmHero: resolves when a swap may happen (after the first seconds of play, one per frame). */
   swapSlot: (() => Promise<void>) | null = null;
-  private async loadHero(entry: LodBatch, lod: 'lod0' | 'lod1' = 'lod0'): Promise<void> {
+  private async loadHero(entry: LodBatch, lod: Lod = 'lod0'): Promise<void> {
     const prototype = await this.registry.asset(entry.id, entry.lit, lod);
     if (this.disposed) return;
     // Allocate full placement capacity, then retain only currently visible refs.
-    const old = lod === 'lod0' ? entry.hero : entry.near;
+    const old = lod === 'lod0' ? entry.hero : lod === 'lod1' ? entry.near : entry.far;
     const replacement = new InstancedGroup(prototype, entry.refs.slice(), old.capacity);
     if (this.warmHero) { await this.warmHero(replacement); if (this.disposed) { replacement.dispose(); return; } }
     if (this.swapSlot) { await this.swapSlot(); if (this.disposed) { replacement.dispose(); return; } }
@@ -431,7 +432,8 @@ export class DistrictView extends Group {
     replacement.traverse(node => { if (node instanceof Mesh && node.name === 'window-light') this.windows.push(node); });
     this.batches[this.batches.indexOf(old)] = replacement;
     if (lod === 'lod0') { entry.hero = replacement; entry.loaded = true; }
-    else { entry.near = replacement; entry.nearLoaded = true; }
+    else if (lod === 'lod1') { entry.near = replacement; entry.nearLoaded = true; }
+    else { entry.far = replacement; entry.farLoaded = true; }
     old.removeFromParent(); old.dispose();
   }
   /** Make the route's close tier resident (LOD0 high, LOD1 low). Props never need LOD1 on low.
@@ -439,7 +441,7 @@ export class DistrictView extends Group {
   async prepare(focus?: { x: number; z: number }, cancelled = () => false, maximumDistance = Infinity): Promise<void> {
     await this.ready();
     const lod = this.low ? 'lod1' : 'lod0';
-    const entries = this.lodBatches.filter(entry => this.low ? !entry.nearLoaded && worldAssets[entry.id].category !== 'prop' : !entry.loaded || !entry.nearLoaded && maximumDistance === Infinity);
+    const entries = this.lodBatches.filter(entry => this.low ? !entry.farLoaded || !entry.nearLoaded && worldAssets[entry.id].category !== 'prop' : !entry.loaded || !entry.nearLoaded && maximumDistance === Infinity);
     if (!focus) { await Promise.all(entries.map(entry => this.loadHero(entry, lod))); return; }
     const distance = (entry: LodBatch) => Math.min(...entry.refs.map(ref => Math.hypot(ref.position.x + entry.origin[0] - focus.x, ref.position.z + entry.origin[1] - focus.z)));
     const queue = entries.map(entry => ({ entry, distance: distance(entry) })).filter(item => item.distance <= maximumDistance).sort((a, b) => a.distance - b.distance).map(({ entry }) => entry);
@@ -448,6 +450,7 @@ export class DistrictView extends Group {
         await this.pending.get(entry);
         const pending = (async () => {
           if (!entry.nearLoaded && maximumDistance === Infinity) await this.loadHero(entry, 'lod1');
+          if (!entry.farLoaded) await this.loadHero(entry, 'lod2');
           if (lod === 'lod0' && !entry.loaded) await this.loadHero(entry);
         })();
         this.pending.set(entry, pending); await pending.finally(() => this.pending.delete(entry));
