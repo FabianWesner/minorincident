@@ -1,4 +1,6 @@
-import { BoxGeometry, CanvasTexture, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Quaternion, SRGBColorSpace, Vector3 } from 'three/webgpu';
+import { BoxGeometry, CanvasTexture, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Quaternion, SRGBColorSpace, Vector3, type PerspectiveCamera } from 'three/webgpu';
+import { materialOpacity } from 'three/tsl';
+import { seeThroughHole } from '../SeeThrough';
 import { Rng } from '../../core/Rng';
 
 /** Opaque accident props that the shared soft particle pool cannot do: dark smoke puffs (alpha-faded billboards with a
@@ -28,12 +30,18 @@ export class SmokeColumn extends Group {
   private readonly texture = puffTexture();
   private readonly axis = new Vector3();
   private readonly spin = new Quaternion();
+  private readonly forward = new Vector3();
+  /** Game camera: puffs fade out as they grow on screen, so no single puff covers more than ~a quarter of the view. */
+  camera: PerspectiveCamera | null = null;
   constructor() {
     super();
     this.name = 'lab-accident-fx';
     const plane = new PlaneGeometry(1, 1), box = new BoxGeometry(1, 1, 0.35);
     for (let i = 0; i < PUFFS; i++) {
-      const m = new Mesh(plane, new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, map: this.texture ?? undefined, opacity: 0 }));
+      const material = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, map: this.texture ?? undefined, opacity: 0 });
+      // PO #28: the shared courier see-through hole also opens puffs between the camera and the courier.
+      material.opacityNode = materialOpacity.mul(seeThroughHole());
+      const m = new Mesh(plane, material);
       m.visible = false; m.frustumCulled = false; m.renderOrder = 3; this.puffMeshes.push(m); this.add(m);
     }
     const glass = new MeshBasicNodeMaterial({ color: 0xd5f3fa }), dark = new MeshBasicNodeMaterial({ color: 0x25252a });
@@ -56,6 +64,8 @@ export class SmokeColumn extends Group {
   /** Step by render seconds; `now` is the shared fx clock, `facing` the camera orientation for billboarding. */
   advance(now: number, seconds: number, facing: Quaternion): void {
     let n = 0;
+    const camera = this.camera, tanHalf = camera ? Math.tan(camera.fov * Math.PI / 360) : 0;
+    if (camera) camera.getWorldDirection(this.forward);
     for (let i = 0; i < this.puffs.length;) {
       const p = this.puffs[i], age = now - p.born;
       if (age >= p.life) { this.puffs.splice(i, 1); continue; }
@@ -63,10 +73,21 @@ export class SmokeColumn extends Group {
       const k = age / p.life, m = this.puffMeshes[n++], grow = p.size * (1 + k * 0.9), shade = 0.16 + p.shade * 0.1;
       m.visible = true; m.position.set(p.x + p.vx * age, p.y + p.vy * age + 0.05 * age * age, p.z + p.vz * age); m.quaternion.copy(facing); m.scale.set(grow, grow, 1);
       const mat = m.material as MeshBasicNodeMaterial;
-      mat.opacity = 0.92 * Math.min(1, age / 0.5) * Math.min(1, (1 - k) * 3.5);
+      let near = 1;
+      if (camera) {
+        // PO #28: at the 25 deg game camera a grown puff was taller than the screen. Cap each puff at half the screen
+        // height (about 11 % of the area with its soft edge) so the column stays a column of many puffs, and fade
+        // puffs that reach the camera.
+        const depth = (m.position.x - camera.position.x) * this.forward.x + (m.position.y - camera.position.y) * this.forward.y + (m.position.z - camera.position.z) * this.forward.z;
+        const limit = .5 * 2 * Math.max(depth, 0) * tanHalf * Math.min(1, camera.aspect); // narrower side on portrait
+        if (grow > limit) m.scale.set(limit, limit, 1);
+        near = Math.max(0, Math.min(1, (depth - 1.5) / 2.5));
+      }
+      m.visible = near > 0;
+      mat.opacity = 0.92 * Math.min(1, age / 0.5) * Math.min(1, (1 - k) * 3.5) * near;
       mat.color.setRGB(shade * 0.9, shade * 1.05, shade * 0.92);
     }
-    for (let i = n; i < PUFFS; i++) { if (!this.puffMeshes[i].visible) break; this.puffMeshes[i].visible = false; }
+    for (let i = n; i < PUFFS; i++) this.puffMeshes[i].visible = false;
     n = 0;
     for (let i = 0; i < this.pieces.length;) {
       const q = this.pieces[i], age = now - q.born;
