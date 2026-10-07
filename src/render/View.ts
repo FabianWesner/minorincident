@@ -8,6 +8,7 @@ export interface CameraPose { position: [number, number, number]; target: [numbe
 /** Narrow-FOV follow camera. Presentation seconds are supplied by Game; never read by sim. */
 export class View {
   readonly camera = new PerspectiveCamera(25, 16 / 9, 0.1, 600);
+  /** CSS pixels for projected-size LOD selection, independent of render DPR. */
   viewportHeight = 900;
   readonly focus = new Vector3();
   readonly cameraTarget = new Vector3();

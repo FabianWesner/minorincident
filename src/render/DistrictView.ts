@@ -375,7 +375,7 @@ export class DistrictView extends Group {
       this.bounds.center.set(x, ref.position.y + height * ref.scale.y / 2, z); this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
       if (!this.frustum.intersectsSphere(this.bounds)) continue;
       const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
-      // High tier: LOD0 inside the play view (lodPolicy, with hysteresis). Low tier keeps its budget.
+      // Structural assets keep LOD0 in the high play view; small dressing also considers pixels below.
       let band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' ? 'lod2' : 'lod1') : pickLod(distance, entry.bands[index]);
       if (!this.low && !foliage && worldAssets[entry.id].category === 'prop') {
         const size = worldAssets[entry.id].dimensions;
