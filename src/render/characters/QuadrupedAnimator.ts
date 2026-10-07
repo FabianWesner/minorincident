@@ -20,6 +20,7 @@ export class QuadrupedAnimator {
   private readonly world = new Vector3();
   private readonly turn = new Quaternion();
   private readonly rootTurn = new Quaternion();
+  private speed = 0;
   clip = 'corgi-idle';
   constructor(private readonly root: Object3D) {
     this.mixer = new AnimationMixer(root);
@@ -28,8 +29,10 @@ export class QuadrupedAnimator {
   }
   update(time: number, speed: number, distance: number, warning?: CorgiWarning | null): void {
     const dt = Math.max(0, time - this.time); this.time = time;
+    // Smoothed ground speed: follow-steering noise must not flip gaits (PO #4 flicker).
+    this.speed += (speed - this.speed) * (1 - Math.exp(-dt / .15)); speed = this.speed;
     if (speed > .08) this.stoppedAt = time;
-    const gait = speed > (this.clip === 'corgi-gallop' ? 3.6 : 4.2) ? 'corgi-gallop' : speed > (this.clip === 'corgi-trot' ? 1.2 : 1.6) ? 'corgi-trot' : speed > (this.clip === 'corgi-walk' ? .04 : .12) ? 'corgi-walk' : time - this.stoppedAt > 4 ? 'corgi-sit' : 'corgi-idle';
+    const gait = speed > (this.clip === 'corgi-gallop' ? 5 : 5.6) ? 'corgi-gallop' : speed > (this.clip === 'corgi-trot' ? 1.2 : 1.6) ? 'corgi-trot' : speed > (this.clip === 'corgi-walk' ? .04 : .12) ? 'corgi-walk' : time - this.stoppedAt > 4 ? 'corgi-sit' : 'corgi-idle';
     // Warnings play when the dog has stopped (it stops to stiffen, §5.8); while
     // moving the gait continues and only the head looks.
     const name = warning && warning.stage !== 'none' && !strides[gait] ? warningClips[warning.stage] : gait;
