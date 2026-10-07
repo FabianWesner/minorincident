@@ -77,13 +77,13 @@ test('packing mixed RGB and RGBA AO keeps each primitive stream and its indices 
   }
 });
 
-// Absolute caps are independent of hero density, and every farther file must
-// be smaller than the preceding one (including metadata/vertex attributes).
+// Native vehicles keep absolute caps and decreasing files, including metadata.
 test('native distance packing enforces absolute triangle caps and decreasing bytes', async () => {
   const directory = mkdtempSync('assets/prop.native-lod-test-');
   try {
     const io = await assetIO(), { def } = fixture();
     def.id = directory.slice('assets/'.length);
+    def.category = 'vehicle';
     def.sourceGlb = join(directory, 'model.glb'); def.glb = join(directory, 'packed/model.glb');
     def.lods = { lod1: join(directory, 'packed/model.lod1.glb'), lod2: join(directory, 'packed/model.lod2.glb') };
     def.authoredLodTriangles = { lod1: 1, lod2: 1 }; mkdirSync(join(directory, 'packed'));

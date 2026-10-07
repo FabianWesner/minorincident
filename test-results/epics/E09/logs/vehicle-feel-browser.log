@@ -1,0 +1,17 @@
+
+> test:e2e
+> sh tools/e2e-lock.sh playwright test --project=chromium tests/e2e/driving.spec.ts tests/e2e/vehicle-feel.spec.ts --workers=2
+
+
+Running 8 tests using 2 workers
+
+  ✓  2 [chromium] › tests/e2e/driving.spec.ts:22:1 › S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit (3.0s)
+  ✓  1 [chromium] › tests/e2e/driving.spec.ts:2:1 › T-E09-08 @E09-AC08 held LMB drives ahead-left and release brakes with distant cursor (4.1s)
+  ✓  3 [chromium] › tests/e2e/driving.spec.ts:30:1 › T-E09-controls @E09 keyboard WASD uses local driving axes (2.7s)
+  ✓  4 [chromium] › tests/e2e/driving.spec.ts:36:1 › T-E09-arrow-drift @E09 arrows drive locally and RIGHT holds the rear handbrake (2.6s)
+  ✓  6 [chromium] › tests/e2e/driving.spec.ts:79:1 › T-E09-asset @E09-AC01 dynamically spawned integrated fire engine renders and unloads its native resources (2.6s)
+  ✓  5 [chromium] › tests/e2e/driving.spec.ts:48:1 › T-E09-touch @E09 touch stick accelerates, LEFT holds boost, releasing stick brakes, ACTION exits (4.8s)
+  ✓  8 [chromium] › tests/e2e/vehicle-feel.spec.ts:48:1 › T-E09-curb-video @E09 town raycast wheels ride over a raised planter curb (20.8s)
+  ✓  7 [chromium] › tests/e2e/vehicle-feel.spec.ts:9:1 › T-E09-driving-video @E09 town acceleration, right-angle corner, handbrake and cone (22.5s)
+
+  8 passed (33.8s)

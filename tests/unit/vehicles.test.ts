@@ -20,5 +20,7 @@ test('T-E09-01 @E09-AC01 roster validates and every used asset has its complete 
       }
     } else { const model = vehiclePlaceholder(vehicle); for (const name of required) expect(model.getObjectByName(name), `${def.id}: ${name}`).toBeTruthy(); }
     for (const key of ['mass', 'wheelbase', 'hp', 'topSpeed'] as const) expect(() => validateVehicle({ ...vehicle, [key]: NaN })).toThrow();
+    for (const key of Object.keys(vehicle.handling) as (keyof typeof vehicle.handling)[]) expect(() => validateVehicle({ ...vehicle, handling: { ...vehicle.handling, [key]: NaN } })).toThrow();
+    expect(() => validateVehicle({ ...vehicle, handling: { ...vehicle.handling, engineTaperStart: 1 } })).toThrow();
   }
 });

@@ -1,60 +1,56 @@
-# E09 — Vehicles
+# E09 — vehicle feel update
 
-## Built
+## Changes
 
-Seven validated SI-unit vehicle definitions; Bruno PhysicsVehicle raycast wheels, force taper, lowered centre of mass and fixed-step stuck recovery; 0.6-second driver-door dwell, collision-checked exits and forced explosion ejection; mouse, local WASD and touch driving with horn/boost and separate brake/exit; speed-based run-over damage and brute retaliation; five breakable and three heavy obstacle types with a fixed 24-body debris pool; smoke/fire thresholds and a 180-tick splash fuse; infected attachments and shake-off; registry-backed models, animated wheel pivots, HDR brake/siren lamps, door rings and a 15% driving camera zoom.
+Base: `642f8fe0` on `lane/vehicle-feel`. Bruno reference: folio-2025 commit `41046b5`, read-only. No main merge, push or deployment.
 
-`drive-course` is a 600-metre sine chicane with 46 cones. The pure-pursuit Driver emits ordinary InputFrames and shares player stuck/reverse recovery. It never teleports or uses cheats. Vehicle ownership is unloaded before the Rapier world; view-owned resources are disposed separately from registry prototypes.
+- `16d58119`: all seven drivable cars retain four Rapier raycast wheels and gain data-driven suspension damping/travel, engine plateau/taper, reverse speed/braking, speed-scaled smoothed steering, rear handbrake grip/braking, a stable low centre of mass, fixed-tick stuck detection and physical flip recovery. Wheel steer, suspension and chassis rotation interpolate from fixed-step state. The cargo bike keeps its existing speed-scaled capsule navigation and gains speed-aware wheel steering and deterministic frame lean. Rider attachment code was untouched. Bruno PhysicsVehicle, Player and VisualVehicle attribution is recorded in THIRD_PARTY_NOTICES.md with the MIT license.
+- `fe4da790`: arrows drive locally alongside WASD; keyboard RIGHT and touch DRIFT hold the handbrake. Existing mouse, touch stick, boost, brake and exit inputs remain available. The bot's throttle/steer/brake/boost interface stays compatible; handbrake is optional.
+- `5ee85ee9`: single-slot browser locking waits in the kernel instead of polling; repeated runs in other lanes had starved this lane's checks. Multi-slot behaviour is retained. No nested locks were used in final npm verifier/smoke/e2e commands.
+- `4ac0d3d9` and final evidence commit: browser integration fixes: touch DRIFT release clears held input; mouse fixture widens its camera before projecting the required ten-metre cursor; the harness lists the current delivered API; native police lamp probes and reviewed goldens replace stale placeholder probes/images. Town review capture replaces the rejected empty-plane clip.
 
-## API/data contract
+## Mechanical evidence
 
-`VehicleDef` is documented in src/data/vehicles.ts. EntitySnapshot.vehicle contains speed, forwardSpeed, steer, braking, boosting, driver, attached IDs, damage state, explodeAt, stuck and recoveringUntil. EntitySnapshot.hidden hides the seated survivor; attachedTo records a visible clinging infected. Combat kills caused by ramming carry cause=vehicle. The API is version 1.5.0: spawn accepts vehicle.* IDs, bot.start('driver') operates in drive-course, and camera.preset('vehicle') provides the fixed emergency-car photo spot. InputFrame.drive contains local throttle/steer axes; brake is independent of RIGHT exit. screenshotReady also waits for dynamic vehicle models.
-
-## Acceptance evidence
-
-Each row below has a passing tagged test in the required layer. `acceptance-results.json` indexes actual final verifier results from `vitest.json` and `verify-playwright.json`; all 11 criteria pass.
-
-| Criterion | Result | Tagged test / evidence |
+| Measurement | Result | Required |
 | --- | --- | --- |
-| E09-AC01 | PASS | `tests/unit/vehicles.test.ts`; native fire-engine spawn/unload in `tests/e2e/driving.spec.ts`, `fire-engine.png`. |
-| E09-AC02 | PASS | `tests/sim/vehicles/interaction.test.ts`: 36-tick dwell, input ownership, full capsule exit, dwell reset and moving-car exit. |
-| E09-AC03 | PASS | `tests/sim/vehicles/handling.test.ts`, `handling-metrics.json`. |
-| E09-AC04 | PASS | `tests/sim/vehicles/consequences.test.ts`: runner kill cause, brute knockback and exact HP retaliation. |
-| E09-AC05 | PASS | Consequences suite exercises all five light/three heavy types, low-speed refusal and bounded/recycled debris. |
-| E09-AC06 | PASS | Consequences suite checks strict thresholds, exact 180-tick fuse, splash, ordinary/boxed ejection and manual fuse exit. |
-| E09-AC07 | PASS | Consequences suite checks max-four attachments, speed/hard-steering release and destruction cleanup. |
-| E09-AC08 | PASS | `tests/e2e/driving.spec.ts`: real mouse ahead-left/dead-ring input plus camera zoom. |
-| E09-AC09 | PASS | Consequences suite, `course-metrics.json`: pure-pursuit course and separate blocked/reverse recovery fixture. |
-| E09-AC10 | PASS | `tests/visual/vehicles.spec.ts`, three vehicle goldens, lamp/spoke screenshot pair, `visual-metrics.json`, `review.md`, `compare/police.png`. |
-| E09-AC11 | PASS | Handling suite compares x/y/z/yaw after 1,800 ticks in three independent Rapier worlds at tolerance 1e-4. |
+| Sedan speed after 4 seconds | 15.48234 m/s | ≥14.4 m/s |
+| Full-lock radius / mean speed | 10.39594 m / 10.69182 m/s | 8–14 m near 10 m/s |
+| Maximum flat-slalom roll | 0.54235° | <60° |
+| Bot course | 600.48242 m in 39.68333 s, 300 HP | 600 m within 90 s |
+| Paused native-car fixture | 60 draw calls / 140,353 triangles | ≤600 / ≤1,500,000 |
+| Brake on/off red pixels | 526 / 0 | visible brightening |
+| Alternating siren pixels | 585 / 602 | both lamps change |
 
-## Deviations
-
-No acceptance criteria changed. Per the explicit art-status rule, the sedan, pickup, SUV, police, ambulance and bus use contract-complete code placeholders while their manifest status is below integrated. The integrated fire engine loads its production GLB and all required wheel/light/ladder nodes. Merged main contained tracked sources without registration/optimized outputs for thr.flashbang, npc.helicopter-pilot and veh.box-truck. Their existing pipeline exports and measured metadata were registered to restore unit reproducibility; all retained reference status. The pilot uses the same uniform 1.8-m adult-height conformance as the existing E17 catalog. No source artwork or other-epic gameplay behavior changed. The later explicit orchestrator instructions froze the current base and delegated full cross-epic browser regression to main; both overrides were followed.
-
-## Performance
-
-Measured from the final verifier artifacts: sedan speed at four seconds **14.52219 m/s** (required ≥14.4), full-lock radius **9.98950 m** at mean **10.48763 m/s** (required 8–14 m), maximum flat-slalom roll **0.73796°** (required <60°). The driver reaches x=**600.45465 m** in **40.33333 s** (required ≤90) with **300/300 HP**, no recovery events and Node sim P95 **0.06858 ms** (budget <4 ms).
-
-The paused two-car/cone photo fixture renders **49 draw calls / 651 triangles**, below the 600/1,500,000 budgets. `render-perf.json` is a paused render-counter sample, not a sustained FPS benchmark. Lamp probes measure **672 vs 0** brake-on/off red pixels and **625 changed pixels** at each alternating siren. See `handling-metrics.json`, `course-metrics.json`, `visual-metrics.json` and `render-perf.json`.
+Sources: handling-metrics.json, course-metrics.json, render-perf.json and visual-metrics.json. The sim tests cover all seven speed-scaled steering limits, actual rear slip under handbrake, reverse limiting, stuck recovery, sedan/bus physical flip recovery and driver-only recovery ownership. The existing three-world 1,800-tick determinism gate remains enabled. `review.md` documents the native-model screenshot review.
 
 ## Validation
 
-Frozen base: main **b5dcd1c**, merged before final checks. Final tested code **b90bc08** includes the recorder/API integration repairs and held touch boost; approved goldens are from **d3f1389**, with vehicle-port attribution in **a5ccb07**. The orchestrator explicitly froze this base; no subsequent main changes were merged or registered.
+All final static/build/sim/browser commands exit 0 except the explicitly reported all-level completion command. Browser commands use headless ANGLE/Metal, DPR 1, at most two workers and port 3347; npm scripts own their browser lock.
 
-| Command | Result | Evidence |
-| --- | --- | --- |
-| `npm run typecheck` | exit 0 | `logs/typecheck.log`, `final-gates.json` |
-| `npm run lint` | exit 0 | `logs/lint.log`, `final-gates.json` |
-| `npm run build` | exit 0, no warnings | `logs/build.log`, `final-gates.json` |
-| `npm run test:unit` | 67 passed, 28 files; exit 0 | `logs/unit.log` |
-| `npm run test:sim` | 121 passed, 11 files; exit 0 | `logs/sim.log` |
-| `npm run test:smoke` | 3 Node + 13 browser passed; exit 0 | `logs/smoke.log`, `smoke-playwright.json` |
-| `npm run verify -- E09` | 19 Node + 20 browser passed; exit 0 | `checks.json`, `vitest.json`, `verify-playwright.json`, `logs/verify.log` |
-| Cross-epic browser/native regression | delegated to orchestrator on merged main | Explicit final lane instruction; interrupted-run evidence retained below. |
+| Exact command | Result |
+| --- | --- |
+| `npm run typecheck` | PASS, exit 0 |
+| `npm run lint` | PASS, exit 0 |
+| `sh tools/sim-lock.sh npm run test:unit -- --maxWorkers=2` | PASS, 257 tests / 77 files |
+| `npm run test:smoke` | PASS, 5 sim + 22 browser tests |
+| `E2E_PORT=3347 npm run verify -- E09` | PASS, 38 sim + 33 browser tests; typecheck/lint/build also pass |
+| `E2E_PORT=3347 npm run test:e2e -- tests/e2e/driving.spec.ts tests/e2e/vehicle-feel.spec.ts --workers=2` | PASS, 8 browser tests |
+| `sh tools/sim-lock.sh npx vitest run tests/sim/l1-toys.test.ts tests/levels/l1-ride-input.test.ts --maxWorkers=2 --testTimeout=180000` | PASS, 27 tests / 2 files |
+| `sh tools/sim-lock.sh npx vitest run tests/unit/tooling/headless-only.test.ts --maxWorkers=1` | PASS, 1 test |
+| `npm run test:levels` | FAIL, 12/18 completions; L3 and L6 stall |
 
-Browser runs use E2E_PORT=3323, the machine-wide lock and two workers; Vitest uses at most four workers. The orchestrator superseded lane-wide browser regression with own-epic verify plus smoke, and owns the full regression on merged main. The already-running broad Chromium suite was interrupted accordingly (70 passed, 2 integration failures, 2 interrupted, 17 not run); no native WebGPU check was started. Its two genuine failures were corrected: idle driving throttle is canonical zero across JSON recordings, and the API harness now validates implemented bot stop/status rather than expecting stubs. Both checks are tagged @E09 and pass in the final 20-test browser verifier. The final review also added held touch boost, which the real-touch test proves. Static/unit/sim/smoke/epic checks were rerun for these fixes; no second broad browser run was started. See `cross-regression-interrupted-playwright.json`, `cross-regression-interrupted-checks.json` and `logs/cross-regression-interrupted.log`. Browser command wall times include shared-lock waits. No dependency was added; no deployment or push ran. No criterion was changed.
+The first E09 run had four browser failures (stale mouse/camera fixture, touch release, API surface list and placeholder golden). All four are corrected and pass in the final run. The first focused bike run passed 26/27, with the garage-door test taking 104 seconds on the shared Mac against the default 30-second timeout. The extended-timeout run passes 27/27 without a navigation code change. Unit, verifier, smoke and focused browser logs are in `logs/`; `checks.json`, `vitest.json` and `verify-playwright.json` are the final machine results. `acceptance-results.json` indexes passing tests for all 11 E09 criteria.
 
-## Known issues
+## Town review video
 
-No known E09 gameplay defects. Six catalog models remain code placeholders and smoke/fire use minimal placeholder effects under the explicit asset-status rule; final art/VFX fidelity is not claimed by this epic. Human driving feel remains part of the milestone playtest protocol, not an automated acceptance gate.
+`test-results/vehicle-feel/driving.webm` is **11.36 seconds, 960×540, WebM, 1,642,887 bytes**. It replaces the deleted empty-plane review clip. The first segment uses L1 Row Street / Juniper at the ordinary follow camera: acceleration to 7.32 m/s, cone destruction, an approximately 90° corner, and an opposing handbrake turn. The second segment in the same town runs one side's wheels over the accessible 0.35 m `dressing:planter:548` edge near the bakery; chassis height peaks at 0.85383 m from a settled 0.73543 m. The straight-edge pass was recorded separately because the first attempted curb target was blocked by the medical building. There are no teleports during either recorded manoeuvre; fixture placement and town loading are trimmed out. The two segments have a direct edit between them. Ordinary foreground roofing/foliage partly obscures the end of the drift; the normal gameplay camera is preserved.
+
+The montage metadata and fixed-step manoeuvre samples are next to the video. The raised planter edge is the existing physical curb-like obstacle; street sidewalk surfaces alone have no curb colliders. Raw recordings, ad-hoc frame extracts and the lane's intermediate build are removed after review.
+
+## Deviations and remaining work
+
+No spec criterion changed and no dependency was added. Bruno's variable-time callbacks and wall-clock recovery were adapted to fixed simulation ticks; hydraulics and decorative antenna/blinker work were not added. Body roll comes from the physical chassis rather than a second visual pose. The cargo bike retains its existing capsule/path navigation model to preserve routes and rider ownership.
+
+`npm run test:levels` completed **12/18 runs**, with zero deaths. L1, L2, L4 and L5 pass all three seeds. L3 stalls at `market-route` after 59.43333 s on all three seeds; the orchestrator confirms the same failure on main and has instructed this lane to finish before merging l3-content. L6 also stalls at `drive` after 103.43333 s on all three seeds; that extra level is included by the all-level script and remains a reported failure. Do not claim level validation is green. Resume this lane after l3-content lands, merge main into the lane, and rerun test:levels.
+
+Human review of the town video remains the feel judgement; automated gates establish steering, suspension, drift and recovery behaviour. No manual native-WebGPU check was performed in this headless lane.

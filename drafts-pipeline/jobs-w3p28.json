@@ -1,0 +1,203 @@
+[
+ {
+  "slug": "w3p28-crop",
+  "prompt_file": "briefs/w3p28-crop.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 2400
+ },
+ {
+  "slug": "w3p28-up-prop_light-tower-trailer",
+  "prompt_file": "briefs/w3p28-up-prop.light-tower-trailer.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p28-crop"
+  ]
+ },
+ {
+  "slug": "w3p28-build-prop_light-tower-trailer",
+  "prompt_file": "briefs/w3p28-build-prop.light-tower-trailer.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p28-up-prop_light-tower-trailer"
+  ]
+ },
+ {
+  "slug": "w3p28-up-prop_scoreboard",
+  "prompt_file": "briefs/w3p28-up-prop.scoreboard.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p28-crop"
+  ]
+ },
+ {
+  "slug": "w3p28-build-prop_scoreboard",
+  "prompt_file": "briefs/w3p28-build-prop.scoreboard.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p28-up-prop_scoreboard"
+  ]
+ },
+ {
+  "slug": "w3p28-up-prop_stop-here-sign-trailer",
+  "prompt_file": "briefs/w3p28-up-prop.stop-here-sign-trailer.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p28-crop"
+  ]
+ },
+ {
+  "slug": "w3p28-build-prop_stop-here-sign-trailer",
+  "prompt_file": "briefs/w3p28-build-prop.stop-here-sign-trailer.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p28-up-prop_stop-here-sign-trailer"
+  ]
+ },
+ {
+  "slug": "w3p28-up-prop_tear-gas-canister",
+  "prompt_file": "briefs/w3p28-up-prop.tear-gas-canister.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p28-crop"
+  ]
+ },
+ {
+  "slug": "w3p28-build-prop_tear-gas-canister",
+  "prompt_file": "briefs/w3p28-build-prop.tear-gas-canister.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p28-up-prop_tear-gas-canister"
+  ]
+ },
+ {
+  "slug": "w3p28-up-pick_nail-ammo",
+  "prompt_file": "briefs/w3p28-up-pick.nail-ammo.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p28-crop"
+  ]
+ },
+ {
+  "slug": "w3p28-build-pick_nail-ammo",
+  "prompt_file": "briefs/w3p28-build-pick.nail-ammo.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p28-up-pick_nail-ammo"
+  ]
+ },
+ {
+  "slug": "w3p28-up-pick_pistol-ammo",
+  "prompt_file": "briefs/w3p28-up-pick.pistol-ammo.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p28-crop"
+  ]
+ },
+ {
+  "slug": "w3p28-build-pick_pistol-ammo",
+  "prompt_file": "briefs/w3p28-build-pick.pistol-ammo.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p28-up-pick_pistol-ammo"
+  ]
+ },
+ {
+  "slug": "w3p28-up-pick_shotgun-ammo",
+  "prompt_file": "briefs/w3p28-up-pick.shotgun-ammo.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p28-crop"
+  ]
+ },
+ {
+  "slug": "w3p28-build-pick_shotgun-ammo",
+  "prompt_file": "briefs/w3p28-build-pick.shotgun-ammo.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p28-up-pick_shotgun-ammo"
+  ]
+ },
+ {
+  "slug": "w3p28-up-thr_smoke-grenade",
+  "prompt_file": "briefs/w3p28-up-thr.smoke-grenade.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500,
+  "deps": [
+   "w3p28-crop"
+  ]
+ },
+ {
+  "slug": "w3p28-build-thr_smoke-grenade",
+  "prompt_file": "briefs/w3p28-build-thr.smoke-grenade.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "danger-full-access",
+  "max_seconds": 5400,
+  "deps": [
+   "w3p28-up-thr_smoke-grenade"
+  ]
+ }
+]

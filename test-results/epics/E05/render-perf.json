@@ -1,12 +1,37 @@
 {
-  "fps": 14.992503748125927,
-  "frameMs": 66.70000000000005,
+  "propUploads": 0,
+  "awakeProps": 0,
+  "fps": 10,
+  "frameMs": 100,
   "simMs": 0,
-  "drawCalls": 162,
-  "triangles": 23155,
-  "geometries": 68,
-  "textures": 7,
+  "uiMs": 0,
+  "drawCalls": 91,
+  "triangles": 425629,
+  "geometries": 109,
+  "textures": 9,
   "entities": 9,
   "backend": "webgl",
-  "loadTiming": null
+  "loadTiming": null,
+  "quality": {
+    "setting": "high",
+    "tier": "high",
+    "p90Ms": 0,
+    "slowSeconds": 0,
+    "budgets": {
+      "frameMs": 16.7,
+      "infected": 200,
+      "drawCalls": 600,
+      "triangles": 1500000,
+      "simMs": 4,
+      "heapMB": 400,
+      "pixelRatio": 2,
+      "shadowSize": 2048,
+      "bloomMips": 5,
+      "cullDistance": 60
+    }
+  },
+  "renderedFrames": 12,
+  "contextLost": false,
+  "paused": true,
+  "heapBytes": 364000000
 }

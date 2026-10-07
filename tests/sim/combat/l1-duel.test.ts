@@ -17,12 +17,14 @@ test('E19 @E19 @E19-AC14 unarmed never one-shots: every move 9–11 damage, 4–
     expect(def.damage, `unarmed move ${combo}`).toBeGreaterThanOrEqual(9); expect(def.damage).toBeLessThanOrEqual(11);
     expect(def.damage).toBeLessThan(hp);
     expect(Math.ceil(hp / def.damage)).toBeGreaterThanOrEqual(4); expect(Math.ceil(hp / def.damage)).toBeLessThanOrEqual(5);
-    // Kicks shove 1.5–2.5 m with a 0.4 s stagger; punches only flinch.
-    if (/kick/.test(meleeMoves['weapon.fists'][combo].name)) { expect(def.knockback).toBeGreaterThanOrEqual(1.5); expect(def.knockback).toBeLessThanOrEqual(2.5); expect(def.stagger).toBeCloseTo(.4); }
+    // PO 00 §6.2 supersedes the original E19 shove: every unarmed beat is normal.
+    expect(def.knockback).toBeLessThanOrEqual(.4); expect(def.stagger).toBeLessThanOrEqual(.25);
+    expect(def.knockdown).not.toBe(true);
   });
   const bat = action('weapon.bat'), beats = meleeMoves['weapon.bat'].map((_, combo) => comboDefinition(bat, combo));
   expect(beats.map(b => b.damage)).toEqual([22, 22, 30]);
-  for (const b of beats) { expect(b.knockback).toBeGreaterThanOrEqual(2.5); expect(b.knockback).toBeLessThanOrEqual(3.5); }
+  for (const b of beats.slice(0, 2)) { expect(b.knockback).toBeLessThanOrEqual(.4); expect(b.stagger).toBeLessThanOrEqual(.25); expect(b.knockdown).not.toBe(true); }
+  expect(beats[2].knockdown).toBe(true); expect(beats[2].knockback).toBe(3.3);
   expect(beats[0].damage + beats[1].damage).toBeGreaterThanOrEqual(hp); expect(beats[0].damage).toBeLessThan(hp);
 });
 

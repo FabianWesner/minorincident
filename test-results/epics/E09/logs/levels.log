@@ -1,0 +1,23 @@
+
+> test:levels
+> sh tools/sim-lock.sh tsx tools/sim-runner/index.ts --level all --policy complete --seeds 3 --completion-only
+
+{"level":"L1","seed":1,"completed":true,"time":101.15,"deaths":0,"outcome":"complete","furthestObjective":"firestation"}
+{"level":"L1","seed":2,"completed":true,"time":99.03333333333333,"deaths":0,"outcome":"complete","furthestObjective":"firestation"}
+{"level":"L1","seed":3,"completed":true,"time":101.86666666666666,"deaths":0,"outcome":"complete","furthestObjective":"firestation"}
+{"level":"L2","seed":1,"completed":true,"time":102.45,"deaths":0,"outcome":"complete","furthestObjective":"board"}
+{"level":"L2","seed":2,"completed":true,"time":102.11666666666666,"deaths":0,"outcome":"complete","furthestObjective":"board"}
+{"level":"L2","seed":3,"completed":true,"time":102.5,"deaths":0,"outcome":"complete","furthestObjective":"board"}
+{"level":"L3","seed":1,"completed":false,"time":59.43333333333333,"deaths":0,"outcome":"stalled","furthestObjective":"market-route"}
+{"level":"L3","seed":2,"completed":false,"time":59.43333333333333,"deaths":0,"outcome":"stalled","furthestObjective":"market-route"}
+{"level":"L3","seed":3,"completed":false,"time":59.43333333333333,"deaths":0,"outcome":"stalled","furthestObjective":"market-route"}
+{"level":"L4","seed":1,"completed":true,"time":73.4,"deaths":0,"outcome":"complete","furthestObjective":"bridge"}
+{"level":"L4","seed":2,"completed":true,"time":73.4,"deaths":0,"outcome":"complete","furthestObjective":"bridge"}
+{"level":"L4","seed":3,"completed":true,"time":73.4,"deaths":0,"outcome":"complete","furthestObjective":"bridge"}
+{"level":"L5","seed":1,"completed":true,"time":559.9,"deaths":0,"outcome":"complete","furthestObjective":"hold-4"}
+{"level":"L5","seed":2,"completed":true,"time":559.9,"deaths":0,"outcome":"complete","furthestObjective":"hold-4"}
+{"level":"L5","seed":3,"completed":true,"time":559.9,"deaths":0,"outcome":"complete","furthestObjective":"hold-4"}
+{"level":"L6","seed":1,"completed":false,"time":103.43333333333334,"deaths":0,"outcome":"stalled","furthestObjective":"drive"}
+{"level":"L6","seed":2,"completed":false,"time":103.43333333333334,"deaths":0,"outcome":"stalled","furthestObjective":"drive"}
+{"level":"L6","seed":3,"completed":false,"time":103.43333333333334,"deaths":0,"outcome":"stalled","furthestObjective":"drive"}
+{"output":"test-results/sim/all-complete.json","completed":12,"runs":18,"failures":{"stalled":6}}

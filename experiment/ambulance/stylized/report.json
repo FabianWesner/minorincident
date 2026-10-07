@@ -1,0 +1,38 @@
+{
+  "slug": "ambulance",
+  "iterations": 3,
+  "triangles": 3232,
+  "meshes": 21,
+  "materials": [
+    "emi_policeBlue",
+    "emi_sirenRed",
+    "emi_windowGlow",
+    "pal_glassDark",
+    "pal_picketWhite",
+    "pal_policeBlue",
+    "pal_sidewalk",
+    "pal_survivorRed",
+    "pal_uiDark"
+  ],
+  "glb_bytes": 221600,
+  "within_budget": true,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "identity_features": [
+    "Tall white patient box",
+    "Broad red stripe",
+    "Blue Star of Life on sides and roof",
+    "Sloping toy cab with dark windows",
+    "Chunky wheels",
+    "Thick red and blue emergency light bar"
+  ],
+  "dropped_details": [
+    "Lettering",
+    "Hinges, handles and panel seams",
+    "Wipers and mirrors",
+    "Bolts, lug nuts and tire tread",
+    "Tiny marker lamps",
+    "Detailed medical snake and interior"
+  ],
+  "notes": "Added requested pal_glassDark token and a roof emblem for game-camera readability; static geometry is merged by material and wheels retain centered pivots."
+}
