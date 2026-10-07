@@ -12440,16 +12440,37 @@
     ],
     "requiredNodes": [
       "root",
+      "wheel_front",
+      "wheel_rear",
       "wheelF",
       "wheelR",
-      "handlebar"
+      "handlebar",
+      "seat",
+      "saddle_mount",
+      "crank",
+      "pedal_l",
+      "pedal_r",
+      "cargo_box",
+      "kickstand",
+      "box_lid_top",
+      "grip_l",
+      "grip_r"
     ],
     "animatedNodes": [
-      "wheelF",
-      "wheelR",
-      "handlebar"
+      "wheel_front",
+      "wheel_rear",
+      "handlebar",
+      "crank",
+      "pedal_l",
+      "pedal_r",
+      "kickstand"
     ],
-    "sockets": [],
+    "sockets": [
+      "seat",
+      "grip_l",
+      "grip_r",
+      "box_lid_top"
+    ],
     "budget": {
       "triangles": 60000,
       "materials": 32,
@@ -12457,7 +12478,8 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/veh.courier-bike/model.glb"
+    "sourceGlb": "assets/veh.courier-bike/model.glb",
+    "sourceForward": "+X"
   },
   {
     "id": "prop.package-courier",

@@ -1,26 +1,11 @@
 import { Box3, BoxGeometry, Camera, Group, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
 import '../render/interaction.css';
 import { AssetRegistry } from '../assets/registry';
-import manifest from '../assets/manifest.json';
-import { atLeast, type AssetDef } from '../assets/types';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
 
 /** The delivered cargo bike is courier-sized (2.8 m); the game courier is chibi (1.4 m), so the bike is drawn at toy scale: saddle at the hips, cargo box below the rider's chest. */
 const ASSET = 'veh.courier-bike', WHEEL_R = { F: .335, R: .405 }, SCALE = .6;
-/**
- * The delivered model (assets/veh.courier-bike, packed to public/assets/models) carries the vehicle node contract
- * (wheelF/wheelR/handlebar/seat/basket) while the manifest still lists the richer pedal contract of a placeholder entry.
- * Until the manifest registration lands, validate against what the model really contains; a registered (integrated)
- * entry is used unchanged.
- */
-function definitions(): AssetDef[] {
-  return (manifest as AssetDef[]).map(d => d.id !== ASSET || atLeast(d.status, 'integrated') ? d : {
-    ...d, status: 'integrated', lods: { lod1: d.glb.replace('.glb', '.lod1.glb'), lod2: d.glb.replace('.glb', '.lod2.glb') },
-    dimensions: { x: 2.8, y: 1.2, z: .76, tolerance: .2 }, requiredNodes: ['root', 'wheelF', 'wheelR', 'handlebar', 'seat', 'basket'],
-    animatedNodes: ['wheelF', 'wheelR', 'handlebar'], sockets: [],
-  });
-}
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 /** Code placeholder with the animated-node contract (wheelF/R, handlebar, crank, pedals) until the production GLB is registered. */
 function bicyclePlaceholder(): Group {
@@ -60,24 +45,26 @@ export class BicycleView extends Group {
     super(); this.name = 'bicycle';
     this.prompt.className = 'interaction-prompt'; this.prompt.dataset.testid = 'bike-prompt'; this.prompt.hidden = true; this.prompt.innerHTML = '<strong>Cargo bike</strong><span>Stand here or press E to ride</span>';
     document.querySelector('#game')?.append(this.prompt);
-    this.registry = new AssetRegistry(() => {}, { materials, manifest: definitions() });
+    this.registry = new AssetRegistry(() => {}, { materials });
   }
   async load(): Promise<void> { await this.build(); this.update(); }
   private async build(): Promise<void> {
     if (this.rig || this.loading) return; this.loading = true;
     let model = await this.registry.loadAsset(ASSET, 'lod0');
     // A missing or invalid GLB falls back to the registry's generic box: use the animated code placeholder instead.
-    if (model.userData.placeholder || !model.getObjectByName('wheelF')) model = bicyclePlaceholder();
+    if (model.userData.placeholder || !(model.getObjectByName('wheel_front') ?? model.getObjectByName('wheelF'))) model = bicyclePlaceholder();
     this.loading = false; if (this.disposed) return;
     const lean = new Group(), root = new Group(); lean.add(model); root.add(lean); this.add(root);
     const find = (name: string) => model.getObjectByName(name);
-    const wheelF = find('wheelF'), wheelR = find('wheelR'); for (const w of [wheelF, wheelR]) if (w) w.rotation.order = 'YXZ';
+    const wheelF = find('wheel_front') ?? find('wheelF'), wheelR = find('wheel_rear') ?? find('wheelR'); for (const w of [wheelF, wheelR]) if (w) w.rotation.order = 'YXZ';
     model.scale.setScalar(SCALE); model.traverse(n => { if (n instanceof Mesh) { n.castShadow = true; n.receiveShadow = true; } });
     // Courier parcel that rides on the cargo box lid while she carries it (dropped in when she mounts), and a glint above the parked bike.
     lean.updateMatrixWorld(true);
-    const basket = find('basket') ?? model, box = new Box3().setFromObject(basket), top = box.getCenter(new Vector3()); top.y = box.max.y;
+    const basket = find('cargo_box') ?? find('basket') ?? model, box = new Box3().setFromObject(basket), top = box.getCenter(new Vector3()); top.y = box.max.y;
     // The delivered tub carries no measurable mesh under the `basket` node: fall back to its authored position (lid top ~0.85 m in model units).
     if (!Number.isFinite(top.y)) top.set(.43 * SCALE, .85 * SCALE, 0);
+    const lid = find('box_lid_top');
+    if (lid) { lid.getWorldPosition(top); lean.worldToLocal(top); }
     const parcel = new Group(); parcel.visible = false;
     for (const [w, h, d, color, y] of [[.3, .24, .26, '#b98a55', .12], [.31, .045, .08, '#2aa198', .24]] as const) { const m = new Mesh(new BoxGeometry(w, h, d), new MeshBasicNodeMaterial({ color })); m.position.y = y; m.castShadow = true; parcel.add(m); }
     lean.add(parcel);
@@ -106,7 +93,7 @@ export class BicycleView extends Group {
     // Toy feel: lean into the turn and bob slightly with every pedal stroke while riding.
     const riding = b.mounted, speed = b.speed / 7.5;
     // Kickstand folds up while riding and is down when parked (`kickstand` node of the rebuilt model; absent on the old one).
-    rig.kick = lerp(rig.kick, riding ? 1 : 0, .2); if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * 1.3;
+    rig.kick = lerp(rig.kick, riding ? 1 : 0, .2); if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * Math.PI / 2;
     rig.leanAngle = lerp(rig.leanAngle, riding ? -b.steer * speed * .32 : 0, .2);
     rig.lean.rotation.x = rig.leanAngle; rig.lean.position.y = riding ? Math.abs(Math.sin(b.pedal * 2)) * .012 * speed : 0;
     // Parcel in the cargo box: she carries it (sim `survivor.carrying`) and is riding; it drops in over ~0.35 s.
