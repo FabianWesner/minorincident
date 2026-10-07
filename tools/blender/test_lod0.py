@@ -72,6 +72,23 @@ def key(mesh,face,loop):
 reference={key(weighted.data,face,weighted.data.loops[i]):tuple(weighted.data.corner_normals[i].vector) for face in weighted.data.polygons for i in face.loop_indices}
 prune_hidden_faces([weighted],game_camera=True,defer=True)
 apply_hidden_faces([weighted])
+# Ensure the normal assertion also covers actual face deletion, even when the
+# largest-face safeguard retains this cube's underside.
+from sslib.lod0 import _delete_faces
+_delete_faces(weighted, [0])
 from mathutils import Vector
 assert all((weighted.data.corner_normals[i].vector-Vector(reference[key(weighted.data,face,weighted.data.loops[i])])).length<.0001 for face in weighted.data.polygons for i in face.loop_indices)
 print('TEST OK weighted-normal retention through evaluation and face deletion')
+
+# Detailed convex cylinder shells can hide fasteners without altering the shell.
+bpy.ops.wm.read_factory_settings(use_empty=True)
+bpy.ops.mesh.primitive_cylinder_add(vertices=48,radius=1.2,depth=2)
+shell=bpy.context.object
+bevel=shell.modifiers.new('rounded rim','BEVEL');bevel.width=.08;bevel.segments=3
+bpy.ops.object.modifier_apply(modifier=bevel.name)
+fastener=cube('covered fastener',.6,None)
+assert 160 < len(shell.data.polygons) <= 512
+assert prune_hidden_faces([shell,fastener]) == 0
+assert prune_hidden_faces([shell,fastener],max_occluder_faces=512) == 6
+assert len(shell.data.polygons)>160 and len(fastener.data.polygons)==0
+print('TEST OK detailed convex cylinder coverage')

@@ -2,7 +2,7 @@
 import argparse, json, math, random, sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import stabilize_ao, prepare_export_lod
+from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy, bmesh
 from mathutils import Vector
 HERE=Path(__file__).resolve().parent
@@ -232,6 +232,10 @@ box('attic_floor',(0,0,3.6),(5.8,4.8,.12),'woodWarm',interior)
 for name,loc,size in [('house',(0,0,1.9),(6,5,3.8)),('garage',(-.3,4.05,1.5),(5.45,3,3))]:
     col=empty('col:'+name,loc,root); col['collider']='cuboid'; col['shape']='cuboid'; col['size']=list(size)
 # Merge only within assemblies, so roof removal and hinges remain functional.
+# Only outward leaf meshes participate in ray pruning: inward-wound building
+# detail must retain every visible window bar and shutter face.
+leaves = [obj for obj in parts if obj.name.split('.')[0] == 'leaf']
+prune_hidden_faces(leaves, occlusion=True, defer=True)
 parents={o.parent for o in parts}
 for parent in sorted(parents,key=lambda o:o.name):
     for mat in M.values():

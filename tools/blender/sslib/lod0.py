@@ -30,10 +30,11 @@ def stabilize_ao(objects):
                 color.data[i].color = mean
 
 
-def prune_hidden_faces(objects, groups=None, occlusion=False, game_camera=False, defer=False):
+def prune_hidden_faces(objects, groups=None, occlusion=False, game_camera=False, defer=False, max_occluder_faces=160):
     """Delete hidden faces; never cross a removable/hinged assembly.
 
-    Volume occluders must be outward-wound, closed and convex. AABB broad phase and outward half-space
+    Volume occluders must be outward-wound, closed and convex. The caller may
+    raise max_occluder_faces for detailed cylinder shells. AABB broad phase and outward half-space
     tests reject nonconvex shells and boundary faces. Custom corner normals and
     face attributes survive deletion. Optional near-grazing occlusion probes also
     catch covered backs across small gaps; callers must review those at game zoom.
@@ -73,7 +74,7 @@ def prune_hidden_faces(objects, groups=None, occlusion=False, game_camera=False,
             continue
         lo = tuple(min(p[i] for p in points) for i in range(3))
         hi = tuple(max(p[i] for p in points) for i in range(3))
-        if not opaque(obj) or len(data.polygons) > 160 or min(hi[i]-lo[i] for i in range(3)) < epsilon:
+        if not opaque(obj) or len(data.polygons) > max_occluder_faces or min(hi[i]-lo[i] for i in range(3)) < epsilon:
             continue
         edges = defaultdict(int)
         for face in data.polygons:

@@ -326,7 +326,7 @@ for s in (-1,1):
     for typ,g,token,intensity,direction in [('headlight','lampHead'+suffix,'light_window_warm',6,(1,0,-.12)),('brake','lampBrake'+suffix,'light_siren_red',2,(-1,0,0))]:
         e=empty('light:'+typ+suffix,parent=groups[g]); e.rotation_euler=Vector(direction).to_track_quat('-Z','Y').to_euler()
         e['ss_light']=json.dumps({'type':'spot' if typ=='headlight' else 'point','color':token,'intensity':intensity,'range':18 if typ=='headlight' else 3,'angle':48,'penumbra':.35,'pool':True,'beam':'soft' if typ=='headlight' else 'none','flare':True,'reflect':True,'shadow':'hero' if typ=='headlight' else 'none','heroPriority':2,'flicker':'none','animation':None,'powerGroup':'self','breakable':True,'emissiveNodes':[g+'_'+M['head' if typ=='headlight' else 'red'].name],'tiers':'all'})
-prune_hidden_faces(parts, occlusion=True, defer=True)
+prune_hidden_faces(parts, occlusion=True, defer=True, max_occluder_faces=512)
 # Merge by material within the appropriate rigid motion group.
 joined=[]
 for group,parent in groups.items():
