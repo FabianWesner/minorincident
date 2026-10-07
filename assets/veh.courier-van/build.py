@@ -472,7 +472,7 @@ def build_vehicle(level):
             p=p.parent
         return None
     if DISTANCE:
-        export_variant(Path(__file__).parent, DISTANCE, omit=('tread', 'lug', 'rivet', 'seat', 'steering', 'sidewall_rib','rim_lip','sidewall_line','hub_cap','clamp_bolt','corner_fastener','sidewall_bead'), far_omit=('seat', 'steering', 'handle', 'wiper', 'rib', 'badge', 'rim spoke', 'seam', 'rim', 'hub', 'label', 'letter', 'logo', 'stripe', 'gasket', 'frame_ring', 'dial', 'louver','town_text','courier_text','medical_text','arch_molding','hinge_pin','lock','head_lens_flute','axle','rack_foot','rack_bracket','medical_cross','vent_slats','tail_side'), flat_parts=('steel_rim',))
+        export_variant(Path(__file__).parent, DISTANCE, omit=('tread', 'lug', 'rivet', 'seat', 'steering', 'sidewall_rib','rim_lip','sidewall_line','hub_cap','clamp_bolt','corner_fastener','sidewall_bead'), far_omit=('cargo_panel_reveal', 'rack_crossbar', 'window_rubber', 'seat', 'steering', 'handle', 'wiper', 'rib', 'badge', 'rim spoke', 'seam', 'rim', 'hub', 'label', 'letter', 'logo', 'stripe', 'gasket', 'frame_ring', 'dial', 'louver','town_text','courier_text','medical_text','arch_molding','hinge_pin','lock','head_lens_flute','axle','rack_foot','rack_bracket','medical_cross','vent_slats','tail_side'), flat_parts=('steel_rim',))
 
     buckets={}
     for o in list(CAR.objects):

@@ -45,3 +45,18 @@ test('T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, 
   const findings = reports.flatMap(r => r.errors).filter(e => e.includes('stump_') || e === 'missing LOD' || e.startsWith('forward ') || e.startsWith('material: unknown pal_') || e.includes('degenerate triangle'));
   expect(findings).toEqual([]);
 }, 300_000); // Decode the complete production inventory on the shared build machine.
+
+// Absolute caps must survive permissive manifest budgets and authored ratios.
+test.each([['veh.test', 'vehicle', 1, 6000], ['veh.test', 'vehicle', 2, 2000], ['bld.house-test', 'building', 1, 12000], ['bld.house-test', 'building', 2, 4000], ['house.test', 'building', 2, 4000]] as const)('distance cap for %s LOD%d cannot be relaxed by the manifest', (id, category, lod, cap) => {
+  const { doc, def } = fixture();
+  def.id = id; def.category = category; def.budget.triangles = 100000;
+  def.authoredLodTriangles = { lod1: 100000, lod2: 100000 };
+  const buffer = doc.getRoot().listBuffers()[0];
+  const primitive = doc.getRoot().listMeshes()[0].listPrimitives()[0];
+  const indices = doc.createAccessor().setType('SCALAR').setBuffer(buffer);
+  primitive.setIndices(indices);
+  indices.setArray(Uint16Array.from({ length: cap * 3 }, (_, i) => i % 3));
+  expect(validateDocument(doc, def, 1024, lod).errors.some(e => e.startsWith('delivery: LOD'))).toBe(false);
+  indices.setArray(Uint16Array.from({ length: (cap + 1) * 3 }, (_, i) => i % 3));
+  expect(validateDocument(doc, def, 1024, lod).errors).toContain(`delivery: LOD${lod} triangles ${cap + 1} > ${cap}`);
+});

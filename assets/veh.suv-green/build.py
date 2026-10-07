@@ -312,7 +312,7 @@ for name,loc in [('driverSeat',(.23,-.43,.94)),('exitL',(.35,-1.45,0)),('exitR',
 col=empty('col:chassis',(0,0,1.03),root);col['collider']='cuboid';col['shape']='cuboid';col['size']=[4.4,1.9,1.7]
 
 if DISTANCE:
-    export_variant(Path(__file__).parent, DISTANCE, omit=('tread', 'lug', 'rivet', 'Dark vent', 'Rubber seal'), far_omit=('wiper', 'mirror stem', 'handle', 'seat', 'steering', 'roof rail', 'gauge', 'rib', 'rim spoke', 'Wheel arch cladding', 'Rock slider', 'Bumper guard','Grille brace','Roof rib', 'rim', 'Hub','Sidewall','Paint chip','Tyre barrel','Headlamp reflector'))
+    export_variant(Path(__file__).parent, DISTANCE, fit_dimensions=True, omit=('tread', 'lug', 'rivet', 'Dark vent', 'Rubber seal'), far_omit=('wiper', 'mirror stem', 'handle', 'seat', 'steering', 'roof rail', 'gauge', 'rib', 'rim spoke', 'Wheel arch cladding', 'Rock slider', 'Bumper guard','Grille brace','Roof rib', 'rim', 'Hub','Sidewall','Paint chip','Tyre barrel','Headlamp reflector'))
 
 def clean_mesh(o):
     bm=bmesh.new();bm.from_mesh(o.data)

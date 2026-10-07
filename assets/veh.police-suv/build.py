@@ -11,6 +11,13 @@ import bmesh
 import bpy
 from mathutils import Vector, Matrix
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
+if '--lod-only' in sys.argv:
+    build_native_lods(__file__)
+    sys.exit(0)
+
 HERE = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser()
 parser.add_argument('--render')
@@ -53,6 +60,7 @@ def group(name, pos=(0,0,0), parent=None):
     return o
 
 def finish(o,mat,parent='body',bevel=0, smooth=True):
+    if DISTANCE: bevel = 0
     if o.name not in scene.objects: scene.collection.objects.link(o)
     o.data.materials.append(M[mat])
     if bevel:
@@ -101,14 +109,16 @@ def window(name,outer,inner,parent='body',offset=(0,0,0)):
     surf(name,[(x+offset[0],y+offset[1],z+offset[2]) for x,y,z in inner],'glass',parent)
 
 def rod(name,a,b,r,mat,parent='body',segments=16):
-    if LOD_LEVEL==1: segments*=3
+    if DISTANCE: segments = min(segments, 12 if DISTANCE == 1 else 6)
+    if LOD_LEVEL==1 and not DISTANCE: segments*=3
     a,b=Vector(a),Vector(b)
     bpy.ops.mesh.primitive_cylinder_add(vertices=segments,radius=r,depth=(b-a).length,location=(a+b)/2)
     o=bpy.context.object; o.name=name; o.rotation_euler=(b-a).to_track_quat('Z','Y').to_euler()
     return finish(o,mat,parent,.005)
 
 def lathe(name,profile,c,axis,mat,parent='body',segments=48):
-    if LOD_LEVEL==1: segments*=3
+    if DISTANCE: segments = min(segments, 12 if DISTANCE == 1 else 6)
+    if LOD_LEVEL==1 and not DISTANCE: segments*=3
     vs=[]
     rot={'y':Matrix.Rotation(-PI/2,3,'X'),'x':Matrix.Rotation(PI/2,3,'Y'),'z':Matrix.Identity(3)}[axis]
     for r,z in profile:
@@ -120,6 +130,7 @@ def lathe(name,profile,c,axis,mat,parent='body',segments=48):
     return o
 
 def cylinder(name,c,r,d,axis,mat,parent='body',segments=32):
+    if DISTANCE: segments = min(segments, 12 if DISTANCE == 1 else 6)
     return lathe(name,[(0,-d/2),(r,-d/2),(r,d/2),(0,d/2)],c,axis,mat,parent,segments)
 
 def cut(o,cutter):
@@ -129,6 +140,7 @@ def cut(o,cutter):
     bpy.data.objects.remove(cutter,do_unlink=True)
 
 def arch_points(x,r,start=0,end=PI,n=32):
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 6)
     return [(x+r*math.cos(start+(end-start)*i/n),.46+r*math.sin(start+(end-start)*i/n)) for i in range(n+1)]
 
 def text(name,words,c,size,s,parent='body',width=None,font='Impact.ttf',depth=.003,resolution=5):
@@ -319,6 +331,9 @@ def clean_mesh(o):
     if tiny: bmesh.ops.delete(bm,geom=tiny,context='FACES_ONLY')
     bm.to_mesh(o.data); bm.free(); o.data.update()
 
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('LED', 'SUNSET GROVE', 'POLICE', 'tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('arch flare', 'spotlight shell', 'spotlight stem', 'spotlight lens', 'headlight reflector', 'headlight brow', 'roof cross rack', 'roof rail', 'grille slat', 'grille support', 'wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*',))
+
 def finalize(objects=None):
     buckets={}
     dg=bpy.context.evaluated_depsgraph_get()
@@ -496,3 +511,7 @@ if args.render:
         filename=Path(args.render).name.replace('-ref.png','-game.png') if '-ref.png' in args.render else 'game.png'
         scene.render.filepath=str(Path(args.render).resolve().with_name(filename))
         bpy.ops.render.render(write_still=True); print('RENDER OK',filename)
+
+# Every full source export refreshes the native distance tiers.
+if "--glb" in sys.argv and not DISTANCE:
+    build_native_lods(__file__)

@@ -4,6 +4,13 @@ Run through experiment/tools/blender_run.py; exports all three LODs with --glb.
 import bpy, bmesh, math, sys, json
 from pathlib import Path
 from mathutils import Vector, Matrix
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
+if '--lod-only' in sys.argv:
+    build_native_lods(__file__)
+    sys.exit(0)
+
 HERE=Path(__file__).resolve().parent
 sys.path.insert(0,str(HERE.parents[1]/'tools/blender'))
 from sslib import palette, ao
@@ -29,6 +36,7 @@ root['ss_physics']={'body':'dynamic','mass':1250,'friction':.8,'restitution':.05
 for n,c in [('body',(0,0,0)),('wheelFL',(1.18,.96,.49)),('wheelFR',(1.18,-.96,.49)),('wheelRL',(-1.16,.96,.49)),('wheelRR',(-1.16,-.96,.49)),('lightsFront',(1.8,0,1.1)),('lightsBrake',(-1.7,0,1.1))]:
     GROUPS[n]=empty(n,c,root); PARTS[n]=[]
 def finish(o,mat,g='body',bevel=0):
+    if DISTANCE: bevel = 0
     o.data.materials.append(M[mat]); PARTS[g].append(o)
     if bevel:
         m=o.modifiers.new('soft edges','BEVEL'); m.width=bevel; m.segments=1 if o.name.startswith('offroad tread') else 3
@@ -47,6 +55,7 @@ def prism(n,pts,y0,y1,mat,b=.025):
     l=len(pts); vs=[(x,y,z) for y in [y0,y1] for x,z in pts]; fs=[tuple(reversed(range(l))),tuple(range(l,2*l))]+[(i,(i+1)%l,(i+1)%l+l,i+l) for i in range(l)]
     return mesh(n,vs,fs,mat,b=b)
 def lathe(n,prof,c,axis,mat,g='body',seg=48):
+    if DISTANCE: seg = min(seg, 12 if DISTANCE == 1 else 6)
     vs=[]
     rot={'x':Matrix.Rotation(math.pi/2,4,'Y'),'y':Matrix.Rotation(math.pi/2,4,'X'),'z':Matrix.Identity(4)}[axis]
     for r,d in prof:
@@ -57,9 +66,10 @@ def lathe(n,prof,c,axis,mat,g='body',seg=48):
         for k in range(seg): fs.append((j*seg+k,j*seg+(k+1)%seg,(j+1)*seg+(k+1)%seg,(j+1)*seg+k))
     return mesh(n,vs,fs,mat,g,0)
 def cyl(n,c,r,depth,axis,mat,g='body',seg=32):
+    if DISTANCE: seg = min(seg, 12 if DISTANCE == 1 else 6)
     return lathe(n,[(.0001,-depth/2),(r,-depth/2),(r,depth/2),(.0001,depth/2)],c,axis,mat,g,seg)
 def tube(n,pts,r,mat,g='body'):
-    cu=bpy.data.curves.new(n,'CURVE'); cu.dimensions='3D'; cu.resolution_u=1; cu.bevel_depth=r; cu.bevel_resolution=3
+    cu=bpy.data.curves.new(n,'CURVE'); cu.dimensions='3D'; cu.resolution_u=1; cu.bevel_depth=r; cu.bevel_resolution=0 if DISTANCE else 3
     sp=cu.splines.new('POLY'); sp.points.add(len(pts)-1)
     for p,c in zip(sp.points,pts): p.co=(*c,1)
     o=bpy.data.objects.new(n,cu); scene.collection.objects.link(o); bpy.context.view_layer.objects.active=o; o.select_set(True); bpy.ops.object.convert(target='MESH'); o=bpy.context.object; o.select_set(False); return finish(o,mat,g)
@@ -211,6 +221,9 @@ for s,label in [(1,'L'),(-1,'R')]:
         e=empty('light:'+kind+label,(x,s*.61,z),root)
         e['ss_light']={'type':'spot' if kind=='headlight' else 'point','color':color,'intensity':2,'range':12 if kind=='headlight' else 2,'angle':48,'penumbra':.35,'pool':True,'beam':'soft','flare':True,'reflect':True,'heroPriority':2,'flicker':'none','breakable':True,'tiers':'all','shadow':'hero' if kind=='headlight' else 'none','emissiveNodes':[group+'__emi_windowGlow',group+'__emi_schoolBusYellow'] if kind=='headlight' else [group+'__emi_sirenRed',group+'__emi_schoolBusYellow'],'powerGroup':'vehicle','behavior':'steady','defaultOn':True}
         if kind=='headlight': e.rotation_euler=Vector((1,0,-.15)).to_track_quat('-Z','Y').to_euler()
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*',), owners={GROUPS[g]: objects for g, objects in PARTS.items()})
+
 # Apply modifiers, join each static material and keep wheel-centre origins.
 for g,parts in PARTS.items():
     buckets={}
@@ -264,3 +277,7 @@ def stage(view):
     scene.render.resolution_x=int(arg('--width',960)); scene.render.resolution_y=int(arg('--height',540)); scene.render.resolution_percentage=100
 if arg('--render'):
     stage(arg('--view','ref')); scene.render.filepath=str(Path(arg('--render')).resolve()); bpy.ops.render.render(write_still=True); print('RENDER OK')
+
+# Every full source export refreshes the native distance tiers.
+if "--glb" in sys.argv and not DISTANCE:
+    build_native_lods(__file__)
