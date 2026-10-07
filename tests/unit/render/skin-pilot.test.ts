@@ -55,7 +55,8 @@ async function drive(variant: 'female' | 'male', ticks: number, plan: (t: number
   const samples: Sample[] = []; let speed = 0, yaw = 0;
   for (let tick = 1; tick <= ticks; tick++) {
     const want = plan(tick / 60);
-    speed += Math.sign(want.speed - speed) * Math.min(Math.abs(want.speed - speed), (want.speed > speed ? 36 : 54) / 60);
+    // The sim's click-to-move accelerates at 9 m/s² (run speed in ~0.5 s).
+    speed += Math.sign(want.speed - speed) * Math.min(Math.abs(want.speed - speed), 9 / 60);
     const delta = Math.atan2(Math.sin(want.yaw - yaw), Math.cos(want.yaw - yaw));
     yaw += Math.sign(delta) * Math.min(Math.abs(delta), want.rate / 60);
     actor.face(yaw, tick / 60); actor.position.x += Math.cos(yaw) * speed / 60; actor.position.z -= Math.sin(yaw) * speed / 60;
@@ -148,8 +149,8 @@ test.each(['female', 'male'] as const)('courier %s stops onto locked feet withou
   const m = footwork(samples, 110);
   expect(m.slideMax, `${variant} stop slide`).toBeLessThan(.02);
   expect(ground.pivots).toBe(0);
-  // Half a second after the stop both feet are planted, side by side, and stay put.
-  const settled = samples.filter(s => s.tick > 165);
+  // The body comes to rest around tick 150 (9 m/s² decel); 0.6 s later both feet are planted, side by side, and stay put.
+  const settled = samples.filter(s => s.tick > 186);
   expect(settled.every(s => s.airborne === 0)).toBe(true);
   for (const s of settled) for (let i = 0; i < 2; i++) expect(s.feet[i].heel.distanceTo(settled[0].feet[i].heel)).toBeLessThan(.001);
   expect(Math.abs(settled[0].feet[0].heel.z - settled[0].feet[1].heel.z)).toBeLessThan(.3);
