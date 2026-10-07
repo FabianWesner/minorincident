@@ -4,12 +4,17 @@ All applied signage and surface details stand at least 3 mm proud.
 """
 import argparse, json, math, random, sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy, bmesh
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import export_lods, rebuild_from_baked
+
 HERE=Path(__file__).resolve().parent
+if '--lod-only' in sys.argv:
+    rebuild_from_baked(HERE/'model.glb')
+    sys.exit(0)
+
 p=argparse.ArgumentParser()
 for k in ['render','glb']: p.add_argument('--'+k)
 p.add_argument('--view',default='ref'); p.add_argument('--samples',type=int,default=24)
@@ -41,8 +46,8 @@ door=empty('door_front',(-.94,-1.55,.24),root)
 
 def finish(o,name,mat,parent,bevel=0,segments=2):
     o.name=name;o.data.materials.clear();o.data.materials.append(M[mat if mat in M else 'pal_'+mat])
-    if bevel >= .015:
-        mod=o.modifiers.new('rounded edges','BEVEL');mod.width=bevel;mod.segments=2 if bevel>=.06 else 1
+    if bevel:
+        mod=o.modifiers.new('rounded edges','BEVEL');mod.width=bevel;mod.segments=segments
         bpy.context.view_layer.objects.active=o;bpy.ops.object.modifier_apply(modifier=mod.name)
         mod=o.modifiers.new('weighted normals','WEIGHTED_NORMAL');bpy.ops.object.modifier_apply(modifier=mod.name)
     bpy.context.view_layer.update();w=o.matrix_world.copy();o.parent=parent;o.matrix_world=w
@@ -323,7 +328,6 @@ def merge_by_material(objects,suffix=''):
             bpy.context.scene.cursor.location=parent.matrix_world.translation;bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
             bpy.ops.object.transform_apply(location=False,rotation=True,scale=True)
     return objects
-prune_hidden_faces([o for o in bpy.context.scene.objects if o.type == "MESH"], occlusion=True, game_camera=True, defer=True)
 meshes=merge_by_material([o for o in bpy.context.scene.objects if o.type=='MESH'])
 for o in meshes:o.data.calc_loop_triangles()
 raw_tri=sum(len(o.data.loop_triangles) for o in meshes)
@@ -366,64 +370,13 @@ root['lods']=json.dumps({'LOD0':'model.glb','LOD1':'model.lod1.glb','LOD2':'mode
 if a.glb:
     asset=list(scene.objects);bpy.ops.object.select_all(action='DESELECT')
     for o in asset:o.select_set(True)
-    def export(path):stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod([o for o in bpy.context.scene.objects if o.select_get()], str(path)); bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
+    def export(path):bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
     path=Path(a.glb).resolve();export(path)
     anchors=[o for o in asset if 'ss_light' in o]
     anchor_data={o:o['ss_light'] for o in anchors}
     distant={'pal_survivorRed':'pal_survivorRed','pal_policeBlue':'pal_policeBlue','pal_backpackTeal':'pal_policeBlue','pal_picketWhite':'pal_picketWhite','pal_schoolBusYellow':'pal_picketWhite','pal_windowGlow':'pal_picketWhite'}
-    # Temporary copies keep the hero source intact for rendering after export.
-    for level,ratio in [(1,.12),(2,.03)]:
-        copies=[]
-        for original in meshes:
-            if level==2:
-                if original.parent.name.startswith('lamp_shop'):continue
-                token=original.data.materials[0].name
-                if token.startswith('emi_'):continue
-                source=original.data.color_attributes['ao'].data
-                value=sum(c.color[0] for c in source)/len(source)
-                bm=bmesh.new();bm.from_mesh(original.data);seen=set()
-                for vertex in bm.verts:
-                    if vertex in seen:continue
-                    component=[];stack=[vertex];seen.add(vertex)
-                    while stack:
-                        q=stack.pop();component.append(q)
-                        for edge in q.link_edges:
-                            other=edge.other_vert(q)
-                            if other not in seen:seen.add(other);stack.append(other)
-                    lo=Vector([min(q.co[k] for q in component) for k in range(3)])
-                    hi=Vector([max(q.co[k] for q in component) for k in range(3)])
-                    size=hi-lo;center=original.matrix_world@((hi+lo)/2)
-                    if max(size)<.7:continue
-                    if original.parent==root and token=='pal_uiDark' and max(size)<2:continue
-                    if original.parent==root and token=='pal_sidewalk' and max(size)<1.2 and center.z<.65:continue
-                    mat=distant.get(token,'pal_asphalt')
-                    if original.parent==root and max(size)>9 and size.z<.5:mat='pal_picketWhite'
-                    # Rebuild structural pieces instead of collapsing thin panels.
-                    if token=='pal_schoolBusYellow' and size.x<.10 and abs(size.y-size.z)<.04 and size.y>1:
-                        o=cyl('distant_sunset',center,size.y/2,max(size.x,.05),mat,original.parent,n=16,axis='x',bevel=0)
-                    else:o=box('distant_structure',center,tuple(max(v,.015) for v in size),mat,original.parent,bevel=.018 if min(size)>.20 else 0,segments=1)
-                    # Preserve the owning palette assembly's baked AO.
-                    layer=o.data.color_attributes.new(name='ao',type='FLOAT_COLOR',domain='CORNER');o.data.color_attributes.active_color=layer
-                    for c in layer.data:c.color=(value,value,value,1)
-                    copies.append(o)
-                bm.free()
-            else:
-                o=original.copy();o.data=original.data.copy();bpy.context.collection.objects.link(o);o.name=original.name+'_lod1';copies.append(o)
-                bpy.context.view_layer.objects.active=o;mod=o.modifiers.new('LOD reduction','DECIMATE');mod.ratio=ratio;bpy.ops.object.modifier_apply(modifier=mod.name);clean_triangles(o)
-        if level==2:copies=merge_by_material(copies,'_lod2')
-        for anchor in anchors:
-            light=json.loads(anchor_data[anchor]);light['emissiveNodes']=[o.name for o in copies if o.data.materials[0].name.startswith('emi_')]
-            anchor['ss_light']=json.dumps(light)
-        bpy.ops.object.select_all(action='DESELECT')
-        for o in asset:
-            if o.type!='MESH':o.select_set(True)
-        for o in copies:o.select_set(True)
-        export(path.with_name(path.stem+'.lod'+str(level)+path.suffix))
-        for o in copies:
-            data=o.data;bpy.data.objects.remove(o,do_unlink=True);bpy.data.meshes.remove(data)
-        for anchor,value in anchor_data.items():anchor['ss_light']=value
+    export_lods(path, meshes)
 
-print('BUILD OK',tri,'triangles',len(meshes),'draw calls')
 if a.render:
     world=bpy.data.worlds.new('studio');scene.world=world;world.use_nodes=True
     world.node_tree.nodes['Background'].inputs[0].default_value=(.20,.17,.25,1);world.node_tree.nodes['Background'].inputs[1].default_value=.35

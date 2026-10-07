@@ -1,12 +1,17 @@
 """Sunset Grove main street: deterministic, texture-free, +X front, metres, Z up."""
 import argparse, json, math, random, sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy, bmesh
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import export_lods, rebuild_from_baked
+
 HERE = Path(__file__).resolve().parent
+if '--lod-only' in sys.argv:
+    rebuild_from_baked(HERE/'model.glb')
+    sys.exit(0)
+
 parser = argparse.ArgumentParser()
 for flag in ('render', 'glb'): parser.add_argument('--' + flag)
 parser.add_argument('--view', default='ref', choices=['ref','game','front','side','rear'])
@@ -48,7 +53,7 @@ def attach(o,name,mat,parent):
     parts.append(o); return o
 
 def box(name,loc,size,mat='sidewalk',parent=body,bevel=.025,rot=None):
-    bevel=min(bevel,min(size)*.3); bevel=bevel if bevel>=.015 else 0; key=(tuple(round(v,5) for v in size),mat,round(bevel,5))
+    bevel=min(bevel,min(size)*.3); key=(tuple(round(v,5) for v in size),mat,round(bevel,5))
     if key not in cache:
         sx,sy,sz=[v/2 for v in size]
         me=bpy.data.meshes.new(name); me.from_pydata([(x,y,z) for x in [-sx,sx] for y in [-sy,sy] for z in [-sz,sz]],[],[(0,4,6,2),(1,3,7,5),(0,1,5,4),(2,6,7,3),(0,2,3,1),(4,5,7,6)]); me.update()
@@ -69,7 +74,7 @@ def mesh(name,verts,faces,mat,parent=body,bevel=0):
     me=bpy.data.meshes.new(name); me.from_pydata(verts,[],faces); me.update()
     o=bpy.data.objects.new(name,me); bpy.context.collection.objects.link(o)
     if bevel:
-        bpy.context.view_layer.objects.active=o; mod=o.modifiers.new('soft edge','BEVEL'); mod.width=bevel; mod.segments=1; bpy.ops.object.modifier_apply(modifier=mod.name)
+        bpy.context.view_layer.objects.active=o; mod=o.modifiers.new('soft edge','BEVEL'); mod.width=bevel; mod.segments=2; bpy.ops.object.modifier_apply(modifier=mod.name)
     return attach(o,name,mat,parent)
 
 def beam(name,p1,p2,width,mat='asphalt',parent=body):
@@ -333,7 +338,6 @@ for y in [-1.6,2.4]:box('shop_counter',(1.3,y,.94),(.65,1.8,.95),'woodWarm',inte
 collider=empty('col:building',(0,0,3.88),root)
 collider['collider']='cuboid'; collider['size']=[5.5,8,7]; collider['shape']='cuboid'
 # Join static parts by material within removable/hinged assemblies.
-prune_hidden_faces(parts, occlusion=True, game_camera=True, defer=True)
 for parent in sorted({o.parent for o in parts},key=lambda o:o.name):
     for mat in M.values():
         obs=[o for o in bpy.context.scene.objects if o.type=='MESH' and o.parent==parent and o.data.materials[0]==mat]
@@ -364,18 +368,10 @@ if args.glb:
     bpy.ops.object.select_all(action='DESELECT')
     for o in asset:o.select_set(True)
     def export(path):
-        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(path.resolve())); bpy.ops.export_scene.gltf(filepath=str(path.resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
+        bpy.ops.export_scene.gltf(filepath=str(path.resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
     export(Path(args.glb))
-    original={o:o.data for o in meshes}; lods=[]
-    for level,ratio in [(1,.14),(2,.035)]:
-        for o in meshes:
-            o.data=original[o].copy(); bpy.context.view_layer.objects.active=o
-            mod=o.modifiers.new('LOD','DECIMATE'); mod.ratio=ratio; bpy.ops.object.modifier_apply(modifier=mod.name)
-        path=Path(args.glb).with_name(Path(args.glb).stem+'.lod%d.glb'%level); export(path)
-        lods.append({'level':level,'triangles':sum(len(o.data.polygons) for o in meshes),'file':path.name})
-        for o in meshes:
-            reduced=o.data; o.data=original[o]; bpy.data.meshes.remove(reduced)
-    (HERE/'lods.json').write_text(json.dumps(lods,indent=2)+'\n')
+    export_lods(Path(args.glb), meshes)
+
 print('BUILD OK',tri,'triangles',len(meshes),'draw calls')
 if args.render:
     scene=bpy.context.scene; scene.render.engine='CYCLES'; scene.cycles.samples=args.samples; scene.cycles.use_denoising=True; scene.cycles.seed=714

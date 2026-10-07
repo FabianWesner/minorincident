@@ -1,11 +1,12 @@
 """House C: deterministic, texture-free backyard diorama, +X front, metres."""
 import argparse, hashlib, json, math, random, sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import prune_hidden_faces, prepare_export_lod
 import bpy, bmesh
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import simplify as simplify_lod
+
 P=Path(__file__).resolve().parent
 fingerprint=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 p=argparse.ArgumentParser()
@@ -32,6 +33,7 @@ def build_scene():
   if b:
    weights=o.data.attributes.new(name='bevel_weight_edge',type='FLOAT',domain='EDGE')
    for value in weights.data:value.value=b/.03
+  if a.lod==2 and group!='roof':group='body'
   groups.setdefault((group,m.name),[]).append(o);return o
  def box(n,loc,size,m,b=.018,group='body'):
   vertices=[(x*size[0]/2,y*size[1]/2,z*size[2]/2) for x,y,z in [(-1,-1,-1),(-1,-1,1),(-1,1,-1),(-1,1,1),(1,-1,-1),(1,-1,1),(1,1,-1),(1,1,1)]]
@@ -261,7 +263,7 @@ def build_scene():
   normals=bmesh.new();normals.from_mesh(o.data);bmesh.ops.recalc_face_normals(normals,faces=list(normals.faces));normals.to_mesh(o.data);normals.free()
   bevel=o.modifiers.new('soft edges','BEVEL');bevel.width=.03;bevel.segments=1;bevel.limit_method='WEIGHT';bpy.context.view_layer.objects.active=o;bpy.ops.object.modifier_apply(modifier=bevel.name)
   if a.lod:
-   dec=o.modifiers.new('LOD simplification','DECIMATE');dec.ratio={1:.12,2:.035}[a.lod];bpy.context.view_layer.objects.active=o;bpy.ops.object.modifier_apply(modifier=dec.name)
+   simplify_lod(o, {1:.55,2:.25}[a.lod])
   clean=bmesh.new();clean.from_mesh(o.data);bmesh.ops.triangulate(clean,faces=list(clean.faces))
   tiny=[face for face in clean.faces if face.calc_area()<1e-8]
   if tiny:bmesh.ops.delete(clean,geom=tiny,context='FACES_ONLY')
@@ -273,9 +275,6 @@ def build_scene():
  # Deterministic 32-ray hemisphere AO, baked into the game colour attribute.
  vertices=[];faces=[]
  meshes=[o for o in export_objects if o.type=='MESH']
- if a.lod == 0:
-  grouped={o:'body' if o.parent==root else o.parent.name for o in meshes}
-  prune_hidden_faces(meshes, grouped, occlusion=True, game_camera=True, defer=True)
  for o in meshes:
   offset=len(vertices);vertices.extend(o.matrix_world@v.co for v in o.data.vertices);faces.extend(tuple(offset+i for i in f.vertices) for f in o.data.polygons)
  tree=BVHTree.FromPolygons(vertices,faces)
@@ -290,6 +289,7 @@ def build_scene():
    value=1-.6*occlusion/32;c.color=(value,value,value,1)
  # Light anchors reference emissive nodes and valid light colour tokens.
  for name,loc,nodes,kind in [('windows',(.45,0,2.3),['window_emi_windowGlow','door_emi_windowGlow'],'window'),('festoon',(2,2,2.5),[n+'_emi_windowGlow' for n in bulbs],'point')]:
+  if a.lod==2:nodes=['body_emi_windowGlow']
   anchor=empty('light:'+name,loc);anchor['ss_light']={'type':kind,'color':'light_window_warm','intensity':2.5,'range':4,'pool':True,'beam':'none','flare':True,'reflect':True,'shadow':'none','heroPriority':0,'flicker':'none','powerGroup':'block:residential','breakable':True,'emissiveNodes':nodes,'tiers':'all'};export_objects.append(anchor)
  export_objects+= [bpy.data.objects[n] for n in bulbs]
  col=empty('col:house',(-1.85,0,2.05));col['collider']={'type':'cuboid','size':[3.8,6,4.1]};export_objects.append(col)
@@ -303,9 +303,14 @@ def build_scene():
  return report,export_objects
 
 cache=P/'scene.blend'
-if not a.lod and cache.exists() and (P/'scene.sha256').exists() and (P/'scene.sha256').read_text()==fingerprint:
+if cache.exists() and (P/'scene.sha256').exists() and (P/'scene.sha256').read_text()==fingerprint:
  bpy.ops.wm.open_mainfile(filepath=str(cache))
  report=json.loads((P/'geometry.json').read_text());export_objects=list(bpy.context.scene.objects)
+ if a.lod:
+  for o in export_objects:
+   if o.type=='MESH':simplify_lod(o, {1:.55,2:.25}[a.lod], planar_only=o.data.materials[0].name.startswith('emi_'))
+  report['triangles']=sum(len(o.data.loop_triangles) for o in export_objects if o.type=='MESH')
+  (P/('geometry-lod%d.json'%a.lod)).write_text(json.dumps(report,indent=2))
 else:
  report,export_objects=build_scene()
  if not a.lod:
@@ -314,21 +319,7 @@ if a.glb:
  bpy.ops.object.select_all(action='DESELECT')
  for o in export_objects:o.select_set(True)
  Path(a.glb).parent.mkdir(parents=True,exist_ok=True)
- prepare_export_lod(export_objects, str(Path(a.glb).resolve()), lod1_ratio=.08); bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False)
-# Author all tiers together so lower LODs retain the LOD0 assembly bounds.
-if a.glb and a.lod == 0 and not a.render:
- high_report = report
- high_path = Path(a.glb).resolve()
- for level in (1, 2):
-  a.lod = level
-  bpy.ops.wm.read_factory_settings(use_empty=True)
-  report, export_objects = build_scene()
-  bpy.ops.object.select_all(action='DESELECT')
-  for obj in export_objects: obj.select_set(True)
-  low_path = high_path.with_name(high_path.stem + '.lod%d.glb' % level)
-  prepare_export_lod(export_objects, str(low_path), lod1_ratio=.08)
-  bpy.ops.export_scene.gltf(filepath=str(low_path),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False)
- report = high_report
+ bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False)
 # Preview studio uses only non-exported lighting, no second ground plane.
 if a.render:
  scene=bpy.context.scene;scene.render.engine='CYCLES';scene.cycles.samples=a.samples;scene.cycles.use_denoising=True

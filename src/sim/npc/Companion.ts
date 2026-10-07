@@ -33,6 +33,23 @@ export class Companion {
     const c = e.companion!; c.courage = Math.max(0, c.courage - amount);
     if (!c.courage && c.state !== 'hide') { c.state = 'hide'; c.until = this.world.tick + npcs.corgiRecoveryTicks; c.pickup = null; }
   }
+  /**
+   * After a checkpoint restore / respawn: stale response state, path and facing must not survive (the corgi used to run
+   * toward the courier facing away). Snap it next to her, facing her, with a clean motion state.
+   */
+  respawnNear(): void {
+    const player = this.world.entities.get(1)!.transform, nav = this.world.infected!.nav;
+    for (const e of this.world.entities.iterate()) {
+      const c = e.companion; if (!c) continue;
+      let spot: { x: number; z: number } | null = null;
+      for (const [dx, dz] of [[0, 2], [2, 0], [-2, 0], [0, -2], [1.4, 1.4], [-1.4, -1.4], [0, 1], [0, 0]]) if (nav.clear(player.x + dx, player.z + dz, .35)) { spot = { x: player.x + dx, z: player.z + dz }; break; }
+      spot ??= { x: player.x, z: player.z };
+      e.transform.x = spot.x; e.transform.z = spot.z; e.transform.yaw = -Math.atan2(player.z - spot.z, player.x - spot.x);
+      delete e.locomotion; c.velocity = { x: 0, z: 0 }; c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.following = false; c.pickup = null;
+      if (e.motion) { e.motion.velocity.x = e.motion.velocity.z = 0; e.motion.speed = 0; e.motion.moving = false; }
+      this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+    }
+  }
   update(): void {
     const player = this.world.entities.get(1)!, ai = this.world.infected!;
     for (const e of this.world.entities.iterate()) {
@@ -74,6 +91,11 @@ export class Companion {
         if (enemy.health.current <= 0 || distance > 18 || ai.director.visible(enemy.transform) || !approaching.has(enemy.infected!.state)) continue;
         c.barkAt = this.world.tick + 180;
         this.world.events.emit({ type: 'corgi.bark', tick: this.world.tick, id: e.id, threatId: enemy.id, direction: { x: dx / (distance || 1), z: dz / (distance || 1) } }); break;
+      }
+      // The presented heading always follows the actual travel direction: never run backwards while the bounded turn catches up.
+      const v = c.velocity; if (v && Math.hypot(v.x, v.z) > 1.5) {
+        const heading = -Math.atan2(v.z, v.x), error = Math.atan2(Math.sin(heading - e.transform.yaw), Math.cos(heading - e.transform.yaw));
+        if (Math.abs(error) > .6) { e.transform.yaw = heading; if (e.locomotion) e.locomotion.omega = 0; }
       }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }

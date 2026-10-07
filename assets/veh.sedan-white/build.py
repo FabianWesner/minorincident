@@ -4,11 +4,16 @@ All applied trim is at least 3 mm proud. No image textures are exported.
 """
 import math, sys, json
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bmesh, bpy
 from mathutils import Matrix, Vector
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import hard_normals, refresh_normals
+
 HERE = Path(__file__).resolve().parent
+if '--normals-only' in sys.argv:
+    refresh_normals(HERE, Path(sys.argv[sys.argv.index('--lod-input-directory') + 1]))
+    sys.exit(0)
+
 ARGS = sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
 def arg(name, default=None):
     return ARGS[ARGS.index(name)+1] if name in ARGS else default
@@ -85,10 +90,10 @@ def finish(obj, mat, parent, bevel=0.0, segs=2, smooth=True, harden=True, angle=
     if obj.type == 'MESH':
         for p in obj.data.polygons:
             p.use_smooth = smooth
-    if bevel >= .01:
+    if bevel > 0:
         b = obj.modifiers.new('bevel', 'BEVEL')
         b.width = bevel
-        b.segments = min(segs, 2 if bevel >= .04 else 1)
+        b.segments = segs
         b.limit_method = 'ANGLE'
         b.angle_limit = math.radians(angle)
         b.harden_normals = harden
@@ -163,7 +168,7 @@ def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.00
     return finish(from_bm(name, bm), mat, parent, bevel=bevel, segs=2)
 
 
-def lathe(name, profile, center, axis, mat, parent=None, segs=32, smooth=True):
+def lathe(name, profile, center, axis, mat, parent=None, segs=40, smooth=True):
     """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
     bm = bmesh.new()
     rings = []
@@ -197,10 +202,10 @@ def lathe(name, profile, center, axis, mat, parent=None, segs=32, smooth=True):
 def cylinder(name, center, r, depth, axis, mat, parent=None, segs=40, bevel=0.0):
     prof = [(1e-4, -depth / 2), (r, -depth / 2), (r, depth / 2), (1e-4, depth / 2)]
     o = lathe(name, prof, center, axis, mat, parent, segs)
-    if bevel >= .01:
+    if bevel:
         b = o.modifiers.new('bevel', 'BEVEL')
         b.width = bevel
-        b.segments = 2 if bevel >= .04 else 1
+        b.segments = 2
         b.limit_method = 'ANGLE'
         o.modifiers.move(len(o.modifiers) - 1, 0)
     return o
@@ -219,7 +224,7 @@ def cut(target, cutter_obj):
     bpy.data.objects.remove(cutter_obj)
 
 
-def raw_cyl(name, center, r, depth, axis='y', segs=32):
+def raw_cyl(name, center, r, depth, axis='y', segs=64):
     bm = bmesh.new()
     bmesh.ops.create_cone(bm, cap_ends=True, segments=segs, radius1=r, radius2=r, depth=depth)
     rot = {'y': Matrix.Rotation(PI / 2, 4, 'X'), 'x': Matrix.Rotation(PI / 2, 4, 'Y'), 'z': Matrix.Identity(4)}[axis]
@@ -407,7 +412,6 @@ def motion_owner(o):
         if p in moving:return p
         p=p.parent
     return None
-prune_hidden_faces([o for o in CAR.objects if o.type == "MESH"], {o: motion_owner(o) for o in CAR.objects if o.type == "MESH"}, defer=True)
 buckets={}
 for o in list(CAR.objects):
     if o.type=='MESH':buckets.setdefault((motion_owner(o),o.data.materials[0].name),[]).append(o)
@@ -454,7 +458,7 @@ if arg('--glb'):
     def export_glb(path):
         bpy.ops.object.select_all(action='DESELECT')
         for o in CAR.objects:o.select_set(True)
-        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(Path(path).resolve())); bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_lights=False,export_cameras=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
+        bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_lights=False,export_cameras=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
         print('GLB OK',path)
     export_glb(arg('--glb'))
     original={o:o.data for o in meshes}
@@ -463,6 +467,7 @@ if arg('--glb'):
             o.data=me.copy();bpy.context.view_layer.objects.active=o
             d=o.modifiers.new('LOD','DECIMATE');d.ratio=ratio;bpy.ops.object.modifier_apply(modifier=d.name)
             clean_mesh(o)
+        for obj in meshes: hard_normals(obj)
         export_glb(HERE/f'model.lod{level}.glb')
         for o,me in original.items():o.data=me
 

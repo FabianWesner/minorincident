@@ -11,7 +11,14 @@ import bpy
 import bmesh
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import export_lods, rebuild_from_baked
+
 HERE = Path(__file__).resolve().parent
+if '--lod-only' in sys.argv:
+    rebuild_from_baked(HERE/'model.glb', planar_nodes=('body_pal_khakiSeam',), ratios=(.55,.23))
+    sys.exit(0)
+
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT / 'tools/blender'))
 from sslib import palette, ao
@@ -367,22 +374,7 @@ if args.glb:
         for o in [root,*root.children_recursive]: o.select_set(True)
         bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False,export_vertex_color='ACTIVE')
     target=Path(args.glb).resolve(); export(target)
-    originals={o:o.data.copy() for o in meshes}
-    lod_stats=[]
-    for level,ratio in [(1,.20),(2,.081)]:
-        for o in meshes:
-            o.data=originals[o].copy()
-            if o.parent.name not in ['lightsFront','lightsBrake','lampsRoof']:
-                clean_mesh(o,.16 if level==1 else .36)
-            bpy.context.view_layer.objects.active=o
-            dec=o.modifiers.new('LOD reduction','DECIMATE'); dec.ratio=ratio; dec.use_collapse_triangulate=True
-            bpy.ops.object.modifier_apply(modifier=dec.name)
-            clean_mesh(o)
-        export(target.with_name(target.stem+'.lod'+str(level)+'.glb'))
-        lod_stats.append(stats())
-    for o in meshes: o.data=originals[o]
-    (HERE/'metrics.json').write_text(json.dumps({'lod0':base_stats,'lod1':lod_stats[0],'lod2':lod_stats[1]},indent=2))
-    print('GLB OK',json.dumps(lod_stats))
+    export_lods(target, meshes, planar_nodes=('body_pal_khakiSeam',), ratios=(.55,.23))
 
 if args.render:
     # Neutral dark diorama studio; all staging is created after asset export.

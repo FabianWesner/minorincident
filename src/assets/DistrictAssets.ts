@@ -5,6 +5,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import type { PaletteToken } from "../data/palette";
 import { paletteTokens } from "../data/palette";
 import type { Materials } from "../render/Materials";
+import { PaletteMaterial } from "../render/PaletteMaterial";
 import { placeholder } from "./districtPlaceholders";
 import { worldAssets } from "./worldDefinitions";
 import { AssetRegistry } from "./registry";
@@ -70,7 +71,7 @@ export class DistrictAssets {
                 return this.materials.world(
                   emi && !lit ? "backpackTeal" : token,
                   emi && lit ? 2 : 0,
-                );
+                ).seeThrough();
               };
               o.material = Array.isArray(o.material)
                 ? o.material.map(remap)
@@ -129,7 +130,7 @@ export class DistrictAssets {
       if (id === 'bld.joes-diner') {
         const sign = dinerSign(); root.add(sign.root); this.geometries.add(sign.geometry); this.signTextures.push(sign.texture);
       }
-      root.traverse(node => { if (node instanceof Mesh) this.batchMaterials.add(node.material as Material); });
+      root.traverse(node => { if (node instanceof Mesh) { this.batchMaterials.add(node.material as Material); if (node.material instanceof PaletteMaterial) node.material.seeThrough(); } });
       return root;
     }));
     return this.cache.get(baseKey)!;
@@ -150,7 +151,7 @@ export class DistrictAssets {
           if (!(node instanceof Mesh) || node.name !== 'window-light') return;
           let material = this.sharedMaterials.get('window-light:unlit');
           if (!material) {
-            material = this.materials.shaded(this.materials.sample(attribute('_palette', 'float')).mul(.08));
+            material = this.materials.shaded(this.materials.sample(attribute('_palette', 'float')).mul(.08)).seeThrough();
             material.name = 'emi_static-windows'; this.sharedMaterials.set('window-light:unlit', material); this.batchMaterials.add(material);
           }
           node.material = material;

@@ -7,15 +7,38 @@ from pathlib import Path
 import bpy, bmesh
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import simplify as simplify_lod
+
 HERE = Path(__file__).resolve().parent
+def export_lods(meshes, path, roof):
+    # Exact neon glyph outlines; other closed solids lose bevel detail first.
+    high={o:o.data for o in meshes}
+    for level,ratio in [(1,.55),(2,.25)]:
+        for o,data in high.items():
+            o.data=data.copy()
+            simplify_lod(o, ratio, planar_only=o.parent == roof and o.data.materials[0].name.startswith('emi_'))
+        bpy.ops.object.select_all(action='SELECT')
+        bpy.ops.export_scene.gltf(filepath=str(path.with_name(path.stem+'.lod'+str(level)+path.suffix)),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
+        for o,data in high.items():
+            low=o.data;o.data=data;bpy.data.meshes.remove(low)
+
 parser = argparse.ArgumentParser()
 for key in ['render', 'glb']: parser.add_argument('--'+key)
+parser.add_argument('--lod-only', action='store_true')
 parser.add_argument('--view', default='ref')
 parser.add_argument('--samples', type=int, default=24)
 parser.add_argument('--width', type=int, default=960)
 parser.add_argument('--height', type=int, default=540)
 args = parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
+if args.lod_only:
+    path=Path(args.glb).resolve()
+    bpy.ops.import_scene.gltf(filepath=str(path))
+    export_lods([o for o in bpy.context.scene.objects if o.type=='MESH'], path, bpy.data.objects['roof'])
+    print('OK authored LODs from baked source', path)
+    sys.exit(0)
+
 rng=random.Random(284)
 M={}
 colors={'asphalt':'5b4f5c','sidewalk':'b9a4a0','grass':'6f8f3a','foliage':'7da23c','woodWarm':'b0703f','picketWhite':'f2e6dc','brick':'a8483a','survivorRed':'d9363e','backpackTeal':'2f6e6a','schoolBusYellow':'f2b630','windowGlow':'ffc773','uiDark':'25222c'}
@@ -400,31 +423,7 @@ if args.glb:
     def export_glb(path):
         bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
     path=Path(args.glb).resolve(); export_glb(path)
-    # Reduced meshes retain the same control nodes and baked AO for runtime LODs.
-    high={o:o.data for o in meshes}
-    for level,ratio in [(1,.10),(2,.025)]:
-        for o,data in high.items():
-            o.data=data.copy(); bpy.context.view_layer.objects.active=o
-            if level==2:
-                # Distant views omit small standalone details (petals, leaves,
-                # mugs, checker tiles, bolts). Large silhouette pieces survive.
-                bm=bmesh.new();bm.from_mesh(o.data);seen=set();discard=[]
-                for v in bm.verts:
-                    if v in seen:continue
-                    component=[];stack=[v];seen.add(v)
-                    while stack:
-                        q=stack.pop();component.append(q)
-                        for edge in q.link_edges:
-                            n=edge.other_vert(q)
-                            if n not in seen:seen.add(n);stack.append(n)
-                    extent=Vector([max(q.co[k] for q in component)-min(q.co[k] for q in component) for k in range(3)])
-                    if extent.length<.45:discard.extend(component)
-                bmesh.ops.delete(bm,geom=discard,context='VERTS');bm.to_mesh(o.data);bm.free()
-            mod=o.modifiers.new('distant simplification','DECIMATE');mod.ratio=ratio
-            bpy.ops.object.modifier_apply(modifier=mod.name)
-        export_glb(path.with_name(path.stem+'.lod'+str(level)+path.suffix))
-        for o,data in high.items():
-            low=o.data;o.data=data;bpy.data.meshes.remove(low)
+    export_lods(meshes, path, roof)
 
 print('BUILD OK',tri,'triangles',len(meshes),'draw calls')
 if args.render:

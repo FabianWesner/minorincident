@@ -42,9 +42,12 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       // Completes when the technician has taken the box and walked back in (LevelOneOutbreak drives `delivered`).
       step('deliver', 'interact', 'Deliver the package to the Medical Annex', 'lab-door', { kind: 'state', key: 'delivered', equals: true });
       // Beat 5 leaves no objective for 4 to 6 s; the objective below starts when the infected exit.
-      const escape = step('escape', 'custom', 'Get away from the facility', 'garage-door', { kind: 'state', key: 'away', equals: true }, []);
+      // PO feedback 2026-10-07: the weapon objective and its marker appear at once after the exits (no gate), the world stays live.
+      const escape = step('escape', 'custom', 'Get away from the facility', 'garage-door', { kind: 'state', key: 'exited', equals: true }, []);
       escape.start = { kind: 'state', key: 'exited', equals: true }; escape.onStart = [{ kind: 'radio', id: 'L1.bang' }];
       const bat = interact('weapon', 'Find something to defend yourself', 'garage-bat', 0.6);
+      // The marker sits at the garage door (visible from the street), the interaction itself stays at the bench.
+      bat.onStart = [{ kind: 'marker', anchor: 'garage-door' }];
       bat.onComplete = [{ kind: 'grant', item: 'bat' }, { kind: 'checkpoint', id: 'bat' }];
       // PO: the ending plays in-engine (firefighter, run-in, shutter slam, thuds, caption, fade) before the result: the
       // story sets `safe` when it is over.

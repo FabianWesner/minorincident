@@ -61,6 +61,7 @@ export class GameView implements Lifecycle {
   private readonly meshes: Mesh[] = [];
   private vehicles: VehicleView | null = null;
   private bicycle: BicycleView | null = null;
+  private readonly seat = new Vector3();
   private actions: ActionView | null = null;
   private contactShadows: ContactShadows | null = null;
   private crowd: CrowdView | null = null;
@@ -253,7 +254,7 @@ export class GameView implements Lifecycle {
         shake: strength => this.view.shake(strength),
       });
       this.vfx.set({ ...this.vfxSettings, quality: this.quality }); this.scene.add(this.vfx);
-      if (this.world.scenario === 'L1') { const targets = labAccidentTargets(this.scene, s => this.view.shake(s), (x, z, w) => this.view.pull(x, z, w)); this.labWindows = targets; this.labAccident = new LabAccidentFx(this.world, this.vfx, targets, anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; this.labAccident.facing = this.camera.quaternion; this.scene.add(this.labAccident.column); }
+      if (this.world.scenario === 'L1') { const targets = labAccidentTargets(this.scene, s => this.view.shake(s), (x, z, w) => this.view.pull(x, z, w)); this.labWindows = targets; this.labAccident = new LabAccidentFx(this.world, this.vfx, targets, anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; this.labAccident.facing = this.camera.quaternion; this.labAccident.column.camera = this.camera; this.scene.add(this.labAccident.column); }
       this.crowd?.setGoreEnabled(this.vfx.snapshot().enabled && this.vfx.snapshot().gore === 'Full');
       const survivor = this.world.entities.get(1)?.survivor;
       this.frozenPose = survivor ? structuredClone(survivor) : null;
@@ -499,8 +500,7 @@ export class GameView implements Lifecycle {
       // Portrait hero readability supplements the seven-metre camera floor; collision stays in metres.
       this.character.scale.setScalar(this.camera.aspect < 1 ? 1.25 : 1);
       this.character.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha) - 0.7, lerp(previous?.z ?? current.z, current.z, alpha));
-      // Riding: sit on the saddle (the bicycle view slides its seat under the rider's feet; hips sit ~0.2 m above the ground pose).
-      if (this.world.vehicles?.bicycle.riding) this.character.position.y += .2;
+      this.bicycle?.update(this.camera); // the saddle's world position below needs this frame's bike pose
       const from = previous?.yaw ?? current.yaw;
       const striking = !!survivor.attack && this.world.tick < survivor.attack.endsAt;
       this.character.face(from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60, striking);
@@ -517,6 +517,8 @@ export class GameView implements Lifecycle {
       const bike = riding === undefined ? undefined : (this.world.entities.get(riding) as { bicycle?: { pedal: number; steer: number } } | undefined)?.bicycle;
       this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
         riding === undefined ? undefined : { pedal: bike?.pedal ?? this.world.tick * .12, steer: bike?.steer ?? 0 });
+      // Riding: the pelvis sits on the saddle, measured from the bike's `seat` node every frame (any heading, lean or turn).
+      if (riding !== undefined && this.bicycle?.seatWorld(this.seat)) this.character.seatPelvis(this.seat, -.04);
     }
     if (this.cube && current) {
       this.cube.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha), lerp(previous?.z ?? current.z, current.z, alpha));
@@ -532,13 +534,14 @@ export class GameView implements Lifecycle {
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.vehicles); }
     this.vehicles?.update(alpha);
     if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.scene.add(this.bicycle); }
-    this.bicycle?.update();
+    this.bicycle?.update(this.camera);
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
     this.crowd?.update(this.view, alpha); this.contactShadows?.update(); this.actions?.update();
     this.entityAssets?.update();
     this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha);
     this.flashOverlay.style.opacity = String(Math.max(this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
+    if (this.world.props) this.districts?.syncProps(this.world.props.items);
     this.lighting?.update(this.view); this.districts?.updateLods(this.view);
     this.districts?.cull(this.view, this.quality);
     const locked = this.world.controls.snapshot()?.attack;

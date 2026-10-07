@@ -8,8 +8,6 @@ import math
 import random
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy
 import bmesh
 from mathutils import Vector
@@ -156,7 +154,10 @@ def build(lod=0):
         box('front jamb wall',(1.45,y,1.63),(.18,.34,2.80),'asphalt')
     box('front lintel',(1.45,0,2.89),(.18,3.80,.28),'asphalt')
     for x in (-1.44,1.45):
-        profile('gable wall',[(-2.2,3.01),(2.2,3.01),(0,4.10)],x,.16,'asphalt',roof)
+        # Gables are opaque wall geometry and stay with the body when the roof lifts.
+        gable = profile('gable wall',[(-2.2,3.01),(2.2,3.01),(0,4.10)],x,.16,'asphalt',body)
+        for face in gable.data.polygons: face.material_index = 0
+        assert not gable.data.materials[0].name.startswith('emi_')
     if lod == 0:
         for side in (-1,1):
             for row in range(15):
@@ -172,7 +173,7 @@ def build(lod=0):
                 w=4.26*(4.10-z)/1.09
                 if w>.10:
                     for x in (-1.54,1.54):
-                        box('gable lap siding',(x,0,z),(.025,w,.17),'asphalt',roof,bevel=.003)
+                        box('gable lap siding',(x,0,z),(.025,w,.17),'asphalt',body,bevel=.003)
     for x in (-1.50,1.53):
         for y in (-2.19,2.19):
             box('corner trim',(x,y,1.66),(.17,.17,2.87),'picketWhite')
@@ -389,8 +390,6 @@ def build(lod=0):
             if not o.name.startswith(('workshop floor','mower','stool','shovel','leaning')):
                 o.location.x+=.45
     bat_socket.location.x+=.45
-    if lod == 0:
-        prune_hidden_faces([o for o in scene.objects if o.type == "MESH"], defer=True)
     # Evaluate soft bevels then join only within semantic groups and palette materials.
     bpy.context.view_layer.update()
     groups={}
@@ -463,7 +462,7 @@ def export_chain(path):
         assert len(objects)<=40
         ao.bake_all(objects,samples=32)
         target=Path(path).with_name('model'+('' if lod==0 else '.lod'+str(lod))+'.glb')
-        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(target.resolve())); bpy.ops.export_scene.gltf(filepath=str(target.resolve()),export_format='GLB',export_apply=True,
+        bpy.ops.export_scene.gltf(filepath=str(target.resolve()),export_format='GLB',export_apply=True,
              export_yup=True,export_extras=True,export_cameras=False,export_lights=False,
              export_all_vertex_colors=True)
     (HERE/'metrics.json').write_text(json.dumps(metrics,indent=2)+'\n')

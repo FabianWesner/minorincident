@@ -1,11 +1,16 @@
 """Sunset Grove house B. Deterministic, texture-free, metres, +X front, Z up."""
 import argparse, json, math, random, sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy, bmesh
 from mathutils import Vector
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import export_lods, rebuild_from_baked
+
 HERE=Path(__file__).resolve().parent
+if '--lod-only' in sys.argv:
+    rebuild_from_baked(HERE/'model.glb')
+    sys.exit(0)
+
 p=argparse.ArgumentParser()
 for f in ['render','glb']: p.add_argument('--'+f)
 p.add_argument('--view',default='ref'); p.add_argument('--samples',type=int,default=24)
@@ -232,10 +237,6 @@ box('attic_floor',(0,0,3.6),(5.8,4.8,.12),'woodWarm',interior)
 for name,loc,size in [('house',(0,0,1.9),(6,5,3.8)),('garage',(-.3,4.05,1.5),(5.45,3,3))]:
     col=empty('col:'+name,loc,root); col['collider']='cuboid'; col['shape']='cuboid'; col['size']=list(size)
 # Merge only within assemblies, so roof removal and hinges remain functional.
-# Only outward leaf meshes participate in ray pruning: inward-wound building
-# detail must retain every visible window bar and shutter face.
-leaves = [obj for obj in parts if obj.name.split('.')[0] == 'leaf']
-prune_hidden_faces(leaves, occlusion=True, defer=True)
 parents={o.parent for o in parts}
 for parent in sorted(parents,key=lambda o:o.name):
     for mat in M.values():
@@ -265,21 +266,10 @@ if a.glb:
     bpy.ops.object.select_all(action='DESELECT')
     for o in asset:o.select_set(True)
     def export_glb(path):
-        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(path.resolve())); bpy.ops.export_scene.gltf(filepath=str(path.resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
+        bpy.ops.export_scene.gltf(filepath=str(path.resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
     export_glb(Path(a.glb))
-    original={o:o.data for o in meshes}
-    lod_stats=[]
-    for level,ratio in [(1,.14),(2,.035)]:
-        for o in meshes:
-            o.data=original[o].copy(); bpy.context.view_layer.objects.active=o
-            mod=o.modifiers.new('LOD reduction','DECIMATE'); mod.ratio=ratio; bpy.ops.object.modifier_apply(modifier=mod.name)
-        lod_path=Path(a.glb).with_name(Path(a.glb).stem+'.lod%d.glb'%level); export_glb(lod_path)
-        count=0
-        for o in meshes:o.data.calc_loop_triangles(); count+=len(o.data.loop_triangles)
-        lod_stats.append({'level':level,'triangles':count,'draw_calls':len(meshes),'file':lod_path.name})
-        for o in meshes:
-            reduced=o.data; o.data=original[o]; bpy.data.meshes.remove(reduced)
-    (HERE/'lods.json').write_text(json.dumps(lod_stats,indent=2)+'\n')
+    export_lods(Path(a.glb), meshes)
+
 print('BUILD OK',tri,'triangles',len(meshes),'draw calls')
 if a.render:
     scene=bpy.context.scene; scene.render.engine='CYCLES'; scene.cycles.samples=a.samples; scene.cycles.use_denoising=True
