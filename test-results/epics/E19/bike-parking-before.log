@@ -1,0 +1,14 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/l1-closure
+
+ ❯ tests/sim/bicycle-pavement.test.ts (3 tests | 1 failed | 2 skipped) 210ms
+   ↓ parked start, mount at rack, depot and automatic road parking keep both wheels on pavement @E19
+   ↓ garage bat pickup permits walking back to the parked bike, ACTION remount and riding 30 m @E19
+   × annex auto-parking leaves a clear rider start and a walking route through the gate @E19 @E19-AC16 209ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  16:55:00
+   Duration  639ms (transform 51%, tests 35%, import 13%)
+
+JSON report written to /Users/wesner/Workspace/minorincident/.claude/worktrees/l1-closure/test-results/epics/E19/bike-parking-before.json

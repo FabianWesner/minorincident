@@ -23,11 +23,11 @@
 | [E17](epic-17-asset-production-pipeline.md) | Asset production pipeline | M0 → M3 | E01, E02 |
 | [E18](epic-18-performance-quality-mobile.md) | Performance, quality tiers and mobile | M1 → M4 | E02, E07 |
 | [E19](epic-19-level-1-stop-the-outbreak.md) | Level 1: Stop the Outbreak | M1 | E04–E08, E10–E12, E14 |
-| [E20](epic-20-level-2-get-them-out.md) | Level 2: Get Them Out | M2 | E19, E08, E13 |
-| [E21](epic-21-level-3-reach-the-safe-zone.md) | Level 3: Reach the Safe Zone | M2 | E20, E09 |
-| [E22](epic-22-level-4-open-the-escape-route.md) | Level 4: Open the Escape Route | M3 | E21, E11 |
-| [E23](epic-23-level-5-hold-the-line.md) | Level 5: Hold the Line | M3 | E22 |
-| [E24](epic-24-level-6-get-out.md) | Level 6: Get Out (+ ending) | M3 | E23 |
+| [E20](epic-20-level-2-the-failed-rescue.md) | Level 2: The Failed Rescue (redesigned 2026-10-07) | M2 | E19, E06, E08, E09, E25, E26 |
+| [E21](epic-21-level-3-the-police-collapse.md) | Level 3: The Police Collapse (redesigned 2026-10-07) | M2 | E20, E06, E08, E27 |
+| [E22](epic-22-level-4-the-safe-city-falls.md) | Level 4: The Safe City Falls (redesigned 2026-10-07) | M3 | E21, E18, E25, E26, E27 |
+| [E23](epic-23-level-5-aftermath.md) | Level 5: Aftermath (redesigned 2026-10-07) | M3 | E22, E08, E10 |
+| [E24](epic-24-level-6-the-subway.md) | Level 6: The Subway (redesigned 2026-10-07) | M3 | E23, E25, E26 |
 | [E25](epic-25-lighting-shadows-reflections.md) | Lighting, shadows and reflections | M1 → M3 | E02, E10, E17 |
 | [E26](epic-26-physics-props-and-barricades.md) | Physics props and barricades | M1 → M2 | E04, E05, E07, E09, E10, E11 |
 | [E27](epic-27-explosions-fire-smoke.md) | Explosions, fire and smoke | M2 → M3 | E05, E11, E15, E25, E26 |
@@ -39,8 +39,8 @@
 | --- | --- | --- |
 | **M0 Foundation** | Empty town plane with the camera, loop, input, test API, and asset registry | `npm run verify -- M0` green |
 | **M1 Vertical slice** | **L1 fully playable** from greybox to final P0 assets: unarmed evasion → melee → Patient Zero → twist | the bot completes L1 on 20 seeds; human-feel review passes |
-| **M2 Core campaign** | L2–L3: firearms, throwables, escorts, vehicles, progression, save | bot completes L1→L3 as a campaign |
-| **M3 Full campaign** | L4–L6, heavy weapons, decay W3–W5, ending | bot completes the full campaign on 10 seeds; times in band |
+| **M2 Core campaign** | L2–L3: fire axe, handgun, allied fighters (firefighters, police squad), rides, medkits, save | bot completes L1→L3 as a campaign |
+| **M3 Full campaign** | L4–L6: machine gun, the L4 war scene, the devastated L5 twin, survivor escort, the subway, night exit | bot completes the full campaign on 10 seeds (E24-AC08); times in band |
 | **M4 Ship** | Performance, mobile, accessibility, polish, audio mix | release suite green on all platforms in the test matrix |
 
 Epics marked "M1 → M3" deliver in increments. Each increment's acceptance criteria are tagged with the milestone (e.g. `[M1]`).
@@ -88,3 +88,5 @@ From the remaining-scope gap audit. Nothing is cut; the order changes so that ev
 - **Budgets** (awake props, particles, lights) are upper bounds, not targets.
 - **WebGPU** is checked manually; automated browser runs are headless WebGL2 (repo rule overrides the headed WebGPU wording in 90/91).
 - **Campaign flow:** no reward screens between levels (PO decision); rewards auto-apply.
+- **Levels 2–6 redesign (PO, 2026-10-07):** the PO's verbatim design is [`po-levels-2-6-2026-10-07.md`](po-levels-2-6-2026-10-07.md) and wins over the epics where they disagree. E20–E24 were rewritten and renamed (The Failed Rescue, The Police Collapse, The Safe City Falls, Aftermath, The Subway); all five are `todo` (E21 was `done` for the old L3 and was reopened). The **old L2–L6 content in code** (`src/levels/missions.ts` L2/L4/L5/L6 cases, `src/levels/L3/`, the old compositions and their `@E21`/`@E22` tests) **is superseded**, but its **systems are reused**: outbreak simulation, escort follower, defend/device steps, gates, checkpoints, vehicles as kinematic rides, barricades (E26), blasts and fire (E27), lighting presets (E25), weather (E28, optional). New shared pieces: allied fighters (E20 §5.2, extended in E21/E22), the group follower (E24), districts `D-CORRIDOR`, `D-FAIR` (+ W5 twin) and `D-SUBWAY`. Where the PO text leaves something open the epics mark an "(orchestrator default — PO may change)".
+- **Order after the redesign:** L2 → L3 (M2), then L4 (needs the E18 war-scene budgets and E27 mega blasts) → L5 (decay twin of L4) → L6 (E25 power groups, E26 gates). Level time bands in E20–E24 are provisional until their first green 20-seed run.

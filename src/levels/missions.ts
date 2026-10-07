@@ -41,8 +41,9 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       // L1 v2 (specs/epic-19 section 3): courier job, hand-over, accident, systemic spread, bat, fire station.
       def.l1 = true;
       for (const name of ['player-start', 'parcel-counter', 'lab-door', 'lab-gate', 'lab-exit-front', 'lab-exit-side', 'lab-exit-window', 'lab-smoke-vent', 'lab-smoke-window', 'lab-tech-spawn', 'lab-bike-rack', 'garage-door', 'garage-bat', 'fire-bay-door', 'fire-bay-trigger', 'elm-horde-entry', ...[1, 2, 3, 4, 5, 6].map(i => `edge-in-${i}`)]) anchor(name, 'D-GROVE', name);
-      // Click-to-move stops ~2 m from its target: the reach volume must be forgiving.
-      def.anchors['fire-bay-trigger'].radius = 3;
+      // Entire completion volume is inside the open doorway, never on the apron.
+      def.anchors['fire-bay-trigger'].radius = .5;
+      def.onComplete = [{ kind: 'radio', id: 'L1.twist' }];
       // Doors that director infected emerge from (spec PO request 2026-10-07).
       for (let i = 1; i <= 80; i++) { try { anchor(`refuge-door-${i}`, 'D-GROVE', `refuge-door-${i}`); } catch { break; } }
       def.items.push('parcel', 'bat'); def.states.push('delivered', 'exited', 'away', 'safe'); def.checkpoints.push('accident', 'bat');
@@ -59,10 +60,10 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       // The marker sits at the garage door (visible from the street), the interaction itself stays at the bench.
       bat.onStart = [{ kind: 'marker', anchor: 'garage-door' }];
       bat.onComplete = [{ kind: 'grant', item: 'bat' }, { kind: 'checkpoint', id: 'bat' }];
-      // PO: the ending plays in-engine (firefighter, run-in, shutter slam, thuds, caption, fade) before the result: the
-      // story sets `safe` when it is over.
-      const fire = step('firestation', 'custom', 'Reach the fire station', 'fire-bay-trigger', { kind: 'state', key: 'safe', equals: true });
-      fire.onStart = [{ kind: 'radio', id: 'L1.fire' }]; fire.onComplete = [{ kind: 'gate', id: 'fire-shutter', open: false }];
+      // PO: the courier walks into the bay herself; no cinematic, auto-walk or input lock.
+      const fire = reach('firestation', 'Go into the fire station', 'fire-bay-trigger');
+      fire.onStart = [{ kind: 'radio', id: 'L1.fire' }];
+      fire.onComplete = [{ kind: 'state', key: 'safe', value: true }, { kind: 'gate', id: 'fire-shutter', open: false }];
       end = fire.id; break;
     }
     case 'L2': {
@@ -110,7 +111,7 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
     }
   }
   def.finish = [end]; const at = def.anchors[def.steps.at(-1)!.anchor];
-  def.cinematics.twist = { seconds: id === 'L1' ? 8 : 20, caption: dialogue[`${id}.twist`], position: [at.x+18,22,at.z+18], target: [at.x,0,at.z], actions: [{ kind: 'radio', id: `${id}.twist` }] };
+  if (id !== 'L1') def.cinematics.twist = { seconds: 20, caption: dialogue[`${id}.twist`], position: [at.x+18,22,at.z+18], target: [at.x,0,at.z], actions: [{ kind: 'radio', id: `${id}.twist` }] };
   return def;
 }
 /** Missing loaded anchors are authoring errors, never silently replaced with coordinates. */

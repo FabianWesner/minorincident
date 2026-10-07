@@ -24,6 +24,8 @@ export interface VfxTargets {
   /** E27 camera roll kick (Bruno View.roll.kick) and the follow focus used for distance falloff. */
   roll?(strength: number): void;
   focus?(): { x: number; z: number };
+  /** E25 light field transient pools (fires, blast flashes, mega tint). */
+  light?: import('./Blasts').BlastLight;
 }
 const eventTypes = ['combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo'] as const;
 const limbs = 5;
@@ -71,7 +73,7 @@ export class Vfx extends Group {
   constructor(private readonly world: SimWorld, private readonly targets: VfxTargets, geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
     super(); this.rng = new Rng(world.seed, 'vfx'); this.goreRng = new Rng(world.seed, 'dismemberment');
     this.gibs = new GibPool(geometries);
-    this.blasts = new Blasts(world, { particles: this.particles, shake: s => targets.shake(s), roll: s => targets.roll?.(s), focus: () => targets.focus?.() ?? world.entities.get(1)?.transform ?? { x: 0, z: 0 } });
+    this.blasts = new Blasts(world, { particles: this.particles, shake: s => targets.shake(s), roll: s => targets.roll?.(s), focus: () => targets.focus?.() ?? world.entities.get(1)?.transform ?? { x: 0, z: 0 }, light: (...args) => targets.light?.(...args) ?? null });
     this.add(this.blasts, this.gibs.heads, this.particles.mesh, this.decals.mesh, this.surfaceSplats.mesh, this.telegraphs.mesh, this.waves.mesh, this.gibs.mesh);
     for (const type of eventTypes) this.stops.push(world.events.on(type, this.receive));
   }

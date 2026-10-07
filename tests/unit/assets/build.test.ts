@@ -6,6 +6,7 @@ import type { AssetDef } from '../../../src/assets/types';
 import { buildAsset } from '../../../tools/assets/build';
 import { validateAssets } from '../../../tools/assets/validate';
 import { assetIO } from '../../../tools/assets/io';
+import { triangleCount } from '../../../tools/assets/delivery';
 
 vi.mock('node:child_process', () => ({ spawnSync: vi.fn() }));
 
@@ -43,5 +44,32 @@ test('T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and
   for (const result of results) {
     expect(result.errors, result.id).toEqual([]);
     for (const [axis, target] of [7.4,3.55,2.1].entries()) expect(Math.abs(result.dimensions[axis] - target)).toBeLessThanOrEqual(target * .05);
+  }
+});
+
+test('@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files', async () => {
+  const original = manifest.find(a => a.id === 'veh.sedan-red')! as AssetDef;
+  const directory = mkdtempSync('.cache/assets/wreck-unit-');
+  const def: AssetDef = { ...original, glb: `${directory}/sedan.glb`, lods: { lod1: `${directory}/sedan.lod1.glb`, lod2: `${directory}/sedan.lod2.glb` } };
+  const io = await assetIO();
+  vi.mocked(spawnSync).mockImplementation(() => {
+    writeFileSync(`.cache/assets/${def.id}.glb`, readFileSync(`assets/${def.id}/model.wrecked.glb`));
+    return { status: 0 } as ReturnType<typeof spawnSync>;
+  });
+  try {
+    await buildAsset(def, { decay: 'wrecked' });
+    expect(vi.mocked(spawnSync).mock.calls.at(-1)![1]).toContain('--decay');
+    for (const lod of [1, 2]) {
+      const output = await io.read(`${directory}/sedan.wrecked.lod${lod}.glb`);
+      const source = await io.read(`assets/${def.id}/model.wrecked.lod${lod}.glb`);
+      expect(triangleCount(output)).toBe(triangleCount(source));
+    }
+    const reports = await validateAssets([original]);
+    expect(reports.filter(r => r.id.startsWith('veh.sedan-red.wrecked:'))).toHaveLength(3);
+    expect(reports.flatMap(r => r.errors)).toEqual([]);
+    await expect(buildAsset(def, { decay: 'missing' })).rejects.toThrow('Unknown decay variant');
+  } finally {
+    vi.mocked(spawnSync).mockReset();
+    rmSync(directory, { recursive: true, force: true });
   }
 });

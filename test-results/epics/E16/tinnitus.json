@@ -14,6 +14,12 @@
         "voiceLimit": 32,
         "music": {
           "level": "L1",
+          "state": "calm",
+          "streamed": {
+            "state": null,
+            "transitions": [],
+            "decks": []
+          },
           "paused": false,
           "position": 0,
           "layers": [
@@ -39,15 +45,17 @@
         "cues": [
           {
             "cue": "music.L1.base",
-            "time": 3.6573333333333333,
+            "variant": "music.L1.base",
+            "time": 6.6066666666666665,
             "tick": 0,
-            "gain": 0.3499999940395355,
+            "gain": 0,
             "rate": 1,
             "voice": 8
           },
           {
             "cue": "music.L1.pulse",
-            "time": 3.6573333333333333,
+            "variant": "music.L1.pulse",
+            "time": 6.6066666666666665,
             "tick": 0,
             "gain": 0,
             "rate": 1,
@@ -55,7 +63,8 @@
           },
           {
             "cue": "music.L1.drive",
-            "time": 3.6573333333333333,
+            "variant": "music.L1.drive",
+            "time": 6.6066666666666665,
             "tick": 0,
             "gain": 0,
             "rate": 1,
@@ -63,7 +72,8 @@
           },
           {
             "cue": "music.L1.peak",
-            "time": 3.6573333333333333,
+            "variant": "music.L1.peak",
+            "time": 6.6066666666666665,
             "tick": 0,
             "gain": 0,
             "rate": 1,
@@ -71,7 +81,8 @@
           },
           {
             "cue": "bed.birds",
-            "time": 3.6373333333333333,
+            "variant": "bed.birds",
+            "time": 6.586666666666667,
             "tick": 0,
             "gain": 0.18000000715255737,
             "rate": 0.9742308855056763,
@@ -79,7 +90,8 @@
           },
           {
             "cue": "bed.wind",
-            "time": 3.6373333333333333,
+            "variant": "bed.wind",
+            "time": 6.586666666666667,
             "tick": 0,
             "gain": 0.18000000715255737,
             "rate": 0.9890089631080627,
@@ -87,7 +99,8 @@
           },
           {
             "cue": "bed.traffic",
-            "time": 3.6373333333333333,
+            "variant": "bed.traffic",
+            "time": 6.586666666666667,
             "tick": 0,
             "gain": 0.18000000715255737,
             "rate": 0.9757539629936218,
@@ -95,20 +108,22 @@
           },
           {
             "cue": "explosion.crack",
-            "time": 3.6373333333333333,
+            "variant": "explosion.crack.v3",
+            "time": 6.586666666666667,
             "tick": 0,
             "sourceId": 10,
             "position": {
               "x": 3,
               "z": 0
             },
-            "gain": 0.9100000262260437,
-            "rate": 1.0175628662109375,
+            "gain": 0.860526978969574,
+            "rate": 1.0148118734359741,
             "voice": 15
           },
           {
             "cue": "tinnitus",
-            "time": 3.6373333333333333,
+            "variant": "tinnitus",
+            "time": 6.586666666666667,
             "tick": 0,
             "gain": 0.05999999865889549,
             "rate": 1,
@@ -133,6 +148,12 @@
         "voiceLimit": 32,
         "music": {
           "level": "L1",
+          "state": "calm",
+          "streamed": {
+            "state": null,
+            "transitions": [],
+            "decks": []
+          },
           "paused": false,
           "position": 0,
           "layers": [
@@ -158,15 +179,17 @@
         "cues": [
           {
             "cue": "music.L1.base",
-            "time": 6.110666666666666,
+            "variant": "music.L1.base",
+            "time": 9.870666666666667,
             "tick": 0,
-            "gain": 0.3499999940395355,
+            "gain": 0,
             "rate": 1,
             "voice": 17
           },
           {
             "cue": "music.L1.pulse",
-            "time": 6.110666666666666,
+            "variant": "music.L1.pulse",
+            "time": 9.870666666666667,
             "tick": 0,
             "gain": 0,
             "rate": 1,
@@ -174,7 +197,8 @@
           },
           {
             "cue": "music.L1.drive",
-            "time": 6.110666666666666,
+            "variant": "music.L1.drive",
+            "time": 9.870666666666667,
             "tick": 0,
             "gain": 0,
             "rate": 1,
@@ -182,7 +206,8 @@
           },
           {
             "cue": "music.L1.peak",
-            "time": 6.110666666666666,
+            "variant": "music.L1.peak",
+            "time": 9.870666666666667,
             "tick": 0,
             "gain": 0,
             "rate": 1,
@@ -190,7 +215,8 @@
           },
           {
             "cue": "bed.birds",
-            "time": 6.0906666666666665,
+            "variant": "bed.birds",
+            "time": 9.850666666666667,
             "tick": 0,
             "gain": 0.18000000715255737,
             "rate": 0.9742308855056763,
@@ -198,7 +224,8 @@
           },
           {
             "cue": "bed.wind",
-            "time": 6.0906666666666665,
+            "variant": "bed.wind",
+            "time": 9.850666666666667,
             "tick": 0,
             "gain": 0.18000000715255737,
             "rate": 0.9890089631080627,
@@ -206,7 +233,8 @@
           },
           {
             "cue": "bed.traffic",
-            "time": 6.0906666666666665,
+            "variant": "bed.traffic",
+            "time": 9.850666666666667,
             "tick": 0,
             "gain": 0.18000000715255737,
             "rate": 0.9757539629936218,
@@ -214,15 +242,16 @@
           },
           {
             "cue": "explosion.crack",
-            "time": 6.0906666666666665,
+            "variant": "explosion.crack.v3",
+            "time": 9.850666666666667,
             "tick": 0,
             "sourceId": 10,
             "position": {
               "x": 4,
               "z": 0
             },
-            "gain": 0.9100000262260437,
-            "rate": 1.0175628662109375,
+            "gain": 0.860526978969574,
+            "rate": 1.0148118734359741,
             "voice": 24
           }
         ],
@@ -244,6 +273,12 @@
         "voiceLimit": 32,
         "music": {
           "level": "L1",
+          "state": "calm",
+          "streamed": {
+            "state": null,
+            "transitions": [],
+            "decks": []
+          },
           "paused": false,
           "position": 0,
           "layers": [
@@ -269,15 +304,17 @@
         "cues": [
           {
             "cue": "music.L1.base",
-            "time": 8.494666666666665,
+            "variant": "music.L1.base",
+            "time": 14.670666666666666,
             "tick": 0,
-            "gain": 0.3499999940395355,
+            "gain": 0,
             "rate": 1,
             "voice": 25
           },
           {
             "cue": "music.L1.pulse",
-            "time": 8.494666666666665,
+            "variant": "music.L1.pulse",
+            "time": 14.670666666666666,
             "tick": 0,
             "gain": 0,
             "rate": 1,
@@ -285,7 +322,8 @@
           },
           {
             "cue": "music.L1.drive",
-            "time": 8.494666666666665,
+            "variant": "music.L1.drive",
+            "time": 14.670666666666666,
             "tick": 0,
             "gain": 0,
             "rate": 1,
@@ -293,7 +331,8 @@
           },
           {
             "cue": "music.L1.peak",
-            "time": 8.494666666666665,
+            "variant": "music.L1.peak",
+            "time": 14.670666666666666,
             "tick": 0,
             "gain": 0,
             "rate": 1,
@@ -301,7 +340,8 @@
           },
           {
             "cue": "bed.birds",
-            "time": 8.474666666666666,
+            "variant": "bed.birds",
+            "time": 14.650666666666666,
             "tick": 0,
             "gain": 0.18000000715255737,
             "rate": 0.9742308855056763,
@@ -309,7 +349,8 @@
           },
           {
             "cue": "bed.wind",
-            "time": 8.474666666666666,
+            "variant": "bed.wind",
+            "time": 14.650666666666666,
             "tick": 0,
             "gain": 0.18000000715255737,
             "rate": 0.9890089631080627,
@@ -317,7 +358,8 @@
           },
           {
             "cue": "bed.traffic",
-            "time": 8.474666666666666,
+            "variant": "bed.traffic",
+            "time": 14.650666666666666,
             "tick": 0,
             "gain": 0.18000000715255737,
             "rate": 0.9757539629936218,
@@ -325,15 +367,16 @@
           },
           {
             "cue": "explosion.crack",
-            "time": 8.48,
+            "variant": "explosion.crack.v3",
+            "time": 14.650666666666666,
             "tick": 0,
             "sourceId": 10,
             "position": {
               "x": 3,
               "z": 0
             },
-            "gain": 0.9100000262260437,
-            "rate": 1.0175628662109375,
+            "gain": 0.860526978969574,
+            "rate": 1.0148118734359741,
             "voice": 32
           }
         ],

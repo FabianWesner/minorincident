@@ -1,0 +1,72 @@
+{
+  "status": "incomplete",
+  "sourceCommit": "0ef71ef1",
+  "mainMerged": "959de30b",
+  "stopReason": "Orchestrator requested wrap-up after robust-start matrix; no new long batteries",
+  "robustFinishedLocal": "2026-10-07 18:05:28",
+  "completed": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "unit": {
+      "passed": 269,
+      "files": 82
+    },
+    "smoke": {
+      "simulationPassed": 5,
+      "browserPassed": 22
+    },
+    "civilianIdle": {
+      "passed": 1,
+      "skipped": 6
+    },
+    "bicycleParking": {
+      "passed": 3
+    },
+    "unassistedBicycleE2e": {
+      "passed": 1
+    },
+    "completeBots": {
+      "completed": 20,
+      "seeds": 20,
+      "medianSeconds": 99.2083333333
+    },
+    "newbieBots": {
+      "completed": 20,
+      "seeds": 20,
+      "medianSeconds": 116.6333333333
+    },
+    "unopposedSpread": {
+      "seeds": 20,
+      "median120": 32.5,
+      "median240": 44.5,
+      "floorPassed": 20
+    },
+    "robustStart": {
+      "cases": 100,
+      "actualBitePassed": 100,
+      "seeds": 20
+    }
+  },
+  "preFinalBicycleFixMeasurements": {
+    "mergedRendererSceneBudgetsPassed": 3,
+    "desktopMobileTransitionChecksPassed": 2,
+    "assistedCapturePassed": 1,
+    "continuePassed": 1,
+    "E18DesktopPassed": 1
+  },
+  "deferred": [
+    "Remaining default Node checks and final aggregate totals",
+    "Isolated 20-seed bite proof on final merged tree (historical pass retained)",
+    "Default regular browser phase",
+    "Default serialized native GPU phase",
+    "Final AC23 vision judgment by Opus",
+    "Physical WebGPU/device and human pacing measurements",
+    "Exhaustive campaign performance"
+  ],
+  "historicalVitestArtifacts": {
+    "vitest.json": "older 25-pass baseline, not final",
+    "vitest-prior.json": "133 passed / 3 failed before corrections, not final"
+  },
+  "epicStatus": "in-progress"
+}

@@ -1,0 +1,84 @@
+{
+  "lighting": {
+    "shadowSize": 2048,
+    "preset": "night",
+    "sunDirection": [
+      0.4351453279888774,
+      0.7648421872844885,
+      -0.475042074009589
+    ],
+    "sunColor": "#8fa6ff",
+    "sky": "#141c33",
+    "fog": "#26304d",
+    "fogNear": 42,
+    "fogFar": 115,
+    "intensity": 0.2,
+    "shadowColor": "2f2d55",
+    "coreShadowEdges": [
+      1,
+      -0.25
+    ],
+    "shadowRadius": 2,
+    "normalBias": 0.08,
+    "shadowArea": 16.408023949380027,
+    "fogColors": [
+      "#141c33",
+      "#26304d"
+    ],
+    "rim": 0.45,
+    "fieldShadow": 1,
+    "shadowDirection": [
+      -0.3197941573686122,
+      0.8461215078691702,
+      -0.42639194508585754
+    ],
+    "lightField": {
+      "strength": 1,
+      "resolution": 1024,
+      "size": 80,
+      "statics": 530,
+      "litStatics": 530,
+      "candidates": 201,
+      "drawn": 201,
+      "transients": 0,
+      "capacity": 512,
+      "ms": 0.2999992370605469,
+      "center": [
+        62.1875,
+        -1.40625
+      ]
+    }
+  },
+  "perf": {
+    "lightFieldMs": 0.2999992370605469,
+    "lightPools": 201,
+    "lightCandidates": 201,
+    "shadowMaps": 1,
+    "heroShadow": 1,
+    "preset": "night"
+  },
+  "behind": [
+    -0.017680058166484932,
+    -0.1233632176918155,
+    0.9893795894202143
+  ],
+  "beside": [
+    -0.11844284492981967,
+    0.02341421242643449,
+    0.9898523817905908
+  ],
+  "behindColor": {
+    "r": 53.244897959183675,
+    "g": 40.714285714285715,
+    "b": 61.265306122448976,
+    "l": 0.02669511692435473
+  },
+  "besideColor": {
+    "r": 128.3265306122449,
+    "g": 78.85714285714286,
+    "b": 66.81632653061224,
+    "l": 0.1058898051839749
+  },
+  "darker": 0.747897194843506,
+  "hue": 276.583912611718
+}

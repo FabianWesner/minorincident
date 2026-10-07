@@ -335,5 +335,78 @@ No audio exists. The full list and design are in `09-sound-design.md`; music can
 2. **P1 (L2–L3):** remaining civilian infected, Brute/Screamer/Sprinter/Riot/Bloated, pistol/shotgun/nail gun/SMG/rifle/frag/molotov/pipe bomb/lure, school + playground, supermarket, gas station, hardware, police, ambulance, school bus, SUV, pickup, checkpoint + evac camp, civic center, escorts, living emergency NPCs, gear tiers, action icons, W1–W2 decay.
 3. **P2 (L4–L6):** D-EDGE kit, heavy weapons, Firefighter/Hazmat/Armored/Butcher/Nurse, fire station, hospital, wreck/burned variants, W3–W5 decay, helicopter, military truck.
 4. **P3:** interiors (diner, gym, mall, food court), campground, cosmetics, extra UI art.
+5. **Redesign order (2026-10-07, §6):** P1: `int.fire-station-bay`, fire-engine crew seats, supermarket door states, bridge-checkpoint gate/barriers, `bld.police-station`, `D-CORRIDOR` W2/W3 variants, `kit.army-checkpoint`, `veh.evac-bus`; then P2: `D-FAIR` W0 set → its W5 twin, military vehicles (APC, tank, helicopter variant, HMG nest), basement, the subway kit.
 
 `T-E17-06` keeps this file and `src/assets/manifest.json` in sync once the manifest exists.
+
+## 6. Levels 2–6 redesign: asset needs (2026-10-07)
+
+The PO redesigned L2–L6 ([`po-levels-2-6-2026-10-07.md`](po-levels-2-6-2026-10-07.md); epics E20–E24). This table supersedes the per-level "Needed by" notes in §3–§4 for L2–L6. **Manifest** = status in `src/assets/manifest.json` as of 2026-10-07 (331 entries; no entry has `decayVariants` yet). **Missing** = no manifest entry. Prio: **P1** L2–L3 (M2), **P2** L4–L6 (M3).
+
+### 6.1 Characters and allies
+
+| Asset ID | Need (levels) | Manifest | Action | Prio |
+| --- | --- | --- | --- | --- |
+| `npc.firefighter-alive` | 6 firefighters (L2) | integrated | add held tools via `weaponSocketR` (`wpn.fire-axe`, `wpn.halligan`) | P1 |
+| `wpn.halligan` (firefighter pry bar) | firefighter melee, door forcing (L2) | **missing** | new side-tier prop | P1 |
+| `npc.police-officer` | station officers + squad (L3), bridge officers (L2) | integrated | handgun on `weaponSocketR` (`wpn.pistol`, integrated) | P1 |
+| `npc.national-guard` | ~20 soldiers (L4), army checkpoint (L3) | integrated | rifle on socket (`wpn.assault-rifle`, integrated); helmet/vest variant optional | P2 |
+| armed civilians (pistol, hunting rifle, improvised) | L4 (≥ 40 % of ~50) | **composition of existing assets**: `npc.civilian-*` (integrated, have `weaponSocketR`) + `wpn.pistol`, `wpn.hunting-rifle`, `wpn.baseball-bat`, `wpn.crowbar`, `wpn.shovel` (integrated) | no new model; NPC aim/fire animation in code | P2 |
+| turned firefighters / police / soldiers / survivors | L2–L6 | **no new asset**: identity continuity uses the living model + the infected overlay (E19 §5.7); `inf.firefighter`, `inf.riot-cop` (integrated) are optional extras | — | — |
+| 5 L5 survivors (Dale, Rosa, Mr. Okafor, Mia, Sam) | L5–L6 | integrated bases: `npc.survivor-group`, `npc.paramedic`, `npc.civilian-elderly`, `npc.civilian-woman-a` | **missing**: soot-and-bandage tint/decal variant (`*.aftermath`) | P2 |
+| shelter survivors (20–30) + Marcus | L6 | integrated civilian bases | **missing**: aftermath tint variants, injured pose set (sitting, lying, bandaged) | P2 |
+| uniformed corpses (firefighter, police, soldier) | L3–L5 dressing | `inf.corpse-poses` (integrated, civilian) | posed living models in code; no new asset | P2 |
+
+### 6.2 Weapons and pickups
+
+| Asset ID | Need | Manifest | Prio |
+| --- | --- | --- | --- |
+| `wpn.fire-axe` + `icon.fire-axe` | L2 player weapon (roundhouse animation in code) | integrated | P1 |
+| `prop.axe-rack` (station wall rack) | L2 optional pickup point | **missing** | P1 |
+| `wpn.pistol` + `icon.pistol` | L3 handgun | integrated | P1 |
+| `prop.armory-table` | L3 handgun pickup | **missing** | P1 |
+| `wpn.machine-gun` + `icon.machine-gun` | L4–L6 player weapon | integrated | P2 |
+| `prop.hmg-nest` (sandbag ring + mounted HMG) | L4 spectacle | **missing** (`prop.sandbag-pallet` integrated for the ring) | P2 |
+| `pick.medkit` | L3 (≥ 7) | integrated | P1 |
+| `pick.*-ammo` | none (no ammunition system) | integrated | decorative only |
+
+### 6.3 Vehicles
+
+| Asset ID | Need | Manifest | Action | Prio |
+| --- | --- | --- | --- | --- |
+| `veh.fire-engine` | L2 crew transport | integrated (nodes `driverSeat`, `exitL`, `exitR`) | **change**: crew-cab seat nodes `seat_1…seat_7`, rear crew doors, light-bar `ss_light` anchors | P1 |
+| `veh.police-sedan`, `veh.police-suv` | L2 checkpoint, L3 station and abandoned cars | integrated | abandoned/doors-open pose variant | P1 |
+| `veh.*.wrecked`, `veh.*.burned` (sedans, SUV, pickup, police, ambulance, bus) | L2 crashed cars, L3 wrecks, L5 burned-out cars | **missing** (drafted S17); only the generic `veh.wreck` is integrated | build as `decayVariants` | P1–P2 |
+| `veh.evac-bus` (coach with seated-civilian silhouettes, EVAC placard) | L3 checkpoint, L4 convoy (player rides) | **missing**; fallback: `veh.school-bus` (integrated) livery variant | P1 |
+| `veh.military-truck` | L3 checkpoint, L4 convoy and plaza | integrated | P1 |
+| `veh.military-apc` (light armored vehicle, mounted HMG) | L3 checkpoint, L4 convoy/spectacle, L5 wreck | **missing** | P2 |
+| `veh.tank` (+ `.wrecked`) | L4 spectacle, L5 wreck | **missing** | P2 |
+| `veh.helicopter-military` (door gun) | L4 orbit | **missing**; `veh.helicopter` (rescue, integrated) is the base for a livery/door-gun variant | P2 |
+| `veh.fuel-truck` | L4 line-break mega blast | integrated | P2 |
+
+### 6.4 Buildings, interiors and kits
+
+| Asset ID | Need | Manifest | Action | Prio |
+| --- | --- | --- | --- | --- |
+| `bld.fire-station` | L1 end / L2 start (exterior) | integrated | — | — |
+| `int.fire-station-bay` (truck bay, lockers, radio desk, kitchen corner, benches, red alarm beacons with `rotate` light anchors) | L2 calm beat | **missing** | new hero interior | P1 |
+| `bld.supermarket` + `int.supermarket` (Grove Market) | L2 rescue building | integrated | **change**: chained front doors and loading door with closed/forced/open states, glass with people visible behind | P1 |
+| `bld.river-bridge`, `kit.river-terrain` | L2 end / L3 start | integrated | — | P1 |
+| `kit.police-bridge-checkpoint` (motorized gate, jersey barriers, crowd fences, light bars) | L2 end / L3 start | `kit.police-checkpoint` integrated; **missing**: `prop.checkpoint-gate`, `prop.jersey-barrier`, `prop.crowd-fence` (drafted S06/S10) | P1 |
+| `bld.police-station` (yard, sandbag positions, armory) | L3 | `bld.police` is a **placeholder** | build the hero asset | P1 |
+| `D-CORRIDOR` street sets: residential (Oak Ave), shopping (Commerce St), main road (Grove Blvd) | L3 | houses `bld.house-a…e`, `bld.mainstreet-brick`, `bld.joes-diner`, `bld.maple-hardware`, `bld.bus-stop` integrated | **missing**: W2/W3 variants (`decayVariants`) of the street-facing buildings; `decay.looted-store` (empty shelves, merchandise scatter), `decay.damaged-sign`, `decay.makeshift-barricade` (cars/furniture; `decay.furniture-barricade` integrated); `decay.broken-glass`, `decay.boarded-windows`, `decay.dropped-belongings`, `decay.burned-facade` are only **reference** | P1 |
+| `kit.army-checkpoint` (T-walls/bastion walls, razor wire, sandbag nests, watchtower, loudspeaker pole, floodlights) | L3 end, L4 convoy gate | **missing** (reuse `prop.sandbag-pallet`, `prop.light-tower-trailer`, `kit.highway-onramp`, all integrated) | P1 |
+| `D-FAIR` W0 set (Fairhaven): `bld.apartment-block-a/b` (3–5 storeys with shops), `bld.town-hall`, `bld.church`, `bld.storefront-row`, `bld.metro-entrance`, `bld.kessler-hardware` (variant of `bld.maple-hardware`), `kit.reception-plaza` (registration tables, triage, tents) | L4, L5 | **missing** (`kit.evac-camp` integrated, `prop.tent` placeholder) | P2 |
+| `D-FAIR` W5 twin: a devastated variant **at the same footprint** for every hero and street-facing building (burned, shot up, ≥ 4 collapsed/damaged facades), plus `decal.bullet-holes`, `decay.blown-sandbags`, `decay.fuel-truck-crater` | L5 | **missing** (`decay.collapsed-facade`, `decay.rubble-pile`, `decay.crater` are **reference** only) | P2 |
+| `int.basement-cellar` (stairs, shelves, one bulb anchor, barrable door) | L4 end / L5 start | **missing** | P2 |
+| `int.metro-station` (Lakeshore: concourse, turnstiles, kiosk, benches, platform, signage "Fairhaven Metro") + `int.metro-exit` (Northgate: platform, dead escalator, exit gate) | L5 end, L6 | **missing** | P2 |
+| `kit.metro-tunnel` (track segments, cross-passage, side maintenance passage), `kit.maintenance-corridor` (service corridors, pump room, signal room) | L6 | **missing** (`bld.tunnel-portal` integrated is a rail portal, not usable inside) | P2 |
+| `prop.service-gate` (closable, braceable), `prop.fluorescent-strip`, `prop.emergency-light` (power groups), `kit.shelter-camp` (mats, blankets, camp lights, water pallet; `prop.crates` integrated) | L6 | **missing** | P2 |
+
+### 6.5 Lighting key frames (E25 vision targets)
+
+**Missing:** `kf-l2-midday`, `kf-l3-late-afternoon-smoke`, `kf-l4-safe-city`, `kf-l5-sunset-ruins`, `kf-l6-subway-emergency`, `kf-l6-night-exit`. **Superseded:** `kf-l4-goldenhour-godrays`, `kf-l5-sodium-dusk`, `kf-l6-fire-night`, `kf-helipad-dawn` (still usable as general mood references).
+
+### 6.6 No longer needed by the campaign (kept in the repo)
+
+The zoo kit and animals (`D-ZOO`), the substation and rail crossing, the helipad and flare stands, the school/gym and baseball-field sets for L2, the brother and Mrs. Alvarez escorts, the special-infected archetype models (§3.2) are not used by the redesigned L2–L6. They stay integrated for tests, photo modes and later levels.

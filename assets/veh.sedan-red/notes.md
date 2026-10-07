@@ -9,3 +9,10 @@ No real brand or added lettering. Registration plates are blank, matching the re
 Build with the prescribed `experiment/tools/blender_run.py` wrapper. No shared tooling, source specifications or reference images are modified.
 
 A final `--render renders/hero.png` request also renders `renders/game.png` under the same shared GPU lease.
+
+
+## Wrecked P1 variant (2026-10-07)
+
+`npm run assets:build -- veh.sedan-red --decay wrecked` rebuilds closed native sedan distance forms with missing glazing, a continuous front-impact/roof-sag transform, a closed accordion-fold hood and close-range impact scars. All wheel/light/door/seat node contracts remain intact. No generic decimation. Detailed intact source is preserved. LOD0 uses the native LOD1 foundation to stay within the lane 15k cap; LOD1/2 preserve the existing authored distance sources. The three native GLBs are inputs and are committed beside the script.
+
+Reviewed five-angle LOD0/1/2 contact sheet at `test-results/art-l2l3/veh.sedan-red.wrecked/lod-contact.png`; variant passes geometry/metadata budgets. Independent QA pending.

@@ -1,0 +1,19 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/l1-closure
+
+ ❯ tests/sim/npc/l1-civilians.test.ts (7 tests | 1 failed | 6 skipped) 9195ms
+   ❯ L1 v2 civilians and infection (7)
+     × T-E19-05 @E19 @E19-AC05 50-60 civilians, no idling, startle 0.3-0.8 s, flee slower than infected 9194ms
+     ↓ T-E19-06 @E19 @E19-AC06 every new infected is caused by a bite event (idle player, systemic spread, lane C AI)
+     ↓ T-E19-18 @E19 @E19-AC18 infection continuity: id, asset, tint, accessories, 2.5-3.5 s, phases, speed tier
+     ↓ @E19 @E19-AC05 grab rescue window: any hit on the grabber within 1.0 s saves the pedestrian
+     ↓ @E19 @E19-AC06 at the infected cap a bite kills instead of turning (60 high / 30 low)
+     ↓ @E19 @E19-AC06 horde guarantee and scripted turns keep the pedestrian look (section 5.9)
+     ↓ @E19 @E19-AC18 director/stream spawns get a pedestrian look too (no plain runner in L1)
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  15:43:42
+   Duration  9.85s (tests 94%, transform 5%, import 1%)
+
+JSON report written to /Users/wesner/Workspace/minorincident/.claude/worktrees/l1-closure/test-results/epics/E19/idle-diagnostic.json

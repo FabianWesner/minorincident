@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
 import { devices } from '@playwright/test';
 import { test, expect } from '../e2e/fixtures';
 import { menuStart } from '../e2e/ui-helpers';
@@ -15,7 +15,7 @@ interface Recording { frames: Frame[]; stopped: boolean; previous: number }
 declare global { interface Window { hitchRecording?: Recording; hitchGlCalls?: GlCall[] } }
 for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
   test.use(mode === 'mobile' ? { userAgent: devices['Pixel 7'].userAgent, isMobile: true, hasTouch: true, viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } : {});
-  test(`@E19 @perf M1-22 L1 transition frame budget ${mode}`, async ({ page, context }) => {
+  test(`@E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget ${mode}`, async ({ page, context }) => {
     test.setTimeout(240_000); mkdirSync(output, { recursive: true });
     await page.addInitScript(() => {
       window.hitchGlCalls = [];
@@ -46,7 +46,10 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
       await cdp.send('Tracing.end'); const { stream } = await completed; let trace = '';
       for (;;) { const chunk = await cdp.send('IO.read', { handle: stream }); trace += chunk.data; if (chunk.eof) break; }
       await cdp.send('IO.close', { handle: stream });
-      writeFileSync(`${output}/${phase}-${mode}-${label}-trace.json`, trace);
+      const tracePath = `${output}/${phase}-${mode}-${label}-trace.json`;
+      // RAF samples are the acceptance evidence. Keep bulky Chrome diagnostics only for failures/baseline profiling.
+      if (samples[label].max > 50 || phase === 'before' || process.env.HITCH_CPU_PROFILE === '1') writeFileSync(tracePath, trace);
+      else if (existsSync(tracePath)) unlinkSync(tracePath);
     };
     // Anchors come from the layout; setup teleports (paused, outside any measurement) put the player at each transition.
     const layout = JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as { anchors: Record<string, { position: number[] }> };
@@ -65,14 +68,26 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
     await measure('accident', () => page.waitForFunction(() => window.__SS__!.events().some(e => e.type === 'l1.screams'), undefined, { timeout: 20_000 }), 1_500);
     await measure('infected-exit', () => page.waitForFunction(() => window.__SS__!.missions.state()!.l1!.exitIds.length === 5, undefined, { timeout: 20_000 }), 4_000);
     await place('garage-door');
-    await page.evaluate(() => window.__SS__!.cheats.completeObjective('escape'));
+    await page.evaluate(() => { const a = window.__SS__!; if (a.missions.state()!.steps.escape.status === 'active') a.cheats.completeObjective('escape'); });
     await place('garage-bat'); await measure('weapon-pickup', interact, 3_000);
     expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.bat');
     await measure('death-respawn', () => page.evaluate(() => window.__SS__!.survivor.damage(100)), 3_500);
     expect(await page.evaluate(() => window.__SS__!.getState().player!.health.current)).toBeGreaterThan(0);
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.stats.deaths)).toBe(1);
-    await place('fire-bay-trigger');
-    await measure('fire-station-end', () => page.evaluate(() => window.__SS__!.step(2)), 9_000);
+    // The ending is now a reach volume: entering it during paused setup would finish before recording.
+    // Stand outside the open bay, then capture the player's real click and actual crossing.
+    await page.evaluate(p => {
+      const a = window.__SS__!; a.teleport('player', { x: p.x, z: p.z - 3 });
+      a.camera.preset('D-GROVE/W0/l1-safe');
+      a.camera.cinematic({ position: [p.x - 12, 16, p.z - 12], target: [p.x, 0, p.z] }, true);
+      a.step(1);
+    }, at('fire-bay-door'));
+    await page.evaluate(() => window.__SS__!.screenshotReady());
+    expect(await page.evaluate(() => window.__SS__!.missions.state()!.phase)).toBe('playing');
+    await measure('fire-station-end', async () => {
+      const point = await page.evaluate(p => window.__SS__!.input.project(p), at('fire-bay-trigger'));
+      await page.mouse.click(point.x, point.y);
+    }, 3_000);
     await expect(page.getByTestId('mission-heading')).toHaveText('Delivery complete. Outbreak: not contained.');
     const proof = await page.evaluate(() => { const a = window.__SS__!, gl = document.querySelector('canvas')!.getContext('webgl2')!, ext = gl.getExtension('WEBGL_debug_renderer_info'); return { gpu: ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) as string : null, mission: a.missions.state(), perf: a.perf() }; });
     writeFileSync(`${output}/${phase}-${mode}.json`, JSON.stringify({ samples, loading, ...proof }, null, 2));
