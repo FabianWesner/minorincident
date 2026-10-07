@@ -32,7 +32,7 @@ export function rapierWasmFile(): Plugin {
 
 /** Content hashes of runtime-fetched public assets. Loaders append `?v=<hash>` so the CDN may
  * cache these unhashed paths for long periods while a redeploy still fetches changed files. */
-export const versionedDirs = ['models', 'layouts', 'basis', 'decals'];
+export const versionedDirs = ['models', 'layouts', 'basis', 'decals', 'audio'];
 export function assetVersions(root = 'public'): Record<string, string> {
   const out: Record<string, string> = {};
   const walk = (dir: string): void => {
@@ -41,7 +41,7 @@ export function assetVersions(root = 'public'): Record<string, string> {
     for (const name of entries) {
       const path = join(dir, name);
       if (statSync(path).isDirectory()) walk(path);
-      else if (/\.(glb|json|ktx2|png|webp|wasm|js)$/.test(name)) out['/' + relative(root, path).split('\\').join('/')] = createHash('sha256').update(readFileSync(path)).digest('hex').slice(0, 10);
+      else if (/\.(glb|json|ktx2|png|webp|wasm|js|webm|m4a)$/.test(name)) out['/' + relative(root, path).split('\\').join('/')] = createHash('sha256').update(readFileSync(path)).digest('hex').slice(0, 10);
     }
   };
   for (const dir of versionedDirs) walk(join(root, 'assets', dir));
