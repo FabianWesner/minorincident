@@ -34,9 +34,10 @@ describe('L1 v2 civilians and infection', () => {
       }
       expect(worst).toBeLessThanOrEqual(l1v2.civilians.idleFacingNowhereMaxS * 60);
       // Notice: an infected in plain sight -> 0.3-0.8 s startle (alarmed) -> flee, then moving at the flee speed.
-      const victim = civilians(w).find(e => e.civilian!.state === 'calm')!;
-      const yaw = victim.transform.yaw, ai = w.infected!;
-      const spot = ai.nav.nearestCell(victim.transform.x + Math.cos(yaw) * 8, victim.transform.z - Math.sin(yaw) * 8);
+      const ai = w.infected!, ahead = (e: { transform: { x: number; z: number; yaw: number } }) => ai.nav.nearestCell(e.transform.x + Math.cos(e.transform.yaw) * 7, e.transform.z - Math.sin(e.transform.yaw) * 7);
+      // A calm pedestrian with an infected placed in plain sight ahead (clear line of sight on the real map).
+      const victim = civilians(w).find(e => { if (e.civilian!.state !== 'calm' || e.hidden) return false; const c = ahead(e), p = { x: ai.nav.x(c), z: ai.nav.z(c) }; return c >= 0 && Math.hypot(p.x - e.transform.x, p.z - e.transform.z) > 4 && w.combat!.query.visible(e.transform, p); })!;
+      const spot = ahead(victim);
       const id = ai.spawn('infected.runner', { x: ai.nav.x(spot), z: ai.nav.z(spot) }, { state: 'migration', perched: false });
       const startTick = w.tick; let alarmed = -1, fled = -1;
       for (let t = 0; t < 120 && fled < 0; t++) { step(w, 1); const s = victim.civilian!.state; if (s === 'alarmed' && alarmed < 0) alarmed = w.tick; if (s === 'flee') fled = w.tick; }

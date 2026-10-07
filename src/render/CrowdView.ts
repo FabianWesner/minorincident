@@ -2,7 +2,7 @@ import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
 import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3 } from 'three/webgpu';
-import { attribute, instancedBufferAttribute, mat4, normalGeometry, vec3, positionGeometry, mix, vec4, float, cameraViewMatrix, luminance, screenCoordinate } from 'three/tsl';
+import { attribute, instancedBufferAttribute, mat4, normalGeometry, vec3, positionGeometry, mix, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform } from 'three/tsl';
 import { crowdBlendedMatrix, packCrowdParts } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { AssetRegistry } from '../assets/registry';
@@ -18,6 +18,7 @@ import { authoredClips, strides } from './characters/clips';
 import { CrowdPosePalette } from './characters/CrowdPosePalette';
 import { MotionPresentation } from './characters/MotionPresentation';
 import { MotionPhase } from './characters/MotionPhase';
+import { loadMeasure } from '../assets/loadTiming';
 import { keepsLook } from '../sim/outbreak/appearance';
 interface Batch { poses: CrowdPosePalette; mesh: InstancedMesh; state: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
 const variantShirts: Record<string, Color> = { 'inf.jogger': new Color('#3178ac'), 'inf.cashier': new Color('#e5d9b9'), 'inf.delivery-driver': new Color('#d4ad32'), 'inf.suburban-mom': new Color('#79865b'), 'inf.bbq-dad': new Color('#a86645'), 'inf.bathrobe-neighbor': new Color('#ac7a91') };
@@ -62,10 +63,14 @@ export class CrowdView extends Group {
     this.shadows = new InstancedMesh(shadow, contactShadowMaterial(), 350); this.shadows.frustumCulled = false; this.shadows.count = 0; this.add(this.shadows);
   }
   async init(): Promise<void> {
+    const started = performance.now();
     const variants = manifest.filter(a => a.status === 'integrated' && a.category === 'infected' && !infectedDefinitions.some(d => d.asset === a.id) && a.id !== 'inf.corpse-poses');
     const models = new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.schedule && e.civilian.model ? [e.civilian.model] : []));
     const allDefinitions = [...[...models].map(model => ({ ...infectedDefinitions[0], id: model, asset: model })), ...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
-    const l1Roles = new Set<string>(['infected.runner', ...Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype), ...civilianRoles.map(role => role.variant), ...models]);
+    // L1 v2: every infected is a pedestrian that keeps its look and is drawn by the civilian crowd (lane D); this view
+    // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
+    const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
+    const l1Roles = new Set<string>(this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => d.id === 'D-GROVE') ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
     const definitions = this.world.scenario === 'L1' ? allDefinitions.filter(def => l1Roles.has(def.id)) : allDefinitions;
     for (const def of definitions) {
       this.definitions.set(def.id, def);
@@ -74,8 +79,10 @@ export class CrowdView extends Group {
         mesh.count = 0; mesh.visible = false; this.heroSlots.set(def.id, mesh); this.add(mesh);
       }
     }
-    const lods: ('lod0' | 'lod1' | 'lod2')[] = this.world.scenario === 'L1' ? ['lod0', 'lod1', 'lod2'] : ['lod1', 'lod2'];
+    // The low tier only ever draws LOD2 (see update); it never loads LOD0/LOD1.
+    const lods: ('lod0' | 'lod1' | 'lod2')[] = this.low ? ['lod2'] : this.world.scenario === 'L1' ? ['lod0', 'lod1', 'lod2'] : ['lod1', 'lod2'];
     await Promise.all(definitions.flatMap(def => lods.map(lod => this.loadBatch(def, lod))));
+    loadMeasure('view:infected-crowd', started);
     this.update();
   }
   private async loadBatch(def: { id: string; asset: string; windup: number }, lod: 'lod0' | 'lod1' | 'lod2'): Promise<void> {
@@ -105,13 +112,15 @@ export class CrowdView extends Group {
       material.depthTest = material.depthWrite = true;
       const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
       const matrix = crowdBlendedMatrix(texture, parts.x, feedbackState.x, outgoing, weight);
-      const part = parts.x, leg = baked.clip.parts.indexOf('legL'), shin = baked.clip.parts.indexOf('shinL'), foot = baked.clip.parts.indexOf('footL');
-      let visible = part.equal(leg).or(part.equal(shin)).or(part.equal(foot)).select(feedbackState.y.oneMinus(), 1);
-      const groups = [/^(arm|foreArm|hand)L$/, /^(arm|foreArm|hand)R$/, /^(leg|shin|foot)L$/, /^(leg|shin|foot)R$/, /^head$/];
-      groups.forEach((pattern, index) => {
+      // Part indices are uniforms, not shader constants: every archetype/LOD compiles to the same program (one shared
+      // pipeline), only the uniform values differ. Missing parts get -1 and never match.
+      const part = parts.x, index = (name: string) => uniform(baked.clip.parts.indexOf(name));
+      let visible = part.equal(index('legL')).or(part.equal(index('shinL'))).or(part.equal(index('footL'))).select(feedbackState.y.oneMinus(), 1);
+      const groups = [['armL', 'foreArmL', 'handL'], ['armR', 'foreArmR', 'handR'], ['legL', 'shinL', 'footL'], ['legR', 'shinR', 'footR'], ['head']];
+      groups.forEach((names, bit) => {
         let hidden = float(0).equal(1);
-        baked.clip.parts.forEach((name, partIndex) => { if (pattern.test(name)) hidden = hidden.or(part.equal(partIndex)); });
-        const detached = feedbackState.z.div(2 ** index).floor().mod(2);
+        for (const name of names) hidden = hidden.or(part.equal(index(name)));
+        const detached = feedbackState.z.div(2 ** bit).floor().mod(2);
         visible = hidden.select(visible.mul(detached.oneMinus()), visible);
       });
       const slot = lod === 'lod0' ? this.heroSlots.get(def.id) : undefined;
