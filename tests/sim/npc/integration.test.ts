@@ -12,7 +12,11 @@ test('@E08 rescue lifecycle and tier collision refresh on the retired M1 map (L1
   const victim = w.npcs!.civilians.spawn('cashier', free(4), { waypoints: [free(4)] }), attacker = w.infected!.spawn('infected.runner', free(6));
   expect(w.npcs!.civilians.grab(victim, attacker, true)).toBe(true); expect(w.entities.get(victim)!.civilian!.state).toBe('grabbed');
   w.entities.get(attacker)!.health.current = 0; step(w, 1); expect(w.events.events().some(e => e.type === 'civilian.saved' && e.id === victim)).toBe(true);
-  w.setTier(1); expect(w.districts!.composition.tier).toBe(1); w.setTier(2); expect([...w.entities.iterate()].filter(e => e.traffic)).toHaveLength(0); w.dispose();
+  w.setTier(1); expect(w.districts!.composition.tier).toBe(1);
+  const traffic = [...w.entities.iterate()].filter(e => e.traffic);
+  w.setTier(2);
+  for (const car of traffic) { expect(w.entities.get(car.id)).toBe(car); expect(car.traffic).toMatchObject({ speed: 0, desired: 0, stopped: true }); }
+  w.dispose();
 });
 test('@E08 L2 brother receives protected follower component; checkpoint restores references/timers', async () => {
   const w = await load('L2'); w.missions!.completeObjective('neighbor'); w.missions!.completeObjective('school'); w.missions!.completeObjective('brother'); const id = w.missions!.state.actors.brother, e = w.entities.get(id)!;

@@ -45,7 +45,7 @@ export class NpcView extends Group {
       if (root === this.human && !Array.isArray(node.material) && node.material.name === 'keep_veins') node.visible = false;
       const remap = (old: Material) => {
         const color = (old as import('three').MeshBasicMaterial).color ?? new Color('#e5d9b9');
-        const material = this.materials.fromColor(`npc:${old.name}`, old.name === 'emi_eyes' ? new Color('#302539') : color); material.userData.sharedPalette = true; return material;
+        const material = this.materials.fromColor(`npc:${old.name}:${old.side}`, old.name === 'emi_eyes' ? new Color('#302539') : color); material.side = old.side; material.userData.sharedPalette = true; return material;
       };
       const old = node.material; node.material = Array.isArray(old) ? old.map(remap) : remap(old); if (root === this.human || this.dogSource === 'placeholder') for (const m of Array.isArray(old) ? old : [old]) m.dispose(); node.castShadow = node.receiveShadow = true;
     });

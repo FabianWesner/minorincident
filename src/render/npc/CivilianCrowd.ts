@@ -1,7 +1,11 @@
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
-import { Color, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
+import { StaticCorpses } from '../characters/StaticCorpses';
+import { CrowdLocomotion } from '../characters/CrowdLocomotion';
+import { GaitPhase } from '../characters/GaitPhase';
+import { CrowdFigureProbe } from '../characters/CrowdFigureProbe';
+import { Color, DoubleSide, FrontSide, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
 import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance } from 'three/tsl';
 import type { Materials } from '../Materials';
 import { crowdBlendedMatrix, packCrowdParts } from '../../assets/crowd';
@@ -15,7 +19,7 @@ import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
 import { MotionPresentation } from '../characters/MotionPresentation';
 import { MotionPhase } from '../characters/MotionPhase';
-import { authoredClips, cadenceStride, strides } from '../characters/clips';
+import { authoredClips, strides } from '../characters/clips';
 import { disposeCharacter } from '../characters/rig';
 import { createCivilianPlaceholder } from './placeholders';
 import { loadMeasure } from '../../assets/loadTiming';
@@ -41,9 +45,10 @@ const civStartle = clipOr('civ-startle', 'hurt'), civFlee = clipOr('civ-flee', '
  */
 export function infectedClip(state: string, speed: number, tier: 'frail' | 'average' | 'athletic', windup: boolean): Clip {
   if (state === 'dead') return 'death-back';
-  if (state === 'attack' && speed < 1.2) return windup ? 'windup' : 'swing';
+  // Below 0.1 m/s the body is standing (sim jitter and arrival creep); gait there would read as moon-walking.
+  if (state === 'attack' && speed <= .1) return windup ? 'windup' : 'swing';
   if (speed > 2.6) return tierGait[tier];
-  if (speed > .2) return slowGait[tier];
+  if (speed > .1) return slowGait[tier];
   return state === 'search' ? infectedSearch : infectedIdle;
 }
 /** Locomotion clips (their phase is driven by distance travelled). */
@@ -53,6 +58,9 @@ const slowGait = { frail: clipOr('infected-frail', 'shamble'), average: clipOr('
 const infectedIdle = clipOr('infected-idle', 'idle'), infectedSearch = clipOr('infected-search', 'idle');
 /** One human crowd draw regardless of density; poses, veins, eyes and clothing vary per instance. */
 class CivilianBatch extends Group {
+  private readonly corpses = new StaticCorpses();
+  private readonly probe = new CrowdFigureProbe();
+  private locomotion!: CrowdLocomotion;
   private poses!: CrowdPosePalette;
   private mesh!: InstancedMesh;
   private bakedClip!: CrowdClip;
@@ -67,14 +75,15 @@ class CivilianBatch extends Group {
   private readonly motion = new MotionPhase();
   private strideScale = 1;
   private readonly colors = civilianRoles.map(d => new Color(d.color));
-  private readonly frame = new InstancedBufferAttribute(new Float32Array(128), 1).setUsage(StreamDrawUsage);
-  private readonly tint = new InstancedBufferAttribute(new Float32Array(128 * 4), 4).setUsage(StreamDrawUsage);
+  private readonly poseFrame = new InstancedBufferAttribute(new Float32Array(350), 1).setUsage(StreamDrawUsage);
+  private readonly frame = new InstancedBufferAttribute(new Float32Array(350), 1).setUsage(StreamDrawUsage);
+  private readonly tint = new InstancedBufferAttribute(new Float32Array(350 * 4), 4).setUsage(StreamDrawUsage);
   /** Infection overlay per instance: x skin blend toward ash-green, y eye glow, z blood (mouth and bite). */
-  private readonly overlay = new InstancedBufferAttribute(new Float32Array(128 * 3), 3).setUsage(StreamDrawUsage);
+  private readonly overlay = new InstancedBufferAttribute(new Float32Array(350 * 3), 3).setUsage(StreamDrawUsage);
   private readonly shirt = new Color();
   private readonly registry = new AssetRegistry(() => {});
   source = 'placeholder';
-  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps) { super(); this.name = 'civilian-crowd'; }
+  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase()) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); }
   async init(): Promise<void> {
     const loaded = await this.registry.loadAsset(this.model, this.distant ? 'lod2' : 'lod1');
     await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
@@ -82,6 +91,7 @@ class CivilianBatch extends Group {
     this.source = placeholder ? 'placeholder' : 'glb';
     const baked = bakeInfected(model, [], false, civilianClips), color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     this.strideScale = baked.strideScale;
+    this.locomotion = new CrowdLocomotion(model, baked.clip);
     // QA1-07: the civilian GLBs have no tintable `pal_infectedShirt`; their main garment materials take the per-person
     // tint instead, keeping each shade's brightness ratio (dark seams stay darker), so 5 silhouettes x 12 tints differ.
     const garment = shirtMaterials[this.model], shirtColors: Color[] = [];
@@ -111,9 +121,9 @@ class CivilianBatch extends Group {
     baked.geometry.setAttribute('_vein', new BufferAttribute(veins, 1));
     deinterleaveGeometry(baked.geometry);
     const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
-    baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
+    baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_pose_frame', this.poseFrame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
-    this.poses = new CrowdPosePalette(baked.clip, 128); this.texture = this.poses.texture;
+    this.poses = new CrowdPosePalette(baked.clip, 350); this.texture = this.poses.texture;
     packCrowdParts(baked.geometry);
     const parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
     const overlay = attribute('_overlay', 'vec3'), eye = parts.z, vein = parts.w.greaterThan(.5).select(parts.w.lessThan(1.5).select(1, 0), 0), blood = parts.w.greaterThan(1.5).select(parts.w.lessThan(2.5).select(1, 0), 0), socket = parts.w.greaterThan(2.5).select(1, 0), decay = overlay.x;
@@ -136,34 +146,38 @@ class CivilianBatch extends Group {
     // A faint ash-green self-glow on infected skin so the colour shift survives building shadow (far below bloom).
     const glow = eyeColor.mul(eye.mul(2.2).add(socket.mul(.75))).mul(overlay.y).add(vec3(.05, .1, .03).mul(skinShift).mul(overlay.z));
     const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
-    this.mesh = new InstancedMesh(baked.geometry, material, 128); this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = !this.distant; this.mesh.receiveShadow = true;
+    material.side = baked.doubleSided ? DoubleSide : FrontSide;
+    this.mesh = new InstancedMesh(baked.geometry, material, 350); this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = !this.distant; this.mesh.receiveShadow = true;
     this.mesh.instanceMatrix.setUsage(StreamDrawUsage);
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
     this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, this.mesh.count * 16); };
     const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset), instance = mat4(column(0), column(4), column(8), column(12)), part = parts.x;
     const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
-    const matrix = crowdBlendedMatrix(this.texture, part, attribute('_clip_frame', 'float'), outgoing, weight);
+    const matrix = crowdBlendedMatrix(this.texture, part, attribute('_pose_frame', 'float'), outgoing, weight);
     material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry.mul(vein.greaterThan(.5).select(decay.greaterThan(.25).select(1, 0), 1)), 1))).xyz;
     material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
+    this.mesh.onAfterRender = () => this.probe.draw();
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
   update(alpha = 1, low = false): void {
+    this.probe.begin(); this.corpses.begin(id => this.world.entities.get(id));
     if (!this.mesh) return; let index = 0, shadowPixels = 0;
     const renderTick = Math.max(0, this.world.tick + alpha - 1);
     for (const e of this.world.entities.iterate()) {
-      if (index >= 128) break;
+      if (index >= 350 && !e.corpse) continue;
       // Match once before projection: the other nineteen model/LOD batches
       // need no culling work for this person (or for ordinary infected).
       const c = e.civilian;
       const model = e.appearance?.asset ?? c?.model ?? (c ? ['inf.suburban-mom', 'inf.bathrobe-neighbor'].includes(c.variant) ? 'npc.civilian-woman-a' : 'npc.civilian-man-a' : null);
       if (model !== this.model) continue;
+      // Settled corpses become static instances once, wherever the camera is; they are never culled or LOD-switched.
+      if (e.corpse) { if (!this.distant && !e.civilian && e.infected && keepsLook(e)) this.place(e, index, alpha); continue; }
       // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
       if (!this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
       if ((this.visibility.lod(e.id, pixels, low) === 'lod2') !== this.distant) continue;
-      if (!e.civilian && e.infected && keepsLook(e)) { if (e.appearance!.asset === this.model && this.place(e, index, alpha)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
+      if (!e.civilian && e.infected && keepsLook(e)) { if (this.place(e, index, alpha)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
       if (!c || c.pet || e.hidden || c.state === 'infected') continue;
-
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
       const rising = c.state === 'rising', startle = c.state === 'alarmed' && !!c.l1;
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
@@ -178,9 +192,10 @@ class CivilianBatch extends Group {
       const walkClip: Clip = activity?.prop === 'cane' ? 'npc-cane' : activity?.prop ? 'npc-carry' : e.id % 2 ? 'npc-walk' : 'npc-walk-relaxed';
       // E19 story beats override the routine (render-only, set by the mission script).
       const storyClip = c.story && (civilianClips as readonly string[]).includes(c.story.clip) ? c.story.clip as Clip : null;
-      const clip: Clip = storyClip && c.state === 'calm' ? storyClip : annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle';
+      let clip: Clip = storyClip && c.state === 'calm' ? storyClip : annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle';
+      if (speed > .06 && !strides[clip] && !down && !rising) clip = speed > 2.5 ? civFlee : walkClip;
       const duration = authoredClips.get(clip)!.duration, gaitDistance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
-      const phase = annoyed ? Math.min(1, (this.world.tick - c.entered) / 24) : clip === 'npc-sit-down' || clip === 'npc-stand-up' ? Math.min(1, (noticingSeated ? noticeElapsed : elapsed) / .6) : c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? gaitDistance / cadenceStride(clip, this.strideScale * (c.adult ? 1 : .7), motion.speed) % 1 : (renderTick / 60 + e.id * .137) / duration % 1;
+      const phase = strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale * (c.adult ? 1 : .7), speed) : annoyed ? Math.min(1, (this.world.tick - c.entered) / 24) : clip === 'npc-sit-down' || clip === 'npc-stand-up' ? Math.min(1, (noticingSeated ? noticeElapsed : elapsed) / .6) : c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale * (c.adult ? 1 : .7), motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
       const storyElapsed = storyClip && clip === storyClip && !strides[clip] ? (this.world.tick - c.story!.start) / 60 / authoredClips.get(clip)!.duration : null;
       const storyFrame = storyElapsed === null ? null : clip === 'npc-wave-in' || clip === 'npc-glance' ? storyElapsed % 1 : Math.min(.999, storyElapsed);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
@@ -190,16 +205,19 @@ class CivilianBatch extends Group {
         const seatBlend = noticingSeated ? Math.max(0, 1 - noticeElapsed / .6) : activity.activity === 'stand' ? Math.max(0, 1 - elapsed / .6) : Math.min(1, elapsed / .6);
         this.transform.setPosition(presented.x + (activity.seat.x - presented.x) * seatBlend, presented.y - .7, presented.z + (activity.seat.z - presented.z) * seatBlend);
       }
-      const frame = civilianClips.indexOf(clip) * framesPerClip + (storyFrame ?? phase) * (framesPerClip - 1);
-      const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
-      this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, frame);
+      let frame = civilianClips.indexOf(clip) * framesPerClip + (storyFrame ?? phase) * (framesPerClip - 1);
+      const sourceFrame = frame;
+    const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
+      if (strides[clip] && speed > .06) { frame = this.poses.correct(e.id, frame, ...blend, pose => this.locomotion.correct(e.id, pose, this.transform, phase, clip, this.strideScale * (c.adult ? 1 : .7), speed)); blend[1] = 1; } else { this.locomotion.reset(e.id); if (blend[1] < 1) { frame = this.poses.correct(e.id, frame, ...blend, () => {}); blend[1] = 1; } }
+      this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
+      this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.poseFrame.setX(index, frame);
       // A dropped hand prop (startle, bite) stays dropped: `appearance.handProp` is cleared by the outbreak layer.
       const handProp = c.story ? c.story.prop : activity?.prop;
       if (handProp && c.state === 'calm' && this.props && (c.story || e.appearance?.handProp !== null)) {
         const part = this.bakedClip.parts.indexOf('handR'), stride = this.bakedClip.parts.length * 16;
-        this.hand.fromArray(this.bakedClip.matrices, Math.floor(frame) * stride + part * 16);
-        this.nextHand.fromArray(this.bakedClip.matrices, Math.ceil(frame) * stride + part * 16);
-        const handBlend = frame % 1;
+        this.hand.fromArray(this.bakedClip.matrices, Math.floor(sourceFrame) * stride + part * 16);
+        this.nextHand.fromArray(this.bakedClip.matrices, Math.ceil(sourceFrame) * stride + part * 16);
+        const handBlend = sourceFrame % 1;
         for (let i = 0; i < 16; i++) this.hand.elements[i] += (this.nextHand.elements[i] - this.hand.elements[i]) * handBlend;
         this.hand.premultiply(this.transform); this.props.place(handProp, this.hand);
       }
@@ -212,7 +230,7 @@ class CivilianBatch extends Group {
     this.mesh.castShadow = !this.distant && shadowPixels > (this.mesh.castShadow ? 128 : 156);
     this.mesh.count = index; this.mesh.visible = index > 0;
     if (index) {
-      for (const attribute of [this.mesh.instanceMatrix, this.frame, this.tint, this.overlay]) {
+      for (const attribute of [this.mesh.instanceMatrix, this.frame, this.poseFrame, this.tint, this.overlay]) {
         attribute.clearUpdateRanges(); attribute.addUpdateRange(0, index * attribute.itemSize); attribute.needsUpdate = true;
       }
       const first = this.bakedClip.frames * this.texture.image.width * 4;
@@ -227,28 +245,38 @@ class CivilianBatch extends Group {
   /** A pedestrian who rose infected: same model and tint, full overlay, infected locomotion and fight clips. */
   private place(e: EntitySnapshot, index: number, alpha: number): boolean {
     const b = e.infected!, tick = this.world.tick;
-    if (e.hidden || b.hidden || b.state === 'dead' && tick - b.deadAt > 540) return false;
+    if (e.hidden || b.hidden) return false;
+    if (e.corpse && this.corpses.has(e.id)) return false;
     // PO "skating": the sim publishes the actual post-collision ground motion every tick (AgentMotion) - use it, not a
     // per-batch sampler that goes stale when the figure crosses the near/far batch boundary.
     const motion = e.motion ?? this.motion.sample(e.id, tick, e.transform.x, e.transform.z), reaction = e.combat?.reaction, age = reaction ? (tick - reaction.started) / 60 : Infinity;
     let clip: Clip = infectedClip(b.state, motion.speed, e.appearance!.tier, tick < b.until);
-    if (reaction && tick < reaction.until && b.state !== 'dead') clip = reaction.heavy ? age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
+    if (reaction && tick < reaction.until && b.state !== 'dead' && motion.speed <= .06) clip = reaction.heavy ? age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
     const duration = authoredClips.get(clip)!.duration, renderTick = Math.max(0, tick + alpha - 1);
-    const phase = b.state === 'dead' ? reaction?.groundDeath ? 1 : Math.min(1, (tick - b.deadAt) / 60 / duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && tick < reaction.until ? Math.min(1, age / (reaction.heavy ? .7 : (reaction.until - reaction.started) / 60)) : strides[clip] ? motion.distance / cadenceStride(clip, this.strideScale, motion.speed) % 1 : (renderTick / 60 + e.id * .137) / duration % 1;
+    const phase = b.state === 'dead' ? reaction?.groundDeath ? 1 : Math.min(1, (tick - b.deadAt) / 60 / duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && !strides[clip] && tick < reaction.until ? Math.min(1, age / (reaction.heavy ? .7 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), clip, this.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
     const presented = this.presentation.sample(e.id, e.transform, tick, alpha);
     // Hunched silhouette: the whole body leans forward (pivot at the feet) on top of the tier gait's arms-forward pose.
     // QA2b: the read holds in every state - standing/searching infected sway and twitch on top of the hunch.
     const still = motion.speed <= .2 && b.state !== 'dead', t = tick / 60 + e.id * .71;
     this.transform.makeRotationY(presented.yaw + (still ? Math.sin(t * 1.7) * .14 + (Math.sin(t * 7.3) > .93 ? .18 : 0) : 0));
-    if (b.state !== 'dead' && !reaction) { this.transform.multiply(this.lean).multiply(this.sway.makeRotationX((e.id % 2 ? .17 : -.17) + Math.sin(t * 1.3) * .04)); if (still) this.transform.multiply(this.sway.makeRotationZ(-.14 - Math.abs(Math.sin(t * 2.3)) * .1)); }
+    if (b.state !== 'dead' && !reaction && still) { this.transform.multiply(this.lean).multiply(this.sway.makeRotationX((e.id % 2 ? .17 : -.17) + Math.sin(t * 1.3) * .04)); if (still) this.transform.multiply(this.sway.makeRotationZ(-.14 - Math.abs(Math.sin(t * 2.3)) * .1)); }
     this.transform.setPosition(presented.x, presented.y - .7, presented.z);
-    const frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1), blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
-    this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, frame);
+    let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
+    const sourceFrame = frame;
+      const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
+    if (strides[clip] && motion.speed > .06) { frame = this.poses.correct(e.id, frame, ...blend, pose => this.locomotion.correct(e.id, pose, this.transform, phase, clip, this.strideScale, motion.speed)); blend[1] = 1; } else { this.locomotion.reset(e.id); if (blend[1] < 1) { frame = this.poses.correct(e.id, frame, ...blend, () => {}); blend[1] = 1; } }
+    if (e.corpse) {
+      this.tintOf(e, index, 1);
+      this.corpses.place(e, this.model, this.mesh.geometry, this.mesh.material as MeshLambertNodeMaterial, this.bakedClip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.transform, this.shirt, [.4, 0, 1]);
+      return false;
+    }
+    this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
+    this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.poseFrame.setX(index, frame);
     this.tintOf(e, index, blend[0] * 2 + blend[1]); this.overlay.setXYZ(index, .4, b.state === 'dead' ? 0 : 1, 1);
     return true;
   }
-  snapshot() { return { instances: this.mesh?.count ?? 0, draws: this.mesh?.count ? 1 : 0, source: this.source }; }
-  dispose(): void { if (this.mesh) { this.mesh.geometry.dispose(); (this.mesh.material as MeshLambertNodeMaterial).dispose(); this.mesh.dispose(); this.texture.dispose(); } void this.registry.dispose(); this.clear(); }
+  snapshot() { return { instances: (this.mesh?.count ?? 0) + this.corpses.snapshot().instances, draws: (this.mesh?.count ? 1 : 0) + this.corpses.snapshot().draws, source: this.source, figures: [...this.probe.figures, ...this.corpses.snapshot().figures] }; }
+  dispose(): void { this.corpses.dispose(); if (this.mesh) { this.mesh.geometry.dispose(); (this.mesh.material as MeshLambertNodeMaterial).dispose(); this.mesh.dispose(); this.texture.dispose(); } void this.registry.dispose(); this.clear(); }
 }
 
 /** Five civilian silhouettes share rigid-part LOD batches and the E07 clip path. */
@@ -256,11 +284,12 @@ export class CivilianCrowd extends Group {
   private readonly batches: CivilianBatch[];
   private readonly props: RoutineProps;
   private readonly visibility = new CrowdVisibility();
+  private readonly gait = new GaitPhase();
   private low = false;
   setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; }
-  constructor(world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.batches=['npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly','npc.depot-clerk','npc.firefighter-alive'].flatMap(model=>[new CivilianBatch(world,model,false,this.visibility,shading,this.props),new CivilianBatch(world,model,true,this.visibility,shading,this.props)]); this.add(...this.batches); }
+  constructor(private readonly world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.batches=['npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly','npc.depot-clerk','npc.firefighter-alive'].flatMap(model=>[new CivilianBatch(world,model,false,this.visibility,shading,this.props,this.gait),new CivilianBatch(world,model,true,this.visibility,shading,this.props,this.gait)]); this.add(...this.batches); }
   async init(): Promise<void> { const started = performance.now(); await Promise.all(this.batches.map(b=>b.init())); loadMeasure('view:civilian-crowd', started); this.update(); }
-  update(alpha = 1, camera?: import('three').Camera): void { this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); this.props.finish(); }
-  snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
+  update(alpha = 1, camera?: import('three').Camera): void { this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
+  snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
   dispose(): void { this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
 }

@@ -109,7 +109,7 @@ export class PropSystem {
       }
     }
   }
-  /** After the physics step: mirror awake poses, reset fallen props, and settle the farthest beyond the awake cap. */
+  /** Mirror awake poses, recover props that fall through ground, and settle the farthest beyond the awake cap. */
   postPhysics(): void {
     const player = this.world.entities.get(1)?.transform;
     let awake = 0;
@@ -118,7 +118,13 @@ export class PropSystem {
       if (!item.awake) continue;
       awake++;
       const t = item.body.translation();
-      if (t.y < -5) { if (item.metadata.reset === 'remove') { item.body.setEnabled(false); this.world.entities.get(item.entityId)!.health.current = 0; } else this.place(item, item.home); continue; }
+      if (t.y < -5) {
+        const r = item.body.rotation(), ground = this.world.districts?.groundHeight(t.x, t.z) ?? 0;
+        // Keep the displaced location and orientation. A physics escape must not
+        // delete a knocked prop or silently return it to its authored placement.
+        this.place(item, { p: [t.x, ground + Math.hypot(...item.half) * 2, t.z], q: [r.x, r.y, r.z, r.w] });
+        item.body.wakeUp(); continue;
+      }
       this.mirror(item);
     }
     if (awake <= this.awakeBudget || !player) return;

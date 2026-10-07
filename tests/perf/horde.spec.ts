@@ -7,7 +7,7 @@ test('T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and
   mkdirSync('test-results/epics/E07', { recursive: true });
   await boot(page); await page.evaluate(async () => {
     const api = window.__SS__!; await api.loadScenario('horde-arena'); api.pause(); api.cheats.god(true);
-    for (let i = 0; i < 200; i++) api.spawn('infected.runner', { x: i % 20 * 0.8 - 8, z: Math.floor(i / 20) * 0.8 - 4 }, { state: 'chase' });
+    for (let i = 0; i < 200; i++) api.spawn('infected.runner', i === 199 ? { x: 50, z: 50 } : { x: i % 20 * 0.8 - 8, z: Math.floor(i / 20) * 0.8 - 4 }, { state: 'chase' });
     await api.step(0); await api.screenshotReady();
   });
   const proof = await page.evaluate(() => ({ ai: window.__SS__!.getState().ai!, crowd: window.__SS__!.getState().render.crowd!, perf: window.__SS__!.perf() }));
@@ -16,12 +16,28 @@ test('T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and
   expect(proof.ai.count).toBe(200);
   const rendered = runners.reduce((sum, batch) => sum + batch.instances, 0);
   expect(rendered).toBeGreaterThan(0); expect(rendered).toBeLessThan(200);
-  expect(runners.find(batch => batch.lod === 'lod0')!.instances).toBe(8); // Offscreen instances are culled; simulation keeps all 200.
-  expect(proof.crowd.meshDrawCalls).toBeLessThanOrEqual(30); expect(proof.crowd.nonInstancedMeshes).toBe(0); expect(proof.crowd.objects).toBe(proof.crowd.batches.length + 4);
+  expect(runners.find(batch => batch.lod === 'lod0')!.instances).toBe(8);
+  expect(proof.crowd.meshDrawCalls).toBeLessThanOrEqual(30); expect(proof.crowd.nonInstancedMeshes).toBe(0);
+  expect(proof.crowd.objects).toBe(proof.crowd.batches.length + 5); // Four fixed effects and the empty static-corpse group.
+  const offscreen = await page.evaluate(() => {
+    const api = window.__SS__!, e = api.query({ kind: 'infected' }).find(e => e.transform.x === 50)!;
+    return { projected: api.camera.project(e.transform.x, e.transform.y, e.transform.z), drawn: api.crowdFigures().some(f => f.id === e.id && f.drawn) };
+  });
+  expect(Math.max(Math.abs(offscreen.projected[0]), Math.abs(offscreen.projected[1]))).toBeGreaterThan(1.5);
+  expect(offscreen.drawn).toBe(false);
   mkdirSync('test-results/epics/E07', { recursive: true }); writeFileSync('test-results/epics/E07/render-perf.json', JSON.stringify(proof, null, 2) + '\n');
   await page.locator('canvas').screenshot({ path: 'test-results/epics/E07/horde-200.png' });
-  // Remove all infected and compare actual renderer draws, including fixed crowd shadow/telegraph batches.
-  const before = proof.perf.drawCalls; const after = await page.evaluate(async () => { const api = window.__SS__!; api.cheats.killAll(); await api.step(2762); await api.screenshotReady(); return api.perf().drawCalls; }); expect(before - after).toBeGreaterThan(0); expect(before - after).toBeLessThanOrEqual(30); writeFileSync('test-results/epics/E07/render-perf.json', JSON.stringify({ ...proof, removedDrawCalls: after, crowdDrawDelta: before - after }, null, 2) + '\n');
+  // Death retains bodies; only an explicit level reset provides an empty crowd baseline.
+  const settled = await page.evaluate(async () => {
+    const api = window.__SS__!; api.cheats.killAll(); await api.step(121); await api.screenshotReady();
+    return { corpses: api.query({ kind: 'infected' }).filter(e => e.corpse).length, active: api.getState().ai!.count, draws: api.perf().drawCalls };
+  });
+  expect(settled.corpses).toBe(200); expect(settled.active).toBe(0);
+  const before = proof.perf.drawCalls; const after = await page.evaluate(async () => {
+    const api = window.__SS__!; await api.loadScenario('horde-arena'); api.pause(); await api.screenshotReady(); return api.perf().drawCalls;
+  });
+  expect(before - after).toBeGreaterThan(0); expect(before - after).toBeLessThanOrEqual(30);
+  writeFileSync('test-results/epics/E07/render-perf.json', JSON.stringify({ ...proof, settled, emptyDrawCalls: after, crowdDrawDelta: before - after }, null, 2) + '\n');
   const roles = infectedDefinitions.filter((def) => def.id !== 'infected.crow').map((def) => def.id);
   const mixed = await page.evaluate(async (roles) => {
     const api = window.__SS__!;

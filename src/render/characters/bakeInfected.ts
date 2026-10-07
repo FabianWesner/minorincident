@@ -1,5 +1,5 @@
 // Runtime adaptation of E17 bake-crowd.ts and Bruno InstancedGroup.js (MIT).
-import { BufferAttribute, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, type Group, type Object3D, type MeshBasicMaterial } from 'three';
+import { BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, type Group, type Object3D, type MeshBasicMaterial } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { characterNodes } from '../../data/survivor';
 import { authoredClips, sampleClip, strideScale } from './clips';
@@ -35,6 +35,7 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
   root.updateMatrixWorld(true);
   const geometries: import('three').BufferGeometry[] = [], relative = new Matrix4();
   let shirtColor: import('three').Color | undefined;
+  let doubleSided = false;
   root.traverse((node) => {
     if (!(node instanceof Mesh)) return;
     for (let ancestor: Object3D | null = node; ancestor; ancestor = ancestor.parent) if (!ancestor.visible || ancestor.name.startsWith('stump_')) return;
@@ -55,6 +56,7 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     geometry.applyMatrix4(relative);
     // Every source material is folded into vertex colors, yielding one draw per role.
     const material = (Array.isArray(node.material) ? node.material[0] : node.material) as MeshBasicMaterial;
+    doubleSided ||= material.side === DoubleSide;
     const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), emissive = new Float32Array(count), indices = new Float32Array(count), shirt = new Float32Array(count);
     const clothing = material.name === 'pal_infectedShirt'; if (clothing) shirtColor = material.color.clone();
     const sourceColor = geometry.getAttribute('color');
@@ -62,7 +64,8 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
       const color = material.color?.toArray() ?? [0.4, 0.3, 0.25];
       if (material.vertexColors && sourceColor) { color[0] *= sourceColor.getX(i); color[1] *= sourceColor.getY(i); color[2] *= sourceColor.getZ(i); }
       colors.set(color, i * 3); // Civilian GLBs use dark pupils rather than emissive eye materials.
-      const pupil = owner === rig.head && /^(pal_)?(eyeBrown|uiDark)$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
+      // uiDark also owns hair, brows and collars: height cannot identify pupils.
+      const pupil = owner === rig.head && /^(pal_)?eyeBrown$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
       emissive[i] = Number(material.name.startsWith('emi_') || pupil); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) ? -1 : Number(clothing);
     }
     geometry.setAttribute('_shirt', new BufferAttribute(shirt, 1)); geometry.setAttribute('color', new BufferAttribute(colors, 3)); geometry.setAttribute('_emissive', new BufferAttribute(emissive, 1)); geometry.setAttribute('_part_index', new BufferAttribute(indices, 1)); geometry.deleteAttribute('uv');
@@ -83,5 +86,5 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     offset += attribute.itemSize;
   }
   const clip: CrowdClip = { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
-  return { geometry, clip, shirtColor, strideScale: strideScale(root) };
+  return { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root) };
 }

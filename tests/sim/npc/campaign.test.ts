@@ -15,6 +15,9 @@ for (const tier of ['high', 'low'] as const) test(`T-E08-11-${tier} @E08 @E08-AC
     for (const e of w.entities.iterate()) if (e.civilian) expect(w.districts!.nav.walkable([e.transform.x, e.transform.z])).toBe(true);
     const expected = npcs.density[level - 1] * (tier === 'low' ? .6 : 1), bot = new NpcPatrol(w), times: number[] = [];
     const corgi = [...w.entities.iterate()].find(e => e.companion)!;
+    // Quality switches never despawn people: existing ambient civilians stay, and arrivals stop until the count is within the tier cap.
+    const ambient = () => [...w.entities.iterate()].filter(e => e.civilian?.ambient && !e.civilian.pet && e.civilian.adult);
+    const initial = new Set(ambient().map(e => e.id)), over = initial.size > expected * 1.1;
     let total = 0, distance = 0, attacks = 0; const infectionEvents: GameEvent[] = [];
     const stop = w.events.on('civilian.state', e => { if ('id' in e && e.id === corgi.id) infectionEvents.push(e); });
     const stopAttack = w.events.on('combat.attack', () => { attacks++; });
@@ -25,7 +28,9 @@ for (const tier of ['high', 'low'] as const) test(`T-E08-11-${tier} @E08 @E08-AC
       let count = 0; for (const e of w.entities.iterate()) if (e.kind === 'civilian' && e.civilian?.ambient && e.civilian.adult && e.civilian.state !== 'infected' && e.civilian.state !== 'finished') count++;
       total += count; expect(corgi.civilian).toBeUndefined(); expect(corgi.companion).toBeDefined(); expect(corgi.health.current).toBe(100);
     }
-    const average = total / 10800; expect(average).toBeGreaterThanOrEqual(expected * .9); expect(average).toBeLessThanOrEqual(expected * 1.1); expect(infectionEvents).toHaveLength(0); expect(distance).toBeGreaterThan(10); expect(attacks).toBeGreaterThan(0); stop(); stopAttack();
+    const average = total / 10800;
+    if (over) { expect(average).toBeLessThanOrEqual(initial.size); for (const id of initial) expect(w.entities.get(id)).toBeDefined(); expect(ambient().filter(e => !initial.has(e.id)).length).toBe(0); }
+    else { expect(average).toBeGreaterThanOrEqual(expected * .9); expect(average).toBeLessThanOrEqual(expected * 1.1); } expect(infectionEvents).toHaveLength(0); expect(distance).toBeGreaterThan(10); expect(attacks).toBeGreaterThan(0); stop(); stopAttack();
     times.sort((a, b) => a - b); const simMsP95 = times[Math.floor(times.length * .95)]; expect(simMsP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
     metrics.push({ level: `L${level}`, tier, average, expected, simMsP95, ticks: w.tick, distance, attacks });
   }

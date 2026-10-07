@@ -500,6 +500,7 @@ export class GameView implements Lifecycle {
   }
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
   project(x: number, y: number, z: number): number[] { return this.projection.set(x, y, z).project(this.camera).toArray(); }
+  crowdFigures() { return [...(this.crowd?.getState().figures ?? []), ...(this.npcs?.snapshot().civilians.figures ?? [])]; }
   getState() {
     const materialInventory = new Map<string, { name: string; palette: boolean; plainLit: boolean; emissive: number }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial, plainLit: (material instanceof MeshLambertNodeMaterial || material instanceof MeshStandardMaterial) && !(material instanceof PaletteMaterial), emissive: material.userData.emissiveStrength ?? 0 }); });
