@@ -45,9 +45,10 @@ const civStartle = clipOr('civ-startle', 'hurt'), civFlee = clipOr('civ-flee', '
  */
 export function infectedClip(state: string, speed: number, tier: 'frail' | 'average' | 'athletic', windup: boolean): Clip {
   if (state === 'dead') return 'death-back';
-  if (state === 'attack' && speed <= .06) return windup ? 'windup' : 'swing';
+  // Below 0.1 m/s the body is standing (sim jitter and arrival creep); gait there would read as moon-walking.
+  if (state === 'attack' && speed <= .1) return windup ? 'windup' : 'swing';
   if (speed > 2.6) return tierGait[tier];
-  if (speed > .06) return slowGait[tier];
+  if (speed > .1) return slowGait[tier];
   return state === 'search' ? infectedSearch : infectedIdle;
 }
 /** Locomotion clips (their phase is driven by distance travelled). */
