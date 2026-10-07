@@ -36,14 +36,38 @@ class Walker {
   private route = { path: [] as number[], goal: -1, pathIndex: 0 };
   private key = '';
   private readonly wp = { x: 0, z: 0 };
-  /** Moves one tick toward `target` along the nav grid; true once within `stop` metres. */
+  reset(): void { this.route = { path: [], goal: -1, pathIndex: 0 }; }
+  /** Pick an actual connected grid destination, rather than a point across a fence. */
+  detour(world: SimWorld, goal: { x: number; z: number }, away?: { x: number; z: number }): { x: number; z: number } | null {
+    const p = world.entities.get(1)!.transform, nav = world.infected!.nav;
+    const from = nav.nearestCell(p.x, p.z, .45), path: number[] = [];
+    let best: { x: number; z: number } | null = null, score = -Infinity;
+    for (let i = 0; i < 8; i++) {
+      const angle = i * Math.PI / 4, target = { x: p.x + Math.cos(angle) * 6, z: p.z + Math.sin(angle) * 6 };
+      nav.reachPath(from, target, path);
+      const cell = path[path.length - 1];
+      if (cell === undefined || path.length > 40) continue;
+      const at = { x: nav.x(cell), z: nav.z(cell) };
+      if (dist(p, at) < 3) continue;
+      const value = dist(p, goal) - dist(at, goal) + (away ? 2 * (dist(at, away) - dist(p, away)) : 0);
+      if (value > score) { best = at; score = value; }
+    }
+    this.reset();
+    return best;
+  }
+  /** Route toward the target; stop within `stop` metres or when no route is available. */
   step(world: SimWorld, target: { x: number; z: number }, stop: number, key: string): { x: number; z: number } | null {
     const p = world.entities.get(1)!.transform;
     if (dist(p, target) <= stop) return null;
-    if (key !== this.key) { this.key = key; this.route = { path: [], goal: -1, pathIndex: 0 }; }
-    const ok = world.infected!.nav.steer(p, target, this.route, .45, this.wp);
-    const dx = (ok ? this.wp.x : target.x) - p.x, dz = (ok ? this.wp.z : target.z) - p.z, d = Math.hypot(dx, dz) || 1;
-    return { x: dx / d, z: dz / d };
+    if (key !== this.key) { this.key = key; this.reset(); }
+    // Use the player flood's separate workspace: crowd A* cannot starve a re-plan.
+    const ok = world.infected!.nav.steer(p, target, this.route, .45, this.wp, Infinity, true);
+    // A failed search is not permission to walk straight through its obstacle.
+    if (!ok) return null;
+    const dx = this.wp.x - p.x, dz = this.wp.z - p.z, d = Math.hypot(dx, dz) || 1;
+    // Held movement lasts 250 ms for the newbie: brake before a short grid waypoint.
+    const speed = Math.min(1, d / 1.2);
+    return { x: dx / d * speed, z: dz / d * speed };
   }
 }
 
@@ -54,6 +78,7 @@ export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opt
   const infectedAfterExit: Record<number, number> = {};
   const bike = world.vehicles?.bicycle, useBike = profile === 'complete' && !!bike?.entity;
   const stuck: { at: { x: number; z: number } | null; n: number } = { at: null, n: 0 };
+  let sampleAt = 0;
   let rode = false, press = false, maxInfected = 0, bites = 0, exitTick = 0, detour: { x: number; z: number; until: number } | null = null, decideAt = 0, move = { x: 0, z: 0 }, fight: EntitySnapshot | null = null;
   const stopBites = world.events.on('outbreak.bite', () => { bites++; });
   const stopCivTurn = world.events.on('civilian.turned', () => { bites++; });
@@ -75,19 +100,23 @@ export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opt
     if (world.tick >= decideAt) {
       decideAt = world.tick + reaction;
       const step = mission.def.steps.find(s => mission.state.steps[s.id].status === 'active');
-      const threats = alive().filter(e => dist(e.transform, p) <= 9).sort((a, b) => dist(a.transform, p) - dist(b.transform, p));
+      const threats = alive().filter(e => !e.hidden && !e.infected?.hidden && dist(e.transform, p) <= 9 && world.infected!.nav.visible(p, e.transform, 0)).sort((a, b) => dist(a.transform, p) - dist(b.transform, p));
       const nearest = threats[0];
       fight = fights && nearest && dist(nearest.transform, p) <= 2.6 && (!newbie || rng.next() > .15) ? nearest : null;
       let goal: { x: number; z: number } | null = null, stop = 1.2, key = step?.id ?? 'wait';
       press = false;
       if (bike?.riding) rode = true;
       // A jammed bicycle (wide turns against corners): after 3 s without progress the courier steps off and walks.
-      if (world.tick % 60 === 0) { if (stuck.at && dist(stuck.at, p) < .6 && move.x * move.x + move.z * move.z > 0) stuck.n++; else stuck.n = 0; stuck.at = { x: p.x, z: p.z }; }
+      // Decision ticks can shift after a cinematic or respawn; do not require an exact modulo tick.
+      if (world.tick >= sampleAt) {
+        sampleAt = world.tick + 60;
+        if (stuck.at && dist(stuck.at, p) < .6 && move.x * move.x + move.z * move.z > 0) stuck.n++; else stuck.n = 0;
+        stuck.at = { x: p.x, z: p.z };
+      }
       if (bike?.riding && stuck.n >= 3) { press = true; stuck.n = 0; }
       else if (stuck.n >= 3 && step) {
-        // Jammed on foot (a gate, a hedge corner): side-step 5 m perpendicular to the goal for 3 s, then re-plan.
-        const g = anchor(goals[step.id]), d = dist(g, p) || 1, sign = rng.next() < .5 ? -1 : 1;
-        detour = { x: p.x - (g.z - p.z) / d * 5 * sign, z: p.z + (g.x - p.x) / d * 5 * sign, until: world.tick + 180 }; stuck.n = 0;
+        const at = walker.detour(world, anchor(goals[step.id]), nearest?.transform);
+        detour = at ? { ...at, until: world.tick + 240 } : null; stuck.n = 0;
       }
       if (step) goal = anchor(goals[step.id]);
       else if (l1.delivered && !l1.exitIds.length) { goal = anchor('lab-door'); stop = 3; key = 'calm'; }
@@ -97,11 +126,16 @@ export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opt
         const at = bike!.entity!.transform;
         if (dist(at, p) <= 1.4) press = true; else { goal = { x: at.x, z: at.z }; stop = 1; key = 'to-bike'; }
       }
-      if (detour && world.tick > detour.until) detour = null;
+      if (detour && (world.tick > detour.until || dist(p, detour) < 1)) { detour = null; walker.reset(); }
+      // Retreat along a connected route if a crowd is winning; fight isolated blockers.
+      if (!detour && goal && nearest && player.health.current < 35 && threats.filter(e => dist(e.transform, p) < 4).length >= 3) {
+        const at = walker.detour(world, goal, nearest.transform);
+        if (at) detour = { ...at, until: world.tick + 180 };
+      }
       if (newbie) {
         if (!detour && rng.next() < .0006) { const names = Object.keys(mission.def.anchors); const a = anchor(names[Math.floor(rng.next() * names.length)]); detour = { x: a.x, z: a.z, until: world.tick + 360 }; }
         }
-      if (detour) { goal = detour; stop = 2; key = 'detour'; }
+      if (detour) { goal = detour; stop = .8; key = `detour-${detour.until}`; fight = null; }
       let dir = goal ? walker.step(world, goal, stop, key) : null;
       if (profile === 'evade-only' && nearest && dist(nearest.transform, p) < 8 && goal) {
         // Keep the objective direction but bias away from the closest threat.
