@@ -37,6 +37,16 @@ export class ControlIntent {
       this.attack = { ...raw.attackTarget, started: false, ...(raw.mouseAttack ? { mouseAttack: true } : {}), ...(running && this.world.tick < running.endsAt ? { until: this.world.tick + 12 } : {}) };
       this.moveTarget = null;
     }
+    // Resolve the destination outside solid parked frames' capsule clearance, so steering
+    // cannot fight the controller's push-out at a target beside the nav blocker.
+    if (this.moveTarget) for (let pass = 0; pass < 4; pass++) for (const prop of this.world.player?.locomotion.props ?? []) {
+      const dx: number = this.moveTarget.x - prop.transform.x, dz: number = this.moveTarget.z - prop.transform.z;
+      const distance = Math.hypot(dx, dz), reach = survivor.radius + prop.radius + .1;
+      if (distance < reach) {
+        const angle: number = distance > 1e-6 ? Math.atan2(dz, dx) : Math.atan2(player.transform.z - prop.transform.z, player.transform.x - prop.transform.x);
+        this.moveTarget = { x: prop.transform.x + Math.cos(angle) * reach, z: prop.transform.z + Math.sin(angle) * reach };
+      }
+    }
     if (!this.moveTarget && !this.attack && !raw.pointerGround && !raw.pointerTarget && raw.aimSource !== 'assist') return raw;
     const frame: InputFrame = { ...raw, move: { ...raw.move }, left: { ...raw.left }, right: { ...raw.right } };
     if (raw.pointerGround) frame.left = { down: false, held: false, up: raw.left.up };
@@ -69,7 +79,7 @@ export class ControlIntent {
     if (raw.pointerTarget && !this.attack) { frame.left.down = frame.left.held = false; frame.right.down = frame.right.held = false; }
     if (this.moveTarget) {
       const distance = Math.hypot(this.moveTarget.x - player.transform.x, this.moveTarget.z - player.transform.z);
-      if (distance <= .08) { this.moveTarget = null; frame.navigation = true; frame.move = { x: 0, z: 0 }; }
+      if (distance <= .08) { this.moveTarget = null; this.world.player?.locomotion.reset(); frame.navigation = true; frame.move = { x: 0, z: 0 }; }
       else this.walk(frame, this.moveTarget, distance);
     }
     if (raw.aimSource === 'assist' && combat && !this.attack) {
