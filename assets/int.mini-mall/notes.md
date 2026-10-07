@@ -25,3 +25,7 @@ LOD1/LOD2 use unbeveled source primitives and closed low-density rims.
 Small disconnected detail is culled by size; lettering is limited to the
 principal shop names in LOD1 and removed in LOD2. Each LOD has its own vertex AO.
 A high render via --view ref also writes a 960×540, 24-sample game view.
+
+## Art registration (2026-10-07)
+
+Measured delivered bounds (X/Y/Z, metres): 5.105, 3.9901, 13.49. Source, named pivots/sockets, palette, front marker and delivered tiers are validated by the production validator. Runtime status is integrated. Five-angle LOD contact evidence: `test-results/art-register/int.mini-mall/lod-contact.png`.

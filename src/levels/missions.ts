@@ -1,3 +1,4 @@
+import { levelThreeMission } from './L3/mission';
 import { dialogue } from '../data/dialogue';
 import type { DeviceKind } from '../sim/interact/Interactables';
 import type { DistrictId } from './districts/types';
@@ -9,6 +10,7 @@ export type MissionId = typeof missionIds[number];
 /** Campaign graph authoring, distinct from encounter tuning and bots owned by E19–E24.
  * Coordinates come from loaded district GLB anchors; no duplicate placement coordinates. */
 export function campaignMission(id: MissionId, resolve: (district: DistrictId, anchor: string) => Anchor): MissionDef {
+  if (id === 'L3') return levelThreeMission(resolve);
   const def: MissionDef = { id, briefing: dialogue[`${id}.briefing`], anchors: {}, actors: {}, groups: {}, gates: {}, items: [], states: [], counters: [], checkpoints: [], cinematics: {}, steps: [], finish: [], onStart: [{ kind: 'radio', id: `${id}.briefing` }], onComplete: [{ kind: 'cinematic', id: 'twist' }] };
   const anchor = (key: string, district: DistrictId, name: string) => { def.anchors[key] = resolve(district, name); return key; };
   const actor = (key: string, at: string, kind: string, hp = 100, boss = false) => {
@@ -75,14 +77,6 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       }
       const s = defend('board','Hold the buses while everyone boards',buses,bus,60); s.start = { kind: 'objectives', ids: ['escort-alvarez','escort-brother'], mode: 'all' }; end = s.id; break;
     }
-    case 'L3': {
-      const fuel = anchor('fuel','D-MAIN','fuel-shop-door'), market = anchor('market','D-SHOP','market-door'), park = anchor('park','D-PARK','arrival'), gate = anchor('camp','D-CIVIC','hospital-door');
-      const car = actor('sedan',fuel,'vehicle'); def.deadline = { seconds: 720, retryGraceSeconds: 60 };
-      interact('car','Get the sedan keys',fuel).onComplete = [{ kind: 'spawn', group: car }];
-      for (const [key, at] of [['market-route',market],['park-route',park]]) { const s = step(key,'drive',`Drive via ${key === 'market-route' ? 'the supermarket' : 'the park'}`,at,{ kind: 'drive', actor: car, anchor: at },['car']); s.choice = 'route'; }
-      const checkpointStep = reach('checkpoint','Clear the police checkpoint',anchor('checkpoint','D-CIVIC','checkpoint-door')); checkpointStep.start = { kind: 'objectives', ids: ['market-route','park-route'], mode: 'any' }; checkpoint(checkpointStep);
-      const s = reach('gates','Reach the Civic Center gates',gate); end = s.id; break;
-    }
     case 'L4': {
       const hub = anchor('hub','D-CIVIC','station-door'), substation = anchor('substation','D-EDGE','substation-door'), crossing = anchor('crossing','D-EDGE','arrival'), bridge = anchor('bridge','D-EDGE','exit');
       reach('hub','Meet the survivor group at the fire station',hub);
@@ -91,7 +85,7 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       def.items.push('fuse'); def.actors[fuseActor].item = 'fuse';
       const fuse = step('fuse','collect','Recover the fuse via the zoo',zoo,{ kind: 'items', ids: ['fuse'] },['hub']); fuse.onStart = [{ kind: 'spawn', group: fuseActor }];
       const lever = device('crossing','Raise the rail crossing gates',crossing,'lever',3,['fuse']); def.actors['device-crossing'].device!.requires = ['fuse']; checkpoint(lever);
-      const wreck = actor('blockade',bridge,'prop',180); def.actors[wreck].archetype = 'prop.barricade';
+      const wreck = actor('blockade',bridge,'barricade',180); def.actors[wreck].archetype = 'barricade.bridge-blockade';
       const blockade = step('blockade','custom','Clear the bridge wreck blockade',bridge,{ kind: 'destroy', actor: wreck },['hub']); blockade.onStart = [{ kind: 'spawn', group: wreck }]; checkpoint(blockade);
       end = reach('bridge','Return to the bridge',bridge,['breaker-3','crossing','blockade']).id; break;
     }

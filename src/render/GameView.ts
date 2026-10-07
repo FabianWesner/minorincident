@@ -1,3 +1,4 @@
+import { PropFixtureView } from './PropFixtureView';
 import { ContactShadows } from './ContactShadows';
 import { NpcView } from './npc/NpcView';
 import { lookViewpoints } from '../data/lookViewpoints';
@@ -13,6 +14,7 @@ import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
 import type { SurvivorState } from '../data/survivor';
 import { CharacterView } from './characters/CharacterView';
+import { useSkinnedCourier } from './characters/RiderContacts';
 import { BoxGeometry, Color, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial, type Material } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
@@ -29,7 +31,7 @@ import { Occlusion } from './Occlusion';
 import { PostFx } from './PostFx';
 import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
 import type { TimeOfDay } from '../data/timeOfDay';
-import { Vector3 } from 'three';
+import { Quaternion, Vector3 } from 'three';
 import { VehicleFeedback } from './vfx/VehicleFeedback';
 import { Vfx, type VfxSettings } from './vfx/Vfx';
 import { LabAccidentFx } from './vfx/labAccident';
@@ -42,6 +44,7 @@ import { InteractionView } from './InteractionView';
 import { EntityAssets } from './EntityAssets';
 import { loadMeasure } from '../assets/loadTiming';
 import { loadGate } from '../assets/loadGate';
+import { lodPolicy } from './lodPolicy';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 export class GameView implements Lifecycle {
@@ -58,6 +61,8 @@ export class GameView implements Lifecycle {
   contextLost = false;
   private lostRendererDisposal: Promise<void> | null = null;
   renderedFrames = 0;
+  updateCpuMs = 0;
+  renderCpuMs = 0;
   private readonly meshes: Mesh[] = [];
   private vehicles: VehicleView | null = null;
   private bicycle: BicycleView | null = null;
@@ -91,6 +96,8 @@ export class GameView implements Lifecycle {
   get frozen(): boolean { return this.frozenFrame !== null; }
   private generation = 0;
   private npcs: NpcView | null = null;
+  get propUploads(): number { return this.fixtureProps?.uploads ?? this.districts?.propUploads ?? 0; }
+  private fixtureProps: PropFixtureView | null = null;
   private interactions: InteractionView | null = null;
   private entityAssets: EntityAssets | null = null;
   vfx: Vfx | null = null;
@@ -102,6 +109,7 @@ export class GameView implements Lifecycle {
   private frozenStarted = -1;
   private frozenPose: SurvivorState | null = null;
   private destination: Mesh | null = null;
+  private readonly bikeOrientation = new Quaternion();
   private cube: Mesh | null = null;
   private character: CharacterView | null = null;
   private wireframe: PhysicsWireframe | null = null;
@@ -153,7 +161,7 @@ export class GameView implements Lifecycle {
     const changed = this.quality !== tier; this.quality = tier; this.resize();
     if (changed && this.postFx) { const enabled = this.postFx.bloomEnabled.value; this.postFx.dispose(); this.postFx = new PostFx(this.renderer, this.scene, this.camera, tier, this.look); this.postFx.bloomEnabled.value = enabled; this.postFx.setDof(this.dofEnabled); this.postFx.applyLook(); }
     this.lighting?.setQuality(tier); this.districts?.setQuality(tier);
-    this.vfx?.set({ quality: tier }); this.crowd?.setQuality(tier);
+    this.vfx?.set({ quality: tier }); this.crowd?.setQuality(tier); this.npcs?.setQuality(tier);
   }
   /** Three's WebGL fallback reports loss but does not rebuild its backend on restore.
    * Recreate renderer GPU state on the same canvas so touch/pointer listeners survive. */
@@ -184,20 +192,20 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', this.world.districts.composition.id === 'L1' ? 'courier' : 'survivor');
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', this.world.districts.composition.id === 'L1' ? 'courier' : 'survivor', useSkinnedCourier(this.params));
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
-      await Promise.all([this.districts.load(1), character, ...variants.map(variant => variant.load(1))]);
+      const initialFocus = this.world.scenario === 'L1' ? this.view.cameraTarget : undefined;
+      const heroAtSpawn = this.quality === 'high' && this.renderer.selectedBackend === 'webgl';
+      await Promise.all([this.districts.load(1, initialFocus, heroAtSpawn), character, ...variants.map(variant => variant.load(1, initialFocus, heroAtSpawn))]);
       loadMeasure('view:districts+character',t);
       if (this.world.scenario === 'L1') {
         this.preparedDistrictViews.set(this.world.districts, this.districts);
         for (const variant of variants) { variant.visible = false; this.preparedDistrictViews.set(variant.world, variant); this.scene.add(variant); }
-        // Close-view LOD0 prototypes (high tier only; the low tier never draws them). WebGPU streams
-        // them after the level is playable (startPreparation; measured hitch-free). On WebGL, ANGLE
-        // specializes each new batch on its first draw (~100 ms frames measured), so they stay in
-        // the loading screen and its warm-up, as before.
-        if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare())); loadMeasure('view:hero-lod0', p); }
-        else if (this.quality === 'high') this.pendingPreparation = { shared, instanceCapacity };
+        // WebGL warms the spawn's close-view LOD0 before play (ANGLE specializes first draws).
+        // The rest of the route and its unused LOD1 tier stream after the mission begins.
+        if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, lodPolicy.lod1From))); loadMeasure('view:hero-lod0', p); }
+        this.pendingPreparation = { shared, instanceCapacity };
       }
       this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
       this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
@@ -299,34 +307,39 @@ export class GameView implements Lifecycle {
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */
   private startActors(character: Promise<unknown>): Promise<unknown> {
-    if (this.world.npcs && this.materials) this.npcs = new NpcView(this.world, this.materials);
+    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials); this.npcs.setQuality(this.quality); }
     if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
     if (this.world.combat && this.character) this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer);
     if (this.character && this.world.combat) this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!);
+    if (this.world.props && !this.world.districts && this.materials) { this.fixtureProps = new PropFixtureView(this.world, this.materials); this.scene.add(this.fixtureProps); }
     if (this.world.interactables && this.materials) { this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); }
     if (this.world.vehicles?.cars.size && this.materials) this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low');
     if (this.world.vehicles?.bicycle.entity && this.materials) this.bicycle = new BicycleView(this.world, this.materials);
     const actions = this.actions;
     return Promise.all([this.npcs?.init(), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
   }
-  /** Deferred L1 work: the route's close-view LOD0 prototypes (high tier only; the low tier never
-   * draws them), nearest first, after the first playable frames. The load gate slices GLB parsing
+  /** Deferred L1 work: distant LOD0 and intermediate LOD1 on high, distant buildings' LOD1 on low,
+   * nearest first, after the first playable frames. The load gate slices GLB parsing
    * and static batching to one short step per frame, so streaming stays within the frame budget. */
   private startPreparation(): void {
     const pending = this.pendingPreparation, current = this.districts, generation = this.generation;
     this.pendingPreparation = null;
     if (!pending || !current) return;
-    const stale = () => generation !== this.generation || this.quality !== 'high';
+    const quality = this.quality;
+    const stale = () => generation !== this.generation || this.quality !== quality;
     const frame = () => new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
     this.preparation = (async () => {
       // Let the loading screen close and the first playable frames settle before streaming starts.
       for (let i = 0; i < 30; i++) await frame();
-      if (generation !== this.generation) return;
+      if (stale()) return;
+      // A preload may finish while a briefing is still open. Downloads start only after
+      // gameplay has advanced; test mode keeps readiness even with a paused sim.
+      while (this.world.missions?.state.phase === 'briefing' || this.playSeconds === 0 && this.params.get('test') !== '1') { await frame(); if (stale()) return; }
       loadGate.setPaced(true);
       for (const view of this.preparedDistrictViews.values()) { view.warmHero = batch => this.warmHidden(batch); view.swapSlot = () => this.swapSlot(); }
       const start = performance.now();
       // The decay variants follow: their swap at an objective transition then finds LOD0 batches ready.
-      if (this.quality === 'high') for (const view of [current, ...[...this.preparedDistrictViews.values()].filter(view => view !== current)]) { await view.prepare(this.view.cameraTarget, stale); if (stale()) break; }
+      for (const view of [current, ...[...this.preparedDistrictViews.values()].filter(view => view !== current)]) { await view.prepare(this.view.cameraTarget, stale); if (stale()) break; }
       if (!stale()) loadMeasure('view:background-preparation', start);
     })().catch(error => { if (generation === this.generation) console.error(error); });
   }
@@ -371,6 +384,8 @@ export class GameView implements Lifecycle {
   frame(seconds: number): void { const dt = Math.min(1, seconds); this.playSeconds += dt; this.vfx?.advance(dt); this.labAccident?.advance(dt); }
   /** Seconds of running play since the level loaded (menus/briefing/pause excluded). */
   private playSeconds = 0;
+  /** Network-only extras wait until the first playable frames have been presented. */
+  get backgroundReady(): boolean { return this.params.get('test') === '1' || !this.warming && !this.background && this.playSeconds > .25; }
   /** LOD0 swaps wait for the first seconds of play to pass (no hitch while the player starts moving),
    * then run one per frame through the load gate. */
   private async swapSlot(): Promise<void> {
@@ -399,6 +414,11 @@ export class GameView implements Lifecycle {
   }
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
+    if (this.world.scenario === 'L3' && ['l3-mainstreet-w2', 'l3-driving', 'l3-checkpoint', 'l3-safe-zone'].includes(name)) {
+      const anchors = this.world.missions!.def.anchors;
+      const target = name === 'l3-driving' ? this.world.entities.get(this.world.missions!.state.actors.sedan)?.transform ?? anchors.sedan : name === 'l3-mainstreet-w2' ? { x: anchors.sedan.x, z: anchors.sedan.z-6 } : anchors[name === 'l3-checkpoint' ? 'barrier' : 'camp'];
+      this.view.preset(name, { position: [target.x+20, 24, target.z+22], target: [target.x, .4, target.z] }); this.update(1); return;
+    }
     const reviewSpot = lookViewpoints.find(spot => spot.id === name);
     if (reviewSpot) {
       this.view.reset(reviewSpot); this.view.spot = name;
@@ -467,7 +487,7 @@ export class GameView implements Lifecycle {
   getState() {
     const materialInventory = new Map<string, { name: string; palette: boolean; plainLit: boolean; emissive: number }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial, plainLit: (material instanceof MeshLambertNodeMaterial || material instanceof MeshStandardMaterial) && !(material instanceof PaletteMaterial), emissive: material.userData.emissiveStrength ?? 0 }); });
-    return { quality: this.quality, pixelRatio: this.renderer.getPixelRatio(), postFx: this.postFx?.snapshot() ?? null, moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
+    return { bicycle: this.bicycle?.snapshot() ?? null, quality: this.quality, pixelRatio: this.renderer.getPixelRatio(), postFx: this.postFx?.snapshot() ?? null, moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
       npcs: this.npcs?.snapshot() ?? null,
       vehicles: [...(this.vehicles?.snapshot() ?? []), ...(this.vehicleFeedback?.getState() ?? []).map(v => ({ ...v, wheels: [], brake: 0, sirens: [], placeholder: true }))], entityAssets: this.entityAssets?.getState() ?? null, character: this.character?.getState() ?? null, crowd: this.crowd?.getState() ?? null, actions: this.actions?.getState() ?? null,
       vfx: this.vfx?.snapshot() ?? null, infected: this.crowd?.getGoreState() ?? [],
@@ -476,6 +496,7 @@ export class GameView implements Lifecycle {
   }
   private syncMission(): void {
     const mission = this.world.missions, cinematic = mission?.state.cinematic;
+    if (mission?.def.id === 'L3') this.districts?.setEmergencyPower(!mission.state.states.collapsed);
     if (cinematic && this.cinematicId !== cinematic.id) { this.cinematicId = cinematic.id; this.view.cinematic(mission!.def.cinematics[cinematic.id]); }
     else if (!cinematic && this.cinematicId) { this.cinematicId = null; this.view.follow(); }
     if (mission?.state.timeOfDay && this.lighting?.preset !== mission.state.timeOfDay) this.lighting?.set(mission.state.timeOfDay);
@@ -488,17 +509,21 @@ export class GameView implements Lifecycle {
       const target = this.world.controls.moveTarget; this.destination.visible = target != null;
       if (target) this.destination.position.set(target.x, .12, target.z);
     }
+    const profileStart = this.renderer.profile ? performance.now() : 0;
     this.syncMission();
     const current = this.world.entities.get(1)?.transform, previous = this.world.previousPlayer;
     const survivor = this.world.entities.get(1)?.survivor;
+    if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.scene.add(this.bicycle); }
+    this.bicycle?.update(this.camera); // Sample one bike frame for its saddle, lean and rider.
     if (this.character && current && survivor) {
       // Portrait hero readability supplements the seven-metre camera floor; collision stays in metres.
       this.character.scale.setScalar(this.camera.aspect < 1 ? 1.25 : 1);
       this.character.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha) - 0.7, lerp(previous?.z ?? current.z, current.z, alpha));
-      this.bicycle?.update(this.camera); // the saddle's world position below needs this frame's bike pose
       const from = previous?.yaw ?? current.yaw;
       const striking = !!survivor.attack && this.world.tick < survivor.attack.endsAt;
-      this.character.face(from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60, striking);
+      const riding = this.world.entities.get(1)?.riding;
+      const mountedFrame = riding !== undefined && this.bicycle?.frameOrientation(this.bikeOrientation);
+      this.character.face(mountedFrame ? current.yaw : from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60, striking, mountedFrame ? this.bikeOrientation : undefined);
       const stopped = this.vfx?.hitStop.active(this.vfx.time) ?? false;
       if (stopped && this.vfx!.hitStop.started !== this.frozenStarted && this.frozenPose) {
         this.frozenStarted = this.vfx!.hitStop.started; this.hitStopTick = this.world.tick;
@@ -508,12 +533,12 @@ export class GameView implements Lifecycle {
         this.frozenPose.checkpoint = checkpoint; Object.assign(checkpoint, survivor.checkpoint);
       }
       // E19 courier: the bicycle sim (lane F) marks the rider; the bike's crank/steer drive the pose.
-      const riding = (this.world.entities.get(1) as { riding?: number } | undefined)?.riding;
       const bike = riding === undefined ? undefined : (this.world.entities.get(riding) as { bicycle?: { pedal: number; steer: number } } | undefined)?.bicycle;
       this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
         riding === undefined ? undefined : { pedal: bike?.pedal ?? this.world.tick * .12, steer: bike?.steer ?? 0 });
       // Riding: the pelvis sits on the saddle, measured from the bike's `seat` node every frame (any heading, lean or turn).
-      if (riding !== undefined && this.bicycle?.seatWorld(this.seat)) {
+      if (this.character.skinActive) this.character.applyRideContacts(riding !== undefined ? this.bicycle?.riderContacts() : undefined);
+      else if (riding !== undefined && this.bicycle?.seatWorld(this.seat)) {
         this.character.seatPelvis(this.seat, -.04);
         if (this.bicycle.gripsWorld(this.gripL, this.gripR)) this.character.holdHandlebar(this.gripL, this.gripR);
       }
@@ -531,14 +556,13 @@ export class GameView implements Lifecycle {
     if (this.character) this.character.visible = !this.world.entities.get(1)?.hidden;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.vehicles); }
     this.vehicles?.update(alpha);
-    if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.scene.add(this.bicycle); }
-    this.bicycle?.update(this.camera);
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
     this.crowd?.update(this.view, alpha); this.contactShadows?.update(); this.actions?.update();
     this.entityAssets?.update();
     this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha);
     this.flashOverlay.style.opacity = String(Math.max(this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
+    this.fixtureProps?.update();
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
     this.lighting?.update(this.view); this.districts?.updateLods(this.view);
     this.districts?.cull(this.view, this.quality);
@@ -548,6 +572,9 @@ export class GameView implements Lifecycle {
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;
+    this.renderer.beginProfile(this.camera);
+    const renderStart = profileStart ? performance.now() : 0;
+    if (profileStart) this.updateCpuMs = renderStart - profileStart;
     if(this.foliageMask) {
       const backgroundNode=this.scene.backgroundNode; this.scene.backgroundNode=null;
       const background=this.scene.background, fog=this.scene.fog, shadow=this.renderer.shadowMap.enabled;
@@ -585,9 +612,13 @@ export class GameView implements Lifecycle {
       for (const [mesh, material] of this.savedMaterials) mesh.material = material;
       this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
+    if (profileStart) this.renderCpuMs = performance.now() - renderStart;
   }
   async ready(): Promise<void> {
     await this.warming;
+    // Once a test has begun the mission, snapshots/heap checks settle the same streamed
+    // residency on every load. A briefing snapshot waits only for its visible assets.
+    if (this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
   reset(): void {
@@ -599,6 +630,7 @@ export class GameView implements Lifecycle {
     if (this.vfx) { this.scene.remove(this.vfx); this.vfx.dispose(); this.vfx = null; }
     if (this.vehicleFeedback) { this.scene.remove(this.vehicleFeedback); this.vehicleFeedback.dispose(); this.vehicleFeedback = null; }
     this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;}
+    if (this.fixtureProps) { this.scene.remove(this.fixtureProps); this.fixtureProps.dispose(); this.fixtureProps = null; }
     if (this.interactions) { this.scene.remove(this.interactions); this.interactions.dispose(); this.interactions = null; }
     if (this.entityAssets) { this.scene.remove(this.entityAssets); this.entityAssets.dispose(); this.entityAssets = null; }
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }

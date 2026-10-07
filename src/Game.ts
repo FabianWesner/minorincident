@@ -1,3 +1,4 @@
+import { LevelThreeBot } from './debug/bot/LevelThreeBot';
 import { GameUI } from './ui/GameUI';
 import { CampaignUI } from './ui/CampaignUI';
 import { completePending,newCampaign, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
@@ -45,7 +46,7 @@ export class Game {
   readonly saves = new SaveStore({ getItem: key => localStorage.getItem(key), setItem: (key,value) => localStorage.setItem(key,value), removeItem: key => localStorage.removeItem(key) });
   campaignUI!: CampaignUI;
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
-  driver: Driver | null = null;
+  driver: Driver | LevelThreeBot | null = null;
   frameMs = 0;
   simMs = 0;
   private readonly spawnFrustum = new Matrix4();
@@ -55,6 +56,8 @@ export class Game {
   /** Level loaded behind the title/menus (load lane): consumed by the matching loadLevel. */
   private speculative: { id: string; seed: number } | null = null;
   private speculativeRunning = false;
+  /** A level pick may arrive before the menu preload finishes its layout/audio awaits. */
+  private preloadForeground = false;
   /** Boot-time sound bank load that runs after the title is shown; awaited before the next audio reset. */
   private audioLoad: Promise<void> = Promise.resolve();
   constructor(readonly params: URLSearchParams) {
@@ -68,6 +71,7 @@ export class Game {
       settingsChanged: patch => this.campaignSettings(patch),
       pause: () => { this.clock.pause(); this.ui?.pause(); }, resume: () => { this.ticker.reset(); this.clock.resume(); this.ui?.show(null); },
       release: () => { this.input.clear(); this.world.clearInput(); this.ticker.reset(); },
+      readyForBackground: () => !this.loading && this.view.backgroundReady,
       offscreen: (p) => { const q = this.view.project(p.x, p.y ?? 0.7, p.z); return Math.abs(q[0]) > 1 || Math.abs(q[1]) > 1 || q[2] > 1; },
       project: (p) => { const q = this.view.project(p.x, p.y ?? 0, p.z); return { x: (q[0] + 1) / 2, y: (1 - q[1]) / 2 }; },
     }, params));
@@ -112,7 +116,7 @@ export class Game {
     // While the player reads the menus, load the level they will most likely start (L1 for a new or
     // L1 campaign) behind the title; other levels only warm the HTTP cache.
     const next = `L${saved.status === 'ok' ? saved.save.unlockedLevel : 1}`;
-    if (this.params.get('test') !== '1') void this.audioLoad.then(() => next === 'L1' && this.params.get('preload') !== '0' ? (this.speculativeRunning = true, this.loadLevel('L1', { seed: Number(this.params.get('seed') ?? 1) }, undefined, true).catch(error => console.warn('Speculative L1 load failed', error)).finally(() => { this.speculativeRunning = false; })) : prefetchLevel(next));
+    if (this.params.get('test') !== '1') void this.audioLoad.then(() => this.preloadForeground ? undefined : next === 'L1' && this.params.get('preload') !== '0' ? (this.speculativeRunning = true, this.loadLevel('L1', { seed: Number(this.params.get('seed') ?? 1) }, undefined, true).catch(error => console.warn('Speculative L1 load failed', error)).finally(() => { this.speculativeRunning = false; })) : prefetchLevel(next));
   }
   /** Serialize native-world changes so overlapping API loads cannot leak resources. */
   loadScenario(name: string | null, seed = 1, deferAudio = false): Promise<void> {
@@ -134,7 +138,8 @@ export class Game {
   /** E10 composition plus E12 mission briefing; checkpoints restore reached state or reconstruct an authored graph prefix. */
   loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string;progression?:ProgressionPreset}, performanceScenario?: string, speculative = false):Promise<void>{
     // The player picked a level while one loads behind the menus: finish it at full speed.
-    if (!speculative && this.view.background) {
+    if (!speculative) {
+      this.preloadForeground = true;
       this.view.background = false; loadGate.background = false;
       // Still loading or warming: release the pacing; LOD0 streaming (after load) keeps its pacing.
       if (this.speculativeRunning || this.view.warming) loadGate.setPaced(false);
@@ -164,7 +169,7 @@ export class Game {
         const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(assetUrl(url));if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
         const data=loadMeasure('level:layouts',start);
         const cosmetic=this.world.entities.get(1)?.survivor;
-        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative; this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
+        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
@@ -260,9 +265,13 @@ export class Game {
     await this.view.ready();
     for (let i = 0; i < 2; i++) { await new Promise<void>((resolve) => requestAnimationFrame(() => resolve())); this.view.update(this.clock.paused ? 1 : this.clock.alpha); }
   }
+  /** Last-frame counters. With `?profile`, `profile` groups submitted geometry by
+   * crowd/buildings/props/other and non-view passes (shadows plus fullscreen FX).
+   * CPU timers cover presentation updates and renderer submission/driver waits;
+   * they are not GPU timer queries. Without profiling, the extra timers stay zero. */
   perf() {
     const info = this.view.renderer.info;
-    return { fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null };
+    return { profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null };
   }
   /** Debug-only synthetic GPU cost. It changes the quality observation, never sim time. */
   simulateFrameCost(ms: number): void { if (!Number.isFinite(ms) || ms < 0) throw new RangeError('Invalid frame cost'); this.simulatedFrameMs = ms; }

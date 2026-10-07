@@ -12,7 +12,10 @@ import { HordeClusters, type HordePoint } from './HordeClusters';
 import { AmbienceSchedule } from './AmbienceSchedule';
 import { StreamedMusic } from './StreamedMusic';
 import { l1v2 } from '../data/l1v2';
+import { humanInfected } from '../data/infected';
 import { L1ArcDirector, type ArcFrame } from './L1Arc';
+/** Recorded infected voice cues (alert, hurt, death) are human performances: animals keep their own telegraphs. */
+const voicedInfected = new Set(humanInfected.map(d => d.id));
 export interface AudioSettings {
     muted: boolean;
     captions: boolean;
@@ -34,6 +37,7 @@ export interface CueLog {
     variant: string;
 }
 interface AudioHost {
+    readyForBackground?(): boolean;
     settingsChanged?(patch:Partial<AudioSettings>):void;
     pause(): void;
     resume(): void;
@@ -88,6 +92,7 @@ export class AudioService implements Lifecycle {
     private disposed = false;
     private musicEpoch = 0;
     private started = false;
+    private starting = false;
     private quietMusicUntil = 0;
     private lastDamageTick = -1000;
     private lastDamage = 0;
@@ -133,7 +138,7 @@ export class AudioService implements Lifecycle {
         document.addEventListener('resume', this.thaw);
         this.context.addEventListener('statechange', this.statechange);
         this.mount();
-        await this.registry.prepare();
+        await this.registry.prepare('L1', false);
         if (this.context.state === 'running' && !this.unlocked)
             await this.context.suspend();
         if (document.hidden || !document.hasFocus())
@@ -149,7 +154,7 @@ export class AudioService implements Lifecycle {
         this.graph.map = fromDistricts(this.world.districts);
         this.registry.reset(this.world.seed);
         const generation = this.generation;
-        await this.registry.prepare(this.level);
+        await this.registry.prepare(this.level, false);
         // reset() or dispose() ran while the banks were loading: this world is gone, bind nothing.
         if (generation !== this.generation || this.disposed || !this.world.entities.get(1))
             return;
@@ -166,8 +171,6 @@ export class AudioService implements Lifecycle {
         this.startBedsAndMusic();
         if (this.background)
             this.host.pause();
-        // Lazy banks arrive in the background once the level is running.
-        setTimeout(() => { if (generation === this.generation && !this.disposed) void this.registry.preloadLazy(); }, 300);
     }
     /** Decay rebuilds presentation/acoustics in the same world; keep mission cues and score. */
     refreshAcoustics(): void {
@@ -444,11 +447,23 @@ export class AudioService implements Lifecycle {
             navigator.vibrate(kind === 'explosion' ? [40, 30, 80] : kind === 'crash' ? [60, 20, 40] : 35);
     }
     private startBedsAndMusic(): void {
-        if (!this.available() || this.started)
+        if (!this.available() || this.started || this.starting || this.host.readyForBackground?.() === false)
             return;
+        if (!this.registry.buffers.has('ambience') || !this.registry.buffers.has(`music-${this.level}`)) {
+            this.starting = true;
+            const generation = this.generation;
+            void Promise.all(['ambience', `music-${this.level}`].map(category => this.registry.load(category))).then(() => {
+                if (generation !== this.generation || this.disposed) return;
+                this.starting = false; this.startBedsAndMusic();
+            }).catch(error => { if (generation === this.generation) { this.starting = false; this.registry.errors.push(String(error)); } });
+            return;
+        }
         this.started = true;
         this.musicEpoch = this.context.currentTime + 0.02;
         this.music = new MusicDirector(this.level, this.musicEpoch);
+        // Long recordings and unused SFX banks must not compete with the level download.
+        const generation = this.generation;
+        setTimeout(() => { if (generation === this.generation && !this.disposed) void this.registry.preloadLazy(); }, 300);
         if (this.hasScore) void this.score.transition('calm', this.musicEpoch, this.musicEpoch, this.music.bar);
         for (const layer of musicLayers) {
             const v = this.play(`music.${this.level}.${layer}`, { time: this.musicEpoch, gain: 0, rate: 1, loop: true });
@@ -459,6 +474,7 @@ export class AudioService implements Lifecycle {
             this.loop(`bed:${bed}`, `bed.${bed}`, { gain: this.tier === 5 ? dbGain(-16) : 1 });
     }
     private musicIntensity(input: MusicIntensity): void {
+        if (!this.started) return;
         const t = this.context.currentTime;
         this.score.update();
         this.music.update(t, { ...input, incident: this.incident, complete: this.complete });
@@ -485,7 +501,7 @@ export class AudioService implements Lifecycle {
             this.play('stinger.twist', { time: at });
         }
         else
-            this.play(kind === 'extraction' && level === 'L6' ? 'stinger.dawn' : `stinger.${kind === 'extraction' ? 'complete' : kind}`);
+            this.play(kind === 'extraction' && level === 'L1' ? 'l1.outro.sting' : kind === 'extraction' && level === 'L6' ? 'stinger.dawn' : `stinger.${kind === 'extraction' ? 'complete' : kind}`);
     }
     /** Event → cue adapter. Real producer events and lab tests go through this identical path. */
     event(event: GameEvent): void {
@@ -499,8 +515,6 @@ export class AudioService implements Lifecycle {
             this.arc?.event(event.type, t);
             return;
         }
-        if (event.type === 'level.completed' && this.level === 'L1')
-            this.play('l1.outro.sting');
         if (event.type === 'sim.tick') {
             this.update();
             return;
@@ -703,6 +717,12 @@ export class AudioService implements Lifecycle {
         if (event.type === 'combat.hit' || event.type === 'combat.kill') {
             const target = this.world.entities.get(event.targetId);
             if (target?.faction === 'environment' || target?.vehicle) return;
+            if (target?.infected && voicedInfected.has(target.archetype)) {
+                if (event.type === 'combat.kill')
+                    this.play('infected.death', { position: target.transform }, target.id);
+                else if (event.amount > 0 && target.health.current > 0)
+                    this.play('infected.hurt', { position: target.transform }, target.id);
+            }
             if (event.type === 'combat.hit' && event.amount > 0 && event.damageType === 'melee') {
                 const weapon = event.actionId.split('.').at(-1)!;
                 const targetPosition = target?.transform ?? position;
@@ -715,8 +735,18 @@ export class AudioService implements Lifecycle {
                 this.ambienceDuckUntil = this.context.currentTime + 0.5;
             }
         }
-        if (event.type === 'infected.attack')
-            return; // close individual vocals are bounded by the horde manager
+        if (event.type === 'infected.attack') {
+            // Close individual vocals are bounded by the horde manager; a landed melee attack adds only the bite.
+            if (event.amount > 0 && !['barricade', 'prop-throw', 'explode'].includes(event.special))
+                this.play('infected.bite', { position: this.world.entities.get(event.targetId)?.transform ?? position }, source);
+            return;
+        }
+        if (event.type === 'ai.alerted') {
+            // One shared anti-spam key: a gunshot that alerts a whole street yields a few snarls, not a wall.
+            if (voicedInfected.has(this.world.entities.get(event.targetId)?.archetype ?? ''))
+                this.play('infected.alert', { position: event.position });
+            return;
+        }
         if (event.type === 'objective.started' && event.id !== 'breakfast') {
             this.incident = true;
             this.musicIntensity({ alerted: event.id === 'store-fight' ? 10 : 0 });
@@ -884,6 +914,7 @@ export class AudioService implements Lifecycle {
         this.clearRings();
         this.captionElement.hidden = true;
         this.started = false;
+        this.starting = false;
         this.loaded = false;
         this.scheduledTransition = null;
         this.externalIntensity = null;

@@ -32,21 +32,21 @@ import type { CameraPose } from "./View";
 import type { View } from './View';
 import { AmbientLife } from './AmbientLife';
 import { Foliage } from './Foliage';
-import { pickLod, type Lod } from './lodPolicy';
+import { pickLod, propLod, initialDistrictLods, type Lod } from './lodPolicy';
 import { seeThrough } from './SeeThrough';
 import type { PaletteToken } from '../data/palette';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
+// Repeated fence panels dominated V1 (109k faces in each view/shadow pass).
+// Preserve the adjacent panels; farther boards need their silhouette, not fine bevels.
+const privacyFenceLodPolicy = { lod1From: 6, lod2From: 45, hysteresis: 2 };
 
-/** Assets whose decimated LOD1/LOD2 show torn roofs or panels (asset QA 2026-10-07): their LOD1 band
- * uses LOD0 and their LOD2 band LOD1 until the LODs are regenerated - on the low tier (phones) only: the
- * high tier draws LOD0 within 8 m (lodPolicy), and loading these LOD0s up front cost ~1.6 s per L1 start. */
-const BROKEN_LOD1 = new Set(['bld.house-a', 'bld.house-c', 'bld.mainstreet-brick', 'bld.bus-stop', 'veh.suv-green', 'bld.gas-station']);
-interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; lit: boolean; loaded: boolean; bands: (Lod | undefined)[] }
+interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */
 export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
   readonly batches: InstancedGroup[] = [];
+  private readonly dressingBatches: InstancedGroup[] = [];
   readonly windows: Mesh[] = [];
   private readonly lodBatches: LodBatch[] = [];
   private readonly pending = new Map<LodBatch, Promise<void>>();
@@ -54,9 +54,11 @@ export class DistrictView extends Group {
   private readonly frustum = new Frustum();
   private readonly projection = new Matrix4();
   private readonly bounds = new Sphere(new Vector3(), 1);
+  private readonly viewPoint = new Vector3();
   private cameraPosition = [Infinity, Infinity, Infinity];
   private cameraRotation = [Infinity, Infinity, Infinity, Infinity];
   private cameraAspect = 0;
+  private cameraHeight = 0;
 
   private readonly grass: Grass[] = [];
   private readonly foliage: Foliage;
@@ -83,7 +85,7 @@ export class DistrictView extends Group {
     this.name = "sunset-grove";
     this.foliage = new Foliage(materials, phase); this.add(this.foliage); this.foliage.setQuality(low);
   }
-  async load(seed: number): Promise<void> {
+  async load(seed: number, focus?: { x: number; z: number }, heroAtSpawn = false): Promise<void> {
     this.phase.value = 0;
     if (this.world.composition.id === 'L1') { this.ambient = new AmbientLife(this.materials); this.add(this.ambient); }
     // Backdrop reaches beyond the camera far plane; it is scenery outside the bounded town.
@@ -104,9 +106,15 @@ export class DistrictView extends Group {
     }
     // Placement asset ids are known from the layout JSON: start their downloads now instead of
     // after each multi-megabyte layout GLB has arrived and been parsed.
-    for (const d of this.world.districts) for (const id of new Set(d.layout.placements.filter(p => p.minTier <= this.world.composition.tier && p.maxTier >= this.world.composition.tier).map(p => p.assetId))) {
-      this.registry.prefetch(id, 'lod1'); this.registry.prefetch(id, 'lod2');
+    const initialLods = new Map<string, Set<Lod>>();
+    for (const d of this.world.districts) for (const p of d.layout.placements) {
+      if (p.minTier > this.world.composition.tier || p.maxTier < this.world.composition.tier) continue;
+      const distance = focus ? Math.hypot(p.position[0] + d.origin[0] - focus.x, p.position[2] + d.origin[1] - focus.z) : 0;
+      const lods = initialLods.get(p.assetId) ?? new Set<Lod>();
+      for (const lod of initialDistrictLods(this.low, worldAssets[p.assetId]?.category === 'prop', distance, focus !== undefined, heroAtSpawn)) lods.add(lod);
+      initialLods.set(p.assetId, lods);
     }
+    for (const [id, lods] of initialLods) for (const lod of lods) this.registry.prefetch(id, lod);
     await Promise.all(
       this.world.districts.map(async (d) => {
         const root = new Group();
@@ -157,23 +165,41 @@ export class DistrictView extends Group {
           if (!references.has(key)) references.set(key, []);
           references.get(key)!.push(reference);
         });
+        // L3 authors parking and emergency dressing in its loaded layout. Its
+        // references must use those positions, rather than the unchanged baked GLB.
+        if (this.world.composition.id === 'L3') {
+          references.clear();
+          for (const p of d.decay.placements) {
+            const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}`;
+            const reference = new Object3D(); reference.position.fromArray(p.position); reference.rotation.y = p.yaw; reference.scale.fromArray(p.scale);
+            if (p.tint) reference.userData.tint = p.tint;
+            if (!references.has(key)) references.set(key, []);
+            references.get(key)!.push(reference);
+          }
+        }
         for (const [colors, refs] of crowns) this.foliage.addCrowns(refs, crownTokens.get(colors) ?? ['foliageDark', 'foliageLight'], d.origin);
         await Promise.all(
           [...references].map(async ([key, refs]) => {
             const [id, power] = key.split(":");
-            const prototypes = await Promise.all((BROKEN_LOD1.has(id) && this.low ? ['lod0', 'lod0', 'lod1'] : ['lod1', 'lod1', 'lod2']).map(lod => this.registry.asset(id, power === 'true', lod as 'lod0' | 'lod1' | 'lod2')));
+            if (!worldAssets[id]) {
+              const prototype = await this.registry.asset(id, power === 'true', 'lod0');
+              const batch = new InstancedGroup(prototype, refs); this.dressingBatches.push(batch); root.add(batch); return;
+            }
+            const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;
+            const farLoaded = initialLods.get(id)?.has('lod2') ?? true;
+            const prototypes = await Promise.all([nearLoaded ? 'lod1' : 'lod2', farLoaded ? 'lod2' : 'lod1'].map(lod => this.registry.asset(id, power === 'true', lod as 'lod1' | 'lod2')));
             // L1 uses the shared vertex-attribute instancing path; live counts stay
             // unchanged while shader code no longer depends on placement capacity.
             const capacity = Math.max(refs.length, this.instanceCapacity ?? refs.length);
-            const hero = new InstancedGroup(prototypes[0], refs.slice(), capacity), near = new InstancedGroup(prototypes[1], refs.slice(), capacity), far = new InstancedGroup(prototypes[2], refs.slice(), capacity);
+            const hero = new InstancedGroup(prototypes[0], refs.slice(), capacity), near = new InstancedGroup(prototypes[0], refs.slice(), capacity), far = new InstancedGroup(prototypes[1], refs.slice(), capacity);
             // Distant low-tier props keep their shaded production art without a shadow draw.
             if (this.low) far.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
             for (const batch of [hero, near, far]) {
               batch.name = `inst:${id}`; this.batches.push(batch); root.add(batch);
               batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
             }
-            const dimensions = new Box3().setFromObject(prototypes[1]).getSize(new Vector3());
-            this.lodBatches.push({ hero, near, far, refs, id, lit: power === 'true', loaded: false, bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
+            const dimensions = new Box3().setFromObject(prototypes[0]).getSize(new Vector3());
+            this.lodBatches.push({ hero, near, far, refs, id, lit: power === 'true', loaded: false, nearLoaded, farLoaded, bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
           }),
         );
         // Dynamic nav-blockers use the same positions/extents as their Rapier colliders.
@@ -285,6 +311,13 @@ export class DistrictView extends Group {
       if (node instanceof Mesh) { node.userData.qualityCastShadow ??= node.castShadow; node.castShadow = tier === 'high' && node.userData.qualityCastShadow; }
     });
   }
+  /** L3 collapse extinguishes Civic emissives; ordinary checkpoint restore powers them again. */
+  setEmergencyPower(powered: boolean): void {
+    const root = this.children.find(child => child.name === 'D-CIVIC');
+    root?.traverse(node => {
+      if (node instanceof Mesh && !Array.isArray(node.material) && (node.name === 'window-light' || node.material.name.startsWith('emi_'))) node.visible = powered;
+    });
+  }
   setFoliageReveal(enabled: boolean): void { this.foliage.reveal = enabled; }
   updateFoliage(view: View, player?: { x: number; y: number; z: number }, target?: { x: number; y: number; z: number }): void {
     this.foliage.update(view, player, target); if (player) this.updateRoofs(player);
@@ -350,11 +383,11 @@ export class DistrictView extends Group {
     const p = view.camera.position;
     const rotation = view.camera.quaternion.toArray();
     if (Math.hypot(p.x - this.cameraPosition[0], p.y - this.cameraPosition[1], p.z - this.cameraPosition[2]) < .5
-      && rotation.every((value, i) => Math.abs(value - this.cameraRotation[i]) < .0001) && this.cameraAspect === view.camera.aspect) {
+      && rotation.every((value, i) => Math.abs(value - this.cameraRotation[i]) < .0001) && this.cameraAspect === view.camera.aspect && this.cameraHeight === view.viewportHeight) {
       for (const entry of this.dirtyEntries) this.partition(entry, view);
       this.dirtyEntries.clear(); return;
     }
-    this.cameraPosition = p.toArray(); this.cameraRotation = rotation; this.cameraAspect = view.camera.aspect;
+    this.cameraPosition = p.toArray(); this.cameraRotation = rotation; this.cameraAspect = view.camera.aspect; this.cameraHeight = view.viewportHeight;
     this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     for (const entry of this.lodBatches) this.partition(entry, view);
     this.dirtyEntries.clear();
@@ -366,13 +399,20 @@ export class DistrictView extends Group {
     for (const [index, ref] of refs.entries()) {
       if (foliage && index >= Math.ceil(refs.length * this.materials.look.values.foliageDensity)) continue;
       const x = ref.position.x + origin[0], z = ref.position.z + origin[1];
-      this.bounds.center.set(x, ref.position.y + height / 2, z); this.bounds.radius = radius;
+      this.bounds.center.set(x, ref.position.y + height * ref.scale.y / 2, z); this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
       if (!this.frustum.intersectsSphere(this.bounds)) continue;
       const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
-      // Small props cover fewer pixels: scale their detail radius by the model bounds.
-      // High tier retains nearby hero detail with hysteresis; low tier keeps its measured budget.
+      // Bound detail by distance and projected size; preserve the independent low-tier policy.
       const detailDistance = distance / (worldAssets[entry.id].category === 'prop' ? Math.min(1, radius / 5) : 1);
-      const band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' ? 'lod2' : 'lod1') : pickLod(detailDistance, entry.bands[index]);
+      let band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' ? 'lod2' : 'lod1') : pickLod(detailDistance, entry.bands[index], entry.id === 'prop.privacy-fence' ? privacyFenceLodPolicy : undefined);
+      if (!this.low && !foliage && worldAssets[entry.id].category === 'prop') {
+        const size = worldAssets[entry.id].dimensions;
+        const extent = Math.max(size.x * ref.scale.x, size.y * ref.scale.y, size.z * ref.scale.z);
+        this.viewPoint.copy(this.bounds.center).applyMatrix4(view.camera.matrixWorldInverse);
+        const pixels = extent * view.camera.projectionMatrix.elements[5] * view.viewportHeight / (2 * Math.max(.1, -this.viewPoint.z));
+        const screenBand = propLod(pixels, entry.bands[index]);
+        if (screenBand > band) band = screenBand;
+      }
       entry.bands[index] = band;
       (band === 'lod2' ? far : band === 'lod1' ? near : hero).references.push(ref);
     }
@@ -389,14 +429,22 @@ export class DistrictView extends Group {
    * only batches whose props actually moved are re-partitioned (on the next updateLods). */
   private readonly propLinks = new Map<string, { ref: Object3D; entry: LodBatch } | null>();
   private readonly dirtyEntries = new Set<LodBatch>();
+  propUploads = 0;
   syncProps(items: readonly PushProp[]): void {
+    this.propUploads = 0;
     for (const item of items) {
       let link = this.propLinks.get(item.id);
       if (link === undefined) { link = this.linkProp(item); this.propLinks.set(item.id, link); }
       if (!link) continue;
-      const { ref, entry } = link, [px, py, pz] = item.pose.p, q = item.pose.q, x = px - entry.origin[0], z = pz - entry.origin[1];
-      if (Math.abs(ref.position.x - x) < 1e-4 && Math.abs(ref.position.y - py) < 1e-4 && Math.abs(ref.position.z - z) < 1e-4
+      const { ref, entry } = link;
+      const enabled = item.body.isEnabled(), visibilityChanged = ref.userData.propEnabled !== enabled;
+      if (ref.userData.propScale === undefined) ref.userData.propScale = ref.scale.toArray();
+      ref.userData.propEnabled = enabled;
+      ref.scale.fromArray(ref.userData.propScale).multiplyScalar(enabled ? 1 : 0);
+      const [px, py, pz] = item.pose.p, q = item.pose.q, x = px - entry.origin[0], z = pz - entry.origin[1];
+      if (!visibilityChanged && Math.abs(ref.position.x - x) < 1e-4 && Math.abs(ref.position.y - py) < 1e-4 && Math.abs(ref.position.z - z) < 1e-4
         && Math.abs(ref.quaternion.x - q[0]) < 1e-5 && Math.abs(ref.quaternion.y - q[1]) < 1e-5 && Math.abs(ref.quaternion.z - q[2]) < 1e-5 && Math.abs(ref.quaternion.w - q[3]) < 1e-5) continue;
+      this.propUploads++;
       ref.position.set(x, py, z); ref.quaternion.set(q[0], q[1], q[2], q[3]); this.dirtyEntries.add(entry);
     }
   }
@@ -408,19 +456,20 @@ export class DistrictView extends Group {
     }
     return best;
   }
-  /** Set while the level is playable: prepares a new LOD0 batch's GPU programs and buffers off-screen
-   * (asynchronously) before it replaces the LOD1 hero batch, so the swap does not upload on a frame. */
+  /** Set while the level is playable: prepares a streamed batch's GPU programs and buffers
+   * off-screen before replacing its temporary lower-detail batch. */
   warmHero: ((batch: InstancedGroup) => Promise<void>) | null = null;
   /** Set with warmHero: resolves when a swap may happen (after the first seconds of play, one per frame). */
   swapSlot: (() => Promise<void>) | null = null;
-  private async loadHero(entry: LodBatch): Promise<void> {
-    const prototype = await this.registry.asset(entry.id, entry.lit, 'lod0');
+  private async loadHero(entry: LodBatch, lod: Lod = 'lod0'): Promise<void> {
+    const prototype = await this.registry.asset(entry.id, entry.lit, lod);
     if (this.disposed) return;
     // Allocate full placement capacity, then retain only currently visible refs.
-    const replacement = new InstancedGroup(prototype, entry.refs.slice(), entry.hero.capacity);
+    const old = lod === 'lod0' ? entry.hero : lod === 'lod1' ? entry.near : entry.far;
+    const replacement = new InstancedGroup(prototype, entry.refs.slice(), old.capacity);
+    if (this.low && lod === 'lod2') replacement.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
     if (this.warmHero) { await this.warmHero(replacement); if (this.disposed) { replacement.dispose(); return; } }
     if (this.swapSlot) { await this.swapSlot(); if (this.disposed) { replacement.dispose(); return; } }
-    const old = entry.hero;
     replacement.references.splice(0, replacement.references.length, ...old.references);
     replacement.visible = old.visible; replacement.name = old.name;
     for (const child of replacement.children) if (child instanceof InstancedMesh) child.count = replacement.references.length;
@@ -428,21 +477,29 @@ export class DistrictView extends Group {
     old.parent!.add(replacement);
     old.traverse(node => { const index = this.windows.indexOf(node as Mesh); if (index !== -1) this.windows.splice(index, 1); });
     replacement.traverse(node => { if (node instanceof Mesh && node.name === 'window-light') this.windows.push(node); });
-    this.batches[this.batches.indexOf(old)] = replacement; entry.hero = replacement; entry.loaded = true;
+    this.batches[this.batches.indexOf(old)] = replacement;
+    if (lod === 'lod0') { entry.hero = replacement; entry.loaded = true; }
+    else if (lod === 'lod1') { entry.near = replacement; entry.nearLoaded = true; }
+    else { entry.far = replacement; entry.farLoaded = true; }
     old.removeFromParent(); old.dispose();
   }
-  /** Make the route's detailed close-view prototypes resident. With a focus, nearest placements
-   * load first through a small download window (background streaming after the level started). */
-  async prepare(focus?: { x: number; z: number }, cancelled = () => false): Promise<void> {
+  /** Make the route's close tier resident (LOD0 high, LOD1 low). Props never need LOD1 on low.
+   * With a focus, nearest placements load first through a small background download window. */
+  async prepare(focus?: { x: number; z: number }, cancelled = () => false, maximumDistance = Infinity): Promise<void> {
     await this.ready();
-    const entries = this.lodBatches.filter(entry => !entry.loaded);
-    if (!focus) { await Promise.all(entries.map(entry => this.loadHero(entry))); return; }
+    const lod = this.low ? 'lod1' : 'lod0';
+    const entries = this.lodBatches.filter(entry => this.low ? !entry.farLoaded || !entry.nearLoaded && worldAssets[entry.id].category !== 'prop' : !entry.loaded || !entry.nearLoaded && maximumDistance === Infinity);
+    if (!focus) { await Promise.all(entries.map(entry => this.loadHero(entry, lod))); return; }
     const distance = (entry: LodBatch) => Math.min(...entry.refs.map(ref => Math.hypot(ref.position.x + entry.origin[0] - focus.x, ref.position.z + entry.origin[1] - focus.z)));
-    const queue = entries.map(entry => ({ entry, distance: distance(entry) })).sort((a, b) => a.distance - b.distance).map(({ entry }) => entry);
+    const queue = entries.map(entry => ({ entry, distance: distance(entry) })).filter(item => item.distance <= maximumDistance).sort((a, b) => a.distance - b.distance).map(({ entry }) => entry);
     const worker = async () => {
       for (let entry = queue.shift(); entry && !cancelled() && !this.disposed; entry = queue.shift()) {
-        if (entry.loaded) continue;
-        const pending = this.pending.get(entry) ?? this.loadHero(entry);
+        await this.pending.get(entry);
+        const pending = (async () => {
+          if (!entry.nearLoaded && maximumDistance === Infinity) await this.loadHero(entry, 'lod1');
+          if (!entry.farLoaded) await this.loadHero(entry, 'lod2');
+          if (lod === 'lod0' && !entry.loaded) await this.loadHero(entry);
+        })();
         this.pending.set(entry, pending); await pending.finally(() => this.pending.delete(entry));
       }
     };
@@ -492,6 +549,7 @@ export class DistrictView extends Group {
     this.ambient?.dispose();
     this.foliage.dispose();
     for (const b of this.batches) b.dispose();
+    for (const b of this.dressingBatches) b.dispose(); this.dressingBatches.length = 0;
     for (const g of this.grass) g.dispose();
     for (const g of this.ownedGeometry) g.dispose();
     for (const m of this.ownedMaterials) m.dispose();

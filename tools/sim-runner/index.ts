@@ -12,7 +12,7 @@ import { stateHash } from '../../src/sim/world/stateHash';
 const { values } = parseArgs({ options: {
   scenario: { type: 'string', default: 'empty' }, ticks: { type: 'string' },
   seed: { type: 'string', default: '1' }, out: { type: 'string' },
-  level: { type: 'string' }, policy: { type: 'string', default: 'complete' }, seeds: { type: 'string', default: '1' }, 'completion-only': { type: 'boolean', default: false },
+  route: { type: 'string' }, level: { type: 'string' }, policy: { type: 'string', default: 'complete' }, seeds: { type: 'string', default: '1' }, 'completion-only': { type: 'boolean', default: false },
 } });
 const ticks = Number(values.ticks ?? '600'), seed = Number(values.seed);
 if (!Number.isSafeInteger(ticks) || ticks < 0 || !Number.isSafeInteger(seed)) throw new RangeError('Ticks must be nonnegative and seed an integer');
@@ -21,9 +21,10 @@ if (values.level) {
   if (!['complete', 'newbie'].includes(values.policy!)) throw new RangeError('Policy must be complete or newbie');
   const seeds = Number(values.seeds);
   if (!Number.isSafeInteger(seeds) || seeds <= 0 || !Number.isSafeInteger(seed + seeds - 1)) throw new RangeError('Seeds must be a positive integer');
+  if (values.route && !['market', 'park'].includes(values.route)) throw new RangeError('Route must be market or park');
   const reports = [];
   for (const level of values.level === 'all' ? missionIds : [values.level as MissionId]) for (let i = 0; i < seeds; i++) {
-    const report = await runLevel(level, values.policy as CompletionPolicy, seed + i, values.ticks === undefined ? 1200 : ticks / 60);
+    const report = await runLevel(level, values.policy as CompletionPolicy, seed + i, values.ticks === undefined ? 1200 : ticks / 60, values.route as 'market' | 'park' | undefined);
     reports.push(report);
     console.log(JSON.stringify({ level, seed: seed + i, completed: report.completed, time: report.time, deaths: report.deaths, outcome: report.outcome, furthestObjective: report.furthestObjective }));
   }

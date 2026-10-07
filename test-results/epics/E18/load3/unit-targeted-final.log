@@ -1,0 +1,26 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/load3
+
+ ❯ tests/unit/assets/courier-bike.test.ts (3 tests | 1 failed) 53ms
+   × courier bike riding retracts the stand and aligns the saddle with the rider 14ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/assets/courier-bike.test.ts > courier bike riding retracts the stand and aligns the saddle with the rider
+AssertionError: expected -0.38999998569488525 to be close to +0, received difference is 0.38999998569488525, but expected 5e-7
+ ❯ tests/unit/assets/courier-bike.test.ts:82:78
+     80|     view.updateMatrixWorld(true);
+     81|     expect(model.getObjectByName('kickstand')!.rotation.z).toBeCloseTo…
+     82|     expect(model.getObjectByName('seat')!.getWorldPosition(new Vector3…
+       |                                                                              ^
+     83|     expect(model.getObjectByName('wheel_front')!.getWorldPosition(new …
+     84|     bicycle.mounted = false; view.update();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  1 failed | 15 passed (16)
+   Start at  12:22:07
+   Duration  1.01s (transform 42%, tests 30%, import 26%, worker 1%)
+

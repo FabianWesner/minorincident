@@ -1,11 +1,15 @@
-import { Box3, BoxGeometry, Camera, Group, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
+import { Box3, BoxGeometry, Camera, Group, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, Quaternion, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
 import '../render/interaction.css';
 import { AssetRegistry } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
+import { RiderContacts } from './characters/RiderContacts';
+import { bicycleGeometry } from '../data/bicycleGeometry';
+import { bicycleHandling } from '../data/vehicles';
+import { l1v2 } from '../data/l1v2';
 
 /** The delivered cargo bike is courier-sized (2.8 m); the game courier is chibi (1.4 m), so the bike is drawn at toy scale: saddle at the hips, cargo box below the rider's chest. */
-const ASSET = 'veh.courier-bike', WHEEL_R = { F: .335, R: .405 }, SCALE = .6;
+const ASSET = 'veh.courier-bike', WHEEL_R = { F: .335, R: .405 }, SCALE = bicycleGeometry.scale;
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 /** Code placeholder with the animated-node contract (wheelF/R, handlebar, crank, pedals) until the production GLB is registered. */
 function bicyclePlaceholder(): Group {
@@ -78,6 +82,38 @@ export class BicycleView extends Group {
     const rig = this.rig; if (!rig?.seat) return false;
     rig.root.updateMatrixWorld(true); rig.seat.getWorldPosition(out); return true;
   }
+  private readonly contacts = new RiderContacts();
+  frameOrientation(out: Quaternion): boolean {
+    if (!this.rig) return false;
+    this.rig.root.updateMatrixWorld(true); this.rig.lean.getWorldQuaternion(out); return true;
+  }
+  snapshot() {
+    const rig = this.rig; if (!rig) return null;
+    rig.root.updateMatrixWorld(true);
+    const wheels = [rig.wheelR, rig.wheelF].map((wheel, i) => {
+      const p = wheel?.getWorldPosition(new Vector3()); if (!p) return null;
+      p.y -= (i === 0 ? WHEEL_R.R : WHEEL_R.F) * SCALE; return p.toArray();
+    });
+    return { position: rig.root.position.toArray(), orientation: rig.lean.getWorldQuaternion(new Quaternion()).toArray(), seat: rig.seat?.getWorldPosition(new Vector3()).toArray() ?? null, wheels };
+  }
+  private riderNodes: { handL: Object3D; handR: Object3D; footL: Object3D; footR: Object3D } | undefined;
+  /** Sample the model's named attachment nodes after its crank/steer/lean update.
+   * No anatomy or saddle coordinates are duplicated in the rider. */
+  riderContacts(): RiderContacts | undefined {
+    const rig = this.rig; if (!rig) return;
+    if (!this.riderNodes) {
+      const left = rig.model.getObjectByName('grip_l'), right = rig.model.getObjectByName('grip_r');
+      const pedalL = rig.model.getObjectByName('pedal_l'), pedalR = rig.model.getObjectByName('pedal_r');
+      if (!left || !right || !pedalL || !pedalR) return;
+      this.riderNodes = { handL: left, handR: right, footL: pedalL, footR: pedalR };
+    }
+    if (!rig.seat) return;
+    rig.root.updateMatrixWorld(true);
+    rig.seat.getWorldPosition(this.contacts.seat);
+    for (const name of ['handL', 'handR', 'footL', 'footR'] as const) this.riderNodes[name].getWorldPosition(this.contacts[name]);
+    rig.lean.getWorldQuaternion(this.contacts.orientation);
+    return this.contacts;
+  }
   /** Authored palm contact points follow the handlebar's steering and frame lean. */
   gripsWorld(left: Vector3, right: Vector3): boolean {
     const rig = this.rig, l = rig?.model.getObjectByName('grip_l'), r = rig?.model.getObjectByName('grip_r');
@@ -92,19 +128,20 @@ export class BicycleView extends Group {
     if (!this.rig) { void this.build(); return; }
     const rig = this.rig, b = bike.bicycle, t = bike.transform;
     rig.model.position.x = b.mounted ? rig.offset : 0;
-    const ground = b.mounted ? (this.world.entities.get(1)?.transform.y ?? .705) - .705 : 0; // ride over curbs and steps with the rider
+    const ground = t.y;
     rig.root.visible = true; rig.root.position.set(t.x, Math.max(0, ground), t.z); rig.root.rotation.y = t.yaw;
     if (rig.last) { const d = Math.hypot(t.x - rig.last.x, t.z - rig.last.z); rig.wheelAngle += d; }
     rig.last = { x: t.x, z: t.z };
-    if (rig.wheelF) { rig.wheelF.rotation.z = -rig.wheelAngle / (WHEEL_R.F * SCALE); rig.wheelF.rotation.y = b.steer * .4; }
+    const steering = b.steer * bicycleHandling.maxSteering / (1 + b.speed / l1v2.bicycle.speedMs);
+    if (rig.wheelF) { rig.wheelF.rotation.z = -rig.wheelAngle / (WHEEL_R.F * SCALE); rig.wheelF.rotation.y = -steering; }
     if (rig.wheelR) rig.wheelR.rotation.z = -rig.wheelAngle / (WHEEL_R.R * SCALE);
-    if (rig.handlebar) rig.handlebar.rotation.y = b.steer * .5;
+    if (rig.handlebar) rig.handlebar.rotation.y = -steering;
     if (rig.crank) { rig.crank.rotation.z = -b.pedal; for (const p of rig.pedals) p.rotation.z = b.pedal; }
     // Toy feel: lean into the turn and bob slightly with every pedal stroke while riding.
     const riding = b.mounted, speed = b.speed / 7.5;
     // Kickstand folds up while riding and is down when parked (`kickstand` node of the rebuilt model; absent on the old one).
     rig.kick = riding ? lerp(rig.kick, 1, .2) : 0; if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * Math.PI / 2;
-    rig.leanAngle = lerp(rig.leanAngle, riding ? -b.steer * speed * .32 : 0, .2);
+    rig.leanAngle = riding ? b.lean ?? 0 : 0;
     rig.lean.rotation.x = rig.leanAngle; rig.lean.position.y = riding ? Math.abs(Math.sin(b.pedal * 2)) * .012 * speed : 0;
     // Parcel in the cargo box: she carries it (sim `survivor.carrying`) and is riding; it drops in over ~0.35 s.
     const carrying = !!this.world.entities.get(1)?.survivor?.carrying;
@@ -117,5 +154,14 @@ export class BicycleView extends Group {
     const near = !riding && dist <= 1.6 && !!camera; this.prompt.hidden = !near;
     if (near && camera) { this.projection.set(t.x, 1.9, t.z).project(camera); this.prompt.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.prompt.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`; }
   }
-  dispose(): void { this.prompt.remove(); this.disposed = true; this.clear(); this.rig = null; void this.registry.dispose(); }
+  dispose(): void {
+    this.prompt.remove(); this.disposed = true;
+    if (this.rig) {
+      const roots = [this.rig.parcel, this.rig.glint, ...(this.rig.model.userData.placeholder ? [this.rig.model] : [])];
+      const materials = new Set<MeshBasicNodeMaterial>();
+      for (const root of roots) root.traverse(node => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) materials.add(material as MeshBasicNodeMaterial); } });
+      for (const material of materials) material.dispose();
+    }
+    this.clear(); this.rig = null; void this.registry.dispose();
+  }
 }

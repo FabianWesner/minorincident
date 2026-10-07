@@ -130,3 +130,5 @@ For five-angle side-by-side LOD0/1/2 sheets using shipped geometry:
 `E2E_PORT=3349 sh tools/e2e-lock.sh npm run assets:turntable -- <id>,<id> --lod-contact --output test-results/asset-fix-2`
 Each asset gets `<output>/<id>/lod-contact.png`. This mode needs no reference
 image, fails on placeholders, and uses one headless Chromium process with Metal.
+
+Art registration wave 0 documents the current inventory in `art-register-triage.md`, missing models/compositions in `missing-models.md`, and retained distance budgets in `art-register-lod-budgets.md`. Cheap meshes (up to 3k triangles), side props (up to 12k), and handheld/pickup models (up to 6k) may retain complete geometry; dense unexceptioned meshes still use ratio budgets. Independently articulated models have a 4k triangle floor. Vehicle/house distance caps remain absolute. Delivery sizes use 1500/300 KiB, matching `fileKB`. Only native road/house tiers require decreasing bytes, because other authored material/normal streams can grow independently of triangles.

@@ -1,21 +1,16 @@
-/** PO finding #15 (folio-2025 Objects.js style): small street/garden props are dynamic Rapier bodies the
- * courier and running infected shove aside. Mass in kg (spec 07 light class, the big blue drop box a bit
- * heavier). Everything else (cars, dumpsters, benches, lamps, fences, hydrants, sign rows) stays static. */
-export const pushableProps: Readonly<Record<string, { mass: number }>> = {
-  'prop.trash-bin': { mass: 14 },
-  'prop.recycling-bin': { mass: 10 },
-  'prop.traffic-cone': { mass: 3 },
-  'prop.crates': { mass: 12 },
-  'prop.lawn-chair-a': { mass: 5 },
-  'prop.lawn-chair-b': { mass: 5 },
-  'prop.folding-chair': { mass: 4 },
-  'prop.broken-chair': { mass: 4 },
-  'prop.gnome': { mass: 4 },
-  'prop.flamingo': { mass: 2 },
-  'prop.trash-bags': { mass: 8 },
-  'prop.wheelbarrow': { mass: 14 },
-  'prop.hose-reel': { mass: 6 },
-  'prop.bbq': { mass: 18 },
-  'prop.mailbox-blue': { mass: 25 },
-  'prop.shopping-cart': { mass: 20 },
-};
+import records from './physicsAssets';
+import type { Aabb } from '../levels/districts/types';
+/** Authored GLB ss_physics, baked by tools/assets/physics-metadata.ts during layout builds.
+ * No renderer or asynchronous asset load participates in deterministic simulation. */
+export interface PhysicsAsset {
+  class: 'light' | 'medium' | 'heavy' | 'fixed'; mass: number;
+  friction?: number; restitution?: number; centerOfMass?: number[];
+  pushable?: boolean; kickable?: boolean; barricadeValue?: number; barricadeHP?: number;
+  breakable?: { hp: number; debrisSet?: string }; flammable?: boolean; burnTime?: number;
+  explosive?: unknown; sounds?: string; reset?: 'remove' | 'spawn';
+  boxes: Aabb[]; source: string; hash: string;
+}
+export const physicsAssets = records as unknown as Readonly<Record<string, PhysicsAsset>>;
+/** Only movable environment props enter Rapier; vehicles, pickups and fixed objects retain their own systems. */
+export const pushableProps: Readonly<Record<string, PhysicsAsset>> = Object.fromEntries(Object.entries(physicsAssets)
+  .filter(([id, p]) => (id.startsWith('prop.') || id.startsWith('haz.')) && p.pushable && p.class !== 'fixed' && p.mass > 0 && p.boxes.length));

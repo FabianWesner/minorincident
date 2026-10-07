@@ -1,16 +1,17 @@
 {
   "config": {
     "argv": [
-      "/Users/fabianwesner/Library/Application Support/Herd/config/nvm/versions/node/v22.22.2/bin/node",
-      "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/node_modules/.bin/playwright",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/node_modules/.bin/playwright",
       "test",
       "tests/perf/e18-desktop.spec.ts",
       "tests/perf/e18-devices.spec.ts",
+      "tests/perf/horde-budget.spec.ts",
       "--project=chromium",
       "--workers=1"
     ],
-    "configFile": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/playwright.config.ts",
-    "rootDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
     "failOnFlakyTests": false,
     "forbidOnly": false,
     "fullyParallel": true,
@@ -26,7 +27,7 @@
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -34,7 +35,7 @@
         },
         "id": "chromium",
         "name": "chromium",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
         "testIgnore": [
           "**/webgpu.spec.ts"
         ],
@@ -44,7 +45,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -52,16 +53,18 @@
         },
         "id": "pixel-7",
         "name": "pixel-7",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
-          "**/input-touch.spec.ts"
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -69,16 +72,18 @@
         },
         "id": "pixel-7-landscape",
         "name": "pixel-7-landscape",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
-          "**/input-touch.spec.ts"
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -86,16 +91,18 @@
         },
         "id": "iphone-14",
         "name": "iphone-14",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
-          "**/input-touch.spec.ts"
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -103,16 +110,18 @@
         },
         "id": "iphone-14-landscape",
         "name": "iphone-14-landscape",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
-          "**/input-touch.spec.ts"
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -120,7 +129,7 @@
         },
         "id": "webkit",
         "name": "webkit",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts"
@@ -152,8 +161,8 @@
     "version": "1.63.0",
     "workers": 1,
     "webServer": {
-      "command": "npx vite preview --host 127.0.0.1 --port 3330 --strictPort --configLoader runner",
-      "url": "http://127.0.0.1:3330",
+      "command": "npx vite preview --host 127.0.0.1 --port 3374 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3374",
       "reuseExistingServer": false,
       "timeout": 30000
     }
@@ -184,12 +193,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 15195,
+                  "duration": 16895,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:35:24.069Z",
+                  "startTime": "2026-10-07T13:27:44.100Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -199,7 +208,7 @@
           ],
           "id": "7c075c58ab864332a98e-1e3f9e28dee7bf7def56",
           "file": "perf/e18-desktop.spec.ts",
-          "line": 5,
+          "line": 6,
           "column": 1
         },
         {
@@ -216,8 +225,8 @@
                   "type": "skip",
                   "description": "WebGPU-only checks are verified manually; browser automation is headless.",
                   "location": {
-                    "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-desktop.spec.ts",
-                    "line": 30,
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-desktop.spec.ts",
+                    "line": 32,
                     "column": 8
                   }
                 }
@@ -230,19 +239,19 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "skipped",
-                  "duration": 124,
+                  "duration": 129,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:35:40.032Z",
+                  "startTime": "2026-10-07T13:28:01.639Z",
                   "annotations": [
                     {
                       "type": "skip",
                       "description": "WebGPU-only checks are verified manually; browser automation is headless.",
                       "location": {
-                        "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-desktop.spec.ts",
-                        "line": 30,
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-desktop.spec.ts",
+                        "line": 32,
                         "column": 8
                       }
                     }
@@ -255,7 +264,7 @@
           ],
           "id": "7c075c58ab864332a98e-cddcf7d99e37be73b3f3",
           "file": "perf/e18-desktop.spec.ts",
-          "line": 29,
+          "line": 31,
           "column": 1
         }
       ]
@@ -281,7 +290,7 @@
                   "type": "skip",
                   "description": "AC08 real-device recordings pending user run at final verification; emulated profiles recorded",
                   "location": {
-                    "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-devices.spec.ts",
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-devices.spec.ts",
                     "line": 47,
                     "column": 8
                   }
@@ -295,18 +304,18 @@
                   "workerIndex": 1,
                   "parallelIndex": 0,
                   "status": "skipped",
-                  "duration": 144,
+                  "duration": 130,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:36:47.618Z",
+                  "startTime": "2026-10-07T13:29:35.160Z",
                   "annotations": [
                     {
                       "type": "skip",
                       "description": "AC08 real-device recordings pending user run at final verification; emulated profiles recorded",
                       "location": {
-                        "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-devices.spec.ts",
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-devices.spec.ts",
                         "line": 47,
                         "column": 8
                       }
@@ -350,12 +359,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 34641,
+                      "duration": 60136,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-06T06:35:41.631Z",
+                      "startTime": "2026-10-07T13:28:02.091Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -383,7 +392,7 @@
                       "type": "skip",
                       "description": "WebGPU-only checks require manual verification; browser automation is headless.",
                       "location": {
-                        "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-devices.spec.ts",
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-devices.spec.ts",
                         "line": 12,
                         "column": 12
                       }
@@ -397,18 +406,18 @@
                       "workerIndex": 1,
                       "parallelIndex": 0,
                       "status": "skipped",
-                      "duration": 185,
+                      "duration": 122,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-06T06:36:16.524Z",
+                      "startTime": "2026-10-07T13:29:02.420Z",
                       "annotations": [
                         {
                           "type": "skip",
                           "description": "WebGPU-only checks require manual verification; browser automation is headless.",
                           "location": {
-                            "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-devices.spec.ts",
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-devices.spec.ts",
                             "line": 12,
                             "column": 12
                           }
@@ -452,12 +461,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 30722,
+                      "duration": 32466,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-06T06:36:16.723Z",
+                      "startTime": "2026-10-07T13:29:02.554Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -485,7 +494,7 @@
                       "type": "skip",
                       "description": "WebGPU-only checks require manual verification; browser automation is headless.",
                       "location": {
-                        "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-devices.spec.ts",
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-devices.spec.ts",
                         "line": 12,
                         "column": 12
                       }
@@ -499,18 +508,18 @@
                       "workerIndex": 1,
                       "parallelIndex": 0,
                       "status": "skipped",
-                      "duration": 158,
+                      "duration": 117,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-06T06:36:47.452Z",
+                      "startTime": "2026-10-07T13:29:35.030Z",
                       "annotations": [
                         {
                           "type": "skip",
                           "description": "WebGPU-only checks require manual verification; browser automation is headless.",
                           "location": {
-                            "file": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests/perf/e18-devices.spec.ts",
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-devices.spec.ts",
                             "line": 12,
                             "column": 12
                           }
@@ -530,13 +539,122 @@
           ]
         }
       ]
+    },
+    {
+      "title": "perf/horde-budget.spec.ts",
+      "file": "perf/horde-budget.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/horde-budget.spec.ts",
+          "line": 9,
+          "column": 51,
+          "specs": [
+            {
+              "title": "horde budget high run 1 @E18-AC01 @E18-AC09 @perf",
+              "ok": true,
+              "tags": [
+                "E18-AC01",
+                "E18-AC09",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16890,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"phase\":\"verify\",\"run\":1,\"tier\":\"high\",\"p95\":9.700000000000728,\"sim\":1.9000005722045898,\"update\":0.5999994277954102,\"render\":7.5,\"triangles\":661341,\"draws\":60,\"profile\":{\"other\":{\"drawCalls\":29,\"triangles\":44578},\"shadows\":{\"drawCalls\":24,\"triangles\":35051},\"crowd\":{\"drawCalls\":7,\"triangles\":581712}}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-07T13:29:35.648Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f5a13d911a1bf8890d1f-c2f3b73b9c7f4ebd574d",
+              "file": "perf/horde-budget.spec.ts",
+              "line": 11,
+              "column": 41
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/horde-budget.spec.ts",
+          "line": 9,
+          "column": 51,
+          "specs": [
+            {
+              "title": "horde budget low run 1 @E18-AC01 @E18-AC09 @perf",
+              "ok": true,
+              "tags": [
+                "E18-AC01",
+                "E18-AC09",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 21632,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"phase\":\"verify\",\"run\":1,\"tier\":\"low\",\"p95\":10,\"sim\":4.300000190734863,\"update\":1.8000001907348633,\"render\":4.40000057220459,\"triangles\":213879,\"draws\":59,\"profile\":{\"other\":{\"drawCalls\":29,\"triangles\":13106},\"shadows\":{\"drawCalls\":24,\"triangles\":8179},\"crowd\":{\"drawCalls\":6,\"triangles\":192594}}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-07T13:29:52.818Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f5a13d911a1bf8890d1f-0a834c20c604b4ae4e14",
+              "file": "perf/horde-budget.spec.ts",
+              "line": 11,
+              "column": 41
+            }
+          ]
+        }
+      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-06T06:35:22.821Z",
-    "duration": 85897.647,
-    "expected": 3,
+    "startTime": "2026-10-07T13:27:43.485Z",
+    "duration": 151073.859,
+    "expected": 5,
     "skipped": 4,
     "unexpected": 0,
     "flaky": 0

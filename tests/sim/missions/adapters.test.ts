@@ -95,11 +95,11 @@ test('@E21 @E21-AC07 L3 uses a single 12-minute deadline; graph transitions do n
   const def = campaignMission('L3', () => ({ x: 10, z: 0, radius: 2 }));
   expect(def.deadline).toEqual({ seconds: 720, retryGraceSeconds: 60 }); expect(def.steps.every(s => s.timer === undefined)).toBe(true);
   const mission = await load(def); mission.begin(); ticks(120); expect(mission.state.deadlineTicks).toBe(43080);
-  mission.completeObjective('car'); expect(mission.state.deadlineTicks).toBe(43080);
+  mission.completeObjective('forecourt'); mission.completeObjective('car'); expect(mission.state.deadlineTicks).toBe(43080);
   ticks(60); mission.checkpoint('checkpoint'); const remaining = mission.state.deadlineTicks!;
   ticks(remaining - 1); expect(mission.state.phase).toBe('playing'); ticks(1);
   expect(mission.state.phase).toBe('retry'); expect(world.events.events()).toContainEqual({ type: 'mission.failed', tick: 43200, reason: 'timeout' });
-  ticks(120); expect(world.tick).toBe(43200); mission.restore(); expect(mission.state.deadlineTicks).toBe(remaining + 3600); expect(mission.state.completedObjectives).toEqual(['car']);
+  ticks(120); expect(world.tick).toBe(43200); mission.restore(); expect(mission.state.deadlineTicks).toBe(remaining + 3600); expect(mission.state.completedObjectives).toEqual(['forecourt', 'car']);
   ticks(remaining + 3600); expect(mission.state.failure).toBe('timeout'); mission.restore(); expect(mission.state.deadlineTicks).toBe(remaining + 3600); // no accumulating grace
 });
 test('@E21 @E21-AC07 ordinary checkpoint restore gets no timeout grace; cinematics pause the global clock', async () => {
@@ -117,4 +117,14 @@ test('@E12 driver death ejects and reaches checkpoint respawn through the normal
   world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); ticks(1); world.clearInput(); expect(world.vehicles!.active).toBe(mission.state.actors.car);
   world.player!.damage(1000, world.tick); ticks(1); expect(world.vehicles!.active).toBe(null); expect(world.entities.get(1)!.hidden).toBe(false);
   ticks(120); expect(world.entities.get(1)!.health.current).toBe(100); expect(mission.state.stats.deaths).toBe(1); expect(mission.state.phase).toBe('playing');
+});
+test('@E26 mission barricade actors use real HP/blockers, emit filtered break events and restore at checkpoints', async () => {
+  const def = definition({ kind: 'event', type: 'barricade.broken', actor: 'rail', count: 1 });
+  def.actors.rail = { kind: 'barricade', archetype: 'barricade.bridge-blockade', faction: 'environment', anchor: 'goal', hp: 180 };
+  def.groups.rail = ['rail']; def.onStart = [{ kind: 'spawn', group: 'rail' }];
+  const mission = await load(def); mission.begin(); const id = mission.state.actors.rail;
+  expect(world.barricades!.barricadeIntact('barricade.bridge-blockade')).toBe(true); expect(world.entities.get(id)!.kind).toBe('barricade');
+  mission.checkpoint('C'); world.hazards!.hit(id, 180, 'bullet'); ticks(1);
+  expect(mission.state.phase).toBe('result'); expect(world.barricades!.barricadeIntact('barricade.bridge-blockade')).toBe(false);
+  mission.restore('C'); expect(world.barricades!.barricadeIntact('barricade.bridge-blockade')).toBe(true); expect(world.entities.get(id)!.health.current).toBe(180);
 });

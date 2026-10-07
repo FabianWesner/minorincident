@@ -1,0 +1,377 @@
+{
+  "date": "2026-10-07",
+  "branch": "lane/skin-pilot",
+  "implementationCommit": "7c5d18ec819b445cf6843b21beea51976c2482e8",
+  "mainBikeFixMerge": "cc8b9ffc",
+  "defaultSkin": false,
+  "ab": {
+    "summary": {
+      "0": {
+        "idle": {
+          "cpuP50": 0,
+          "cpuP95": 0.09999942779541016,
+          "cpuMax": 0.10000038146972656,
+          "draws": 225
+        },
+        "walk": {
+          "cpuP50": 0.09999942779541016,
+          "cpuP95": 0.10000038146972656,
+          "cpuMax": 0.19999980926513672,
+          "draws": 249
+        },
+        "run": {
+          "cpuP50": 0,
+          "cpuP95": 0.10000038146972656,
+          "cpuMax": 0.10000038146972656,
+          "draws": 256
+        },
+        "stop": {
+          "cpuP50": 0,
+          "cpuP95": 0,
+          "cpuMax": 0,
+          "draws": 261
+        },
+        "jab": {
+          "cpuP50": 0,
+          "cpuP95": 0.20000076293945312,
+          "cpuMax": 0.20000076293945312,
+          "draws": 264
+        },
+        "kick": {
+          "cpuP50": 0,
+          "cpuP95": 0.09999942779541016,
+          "cpuMax": 0.10000038146972656,
+          "draws": 264
+        },
+        "bat": {
+          "cpuP50": 0.09999942779541016,
+          "cpuP95": 0.10000038146972656,
+          "cpuMax": 0.10000038146972656,
+          "draws": 270
+        },
+        "hurt": {
+          "cpuP50": 0,
+          "cpuP95": 0.10000038146972656,
+          "cpuMax": 0.10000038146972656,
+          "draws": 268
+        },
+        "mount": {
+          "cpuP50": 0,
+          "cpuP95": 0.10000038146972656,
+          "cpuMax": 0.10000038146972656,
+          "draws": 293
+        },
+        "ride": {
+          "cpuP50": 0,
+          "cpuP95": 0.10000038146972656,
+          "cpuMax": 0.19999980926513672,
+          "draws": 294
+        },
+        "dismount": {
+          "cpuP50": 0,
+          "cpuP95": 0.10000038146972656,
+          "cpuMax": 0.10000038146972656,
+          "draws": 298
+        },
+        "rest": {
+          "cpuP50": 0,
+          "cpuP95": 0,
+          "cpuMax": 0.10000038146972656,
+          "draws": 298
+        }
+      },
+      "1": {
+        "idle": {
+          "cpuP50": 0,
+          "cpuP95": 0.09999942779541016,
+          "cpuMax": 0.10000038146972656,
+          "draws": 195
+        },
+        "walk": {
+          "cpuP50": 0.10000038146972656,
+          "cpuP95": 0.19999980926513672,
+          "cpuMax": 0.3000001907348633,
+          "draws": 219
+        },
+        "run": {
+          "cpuP50": 0.10000038146972656,
+          "cpuP95": 0.10000038146972656,
+          "cpuMax": 0.20000076293945312,
+          "draws": 226
+        },
+        "stop": {
+          "cpuP50": 0.10000038146972656,
+          "cpuP95": 0.10000038146972656,
+          "cpuMax": 0.10000038146972656,
+          "draws": 231
+        },
+        "jab": {
+          "cpuP50": 0,
+          "cpuP95": 0.10000038146972656,
+          "cpuMax": 0.10000038146972656,
+          "draws": 234
+        },
+        "kick": {
+          "cpuP50": 0,
+          "cpuP95": 0.09999942779541016,
+          "cpuMax": 0.10000038146972656,
+          "draws": 234
+        },
+        "bat": {
+          "cpuP50": 0,
+          "cpuP95": 0.10000038146972656,
+          "cpuMax": 0.19999980926513672,
+          "draws": 240
+        },
+        "hurt": {
+          "cpuP50": 0.10000038146972656,
+          "cpuP95": 0.10000038146972656,
+          "cpuMax": 0.19999980926513672,
+          "draws": 238
+        },
+        "mount": {
+          "cpuP50": 0.10000038146972656,
+          "cpuP95": 0.20000076293945312,
+          "cpuMax": 0.20000076293945312,
+          "draws": 263
+        },
+        "ride": {
+          "cpuP50": 0.10000038146972656,
+          "cpuP95": 0.20000076293945312,
+          "cpuMax": 0.20000076293945312,
+          "draws": 264
+        },
+        "dismount": {
+          "cpuP50": 0.10000038146972656,
+          "cpuP95": 0.19999980926513672,
+          "cpuMax": 0.19999980926513672,
+          "draws": 268
+        },
+        "rest": {
+          "cpuP50": 0,
+          "cpuP95": 0.09999942779541016,
+          "cpuMax": 0.10000038146972656,
+          "draws": 268
+        }
+      }
+    },
+    "samePlayerState": true,
+    "sameSimulationState": true,
+    "durationSeconds": 12.8,
+    "framesPerVariant": {
+      "0": 192,
+      "1": 192
+    }
+  },
+  "cpuProfile": {
+    "platform": "darwin",
+    "cpu": "Apple M4",
+    "node": "v26.0.0",
+    "method": "300 warm-up, 2000 timed frames; CharacterView.update + ride contacts + matrix propagation + Skeleton.update; no simulation/render",
+    "results": {
+      "skin0-idle": {
+        "frames": 2000,
+        "cpuMsP50": 0.010000000000047748,
+        "cpuMsP95": 0.013125000000002274,
+        "cpuMsMean": 0.010835412999999818,
+        "matrixAndSkeletonMsP95": 0.006084000000043943,
+        "skinnedMeshes": 0,
+        "bones": 0
+      },
+      "skin0-walk": {
+        "frames": 2000,
+        "cpuMsP50": 0.012333000000012362,
+        "cpuMsP95": 0.028333000000031916,
+        "cpuMsMean": 0.01423118199999942,
+        "matrixAndSkeletonMsP95": 0.009458999999992557,
+        "skinnedMeshes": 0,
+        "bones": 0
+      },
+      "skin0-run": {
+        "frames": 2000,
+        "cpuMsP50": 0.009667000000035841,
+        "cpuMsP95": 0.01087500000005548,
+        "cpuMsMean": 0.010217917000001193,
+        "matrixAndSkeletonMsP95": 0.005707999999913227,
+        "skinnedMeshes": 0,
+        "bones": 0
+      },
+      "skin0-jab": {
+        "frames": 2000,
+        "cpuMsP50": 0.009957999999983258,
+        "cpuMsP95": 0.01841699999999946,
+        "cpuMsMean": 0.011242549500002098,
+        "matrixAndSkeletonMsP95": 0.008083000000056018,
+        "skinnedMeshes": 0,
+        "bones": 0
+      },
+      "skin0-kick": {
+        "frames": 2000,
+        "cpuMsP50": 0.009457999999995081,
+        "cpuMsP95": 0.011708999999996195,
+        "cpuMsMean": 0.010417726000000243,
+        "matrixAndSkeletonMsP95": 0.005625000000009095,
+        "skinnedMeshes": 0,
+        "bones": 0
+      },
+      "skin0-bat": {
+        "frames": 2000,
+        "cpuMsP50": 0.009415999999987434,
+        "cpuMsP95": 0.014000000000010004,
+        "cpuMsMean": 0.010705648999999028,
+        "matrixAndSkeletonMsP95": 0.005583000000001448,
+        "skinnedMeshes": 0,
+        "bones": 0
+      },
+      "skin0-ride": {
+        "frames": 2000,
+        "cpuMsP50": 0.03383300000007239,
+        "cpuMsP95": 0.04016699999999673,
+        "cpuMsMean": 0.03604168050000027,
+        "matrixAndSkeletonMsP95": 0.005166999999914879,
+        "skinnedMeshes": 0,
+        "bones": 0
+      },
+      "skin1-idle": {
+        "frames": 2000,
+        "cpuMsP50": 0.014749999999935426,
+        "cpuMsP95": 0.01999999999998181,
+        "cpuMsMean": 0.016654060999999103,
+        "matrixAndSkeletonMsP95": 0.010750000000030013,
+        "skinnedMeshes": 1,
+        "bones": 19
+      },
+      "skin1-walk": {
+        "frames": 2000,
+        "cpuMsP50": 0.026250000000118234,
+        "cpuMsP95": 0.037042000000155895,
+        "cpuMsMean": 0.02873255199999778,
+        "matrixAndSkeletonMsP95": 0.011292000000139524,
+        "skinnedMeshes": 1,
+        "bones": 19
+      },
+      "skin1-run": {
+        "frames": 2000,
+        "cpuMsP50": 0.024375000000190994,
+        "cpuMsP95": 0.029540999999881024,
+        "cpuMsMean": 0.02640688450000084,
+        "matrixAndSkeletonMsP95": 0.010917000000063126,
+        "skinnedMeshes": 1,
+        "bones": 19
+      },
+      "skin1-jab": {
+        "frames": 2000,
+        "cpuMsP50": 0.015458000000080574,
+        "cpuMsP95": 0.017666999999846666,
+        "cpuMsMean": 0.0162591169999979,
+        "matrixAndSkeletonMsP95": 0.009958999999980733,
+        "skinnedMeshes": 1,
+        "bones": 19
+      },
+      "skin1-kick": {
+        "frames": 2000,
+        "cpuMsP50": 0.014750000000049113,
+        "cpuMsP95": 0.016666999999870313,
+        "cpuMsMean": 0.015842884000001164,
+        "matrixAndSkeletonMsP95": 0.010166000000026543,
+        "skinnedMeshes": 1,
+        "bones": 19
+      },
+      "skin1-bat": {
+        "frames": 2000,
+        "cpuMsP50": 0.015040999999882843,
+        "cpuMsP95": 0.03466699999989942,
+        "cpuMsMean": 0.01685548300000255,
+        "matrixAndSkeletonMsP95": 0.020332999999936874,
+        "skinnedMeshes": 1,
+        "bones": 19
+      },
+      "skin1-ride": {
+        "frames": 2000,
+        "cpuMsP50": 0.05033400000002075,
+        "cpuMsP95": 0.06204200000001947,
+        "cpuMsMean": 0.05383818900000006,
+        "matrixAndSkeletonMsP95": 0.009749999999939973,
+        "skinnedMeshes": 1,
+        "bones": 19
+      }
+    }
+  },
+  "artifacts": {
+    "directory": "test-results/skin-pilot",
+    "videos": {
+      "skin0.webm": {
+        "bytes": 2824272,
+        "sha256": "70a71a52d942cec2e7797fdbd5fba6d1b071298eb0c7f2bb07cdeaf9772ad5fa",
+        "durationSeconds": 12.8
+      },
+      "skin1.webm": {
+        "bytes": 2823048,
+        "sha256": "97e5d9ac22c7c49d7872fd3e827671c6d3d7690a484b3dff6f08b460c8044e0c",
+        "durationSeconds": 12.8
+      }
+    },
+    "stills": 24
+  },
+  "consoleErrors": {
+    "skin0": [],
+    "skin1": []
+  },
+  "missingClips": {
+    "skin0": 0,
+    "skin1": 0
+  },
+  "validation": {
+    "typecheck": {
+      "exitCode": 0
+    },
+    "lint": {
+      "exitCode": 0
+    },
+    "build": {
+      "exitCode": 0
+    },
+    "unit": {
+      "command": "sh tools/sim-lock.sh npm run test:unit -- --maxWorkers=2",
+      "passed": 241,
+      "filesPassed": 76,
+      "failed": 0,
+      "exitCode": 0
+    },
+    "smoke0": {
+      "simUnitPassed": 5,
+      "browserPassed": 22,
+      "failed": 0
+    },
+    "smoke1": {
+      "simUnitPassed": 5,
+      "browserPassed": 22,
+      "failed": 0
+    },
+    "verifyE04": {
+      "simUnitPassed": 34,
+      "browserPassed": 27,
+      "failed": 0
+    }
+  },
+  "budgets": {
+    "cpuMs": 0.5,
+    "worstBrowserCpuP95Ms": 0.20000076293945312,
+    "worstBrowserCpuSampleMs": 0.3000001907348633,
+    "maxAddedDrawCalls": 3,
+    "observedDrawDeltas": {
+      "idle": -30,
+      "walk": -30,
+      "run": -30,
+      "stop": -30,
+      "jab": -30,
+      "kick": -30,
+      "bat": -30,
+      "hurt": -30,
+      "mount": -30,
+      "ride": -30,
+      "dismount": -30,
+      "rest": -30
+    }
+  }
+}

@@ -14,6 +14,7 @@ export interface EntitySnapshot {
   traffic?: import('../npc/types').Traffic;
   convoy?: import('../npc/types').Convoy;
   infected?: import('../ai/types').InfectedState;
+  barricade?: import('../interact/Barricades').BarricadeState;
   interactable?: import('../interact/Interactables').Interactable;
   inventory?: string[];
   hazard?: import('../interact/Hazards').Hazard;
@@ -43,7 +44,7 @@ export interface EntitySnapshot {
   weapons?: import('../combat/Loadout').LoadoutState;
   combat?: { radius: number; armor: number; shield: boolean; staggerUntil: number; attacking: boolean; damageMultiplier: number; statuses: import('../combat/Status').StatusState[];
     /** Authored reaction intent and swept knockback endpoints; presentation only. */
-    reaction?: { index: number; started: number; until: number; direction: { x: number; z: number }; from: { x: number; z: number }; to: { x: number; z: number }; heavy: boolean } };
+    reaction?: { index: number; started: number; until: number; direction: { x: number; z: number }; from: { x: number; z: number }; to: { x: number; z: number }; heavy: boolean; groundDeath?: boolean } };
   /** Reactive fixture hearing; E07 brains consume the same noise contract. */
   hearing?: { mode: 'idle' | 'investigate' | 'lured'; target: { x: number; z: number }; lureUntil: number };
   kind: string;
@@ -55,7 +56,8 @@ export interface EntitySnapshot {
 /** Presentation events contain only plain authored geometry; views never write back. */
 export type TelegraphKind = 'lunge' | 'charge' | 'splash' | 'bloated';
 export type EffectKind = 'explosion' | 'fire' | 'smoke' | 'toxic' | 'electric' | 'screamer' | 'objective' | 'pickup' | 'ash' | 'vehicle-smoke' | 'vehicle-fire';
-export type GameEvent = import('../npc/types').NpcEvent
+export type GameEvent = import('../interact/Barricades').BarricadeEvent
+  | import('../npc/types').NpcEvent
   | { tick: number; type: 'level.started'; id: string }
   | import('../../data/audioEvents').AudioSystemEvent
   | { tick: number; type: 'civilian.grabbed'; sourceId: number; targetId: number; variant: string; rescueUntil: number }

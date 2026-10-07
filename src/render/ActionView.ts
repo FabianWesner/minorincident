@@ -57,17 +57,14 @@ export class ActionView extends Group {
     for (let i = 0; i < 32; i++) { const mesh = new Mesh(this.projectileGeometry, this.projectileMaterial); mesh.visible = false; this.projectiles.push(mesh); this.add(mesh); }
   }
   private readonly loading = new Map<string, Promise<void>>();
-  /** Background loads of weapons not needed for the first playable frame (E19 load budget). */
-  rest: Promise<void> = Promise.resolve();
   /** Loads the carried actions, pickups on the ground and the L1 essentials in parallel; every other
-   * weapon model streams in afterwards (or on first equip/pickup) instead of blocking the start. */
+   * weapon model loads on first equip/pickup instead of competing with the start. */
   async init(): Promise<void> {
     const loadout = this.world.combat?.runner.loadout, needed = new Set(['weapon.fists', 'weapon.kick', 'weapon.bat']);
     if (loadout) for (const side of sides) for (const slot of loadout.state[side].rack) needed.add(slot.id);
     for (const entity of this.world.entities.iterate()) if (entity.pickup && 'actionId' in entity.pickup) needed.add(entity.pickup.actionId);
     const defs = Object.values(catalog);
     await Promise.all(defs.filter(def => needed.has(def.id)).map(def => this.load(def)));
-    this.rest = Promise.all(defs.filter(def => !needed.has(def.id)).map(def => this.load(def))).then(() => {});
   }
   private load(def: (typeof catalog)[string]): Promise<void> {
     let pending = this.loading.get(def.viewAssetId);

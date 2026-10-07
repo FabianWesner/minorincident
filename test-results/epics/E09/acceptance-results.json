@@ -1,7 +1,6 @@
 {
+  "baseCommit": "642f8fe0",
   "allPassed": true,
-  "baseCommit": "b5dcd1c",
-  "codeCommit": "b90bc08",
   "criteria": {
     "E09-AC01": [
       {
@@ -32,6 +31,11 @@
         "runner": "vitest",
         "title": "T-E09-05b @E09-AC05 below-threshold impact stays solid and debris bodies remain bounded/recycled",
         "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "M1 E09/E11 @E09 @E09-AC05 @E11 @E11-AC07 driving breaks an authored fence and updates its infected nav/debris",
+        "status": "passed"
       }
     ],
     "E09-AC06": [
@@ -47,7 +51,7 @@
       },
       {
         "runner": "vitest",
-        "title": "T-E09-06c @E09-AC06 RIGHT can exit a zero-HP car during its fuse",
+        "title": "T-E09-06c @E09-AC06 ACTION can exit a zero-HP car during its fuse",
         "status": "passed"
       }
     ],
@@ -55,6 +59,11 @@
       {
         "runner": "vitest",
         "title": "T-E09-07 @E09-AC07 proximity/speed grab limits and acceleration/steering shake-off",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
+        "title": "M1 E07/E09 @E09 @E09-AC07 attached infected stay anchored while their chase brain is suspended",
         "status": "passed"
       }
     ],
@@ -87,6 +96,11 @@
     "E09-AC02": [
       {
         "runner": "vitest",
+        "title": "M1 E09/E12 @E09 @E09-AC02 @E12 @E12-AC05 checkpoint rebinds vehicles to restored records and native bodies",
+        "status": "passed"
+      },
+      {
+        "runner": "vitest",
         "title": "T-E09-02 @E09-AC02 door dwell, input ownership and capsule-safe exit on opposite side",
         "status": "passed"
       },
@@ -104,7 +118,7 @@
     "E09-AC08": [
       {
         "runner": "chromium",
-        "title": "T-E09-08 @E09-AC08 real mouse aims ahead-left to accelerate/turn and dead ring brakes",
+        "title": "T-E09-08 @E09-AC08 held LMB drives ahead-left and release brakes with distant cursor",
         "status": "passed"
       }
     ],

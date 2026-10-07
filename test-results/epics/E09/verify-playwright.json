@@ -1,14 +1,14 @@
 {
   "config": {
     "argv": [
-      "/Users/fabianwesner/Library/Application Support/Herd/config/nvm/versions/node/v22.22.2/bin/node",
-      "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/node_modules/.bin/playwright",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/node_modules/.bin/playwright",
       "test",
       "--grep",
       "@(?:E09)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
     ],
-    "configFile": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/playwright.config.ts",
-    "rootDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/tests",
     "failOnFlakyTests": false,
     "forbidOnly": false,
     "fullyParallel": true,
@@ -24,7 +24,7 @@
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/test-results/playwright/run-3347",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -32,7 +32,7 @@
         },
         "id": "chromium",
         "name": "chromium",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/tests",
         "testIgnore": [
           "**/webgpu.spec.ts"
         ],
@@ -42,7 +42,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/test-results/playwright/run-3347",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -50,16 +50,18 @@
         },
         "id": "pixel-7",
         "name": "pixel-7",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
-          "**/input-touch.spec.ts"
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/test-results/playwright/run-3347",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -67,16 +69,18 @@
         },
         "id": "pixel-7-landscape",
         "name": "pixel-7-landscape",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
-          "**/input-touch.spec.ts"
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/test-results/playwright/run-3347",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -84,16 +88,18 @@
         },
         "id": "iphone-14",
         "name": "iphone-14",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
-          "**/input-touch.spec.ts"
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/test-results/playwright/run-3347",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -101,16 +107,18 @@
         },
         "id": "iphone-14-landscape",
         "name": "iphone-14-landscape",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
-          "**/input-touch.spec.ts"
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/test-results/playwright/run-3347",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -118,7 +126,7 @@
         },
         "id": "webkit",
         "name": "webkit",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e09-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts"
@@ -150,13 +158,296 @@
     "version": "1.63.0",
     "workers": 2,
     "webServer": {
-      "command": "npx vite preview --host 127.0.0.1 --port 3323 --strictPort --configLoader runner",
-      "url": "http://127.0.0.1:3323",
+      "command": "npx vite preview --host 127.0.0.1 --port 3347 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3347",
       "reuseExistingServer": false,
       "timeout": 30000
     }
   },
   "suites": [
+    {
+      "title": "e2e/audio/smoke.spec.ts",
+      "file": "e2e/audio/smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5981,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T11:51:31.570Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-97a3d61ff3acce718662",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7",
+              "projectName": "pixel-7",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6229,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T11:52:27.233Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-2dc10c72b0be464382db",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "pixel-7-landscape",
+              "projectName": "pixel-7-landscape",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5927,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T11:52:32.483Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-15d01b5b0ba9e48f3f0d",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14",
+              "projectName": "iphone-14",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 5897,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T11:52:35.623Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-581cfa9a47816c39bec7",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "iphone-14-landscape",
+              "projectName": "iphone-14-landscape",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5789,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T11:52:40.292Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-11aea1404dff4487d786",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8018,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T11:52:43.518Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-eb40bc0a2fb51cb3189f",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/controls-playtest.spec.ts",
+      "file": "e2e/controls-playtest.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E03",
+            "E03-AC14",
+            "E03-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 16864,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T11:51:31.546Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2750c3bdceeb5e094725-03dcd144480ffdfe041b",
+          "file": "e2e/controls-playtest.spec.ts",
+          "line": 8,
+          "column": 1
+        }
+      ]
+    },
     {
       "title": "e2e/driving.spec.ts",
       "file": "e2e/driving.spec.ts",
@@ -164,7 +455,7 @@
       "line": 0,
       "specs": [
         {
-          "title": "T-E09-08 @E09-AC08 real mouse aims ahead-left to accelerate/turn and dead ring brakes",
+          "title": "T-E09-08 @E09-AC08 held LMB drives ahead-left and release brakes with distant cursor",
           "ok": true,
           "tags": [
             "E09-AC08"
@@ -181,12 +472,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 9480,
+                  "duration": 3734,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:29.734Z",
+                  "startTime": "2026-10-07T11:51:37.668Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -194,13 +485,13 @@
               "status": "expected"
             }
           ],
-          "id": "5e6c768bb370cc6a9717-7bac17c06bf378db8a6a",
+          "id": "5e6c768bb370cc6a9717-fb1669d59b17375588eb",
           "file": "e2e/driving.spec.ts",
           "line": 2,
           "column": 1
         },
         {
-          "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real right-click exit",
+          "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
           "ok": true,
           "tags": [
             "smoke",
@@ -215,15 +506,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5594,
+                  "duration": 2623,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:29.718Z",
+                  "startTime": "2026-10-07T11:51:41.410Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -231,9 +522,9 @@
               "status": "expected"
             }
           ],
-          "id": "5e6c768bb370cc6a9717-48a8369a19aa5e31510a",
+          "id": "5e6c768bb370cc6a9717-6d653d77642b28f98199",
           "file": "e2e/driving.spec.ts",
-          "line": 20,
+          "line": 22,
           "column": 1
         },
         {
@@ -251,15 +542,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4690,
+                  "duration": 2598,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:35.494Z",
+                  "startTime": "2026-10-07T11:51:44.040Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -269,11 +560,11 @@
           ],
           "id": "5e6c768bb370cc6a9717-083c45fa806c40c358d0",
           "file": "e2e/driving.spec.ts",
-          "line": 28,
+          "line": 30,
           "column": 1
         },
         {
-          "title": "T-E09-touch @E09 touch stick accelerates, LEFT holds boost and brake stops without exiting",
+          "title": "T-E09-arrow-drift @E09 arrows drive locally and RIGHT holds the rear handbrake",
           "ok": true,
           "tags": [
             "E09"
@@ -290,12 +581,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4229,
+                  "duration": 2690,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:39.389Z",
+                  "startTime": "2026-10-07T11:51:46.649Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -303,9 +594,45 @@
               "status": "expected"
             }
           ],
-          "id": "5e6c768bb370cc6a9717-7ac06add104eba4935d6",
+          "id": "5e6c768bb370cc6a9717-4059fc8fd379523b10b1",
           "file": "e2e/driving.spec.ts",
-          "line": 35,
+          "line": 36,
+          "column": 1
+        },
+        {
+          "title": "T-E09-touch @E09 touch stick accelerates, LEFT holds boost, releasing stick brakes, ACTION exits",
+          "ok": true,
+          "tags": [
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3243,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T11:51:48.551Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-20c02b1c6de27e6c741a",
+          "file": "e2e/driving.spec.ts",
+          "line": 48,
           "column": 1
         },
         {
@@ -323,15 +650,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4103,
+                  "duration": 1046,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:40.190Z",
+                  "startTime": "2026-10-07T11:51:49.349Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -341,7 +668,7 @@
           ],
           "id": "5e6c768bb370cc6a9717-9fffa25039356ae07111",
           "file": "e2e/driving.spec.ts",
-          "line": 57,
+          "line": 79,
           "column": 1
         }
       ]
@@ -353,7 +680,7 @@
       "line": 0,
       "specs": [
         {
-          "title": "T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, every contract method and epic stubs",
+          "title": "T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, delivered methods and remaining epic stubs",
           "ok": true,
           "tags": [
             "E01",
@@ -372,12 +699,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 3153,
+                  "duration": 3026,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:43.668Z",
+                  "startTime": "2026-10-07T11:51:50.549Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -385,9 +712,9 @@
               "status": "expected"
             }
           ],
-          "id": "696d2ab3be73ec9c37de-26c551e3af296a57c78b",
+          "id": "696d2ab3be73ec9c37de-22f2694513cf06989c17",
           "file": "e2e/harness.spec.ts",
-          "line": 30,
+          "line": 35,
           "column": 1
         }
       ]
@@ -418,12 +745,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 2073,
+                  "duration": 658,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:44.304Z",
+                  "startTime": "2026-10-07T11:51:51.828Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -434,6 +761,143 @@
           "id": "1749e9792bc1e09518b9-33c10cb7f823cd38b875",
           "file": "e2e/input-recorder.spec.ts",
           "line": 7,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/integration-m1.spec.ts",
+      "file": "e2e/integration-m1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "M1 E09/E15 @E09 @E15 real integrated vehicle takes feedback on its existing model and obeys Off",
+          "ok": true,
+          "tags": [
+            "E09",
+            "E15"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2439,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T11:51:52.499Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b8beef3166d28778295f-a04c44b36e7ee59cac22",
+          "file": "e2e/integration-m1.spec.ts",
+          "line": 52,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/menus-mouse.spec.ts",
+      "file": "e2e/menus-mouse.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+          "ok": true,
+          "tags": [
+            "E14",
+            "E14-AC03",
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8574,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T11:51:53.606Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "985816c1468952bd1927-cecdef361888236d9f37",
+          "file": "e2e/menus-mouse.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/save.spec.ts",
+      "file": "e2e/save.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+          "ok": true,
+          "tags": [
+            "E13",
+            "E13-AC05",
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7782,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T11:51:54.959Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4fc26a16ee2fb292eca8-e64e10e112418c30083b",
+          "file": "e2e/save.spec.ts",
+          "line": 35,
           "column": 1
         }
       ]
@@ -459,15 +923,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1563,
+                  "duration": 566,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:46.387Z",
+                  "startTime": "2026-10-07T11:52:02.197Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -495,15 +959,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 2584,
+                  "duration": 601,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:46.835Z",
+                  "startTime": "2026-10-07T11:52:02.752Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -531,15 +995,15 @@
               "projectName": "pixel-7",
               "results": [
                 {
-                  "workerIndex": 2,
+                  "workerIndex": 5,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1537,
+                  "duration": 633,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:49.801Z",
+                  "startTime": "2026-10-07T11:52:30.767Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -567,15 +1031,15 @@
               "projectName": "pixel-7",
               "results": [
                 {
-                  "workerIndex": 2,
+                  "workerIndex": 5,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 2388,
+                  "duration": 520,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:51.448Z",
+                  "startTime": "2026-10-07T11:52:31.520Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -603,15 +1067,15 @@
               "projectName": "pixel-7-landscape",
               "results": [
                 {
-                  "workerIndex": 3,
-                  "parallelIndex": 0,
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1468,
+                  "duration": 624,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:54.262Z",
+                  "startTime": "2026-10-07T11:52:34.039Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -639,15 +1103,15 @@
               "projectName": "pixel-7-landscape",
               "results": [
                 {
-                  "workerIndex": 3,
-                  "parallelIndex": 0,
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1559,
+                  "duration": 466,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:55.847Z",
+                  "startTime": "2026-10-07T11:52:34.767Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -675,15 +1139,15 @@
               "projectName": "iphone-14",
               "results": [
                 {
-                  "workerIndex": 4,
+                  "workerIndex": 9,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1561,
+                  "duration": 582,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:57.811Z",
+                  "startTime": "2026-10-07T11:52:38.825Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -711,15 +1175,15 @@
               "projectName": "iphone-14",
               "results": [
                 {
-                  "workerIndex": 5,
-                  "parallelIndex": 1,
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 2299,
+                  "duration": 459,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:58.589Z",
+                  "startTime": "2026-10-07T11:52:39.500Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -747,15 +1211,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 6,
-                  "parallelIndex": 0,
+                  "workerIndex": 11,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1407,
+                  "duration": 674,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:59.885Z",
+                  "startTime": "2026-10-07T11:52:41.958Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -783,15 +1247,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 7,
+                  "workerIndex": 11,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 2396,
+                  "duration": 469,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:53:01.377Z",
+                  "startTime": "2026-10-07T11:52:42.727Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -819,15 +1283,15 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 8,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1087,
+                  "duration": 1746,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:53:01.787Z",
+                  "startTime": "2026-10-07T11:52:46.519Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -855,15 +1319,15 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 8,
+                  "workerIndex": 13,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1888,
+                  "duration": 2603,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:53:03.135Z",
+                  "startTime": "2026-10-07T11:52:48.500Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -874,6 +1338,98 @@
           "id": "aa58ad17b2d44b8d86cc-15be96bfa75c42d15e99",
           "file": "e2e/smoke.spec.ts",
           "line": 12,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/vehicle-feel.spec.ts",
+      "file": "e2e/vehicle-feel.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E09-driving-video @E09 town acceleration, right-angle corner, handbrake and cone",
+          "ok": true,
+          "tags": [
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 22232,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T11:52:04.044Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/test-results/playwright/run-3347/e2e-vehicle-feel-T-E09-dri-eb30a-e-corner-handbrake-and-cone-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "010f2b50f0b35a26b351-df87ef87df266b42ec5e",
+          "file": "e2e/vehicle-feel.spec.ts",
+          "line": 9,
+          "column": 1
+        },
+        {
+          "title": "T-E09-curb-video @E09 town raycast wheels ride over a raised planter curb",
+          "ok": true,
+          "tags": [
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21030,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T11:52:09.132Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel/test-results/playwright/run-3347/e2e-vehicle-feel-T-E09-cur-8f7ad--over-a-raised-planter-curb-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "010f2b50f0b35a26b351-6981ae96bc7a611a021a",
+          "file": "e2e/vehicle-feel.spec.ts",
+          "line": 48,
           "column": 1
         }
       ]
@@ -899,15 +1455,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 10234,
+                  "duration": 5856,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-05T23:52:47.965Z",
+                  "startTime": "2026-10-07T11:52:02.783Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -925,9 +1481,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-05T23:52:28.332Z",
-    "duration": 36721.525,
-    "expected": 20,
+    "startTime": "2026-10-07T11:51:29.743Z",
+    "duration": 82149.982,
+    "expected": 33,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
