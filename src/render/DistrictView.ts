@@ -402,8 +402,9 @@ export class DistrictView extends Group {
       this.bounds.center.set(x, ref.position.y + height * ref.scale.y / 2, z); this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
       if (!this.frustum.intersectsSphere(this.bounds)) continue;
       const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
-      // Structural assets keep LOD0 in the high play view; small dressing also considers pixels below.
-      let band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' ? 'lod2' : 'lod1') : pickLod(distance, entry.bands[index], entry.id === 'prop.privacy-fence' ? privacyFenceLodPolicy : undefined);
+      // Bound detail by distance and projected size; preserve the independent low-tier policy.
+      const detailDistance = distance / (worldAssets[entry.id].category === 'prop' ? Math.min(1, radius / 5) : 1);
+      let band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' ? 'lod2' : 'lod1') : pickLod(detailDistance, entry.bands[index], entry.id === 'prop.privacy-fence' ? privacyFenceLodPolicy : undefined);
       if (!this.low && !foliage && worldAssets[entry.id].category === 'prop') {
         const size = worldAssets[entry.id].dimensions;
         const extent = Math.max(size.x * ref.scale.x, size.y * ref.scale.y, size.z * ref.scale.z);
@@ -527,6 +528,8 @@ export class DistrictView extends Group {
         assetId: b.name.slice(5),
         instances: b.references.length,
         meshes: b.children.filter((c) => c instanceof InstancedMesh).length,
+        // Submitted geometry per batch, before shadow/post passes (test/perf diagnostics).
+        triangles: b.visible ? b.children.reduce((n, c) => n + (c instanceof InstancedMesh && c.visible ? (c.geometry.index?.count ?? c.geometry.getAttribute('position').count) / 3 * c.count : 0), 0) : 0,
       })),
       grassBlades: this.grass.reduce(
         (n, g) => n + g.geometry.getAttribute("position").count / 3,

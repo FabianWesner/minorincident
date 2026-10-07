@@ -19,9 +19,9 @@ const commands: string[][] = [
     ]
     : target === 'E19'
       ? [
-        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'M1-22', '--workers=2'],
+        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'M1-22|T-E19-24', '--workers=2'],
         // Transition frame budgets must not compete with another context loading GPU programs.
-        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/l1-transitions.spec.ts', '--project=chromium', '--workers=1'],
+        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/l1-transitions.spec.ts', 'tests/perf/l1-spots.spec.ts', '--project=chromium', '--workers=1'],
       ]
     : target === 'E18'
       ? [
@@ -36,6 +36,7 @@ for (const [command, ...args] of commands) {
   console.log(`\nVerifying ${target}: ${command} ${args.join(' ')}`);
   const result = spawnSync(command, args, { stdio: 'inherit', env: process.env });
   if (target === 'E10' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('@E10-AC06') && !args.includes('--grep-invert') ? 'gpu' : 'headless'}.json`);
+  if (target === 'E19' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/l1-transitions.spec.ts') ? 'gpu' : 'headless'}.json`);
   if (target === 'E18' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/e18-desktop.spec.ts') ? 'gpu' : 'headless'}.json`);
   checks.push({ command: [command, ...args], exitCode: result.status });
   writeFileSync(`${output}/checks.json`, JSON.stringify({ target, ...selection, checks }, null, 2) + '\n');

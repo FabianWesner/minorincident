@@ -22,17 +22,19 @@ describe('L1 v2 civilians and infection', () => {
         expect(`${a.appearance!.asset}|${a.appearance!.tint}`).not.toBe(`${b.appearance!.asset}|${b.appearance!.tint}`);
       if (seed > 3) { w.dispose(); continue; }
       // 60 s of calm morning: nobody stands still without facing something for more than 3 s.
-      park(w); const still = new Map<number, number>(); let worst = 0;
+      park(w); const still = new Map<number, number>(); let worst = 0, worstId = 0;
       for (let t = 0; t < 3600; t++) {
         step(w, 1);
         for (const e of civilians(w)) {
           const c = e.civilian!, moving = (e.motion?.speed ?? 0) > .1, activity = c.schedule![c.scheduleStep ?? 0];
           // Performing a civlife activity (sit, chat, water, look at something) or inside a shop counts as purposeful.
           const facing = e.hidden || !!c.activityUntil && !!activity.facing;
-          const n = moving || facing ? 0 : (still.get(e.id) ?? 0) + 1; still.set(e.id, n); worst = Math.max(worst, n);
+          const n = moving || facing ? 0 : (still.get(e.id) ?? 0) + 1; still.set(e.id, n); if (n > worst) { worst = n; worstId = e.id; }
         }
       }
-      expect(worst).toBeLessThanOrEqual(l1v2.civilians.idleFacingNowhereMaxS * 60);
+      const offender = w.entities.get(worstId)!;
+      const near = [...w.entities.iterate()].filter(e => e !== offender && e.combat && Math.hypot(e.transform.x - offender.transform.x, e.transform.z - offender.transform.z) < 2).map(e => ({ id: e.id, kind: e.kind, transform: e.transform, owner: e.civilian?.owner, state: e.civilian?.state, motion: e.motion }));
+      expect(worst, `seed ${seed}, civilian ${worstId}: ${JSON.stringify(offender)}; neighbors: ${JSON.stringify(near)}`).toBeLessThanOrEqual(l1v2.civilians.idleFacingNowhereMaxS * 60);
       // Notice: an infected in plain sight -> 0.3-0.8 s startle (alarmed) -> flee, then moving at the flee speed.
       const ai = w.infected!, ahead = (e: { transform: { x: number; z: number; yaw: number } }) => ai.nav.nearestCell(e.transform.x + Math.cos(e.transform.yaw) * 7, e.transform.z - Math.sin(e.transform.yaw) * 7);
       // A calm pedestrian with an infected placed in plain sight ahead (clear line of sight on the real map).
