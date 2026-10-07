@@ -417,7 +417,8 @@ export class GameView implements Lifecycle {
       // Riding: sit on the saddle (the bicycle view slides its seat under the rider's feet; hips sit ~0.2 m above the ground pose).
       if (this.world.vehicles?.bicycle.riding) this.character.position.y += .2;
       const from = previous?.yaw ?? current.yaw;
-      this.character.face(from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60);
+      const striking = !!survivor.attack && this.world.tick < survivor.attack.endsAt;
+      this.character.face(from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60, striking);
       const stopped = this.vfx?.hitStop.active(this.vfx.time) ?? false;
       if (stopped && this.vfx!.hitStop.started !== this.frozenStarted && this.frozenPose) {
         this.frozenStarted = this.vfx!.hitStop.started; this.hitStopTick = this.world.tick;
