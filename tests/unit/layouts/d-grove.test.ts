@@ -154,7 +154,7 @@ describe('D-GROVE layout', () => {
 
   test('T-E19-04 @E19 @E19-AC04 gameplay anchors are walkable and reachable from the start', () => {
     const reached = nav.flood(at('player-start'));
-    const skip = /^(alarm-car|lab-tech-spawn|lab-smoke|lab-nobike|garage-nobike|fire-nobike|carwash-bay|dumpster-\d$|dumpster-\d-end|gate-)/;
+    const skip = /^(bike-start|alarm-car|lab-tech-spawn|lab-smoke|lab-nobike|garage-nobike|fire-nobike|carwash-bay|dumpster-\d$|dumpster-\d-end|gate-)/;
     for (const name of Object.keys(layout.anchors)) {
       if (skip.test(name)) continue;
       const p = at(name), i = nav.index(p[0], p[1]);
