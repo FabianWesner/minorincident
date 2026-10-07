@@ -15,6 +15,7 @@ for (const route of ['market', 'park'] as const) test(`@E21 @E21-AC08 @E21-AC09 
   await snap('l3-mainstreet-w2');
   for (let i = 0; i < 3000; i++) {
     const state = await page.evaluate(() => ({ player: window.__SS__!.getState().player, mission: window.__SS__!.missions.state() }));
+    if (i % 20 === 0) writeFileSync(`${output}/browser-progress-${route}.json`, JSON.stringify(state, null, 2));
     if (!captured.has('l3-driving') && state.player?.hidden) await snap('l3-driving');
     if (!captured.has('l3-checkpoint') && state.mission?.steps.checkpoint.status === 'active') await snap('l3-checkpoint');
     if (state.mission?.phase === 'cinematic' || state.mission?.phase === 'result') { await snap('l3-safe-zone'); break; }
