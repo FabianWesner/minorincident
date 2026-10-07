@@ -69,6 +69,9 @@ export class SimWorld implements Lifecycle {
   readonly controls = new ControlIntent(this);
   private effectiveInput = emptyInput();
   private input = emptyInput();
+  /** Story beats (E19 PO UAT): while set, player input is replaced by `scripted` (or nothing); any press
+   * (click, key, tap, move) marks `skip` for the beat owner to fast-forward. */
+  storyLock: { scripted: InputFrame | null; skip: boolean } | null = null;
   private readonly drivingCombatInput = emptyInput();
   private scheme: import('../../input/InputFrame').Scheme = 'mouse-only';
   private rng: Rng | null = null;
@@ -92,7 +95,15 @@ export class SimWorld implements Lifecycle {
       this.vehicles!.spawn('vehicle.sedan', { x: 0, z: 0 }); this.vehicles!.spawn('vehicle.police', { x: 0, z: 12 });
       for (let x = 25; x <= 575; x += 25) { const z = Math.sin(x / 40) * 3; this.vehicles!.obstacles.spawn('cone', { x, z: z - 2 }); this.vehicles!.obstacles.spawn('cone', { x, z: z + 2 }); }
     }
-    this.events.on('sim.tick', () => { const frame = this.controls.resolve(this.input); this.effectiveInput = this.vehicles?.bicycle.filter(frame) ?? frame; }, SimPhase.input);
+    this.events.on('sim.tick', () => {
+      let raw = this.input;
+      if (this.storyLock) {
+        const pressed = raw.left.down || raw.right.down || raw.interact || raw.pause || !!raw.moveTarget || !!raw.attackTarget || Math.hypot(raw.move.x, raw.move.z) > .5;
+        if (pressed) this.storyLock.skip = true;
+        raw = this.storyLock.scripted ?? emptyInput();
+      }
+      const frame = this.controls.resolve(raw); this.effectiveInput = this.vehicles?.bicycle.filter(frame) ?? frame;
+    }, SimPhase.input);
     this.events.on('sim.tick', () => this.vehicles?.prePhysics(this.effectiveInput, this.scheme), SimPhase.input);
     this.events.on('sim.tick', () => { if (this.combat && this.vehicles?.active == null) this.combat.intent(this.effectiveInput); }, SimPhase.input);
     this.events.on('sim.tick', () => {

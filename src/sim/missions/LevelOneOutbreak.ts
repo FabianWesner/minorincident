@@ -5,6 +5,7 @@ import { installL1Outbreak } from '../outbreak/install';
 import type { Mission } from './Mission';
 import type { L1State } from './types';
 import type { EntitySnapshot } from '../world/types';
+import { L1Story } from './L1Story';
 
 const TICKS = 60;
 /** Story-only numbers; spec section 3 beats 4 to 6. Everything systemic lives in the C/D lanes. */
@@ -37,7 +38,9 @@ const fresh = (): L1State => ({
  * From beat 6 on the outbreak is systemic (lanes C and D); this class then only counts results.
  */
 export class LevelOneOutbreak {
-  constructor(private readonly mission: Mission) {}
+  /** PO UAT story beats (clerk, technician, garage rack, fire station). */
+  readonly story: L1Story;
+  constructor(private readonly mission: Mission) { this.story = new L1Story(mission); }
   private get l1(): L1State { return this.mission.state.l1!; }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
 
@@ -64,8 +67,9 @@ export class LevelOneOutbreak {
   /** Called by the mission when an objective completes (before its onComplete actions). */
   completed(id: string): void {
     const { world } = this.mission, l1 = this.l1;
-    if (id === 'pickup') l1.carrying = true;
-    if (id === 'weapon') world.combat?.setLoadout(['weapon.bat'], ['weapon.fists']);
+    // The parcel changes hands inside the clerk beat (matched hand-to-hand), not at the objective tick.
+    if (id === 'pickup') { if (world.npcs?.civilians.outbreak) this.story.pickup(); else l1.carrying = true; }
+    if (id === 'weapon') { world.combat?.setLoadout(['weapon.bat'], ['weapon.fists']); this.story.garage(); }
     if (id === 'firestation') {
       // The shutter closes behind the player (the gate action blocks the player collider): infected outside cannot pass either.
       const door = this.anchor('fire-bay-door');
@@ -140,6 +144,7 @@ export class LevelOneOutbreak {
   update(): void {
     const { world, state } = this.mission, l1 = state.l1; if (!l1) return;
     const tick = world.tick, player = world.entities.get(1)!, tech = world.entities.get(l1.techId);
+    this.story.update();
     // The technician is script-driven until he turns: ambient civilian logic (alarm, flee) must not move him.
     if (tech?.civilian) { tech.civilian.state = 'calm'; tech.civilian.pauseUntil = Number.MAX_SAFE_INTEGER; }
     if (!l1.delivered) this.handover(tick, player);
@@ -171,19 +176,27 @@ export class LevelOneOutbreak {
       if (step?.status === 'active' && l1.carrying && near && player.health.current > 0 && (world.inputFrame.interact || step.interaction >= TICKS)) {
         const dx = player.transform.x - door.x, dz = player.transform.z - door.z, d = Math.hypot(dx, dz) || 1;
         l1.hx = player.transform.x - dx / d * story.standoffM; l1.hz = player.transform.z - dz / d * story.standoffM;
-        l1.handoverAt = tick; l1.phase = 'handover';
+        l1.handoverAt = tick; l1.phase = 'handover'; this.story.handoverStart(l1.techId, door);
       } else { this.place(tech, spawn.x, spawn.z, a); return; }
     }
     const out1 = Math.hypot(door.x - spawn.x, door.z - spawn.z), out2 = Math.hypot(l1.hx - door.x, l1.hz - door.z), total = out1 + out2;
-    const walkS = total / story.techWalkMs, pauseS = story.takeBoxS, t = (tick - l1.handoverAt) / TICKS;
+    const walkS = total / story.techWalkMs, pauseS = story.takeBoxS;
+    // Any press during the beat fast-forwards to the moment the technician has the box.
+    if (this.story.skipping && (tick - l1.handoverAt) / TICKS < walkS + pauseS) l1.handoverAt = tick - Math.ceil((walkS + pauseS) * TICKS);
+    const t = (tick - l1.handoverAt) / TICKS;
     const point = (m: number) => m <= out1 ? { x: spawn.x + (door.x - spawn.x) * m / out1, z: spawn.z + (door.z - spawn.z) * m / out1 }
       : { x: door.x + (l1.hx - door.x) * (m - out1) / out2, z: door.z + (l1.hz - door.z) * (m - out1) / out2 };
     let pos: { x: number; z: number };
-    if (t < walkS) pos = point(t * story.techWalkMs);
-    else if (t < walkS + pauseS) { pos = { x: l1.hx, z: l1.hz }; l1.carrying = false; }
-    else if (t < 2 * walkS + pauseS) pos = point(total - (t - walkS - pauseS) * story.techWalkMs);
+    if (t < walkS) { pos = point(t * story.techWalkMs); this.story.handoverPose(tech, 'out'); }
+    else if (t < walkS + pauseS) {
+      // Nervous glance, then he signs and takes the box (matched with the courier's hand-over).
+      pos = { x: l1.hx, z: l1.hz }; const into = t - walkS;
+      if (into < .6) { this.story.handoverPose(tech, 'glance'); if (tick === l1.handoverAt + Math.ceil(walkS * TICKS)) this.story.say(tech.id, 'handover.tech'); }
+      else { this.story.handoverPose(tech, 'sign'); if (tick === l1.handoverAt + Math.ceil((walkS + .6) * TICKS)) world.player?.act('hand-over', tick); if (into >= 1.05) l1.carrying = false; }
+    }
+    else if (t < 2 * walkS + pauseS) { l1.carrying = false; this.story.handoverPose(tech, 'in'); pos = point(total - (t - walkS - pauseS) * story.techWalkMs); if (t - walkS - pauseS > .4) this.story.handoverEnd(undefined); }
     else {
-      this.place(tech, spawn.x, spawn.z, this.anchor('lab-door'));
+      this.place(tech, spawn.x, spawn.z, this.anchor('lab-door')); this.story.handoverEnd(tech);
       l1.delivered = true; l1.deliveredAt = tick; l1.phase = 'calm'; l1.carrying = false;
       // 4 to 6 s of nothing, then the accident: a fresh seeded stream, so a retry after death replays the same timing.
       const rng = new Rng(world.seed, 'l1-story');
