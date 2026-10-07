@@ -17,7 +17,7 @@ const presets = {
   L5: { sun: '#9c9edb', intensity: 0.65, polar: 1.48, azimuth: -1.4, shadow: '#504978', sky: '#695d91', fog: '#786d96', fogNear: 45, fogFar: 125, practical: .8, rim: .25, aura: .25 },
   L6: { sun: '#9fb4ff', intensity: 0.38, polar: 0.85, azimuth: 2.2, shadow: '#39365f', sky: '#202c4b', fog: '#344161', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45 },
   /** Night segments without fires (L4 blackout blocks, scripted night beats): moonlight only, practicals carry the scene. */
-  night: { sun: '#8fa6ff', intensity: 0.3, polar: 0.7, azimuth: 2.4, shadow: '#2f2d55', sky: '#141c33', fog: '#26304d', fogNear: 42, fogFar: 115, practical: 1, rim: .45, aura: .5 },
+  night: { sun: '#8fa6ff', intensity: 0.2, polar: 0.7, azimuth: 2.4, shadow: '#2f2d55', sky: '#141c33', fog: '#26304d', fogNear: 42, fogFar: 115, practical: 1, rim: .45, aura: .5 },
 } satisfies Record<string, TimeOfDayPreset>;
 export type TimeOfDay = keyof typeof presets;
 export const timeOfDay: Record<TimeOfDay, TimeOfDayPreset> = presets;

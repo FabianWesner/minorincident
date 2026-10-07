@@ -59,6 +59,9 @@ export class Lighting {
   readonly hero = uniform(new Vector3(0, -100, 0));
   readonly rim = uniform(0);
   readonly rimColor = uniform(new Color('#b9c6ff'));
+  /** Survivor-only fill at night (preset `aura`), warm lantern white. */
+  readonly heroFill = uniform(0);
+  readonly heroFillColor = uniform(new Color('#ffe9cf'));
   /** Weight of the sun/moon shadow map on light-field pools (hero shadows at night). */
   readonly fieldShadow = uniform(0);
   /** Direction towards the shadow-casting light: the sun/moon, or the promoted hero lamp at night. */
@@ -89,7 +92,7 @@ export class Lighting {
     if (!(name in timeOfDay)) throw new Error(`Unknown time-of-day preset: ${name}`);
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
-    this.field.strength.value = p.practical ?? 0; this.rim.value = p.rim ?? 0;
+    this.field.strength.value = p.practical ?? 0; this.rim.value = p.rim ?? 0; this.heroFill.value = (p.aura ?? 0) * 3.2;
     this.direction.value.setFromSphericalCoords(1, p.polar, p.azimuth);
     this.color.value.set(p.sun); this.intensity.value = p.intensity; this.shadow.value.set(p.shadow);
     this.sun.color.set(p.sun); this.sun.intensity = p.intensity;

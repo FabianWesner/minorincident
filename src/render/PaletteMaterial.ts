@@ -49,7 +49,9 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const fresnel = normalView.dot(positionViewDirection).clamp(0, 1).oneMinus().smoothstep(.62, .95);
       const heroMask = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(1.3, .6).mul(positionWorld.y.sub(lighting.hero.y).smoothstep(.1, .3));
       const rim = lighting.rimColor.mul(fresnel.mul(max(heroMask, this.figureRim)).mul(lighting.rim));
-      const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field)).add(rim);
+      // The survivor's own aura fill (readability rule): lifts the hero, not the ground ring around it.
+      const fill = lighting.heroFillColor.mul(heroMask.mul(lighting.heroFill).mul(normalWorld.y.mul(.3).add(.7)));
+      const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(rim);
       const controlled = mix(luminance(shaded), shaded, lighting.look.nodes.saturation);
       const output = emissive > 0 ? base.div(luminance(base).max(0.001)).mul(emissive) : mix(controlled.add(nodes?.glow ?? 0), lighting.radialFog, rangeFogFactor(lighting.fogNear, lighting.fogFar));
       return vec4(output.add(this.hitFlash), this.fade.mul(nodes?.opacity ?? 1));

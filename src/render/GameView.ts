@@ -46,7 +46,7 @@ import { loadMeasure } from '../assets/loadTiming';
 import { loadGate } from '../assets/loadGate';
 import { lodPolicy } from './lodPolicy';
 import { layoutLights } from './WorldLights';
-import { auraLight } from './LightField';
+import { auraLight, pickupLight } from './LightField';
 import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
@@ -634,6 +634,11 @@ export class GameView implements Lifecycle {
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
     if (profileStart) this.renderCpuMs = performance.now() - renderStart;
   }
+  /** E25 lighting-pass counters for perf(): light-field CPU ms and pools, shadow maps, the promoted hero shadow light. */
+  lightingPerf() {
+    const field = this.lighting?.field.snapshot();
+    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? 1 : 0, heroShadow: (this.lighting?.fieldShadow.value ?? 0) > .5 ? 1 : 0, preset: this.lighting!.preset } : null;
+  }
   /** E25 light field of the loaded scene (E27 transients hook in here). */
   get lightField() { return this.lighting?.field ?? null; }
   /** E25 light field: layout pools plus per-frame vehicle lamps and the survivor aura, one pass before the scene. */
@@ -645,6 +650,8 @@ export class GameView implements Lifecycle {
       const aura = timeOfDayPresets[lighting.preset].aura ?? 0;
       if (hero && aura > 0) field.push(auraLight(hero.x, hero.z, aura));
       this.vehicles?.pushLights(field);
+      // Pickups keep a small cool glint pool so loot stays findable in the dark.
+      for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden) field.push(pickupLight(entity.transform.x, entity.transform.z));
     }
     lighting.setHeroLight(hero && field.active ? field.heroAt(hero.x, hero.z) : null, hero ?? this.view.focus, this.world.tick / 60);
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
