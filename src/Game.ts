@@ -228,12 +228,17 @@ export class Game {
     for (let i = 0; i < ticks; i++) this.simTick();
     await this.refreshView(); this.view.update(1); this.ui.update();
   }
+  private wasDead = false;
   private simTick(): void {
     this.input.setDriving(this.world.vehicles?.active != null);
     const mission = this.world.missions, at = this.world.entities.get(1)?.transform;
     const missionInteract = !!mission && !!at && mission.def.steps.some(step => step.type === 'interact' && mission.state.steps[step.id].status === 'active' && Math.hypot(at.x - mission.def.anchors[step.anchor].x, at.z - mission.def.anchors[step.anchor].z) <= mission.def.anchors[step.anchor].radius);
     this.input.touch.setInteractable(this.world.vehicles?.canInteract() === true || this.world.interactables?.activeId != null || missionInteract);
     const player = this.world.entities.get(1)?.transform;
+    // PO: after a respawn, held buttons/targets/modifiers from the fight before death must not carry over.
+    const dead = this.world.entities.get(1)?.survivor?.diedAt != null;
+    if (this.wasDead && !dead) { this.input.release(); this.world.controls.reset(); }
+    this.wasDead = dead;
     if (this.driver) this.world.applyInput(this.driver.sample(), 'keyboard');
     else if (player) {
       const frame = this.input.sample(player, 1 / 60, this.world.entities.iterate());

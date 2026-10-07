@@ -3,6 +3,8 @@
 /** Canvas-scoped mouse coordinates and buttons, with outside-canvas release. */
 export class Pointer {
   x = 0; y = 0; valid = false;
+  /** Shift state reported by the last mouse event (authoritative even if a Shift keyup was missed). */
+  shift = false;
   private readonly pressed = new Set<number>();
   constructor(private readonly element: HTMLElement, private readonly target: Window, private readonly activity: () => void, private readonly change: (token: string, held: boolean) => void) {}
   init(): void {
@@ -16,10 +18,10 @@ export class Pointer {
     if (event.pointerType !== 'mouse') return;
     this.coordinates(event);
   };
-  private coordinates(event: MouseEvent): void { this.x = event.clientX; this.y = event.clientY; this.valid = true; this.activity(); }
+  private coordinates(event: MouseEvent): void { this.x = event.clientX; this.y = event.clientY; this.valid = true; this.shift = event.shiftKey; this.activity(); }
   // Pointer events retain subpixel coordinates; mouse edges fire for each chorded button.
   private readonly down = (event: MouseEvent): void => {
-    this.valid = true; this.activity(); this.element.focus({ preventScroll: true }); event.preventDefault(); this.pressed.add(event.button); this.change(`Mouse${event.button}`, true);
+    this.valid = true; this.shift = event.shiftKey; this.activity(); this.element.focus({ preventScroll: true }); event.preventDefault(); this.pressed.add(event.button); this.change(`Mouse${event.button}`, true);
   };
   private readonly up = (event: MouseEvent): void => {
     if (!this.pressed.delete(event.button)) return;
