@@ -1,3 +1,9 @@
+import { readFileSync } from 'node:fs';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { CharacterView } from '../../../src/render/characters/CharacterView';
+import { resolveRig, type CharacterRig } from '../../../src/render/characters/rig';
+import { sampleClip } from '../../../src/render/characters/clips';
 import { expect, test, vi } from 'vitest';
 import { Group, Vector3 } from 'three/webgpu';
 import type { Node } from '@gltf-transform/core';
@@ -70,6 +76,28 @@ test('courier bike riding retracts the stand and aligns the saddle with the ride
     const saddle = new Vector3(); expect(view.seatWorld(saddle)).toBe(true);
     expect(saddle.distanceTo(model.getObjectByName('seat')!.getWorldPosition(new Vector3()))).toBeLessThan(1e-6);
     expect(model.getObjectByName('wheel_front')!.getWorldPosition(new Vector3()).x).toBeGreaterThan(saddle.x);
+    // Exercise the production courier rigs and the same contact methods called by GameView.
+    // A seat-node self-comparison cannot catch a rider hovering 0.39 m away from it.
+    for (const variant of ['female', 'male'] as const) {
+      const bytes = readFileSync(`public/assets/models/char.courier-${variant}.glb`);
+      const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+      const rider = new CharacterView(), rig = resolveRig(scene);
+      (rider as unknown as { characters: Map<string, { rig: CharacterRig }> }).characters.set(variant, { rig });
+      (rider as unknown as { variant: string }).variant = variant; rider.add(scene);
+      for (const scale of [1, 1.25]) for (const yaw of [0, Math.PI / 2, -2.4]) for (const phase of [0, .15, .3, .45]) {
+        const transform = world.vehicles!.bicycle.entity!.transform;
+        transform.x = 8; transform.z = -3; transform.yaw = yaw;
+        Object.assign(bicycle, { pedal: phase / .6 * Math.PI * 2, steer: .5, speed: 7.5 });
+        view.update(); view.seatWorld(saddle);
+        rider.scale.setScalar(scale); rider.rotation.y = yaw; sampleClip(scene, 'ride', phase);
+        rider.seatPelvis(saddle, -.04);
+        const l = new Vector3(), r = new Vector3(); expect(view.gripsWorld(l, r)).toBe(true);
+        rider.holdHandlebar(l, r);
+        expect(rig.hip.getWorldPosition(new Vector3()).distanceTo(saddle), variant).toBeCloseTo(.04, 5);
+        expect(rig.handL.getWorldPosition(new Vector3()).distanceTo(l), variant).toBeLessThan(.015);
+        expect(rig.handR.getWorldPosition(new Vector3()).distanceTo(r), variant).toBeLessThan(.015);
+      }
+    }
     bicycle.mounted = false; for (let i = 0; i < 60; i++) view.update();
     expect(model.getObjectByName('kickstand')!.rotation.z).toBeCloseTo(0, 3);
   } finally { view.dispose(); vi.restoreAllMocks(); vi.unstubAllGlobals(); }
