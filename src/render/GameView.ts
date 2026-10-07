@@ -164,7 +164,7 @@ export class GameView implements Lifecycle {
     const changed = this.quality !== tier; this.quality = tier; this.resize();
     if (changed && this.postFx) { const enabled = this.postFx.bloomEnabled.value; this.postFx.dispose(); this.postFx = new PostFx(this.renderer, this.scene, this.camera, tier, this.look); this.postFx.bloomEnabled.value = enabled; this.postFx.setDof(this.dofEnabled); this.postFx.applyLook(); }
     this.lighting?.setQuality(tier); this.districts?.setQuality(tier);
-    this.vfx?.set({ quality: tier }); this.crowd?.setQuality(tier);
+    this.vfx?.set({ quality: tier }); this.crowd?.setQuality(tier); this.npcs?.setQuality(tier);
   }
   /** Three's WebGL fallback reports loss but does not rebuild its backend on restore.
    * Recreate renderer GPU state on the same canvas so touch/pointer listeners survive. */
@@ -310,7 +310,7 @@ export class GameView implements Lifecycle {
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */
   private startActors(character: Promise<unknown>): Promise<unknown> {
-    if (this.world.npcs && this.materials) this.npcs = new NpcView(this.world, this.materials);
+    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials); this.npcs.setQuality(this.quality); }
     if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
     if (this.world.combat && this.character) this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer);
     if (this.character && this.world.combat) this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!);

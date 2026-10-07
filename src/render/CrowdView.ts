@@ -1,3 +1,5 @@
+import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
+import { CrowdVisibility } from './CrowdVisibility';
 import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
@@ -36,6 +38,11 @@ export class CrowdView extends Group {
   private readonly definitions = new Map<string, { id: string; asset: string; windup: number }>();
   private readonly pending = new Map<string, Promise<void>>();
   private readonly heroSlots = new Map<string, InstancedMesh>();
+  private readonly visibility = new CrowdVisibility();
+  private readonly heroIds = new Set<number>();
+  private readonly previousHeroes = new Set<number>();
+  private readonly nearest: { id: number; distance: number }[] = [];
+  private readonly heroBands = new Map<number, boolean>();
   private readonly frustum = new Frustum();
   private readonly projection = new Matrix4();
   private readonly bounds = new Sphere(new Vector3(), 1);
@@ -95,6 +102,10 @@ export class CrowdView extends Group {
       if (this.disposed) return;
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback), capacity = role === 'crow' ? 800 : 350;
+      // Baking expands rigid parts to triangle soup. Index identical vertices before
+      // instanced attributes are attached: same surfaces, fewer animated vertices.
+      deinterleaveGeometry(baked.geometry);
+      const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
       packCrowdParts(baked.geometry);
       const tint = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
@@ -149,21 +160,28 @@ export class CrowdView extends Group {
     const player = this.world.entities.get(1)!;
     const focus = view?.cameraTarget ?? player.transform;
     if (view) this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
-    const heroes = new Set<number>();
-    if (!this.low) {
-      const nearest = [...this.world.entities.iterate()].filter(e => e.faction === 'infected' && e.combat && (e.health.current > 0 || this.world.tick - (e.infected?.deadAt ?? 0) < this.corpseTicks) && !e.hidden && !e.infected?.hidden && e.archetype !== 'infected.crow')
-        .map(e => ({ e, distance: Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z) }))
-        .filter(({ e, distance }) => {
-          if (distance > 12) return false;
-          if (!view) return true;
-          const variant = e.infected?.model ?? e.infected?.variant, key = variant && this.definitions.has(variant) ? variant : this.definitions.has(e.archetype) ? e.archetype : 'infected.runner';
-          const dimensions = this.registry.definition(this.definitions.get(key)!.asset).dimensions;
-          this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);
-          this.bounds.radius = Math.hypot(dimensions.x, dimensions.y, dimensions.z) / 2;
-          return this.frustum.intersectsSphere(this.bounds);
-        }).sort((a, b) => a.distance - b.distance).slice(0, 8);
-      for (const { e } of nearest) heroes.add(e.id);
+    this.visibility.begin(view?.camera, typeof innerHeight === 'number' ? innerHeight : 900);
+    const heroes = this.heroIds; this.previousHeroes.clear();
+    for (const id of heroes) this.previousHeroes.add(id);
+    heroes.clear(); this.nearest.length = 0;
+    if (!this.low) for (const e of this.world.entities.iterate()) {
+      if (e.faction !== 'infected' || !e.combat || e.hidden || e.infected?.hidden || e.archetype === 'infected.crow' || keepsLook(e)) continue;
+      if (e.health.current <= 0 && this.world.tick - (e.infected?.deadAt ?? 0) >= this.corpseTicks) continue;
+      const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
+      if (distance > (this.previousHeroes.has(e.id) ? 13 : 12)) continue;
+      const variant = e.infected?.model ?? e.infected?.variant;
+      const key = variant && this.definitions.has(variant) ? variant : this.definitions.has(e.archetype) ? e.archetype : 'infected.runner';
+      const d = this.registry.definition(this.definitions.get(key)!.asset).dimensions;
+      if (!this.visibility.visible(e.transform.x, e.transform.y - .7 + d.y / 2, e.transform.z, Math.hypot(d.x, d.y, d.z) / 2 + .6)) continue;
+      const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, d.y);
+      const hero = !view || pixels > (this.heroBands.get(e.id) ? 164 : 196);
+      this.heroBands.set(e.id, hero); if (!hero) continue;
+      // Hold an existing hero until a replacement is clearly closer.
+      const score = distance - (this.previousHeroes.has(e.id) ? .75 : 0);
+      let at = 0; while (at < this.nearest.length && this.nearest[at].distance <= score) at++;
+      if (at < 8) { this.nearest.splice(at, 0, { id: e.id, distance: score }); if (this.nearest.length > 8) this.nearest.pop(); }
     }
+    for (const e of this.nearest) heroes.add(e.id);
     for (const e of this.world.entities.iterate()) {
       if (e.id === 1 || e.faction !== 'infected' || !e.combat) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
@@ -179,14 +197,17 @@ export class CrowdView extends Group {
       this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);
       this.bounds.radius = Math.hypot(dimensions.x, dimensions.y, dimensions.z) / 2;
       if (view && !this.frustum.intersectsSphere(this.bounds)) continue;
-      let lod = this.low || distance > 30 ? 'lod2' : 'lod1';
+      const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, dimensions.y);
+      let lod: 'lod0' | 'lod1' | 'lod2' = this.visibility.lod(e.id, pixels, this.low);
       if (heroes.has(e.id)) {
         if (this.batches.has(`${key}:lod0`)) lod = 'lod0';
         else if (!this.pending.has(key)) {
           this.pending.set(key, this.loadBatch(def, 'lod0').finally(() => this.pending.delete(key)));
         }
       }
-      const batch = this.batches.get(`${key}:${lod}`)!;
+      // Quality changes/streaming may not have the requested tier yet. Keep the loaded figure.
+      const batch = this.batches.get(`${key}:${lod}`) ?? this.batches.get(`${key}:${availableLod}`) ?? this.batches.get(`${key}:lod2`) ?? this.batches.get(`${key}:lod1`);
+      if (!batch) continue;
       const b = e.infected ?? { state: e.health.current <= 0 ? 'dead' : e.combat.attacking ? 'attack' : 'idle', until: 0, deadAt: 0, legLost: false, special: '', detached: false, variant: '', birdAlive: [], birdPositions: [], dx: 0, dz: 0 };
       const feedback = this.feedback.get(e.id);
       const renderTick = Math.max(0, this.world.tick + alpha - 1);

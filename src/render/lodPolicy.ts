@@ -31,3 +31,10 @@ export function modelLod(distance: number, previous: string | undefined, low: bo
   if (low) return distance > 30 ? 'lod2' : 'lod1';
   return pickLod(distance, previous === 'lod0' || previous === 'lod1' || previous === 'lod2' ? previous : undefined);
 }
+
+/** Crowd bands use CSS pixels, so portrait/zoom changes select the detail actually visible.
+ * Separate enter/leave thresholds prevent a figure oscillating between batches. */
+export function crowdLod(pixels: number, previous: 'lod1' | 'lod2' | undefined, low: boolean): 'lod1' | 'lod2' {
+  if (low) return 'lod2';
+  return pixels > (previous === 'lod1' ? 72 : previous === 'lod2' ? 88 : 80) ? 'lod1' : 'lod2';
+}
