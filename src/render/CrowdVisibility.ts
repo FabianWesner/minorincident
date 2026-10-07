@@ -23,7 +23,7 @@ export class CrowdVisibility {
     this.bounds.center.set(x, y, z); this.bounds.radius = radius;
     return !this.camera || this.frustum.intersectsSphere(this.bounds);
   }
-  lod(id: number, pixels: number, low: boolean): 'lod1' | 'lod2' {
-    const band = crowdLod(pixels, this.bands.get(id), low); this.bands.set(id, band); return band;
+  lod(id: number, pixels: number): 'lod1' | 'lod2' {
+    const band = crowdLod(pixels, this.bands.get(id)); this.bands.set(id, band); return band;
   }
 }

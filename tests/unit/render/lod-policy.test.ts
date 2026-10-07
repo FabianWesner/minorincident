@@ -30,14 +30,21 @@ test('@load phone initial downloads include only tiers used at the spawn', () =>
   expect(initialDistrictLods(false, false, 46, true)).toEqual(['lod2']);
 });
 
-test('@E18-AC01 crowd screen-size hysteresis holds detail through boundary jitter and forces low tier', async () => {
+test('@E18-AC01 crowd screen-size hysteresis holds detail through boundary jitter', async () => {
   const { crowdLod } = await import('../../../src/render/lodPolicy');
-  expect(crowdLod(161, undefined, false)).toBe('lod1');
-  expect(crowdLod(145, 'lod1', false)).toBe('lod1');
-  expect(crowdLod(143, 'lod1', false)).toBe('lod2');
-  expect(crowdLod(175, 'lod2', false)).toBe('lod2');
-  expect(crowdLod(177, 'lod2', false)).toBe('lod1');
-  expect(crowdLod(300, 'lod1', true)).toBe('lod2');
+  expect(crowdLod(97)).toBe('lod1');
+  expect(crowdLod(89, 'lod1')).toBe('lod1');
+  expect(crowdLod(87, 'lod1')).toBe('lod2');
+  expect(crowdLod(103, 'lod2')).toBe('lod2');
+  expect(crowdLod(105, 'lod2')).toBe('lod1');
+});
+
+// PROD P1 "this guy looks terrible": the low tier forced the ~1.8k-triangle far silhouette (LOD2) onto every pedestrian,
+// and high showed it below 160 px, i.e. at the default game camera (figures 120-180 CSS px). Any figure at game-camera
+// size or closer must take the near tier, whatever its band history.
+test('P1 crowd figures at game-camera size or closer never draw the far silhouette tier', async () => {
+  const { crowdLod } = await import('../../../src/render/lodPolicy');
+  for (const pixels of [105, 120, 160, 180, 300, 900]) for (const previous of [undefined, 'lod1', 'lod2'] as const) expect(crowdLod(pixels, previous)).toBe('lod1');
 });
 
 test('@E18-AC01 small prop screen-size hysteresis keeps both boundaries stable', () => {
