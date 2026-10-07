@@ -17,7 +17,9 @@ for (const route of ['market', 'park'] as const) test(`@E21 @E21-AC08 @E21-AC09 
   const captured = new Set<string>();
   const snap = async (name: string) => {
     await page.evaluate(name => { window.__SS__!.pause(); window.__SS__!.camera.preset(name); }, name); await page.evaluate(() => window.__SS__!.screenshotReady());
-    await page.screenshot({ path: `${output}/${name}-${route}.png` }); captured.add(name); await page.evaluate(() => window.__SS__!.camera.follow());
+    await page.screenshot({ path: `${output}/${name}-${route}.png` }); captured.add(name);
+    if (name === 'l3-mainstreet-w2') await expect(page.getByTestId('objective-text')).toContainText('Gates close in 12:00');
+    await page.evaluate(() => window.__SS__!.camera.follow());
     await page.evaluate(() => window.__SS__!.resume());
   };
   await snap('l3-mainstreet-w2');
@@ -41,4 +43,16 @@ for (const route of ['market', 'park'] as const) test(`@E21 @E21-AC08 @E21-AC09 
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible();
   expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L4');
+});
+test.describe('L3 portrait phone evidence', () => {
+  test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  test('@E21 @E21-AC09 L3 countdown and objective text remain readable on a portrait phone', async ({ page }) => {
+    mkdirSync(output, { recursive: true });
+    await boot(page, `${testUrl}&ui=1`);
+    await page.evaluate(() => window.__SS__!.loadLevel('L3', { seed: 1, progression: 'L3-default' }));
+    await page.evaluate(() => { const api = window.__SS__!; api.pause(); api.missions.begin(); api.camera.preset('l3-mainstreet-w2'); });
+    await page.evaluate(() => window.__SS__!.screenshotReady());
+    await expect(page.getByTestId('objective-text')).toContainText('Gates close in 12:00');
+    await page.screenshot({ path: `${output}/l3-phone-390.png` });
+  });
 });
