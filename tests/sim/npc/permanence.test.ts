@@ -3,7 +3,7 @@ import { groveWorld, step, anchor } from './l1-grove';
 import { missionControls } from '../../../src/sim/missions/controls';
 import { npcWorld } from './helpers';
 
-test('quality and density never recycle a visible pedestrian or pet', async () => {
+test('quality and density never recycle a visible pedestrian or pet @E07', async () => {
   const w = await npcWorld();
   try {
     w.npcs!.configure(4, 'high', 8);
@@ -14,7 +14,7 @@ test('quality and density never recycle a visible pedestrian or pet', async () =
   } finally { w.dispose(); }
 });
 
-test('20 corpses keep their IDs and positions after leaving 60 m and returning @smoke', async () => {
+test('20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07', async () => {
   const { w } = await groveWorld(1, { civilians: 0 });
   try {
     const ai = w.infected!, at = anchor('lab-exit-front'), ids: number[] = [];
@@ -34,7 +34,7 @@ test('20 corpses keep their IDs and positions after leaving 60 m and returning @
   } finally { w.dispose(); }
 });
 
-test('a dropped hand prop and an uncollected weapon persist for the level', async () => {
+test('a dropped hand prop and an uncollected weapon persist for the level @E07', async () => {
   const { w, outbreak } = await groveWorld(1, { civilians: 0 });
   try {
     const id = outbreak.spawnPedestrian({ x: 55, z: -10 }, { handProp: 'coffee', schedule: [{ activity: 'look', anchor: 'test', target: { x: 55, z: -10 }, ticks: 60000 }] });

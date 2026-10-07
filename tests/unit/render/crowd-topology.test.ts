@@ -6,7 +6,7 @@ import { expect, test } from 'vitest';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
 import { AssetMaterials } from '../../../src/assets/materials';
 
-test('common-worker crowd triangles keep one rigid owner and bounded posed edges at every LOD', async () => {
+test('common-worker crowd triangles keep one rigid owner and bounded posed edges at every LOD @E07', async () => {
   const metrics = [];
   for (const lod of ['', '.lod1', '.lod2']) {
     const bytes = readFileSync(`public/assets/models/inf.common-worker${lod}.glb`);
