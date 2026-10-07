@@ -1,3 +1,4 @@
+import { PropFixtureView } from './PropFixtureView';
 import { ContactShadows } from './ContactShadows';
 import { NpcView } from './npc/NpcView';
 import { lookViewpoints } from '../data/lookViewpoints';
@@ -91,6 +92,8 @@ export class GameView implements Lifecycle {
   get frozen(): boolean { return this.frozenFrame !== null; }
   private generation = 0;
   private npcs: NpcView | null = null;
+  get propUploads(): number { return this.fixtureProps?.uploads ?? this.districts?.propUploads ?? 0; }
+  private fixtureProps: PropFixtureView | null = null;
   private interactions: InteractionView | null = null;
   private entityAssets: EntityAssets | null = null;
   vfx: Vfx | null = null;
@@ -307,6 +310,7 @@ export class GameView implements Lifecycle {
     if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
     if (this.world.combat && this.character) this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer);
     if (this.character && this.world.combat) this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!);
+    if (this.world.props && !this.world.districts && this.materials) { this.fixtureProps = new PropFixtureView(this.world, this.materials); this.scene.add(this.fixtureProps); }
     if (this.world.interactables && this.materials) { this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); }
     if (this.world.vehicles?.cars.size && this.materials) this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low');
     if (this.world.vehicles?.bicycle.entity && this.materials) this.bicycle = new BicycleView(this.world, this.materials);
@@ -555,6 +559,7 @@ export class GameView implements Lifecycle {
     this.entityAssets?.update();
     this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha);
     this.flashOverlay.style.opacity = String(Math.max(this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
+    this.fixtureProps?.update();
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
     this.lighting?.update(this.view); this.districts?.updateLods(this.view);
     this.districts?.cull(this.view, this.quality);
@@ -615,6 +620,7 @@ export class GameView implements Lifecycle {
     if (this.vfx) { this.scene.remove(this.vfx); this.vfx.dispose(); this.vfx = null; }
     if (this.vehicleFeedback) { this.scene.remove(this.vehicleFeedback); this.vehicleFeedback.dispose(); this.vehicleFeedback = null; }
     this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;}
+    if (this.fixtureProps) { this.scene.remove(this.fixtureProps); this.fixtureProps.dispose(); this.fixtureProps = null; }
     if (this.interactions) { this.scene.remove(this.interactions); this.interactions.dispose(); this.interactions = null; }
     if (this.entityAssets) { this.scene.remove(this.entityAssets); this.entityAssets.dispose(); this.entityAssets = null; }
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }

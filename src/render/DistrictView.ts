@@ -387,14 +387,22 @@ export class DistrictView extends Group {
    * only batches whose props actually moved are re-partitioned (on the next updateLods). */
   private readonly propLinks = new Map<string, { ref: Object3D; entry: LodBatch } | null>();
   private readonly dirtyEntries = new Set<LodBatch>();
+  propUploads = 0;
   syncProps(items: readonly PushProp[]): void {
+    this.propUploads = 0;
     for (const item of items) {
       let link = this.propLinks.get(item.id);
       if (link === undefined) { link = this.linkProp(item); this.propLinks.set(item.id, link); }
       if (!link) continue;
-      const { ref, entry } = link, [px, py, pz] = item.pose.p, q = item.pose.q, x = px - entry.origin[0], z = pz - entry.origin[1];
-      if (Math.abs(ref.position.x - x) < 1e-4 && Math.abs(ref.position.y - py) < 1e-4 && Math.abs(ref.position.z - z) < 1e-4
+      const { ref, entry } = link;
+      const enabled = item.body.isEnabled(), visibilityChanged = ref.userData.propEnabled !== enabled;
+      if (ref.userData.propScale === undefined) ref.userData.propScale = ref.scale.toArray();
+      ref.userData.propEnabled = enabled;
+      ref.scale.fromArray(ref.userData.propScale).multiplyScalar(enabled ? 1 : 0);
+      const [px, py, pz] = item.pose.p, q = item.pose.q, x = px - entry.origin[0], z = pz - entry.origin[1];
+      if (!visibilityChanged && Math.abs(ref.position.x - x) < 1e-4 && Math.abs(ref.position.y - py) < 1e-4 && Math.abs(ref.position.z - z) < 1e-4
         && Math.abs(ref.quaternion.x - q[0]) < 1e-5 && Math.abs(ref.quaternion.y - q[1]) < 1e-5 && Math.abs(ref.quaternion.z - q[2]) < 1e-5 && Math.abs(ref.quaternion.w - q[3]) < 1e-5) continue;
+      this.propUploads++;
       ref.position.set(x, py, z); ref.quaternion.set(q[0], q[1], q[2], q[3]); this.dirtyEntries.add(entry);
     }
   }
