@@ -14,6 +14,7 @@ export class L2Props extends Group {
   private readonly box = new BoxGeometry(1, 1, 1);
   private readonly red = new MeshBasicNodeMaterial({ color: '#ff2a1a' });
   private readonly blue = new MeshBasicNodeMaterial({ color: '#2f6bff' });
+  private readonly glass = new MeshBasicNodeMaterial({ color: '#cfe8f2' });
   private readonly m4 = new Matrix4();
   private readonly at = new Vector3();
   private readonly scaleV = new Vector3();
@@ -58,6 +59,15 @@ export class L2Props extends Group {
     panel(.16, z1 - z0 - 2.4, [x - .2, z1 + 4.6], [x, (z0 + z1) / 2]);
     panel(2.5, .16, [80.2, 37.4], [81.5, 35]);
     this.stripes.push({ mesh: instanced(materials.get('picketWhite'), white.length), boxes: white }, { mesh: instanced(this.red, redStripes.length), boxes: redStripes });
+    // Broken windows: a dark pane on the facade and pale glass shards on the pavement in front of it.
+    const panes: Box[] = [], shards: Box[] = [];
+    for (const d of l2Dressing) if (d.kind === 'broken-window') {
+      const out = d.yaw ? -1 : 1;
+      panes.push({ x: d.x, y: 1.3, z: d.z - out * .8, sx: 1.3, sy: .9, sz: .06 });
+      for (let k = 0; k < 6; k++) shards.push({ x: d.x + Math.sin(k * 2.3) * .7, y: .03, z: d.z + out * (.3 + (k % 3) * .25), sx: .18 + (k % 2) * .1, sy: .02, sz: .12 });
+    }
+    this.place(instanced(materials.get('uiDark'), panes.length), panes, () => [0, 0]);
+    this.place(instanced(this.glass, shards.length), shards, () => [0, 0]);
     for (const { mesh, boxes } of this.bars) this.place(mesh, boxes, () => [0, 0]);
     this.update();
   }
@@ -86,5 +96,5 @@ export class L2Props extends Group {
     const closing = s.crossedAt > 0 ? Math.min(1, (tick - s.crossedAt) / 36) : 0;
     for (const { mesh, boxes } of this.stripes) this.place(mesh, boxes, b => { const g = this.gates[b.gate!]; return [g.open[0] + (g.closed[0] - g.open[0]) * closing, g.open[1] + (g.closed[1] - g.open[1]) * closing]; });
   }
-  dispose(): void { this.box.dispose(); this.red.dispose(); this.blue.dispose(); }
+  dispose(): void { this.box.dispose(); this.red.dispose(); this.blue.dispose(); this.glass.dispose(); }
 }

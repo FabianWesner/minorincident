@@ -88,6 +88,8 @@ test.describe('L2 The Failed Rescue in the browser', () => {
     await snap('l2-truck-ride');
     for (let i = 0; i < 100 && !(await mission()).l2!.arrivedAt; i++) await step(15);
     expect((await player()).hidden).toBeFalsy();
+    // Main Row before the doors open: the same game camera as the L1 pickup spot, W1 damage without the crowd.
+    await snap('l2-streets-w1');
     await go(at('l2-forecourt'), 1.5, async () => (await mission()).l2!.doorsOpenAt > 0);
     for (let i = 0; i < 1200 && !(await mission()).l2!.doorsOpenAt; i++) await step(1);
     await snap('l2-doors-open'); await step(300);
@@ -97,10 +99,9 @@ test.describe('L2 The Failed Rescue in the browser', () => {
     for (let i = 0; i < 8; i++) { if (!await h.fightNearby()) await step(20); }
     await snap('l2-collapse');
     const route = l2Routes.side;
-    for (const [k, wp] of route.entries()) {
+    for (const wp of route) {
       await go(wp, 1.8, async () => { const m = await mission(); return m.phase !== 'playing' || m.l2!.gateClosedAt > 0; });
       const m = await mission();
-      if (k === 1 && !h.shots.has('l2-streets-w1')) await snap('l2-streets-w1');
       if (m.l2!.clusterReached && !h.shots.has('l2-cluster')) await snap('l2-cluster');
       if (m.phase !== 'playing' || m.l2!.gateClosedAt) break;
     }
