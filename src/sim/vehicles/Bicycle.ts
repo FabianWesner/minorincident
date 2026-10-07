@@ -70,7 +70,9 @@ export class Bicycle {
       return frame;
     }
     if (!alive) { this.dismount(bike, player); return frame; }
-    if (frame.interact) { this.dismount(bike, player); return { ...frame, interact: false }; }
+    // Interact priority: an objective or device in reach takes the press; dismount only if nothing else does.
+    const claimed = this.world.missions?.interactionAvailable() || this.world.interactables?.activeId != null;
+    if (frame.interact && !claimed) { this.dismount(bike, player); return { ...frame, interact: false }; }
     // Contact with an infected stops the bicycle and dismounts the rider (no damage, no knockback).
     for (const e of this.world.entities.iterate()) {
       if (!e.infected || e.health.current <= 0 || e.hidden || e.infected.hidden) continue;
@@ -85,10 +87,13 @@ export class Bicycle {
     let target = 0;
     if (want > 0) {
       const desired = Math.atan2(frame.move.z, frame.move.x), err = Math.atan2(Math.sin(desired - b.heading), Math.cos(desired - b.heading));
-      const omega = Math.max(1.5, b.speed / minTurnRadiusM), turn = Math.sign(err) * Math.min(Math.abs(err), omega * FIXED_DT);
+      // Click-to-move rides the on-foot navigation route (QA1-02): follow its waypoints tightly and slow
+      // into turns so the bicycle rounds fences instead of cutting into them.
+      const routed = !!frame.navigation;
+      const omega = Math.max(routed ? 4 : 1.5, b.speed / minTurnRadiusM), turn = Math.sign(err) * Math.min(Math.abs(err), omega * FIXED_DT);
       b.heading += turn; b.steer = Math.max(-1, Math.min(1, turn / (omega * FIXED_DT || 1)));
       // Sharp turns shed speed so the bicycle never pivots at full speed.
-      target = speedMs * want * Math.max(.35, Math.cos(Math.min(Math.abs(err), Math.PI / 2)) ** .5);
+      target = routed ? speedMs * want * Math.max(.12, Math.cos(Math.min(Math.abs(err), Math.PI / 2)) ** 2) : speedMs * want * Math.max(.35, Math.cos(Math.min(Math.abs(err), Math.PI / 2)) ** .5);
     } else b.steer = 0;
     const accel = accelToMs / accelS, change = target > b.speed ? accel * FIXED_DT : (want > 0 ? 9 : 6) * FIXED_DT;
     b.speed += Math.max(-change, Math.min(change, target - b.speed));
@@ -96,7 +101,7 @@ export class Bicycle {
     const m = b.speed / speedMs;
     // The attack buttons are disabled while riding; a coasting bicycle with no input keeps its heading.
     const off = { down: false, held: false, up: false };
-    const next: InputFrame = { ...frame, move: { x: Math.cos(b.heading) * m, z: Math.sin(b.heading) * m }, left: off, right: { ...off }, selector: 0, interact: false };
+    const next: InputFrame = { ...frame, move: { x: Math.cos(b.heading) * m, z: Math.sin(b.heading) * m }, left: off, right: { ...off }, selector: 0, interact: !!claimed && frame.interact };
     delete next.attackTarget; delete next.navigation; // the bicycle has its own acceleration and turning model
     return next;
   }
