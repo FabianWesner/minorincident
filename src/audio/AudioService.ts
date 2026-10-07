@@ -748,7 +748,8 @@ export class AudioService implements Lifecycle {
             return;
         }
         if (event.type === 'objective.started' && event.id !== 'breakfast') {
-            this.incident = true;
+            // L1 v2 opens with a calm morning: its objectives are not an incident until the arc leaves calm.
+            if (!this.arc || this.arc.phase !== 'calm') this.incident = true;
             this.musicIntensity({ alerted: event.id === 'store-fight' ? 10 : 0 });
             if (event.id === 'escape') this.stinger('elite', this.level);
         }
@@ -871,6 +872,7 @@ export class AudioService implements Lifecycle {
     private updateArc(listener: SoundPosition, t: number): void {
         const arc = this.arc!, zone = zoneAt(this.graph.map, listener);
         const frame = this.arcFrame = arc.update(t, this.points.length, zone.startsWith('interior') && arc.phase === 'chaos');
+        if (arc.phase !== 'calm') this.incident = true;
         const bedScale = frame.calmGain;
         this.loop('arc:chatter', 'l1.calm.chatter', { gain: bedScale });
         for (const bed of ambienceTiers[this.tier].beds) {

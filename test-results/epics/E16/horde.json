@@ -10,8 +10,14 @@
     "voiceLimit": 32,
     "music": {
       "level": "L1",
+      "state": "calm",
+      "streamed": {
+        "state": null,
+        "transitions": [],
+        "decks": []
+      },
       "paused": false,
-      "position": 2.556,
+      "position": 0.1346666666666665,
       "layers": [
         "base"
       ],
@@ -34,8 +40,18 @@
     "errors": [],
     "cues": [
       {
+        "cue": "l1.calm.chatter",
+        "variant": "l1.calm.chatter",
+        "time": 3.456,
+        "tick": 1,
+        "gain": 0.2199999988079071,
+        "rate": 1.0117086172103882,
+        "voice": 8
+      },
+      {
         "cue": "horde.loop.asphalt",
-        "time": 3.28,
+        "variant": "horde.loop.asphalt",
+        "time": 3.461333333333333,
         "tick": 12,
         "sourceId": 100000,
         "position": {
@@ -45,27 +61,29 @@
           "count": 29
         },
         "gain": 0.138004869222641,
-        "rate": 1.0175628662109375,
-        "voice": 15
+        "rate": 0.9854338765144348,
+        "voice": 9
       },
       {
         "cue": "horde.loop.asphalt",
-        "time": 3.28,
+        "variant": "horde.loop.asphalt",
+        "time": 3.461333333333333,
         "tick": 12,
         "sourceId": 100001,
         "position": {
           "id": 1,
-          "x": -20.026762454580577,
-          "z": -1.250681961288392,
+          "x": -20.039909407985604,
+          "z": -1.250681961287442,
           "count": 31
         },
         "gain": 0.138004869222641,
-        "rate": 0.9854338765144348,
-        "voice": 16
+        "rate": 1.0148118734359741,
+        "voice": 10
       },
       {
         "cue": "horde.loop.asphalt",
-        "time": 3.28,
+        "variant": "horde.loop.asphalt",
+        "time": 3.461333333333333,
         "tick": 12,
         "sourceId": 100002,
         "position": {
@@ -75,12 +93,13 @@
           "count": 30
         },
         "gain": 0.138004869222641,
-        "rate": 1.0148118734359741,
-        "voice": 17
+        "rate": 1.000381350517273,
+        "voice": 11
       },
       {
         "cue": "horde.loop.asphalt",
-        "time": 3.28,
+        "variant": "horde.loop.asphalt",
+        "time": 3.461333333333333,
         "tick": 12,
         "sourceId": 100003,
         "position": {
@@ -90,12 +109,13 @@
           "count": 31
         },
         "gain": 0.138004869222641,
-        "rate": 1.000381350517273,
-        "voice": 18
+        "rate": 0.9735692143440247,
+        "voice": 12
       },
       {
         "cue": "horde.loop.asphalt",
-        "time": 3.28,
+        "variant": "horde.loop.asphalt",
+        "time": 3.464,
         "tick": 12,
         "sourceId": 100004,
         "position": {
@@ -105,12 +125,13 @@
           "count": 29
         },
         "gain": 0.138004869222641,
-        "rate": 0.9735692143440247,
-        "voice": 19
+        "rate": 0.9925184845924377,
+        "voice": 13
       },
       {
         "cue": "infected.vocal",
-        "time": 3.28,
+        "variant": "infected.vocal",
+        "time": 3.466666666666667,
         "tick": 12,
         "sourceId": 2,
         "position": {
@@ -118,13 +139,14 @@
           "x": 5,
           "z": 0
         },
-        "gain": 0.11999999731779099,
-        "rate": 0.9925184845924377,
-        "voice": 20
+        "gain": 0.11045797914266586,
+        "rate": 0.9529075622558594,
+        "voice": 14
       },
       {
         "cue": "infected.vocal",
-        "time": 3.28,
+        "variant": "infected.vocal.v3",
+        "time": 3.466666666666667,
         "tick": 12,
         "sourceId": 3,
         "position": {
@@ -132,27 +154,29 @@
           "x": 3.061616997868383e-16,
           "z": 5
         },
-        "gain": 0.11999999731779099,
-        "rate": 0.9737738966941833,
-        "voice": 21
+        "gain": 0.12161434441804886,
+        "rate": 0.9838246703147888,
+        "voice": 15
       },
       {
         "cue": "infected.vocal",
-        "time": 3.28,
+        "variant": "infected.vocal.v2",
+        "time": 3.466666666666667,
         "tick": 12,
         "sourceId": 4,
         "position": {
           "id": 4,
-          "x": -4.579999999999998,
-          "z": -2.942503174302289e-11
+          "x": -4.987555555555556,
+          "z": 6.10799394668071e-16
         },
-        "gain": 0.11999999731779099,
-        "rate": 0.9784095287322998,
-        "voice": 22
+        "gain": 0.1334371268749237,
+        "rate": 1.0541772842407227,
+        "voice": 16
       },
       {
         "cue": "infected.vocal",
-        "time": 3.28,
+        "variant": "infected.vocal.v1",
+        "time": 3.466666666666667,
         "tick": 12,
         "sourceId": 5,
         "position": {
@@ -160,24 +184,9 @@
           "x": -9.184850993605148e-16,
           "z": -5
         },
-        "gain": 0.11999999731779099,
-        "rate": 0.9764537811279297,
-        "voice": 23
-      },
-      {
-        "cue": "telegraph.runner",
-        "time": 3.2853333333333334,
-        "tick": 43,
-        "sourceId": 4,
-        "position": {
-          "x": -2.4799999999999995,
-          "y": 0.7,
-          "z": -1.765532520751354e-10,
-          "yaw": 7.00610573010058e-11
-        },
-        "gain": 0.6000000238418579,
-        "rate": 1,
-        "voice": 24
+        "gain": 0.11760950088500977,
+        "rate": 0.9406205415725708,
+        "voice": 17
       }
     ],
     "clusters": [
@@ -189,8 +198,8 @@
       },
       {
         "id": 1,
-        "x": -19.95902051909671,
-        "z": -1.2506819612931375,
+        "x": -19.97576505177917,
+        "z": -1.250681961287442,
         "count": 31
       },
       {
@@ -216,10 +225,10 @@
   },
   "emitters": [
     {
-      "id": 8,
+      "id": 1,
       "cue": "music.L1.base",
       "priority": 35,
-      "gain": 0.3499999940395355,
+      "gain": 0,
       "rate": 1,
       "cutoff": 20000,
       "position": null,
@@ -227,7 +236,7 @@
       "loop": true
     },
     {
-      "id": 9,
+      "id": 2,
       "cue": "music.L1.pulse",
       "priority": 35,
       "gain": 0,
@@ -238,7 +247,7 @@
       "loop": true
     },
     {
-      "id": 10,
+      "id": 3,
       "cue": "music.L1.drive",
       "priority": 35,
       "gain": 0,
@@ -249,7 +258,7 @@
       "loop": true
     },
     {
-      "id": 11,
+      "id": 4,
       "cue": "music.L1.peak",
       "priority": 35,
       "gain": 0,
@@ -260,7 +269,7 @@
       "loop": true
     },
     {
-      "id": 12,
+      "id": 5,
       "cue": "bed.birds",
       "priority": 10,
       "gain": 0.18000000715255737,
@@ -271,7 +280,7 @@
       "loop": true
     },
     {
-      "id": 13,
+      "id": 6,
       "cue": "bed.wind",
       "priority": 10,
       "gain": 0.18000000715255737,
@@ -282,7 +291,7 @@
       "loop": true
     },
     {
-      "id": 14,
+      "id": 7,
       "cue": "bed.traffic",
       "priority": 10,
       "gain": 0.18000000715255737,
@@ -293,7 +302,18 @@
       "loop": true
     },
     {
-      "id": 15,
+      "id": 8,
+      "cue": "l1.calm.chatter",
+      "priority": 10,
+      "gain": 0.2199999988079071,
+      "rate": 1.0117086172103882,
+      "cutoff": 20000,
+      "position": null,
+      "panner": null,
+      "loop": true
+    },
+    {
+      "id": 9,
       "cue": "horde.loop.asphalt",
       "priority": 10,
       "gain": 0.138004869222641,
@@ -309,23 +329,23 @@
       "loop": true
     },
     {
-      "id": 16,
+      "id": 10,
       "cue": "horde.loop.asphalt",
       "priority": 10,
       "gain": 0.138004869222641,
       "rate": 1,
-      "cutoff": 20000,
+      "cutoff": 19985.130859375,
       "position": {
         "id": 1,
-        "x": -19.95902051909671,
-        "z": -1.2506819612931375,
+        "x": -19.97576505177917,
+        "z": -1.250681961287442,
         "count": 31
       },
       "panner": "HRTF",
       "loop": true
     },
     {
-      "id": 17,
+      "id": 11,
       "cue": "horde.loop.asphalt",
       "priority": 10,
       "gain": 0.138004869222641,
@@ -341,7 +361,7 @@
       "loop": true
     },
     {
-      "id": 18,
+      "id": 12,
       "cue": "horde.loop.asphalt",
       "priority": 10,
       "gain": 0.138004869222641,
@@ -357,7 +377,7 @@
       "loop": true
     },
     {
-      "id": 19,
+      "id": 13,
       "cue": "horde.loop.asphalt",
       "priority": 10,
       "gain": 0.138004869222641,
@@ -373,11 +393,11 @@
       "loop": true
     },
     {
-      "id": 20,
+      "id": 14,
       "cue": "infected.vocal",
       "priority": 70,
-      "gain": 0.11999999731779099,
-      "rate": 0.9925184845924377,
+      "gain": 0.11045797914266586,
+      "rate": 0.9529075622558594,
       "cutoff": 20000,
       "position": {
         "id": 2,
@@ -388,11 +408,11 @@
       "loop": false
     },
     {
-      "id": 21,
+      "id": 15,
       "cue": "infected.vocal",
       "priority": 70,
-      "gain": 0.11999999731779099,
-      "rate": 0.9737738966941833,
+      "gain": 0.12161434441804886,
+      "rate": 0.9838246703147888,
       "cutoff": 20000,
       "position": {
         "id": 3,
@@ -403,47 +423,31 @@
       "loop": false
     },
     {
-      "id": 22,
+      "id": 16,
       "cue": "infected.vocal",
       "priority": 70,
-      "gain": 0.11999999731779099,
-      "rate": 0.9784095287322998,
+      "gain": 0.1334371268749237,
+      "rate": 1.0541772842407227,
       "cutoff": 20000,
       "position": {
         "id": 4,
-        "x": -4.579999999999998,
-        "z": -2.942503174302289e-11
+        "x": -4.987555555555556,
+        "z": 6.10799394668071e-16
       },
       "panner": "HRTF",
       "loop": false
     },
     {
-      "id": 23,
+      "id": 17,
       "cue": "infected.vocal",
       "priority": 70,
-      "gain": 0.11999999731779099,
-      "rate": 0.9764537811279297,
+      "gain": 0.11760950088500977,
+      "rate": 0.9406205415725708,
       "cutoff": 20000,
       "position": {
         "id": 5,
         "x": -9.184850993605148e-16,
         "z": -5
-      },
-      "panner": "HRTF",
-      "loop": false
-    },
-    {
-      "id": 24,
-      "cue": "telegraph.runner",
-      "priority": 90,
-      "gain": 0.6000000238418579,
-      "rate": 1,
-      "cutoff": 20000,
-      "position": {
-        "x": -2.4799999999999995,
-        "y": 0.7,
-        "z": -1.765532520751354e-10,
-        "yaw": 7.00610573010058e-11
       },
       "panner": "HRTF",
       "loop": false
