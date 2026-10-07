@@ -11,6 +11,9 @@ import bpy
 import bmesh
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import simplify as simplify_lod
+
 HERE = Path(__file__).resolve().parent
 p = argparse.ArgumentParser()
 p.add_argument('--render'); p.add_argument('--glb'); p.add_argument('--view', default='ref')
@@ -391,15 +394,12 @@ if a.glb:
     # Independently exported LODs preserve all node names and joint transforms.
     meshes=[o for o in scene.objects if o.type=='MESH']
     originals={o:o.data for o in meshes}
-    for suffix,ratio in [('lod1',.15),('lod2',.03)]:
+    for suffix,ratio in [('lod1',.55),('lod2',.25)]:
         for o in meshes:
             o.data=originals[o].copy()
         for o in scene.objects:
             if o.type=='MESH':
-                d=o.modifiers.new('LOD','DECIMATE');d.ratio=ratio
-                bpy.context.view_layer.objects.active=o
-                bpy.ops.object.modifier_apply(modifier=d.name)
-                clean_mesh(o)
+                simplify_lod(o, ratio, planar_only=o.data.materials[0] == M['glass'])
         export_glb(HERE/('model.'+suffix+'.glb'))
         for o in meshes:
             reduced=o.data;o.data=originals[o];bpy.data.meshes.remove(reduced)

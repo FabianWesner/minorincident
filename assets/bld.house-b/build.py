@@ -3,7 +3,14 @@ import argparse, json, math, random, sys
 from pathlib import Path
 import bpy, bmesh
 from mathutils import Vector
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import export_lods, rebuild_from_baked
+
 HERE=Path(__file__).resolve().parent
+if '--lod-only' in sys.argv:
+    rebuild_from_baked(HERE/'model.glb')
+    sys.exit(0)
+
 p=argparse.ArgumentParser()
 for f in ['render','glb']: p.add_argument('--'+f)
 p.add_argument('--view',default='ref'); p.add_argument('--samples',type=int,default=24)
@@ -261,19 +268,8 @@ if a.glb:
     def export_glb(path):
         bpy.ops.export_scene.gltf(filepath=str(path.resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
     export_glb(Path(a.glb))
-    original={o:o.data for o in meshes}
-    lod_stats=[]
-    for level,ratio in [(1,.14),(2,.035)]:
-        for o in meshes:
-            o.data=original[o].copy(); bpy.context.view_layer.objects.active=o
-            mod=o.modifiers.new('LOD reduction','DECIMATE'); mod.ratio=ratio; bpy.ops.object.modifier_apply(modifier=mod.name)
-        lod_path=Path(a.glb).with_name(Path(a.glb).stem+'.lod%d.glb'%level); export_glb(lod_path)
-        count=0
-        for o in meshes:o.data.calc_loop_triangles(); count+=len(o.data.loop_triangles)
-        lod_stats.append({'level':level,'triangles':count,'draw_calls':len(meshes),'file':lod_path.name})
-        for o in meshes:
-            reduced=o.data; o.data=original[o]; bpy.data.meshes.remove(reduced)
-    (HERE/'lods.json').write_text(json.dumps(lod_stats,indent=2)+'\n')
+    export_lods(Path(a.glb), meshes)
+
 print('BUILD OK',tri,'triangles',len(meshes),'draw calls')
 if a.render:
     scene=bpy.context.scene; scene.render.engine='CYCLES'; scene.cycles.samples=a.samples; scene.cycles.use_denoising=True

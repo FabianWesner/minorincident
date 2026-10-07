@@ -32,14 +32,17 @@ import type { CameraPose } from "./View";
 import type { View } from './View';
 import { AmbientLife } from './AmbientLife';
 import { Foliage } from './Foliage';
+import { pickLod, type Lod } from './lodPolicy';
 import { seeThrough } from './SeeThrough';
 import type { PaletteToken } from '../data/palette';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 
-/** Assets whose decimated LOD1/LOD2 show torn roofs or panels (asset QA 2026-10-07): near views use LOD0 until regenerated. */
+/** Assets whose decimated LOD1/LOD2 show torn roofs or panels (asset QA 2026-10-07): their LOD1 band
+ * uses LOD0 and their LOD2 band LOD1 until the LODs are regenerated - on the low tier (phones) only: the
+ * high tier draws LOD0 within 45 m (lodPolicy), and loading these LOD0s up front cost ~1.6 s per L1 start. */
 const BROKEN_LOD1 = new Set(['bld.house-a', 'bld.house-c', 'bld.mainstreet-brick', 'bld.bus-stop', 'veh.suv-green', 'bld.gas-station']);
-interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; lit: boolean; loaded: boolean }
+interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; lit: boolean; loaded: boolean; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */
 export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
@@ -158,7 +161,7 @@ export class DistrictView extends Group {
         await Promise.all(
           [...references].map(async ([key, refs]) => {
             const [id, power] = key.split(":");
-            const prototypes = await Promise.all((BROKEN_LOD1.has(id) ? ['lod0', 'lod0', 'lod1'] : ['lod1', 'lod1', 'lod2']).map(lod => this.registry.asset(id, power === 'true', lod as 'lod0' | 'lod1' | 'lod2')));
+            const prototypes = await Promise.all((BROKEN_LOD1.has(id) && this.low ? ['lod0', 'lod0', 'lod1'] : ['lod1', 'lod1', 'lod2']).map(lod => this.registry.asset(id, power === 'true', lod as 'lod0' | 'lod1' | 'lod2')));
             // L1 uses the shared vertex-attribute instancing path; live counts stay
             // unchanged while shader code no longer depends on placement capacity.
             const capacity = Math.max(refs.length, this.instanceCapacity ?? refs.length);
@@ -170,7 +173,7 @@ export class DistrictView extends Group {
               batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
             }
             const dimensions = new Box3().setFromObject(prototypes[1]).getSize(new Vector3());
-            this.lodBatches.push({ hero, near, far, refs, id, lit: power === 'true', loaded: false, origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
+            this.lodBatches.push({ hero, near, far, refs, id, lit: power === 'true', loaded: false, bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
           }),
         );
         // Dynamic nav-blockers use the same positions/extents as their Rapier colliders.
@@ -366,7 +369,10 @@ export class DistrictView extends Group {
       this.bounds.center.set(x, ref.position.y + height / 2, z); this.bounds.radius = radius;
       if (!this.frustum.intersectsSphere(this.bounds)) continue;
       const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
-      (distance > (this.low ? 16 : 30) || this.low && worldAssets[entry.id].category === 'prop' ? far : !this.low && distance <= 12 ? hero : near).references.push(ref);
+      // High tier: LOD0 inside the play view (lodPolicy, with hysteresis). Low tier keeps its budget.
+      const band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' ? 'lod2' : 'lod1') : pickLod(distance, entry.bands[index]);
+      entry.bands[index] = band;
+      (band === 'lod2' ? far : band === 'lod1' ? near : hero).references.push(ref);
     }
     for (const batch of [hero, near, far]) {
       batch.visible = batch.references.length > 0;
@@ -403,12 +409,15 @@ export class DistrictView extends Group {
   /** Set while the level is playable: prepares a new LOD0 batch's GPU programs and buffers off-screen
    * (asynchronously) before it replaces the LOD1 hero batch, so the swap does not upload on a frame. */
   warmHero: ((batch: InstancedGroup) => Promise<void>) | null = null;
+  /** Set with warmHero: resolves when a swap may happen (after the first seconds of play, one per frame). */
+  swapSlot: (() => Promise<void>) | null = null;
   private async loadHero(entry: LodBatch): Promise<void> {
     const prototype = await this.registry.asset(entry.id, entry.lit, 'lod0');
     if (this.disposed) return;
     // Allocate full placement capacity, then retain only currently visible refs.
     const replacement = new InstancedGroup(prototype, entry.refs.slice(), entry.hero.capacity);
     if (this.warmHero) { await this.warmHero(replacement); if (this.disposed) { replacement.dispose(); return; } }
+    if (this.swapSlot) { await this.swapSlot(); if (this.disposed) { replacement.dispose(); return; } }
     const old = entry.hero;
     replacement.references.splice(0, replacement.references.length, ...old.references);
     replacement.visible = old.visible; replacement.name = old.name;

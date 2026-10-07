@@ -1,5 +1,6 @@
 // Adapted from Bruno Simon InteractivePoints.js / RayCursor.js (MIT):
 // highlighted active point above geometry, range-based reveal, separate presentation state.
+import { modelLod } from './lodPolicy';
 import { BoxGeometry, CylinderGeometry, Group, Mesh, MeshBasicNodeMaterial, RingGeometry, SphereGeometry, Vector3, type Camera, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
 import type { View } from './View';
 import type { AssetQuality } from '../assets/types';
@@ -63,7 +64,7 @@ export class InteractionView extends Group {
   private ensure(e: EntitySnapshot): void {
     if (!(e.interactable || e.hazard || e.destructible || (e.pickup && 'kind' in e.pickup)) || this.pending.has(e.id)) return;
     const distance = Math.hypot(e.transform.x - this.view.cameraTarget.x, e.transform.z - this.view.cameraTarget.z);
-    const lod = !this.assetId(e) ? 'lod0' : distance > 30 ? 'lod2' : this.low || distance > 12 ? 'lod1' : 'lod0';
+    const lod = !this.assetId(e) ? 'lod0' : modelLod(distance, this.lods.get(e.id), this.low);
     if (this.objects.has(e.id) && this.lods.get(e.id) === lod) return;
     const load = this.create(e, lod).then(object => {
       if (!this.disposed) {

@@ -14,7 +14,14 @@ import bmesh
 import bpy
 from mathutils import Matrix, Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import hard_normals, refresh_normals
+
 HERE = Path(__file__).resolve().parent
+if '--normals-only' in sys.argv:
+    refresh_normals(HERE, Path(sys.argv[sys.argv.index('--lod-input-directory') + 1]))
+    sys.exit(0)
+
 ARGS = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 
 
@@ -768,6 +775,7 @@ if arg('--glb'):
             bpy.context.view_layer.objects.active=obj
             dec=obj.modifiers.new('lod_density','DECIMATE');dec.ratio=ratio
             bpy.ops.object.modifier_apply(modifier=dec.name)
+        for obj in meshes: hard_normals(obj)
         lodpath=Path(arg('--glb')).with_name('model.lod'+str(level)+'.glb').resolve()
         bpy.ops.export_scene.gltf(filepath=str(lodpath),export_format='GLB',
             use_selection=True,export_apply=True,export_yup=True,export_extras=True,
