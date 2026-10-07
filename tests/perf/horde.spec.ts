@@ -16,7 +16,8 @@ test('T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and
   expect(proof.ai.count).toBe(200);
   const rendered = runners.reduce((sum, batch) => sum + batch.instances, 0);
   expect(rendered).toBeGreaterThan(0); expect(rendered).toBeLessThan(200);
-  expect(runners.find(batch => batch.lod === 'lod0')!.instances).toBe(8); // Offscreen instances are culled; simulation keeps all 200. expect(proof.crowd.meshDrawCalls).toBeLessThanOrEqual(30); expect(proof.crowd.nonInstancedMeshes).toBe(0); expect(proof.crowd.objects).toBe(proof.crowd.batches.length + 4);
+  expect(runners.find(batch => batch.lod === 'lod0')!.instances).toBe(8); // Offscreen instances are culled; simulation keeps all 200.
+  expect(proof.crowd.meshDrawCalls).toBeLessThanOrEqual(30); expect(proof.crowd.nonInstancedMeshes).toBe(0); expect(proof.crowd.objects).toBe(proof.crowd.batches.length + 4);
   mkdirSync('test-results/epics/E07', { recursive: true }); writeFileSync('test-results/epics/E07/render-perf.json', JSON.stringify(proof, null, 2) + '\n');
   await page.locator('canvas').screenshot({ path: 'test-results/epics/E07/horde-200.png' });
   // Remove all infected and compare actual renderer draws, including fixed crowd shadow/telegraph batches.

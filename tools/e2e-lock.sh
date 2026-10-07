@@ -9,14 +9,15 @@ command -v lockf >/dev/null 2>&1 || exec "$@"
 export MI_E2E_LOCK_HELD=1
 base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"
 slots="${E2E_SLOTS:-1}"
-# Wait in the kernel for the single shared slot; polling can starve a lane behind repeated runs.
+# Join the kernel queue for the default shared slot; polling can starve queued lanes.
 if [ "$slots" -eq 1 ]; then
-  exec lockf "$base.0" "$@"
+  exec lockf -k "$base.0" "$@"
 fi
 while :; do
   i=0
   while [ "$i" -lt "$slots" ]; do
-    lockf -t "${E2E_WAIT:-60}" "$base.$i" "$@" 2>/dev/null; rc=$?
+    # Keep the inode: unlinking a lock file splits queued and newly arriving users.
+    lockf -k -t "${E2E_WAIT:-60}" "$base.$i" "$@" 2>/dev/null; rc=$?
     [ "$rc" -ne 75 ] && exit "$rc"   # 75 = slot busy (EX_TEMPFAIL); anything else is the command's result
     i=$((i + 1))
   done
