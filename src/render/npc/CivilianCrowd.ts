@@ -6,7 +6,7 @@ import { CrowdLocomotion } from '../characters/CrowdLocomotion';
 import { GaitPhase } from '../characters/GaitPhase';
 import { CrowdFigureProbe } from '../characters/CrowdFigureProbe';
 import { Color, DoubleSide, FrontSide, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
-import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance } from 'three/tsl';
+import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance, time, sin } from 'three/tsl';
 import type { Materials } from '../Materials';
 import { crowdBlendedMatrix, packCrowdParts } from '../../assets/crowd';
 import { AssetRegistry } from '../../assets/registry';
@@ -84,7 +84,7 @@ class CivilianBatch extends Group {
   private readonly shirt = new Color();
   private readonly registry = new AssetRegistry(() => {});
   source = 'placeholder';
-  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase()) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); }
+  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase()) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = distant ? 'lod2' : 'lod1'; }
   async init(): Promise<void> {
     const loaded = await this.registry.loadAsset(this.model, this.distant ? 'lod2' : 'lod1');
     await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
@@ -127,7 +127,8 @@ class CivilianBatch extends Group {
     this.poses = new CrowdPosePalette(baked.clip, 350); this.texture = this.poses.texture;
     packCrowdParts(baked.geometry);
     const parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
-    const overlay = attribute('_overlay', 'vec4'), eye = parts.z, vein = parts.w.greaterThan(.5).select(parts.w.lessThan(1.5).select(1, 0), 0), blood = parts.w.greaterThan(1.5).select(parts.w.lessThan(2.5).select(1, 0), 0), socket = parts.w.greaterThan(2.5).select(1, 0), decay = overlay.x;
+    // overlay.y >= 2 flags a pedestrian who is turning (eye glow = y - 2); y in 0..1 is the plain eye glow.
+    const overlay = attribute('_overlay', 'vec4'), turning = overlay.y.greaterThan(1.5).select(1, 0), eyeGlow = overlay.y.sub(turning.mul(2)), eye = parts.z, vein = parts.w.greaterThan(.5).select(parts.w.lessThan(1.5).select(1, 0), 0), blood = parts.w.greaterThan(1.5).select(parts.w.lessThan(2.5).select(1, 0), 0), socket = parts.w.greaterThan(2.5).select(1, 0), decay = overlay.x;
     // parts.y > 0: tinted garment, value = the shade's brightness relative to the main garment colour.
     const clothing = parts.y.greaterThan(0).select(variant.xyz.mul(parts.y), attribute('color', 'vec3'));
     // Same clothes and body: only the skin blends toward ash-green, blood darkens mouth and bite, eyes ignite.
@@ -139,13 +140,17 @@ class CivilianBatch extends Group {
     const grimy = clothing.mul(overlay.z.mul(-.42).add(1));
     const skin = mix(grimy, sunken, skinShift);
     const bloody = mix(skin, vec3(.36, .02, .03), blood.mul(overlay.z).mul(.9));
-    const base = mix(bloody, mix(vec3(.02), vec3(1, .015, .025), overlay.y), eye);
+    const base = mix(bloody, mix(vec3(.02), vec3(1, .015, .025), eyeGlow), eye);
     const eyeColor = vec3(1, .005, .02);
     // Red glowing eyes in dark sockets. Kept below the bloom whiteout point: the emissive is a pure red (no luminance
     // normalisation, which pushed it to ~14x and bloomed the whole head white) at a capped strength.
     // The sockets glow a dim red around the eyes so the read survives 10-15 m, still far below the bloom whiteout.
     // A faint ash-green self-glow on infected skin so the colour shift survives building shadow (far below bloom).
-    const glow = eyeColor.mul(eye.mul(2.2).add(socket.mul(.75))).mul(overlay.y).add(vec3(.05, .1, .03).mul(skinShift).mul(overlay.z));
+    // E19-AC23: while turning, a sickly ash-green pulse throbs on the skin only (hair and clothes keep the person's own
+    // colours, so it stays recognisably the same person); it reads at the game camera even when the body is down.
+    const pulse = sin(time.mul(7.5).add(variant.x.mul(9))).mul(.5).add(.5);
+    const glow = eyeColor.mul(eye.mul(2.2).add(socket.mul(.75))).mul(eyeGlow).add(vec3(.05, .1, .03).mul(skinShift).mul(overlay.z))
+      .add(vec3(.22, .4, .08).mul(turning).mul(pulse.mul(.7).add(.3)).mul(parts.y.lessThan(0).select(1, 0)));
     const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     // E25 night readability: crowd silhouettes take the preset's moonlit rim.
     if ('figureRim' in material) material.figureRim.value = 1;
@@ -178,7 +183,7 @@ class CivilianBatch extends Group {
       // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
       if (!this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
-      if ((this.visibility.lod(e.id, pixels, low) === 'lod2') !== this.distant) continue;
+      if ((this.visibility.lod(e.id, pixels) === 'lod2') !== this.distant) continue;
       if (!e.civilian && e.infected && keepsLook(e)) { if (this.place(e, index, alpha)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
       if (!c || c.pet || e.hidden || c.state === 'infected') continue;
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
@@ -226,11 +231,11 @@ class CivilianBatch extends Group {
       }
       this.tintOf(e, index, blend[0] * 2 + blend[1]);
       const glow = c.eyesGlow ? e.infection ? Math.min(1, (this.world.tick - (e.infection.endsTick - 78)) / 30) : Math.min(1, Math.max(0, (c.veins - .12) / .65)) : 0;
-      this.overlay.setXYZ(index, c.veins, Math.max(0, glow), e.infection ? Math.min(1, Math.max(0, (e.infection.progress - .35) / .4)) : 0); index++; shadowPixels = Math.max(shadowPixels, pixels);
+      this.overlay.setXYZ(index, c.veins, Math.max(0, glow) + (e.infection ? 2 : 0), e.infection ? Math.min(1, Math.max(0, (e.infection.progress - .35) / .4)) : 0); index++; shadowPixels = Math.max(shadowPixels, pixels);
     }
-    // Full sun silhouettes matter in the close game camera. Wider views retain
+    // Full sun silhouettes matter in the close game camera (high tier; low keeps the shared contact shadows). Wider views retain
     // the shared contact shadows; hysteresis prevents caster toggling at an edge.
-    this.mesh.castShadow = !this.distant && shadowPixels > (this.mesh.castShadow ? 128 : 156);
+    this.mesh.castShadow = !low && !this.distant && shadowPixels > (this.mesh.castShadow ? 128 : 156);
     this.mesh.count = index; this.mesh.visible = index > 0;
     if (index) {
       for (const attribute of [this.mesh.instanceMatrix, this.frame, this.tint, this.overlay]) {
