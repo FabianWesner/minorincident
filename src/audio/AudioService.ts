@@ -12,7 +12,10 @@ import { HordeClusters, type HordePoint } from './HordeClusters';
 import { AmbienceSchedule } from './AmbienceSchedule';
 import { StreamedMusic } from './StreamedMusic';
 import { l1v2 } from '../data/l1v2';
+import { humanInfected } from '../data/infected';
 import { L1ArcDirector, type ArcFrame } from './L1Arc';
+/** Recorded infected voice cues (alert, hurt, death) are human performances: animals keep their own telegraphs. */
+const voicedInfected = new Set(humanInfected.map(d => d.id));
 export interface AudioSettings {
     muted: boolean;
     captions: boolean;
@@ -716,6 +719,12 @@ export class AudioService implements Lifecycle {
         if (event.type === 'combat.hit' || event.type === 'combat.kill') {
             const target = this.world.entities.get(event.targetId);
             if (target?.faction === 'environment' || target?.vehicle) return;
+            if (target?.infected && voicedInfected.has(target.archetype)) {
+                if (event.type === 'combat.kill')
+                    this.play('infected.death', { position: target.transform }, target.id);
+                else if (event.amount > 0 && target.health.current > 0)
+                    this.play('infected.hurt', { position: target.transform }, target.id);
+            }
             if (event.type === 'combat.hit' && event.amount > 0 && event.damageType === 'melee') {
                 const weapon = event.actionId.split('.').at(-1)!;
                 const targetPosition = target?.transform ?? position;
@@ -728,8 +737,18 @@ export class AudioService implements Lifecycle {
                 this.ambienceDuckUntil = this.context.currentTime + 0.5;
             }
         }
-        if (event.type === 'infected.attack')
-            return; // close individual vocals are bounded by the horde manager
+        if (event.type === 'infected.attack') {
+            // Close individual vocals are bounded by the horde manager; a landed melee attack adds only the bite.
+            if (event.amount > 0 && !['barricade', 'prop-throw', 'explode'].includes(event.special))
+                this.play('infected.bite', { position: this.world.entities.get(event.targetId)?.transform ?? position }, source);
+            return;
+        }
+        if (event.type === 'ai.alerted') {
+            // One shared anti-spam key: a gunshot that alerts a whole street yields a few snarls, not a wall.
+            if (voicedInfected.has(this.world.entities.get(event.targetId)?.archetype ?? ''))
+                this.play('infected.alert', { position: event.position });
+            return;
+        }
         if (event.type === 'objective.started' && event.id !== 'breakfast') {
             this.incident = true;
             this.musicIntensity({ alerted: event.id === 'store-fight' ? 10 : 0 });

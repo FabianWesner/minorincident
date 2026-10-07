@@ -88,3 +88,14 @@ faded out, and a chaos layer whose intensity follows the live infected count (ca
 `AudioService` feeds it the `l1.*` events and applies the frame. Cues live in sprite `l1arc` (self-made MIT synthesis, ledger
 in `public/assets/audio/LICENSES.md`). The fire-station interior is any `interior-*` acoustic zone during chaos (muffles the
 ambience bus, adds a hush bed); `level.completed` plays `l1.outro.sting`.
+
+## Infected voices and credits
+
+The lazy `infected` bank holds recorded humanoid voices: `infected.alert` (shared anti-spam key on `ai.alerted`),
+`infected.hurt` / `infected.death` (melee/ranged hits and kills on human archetypes), and `infected.bite` (a landed
+infected melee attack). Idle groans (`infected.vocal`, max four nearby via `HordeClusters`) and the clustered
+`horde.loop.*` beds stay in the initial banks. Telegraph wind-ups for human archetypes share one CC0 performer with
+per-archetype pitch/colour. Voice recipes set `level` in `imports.json`: the builder compresses gently and matches the
+active-part RMS (−21 dBFS) under the sprite ceiling, so variants in a pool sit within about 1.5 dB.
+The in-game Credits & Licenses screen and the generated block in `THIRD_PARTY_NOTICES.md` come from
+`npx tsx tools/credits/generate.ts` (package.json, package-lock.json, `imports.json`); a unit test fails when they drift.
