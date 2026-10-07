@@ -10,7 +10,7 @@ export const gameplay: DistrictGameplay = {
   spawnVolumes: [{ center: anchor("player-start"), radius: 1 }],
   triggers: [
     { id: "lab-forecourt", position: anchor("lab-gate"), radius: 4 },
-    { id: "fire-bay", position: anchor("fire-bay-trigger"), radius: 2 },
+    { id: "fire-bay", position: anchor("fire-bay-trigger"), radius: .5 },
   ],
   objectives: [
     { id: "pickup", position: anchor("parcel-counter") },

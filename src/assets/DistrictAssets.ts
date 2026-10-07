@@ -123,6 +123,11 @@ export class DistrictAssets {
         const fit = Math.max(straight, turned); asset.scale.set(fit, 1, fit);
         if (turned > straight) asset.rotation.y = Math.PI / 2;
       }
+      // The authored sectional leaves expose a real aperture (not a dark overlay on a closed door).
+      if (id === 'bld.fire-station') for (const name of ['door_bay_L', 'door_bay_R']) {
+        const leaf = asset.getObjectByName(name);
+        if (leaf) leaf.position.y += Number(leaf.userData.travel ?? 3.15);
+      }
       // While a level is playable, batching is sliced over frames (one gate slot per slice).
       if (ROOFED.has(id)) asset.userData.splitRoof = true;
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));

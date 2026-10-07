@@ -80,7 +80,7 @@ test.describe('L1 v2 real-input playthrough', () => {
         const p = (await player()).transform;
         const m = await mission();
         // An objective trigger can stop movement and start a beat before the requested stop radius.
-        if (Math.hypot(target.x - p.x, target.z - p.z) <= stop || m.phase !== 'playing' || m.l1!.beat?.id === 'firestation' || (activeBefore && m.steps[activeBefore].status === 'completed')) return;
+        if (Math.hypot(target.x - p.x, target.z - p.z) <= stop || m.phase !== 'playing' || (activeBefore && m.steps[activeBefore].status === 'completed')) return;
       }
       throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
     };
@@ -161,13 +161,23 @@ test.describe('L1 v2 real-input playthrough', () => {
         await waitBeat(); await go(at('photo-l1-horde'), 1.5); await step(1200);
         shots.add('l1-horde'); await snap('l1-horde', (await player()).transform, true);
       }
-      const goal = at(goals[active]);
-      await go(goal, active === 'weapon' ? 1.2 : active === 'firestation' ? 2.5 : 1.5);
-      if (assisted && active === 'firestation' && (await mission()).l1!.beat?.id === 'firestation') {
-        for (let i = 0; i < 120 && (await mission()).l1!.say?.text !== caption; i++) await step(10);
-        expect((await mission()).l1!.say?.text).toBe(caption);
-        shots.add('l1-safe'); await snap('l1-safe', at('fire-bay-door'), true); await waitBeat();
+      if (active === 'firestation') {
+        const door = at('fire-bay-door');
+        await go({ x: door.x, z: door.z - 5 }, 1);
+        await step(20);
+        expect((await mission()).phase).toBe('playing');
+        expect((await mission()).l1!.beat).toBeFalsy();
+        expect((await mission()).gates['fire-shutter']).toBe(true);
+        expect((await mission()).l1!.say?.text).toBe('Get in!');
+        if (assisted) {
+          await page.evaluate(p => window.__SS__!.camera.cinematic({ position: [p.x - 18, 20, p.z - 18], target: [p.x, 0, p.z] }), door);
+          await page.evaluate(() => window.__SS__!.screenshotReady());
+          await page.screenshot({ path: `${output}/firestation-invitation.png` });
+          await page.evaluate(() => window.__SS__!.camera.follow());
+        }
       }
+      const goal = at(goals[active]);
+      await go(goal, active === 'weapon' ? 1.2 : active === 'firestation' ? .25 : 1.5);
       if (active === 'weapon') {
         await interact(); await step(40);
         if (!shots.has('l1-garage')) { shots.add('l1-garage'); await snap('l1-garage'); }
@@ -180,7 +190,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.bat');
     await step(2);
     await expect(page.getByTestId('mission-subtitle')).toHaveText(caption);
-    if (!shots.has('l1-safe')) await snap('l1-safe');
+    if (!shots.has('l1-safe')) await snap('l1-safe', at('fire-bay-door'), true);
     for (let i = 0; i < 40 && (await mission()).phase !== 'result'; i++) await step(30);
     expect((await mission()).phase).toBe('result');
     await expect(page.getByTestId('mission-heading')).toHaveText(caption);

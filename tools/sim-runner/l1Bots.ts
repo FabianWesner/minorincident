@@ -121,6 +121,7 @@ export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opt
       if (step) goal = anchor(goals[step.id]);
       else if (l1.delivered && !l1.exitIds.length) { goal = anchor('lab-door'); stop = 3; key = 'calm'; }
       if (step?.id === 'deliver' || step?.id === 'pickup') stop = .9;
+      if (step?.id === 'firestation') stop = .25;
       // The courier rides from bike-start through the depot to the facility; it auto-dismounts at the no-bike zone edge.
       if (useBike && !rode && !bike!.riding && !l1.delivered && step && (step.id === 'pickup' || step.id === 'deliver')) {
         const at = bike!.entity!.transform;
