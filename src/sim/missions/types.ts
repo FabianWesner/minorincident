@@ -80,9 +80,7 @@ export interface L1State {
   /** Beat 9: the horde near the garage was produced; further streams spawned along the route to the fire station. */
   graceUntil: number; hordeDone: boolean; routeSpawns: number; routeNextAt: number;
   /** PO UAT story beats: the running beat (camera framing + input lock), finished beats and the beat actors. */
-  beat?: { id: 'pickup' | 'handover' | 'garage' | 'firestation'; start: number; until: number; actor: number; fx: number; fz: number; ax: number; az: number; mx: number; mz: number;
-    /** Ending: where the run started and the tick the shutter slammed (render: shutter, shake, fade). */
-    sx?: number; sz?: number; slam?: number; fadeAt?: number } | null;
+  beat?: { id: 'pickup' | 'handover' | 'garage'; start: number; until: number; actor: number; fx: number; fz: number; ax: number; az: number; mx: number; mz: number } | null;
   /** The story bubble on screen (speaker 0 = caption): readable until `until`, the beat holds while it reads. */
   say?: { id: number; text: string; at: number; until: number } | null;
   beatsDone?: string[]; clerkId?: number; firefighterId?: number;

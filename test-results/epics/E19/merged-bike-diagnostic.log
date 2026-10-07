@@ -1,0 +1,32 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/levels/L1.spec.ts:34:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result (47.4s)
+
+
+  1) [chromium] › tests/e2e/levels/L1.spec.ts:34:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result
+
+    Error: Could not travel to {"x":66,"z":-12.3} from {"kind":"player","archetype":"player.survivor","transform":{"x":66.2160873413086,"y":0.7049985527992249,"z":-10.308212280273438,"yaw":1.6532286380276178},"health":{"current":100,"max":100},"faction":"survivor","id":1,"locomotion":{"vx":0,"vz":0,"ax":0,"az":0,"omega":0,"updatedAt":-1},"survivor":{"variant":"female","gearTier":0,"animation":"idle","animationTick":2022,"velocity":{"x":0,"z":0},"grounded":true,"invulnerableUntil":0,"checkpoint":{"x":-66.4,"y":0.705,"z":9,"yaw":0.3205919885488634},"diedAt":null,"carrying":"prop.package-courier"},"combat":{"radius":0.3,"armor":0,"shield":false,"staggerUntil":0,"attacking":false,"damageMultiplier":1,"statuses":[]}}; bicycle=[{"kind":"bicycle","archetype":"veh.courier-bike","faction":"environment","transform":{"x":66.19101790462497,"y":0.05,"z":-9.347924259278896,"yaw":1.635412228164495},"health":{"current":1,"max":1},"bicycle":{"mounted":false,"heading":-1.635412228164495,"speed":0,"pedal":314.1447819344648,"steer":0,"lean":0,"standTicks":0,"armed":false,"lockUntil":2039},"id":91}]
+
+      89 |         else if (i % 12 === 11) await clickDestination();
+      90 |       }
+    > 91 |       throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify(await player())}; bicycle=${JSON.stringify(await page.evaluate(() => window.__SS__!.query({ kind: 'bicycle' })))} `);
+         |             ^
+      92 |     };
+      93 |     const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(1); };
+      94 |     const fightNearby = async (page: Page) => {
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-closure/tests/e2e/levels/L1.spec.ts:91:13)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l1-closure/tests/e2e/levels/L1.spec.ts:127:5
+
+    Error Context: test-results/playwright/run-3317/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3317/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3317/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/levels/L1.spec.ts:34:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result

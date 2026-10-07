@@ -1,11 +1,8 @@
-/** Distance LOD policy for structural world assets (buildings, vehicles, interactables).
- * At the maximum zoom (camera radius 19 m x 1.45, x1.15 while driving) everything inside the view lies
- * within ~30 m of the camera target; LOD0 covers that plus about one screen of margin, so the play
- * view keeps their authored high tier. Small props additionally use propLod below.
- * Hysteresis keeps a band until the distance is
- * clearly past the boundary, so assets near a boundary do not pop back and forth. */
+/** High world detail stays near the camera target; authored distance tiers cover the rest.
+ * The whole-screen 45 m LOD0 margin exceeds L1's 1.5M triangle cap even after prop/crowd fixes.
+ * Small props additionally consider projected pixels; hysteresis avoids boundary flicker. */
 export type Lod = 'lod0' | 'lod1' | 'lod2';
-export const lodPolicy = { lod1From: 45, lod2From: 90, hysteresis: 4 } as const;
+export const lodPolicy = { lod1From: 8, lod2From: 24, hysteresis: 2 } as const;
 /** Low tier (phones) keeps its measured budget: LOD1 near, LOD2 beyond 16 m (props always LOD2). */
 export const lowLodPolicy = { lod1From: 0, lod2From: 16, hysteresis: 2 } as const;
 /** Initial phone download: props only draw LOD2; LOD1 is needed only around the spawn.
