@@ -237,6 +237,27 @@ describe('L1 v2 infected perception', () => {
     expect(searched).toBeGreaterThanOrEqual(6);
   }, 120_000);
 
+  test('T-E19-herd @E19 @E19-AC25 herd cue: an infected that sees a chasing infected turns to its heading and acquires the victim (sight only)', async () => {
+    const times: number[] = [];
+    for (const seed of seeds) for (const blocked of [false, true]) {
+      const { w, humans } = await l1World(seed);
+      if (blocked) wall(w, 920, 6, 4, 0.4, 2); // hides the player from B's new view, not from A
+      const player = humans.add(1, 'player', 12, 0);
+      const a = zombie(w, 0, 0, 0);
+      for (let i = 0; i < 120 && brain(a).mode !== 'chase'; i++) w.update();
+      expect(brain(a).mode).toBe('chase');
+      // B stands north of A, facing A (south): A is in its cone, the player (east) is not.
+      const b = zombie(w, 0, 8, Math.PI / 2), bb = brain(b);
+      bb.pauseUntil = 0; bb.looking = false; bb.hasGoal = true; bb.goalX = 0; bb.goalZ = 2; bb.search.legTicks = 0;
+      const start = w.tick; let acquired = -1;
+      for (let i = 0; i < 60; i++) { player.position.x += 1 / 60; w.update(); if (acquired < 0 && bb.mode === 'chase' && bb.targetId === 1) acquired = w.tick - start; }
+      if (blocked) { expect(acquired).toBe(-1); expect(bb.cueSource).toBe(a.id); expect(['attracted', 'search', 'wander']).toContain(bb.mode); }
+      else { expect(acquired).toBeGreaterThanOrEqual(0); expect(acquired).toBeLessThanOrEqual(36); times.push(acquired / 60); }
+      w.dispose(); worlds.length = 0;
+    }
+    console.info(`[herd] acquired after ${Math.min(...times).toFixed(2)}-${Math.max(...times).toFixed(2)} s on ${times.length}/20 seeds`);
+  });
+
   test('T-E19-11 @E19 @E19-AC11 car alarm attracts non-chasing infected within 30 m; 20 s, then search and wander', async () => {
     for (const seed of seeds) {
       const { w, humans, perception } = await l1World(seed);
