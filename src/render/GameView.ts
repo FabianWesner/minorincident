@@ -64,6 +64,8 @@ export class GameView implements Lifecycle {
   private readonly preparedDistrictViews = new Map<SimWorld['districts'], DistrictView>();
   private pendingPreparation: { shared: NonNullable<GameView['districtResources']>; instanceCapacity?: number } | null = null;
   private preparation: Promise<void> | null = null;
+  /** Pending L1 shader warm-up while the briefing is shown (see load()). */
+  warming: Promise<void> | null = null;
   private generation = 0;
   private npcs: NpcView | null = null;
   private interactions: InteractionView | null = null;
@@ -239,17 +241,32 @@ export class GameView implements Lifecycle {
     // bound. The first update below warms those programs in their render context.
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.districts?.ready()]);
     t = loadMeasure('view:lod-ready', t);
-    if (this.world.scenario === 'L1') {
+    const warm = async (): Promise<void> => {
       this.lighting?.update(this.view);
       // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
       try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); }))); }
       finally { restore?.(); }
-    } else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
-    loadMeasure('view:warm-up', t);
-    this.idPass = this.params.get('idpass') === '1'; this.update(1);
-    this.startPreparation();
+    };
+    const finish = (): void => {
+      loadMeasure('view:warm-up', t);
+      this.idPass = this.params.get('idpass') === '1'; this.update(1);
+      this.startPreparation();
+    };
+    if (this.world.scenario === 'L1' && this.params.get('test') !== '1') {
+      // Load lane: the shader warm-up runs while the mission briefing is up instead of behind the
+      // loading screen. Until it finishes the view does not draw and the game clock does not advance
+      // (Game checks `warming`), so 'Begin mission' is never blocked and play starts warmed.
+      // The warm-up draws into a 32x32 buffer: keep the canvas hidden behind the briefing meanwhile.
+      const generation = this.generation, canvas = this.renderer.domElement, done = () => { canvas.style.visibility = ''; };
+      canvas.style.visibility = 'hidden';
+      this.warming = warm().then(() => { done(); if (generation === this.generation) { this.warming = null; finish(); } }, error => { done(); if (generation === this.generation) { this.warming = null; console.error(error); } });
+      return;
+    }
+    if (this.world.scenario === 'L1') await warm();
+    else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
+    finish();
   }
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */
@@ -402,6 +419,7 @@ export class GameView implements Lifecycle {
     if (mission?.state.timeOfDay && this.lighting?.preset !== mission.state.timeOfDay) this.lighting?.set(mission.state.timeOfDay);
   }
   update(alpha = 1): void {
+    if (this.warming) { this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
     if (this.contextLost) return;
     if (this.destination) {
       const target = this.world.controls.moveTarget; this.destination.visible = target != null;
@@ -501,10 +519,11 @@ export class GameView implements Lifecycle {
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
   }
   async ready(): Promise<void> {
+    await this.warming;
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
   reset(): void {
-    this.generation++; this.pendingPreparation = null; this.preparation = null; loadGate.setPaced(false);
+    this.generation++; this.pendingPreparation = null; this.preparation = null; this.warming = null; loadGate.setPaced(false);
     this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;
     if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }
     if (this.labAccident) { this.scene.remove(this.labAccident.column); this.labAccident.dispose(); this.labAccident = null; }
