@@ -38,6 +38,8 @@ for (const skin of [0, 1]) test(`bike skin=${skin} mounts level on the start sid
     const rider = new Quaternion().fromArray(f.rider.orientation), frame = new Quaternion().fromArray(f.view.orientation);
     expect(rider.angleTo(frame) * 180 / Math.PI).toBeLessThan(1);
     expect(Math.abs(Math.atan2(Math.sin(f.rider.yaw - f.bike.transform.yaw), Math.cos(f.rider.yaw - f.bike.transform.yaw))) * 180 / Math.PI).toBeLessThan(1);
+    const hip = f.rider.pelvis!, seat = f.view.seat!;
+    expect(Math.hypot(hip[0] - seat[0], hip[1] - seat[1] + .04, hip[2] - seat[2])).toBeLessThan(.01);
   }
   // Fractional render frames also use the bike's current frame, without a separate facing lag.
   const live = await page.evaluate(async () => {
@@ -47,7 +49,11 @@ for (const skin of [0, 1]) test(`bike skin=${skin} mounts level on the start sid
     a.pause(); return frames;
   });
   writeFileSync(info.outputPath('bike-turn-live.json'), JSON.stringify(live, null, 2));
-  for (const f of live) expect(new Quaternion().fromArray(f.rider.orientation).angleTo(new Quaternion().fromArray(f.bike.orientation)) * 180 / Math.PI).toBeLessThan(1);
+  for (const f of live) {
+    expect(new Quaternion().fromArray(f.rider.orientation).angleTo(new Quaternion().fromArray(f.bike.orientation)) * 180 / Math.PI).toBeLessThan(1);
+    const hip = f.rider.pelvis!, seat = f.bike.seat!;
+    expect(Math.hypot(hip[0] - seat[0], hip[1] - seat[1] + .04, hip[2] - seat[2])).toBeLessThan(.01);
+  }
   console.log('bike turn measurement', JSON.stringify({ skin, fixedFrames: frames.length, liveFrames: live.length, yawChangeDegrees: Math.abs(frames.at(-1)!.bike.transform.yaw - frames[0].bike.transform.yaw) * 180 / Math.PI, maxFrameMismatchDegrees: Math.max(...frames.map(f => new Quaternion().fromArray(f.rider.orientation).angleTo(new Quaternion().fromArray(f.view.orientation)) * 180 / Math.PI)), maxLiveFrameMismatchDegrees: Math.max(...live.map(f => new Quaternion().fromArray(f.rider.orientation).angleTo(new Quaternion().fromArray(f.bike.orientation)) * 180 / Math.PI)) }));
 });
 
