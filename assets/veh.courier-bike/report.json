@@ -1,42 +1,378 @@
 {
   "id": "veh.courier-bike",
-  "tier": "Side",
+  "tier": "hero",
   "triangles": {
-    "lod0": 9266,
-    "lod1": 1384,
-    "lod2": 356
+    "lod0": 10478,
+    "lod1": 1460,
+    "lod2": 444
   },
   "file_bytes": {
-    "lod0": 159176,
-    "lod1": 37440,
-    "lod2": 16380
+    "lod0": 173980,
+    "lod1": 41808,
+    "lod2": 21800
   },
-  "draw_calls": 23,
-  "materials": [
-    "pal_asphalt",
-    "pal_backpackTeal",
-    "pal_orange",
-    "pal_picketWhite",
-    "pal_silver",
-    "pal_uiDark",
-    "pal_redDark",
-    "emi_windowGlow"
-  ],
+  "source_file_bytes": {
+    "lod0": 176452,
+    "lod1": 41916,
+    "lod2": 21796
+  },
+  "draw_calls": 27,
   "nodes_ok": true,
   "within_budget": true,
   "lod_ratios": {
-    "lod1": 0.14936326354413987,
-    "lod2": 0.0384200302180013
+    "lod1": 0.13933956861996563,
+    "lod2": 0.04237449895018133
   },
-  "rounds": 4,
-  "webgpu_ok": true,
-  "webgl2_ok": true,
-  "gaps": [
-    "Shared pal_orange is more amber than the saturated concept paint.",
-    "Saddle contour, grip texture and fine tire markings simplified for side tier.",
-    "LOD2 omits lettering, mudguards and rack supports at distance."
+  "axis": "+X forward, +Y up, +Z right (glTF)",
+  "wheel_count": 2,
+  "tiers": [
+    {
+      "level": 0,
+      "source_bytes": 176452,
+      "packed_bytes": 173980,
+      "triangles": 10478,
+      "bounds": {
+        "min": [
+          -1.38568115234375,
+          -0.000004059159848857075,
+          -0.3800070909192907
+        ],
+        "max": [
+          1.4118120670318604,
+          1.2039238359188726,
+          0.3800070313146459
+        ]
+      },
+      "authored": true,
+      "nodes": {
+        "box_lid_top": [
+          0.53,
+          0.89,
+          0
+        ],
+        "cargo_box": [
+          0.53,
+          0.37,
+          0
+        ],
+        "pedal_l": [
+          -0.39,
+          0.22,
+          -0.18
+        ],
+        "pedal_r": [
+          -0.55,
+          0.38,
+          0.18
+        ],
+        "crank": [
+          -0.47,
+          0.3,
+          0
+        ],
+        "grip_l": [
+          -0.23,
+          1.175,
+          -0.29
+        ],
+        "grip_r": [
+          -0.23,
+          1.175,
+          0.29
+        ],
+        "handlebar": [
+          -0.075,
+          1.065,
+          0
+        ],
+        "kickstand": [
+          -0.1,
+          0.32,
+          0
+        ],
+        "saddle_mount": [
+          -0.65,
+          1.115,
+          0
+        ],
+        "seat": [
+          -0.65,
+          1.16,
+          0
+        ],
+        "wheelF": [
+          1.035,
+          0.335,
+          0
+        ],
+        "wheel_front": [
+          1.035,
+          0.335,
+          0
+        ],
+        "wheelR": [
+          -0.94,
+          0.405,
+          0
+        ],
+        "wheel_rear": [
+          -0.94,
+          0.405,
+          0
+        ],
+        "root": [
+          0,
+          0,
+          0
+        ]
+      },
+      "validation": {
+        "id": "veh.courier-bike",
+        "errors": [],
+        "triangles": 10478,
+        "materials": 8,
+        "drawCalls": 27,
+        "fileKB": 169.90234375,
+        "dimensions": [
+          2.7974932193756104,
+          1.2039278950787216,
+          0.7600141222339366
+        ],
+        "hash": "9a66b5798bb3050d7b433c01542a2bd6d091bc000defcfea2260f7fca4d22148"
+      }
+    },
+    {
+      "level": 1,
+      "source_bytes": 41916,
+      "packed_bytes": 41808,
+      "triangles": 1460,
+      "bounds": {
+        "min": [
+          -1.38568115234375,
+          -0.000004059159848857075,
+          -0.3770057483768574
+        ],
+        "max": [
+          1.4118120670318604,
+          1.2039223321840187,
+          0.37700568877221263
+        ]
+      },
+      "authored": true,
+      "nodes": {
+        "box_lid_top": [
+          0.53,
+          0.89,
+          0
+        ],
+        "cargo_box": [
+          0.53,
+          0.37,
+          0
+        ],
+        "pedal_l": [
+          -0.39,
+          0.22,
+          -0.18
+        ],
+        "pedal_r": [
+          -0.55,
+          0.38,
+          0.18
+        ],
+        "crank": [
+          -0.47,
+          0.3,
+          0
+        ],
+        "grip_l": [
+          -0.23,
+          1.175,
+          -0.29
+        ],
+        "grip_r": [
+          -0.23,
+          1.175,
+          0.29
+        ],
+        "handlebar": [
+          -0.075,
+          1.065,
+          0
+        ],
+        "kickstand": [
+          -0.1,
+          0.32,
+          0
+        ],
+        "saddle_mount": [
+          -0.65,
+          1.115,
+          0
+        ],
+        "seat": [
+          -0.65,
+          1.16,
+          0
+        ],
+        "wheelF": [
+          1.035,
+          0.335,
+          0
+        ],
+        "wheel_front": [
+          1.035,
+          0.335,
+          0
+        ],
+        "wheelR": [
+          -0.94,
+          0.405,
+          0
+        ],
+        "wheel_rear": [
+          -0.94,
+          0.405,
+          0
+        ],
+        "root": [
+          0,
+          0,
+          0
+        ]
+      },
+      "validation": {
+        "id": "veh.courier-bike",
+        "errors": [],
+        "triangles": 1460,
+        "materials": 7,
+        "drawCalls": 20,
+        "fileKB": 40.828125,
+        "dimensions": [
+          2.7974932193756104,
+          1.2039263913438676,
+          0.75401143714907
+        ],
+        "hash": "ed25d4377d3cd4a87aed67e1a0e217644f3577ca2d7201411e9cd3120659bfab"
+      }
+    },
+    {
+      "level": 2,
+      "source_bytes": 21796,
+      "packed_bytes": 21800,
+      "triangles": 444,
+      "bounds": {
+        "min": [
+          -1.344999998807907,
+          0,
+          -0.34899687046141303
+        ],
+        "max": [
+          1.3699999749660492,
+          1.1969992824483842,
+          0.34899687046141303
+        ]
+      },
+      "authored": true,
+      "nodes": {
+        "box_lid_top": [
+          0.53,
+          0.89,
+          0
+        ],
+        "cargo_box": [
+          0.53,
+          0.37,
+          0
+        ],
+        "pedal_l": [
+          -0.39,
+          0.22,
+          -0.18
+        ],
+        "pedal_r": [
+          -0.55,
+          0.38,
+          0.18
+        ],
+        "crank": [
+          -0.47,
+          0.3,
+          0
+        ],
+        "grip_l": [
+          -0.23,
+          1.175,
+          -0.29
+        ],
+        "grip_r": [
+          -0.23,
+          1.175,
+          0.29
+        ],
+        "handlebar": [
+          -0.075,
+          1.065,
+          0
+        ],
+        "kickstand": [
+          -0.1,
+          0.32,
+          0
+        ],
+        "saddle_mount": [
+          -0.65,
+          1.115,
+          0
+        ],
+        "seat": [
+          -0.65,
+          1.16,
+          0
+        ],
+        "wheelF": [
+          1.035,
+          0.335,
+          0
+        ],
+        "wheel_front": [
+          1.035,
+          0.335,
+          0
+        ],
+        "wheelR": [
+          -0.94,
+          0.405,
+          0
+        ],
+        "wheel_rear": [
+          -0.94,
+          0.405,
+          0
+        ],
+        "root": [
+          0,
+          0,
+          0
+        ]
+      },
+      "validation": {
+        "id": "veh.courier-bike",
+        "errors": [],
+        "triangles": 444,
+        "materials": 5,
+        "drawCalls": 17,
+        "fileKB": 21.2890625,
+        "dimensions": [
+          2.7149999737739563,
+          1.1969992824483842,
+          0.6979937409228261
+        ],
+        "hash": "7078e5b74d1a374e4cf0c7716432e061350694e5b0591ab481880821bce17d1d"
+      }
+    }
   ],
-  "matches_reference": true,
-  "reproducible": true,
-  "ground_contact": true
+  "contact_sheet": "assets/veh.courier-bike/contact-sheet.png",
+  "renderer": "Cycles CPU",
+  "webgpu_ok": false
 }

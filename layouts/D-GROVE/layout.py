@@ -169,7 +169,7 @@ def row(name, x0, x1, facing, line, rear, kinds, drives=None, gate_at=None):
         g.lawn(lx0 + .3, min(line, line + sgn * 3.0), lx1 - .3, max(line, line + sgn * 3.0))
         # back yard: a tree crown rising behind the house (large mass for the top-down camera)
         bz = (hz + sgn * depth / 2 + rear) / 2
-        g.place('prop.street-tree' if (i + len(doors)) % 2 else 'prop.street-tree-blossom', hx, bz, 0, 1.0, soft=True)
+        g.place('prop.street-tree' if (i + len(doors)) % 2 else 'prop.street-tree-blossom', hx + (1.5 if (i % 2) else -1.5), bz, 0, .8, soft=True)   # offset + smaller: canopies stay off the house fronts
         variant = len(doors) % 5
         gx = (lx0 + 1.7) if door[0] > hx else (lx1 - 1.7)   # clutter on the side away from the door path
         gz = line + sgn * 2.6
@@ -277,6 +277,7 @@ if g.placeholder(depot):
 anchors['parcel-door'] = (depot_x, SHOP_FRONT + .9)
 anchors['parcel-counter'] = (depot_x, SHOP_FRONT + 1.0)   # real depot collision is a closed shell: hand-over happens at the door
 doors.append(anchors['parcel-door'])
+g.path(PASS_X - 3.2, SHOP_FRONT - .1, PASS_X + 3.2, SHOP_FRONT + 3.0, 'uiDark')   # paved apron under the van
 g.place('veh.courier-van', PASS_X, SHOP_FRONT + 1.7 - .35, 0, 1.0, soft=True)
 # shop-front dressing: A-frame / vending / bench between the planters, lamps come with the kerb line below
 g.path(depot_x - 4.0, SHOP_FRONT - .2, depot_x + 4.0, ZN - 4.5, 'sidewalk')     # open paved plaza in front of the counter (>= 3 m clear)
@@ -311,7 +312,6 @@ g.path(ax_ - 1.4, FENCE_Z, ax_ + 1.4, -4.5, 'sidewalk')
 for sx_ in (ax_ - 4.4, ax_ + 4.4):    # "AUTHORIZED PERSONNEL ONLY", hazard, deliveries, keypad
     g.place('prop.lab-signs', sx_, FENCE_Z + .9, FACE_YAW['S'], 1.0, soft=True)
 g.place('prop.lab-signs', 57.8, -7.9, FACE_YAW['S'], 1.0, soft=True)   # "NO BICYCLES BEYOND THIS POINT" by the rack
-g.place('veh.pickup-white', CX1 - 3.2, -23.0, PI / 2, 1.0, soft=True)  # unmarked white vehicle inside the compound
 for tx_, tz_ in ((CX0 + 2.2, -24.0), (CX1 - 2.2, -24.0)):
     g.place('prop.street-tree-blossom' if tx_ < 66 else 'prop.street-tree', tx_, tz_, 0, .8, soft=True)
 anchors['lab-gate'] = (ax_, FENCE_Z)
@@ -327,7 +327,8 @@ anchors['lab-bike-rack-front'] = (57.8, -5.3)
 g.place('prop.bike-rack', 57.8, -6.8, PI / 2)
 doors.append(anchors['lab-door'])
 # staff parking east of the compound, a van and a sedan
-g.place('veh.sedan-white', 81.2, -14.5, -PI / 2, 1.0, soft=True)
+g.place('veh.pickup-white', 79.4, -21.5, PI / 2, 1.0, soft=True)   # unmarked white vehicle at the staff parking
+g.place('veh.sedan-white', 79.4, -14.0, -PI / 2, 1.0, soft=True)
 g.path(79.8, -26, 82.6, -11.5, 'uiDark')
 g.hedge(79.0, -28.5, 83.0, -28.5, scale=1.15)
 g.hedge(79.0, -10.0, 83.0, -10.0, scale=1.15)
