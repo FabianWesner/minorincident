@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { Matrix4, Quaternion, Vector3, Color } from 'three';
 import manifest from '../../src/assets/manifest.json';
 import type { Document, Node } from '@gltf-transform/core';
-import { dedup, prune, weld, join, meshopt, simplify, normals, reorder, getBounds, transformMesh } from '@gltf-transform/functions';
+import { dedup, prune, weld, join, meshopt, simplify, normals, getBounds, transformMesh } from '@gltf-transform/functions';
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
 import type { DistrictLayout } from '../../src/levels/districts/types';
 import type { AssetDef } from '../../src/assets/types';
@@ -198,6 +198,13 @@ function shareVertexStreams(document: Document): void {
     if (primitives.length < 2 || primitives.some(p => p.listTargets().length)) continue;
     const semantics = primitives[0].listSemantics().sort();
     if (primitives.some(p => p.listSemantics().sort().join('|') !== semantics.join('|'))) continue;
+    // Streams must all share a layout before rebasing any indices. Blender's
+    // imported AO may be RGB on one palette primitive and RGBA on another.
+    if (primitives.some(p => semantics.some(semantic => {
+      const first = primitives[0].getAttribute(semantic)!, attribute = p.getAttribute(semantic)!;
+      return attribute.getType() !== first.getType() || attribute.getComponentType() !== first.getComponentType()
+        || attribute.getNormalized() !== first.getNormalized() || attribute.getCount() !== p.getAttribute('POSITION')!.getCount();
+    }))) continue;
     const offsets: number[] = []; let count = 0;
     for (const primitive of primitives) { offsets.push(count); count += primitive.getAttribute('POSITION')!.getCount(); }
     for (const semantic of semantics) {
@@ -213,28 +220,6 @@ function shareVertexStreams(document: Document): void {
       const indices = primitive.getIndices()!;
       const array = Uint32Array.from(indices.getArray()! as Uint32Array, index => index + offsets[i]);
       primitive.setIndices(indices.clone().setArray(count < 65535 ? new Uint16Array(array) : array));
-    }
-  }
-}
-
-/** Canonicalize normals that the existing octahedral encoder ships identically.
- * Blender's split-normal storage introduces tiny corner differences. Welding
- * their identical delivery values preserves hard seams and every decoded normal.
- */
-function canonicalizeDeliveryNormals(document: Document): void {
-  const normals = new Set(document.getRoot().listMeshes().flatMap(mesh => mesh.listPrimitives().map(p => p.getAttribute('NORMAL')).filter(a => a !== null)));
-  for (const normal of normals) {
-    const padded = new Float32Array(normal.getCount() * 4), value: number[] = [];
-    for (let i = 0; i < normal.getCount(); i++) {
-      normal.getElement(i, value); padded.set([value[0], value[1], value[2], 0], i * 4);
-    }
-    const encoded = MeshoptEncoder.encodeFilterOct(padded, normal.getCount(), 4, 8);
-    const representatives = new Map<number, number[]>();
-    for (let i = 0; i < normal.getCount(); i++) {
-      const offset = i * 4, key = encoded[offset] | encoded[offset + 1] << 8 | encoded[offset + 2] << 16 | encoded[offset + 3] << 24;
-      const representative = representatives.get(key);
-      if (representative) normal.setElement(i, representative);
-      else { normal.getElement(i, value); representatives.set(key, [...value]); }
     }
   }
 }
@@ -400,14 +385,7 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
     const value: number[] = [];
     for (let i = 0; i < color.getCount(); i++) { color.getElement(i, value); color.setElement(i, value.map(v => Math.round(v * 127) / 127)); }
   }
-  // Builds opt into camera-reviewed LOD0 precision; legacy assets retain 16 bits.
-  const requestedBits = document.getRoot().listNodes().map(node => node.getExtras().lod0_position_bits);
-  const positionBits = ratio === 1 ? requestedBits.includes(12) ? 12 : requestedBits.includes(14) ? 14 : 16 : 16;
-  await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'high', quantizePosition: positionBits, quantizeNormal: 8, quantizeColor: 8, cleanup: false }));
-  if (ratio === 1 && positionBits < 16) {
-    canonicalizeDeliveryNormals(document);
-    await document.transform(weld(), reorder({ encoder: MeshoptEncoder, target: 'size' }));
-  }
+  await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'high', quantizePosition: 16, quantizeNormal: 8, quantizeColor: 8, cleanup: false }));
   removeDegenerateTriangles(document);
   shareVertexStreams(document);
   await document.transform(prune({ keepLeaves: true, keepAttributes: true, keepExtras: true }));
@@ -434,7 +412,8 @@ export async function optimizeExports(def: AssetDef): Promise<void> {
     const supplied = existsSync(canonical) ? canonical : `assets/${def.id}/model.${lod}.glb`, output = def.lods?.[lod];
     if (!output) throw new Error(`${def.id}: missing manifest ${lod} path`);
     const generatedRatio = def.generatedLodRatios?.[lod];
-    const handMade = generatedRatio === undefined && existsSync(supplied);
+    if (def.authoredLodRatios && !existsSync(supplied)) throw new Error(`${def.id}: missing authored ${lod}`);
+    const handMade = (def.authoredLodRatios !== undefined || generatedRatio === undefined) && existsSync(supplied);
     // Leave room for retained rigid parts and infected stump caps within the LOD1 budget.
     const targetRatio = lod === 'lod1' && (def.category === 'infected' || def.category === 'character') ? .10 : ratio;
     await optimizeAsset(handMade ? supplied : source, output, def, handMade ? 1 : generatedRatio ?? targetRatio);

@@ -9,9 +9,8 @@ import math
 import random
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy
+import bmesh
 from mathutils import Matrix, Vector
 
 HERE = Path(__file__).resolve().parent
@@ -60,10 +59,10 @@ def finish(o, material, group=root, bevel=0, segments=2):
         c.objects.unlink(o)
     asset.objects.link(o)
     o.data.materials.append(M[material])
-    if bevel >= .015:
+    if bevel:
         mod = o.modifiers.new('Soft edges', 'BEVEL')
         mod.width = bevel
-        mod.segments = 2 if bevel >= .06 else 1
+        mod.segments = segments
     if o.type == 'MESH':
         mod = o.modifiers.new('Corner normals', 'WEIGHTED_NORMAL')
         mod.keep_sharp = True
@@ -435,7 +434,6 @@ for x,y in [(-4.15,3.65),(-4.15,2.15)]:
         leaf.rotation_euler=(.4*math.sin(a),.4*math.cos(a),a)
 
 # Apply geometry operations once, then merge within each functional parent/material.
-prune_hidden_faces(parts, occlusion=True, game_camera=True, defer=True)
 lod_parts = [(o.name, o.parent, o.data.copy(), o.matrix_world.copy(), bool(o.get('lettering')), o.get('lod_shape', 'custom')) for o in parts] if args.glb else []
 depsgraph = bpy.context.evaluated_depsgraph_get()
 evaluated = [(o, bpy.data.meshes.new_from_object(o.evaluated_get(depsgraph), depsgraph=depsgraph), o.matrix_world.copy()) for o in parts]
@@ -476,6 +474,16 @@ def merge(objects, prefix=''):
         merged.append(o)
     return merged
 
+def outward_normals(objects):
+    # Mirroring evaluated meshes leaves the bevels' custom normals stale for AO.
+    for o in objects:
+        if o.data.has_custom_normals:
+            o.data.normals_split_custom_set([(0, 0, 0)] * len(o.data.loops))
+        bm = bmesh.new(); bm.from_mesh(o.data)
+        bmesh.ops.recalc_face_normals(bm, faces=list(bm.faces))
+        bm.to_mesh(o.data); bm.free(); o.data.update()
+
+outward_normals(parts)
 meshes=merge(parts)
 
 def light_references(objects):
@@ -523,7 +531,7 @@ def build_lod(level):
         if level==2:
             token=data.materials[0].name.removeprefix('pal_')
             token={'foliage':'grass','woodWarm':'brick','sidewalk':'picketWhite',
-                   'asphalt':'uiDark','survivorRed':'brick','backpackTeal':'uiDark'}.get(token,token)
+                   'survivorRed':'brick','backpackTeal':'uiDark'}.get(token,token)
             if token in M:data.materials[0]=M[token]
         o=bpy.data.objects.new('lod_'+name,data);asset.objects.link(o)
         o.parent=parent;o.matrix_parent_inverse=parent.matrix_world.inverted()
@@ -542,19 +550,27 @@ def build_lod(level):
         data.materials.append(M['woodWarm'])
         o=bpy.data.objects.new('lod_roof_cap',data);asset.objects.link(o)
         o.parent=roof;o.matrix_parent_inverse=roof.matrix_world.inverted();objects.append(o)
+    outward_normals(objects)
     return merge(objects,'lod'+str(level)+'_')
+
+def bake_ao(objects):
+    ao.bake_all(objects, samples=32)
+    # Keep the direct-light palette readable; AO represents contact shadows.
+    for o in objects:
+        for color in o.data.color_attributes['ao'].data:
+            color.color = tuple(.35 + .65 * max(0, min(1, c)) for c in color.color[:3]) + (1,)
 
 if args.glb:
     output=Path(args.glb).resolve();output.parent.mkdir(parents=True,exist_ok=True)
     def export(path,objects):
         bpy.ops.object.select_all(action='DESELECT')
         for o in asset.objects:o.select_set(o.type=='EMPTY' or o in objects)
-        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(path)); bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_vertex_color='ACTIVE',export_all_vertex_colors=False,export_cameras=False,export_lights=False)
-    ao.bake_all(meshes,samples=32);stats=statistics();export(output,meshes)
+        bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_vertex_color='ACTIVE',export_all_vertex_colors=False,export_cameras=False,export_lights=False)
+    bake_ao(meshes);stats=statistics();export(output,meshes)
     lods={}
     for o in meshes:asset.objects.unlink(o)
     for level in [1,2]:
-        low=build_lod(level);light_references(low);ao.bake_all(low,samples=32)
+        low=build_lod(level);light_references(low);bake_ao(low)
         lods['lod'+str(level)]=statistics(low)
         export(output.with_name(output.stem+'.lod'+str(level)+'.glb'),low)
         for o in low:bpy.data.objects.remove(o,do_unlink=True)

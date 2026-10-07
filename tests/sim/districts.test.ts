@@ -79,8 +79,9 @@ test("T-E10-runtime @E10 gameplay blockers have Rapier colliders, fires damage o
     expect(Math.hypot(companions[0].transform.x-start[0],companions[0].transform.z-start[1])).toBeLessThanOrEqual(2);
     expect(world.player).not.toBeNull();
     expect(world.physics.characterController).not.toBeNull();
+    // + one collider per pushable prop body (PO #15).
     const colliderCount =
-      2 + world.districts!.boundaries.length +
+      2 + world.districts!.boundaries.length + world.props!.items.length +
       world.districts!.districts.reduce(
         (n, d) => n + d.decay.colliders.length + d.blockers.length,
         0,

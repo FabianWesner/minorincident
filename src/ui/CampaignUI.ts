@@ -1,5 +1,5 @@
 import type { Game } from '../Game';
-import { beginRewards,chooseWeapon,revealCards,pickUpgrades,finishRewards,weaponChoices,rackSize,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
+import { autoRewards,chooseWeapon,revealCards,pickUpgrades,finishRewards,weaponChoices,rackSize,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
 import { SAVE_ERROR,type SaveResult } from '../sim/progression/Save';
 import { upgrades } from '../data/upgrades';
 import './campaign.css';
@@ -35,8 +35,9 @@ export class CampaignUI {
   private characterSelect():void {this.screen('Choose your survivor');for(const character of ['female','male']as const)this.button(character==='female'?'Female survivor':'Male survivor',async()=>{await this.game.startCampaign(character);});this.focus();}
   private levelSelect():void {
     this.screen('Level select');const save=this.menuSave??this.game.campaign;if(!save)return;
-    for(let level=1;level<=6;level++){const b=this.button(`Level ${level}`,async()=>{await this.game.continueCampaign(save,level as Level);});b.disabled=level>save.unlockedLevel;}
-    this.button('Back',()=>this.showMenu({status:'ok',save}));this.focus();
+    const hint=document.createElement('p');hint.className='lock-hint';hint.setAttribute('role','status');hint.hidden=true;
+    for(let level=1;level<=6;level++){const b:HTMLButtonElement=this.button(`Level ${level}`,async()=>{if(b.getAttribute('aria-disabled')==='true'){hint.textContent=`Complete Level ${level-1} first`;hint.hidden=false;return;}await this.game.continueCampaign(save,level as Level);});const locked=level>save.unlockedLevel;if(locked)b.setAttribute('aria-disabled','true');b.classList.toggle('is-locked',locked);if(locked){b.textContent=`🔒 Level ${level}`;b.title=`Complete Level ${level-1} first`;b.setAttribute('aria-label',`Level ${level}, locked. Complete Level ${level-1} first`);}}
+    this.content.append(hint);this.button('Back',()=>this.showMenu({status:'ok',save}));this.focus();
   }
   /** A paused result screen can still hand off to progression; no sim polling/allocation when idle. */
   update():void {
@@ -47,7 +48,8 @@ export class CampaignUI {
     const level=Number(match[1]) as Level;
     if(level===6){this.screen('Campaign complete');this.button('Level select',()=>{this.menuSave=save;this.levelSelect();});this.focus();return;}
     if(level!==save.completedLevels+1){this.screen('Level complete');this.button('Continue',()=>this.game.continueCampaign(save));this.focus();return;}
-    beginRewards(save,level);this.save();this.showRewards();
+    // PO decision 2026-10-07: straight on to the next step, no unlock / upgrade / rack screens.
+    autoRewards(save,level);this.save();this.game.applyCampaign();void this.game.continueCampaign(save);
   }
   showRewards():void {
     const save=this.game.campaign!,p=save.pending!;

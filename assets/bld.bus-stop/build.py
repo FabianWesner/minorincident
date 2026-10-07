@@ -6,6 +6,9 @@ import bpy, bmesh, math, argparse, sys
 from pathlib import Path
 from mathutils import Matrix
 from mathutils import Vector
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import simplify as simplify_lod
+
 p=argparse.ArgumentParser(); p.add_argument('--render'); p.add_argument('--view',default='ref'); p.add_argument('--samples',type=int,default=16); p.add_argument('--width',type=int,default=960); p.add_argument('--height',type=int,default=540); p.add_argument('--glb'); p.add_argument('--blend'); a=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
 colors={'asphalt':'5b4f5c','uiDark':'25222c','woodWarm':'b0703f','picketWhite':'f2e6dc','backpackTeal':'2f6e6a','schoolBusYellow':'f2b630','survivorRed':'d9363e','sidewalk':'b9a4a0'}
@@ -177,6 +180,16 @@ if a.glb:
  bpy.ops.object.select_all(action='DESELECT'); root.select_set(True); roof.select_set(True); interior.select_set(True)
  for o in asset:o.select_set(True)
  bpy.ops.export_scene.gltf(filepath=a.glb,export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
+ originals={o:o.data for o in asset}
+ for level,ratio in [(1,.55),(2,.25)]:
+  for o,data in originals.items():
+   o.data=data.copy()
+   # Closed canopy volume survives reduction; the boundary guard rejects tears.
+   simplify_lod(o,ratio)
+  bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).with_name('model.lod%d.glb'%level)),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
+  for o,data in originals.items():
+   reduced=o.data;o.data=data;bpy.data.meshes.remove(reduced)
+
 # Presentation stage is excluded from GLB.
 scene=bpy.context.scene
 box('stage',(0,0,-.10),(200,200,.2),'sidewalk')

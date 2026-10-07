@@ -7,12 +7,13 @@ import json
 import math
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import prepare_export_lod
 import bpy
 import bmesh
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import simplify as simplify_lod
 
 HERE = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser()
@@ -94,10 +95,10 @@ def mesh(name, verts, faces, token, parent=body, bevel=.018, segments=2):
     o.data.materials.append(M[token])
     o.parent = parent
     o.matrix_parent_inverse = parent.matrix_world.inverted()
-    if bevel >= .01:
+    if bevel:
         mod = o.modifiers.new('Soft edges', 'BEVEL')
         mod.width = bevel
-        mod.segments = 1 if bevel < .05 else 2
+        mod.segments = segments
         mod.limit_method = 'ANGLE'
         mod.harden_normals = True
         wn = o.modifiers.new('Weighted normals', 'WEIGHTED_NORMAL')
@@ -149,7 +150,7 @@ def cylinder(name, c, radius, depth, token, parent=body, axis='Z', vertices=24):
     o.data.materials.append(M[token])
     o.parent = parent
     o.matrix_parent_inverse = parent.matrix_world.inverted()
-    be = o.modifiers.new('Rim bevel','BEVEL'); be.width=.008; be.segments=1
+    be = o.modifiers.new('Rim bevel','BEVEL'); be.width=.008; be.segments=2
     o.modifiers.new('Weighted normals','WEIGHTED_NORMAL')
     return o
 
@@ -548,7 +549,7 @@ print('BUILD OK',json.dumps(report))
 def export(path):
     bpy.ops.object.select_all(action='DESELECT')
     for o in asset.objects: o.select_set(True)
-    prepare_export_lod(list(bpy.context.scene.objects), str(Path(path).resolve())); bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',
+    bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',
        use_selection=True,export_apply=True,export_yup=True,export_extras=True,
        export_lights=False,export_cameras=False,export_materials='EXPORT')
     print('GLB OK',path)
@@ -557,14 +558,12 @@ def export(path):
 if args.glb:
     export(args.glb)
     # Same addressable groups and hinges at all densities. LODs ship alongside LOD0.
-    for level,ratio in [(1,.15),(2,.035)]:
+    for level,ratio in [(1,.55),(2,.25)]:
         copies=[]
         for o in [o for o in asset.objects if o.type=='MESH']:
             copies.append((o,o.data))
             o.data=o.data.copy()
-            mod=o.modifiers.new('LOD simplification','DECIMATE'); mod.ratio=ratio
-            bpy.context.view_layer.objects.active=o
-            bpy.ops.object.modifier_apply(modifier=mod.name)
+            simplify_lod(o, ratio)
         export(Path(args.glb).with_name(f'model.lod{level}.glb'))
         for o,data in copies:
             reduced=o.data; o.data=data; bpy.data.meshes.remove(reduced)
