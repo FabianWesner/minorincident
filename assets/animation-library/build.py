@@ -117,16 +117,17 @@ def gait(name,duration,stride,run=False,infected=False):
     for i in range(9):
         y=([-.085,-.11,-.08,-.065,-.085,-.11,-.08,-.065,-.085][i] if run else heights[i])
         pose=p(hip=hip(y=y,roll=[0,-2,-3,-2,0,2,3,2,0][i],twist=[-4,-2,0,2,4,2,0,-2,-4][i],sway=[0,-.012,-.018,-.012,0,.012,.018,.012,0][i]),
-            torso=(0,[6,3,0,-3,-6,-3,0,3,6][i],-9 if run else -2),head=(0,0,9 if run else 2))
+            torso=(0,[6,3,0,-3,-6,-3,0,3,6][i]*(1.5 if run else 1.2),-14 if run else -3),head=(0,[-2,-1,0,1,2,1,0,-1,-2][i]*(2 if run else 1),12 if run else 3))
         for side,index in [('L',i),('R',(i+4)%8)]:
             x,lift=targets[index]
             thigh,knee=leg_pose(x*(1.3 if run else 1),lift*(1.25 if run else 1),y)
             pose['leg'+side]=z(thigh)
             pose['shin'+side]=z(knee)
             pose['foot'+side]=z(-thigh-knee+[ -8,0,0,10,20,-12,-18,-10, -8][index])
-            arm=[-27,-14,0,14,27,14,0,-14,-27][index]*(1.15 if run else .65)
+            # PO #2/#4: arms swing from the shoulder with real amplitude (cartoon-readable at the game camera).
+            arm=[-27,-14,0,14,27,14,0,-14,-27][index]*(1.9 if run else .85)
             pose['arm'+side]=(0,0,arm+(-12 if infected and side=='L' else 0))
-            pose['foreArm'+side]=z((65 if run else 20)+[0,4,8,4,0,-4,-8,-4,0][index])
+            pose['foreArm'+side]=z((80 if run else 26)+[0,6,12,6,0,-6,-12,-6,0][index]*(1 if run else .6))
         if infected:
             pose['torso']=(4,pose['torso'][1]+7,-15)
             pose['head']=(i%3*3-3,-8,12)

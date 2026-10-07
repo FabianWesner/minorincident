@@ -82,13 +82,14 @@ test('M1-02 @E04 speed phase stops for stationary NPCs and hero mixer preserves 
 
 test('M1-04 @E04 corgi trots on diagonal pairs and settles into an authored sit', () => {
   const root=createCorgiPlaceholder(), animator=new QuadrupedAnimator(root), body=root.getObjectByName('body')!, rest=body.position.y;
-  animator.update(0,0,0);animator.update(.2,2,.1);animator.update(.3,2,strides['corgi-trot']*.5);
+  // Gait speed is smoothed (PO #4): the trot settles after its 160 ms crossfade.
+  animator.update(0,0,0);animator.update(.2,2,.1);animator.update(.3,2,strides['corgi-trot']*.25);animator.update(.6,2,strides['corgi-trot']*.5);
   expect(animator.clip).toBe('corgi-trot');
   const rotation=(name:string)=>root.getObjectByName(name)!.quaternion.clone().normalize();
   expect(rotation('legFL').angleTo(rotation('legBR'))).toBeLessThan(.0001);
   expect(rotation('legFR').angleTo(rotation('legBL'))).toBeLessThan(.0001);
   expect(rotation('legFL').angleTo(rotation('legFR'))).toBeGreaterThan(.2);
-  animator.update(1,0,.2);expect(animator.clip).toBe('corgi-idle');
+  animator.update(1,0,.2);animator.update(1.8,0,.2);expect(animator.clip).toBe('corgi-idle');
   animator.update(6,0,.2);expect(animator.clip).toBe('corgi-sit');expect(body.position.y).toBeLessThan(rest-.08);
 });
 
@@ -154,11 +155,12 @@ test.each([
   const walk = actions.find(action => action.getClip().name === 'walk')!;
   const run = actions.find(action => action.getClip().name === 'run')!;
   for (let tick = 1; tick <= 60; tick++) { parent.position.x = tick / 60; animator.update(pose,tick); }
-  const phase = walk.time / walk.getClip().duration;
-  parent.position.x += 4.5 / 60; animator.update(pose,61);
+  // PO #2/#4 blend-space: speed is smoothed and walk/run blend on one stride-matched phase (no restart).
+  for (let tick = 61; tick <= 90; tick++) { parent.position.x += 4.5 / 60; animator.update(pose,tick); }
   expect(animator.clip).toBe('run');
-  expect(run.time / run.getClip().duration).toBeCloseTo((phase + 4.5 / 60 / (strides.run * strideScale(rig.root))) % 1, 6);
   expect(walk.time / walk.getClip().duration).toBeCloseTo(run.time / run.getClip().duration, 6);
+  const before = run.time / run.getClip().duration; parent.position.x += 4.5 / 60; animator.update(pose,91);
+  expect(((run.time / run.getClip().duration - before) % 1 + 1) % 1).toBeCloseTo(4.5 / 60 / Math.max(strides.run * strideScale(rig.root), 4.5 / 2.7), 2);
   actionCalls.mockRestore();
 });
 

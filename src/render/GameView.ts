@@ -13,7 +13,7 @@ import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
 import type { SurvivorState } from '../data/survivor';
 import { CharacterView } from './characters/CharacterView';
-import { BoxGeometry, Color, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial, type Material } from 'three/webgpu';
+import { BoxGeometry, Color, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial, type Material } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -120,6 +120,10 @@ export class GameView implements Lifecycle {
   private readonly projection = new Vector3();
   private idPass = false;
   private readonly flashOverlay = document.createElement('div');
+  /** E19 ending: black fade after the shutter slam, and the rolled-down bay shutter. */
+  private readonly endingFade = document.createElement('div');
+  private shutter: Group | null = null;
+  private endingShakes = -1;
   private readonly idBackground = new MeshBasicNodeMaterial({ color: '#000000' });
   private readonly idPlayer = new MeshBasicNodeMaterial({ color: '#ff00ff' });
   private readonly savedMaterials = new Map<Mesh, Material | Material[]>();
@@ -135,6 +139,8 @@ export class GameView implements Lifecycle {
     this.missionUI = new MissionUI(this.world,()=>this.update(1));
     this.flashOverlay.style.cssText = 'position:fixed;inset:0;background:white;opacity:0;pointer-events:none;z-index:3';
     document.querySelector('#game')!.appendChild(this.flashOverlay);
+    this.endingFade.style.cssText = 'position:fixed;inset:0;background:#05060a;opacity:0;pointer-events:none;z-index:3;transition:none'; this.endingFade.dataset.testid = 'ending-fade';
+    document.querySelector('#game')!.appendChild(this.endingFade);
     window.addEventListener('resize', this.resize);
   }
   private readonly resize = (): void => {
@@ -319,7 +325,7 @@ export class GameView implements Lifecycle {
       for (let i = 0; i < 30; i++) await frame();
       if (generation !== this.generation) return;
       loadGate.setPaced(true);
-      for (const view of this.preparedDistrictViews.values()) view.warmHero = batch => this.warmHidden(batch);
+      for (const view of this.preparedDistrictViews.values()) { view.warmHero = batch => this.warmHidden(batch); view.swapSlot = () => this.swapSlot(); }
       const start = performance.now();
       // The decay variants follow: their swap at an objective transition then finds LOD0 batches ready.
       if (this.quality === 'high') for (const view of [current, ...[...this.preparedDistrictViews.values()].filter(view => view !== current)]) { await view.prepare(this.view.cameraTarget, stale); if (stale()) break; }
@@ -347,8 +353,44 @@ export class GameView implements Lifecycle {
     next.updateLods(this.view); this.lighting?.set(next.world.composition.timeOfDay);
     return true;
   }
+  /** The fire-station ending: the bay shutter rolls down at the slam (small shake), thuds shake the camera lightly,
+   * then the screen fades to black and stays dark under the result panel. */
+  private updateEnding(): void {
+    const mission = this.world.missions?.state, l1 = mission?.l1, beat = l1?.beat, door = this.world.missions?.def.anchors['fire-bay-door'], trigger = this.world.missions?.def.anchors['fire-bay-trigger'];
+    const ending = beat?.id === 'firestation', slam = ending ? beat!.slam : undefined, tick = this.world.tick;
+    const done = !!l1?.beatsDone?.includes('firestation') && (mission?.phase === 'result' || mission?.phase === 'progression' || mission?.phase === 'cinematic');
+    if ((ending || done) && door && trigger && this.materials) {
+      if (!this.shutter) {
+        // The station model ships closed bay doors (static batch): an open dark bay is shown in front of them for
+        // the run-in, and the roll-down shutter covers it at the slam.
+        const dx = door.x - trigger.x, dz = door.z - trigger.z, d = Math.hypot(dx, dz) || 1, ground = this.world.districts?.groundHeight(door.x, door.z) ?? 0;
+        const group = new Group(); group.position.set(door.x + dx / d * 2.05, ground, door.z + dz / d * 2.05); group.rotation.y = Math.atan2(dx, dz);
+        const opening = new Mesh(new BoxGeometry(3.6, 3.2, .04), this.materials.fromColor('story:bay-dark', new Color('#120d12'))); opening.position.set(0, 1.6, .02); opening.name = 'bay-opening';
+        const shutter = new Mesh(new BoxGeometry(3.8, 3.4, .1), this.materials.fromColor('story:shutter', new Color('#b44a3e'))); shutter.position.set(0, 3.4, -.06); shutter.name = 'bay-shutter'; shutter.castShadow = true;
+        group.add(opening, shutter); this.shutter = group; this.scene.add(group);
+      }
+      const shutter = this.shutter.getObjectByName('bay-shutter')!, k = slam !== undefined ? Math.min(1, (tick - slam) / 24) : done ? 1 : 0;
+      shutter.visible = k > 0; shutter.scale.y = Math.max(.01, k * k); shutter.position.y = 3.4 - 1.7 * k * k;
+      if (slam !== undefined) {
+        const since = tick - slam;
+        if (since >= 24 && this.endingShakes < 0) { this.view.shake(.6); this.endingShakes = 0; }
+        for (const [i, at] of [40, 70, 95].entries()) if (since >= at && this.endingShakes === i) { this.view.shake(.25); this.endingShakes = i + 1; }
+      }
+    } else if (this.shutter) { this.scene.remove(this.shutter); this.shutter.traverse((o: import('three').Object3D) => { if (o instanceof Mesh) o.geometry.dispose(); }); this.shutter = null; this.endingShakes = -1; }
+    const fade = slam !== undefined ? beat!.fadeAt !== undefined ? Math.max(0, Math.min(1, (tick - beat!.fadeAt) / 60)) : 0 : done ? 1 : 0;
+    this.endingFade.style.opacity = String(fade);
+  }
   /** Real render seconds, deliberately independent of sim ticks/time scale. */
-  frame(seconds: number): void { const dt = Math.min(1, seconds); this.vfx?.advance(dt); this.labAccident?.advance(dt); }
+  frame(seconds: number): void { const dt = Math.min(1, seconds); this.playSeconds += dt; this.vfx?.advance(dt); this.labAccident?.advance(dt); }
+  /** Seconds of running play since the level loaded (menus/briefing/pause excluded). */
+  private playSeconds = 0;
+  /** LOD0 swaps wait for the first seconds of play to pass (no hitch while the player starts moving),
+   * then run one per frame through the load gate. */
+  private async swapSlot(): Promise<void> {
+    // Test mode keeps deterministic readiness (paused clocks would otherwise hold swaps forever).
+    while (this.playSeconds < 4 && this.params.get('test') !== '1') await new Promise(resolve => setTimeout(resolve, 250));
+    await loadGate.wait();
+  }
   advance(seconds: number): void {
     this.districts?.advance(seconds);
     const player = this.world.entities.get(1);
@@ -358,10 +400,12 @@ export class GameView implements Lifecycle {
       // then back to the follow camera; no cut, same isometric angle.
       const beat = this.world.missions?.state.l1?.beat;
       if (beat && this.world.storyLock && !this.view.spot) {
-        this.storyFocus.set(beat.fx, .8, beat.fz); this.storyOffset.setFromSphericalCoords(13, this.view.polar, this.view.azimuth);
+        // The fire-station bay faces away from the follow camera: the ending swings round to look at the open bay.
+        this.storyFocus.set(beat.fx, .8, beat.fz); this.storyOffset.setFromSphericalCoords(beat.id === 'firestation' ? 15 : 13, this.view.polar, this.view.azimuth + (beat.id === 'firestation' ? Math.PI : 0));
         this.view.cinematic({ position: this.storyFocus.clone().add(this.storyOffset).toArray() as [number, number, number], target: this.storyFocus.toArray() as [number, number, number] });
         this.storyFraming = true;
       } else if (this.storyFraming) { this.storyFraming = false; this.view.follow(); }
+      this.updateEnding();
       this.view.update(player.transform, seconds);
       this.playerPosition.set(player.transform.x, player.transform.y - 0.5, player.transform.z);
       if (this.lookdev) this.occlusion.update(this.camera, this.playerPosition, seconds, this.lookdev.playerMeshes);
@@ -558,7 +602,7 @@ export class GameView implements Lifecycle {
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
   reset(): void {
-    this.generation++; this.pendingPreparation = null; this.preparation = null; this.warming = null;
+    this.playSeconds = 0; this.generation++; this.pendingPreparation = null; this.preparation = null; this.warming = null;
     if (this.background) { loadGate.setPaced(true); loadGate.background = true; } else loadGate.setPaced(false);
     this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;
     if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }
