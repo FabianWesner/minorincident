@@ -3239,11 +3239,11 @@
       "lod1": "public/assets/models/veh.fire-engine.lod1.glb",
       "lod2": "public/assets/models/veh.fire-engine.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
-    },
-    "sourceGlb": "assets/veh.fire-engine/model.glb"
+    "sourceGlb": "assets/veh.fire-engine/model.glb",
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    }
   },
   {
     "id": "veh.sedan-red",
@@ -3412,9 +3412,9 @@
       "token": "picketWhite",
       "solid": false
     },
-    "authoredLodRatios": {
-      "lod1": 0.383,
-      "lod2": 0.253
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3758,9 +3758,9 @@
       "token": "tealDark",
       "solid": false
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3915,9 +3915,9 @@
     },
     "decayVariants": [],
     "sourceForward": "+X",
-    "authoredLodRatios": {
-      "lod1": 0.48,
-      "lod2": 0.368
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -4041,9 +4041,9 @@
       "token": "schoolBusYellow",
       "solid": true
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4091,9 +4091,9 @@
       "token": "backpackTeal",
       "solid": true
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4139,9 +4139,9 @@
       "token": "brick",
       "solid": true
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4297,9 +4297,9 @@
       "token": "survivorRed",
       "solid": true
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4341,9 +4341,9 @@
       "lod1": "public/assets/models/bld.gas-station.lod1.glb",
       "lod2": "public/assets/models/bld.gas-station.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4430,10 +4430,11 @@
       "token": "brick",
       "solid": true
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
-    }
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "compactMeshopt": true
   },
   {
     "id": "bld.bus-stop",
@@ -4476,9 +4477,9 @@
       "token": "backpackTeal",
       "solid": false
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4555,10 +4556,11 @@
     },
     "sourceForward": "+X",
     "script": "assets/bld.school-elementary/build.py",
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
-    }
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "compactMeshopt": true
   },
   {
     "id": "int.gym-cafeteria",
@@ -4807,9 +4809,9 @@
       "lod1": "public/assets/models/bld.fire-station.lod1.glb",
       "lod2": "public/assets/models/bld.fire-station.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -5891,9 +5893,9 @@
       "token": "backpackTeal",
       "solid": false
     },
-    "authoredLodRatios": {
-      "lod1": 0.427,
-      "lod2": 0.311
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -7130,9 +7132,9 @@
       "lod1": "public/assets/models/veh.military-truck.lod1.glb",
       "lod2": "public/assets/models/veh.military-truck.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -7190,9 +7192,9 @@
       "token": "canvasTan",
       "solid": false
     },
-    "authoredLodRatios": {
-      "lod1": 0.551,
-      "lod2": 0.442
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -7246,9 +7248,9 @@
       "lod1": "public/assets/models/veh.semi-trailer.lod1.glb",
       "lod2": "public/assets/models/veh.semi-trailer.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.643,
-      "lod2": 0.524
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -7599,9 +7601,9 @@
       "lod1": "public/assets/models/bld.helipad.lod1.glb",
       "lod2": "public/assets/models/bld.helipad.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -12397,9 +12399,9 @@
       "lod1": "public/assets/models/bld.garage-detached.lod1.glb",
       "lod2": "public/assets/models/bld.garage-detached.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {

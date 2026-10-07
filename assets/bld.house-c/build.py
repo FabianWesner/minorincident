@@ -6,6 +6,8 @@ from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
 from sslib.lod import simplify as simplify_lod
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 P=Path(__file__).resolve().parent
 fingerprint=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
@@ -29,6 +31,7 @@ def build_scene():
   o=bpy.data.objects.new(n,None);bpy.context.collection.objects.link(o);o.location=loc;o.parent=parent;return o
  roof=empty('roof');interior=empty('interior');door=empty('door_back',(0,-.46,.85));lid=empty('door_grill_lid',(.75,-2.05,1.72))
  def finish(o,m,b=0,group='body'):
+  if DISTANCE: b=0
   o.data.materials.append(m)
   if b:
    weights=o.data.attributes.new(name='bevel_weight_edge',type='FLOAT',domain='EDGE')
@@ -41,11 +44,13 @@ def build_scene():
  def mesh(n,v,f,m,group='body',b=0):
   me=bpy.data.meshes.new(n);me.from_pydata(v,[],f);me.update();o=bpy.data.objects.new(n,me);bpy.context.collection.objects.link(o);return finish(o,m,b,group)
  def cyl(n,loc,r,d,m,N=16,group='body'):
+  if DISTANCE: N=min(N,12 if DISTANCE==1 else 8)
   vertices=[(r*math.cos(i*math.tau/N),r*math.sin(i*math.tau/N),z) for z in [-d/2,d/2] for i in range(N)]
   faces=[tuple(range(N-1,-1,-1)),tuple(range(N,2*N))]+[(i,(i+1)%N,(i+1)%N+N,i+N) for i in range(N)]
   o=mesh(n,vertices,faces,m,group,(min(.008,r*.2) if r>.025 else 0));o.location=loc;return o
  sphere_templates={}
  def ball(n,loc,scale,m,group='body',sub=1):
+  if DISTANCE: sub=1
   if sub not in sphere_templates:
    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=sub,radius=1)
    template=bpy.context.object;sphere_templates[sub]=([tuple(v.co) for v in template.data.vertices],[tuple(f.vertices) for f in template.data.polygons]);bpy.data.objects.remove(template,do_unlink=True)
@@ -57,6 +62,9 @@ def build_scene():
  box('lawn island',(.2,0,.08),(8.6,7.3,.16),grass,.08)
  box('foundation',(-1.85,0,.45),(3.8,6,.62),slate,.045)
  box('interior floor',(-1.85,0,.79),(3.64,5.84,.13),wood,group='interior')
+ if DISTANCE==2:
+  for y in [-3,3]:box('distance wall',(-1.85,y,2.44),(3.8,.14,3.12),siding)
+  for x in [-3.75,.05]:box('distance wall',(x,0,2.44),(.14,6,3.12),siding)
  # Walls are actual separate cladding boards; offsets reveal seams.
  for j in range(14):
   z=.98+j*.224
@@ -78,7 +86,7 @@ def build_scene():
  slope=1.6/2.08;angle=math.atan(slope)
  for side in [-1,1]:
   x=-1.85+side*1.05;z=4.82
-  o=box('roof underlay',(x,0,z),(2.66,6.62,.13),dark,.01,'roof');o.rotation_euler.y=side*angle
+  o=box('roof underlay',(x,0,z),(2.66,6.62,.13),slate if DISTANCE else dark,.01,'roof');o.rotation_euler.y=side*angle
   for row in range(7):
    distance=.16+row*.298;x=-1.85+side*distance;z=5.65-distance*slope+.09+row*.006
    for col in range(14):
@@ -202,6 +210,8 @@ def build_scene():
  beam('mug handle',(tx+.44,ty-.15,1.66),(tx+.46,ty-.15,1.77),.022,cream)
  # Flowers and leaves: clustered low-poly ellipsoids, actual petals and centres.
  def plant(x,y,z,scale=.6,flower=True):
+  if DISTANCE:
+   ball('distance shrub',(x,y,z+scale*.5),(scale*.6,scale*.6,scale*.5),green);return
   for j in range(5 if a.lod==2 else 12):
    t=rng.random()*math.tau;r=scale*math.sqrt(rng.random())*.65;zz=z+scale*(.18+rng.random()*.52)
    o=ball('leaf cluster',(x+r*math.cos(t),y+r*math.sin(t),zz),(.24*scale,.13*scale,.18*scale),green);o.rotation_euler=(rng.uniform(-1.2,1.2),rng.uniform(-1.2,1.2),t)
@@ -214,6 +224,8 @@ def build_scene():
      t=k*math.tau/5;ball('petal',(px+.054*math.cos(t),py+.054*math.sin(t),pz),(.046,.032,.031),color)
     ball('flower centre',(px,py,pz+.022),(.028,.028,.025),yellow)
  def planter(x,y,z,s=.55):
+  if DISTANCE==2:
+   box('distance planter',(x,y,z+.2),(s,s,.4),wood);plant(x,y,z+.33,s*1.5);return
   box('planter soil',(x,y,z+.22),(s*.92,s*.92,.10),dark)
   for j in range(3):
    for dx,dy,sx,sy in [(s/2,0,.045,s),(-s/2,0,.045,s),(0,s/2,s,.045),(0,-s/2,s,.045)]:box('planter horizontal slat',(x+dx,y+dy,z+.08+j*.12),(sx,sy,.106),wood,.009)
@@ -253,6 +265,10 @@ def build_scene():
  # Join static geometry by material; roof and hinge groups remain independent.
  parents={'roof':roof,'interior':interior,'door':door,'lid':lid,'window':root,'bulbs':root,'body':root}
  parents.update({n:bpy.data.objects[n] for n in bulbs})
+ if DISTANCE:
+  ownership={}
+  for (g,m),objects in groups.items():ownership.setdefault(parents[g],[]).extend(objects)
+  export_variant(P,DISTANCE,omit=('overlapping slate shingle',),far_omit=('mullion','ridge cap','pendant cord','flower','ivy leaves','baluster','deck board','gable siding','eave siding','clipped gable clapboard','festoon cable','bulb socket','planter horizontal slat','deck plank','canopy rib','chair','seat slat','saucer','coffee','mug'),owners=ownership)
  export_objects=[root,roof,interior,door,lid]
  for (g,m),objects in groups.items():
   bpy.ops.object.select_all(action='DESELECT')
@@ -351,3 +367,6 @@ if a.render:
   if name==Path(a.render).name:name='game.png'
   scene.render.filepath=str(Path(a.render).with_name(name).resolve());bpy.ops.render.render(write_still=True)
 print('OK',json.dumps(report))
+
+if a.glb and not DISTANCE:
+    build_native_lods(__file__)

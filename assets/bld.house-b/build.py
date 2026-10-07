@@ -4,11 +4,12 @@ from pathlib import Path
 import bpy, bmesh
 from mathutils import Vector
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
-from sslib.lod import export_lods, rebuild_from_baked
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE=Path(__file__).resolve().parent
 if '--lod-only' in sys.argv:
-    rebuild_from_baked(HERE/'model.glb')
+    build_native_lods(__file__)
     sys.exit(0)
 
 p=argparse.ArgumentParser()
@@ -36,6 +37,7 @@ root=empty('root'); root['asset_id']='bld.house-b'
 body=empty('body',parent=root); roof=empty('roof',parent=root); interior=empty('interior',parent=root)
 parts=[]
 def finish(o,name,mat,parent,bevel=0):
+    if DISTANCE: bevel = 0
     o.name=name; o.data.materials.append(M[mat])
     if bevel:
         b=o.modifiers.new('soft edges','BEVEL'); b.width=bevel; b.segments=2 if bevel>=.025 else 1
@@ -44,6 +46,7 @@ def finish(o,name,mat,parent,bevel=0):
     o.parent=parent; o.matrix_parent_inverse=parent.matrix_world.inverted(); parts.append(o); return o
 
 def box(name,loc,size,mat='picketWhite',parent=body,bevel=.025,rot=None):
+    if DISTANCE: bevel = 0
     sx,sy,sz=[v/2 for v in size]
     vs=[(x,y,z) for x in [-sx,sx] for y in [-sy,sy] for z in [-sz,sz]]
     me=bpy.data.meshes.new(name); me.from_pydata(vs,[],[(0,4,6,2),(1,3,7,5),(0,1,5,4),(2,6,7,3),(0,2,3,1),(4,5,7,6)]); me.update()
@@ -211,6 +214,8 @@ def leaf(loc,size,mat):
     o.rotation_euler=(rng.uniform(-.8,.8),rng.uniform(-.8,.8),rng.uniform(0,6.28))
     return finish(o,'leaf',mat,body)
 def shrub(x,y,z,r,h,flowers=0):
+    if DISTANCE:
+        leaf((x,y,z+h/2),(r,r,h/2),'foliage'); return
     for i in range(65):
         ang=rng.random()*6.28; zz=rng.random()*h; radius=r*math.sqrt(rng.random())*(1-.5*zz/h)
         leaf((x+math.cos(ang)*radius,y+math.sin(ang)*radius,z+zz),(.10,.22,.055),'foliage' if i%3 else 'grass')
@@ -236,6 +241,9 @@ box('ground_floor',(0,0,.47),(5.8,4.8,.10),'woodWarm',interior)
 box('attic_floor',(0,0,3.6),(5.8,4.8,.12),'woodWarm',interior)
 for name,loc,size in [('house',(0,0,1.9),(6,5,3.8)),('garage',(-.3,4.05,1.5),(5.45,3,3))]:
     col=empty('col:'+name,loc,root); col['collider']='cuboid'; col['shape']='cuboid'; col['size']=list(size)
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('clay_tile',), far_omit=('panel_inset', 'panel_face', 'siding', 'baluster', 'mullion', 'leaf', 'bloom', 'ridge_cap'))
+
 # Merge only within assemblies, so roof removal and hinges remain functional.
 parents={o.parent for o in parts}
 for parent in sorted(parents,key=lambda o:o.name):
@@ -268,7 +276,6 @@ if a.glb:
     def export_glb(path):
         bpy.ops.export_scene.gltf(filepath=str(path.resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
     export_glb(Path(a.glb))
-    export_lods(Path(a.glb), meshes)
 
 print('BUILD OK',tri,'triangles',len(meshes),'draw calls')
 if a.render:
@@ -292,3 +299,6 @@ if a.render:
         game_path=Path(a.render).with_name('game.png' if Path(a.render).stem=='hero' else Path(a.render).stem.replace('-ref','')+'-game.png')
         scene.render.filepath=str(game_path.resolve()); bpy.ops.render.render(write_still=True)
     print('RENDER OK')
+
+if a.glb and not DISTANCE:
+    build_native_lods(__file__)

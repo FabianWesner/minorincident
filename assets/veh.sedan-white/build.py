@@ -8,6 +8,8 @@ import bmesh, bpy
 from mathutils import Matrix, Vector
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
 from sslib.lod import hard_normals, refresh_normals
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE = Path(__file__).resolve().parent
 if '--normals-only' in sys.argv:
@@ -82,6 +84,7 @@ def group(name, location=(0, 0, 0), parent=None):
 
 
 def finish(obj, mat, parent, bevel=0.0, segs=2, smooth=True, harden=True, angle=40):
+    if DISTANCE: bevel = 0
     CAR.objects.link(obj)
     if isinstance(mat, str):
         mat = M[mat]
@@ -117,6 +120,7 @@ def from_bm(name, bm):
 
 
 def box(name, center, size, mat, parent=None, bevel=0.02, segs=2, rot=(0, 0, 0)):
+    if DISTANCE: bevel = 0
     bm = bmesh.new()
     bmesh.ops.create_cube(bm, size=1.0)
     bmesh.ops.scale(bm, vec=Vector(size), verts=bm.verts)
@@ -127,6 +131,7 @@ def box(name, center, size, mat, parent=None, bevel=0.02, segs=2, rot=(0, 0, 0))
 
 
 def prism(name, pts_xz, y0, y1, mat, parent=None, bevel=0.03, segs=2):
+    if DISTANCE: bevel = 0
     """2D side silhouette (x, z) extruded across y0..y1."""
     bm = bmesh.new()
     vs = [bm.verts.new((x, y0, z)) for x, z in pts_xz]
@@ -140,6 +145,7 @@ def prism(name, pts_xz, y0, y1, mat, parent=None, bevel=0.03, segs=2):
 
 
 def plate(name, pts_xz, side, depth, mat, parent=None, y_skin=W, bevel=0.006, segs=2, lift=0.0):
+    if DISTANCE: bevel = 0
     """Flat shape lying on a side skin. side=-1 near (-Y), +1 far (+Y). pts in world (x, z)."""
     y0 = side * (y_skin + lift)
     y1 = side * (y_skin + lift + depth)
@@ -147,6 +153,7 @@ def plate(name, pts_xz, side, depth, mat, parent=None, y_skin=W, bevel=0.006, se
 
 
 def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.005, lift=0.0):
+    if DISTANCE: bevel = 0
     """Frame between two loops with equal vertex count, on a side skin."""
     bm = bmesh.new()
     y0 = side * (y_skin + lift)
@@ -169,6 +176,7 @@ def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.00
 
 
 def lathe(name, profile, center, axis, mat, parent=None, segs=40, smooth=True):
+    if DISTANCE: segs = min(segs, 12 if DISTANCE == 1 else 8)
     """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
     bm = bmesh.new()
     rings = []
@@ -200,6 +208,7 @@ def lathe(name, profile, center, axis, mat, parent=None, segs=40, smooth=True):
 
 
 def cylinder(name, center, r, depth, axis, mat, parent=None, segs=40, bevel=0.0):
+    if DISTANCE: bevel = 0; segs = min(segs, 12 if DISTANCE == 1 else 8)
     prof = [(1e-4, -depth / 2), (r, -depth / 2), (r, depth / 2), (1e-4, depth / 2)]
     o = lathe(name, prof, center, axis, mat, parent, segs)
     if bevel:
@@ -225,6 +234,7 @@ def cut(target, cutter_obj):
 
 
 def raw_cyl(name, center, r, depth, axis='y', segs=64):
+    if DISTANCE: segs=min(segs, 12 if DISTANCE==1 else 6)
     bm = bmesh.new()
     bmesh.ops.create_cone(bm, cap_ends=True, segments=segs, radius1=r, radius2=r, depth=depth)
     rot = {'y': Matrix.Rotation(PI / 2, 4, 'X'), 'x': Matrix.Rotation(PI / 2, 4, 'Y'), 'z': Matrix.Identity(4)}[axis]
@@ -406,6 +416,9 @@ for o in list(CAR.objects):
     bpy.ops.object.select_all(action='DESELECT');o.select_set(True);bpy.context.view_layer.objects.active=o
     for mod in list(o.modifiers):bpy.ops.object.modifier_apply(modifier=mod.name)
     bpy.ops.object.transform_apply(location=False,rotation=True,scale=True)
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('tread', 'lug', 'rivet', 'seat', 'steering', 'sidewall_rib','rim_lip','sidewall_line','hub_cap','clamp_bolt','corner_fastener','sidewall_bead'), far_omit=('seat', 'steering', 'handle', 'wiper', 'rib', 'badge', 'rim spoke', 'seam', 'rim', 'hub', 'label', 'letter', 'logo', 'stripe', 'gasket', 'frame_ring', 'dial', 'louver','arch_lip','lens_flute','tail_lens_rib','grille_support','headrest','rear_bench','rear_backrest','dashboard','plate_screw','axle','_lock'), flat_parts=('wheel*_rim',))
+
 def motion_owner(o):
     p=o.parent
     while p:
@@ -462,14 +475,6 @@ if arg('--glb'):
         print('GLB OK',path)
     export_glb(arg('--glb'))
     original={o:o.data for o in meshes}
-    for level,ratio in [(1,.14),(2,.045)]:
-        for o,me in original.items():
-            o.data=me.copy();bpy.context.view_layer.objects.active=o
-            d=o.modifiers.new('LOD','DECIMATE');d.ratio=ratio;bpy.ops.object.modifier_apply(modifier=d.name)
-            clean_mesh(o)
-        for obj in meshes: hard_normals(obj)
-        export_glb(HERE/f'model.lod{level}.glb')
-        for o,me in original.items():o.data=me
 
 def stage(view):
     world=bpy.data.worlds.new('Studio');scene.world=world;world.use_nodes=True
@@ -505,3 +510,6 @@ if arg('--render'):
         if path.name=='hero.png':
             scene.cycles.samples=24;scene.render.resolution_x=960;scene.render.resolution_y=540
         scene.render.filepath=str(game_path.resolve());bpy.ops.render.render(write_still=True);print('RENDER OK game')
+
+if arg('--glb') and not DISTANCE:
+    build_native_lods(__file__)
