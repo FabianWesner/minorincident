@@ -114,7 +114,7 @@ export class CourierGroundContacts {
       const desired = foot.target.y + Math.sqrt(Math.max(.001, length * length - dx * dx - dz * dz));
       const offset = this.joint.y - rig.hip.getWorldPosition(this.delta).y;
       height = Math.min(height, desired - offset);
-      const minLength = Math.sqrt(foot.a ** 2 + foot.b ** 2 + 2 * foot.a * foot.b * Math.cos((moving ? 25 + 20 * run : 50) * Math.PI / 180)) * this.scale.y;
+      const minLength = Math.sqrt(foot.a ** 2 + foot.b ** 2 + 2 * foot.a * foot.b * Math.cos((moving ? 24 + 21 * run : 50) * Math.PI / 180)) * this.scale.y;
       const maxLength = (foot.a + foot.b) * this.scale.y * .999;
       minimumHeight = Math.max(minimumHeight, foot.target.y + Math.sqrt(Math.max(.001, minLength * minLength - dx * dx - dz * dz)) - offset);
       maximumHeight = Math.min(maximumHeight, foot.target.y + Math.sqrt(Math.max(.001, maxLength * maxLength - dx * dx - dz * dz)) - offset);
@@ -145,7 +145,7 @@ export class CourierGroundContacts {
         // Prescribe a smooth knee arc, then solve vertical ankle clearance from
         // the fitted bone lengths. This avoids hitting the IK straight-leg
         // singularity twice per swing (a visible knee snap in the pilot).
-        const knee = (10 + 15 * run + (15 + 5 * run) * Math.sin(Math.PI * u) ** 2) * Math.PI / 180;
+        const knee = (10 + 15 * run + (14 + 6 * run) * Math.sin(Math.PI * u) ** 2) * Math.PI / 180;
         const length = Math.sqrt(foot.a ** 2 + foot.b ** 2 + 2 * foot.a * foot.b * Math.cos(knee)) * this.scale.y;
         this.delta.copy(foot.target).sub(this.joint);
         foot.target.y = Math.max(this.origin.y + this.sole * this.scale.y,
