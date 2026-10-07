@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { audioCues, audioCategories, audioFile, eventCues, telegraphCues } from '../../../src/data/audioCues';
 import { infectedDefinitions } from '../../../src/data/infected';
 import imports from '../../../assets/audio/imports.json';
-import { audioCredits } from '../../../src/data/audioCredits';
+import { audioCredits } from '../../../src/data/credits';
 test('T-E16-01a @E16 @E16-AC01 every sim event and archetype resolves to a real sprite cue', () => {
     const source = readFileSync('src/sim/world/types.ts', 'utf8') + readFileSync('src/data/audioEvents.ts', 'utf8');
     const types = [...source.matchAll(/type:\s*((?:'[^']+'\s*\|\s*)*'[^']+')/g)].flatMap(m => [...m[1].matchAll(/'([^']+)'/g)].map(t => t[1]));
