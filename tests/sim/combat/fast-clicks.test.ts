@@ -16,10 +16,11 @@ async function clickDuel(weapon: string, clicks = Infinity, brain = false) {
     const p = w.entities.get(1)!.transform;
     if (target.health.current > 0) distances.push(Math.hypot(target.transform.x - p.x, target.transform.z - p.z));
   });
-  for (let tick = 0; tick < 600 && target.health.current > 0; tick++) {
+  let sentClicks = 0;
+  for (let tick = 0; tick < Math.min(600, clicks * 12) && (Number.isFinite(clicks) || target.health.current > 0); tick++) {
     const frame = emptyInput(); frame.aimSource = 'pointer'; frame.pointerTarget = true;
     if (tick % 12 === 0 && tick / 12 < clicks) {
-      frame.mouseAttack = true; frame.left = { down: true, held: false, up: true }; frame.attackTarget = { id, side: 'LEFT' };
+      sentClicks++; frame.mouseAttack = true; frame.left = { down: true, held: false, up: true }; frame.attackTarget = { id, side: 'LEFT' };
     }
     w.applyInput(frame, 'mouse-only'); w.update();
     if (target.health.current > 0 && target.combat!.reaction) {
@@ -32,7 +33,7 @@ async function clickDuel(weapon: string, clicks = Infinity, brain = false) {
   const hitStops = w.events.events().filter(e => e.type === 'combat.hit-stop' && e.sourceId === 1);
   expect(hitStops).toHaveLength(hits.length);
   for (const stop of hitStops) if (stop.type === 'combat.hit-stop') { expect(stop.durationMs).toBeGreaterThanOrEqual(40); expect(stop.durationMs).toBeLessThanOrEqual(70); }
-  return { weapon, ticks: w.tick, seconds: w.tick / 60, killed: target.health.current === 0, hits, distances };
+  return { weapon, sentClicks, ticks: w.tick, seconds: w.tick / 60, killed: target.health.current === 0, hits, distances };
 }
 
 test('@E05 @E05-AC14 @E06 @E06-AC10 click TTK measurement', async () => {
@@ -53,7 +54,7 @@ function knockDown(w: SimWorld, id: number) {
 for (const [weapon, count] of [['weapon.fists', 5], ['weapon.bat', 2]] as const) {
   test(`@E05 @E05-AC03 @E05-AC07 @E06 ten rapid released clicks keep ${weapon} in reach and kill`, async () => {
     const row = await clickDuel(weapon, 10, true);
-    expect(row.killed).toBe(true); expect(row.hits).toHaveLength(count);
+    expect(row.sentClicks).toBe(10); expect(row.killed).toBe(true); expect(row.hits).toHaveLength(count);
     for (let i = 1; i < row.hits.length; i++) expect((row.hits[i] - row.hits[i - 1]) / 60).toBeLessThanOrEqual(.6);
     expect(Math.max(...row.distances)).toBeLessThanOrEqual(weapon === 'weapon.fists' ? 1.6 : 1.9);
   });
