@@ -97,6 +97,36 @@ export class LevelOneOutbreak {
     const l1 = this.l1;
     for (const key of ['handoverAt', 'deliveredAt', 'flickerAt', 'exitAt', 'graceUntil'] as const) if (l1[key]) l1[key] += delta;
     for (const run of l1.runs) run.until += delta;
+    if (l1.exitIds.length && this.mission.state.checkpoint === 'accident') this.safeRespawn();
+  }
+
+  /**
+   * Death after the accident (QA2b-01): the checkpoint sits at the door in the middle of the mob, so the player is placed at the
+   * safest nearby street point out of infected sight with ~2 s of invulnerability, and infected close to the old spot are sent searching.
+   */
+  private safeRespawn(): void {
+    const { world } = this.mission, ai = world.infected, nav = ai?.nav, player = world.entities.get(1)!, tick = world.tick;
+    if (!ai || !nav) return;
+    const live = ai.active.filter(e => e.health.current > 0), gate = this.anchor('lab-gate'), from = { x: player.transform.x, z: player.transform.z };
+    const near = (x: number, z: number) => live.reduce((m, e) => Math.min(m, Math.hypot(e.transform.x - x, e.transform.z - z)), 99);
+    let best = { x: from.x, z: from.z }, bestScore = -Infinity;
+    const candidates = [{ x: gate.x, z: gate.z }, this.anchor('lab-bike-rack')];
+    for (const r of [10, 18, 26, 34]) for (let k = 0; k < 12; k++) candidates.push({ x: gate.x + Math.cos(k * Math.PI / 6) * r, z: gate.z + Math.sin(k * Math.PI / 6) * r });
+    for (const c of candidates) {
+      if (!c || !nav.clear(c.x, c.z, .6) || !nav.visible(from, c, .5) && Math.hypot(c.x - from.x, c.z - from.z) > 14) continue;
+      const score = Math.min(near(c.x, c.z), 22) - .15 * Math.hypot(c.x - gate.x, c.z - gate.z);
+      if (score > bestScore) { bestScore = score; best = c; }
+    }
+    player.transform.x = best.x; player.transform.z = best.z;
+    world.physics.playerBody!.setTranslation(player.transform, true); world.previousPlayer = { ...player.transform }; world.spatial.set(1, best.x, best.z);
+    world.player!.setCheckpoint(player.transform);
+    if (player.survivor) player.survivor.invulnerableUntil = tick + 2 * TICKS;
+    for (const e of live) {
+      if (Math.hypot(e.transform.x - best.x, e.transform.z - best.z) > 22 || !e.infected?.l1) continue;
+      // Re-disperse: a point 25 m from the player, away from them, then a normal search.
+      const a = Math.atan2(e.transform.z - best.z, e.transform.x - best.x), cell = nav.nearestCell(e.transform.x + Math.cos(a) * 25, e.transform.z + Math.sin(a) * 25);
+      if (cell >= 0) { e.infected.l1.mode = 'wander'; e.infected.state = 'wander'; ai.rush(e.id, { x: nav.x(cell), z: nav.z(cell) }, tick + 10 * TICKS); }
+    }
   }
 
   private face(e: EntitySnapshot, at: { x: number; z: number }): void { e.transform.yaw = -Math.atan2(at.z - e.transform.z, at.x - e.transform.x); }

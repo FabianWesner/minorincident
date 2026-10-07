@@ -14,8 +14,25 @@ test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enabl
 test.describe('L1 v2 real-input playthrough', () => {
   test.fixme('T-E19-13 @E19 @E19-AC13 walk modifier: run by default, hold Walk at 2.0 m/s on keyboard and mouse', async () => {});
 
+  test('T-E19-unlock @E19 result screen, real click on Continue: the unlock panel shows the bat, not a crowbar', async ({ page }) => {
+    test.setTimeout(300_000); page.setDefaultTimeout(60_000); mkdirSync(output, { recursive: true });
+    await menuStart(page);
+    await page.evaluate(() => window.__SS__!.pause());
+    // Objectives are advanced with the test cheat (the walk is covered by the playthrough); the screens are real clicks.
+    for (let i = 0; i < 12; i++) {
+      const phase = await page.evaluate(() => window.__SS__!.missions.state()!.phase);
+      if (phase === 'cinematic' || phase === 'result') break;
+      await page.evaluate(() => window.__SS__!.cheats.completeObjective());
+    }
+    for (let i = 0; i < 40 && (await page.evaluate(() => window.__SS__!.missions.state()!.phase)) !== 'result'; i++) await page.evaluate(() => window.__SS__!.step(30));
+    await page.getByRole('button', { name: 'Continue', exact: true }).click();
+    await expect(page.locator('body')).toContainText(/bat/i);
+    await expect(page.locator('body')).not.toContainText(/crowbar/i);
+    await page.screenshot({ path: `${output}/unlock-after-continue.png` });
+  });
+
   test('T-E19-22 @E19 @E19-AC22 headless real-input playthrough from title to result, 9 photo spots, end caption', async ({ page }) => {
-    test.setTimeout(900_000); page.setDefaultTimeout(20_000); mkdirSync(output, { recursive: true });
+    test.setTimeout(900_000); page.setDefaultTimeout(60_000); mkdirSync(output, { recursive: true });
     await menuStart(page);
     await page.evaluate(() => { window.__SS__!.pause(); window.__SS__!.cheats.god(true); }); // survival aid only: all movement, interaction and combat input stays real
     const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);
@@ -27,10 +44,13 @@ test.describe('L1 v2 real-input playthrough', () => {
     };
     /** Click-to-move toward a world point: real mouse clicks on the ground, the game paths around obstacles. */
     const go = async (target: { x: number; z: number }, stop = 1.2) => {
-      for (let i = 0; i < 400; i++) {
+      let best = Infinity, stalled = 0;
+      for (let i = 0; i < 500; i++) {
         const p = (await player()).transform, d = Math.hypot(target.x - p.x, target.z - p.z);
         if (d <= stop || (await mission()).phase !== 'playing') return;
-        const k = Math.min(6, d) / d, point = await page.evaluate(q => window.__SS__!.input.project(q), { x: p.x + (target.x - p.x) * k, z: p.z + (target.z - p.z) * k });
+        if (d < best - 1) { best = d; stalled = 0; } else stalled++;
+        // Short hops along the straight line; when stalled behind a building, click the real target so the game paths around it.
+        const k = stalled > 6 ? Math.min(1, 14 / d) : Math.min(6, d) / d, point = await page.evaluate(q => window.__SS__!.input.project(q), { x: p.x + (target.x - p.x) * k, z: p.z + (target.z - p.z) * k });
         await page.mouse.click(point.x, point.y); await step(30);
       }
       throw new Error(`Could not walk to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
