@@ -215,10 +215,21 @@ export class NavGrid {
     // NPC steering (finite budget) samples the window coarsely: forty line tests per agent per tick dominated crowded
     // scenes (E20 rescue: ~16 ms/tick); bots and vehicles (infinite budget) keep the exact farthest-visible node.
     if (Number.isFinite(budget)) {
+      const last = route.path.length - 1;
+      let above = Math.min(last, route.pathIndex + 40) + 1;
       for (const k of lookAhead) {
-        const i = Math.min(route.path.length - 1, route.pathIndex + k); if (i < route.pathIndex) continue;
+        const i = Math.min(last, route.pathIndex + k); if (i >= above) continue;
         waypoint.x = this.x(route.path[i]); waypoint.z = this.z(route.path[i]);
-        if (this.visible(position, waypoint, radius)) { route.pathIndex = i; return true; }
+        if (this.visible(position, waypoint, radius)) {
+          // Refine between the visible sample and the blocked one above it, so corners are cut as tightly as before.
+          for (let j = above - 1; j > i; j--) {
+            waypoint.x = this.x(route.path[j]); waypoint.z = this.z(route.path[j]);
+            if (this.visible(position, waypoint, radius)) { route.pathIndex = j; return true; }
+          }
+          waypoint.x = this.x(route.path[i]); waypoint.z = this.z(route.path[i]);
+          route.pathIndex = i; return true;
+        }
+        above = i;
       }
       route.goal = -1; return false;
     }

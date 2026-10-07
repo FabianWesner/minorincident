@@ -10,7 +10,11 @@ import { inside } from '../../levels/districts/validate';
 export function installCampaignNpcs(world: SimWorld): void {
   const districts = world.districts!;
   // L1 v2 (D-GROVE): systems + corgi only; `installL1Outbreak` adds the pedestrians (lane D).
-  if (districts.districts.some(d => d.id === 'D-GROVE')) { installNpcSystems(world); world.npcs!.companion.spawn(); return; }
+  // L2 also plays on D-GROVE: keep the level for the per-level density/cap tables (E08-AC11 fixture: L2 = 40).
+  if (districts.districts.some(d => d.id === 'D-GROVE')) {
+    installNpcSystems(world); if (/^L[1-6]$/.test(districts.composition.id)) world.npcs!.civilians.level = Number(districts.composition.id[1]);
+    world.npcs!.companion.spawn(); return;
+  }
   if (!/^L[1-6]$/.test(districts.composition.id)) return;
   installNpcSystems(world); const { min, max } = districts.nav;
   world.npcs!.configure(Number(districts.composition.id[1])); world.npcs!.companion.spawn();

@@ -151,8 +151,9 @@ export class Civilians {
         if (!distance) { dx = e.id % 2 ? 1 : -1; dz = .3; distance = Math.hypot(dx, dz); }
         const speed = c.state === 'bitten' ? .6 : c.outbreak ? 2.8 : npcs.fleeSpeed;
         const targetCell = ai.nav.nearestCell(e.transform.x + dx / distance * 5, e.transform.z + dz / distance * 5);
-        if (targetCell >= 0) this.world.npcs!.move(e, { x: ai.nav.x(targetCell), z: ai.nav.z(targetCell) }, speed, c, .2);
-        if (c.state === 'flee' && distance > 25) this.state(e, 'hide');
+        const moved = targetCell >= 0 && this.world.npcs!.move(e, { x: ai.nav.x(targetCell), z: ai.nav.z(targetCell) }, speed, c, .2);
+        // Ambient people cornered against a fence (flee cell beyond it, no route) hide instead of re-planning every tick.
+        if (c.state === 'flee' && (distance > 25 || !moved && !c.outbreak)) this.state(e, 'hide');
       } else if (c.state === 'calm' && c.schedule) {
         updateRoutine(this.world, e);
       } else if (c.state === 'calm' && tick >= c.pauseUntil) {

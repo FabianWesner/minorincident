@@ -19,17 +19,18 @@ export class Npcs {
   private readonly waypoint = { x: 0, z: 0 };
   constructor(readonly world: SimWorld) {
     this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
-  move(e: EntitySnapshot, target: Point, speed: number, path: { path: number[]; goal: number; pathIndex: number }, stop = .1): void {
+  /** False only when the target is unreachable (no route within the steering budget). */
+  move(e: EntitySnapshot, target: Point, speed: number, path: { path: number[]; goal: number; pathIndex: number }, stop = .1): boolean {
     const nav = this.world.infected!.nav;
     let dx = target.x - e.transform.x, dz = target.z - e.transform.z;
     const distance = Math.hypot(dx, dz);
-    if (distance <= stop) { if (e.companion?.velocity) e.companion.velocity.x = e.companion.velocity.z = 0; return; }
-    if (!nav.steer(e.transform, target, path, .35, this.waypoint)) return;
+    if (distance <= stop) { if (e.companion?.velocity) e.companion.velocity.x = e.companion.velocity.z = 0; return true; }
+    if (!nav.steer(e.transform, target, path, .35, this.waypoint)) return false;
     dx = this.waypoint.x - e.transform.x; dz = this.waypoint.z - e.transform.z;
-    const routed = Math.hypot(dx, dz); if (routed < .01) return;
+    const routed = Math.hypot(dx, dz); if (routed < .01) return true;
     const vx = dx / routed * Math.min(speed, Math.max(0, distance - stop) * 4), vz = dz / routed * Math.min(speed, Math.max(0, distance - stop) * 4);
     this.moveStep(e, vx / 60, vz / 60);
-    this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+    this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true;
   }
   moveStep(e: EntitySnapshot, dx: number, dz: number): void {
     const x = e.transform.x, z = e.transform.z;
