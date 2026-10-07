@@ -41,6 +41,7 @@ export class QuadrupedAnimator {
       if (name === 'corgi-sit' || name === 'corgi-stiffen' || name === 'corgi-bark') { this.action.setLoop(LoopOnce, 1); this.action.clampWhenFinished = true; }
       previous?.crossFadeTo(this.action, name === 'corgi-bark' || name === 'corgi-stiffen' ? .08 : .16, false); this.clip = name;
     }
+    { const __g = (globalThis as unknown as { __gait?: unknown[] }).__gait; if (__g && strides[name]) __g.push(['dog:' + name, speed, strides[name] * strideScale(this.root)]); }
     if (strides[name]) { this.action.time = distance / (strides[name] * strideScale(this.root)) % 1 * this.action.getClip().duration; this.action.setEffectiveTimeScale(0); }
     else this.action.setEffectiveTimeScale(1);
     this.mixer.update(dt);

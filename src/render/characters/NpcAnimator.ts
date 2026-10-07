@@ -18,6 +18,7 @@ export class NpcAnimator {
       if (down) { this.current.setLoop(LoopOnce, 1); this.current.clampWhenFinished = true; }
       previous?.crossFadeTo(this.current, .2, false); this.clip = name;
     }
+    { const __g = (globalThis as unknown as { __gait?: unknown[] }).__gait; if (__g && strides[name]) __g.push(['esc:' + name, speed, strides[name] * strideScale(this.root)]); }
     if (strides[name]) { for (const [clip, action] of this.actions) if (strides[clip]) {
       action.time = distance / (strides[clip] * strideScale(this.root)) % 1 * action.getClip().duration; action.setEffectiveTimeScale(0);
     }

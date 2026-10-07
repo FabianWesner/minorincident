@@ -200,6 +200,7 @@ export class CrowdView extends Group {
       if (b.special === 'dive') clip = 'run';
       const duration = authoredClips.get(clip)!.duration;
       const phase = e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? Math.min(1, (this.world.tick - b.deadAt) / 60 / duration) : clip === 'windup' ? Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : duration)) : strides[clip] ? gaitDistance / (strides[clip] * batch.strideScale) % 1 : (renderTick / 60 + e.id * .137) / duration % 1;
+      { const __g = (globalThis as unknown as { __gait?: unknown[] }).__gait; if (__g && strides[clip]) __g.push(['inf:' + clip, motion.speed, strides[clip] * batch.strideScale]); }
       const frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1), tint = variantShirts[b.variant] ?? batch.shirt;
       const flight = reaction ? Math.max(0, 1 - age / .28) : 0;
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
