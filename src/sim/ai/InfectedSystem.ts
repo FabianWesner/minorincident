@@ -187,11 +187,11 @@ export class InfectedSystem {
         continue;
       }
       if (b.state === 'chase') {
-        if (this.world.tick >= b.cooldown) {
-          let obstacle = this.world.barricades?.attackTarget(e, player.transform);
-          for (const target of this.barricades) if (!obstacle && !target.barricade && target.health.current > 0 && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2) { obstacle = target; break; }
-          if (obstacle) { this.windup(e); b.targetId = obstacle.id; continue; }
-        }
+        let obstacle = this.world.barricades?.attackTarget(e, player.transform);
+        for (const target of this.barricades) if (!obstacle && !target.barricade && target.health.current > 0 && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2) { obstacle = target; break; }
+        // Hold at an obstructing brace during cooldown. Seeking an unreachable goal here
+        // makes the nearest-cell fallback pull attackers away between their hits.
+        if (obstacle) { if (this.world.tick >= b.cooldown) { this.windup(e); b.targetId = obstacle.id; } continue; }
         const def = infectedDef(e.archetype);
         let range = def.range;
         if (b.special === 'lunge') range = 2.5;

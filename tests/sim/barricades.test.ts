@@ -38,8 +38,11 @@ test('T-E26-10 @E26-AC10 10 runners deal authored volleys; Brute is fivefold; br
   for (let i = 0; i < 10; i++) w.infected!.spawn('infected.runner', { x: (i % 5 - 2) * .35, z: -1 - Math.floor(i / 5) * .2 }, { state: 'chase' });
   step(w, Math.ceil(infectedDef('infected.runner').windup * 60) + 1);
   expect(e.health.current).toBeCloseTo(400 - 10 * infectedDef('infected.runner').damage, 5);
+  const period = 60 + Math.ceil(infectedDef('infected.runner').windup * 60) + 1;
+  step(w, period * 2);
+  expect(e.health.current).toBeCloseTo(400 - 30 * infectedDef('infected.runner').damage, 5);
+  step(w, period);
   const brute = w.infected!.spawn('infected.brute', { x: 0, z: -1 }, { state: 'chase' }); expect(w.infected!.barricadeDamage(brute, 10)).toBe(50);
-  w.hazards!.hit(e.id, 400, 'bullet');
   expect(w.barricades!.barricadeIntact('door')).toBe(false); expect(w.infected!.nav.clear(0, 0, .2)).toBe(true);
   expect(w.props!.items[0].body.isDynamic()).toBe(true); expect(w.props!.items[0].body.linvel().z).toBeGreaterThan(0); expect(w.props!.items[0].body.linvel().y).toBeGreaterThan(0);
   expect(w.events.events().filter(e => e.type === 'barricade.broken')).toHaveLength(1);

@@ -32,6 +32,6 @@ export function physicsMetadata(): Record<string, PhysicsAsset> {
   return result;
 }
 export function writePhysicsMetadata(): void {
-  writeFileSync('src/data/physicsAssets.json', JSON.stringify(physicsMetadata(), null, 2) + '\n');
+  writeFileSync('src/data/physicsAssets.ts', '// Generated from production GLB ss_physics by tools/assets/physics-metadata.ts.\nexport default ' + JSON.stringify(physicsMetadata(), null, 2) + ';\n');
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) writePhysicsMetadata();

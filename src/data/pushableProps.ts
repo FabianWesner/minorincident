@@ -1,4 +1,4 @@
-import records from './physicsAssets.json';
+import records from './physicsAssets';
 import type { Aabb } from '../levels/districts/types';
 /** Authored GLB ss_physics, baked by tools/assets/physics-metadata.ts during layout builds.
  * No renderer or asynchronous asset load participates in deterministic simulation. */

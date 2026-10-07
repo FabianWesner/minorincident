@@ -1,4 +1,5 @@
-{
+// Generated from production GLB ss_physics by tools/assets/physics-metadata.ts.
+export default {
   "thr.molotov": {
     "class": "light",
     "mass": 0.65,
@@ -2968,4 +2969,4 @@
     "source": "public/assets/models/house.porch-b.glb",
     "hash": "c7e8c48151aae47794984c9eaaa4067fdbae7275873ec9325e768f97cf5771ff"
   }
-}
+};
