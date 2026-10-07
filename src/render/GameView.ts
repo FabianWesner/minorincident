@@ -455,6 +455,8 @@ export class GameView implements Lifecycle {
       this.view.preset(name, { position: [p.x + 15, 18, p.z + 15], target: [p.x, .4, p.z] }); this.update(1); return;
     }
     if (this.world.vehicles && name === 'vehicle') { this.view.preset(name, { position: [-9, 6, 21], target: [0, .8, 12] }); this.update(1); return; }
+    // E27 labs: the game camera geometry (radius 19, max zoom-out 1.45×) centred on the blast origin.
+    if ((this.world.scenario?.startsWith('blast') || this.world.scenario === 'smoke-lab') && (name === 'blast' || name === 'blast-wide')) { const k = name === 'blast' ? 1 : 1.45; this.view.preset(name, { position: [10.9 * k, 11.2 * k, 10.9 * k], target: [0, 0, 0] }); this.update(1); return; }
     if (this.world.combat && name === 'aim') { this.view.preset(name, combatPhotoSpots.aim); this.update(1); return; }
     if (this.world.scenario?.startsWith('vfx') || this.world.scenario === 'blood-probe' || this.world.scenario === 'gore-probe') {
       if (!['blood-probe', 'gore-probe', 'vfx-stress', 'vfx-showcase', 'L4', 'L6', 'lunge', 'charge', 'splash', 'bloated'].includes(name)) throw new Error(`Unknown VFX photo spot: ${name}`);
