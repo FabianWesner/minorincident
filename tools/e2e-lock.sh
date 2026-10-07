@@ -3,6 +3,9 @@
 # saturate it. E2E_SLOTS (default 1) runs may proceed at once; the rest wait for a free slot.
 # Only wrap browser runs, never plain builds. Without lockf (e.g. Linux CI) just run.
 command -v lockf >/dev/null 2>&1 || exec "$@"
+# Re-entrant: a command already running under this lock (e.g. verify inside an outer wrapper) must not take a second slot.
+[ -n "${MI_E2E_LOCK_HELD:-}" ] && exec "$@"
+export MI_E2E_LOCK_HELD=1
 base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"
 slots="${E2E_SLOTS:-1}"
 while :; do
