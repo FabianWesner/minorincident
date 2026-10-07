@@ -189,7 +189,8 @@ export class GameView implements Lifecycle {
       const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', this.world.districts.composition.id === 'L1' ? 'courier' : 'survivor');
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
-      await Promise.all([this.districts.load(1), character, ...variants.map(variant => variant.load(1))]);
+      const initialFocus = this.world.scenario === 'L1' ? this.view.cameraTarget : undefined;
+      await Promise.all([this.districts.load(1, initialFocus), character, ...variants.map(variant => variant.load(1, initialFocus))]);
       loadMeasure('view:districts+character',t);
       if (this.world.scenario === 'L1') {
         this.preparedDistrictViews.set(this.world.districts, this.districts);
@@ -199,7 +200,7 @@ export class GameView implements Lifecycle {
         // specializes each new batch on its first draw (~100 ms frames measured), so they stay in
         // the loading screen and its warm-up, as before.
         if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare())); loadMeasure('view:hero-lod0', p); }
-        else if (this.quality === 'high') this.pendingPreparation = { shared, instanceCapacity };
+        else this.pendingPreparation = { shared, instanceCapacity };
       }
       this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
       this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
@@ -311,24 +312,28 @@ export class GameView implements Lifecycle {
     const actions = this.actions;
     return Promise.all([this.npcs?.init(), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
   }
-  /** Deferred L1 work: the route's close-view LOD0 prototypes (high tier only; the low tier never
-   * draws them), nearest first, after the first playable frames. The load gate slices GLB parsing
+  /** Deferred L1 work: close-view LOD0 on high, distant buildings' LOD1 on low,
+   * nearest first, after the first playable frames. The load gate slices GLB parsing
    * and static batching to one short step per frame, so streaming stays within the frame budget. */
   private startPreparation(): void {
     const pending = this.pendingPreparation, current = this.districts, generation = this.generation;
     this.pendingPreparation = null;
     if (!pending || !current) return;
-    const stale = () => generation !== this.generation || this.quality !== 'high';
+    const quality = this.quality;
+    const stale = () => generation !== this.generation || this.quality !== quality;
     const frame = () => new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
     this.preparation = (async () => {
       // Let the loading screen close and the first playable frames settle before streaming starts.
       for (let i = 0; i < 30; i++) await frame();
-      if (generation !== this.generation) return;
+      if (stale()) return;
+      // A preload may finish while a briefing is still open. Downloads start only after
+      // gameplay has advanced; test mode keeps readiness even with a paused sim.
+      while (this.playSeconds === 0 && this.params.get('test') !== '1') { await frame(); if (stale()) return; }
       loadGate.setPaced(true);
       for (const view of this.preparedDistrictViews.values()) { view.warmHero = batch => this.warmHidden(batch); view.swapSlot = () => this.swapSlot(); }
       const start = performance.now();
       // The decay variants follow: their swap at an objective transition then finds LOD0 batches ready.
-      if (this.quality === 'high') for (const view of [current, ...[...this.preparedDistrictViews.values()].filter(view => view !== current)]) { await view.prepare(this.view.cameraTarget, stale); if (stale()) break; }
+      for (const view of [current, ...[...this.preparedDistrictViews.values()].filter(view => view !== current)]) { await view.prepare(this.view.cameraTarget, stale); if (stale()) break; }
       if (!stale()) loadMeasure('view:background-preparation', start);
     })().catch(error => { if (generation === this.generation) console.error(error); });
   }
