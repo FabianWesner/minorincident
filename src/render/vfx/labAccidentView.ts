@@ -8,7 +8,7 @@ import type { DistrictWorld } from '../../sim/world/DistrictWorld';
  * flickers: that mesh gets a private basic material (vertex colours x intensity) the first time the flicker starts, and
  * the blast turns it dark (blown windows). Other buildings keep their shared window material. */
 const GLOW = 3.5;
-export function labAccidentTargets(scene: Object3D, shake: (strength: number) => void, camera?: (x: number, z: number, weight: number) => void): LabAccidentTargets {
+export function labAccidentTargets(scene: Object3D, shake: (strength: number) => void, camera?: (x: number, z: number, weight: number) => void): LabAccidentTargets & { prewarmWindows(): () => void } {
   const meshes = new Set<Mesh>();
   const lit = new MeshBasicNodeMaterial({ vertexColors: true });
   const fire = new MeshBasicNodeMaterial({ color: 0xff7a22 });
@@ -27,6 +27,17 @@ export function labAccidentTargets(scene: Object3D, shake: (strength: number) =>
     for (const m of meshes) if (m.material !== material) m.material = material;
   };
   return {
+    /** Load-time pipeline warm-up (100 ms hitch at the first flicker otherwise): tiny copies of the window mesh with the
+     * flicker/fire/broken materials join the pre-render pass; the returned callback removes them again. */
+    prewarmWindows() {
+      bind(); const added: Mesh[] = [];
+      for (const source of meshes) {
+        // Clone the real (instanced/batched) window mesh so the warmed programs match exactly what the flicker draws.
+        for (const material of [lit, fire, broken]) { const m = source.clone() as Mesh; m.material = material; m.frustumCulled = false; source.parent?.add(m); added.push(m); }
+        break;
+      }
+      return () => { for (const m of added) m.removeFromParent(); };
+    },
     shake,
     camera,
     windowLight(intensity) { use(lit); lit.color.setScalar(GLOW * intensity); },
