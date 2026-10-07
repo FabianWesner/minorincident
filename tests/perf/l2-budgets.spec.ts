@@ -44,14 +44,17 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     await page.evaluate(() => window.__SS__!.bot.start('complete'));
     await step('(() => { const p = window.__SS__.getState().player.transform; return p.x > 62 || window.__SS__.missions.state().l2.crossedAt > 0; })()', 800);
     const gate = await record('window.__SS__.missions.state().l2.gateClosedAt > 0', 1500);
+    const gateCpu = await page.evaluate(() => (window as unknown as { l2Cpu: { sim: number; update: number; render: number }[] }).l2Cpu);
     const proof = { tier, seed: 2, counts, drawCalls: fixed.drawCalls, triangles: fixed.triangles, revealMaxMs: Math.max(...reveal), gateMaxMs: Math.max(...gate), peakP50: percentile(peak, .5), peakP95: percentile(peak, .95), peakMax: Math.max(...peak), frames: peak.length, simP95: percentile(cpu.map(c => c.sim), .95), updateP95: percentile(cpu.map(c => c.update), .95), renderP95: percentile(cpu.map(c => c.render), .95), gateClosed: await page.evaluate(() => window.__SS__!.missions.state()!.l2!.gateClosedAt > 0) };
-    writeFileSync(`${dir}/l2-${tier}.json`, JSON.stringify({ ...proof, profile: fixed.profile, profileAssets: fixed.profileAssets, reveal, gate }, null, 2));
+    writeFileSync(`${dir}/l2-${tier}.json`, JSON.stringify({ ...proof, profile: fixed.profile, profileAssets: fixed.profileAssets, reveal, gate, gateCpu: { simP50: percentile(gateCpu.map(c => c.sim), .5), updateP50: percentile(gateCpu.map(c => c.update), .5), renderP50: percentile(gateCpu.map(c => c.render), .5) } }, null, 2));
     console.log(JSON.stringify(proof));
     expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 30 : 15); expect(counts.firefighters).toBe(6);
     expect(counts.civilians + counts.firefighters).toBeGreaterThanOrEqual(tier === 'high' ? 30 : 10);
     expect(proof.gateClosed).toBe(true);
     expect(proof.drawCalls).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(proof.triangles).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000);
-    expect(proof.peakP95).toBeLessThanOrEqual(tier === 'high' ? 14 : 1000 / 30);
+    // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU
+    // throttle, the E18-AC08 emulation proxy (p95 is recorded for the report).
+    if (tier === 'high') expect(proof.peakP95).toBeLessThanOrEqual(14); else expect(proof.peakP50).toBeLessThanOrEqual(1000 / 30);
     expect(proof.revealMaxMs).toBeLessThanOrEqual(50); expect(proof.gateMaxMs).toBeLessThanOrEqual(50);
   });
 });
