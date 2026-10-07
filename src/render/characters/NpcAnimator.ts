@@ -1,5 +1,5 @@
 import { AnimationMixer, LoopOnce, type AnimationAction, type Object3D } from 'three';
-import { retargetClip, settleGroundPose, strideScale, strides } from './clips';
+import { cadenceStride, retargetClip, settleGroundPose, strideScale, strides } from './clips';
 /** Escort figures use the same distance clock and fades as instanced civilians. */
 export class NpcAnimator {
   private readonly mixer: AnimationMixer;
@@ -18,9 +18,8 @@ export class NpcAnimator {
       if (down) { this.current.setLoop(LoopOnce, 1); this.current.clampWhenFinished = true; }
       previous?.crossFadeTo(this.current, .2, false); this.clip = name;
     }
-    { const __g = (globalThis as unknown as { __gait?: unknown[] }).__gait; if (__g && strides[name]) __g.push(['esc:' + name, speed, strides[name] * strideScale(this.root)]); }
     if (strides[name]) { for (const [clip, action] of this.actions) if (strides[clip]) {
-      action.time = distance / (strides[clip] * strideScale(this.root)) % 1 * action.getClip().duration; action.setEffectiveTimeScale(0);
+      action.time = distance / cadenceStride(clip, strideScale(this.root), speed) % 1 * action.getClip().duration; action.setEffectiveTimeScale(0);
     }
     } else if (down && this.current) { this.current.time = this.current.getClip().duration; this.current.setEffectiveTimeScale(0); }
     else this.current?.setEffectiveTimeScale(1);

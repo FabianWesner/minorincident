@@ -9,6 +9,13 @@ export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .
   // E19 §5.4 tiers read from cadence: frail chops short quick steps, the lurch is
   // medium, the athletic sprint covers ground in long low strides.
   'infected-frail': .95, 'infected-lurch': 1.25, 'infected-sprint': 1.75, 'civ-flee': 1.25, 'corgi-gallop': 1.1, ride: 3.2 };
+/** Keep short authored strides from buzzing at speed; longer strides preserve planted feet as speed rises. */
+export function cadenceStride(name: string, scale: number, speed: number): number {
+  const authored = (strides[name] ?? 0) * scale;
+  const cyclesPerSecond = name.startsWith('corgi-') ? name === 'corgi-walk' ? 2 : 2.7
+    : name === 'run' || name === 'infected-run' || name === 'infected-sprint' || name === 'civ-flee' ? 2.7 : 2;
+  return Math.max(authored, Math.max(0, speed) / cyclesPerSecond);
+}
 /** Planted support per gait: stance fraction of the cycle and swing-foot lift (m). */
 const gaitShape: Record<string, { stance: number; lift: number }> = {
   walk: { stance: .6, lift: .055 }, shamble: { stance: .6, lift: .055 }, 'npc-walk': { stance: .6, lift: .055 }, 'npc-walk-relaxed': { stance: .6, lift: .055 },
