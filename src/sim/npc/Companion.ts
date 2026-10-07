@@ -66,7 +66,7 @@ export class Companion {
         const riding = this.world.vehicles?.bicycle.riding === true, frozen = this.safe && this.warn(e, c, player.transform) && distance < 6;
         if (frozen) { if (c.velocity) c.velocity.x = c.velocity.z = 0; }
         // While the player rides, the corgi's speed cap rises to 7.5 m/s (a short 15 % catch-up when it falls > 4 m behind) and it runs alongside (spec 5.10).
-        else if (c.following) this.world.npcs!.move(e, player.transform, riding ? Math.min(l1v2.corgi.riderSpeedCapMs * (distance > 4 ? 1.15 : 1), l1v2.corgi.riderSpeedCapMs * .9 + Math.max(0, distance - 3) * 2) : Math.min(8, 4.5 + Math.max(0, distance - 4) * 2), c, riding ? 1.5 : 2);
+        else if (c.following) this.world.npcs!.move(e, riding ? this.riderSide(player.transform) : player.transform, riding ? Math.min(l1v2.corgi.riderSpeedCapMs * (distance > 4 ? 1.15 : 1), l1v2.corgi.riderSpeedCapMs * .9 + Math.max(0, distance - 3) * 2) : Math.min(8, 4.5 + Math.max(0, distance - 4) * 2), c, riding ? 1.5 : 2);
         else if (c.velocity) c.velocity.x = c.velocity.z = 0;
       }
       if (!this.safe && this.world.tick >= c.barkAt) for (const enemy of ai.active) {
@@ -77,6 +77,12 @@ export class Companion {
       }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
+  }
+  /** While riding, the corgi runs alongside at a fixed lateral offset (right of the heading, slightly behind), never in the cargo box. */
+  private readonly side = { x: 0, z: 0 };
+  private riderSide(p: { x: number; z: number }): { x: number; z: number } {
+    const h = this.world.vehicles!.bicycle.entity!.bicycle!.heading;
+    this.side.x = p.x + Math.sin(h) * -1.5 - Math.cos(h) * .6; this.side.z = p.z + Math.cos(h) * 1.5 - Math.sin(h) * .6; return this.side;
   }
   /**
    * Warning ladder against the nearest live infected that is off screen (or behind cover): stop + stiffen + look within 20 m,
