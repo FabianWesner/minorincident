@@ -6,6 +6,8 @@ export interface Attack {
   id: number; sourceId: number; side: Side; def: ActionDef; aim: Vec2; aimPoint: Vec2 | null;
   started: number; activeAt: number; recoveryAt: number; endsAt: number; resolved: boolean; hit: Set<number>;
   combo: number; inPlace: boolean;
+  /** E20 §5.3: the fire axe decides single swing or roundhouse at swing start. */
+  style?: 'single' | 'roundhouse';
 }
 /** Fixed-tick phases; each active action resolves once, independent of render rate. */
 export class ActionRunner {

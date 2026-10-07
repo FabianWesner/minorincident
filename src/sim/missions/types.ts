@@ -99,7 +99,8 @@ export interface L2State {
   /** Trapped civilians released so far, and the hidden ambush still waiting at its emergence doors. */
   released: number; ambush: { id: number; door: string; at: number }[]; ambushIds: number[];
   /** Escape population, cluster and their emergence (hidden at a door until `at`). */
-  pending: { id: number; door: string; at: number; home: { x: number; z: number } }[]; escapeIds: number[]; clusterIds: number[];
+  /** `x/z/seen`: where it first appeared and whether that point was inside the camera volume then (omniscience audit). */
+  pending: { id: number; door: string; at: number; home: { x: number; z: number }; x?: number; z?: number; seen?: boolean }[]; escapeIds: number[]; clusterIds: number[];
   escapeSpawned: boolean; clusterSpawned: boolean; clusterReached: boolean;
 }
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number; driveArrived?: boolean; holds?: Record<string, number> }

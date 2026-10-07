@@ -34,6 +34,7 @@ export class LevelTwoBot {
   private stuck = { at: null as P | null, n: 0, next: 0 };
   private retreatAt = 0;
   private alarmed = false;
+  private last: P | null = null;
   constructor(private readonly world: SimWorld, readonly profile: L2Profile = 'complete', readonly opening: L2Opening = 'side') { this.rng = new Rng(world.seed, `l2-bot-${profile}`); }
   private get takesAxe(): boolean { return this.profile !== 'no-axe' && this.profile !== 'idle'; }
   private threats(p: P, radius: number): EntitySnapshot[] {
@@ -79,6 +80,9 @@ export class LevelTwoBot {
     const leaving = w.tick >= this.retreatAt;
     if (!leaving) { if (near[0] && !skip) strike(near[0]); else go(a['l2-forecourt'], 2.5, 'cover'); return frame; }
     const route = ROUTES[this.opening];
+    // After a respawn (checkpoint restore) rejoin the route at its nearest point instead of cutting across blocks.
+    if (this.last && dist(this.last, p) > 6) { this.waypoint = route.reduce((best, q, i) => dist(q, p) < dist(route[best], p) ? i : best, 0); this.walker.reset(); this.detour = null; if (this.opening === 'alarm' && this.waypoint <= ALARM_AT) this.alarmed = false; }
+    this.last = { x: p.x, z: p.z };
     while (this.waypoint < route.length - 1 && dist(p, route[this.waypoint]) < 2.2) this.waypoint++;
     if (this.opening === 'alarm' && !this.alarmed && this.waypoint >= ALARM_AT) {
       // Set the car alarm off (interact at the car), then double back while the cluster runs to it.
