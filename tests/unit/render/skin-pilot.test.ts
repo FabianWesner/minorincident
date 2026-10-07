@@ -19,8 +19,8 @@ async function model(path: string) {
 }
 function pose(): SurvivorState { return { variant: 'female', gearTier: 0, animation: 'idle', animationTick: 0, velocity: { x: 0, z: 0 }, grounded: true, invulnerableUntil: 0, checkpoint: { x: 0, y: .7, z: 0 }, diedAt: null }; }
 
-test('skin rollout retains explicit A/B overrides', () => {
-  expect(useSkinnedCourier(new URLSearchParams())).toBe(false);
+test('courier skins default on and retain explicit A/B overrides', () => {
+  expect(useSkinnedCourier(new URLSearchParams())).toBe(true);
   expect(useSkinnedCourier(new URLSearchParams('skin=1'))).toBe(true);
   expect(useSkinnedCourier(new URLSearchParams('skin=0'))).toBe(false);
 });
