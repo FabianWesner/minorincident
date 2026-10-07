@@ -94,7 +94,9 @@ export function populateGrove(outbreak: Outbreak, count = 56): number[] {
   const counter = anchor('parcel-counter'), depotDoor = anchor('parcel-door');
   if (depotDoor) circle(snap({ x: depotDoor.x + 2.5, z: depotDoor.z + 2 }, 3), 2, ['phone', null]);
   line(counter && snap({ x: counter.x + 3, z: counter.z + 2 }, 3), counter, 2, ['bag', null], depotDoor);
-  for (const [i, door] of doors.entries()) {
+  // At most ~8 doorstep hubs spread over the map (the full layout has 50+ refuge doors).
+  const hubDoors = doors.filter((_, i) => i % Math.max(1, Math.ceil(doors.length / 8)) === 0);
+  for (const [i, door] of hubDoors.entries()) {
     if (i % 3 === 0) circle(snap({ x: door.x + 1.5, z: door.z + (door.z < 0 ? 2 : -2) }, 3), 2, [null, 'phone']);
     else if (i % 3 === 1) {
       // Gardener: water two flower spots beside the door, facing them.
@@ -108,10 +110,16 @@ export function populateGrove(outbreak: Outbreak, count = 56): number[] {
     const p = anchor(name), at = p && snap({ x: p.x + 2, z: p.z + 2 }, 4);
     if (at && p) { const h = pick(['coffee', 'phone', 'bag']); plans.push({ at, handProp: h, schedule: [look(at, p, h, [6, 12]), look(at, { x: p.x + 3, z: p.z - 2 }, h, [2, 4])] }); }
   }
+  // Stationary groups take at most 55 %: the rest walk, so the streets stay alive and the outbreak meets people.
+  plans.splice(Math.round(count * .55));
   // Fill with grocery walkers, phone walkers, joggers, dog walkers and elderly cane strollers on every sidewalk run.
   let r = Math.floor(rng.next() * Math.max(1, runs.length)), dogs = 0;
+  // Larch Street stays busy: the first walkers use the sidewalks near the facility (section 3, beats 3-7), so the
+  // outbreak meets pedestrians there instead of an empty street.
+  const lab = anchor('lab-door'), nearLab = lab ? runs.filter(run => run.some(q => Math.hypot(q.x - lab.x, q.z - lab.z) < 45)) : [];
+  let larch = Math.min(10, nearLab.length * 3);
   for (let guard = 0; plans.length < count && runs.length && guard < count * 8; guard++) {
-    const run = runs[r++ % runs.length], start = Math.floor(rng.next() * run.length), kind = rng.next();
+    const run = larch-- > 0 ? nearLab[larch % nearLab.length] : runs[r++ % runs.length], start = Math.floor(rng.next() * run.length), kind = rng.next();
     const span = kind < .2 ? run.length : 2 + Math.floor(rng.next() * 4), points: Point[] = [];
     for (let i = 0; i < span && start + i < run.length; i++) points.push(run[start + i]);
     if (points.length < 2) { const back = run.slice(Math.max(0, start - 3), start + 1); if (back.length < 2) continue; points.splice(0, points.length, ...back); }

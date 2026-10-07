@@ -28,8 +28,8 @@ export const l1Pedestrians = {
   topUpEveryS: 2,
   /** Refuge or edge counts as reached within this radius (escaped). */
   refugeReachM: 1.2,
-  /** Seconds spent opening a refuge door (houses, shops) before being safe inside; edges are instant. */
-  doorOpenS: 1.0,
+  /** Seconds spent knocking/fumbling at a refuge door (houses, shops) before being let in; edges are instant. */
+  doorOpenS: 2.5,
   /** Bite reach of an infected that is not already holding someone. */
   grabReachM: 1.0,
   /** A grabbing infected farther than this from its victim has been knocked away (rescue). */
