@@ -26,22 +26,23 @@ export const combatArchetypes = {
 } as const;
 export type CombatArchetype = keyof typeof combatArchetypes;
 export const ttkBands: Record<string, Record<CombatArchetype, readonly [number, number]>> = {
+  // 00 §6.2: normal bat hits stay in reach; short 3/5-hit fights no longer include long shove pursuit.
   'weapon.bat': {
     runner: [0.39, 1.21],
     crawler: [0.39, 1.21],
     brute: [4.48, 7.35],
-    screamer: [0.96, 2.07],
+    screamer: [0.6, 2.07],
     sprinter: [0.39, 1.21],
     riot: [2.72, 4.71],
-    bloated: [2.15, 3.85],
+    bloated: [1.5, 3.85],
     firefighter: [2.47, 4.33],
-    hazmat: [2.15, 3.85],
+    hazmat: [1.5, 3.85],
     armored: [10.39, 16.21],
     butcher: [11.52, 17.91],
-    nurse: [0.96, 2.07],
+    nurse: [0.6, 2.07],
     dog: [0.39, 1.21],
     dachshund: [0.01, 0.37],
-    k9: [0.96, 2.07],
+    k9: [0.6, 2.07],
     cat: [0.01, 0.37],
     crow: [0.01, 0.37],
     lion: [5.67, 9.13],
