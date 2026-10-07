@@ -45,5 +45,6 @@ for (const skin of [0, 1]) test(`courier skin=${skin} arrival remains idle besid
       if (i) { const p = live[i - 1].transform; liveTravel += Math.hypot(f.transform.x - p.x, f.transform.y - p.y, f.transform.z - p.z); }
     }
     expect(liveTravel / 3).toBeLessThanOrEqual(.001);
+    console.log('arrival measurement', JSON.stringify({ skin, target, fixedFrames: frames.length, liveFrames: live.length, driftMmPerSecond: travel / 3 * 1000, liveDriftMmPerSecond: liveTravel / 3 * 1000, maxSpeed: Math.max(...frames.map(f => Math.hypot(f.velocity.x, f.velocity.z))), yawRange: Math.max(...frames.map(f => f.position.yaw)) - Math.min(...frames.map(f => f.position.yaw)), animations: [...new Set(frames.map(f => f.animation))], markerVisible: frames.some(f => f.marker.visible) }));
   }
 });

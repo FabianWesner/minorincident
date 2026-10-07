@@ -61,7 +61,7 @@ export class Bicycle {
   get riding(): boolean { return this.entity?.bicycle?.mounted === true; }
   canInteract(): boolean {
     const bike = this.entity, player = this.world.entities.get(1);
-    return !!bike?.bicycle && !!player && player.health.current > 0 && (bike.bicycle.mounted || this.world.tick >= bike.bicycle.lockUntil && Math.hypot(player.transform.x - bike.transform.x, player.transform.z - bike.transform.z) <= MOUNT_RANGE && !this.atNoBikeZone(bike.transform) && !this.atNoBikeZone(player.transform));
+    return !!bike?.bicycle && !!player && player.health.current > 0 && (bike.bicycle.mounted || this.world.tick >= bike.bicycle.lockUntil && Math.hypot(player.transform.x - bike.transform.x, player.transform.z - bike.transform.z) <= MOUNT_RANGE && !this.atNoBikeZone(bike.transform) && !this.inNoBikeZone(player.transform));
   }
   /** Controller speed scale (7.5 m/s over the 4.5 m/s run); 1 on foot. */
   get speedScale(): number { return this.riding ? speedMs / survivor.speed : 1; }
