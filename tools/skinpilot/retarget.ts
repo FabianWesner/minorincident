@@ -45,13 +45,16 @@ const ourLeg = restWorld('legL').y - restWorld('footL').y;
 const deltaMap: Record<string, string> = { hip: 'pelvis', torso: 'spine_03', head: 'head', handL: 'hand_l', handR: 'hand_r', footL: 'foot_l', footR: 'foot_r' };
 const dirMap: Record<string, [string, string]> = { armL: ['upperarm_l', 'lowerarm_l'], foreArmL: ['lowerarm_l', 'hand_l'], armR: ['upperarm_r', 'lowerarm_r'], foreArmR: ['lowerarm_r', 'hand_r'], legL: ['thigh_l', 'calf_l'], shinL: ['calf_l', 'foot_l'], legR: ['thigh_r', 'calf_r'], shinR: ['calf_r', 'foot_r'] };
 
-interface Spec { name: string; source: string; loop?: boolean; exaggerate?: number; bob?: number; armOut?: number; trim?: [number, number] }
+interface Spec { name: string; source: string; loop?: boolean; exaggerate?: number; bob?: number; strike?: 'l' | 'r' }
 const specs: Spec[] = [
   { name: 'idle', source: 'Idle_A', loop: true, exaggerate: 1.35, bob: 1.3 },
   { name: 'walk', source: 'Walk_Female', loop: true, exaggerate: 1.3, bob: 1.25 },
   { name: 'run', source: 'Run_Female', loop: true, exaggerate: 1.2, bob: 1.1 },
   { name: 'carry', source: 'Walk_Carry', loop: true, exaggerate: 1 },
   { name: 'hurt', source: 'Hit_Chest', exaggerate: 1.4 },
+  // Strikes: contact (max hand reach) is re-timed onto 20 % of the clip, the KeyframeAnimator contract.
+  { name: 'unarmed-jab', source: 'Punch_Jab', exaggerate: 1.15, strike: 'l' },
+  { name: 'unarmed-cross', source: 'Punch_Cross', exaggerate: 1.15, strike: 'r' },
 ];
 
 const scaleQ = (q: Quaternion, k: number) => { if (k === 1) return q; const w = Math.min(1, Math.max(-1, q.w)), angle = 2 * Math.acos(Math.abs(w)), s = Math.sqrt(1 - w * w); if (s < 1e-6) return q; const axis = new Vector3(q.x, q.y, q.z).divideScalar(s).multiplyScalar(Math.sign(w) || 1); return q.setFromAxisAngle(axis, angle * k); };
@@ -94,13 +97,23 @@ for (const spec of specs) {
     let best = -Infinity;
     for (let i = 0; i < frames; i++) { sample(i / fps); const d = bone('foot_l').getWorldPosition(new Vector3()).sub(bone('pelvis').getWorldPosition(new Vector3())).applyQuaternion(R).x; if (d > best) { best = d; shift = i; } }
   }
+  let contact = -1;
+  if (spec.strike) {
+    let best = -Infinity; const reach = { l: 0, r: 0 };
+    for (let i = 0; i <= frames; i++) {
+      sample(Math.min(clip.duration, i / fps));
+      for (const side of ['l', 'r'] as const) { const d = bone(`hand_${side}`).getWorldPosition(new Vector3()).sub(bone('pelvis').getWorldPosition(new Vector3())).applyQuaternion(R).x; reach[side] = Math.max(reach[side], d); if (side === spec.strike && d > best) { best = d; contact = i; } }
+    }
+    if (reach[spec.strike] < reach[spec.strike === 'l' ? 'r' : 'l']) throw new Error(`${spec.source}: striking hand is not ${spec.strike}`);
+  }
   const pelvis0 = sourceRest.get('pelvis')!.p;
   const tracks = new Map<string, number[]>(), times: number[] = [];
   const hipPositions: Vector3[] = [];
   const world = new Map<string, Quaternion>();
   for (let i = 0; i <= frames; i++) {
     const t = ((i + shift) % frames) / fps; sample(spec.loop ? t : Math.min(clip.duration, i / fps));
-    times.push(+(i / fps).toFixed(5));
+    const end = frames / fps, at = i / fps;
+    times.push(+(contact > 0 ? i <= contact ? at / (contact / fps) * .2 * end : .2 * end + (at - contact / fps) / (end - contact / fps) * .8 * end : at).toFixed(5));
     world.clear();
     const delta = (src: string) => R.clone().multiply(bone(src).getWorldQuaternion(new Quaternion()).multiply(sourceRest.get(src)!.q.clone().invert())).multiply(Ri);
     for (const [node, src] of Object.entries(deltaMap)) world.set(node, delta(src));
@@ -137,7 +150,7 @@ for (const spec of specs) {
   for (const [node, values] of tracks) out.push({ node, path: 'rotation', times, values: values.map(v => +v.toFixed(5)) });
   // Loops must close exactly.
   library.push({ name: spec.name, duration: frames / fps, source: `mesh2motion:${spec.source}`, tracks: out });
-  console.log(spec.name, '←', spec.source, frames, 'frames', 'shift', shift);
+  console.log(spec.name, '←', spec.source, frames, 'frames', 'shift', shift, 'contact', contact);
 }
 writeFileSync('src/render/characters/library.skin.json', JSON.stringify(library) + '\n');
 console.log(JSON.stringify({ legScale: +legScale.toFixed(3), clips: library.length }));
