@@ -17,6 +17,7 @@ export class KeyframeAnimator {
   private base: AnimationAction | undefined;
   private overlay: AnimationAction | undefined;
   private attackTick = -1;
+  private actionTick = -1;
   private lastTime = 0;
   private moving = false;
   private phase = 0;
@@ -28,11 +29,11 @@ export class KeyframeAnimator {
   private readonly backpack: Object3D | undefined;
   private readonly backpackRest: number;
   private carryWeight = 0;
+  private contactWeight = 1;
   private mode = '';
   private locoSpeed = 0;
   private locoWeight = 1;
   private lunge = 0;
-  private lungeOffset = 0;
   private readonly scaleScratch = new Vector3();
   private readonly carryPose: [Object3D, Quaternion][] = [];
   state: AnimationState = 'idle';
@@ -46,11 +47,10 @@ export class KeyframeAnimator {
   private rideChangedAt = -1;
   rideWeight = 0;
   private readonly ground: GroundContacts | undefined;
-  private readonly torsoPose = new Quaternion();
-  private readonly headPose = new Quaternion();
+  private readonly sampledPose: { node: Object3D; position: Vector3; rotation: Quaternion }[] = [];
   constructor(private readonly rig: CharacterRig, clipSource?: typeof skinClips) {
     this.skin = clipSource === skinClips;
-    this.torsoPose.copy(rig.torso.quaternion); this.headPose.copy(rig.head.quaternion);
+    if (this.skin) for (const node of Object.values(rig)) this.sampledPose.push({ node, position: node.position.clone(), rotation: node.quaternion.clone() });
     if (this.skin) this.ground = new GroundContacts(rig);
     this.strides = clipSource === skinClips ? { ...strides, ...Object.fromEntries(Object.entries(skinGait).map(([k, g]) => [k, g.stride])) } : strides;
     this.mixer = new AnimationMixer(rig.root);
@@ -112,21 +112,21 @@ export class KeyframeAnimator {
     // PO #2/#4 (puppet walk, flicker): locomotion is a speed blend-space (idle / walk / run weighted by a
     // smoothed ground speed, all on one stride-matched phase), never discrete clip restarts; start/stop/turn
     // pops are gone. Other actions fade over it.
-    const loco = locoStates.has(name), fade = strike ? .06 : .2;
+    const loco = locoStates.has(name), fade = strike ? Math.min(.05, Math.max(1, (combat?.activeAt ?? tick + 4) - (combat?.started ?? tick)) / 60 * .55) : name === 'hurt' ? .055 : .2;
     this.locoSpeed += (speed - this.locoSpeed) * (1 - Math.exp(-dt / .1));
-    if (!loco && (this.mode !== name || strike && !upper && this.attackTick !== pose.animationTick || !this.base)) {
+    if (!loco && (this.mode !== name || strike && !upper && this.attackTick !== pose.animationTick || name === 'hurt' && this.actionTick !== pose.animationTick || !this.base)) {
       this.base?.fadeOut(fade); this.base = this.play(name, !!this.strides[name] || name === 'idle').fadeIn(fade);
-      this.mode = name; this.clip = name;
+      this.mode = name; this.clip = name; this.actionTick = pose.animationTick;
     } else if (loco && this.mode !== 'loco') { this.base?.fadeOut(.2); this.base = undefined; this.mode = 'loco'; }
     this.locoWeight = Math.max(0, Math.min(1, this.locoWeight + (loco ? 1 : -1) * dt / (loco ? .2 : fade)));
-    let groundStride = 0, groundRun = 0, groundWeight = 0;
+    let groundStride = 0, groundRun = 0;
     {
       const s = this.locoSpeed, move = smooth(.04, .55, s), run = smooth(1.9, 3.3, s);
       // PO 27 (walk micro-vibration): stride-matching the short chibi legs gave 9 steps/s walking and up to 15 steps/s
       // running, which reads as the figure vibrating. Cadence is capped (rigid walk/run 2.0/2.7, fitted skin 2.5/3.2 cycles/s);
       // above that the stride lengthens instead (small slide at the game camera beats a buzzing gait).
       const stride = Math.max((this.strides.walk + (this.strides.run - this.strides.walk) * run) * strideScale(this.rig.root), s / (this.skin ? 2.5 + .7 * run : 2 + .7 * run));
-      groundStride = stride; groundRun = run; groundWeight = this.skin ? this.locoWeight : move * this.locoWeight;
+      groundStride = stride; groundRun = run;
       if (s > .01) this.phase = (this.phase + (this.skin ? speed : s) * dt / stride) % 1;
       const weights: [string, number][] = [['idle', 1 - move], ['walk', move * (1 - run)], ['run', move * run]];
       for (const [clip, w] of weights) {
@@ -158,22 +158,27 @@ export class KeyframeAnimator {
       this.lunge = phase < .2 ? phase / .2 : phase < .4 ? 1 : Math.max(0, 1 - (phase - .4) / .5);
     } else this.lunge = 0;
     this.attackTick = strike ? pose.animationTick : -1;
-    // Constant clip translations may be skipped by mixer bindings. Undo the
-    // pilot's last lunge before sampling so a kick cannot accumulate root drift.
-    if (this.skin) { this.rig.hip.position.x -= this.lungeOffset; this.lungeOffset = 0; }
-    if (this.skin) { this.rig.torso.quaternion.copy(this.torsoPose); this.rig.head.quaternion.copy(this.headPose); }
-    this.ground?.restore();
+    // Restore every mixer input before sampling: Three skips unchanged bindings,
+    // while our contacts, carry and bicycle layers modify those same nodes.
+    for (const p of this.sampledPose) { p.node.position.copy(p.position); p.node.quaternion.copy(p.rotation); }
     this.mixer.update(dt);
-    if (this.skin) { this.torsoPose.copy(this.rig.torso.quaternion); this.headPose.copy(this.rig.head.quaternion); }
+    for (const p of this.sampledPose) { p.position.copy(p.node.position); p.rotation.copy(p.node.quaternion); }
+    const plantedAction = !ride && (name === 'hurt' || !!strike && !/kick|knee|spinning/.test(strike));
+    if (this.skin && this.lunge > 0 && !upper) {
+      const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1;
+      this.rig.hip.position.x += .09 / scale * this.lunge * this.lunge * (3 - 2 * this.lunge);
+    }
     if (this.ground) {
-      if (loco && !ride && groundWeight > .05) this.ground.update(this.phase, groundStride, groundRun, groundWeight, speed, dt);
+      const grounded = (loco || plantedAction) && !ride;
+      this.contactWeight = Math.max(0, Math.min(1, this.contactWeight + (grounded ? 1 : -1) * dt / .1));
+      if (grounded) this.ground.update(this.phase, groundStride, groundRun, this.contactWeight, speed, dt);
       else this.ground.reset();
     }
     // Parcel carry: arms hold the box over any lower-body motion, eased in/out over 150 ms.
     const holding = !!pose.carrying && !strike && name !== 'hand-over' && name !== 'ride';
     this.carryWeight = Math.max(0, Math.min(1, this.carryWeight + (holding ? 1 : -1) * dt / .15));
     if (this.carryWeight > 0) for (const [node, target] of this.carryPose) node.quaternion.slerp(target, this.carryWeight);
-    if (this.lunge > 0 && !upper) { const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1; const offset = .14 / scale * this.lunge * this.lunge * (3 - 2 * this.lunge); this.rig.hip.position.x += offset; if (this.skin) this.lungeOffset = offset; }
+    if (!this.skin && this.lunge > 0 && !upper) { const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1; const offset = .14 / scale * this.lunge * this.lunge * (3 - 2 * this.lunge); this.rig.hip.position.x += offset; }
     for (const node of Object.values(this.rig)) node.quaternion.normalize();
     if (pose.animation === 'die') settleGroundPose(this.rig.root);
     const target = this.rig.torso.rotation.z * -.3;

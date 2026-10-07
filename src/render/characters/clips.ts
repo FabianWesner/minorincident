@@ -57,13 +57,15 @@ export function retargetClip(root: Object3D, name: string, additive = false, ove
   if (!rest) { rest = []; root.traverse(node => rest!.push({ node, position: node.position.clone(), quaternion: node.quaternion.clone() })); restPoses.set(root, rest); }
   const current = rest.map(({ node }) => ({ node, position: node.position.clone(), quaternion: node.quaternion.clone() }));
   for (const pose of rest) { pose.node.position.copy(pose.position); pose.node.quaternion.copy(pose.quaternion); }
-  try { return buildRetargetedClip(root, name, additive, overrides?.get(name) ?? authoredClips.get(name), overrides === skinClips ? skinGait[name] : undefined); }
+  try { return buildRetargetedClip(root, name, additive, overrides?.get(name) ?? authoredClips.get(name), overrides === skinClips ? skinGait[name] : undefined, overrides === skinClips); }
   finally { for (const pose of current) { pose.node.position.copy(pose.position); pose.node.quaternion.copy(pose.quaternion); } }
 }
-function buildRetargetedClip(root: Object3D, name: string, additive: boolean, source = authoredClips.get(name), gait?: { stride: number; stance: number; lift: number }): AnimationClip {
+function buildRetargetedClip(root: Object3D, name: string, additive: boolean, source = authoredClips.get(name), gait?: { stride: number; stance: number; lift: number }, skinned = false): AnimationClip {
   if (!source) throw new Error(`Missing authored clip ${name}`);
   const tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[] = [], q = new Quaternion();
   const hipHeight = root.getObjectByName('hip')?.position.y ?? .705;
+  const skinLocomotion = !!gait;
+  const skinPlanted = skinned && /^(unarmed-(jab|cross|uppercut)|bat-|hurt)/.test(name);
   const contract = name === 'infected-flight' || name === 'animal-death' ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR','wingL','wingR'] : name.startsWith('corgi-') ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR'] : ['root','hip','torso','head','armL','armR','foreArmL','foreArmR','handL','handR','legL','legR','shinL','shinR','footL','footR','backpackSocket'];
   for (const nodeName of contract) {
     const node = root.getObjectByName(nodeName);
@@ -74,6 +76,7 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
       if (path === 'rotation') {
         for (let i = 0; i < times.length; i++) {
           q.set(0, 0, 0, 1); if (track) q.fromArray(track.values, i * 4).normalize();
+          if ((skinLocomotion || skinPlanted) && nodeName === 'hip') q.slerp(new Quaternion(), skinLocomotion ? .82 : .7);
           // Forward-reaching infected need their arms beside the body and bent
           // legs lowered as the back pose settles, rather than pointing upward.
           if (/^(die|death-back)$/.test(name) && (root.getObjectByName('foreArmL')?.position.x ?? 0) > .08 && /^(arm|foreArm|leg)[LR]$/.test(nodeName)) {
@@ -87,6 +90,8 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
       } else {
         for (let i = 0; i < times.length; i++) for (let c = 0; c < 3; c++) {
           let delta = track?.values[i * 3 + c] ?? 0;
+          if (skinLocomotion && nodeName === 'hip') delta = c === 2 ? delta * .15 : 0;
+          if (skinPlanted && nodeName === 'hip') delta *= .2;
           if (c === 1 && nodeName === 'hip' && groundClips.test(name)) delta *= Math.max(0, hipHeight - .15) / .55;
           values.push(delta + (additive ? 0 : node.position.getComponent(c)));
         }

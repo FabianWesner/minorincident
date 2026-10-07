@@ -124,7 +124,10 @@ test.each(['female', 'male'] as const)('skin rollout %s keeps knees, turn reach 
       feet.push(ankle);
     }
     if (tick > 300 && feet[0].distanceTo(feet[1]) > separation) { separation = feet[0].distanceTo(feet[1]); worstTick = tick; }
-    if (tick > 300 && tick <= 312 || tick > 360) expect(feet[0].distanceTo(feet[1])).toBeLessThan(.23);
+    // A turn releases the old stance over 100 ms; requiring an instant narrow
+    // stance would permit exactly the foot teleport this regression guards.
+    if (tick > 307 && tick <= 312) expect(feet[0].distanceTo(feet[1])).toBeLessThan(.28);
+    if (tick > 360) expect(feet[0].distanceTo(feet[1])).toBeLessThan(.23);
   }
   expect(reach).toBeLessThan((rig.shinL.position.length() + rig.footL.position.length()) * 1.001); expect(separation, `largest separation at ${worstTick}`).toBeLessThan(.56);
 });
