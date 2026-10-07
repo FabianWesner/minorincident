@@ -34,7 +34,7 @@ E2E_SKIN=1 E2E_PORT=3355 npm run test:smoke
 ```
 
 The capture uses identical seeded L1 inputs and deterministic paused stepping,
-15 captured frames/second, and emits two 14.47-second VP8 WebM videos plus full
+15 captured frames/second, and emits two 12.80-second VP8 WebM videos plus full
 resolution stills, browser CPU/draw samples, a summary and final sim state.
 Intermediate frames are deleted after encoding. The mount fixture places the
 bike on clear road through the existing test API. The scene covers idle, walk,
