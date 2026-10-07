@@ -1,14 +1,20 @@
 import { AnimationClip, AnimationMixer, Box3, Mesh, Quaternion, QuaternionKeyframeTrack, VectorKeyframeTrack, Vector3, LoopOnce, type Object3D } from 'three';
 import type { AnimationState } from '../../data/survivor';
 import library from './library.json';
+import skinLibrary from './library.skin.json';
 import type { CharacterRig } from './rig';
 
 /** Blender GLB samplers compiled by tools/assets/animation-library.ts. */
 export const authoredClips = new Map(library.map(clip => [clip.name, clip]));
+/** Skin pilot: Mesh2Motion CC0 clips retargeted offline (tools/skinpilot/retarget.ts); same schema, overrides by name. */
+export const skinClips: typeof authoredClips = new Map(skinLibrary.map(clip => [clip.name, clip as unknown as (typeof library)[number]]));
 export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'npc-carry': .9, 'npc-cane': .9, 'corgi-walk': .55, 'corgi-trot': .8,
   // E19 §5.4 tiers read from cadence: frail chops short quick steps, the lurch is
   // medium, the athletic sprint covers ground in long low strides.
   'infected-frail': .95, 'infected-lurch': 1.25, 'infected-sprint': 1.75, 'civ-flee': 1.25, 'corgi-gallop': 1.1, ride: 3.2 };
+/** Skin pilot gait: longer strides at a calmer cadence (the library run cycles ~5×/s at 4.5 m/s on
+ * chibi legs and reads as scurrying/vibration); raw strides before the rig's leg proportion. */
+export const skinGait: Record<string, { stride: number; stance: number; lift: number }> = { walk: { stride: 1.05, stance: .55, lift: .06 }, run: { stride: 1.75, stance: .32, lift: .1 } };
 /** Planted support per gait: stance fraction of the cycle and swing-foot lift (m). */
 const gaitShape: Record<string, { stance: number; lift: number }> = {
   walk: { stance: .6, lift: .055 }, shamble: { stance: .6, lift: .055 }, 'npc-walk': { stance: .6, lift: .055 }, 'npc-walk-relaxed': { stance: .6, lift: .055 },
@@ -39,16 +45,15 @@ const upperBody = /^(torso|head|arm|foreArm|hand)/;
  * offsets so the locomotion action retains control of planted feet. */
 const restPoses = new WeakMap<Object3D, { node: Object3D; position: Vector3; quaternion: Quaternion }[]>();
 /** Sampling one action must not become the rest pose of the next action. */
-export function retargetClip(root: Object3D, name: string, additive = false): AnimationClip {
+export function retargetClip(root: Object3D, name: string, additive = false, overrides?: typeof authoredClips): AnimationClip {
   let rest = restPoses.get(root);
   if (!rest) { rest = []; root.traverse(node => rest!.push({ node, position: node.position.clone(), quaternion: node.quaternion.clone() })); restPoses.set(root, rest); }
   const current = rest.map(({ node }) => ({ node, position: node.position.clone(), quaternion: node.quaternion.clone() }));
   for (const pose of rest) { pose.node.position.copy(pose.position); pose.node.quaternion.copy(pose.quaternion); }
-  try { return buildRetargetedClip(root, name, additive); }
+  try { return buildRetargetedClip(root, name, additive, overrides?.get(name) ?? authoredClips.get(name), overrides === skinClips ? skinGait[name] : undefined); }
   finally { for (const pose of current) { pose.node.position.copy(pose.position); pose.node.quaternion.copy(pose.quaternion); } }
 }
-function buildRetargetedClip(root: Object3D, name: string, additive: boolean): AnimationClip {
-  const source = authoredClips.get(name);
+function buildRetargetedClip(root: Object3D, name: string, additive: boolean, source = authoredClips.get(name), gait?: { stride: number; stance: number; lift: number }): AnimationClip {
   if (!source) throw new Error(`Missing authored clip ${name}`);
   const tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[] = [], q = new Quaternion();
   const hipHeight = root.getObjectByName('hip')?.position.y ?? .705;
@@ -82,20 +87,20 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean): A
       }
     }
   }
-  if (!additive && gaitShape[name]) plantLocomotion(root, name, source.duration, tracks);
+  if (!additive && (gait || gaitShape[name])) plantLocomotion(root, name, source.duration, tracks, gait);
   return new AnimationClip(name, source.duration, tracks);
 }
 
 /** Bake flat-ground support into target-specific tracks. The authored pelvis keeps
  * its weight shift/counter-rotation; each rig's actual limb lengths determine the
  * knee arc. Stance travels backwards by exactly the runtime full-cycle distance. */
-function plantLocomotion(root: Object3D, name: string, duration: number, tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[]): void {
+function plantLocomotion(root: Object3D, name: string, duration: number, tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[], gait?: { stride: number; stance: number; lift: number }): void {
   const hip = root.getObjectByName('hip');
   if (!hip) return;
   const hipTrack = tracks.find(t => t.name === 'hip.position')!;
   const position = hipTrack.InterpolantFactoryMethodLinear();
   const rotation = tracks.find(t => t.name === 'hip.quaternion')!.InterpolantFactoryMethodLinear();
-  const { stance, lift } = gaitShape[name], stride = strides[name] * strideProportion(root);
+  const { stance, lift } = gait ?? gaitShape[name], stride = (gait?.stride ?? strides[name]) * strideProportion(root);
   // A grouped NPC can have a rotated sub-root above its hip. Express actor
   // travel in that parent's coordinates, rather than sliding along its local X.
   const forward = new Vector3(1, 0, 0).applyQuaternion(root.getWorldQuaternion(new Quaternion()));

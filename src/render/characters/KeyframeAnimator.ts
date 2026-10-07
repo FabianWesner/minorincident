@@ -1,7 +1,7 @@
 import { AdditiveAnimationBlendMode, AnimationMixer, LoopOnce, LoopRepeat, Quaternion, Vector3, type AnimationAction, type Object3D } from 'three';
 import { meleeChains } from '../../data/meleeCombos';
 import type { AnimationState, SurvivorState } from '../../data/survivor';
-import { authoredClips, retargetClip, settleGroundPose, strides, strideScale } from './clips';
+import { authoredClips, retargetClip, skinClips, skinGait, settleGroundPose, strides, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 
 /** Rider state from the bicycle (crank angle in radians, steer −1..1). */
@@ -32,18 +32,21 @@ export class KeyframeAnimator {
   clip = 'idle';
   evaluations = 0;
   missingClips = 0;
-  constructor(private readonly rig: CharacterRig) {
+  /** `clipSource` overrides library clips by name (skin pilot: retargeted Mesh2Motion locomotion). */
+  private readonly strides: Record<string, number>;
+  constructor(private readonly rig: CharacterRig, clipSource?: typeof skinClips) {
+    this.strides = clipSource === skinClips ? { ...strides, ...Object.fromEntries(Object.entries(skinGait).map(([k, g]) => [k, g.stride])) } : strides;
     this.mixer = new AnimationMixer(rig.root);
     this.backpack = rig.root.getObjectByName('backpackSocket'); this.backpackRest = this.backpack?.rotation.z ?? 0;
     for (const name of authoredClips.keys()) {
       if (name.startsWith('corgi-') || name === 'infected-flight' || name === 'animal-death') continue;
-      this.actions.set(name, this.mixer.clipAction(retargetClip(rig.root, name)));
+      this.actions.set(name, this.mixer.clipAction(retargetClip(rig.root, name, false, clipSource)));
       if (/^(unarmed-|fists-|bat-|crowbar-|machete-|swing|shoot|throw)/.test(name)) {
-        const clip = retargetClip(rig.root, name, true); clip.blendMode = AdditiveAnimationBlendMode;
+        const clip = retargetClip(rig.root, name, true, clipSource); clip.blendMode = AdditiveAnimationBlendMode;
         this.actions.set(`${name}:upper`, this.mixer.clipAction(clip));
       }
     }
-    const carry = retargetClip(rig.root, 'carry');
+    const carry = retargetClip(rig.root, 'carry', false, clipSource);
     for (const node of ['armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR'] as const) {
       const track = carry.tracks.find(t => t.name === `${node}.quaternion`);
       if (track) this.carryPose.push([rig[node], new Quaternion().fromArray(track.values, 0)]);
@@ -84,17 +87,17 @@ export class KeyframeAnimator {
     // E19 courier: seated pedalling while riding (mount/dismount play as actions).
     else if (ride) name = 'ride';
     if (this.clip !== name || strike && !upper && this.attackTick !== pose.animationTick || !this.base) {
-      const previous = this.base; this.base = this.play(name, !!strides[name] || name === 'idle');
+      const previous = this.base; this.base = this.play(name, !!this.strides[name] || name === 'idle');
       if (previous && previous !== this.base) previous.crossFadeTo(this.base, strike ? .06 : .2, false);
       this.clip = name;
     }
     if (name === 'ride' && this.base && ride) {
       // Pedalling follows the bike's crank; no stride accumulation while seated.
       this.base.time = ((ride.pedal / (Math.PI * 2)) % 1 + 1) % 1 * this.base.getClip().duration; this.base.setEffectiveTimeScale(0);
-    } else if (strides[name] && this.base) {
-      this.phase = (this.phase + speed * dt / (strides[name] * strideScale(this.rig.root))) % 1;
+    } else if (this.strides[name] && this.base) {
+      this.phase = (this.phase + speed * dt / (this.strides[name] * strideScale(this.rig.root))) % 1;
       // Keep the outgoing gait on the same support phase throughout crossfade.
-      for (const [clip, action] of this.actions) if (strides[clip]) {
+      for (const [clip, action] of this.actions) if (this.strides[clip]) {
         action.time = this.phase * action.getClip().duration; action.setEffectiveTimeScale(0);
       }
     }
