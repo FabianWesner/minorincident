@@ -1,7 +1,11 @@
+import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
+import { CrowdVisibility } from './CrowdVisibility';
+import { simplifyCrowdLod } from './characters/crowdLodGeometry';
+import { crowdLod } from './lodPolicy';
 import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
-import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3 } from 'three/webgpu';
+import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, ConeGeometry, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
 import { attribute, instancedBufferAttribute, mat4, normalGeometry, vec3, positionGeometry, mix, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform } from 'three/tsl';
 import { crowdBlendedMatrix, packCrowdParts } from '../assets/crowd';
 import type { Materials } from './Materials';
@@ -36,6 +40,13 @@ export class CrowdView extends Group {
   private readonly definitions = new Map<string, { id: string; asset: string; windup: number }>();
   private readonly pending = new Map<string, Promise<void>>();
   private readonly heroSlots = new Map<string, InstancedMesh>();
+  private readonly visibility = new CrowdVisibility();
+  private readonly heroIds = new Set<number>();
+  private readonly previousHeroes = new Set<number>();
+  private readonly nearest: { id: number; distance: number }[] = [];
+  private readonly heroBands = new Map<number, boolean>();
+  private readonly rolePixels = new Map<string, number>();
+  private readonly roleLods = new Map<string, 'lod1' | 'lod2'>();
   private readonly frustum = new Frustum();
   private readonly projection = new Matrix4();
   private readonly bounds = new Sphere(new Vector3(), 1);
@@ -95,11 +106,19 @@ export class CrowdView extends Group {
       if (this.disposed) return;
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback), capacity = role === 'crow' ? 800 : 350;
+      // Baking expands rigid parts to triangle soup. Index identical vertices before
+      // instanced attributes are attached: same surfaces, fewer animated vertices.
+      deinterleaveGeometry(baked.geometry);
+      const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
+      if (lod === 'lod2' && !fallback) {
+        await simplifyCrowdLod(baked.geometry);
+        if (this.disposed) { baked.geometry.dispose(); return; }
+      }
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
       packCrowdParts(baked.geometry);
-      const tint = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
+      const tint = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4).setUsage(StreamDrawUsage);
       // Pack frame, detached leg, gore mask and flash into one slot: WebGL2 guarantees 16 attributes.
-      const state = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
+      const state = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4).setUsage(StreamDrawUsage);
       baked.geometry.setAttribute('_state', state); baked.geometry.setAttribute('_variant', tint);
       const feedbackState = attribute('_state', 'vec4'), parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
       const opacity = feedbackState.w.div(2).floor().div(255).oneMinus();
@@ -129,10 +148,11 @@ export class CrowdView extends Group {
       });
       const slot = lod === 'lod0' ? this.heroSlots.get(def.id) : undefined;
       const mesh = slot ?? new InstancedMesh(baked.geometry, material, capacity);
+      mesh.instanceMatrix.setUsage(StreamDrawUsage);
       if (slot) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.geometry = baked.geometry; mesh.material = material; this.heroSlots.delete(def.id); } mesh.userData.preRenderSolo = true; mesh.name = def.id; mesh.frustumCulled = false; mesh.count = 0;
       // E17's explicit instance * part order: positionNode runs after default instancing.
-      const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1);
-      mesh.onBeforeRender = () => { matrices.version = mesh.instanceMatrix.version; };
+      const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
+      mesh.onBeforeRender = () => { matrices.version = mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, mesh.count * 16); };
       const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset);
       const instance = mat4(column(0), column(4), column(8), column(12));
       material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry.mul(visible), 1))).xyz;
@@ -140,6 +160,7 @@ export class CrowdView extends Group {
       this.batches.set(`${def.id}:${lod}`, { poses, lod, role: def.id, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
+  private hasRole(id: string): boolean { return this.batches.has(`${id}:lod1`) || this.batches.has(`${id}:lod2`); }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   update(view?: View, alpha = 1): void {
     for (const [id, pose] of this.corpses) if (!this.world.entities.get(id)?.infected || this.world.entities.get(id)!.health.current > 0 || this.world.tick - pose.deadAt > this.corpseTicks) this.corpses.delete(id);
@@ -149,21 +170,34 @@ export class CrowdView extends Group {
     const player = this.world.entities.get(1)!;
     const focus = view?.cameraTarget ?? player.transform;
     if (view) this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
-    const heroes = new Set<number>();
-    if (!this.low) {
-      const nearest = [...this.world.entities.iterate()].filter(e => e.faction === 'infected' && e.combat && (e.health.current > 0 || this.world.tick - (e.infected?.deadAt ?? 0) < this.corpseTicks) && !e.hidden && !e.infected?.hidden && e.archetype !== 'infected.crow')
-        .map(e => ({ e, distance: Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z) }))
-        .filter(({ e, distance }) => {
-          if (distance > 12) return false;
-          if (!view) return true;
-          const variant = e.infected?.model ?? e.infected?.variant, key = variant && this.definitions.has(variant) ? variant : this.definitions.has(e.archetype) ? e.archetype : 'infected.runner';
-          const dimensions = this.registry.definition(this.definitions.get(key)!.asset).dimensions;
-          this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);
-          this.bounds.radius = Math.hypot(dimensions.x, dimensions.y, dimensions.z) / 2;
-          return this.frustum.intersectsSphere(this.bounds);
-        }).sort((a, b) => a.distance - b.distance).slice(0, 8);
-      for (const { e } of nearest) heroes.add(e.id);
+    this.visibility.begin(view?.camera, typeof innerHeight === 'number' ? innerHeight : 900);
+    const heroes = this.heroIds; this.previousHeroes.clear();
+    for (const id of heroes) this.previousHeroes.add(id);
+    heroes.clear(); this.nearest.length = 0; this.rolePixels.clear();
+    if (!this.low) for (const e of this.world.entities.iterate()) {
+      if (e.faction !== 'infected' || !e.combat || e.hidden || e.infected?.hidden || e.archetype === 'infected.crow' || keepsLook(e)) continue;
+      if (e.health.current <= 0 && this.world.tick - (e.infected?.deadAt ?? 0) >= this.corpseTicks) continue;
+      const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
+      if (distance > this.cullDistance) continue;
+      const variant = e.infected?.model ?? e.infected?.variant;
+      const role = this.hasRole(e.archetype) ? e.archetype : 'infected.runner';
+      const key = variant && this.hasRole(variant) ? variant : role;
+      const d = this.registry.definition(this.definitions.get(key)!.asset).dimensions;
+      if (!this.visibility.visible(e.transform.x, e.transform.y - .7 + d.y / 2, e.transform.z, Math.hypot(d.x, d.y, d.z) / 2 + .6)) continue;
+      const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, d.y);
+      this.rolePixels.set(key, Math.max(this.rolePixels.get(key) ?? 0, pixels));
+      if (distance > (this.previousHeroes.has(e.id) ? 13 : 12)) continue;
+      const hero = !view || pixels > (this.heroBands.get(e.id) ? 164 : 196);
+      this.heroBands.set(e.id, hero); if (!hero) continue;
+      // Hold an existing hero until a replacement is clearly closer.
+      const score = distance - (this.previousHeroes.has(e.id) ? .75 : 0);
+      let at = 0; while (at < this.nearest.length && this.nearest[at].distance <= score) at++;
+      if (at < 8) { this.nearest.splice(at, 0, { id: e.id, distance: score }); if (this.nearest.length > 8) this.nearest.pop(); }
     }
+    // One background tier per role protects the largest visible silhouette and
+    // avoids a third active draw for every archetype in a mixed horde.
+    for (const [role, pixels] of this.rolePixels) this.roleLods.set(role, crowdLod(pixels, this.roleLods.get(role), false));
+    for (const e of this.nearest) heroes.add(e.id);
     for (const e of this.world.entities.iterate()) {
       if (e.id === 1 || e.faction !== 'infected' || !e.combat) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
@@ -171,22 +205,24 @@ export class CrowdView extends Group {
       // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
       if (keepsLook(e)) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); continue; }
       const availableLod = this.low ? 'lod2' : 'lod1';
-      const role = this.batches.has(`${e.archetype}:${availableLod}`) ? e.archetype : 'infected.runner';
+      const role = this.hasRole(e.archetype) ? e.archetype : 'infected.runner';
       const variant = e.infected?.model ?? e.infected?.variant;
-      const key = variant && this.batches.has(`${variant}:${availableLod}`) ? variant : role;
+      const key = variant && this.hasRole(variant) ? variant : role;
       const def = this.definitions.get(key)!;
       const dimensions = this.registry.definition(def.asset).dimensions;
       this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);
       this.bounds.radius = Math.hypot(dimensions.x, dimensions.y, dimensions.z) / 2;
       if (view && !this.frustum.intersectsSphere(this.bounds)) continue;
-      let lod = this.low || distance > 30 ? 'lod2' : 'lod1';
+      let lod: 'lod0' | 'lod1' | 'lod2' = this.low ? 'lod2' : this.roleLods.get(key) ?? 'lod2';
       if (heroes.has(e.id)) {
         if (this.batches.has(`${key}:lod0`)) lod = 'lod0';
         else if (!this.pending.has(key)) {
           this.pending.set(key, this.loadBatch(def, 'lod0').finally(() => this.pending.delete(key)));
         }
       }
-      const batch = this.batches.get(`${key}:${lod}`)!;
+      // Quality changes/streaming may not have the requested tier yet. Keep the loaded figure.
+      const batch = this.batches.get(`${key}:${lod}`) ?? this.batches.get(`${key}:${availableLod}`) ?? this.batches.get(`${key}:lod2`) ?? this.batches.get(`${key}:lod1`);
+      if (!batch) continue;
       const b = e.infected ?? { state: e.health.current <= 0 ? 'dead' : e.combat.attacking ? 'attack' : 'idle', until: 0, deadAt: 0, legLost: false, special: '', detached: false, variant: '', birdAlive: [], birdPositions: [], dx: 0, dz: 0 };
       const feedback = this.feedback.get(e.id);
       const renderTick = Math.max(0, this.world.tick + alpha - 1);
@@ -220,7 +256,15 @@ export class CrowdView extends Group {
         const mesh = this.telegraphs[b.special === 'charge' || b.special === 'pin' || b.special === 'pounce' ? 1 : 0]; if (b.special === 'explode') this.transform.makeScale(3.75, 1, 3.75); else this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); this.transform.setPosition(e.transform.x, 0.06, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
       }
     }
-    for (const batch of this.batches.values()) { batch.mesh.count = batch.count; batch.mesh.visible = batch.count > 0; if (batch.count) { batch.mesh.instanceMatrix.needsUpdate = true; batch.state.needsUpdate = true; batch.tint.needsUpdate = true; } }
+    for (const batch of this.batches.values()) {
+      batch.mesh.count = batch.count; batch.mesh.visible = batch.count > 0;
+      if (batch.count) {
+        batch.mesh.instanceMatrix.clearUpdateRanges(); batch.mesh.instanceMatrix.addUpdateRange(0, batch.count * 16); batch.mesh.instanceMatrix.needsUpdate = true;
+        for (const attribute of [batch.state, batch.tint]) { attribute.clearUpdateRanges(); attribute.addUpdateRange(0, batch.count * 4); attribute.needsUpdate = true; }
+        const first = batch.poses.clip.frames * batch.texture.image.width * 4;
+        batch.texture.clearUpdateRanges(); batch.texture.addUpdateRange(first, batch.texture.image.data!.length - first);
+      }
+    }
     for (const mesh of this.telegraphs) { mesh.visible = mesh.count > 0; if (mesh.count) mesh.instanceMatrix.needsUpdate = true; }
     this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0;
     if (this.caps.count) this.caps.instanceMatrix.needsUpdate = true;

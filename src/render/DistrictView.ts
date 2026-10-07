@@ -32,11 +32,14 @@ import type { CameraPose } from "./View";
 import type { View } from './View';
 import { AmbientLife } from './AmbientLife';
 import { Foliage } from './Foliage';
-import { pickLod, initialDistrictLods, type Lod } from './lodPolicy';
+import { pickLod, propLod, initialDistrictLods, type Lod } from './lodPolicy';
 import { seeThrough } from './SeeThrough';
 import type { PaletteToken } from '../data/palette';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
+// Repeated fence panels dominated V1 (109k faces in each view/shadow pass).
+// Preserve the adjacent panels; farther boards need their silhouette, not fine bevels.
+const privacyFenceLodPolicy = { lod1From: 6, lod2From: 45, hysteresis: 2 };
 
 interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */
@@ -51,9 +54,11 @@ export class DistrictView extends Group {
   private readonly frustum = new Frustum();
   private readonly projection = new Matrix4();
   private readonly bounds = new Sphere(new Vector3(), 1);
+  private readonly viewPoint = new Vector3();
   private cameraPosition = [Infinity, Infinity, Infinity];
   private cameraRotation = [Infinity, Infinity, Infinity, Infinity];
   private cameraAspect = 0;
+  private cameraHeight = 0;
 
   private readonly grass: Grass[] = [];
   private readonly foliage: Foliage;
@@ -378,11 +383,11 @@ export class DistrictView extends Group {
     const p = view.camera.position;
     const rotation = view.camera.quaternion.toArray();
     if (Math.hypot(p.x - this.cameraPosition[0], p.y - this.cameraPosition[1], p.z - this.cameraPosition[2]) < .5
-      && rotation.every((value, i) => Math.abs(value - this.cameraRotation[i]) < .0001) && this.cameraAspect === view.camera.aspect) {
+      && rotation.every((value, i) => Math.abs(value - this.cameraRotation[i]) < .0001) && this.cameraAspect === view.camera.aspect && this.cameraHeight === view.viewportHeight) {
       for (const entry of this.dirtyEntries) this.partition(entry, view);
       this.dirtyEntries.clear(); return;
     }
-    this.cameraPosition = p.toArray(); this.cameraRotation = rotation; this.cameraAspect = view.camera.aspect;
+    this.cameraPosition = p.toArray(); this.cameraRotation = rotation; this.cameraAspect = view.camera.aspect; this.cameraHeight = view.viewportHeight;
     this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     for (const entry of this.lodBatches) this.partition(entry, view);
     this.dirtyEntries.clear();
@@ -394,11 +399,19 @@ export class DistrictView extends Group {
     for (const [index, ref] of refs.entries()) {
       if (foliage && index >= Math.ceil(refs.length * this.materials.look.values.foliageDensity)) continue;
       const x = ref.position.x + origin[0], z = ref.position.z + origin[1];
-      this.bounds.center.set(x, ref.position.y + height / 2, z); this.bounds.radius = radius;
+      this.bounds.center.set(x, ref.position.y + height * ref.scale.y / 2, z); this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
       if (!this.frustum.intersectsSphere(this.bounds)) continue;
       const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
-      // High tier: LOD0 inside the play view (lodPolicy, with hysteresis). Low tier keeps its budget.
-      const band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' ? 'lod2' : 'lod1') : pickLod(distance, entry.bands[index]);
+      // Structural assets keep LOD0 in the high play view; small dressing also considers pixels below.
+      let band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' ? 'lod2' : 'lod1') : pickLod(distance, entry.bands[index], entry.id === 'prop.privacy-fence' ? privacyFenceLodPolicy : undefined);
+      if (!this.low && !foliage && worldAssets[entry.id].category === 'prop') {
+        const size = worldAssets[entry.id].dimensions;
+        const extent = Math.max(size.x * ref.scale.x, size.y * ref.scale.y, size.z * ref.scale.z);
+        this.viewPoint.copy(this.bounds.center).applyMatrix4(view.camera.matrixWorldInverse);
+        const pixels = extent * view.camera.projectionMatrix.elements[5] * view.viewportHeight / (2 * Math.max(.1, -this.viewPoint.z));
+        const screenBand = propLod(pixels, entry.bands[index]);
+        if (screenBand > band) band = screenBand;
+      }
       entry.bands[index] = band;
       (band === 'lod2' ? far : band === 'lod1' ? near : hero).references.push(ref);
     }

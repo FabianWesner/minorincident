@@ -1,0 +1,50 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde
+
+stdout | tests/sim/ai/director.test.ts > T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget
+{"scenario":"horde-arena","infected":200,"simMsP95":21.054957999999715,"budget":4}
+
+ ❯ tests/sim/ai/director.test.ts (9 tests | 1 failed | 8 skipped) 5846ms
+   × T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget 5844ms
+ ❯ tests/sim/performance/horde.test.ts (3 tests | 2 failed | 1 skipped) 7496ms
+   × T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms 5762ms
+   × T-E18-02-100 @E18-AC02 @perf Node sim p95 100 living infected <= 6ms 1733ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sim/ai/director.test.ts > T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget
+AssertionError: expected 21.054957999999715 to be less than or equal to 4
+ ❯ tests/sim/ai/director.test.ts:39:520
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/sim/performance/horde.test.ts > T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms
+AssertionError: expected 19.050874999999905 to be less than or equal to 4
+ ❯ tests/sim/performance/horde.test.ts:8:98
+      6|     const proof = await measureHorde(scenario);
+      7|     mkdirSync('test-results/epics/E18', { recursive: true }); writeFil…
+      8|     expect(proof.minInfected).toBe(count); expect(proof.cap).toBe(coun…
+       |                                                                                                  ^
+      9|   });
+     10| }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/sim/performance/horde.test.ts > T-E18-02-100 @E18-AC02 @perf Node sim p95 100 living infected <= 6ms
+AssertionError: expected 6.8590839999997115 to be less than or equal to 6
+ ❯ tests/sim/performance/horde.test.ts:8:98
+      6|     const proof = await measureHorde(scenario);
+      7|     mkdirSync('test-results/epics/E18', { recursive: true }); writeFil…
+      8|     expect(proof.minInfected).toBe(count); expect(proof.cap).toBe(coun…
+       |                                                                                                  ^
+      9|   });
+     10| }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  3 failed | 9 skipped (12)
+   Start at  13:39:12
+   Duration  9.83s (tests 76%, transform 21%, import 3%)

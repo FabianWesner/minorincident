@@ -1,7 +1,8 @@
-/** Distance LOD policy for world assets (buildings, props, vehicles, interactables).
+/** Distance LOD policy for structural world assets (buildings, vehicles, interactables).
  * At the maximum zoom (camera radius 19 m x 1.45, x1.15 while driving) everything inside the view lies
  * within ~30 m of the camera target; LOD0 covers that plus about one screen of margin, so the play
- * view never shows a decimated LOD on the high tier. Hysteresis keeps a band until the distance is
+ * view keeps their authored high tier. Small props additionally use propLod below.
+ * Hysteresis keeps a band until the distance is
  * clearly past the boundary, so assets near a boundary do not pop back and forth. */
 export type Lod = 'lod0' | 'lod1' | 'lod2';
 export const lodPolicy = { lod1From: 45, lod2From: 90, hysteresis: 4 } as const;
@@ -30,4 +31,19 @@ export function pickLod(distance: number, previous?: Lod, policy: { lod1From: nu
 export function modelLod(distance: number, previous: string | undefined, low: boolean): Lod {
   if (low) return distance > 30 ? 'lod2' : 'lod1';
   return pickLod(distance, previous === 'lod0' || previous === 'lod1' || previous === 'lod2' ? previous : undefined);
+}
+
+/** Crowd bands use CSS pixels, so portrait/zoom changes select the detail actually visible.
+ * Separate enter/leave thresholds prevent a figure oscillating between batches. */
+export function crowdLod(pixels: number, previous: 'lod1' | 'lod2' | undefined, low: boolean): 'lod1' | 'lod2' {
+  if (low) return 'lod2';
+  return pixels > (previous === 'lod1' ? 144 : previous === 'lod2' ? 176 : 160) ? 'lod1' : 'lod2';
+}
+
+/** Small dressing keeps its authored silhouette while avoiding subpixel detail.
+ * Tall foliage and buildings keep the distance policy. */
+export function propLod(pixels: number, previous?: Lod): Lod {
+  const hero = previous === 'lod0' ? 112 : previous ? 144 : 128;
+  const far = previous === 'lod2' ? 46 : previous ? 34 : 40;
+  return pixels > hero ? 'lod0' : pixels > far ? 'lod1' : 'lod2';
 }

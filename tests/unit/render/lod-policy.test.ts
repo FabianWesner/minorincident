@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { initialDistrictLods, lodPolicy, modelLod, pickLod } from '../../../src/render/lodPolicy';
+import { initialDistrictLods, lodPolicy, modelLod, pickLod, propLod } from '../../../src/render/lodPolicy';
 
 test('@load play view renders LOD0; LOD1 beyond 45 m, LOD2 beyond 90 m', () => {
   expect(pickLod(0)).toBe('lod0'); expect(pickLod(44)).toBe('lod0'); expect(pickLod(46)).toBe('lod1'); expect(pickLod(91)).toBe('lod2');
@@ -29,4 +29,22 @@ test('@load phone initial downloads include only tiers used at the spawn', () =>
   expect(initialDistrictLods(false, false, 0, true, true)).toEqual(['lod2']);
   expect(initialDistrictLods(false, false, 0, true)).toEqual(['lod1', 'lod2']);
   expect(initialDistrictLods(false, false, 46, true)).toEqual(['lod2']);
+});
+
+test('@E18-AC01 crowd screen-size hysteresis holds detail through boundary jitter and forces low tier', async () => {
+  const { crowdLod } = await import('../../../src/render/lodPolicy');
+  expect(crowdLod(161, undefined, false)).toBe('lod1');
+  expect(crowdLod(145, 'lod1', false)).toBe('lod1');
+  expect(crowdLod(143, 'lod1', false)).toBe('lod2');
+  expect(crowdLod(175, 'lod2', false)).toBe('lod2');
+  expect(crowdLod(177, 'lod2', false)).toBe('lod1');
+  expect(crowdLod(300, 'lod1', true)).toBe('lod2');
+});
+
+test('@E18-AC01 small prop screen-size hysteresis keeps both boundaries stable', () => {
+  expect(propLod(129)).toBe('lod0'); expect(propLod(127)).toBe('lod1'); expect(propLod(39)).toBe('lod2');
+  expect(propLod(113, 'lod0')).toBe('lod0'); expect(propLod(111, 'lod0')).toBe('lod1');
+  expect(propLod(143, 'lod1')).toBe('lod1'); expect(propLod(145, 'lod1')).toBe('lod0');
+  expect(propLod(35, 'lod1')).toBe('lod1'); expect(propLod(33, 'lod1')).toBe('lod2');
+  expect(propLod(45, 'lod2')).toBe('lod2'); expect(propLod(47, 'lod2')).toBe('lod1');
 });

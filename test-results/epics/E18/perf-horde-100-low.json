@@ -1,46 +1,19 @@
 {
   "first": {
-    "fps": 60.240963855421604,
-    "frameMs": 16.600000000000023,
+    "profile": null,
+    "profileAssets": null,
+    "updateCpuMs": 0,
+    "renderCpuMs": 0,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 59.880239520957105,
+    "frameMs": 16.700000000000273,
     "simMs": 0,
-    "drawCalls": 43,
-    "triangles": 68047,
-    "geometries": 84,
-    "textures": 23,
-    "entities": 101,
-    "backend": "webgl",
-    "loadTiming": null,
-    "quality": {
-      "setting": "low",
-      "tier": "low",
-      "p90Ms": 0,
-      "slowSeconds": 0,
-      "budgets": {
-        "frameMs": 33.333333333333336,
-        "infected": 100,
-        "drawCalls": 300,
-        "triangles": 500000,
-        "simMs": 6,
-        "heapMB": 250,
-        "pixelRatio": 1.5,
-        "shadowSize": 1024,
-        "bloomMips": 2,
-        "cullDistance": 45
-      }
-    },
-    "renderedFrames": 11,
-    "contextLost": false,
-    "paused": true,
-    "heapBytes": 72200000
-  },
-  "second": {
-    "fps": 60.240963855421604,
-    "frameMs": 16.600000000000023,
-    "simMs": 0,
-    "drawCalls": 43,
-    "triangles": 68047,
-    "geometries": 84,
-    "textures": 23,
+    "uiMs": 0,
+    "drawCalls": 55,
+    "triangles": 259205,
+    "geometries": 78,
+    "textures": 6,
     "entities": 101,
     "backend": "webgl",
     "loadTiming": null,
@@ -65,7 +38,48 @@
     "renderedFrames": 13,
     "contextLost": false,
     "paused": true,
-    "heapBytes": 72200000
+    "heapBytes": 254000000
+  },
+  "second": {
+    "profile": null,
+    "profileAssets": null,
+    "updateCpuMs": 0,
+    "renderCpuMs": 0,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 59.88023952095874,
+    "frameMs": 16.699999999999818,
+    "simMs": 0,
+    "uiMs": 0,
+    "drawCalls": 55,
+    "triangles": 259205,
+    "geometries": 78,
+    "textures": 6,
+    "entities": 101,
+    "backend": "webgl",
+    "loadTiming": null,
+    "quality": {
+      "setting": "low",
+      "tier": "low",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 33.333333333333336,
+        "infected": 100,
+        "drawCalls": 300,
+        "triangles": 500000,
+        "simMs": 6,
+        "heapMB": 250,
+        "pixelRatio": 1.5,
+        "shadowSize": 1024,
+        "bloomMips": 2,
+        "cullDistance": 45
+      }
+    },
+    "renderedFrames": 15,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 254000000
   },
   "state": {
     "ai": {
@@ -87,6 +101,7 @@
     },
     "combat": {
       "sequence": 0,
+      "chains": {},
       "rng": {
         "stream": "combat",
         "state": 1043179582,
@@ -131,7 +146,7 @@
       "archetype": "player.survivor",
       "transform": {
         "x": 0,
-        "y": 0.705,
+        "y": 0.7049999833106995,
         "z": 0,
         "yaw": 0.3205919885488634
       },
@@ -141,6 +156,14 @@
       },
       "faction": "survivor",
       "id": 1,
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
       "survivor": {
         "variant": "female",
         "gearTier": 0,
@@ -154,7 +177,7 @@
         "invulnerableUntil": 0,
         "checkpoint": {
           "x": 0,
-          "y": 0.705,
+          "y": 0.7049999833106995,
           "z": 0,
           "yaw": 0.3205919885488634
         },
@@ -237,7 +260,7 @@
         "archetype": "player.survivor",
         "transform": {
           "x": 0,
-          "y": 0.705,
+          "y": 0.7049999833106995,
           "z": 0,
           "yaw": 0.3205919885488634
         },
@@ -247,6 +270,14 @@
         },
         "faction": "survivor",
         "id": 1,
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
+        },
         "survivor": {
           "variant": "female",
           "gearTier": 0,
@@ -260,7 +291,7 @@
           "invulnerableUntil": 0,
           "checkpoint": {
             "x": 0,
-            "y": 0.705,
+            "y": 0.7049999833106995,
             "z": 0,
             "yaw": 0.3205919885488634
           },
@@ -478,6 +509,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -621,6 +660,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -764,6 +811,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -907,6 +962,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -1050,6 +1113,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -1193,6 +1264,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -1336,6 +1415,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -1479,6 +1566,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -1622,6 +1717,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -1765,6 +1868,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -1908,6 +2019,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -2051,6 +2170,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -2194,6 +2321,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -2337,6 +2472,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -2480,6 +2623,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -2623,6 +2774,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -2766,6 +2925,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -2909,6 +3076,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -3052,6 +3227,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -3195,6 +3378,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -3338,6 +3529,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -3481,6 +3680,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -3624,6 +3831,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -3767,6 +3982,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -3910,6 +4133,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -4053,6 +4284,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -4196,6 +4435,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -4339,6 +4586,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -4482,6 +4737,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -4625,6 +4888,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -4768,6 +5039,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -4911,6 +5190,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -5054,6 +5341,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -5197,6 +5492,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -5340,6 +5643,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -5483,6 +5794,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -5626,6 +5945,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -5769,6 +6096,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -5912,6 +6247,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -6055,6 +6398,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -6198,6 +6549,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -6341,6 +6700,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -6484,6 +6851,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -6627,6 +7002,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -6770,6 +7153,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -6913,6 +7304,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -7056,6 +7455,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -7199,6 +7606,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -7342,6 +7757,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -7485,6 +7908,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -7628,6 +8059,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -7771,6 +8210,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -7914,6 +8361,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -8057,6 +8512,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -8200,6 +8663,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -8343,6 +8814,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -8486,6 +8965,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -8629,6 +9116,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -8772,6 +9267,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -8915,6 +9418,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -9058,6 +9569,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -9201,6 +9720,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -9344,6 +9871,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -9487,6 +10022,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -9630,6 +10173,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -9773,6 +10324,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -9916,6 +10475,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -10059,6 +10626,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -10202,6 +10777,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -10345,6 +10928,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -10488,6 +11079,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -10631,6 +11230,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -10774,6 +11381,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -10917,6 +11532,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -11060,6 +11683,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -11203,6 +11834,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -11346,6 +11985,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -11489,6 +12136,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -11632,6 +12287,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -11775,6 +12438,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -11918,6 +12589,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -12061,6 +12740,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -12204,6 +12891,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -12347,6 +13042,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -12490,6 +13193,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -12633,6 +13344,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -12776,6 +13495,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -12919,6 +13646,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -13062,6 +13797,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -13205,6 +13948,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -13348,6 +14099,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -13491,6 +14250,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -13634,6 +14401,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -13777,6 +14552,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -13920,6 +14703,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -14063,6 +14854,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -14206,6 +15005,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -14349,6 +15156,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -14492,6 +15307,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       },
       {
@@ -14635,6 +15458,14 @@
           "attacking": false,
           "damageMultiplier": 1,
           "statuses": []
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
         }
       }
     ],
@@ -14651,24 +15482,43 @@
       "entities": 101,
       "bodies": 2,
       "colliders": 2,
-      "listeners": 111
+      "listeners": 152
     },
     "render": {
       "quality": "low",
       "pixelRatio": 1,
       "postFx": null,
+      "moveMarker": {
+        "visible": false,
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
       "missionMarker": null,
       "districts": null,
       "backend": "webgl",
       "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.45
+        ],
         "fov": 25,
         "azimuth": 0.7853981633974483,
         "polar": 0.9424777960769379,
-        "radius": 35,
+        "radius": 19,
         "focus": [
           0,
           0,
           0
+        ],
+        "target": [
+          0,
+          0.5,
+          -5
         ],
         "position": [
           24,
@@ -14688,222 +15538,273 @@
         "sunColor": "#ffdb9a",
         "sky": "#eeb888",
         "fog": "#e5b39e",
-        "intensity": 1.15
+        "fogNear": 55,
+        "fogFar": 140,
+        "intensity": 1.15,
+        "shadowColor": "66548d",
+        "coreShadowEdges": [
+          1,
+          -0.25
+        ],
+        "shadowRadius": 2,
+        "normalBias": 0.08,
+        "shadowArea": 40.638162925673235,
+        "fogColors": [
+          "#eeb888",
+          "#e5b39e"
+        ]
+      },
+      "npcs": {
+        "civilians": {
+          "instances": 0,
+          "draws": 0,
+          "source": "glb"
+        },
+        "heroes": [],
+        "cars": 0
       },
       "vehicles": [],
+      "entityAssets": {
+        "companion": "glb",
+        "actors": [],
+        "placeholders": []
+      },
       "character": {
         "bloodCoverage": 0,
         "variant": "female",
         "gearTier": 0,
         "animation": "idle",
+        "clip": "idle",
         "missingClips": 0,
-        "evaluations": 6,
+        "evaluations": 1,
+        "skinned": false,
+        "cpuMs": 0.40000057220458984,
+        "rideWeight": 0,
         "sources": [
           {
             "variant": "female",
-            "source": "placeholder",
-            "reason": "Error: status reference"
+            "source": "glb",
+            "reason": null
           },
           {
             "variant": "male",
-            "source": "placeholder",
-            "reason": "Error: status reference"
+            "source": "glb",
+            "reason": null
           }
         ]
       },
       "crowd": {
         "instances": 200,
         "meshDrawCalls": 2,
-        "objects": 22,
+        "objects": 37,
         "nonInstancedMeshes": 0,
         "caps": 0,
         "flashes": 0,
         "batches": [
           {
             "id": "infected.runner",
+            "lod": "lod2",
             "instances": 100,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.crawler",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.brute",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.screamer",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.sprinter",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.riot",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.bloated",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.firefighter",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.hazmat",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.armored",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.butcher",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.nurse",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.dog",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.cat",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.crow",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.lion",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           },
           {
             "id": "infected.gorilla",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
+          },
+          {
+            "id": "infected.patient-zero",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.jogger",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.baseball-cap",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.suburban-mom",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.delivery-driver",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.skater",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.college-student",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.bbq-dad",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.cashier",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.bathrobe-neighbor",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.construction-worker",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.dog-dachshund",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.dog-k9",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.cat-black",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
+          },
+          {
+            "id": "inf.teen-skater",
+            "lod": "lod2",
+            "instances": 0,
+            "source": "glb"
           },
           {
             "id": "infected.flamingo",
+            "lod": "lod2",
             "instances": 0,
-            "source": "placeholder"
+            "source": "glb"
           }
         ],
-        "assets": [
-          {
-            "type": "asset.placeholder",
-            "id": "inf.common-worker",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.crawler",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.brute",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.screamer",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.sprinter",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.riot-cop",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.bloated",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.firefighter",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.hazmat",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.armored-football",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.butcher",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.nurse",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.dog-retriever",
-            "reason": "status placeholder"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.cat-tabby",
-            "reason": "status placeholder"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.crow",
-            "reason": "status placeholder"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.lion",
-            "reason": "status placeholder"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.gorilla",
-            "reason": "status placeholder"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "inf.flamingo",
-            "reason": "status placeholder"
-          }
-        ]
+        "assets": []
       },
       "actions": {
+        "targetMarker": null,
+        "trailVertices": 0,
         "bloodCoverage": 0,
         "indicator": {
           "selectedSide": "LEFT",
@@ -14922,12 +15823,12 @@
           {
             "side": "LEFT",
             "actionId": "weapon.bat",
-            "iconUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMyOTM0NDciLz48ZyBzdHJva2U9IiNmZmQxNjYiIHN0cm9rZS13aWR0aD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTUgNDdMNDMgMTlNMzkgMTVMNDkgMjVNMTIgNDJMMjIgNTIiLz48L2c+PHRleHQgeD0iNDgiIHk9IjU5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9ImJvbGQiPkJBPC90ZXh0Pjwvc3ZnPgo=",
-            "socket": "weaponSocketL",
-            "handDistance": 0.045000000000000005,
+            "iconUrl": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3e%3crect%20width='64'%20height='64'%20rx='12'%20fill='%23293447'/%3e%3cg%20stroke='%23ffd166'%20stroke-width='3'%20stroke-linecap='round'%20stroke-linejoin='round'%3e%3cpath%20d='M16%2046L28%2033L40%2016Q47%208%2053%2015Q58%2021%2049%2028L32%2040L20%2050Z'%20fill='%23a77850'/%3e%3cpath%20d='M14%2047L20%2053M20%2042L25%2047M24%2038L29%2043'%20fill='none'/%3e%3c/g%3e%3c/svg%3e",
+            "socket": "weaponSocketR",
+            "handDistance": 0.04500000000000003,
             "gripDistance": 0,
             "attached": true,
-            "source": "placeholder",
+            "source": "glb",
             "sockets": [
               "grip",
               "tip"
@@ -14937,14 +15838,13 @@
             "side": "RIGHT",
             "actionId": "weapon.grenade",
             "iconUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMyOTM0NDciLz48ZyBzdHJva2U9IiNmZmQxNjYiIHN0cm9rZS13aWR0aD0iNSIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48Y2lyY2xlIGN4PSIzMiIgY3k9IjM2IiByPSIxNCIvPjxwYXRoIGQ9Ik0yOSAyMlYxNEgzOE0zNyAxNkw0MyAxMCIvPjwvZz48dGV4dCB4PSI0OCIgeT0iNTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmb250LXdlaWdodD0iYm9sZCI+R1I8L3RleHQ+PC9zdmc+Cg==",
-            "socket": "weaponSocketR",
-            "handDistance": 0.045000000000000005,
+            "socket": "weaponSocketL",
+            "handDistance": 0.04499999999999999,
             "gripDistance": 0,
             "attached": true,
-            "source": "placeholder",
+            "source": "glb",
             "sockets": [
-              "grip",
-              "tip"
+              "grip"
             ]
           }
         ],
@@ -14958,150 +15858,28 @@
             "type": "asset.placeholder",
             "id": "wpn.kick",
             "reason": "status placeholder"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.baseball-bat",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.crowbar",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.machete",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.knife",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.nail-bat",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.shovel",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.police-baton",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.fire-axe",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.katana",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.pistol",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.shotgun",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.nail-gun",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.smg",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.hunting-rifle",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.assault-rifle",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.machine-gun",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "wpn.rocket-launcher",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "thr.frag-grenade",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "thr.molotov",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "thr.pipe-bomb",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "thr.firecracker-lure",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "thr.smoke-grenade",
-            "reason": "status placeholder"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "thr.flashbang",
-            "reason": "status reference"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "ability.corgi-lure",
-            "reason": "status placeholder"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "ability.shield-bubble",
-            "reason": "status placeholder"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "ability.adrenaline",
-            "reason": "status placeholder"
-          },
-          {
-            "type": "asset.placeholder",
-            "id": "ability.turret",
-            "reason": "status placeholder"
           }
         ]
       },
       "vfx": {
         "enabled": true,
+        "colorblind": false,
         "gore": "Full",
         "quality": "low",
         "flashReduction": false,
         "time": 0,
+        "lastSpray": {
+          "actionId": "",
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "droplets": 0,
+          "chunks": 0,
+          "gravity": 9.81
+        },
+        "surfaceSplats": 0,
+        "pendingSplats": 0,
         "particles": 0,
         "particleCap": 512,
         "decals": 0,
@@ -15126,239 +15904,579 @@
       "materials": [
         {
           "name": "pal_sidewalk",
-          "palette": true
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "",
-          "palette": false
-        },
-        {
-          "name": "pal_survivorRed",
-          "palette": true
-        },
-        {
-          "name": "female:",
-          "palette": true
-        },
-        {
-          "name": "pal_survivorRed",
-          "palette": true
+          "name": "character:female",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "pal_uiDark",
-          "palette": true
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
-          "name": "pal_backpackTeal",
-          "palette": true
+          "name": "action:thr.frag-grenade:pal_grass",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
-          "name": "pal_backpackTeal",
-          "palette": true
+          "name": "action:thr.frag-grenade:pal_sidewalk",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
-          "name": "pal_survivorRed",
-          "palette": true
+          "name": "action:thr.frag-grenade:pal_uiDark",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
-          "name": "female:keep_placeholder",
-          "palette": true
+          "name": "action:thr.frag-grenade:pal_schoolBusYellow",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "female:pal_skinWarm",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "action:wpn.baseball-bat:pal_woodWarm",
-          "palette": true
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
-          "name": "pal_survivorRed",
-          "palette": true
+          "name": "action:wpn.baseball-bat:pal_uiDark",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
-          "name": "action:thr.frag-grenade:pal_woodWarm",
-          "palette": true
-        },
-        {
-          "name": "pal_policeBlue",
-          "palette": true
-        },
-        {
-          "name": "female:keep_placeholder",
-          "palette": true
-        },
-        {
-          "name": "female:keep_placeholder",
-          "palette": true
-        },
-        {
-          "name": "pal_survivorRed",
-          "palette": true
-        },
-        {
-          "name": "pal_survivorRed",
-          "palette": true
-        },
-        {
-          "name": "pal_woodWarm",
-          "palette": true
-        },
-        {
-          "name": "pal_survivorRed",
-          "palette": true
-        },
-        {
-          "name": "male:",
-          "palette": true
+          "name": "action:wpn.baseball-bat:pal_brick",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "pal_backpackTeal",
-          "palette": true
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "pal_survivorRed",
-          "palette": true
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
-          "name": "male:keep_placeholder",
-          "palette": true
+          "name": "pal_policeBlue",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_woodWarm",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "character:male",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "parcel:card",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "parcel:tape",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "keep_contactShadow",
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "keep_moveMarker",
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "",
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "",
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "",
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "pal_survivorRed",
-          "palette": true
-        },
-        {
-          "name": "male:keep_placeholder",
-          "palette": true
-        },
-        {
-          "name": "pal_survivorRed",
-          "palette": true
-        },
-        {
-          "name": "pal_survivorRed",
-          "palette": true
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "",
-          "palette": false
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "",
-          "palette": false
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "",
-          "palette": false
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "",
-          "palette": false
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "",
-          "palette": false
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "",
-          "palette": false
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "keep_contactShadow",
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "pal_picketWhite",
+          "palette": true,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "",
-          "palette": false
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "",
-          "palette": false
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "",
-          "palette": false
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
         },
         {
           "name": "",
-          "palette": false
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "",
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
+        },
+        {
+          "name": "",
+          "palette": false,
+          "plainLit": false,
+          "emissive": 0
         }
       ],
       "occlusion": [],
