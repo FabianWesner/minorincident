@@ -82,6 +82,7 @@ describe('L1 v2 mission', () => {
     const { world: w, mission } = await load(3); let attacks = 0;
     w.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1) attacks++; });
     const run = runL1(w, mission, 'evade-only', { seed: 3 });
+    record('evade-bot', { ...run, attacks });
     expect(run.outcome).toBe('complete'); expect(attacks).toBe(0);
   }, HEAVY);
 
