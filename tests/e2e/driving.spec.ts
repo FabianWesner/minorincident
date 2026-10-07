@@ -4,9 +4,10 @@ test('T-E09-08 @E09-AC08 held LMB drives ahead-left and release brakes with dist
   const baseRadius = await page.evaluate(async () => {
     const api = window.__SS__!; await api.loadScenario('drive-course'); api.pause(); const radius = api.getState().render.camera.radius; await api.step(36);
     // The close gameplay camera cannot show a cursor ten metres ahead; widen this input fixture.
-    api.camera.cinematic({ position: [25, 32, 25], target: [0, .7, 0] }); api.vfx.stepRender(1); return radius;
+    api.camera.cinematic({ position: [25, 32, 25], target: [0, .7, 0] }); api.resume(); return radius;
   });
   await page.waitForTimeout(1100); // allow the cinematic camera blend to finish before projecting
+  await page.evaluate(() => window.__SS__!.pause());
   const start = await page.evaluate(() => window.__SS__!.getEntity(2)!);
   const cursor = await page.evaluate(p => window.__SS__!.input.project({ x: p.x + 10, z: p.z + 4 }), start.transform);
   await page.mouse.move(cursor.x, cursor.y); await page.mouse.down();
@@ -59,10 +60,11 @@ test('T-E09-touch @E09 touch stick accelerates, LEFT holds boost, releasing stic
   await touch('touchStart', [{ id: 1, x: 140, y: 400 }, { id: 4, x: drift!.x + drift!.width / 2, y: drift!.y + drift!.height / 2 }]);
   await page.evaluate(() => window.__SS__!.step(1));
   expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.braking)).toBe(true);
-  await touch('touchEnd', [{ id: 1, x: 140, y: 400 }]);
+  await touch('touchEnd', []); // CDP touchEnd clears all contacts
   await page.evaluate(() => window.__SS__!.step(1));
   const released = await page.evaluate(() => window.__SS__!.getState());
   expect(released.input.frame.right.held, JSON.stringify(released.input)).toBe(false);
+  await touch('touchStart', [{ id: 1, x: 80, y: 400 }]); await touch('touchMove', [{ id: 1, x: 140, y: 400 }]);
   const horn = await page.locator('[data-touch-action=left]').boundingBox(); expect(horn).not.toBeNull();
   await touch('touchStart', [{ id: 1, x: 140, y: 400 }, { id: 3, x: horn!.x + horn!.width / 2, y: horn!.y + horn!.height / 2 }]);
   await page.evaluate(async () => { await window.__SS__!.step(6); });
