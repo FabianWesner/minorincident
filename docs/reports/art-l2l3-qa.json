@@ -1,0 +1,96 @@
+{
+  "lane": "art-l2l3",
+  "assets": [
+    {
+      "id": "int.fire-station-bay",
+      "triangles": {
+        "lod0": 15096,
+        "lod1": 6300,
+        "lod2": 3244
+      },
+      "contactSheet": "test-results/epics/E17/art-l2l3-qa/int.fire-station-bay/lod-contact.png"
+    },
+    {
+      "id": "kit.army-checkpoint",
+      "triangles": {
+        "lod0": 19394,
+        "lod1": 4946,
+        "lod2": 1330
+      },
+      "contactSheet": "test-results/epics/E17/art-l2l3-qa/kit.army-checkpoint/lod-contact.png"
+    },
+    {
+      "id": "decay.looted-store",
+      "triangles": {
+        "lod0": 1068,
+        "lod1": 524,
+        "lod2": 180
+      },
+      "contactSheet": "test-results/epics/E17/art-l2l3-qa/decay.looted-store/lod-contact.png"
+    },
+    {
+      "id": "veh.sedan-red.wrecked",
+      "triangles": {
+        "lod0": 3056,
+        "lod1": 2996,
+        "lod2": 1204
+      },
+      "contactSheet": "test-results/epics/E17/art-l2l3-qa/veh.sedan-red.wrecked/lod-contact.png"
+    },
+    {
+      "id": "veh.sedan-blue.wrecked",
+      "triangles": {
+        "lod0": 2964,
+        "lod1": 2904,
+        "lod2": 1856
+      },
+      "contactSheet": "test-results/epics/E17/art-l2l3-qa/veh.sedan-blue.wrecked/lod-contact.png"
+    },
+    {
+      "id": "veh.police-sedan.wrecked",
+      "triangles": {
+        "lod0": 3352,
+        "lod1": 3292,
+        "lod2": 1597
+      },
+      "contactSheet": "test-results/epics/E17/art-l2l3-qa/veh.police-sedan.wrecked/lod-contact.png"
+    }
+  ],
+  "visualReview": "lane PASS; Opus independent review pending",
+  "commits": [
+    "03304a15"
+  ],
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "unit": {
+      "filesPassed": 87,
+      "passed": 284,
+      "failed": 0
+    },
+    "assets": {
+      "passed": 721,
+      "failed": 0
+    },
+    "lights": {
+      "anchors": 297,
+      "assets": 72,
+      "errors": 0,
+      "unreferencedEmissiveMeshes": 0
+    },
+    "browser": {
+      "passed": 39,
+      "failed": 0,
+      "skipped": 0
+    },
+    "determinism": {
+      "asset": "int.fire-station-bay",
+      "hash": "9a462ee57375c1d844ea0da458017133c3f4dd53bd01f66ce02b3bb9bde10de0",
+      "result": "pass"
+    },
+    "verifyE17": {
+      "result": "blocked",
+      "reason": "Both shared sim slots held by other lanes; stopped own queued command before Node tests started. Typecheck/lint/build stages passed. Equivalent browser selection passed separately."
+    }
+  }
+}
