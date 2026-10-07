@@ -1,3 +1,4 @@
+import { modelLod } from './lodPolicy';
 import { Group, Mesh, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
 import { staticBatch } from '../assets/staticBatch';
@@ -55,7 +56,7 @@ export class EntityAssets extends Group {
       if (!id) continue;
       const target = this.view?.cameraTarget ?? this.world.entities.get(1)!.transform;
       const distance = Math.hypot(entity.transform.x - target.x, entity.transform.z - target.z);
-      const lod = distance > 30 ? 'lod2' : this.low || distance > 12 ? 'lod1' : 'lod0';
+      const lod = modelLod(distance, this.records.get(entity.id)?.lod, this.low);
       if (this.records.get(entity.id)?.lod === lod) continue;
       const load = this.actorModel(id, lod).then(model => {
         if (!this.disposed && this.world.entities.get(entity.id)) {
