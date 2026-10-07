@@ -35,6 +35,8 @@ export interface GraphVoice {
     stop(time?: number): void;
 }
 /** The same graph is used for live playback and OfflineAudioContext acceptance renders. */
+/** Master ceiling about -1.4 dBFS: with the 4x oversampled shaper the true peak stays under -1 dBTP. */
+const CEILING = 0.85;
 export class AudioGraph {
     readonly limiter: VoiceLimiter;
     readonly buses = {} as Record<AudioBus, GainNode>;
@@ -80,7 +82,7 @@ export class AudioGraph {
         this.compressor.release.value = 0.06;
         const ceiling = context.createWaveShaper(), curve = new Float32Array(2049);
         for (let i = 0; i < curve.length; i++)
-            curve[i] = Math.max(-0.8, Math.min(0.8, (i / (curve.length - 1) * 2 - 1)));
+            curve[i] = Math.max(-CEILING, Math.min(CEILING, (i / (curve.length - 1) * 2 - 1)));
         ceiling.curve = curve;
         ceiling.oversample = '4x';
         this.master.connect(this.tinnitusFilter).connect(this.compressor).connect(ceiling);
