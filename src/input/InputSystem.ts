@@ -256,7 +256,7 @@ export class InputSystem implements Lifecycle {
     }
     if (this.drivingContext && this.scheme === 'touch') {
       if (this.touch.holdingLeft) frame.left.held = true;
-      if (this.touch.holdingRight) frame.right.held = true;
+      frame.right.held = this.touch.holdingRight;
     }
     if (this.selectedActiveSlot !== undefined) { frame.selectedActiveSlot = this.selectedActiveSlot; this.selectedActiveSlot = undefined; }
     if (this.selectedSlot) { frame.selectedSlot = this.selectedSlot; this.selectedSlot = undefined; }

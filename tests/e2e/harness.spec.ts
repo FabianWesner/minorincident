@@ -58,8 +58,8 @@ test('T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, delivered methods and
     return { version: api.version, keys: Object.keys(api).sort(), npcKeys: Object.keys(api.npcs).sort(), campaignKeys: Object.keys(api.campaign).sort(), vfxKeys: Object.keys(api.vfx).sort(), errors, bot, entity, missing, nearby, events: api.events(0), perf: api.perf() };
   });
   expect(surface.version).toMatch(/^\d+\.\d+\.\d+$/);
-  expect(surface.keys).toEqual(['version', 'ready', 'missions', 'npcs', 'campaign', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'interact', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'vfx', 'audio', 'debug', 'perf', 'screenshotReady'].sort());
-  expect(surface.npcKeys).toEqual(['civilian', 'escort', 'grab', 'courage', 'quality'].sort());
+  expect(surface.keys).toEqual(['version', 'ready', 'missions', 'npcs', 'campaign', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'interact', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'vfx', 'audio', 'debug', 'barricades', 'look', 'perf', 'screenshotReady'].sort());
+  expect(surface.npcKeys).toEqual(['civilian', 'escort', 'grab', 'courage', 'quality', 'l1Outbreak', 'l1Stats'].sort());
   expect(surface.campaignKeys).toEqual(['state', 'menu', 'save', 'restore'].sort());
   expect(surface.errors.spawn).toBe('Load an infected or combat scenario before spawning');
   expect(surface.errors['cheats.killAll']).toBe('NO ERROR');
