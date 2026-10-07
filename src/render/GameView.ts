@@ -61,6 +61,8 @@ export class GameView implements Lifecycle {
   contextLost = false;
   private lostRendererDisposal: Promise<void> | null = null;
   renderedFrames = 0;
+  updateCpuMs = 0;
+  renderCpuMs = 0;
   private readonly meshes: Mesh[] = [];
   private vehicles: VehicleView | null = null;
   private bicycle: BicycleView | null = null;
@@ -516,6 +518,7 @@ export class GameView implements Lifecycle {
       const target = this.world.controls.moveTarget; this.destination.visible = target != null;
       if (target) this.destination.position.set(target.x, .12, target.z);
     }
+    const profileStart = this.renderer.profile ? performance.now() : 0;
     this.syncMission();
     const current = this.world.entities.get(1)?.transform, previous = this.world.previousPlayer;
     const survivor = this.world.entities.get(1)?.survivor;
@@ -578,6 +581,9 @@ export class GameView implements Lifecycle {
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;
+    this.renderer.beginProfile(this.camera);
+    const renderStart = profileStart ? performance.now() : 0;
+    if (profileStart) this.updateCpuMs = renderStart - profileStart;
     if(this.foliageMask) {
       const backgroundNode=this.scene.backgroundNode; this.scene.backgroundNode=null;
       const background=this.scene.background, fog=this.scene.fog, shadow=this.renderer.shadowMap.enabled;
@@ -615,6 +621,7 @@ export class GameView implements Lifecycle {
       for (const [mesh, material] of this.savedMaterials) mesh.material = material;
       this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
+    if (profileStart) this.renderCpuMs = performance.now() - renderStart;
   }
   async ready(): Promise<void> {
     await this.warming;
