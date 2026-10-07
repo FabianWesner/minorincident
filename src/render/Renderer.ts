@@ -1,5 +1,12 @@
 // Adapted from folio-2025 Rendering.js / Viewport.js by Bruno Simon (MIT), commit 41046b5.
-import { WebGPURenderer } from 'three/webgpu';
+import { NodeBuilder, WebGPURenderer } from 'three/webgpu';
+
+// Load lane: three emits small instance-matrix arrays (and bone/range arrays) as per-object uniform
+// buffers named after the node id ('NodeBuffer_<id>'), so every InstancedMesh below the uniform limit
+// compiled its own shader module and pipeline (L1 v2: 21 civilian batches x 2 passes = 42 of 130
+// pipelines). Report no uniform-buffer room to node builders: three then takes its attribute
+// (instancing) / texture (bones) paths, whose shader text is shared by every object of a material.
+(NodeBuilder.prototype as unknown as { getUniformBufferLimit(): number }).getUniformBufferLimit = () => 0;
 
 /** Automatic WebGPU → WebGL2 fallback; backend is read after renderer.init(), not inferred from navigator. */
 export class Renderer extends WebGPURenderer {
