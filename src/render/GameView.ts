@@ -73,6 +73,7 @@ export class GameView implements Lifecycle {
   private entityAssets: EntityAssets | null = null;
   vfx: Vfx | null = null;
   private labAccident: LabAccidentFx | null = null;
+  private labWindows: { prewarmWindows(): () => void } | null = null;
   private vehicleFeedback: VehicleFeedback | null = null;
   private readonly vfxSettings: VfxSettings = {};
   private hitStopTick = 0;
@@ -227,7 +228,7 @@ export class GameView implements Lifecycle {
         shake: strength => this.view.shake(strength),
       });
       this.vfx.set({ ...this.vfxSettings, quality: this.quality }); this.scene.add(this.vfx);
-      if (this.world.scenario === 'L1') { this.labAccident = new LabAccidentFx(this.world, this.vfx, labAccidentTargets(this.scene, s => this.view.shake(s), (x, z, w) => this.view.pull(x, z, w)), anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; this.labAccident.facing = this.camera.quaternion; this.scene.add(this.labAccident.column); }
+      if (this.world.scenario === 'L1') { const targets = labAccidentTargets(this.scene, s => this.view.shake(s), (x, z, w) => this.view.pull(x, z, w)); this.labWindows = targets; this.labAccident = new LabAccidentFx(this.world, this.vfx, targets, anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; this.labAccident.facing = this.camera.quaternion; this.scene.add(this.labAccident.column); }
       this.crowd?.setGoreEnabled(this.vfx.snapshot().enabled && this.vfx.snapshot().gore === 'Full');
       const survivor = this.world.entities.get(1)?.survivor;
       this.frozenPose = survivor ? structuredClone(survivor) : null;
@@ -246,9 +247,10 @@ export class GameView implements Lifecycle {
       this.lighting?.update(this.view);
       // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
+      const unwarm = this.labWindows?.prewarmWindows();
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
       try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); }))); }
-      finally { restore?.(); }
+      finally { restore?.(); unwarm?.(); }
     } else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
     loadMeasure('view:warm-up', t);
     this.idPass = this.params.get('idpass') === '1'; this.update(1);
