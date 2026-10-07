@@ -248,4 +248,19 @@ describe('L1 v2 corgi', () => {
     }
     expect(worst).toBeLessThan(.7);
   });
+  test('the moving corgi faces its travel direction (no crab-walk) even with an off-screen threat to the side', async () => {
+    await dogWorld(); const dog = [...world.entities.iterate()].find(e => e.companion)!, p = world.entities.get(1)!.transform;
+    world.infected!.spawn('infected.runner', { x: p.x + 15, z: p.z + 6 }, { state: 'idle' });
+    world.setInput({ move: { x: 0, z: -1 } }); let worst = 0, moving = 0, flips = 0, lastStep = 0, lastYaw = dog.transform.yaw; const trail: number[][] = [];
+    for (let i = 0; i < 600; i++) {
+      if (i === 300) world.setInput({ move: { x: -1, z: 0 } });
+      world.update(); const v = dog.companion!.velocity;
+      const step = Math.atan2(Math.sin(dog.transform.yaw - lastYaw), Math.cos(dog.transform.yaw - lastYaw)); lastYaw = dog.transform.yaw; if (step * lastStep < -1e-8) flips++; if (step) lastStep = step; trail.push([dog.transform.x, dog.transform.z]);
+      if (v && Math.hypot(v.x, v.z) > .5) { moving++; const h = -Math.atan2(v.z, v.x); worst = Math.max(worst, Math.abs(Math.atan2(Math.sin(h - dog.transform.yaw), Math.cos(h - dog.transform.yaw)))); }
+    }
+    // no micro-vibration: no yaw oscillation and under 3 cm of position noise against a +-8 tick moving average
+    let noise = 0; for (let i = 8; i < trail.length - 8; i++) { let mx = 0, mz = 0; for (let k = -8; k <= 8; k++) { mx += trail[i + k][0] / 17; mz += trail[i + k][1] / 17; } noise = Math.max(noise, Math.hypot(trail[i][0] - mx, trail[i][1] - mz)); }
+    expect(flips).toBeLessThanOrEqual(2); expect(noise).toBeLessThan(.03);
+    expect(moving).toBeGreaterThan(100); expect(worst).toBeLessThanOrEqual(20 * Math.PI / 180);
+  });
 });
