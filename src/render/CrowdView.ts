@@ -206,7 +206,7 @@ export class CrowdView extends Group {
       const motion = e.motion ?? this.motion.sample(e.id, tick, e.transform.x, e.transform.z), gaitDistance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), reaction = e.combat.reaction;
       const age = reaction ? (this.world.tick - reaction.started) / 60 : Infinity;
       const death = e.archetype === 'infected.crawler' ? 'death-side' : 'death-back';
-      let clip: typeof infectedClips[number] = b.state === 'dead' ? death : b.legLost || e.archetype === 'infected.crawler' ? 'crawl' : b.state === 'attack' && motion.speed <= .06 ? this.world.tick < b.until ? 'windup' : 'swing' : motion.speed > 2 ? tierGait(b as { speed?: number; tier?: string; l1?: { tier: string } }) : motion.speed > .06 ? 'shamble' : (b.state as string) === 'search' || (b.state as string) === 'attracted' ? 'infected-search' : 'infected-idle';
+      let clip: typeof infectedClips[number] = b.state === 'dead' ? death : (b.legLost || e.archetype === 'infected.crawler') && motion.speed <= .06 ? 'crawl' : b.state === 'attack' && motion.speed <= .06 ? this.world.tick < b.until ? 'windup' : 'swing' : motion.speed > 2 ? tierGait(b as { speed?: number; tier?: string; l1?: { tier: string } }) : motion.speed > .06 ? 'shamble' : (b.state as string) === 'search' || (b.state as string) === 'attracted' ? 'infected-search' : 'infected-idle';
       if (reaction && age < (reaction.heavy ? 1.34 : .43) && b.state !== 'dead' && motion.speed <= .06) clip = reaction.heavy ? age < .48 ? reaction.index % 2 ? 'knockdown' : 'flung' : age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
       if (e.infectionRise) clip = 'infection-rise';
       if (b.special === 'dive') clip = 'run';

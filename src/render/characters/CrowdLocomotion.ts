@@ -3,6 +3,7 @@ import type { CrowdClip } from '../../assets/crowd';
 import { GroundContacts } from './GroundContacts';
 import type { CharacterRig } from './rig';
 import { cadenceStride, gaitShape } from './clips';
+import { PawContacts } from './PawContacts';
 
 /** One small off-scene skeleton per batch; figures retain only their two contact
  * targets. The scene still contains instanced meshes, never per-person actors. */
@@ -15,9 +16,12 @@ export class CrowdLocomotion {
   private readonly inverse = new Matrix4();
   private readonly rig: CharacterRig;
   private readonly contacts = new Map<number, GroundContacts>();
+  private readonly paws = new Map<number, PawContacts>();
+  private readonly animal: boolean;
   private readonly rest: { position: Vector3; quaternion: import('three').Quaternion; scale: Vector3 }[];
   readonly reach: number;
-  constructor(model: Object3D, private readonly clip: CrowdClip) {
+  constructor(private readonly model: Object3D, private readonly clip: CrowdClip) {
+    this.animal = !!model.getObjectByName('legFL');
     model.updateMatrixWorld(true);
     const originals = clip.parts.map(name => model.getObjectByName(name)!);
     this.nodes = originals.map(node => { const copy = new Object3D(); copy.name = node.name; return copy; });
@@ -39,9 +43,9 @@ export class CrowdLocomotion {
   }
   stance(name: string, stride: number): number { return Math.min(gaitShape[name]?.stance ?? .5, this.reach * .75 / Math.max(.001, stride)); }
   correct(id: number, pose: Float32Array, instance: Matrix4, phase: number, name: string, scale: number, speed: number): void {
-    if (!this.reach || !gaitShape[name]) return;
+    if (!this.animal && (!this.reach || !gaitShape[name])) return;
     let contacts = this.contacts.get(id);
-    if (!contacts) {
+    if (!contacts && !this.animal) {
       // Contact geometry is measured from rest, never from another figure's pose.
       this.frame.matrixAutoUpdate = true; this.frame.position.set(0, 0, 0); this.frame.quaternion.identity(); this.frame.scale.setScalar(1);
       this.nodes.forEach((node, i) => {
@@ -58,9 +62,13 @@ export class CrowdLocomotion {
     });
     this.frame.matrixAutoUpdate = false; this.frame.matrix.copy(instance); this.frame.updateMatrixWorld(true);
     const stride = cadenceStride(name, scale, speed), run = /run|sprint|flee/.test(name) ? 1 : 0;
-    contacts.update(phase, stride, run, 1, this.stance(name, stride));
+    if (this.animal) {
+      let paws = this.paws.get(id);
+      if (!paws) { paws = new PawContacts(this.frame, this.model); this.paws.set(id, paws); }
+      paws.update(phase, stride, 'corgi-trot');
+    } else contacts!.update(phase, stride, run, 1, this.stance(name, stride));
     this.inverse.copy(instance).invert();
     this.nodes.forEach((node, i) => this.world[i].multiplyMatrices(this.inverse, node.matrixWorld).toArray(pose, i * 16));
   }
-  reset(id: number): void { this.contacts.get(id)?.reset(); }
+  reset(id: number): void { this.contacts.get(id)?.reset(); this.paws.get(id)?.reset(); }
 }
