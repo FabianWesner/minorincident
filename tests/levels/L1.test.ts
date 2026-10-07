@@ -155,12 +155,19 @@ describe('L1 v2 mission', () => {
     }
   }, HEAVY);
 
-  test('T-E19-09 @E19 beat 9 the director produces >= 6 infected near the garage exit and a stream ahead on the route', async () => {
+  test('T-E19-09 @E19 @E19-AC25 beat 9 the director produces >= 6 infected near the garage exit and a stream ahead on the route', async () => {
     const { world: w, mission } = await load(2); w.combat!.damage.god = true;
     runL1(w, mission, 'complete', { seed: 2, stopWhen: m => m.state.steps.weapon.status === 'completed' });
     const g = mission.def.anchors['garage-door'], near = () => w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - g.x, e.transform.z - g.z) <= l1v2.director.hordeRadiusM).length;
     for (let i = 0; i < 60 * 40 && !mission.state.l1!.hordeDone; i++) w.update();
     expect(mission.state.l1!.hordeDone).toBe(true);
+    // Emergence: the horde infected wait hidden at doors, then appear within 3 m of that door after the door-open event.
+    const doorRuns = mission.state.l1!.runs.filter(r => r.door), doorEvents: string[] = [];
+    expect(doorRuns.length).toBeGreaterThan(0);
+    w.events.on('gate.changed', e => { if (e.type === 'gate.changed' && e.id.startsWith('door-')) doorEvents.push(e.id); });
+    for (const r of doorRuns) expect(w.entities.get(r.id)!.hidden).toBe(true);
+    for (let i = 0; i < 60 * 10 && mission.state.l1!.runs.some(r => r.emergeAt !== undefined); i++) w.update();
+    expect(doorEvents.length).toBeGreaterThan(0);
     for (let i = 0; i < 60 * 30 && near() < l1v2.director.hordeMinInfectedNearGarage; i++) w.update();
     expect(near()).toBeGreaterThanOrEqual(l1v2.director.hordeMinInfectedNearGarage);
   }, HEAVY);

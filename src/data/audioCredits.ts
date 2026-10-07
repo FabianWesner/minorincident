@@ -104,5 +104,54 @@ export const audioCredits = [
         "url": "https://opengameart.org/content/female-high-pitched-scream-sfx",
         "license": "CC0",
         "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    {
+        "title": "Impact Sounds",
+        "author": "Kenney",
+        "url": "https://kenney.nl/assets/impact-sounds",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    {
+        "title": "75 CC0 breaking / falling / hit SFX",
+        "author": "rubberduck",
+        "url": "https://opengameart.org/content/75-cc0-breaking-falling-hit-sfx",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    {
+        "title": "100 CC0 SFX #2",
+        "author": "rubberduck",
+        "url": "https://opengameart.org/content/100-cc0-sfx-2",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    {
+        "title": "100 CC0 Metal and Wood SFX",
+        "author": "rubberduck",
+        "url": "https://opengameart.org/content/100-cc0-metal-and-wood-sfx",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    {
+        "title": "15 vocal male strain/hurt/pain/jump sounds",
+        "author": "qubodup",
+        "url": "https://opengameart.org/content/15-vocal-male-strainhurtpainjump-sounds",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    {
+        "title": "Car Sound Effects Pack (Low Quality)",
+        "author": "GGBotNet",
+        "url": "https://opengameart.org/content/car-sound-effects-pack-low-quality",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    {
+        "title": "Female RPG Voice Starter Pack",
+        "author": "cicifyre",
+        "url": "https://opengameart.org/content/female-rpg-voice-starter-pack",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
     }
 ] as const;

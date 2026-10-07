@@ -51,8 +51,9 @@ function recording(recipe: Recipe, duration: number, loop = false, music = false
         const raw = run(['-i', master(recipe.source), '-t', String(duration),
             '-af', `atrim=start=${recipe.start}:duration=${duration},asetpts=PTS-STARTPTS,${recipe.filter ? `${recipe.filter},` : ''}${music ? 'loudnorm=I=-18:TP=-2:LRA=9,' : ''}apad,atrim=duration=${duration}`,
             '-ac', '1', '-ar', String(rate), '-f', 'f32le', '-']);
-        const samples = new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.byteLength));
-        if (samples.length < Math.round(duration * rate) - 1) throw new Error(`Recording slice is truncated: ${recipe.source}`);
+        let samples = new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.byteLength));
+        // Short recordings (single hits) are zero-padded to the cue length; only an empty decode is an error.
+        if (samples.length < Math.round(duration * rate)) { const padded = new Float32Array(Math.round(duration * rate)); padded.set(samples); samples = padded; }
         let peak = 0;
         for (const value of samples) peak = Math.max(peak, Math.abs(value));
         if (peak < 0.00001) throw new Error(`Recording slice is silent: ${recipe.source} at ${recipe.start}s`);
@@ -63,6 +64,13 @@ function recording(recipe: Recipe, duration: number, loop = false, music = false
         pcmCache.set(key, samples);
     }
     return pcmCache.get(key)!;
+}
+/** Synthesized slices never exceed the ceiling (recorded slices are already peak-normalised to 0.5, music to -2 dBTP). */
+function capPeak(samples: Float32Array, max: number): Float32Array {
+    let peak = 0;
+    for (const value of samples) peak = Math.max(peak, Math.abs(value));
+    if (peak > max) for (let i = 0; i < samples.length; i++) samples[i] *= max / peak;
+    return samples;
 }
 function encode(name: string, samples: Float32Array, bitrate = '64k'): void {
     const wav = join(temp, `${name}.wav`);
@@ -83,10 +91,11 @@ try {
             for (const cue of Object.values(audioCues)) {
                 if (cue.category !== category) continue;
                 const recipe = (imports.cues as Record<string, Recipe>)[cue.id];
-                samples.set(recipe ? recording(recipe, cue.duration, cue.loop, cue.bus === 'music') : synthesize(cue, rate), Math.round(cue.offset * rate));
+                samples.set(recipe ? recording(recipe, cue.duration, cue.loop, cue.bus === 'music') : capPeak(synthesize(cue, rate), 0.7), Math.round(cue.offset * rate));
             }
+            if (!category.startsWith('music')) capPeak(samples, 0.6); // sprite ceiling: about -4.4 dBFS before Opus/AAC overshoot, so every file stays under -1 dBTP
             // Streamed stereo score is 96k. Compact mono sprites keep both codecs below 4MB.
-            encode(category, samples, category === 'l1arc' ? '24k' : category === 'ambience' ? '32k' : category.startsWith('music-') ? '48k' : '40k');
+            encode(category, samples, category === 'ambience' ? '32k' : category.startsWith('music-') ? '48k' : '64k');
             pcmCache.clear();
         }
         for (const ext of ['webm', 'm4a']) {

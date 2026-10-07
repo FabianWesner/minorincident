@@ -69,7 +69,7 @@ export interface L1State {
   techId: number;
   /** Handover and accident timeline in sim ticks; 0 = not scheduled. */
   hx: number; hz: number; handoverAt: number; deliveredAt: number; flickerAt: number; exitAt: number; warned: boolean; fired: number;
-  exitIds: number[]; exitHeadingsDeg: number[]; runs: { id: number; dx: number; dz: number; speed: number; until: number; via?: { x: number; z: number }; rushAt?: number }[];
+  exitIds: number[]; exitHeadingsDeg: number[]; runs: { id: number; dx: number; dz: number; speed: number; until: number; via?: { x: number; z: number }; rushAt?: number; /** Emerging from a building: hidden at the door until this tick, then stumbles out and joins the AI. */ emergeAt?: number; door?: number }[];
   turnedIds: number[]; escapedIds: number[];
   /** Beat 9: the horde near the garage was produced; further streams spawned along the route to the fire station. */
   graceUntil: number; hordeDone: boolean; routeSpawns: number; routeNextAt: number;
