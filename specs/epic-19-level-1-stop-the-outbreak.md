@@ -205,3 +205,11 @@ Bot timing bands are calibrated per staging decision §6: the 20-seed complete/n
 - The previous Patient-Zero boss, cooler sealing, hardware-store weapon choice and kick-a-cone tutorial are out of L1 (assets stay for later levels).
 - **PO decision 2026-10-07:** no upgrade/rack screens after L1 (see epic 13); the result screen continues straight to the next step. Beat 7 shows the weapon objective and its marker at the garage door right after the exits; zombies stay active, corpses persist.
 - Campaign unlock after L1: the **baseball bat** (crowbar and machete stay findable in later levels).
+
+## PO rule — outbreak growth without spawning (2026-10-07, verbatim)
+"These zombies near the block where I get the baseball stick spawn out of nowhere. I want the system to behave differently: First zombies (10 but not all at the same moment) come out of the house. Then bite pedestrians, so it's getting more (you can add more pedestrians). No random spawns at other places. And things stay where they are; even when the user respawns (incl corpses)."
+
+Consequences (supersede §5.9 director top-ups and any respawn-time world reset):
+- The only infected that enter the world without being bitten are the lab-accident exits and **10 infected that emerge one by one from one house near the garage** (staggered, visibly through its door). No director top-ups, no streams from other doors, no off-screen spawns.
+- From then on the infected count grows **only through bites** (the existing transformation rules). Pedestrian density near the garage/route is raised so the snowball is visible.
+- **Respawn keeps the world**: corpses, infected, pedestrians, knocked props and dropped items stay where they are; the player respawns at a safe point without resetting anything.
