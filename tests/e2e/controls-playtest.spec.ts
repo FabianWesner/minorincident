@@ -9,9 +9,8 @@ test('S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, st
   await menuStart(page);
   await page.evaluate(() => window.__SS__!.pause());
   const start = await page.evaluate(() => window.__SS__!.getState().player!.transform);
-  // +X is fenced and +Z can be occupied by the bicycle's safe parking spot.
-  // Walk along the open sidewalk away from the parked bike to test arrival.
-  const point = await page.evaluate(p => window.__SS__!.input.project({ x: p.x, z: p.z - 2 }), start);
+  // The bike is parked along the sidewalk towards -Z. Walk away from its frame.
+  const point = await page.evaluate(p => window.__SS__!.input.project({ x: p.x, z: p.z + 2 }), start);
   await page.mouse.move(point.x, point.y); await tick(page, 30);
   const idle = await page.evaluate(() => window.__SS__!.getState().player!.transform);
   expect(Math.hypot(idle.x - start.x, idle.z - start.z)).toBeLessThan(.02);
@@ -21,7 +20,7 @@ test('S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, st
   mkdirSync(output, { recursive: true }); await page.screenshot({ path: `${output}/l1-desktop-marker.png` });
   await tick(page, 120);
   const arrived = await page.evaluate(() => window.__SS__!.getState().player!.transform);
-  expect(Math.hypot(arrived.x - start.x, arrived.z - start.z + 2)).toBeLessThan(.15);
+  expect(Math.hypot(arrived.x - start.x, arrived.z - start.z - 2)).toBeLessThan(.15);
   expect(await page.evaluate(() => window.__SS__!.getState().render.moveMarker!.visible)).toBe(false);
   expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons)).toBeUndefined();
   // Before the L1 unarmed pickup, cycling has no action to select. The fixture

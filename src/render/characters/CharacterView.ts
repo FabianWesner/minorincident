@@ -140,7 +140,9 @@ export class CharacterView extends Group {
     if (!rider || this.variant !== 'female' || !character) return;
     const started = performance.now(), weight = character.animator.rideWeight;
     if (this.contactEvaluation === character.animator.evaluations) {
-      this.position.add(this.appliedOffset); this.quaternion.copy(this.appliedRotation);
+      this.position.add(this.appliedOffset);
+      this.quaternion.copy(contacts?.orientation ?? this.appliedRotation);
+      if (contacts && weight >= 1) this.seatPelvis(contacts.seat, -.04);
       return;
     }
     this.contactEvaluation = character.animator.evaluations;
@@ -215,7 +217,8 @@ export class CharacterView extends Group {
   /** Presentation heading eases aim changes while the sim keeps its exact hit direction. */
   /** `striking` snaps the body onto the attack direction (QA1-06: strikes read side-on when the
    * 6 rad/s locomotion turn lags a 0.27 s jab); locomotion keeps the bounded turn. */
-  face(yaw: number, time: number, striking = false): void {
+  face(yaw: number, time: number, striking = false, frame?: Quaternion): void {
+    if (frame) { this.quaternion.copy(frame); this.facing = yaw; this.facingTime = time; this.turn = 0; return; }
     // Facing is tracked as a scalar heading. Reading it back from `rotation.y` (an XYZ Euler decomposed from the
     // slerped quaternion) wraps beyond +-90 deg, which made the turn rate flip sign and the courier wobble while walking
     // diagonally (PO: walk micro-vibration).
@@ -232,7 +235,7 @@ export class CharacterView extends Group {
   socket(side: 'LEFT' | 'RIGHT') { return this.characters.get(this.variant)!.sockets[side]; }
   getState() {
     const character = this.characters.get(this.variant);
-    return { bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
+    return { position: this.position.toArray(), orientation: this.quaternion.toArray(), yaw: this.facing, pelvis: character?.rig.hip.getWorldPosition(this.scratchA).toArray() ?? null, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
       evaluations: character?.animator.evaluations ?? 0, skinned: this.skinned, cpuMs: this.cpuMs, rideWeight: character?.animator.rideWeight ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
   }
   dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.parcel?.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); }); this.parcel = null; this.characters.clear(); this.bloodMaterials.length = 0; this.clear(); }
