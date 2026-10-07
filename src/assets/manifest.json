@@ -3381,7 +3381,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "sourceForward": "+X",
     "world": {
       "token": "survivorRed",
@@ -3390,7 +3392,8 @@
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
-    }
+    },
+    "decayTriangleBudget": 15000
   },
   {
     "id": "veh.sedan-blue",
@@ -3437,7 +3440,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "lods": {
       "lod1": "public/assets/models/veh.sedan-blue.lod1.glb",
       "lod2": "public/assets/models/veh.sedan-blue.lod2.glb"
@@ -3450,7 +3455,8 @@
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
-    }
+    },
+    "decayTriangleBudget": 15000
   },
   {
     "id": "veh.sedan-white",
@@ -3927,12 +3933,15 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "sourceForward": "+X",
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
-    }
+    },
+    "decayTriangleBudget": 15000
   },
   {
     "id": "veh.police-suv",
@@ -7923,13 +7932,13 @@
   {
     "id": "decay.dropped-belongings",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/decay.dropped-belongings.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 1.5700370073318481,
+      "y": 0.46000000834465027,
+      "z": 1.0517759919166565,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -7937,28 +7946,39 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
-      "triangles": 12000,
+      "triangles": 1500,
       "materials": 12,
-      "fileKB": 1200,
+      "fileKB": 300,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "script": "assets/decay.dropped-belongings/build.py",
+    "sourceGlb": "assets/decay.dropped-belongings/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.dropped-belongings.lod1.glb",
+      "lod2": "public/assets/models/decay.dropped-belongings.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   },
   {
     "id": "decay.broken-glass",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
-    "glb": "",
+    "glb": "public/assets/models/decay.broken-glass.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 1.943875014781952,
+      "y": 0.07599999755620956,
+      "z": 1.633380949497223,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -7966,29 +7986,39 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
-      "triangles": 12000,
+      "triangles": 1500,
       "materials": 12,
-      "fileKB": 1200,
+      "fileKB": 300,
       "drawCalls": 30
     },
     "decayVariants": [],
-    "nonModel": "procedural"
+    "script": "assets/decay.broken-glass/build.py",
+    "sourceGlb": "assets/decay.broken-glass/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.broken-glass.lod1.glb",
+      "lod2": "public/assets/models/decay.broken-glass.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   },
   {
     "id": "decay.boarded-windows",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/decay.boarded-windows.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 1.5499999523162842,
+      "y": 1.600000023841858,
+      "z": 0.21000000461935997,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -7996,17 +8026,28 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
-      "triangles": 12000,
+      "triangles": 1500,
       "materials": 12,
-      "fileKB": 1200,
+      "fileKB": 300,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "script": "assets/decay.boarded-windows/build.py",
+    "sourceGlb": "assets/decay.boarded-windows/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.boarded-windows.lod1.glb",
+      "lod2": "public/assets/models/decay.boarded-windows.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   },
   {
     "id": "decay.furniture-barricade",
@@ -15031,5 +15072,523 @@
       "lod2": "public/assets/models/house.porch-b.lod2.glb"
     },
     "sourceForward": "+X"
+  },
+  {
+    "id": "int.fire-station-bay",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/int.fire-station-bay/build.py",
+    "glb": "public/assets/models/int.fire-station-bay.glb",
+    "sourceGlb": "assets/int.fire-station-bay/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/int.fire-station-bay.lod1.glb",
+      "lod2": "public/assets/models/int.fire-station-bay.lod2.glb"
+    },
+    "dimensions": {
+      "x": 12.0,
+      "y": 4.300000190734863,
+      "z": 10.0,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "truckParking",
+      "radioSocket"
+    ],
+    "budget": {
+      "triangles": 40000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 15000,
+      "lod2": 4000
+    }
+  },
+  {
+    "id": "prop.axe-rack",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.axe-rack/build.py",
+    "glb": "public/assets/models/prop.axe-rack.glb",
+    "sourceGlb": "assets/prop.axe-rack/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.axe-rack.lod1.glb",
+      "lod2": "public/assets/models/prop.axe-rack.lod2.glb"
+    },
+    "dimensions": {
+      "x": 0.8300000131130219,
+      "y": 1.5,
+      "z": 0.2900000065565109,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 1500,
+      "materials": 12,
+      "fileKB": 300,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
+  },
+  {
+    "id": "wpn.halligan",
+    "category": "weapon",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/wpn.halligan/build.py",
+    "glb": "public/assets/models/wpn.halligan.glb",
+    "sourceGlb": "assets/wpn.halligan/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/wpn.halligan.lod1.glb",
+      "lod2": "public/assets/models/wpn.halligan.lod2.glb"
+    },
+    "dimensions": {
+      "x": 0.3814229965209961,
+      "y": 0.9325000047683716,
+      "z": 0.11999999731779099,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "grip",
+      "tip"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 12,
+      "fileKB": 300,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
+  },
+  {
+    "id": "prop.checkpoint-gate",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.checkpoint-gate/build.py",
+    "glb": "public/assets/models/prop.checkpoint-gate.glb",
+    "sourceGlb": "assets/prop.checkpoint-gate/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.checkpoint-gate.lod1.glb",
+      "lod2": "public/assets/models/prop.checkpoint-gate.lod2.glb"
+    },
+    "dimensions": {
+      "x": 4.900000095367432,
+      "y": 1.4700000286102295,
+      "z": 0.800000011920929,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [
+      "gateArm"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 1500,
+      "materials": 12,
+      "fileKB": 300,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
+  },
+  {
+    "id": "prop.jersey-barrier",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.jersey-barrier/build.py",
+    "glb": "public/assets/models/prop.jersey-barrier.glb",
+    "sourceGlb": "assets/prop.jersey-barrier/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.jersey-barrier.lod1.glb",
+      "lod2": "public/assets/models/prop.jersey-barrier.lod2.glb"
+    },
+    "dimensions": {
+      "x": 3.0,
+      "y": 0.949999988079071,
+      "z": 0.7200000286102295,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 1500,
+      "materials": 12,
+      "fileKB": 300,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
+  },
+  {
+    "id": "prop.crowd-fence",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.crowd-fence/build.py",
+    "glb": "public/assets/models/prop.crowd-fence.glb",
+    "sourceGlb": "assets/prop.crowd-fence/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.crowd-fence.lod1.glb",
+      "lod2": "public/assets/models/prop.crowd-fence.lod2.glb"
+    },
+    "dimensions": {
+      "x": 2.380000114440918,
+      "y": 1.125,
+      "z": 0.6499999761581421,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 1500,
+      "materials": 12,
+      "fileKB": 300,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
+  },
+  {
+    "id": "prop.armory-table",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.armory-table/build.py",
+    "glb": "public/assets/models/prop.armory-table.glb",
+    "sourceGlb": "assets/prop.armory-table/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.armory-table.lod1.glb",
+      "lod2": "public/assets/models/prop.armory-table.lod2.glb"
+    },
+    "dimensions": {
+      "x": 2.0,
+      "y": 1.0800000429153442,
+      "z": 0.800000011920929,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "pickupSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 12,
+      "fileKB": 300,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
+  },
+  {
+    "id": "veh.evac-bus",
+    "category": "vehicle",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/veh.evac-bus/build.py",
+    "glb": "public/assets/models/veh.evac-bus.glb",
+    "sourceGlb": "assets/veh.evac-bus/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/veh.evac-bus.lod1.glb",
+      "lod2": "public/assets/models/veh.evac-bus.lod2.glb"
+    },
+    "dimensions": {
+      "x": 9.34000015258789,
+      "y": 3.055000066757202,
+      "z": 2.7250001430511475,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelRL",
+      "wheelRR",
+      "doorR"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR",
+      "seat_1",
+      "seat_2",
+      "seat_3",
+      "seat_4",
+      "seat_5",
+      "seat_6",
+      "seat_7",
+      "seat_8",
+      "seat_9",
+      "seat_10",
+      "seat_11",
+      "seat_12"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    }
+  },
+  {
+    "id": "kit.army-checkpoint",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/kit.army-checkpoint/build.py",
+    "glb": "public/assets/models/kit.army-checkpoint.glb",
+    "sourceGlb": "assets/kit.army-checkpoint/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.army-checkpoint.lod1.glb",
+      "lod2": "public/assets/models/kit.army-checkpoint.lod2.glb"
+    },
+    "dimensions": {
+      "x": 11.575000286102295,
+      "y": 5.889999866485596,
+      "z": 9.800000190734863,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 30000,
+      "materials": 12,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    }
+  },
+  {
+    "id": "decay.looted-store",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/decay.looted-store/build.py",
+    "glb": "public/assets/models/decay.looted-store.glb",
+    "sourceGlb": "assets/decay.looted-store/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.looted-store.lod1.glb",
+      "lod2": "public/assets/models/decay.looted-store.lod2.glb"
+    },
+    "dimensions": {
+      "x": 2.0,
+      "y": 2.0,
+      "z": 1.7799999713897705,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 1500,
+      "materials": 12,
+      "fileKB": 300,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
+  },
+  {
+    "id": "decay.damaged-sign",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/decay.damaged-sign/build.py",
+    "glb": "public/assets/models/decay.damaged-sign.glb",
+    "sourceGlb": "assets/decay.damaged-sign/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.damaged-sign.lod1.glb",
+      "lod2": "public/assets/models/decay.damaged-sign.lod2.glb"
+    },
+    "dimensions": {
+      "x": 1.552412986755371,
+      "y": 2.0250000953674316,
+      "z": 0.7610580027103424,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 1500,
+      "materials": 12,
+      "fileKB": 300,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
+  },
+  {
+    "id": "decay.makeshift-barricade",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/decay.makeshift-barricade/build.py",
+    "glb": "public/assets/models/decay.makeshift-barricade.glb",
+    "sourceGlb": "assets/decay.makeshift-barricade/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.makeshift-barricade.lod1.glb",
+      "lod2": "public/assets/models/decay.makeshift-barricade.lod2.glb"
+    },
+    "dimensions": {
+      "x": 3.2792000770568848,
+      "y": 1.5,
+      "z": 1.6820319890975952,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 1500,
+      "materials": 12,
+      "fileKB": 300,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   }
 ]

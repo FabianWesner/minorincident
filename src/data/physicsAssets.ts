@@ -1036,6 +1036,68 @@ export default {
     "source": "public/assets/models/veh.train-freight.glb",
     "hash": "b14241524bb4d7ec7c83215236f565f1160a10863ff6fc8f055c6977b07b396a"
   },
+  "decay.dropped-belongings": {
+    "class": "light",
+    "mass": 8,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.026763498783111572,
+      0.23000000417232513,
+      0.1356860101222992
+    ],
+    "pushable": true,
+    "kickable": true,
+    "flammable": true,
+    "sounds": "prop.wood-medium",
+    "boxes": [
+      {
+        "min": [
+          -0.7582550048828125,
+          0,
+          -0.39020198583602905
+        ],
+        "max": [
+          0.8117820024490356,
+          0.46000000834465027,
+          0.6615740060806274
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.dropped-belongings.glb",
+    "hash": "ebc710dafbbfb79a4c69ed3652f606da29b5153ddd1e0813f0babf1e1a5252d8"
+  },
+  "decay.boarded-windows": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.800000011920929,
+      0.04500000365078449
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.7749999761581421,
+          0,
+          -0.06000000052154064
+        ],
+        "max": [
+          0.7749999761581421,
+          1.600000023841858,
+          0.15000000409781933
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.boarded-windows.glb",
+    "hash": "9f2539728ba287156ea5de6c455e829a4cb123cecae504cc9f63668112e518d0"
+  },
   "decay.furniture-barricade": {
     "class": "heavy",
     "mass": 65,
@@ -3043,5 +3105,526 @@ export default {
     ],
     "source": "public/assets/models/house.porch-b.glb",
     "hash": "c7e8c48151aae47794984c9eaaa4067fdbae7275873ec9325e768f97cf5771ff"
+  },
+  "int.fire-station-bay": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      2.1500000953674316,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -6,
+          2.0500000953674316,
+          -7.050000095367432
+        ],
+        "max": [
+          6,
+          2.2500000953674317,
+          -2.7500000953674317
+        ]
+      },
+      {
+        "min": [
+          -6,
+          -1.7881393449270533e-9,
+          -5
+        ],
+        "max": [
+          6,
+          0.15999999821186067,
+          5
+        ]
+      },
+      {
+        "min": [
+          -6.000000095367431,
+          9.536743172944284e-8,
+          -5
+        ],
+        "max": [
+          -5.800000095367432,
+          4.300000095367432,
+          5
+        ]
+      }
+    ],
+    "source": "public/assets/models/int.fire-station-bay.glb",
+    "hash": "6bf8b534e55c90aab3aa1208c204fad428e80bdd50ac0a77fea7575b2c665231"
+  },
+  "prop.axe-rack": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.040000006556510925,
+      0.75,
+      0.054999999701976776
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.375,
+          0,
+          -0.09000000357627869
+        ],
+        "max": [
+          0.45500001311302185,
+          1.5,
+          0.20000000298023224
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.axe-rack.glb",
+    "hash": "6ccdfa3b5faba5b5a8c2ae6ac70f01e0d2ad7db98831a9770233f10384dc5e5d"
+  },
+  "prop.checkpoint-gate": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.04999995231628418,
+      0.7350000143051147,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -2.4,
+          -1.1920928910669204e-8,
+          -0.4
+        ],
+        "max": [
+          -1.6,
+          1.399999988079071,
+          0.4
+        ]
+      },
+      {
+        "min": [
+          -0.099999952316284,
+          -0.08,
+          -0.1
+        ],
+        "max": [
+          4.500000047683716,
+          0.08,
+          0.1
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.checkpoint-gate.glb",
+    "hash": "43778fbffc08bbdd00371d0687d7d919059700556b139422c87d6a7eeff8e741"
+  },
+  "prop.jersey-barrier": {
+    "class": "heavy",
+    "mass": 650,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.4749999940395355,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1.5,
+          -5.960464455334602e-9,
+          -0.36
+        ],
+        "max": [
+          1.5,
+          0.9499999940395355,
+          0.36
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.jersey-barrier.glb",
+    "hash": "f7ecb9b84e9cf2b90ac23a0de55b720a7918f8d254ed1120dd73d55621a88e45"
+  },
+  "prop.crowd-fence": {
+    "class": "medium",
+    "mass": 22,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.5625,
+      0
+    ],
+    "pushable": true,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1.15,
+          2.38418573772492e-9,
+          -0.325
+        ],
+        "max": [
+          1.15,
+          1.1200000023841858,
+          0.325
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.crowd-fence.glb",
+    "hash": "9ea5dbcc2f7d3d0d9f32591f875a8ab5df5d99bf87af9fe015ee1cfd1e1cb577"
+  },
+  "prop.armory-table": {
+    "class": "heavy",
+    "mass": 85,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.5400000214576721,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": true,
+    "sounds": "prop.wood-medium",
+    "boxes": [
+      {
+        "min": [
+          -1,
+          9.536743172944284e-9,
+          -0.4
+        ],
+        "max": [
+          1,
+          0.9800000095367432,
+          0.4
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.armory-table.glb",
+    "hash": "972a44de6e8092c8a9c79831fe6bbf9caefd4ab3762eb5e8f3c6207469893037"
+  },
+  "veh.evac-bus": {
+    "class": "heavy",
+    "mass": 9000,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.01750016212463379,
+      1.527500033378601,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -4.6,
+          0.2749999761581421,
+          -1.525
+        ],
+        "max": [
+          4.6,
+          2.774999976158142,
+          1.525
+        ]
+      }
+    ],
+    "source": "public/assets/models/veh.evac-bus.glb",
+    "hash": "eaf604fa9b357242c0e65aadc9e91a040f48e8cbf9bca98c53814df3b76ff160"
+  },
+  "kit.army-checkpoint": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.01250004768371582,
+      2.944999933242798,
+      -0.09999990463256836
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          3.0299999046325685,
+          2.2299999523162843,
+          -4.599999952316284
+        ],
+        "max": [
+          3.169999904632568,
+          2.369999952316284,
+          4.7683715642676816e-8
+        ]
+      },
+      {
+        "min": [
+          3.0299999046325685,
+          2.2299999523162843,
+          -6.9999998092651365
+        ],
+        "max": [
+          3.169999904632568,
+          2.369999952316284,
+          -2.399999809265137
+        ]
+      },
+      {
+        "min": [
+          5.43,
+          2.2299999523162843,
+          -4.599999952316284
+        ],
+        "max": [
+          5.57,
+          2.369999952316284,
+          4.7683715642676816e-8
+        ]
+      },
+      {
+        "min": [
+          5.43,
+          2.2299999523162843,
+          -6.9999998092651365
+        ],
+        "max": [
+          5.57,
+          2.369999952316284,
+          -2.399999809265137
+        ]
+      },
+      {
+        "min": [
+          -4.8000000476837155,
+          0.23500001430511475,
+          -3.284999952316284
+        ],
+        "max": [
+          -2.6000000476837157,
+          0.7350000143051147,
+          -2.3149999523162843
+        ]
+      },
+      {
+        "min": [
+          -4.8000000476837155,
+          0.23500001430511475,
+          2.3149999523162843
+        ],
+        "max": [
+          -2.6000000476837157,
+          0.7350000143051147,
+          3.284999952316284
+        ]
+      },
+      {
+        "min": [
+          2.9000001907348634,
+          2.7500000953674317,
+          -3.61
+        ],
+        "max": [
+          5.700000190734864,
+          5.550000095367432,
+          -3.39
+        ]
+      },
+      {
+        "min": [
+          0.6000000000000001,
+          0.900000023841858,
+          3.0999998092651366
+        ],
+        "max": [
+          3.4,
+          1.3000000238418579,
+          5.299999809265136
+        ]
+      },
+      {
+        "min": [
+          0.6000000000000001,
+          0.900000023841858,
+          -5.299999809265136
+        ],
+        "max": [
+          3.4,
+          1.3000000238418579,
+          -3.0999998092651366
+        ]
+      },
+      {
+        "min": [
+          -2.4,
+          0.900000023841858,
+          3.0999998092651366
+        ],
+        "max": [
+          0.3999999999999999,
+          1.3000000238418579,
+          5.299999809265136
+        ]
+      },
+      {
+        "min": [
+          -5.4,
+          0.900000023841858,
+          3.0999998092651366
+        ],
+        "max": [
+          -2.6,
+          1.3000000238418579,
+          5.299999809265136
+        ]
+      },
+      {
+        "min": [
+          -2.4,
+          0.900000023841858,
+          -5.299999809265136
+        ],
+        "max": [
+          0.3999999999999999,
+          1.3000000238418579,
+          -3.0999998092651366
+        ]
+      },
+      {
+        "min": [
+          -5.4,
+          0.900000023841858,
+          -5.299999809265136
+        ],
+        "max": [
+          -2.6,
+          1.3000000238418579,
+          -3.0999998092651366
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.army-checkpoint.glb",
+    "hash": "86cfd155de97b67fecfb65f34303da7c2d7f6ab6c42bcced26b634731930a1af"
+  },
+  "decay.looted-store": {
+    "class": "heavy",
+    "mass": 100,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1,
+          0,
+          -0.8899999856948853
+        ],
+        "max": [
+          1,
+          2,
+          0.8899999856948853
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.looted-store.glb",
+    "hash": "ba8a44e1891373b3054346c529371dd57a149506b33baedb6ffa5bc6750ea5cd"
+  },
+  "decay.damaged-sign": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.13033050298690796,
+      1.0125000476837158,
+      0.2302200049161911
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.6458759903907776,
+          0,
+          -0.1503089964389801
+        ],
+        "max": [
+          0.9065369963645935,
+          2.0250000953674316,
+          0.6107490062713623
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.damaged-sign.glb",
+    "hash": "086308496ddb15fafb68879bee991d16670da01af774edb9a5a690492a5bd6a2"
+  },
+  "decay.makeshift-barricade": {
+    "class": "heavy",
+    "mass": 180,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.75,
+      -0.12908601760864258
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": true,
+    "sounds": "prop.wood-medium",
+    "boxes": [
+      {
+        "min": [
+          -1.6,
+          -0.025000023841857955,
+          -0.7500000014901161
+        ],
+        "max": [
+          1.6,
+          1.3249999761581421,
+          0.5499999985098839
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.makeshift-barricade.glb",
+    "hash": "1c633cbd17b3134ee25607695b62f74501238d33912114b6c17fbfd38a247045"
   }
 };
