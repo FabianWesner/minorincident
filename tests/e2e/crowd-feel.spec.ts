@@ -6,7 +6,7 @@ const stage = process.env.CROWD_CAPTURE ?? 'after';
 const output = `test-results/epics/E07/crowd-feel/${stage}`;
 test.use({ video: { mode: 'on', size: { width: 1280, height: 720 } } });
 
-test('crowd draw visibility stays continuous for 60 seconds after the L1 outbreak', async ({ page }) => {
+test('crowd draw visibility stays continuous for 60 seconds after the L1 outbreak @E07', async ({ page }) => {
   test.setTimeout(240_000); mkdirSync(output, { recursive: true });
   await boot(page);
   await page.evaluate(async () => {
@@ -82,7 +82,7 @@ test('crowd draw visibility stays continuous for 60 seconds after the L1 outbrea
   }
 });
 
-test('20 infected corpses remain drawn after travelling 60 m away and returning @smoke', async ({ page }) => {
+test('20 infected corpses remain drawn after travelling 60 m away and returning @smoke @E07', async ({ page }) => {
   test.skip(stage === 'before'); test.setTimeout(180_000);
   await boot(page);
   const proof = await page.evaluate(async () => {
@@ -99,7 +99,7 @@ test('20 infected corpses remain drawn after travelling 60 m away and returning 
   await page.close(); rmSync(await page.video()!.path(), { force: true });
 });
 
-test('common-worker hierarchy and crowd remain readable at all delivered tiers', async ({ page }) => {
+test('common-worker hierarchy and crowd remain readable at all delivered tiers @E07', async ({ page }) => {
   test.setTimeout(180_000); mkdirSync(output, { recursive: true });
   await page.goto('/preview/?asset=inf.common-worker&test=1&renderer=webgl');
   await page.waitForFunction(() => !!window.__ASSET__);

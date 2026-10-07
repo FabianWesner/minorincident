@@ -8,14 +8,14 @@ import { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalett
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 import { RoutineProps } from '../../../src/render/npc/RoutineProps';
 
-test('dropped accessories grow beyond their initial instance capacity', () => {
+test('dropped accessories grow beyond their initial instance capacity @E07', () => {
   const props = new RoutineProps(); props.begin();
   for (let i = 0; i < 260; i++) props.dropped('coffee', { x: i, y: 0, z: 0, yaw: 0 });
   props.finish();
   expect(props.children.find(mesh => (mesh as InstancedMesh).count === 260)).toBeDefined(); props.dispose();
 });
 
-test('static corpse pages grow beyond the old population cap and survive camera movement', () => {
+test('static corpse pages grow beyond the old population cap and survive camera movement @E07', () => {
   const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
   const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
   const records = new Map<number, EntitySnapshot>();
@@ -32,7 +32,7 @@ test('static corpse pages grow beyond the old population cap and survive camera 
   pool.dispose(); baked.geometry.dispose(); material.dispose();
 });
 
-test('opposing crowd rotations keep full size during clip fades', () => {
+test('opposing crowd rotations keep full size during clip fades @E07', () => {
   const first = new Matrix4(), second = new Matrix4().makeRotationY(Math.PI);
   const palette = new CrowdPosePalette({ parts: ['root'], frames: 2, duration: 1, matrices: [...first.elements, ...second.elements] }, 1, .2);
   palette.sample(1, 'idle', 0, 0); palette.sample(1, 'turn', 1, .1);
@@ -43,7 +43,7 @@ test('opposing crowd rotations keep full size during clip fades', () => {
   palette.texture.dispose();
 });
 
-test('static bodies preserve flock instances and removed body parts', () => {
+test('static bodies preserve flock instances and removed body parts @E07', () => {
   const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
   const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial(), e = { id: 9 } as EntitySnapshot;
   const frame = infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;

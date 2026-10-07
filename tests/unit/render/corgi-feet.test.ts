@@ -7,7 +7,7 @@ import { QuadrupedAnimator } from '../../../src/render/characters/QuadrupedAnima
 import { PawContacts } from '../../../src/render/characters/PawContacts';
 import { authoredClips, cadenceStride, sampleClip, strideScale } from '../../../src/render/characters/clips';
 
-test('corgi paws remain planted below the cadence cap in walk, trot and gallop', async () => {
+test('corgi paws remain planted below the cadence cap in walk, trot and gallop @E07', async () => {
   const results = [];
   for (const speed of [1.4, 3.8, 7]) {
     const bytes = readFileSync('public/assets/models/char.corgi.glb');
@@ -35,7 +35,7 @@ test('corgi paws remain planted below the cadence cap in walk, trot and gallop',
   mkdirSync('test-results/epics/E07/crowd-feel', { recursive: true }); writeFileSync('test-results/epics/E07/crowd-feel/corgi-feet.json', JSON.stringify(results, null, 2));
 });
 
-test('instanced infected dog paws remain planted while the root travels', async () => {
+test('instanced infected dog paws remain planted while the root travels @E07', async () => {
   const { Matrix4 } = await import('three');
   const { bakeInfected, infectedClips, framesPerClip } = await import('../../../src/render/characters/bakeInfected');
   const { CrowdLocomotion } = await import('../../../src/render/characters/CrowdLocomotion');

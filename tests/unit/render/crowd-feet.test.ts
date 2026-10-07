@@ -9,7 +9,7 @@ import { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalett
 import { cadenceStride, gaitShape } from '../../../src/render/characters/clips';
 import { GaitPhase } from '../../../src/render/characters/GaitPhase';
 
-test('crowd stance ankles travel at most 3 cm at actual walk/run speeds and headings', async () => {
+test('crowd stance ankles travel at most 3 cm at actual walk/run speeds and headings @E07', async () => {
   const results: { asset: string; clip: string; speed: number; beforeCm: number; afterCm: number }[] = [];
   for (const asset of ['npc.civilian-man-a', 'npc.civilian-woman-a', 'npc.lab-tech-a', 'inf.common-worker.lod1']) {
     const bytes = readFileSync(`public/assets/models/${asset}.glb`);
@@ -48,7 +48,7 @@ test('crowd stance ankles travel at most 3 cm at actual walk/run speeds and head
   for (const r of results) expect(r.afterCm, `${r.asset} ${r.clip}`).toBeLessThanOrEqual(3);
 });
 
-test('distance phase stays continuous when speed and stride change', () => {
+test('distance phase stays continuous when speed and stride change @E07', () => {
   const phase = new GaitPhase();
   const first = phase.sample(1, 200, 'infected-frail', .5, 4.7);
   const next = phase.sample(1, 200.001, 'infected-frail', .5, .4);
