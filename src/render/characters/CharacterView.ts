@@ -11,6 +11,7 @@ import type { Materials } from '../Materials';
 import type { PaletteMaterial } from '../PaletteMaterial';
 import { KeyframeAnimator, type RidePose } from './KeyframeAnimator';
 import { disposeCharacter, loadCharacter } from './rig';
+import { alignSkeleton } from './skin';
 
 type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { animator: KeyframeAnimator; gear: Group[]; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
@@ -24,7 +25,9 @@ export class CharacterView extends Group {
   private turn = 0;
   private readonly bloodMaterials: PaletteMaterial[] = [];
   /** `outfit` picks the hero model set: L1 v2 plays the courier (E19), later levels the survivor. Same rig and clips. */
-  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor'): Promise<void> {
+  /** Skinned-figure pilot: ?skin=1 swaps the female courier for one welded, bone-weighted mesh (same rig names/clips). */
+  skinned = false;
+  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     for (const variant of ['female', 'male'] as const) {
       const id = `char.${outfit}-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
@@ -33,7 +36,10 @@ export class CharacterView extends Group {
           const reason = def ? `status ${def.status}` : 'missing manifest entry';
           throw new Error(reason);
         }
-        return (await loader.loadAsync('/' + (low ? def.lods?.lod1 ?? def.glb : def.glb).replace(/^public\//, ''))).scene;
+        const skinned = skin && id === 'char.courier-female';
+        const scene = (await loader.loadAsync('/' + (skinned ? def.glb.replace(/\.glb$/, '.skin.glb') : low ? def.lods?.lod1 ?? def.glb : def.glb).replace(/^public\//, ''))).scene;
+        if (skinned && alignSkeleton(scene).length) this.skinned = true;
+        return scene;
       }, def?.dimensions.y);
       if (character.source === 'placeholder') console.info(JSON.stringify({ type: 'asset.placeholder', id, reason: character.reason }));
       const vertexMaterial = materials.fromVertexColors(`character:${variant}`);
@@ -49,6 +55,7 @@ export class CharacterView extends Group {
         if (!(object instanceof Mesh)) return;
         const remap = (source: Material): Material => {
           if (source === vertexMaterial) return source;
+          if (source.name === 'pal_vertexColor') { oldMaterials.add(source); return vertexMaterial; }
           let replacement = replacements.get(source);
           if (replacement) return replacement;
           const token = source.name.replace(/^pal_/, '') as PaletteToken;
@@ -135,7 +142,7 @@ export class CharacterView extends Group {
   getState() {
     const character = this.characters.get(this.variant);
     return { bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
-      evaluations: character?.animator.evaluations ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
+      evaluations: character?.animator.evaluations ?? 0, skinned: this.skinned, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
   }
   dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.characters.clear(); this.bloodMaterials.length = 0; this.clear(); }
 }
