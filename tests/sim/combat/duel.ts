@@ -4,8 +4,10 @@ import { emptyInput } from '../../../src/input/InputFrame';
 /** E19 §5.6 duel harness: real InfectedSystem brains against a scripted player.
  * `newbie` walks to the closest infected and holds the attack button aimed at it,
  * re-reading the situation only every 0.2 s (no kiting, no retreat). `stand` never
- * moves and swings at whatever is closest. Spawn ring positions come from the seed. */
-export type DuelPolicy = 'newbie' | 'stand';
+ * moves and swings at whatever is closest. `evade` (PO 2026-10-07: fight a few, never all at once) runs from the
+ * pack whenever 3+ are close, and turns to strike the followers that reach it one or two at a time. Spawn ring
+ * positions come from the seed. */
+export type DuelPolicy = 'newbie' | 'stand' | 'evade';
 export interface DuelResult { seed: number; won: boolean; died: boolean; seconds: number; hp: number; hits: number; kills: number }
 
 function rng(seed: number): () => number {
@@ -42,6 +44,24 @@ export async function duel(seed: number, count: number, policy: DuelPolicy, weap
       const reach = 1.15;
       frame.move = policy === 'newbie' && d > reach ? { x: dx / d, z: dz / d } : { x: 0, z: 0 };
       frame.left = { down: false, held: d <= reach + .35, up: false };
+      if (policy === 'evade') {
+        // Away from the pack's centre (infected within 6 m), bending toward the arena centre near its edge.
+        let cx = 0, cz = 0, close = 0, pack = 0;
+        for (const e of alive) {
+          const ex = e.transform.x - player.transform.x, ez = e.transform.z - player.transform.z, ed = Math.hypot(ex, ez);
+          if (ed < 2.5) close++;
+          if (ed < 6) { cx += ex / (ed || 1); cz += ez / (ed || 1); pack++; }
+        }
+        const fight = close < 3 && d <= reach + .35;
+        if (fight) frame.move = { x: 0, z: 0 };
+        else {
+          let mx = pack ? -cx : -dx, mz = pack ? -cz : -dz;
+          const m = Math.hypot(mx, mz) || 1, edge = Math.max(0, Math.hypot(player.transform.x, player.transform.z) - 35) / 15;
+          mx = mx / m - player.transform.x / 50 * edge * 3; mz = mz / m - player.transform.z / 50 * edge * 3;
+          const n = Math.hypot(mx, mz) || 1; frame.move = { x: mx / n, z: mz / n };
+        }
+        frame.left = { down: false, held: fight, up: false };
+      }
       w.applyInput(frame, 'keyboard'); w.update();
     }
     const player = w.entities.get(1)!, alive = ids.filter(id => (w.entities.get(id)?.health.current ?? 0) > 0).length;

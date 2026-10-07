@@ -331,7 +331,7 @@ describe('L1 v2 infected perception', () => {
       step(w, 16); expect(brain(lure).mode).toBe('chase'); expect(brain(lure).targetId).toBe(600); humans.remove(600);
       // Others keep searching around the car during the alarm, then wander within alarm + 8 s.
       step(w, until - w.tick);
-      expect(near.slice(1).every((e) => brain(e).mode === 'search' || brain(e).mode === 'chase')).toBe(true);
+      expect(near.slice(1).map((e) => brain(e).mode).join(), `seed ${seed}`).toMatch(/^((search|chase),?)+$/);
       step(w, 8 * 60 + 2);
       // Attraction over: nobody is still held by this alarm (others may chase or search humans they saw meanwhile).
       for (const e of near) expect(brain(e).distractionId).toBe(0);
@@ -340,7 +340,7 @@ describe('L1 v2 infected perception', () => {
     }
   }, 120_000);
 
-  test('T-E19-12 @E19 @E19-AC12 speed tiers ordered and faster than the running player, jitter per entity', async () => {
+  test('T-E19-12 @E19 @E19-AC12 speed tiers ordered, mostly faster than the running player, persistent spread per entity', async () => {
     const closing: number[] = [], closingSpeed: number[] = [];
     const tiers = { frail: 'npc.civilian-elderly', average: 'inf.cashier', athletic: 'inf.jogger' } as const;
     const all: Record<string, number[]> = { frail: [], average: [], athletic: [] };
@@ -348,16 +348,20 @@ describe('L1 v2 infected perception', () => {
       const { w, ai, humans } = await l1World(seed);
       for (const [tier, variant] of Object.entries(tiers)) {
         const group = Array.from({ length: 5 }, (_, i) => ai.l1Speed(zombie(w, 30 + i * 2, -56 + Object.keys(tiers).indexOf(tier) * 3, 0, variant).id));
-        expect(group.every((s) => s > l1v2.player.runMs)).toBe(true);
+        const f = l1v2.speedTiers.factor, base = l1v2.speedTiers[tier as keyof typeof tiers].baseMs;
+        expect(group.every((s) => s >= f.minMs - 1e-9 && s <= base * f.max + 1e-9)).toBe(true);
         for (let i = 0; i < group.length; i++) for (let j = i + 1; j < group.length; j++) expect(Math.abs(group[i] - group[j]) / Math.max(group[i], group[j])).toBeGreaterThanOrEqual(0.01);
         all[tier].push(...group);
         expect(brain(w.entities.get(ai.active.at(-1)!.id)!).tier).toBe(tier);
       }
       // Straight-line chase: average tier vs the player running at 4.5 m/s, starting 12 m apart.
       // Straight diagonal run across the 120 m arena, clear of the real survivor body at the origin.
-      const k = Math.SQRT1_2, e = zombie(w, -56, -40, -Math.PI / 4, 'inf.common-worker'); const p = humans.add(1, 'player', -56 + 12.5 * k, -40 + 12.5 * k);
+      const k = Math.SQRT1_2, e = zombie(w, -56, -40, -Math.PI / 4, 'inf.common-worker');
+      // Only chasers that outrun the courier can close a gap (slower ones are part of the PO 2026-10-07 spread).
+      if (brain(e).runSpeed < 5) { w.dispose(); worlds.length = 0; continue; }
+      const p = humans.add(1, 'player', -56 + 12.5 * k, -40 + 12.5 * k);
       // Timed once the chaser runs at full speed (after its first look, notice beat and acceleration).
-      for (let i = 0; i < 300 && !(brain(e).mode === 'chase' && Math.hypot(e.locomotion!.vx, e.locomotion!.vz) >= brain(e).runSpeed * 0.97); i++) { p.position.x += l1v2.player.runMs / 60 * k; p.position.z += l1v2.player.runMs / 60 * k; w.update(); }
+      for (let i = 0; i < 300 && !(brain(e).mode === 'chase' && Math.hypot(e.locomotion!.vx, e.locomotion!.vz) >= brain(e).runSpeed * 0.97); i++) { if (brain(e).mode === 'chase') { p.position.x += l1v2.player.runMs / 60 * k; p.position.z += l1v2.player.runMs / 60 * k; } w.update(); }
       expect(brain(e).mode).toBe('chase');
       p.position.x = e.transform.x + 12.5 * k; p.position.z = e.transform.z + 12.5 * k;
       let gap = 12.5, t = 0;
@@ -368,12 +372,41 @@ describe('L1 v2 infected perception', () => {
     }
     const mean = (v: number[]) => v.reduce((a, b) => a + b) / v.length;
     expect(mean(all.frail)).toBeLessThan(mean(all.average)); expect(mean(all.average)).toBeLessThan(mean(all.athletic));
-    expect(all.frail.filter((s) => s > 4.5).length / all.frail.length).toBeGreaterThanOrEqual(0.95);
-    // Strict clause: every average-tier infected closes 10 m in <= 20 s (base 5.3 m/s, jitter +/-4 %).
+    // PO 2026-10-07: a persistent spread, not one speed: most still outrun the running player, some do not.
+    const every = [...all.frail, ...all.average, ...all.athletic];
+    expect(every.filter((s) => s > l1v2.player.runMs).length / every.length).toBeGreaterThanOrEqual(l1v2.speedTiers.minShareAbovePlayerRun);
+    expect(every.some((s) => s < l1v2.player.runMs)).toBe(true);
+    // A chaser at >= 5.0 m/s still closes 10 m in <= 20 s.
+    expect(closing.length).toBeGreaterThanOrEqual(5);
     for (const t of closing) expect(t).toBeLessThanOrEqual(l1v2.speedTiers.closeTenMetresMaxS);
     // Simulated closing tracks the analytic 10 / (v - 4.5) within 1.5 s (no hidden slow-downs in the chase).
     closing.forEach((t, i) => { if (t < 60) expect(Math.abs(t - 10 / (closingSpeed[i] - l1v2.player.runMs))).toBeLessThanOrEqual(1.5); });
     console.info(`[AC12] frail ${Math.min(...all.frail).toFixed(2)}-${Math.max(...all.frail).toFixed(2)} average ${Math.min(...all.average).toFixed(2)}-${Math.max(...all.average).toFixed(2)} athletic ${Math.min(...all.athletic).toFixed(2)}-${Math.max(...all.athletic).toFixed(2)} m/s; close 10 m median ${median(closing).toFixed(1)} s (min ${Math.min(...closing).toFixed(1)}, max ${Math.max(...closing).toFixed(1)})`);
+  }, 120_000);
+
+  test('T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.5 s, deterministic per seed', async () => {
+    const k = Math.SQRT1_2;
+    const arrivals = async (seed: number) => {
+      const { w, humans } = await l1World(seed);
+      // Ten average-tier infected packed around one start point, all facing the courier 8 m away along the diagonal.
+      const group = Array.from({ length: 10 }, (_, i) => zombie(w, -52 + (i % 4) * .8 - (i >> 2) * .8 * k, -42 + (i >> 2) * .8 * k, -Math.PI / 4));
+      const p = humans.add(1, 'player', -50 + 8 * k, -40 + 8 * k);
+      const arrived = group.map(() => Infinity);
+      // The courier runs away for 12 s, then stands: arrival = first tick within 2 m.
+      for (let t = 0; t < 30 * 60 && arrived.some(a => !Number.isFinite(a)); t++) {
+        if (t < 12 * 60) { p.position.x += l1v2.player.runMs / 60 * k; p.position.z += l1v2.player.runMs / 60 * k; }
+        w.update();
+        group.forEach((e, i) => { if (!Number.isFinite(arrived[i]) && Math.hypot(e.transform.x - p.position.x, e.transform.z - p.position.z) <= 2) arrived[i] = t / 60; });
+      }
+      w.dispose(); worlds.length = 0;
+      return arrived;
+    };
+    for (const seed of [1, 2, 3, 4, 5]) {
+      const a = await arrivals(seed);
+      expect(a.every(Number.isFinite), `seed ${seed}: ${a}`).toBe(true);
+      expect(Math.max(...a) - Math.min(...a), `seed ${seed}: ${a.map(x => x.toFixed(2))}`).toBeGreaterThanOrEqual(2.5);
+      if (seed === 1) expect(await arrivals(seed)).toEqual(a);
+    }
   }, 120_000);
 
   test('T-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms', async () => {
