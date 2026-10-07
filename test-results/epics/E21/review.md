@@ -60,3 +60,9 @@ D is not signed off. Follow-up: inspect a live checkpoint fight and Bloated burs
 - `l3-phone-390.png`: the actual portrait follow camera and visible 12:00 countdown.
 
 `decay.dropped-belongings` remains missing; existing bags, benches, carts and medical coolers are the approved temporary dressing. The heavy wall uses the existing native E09 obstacle view. No new model was authored.
+
+## Orchestrator (Opus) vision verdict — 2026-10-07
+PASS with notes. Reviewed main street W2 (both routes), driving, checkpoints (market/park), safe-zone fall, phone 390 px.
+- Readable at the game camera: player, corgi, infected groups, route-choice prompt, timer line and objectives; HUD does not cover the action on desktop or phone.
+- Afternoon W2 mood and route variety read clearly; safe-zone camp (evac tents, fences, portable toilets) sells the collapse beat with the caption.
+- Notes for later polish (not blocking): checkpoint dressing is sparse (one grey concrete block + a few barriers — add sandbags/police tape/abandoned car from existing kit.police-checkpoint), checkpoint pavement area feels empty; dropped-belongings decal still a placeholder (missing model).
