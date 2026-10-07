@@ -15,6 +15,6 @@ for (const tier of ['high', 'low'] as const) test(`L1 game camera photo spots ${
     await page.locator('canvas').screenshot({ path: `${dir}/${phase}-L1-${tier}-${spot.id}.png`, scale: 'css' });
   }
   writeFileSync(`test-results/epics/E18/horde/${phase}-L1-${tier}.json`, JSON.stringify(proofs, null, 2));
-  console.log(JSON.stringify({ phase, tier, spots: proofs.map(p => ({ spot: p.spot, triangles: p.triangles, draws: p.drawCalls, profile: p.profile })) }));
+  console.log(JSON.stringify({ phase, tier, spots: proofs.map(p => ({ spot: p.spot, triangles: p.triangles, draws: p.drawCalls, profile: p.profile, assets: p.profileAssets })) }));
   if (phase !== 'before') for (const proof of proofs) { expect(proof.drawCalls).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(proof.triangles).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }
 });

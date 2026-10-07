@@ -37,7 +37,7 @@ export function modelLod(distance: number, previous: string | undefined, low: bo
  * Separate enter/leave thresholds prevent a figure oscillating between batches. */
 export function crowdLod(pixels: number, previous: 'lod1' | 'lod2' | undefined, low: boolean): 'lod1' | 'lod2' {
   if (low) return 'lod2';
-  return pixels > (previous === 'lod1' ? 72 : previous === 'lod2' ? 88 : 80) ? 'lod1' : 'lod2';
+  return pixels > (previous === 'lod1' ? 144 : previous === 'lod2' ? 176 : 160) ? 'lod1' : 'lod2';
 }
 
 /** Small dressing keeps its authored silhouette while avoiding subpixel detail.
