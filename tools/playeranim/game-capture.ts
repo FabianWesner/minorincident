@@ -4,7 +4,7 @@ import { homedir } from 'node:os';
 import { open, origin } from '../skinpilot/browser';
 import { attachErrorGuard } from '../../tests/e2e/fixtures';
 
-/** Actual L1 renderer/camera, maximum gameplay zoom, every sim pose evaluated at
+/** Actual L1 renderer/camera, game angle/FOV at a close review radius, every sim pose evaluated at
  * 60 Hz and captured at 20 fps. Run through e2e-lock, on a dedicated Vite port. */
 const out = process.argv[2] ?? 'test-results/player-anim-r1';
 const ffmpeg = process.env.FFMPEG_BIN ?? `${homedir()}/Library/Caches/ms-playwright/ffmpeg-1011/ffmpeg-mac`;
@@ -22,9 +22,11 @@ for (const variant of ['female', 'male'] as const) {
       document.querySelector<HTMLButtonElement>('[data-testid=mission-button]')?.click();
       a.pause(); a.cheats.god(true); a.survivor.select(variant); a.settings.set({ cameraShake: false });
       a.survivor.present({ carrying: '' }); a.teleport('player', { x: -62, z: -2 });
-      const r = 6, p = a.getState().player!.transform;
+      const r = 8, p = a.getState().player!.transform;
       a.camera.cinematic({ target: [p.x, .7, p.z], position: [p.x + r * Math.sin(.3 * Math.PI) / Math.SQRT2, .7 + r * Math.cos(.3 * Math.PI), p.z + r * Math.sin(.3 * Math.PI) / Math.SQRT2] });
     }, variant);
+    // Hide dialogue overlays only in this evidence view, keeping the courier unobstructed.
+    await page.addStyleTag({ content: '.story-bubble,.mission-subtitle{visibility:hidden!important}' });
     await page.mouse.move(800, 450); await page.mouse.wheel(0, -3000);
     await page.evaluate(async () => { const a = window.__SS__!; for (let i = 0; i < 60; i++) { a.vfx.stepRender(1 / 60); await a.step(1); } await a.screenshotReady(); });
     const frames: Buffer[] = [], samples: unknown[] = [];
@@ -37,7 +39,7 @@ for (const variant of ['female', 'male'] as const) {
           await page.keyboard.down('Shift'); await page.mouse.click(p.x, p.y); await page.keyboard.up('Shift');
         }
         const s = await page.evaluate(async () => {
-          const a = window.__SS__!, p = a.getState().player!.transform, r = 6;
+          const a = window.__SS__!, p = a.getState().player!.transform, r = 8;
           a.camera.cinematic({ target: [p.x, .7, p.z], position: [p.x + r * Math.sin(.3 * Math.PI) / Math.SQRT2, .7 + r * Math.cos(.3 * Math.PI), p.z + r * Math.sin(.3 * Math.PI) / Math.SQRT2] });
           a.vfx.stepRender(1 / 60); await a.step(1);
           const s = a.getState(); return { tick: s.tick, character: s.render.character, player: s.player, point: a.input.project(s.player!.transform), camera: s.render.camera };
@@ -70,12 +72,13 @@ for (const variant of ['female', 'male'] as const) {
     }
     await page.evaluate(async () => {
       const a = window.__SS__!, b = a.query({ kind: 'bicycle' })[0]; a.input.clear(); a.cheats.killAll();
-      a.teleport('player', { x: b.transform.x + .9, z: b.transform.z });
+      a.teleport(b.id, { x: -58, z: -2 }); a.teleport('player', { x: -57.1, z: -2 });
       for (let i = 0; i < 2; i++) { a.vfx.stepRender(1 / 60); await a.step(1); }
       a.input.set({ interact: true }); a.vfx.stepRender(1 / 60); await a.step(1); a.input.set({ interact: false });
       if (!a.getState().player!.riding) throw new Error(`Mount failed: ${JSON.stringify({ player: a.getState().player, bike: a.query({ kind: 'bicycle' })[0], input: a.getState().input })}`);
     });
-    await scene('mount', 45); await move(1); await scene('ride', 150);
+    await scene('mount', 45);
+    await move(1); await scene('ride', 90); await move(); await scene('ride-stop', 60);
     await page.evaluate(async () => { const a = window.__SS__!; a.input.clear(); a.input.set({ interact: true }); a.vfx.stepRender(1 / 60); await a.step(1); a.input.set({ interact: false }); });
     await scene('dismount', 60); encode('bike');
     const events = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'));
