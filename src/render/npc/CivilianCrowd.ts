@@ -15,6 +15,7 @@ import { MotionPhase } from '../characters/MotionPhase';
 import { authoredClips, strides } from '../characters/clips';
 import { disposeCharacter } from '../characters/rig';
 import { createCivilianPlaceholder } from './placeholders';
+import { loadMeasure } from '../../assets/loadTiming';
 import { keepsLook } from '../../sim/outbreak/appearance';
 import type { EntitySnapshot } from '../../sim/world/types';
 type Clip = typeof civilianClips[number];
@@ -173,7 +174,7 @@ export class CivilianCrowd extends Group {
   private readonly batches: CivilianBatch[];
   private readonly props: RoutineProps;
   constructor(world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.batches=['npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly'].flatMap(model=>[new CivilianBatch(world,model,false,shading,this.props),new CivilianBatch(world,model,true,shading,this.props)]); this.add(...this.batches); }
-  async init(): Promise<void> { await Promise.all(this.batches.map(b=>b.init())); this.update(); }
+  async init(): Promise<void> { const started = performance.now(); await Promise.all(this.batches.map(b=>b.init())); loadMeasure('view:civilian-crowd', started); this.update(); }
   update(alpha = 1): void { this.props.begin(); this.batches.forEach(b=>b.update(alpha)); this.props.finish(); }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
   dispose(): void { this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
