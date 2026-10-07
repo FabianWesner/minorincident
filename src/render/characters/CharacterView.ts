@@ -105,6 +105,23 @@ export class CharacterView extends Group {
     this.position.x += target.x - this.scratchA.x; this.position.z += target.z - this.scratchA.z; this.position.y += target.y + lift - this.scratchA.y;
     this.updateMatrixWorld(true);
   }
+  /** Solve the arms after seating: keep the authored limb lengths and place each palm on its grip. */
+  holdHandlebar(left: Vector3, right: Vector3): void {
+    const character = this.characters.get(this.variant); if (!character) return;
+    for (const [side, grip] of [['L', left], ['R', right]] as const) {
+      const arm = character.rig[`arm${side}`], forearm = character.rig[`foreArm${side}`], hand = character.rig[`hand${side}`];
+      this.updateMatrixWorld(true);
+      const target = arm.parent!.worldToLocal(grip.clone()).sub(arm.position);
+      const a = forearm.position.length(), b = hand.position.length(), d = Math.max(.0001, Math.min(a + b - .0001, target.length()));
+      const axis = target.clone().normalize(), along = (a * a + d * d - b * b) / (2 * d);
+      const bend = new Vector3(0, -1, 0).addScaledVector(axis, axis.y).normalize();
+      const elbow = axis.clone().multiplyScalar(along).addScaledVector(bend, Math.sqrt(Math.max(0, a * a - along * along)));
+      arm.quaternion.setFromUnitVectors(forearm.position.clone().normalize(), elbow.clone().normalize());
+      const lower = axis.multiplyScalar(d).sub(elbow).applyQuaternion(arm.quaternion.clone().invert());
+      forearm.quaternion.setFromUnitVectors(hand.position.clone().normalize(), lower.normalize());
+    }
+    this.updateMatrixWorld(true);
+  }
   private parcel: Group | null = null;
   private readonly scratchA = new Vector3();
   private readonly scratchB = new Vector3();
