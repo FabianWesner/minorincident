@@ -1,3 +1,4 @@
+import { SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
 import { l1v2 } from '../../data/l1v2';
 import { civilianRoles, l1Pedestrians } from '../../data/npcs';
@@ -71,6 +72,7 @@ export class Outbreak {
       const p = event.position ?? (event.anchor ? options.anchors?.[event.anchor] : undefined); if (p) this.hear(p);
     };
     this.offs.push(world.events.on('l1.blast', hear), world.events.on('l1.screams', hear));
+    this.offs.push(world.events.on('sim.tick', () => this.dressInfected(), SimPhase.cleanup));
     this.offs.push(world.events.on('outbreak.bite', event => { if (event.type === 'outbreak.bite' && !this.emitting) this.externalBite(event); }));
     // Lane C's L1 brain grabs on contact and owns the 1.0 s hold and the rescue; the victim only mirrors it here.
     this.offs.push(world.events.on('civilian.grabbed', event => { if (event.type === 'civilian.grabbed' && !this.emitting && this.aiBites()) this.grabbedBy(event.targetId, event.sourceId); }));
@@ -131,11 +133,23 @@ export class Outbreak {
     for (let k = 1; k <= shirts.length; k++) { const t = shirts[(start + k) % shirts.length]; if (!taken.has(t)) return t; }
     return tint;
   }
+  /**
+   * Every L1 infected is somebody: director, horde and stream spawns (and a pooled record reused under a new id) get a
+   * pedestrian look (random civilian model, free tint) so they render with the turned treatment, never the old runner.
+   * Runs in the AI phase and again at cleanup, so spawns from later phases are dressed before the frame renders.
+   */
+  dressInfected(): void {
+    for (const e of this.world.infected!.active) {
+      if (e.appearance?.entityId === e.id || e.health.current <= 0 || e.archetype !== 'infected.runner') continue;
+      const asset = l1Pedestrians.models[Math.floor(this.rng.next() * l1Pedestrians.models.length)];
+      const tier: SpeedTier = e.infected?.l1?.tier ?? (asset === 'npc.civilian-elderly' ? 'frail' : 'average');
+      e.appearance = { entityId: e.id, asset, tint: this.freeTint(e.transform, asset, l1Pedestrians.shirts[Math.floor(this.rng.next() * l1Pedestrians.shirts.length)], e.id), accessories: [], handProp: null, tier };
+    }
+  }
   update(): void {
     const world = this.world, ai = world.infected!, tick = world.tick;
     if (this.started < 0 && ai.active.some(a => a.health.current > 0)) { this.started = tick; this.topUpAt = tick; }
-    // A pooled record reused by another spawn never inherits a former pedestrian's look.
-    for (const e of ai.active) if (e.appearance && e.appearance.entityId !== e.id) delete e.appearance;
+    this.dressInfected();
     while (this.heard.length && this.heard[0].tick < tick - 1) this.heard.shift();
     this.turning.length = 0; for (const e of world.entities.iterate()) if (e.infection && e.infection.phase !== 'stagger') this.turning.push(e);
     for (const e of world.entities.iterate()) {
