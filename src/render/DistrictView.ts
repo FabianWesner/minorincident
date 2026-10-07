@@ -79,7 +79,7 @@ export class DistrictView extends Group {
     this.name = "sunset-grove";
     this.foliage = new Foliage(materials, phase); this.add(this.foliage); this.foliage.setQuality(low);
   }
-  async load(seed: number, focus?: { x: number; z: number }): Promise<void> {
+  async load(seed: number, focus?: { x: number; z: number }, heroAtSpawn = false): Promise<void> {
     this.phase.value = 0;
     if (this.world.composition.id === 'L1') { this.ambient = new AmbientLife(this.materials); this.add(this.ambient); }
     // Backdrop reaches beyond the camera far plane; it is scenery outside the bounded town.
@@ -105,7 +105,7 @@ export class DistrictView extends Group {
       if (p.minTier > this.world.composition.tier || p.maxTier < this.world.composition.tier) continue;
       const distance = focus ? Math.hypot(p.position[0] + d.origin[0] - focus.x, p.position[2] + d.origin[1] - focus.z) : 0;
       const lods = initialLods.get(p.assetId) ?? new Set<Lod>();
-      for (const lod of initialDistrictLods(this.low, worldAssets[p.assetId]?.category === 'prop', distance, focus !== undefined)) lods.add(lod);
+      for (const lod of initialDistrictLods(this.low, worldAssets[p.assetId]?.category === 'prop', distance, focus !== undefined, heroAtSpawn)) lods.add(lod);
       initialLods.set(p.assetId, lods);
     }
     for (const [id, lods] of initialLods) for (const lod of lods) this.registry.prefetch(id, lod);

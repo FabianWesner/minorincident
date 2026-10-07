@@ -191,7 +191,8 @@ export class GameView implements Lifecycle {
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       const initialFocus = this.world.scenario === 'L1' ? this.view.cameraTarget : undefined;
-      await Promise.all([this.districts.load(1, initialFocus), character, ...variants.map(variant => variant.load(1, initialFocus))]);
+      const heroAtSpawn = this.quality === 'high' && this.renderer.selectedBackend === 'webgl';
+      await Promise.all([this.districts.load(1, initialFocus, heroAtSpawn), character, ...variants.map(variant => variant.load(1, initialFocus, heroAtSpawn))]);
       loadMeasure('view:districts+character',t);
       if (this.world.scenario === 'L1') {
         this.preparedDistrictViews.set(this.world.districts, this.districts);

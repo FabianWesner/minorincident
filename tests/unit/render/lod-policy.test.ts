@@ -25,5 +25,7 @@ test('@load phone initial downloads include only tiers used at the spawn', () =>
   expect(initialDistrictLods(true, false, 16)).toEqual(['lod1', 'lod2']);
   expect(initialDistrictLods(true, false, 16.01)).toEqual(['lod2']);
   expect(initialDistrictLods(false, true, 100)).toEqual(['lod1', 'lod2']);
-  expect(initialDistrictLods(false, false, 0, true)).toEqual(['lod2']);
+  expect(initialDistrictLods(false, false, 0, true, true)).toEqual(['lod2']);
+  expect(initialDistrictLods(false, false, 0, true)).toEqual(['lod1', 'lod2']);
+  expect(initialDistrictLods(false, false, 46, true)).toEqual(['lod2']);
 });
