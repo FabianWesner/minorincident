@@ -24,12 +24,14 @@ export interface AudioCue {
     initial: boolean;
 }
 export const audioCues: Record<string, AudioCue> = {};
+/** Banks nothing needs at the first frame: loaded in the background shortly after the level starts (AudioService.load). */
+export const lazyCategories = new Set(['props', 'vehicles', 'dialogue', 'music', 'telegraph', 'weapons', 'gore']);
 const offsets = new Map<string, number>();
 function cue(id: string, bus: AudioBus, shape: SoundShape, duration = 0.3, frequency = 250, options: Partial<AudioCue> = {}): void {
     const category = options.category ?? bus;
     const offset = offsets.get(category) ?? 0;
     const priority = { weapons: 100, telegraph: 90, impacts: 80, dialogue: 75, barks: 70, vehicles: 60, gore: 45, props: 40, music: 35, ui: 35, ambience: 10 }[bus];
-    audioCues[id] = { id, category, offset, duration, bus, shape, frequency, priority, gain: 0.35, antiSpam: 0.08, rateSpread: 0.06, loop: false, initial: !category.startsWith('music-L') || category === 'music-L1', ...options };
+    audioCues[id] = { id, category, offset, duration, bus, shape, frequency, priority, gain: 0.35, antiSpam: 0.08, rateSpread: 0.06, loop: false, initial: (!category.startsWith('music-L') && !lazyCategories.has(category)) || category === 'music-L1', ...options };
     offsets.set(category, offset + duration + 0.08);
 }
 const captions: Record<string, string> = { screamer: 'Screamer inhaling', runner: 'Runner snarling', crawler: 'Crawler scraping', brute: 'Brute roaring', bloated: 'Bloated gurgling', dog: 'Dog growling', cat: 'Cat hissing', crow: 'Crows cawing', lion: 'Lion roaring', gorilla: 'Gorilla beating its chest' };
@@ -67,10 +69,10 @@ for (const id of ['hum', 'flicker', 'break', 'power-on', 'power-off'])
     cue(`lamp.${id}`, 'props', id === 'hum' ? 'tone' : 'step', id === 'hum' ? 1 : 0.25, 120, { loop: id === 'hum' });
 export const explosionBeats = ['tell', 'crack', 'boom', 'sub', 'debris', 'roar', 'crackle'] as const;
 for (const beat of explosionBeats)
-    cue(`explosion.${beat}`, 'impacts', beat === 'tell' ? 'tone' : beat === 'crack' ? 'shot' : beat === 'sub' ? 'tone' : 'noise', beat === 'sub' ? 0.8 : beat === 'roar' ? 1.5 : 0.4, beat === 'sub' ? 55 : beat === 'tell' ? 1400 : 200, { gain: 0.65, antiSpam: 0.02 });
+    cue(`explosion.${beat}`, 'impacts', beat === 'tell' ? 'tone' : beat === 'crack' ? 'shot' : beat === 'sub' ? 'tone' : 'noise', beat === 'sub' ? 0.8 : beat === 'roar' ? 1.5 : beat === 'boom' ? 0.9 : beat === 'debris' ? 0.8 : 0.4, beat === 'sub' ? 55 : beat === 'tell' ? 1400 : 200, { gain: 0.65, antiSpam: 0.02 });
 cue('tinnitus', 'impacts', 'tone', 1.5, 3800, { gain: 0.06, rateSpread: 0 });
 for (const id of ['engine-low', 'engine-high', 'sputter', 'fire', 'skid', 'horn', 'siren', 'crash', 'grab'])
-    cue(`vehicle.${id}`, 'vehicles', id === 'crash' ? 'shot' : ['horn', 'siren', 'engine-low', 'engine-high'].includes(id) ? 'tone' : 'noise', id === 'crash' ? 0.4 : 1, id === 'engine-high' ? 160 : id === 'horn' ? 380 : id === 'siren' ? 700 : 80, { loop: ['engine-low', 'engine-high', 'sputter', 'fire', 'siren'].includes(id), caption: id === 'horn' ? 'Car horn' : id === 'siren' ? 'Police siren' : undefined });
+    cue(`vehicle.${id}`, 'vehicles', id === 'crash' ? 'shot' : ['horn', 'siren', 'engine-low', 'engine-high'].includes(id) ? 'tone' : 'noise', id === 'crash' ? 0.6 : 1, id === 'engine-high' ? 160 : id === 'horn' ? 380 : id === 'siren' ? 700 : 80, { loop: ['engine-low', 'engine-high', 'sputter', 'fire', 'siren'].includes(id), caption: id === 'horn' ? 'Car horn' : id === 'siren' ? 'Police siren' : undefined });
 for (const id of ['squelch', 'bone', 'splat'])
     cue(`gore.${id}`, 'gore', 'noise', 0.2, 130, { gain: 0.18 });
 for (const variant of ['male', 'female'])
@@ -115,10 +117,21 @@ for (const weapon of ['fists', 'kick', 'bat', 'crowbar', 'machete'])
     cue(`flesh.${weapon}`, 'impacts', 'step', 0.35, 150, { gain: 0.65, antiSpam: 0.04, rateSpread: 0.06 });
 cue('civilian.transform', 'barks', 'vocal', 1.6, 130, { gain: 0.45, antiSpam: 0.4, caption: 'Infection taking hold' });
 cue('civilian.scream', 'barks', 'vocal', 1.2, 500, { gain: 0.4, antiSpam: 0.7, caption: 'Civilian screaming' });
+/** sfx2: layered melee hits (transient flesh.* + body + low thump), doors and the bike bell. Recorded CC0, see imports.json. */
+cue('impact.body.punch', 'impacts', 'step', 0.45, 150, { gain: 0.55, antiSpam: 0.04 });
+cue('impact.body.wood', 'impacts', 'step', 0.5, 150, { gain: 0.55, antiSpam: 0.04 });
+cue('impact.body.metal', 'impacts', 'step', 0.5, 150, { gain: 0.5, antiSpam: 0.04 });
+cue('impact.thump', 'impacts', 'step', 0.4, 80, { gain: 0.7, antiSpam: 0.04 });
+cue('door.gate', 'props', 'noise', 1.1, 300, { gain: 0.5, antiSpam: 0.15 });
+cue('door.wood', 'props', 'noise', 0.6, 300, { gain: 0.5, antiSpam: 0.15 });
+cue('bike.bell', 'props', 'tone', 0.9, 2000, { gain: 0.4, antiSpam: 0.3 });
+/** Frequent one-shots get +-7 % pitch variation; with the registry's +-1 dB gain jitter and no-repeat variant draw. */
+const variedFamilies = /^(footstep\.|impact\.|prop\.(wood|metal|plastic|glass|rubber|sandbag|break|creak|brace)|lamp\.(break|power)|bark\.|door\.|bike\.)/;
+for (const c of Object.values(audioCues)) if (variedFamilies.test(c.id) && !c.loop) c.rateSpread = 0.14;
 /** Four independent sprite slices per repeated one-shot; selection never repeats its last slice. */
 export const audioVariationPools: Record<string, string[]> = {};
 for (const original of Object.values(audioCues)) {
-    if (original.loop || !(/^(footstep\.|flesh\.|gore\.|corgi\.|civilian\.|infected\.vocal|telegraph\.|screamer\.scream|ambient\.(shout|scream)|ui\.(click|switch|pickup))/.test(original.id))) continue;
+    if (original.loop || !(/^(footstep\.|flesh\.|gore\.|corgi\.|civilian\.|infected\.vocal|telegraph\.|screamer\.scream|ambient\.(shout|scream)|ui\.(click|switch|pickup)|impact\.|prop\.(wood|metal|plastic|glass|rubber|sandbag|break|creak|brace)|lamp\.(break|power|flicker)|bark\.|door\.|bike\.|explosion\.(crack|boom|debris)|vehicle\.(crash|grab))/.test(original.id))) continue;
     const ids = [original.id];
     for (let variant = 1; variant < 4; variant++) {
         const id = `${original.id}.v${variant}`;
@@ -176,7 +189,7 @@ export const eventCues = {
     'dialogue.line': 'dialogue.radio',
     'entity.spawned': 'ui.tick',
     'escort.rescued': 'stinger.objective',
-    'gate.changed': 'l1.crash',
+    'gate.changed': 'door.gate',
     'hazard.armed': 'explosion.tell',
     'hazard.electrified': 'lamp.power-on',
     'hazard.exploded': 'explosion.boom',
