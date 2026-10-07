@@ -282,14 +282,16 @@ export class LevelOneOutbreak {
     const { world, state } = this.mission, l1 = this.l1, outbreak = world.npcs?.civilians.outbreak;
     if (!outbreak || state.steps.weapon.status !== 'completed' || tick % 30 !== 0) return;
     if (!l1.hordeDone) {
-      const near = world.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - this.anchor('garage-door').x, e.transform.z - this.anchor('garage-door').z) <= l1v2.director.hordeRadiusM).length;
-      // Spawn only off-screen: try Elm Street's entry first, then the nearest map-edge entries to the garage.
-      const garage = this.anchor('garage-door'), entries = ['elm-horde-entry', ...[1, 2, 3, 4, 5, 6].map(i => `edge-in-${i}`)].map(n => this.anchor(n)).filter(Boolean)
+      const garage = this.anchor('garage-door');
+      const near = world.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - garage.x, e.transform.z - garage.z) <= l1v2.director.hordeRadiusM).length;
+      if (near >= l1v2.director.hordeMinInfectedNearGarage) { l1.hordeDone = true; l1.routeNextAt = tick + 8 * TICKS; return; }
+      // Director infected come out of houses near the garage (PO request 2026-10-07); off-screen entry only if no door is in range.
+      if (this.emerge(garage, l1v2.director.hordeMinInfectedNearGarage - near, garage, player.transform)) { l1.hordeDone = true; l1.routeNextAt = tick + 8 * TICKS; return; }
+      const entries = ['elm-horde-entry', ...[1, 2, 3, 4, 5, 6].map(i => `edge-in-${i}`)].map(n => this.anchor(n)).filter(Boolean)
         .sort((a, b) => Math.hypot(a.x - garage.x, a.z - garage.z) - Math.hypot(b.x - garage.x, b.z - garage.z));
       const before = new Set(world.infected!.active.map(e => e.id));
-      if (near >= l1v2.director.hordeMinInfectedNearGarage || entries.some(entry => outbreak.ensureHorde(garage, entry) > 0)) {
+      if (entries.some(entry => outbreak.ensureHorde(garage, entry) > 0)) {
         l1.hordeDone = true; l1.routeNextAt = tick + 8 * TICKS;
-        // The new infected come running down the street toward the garage exit, then search around it.
         for (const e of world.infected!.active) if (!before.has(e.id) && e.health.current > 0) world.infected!.rush(e.id, garage, tick + 25 * TICKS);
       }
       return;
@@ -300,12 +302,50 @@ export class LevelOneOutbreak {
     const cell = nav.nearestCell(p.x + (fire.x - p.x) / d * 30, p.z + (fire.z - p.z) / d * 30);
     if (cell < 0) return;
     const ahead = { x: nav.x(cell), z: nav.z(cell) };
-    // A stream is a fresh "garage-style" horde around the point ahead (the spawn waits for it to be off-screen).
+    if (this.emerge(ahead, 3, { x: p.x, z: p.z }, p)) { l1.routeSpawns++; l1.routeNextAt = tick + 15 * TICKS; return; }
     const before = new Set(world.infected!.active.map(e => e.id));
     if (outbreak.ensureHorde(ahead, ahead) > 0) {
       l1.routeSpawns++; l1.routeNextAt = tick + 15 * TICKS;
       for (const e of world.infected!.active) if (!before.has(e.id) && e.health.current > 0) world.infected!.rush(e.id, { x: p.x, z: p.z }, tick + 20 * TICKS);
     }
+  }
+
+  /**
+   * Director infected emerge from buildings: pick refuge doors 6 to 32 m from `center` (preferring ones near the player so the PO
+   * sees it), the infected waits hidden at the door, the door bangs open (`gate.changed door-N`), it stumbles out two metres and
+   * joins the normal AI toward `target`. Deterministic (door order by distance), 2 infected per door, 0.7 s apart. False if no door is in range.
+   */
+  private emerge(center: { x: number; z: number }, want: number, target: { x: number; z: number }, player: { x: number; z: number }): boolean {
+    const { world } = this.mission, l1 = this.l1, outbreak = world.npcs?.civilians.outbreak, ai = world.infected, nav = ai?.nav, layout = world.districts?.districts[0].layout;
+    if (!outbreak || !ai || !nav || want <= 0) return false;
+    const doors: { n: number; x: number; z: number; score: number }[] = [];
+    for (let n = 1; n <= 80; n++) {
+      const a = this.mission.def.anchors[`refuge-door-${n}`]; if (!a) break;
+      const dc = Math.hypot(a.x - center.x, a.z - center.z); if (dc < 6 || dc > 32) continue;
+      doors.push({ n, x: a.x, z: a.z, score: Math.abs(dc - 20) + Math.hypot(a.x - player.x, a.z - player.z) * .3 });
+    }
+    doors.sort((a, b) => a.score - b.score || a.n - b.n);
+    const tick = world.tick; let spawned = 0;
+    for (const door of doors) {
+      // Outward direction: from the nearest building's centre through the door.
+      let out = { x: 0, z: 1 }, best = Infinity;
+      for (const b of layout?.buildings ?? []) {
+        const cx = (b.aabb.min[0] + b.aabb.max[0]) / 2, cz = (b.aabb.min[2] + b.aabb.max[2]) / 2, d = Math.hypot(door.x - cx, door.z - cz);
+        if (d < best) { best = d; const dx = door.x - cx, dz = door.z - cz; out = Math.abs(dx) > Math.abs(dz) ? { x: Math.sign(dx), z: 0 } : { x: 0, z: Math.sign(dz) }; }
+      }
+      const cell = nav.nearestCell(door.x + out.x * 2.2, door.z + out.z * 2.2); if (cell < 0) continue;
+      const outside = { x: nav.x(cell), z: nav.z(cell) };
+      for (let k = 0; k < 2 && spawned < want; k++) {
+        const id = outbreak.spawnPedestrian(outside, { role: story.techRole, model: story.staffModels[(door.n + k) % story.staffModels.length], tint: story.staffTints[(door.n * 2 + k) % story.staffTints.length] });
+        const e = world.entities.get(id)!; outbreak.turnNow(e);
+        const brain = e.infected?.l1; if (brain) brain.pauseUntil = tick + 60 * TICKS;
+        e.hidden = true; e.transform.x = door.x; e.transform.z = door.z; world.spatial.set(id, door.x, door.z);
+        l1.runs.push({ id, dx: target.x, dz: target.z, speed: 1.7, until: tick + 90 * TICKS, via: outside, emergeAt: tick + Math.round((.5 + k * .7) * TICKS), door: door.n });
+        spawned++;
+      }
+      if (spawned >= want) break;
+    }
+    return spawned > 0;
   }
   /** The nearest live pedestrian within 30 m of an exit: the first infected go for them before the player. */
   private pedestrianTarget(at: { x: number; z: number }, maxM = 30): { x: number; z: number } | null {
@@ -343,6 +383,13 @@ export class LevelOneOutbreak {
     for (let i = l1.runs.length - 1; i >= 0; i--) {
       const run = l1.runs[i], e = world.entities.get(run.id);
       if (!e?.infected || e.health.current <= 0) { l1.runs.splice(i, 1); continue; }
+      if (run.emergeAt !== undefined) {
+        if (tick < run.emergeAt) { e.hidden = true; continue; }
+        // The door bangs open and the infected stumbles out (stagger beat), then walks the last metres to the street.
+        e.hidden = false; e.combat!.staggerUntil = tick + 45;
+        world.events.emit({ type: 'gate.changed', tick, id: `door-${run.door}`, open: true });
+        delete run.emergeAt;
+      }
       if (!run.via) {
         if (tick >= (run.rushAt ?? 0)) { l1.runs.splice(i, 1); ai.rush(e.id, { x: run.dx, z: run.dz }, tick + story.exitSearchS * TICKS); }
         continue;

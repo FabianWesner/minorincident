@@ -119,6 +119,7 @@ Follows the player (existing companion), cannot die, no health bar, never target
 The director never places infected in view (M1-10 spawn rule still applies: off-frustum + 10 % margin or fully occluded at doors/alleys). It may only:
 - top up the civilian population off-screen (walkers entering from map edges) while fewer than 25 civilians remain, until 3:30 into the outbreak;
 - before beat 9, if fewer than 6 infected are within 35 m of the garage exit, steer existing infected (choose wander targets) and, if still short, spawn off-screen infected *pedestrian victims* (civilian models with the infected overlay) coming down Elm Street chasing fleeing civilians.
+- **Emergence (PO request 2026-10-07):** every infected the director adds (horde, route streams; not turned pedestrians) comes **out of a building**: it waits hidden at a house/shop door 6–32 m from the target area (doors near the player preferred), the door bangs open with a sound, it stumbles out and joins the normal AI; off-screen entry is only the fallback when no door is in range. Deterministic.
 - **Caps:** concurrent infected ≤ 60 (high tier) / 30 (low tier, mobile); at the cap a bite kills the civilian instead of turning them.
 
 ### 5.10 Bicycle
@@ -190,6 +191,7 @@ Bots: `complete` (uses the bicycle, the shortest route), `newbie` (handicapped p
 | E19-AC21 | **Sound arc:** pre-accident only calm-layer cues play; the blast triggers the ringing/low-pass and the calm layer drops ≥ 12 dB within 3 s; the chaos layer intensity correlates with the infected count (Spearman ρ ≥ 0.7 over a run) | sim (audio event log) |
 | E19-AC22 | **Real-input playthrough:** headless Playwright drives L1 with real mouse/keyboard input only (click-to-move, interactions via `E`, Shift-attack, the bicycle) from title to the result screen on 1 seed; 0 console errors; screenshots at all 9 photo spots (§8); the end caption text matches exactly | real-input e2e |
 | E19-AC23 | **Visual review** (Opus vision against the mockup, checklists §7.1/§7.4 + this list): `l1-morning` reads as a normal living suburb; `l1-facility` reads as slightly suspicious; `l1-accident` shows contained (not cinematic) damage; `l1-spread` shows the same person mid-transformation; `l1-horde` reads "too many — run". Each scores ≥ 7/10 and has no P0/P1 findings | vision |
+| E19-AC25 | **Director infected emerge from doors:** every director/horde infected starts hidden at a refuge door, becomes visible no earlier than its door-open event (`gate.changed door-N`), is within 3 m of that door when it appears, and joins the AI afterwards; ≥ 6 infected are near the garage after the bat pickup | sim |
 | E19-AC24 | **Performance:** high tier holds the E18 budget at `l1-morning` (60 civilians), `l1-accident` and `l1-horde` (≥ 30 infected + civilians); no frame > 50 ms on any objective transition | perf |
 
 ## 10. Notes for implementers
