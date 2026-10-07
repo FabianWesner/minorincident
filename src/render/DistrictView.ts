@@ -95,6 +95,11 @@ export class DistrictView extends Group {
       const length = Math.max(width, depth), count = Math.ceil(length / 2);
       for (let i = 0; i <= count; i++) this.box(perimeter, 'woodWarm', [.16, 1.05, .16], [width > depth ? fence.min[0] + length * i / count : x, .525, depth > width ? fence.min[2] + length * i / count : z]);
     }
+    // Placement asset ids are known from the layout JSON: start their downloads now instead of
+    // after each multi-megabyte layout GLB has arrived and been parsed.
+    for (const d of this.world.districts) for (const id of new Set(d.layout.placements.filter(p => p.minTier <= this.world.composition.tier && p.maxTier >= this.world.composition.tier).map(p => p.assetId))) {
+      this.registry.prefetch(id, 'lod1'); this.registry.prefetch(id, 'lod2');
+    }
     await Promise.all(
       this.world.districts.map(async (d) => {
         const root = new Group();
@@ -326,11 +331,16 @@ export class DistrictView extends Group {
       }
     }
   }
+  /** Set while the level is playable: prepares a new LOD0 batch's GPU programs and buffers off-screen
+   * (asynchronously) before it replaces the LOD1 hero batch, so the swap does not upload on a frame. */
+  warmHero: ((batch: InstancedGroup) => Promise<void>) | null = null;
   private async loadHero(entry: LodBatch): Promise<void> {
     const prototype = await this.registry.asset(entry.id, entry.lit, 'lod0');
     if (this.disposed) return;
     // Allocate full placement capacity, then retain only currently visible refs.
-    const replacement = new InstancedGroup(prototype, entry.refs.slice(), entry.hero.capacity), old = entry.hero;
+    const replacement = new InstancedGroup(prototype, entry.refs.slice(), entry.hero.capacity);
+    if (this.warmHero) { await this.warmHero(replacement); if (this.disposed) { replacement.dispose(); return; } }
+    const old = entry.hero;
     replacement.references.splice(0, replacement.references.length, ...old.references);
     replacement.visible = old.visible; replacement.name = old.name;
     for (const child of replacement.children) if (child instanceof InstancedMesh) child.count = replacement.references.length;
@@ -341,10 +351,22 @@ export class DistrictView extends Group {
     this.batches[this.batches.indexOf(old)] = replacement; entry.hero = replacement; entry.loaded = true;
     old.removeFromParent(); old.dispose();
   }
-  /** L1's entire route is resident before start, including detailed close-view prototypes. */
-  async prepare(): Promise<void> {
+  /** Make the route's detailed close-view prototypes resident. With a focus, nearest placements
+   * load first through a small download window (background streaming after the level started). */
+  async prepare(focus?: { x: number; z: number }, cancelled = () => false): Promise<void> {
     await this.ready();
-    await Promise.all(this.lodBatches.filter(entry => !entry.loaded).map(entry => this.loadHero(entry)));
+    const entries = this.lodBatches.filter(entry => !entry.loaded);
+    if (!focus) { await Promise.all(entries.map(entry => this.loadHero(entry))); return; }
+    const distance = (entry: LodBatch) => Math.min(...entry.refs.map(ref => Math.hypot(ref.position.x + entry.origin[0] - focus.x, ref.position.z + entry.origin[1] - focus.z)));
+    const queue = entries.map(entry => ({ entry, distance: distance(entry) })).sort((a, b) => a.distance - b.distance).map(({ entry }) => entry);
+    const worker = async () => {
+      for (let entry = queue.shift(); entry && !cancelled() && !this.disposed; entry = queue.shift()) {
+        if (entry.loaded) continue;
+        const pending = this.pending.get(entry) ?? this.loadHero(entry);
+        this.pending.set(entry, pending); await pending.finally(() => this.pending.delete(entry));
+      }
+    };
+    await Promise.all(Array.from({ length: 4 }, worker));
   }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   /** Probe-only mask; render normal view immediately afterwards so it cannot leak across frames. */

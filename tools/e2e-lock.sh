@@ -8,7 +8,7 @@ slots="${E2E_SLOTS:-1}"
 while :; do
   i=0
   while [ "$i" -lt "$slots" ]; do
-    lockf -t 0 "$base.$i" "$@"; rc=$?
+    lockf -t 0 "$base.$i" "$@" 2>/dev/null; rc=$?
     [ "$rc" -ne 75 ] && exit "$rc"   # 75 = slot busy (EX_TEMPFAIL); anything else is the command's result
     i=$((i + 1))
   done

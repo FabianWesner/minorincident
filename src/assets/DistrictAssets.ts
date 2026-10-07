@@ -12,13 +12,20 @@ import { atLeast } from "./types";
 import type { AssetQuality } from './types';
 import { dinerSign } from '../render/DinerSign';
 import { attribute } from 'three/tsl';
-import { staticBatch } from './staticBatch';
+import { staticBatch, staticBatchAsync } from './staticBatch';
+import { loadGate, loadGltf } from './loadGate';
 // E10's semantic building IDs predate the accepted production inventory.
 const productionIds: Record<string, string> = {
   'bld.school': 'bld.school-elementary', 'bld.gym': 'int.gym-cafeteria',
   'bld.supermarket': 'int.supermarket', 'bld.pharmacy': 'int.pharmacy-clinic',
   'bld.hospital': 'bld.hospital-exterior', 'bld.substation': 'bld.power-substation',
 };
+/** Runtime URLs DistrictView requests for a placement asset (LOD1 and LOD2 prototypes), for HTTP prefetch. */
+export function districtAssetUrls(id: string, definition: (id: string) => import('./types').AssetDef): string[] {
+  const def = definition(productionIds[id] ?? id);
+  if (!atLeast(def.status, 'integrated') || def.decalTexture) return [];
+  return [...new Set([def.lods?.lod1 ?? def.glb, def.lods?.lod2 ?? def.glb].filter((path): path is string => Boolean(path)).map(path => '/' + path.replace(/^public\//, '')))];
+}
 /** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
 export class DistrictAssets {
   private readonly loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
@@ -46,8 +53,7 @@ export class DistrictAssets {
     if (!this.cache.has(key))
       this.cache.set(
         key,
-        this.loader
-          .loadAsync(url)
+        loadGltf(this.loader, url)
           .then(({ scene }) => {
             scene.traverse((o) => {
               if (!(o instanceof Mesh)) return;
@@ -79,39 +85,72 @@ export class DistrictAssets {
       );
     return this.cache.get(key)!;
   }
+  /** Every static batch of a role (body, lit windows, unlit windows) has the same node graph: one
+   * shared material means one node build and cache key for all of them, so later LOD0 swaps reuse
+   * the warmed render state (no per-asset shader builds during play). */
+  private readonly sharedMaterials = new Map<string, Material>();
+  private share(root: Group): void {
+    for (const child of root.children) {
+      if (!(child instanceof Mesh) || (child.name !== 'window-light' && child.name !== 'static-body')) continue;
+      const shared = this.sharedMaterials.get(child.name);
+      if (shared) { (child.material as Material).dispose(); child.material = shared; }
+      else { this.sharedMaterials.set(child.name, child.material as Material); this.batchMaterials.add(child.material as Material); }
+    }
+  }
+  /** Start download, parse and batching of a placement prototype before its layout GLB arrives. */
+  prefetch(id: string, lod: AssetQuality = 'lod1'): void {
+    try {
+      if (worldAssets[id] && atLeast(this.assets.definition(productionIds[id] ?? id).status, "integrated")) void this.base(id, lod).catch(() => {});
+    } catch { /* unknown ids report through asset() */ }
+  }
+  private canonical(id: string, lod: AssetQuality): AssetQuality {
+    const assetDef = this.assets.definition(productionIds[id] ?? id);
+    return (lod === 'lod1' || lod === 'lod2') && !assetDef.lods?.[lod] ? 'lod0' : lod;
+  }
+  /** Powered and unpowered placements share their large diffuse geometry. */
+  private base(id: string, lod: AssetQuality): Promise<Group> {
+    const def = worldAssets[id], productionId = productionIds[id] ?? id, canonical = this.canonical(id, lod);
+    const baseKey = `${id}:batch:${canonical}`;
+    if (!this.cache.has(baseKey)) this.cache.set(baseKey, this.assets.loadAsset(productionId, canonical).then(async (asset) => {
+      await loadGate.wait();
+      if (productionId !== id) {
+        const source = this.assets.definition(productionId).dimensions, target = def.dimensions;
+        const straight = Math.min(1, target.x / source.x, target.z / source.z), turned = Math.min(1, target.x / source.z, target.z / source.x);
+        // Fit legacy footprints while retaining human-sized doors/floors.
+        const fit = Math.max(straight, turned); asset.scale.set(fit, 1, fit);
+        if (turned > straight) asset.rotation.y = Math.PI / 2;
+      }
+      // While a level is playable, batching is sliced over frames (one gate slot per slice).
+      const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
+      this.share(root);
+      if (id === 'bld.joes-diner') {
+        const sign = dinerSign(); root.add(sign.root); this.geometries.add(sign.geometry); this.signTextures.push(sign.texture);
+      }
+      root.traverse(node => { if (node instanceof Mesh) this.batchMaterials.add(node.material as Material); });
+      return root;
+    }));
+    return this.cache.get(baseKey)!;
+  }
   async asset(id: string, lit = true, lod: AssetQuality = 'lod1'): Promise<Group> {
     const def = worldAssets[id];
     if (!def) throw new Error(`Unknown asset: ${id}`);
     const productionId = productionIds[id] ?? id;
     if (atLeast(this.assets.definition(productionId).status, "integrated")) {
-      const assetDef = this.assets.definition(productionId);
-      const canonical = (lod === 'lod1' || lod === 'lod2') && !assetDef.lods?.[lod] ? 'lod0' : lod;
+      const canonical = this.canonical(id, lod);
       const key = `${id}:${lit}:${canonical}`;
-      // Powered and unpowered placements share their large diffuse geometry.
       const baseKey = `${id}:batch:${canonical}`;
-      if (!this.cache.has(baseKey)) this.cache.set(baseKey, this.assets.loadAsset(productionId, canonical).then((asset) => {
-        if (productionId !== id) {
-          const source = this.assets.definition(productionId).dimensions, target = def.dimensions;
-          const straight = Math.min(1, target.x / source.x, target.z / source.z), turned = Math.min(1, target.x / source.z, target.z / source.x);
-          // Fit legacy footprints while retaining human-sized doors/floors.
-          const fit = Math.max(straight, turned); asset.scale.set(fit, 1, fit);
-          if (turned > straight) asset.rotation.y = Math.PI / 2;
-        }
-        const root = this.remember(staticBatch(asset, true, this.materials));
-        if (id === 'bld.joes-diner') {
-          const sign = dinerSign(); root.add(sign.root); this.geometries.add(sign.geometry); this.signTextures.push(sign.texture);
-        }
-        root.traverse(node => { if (node instanceof Mesh) this.batchMaterials.add(node.material as Material); });
-        return root;
-      }));
+      void this.base(id, lod);
       if (!this.cache.has(key)) this.cache.set(key, this.cache.get(baseKey)!.then(source => {
         if (lit) return source;
         const root = source.clone(true);
         root.traverse(node => {
           if (!(node instanceof Mesh) || node.name !== 'window-light') return;
-          const material = this.materials.shaded(this.materials.sample(attribute('_palette', 'float')).mul(.08));
-          material.name = 'emi_static-windows';
-          this.batchMaterials.add(material); node.material = material;
+          let material = this.sharedMaterials.get('window-light:unlit');
+          if (!material) {
+            material = this.materials.shaded(this.materials.sample(attribute('_palette', 'float')).mul(.08));
+            material.name = 'emi_static-windows'; this.sharedMaterials.set('window-light:unlit', material); this.batchMaterials.add(material);
+          }
+          node.material = material;
         });
         return root;
       }));
@@ -128,7 +167,7 @@ export class DistrictAssets {
   dispose(): void {
     for (const geometry of this.geometries) geometry.dispose();
     this.geometries.clear();
-    for (const material of this.batchMaterials) material.dispose(); this.batchMaterials.clear();
+    for (const material of this.batchMaterials) material.dispose(); this.batchMaterials.clear(); this.sharedMaterials.clear();
     for (const texture of this.signTextures) texture.dispose(); this.signTextures.length = 0;
     this.cache.clear();
     void this.assets.dispose();

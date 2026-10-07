@@ -1,0 +1,14 @@
+# Cloudflare Pages caching (load-performance lane). Vite emits content-hashed bundles under /build/.
+/build/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Runtime loaders request these with ?v=<content hash> (src/assets/assetUrl.ts), so a redeploy
+# changes the URL of every changed file; unversioned requests revalidate within a day.
+/assets/models/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=2592000
+/assets/layouts/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=2592000
+/assets/basis/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=2592000
+/assets/decals/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=2592000

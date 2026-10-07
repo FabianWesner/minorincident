@@ -1,6 +1,7 @@
 // Registry, anti-spam, distance fade and rate variation adapted from Bruno Simon Audio.js (MIT, 41046b5).
 import { audioCues, audioFile, audioVariationPools, type AudioCue } from '../data/audioCues';
 import { Rng } from '../core/Rng';
+import { assetUrl } from '../assets/assetUrl';
 /** Plain Web Audio loader (09 §9 escape hatch): Howler's private node graph would conflict with
  * our offline/live graph. Sprite metadata and native codec fallback stay in this small registry. */
 export class AudioRegistry {
@@ -10,7 +11,7 @@ export class AudioRegistry {
     private readonly lastVariant = new Map<string, number>();
     private rng = new Rng(1, 'audio-variants');
     readonly errors: string[] = [];
-    constructor(private readonly context: BaseAudioContext, private readonly read: (url: string) => Promise<ArrayBuffer> = async (url) => { const r = await fetch(url); if (!r.ok)
+    constructor(private readonly context: BaseAudioContext, private readonly read: (url: string) => Promise<ArrayBuffer> = async (url) => { const r = await fetch(assetUrl(url)); if (!r.ok)
         throw new Error(`Audio request failed: ${url}`); return r.arrayBuffer(); }) { }
     load(category: string): Promise<AudioBuffer> {
         if (!this.loads.has(category))
@@ -44,7 +45,9 @@ export class AudioRegistry {
         }
         const buffer = this.buffers.get(cue.category);
         if (!buffer) {
-            this.errors.push(`Unloaded cue: ${id}`);
+            // Banks outside the initial set load on first use; this play is skipped, the next one sounds.
+            if (!this.loads.has(cue.category))
+                this.load(cue.category).catch(() => { this.errors.push(`Unloaded cue: ${id}`); });
             return null;
         }
         if (!ignoreSpam && time - (this.last.get(key) ?? -Infinity) < cue.antiSpam)

@@ -92,6 +92,9 @@ export function buildLayout(
     throw new Error(
       `${result.error ?? ""}\n${result.stdout}\n${result.stderr}`,
     );
+  // Blender exports float32 attributes; meshopt + quantization cuts L1 district GLBs ~4x (load lane).
+  const compressed = spawnSync(process.execPath, ["--import", "tsx", "tools/layouts/compress.ts", ...outputs.filter((path) => path.endsWith(".glb"))], { encoding: "utf8" });
+  if (compressed.status !== 0) throw new Error(`layout GLB compression failed\n${compressed.stdout}\n${compressed.stderr}`);
   mkdirSync(".cache/layouts", { recursive: true });
   writeFileSync(cache, JSON.stringify({ sourceHash }) + "\n");
   return { rebuilt: true, sourceHash };

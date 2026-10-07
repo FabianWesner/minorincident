@@ -35,6 +35,12 @@ export class Renderer extends WebGPURenderer {
     if (this.selectedBackend === 'webgl') {
       const backend = this.backend as unknown as { utils: { _clientWaitAsync(): Promise<void> } };
       await backend.utils._clientWaitAsync();
+    } else {
+      // Dawn finishes pipeline compilation in the GPU process after createRenderPipeline returns.
+      // Wait for the warm-up submission, or a cold shader cache freezes the first playable frame
+      // (measured ~4.5 s on a first visit) after the loading screen has already closed.
+      const device = (this.backend as unknown as { device?: { queue: { onSubmittedWorkDone(): Promise<void> } } }).device;
+      await device?.queue.onSubmittedWorkDone();
     }
     // PassNode and ShadowNode cache work per animation frame. A fence can already
     // be signaled: still let Three advance its frame before the next warm-up draw.

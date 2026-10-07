@@ -1,3 +1,4 @@
+import { assetUrl } from '../assets/assetUrl';
 import type { MusicState } from './MusicDirector';
 
 interface Deck { media: HTMLAudioElement; source: MediaElementAudioSourceNode; gain: GainNode; retire: number; }
@@ -25,7 +26,7 @@ export class StreamedMusic {
         media.preload = 'auto';
         media.loop = true;
         const format = media.canPlayType('audio/webm; codecs="opus"') ? 'webm' : 'm4a';
-        media.src = `/assets/audio/score-${state}.${format}`;
+        media.src = assetUrl(`/assets/audio/score-${state}.${format}`);
         const source = this.context.createMediaElementSource(media), gain = this.context.createGain();
         gain.gain.value = 0;
         source.connect(gain).connect(this.bus);
