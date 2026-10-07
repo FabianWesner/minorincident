@@ -177,3 +177,13 @@ body:not(.debug-ui) [data-input-hint]{display:none!important}
 }
 /* Locked levels: greyed out, not clickable or focusable (disabled), with a "Complete Level N first" hint. */
 .full-ui button.is-locked{opacity:.45;cursor:not-allowed;filter:grayscale(1)}
+
+/* Title background art: cover, art-directed crops via <picture>; the title panel sits on a readable scrim. */
+.home-art{display:none;position:absolute;inset:0;z-index:0;overflow:hidden;background-size:cover;background-position:center;filter:none}
+.home-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.home-art-shade{position:absolute;inset:0;background:linear-gradient(90deg,#10182ecc 0,#10182e88 38%,#10182e22 70%),linear-gradient(0deg,#10182eaa 0,transparent 35%)}
+@media(orientation:portrait){.home-art-shade{background:linear-gradient(0deg,#10182ee6 0,#10182eaa 45%,#10182e55 100%)}}
+.full-ui[data-ui-screen=title] .home-art{display:block}
+.full-ui[data-ui-screen=title] .menus{background:#162032}
+.menus>.menu-panel{position:relative;z-index:1}
+@media(orientation:portrait){.full-ui[data-ui-screen=title] .menus{align-items:start;padding-top:max(20px,4vh)}.full-ui[data-ui-screen=title] .menu-title{padding:18px 16px;gap:8px}.full-ui[data-ui-screen=title] .menu-title button{min-height:48px}}

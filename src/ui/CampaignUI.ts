@@ -1,5 +1,5 @@
 import type { Game } from '../Game';
-import { autoRewards,beginRewards,chooseWeapon,revealCards,pickUpgrades,finishRewards,weaponChoices,rackSize,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
+import { autoRewards,chooseWeapon,revealCards,pickUpgrades,finishRewards,weaponChoices,rackSize,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
 import { SAVE_ERROR,type SaveResult } from '../sim/progression/Save';
 import { upgrades } from '../data/upgrades';
 import './campaign.css';
