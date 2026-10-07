@@ -1,11 +1,10 @@
 """Courier long-john cargo bicycle; deterministic metres, +X forward, Z up.
-Rebuild: python3 experiment/tools/blender_run.py ../assets/veh.courier-bike assets/veh.courier-bike/build.py -- --glb assets/veh.courier-bike/model.glb
-Review: same command with --render assets/veh.courier-bike/renders/hero.png --width 1600 --height 900 --samples 96
+Rebuild through the existing blender_run.py wrapper; see README.md for build/pack commands.
+Review: same command with --render assets/veh.courier-bike/renders/hero.png --width 480 --height 360 --samples 24
 """
 import argparse
 import json
 import math
-import subprocess
 import sys
 from pathlib import Path
 import bpy
@@ -17,7 +16,7 @@ sys.path.insert(0, str(ROOT / 'tools/blender'))
 from sslib import palette, ao
 ASSET = {'id': 'veh.courier-bike', 'category': 'vehicle'}
 p = argparse.ArgumentParser()
-p.add_argument('--glb'); p.add_argument('--render'); p.add_argument('--view', default='ref')
+p.add_argument('--lod', type=int, default=0, choices=[0,1,2]); p.add_argument('--glb'); p.add_argument('--render'); p.add_argument('--view', default='ref')
 p.add_argument('--samples', type=int, default=24); p.add_argument('--width', type=int, default=960); p.add_argument('--height', type=int, default=540)
 a = p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 
@@ -30,7 +29,7 @@ def build(level=0):
         bs = m.node_tree.nodes['Principled BSDF']; bs.inputs['Roughness'].default_value = .52
         if token == 'silver': bs.inputs['Metallic'].default_value = .65
     parts=[]; groups=[]
-    n = [24,8,8][level]; tube_n=[8,4,4][level]
+    n = [32,12,8][level]; tube_n=[8,4,4][level]
     def empty(name, loc=(0,0,0), parent=None):
         o=bpy.data.objects.new(name,None); bpy.context.collection.objects.link(o); o.location=loc
         if parent: o.parent=parent
@@ -40,11 +39,29 @@ def build(level=0):
     body=empty('body',parent=root); groups.append(body)
     def group(name,loc):
         o=empty(name,loc,root); groups.append(o); return o
-    front=group('wheelF',(1.035,0,.335)); rear=group('wheelR',(-.94,0,.405))
-    seat=group('seat',(-.58,0,1.115)); basket=group('basket',(.43,0,.37))
-    handle=group('handlebar',(-.015,0,1.17)); lamps=group('lightsFront',(1.10,0,.78))
+    front=group('wheel_front',(1.035,0,.335)); rear=group('wheel_rear',(-.94,0,.405))
+    # Legacy socket aliases contain no geometry; there are exactly two wheel assemblies.
+    empty('wheelF',parent=front); empty('wheelR',parent=rear)
+    seat=empty('seat',(-.65,0,1.16),root)
+    saddle=group('saddle_mount',(-.65,0,1.115))
+    basket=group('cargo_box',(.53,0,.37)); empty('basket',parent=basket)
+    empty('box_lid_top',(.53,0,.89),root)
+    handle=group('handlebar',(-.075,0,1.065)); lamps=group('lightsFront',(1.10,0,.78))
+    # Grips are socket empties with local positions relative to the steering axis.
+    empty('grip_l',(-.155,.29,.11),handle); empty('grip_r',(-.155,-.29,.11),handle)
+    crank_group=group('crank',(-.47,0,.30))
+    stand=group('kickstand',(-.10,0,.32)); stand['riding_rotation_z']=math.pi/2
+    stand['parked_rotation_z']=0.0
+    pedals=[]
+    for name,side in [('pedal_l',1),('pedal_r',-1)]:
+        pedal=empty(name,(side*.08,side*.18,-side*.08),crank_group); groups.append(pedal); pedals.append(pedal)
+        empty('pedalL' if side==1 else 'pedalR',parent=pedal)
     def finish(o,name,token,parent,bevel=0):
         o.name=name; o.data.materials.append(mats[token])
+        # Move the tub forward 10 cm and the saddle back 7 cm without changing wheelbase.
+        if parent==basket: o.location.x += .10
+        if parent==saddle: o.location.x -= .07
+        if parent==handle: o.location.x -= .08
         if bevel and level==0:
             mod=o.modifiers.new('soft edge','BEVEL'); mod.width=bevel; mod.segments=2 if name in ['cargo side','cargo end','cargo lid','saddle'] else 1
             bpy.context.view_layer.objects.active=o; bpy.ops.object.modifier_apply(modifier=mod.name)
@@ -96,10 +113,15 @@ def build(level=0):
             ('fork',(1.035,0,.335),(.85,0,.95),.032),
             ('rear stay',(-.47,0,.30),(-.94,0,.405),.032)]:
             tube(name,start,end,r)
-        box('saddle',(-.58,0,1.115),(.32,.24,.09),'uiDark',seat,0)
+        box('saddle',(-.58,0,1.115),(.32,.24,.09),'uiDark',saddle,0)
+        tube('stem',(.04,0,1.16),(-.11,0,1.17),.022,'silver',handle)
         tube('handlebar',(-.11,-.335,1.17),(-.11,.335,1.17),.027,'uiDark',handle)
+        tube('chain gear',(-.47,-.10,.30),(-.47,-.08,.30),.06,'silver',crank_group,8)
+        for i,s in enumerate([1,-1]):
+            tube('crank arm',(-.47,s*.09,.30),(-.47+s*.08,s*.13,.30-s*.08),.015,'silver',crank_group)
+            box('pedal platform',(-.47+s*.08,s*.18,.30-s*.08),(.12,.11,.035),'uiDark',pedals[i],0)
         box('rack',(-.99,0,.88),(.43,.32,.026),'uiDark',bevel=0)
-        tube('stand',(-.10,0,.32),(-.19,.25,.016),.018,'uiDark')
+        tube('stand',(-.10,0,.32),(-.19,.25,.016),.018,'uiDark',stand)
         tube('lamp',(1.06,0,.78),(1.13,0,.78),.058,'uiDark',lamps,4)
         tube('lamp face',(1.134,0,.78),(1.142,0,.78),.046,'lamp',lamps,4)
         for parent,r in [(front,.335),(rear,.405)]:
@@ -184,8 +206,8 @@ def build(level=0):
                         finish(bpy.context.object,'courier lettering','picketWhite',basket)
         # Saddle, post and rear luggage rack.
         tube('seat post',(-.66,0,.98),(-.58,0,1.10),.024,'silver')
-        box('saddle',(-.58,0,1.115),(.32,.24,.09),'uiDark',seat,.040)
-        box('saddle underside',(-.60,0,1.075),(.20,.16,.025),'asphalt',seat,.01)
+        box('saddle',(-.58,0,1.115),(.32,.24,.09),'uiDark',saddle,.040)
+        box('saddle underside',(-.60,0,1.075),(.20,.16,.025),'asphalt',saddle,.01)
         for s in [-1,1]:
             tube('rack side',(-1.20,s*.16,.88),(-.77,s*.16,.88),.018,'uiDark')
             tube('rack strut',(-1.12,s*.16,.88),(-.94,s*.11,.43),.012,'silver')
@@ -201,7 +223,7 @@ def build(level=0):
                     t=math.tau*i/32
                     block=box('tread',(x+(r-.004)*math.cos(t),0,z+(r-.004)*math.sin(t)),(.038,.076,.008),'asphalt',parent,0)
                     block.rotation_euler.y=math.pi/2-t
-            for s in [-1,1]:
+            for s in ([-1,1] if level==0 else [0]):
                 ring('sidewall',(x,s*.025,z),r-.038,.009,'asphalt',parent)
                 ring('rim',(x,s*.020,z),r-.074,.012,'silver',parent)
             tube('hub',(x,-.070,z),(x,.070,z),.035,'silver',parent)
@@ -218,26 +240,31 @@ def build(level=0):
                 tube('mudguard stay',(x-.20,-.065,z+.26),(x,-.065,z),.009,'silver')
         # Crank, chain guard, pedal platforms and deployment stand.
         tube('bottom bracket',(-.47,-.08,.30),(-.47,.08,.30),.072,'uiDark')
-        ring('chainring',(-.47,-.087,.30),.083,.012,'silver',body)
+        # A filled, toothed 7 cm gear, never another open wheel-like hoop.
+        tube('chain gear',(-.47,-.10,.30),(-.47,-.08,.30),.060,'silver',crank_group,12)
+        for i in range([12,6,4][level]):
+            t=math.tau*i/[12,6,4][level]
+            tooth=box('gear tooth',(-.47+.061*math.cos(t),-.09,.30+.061*math.sin(t)),(.018,.023,.018),'silver',crank_group,0)
+            tooth.rotation_euler.y=-t
         box('chain guard',(-.72,-.105,.35),(.51,.032,.11),'orange',bevel=.045)
         for s in [-1,1]:
-            tube('crank arm',(-.47,s*.09,.30),(-.47+s*.08,s*.13,.22),.015,'silver')
-            box('pedal',(-.47+s*.08,s*.18,.22),(.12,.11,.035),'uiDark',bevel=.009)
-            tube('center stand',(-.10,s*.11,.32),(-.19,s*.25,.016),.014,'uiDark')
-            tube('stand foot',(-.25,s*.25,.015),(-.14,s*.25,.015),.015,'uiDark')
+            tube('crank arm',(-.47,s*.09,.30),(-.47+s*.08,s*.13,.30-s*.08),.015,'silver',crank_group)
+            box('pedal platform',(-.47+s*.08,s*.18,.30-s*.08),(.12,.11,.035),'uiDark',pedals[0 if s==1 else 1],bevel=.009)
+            tube('center stand',(-.10,s*.11,.32),(-.19,s*.25,.016),.014,'uiDark',stand)
+            tube('stand foot',(-.25,s*.25,.015),(-.14,s*.25,.015),.015,'uiDark',stand)
         # Headlamp and blank miniature courier computer plate.
         tube('lamp housing',(1.06,0,.78),(1.13,0,.78),.058,'uiDark',parent=lamps,verts=n)
         tube('lamp lens',(1.134,0,.78),(1.142,0,.78),.046,'lamp',parent=lamps,verts=n)
         box('front plate',(1.02,0,.93),(.09,.22,.065),'uiDark',bevel=.012)
         box('plate face',(1.071,0,.93),(.012,.17,.04),'backpackTeal',bevel=.005)
-    empty('driverSeat',(-.58,0,1.18),root); empty('exitL',(-.50,.56,0),root); empty('exitR',(-.50,-.56,0),root)
+    empty('driverSeat',(-.65,0,1.16),root); empty('exitL',(-.50,.56,0),root); empty('exitR',(-.50,-.56,0),root)
     empty('front',(1.15,0,.78),root)
     col=empty('col:body',(0,0,.59),root); col['collider']='cuboid'; col['size']=[2.7,.70,1.18]
     light=empty('light:headlamp',(1.15,0,.78),root); light.rotation_euler=Vector((1,0,-.15)).to_track_quat('-Z','Y').to_euler()
     light['ss_light']=json.dumps({'type':'spot','color':'light_led_white','intensity':2,'range':8,'angle':45,'penumbra':.4,'pool':True,'beam':'none','flare':True,'reflect':False,'shadow':'none','heroPriority':0,'flicker':'none','animation':None,'powerGroup':'self','breakable':True,'emissiveNodes':['lightsFront'],'tiers':'all'})
     if level==1:
         # Remove hidden/cosmetic components, keeping all retained surfaces closed.
-        omitted={'sidewall','inner lining','end interior','tub interior floor','brake cable','plate face','lid latch','saddle underside'}
+        omitted={'sidewall','inner lining','end interior','tub interior floor','brake cable','plate face','lid latch','saddle underside','brake lever','mudguard stay'}
         for o in list(parts):
             if o.name.split('.')[0] in omitted:
                 parts.remove(o); bpy.data.objects.remove(o,do_unlink=True)
@@ -261,14 +288,13 @@ if a.glb:
     for level in range(3):
         meshes=build(level); ao.bake_all(meshes,samples=32 if level==0 else 8)
         counts[f'lod{level}']=sum(len(o.data.polygons) for o in meshes)
-        raw=destination.with_name('raw'+('' if level==0 else f'.lod{level}')+'.glb')
+        raw=destination.with_name('model'+('' if level==0 else f'.lod{level}')+'.glb')
         bpy.ops.object.select_all(action='SELECT')
         bpy.ops.export_scene.gltf(filepath=str(raw),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False,export_texcoords=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
     print('BUILD OK',json.dumps(counts))
-    subprocess.run(['node','--import','tsx',str(HERE/'pack.ts'),str(destination)],cwd=ROOT,check=True)
 
 if a.render:
-    meshes=build(0)
+    meshes=build(a.lod)
     scene=bpy.context.scene
     scene.render.engine='CYCLES'; ao.bake_all(meshes,samples=16)
     floor=bpy.data.materials.new('studio'); floor.use_nodes=True; floor.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value=(.022,.019,.028,1); floor.node_tree.nodes['Principled BSDF'].inputs['Roughness'].default_value=.85
@@ -277,15 +303,15 @@ if a.render:
     for name,pos,power,color,size in [('key',(3,-4,6),350,(1,.75,.52),4),('fill',(-1,4,4),200,(.66,.78,1),4),('rim',(-4,-1,4),350,(1,.63,.36),3)]:
         d=bpy.data.lights.new(name,'AREA'); o=bpy.data.objects.new(name,d); scene.collection.objects.link(o); o.location=pos; d.energy=power; d.color=color; d.shape='DISK'; d.size=size; o.rotation_euler=(Vector((0,0,.6))-o.location).to_track_quat('-Z','Y').to_euler()
     cam=bpy.data.objects.new('camera',bpy.data.cameras.new('camera')); scene.collection.objects.link(cam); scene.camera=cam; cam.data.type='ORTHO'
-    views={'ref':(4,8,3.2),'game':(7,7,10),'front':(8,0,2.6),'rear':(-8,0,2.6),'side':(0,8,2.0),'back':(0,-8,2.0)}
+    views={'quarter-rear':(-4,8,3.2),'quarter-back':(-4,-8,3.2),'quarter-front':(4,-8,3.2),'ref':(4,8,3.2),'game':(7,7,10),'front':(8,0,2.6),'rear':(-8,0,2.6),'side':(0,8,.61),'back':(0,-8,2.0)}
     def render(view,path):
         cam.location=views[view]; cam.rotation_euler=(Vector((0,0,.61))-cam.location).to_track_quat('-Z','Y').to_euler(); cam.data.ortho_scale=3.65 if view!='game' else 4.0
-        scene.render.engine='BLENDER_EEVEE'
-        if hasattr(scene.eevee,'taa_render_samples'): scene.eevee.taa_render_samples=a.samples
+        scene.render.engine='CYCLES'; scene.cycles.device='CPU'; scene.cycles.samples=a.samples
+        scene.cycles.use_denoising=True
         scene.render.resolution_x=a.width; scene.render.resolution_y=a.height; scene.render.resolution_percentage=100
         scene.render.image_settings.file_format='PNG'; scene.view_settings.view_transform='Standard'
         scene.render.filepath=str(path); path.parent.mkdir(exist_ok=True,parents=True); bpy.ops.render.render(write_still=True)
         print('RENDER OK',view,path)
     target=Path(a.render).resolve(); render(a.view,target)
     if a.view=='ref':
-        for view in ['game','front','side','rear','back']: render(view,target.with_name('game.png' if view=='game' else f'turntable-{view}.png'))
+        for view in ['quarter-front','quarter-rear','quarter-back','side']: render(view,target.with_name('game.png' if view=='game' else f'turntable-{view}.png'))
