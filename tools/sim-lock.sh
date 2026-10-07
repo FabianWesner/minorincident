@@ -3,6 +3,9 @@
 # saturate it. SIM_SLOTS (default 2) runs may proceed at once; the rest wait for a free slot.
 # Only wrap browser runs, never plain builds. Without lockf (e.g. Linux CI) just run.
 command -v lockf >/dev/null 2>&1 || exec "$@"
+# Re-entrant: a command already running under this lock (e.g. verify inside an outer wrapper) must not take a second slot.
+[ -n "${MI_SIM_LOCK_HELD:-}" ] && exec "$@"
+export MI_SIM_LOCK_HELD=1
 base="${SIM_LOCK:-/tmp/minor-incident-sim.lock}"
 slots="${SIM_SLOTS:-2}"
 while :; do
