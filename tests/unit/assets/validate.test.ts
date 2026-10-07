@@ -47,7 +47,7 @@ test('T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, 
 }, 300_000); // Decode the complete production inventory on the shared build machine.
 
 // Absolute caps must survive permissive manifest budgets and authored ratios.
-test.each([['veh.test', 'vehicle', 1, 6000], ['veh.test', 'vehicle', 2, 2000], ['bld.house-test', 'building', 1, 12000], ['bld.house-test', 'building', 2, 4000], ['house.test', 'building', 2, 4000]] as const)('distance cap for %s LOD%d cannot be relaxed by the manifest', (id, category, lod, cap) => {
+test.each([['veh.test', 'vehicle', 1, 6000], ['veh.test', 'vehicle', 2, 2000], ['bld.house-test', 'building', 1, 12000], ['bld.house-test', 'building', 2, 4000], ['house.test', 'building', 2, 4000], ['bld.safe-house', 'building', 1, 12000]] as const)('distance cap for %s LOD%d cannot be relaxed by the manifest', (id, category, lod, cap) => {
   const { doc, def } = fixture();
   def.id = id; def.category = category; def.budget.triangles = 100000;
   def.authoredLodTriangles = { lod1: 100000, lod2: 100000 };
