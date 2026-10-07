@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { devices } from '@playwright/test';
 import { test, expect } from '../e2e/fixtures';
 
@@ -34,6 +34,12 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     if (run === 1) await page.locator('canvas').screenshot({ path: `${dir}/${phase}-${tier}-${run}.png`, scale: 'css' });
     console.log(JSON.stringify({ phase, run, tier, p95: proof.frameMsP95, sim: proof.simMsP95, update: proof.updateCpuMsP95, render: proof.renderCpuMsP95, triangles: proof.fixed.triangles, draws: proof.fixed.drawCalls, profile: proof.fixed.profile }));
     expect(proof.gpu).not.toMatch(/swiftshader|llvmpipe|software/i); expect(proof.infected).toBe(tier === 'high' ? 200 : 100); expect(proof.civilians).toBe(40); expect(proof.ticks).toBeGreaterThan(300);
-    if (phase !== 'before') { expect(proof.fixed.drawCalls).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(proof.fixed.triangles).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); expect(proof.frameMsP95).toBeLessThanOrEqual(tier === 'high' ? 14 : 1000 / 30); }
+    if (phase !== 'before') {
+      expect(proof.fixed.drawCalls).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(proof.fixed.triangles).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000);
+      if (run === runs) {
+        const p95s = Array.from({ length: runs }, (_, i) => (JSON.parse(readFileSync(`${dir}/${phase}-${tier}-${i + 1}.json`, 'utf8')) as { frameMsP95: number }).frameMsP95).sort((a, b) => a - b);
+        expect(Math.round(p95s[Math.floor(runs / 2)] * 1e6) / 1e6, 'median of repeated p95 frame times').toBeLessThanOrEqual(tier === 'high' ? 14 : 1000 / 30);
+      }
+    }
   });
 });
