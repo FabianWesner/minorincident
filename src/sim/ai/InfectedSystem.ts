@@ -107,7 +107,7 @@ export class InfectedSystem {
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || !this.nav.clear(position.x, position.z, def.radius)) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
     entity.locomotion = motionResponse(); delete entity.motion;
-    delete entity.infected!.model; delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
+    delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
@@ -320,7 +320,7 @@ export class InfectedSystem {
     const b = e.infected!;
     if (b.state !== 'dead') {
       b.state = 'dead'; b.deadAt = this.world.tick; b.grabUntil = 0;
-      if (e.archetype === 'infected.crow') { b.birds = 0; b.birdAlive.fill(0); }
+      if (e.archetype === 'infected.crow') { for (let i = 0; i < 20; i++) if (b.birdAlive[i]) b.birdDeadMask = (b.birdDeadMask ?? 0) | 1 << i; b.birds = 0; b.birdAlive.fill(0); }
       if (b.special === 'explode') { b.attackId = ++this.sequence; b.until = this.world.tick + 60; this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: 'explode', duration: 1 }); }
     }
     if (b.special === 'explode' && this.world.tick === b.until) {
@@ -344,7 +344,7 @@ export class InfectedSystem {
       const dx = b.birdPositions[i * 3] - origin.x, dz = b.birdPositions[i * 3 + 2] - origin.z, distance = Math.hypot(dx, dz);
       const along = dx * direction.x + dz * direction.z;
       const inside = spread === 0 ? along >= 0 && Math.abs(dx * direction.z - dz * direction.x) <= 0.2 : spread >= 360 || !distance || along / distance >= Math.cos(spread * Math.PI / 360);
-      if (distance <= radius && inside) { b.birdAlive[i] = 0; killed++; if (spread === 0) break; }
+      if (distance <= radius && inside) { b.birdAlive[i] = 0; b.birdDeadMask = (b.birdDeadMask ?? 0) | 1 << i; killed++; if (spread === 0) break; }
     }
     b.birds -= killed;
     if (b.birds > 0) { b.state = 'scatter'; b.scatterUntil = this.world.tick + 300; }

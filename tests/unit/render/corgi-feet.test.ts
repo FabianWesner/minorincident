@@ -32,7 +32,7 @@ test('corgi paws remain planted below the cadence cap in walk, trot and gallop',
     }
     results.push({ gait, speed, stance, samples, beforeCm, maxCm }); expect(samples).toBeGreaterThan(10); expect(maxCm).toBeLessThanOrEqual(3);
   }
-  mkdirSync('test-results/crowd-feel', { recursive: true }); writeFileSync('test-results/crowd-feel/corgi-feet.json', JSON.stringify(results, null, 2));
+  mkdirSync('test-results/epics/E07/crowd-feel', { recursive: true }); writeFileSync('test-results/epics/E07/crowd-feel/corgi-feet.json', JSON.stringify(results, null, 2));
 });
 
 test('instanced infected dog paws remain planted while the root travels', async () => {

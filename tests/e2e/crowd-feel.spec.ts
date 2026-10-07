@@ -3,7 +3,7 @@ import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { boot, test, expect } from './fixtures';
 
 const stage = process.env.CROWD_CAPTURE ?? 'after';
-const output = `test-results/crowd-feel/${stage}`;
+const output = `test-results/epics/E07/crowd-feel/${stage}`;
 test.use({ video: { mode: 'on', size: { width: 1280, height: 720 } } });
 
 test('crowd draw visibility stays continuous for 60 seconds after the L1 outbreak', async ({ page }) => {
@@ -27,8 +27,11 @@ test('crowd draw visibility stays continuous for 60 seconds after the L1 outbrea
     while (performance.now() - start < 60_000) {
       await new Promise(requestAnimationFrame); frames++;
       const figures = a.crowdFigures(), counts = new Map<number, number>();
-      for (const f of figures) if (f.drawn) counts.set(f.id, (counts.get(f.id) ?? 0) + 1);
-      for (const count of counts.values()) if (count > 1) duplicateDraws++;
+      const instances = new Set<string>();
+      for (const f of figures) if (f.drawn) {
+        const key = f.instanceKey ?? String(f.id); if (instances.has(key)) duplicateDraws++; instances.add(key);
+        counts.set(f.id, (counts.get(f.id) ?? 0) + 1);
+      }
       // Query is authoritative: building entry/death/escape is never classified as a renderer disappearance.
       const eligible = new Set<number>();
       for (const e of [...a.query({ kind: 'civilian' }), ...a.query({ kind: 'infected' })]) {

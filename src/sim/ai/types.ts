@@ -10,6 +10,7 @@ export interface InfectedState {
   birdMotion?: import('../locomotion/MotionResponse').MotionResponse[];
   birdVertical?: import('../locomotion/MotionResponse').MotionResponse[];
   pack: number; packIndex: number; birds: number; birdPositions: number[]; birdAlive: number[]; scatterUntil: number;
+  birdDeadMask?: number;
   /** Scheduled civilians retain their exact silhouette and clothes after turning. */
   model?: string;
   variant: string; path: number[]; pathIndex: number; goal: number; dx: number; dz: number;

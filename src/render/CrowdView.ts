@@ -190,6 +190,11 @@ export class CrowdView extends Group {
       const dimensions = this.registry.definition(def.asset).dimensions;
       this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);
       this.bounds.radius = Math.hypot(dimensions.x, dimensions.y, dimensions.z) / 2 + .75;
+      if (e.archetype === 'infected.crow' && e.infected) for (let bird = 0; bird < 20; bird++) {
+        if (!e.infected.birdAlive[bird] && !((e.infected.birdDeadMask ?? 0) & 1 << bird)) continue;
+        const p = e.infected.birdPositions;
+        this.bounds.radius = Math.max(this.bounds.radius, Math.hypot(p[bird * 3] - this.bounds.center.x, p[bird * 3 + 1] - this.bounds.center.y, p[bird * 3 + 2] - this.bounds.center.z) + .5);
+      }
       if (view && !e.corpse && !this.frustum.intersectsSphere(this.bounds)) continue;
       let lod = this.low || distance > 30 ? 'lod2' : 'lod1';
       if (heroes.has(e.id)) {
@@ -221,11 +226,17 @@ export class CrowdView extends Group {
       const blend = batch.poses.sample(e.id, clip, frame, renderTick / 60);
       const fade = 0;
       if (e.archetype === 'infected.crow') {
+        for (let bird = 0; bird < 20; bird++) if ((e.infected?.birdDeadMask ?? 0) & 1 << bird) {
+          const x = b.birdPositions[bird * 3], z = b.birdPositions[bird * 3 + 2]; this.transform.makeTranslation(x, this.world.districts?.groundHeight(x, z) ?? 0, z);
+          this.staticCorpses.place(e, `${key}:bird`, batch.mesh.geometry, batch.mesh.material as MeshLambertNodeMaterial, batch.poses.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], `${e.id}/${bird}`);
+        }
         for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZW(batch.count, tint.r, tint.g, tint.b, blend[0] * 2 + blend[1]); batch.state.setXYZW(batch.count++, frame, 0, 0, feedback?.strength ?? 0); }
       } else {
         this.transform.makeRotationY(presented.yaw); this.transform.setPosition(x, presented.y - 0.7 + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
         if (e.corpse) {
-          this.staticCorpses.place(e, `${key}:${death}`, batch.mesh.geometry, batch.mesh.material as MeshLambertNodeMaterial, batch.poses.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0]);
+          const mask = (feedback?.mask ?? 0) | (b.detached && this.goreEnabled ? 4 : 0);
+          const hiddenParts = [['armL', 'foreArmL', 'handL'], ['armR', 'foreArmR', 'handR'], ['legL', 'shinL', 'footL'], ['legR', 'shinR', 'footR'], ['head']].flatMap((parts, bit) => mask & 1 << bit ? parts : []);
+          this.staticCorpses.place(e, `${key}:${death}:${mask}`, batch.mesh.geometry, batch.mesh.material as MeshLambertNodeMaterial, batch.poses.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], String(e.id), hiddenParts);
           continue;
         }
         if (strides[clip] && motion.speed > .06) { frame = batch.poses.correct(e.id, frame, ...blend, pose => batch.locomotion.correct(e.id, pose, this.transform, phase, clip, batch.strideScale, motion.speed)); blend[1] = 1; } else { batch.locomotion.reset(e.id); if (blend[1] < 1) { frame = batch.poses.correct(e.id, frame, ...blend, () => {}); blend[1] = 1; } }
