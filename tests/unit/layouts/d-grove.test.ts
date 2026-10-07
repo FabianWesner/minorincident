@@ -169,7 +169,7 @@ describe('D-GROVE layout', () => {
 
   test('T-E19-04 @E19 @E19-AC04 no invisible walls: authored colliders sit on visible geometry and the map edge is sealed by visible barriers', () => {
     const inside = (a: Aabb, b: Aabb, pad: number) => a.min[0] >= b.min[0] - pad && a.max[0] <= b.max[0] + pad && a.min[2] >= b.min[2] - pad && a.max[2] <= b.max[2] + pad;
-    const visible = ['planter', 'trash-bag', 'gnome', 'crate', 'cafe-table']; // authored boxes that are merged meshes in the layout GLB
+    const visible = ['planter', 'trash-bag', 'gnome', 'crate', 'cafe-table', 'sec-fence']; // authored boxes that are merged meshes in the layout GLB
     for (const c of layout.colliders) {
       if (!c.id.startsWith('dressing:')) continue;
       const name = c.id.split(':')[1];
@@ -191,7 +191,7 @@ describe('D-GROVE layout', () => {
 
   test('T-E19-04 @E19 @E19-AC04 no overlapping solid props (colliders, 0.15 m tolerance)', () => {
     // pieces of one authored wall set (shell walls) or one placement's compound boxes never count against each other
-    const group = (id: string) => (id.startsWith('dressing:') && !/^dressing:(planter|trash-bag|gnome|crate|cafe-table|bus-stop)/.test(id) ? id.split(':')[1] : id.replace(/\/geometry-\d+$/, ''));
+    const group = (id: string) => (id.startsWith('dressing:') && !/^dressing:(planter|trash-bag|gnome|crate|cafe-table|sec-fence|bus-stop)/.test(id) ? id.split(':')[1] : id.replace(/\/geometry-\d+$/, ''));
     const boxes = solid.map((c) => ({ id: group(c.id), a: c.aabb }));
     const hits: string[] = [];
     for (let i = 0; i < boxes.length; i++) for (let j = i + 1; j < boxes.length; j++) {
@@ -213,6 +213,18 @@ describe('D-GROVE layout', () => {
         if (i >= 0 && nav.cells[i]) width += .5; else break;
       }
       expect(width + .8, `${name} opening`).toBeLessThanOrEqual(2.5);
+    }
+  });
+  test('T-E19-04 @E19 @E19-AC04 every alarm car has a reachable standing point within 2.4 m (QA1-17)', () => {
+    const reached = nav.flood(at('player-start'));
+    for (let n = 1; n <= 4; n++) {
+      const c = at(`alarm-car-${n}`);
+      let best = Infinity;
+      for (let dz = -3; dz <= 3; dz += .5) for (let dx = -3; dx <= 3; dx += .5) {
+        const i = nav.index(c[0] + dx, c[1] + dz);
+        if (i >= 0 && reached[i] && Math.hypot(dx, dz) < best) best = Math.hypot(dx, dz);
+      }
+      expect(best, `alarm-car-${n}`).toBeLessThanOrEqual(2.4);
     }
   });
 });

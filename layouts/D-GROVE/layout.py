@@ -14,9 +14,13 @@ import random
 from sslib.layout import Layout
 from sslib import l1_dressing as D
 from sslib.grove_dressing import Grove, FACE_YAW, rot
+from sslib import grove_dressing as G
 
 PI = math.pi
 l = Layout('D-GROVE', 'Sunset Grove', size=(170, 110))
+# Placement empties are written with +yaw here so the rendered front matches placements[].yaw and the baked collision (three.js rotation.y);
+# the legacy -yaw empties of the other districts mirror every +-90 degree placement.
+l.yaw_matches_collision = True
 g = Grove(l)
 rng = random.Random(19)
 dims = g.dims
@@ -93,6 +97,8 @@ def planter(x, z):
     D.planter(l, x, z)
     g.solids.append((f'planter@{x:.1f},{z:.1f}', x - .6, z - .3, x + .6, z + .3, .5, f'planter{x:.1f},{z:.1f}'))
 
+ALARM_LOTS = {('r1c1n', 0), ('r0c2s', 0), ('r0c3s', 0), ('r1c3s', 1)}   # driveway cars parked nose to the pavement so the alarm ring is reachable
+alarm_cars = []
 def row(name, x0, x1, facing, line, rear, kinds, drives=None, gate_at=None):
     """One side of a block. facing: direction the houses face (N/S); line: z of the lot front line (sidewalk inner edge);
     rear: z of the rear (alley) fence. Lots are as wide as their house plus an equal share of the slack. Fences run on lot
@@ -147,13 +153,16 @@ def row(name, x0, x1, facing, line, rear, kinds, drives=None, gate_at=None):
         if d:
             g.path(carx - 1.4, line, carx + 1.4, line + sgn * 6.0, 'uiDark')
             car = next_car()
-            cz = line + sgn * (.5 + 2.45)
-            g.place(car, carx, cz, (PI / 2 if rng.random() < .5 else -PI / 2), 1.0, soft=True)
-            cars.append((carx, cz, name))
+            if (name, i) in ALARM_LOTS: car = ['veh.sedan-green', 'veh.sedan-blue', 'veh.sedan-white', 'veh.sedan-red'][len(alarm_cars) % 4]   # short sedans
+            alarm = (name, i) in ALARM_LOTS
+            cz = line + sgn * (.9 if alarm else .5 + 2.45)
+            ok = g.place(car, carx, cz, (PI / 2 if rng.random() < .5 else -PI / 2), .7 if alarm else 1.0, soft=True)   # alarm cars: toy-size, nose at the pavement
+            if ok and alarm: alarm_cars.append((carx, cz))
+            else: cars.append((carx, cz, name))
         # front yard recipe: bushes by the fence corners, mailbox at the path, flowerbeds along the porch, a personality cluster
         near_side = -1 if door[0] > hx else 1
-        g.place('prop.garden-bush-small', lx0 + 1.0, line + sgn * 1.0, 0, 1.0, soft=True)
-        g.place('prop.garden-bush', lx1 - 1.2, line + sgn * 1.1, 0, .8, soft=True)
+        if d >= 0: g.place('prop.garden-bush-small', lx0 + 1.0, line + sgn * 1.0, 0, 1.0, soft=True)   # never in the driveway mouth
+        if d <= 0: g.place('prop.garden-bush', lx1 - 1.2, line + sgn * 1.1, 0, .8, soft=True)
         mbx = door[0] + 1.3 if door[0] + 1.3 < lx1 - 1.5 and door[0] + 1.3 < hx + w / 2 else door[0] - 1.3
         g.place('prop.mailbox-blue', mbx, line + sgn * .7, yaw, .8, soft=True)
         g.flowers(door[0] - 3, line + (.3 if sgn > 0 else -2.2), door[0] + 3, line + (2.2 if sgn > 0 else -.3), 12)
@@ -270,7 +279,7 @@ anchors['parcel-counter'] = (depot_x, SHOP_FRONT + 1.0)   # real depot collision
 doors.append(anchors['parcel-door'])
 g.place('veh.courier-van', PASS_X, SHOP_FRONT + 1.7 - .35, 0, 1.0, soft=True)
 # shop-front dressing: A-frame / vending / bench between the planters, lamps come with the kerb line below
-g.place('prop.vending-machine', depot_x + 4.4, SHOP_FRONT + .6, FACE_YAW['S'], .65, soft=True)
+g.path(depot_x - 4.0, SHOP_FRONT - .2, depot_x + 4.0, ZN - 4.5, 'sidewalk')     # open paved plaza in front of the counter (>= 3 m clear)
 g.place('prop.bench', -53.5, SHOP_FRONT + 1.0, FACE_YAW['S'], .9, soft=True)
 # service strip behind the shops (accessible through the passage): crates, bins, fence line
 for x in (-78, -69, -60):
@@ -284,20 +293,22 @@ kdx, kdy, kdz = dims(clinic)
 ANNEX_FRONT = -13.5
 ax_, az_ = 66.0, ANNEX_FRONT - kdx / 2
 g.place(clinic, ax_, az_, FACE_YAW['S'])
-FENCE_Z = -9.0
+FENCE_Z = -10.9    # compound front line close to the facade: the follow camera keeps the building in frame during hand-over and accident
 if g.placeholder(clinic):
     g.shell('annex', ax_, az_, 'S', kdx, kdz, [('front', 0, 2.4), ('left', kdx / 2 - 3.5, 2.0)])
-# security compound around the annex: low fence + gate gap at the front, tall fences on the sides and back, paved forecourt
-CX0, CX1, CZ0 = 56.5, 75.5, -26.5
-g.fence('picket', CX0, FENCE_Z, CX1, FENCE_Z, gaps=[(ax_, 3.0)], scale_y=1.0)
-g.fence('privacy', CX0, CZ0, CX0, FENCE_Z - .2)
-g.fence('privacy', CX1, CZ0, CX1, FENCE_Z - .2)
-g.fence('privacy', CX0, CZ0, CX1, CZ0)
+# security compound: chain-link style fence with a 3 m gate gap, side/back fences, paved forecourt, signage, unmarked white pickup
+CX0, CX1, CZ0 = 58.5, 73.5, -26.5
+G.security_fence(g, CX0, FENCE_Z, CX1, FENCE_Z, gaps=[(ax_, 3.0)])
+G.security_fence(g, CX0, CZ0, CX0, FENCE_Z - .2)
+G.security_fence(g, CX1, CZ0, CX1, FENCE_Z - .2)
+G.security_fence(g, CX0, CZ0, CX1, CZ0)
 g.path(ax_ - 3.5, ANNEX_FRONT + .1, ax_ + 3.5, FENCE_Z, 'sidewalk')
 g.path(ax_ - 1.4, FENCE_Z, ax_ + 1.4, -4.5, 'sidewalk')
-for hx_c in (CX0 + 2.0, CX1 - 2.0):
-    g.hedge(hx_c - 1.2, FENCE_Z + 1.0, hx_c + 1.2, FENCE_Z + 1.0, scale=.9)
-for tx_, tz_ in ((CX0 + 2.5, -24.0), (CX1 - 2.5, -24.0), (CX0 + 2.5, -18.0), (CX1 - 2.5, -18.0)):
+for sx_ in (ax_ - 4.4, ax_ + 4.4):    # "AUTHORIZED PERSONNEL ONLY", hazard, deliveries, keypad
+    g.place('prop.lab-signs', sx_, FENCE_Z + .9, FACE_YAW['S'], 1.0, soft=True)
+g.place('prop.lab-signs', 57.8, -7.9, FACE_YAW['S'], 1.0, soft=True)   # "NO BICYCLES BEYOND THIS POINT" by the rack
+g.place('veh.pickup-white', CX1 - 3.2, -23.0, PI / 2, 1.0, soft=True)  # unmarked white vehicle inside the compound
+for tx_, tz_ in ((CX0 + 2.2, -24.0), (CX1 - 2.2, -24.0)):
     g.place('prop.street-tree-blossom' if tx_ < 66 else 'prop.street-tree', tx_, tz_, 0, .8, soft=True)
 anchors['lab-gate'] = (ax_, FENCE_Z)
 anchors['lab-door'] = (ax_, ANNEX_FRONT + 1.2)
@@ -312,7 +323,6 @@ anchors['lab-bike-rack-front'] = (57.8, -5.3)
 g.place('prop.bike-rack', 57.8, -6.8, PI / 2)
 doors.append(anchors['lab-door'])
 # staff parking east of the compound, a van and a sedan
-g.place('veh.courier-van', 81.2, -22.0, PI / 2, 1.0, soft=True)
 g.place('veh.sedan-white', 81.2, -14.5, -PI / 2, 1.0, soft=True)
 g.path(79.8, -26, 82.6, -11.5, 'uiDark')
 g.hedge(79.0, -28.5, 83.0, -28.5, scale=1.15)
@@ -337,8 +347,8 @@ gx, gz_ = 22.8, GARAGE_FRONT + gdx / 2
 g.place(garage, gx, gz_, FACE_YAW['N'])
 if g.placeholder(garage):
     g.shell('garage', gx, gz_, 'N', gdx, gdz, [('front', 0, 2.6)])
-anchors['garage-door'] = (gx, GARAGE_FRONT - 1.9)
-anchors['garage-bat'] = (gx, GARAGE_FRONT - .9)   # open apron in front of the half-open door (real collision shell is closed)
+anchors['garage-door'] = (gx, GARAGE_FRONT + .3)          # on the apron, 0.9 m outside the door plane (local x 1.5)
+anchors['garage-bat'] = (gx + .3, gz_ - .85)              # threshold of the lit garage: the nav-reachable point nearest the workbench (interior boxes are solid)
 g.path(gx - 1.5, SFRONT, gx + 1.5, GARAGE_FRONT, 'uiDark')
 hd = HOUSE['d']
 henderson = kind('D')
@@ -467,6 +477,7 @@ def lamps():
                 if any(abs(p - o['a'][ax]) < 6.5 for o in g.road_list if o is not r and o['ax'] != ax and o['kind'] == 'road'): continue
                 off = side * (r['w'] / 2 + .5)
                 x, z = (p, line + off) if ax == 0 else (line + off, p)
+                if any(abs(x - ax_c) < 4.0 and abs(z - az_c) < 4.0 for ax_c, az_c in alarm_cars): continue   # keep the alarm ring approach clear
                 g.place('prop.street-lamp', x, z, 0, 1.0, soft=True)
             v += 14
 lamps()
@@ -522,12 +533,9 @@ for dz in (3.0, 5.5):
 g.place('prop.vending-machine', GS_X + 5.6, SFRONT + 5.6, FACE_YAW['N'], .65, soft=True)
 
 # ------------------------------------------------------------------------------------------------ anchors that follow the plan
-def cars_near(x, z):
-    return min(cars, key=lambda c: (c[0] - x) ** 2 + (c[1] - z) ** 2)
-for i, tgt in enumerate([(-58.0, 8.0), (-12.0, -9.0), (28.0, -9.0), (45.0, 20.0)], 1):
-    c = cars_near(*tgt)
-    cars.remove(c)
-    anchors[f'alarm-car-{i}'] = (c[0], c[1])
+for i, c in enumerate(sorted(alarm_cars), 1):
+    anchors[f'alarm-car-{i}'] = c
+assert len(alarm_cars) == 4, alarm_cars
 # rear gates sit in the alley-side fence of lots (gate_at gaps above): gate-1 R1 alley, gate-2 R0 alley, gate-3 R1 east alley
 anchors['gate-1'] = (-20.0, R1N[1])
 anchors['gate-2'] = (-10.0, R0N[1])
@@ -560,7 +568,7 @@ l.data['anchors'] = {k: v for k, v in l.data['anchors'].items()}
 
 # named gameplay polygons
 l.zone('lab-nobike-zone', [(CX0, CZ0), (CX1, CZ0), (CX1, FENCE_Z), (CX0, FENCE_Z)])
-l.zone('garage-nobike-zone', [(gx - 3.4, GARAGE_FRONT - 1.4), (gx + 3.4, GARAGE_FRONT - 1.4), (gx + 3.4, GARAGE_FRONT + gdx + .4), (gx - 3.4, GARAGE_FRONT + gdx + .4)])
+l.zone('garage-nobike-zone', [(gx - 3.7, GARAGE_FRONT - .6), (gx + 3.7, GARAGE_FRONT - .6), (gx + 3.7, GARAGE_FRONT + gdx + .2), (gx - 3.7, GARAGE_FRONT + gdx + .2)])
 fx0, fz0 = anchors['fire-bay-door']
 l.zone('fire-nobike-zone', [(FS_X - 6.2, SFRONT), (FS_X + 6.2, SFRONT), (FS_X + 6.2, FS_Z + fdx / 2 + .5), (FS_X - 6.2, FS_Z + fdx / 2 + .5)])
 l.zone('carwash-bay', [(CW_X - cwx / 2, CW_Z - cwz / 2), (CW_X + cwx / 2, CW_Z - cwz / 2), (CW_X + cwx / 2, CW_Z + cwz / 2), (CW_X - cwx / 2, CW_Z + cwz / 2)])
