@@ -85,5 +85,6 @@ const percentile = (values: number[], p: number): number => values.sort((a, b) =
 const summary = Object.fromEntries(['0', '1'].map(skin => [skin, Object.fromEntries(Object.entries(pair[`skin${skin}`].samples).map(([scene, samples]) => [scene, {
   cpuP50: percentile(samples.map(s => s.cpuMs), .5), cpuP95: percentile(samples.map(s => s.cpuMs), .95), cpuMax: Math.max(...samples.map(s => s.cpuMs)), draws: percentile(samples.map(s => s.drawCalls), .5),
 }]))]));
-writeFileSync(`${out}/ab-summary.json`, JSON.stringify({ summary, samePlayerState: JSON.stringify(pair.skin0.player) === JSON.stringify(pair.skin1.player), sameSimulationState: JSON.stringify(pair.skin0.simulation) === JSON.stringify(pair.skin1.simulation), durationSeconds: 868 / 60 }, null, 2) + '\n');
+const framesPerVariant = Object.fromEntries(['0', '1'].map(skin => [skin, Object.values(pair[`skin${skin}`].samples).reduce((count, samples) => count + samples.length, 0)]));
+writeFileSync(`${out}/ab-summary.json`, JSON.stringify({ summary, samePlayerState: JSON.stringify(pair.skin0.player) === JSON.stringify(pair.skin1.player), sameSimulationState: JSON.stringify(pair.skin0.simulation) === JSON.stringify(pair.skin1.simulation), framesPerVariant, durationSeconds: framesPerVariant['0'] / 15 }, null, 2) + '\n');
 console.log(JSON.stringify(summary));
