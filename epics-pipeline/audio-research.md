@@ -178,3 +178,27 @@ Typecheck, lint and build pass. Full unit baseline exception remains as describe
 above; no thresholds or console allowlist were relaxed. Current report and
 compact case/PCM evidence: `test-results/epics/E16/report.md`,
 `audio-upgrade-validation.json`, `audio-preview-measurements.json`.
+
+## Infected and voice curation (lane infected-voices)
+
+Sources searched: the [open-game-sfx-index](https://github.com/Mcamento8/open-game-sfx-index) (Kenney + CC0 OGA packs;
+its "OGA Zombies" pack is artisticdude's), OpenGameArt sound search ("zombie", "scream", "hey"), Freesound policy as above.
+Every candidate was decoded and measured (ffmpeg EBU R128 loudness/true peak, clipped samples, 50 ms noise floor,
+spectral centroid/HF ratio) and inspected as spectrogram/waveform sheets.
+
+| Event | Selected (license) | Why |
+| --- | --- | --- |
+| Human telegraph wind-ups (runner, sprinter, crawler, brute, butcher, nurse, hazmat, bloated, screamer inhale, civilian) | [Zombies sound pack](https://opengameart.org/content/zombies-sound-pack), artisticdude (CC0), 23 takes, per-archetype pitch/low-pass; screamer inhale = reversed snarl | 24-bit, unclipped, natural throat performances with 1.1–2.5 kHz centroid: gritty, not tonal |
+| Screamer shriek | [6 Zombie Sounds](https://opengameart.org/content/6-zombie-sounds), ChibiBagu (CC-BY 3.0) Roar2/3; [80 CC0 creature SFX](https://opengameart.org/content/80-cc0-creature-sfx), rubberduck (CC0) scream_01/02 | Longest clean full-voice screams; ≤36 clipped samples each, inaudible inside a shriek |
+| Idle groans, transformation, distant horde | [Zombie moans](https://opengameart.org/content/zombie-moans), Darsycho (CC0) | Seven 0.8–2.8 s groans with a −43 dB floor; horde beds smear one take with short delays + low-pass |
+| Alert / death | [Voice Effects Zombie-Skeleton-Monster Human Male](https://opengameart.org/content/zombie-skeleton-monster-voice-effects), ArcadeParty (CC0) | Dry, −48…−65 dB floor, 0.4–0.8 s, no clipping |
+| Hurt (infected, pitched 0.85) and male civilian cries | [11 male human pain/death sounds](https://opengameart.org/content/11-male-human-paindeath-sounds), Michel Baradari (CC-BY 3.0) | Clean human pain performances; lower pitch reads as infected |
+| Bite | rubberduck eat_01/04 (CC0); [8 wet squish/slurp impacts](https://opengameart.org/content/8-wet-squish-slurp-impacts), Independent.nu (CC0) | Wet chomp transients under the existing hurt bark |
+| Civilian "Hey!" (was synthesized) | [Aggressive NPC sounds](https://opengameart.org/content/aggressive-npc-sounds-hey-i-will-kill-you), mujtaba-io (CC0) | Real spoken "Hey", four pitch variants |
+
+Rejected: Colodical ZombiePackSFX 1–3 (CC-BY 3.0; up to 320 clipped samples, 5–6 kHz harsh centroid); StarNinjas
+16 monster growls (CC0; takes 7/9/10/13–16 clip, +5.8 dBTP); Little Robot Sound Factory Horror/Voices libraries
+(CC-BY 3.0; good, but 70/100 MB downloads for a few files); ianzazz zombie noises (CC0; −37…−45 LUFS, noise rises when
+normalized); EmoPreben moans (CC0; −30 dB hiss floor); DonkeyMan zombie noises (CC-BY 4.0; lossy MP3 with a tonal
+whistle segment); Darsycho hungry ghoul (144 clipped samples); congusbongus aargh screams (Wilhelm-style, cartoonish);
+Tiskolin zombie voice (CC-BY-SA 4.0), qubodup big monster moan (CC-BY-SA/GPL), Soundsnap zombie crying (GPL 3.0) on license.

@@ -95,3 +95,14 @@ use metal Foley taps, and blast ringing uses a recorded bell decay. Diegetic
 music uses recorded guitar/bell excerpts. No category, offset or lazy-load contract
 changes. See `docs/reports/audio-stingers.md` for the complete procedural inventory
 and per-event replacements.
+
+## Infected voices and credits
+
+The lazy `infected` bank holds recorded humanoid voices: `infected.alert` (shared anti-spam key on `ai.alerted`),
+`infected.hurt` / `infected.death` (melee/ranged hits and kills on human archetypes), and `infected.bite` (a landed
+infected melee attack). Idle groans (`infected.vocal`, max four nearby via `HordeClusters`) and the clustered
+`horde.loop.*` beds stay in the initial banks. Telegraph wind-ups for human archetypes share one CC0 performer with
+per-archetype pitch/colour. Voice recipes set `level` in `imports.json`: the builder compresses gently and matches the
+active-part RMS (−21 dBFS) under the sprite ceiling, so variants in a pool sit within about 1.5 dB.
+The in-game Credits & Licenses screen and the generated block in `THIRD_PARTY_NOTICES.md` come from
+`npx tsx tools/credits/generate.ts` (package.json, package-lock.json, `imports.json`); a unit test fails when they drift.
