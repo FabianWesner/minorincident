@@ -11,12 +11,12 @@ base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"
 slots="${E2E_SLOTS:-1}"
 # Wait in the kernel for the single shared slot; polling can starve a lane behind repeated runs.
 if [ "$slots" -eq 1 ]; then
-  exec lockf "$base.0" "$@"
+  exec lockf -k "$base.0" "$@"
 fi
 while :; do
   i=0
   while [ "$i" -lt "$slots" ]; do
-    lockf -t "${E2E_WAIT:-60}" "$base.$i" "$@" 2>/dev/null; rc=$?
+    lockf -k -t "${E2E_WAIT:-60}" "$base.$i" "$@" 2>/dev/null; rc=$?
     [ "$rc" -ne 75 ] && exit "$rc"   # 75 = slot busy (EX_TEMPFAIL); anything else is the command's result
     i=$((i + 1))
   done
