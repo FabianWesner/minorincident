@@ -11,7 +11,14 @@ import bpy
 import bmesh
 from mathutils import Vector, Matrix
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import hard_normals, refresh_normals
+
 HERE = Path(__file__).resolve().parent
+if '--normals-only' in sys.argv:
+    refresh_normals(HERE, Path(sys.argv[sys.argv.index('--lod-input-directory') + 1]))
+    sys.exit(0)
+
 p = argparse.ArgumentParser()
 p.add_argument('--lod',type=int,choices=(0,1,2),default=0)
 p.add_argument('--render'); p.add_argument('--glb'); p.add_argument('--view', default='ref')
@@ -380,6 +387,8 @@ if a.glb:
     lod_stats={}
     for lod in ((1,2) if a.lod==0 else ()):
         _,lo,ss=build_scene(lod,bake=True)
+        for obj in lo:
+            if obj.type=='MESH': hard_normals(obj)
         export_scene(Path(a.glb).with_name('model.lod'+str(lod)+'.glb'),lo)
         lod_stats[str(lod)]={k:ss[k] for k in ('triangles','draw_calls')}
     if a.lod==0: (HERE/'lod-stats.json').write_text(json.dumps(lod_stats,indent=2)+'\n')

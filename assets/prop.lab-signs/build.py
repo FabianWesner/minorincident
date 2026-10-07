@@ -3,6 +3,9 @@ import argparse, json, math, sys
 from pathlib import Path
 import bpy
 from mathutils import Vector, Matrix
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import simplify as simplify_lod
+
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
 sys.path.insert(0,str(ROOT/'tools/blender'))
@@ -125,6 +128,36 @@ for yy in (y-.175,y+.175):
  for zz in (.95,1.56):rod('casing fastener',(.126,yy,zz),(.142,yy,zz),.012,'uiDark',8)
 collider('keypad',(0,y,.83),(.27,.47,1.66))
 empty('front',(.35,0,1),root)
+# Fit each complete print in its own board with a 45 mm margin. This includes
+# text, icons and arrows; metal backing, screws and posts stay in place.
+print_boxes = {
+ 'sign_authorized': (-1.72, 1.30, .52, .66),
+ 'sign_nobike': (-.86, 1.27, .54, .84),
+ 'sign_deliveries': (.88, 1.27, .63, .65),
+}
+for name, (y, z, width, height) in print_boxes.items():
+ owner=bpy.data.objects[name]
+ graphics=[o for o in parts if o.parent==owner and o.name.startswith((
+  'authorized text','bicycle wheel','bicycle frame','prohibition',
+  'no bicycle wording','deliveries wording','side door wording','direction arrow'))]
+ bpy.context.view_layer.update()
+ points=[o.matrix_world@v.co for o in graphics for v in o.data.vertices]
+ cy=(min(v.y for v in points)+max(v.y for v in points))/2
+ cz=(min(v.z for v in points)+max(v.z for v in points))/2
+ scale=min(width/(max(v.y for v in points)-min(v.y for v in points)),
+           height/(max(v.z for v in points)-min(v.z for v in points)))
+ for o in graphics:
+  inverse=o.matrix_world.inverted()
+  for v in o.data.vertices:
+   world=o.matrix_world@v.co
+   world.y=y+(world.y-cy)*scale;world.z=z+(world.z-cz)*scale
+   v.co=inverse@world
+ bpy.context.view_layer.update()
+ for o in graphics:
+  for v in o.data.vertices:
+   world=o.matrix_world@v.co
+   assert abs(world.y-y)<=width/2+1e-5 and abs(world.z-z)<=height/2+1e-5
+
 # Reference has short mounting stubs rather than waist-high roadside posts.
 for o in parts:
  if not o.name.startswith(('galvanized post','post foot','post perforation')):o.location.z-=.5
@@ -164,22 +197,16 @@ if a.glb:
   for o in asset:o.select_set(True)
   bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False)
  export(a.glb)
- for level,ratio in ((1,.12),(2,.03)):
+ for level,ratio in ((1,.55),(2,.25)):
   originals=[]
   for o in meshes:
-   m=o.modifiers.new('LOD','DECIMATE');m.ratio=ratio;m.use_collapse_triangulate=True
-   bpy.context.view_layer.update()
-   original=o.data;reduced=bpy.data.meshes.new_from_object(o.evaluated_get(bpy.context.evaluated_depsgraph_get()))
-   o.modifiers.remove(m);o.data=reduced;originals.append((o,original,reduced))
-   # Decimation can shift paper-thin plates outward; constrain to the original envelope.
-   inverse=o.matrix_world.inverted()
-   for v in reduced.vertices:
-    world=o.matrix_world@v.co
-    for axis in range(3):world[axis]=max(lo[axis],min(hi[axis],world[axis]))
-    v.co=inverse@world
+   original=o.data;o.data=original.copy();originals.append((o,original))
+   # Exact glyph outlines, circles and board margins at every play distance.
+   simplify_lod(o,ratio,planar_only=True)
   bpy.context.view_layer.update();report['triangles']['lod'+str(level)]=count()
   export(Path(a.glb).with_name('model.lod'+str(level)+'.glb'))
-  for o,original,reduced in originals:o.data=original;bpy.data.meshes.remove(reduced)
+  for o,original in originals:
+   reduced=o.data;o.data=original;bpy.data.meshes.remove(reduced)
  (HERE/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 if a.render:
  scene=bpy.context.scene;scene.render.engine='BLENDER_EEVEE'

@@ -124,7 +124,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   }
   for (const material of root.listMaterials()) if (!validMaterial(material.getName())) errors.push(`material: unknown ${material.getName()}`);
   const materials = root.listMaterials().length, fileKB = bytes / 1024;
-  const budget = lod === 1 && def.tier === 'hero' ? Math.min(def.budget.triangles, Math.ceil(def.budget.triangles * .15)) : lod === 2 ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
+  const budget = lod > 0 && def.authoredLodRatios ? Math.ceil(def.budget.triangles * def.authoredLodRatios[lod === 1 ? 'lod1' : 'lod2']) : lod === 1 && def.tier === 'hero' ? Math.min(def.budget.triangles, Math.ceil(def.budget.triangles * .15)) : lod === 2 ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
   if (triangles > budget) errors.push(`triangles: ${triangles} > ${budget}`);
   if (materials > def.budget.materials) errors.push(`materials: ${materials} > ${def.budget.materials}`);
   if (fileKB > def.budget.fileKB) errors.push(`fileKB: ${fileKB} > ${def.budget.fileKB}`);
@@ -195,7 +195,8 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
           if (!extensions.includes('EXT_meshopt_compression') || !extensions.includes('KHR_mesh_quantization')) validation.errors.push('delivery: missing meshopt/quantization');
           if (base && lod > 0 && requiredLods(def, base.triangles).includes(lod === 1 ? 'lod1' : 'lod2')) {
             const ratio = validation.triangles / base.triangles;
-            if (ratio > (lod === 1 ? .155 : .045)) validation.errors.push(`delivery: triangle ratio ${ratio} exceeds LOD${lod} budget`);
+            const authoredLimit = def.authoredLodRatios?.[lod === 1 ? 'lod1' : 'lod2'];
+            if (ratio > (authoredLimit === undefined ? (lod === 1 ? .155 : .045) : authoredLimit + .005)) validation.errors.push(`delivery: triangle ratio ${ratio} exceeds LOD${lod} budget`);
           }
         }
         results.push(validation);

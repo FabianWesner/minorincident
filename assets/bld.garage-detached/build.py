@@ -154,7 +154,10 @@ def build(lod=0):
         box('front jamb wall',(1.45,y,1.63),(.18,.34,2.80),'asphalt')
     box('front lintel',(1.45,0,2.89),(.18,3.80,.28),'asphalt')
     for x in (-1.44,1.45):
-        profile('gable wall',[(-2.2,3.01),(2.2,3.01),(0,4.10)],x,.16,'asphalt',roof)
+        # Gables are opaque wall geometry and stay with the body when the roof lifts.
+        gable = profile('gable wall',[(-2.2,3.01),(2.2,3.01),(0,4.10)],x,.16,'asphalt',body)
+        for face in gable.data.polygons: face.material_index = 0
+        assert not gable.data.materials[0].name.startswith('emi_')
     if lod == 0:
         for side in (-1,1):
             for row in range(15):
@@ -170,7 +173,7 @@ def build(lod=0):
                 w=4.26*(4.10-z)/1.09
                 if w>.10:
                     for x in (-1.54,1.54):
-                        box('gable lap siding',(x,0,z),(.025,w,.17),'asphalt',roof,bevel=.003)
+                        box('gable lap siding',(x,0,z),(.025,w,.17),'asphalt',body,bevel=.003)
     for x in (-1.50,1.53):
         for y in (-2.19,2.19):
             box('corner trim',(x,y,1.66),(.17,.17,2.87),'picketWhite')

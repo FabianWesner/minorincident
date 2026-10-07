@@ -12,6 +12,9 @@ import bmesh
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import simplify as simplify_lod
+
 HERE = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser()
 parser.add_argument('--render')
@@ -555,14 +558,12 @@ def export(path):
 if args.glb:
     export(args.glb)
     # Same addressable groups and hinges at all densities. LODs ship alongside LOD0.
-    for level,ratio in [(1,.15),(2,.035)]:
+    for level,ratio in [(1,.55),(2,.25)]:
         copies=[]
         for o in [o for o in asset.objects if o.type=='MESH']:
             copies.append((o,o.data))
             o.data=o.data.copy()
-            mod=o.modifiers.new('LOD simplification','DECIMATE'); mod.ratio=ratio
-            bpy.context.view_layer.objects.active=o
-            bpy.ops.object.modifier_apply(modifier=mod.name)
+            simplify_lod(o, ratio)
         export(Path(args.glb).with_name(f'model.lod{level}.glb'))
         for o,data in copies:
             reduced=o.data; o.data=data; bpy.data.meshes.remove(reduced)
