@@ -150,6 +150,8 @@ export class InteractionView extends Group {
       }));
       return (await this.prototypes.get(key)!).clone(true);
     }
+    // E27 draws fire hazards (flame cards, light pools, smoke): no placeholder slab.
+    if (e.hazard?.kind === 'fire') return new Group();
     // Devices without an integrated art entry use gameplay-shaped code placeholders.
     const g = new Group(), body = new Mesh(this.box, this.materials.get(pickup ? 'backpackTeal' : e.hazard?.kind === 'toxic' ? 'grass' : e.destructible ? 'woodWarm' : 'policeBlue'));
     if (pickup) body.scale.set(.3, .3, .3);

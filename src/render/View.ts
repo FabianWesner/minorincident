@@ -37,6 +37,9 @@ export class View {
   private blendTarget = 0;
   private shakeStrength = 0;
   private shakeTime = 0;
+  /** E27 roll kick (Bruno View.roll): damped spring around the view axis, radians. */
+  private rollAngle = 0;
+  private rollSpeed = 0;
   /** Close isometric combat framing; portrait retains at least seven metres of ground width. */
   resize(width: number, height: number): void {
     this.viewportHeight = height;
@@ -47,7 +50,7 @@ export class View {
   }
   reset(player: { x: number; z: number }): void {
     this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
-    this.driving = false; this.focus.set(player.x, 0, player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.pullWeight = 0;
+    this.driving = false; this.focus.set(player.x, 0, player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
     this.update(player, 0);
   }
   /** Named deterministic photo pose (instant); cinematic poses can blend over 1 s. */
@@ -65,6 +68,11 @@ export class View {
   shake(intensity: number): void {
     if (!Number.isFinite(intensity) || intensity < 0) throw new RangeError('Shake intensity must be finite and nonnegative');
     if (this.cameraShake) this.shakeStrength = Math.min(0.4, this.shakeStrength + intensity * 0.4);
+  }
+  /** Blast roll kick; signed strength ~0..1.4 maps to at most ~3° and settles within a second. Off with camera shake off. */
+  roll(strength: number): void {
+    if (!Number.isFinite(strength)) throw new RangeError('Roll strength must be finite');
+    if (this.cameraShake) this.rollSpeed += Math.max(-1.5, Math.min(1.5, strength)) * .55;
   }
   update(player: { x: number; z: number }, seconds: number): void {
     this.zoomRatio += (this.targetZoom - this.zoomRatio) * (1 - Math.exp(-12 * seconds));
@@ -84,7 +92,11 @@ export class View {
     this.shakeTime += seconds;
     this.shakeStrength *= Math.exp(-8 * seconds);
     this.offset.set(Math.sin(this.shakeTime * 67), Math.sin(this.shakeTime * 89), 0).multiplyScalar(this.shakeStrength / Math.SQRT2);
-    this.camera.position.add(this.offset); this.camera.updateMatrixWorld();
+    this.camera.position.add(this.offset);
+    if (!this.cameraShake) this.rollAngle = this.rollSpeed = 0;
+    this.rollSpeed = (this.rollSpeed - this.rollAngle * 90 * seconds) * Math.exp(-7 * seconds); this.rollAngle += this.rollSpeed * seconds;
+    if (this.rollAngle) this.camera.rotateZ(this.rollAngle);
+    this.camera.updateMatrixWorld();
   }
   getState() {
     return { zoom: this.zoomRatio, targetZoom: this.targetZoom, zoomLimits: [...zoomLimits], fov: this.camera.fov, azimuth: this.azimuth, polar: this.polar, radius: this.radius * (this.driving ? 1.15 : 1), focus: this.focus.toArray(), target: this.cameraTarget.toArray(), position: this.camera.position.toArray(), spot: this.spot };

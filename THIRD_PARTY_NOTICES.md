@@ -57,6 +57,8 @@ copyright 2025 Bruno Simon):
 | `Physics/PhysicsVehicle.js`, `Player.js` (41046b5) | `src/sim/vehicles/VehicleBody.ts`, `Vehicles.ts` — fixed-step four-wheel raycast suspension, engine taper, idle/reverse braking, low centre of mass, bounded stuck history and mass-scaled upside-down jump/roll recovery. Recovery delays use simulation ticks in place of GSAP timers; speed-scaled steering and rear handbrake grip are our arcade tuning. |
 | `World/VisualVehicle.js` (41046b5) | `src/render/VehicleView.ts` — fixed-tick wheel steering/suspension smoothing, interpolated chassis roll and wheel transforms, brake lamps and emergency lamp animation |
 | `Explosions.js` (41046b5) | `src/sim/combat/Damage.ts` — radial splash falloff and direction-scaled impulse, without singleton/render dependencies |
+| `Explosions.js`, `Time.js` (41046b5) | `src/sim/combat/Explosions.ts` — E27 radial impulse with upward bias, mass-scaled linear falloff applied one sim tick later, bullet-time trigger by distance |
+| `World/Fireballs.js`, `Explosions.js`, `Time.js` (41046b5) | `src/render/vfx/Blasts.ts`, `src/render/View.ts` — noise-dissolved TSL fireball spheres with a fire gradient, camera roll kick by distance, bullet-time ramp (MaterialX noise replaces the Perlin texture) |
 
 | `Noises.js`, `World/Confetti.js`, `World/Leaves.js`, `Trails.js` (41046b5) | `src/render/vfx/FxPool.ts` — fixed instancing, shader burst trajectories, shared sine noise and tracer slots |
 
@@ -149,7 +151,7 @@ FFmpeg is a local asset/test tool, not bundled or redistributed with the game.
 - @dimforge/rapier3d-compat 0.21.0 — @dimforge/rapier3d-compat. Source: https://www.npmjs.com/package/@dimforge/rapier3d-compat. License: Apache-2.0 (https://spdx.org/licenses/Apache-2.0.html).
 - three 0.186.0 — three. Source: https://www.npmjs.com/package/three. License: MIT (https://spdx.org/licenses/MIT.html).
 - tweakpane 4.0.5 — tweakpane. Source: https://www.npmjs.com/package/tweakpane. License: MIT (https://spdx.org/licenses/MIT.html).
-- folio-2025 (source patterns adapted at commit 41046b5) — Bruno Simon. Source: https://github.com/brunosimon/folio-2025. License: MIT (https://spdx.org/licenses/MIT.html). Engine, input, UI, rendering, vehicle and audio patterns; no art, meshes, textures or audio reused.
+- folio-2025 (source patterns adapted at commit 41046b5) — Bruno Simon. Source: https://github.com/brunosimon/folio-2025. License: MIT (https://spdx.org/licenses/MIT.html). Engine, input, UI, rendering, vehicle, explosion (impulse, fireball, roll kick, bullet time) and audio patterns; no art, meshes, textures or audio reused.
 - Mesh2Motion human rig and animation clips — Mesh2Motion (Scott Petrovic and contributors). Source: https://github.com/Mesh2Motion/mesh2motion-app. License: CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). Rig and animations retargeted to our original characters (pinned commit 79f3f61).
 - meshoptimizer decoder (bundled with three.js addons) — Arseny Kapoulkine. Source: https://github.com/zeux/meshoptimizer. License: MIT (https://spdx.org/licenses/MIT.html).
 - Basis Universal transcoder (public/assets/basis) — Binomial LLC. Source: https://github.com/BinomialLLC/basis_universal. License: Apache-2.0 (https://spdx.org/licenses/Apache-2.0.html).

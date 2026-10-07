@@ -196,6 +196,8 @@ export const eventCues = {
     'hazard.armed': 'explosion.tell',
     'hazard.electrified': 'lamp.power-on',
     'hazard.exploded': 'explosion.boom',
+    // E27: the blast speaks through explosion.beat (crack/debris/roar); these carry no extra one-shot.
+    explosion: 'ui.tick', 'explosion.slowmo': 'ui.tick', 'ai.lostTarget': 'ui.tick',
     'hazard.leaked': 'generator.sputter',
     'interact.completed': 'ui.switch',
     'interact.interrupted': 'ui.tick',

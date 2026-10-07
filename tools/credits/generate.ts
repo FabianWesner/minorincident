@@ -11,7 +11,7 @@ const CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/';
 
 /** Authored third-party content outside npm and the audio ledger (keep in sync with THIRD_PARTY_NOTICES.md prose). */
 const technology: Credit[] = [
-    { title: 'folio-2025 (source patterns adapted at commit 41046b5)', author: 'Bruno Simon', url: 'https://github.com/brunosimon/folio-2025', license: 'MIT', licenseUrl: spdx('MIT'), detail: 'Engine, input, UI, rendering, vehicle and audio patterns; no art, meshes, textures or audio reused.' },
+    { title: 'folio-2025 (source patterns adapted at commit 41046b5)', author: 'Bruno Simon', url: 'https://github.com/brunosimon/folio-2025', license: 'MIT', licenseUrl: spdx('MIT'), detail: 'Engine, input, UI, rendering, vehicle, explosion (impulse, fireball, roll kick, bullet time) and audio patterns; no art, meshes, textures or audio reused.' },
     { title: 'Mesh2Motion human rig and animation clips', author: 'Mesh2Motion (Scott Petrovic and contributors)', url: 'https://github.com/Mesh2Motion/mesh2motion-app', license: 'CC0 1.0', licenseUrl: CC0, detail: 'Rig and animations retargeted to our original characters (pinned commit 79f3f61).' },
     { title: 'meshoptimizer decoder (bundled with three.js addons)', author: 'Arseny Kapoulkine', url: 'https://github.com/zeux/meshoptimizer', license: 'MIT', licenseUrl: spdx('MIT') },
     { title: 'Basis Universal transcoder (public/assets/basis)', author: 'Binomial LLC', url: 'https://github.com/BinomialLLC/basis_universal', license: 'Apache-2.0', licenseUrl: spdx('Apache-2.0') },

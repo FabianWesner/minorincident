@@ -261,6 +261,8 @@ export class GameView implements Lifecycle {
         vehicleBloodEnabled: enabled => { this.vehicles?.setBloodEnabled(enabled); this.vehicleFeedback?.setBloodEnabled(enabled); },
         clearGore: () => { this.crowd?.clearGore(); },
         shake: strength => this.view.shake(strength),
+        roll: strength => this.view.roll(strength), focus: () => this.view.focus,
+        light: (x, z, hex, intensity, radius, ttl, flicker) => this.lightField?.addTransient({ x, z }, hex, intensity, radius, ttl, flicker) ?? null,
       });
       this.vfx.set({ ...this.vfxSettings, quality: this.quality }); this.scene.add(this.vfx);
       if (this.world.scenario === 'L1') { const targets = labAccidentTargets(this.scene, s => this.view.shake(s), (x, z, w) => this.view.pull(x, z, w)); this.labWindows = targets; this.labAccident = new LabAccidentFx(this.world, this.vfx, targets, anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; this.labAccident.facing = this.camera.quaternion; this.labAccident.column.camera = this.camera; this.scene.add(this.labAccident.column); }
@@ -441,6 +443,8 @@ export class GameView implements Lifecycle {
       this.view.preset(name, { position: [p.x + 15, 18, p.z + 15], target: [p.x, .4, p.z] }); this.update(1); return;
     }
     if (this.world.vehicles && name === 'vehicle') { this.view.preset(name, { position: [-9, 6, 21], target: [0, .8, 12] }); this.update(1); return; }
+    // E27 labs: the game camera geometry (radius 19, max zoom-out 1.45×) centred on the blast origin.
+    if ((this.world.scenario?.startsWith('blast') || this.world.scenario === 'smoke-lab') && (name === 'blast' || name === 'blast-wide' || name === 'blast-car')) { const k = name === 'blast-wide' ? 1.45 : 1, [x, z] = name === 'blast-car' ? [7, -3] : [0, 0]; this.view.preset(name, { position: [x + 10.9 * k, 11.2 * k, z + 10.9 * k], target: [x, 0, z] }); this.update(1); return; }
     if (this.world.combat && name === 'aim') { this.view.preset(name, combatPhotoSpots.aim); this.update(1); return; }
     if (this.world.scenario?.startsWith('vfx') || this.world.scenario === 'blood-probe' || this.world.scenario === 'gore-probe') {
       if (!['blood-probe', 'gore-probe', 'vfx-stress', 'vfx-showcase', 'L4', 'L6', 'lunge', 'charge', 'splash', 'bloated'].includes(name)) throw new Error(`Unknown VFX photo spot: ${name}`);
@@ -473,6 +477,7 @@ export class GameView implements Lifecycle {
     if (patch.gore !== undefined) this.vfxSettings.gore = patch.gore;
     if (patch.flashReduction !== undefined) { this.vfxSettings.flashReduction = patch.flashReduction; if (this.labAccident) this.labAccident.flashReduction = patch.flashReduction; }
     if (patch.quality !== undefined) this.vfxSettings.quality = patch.quality;
+    if (patch.slowMotion !== undefined) this.vfxSettings.slowMotion = patch.slowMotion;
     if (patch.cameraShake !== undefined) { this.view.cameraShake = patch.cameraShake; this.advance(0); }
     if (patch.bloom !== undefined && this.postFx) this.postFx.bloomEnabled.value = Number(patch.bloom);
     if (patch.cheapDof !== undefined) { this.dofEnabled = patch.cheapDof; this.postFx?.setDof(this.dofEnabled); }
