@@ -1,5 +1,5 @@
 #!/bin/sh
-# Limit heavy Vitest runs (tests/sim, tests/levels, full test:unit) machine-wide: several lanes share one Mac and parallel Playwright runs
+# Limit heavy Vitest runs (tests/sim, tests/levels, full test:unit) machine-wide: several lanes share one Mac and parallel test runs
 # saturate it. SIM_SLOTS (default 2) runs may proceed at once; the rest wait for a free slot.
 # Wrap heavy sim/unit runs, never plain builds. Without lockf (e.g. Linux CI) just run.
 # SIM_WAIT (seconds, default 0) queues on a slot instead of polling when validation is starved.

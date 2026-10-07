@@ -118,3 +118,17 @@ test('@E05 released mouse target clicks on the kick side keep using the normal u
   expect(attacks.length).toBeGreaterThanOrEqual(5);
   for (const attack of attacks) expect(attack).toMatchObject({ actionId: 'weapon.fists', side: 'RIGHT' });
 });
+
+test('@E05 released mouse recovery tap in place keeps unarmed intent on the kick side', async () => {
+  const w = await arena(); equip(w, ['weapon.fists'], ['weapon.kick']);
+  w.combat!.runner.loadout.state.selectedSide = 'RIGHT';
+  const frame = emptyInput(); frame.mouseAttack = true; frame.attackInPlace = true;
+  frame.left = { down: true, held: false, up: true }; frame.aim = { x: 1, z: 0 };
+  w.applyInput(frame, 'mouse-only'); w.update(); w.clearInput();
+  while (w.tick < 10) w.update();
+  w.applyInput(frame, 'mouse-only'); w.update(); w.clearInput();
+  while (w.tick < 25) w.update();
+  const attacks = w.events.events().filter(e => e.type === 'combat.attack');
+  expect(attacks).toHaveLength(2); expect(attacks[1].tick).toBe(17);
+  for (const attack of attacks) expect(attack).toMatchObject({ actionId: 'weapon.fists', side: 'RIGHT' });
+});

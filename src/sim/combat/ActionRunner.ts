@@ -12,7 +12,7 @@ export class ActionRunner {
   readonly running: Partial<Record<Side, Attack>> = {};
   infiniteCharges = false;
   /** One pending melee tap per side, valid for 200ms (12 sim ticks). */
-  private readonly buffered: Partial<Record<Side, { actionId: string; until: number; inPlace: boolean }>> = {};
+  private readonly buffered: Partial<Record<Side, { actionId: string; until: number; inPlace: boolean; mouseAttack?: boolean }>> = {};
   snapshotBuffer() { return structuredClone(this.buffered); }
   private readonly chains: Partial<Record<Side, { actionId: string; combo: number; until: number }>> = {};
   constructor(readonly sourceId: number, readonly loadout: Loadout, private sequence = 0) {}
@@ -24,13 +24,13 @@ export class ActionRunner {
       if (!enabled) { delete this.running[side]; delete this.buffered[side]; continue; }
       if (attack && tick >= attack.endsAt) { delete this.running[side]; attack = undefined; }
       const button = side === 'LEFT' ? frame.left : frame.right;
-      let def = this.loadout.definition(this.loadout.current(side).id);
-      if (frame.mouseAttack && def.id === 'weapon.kick') def = this.loadout.definition('weapon.fists');
       if (frame.cancelMove || frame.moveTarget || frame.attackTarget || frame.selector || frame.selectedSlot || frame.selectedActiveSlot !== undefined) delete this.buffered[side];
       let buffered = this.buffered[side];
+      let def = this.loadout.definition(this.loadout.current(side).id);
+      if ((frame.mouseAttack || (!button.down && buffered?.mouseAttack)) && def.id === 'weapon.kick') def = this.loadout.definition('weapon.fists');
       if (buffered && (tick > buffered.until || buffered.actionId !== def.id)) { delete this.buffered[side]; buffered = undefined; }
       if (button.down && def.category === 'melee') {
-        buffered = { actionId: def.id, until: tick + 12, inPlace: !!frame.attackInPlace };
+        buffered = { actionId: def.id, until: tick + 12, inPlace: !!frame.attackInPlace, ...(frame.mouseAttack ? { mouseAttack: true } : {}) };
         this.buffered[side] = buffered;
       }
       if (!attack && (buffered || button.down || (button.held && (def.category === 'melee' || def.category === 'ranged'))) && this.loadout.usable(side, tick)) {
