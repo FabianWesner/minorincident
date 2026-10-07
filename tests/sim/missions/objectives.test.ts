@@ -1,6 +1,7 @@
 import { afterEach, expect, test } from 'vitest';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { missionControls } from '../../../src/sim/missions/controls';
+import { emptyInput } from '../../../src/input/InputFrame';
 import { objectiveTypes } from '../../../src/sim/missions/types';
 import { missionSandbox } from '../../fixtures/scenarios/mission-sandbox';
 let world: SimWorld;
@@ -22,7 +23,14 @@ for (const type of objectiveTypes) test(`T-E12-02-${type} @E12 @E12-AC02 mission
     case 'survive': case 'defend': step(119); expect(api.state()!.completedObjectives).toEqual([]); break;
     case 'escort': teleport(actors.escort); break;
     case 'collect': api.collect('fuse'); step(); expect(api.state()!.completedObjectives).toEqual([]); api.collect('keys'); break;
-    case 'drive': teleport(actors.car); step(); expect(api.state()!.completedObjectives).toEqual([]); api.setState('driving:car', true); break;
+    case 'drive': {
+      api.setState('driving:car', true); step(); expect(api.state()!.completedObjectives).toEqual([]);
+      teleport(1, -4.8, 1.45); world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); step();
+      expect(world.vehicles!.active).toBe(actors.car);
+      world.applyInput({ ...emptyInput(), drive: { throttle: .6, steer: 0 } }, 'keyboard');
+      for (let i = 0; i < 600 && api.state()!.phase === 'playing'; i++) step();
+      break;
+    }
     case 'custom': api.count('breakers', 2); step(); expect(api.state()!.completedObjectives).toEqual([]); api.count('breakers'); break;
   }
   step(); expect(api.state()!.completedObjectives).toEqual([type]);

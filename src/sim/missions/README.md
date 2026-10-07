@@ -41,3 +41,34 @@ clamped direction arrows, subtitles, briefing/retry/results and progression hand
 Bruno View adaptation. World/player visuals continue through the asset registry;
 scenario actors retain existing code placeholders until their gameplay view owner
 integrates them. No assets or dependencies are required for subtitles or mission UI.
+
+Campaign adapters use `SimWorld.spawnMissionActor` to attach real vehicle bodies,
+E11 devices, destructibles and item pickups to the graph's actor IDs. For an
+`interact` trigger with `actor`, the actor's device must complete; authored mission
+devices use `instant: false`, require standing still, and retain the existing 25%
+damage interruption notch. Bare interaction triggers keep the L1 story semantics.
+`drive` checks the actual driver and vehicle position; `exit: true` also requires
+the player to leave the vehicle inside the destination after driving into it.
+`escort` checks the living follower, `destroy` checks the spawned object's health,
+and `items` receives E11 pickup transactions. Device, vehicle and prop events also
+retain actor filtering in `event` triggers.
+
+`hold` requires continuous living player occupancy and resets progress when the
+player leaves its ring. Defend steps combine this with a target-death failure.
+L3's `deadline` is global: `state.deadlineTicks` counts down during gameplay only.
+A timeout emits `mission.failed`, opens Retry, then restores the checkpoint's
+remaining ticks plus 3600 (60 s). Ordinary restores get no grace; repeated retries
+do not accumulate grace on the stored checkpoint. The tracker shows the countdown.
+
+Headless real-input checks: `npm run sim -- --level L2 --policy newbie --seeds 20`.
+`--level all` runs L1–L6; `--seed` selects the first seed, `--ticks` caps each run,
+and `--out` selects the JSON report. Reports include completed, time, deaths,
+failures by reason, objective timeline, active objectives and stalled positions.
+The CLI delegates L1 to its existing story bot and reuses its navigation Walker
+for later levels. The later policies drive with throttle/steering, enter/exit at
+doors, stand at devices, follow objectives, and attack destructibles/threats.
+`newbie` makes decisions every 250 ms and skips 15% of attack decisions.
+`npm run test:levels` runs three seeds per level and returns nonzero if any fail;
+it asserts completion only, without padding times to match acceptance bands.
+This is a foundation check: missing routes/encounters and finale content still
+need the subsequent content lanes. A graph completion does not prove every epic.
