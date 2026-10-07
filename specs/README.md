@@ -7,6 +7,7 @@ This folder holds the specification for **Minor Incident**, a colorful isometric
 | File | Purpose |
 | --- | --- |
 | [00-game-concept.md](00-game-concept.md) | Full game concept: pillars, core loop, controls, combat, progression, vehicles, enemies, campaign |
+| [po-levels-2-6-2026-10-07.md](po-levels-2-6-2026-10-07.md) | The product owner's verbatim Level 2–6 design (source of truth for E20–E24; wins on any disagreement) |
 | [01-art-direction.md](01-art-direction.md) | Visual language taken from `initial-drafts/`: palette, lighting, world-decay tiers, gore policy |
 | [02-technical-architecture.md](02-technical-architecture.md) | Runtime architecture, conventions, the sim/render split, the test API contract |
 | [03-asset-pipeline.md](03-asset-pipeline.md) | Codex imagegen → upscaled reference → Blender `bpy` build script → GLB → gltf-transform → game, plus asset contracts and validation |
@@ -35,7 +36,7 @@ This folder holds the specification for **Minor Incident**, a colorful isometric
 - Epics: `E01` … `E28`
 - Acceptance criteria: `E05-AC03`
 - Tests: `T-E05-03` (normally 1:1 with an acceptance criterion; extra tests get a suffix such as `T-E05-03b`)
-- Levels: `L1` … `L6`. Districts: `D-RES`, `D-MAIN`, `D-SCHOOL`, `D-SHOP`, `D-CIVIC`, `D-PARK`, `D-ZOO`, `D-EDGE`
+- Levels: `L1` … `L6`. Districts: `D-GROVE` (L1), `D-RES`, `D-MAIN`, `D-SCHOOL`, `D-SHOP`, `D-CIVIC`, `D-PARK`, `D-ZOO`, `D-EDGE`, `D-CORRIDOR` (L3), `D-FAIR` (L4–L5, Fairhaven), `D-SUBWAY` (L6)
 - World-state tiers: `W0` (normal) … `W5` (destroyed)
 
 ## Language rule for criteria
