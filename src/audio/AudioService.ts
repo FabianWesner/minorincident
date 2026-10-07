@@ -34,6 +34,7 @@ export interface CueLog {
     variant: string;
 }
 interface AudioHost {
+    readyForBackground?(): boolean;
     settingsChanged?(patch:Partial<AudioSettings>):void;
     pause(): void;
     resume(): void;
@@ -88,6 +89,7 @@ export class AudioService implements Lifecycle {
     private disposed = false;
     private musicEpoch = 0;
     private started = false;
+    private starting = false;
     private quietMusicUntil = 0;
     private lastDamageTick = -1000;
     private lastDamage = 0;
@@ -133,7 +135,7 @@ export class AudioService implements Lifecycle {
         document.addEventListener('resume', this.thaw);
         this.context.addEventListener('statechange', this.statechange);
         this.mount();
-        await this.registry.prepare();
+        await this.registry.prepare('L1', false);
         if (this.context.state === 'running' && !this.unlocked)
             await this.context.suspend();
         if (document.hidden || !document.hasFocus())
@@ -149,7 +151,7 @@ export class AudioService implements Lifecycle {
         this.graph.map = fromDistricts(this.world.districts);
         this.registry.reset(this.world.seed);
         const generation = this.generation;
-        await this.registry.prepare(this.level);
+        await this.registry.prepare(this.level, false);
         // reset() or dispose() ran while the banks were loading: this world is gone, bind nothing.
         if (generation !== this.generation || this.disposed || !this.world.entities.get(1))
             return;
@@ -166,8 +168,6 @@ export class AudioService implements Lifecycle {
         this.startBedsAndMusic();
         if (this.background)
             this.host.pause();
-        // Lazy banks arrive in the background once the level is running.
-        setTimeout(() => { if (generation === this.generation && !this.disposed) void this.registry.preloadLazy(); }, 300);
     }
     /** Decay rebuilds presentation/acoustics in the same world; keep mission cues and score. */
     refreshAcoustics(): void {
@@ -444,11 +444,23 @@ export class AudioService implements Lifecycle {
             navigator.vibrate(kind === 'explosion' ? [40, 30, 80] : kind === 'crash' ? [60, 20, 40] : 35);
     }
     private startBedsAndMusic(): void {
-        if (!this.available() || this.started)
+        if (!this.available() || this.started || this.starting || this.host.readyForBackground?.() === false)
             return;
+        if (!this.registry.buffers.has('ambience') || !this.registry.buffers.has(`music-${this.level}`)) {
+            this.starting = true;
+            const generation = this.generation;
+            void Promise.all(['ambience', `music-${this.level}`].map(category => this.registry.load(category))).then(() => {
+                if (generation !== this.generation || this.disposed) return;
+                this.starting = false; this.startBedsAndMusic();
+            }).catch(error => { if (generation === this.generation) { this.starting = false; this.registry.errors.push(String(error)); } });
+            return;
+        }
         this.started = true;
         this.musicEpoch = this.context.currentTime + 0.02;
         this.music = new MusicDirector(this.level, this.musicEpoch);
+        // Long recordings and unused SFX banks must not compete with the level download.
+        const generation = this.generation;
+        setTimeout(() => { if (generation === this.generation && !this.disposed) void this.registry.preloadLazy(); }, 300);
         if (this.hasScore) void this.score.transition('calm', this.musicEpoch, this.musicEpoch, this.music.bar);
         for (const layer of musicLayers) {
             const v = this.play(`music.${this.level}.${layer}`, { time: this.musicEpoch, gain: 0, rate: 1, loop: true });
@@ -459,6 +471,7 @@ export class AudioService implements Lifecycle {
             this.loop(`bed:${bed}`, `bed.${bed}`, { gain: this.tier === 5 ? dbGain(-16) : 1 });
     }
     private musicIntensity(input: MusicIntensity): void {
+        if (!this.started) return;
         const t = this.context.currentTime;
         this.score.update();
         this.music.update(t, { ...input, incident: this.incident, complete: this.complete });
@@ -884,6 +897,7 @@ export class AudioService implements Lifecycle {
         this.clearRings();
         this.captionElement.hidden = true;
         this.started = false;
+        this.starting = false;
         this.loaded = false;
         this.scheduledTransition = null;
         this.externalIntensity = null;
