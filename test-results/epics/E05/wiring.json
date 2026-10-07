@@ -7,8 +7,8 @@
         "z": 0
       },
       "aim": {
-        "x": 0.9999999999999541,
-        "z": 3.02405055767746e-7
+        "x": 0.9999999999999367,
+        "z": -3.560173502155469e-7
       },
       "aimSource": "pointer",
       "left": {
@@ -24,14 +24,15 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": true,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": 0.7999996026345393,
-        "z": 2.4192392444888355e-7
+        "x": 0.8000000370380942,
+        "z": -2.848138933586597e-7
       }
     },
     "browser": {
@@ -59,12 +60,12 @@
         ],
         "index": 0,
         "aim": {
-          "x": 0.9999999999999543,
-          "z": 3.0240505576774603e-7
+          "x": 0.9999999999999367,
+          "z": -3.560173502155469e-7
         },
         "aimPoint": {
-          "x": 0.7999996026345393,
-          "z": 2.4192392444888355e-7
+          "x": 0.8000000370380942,
+          "z": -2.848138933586597e-7
         },
         "swapUntil": 0
       },
@@ -123,12 +124,12 @@
         ],
         "index": 0,
         "aim": {
-          "x": 0.9999999999999543,
-          "z": 3.0240505576774603e-7
+          "x": 0.9999999999999367,
+          "z": -3.560173502155469e-7
         },
         "aimPoint": {
-          "x": 0.7999996026345393,
-          "z": 2.4192392444888355e-7
+          "x": 0.8000000370380942,
+          "z": -2.848138933586597e-7
         },
         "swapUntil": 0
       },
@@ -171,8 +172,8 @@
         "z": 0
       },
       "aim": {
-        "x": 0.9999999999999541,
-        "z": 3.02405055767746e-7
+        "x": 0.9999999999999367,
+        "z": -3.560173502155469e-7
       },
       "aimSource": "pointer",
       "left": {
@@ -188,15 +189,22 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": true,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": 0.7999996026345393,
-        "z": 2.4192392444888355e-7
-      }
+        "x": 0.8000000370380942,
+        "z": -2.848138933586597e-7
+      },
+      "mouseAttack": true,
+      "moveTarget": {
+        "x": 0.8000000370380942,
+        "z": -2.848138933586597e-7
+      },
+      "pointerGround": true
     },
     "browser": {
       "selectedSide": "LEFT",
@@ -204,12 +212,12 @@
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -223,12 +231,12 @@
         ],
         "index": 0,
         "aim": {
-          "x": 0.9999999999999543,
-          "z": 3.0240505576774603e-7
+          "x": 0.9999999999999367,
+          "z": -3.560173502155469e-7
         },
         "aimPoint": {
-          "x": 0.7999996026345393,
-          "z": 2.4192392444888355e-7
+          "x": 0.8000000370380942,
+          "z": -2.848138933586597e-7
         },
         "swapUntil": 0
       },
@@ -268,12 +276,12 @@
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -287,12 +295,12 @@
         ],
         "index": 0,
         "aim": {
-          "x": 0.9999999999999543,
-          "z": 3.0240505576774603e-7
+          "x": 0.9999999999999367,
+          "z": -3.560173502155469e-7
         },
         "aimPoint": {
-          "x": 0.7999996026345393,
-          "z": 2.4192392444888355e-7
+          "x": 0.8000000370380942,
+          "z": -2.848138933586597e-7
         },
         "swapUntil": 0
       },
@@ -335,8 +343,8 @@
         "z": 0
       },
       "aim": {
-        "x": 0.9999999999999541,
-        "z": 3.02405055767746e-7
+        "x": 0.9999999999999367,
+        "z": -3.5601735110402423e-7
       },
       "aimSource": "pointer",
       "left": {
@@ -352,15 +360,17 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": 0.7999996026345393,
-        "z": 2.4192392444888355e-7
-      }
+        "x": 0.8000568956583933,
+        "z": -2.848341367212015e-7
+      },
+      "pointerGround": true
     },
     "browser": {
       "selectedSide": "LEFT",
@@ -368,12 +378,12 @@
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -387,12 +397,12 @@
         ],
         "index": 0,
         "aim": {
-          "x": 0.9999999999999543,
-          "z": 3.0240505576774603e-7
+          "x": 0.9999999999999367,
+          "z": -3.5601735110402423e-7
         },
         "aimPoint": {
-          "x": 0.7999996026345393,
-          "z": 2.4192392444888355e-7
+          "x": 0.8000568956583933,
+          "z": -2.848341367212015e-7
         },
         "swapUntil": 0
       },
@@ -432,12 +442,12 @@
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -451,12 +461,12 @@
         ],
         "index": 0,
         "aim": {
-          "x": 0.9999999999999543,
-          "z": 3.0240505576774603e-7
+          "x": 0.9999999999999367,
+          "z": -3.5601735110402423e-7
         },
         "aimPoint": {
-          "x": 0.7999996026345393,
-          "z": 2.4192392444888355e-7
+          "x": 0.8000568956583933,
+          "z": -2.848341367212015e-7
         },
         "swapUntil": 0
       },
@@ -499,8 +509,8 @@
         "z": 0
       },
       "aim": {
-        "x": 3.0240505132685033e-7,
-        "z": 0.9999999999999541
+        "x": 7.7193819140639e-8,
+        "z": 0.9999999999999971
       },
       "aimSource": "pointer",
       "left": {
@@ -516,15 +526,17 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": 2.419239208961699e-7,
-        "z": 0.7999996026345428
-      }
+        "x": 0.0014815432336146017,
+        "z": 0.8000001257671805
+      },
+      "pointerGround": true
     },
     "browser": {
       "selectedSide": "LEFT",
@@ -532,12 +544,12 @@
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -551,12 +563,12 @@
         ],
         "index": 0,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": 7.7193819140639e-8,
+          "z": 0.9999999999999971
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": 0.0014815432336146017,
+          "z": 0.8000001257671805
         },
         "swapUntil": 0
       },
@@ -596,12 +608,12 @@
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -615,12 +627,12 @@
         ],
         "index": 0,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": 7.7193819140639e-8,
+          "z": 0.9999999999999971
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": 0.0014815432336146017,
+          "z": 0.8000001257671805
         },
         "swapUntil": 0
       },
@@ -663,518 +675,8 @@
         "z": 0
       },
       "aim": {
-        "x": 2.823419269718188e-7,
-        "z": 0.9999999999999603
-      },
-      "aimSource": "pointer",
-      "left": {
-        "down": false,
-        "held": false,
-        "up": false
-      },
-      "right": {
-        "down": true,
-        "held": true,
-        "up": false
-      },
-      "selector": 0,
-      "interact": false,
-      "pause": false,
-      "drive": {
-        "throttle": 0,
-        "steer": 0
-      },
-      "brake": false,
-      "aimPoint": {
-        "x": 2.448348439543224e-7,
-        "z": 0.7999996055454659
-      }
-    },
-    "browser": {
-      "selectedSide": "RIGHT",
-      "LEFT": {
-        "rack": [
-          {
-            "id": "weapon.machine-gun",
-            "magazine": 29,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 8
-          },
-          {
-            "id": "weapon.pistol",
-            "magazine": 6,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 0
-          }
-        ],
-        "index": 0,
-        "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
-        },
-        "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
-        },
-        "swapUntil": 0
-      },
-      "RIGHT": {
-        "rack": [
-          {
-            "id": "weapon.grenade",
-            "magazine": 0,
-            "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
-            "reloadUntil": 0,
-            "readyAt": 20
-          },
-          {
-            "id": "ability.ground-slam",
-            "magazine": 0,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 0
-          }
-        ],
-        "index": 0,
-        "aim": {
-          "x": 2.823419269718188e-7,
-          "z": 0.9999999999999603
-        },
-        "aimPoint": {
-          "x": 2.448348439543224e-7,
-          "z": 0.7999996055454659
-        },
-        "swapUntil": 0
-      }
-    },
-    "sim": {
-      "selectedSide": "RIGHT",
-      "LEFT": {
-        "rack": [
-          {
-            "id": "weapon.machine-gun",
-            "magazine": 29,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 8
-          },
-          {
-            "id": "weapon.pistol",
-            "magazine": 6,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 0
-          }
-        ],
-        "index": 0,
-        "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
-        },
-        "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
-        },
-        "swapUntil": 0
-      },
-      "RIGHT": {
-        "rack": [
-          {
-            "id": "weapon.grenade",
-            "magazine": 0,
-            "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
-            "reloadUntil": 0,
-            "readyAt": 20
-          },
-          {
-            "id": "ability.ground-slam",
-            "magazine": 0,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 0
-          }
-        ],
-        "index": 0,
-        "aim": {
-          "x": 2.823419269718188e-7,
-          "z": 0.9999999999999603
-        },
-        "aimPoint": {
-          "x": 2.448348439543224e-7,
-          "z": 0.7999996055454659
-        },
-        "swapUntil": 0
-      }
-    }
-  },
-  {
-    "tick": 6,
-    "frame": {
-      "move": {
-        "x": 0,
-        "z": 0
-      },
-      "aim": {
-        "x": 2.8542198389446427e-7,
-        "z": 0.9999999999999594
-      },
-      "aimSource": "pointer",
-      "left": {
-        "down": false,
-        "held": false,
-        "up": false
-      },
-      "right": {
-        "down": false,
-        "held": false,
-        "up": true
-      },
-      "selector": 0,
-      "interact": false,
-      "pause": false,
-      "drive": {
-        "throttle": 0,
-        "steer": 0
-      },
-      "brake": false,
-      "aimPoint": {
-        "x": 2.4729888892238705e-7,
-        "z": 0.7999996080095109
-      }
-    },
-    "browser": {
-      "selectedSide": "RIGHT",
-      "LEFT": {
-        "rack": [
-          {
-            "id": "weapon.machine-gun",
-            "magazine": 29,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 8
-          },
-          {
-            "id": "weapon.pistol",
-            "magazine": 6,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 0
-          }
-        ],
-        "index": 0,
-        "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
-        },
-        "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
-        },
-        "swapUntil": 0
-      },
-      "RIGHT": {
-        "rack": [
-          {
-            "id": "weapon.grenade",
-            "magazine": 0,
-            "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
-            "reloadUntil": 0,
-            "readyAt": 20
-          },
-          {
-            "id": "ability.ground-slam",
-            "magazine": 0,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 0
-          }
-        ],
-        "index": 0,
-        "aim": {
-          "x": 2.8542198389446427e-7,
-          "z": 0.9999999999999594
-        },
-        "aimPoint": {
-          "x": 2.4729888892238705e-7,
-          "z": 0.7999996080095109
-        },
-        "swapUntil": 0
-      }
-    },
-    "sim": {
-      "selectedSide": "RIGHT",
-      "LEFT": {
-        "rack": [
-          {
-            "id": "weapon.machine-gun",
-            "magazine": 29,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 8
-          },
-          {
-            "id": "weapon.pistol",
-            "magazine": 6,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 0
-          }
-        ],
-        "index": 0,
-        "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
-        },
-        "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
-        },
-        "swapUntil": 0
-      },
-      "RIGHT": {
-        "rack": [
-          {
-            "id": "weapon.grenade",
-            "magazine": 0,
-            "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
-            "reloadUntil": 0,
-            "readyAt": 20
-          },
-          {
-            "id": "ability.ground-slam",
-            "magazine": 0,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 0
-          }
-        ],
-        "index": 0,
-        "aim": {
-          "x": 2.8542198389446427e-7,
-          "z": 0.9999999999999594
-        },
-        "aimPoint": {
-          "x": 2.4729888892238705e-7,
-          "z": 0.7999996080095109
-        },
-        "swapUntil": 0
-      }
-    }
-  },
-  {
-    "tick": 7,
-    "frame": {
-      "move": {
-        "x": 0,
-        "z": 0
-      },
-      "aim": {
-        "x": -0.9999999999998187,
-        "z": -6.019398769600576e-7
-      },
-      "aimSource": "pointer",
-      "left": {
-        "down": false,
-        "held": false,
-        "up": false
-      },
-      "right": {
-        "down": false,
-        "held": false,
-        "up": false
-      },
-      "selector": 0,
-      "interact": false,
-      "pause": false,
-      "drive": {
-        "throttle": 0,
-        "steer": 0
-      },
-      "brake": false,
-      "aimPoint": {
-        "x": -0.7999997374063099,
-        "z": -4.625903358146388e-7
-      }
-    },
-    "browser": {
-      "selectedSide": "RIGHT",
-      "LEFT": {
-        "rack": [
-          {
-            "id": "weapon.machine-gun",
-            "magazine": 29,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 8
-          },
-          {
-            "id": "weapon.pistol",
-            "magazine": 6,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 0
-          }
-        ],
-        "index": 0,
-        "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
-        },
-        "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
-        },
-        "swapUntil": 0
-      },
-      "RIGHT": {
-        "rack": [
-          {
-            "id": "weapon.grenade",
-            "magazine": 0,
-            "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
-            "reloadUntil": 0,
-            "readyAt": 20
-          },
-          {
-            "id": "ability.ground-slam",
-            "magazine": 0,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 0
-          }
-        ],
-        "index": 0,
-        "aim": {
-          "x": -0.9999999999998188,
-          "z": -6.019398769600577e-7
-        },
-        "aimPoint": {
-          "x": -0.7999997374063099,
-          "z": -4.625903358146388e-7
-        },
-        "swapUntil": 0
-      }
-    },
-    "sim": {
-      "selectedSide": "RIGHT",
-      "LEFT": {
-        "rack": [
-          {
-            "id": "weapon.machine-gun",
-            "magazine": 29,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 8
-          },
-          {
-            "id": "weapon.pistol",
-            "magazine": 6,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 0
-          }
-        ],
-        "index": 0,
-        "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
-        },
-        "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
-        },
-        "swapUntil": 0
-      },
-      "RIGHT": {
-        "rack": [
-          {
-            "id": "weapon.grenade",
-            "magazine": 0,
-            "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
-            "reloadUntil": 0,
-            "readyAt": 20
-          },
-          {
-            "id": "ability.ground-slam",
-            "magazine": 0,
-            "reserve": "infinite",
-            "charges": 0,
-            "nextCharge": 0,
-            "reloadUntil": 0,
-            "readyAt": 0
-          }
-        ],
-        "index": 0,
-        "aim": {
-          "x": -0.9999999999998188,
-          "z": -6.019398769600577e-7
-        },
-        "aimPoint": {
-          "x": -0.7999997374063099,
-          "z": -4.625903358146388e-7
-        },
-        "swapUntil": 0
-      }
-    }
-  },
-  {
-    "tick": 8,
-    "frame": {
-      "move": {
-        "x": 0,
-        "z": 0
-      },
-      "aim": {
-        "x": -0.9999999999998079,
-        "z": -6.197960367659363e-7
+        "x": -0.002119842852001222,
+        "z": 0.9999977531306172
       },
       "aimSource": "pointer",
       "left": {
@@ -1190,28 +692,31 @@
       "selector": 1,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999997327298232,
-        "z": -4.579138490612422e-7
-      }
+        "x": 0.0020078252771433824,
+        "z": 0.8000001255798157
+      },
+      "pointerGround": true,
+      "selectorActive": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -1223,16 +728,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.002119842852001222,
+          "z": 0.9999977531306172
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": 0.0020078252771433824,
+          "z": 0.8000001255798157
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -1240,10 +745,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -1255,30 +760,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998079,
-          "z": -6.197960367659363e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999997327298232,
-          "z": -4.579138490612422e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -1290,16 +792,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.002119842852001222,
+          "z": 0.9999977531306172
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": 0.0020078252771433824,
+          "z": 0.8000001255798157
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -1307,10 +809,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -1322,16 +824,511 @@
             "readyAt": 0
           }
         ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      }
+    }
+  },
+  {
+    "tick": 6,
+    "frame": {
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "aim": {
+        "x": -0.005481801349008853,
+        "z": 0.9999849748141069
+      },
+      "aimSource": "pointer",
+      "left": {
+        "down": false,
+        "held": false,
+        "up": false
+      },
+      "right": {
+        "down": false,
+        "held": false,
+        "up": false
+      },
+      "selector": 0,
+      "interact": false,
+      "pause": false,
+      "cancelMove": false,
+      "drive": {
+        "throttle": 0,
+        "steer": 0
+      },
+      "brake": false,
+      "aimPoint": {
+        "x": 0.0030218996031763368,
+        "z": 0.8000001252187872
+      },
+      "pointerGround": true
+    },
+    "browser": {
+      "selectedSide": "LEFT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.machine-gun",
+            "magazine": 30,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.pistol",
+            "magazine": 6,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
         "index": 1,
         "aim": {
-          "x": -0.9999999999998079,
-          "z": -6.197960367659363e-7
+          "x": -0.005481801349008854,
+          "z": 0.999984974814107
         },
         "aimPoint": {
-          "x": -0.7999997327298232,
-          "z": -4.579138490612422e-7
+          "x": 0.0030218996031763368,
+          "z": 0.8000001252187872
         },
-        "swapUntil": 23
+        "swapUntil": 20
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.grenade",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 2,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.ground-slam",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      }
+    },
+    "sim": {
+      "selectedSide": "LEFT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.machine-gun",
+            "magazine": 30,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.pistol",
+            "magazine": 6,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 1,
+        "aim": {
+          "x": -0.005481801349008854,
+          "z": 0.999984974814107
+        },
+        "aimPoint": {
+          "x": 0.0030218996031763368,
+          "z": 0.8000001252187872
+        },
+        "swapUntil": 20
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.grenade",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 2,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.ground-slam",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      }
+    }
+  },
+  {
+    "tick": 7,
+    "frame": {
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "aim": {
+        "x": -0.9999999999999989,
+        "z": -4.696782924608517e-8
+      },
+      "aimSource": "pointer",
+      "left": {
+        "down": false,
+        "held": false,
+        "up": false
+      },
+      "right": {
+        "down": false,
+        "held": false,
+        "up": false
+      },
+      "selector": 0,
+      "interact": false,
+      "pause": false,
+      "cancelMove": false,
+      "drive": {
+        "throttle": 0,
+        "steer": 0
+      },
+      "brake": false,
+      "aimPoint": {
+        "x": -0.7871116678872667,
+        "z": -4.2162781710430863e-8
+      },
+      "pointerGround": true
+    },
+    "browser": {
+      "selectedSide": "LEFT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.machine-gun",
+            "magazine": 30,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.pistol",
+            "magazine": 6,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 1,
+        "aim": {
+          "x": -0.9999999999999989,
+          "z": -4.696782924608517e-8
+        },
+        "aimPoint": {
+          "x": -0.7871116678872667,
+          "z": -4.2162781710430863e-8
+        },
+        "swapUntil": 20
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.grenade",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 2,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.ground-slam",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      }
+    },
+    "sim": {
+      "selectedSide": "LEFT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.machine-gun",
+            "magazine": 30,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.pistol",
+            "magazine": 6,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 1,
+        "aim": {
+          "x": -0.9999999999999989,
+          "z": -4.696782924608517e-8
+        },
+        "aimPoint": {
+          "x": -0.7871116678872667,
+          "z": -4.2162781710430863e-8
+        },
+        "swapUntil": 20
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.grenade",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 2,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.ground-slam",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      }
+    }
+  },
+  {
+    "tick": 8,
+    "frame": {
+      "move": {
+        "x": 0,
+        "z": 0
+      },
+      "aim": {
+        "x": -0.9999999999999992,
+        "z": -4.4538656978393836e-8
+      },
+      "aimSource": "pointer",
+      "left": {
+        "down": false,
+        "held": false,
+        "up": false
+      },
+      "right": {
+        "down": false,
+        "held": false,
+        "up": false
+      },
+      "selector": 0,
+      "interact": false,
+      "pause": false,
+      "cancelMove": false,
+      "drive": {
+        "throttle": 0,
+        "steer": 0
+      },
+      "brake": false,
+      "aimPoint": {
+        "x": -0.7845319437137501,
+        "z": -4.3081207934392296e-8
+      },
+      "pointerGround": true
+    },
+    "browser": {
+      "selectedSide": "LEFT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.machine-gun",
+            "magazine": 30,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.pistol",
+            "magazine": 6,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 1,
+        "aim": {
+          "x": -0.9999999999999992,
+          "z": -4.4538656978393836e-8
+        },
+        "aimPoint": {
+          "x": -0.7845319437137501,
+          "z": -4.3081207934392296e-8
+        },
+        "swapUntil": 20
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.grenade",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 2,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.ground-slam",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
+      }
+    },
+    "sim": {
+      "selectedSide": "LEFT",
+      "LEFT": {
+        "rack": [
+          {
+            "id": "weapon.machine-gun",
+            "magazine": 30,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "weapon.pistol",
+            "magazine": 6,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 1,
+        "aim": {
+          "x": -0.9999999999999992,
+          "z": -4.4538656978393836e-8
+        },
+        "aimPoint": {
+          "x": -0.7845319437137501,
+          "z": -4.3081207934392296e-8
+        },
+        "swapUntil": 20
+      },
+      "RIGHT": {
+        "rack": [
+          {
+            "id": "weapon.grenade",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 2,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          },
+          {
+            "id": "ability.ground-slam",
+            "magazine": 0,
+            "reserve": "infinite",
+            "charges": 0,
+            "nextCharge": 0,
+            "reloadUntil": 0,
+            "readyAt": 0
+          }
+        ],
+        "index": 0,
+        "aim": {
+          "x": 1,
+          "z": 0
+        },
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -1343,8 +1340,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999998109,
-        "z": -6.14847832100604e-7
+        "x": -0.9999999999999991,
+        "z": -4.192231997203403e-8
       },
       "aimSource": "pointer",
       "left": {
@@ -1360,28 +1357,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999997287712581,
-        "z": -4.539552840299166e-7
-      }
+        "x": -0.8024328136484957,
+        "z": -4.54900455082452e-8
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -1393,16 +1392,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999991,
+          "z": -4.192231997203403e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8024328136484957,
+          "z": -4.54900455082452e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -1410,10 +1409,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -1425,30 +1424,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.999999999999811,
-          "z": -6.148478321006041e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999997287712581,
-          "z": -4.539552840299166e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -1460,16 +1456,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999991,
+          "z": -4.192231997203403e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8024328136484957,
+          "z": -4.54900455082452e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -1477,10 +1473,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -1492,16 +1488,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.999999999999811,
-          "z": -6.148478321006041e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999997287712581,
-          "z": -4.539552840299166e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -1513,8 +1506,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999998137,
-        "z": -6.106592683865159e-7
+        "x": -0.9999999999999993,
+        "z": -3.903513420418194e-8
       },
       "aimSource": "pointer",
       "left": {
@@ -1530,28 +1523,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999997254204061,
-        "z": -4.5060443198963185e-7
-      }
+        "x": -0.8152238029204995,
+        "z": -4.812621057226352e-8
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -1563,16 +1558,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999993,
+          "z": -3.903513420418194e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8152238029204995,
+          "z": -4.812621057226352e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -1580,10 +1575,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -1595,30 +1590,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998137,
-          "z": -6.106592683865159e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999997254204061,
-          "z": -4.5060443198963185e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -1630,16 +1622,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999993,
+          "z": -3.903513420418194e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8152238029204995,
+          "z": -4.812621057226352e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -1647,10 +1639,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -1662,16 +1654,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998137,
-          "z": -6.106592683865159e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999997254204061,
-          "z": -4.5060443198963185e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -1683,8 +1672,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999998035,
-        "z": -6.271768413294497e-7
+        "x": -0.9999999999999993,
+        "z": -3.5957877483253877e-8
       },
       "aimSource": "pointer",
       "left": {
@@ -1700,28 +1689,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999997196730497,
-        "z": -4.4485707562103016e-7
-      }
+        "x": -0.8234935898806945,
+        "z": -5.1068681727883813e-8
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -1733,16 +1724,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999993,
+          "z": -3.5957877483253877e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8234935898806945,
+          "z": -5.1068681727883813e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -1750,10 +1741,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -1765,30 +1756,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998035,
-          "z": -6.271768413294497e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999997196730497,
-          "z": -4.4485707562103016e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -1800,16 +1788,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999993,
+          "z": -3.5957877483253877e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8234935898806945,
+          "z": -5.1068681727883813e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -1817,10 +1805,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -1832,16 +1820,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998035,
-          "z": -6.271768413294497e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999997196730497,
-          "z": -4.4485707562103016e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -1853,8 +1838,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999998073,
-        "z": -6.210955523816863e-7
+        "x": -0.9999999999999996,
+        "z": -3.276787801579704e-8
       },
       "aimSource": "pointer",
       "left": {
@@ -1870,28 +1855,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999997148080169,
-        "z": -4.3999204279998594e-7
-      }
+        "x": -0.8277349772676654,
+        "z": -5.4378260117005084e-8
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -1903,16 +1890,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999996,
+          "z": -3.276787801579704e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8277349772676654,
+          "z": -5.4378260117005084e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -1920,10 +1907,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -1935,30 +1922,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998073,
-          "z": -6.210955523816863e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999997148080169,
-          "z": -4.3999204279998594e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -1970,16 +1954,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999996,
+          "z": -3.276787801579704e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8277349772676654,
+          "z": -5.4378260117005084e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -1987,10 +1971,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -2002,16 +1986,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998073,
-          "z": -6.210955523816863e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999997148080169,
-          "z": -4.3999204279998594e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -2023,8 +2004,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999998104,
-        "z": -6.159478495984334e-7
+        "x": -0.9999999999999996,
+        "z": -2.953577505411233e-8
       },
       "aimSource": "pointer",
       "left": {
@@ -2040,28 +2021,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999997106898533,
-        "z": -4.3587387921206755e-7
-      }
+        "x": -0.8283677110164334,
+        "z": -5.8098938993111915e-8
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -2073,16 +2056,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999996,
+          "z": -2.953577505411233e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8283677110164334,
+          "z": -5.8098938993111915e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -2090,10 +2073,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -2105,30 +2088,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998104,
-          "z": -6.159478495984334e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999997106898533,
-          "z": -4.3587387921206755e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -2140,16 +2120,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999996,
+          "z": -2.953577505411233e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8283677110164334,
+          "z": -5.8098938993111915e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -2157,10 +2137,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -2172,16 +2152,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998104,
-          "z": -6.159478495984334e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999997106898533,
-          "z": -4.3587387921206755e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -2193,8 +2170,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999998006,
-        "z": -6.316535254409002e-7
+        "x": -0.9999999999999998,
+        "z": -2.632379079431331e-8
       },
       "aimSource": "pointer",
       "left": {
@@ -2210,28 +2187,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999997042929792,
-        "z": -4.294770050705665e-7
-      }
+        "x": -0.8257557649604053,
+        "z": -6.225950421878679e-8
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -2243,16 +2222,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999998,
+          "z": -2.632379079431331e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8257557649604053,
+          "z": -6.225950421878679e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -2260,10 +2239,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -2275,30 +2254,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998006,
-          "z": -6.316535254409002e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999997042929792,
-          "z": -4.294770050705665e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -2310,16 +2286,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999998,
+          "z": -2.632379079431331e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8257557649604053,
+          "z": -6.225950421878679e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -2327,10 +2303,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -2342,16 +2318,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998006,
-          "z": -6.316535254409002e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999997042929792,
-          "z": -4.294770050705665e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -2363,8 +2336,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999998048,
-        "z": -6.248849820863896e-7
+        "x": -0.9999999999999998,
+        "z": -2.318505333827402e-8
       },
       "aimSource": "pointer",
       "left": {
@@ -2380,28 +2353,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999996988781426,
-        "z": -4.2406216849144585e-7
-      }
+        "x": -0.8202203445060299,
+        "z": -6.68752573318443e-8
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -2413,16 +2388,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999998,
+          "z": -2.318505333827402e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8202203445060299,
+          "z": -6.68752573318443e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -2430,10 +2405,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -2445,30 +2420,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998048,
-          "z": -6.248849820863896e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996988781426,
-          "z": -4.2406216849144585e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -2480,16 +2452,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999998,
+          "z": -2.318505333827402e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8202203445060299,
+          "z": -6.68752573318443e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -2497,10 +2469,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -2512,16 +2484,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998048,
-          "z": -6.248849820863896e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996988781426,
-          "z": -4.2406216849144585e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -2533,8 +2502,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999998084,
-        "z": -6.191555359933024e-7
+        "x": -0.9999999999999998,
+        "z": -2.016365339124557e-8
       },
       "aimSource": "pointer",
       "left": {
@@ -2550,28 +2519,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999996942945842,
-        "z": -4.1947861006974563e-7
-      }
+        "x": -0.8120496058932432,
+        "z": -7.194976170410428e-8
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -2583,16 +2554,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999998,
+          "z": -2.016365339124557e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8120496058932432,
+          "z": -7.194976170410428e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -2600,10 +2571,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -2615,30 +2586,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998084,
-          "z": -6.191555359933024e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996942945842,
-          "z": -4.1947861006974563e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -2650,16 +2618,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -0.9999999999999998,
+          "z": -2.016365339124557e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8120496058932432,
+          "z": -7.194976170410428e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -2667,10 +2635,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -2682,16 +2650,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998084,
-          "z": -6.191555359933024e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996942945842,
-          "z": -4.1947861006974563e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -2703,8 +2668,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999997987,
-        "z": -6.343687702706262e-7
+        "x": -1,
+        "z": -1.7295153704228463e-8
       },
       "aimSource": "pointer",
       "left": {
@@ -2720,28 +2685,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999996875037603,
-        "z": -4.1268778616654345e-7
-      }
+        "x": -0.8015058784075908,
+        "z": -7.747653363310292e-8
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -2753,16 +2720,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -1.7295153704228463e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8015058784075908,
+          "z": -7.747653363310292e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -2770,10 +2737,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -2785,30 +2752,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999997988,
-          "z": -6.343687702706263e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996875037603,
-          "z": -4.1268778616654345e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -2820,16 +2784,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -1.7295153704228463e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.8015058784075908,
+          "z": -7.747653363310292e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -2837,10 +2801,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -2852,16 +2816,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999997988,
-          "z": -6.343687702706263e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996875037603,
-          "z": -4.1268778616654345e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -2873,8 +2834,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999998032,
-        "z": -6.271833872021256e-7
+        "x": -1,
+        "z": -1.4607374991088434e-8
       },
       "aimSource": "pointer",
       "left": {
@@ -2890,28 +2851,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999996817554518,
-        "z": -4.0693947767067584e-7
-      }
+        "x": -0.7888309777690026,
+        "z": -8.344065172138926e-8
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -2923,16 +2886,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -1.4607374991088434e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.7888309777690026,
+          "z": -8.344065172138926e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -2940,10 +2903,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -2955,30 +2918,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998033,
-          "z": -6.271833872021257e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996817554518,
-          "z": -4.0693947767067584e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -2990,16 +2950,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -1.4607374991088434e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.7888309777690026,
+          "z": -8.344065172138926e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -3007,10 +2967,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -3022,16 +2982,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998033,
-          "z": -6.271833872021257e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996817554518,
-          "z": -4.0693947767067584e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -3043,8 +3000,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999998073,
-        "z": -6.21101090172274e-7
+        "x": -1,
+        "z": -1.212131055657535e-8
       },
       "aimSource": "pointer",
       "left": {
@@ -3060,28 +3017,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999996768896125,
-        "z": -4.0207363838362653e-7
-      }
+        "x": -0.7742500958385712,
+        "z": -8.982019750192194e-8
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -3093,16 +3052,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -1.212131055657535e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.7742500958385712,
+          "z": -8.982019750192194e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -3110,10 +3069,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -3125,30 +3084,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998073,
-          "z": -6.21101090172274e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996768896125,
-          "z": -4.0207363838362653e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -3160,16 +3116,16 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -1.212131055657535e-8
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.7742500958385712,
+          "z": -8.982019750192194e-8
         },
-        "swapUntil": 0
+        "swapUntil": 20
       },
       "RIGHT": {
         "rack": [
@@ -3177,10 +3133,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -3192,16 +3148,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998073,
-          "z": -6.21101090172274e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996768896125,
-          "z": -4.0207363838362653e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -3213,8 +3166,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999997976,
-        "z": -6.360156478606955e-7
+        "x": -1,
+        "z": -9.852070820426908e-9
       },
       "aimSource": "pointer",
       "left": {
@@ -3230,28 +3183,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999996698598473,
-        "z": -3.9504387316924294e-7
-      }
+        "x": -0.7579746266026426,
+        "z": -9.658760546926715e-8
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -3263,14 +3218,14 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -9.852070820426908e-9
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.7579746266026426,
+          "z": -9.658760546926715e-8
         },
         "swapUntil": 0
       },
@@ -3280,10 +3235,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -3295,30 +3250,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999997977,
-          "z": -6.360156478606956e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996698598473,
-          "z": -3.9504387316924294e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -3330,14 +3282,14 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -9.852070820426908e-9
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.7579746266026426,
+          "z": -9.658760546926715e-8
         },
         "swapUntil": 0
       },
@@ -3347,10 +3299,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -3362,16 +3314,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999997977,
-          "z": -6.360156478606956e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996698598473,
-          "z": -3.9504387316924294e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -3383,8 +3332,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999998026,
-        "z": -6.285774404765255e-7
+        "x": -1,
+        "z": -7.809857119191367e-9
       },
       "aimSource": "pointer",
       "left": {
@@ -3400,28 +3349,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999996639092792,
-        "z": -3.8909330513092755e-7
-      }
+        "x": -0.7402042093196215,
+        "z": -1.0371085323868101e-7
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -3433,14 +3384,14 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -7.809857119191367e-9
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.7402042093196215,
+          "z": -1.0371085323868101e-7
         },
         "swapUntil": 0
       },
@@ -3450,10 +3401,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -3465,30 +3416,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998026,
-          "z": -6.285774404765255e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996639092792,
-          "z": -3.8909330513092755e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -3500,14 +3448,14 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -7.809857119191367e-9
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.7402042093196215,
+          "z": -1.0371085323868101e-7
         },
         "swapUntil": 0
       },
@@ -3517,10 +3465,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -3532,16 +3480,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999998026,
-          "z": -6.285774404765255e-7
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999996639092792,
-          "z": -3.8909330513092755e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -3553,8 +3498,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999891198,
-        "z": -0.00000466482309275255
+        "x": -1,
+        "z": -6.000811829655002e-9
       },
       "aimSource": "pointer",
       "left": {
@@ -3570,28 +3515,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999990723439971,
-        "z": 2.024719769622152e-7
-      }
+        "x": -0.7211282064820441,
+        "z": -1.1115450071486066e-7
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -3603,14 +3550,14 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -6.000811829655002e-9
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.7211282064820441,
+          "z": -1.1115450071486066e-7
         },
         "swapUntil": 0
       },
@@ -3620,10 +3567,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -3635,30 +3582,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999891198,
-          "z": -0.00000466482309275255
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999990723439971,
-          "z": 2.024719769622152e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -3670,14 +3614,14 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -6.000811829655002e-9
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.7211282064820441,
+          "z": -1.1115450071486066e-7
         },
         "swapUntil": 0
       },
@@ -3687,10 +3631,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -3702,16 +3646,13 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999891198,
-          "z": -0.00000466482309275255
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999990723439971,
-          "z": 2.024719769622152e-7
-        },
-        "swapUntil": 23
+        "aimPoint": null,
+        "swapUntil": 0
       }
     }
   },
@@ -3723,8 +3664,8 @@
         "z": 0
       },
       "aim": {
-        "x": -0.9999999999917626,
-        "z": -0.0000040589546418776774
+        "x": -1,
+        "z": -4.427826796160547e-9
       },
       "aimSource": "pointer",
       "left": {
@@ -3740,28 +3681,30 @@
       "selector": 0,
       "interact": false,
       "pause": false,
+      "cancelMove": false,
       "drive": {
         "throttle": 0,
         "steer": 0
       },
       "brake": false,
       "aimPoint": {
-        "x": -0.7999985686838471,
-        "z": 7.061321269929977e-7
-      }
+        "x": -0.7009267727281934,
+        "z": -1.1888058715214811e-7
+      },
+      "pointerGround": true
     },
     "browser": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -3773,14 +3716,14 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -4.427826796160547e-9
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.7009267727281934,
+          "z": -1.1888058715214811e-7
         },
         "swapUntil": 0
       },
@@ -3790,10 +3733,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -3805,30 +3748,27 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999917626,
-          "z": -0.0000040589546418776774
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999985686838471,
-          "z": 7.061321269929977e-7
-        },
+        "aimPoint": null,
         "swapUntil": 0
       }
     },
     "sim": {
-      "selectedSide": "RIGHT",
+      "selectedSide": "LEFT",
       "LEFT": {
         "rack": [
           {
             "id": "weapon.machine-gun",
-            "magazine": 29,
+            "magazine": 30,
             "reserve": "infinite",
             "charges": 0,
             "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 8
+            "readyAt": 0
           },
           {
             "id": "weapon.pistol",
@@ -3840,14 +3780,14 @@
             "readyAt": 0
           }
         ],
-        "index": 0,
+        "index": 1,
         "aim": {
-          "x": 3.024050513268504e-7,
-          "z": 0.9999999999999543
+          "x": -1,
+          "z": -4.427826796160547e-9
         },
         "aimPoint": {
-          "x": 2.419239208961699e-7,
-          "z": 0.7999996026345428
+          "x": -0.7009267727281934,
+          "z": -1.1888058715214811e-7
         },
         "swapUntil": 0
       },
@@ -3857,10 +3797,10 @@
             "id": "weapon.grenade",
             "magazine": 0,
             "reserve": "infinite",
-            "charges": 1,
-            "nextCharge": 725,
+            "charges": 2,
+            "nextCharge": 0,
             "reloadUntil": 0,
-            "readyAt": 20
+            "readyAt": 0
           },
           {
             "id": "ability.ground-slam",
@@ -3872,15 +3812,12 @@
             "readyAt": 0
           }
         ],
-        "index": 1,
+        "index": 0,
         "aim": {
-          "x": -0.9999999999917626,
-          "z": -0.0000040589546418776774
+          "x": 1,
+          "z": 0
         },
-        "aimPoint": {
-          "x": -0.7999985686838471,
-          "z": 7.061321269929977e-7
-        },
+        "aimPoint": null,
         "swapUntil": 0
       }
     }

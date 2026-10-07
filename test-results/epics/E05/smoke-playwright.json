@@ -5,7 +5,7 @@
       "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/node_modules/.bin/playwright",
       "test",
       "--grep",
-      "@(?:E05)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+      "@smoke"
     ],
     "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/playwright.config.ts",
     "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/tests",
@@ -24,7 +24,7 @@
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/test-results/playwright/run-3318",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -42,7 +42,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/test-results/playwright/run-3318",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -61,7 +61,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/test-results/playwright/run-3318",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -80,7 +80,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/test-results/playwright/run-3318",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -99,7 +99,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/test-results/playwright/run-3318",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -118,7 +118,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/test-results/playwright/run-3318",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -158,9 +158,9 @@
     "version": "1.63.0",
     "workers": 2,
     "webServer": {
-      "command": "npx vite preview --host 127.0.0.1 --port 3301 --strictPort --configLoader runner",
-      "url": "http://127.0.0.1:3301",
-      "reuseExistingServer": true,
+      "command": "npx vite preview --host 127.0.0.1 --port 3318 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3318",
+      "reuseExistingServer": false,
       "timeout": 30000
     }
   },
@@ -191,12 +191,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5874,
+                  "duration": 5900,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:49:57.933Z",
+                  "startTime": "2026-10-07T11:56:07.234Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -227,14 +227,14 @@
               "results": [
                 {
                   "workerIndex": 2,
-                  "parallelIndex": 0,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 5957,
+                  "duration": 6386,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:29.741Z",
+                  "startTime": "2026-10-07T11:56:26.549Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -265,14 +265,14 @@
               "results": [
                 {
                   "workerIndex": 4,
-                  "parallelIndex": 1,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5944,
+                  "duration": 6096,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:35.445Z",
+                  "startTime": "2026-10-07T11:56:34.105Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -303,14 +303,14 @@
               "results": [
                 {
                   "workerIndex": 6,
-                  "parallelIndex": 0,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 5873,
+                  "duration": 5915,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:37.659Z",
+                  "startTime": "2026-10-07T11:56:36.057Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -340,15 +340,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 8,
+                  "workerIndex": 9,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 6178,
+                  "duration": 6275,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:43.568Z",
+                  "startTime": "2026-10-07T11:56:42.666Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -381,12 +381,12 @@
                   "workerIndex": 10,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 8111,
+                  "duration": 8367,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:45.833Z",
+                  "startTime": "2026-10-07T11:56:44.730Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -398,159 +398,6 @@
           "file": "e2e/audio/smoke.spec.ts",
           "line": 5,
           "column": 1
-        }
-      ]
-    },
-    {
-      "title": "e2e/combat-wiring.spec.ts",
-      "file": "e2e/combat-wiring.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "T-E05-13 @E05 @E05-AC13 real cursor LMB RMB wheel matches sim side/rack state",
-          "ok": true,
-          "tags": [
-            "E05",
-            "E05-AC13"
-          ],
-          "tests": [
-            {
-              "timeout": 60000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "chromium",
-              "projectName": "chromium",
-              "results": [
-                {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
-                  "status": "passed",
-                  "duration": 4788,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-10-07T11:49:57.993Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "0af9e8106ec3788350ff-7e1579f532086a800548",
-          "file": "e2e/combat-wiring.spec.ts",
-          "line": 6,
-          "column": 1
-        },
-        {
-          "title": "T-E05-browser @E05 arena placeholder scene, cheats, settings, screenshot and lifecycle",
-          "ok": true,
-          "tags": [
-            "E05"
-          ],
-          "tests": [
-            {
-              "timeout": 60000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "chromium",
-              "projectName": "chromium",
-              "results": [
-                {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
-                  "status": "passed",
-                  "duration": 11917,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-10-07T11:50:02.905Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "0af9e8106ec3788350ff-a668a3701631fca2430c",
-          "file": "e2e/combat-wiring.spec.ts",
-          "line": 44,
-          "column": 1
-        },
-        {
-          "title": "@E05 real released clicks chain weapon.fists and hit a downed target",
-          "ok": true,
-          "tags": [
-            "E05"
-          ],
-          "tests": [
-            {
-              "timeout": 60000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "chromium",
-              "projectName": "chromium",
-              "results": [
-                {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 4276,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-10-07T11:50:03.997Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "0af9e8106ec3788350ff-af6340aa9bcf558744e0",
-          "file": "e2e/combat-wiring.spec.ts",
-          "line": 64,
-          "column": 3
-        },
-        {
-          "title": "@E05 real released clicks chain weapon.bat and hit a downed target",
-          "ok": true,
-          "tags": [
-            "E05"
-          ],
-          "tests": [
-            {
-              "timeout": 60000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "chromium",
-              "projectName": "chromium",
-              "results": [
-                {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 2540,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-10-07T11:50:08.290Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "0af9e8106ec3788350ff-d883f4c22d96745080a4",
-          "file": "e2e/combat-wiring.spec.ts",
-          "line": 64,
-          "column": 3
         }
       ]
     },
@@ -578,15 +425,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 17121,
+                  "duration": 17120,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:10.858Z",
+                  "startTime": "2026-10-07T11:56:07.234Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -623,15 +470,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 2680,
+                  "duration": 2535,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:14.840Z",
+                  "startTime": "2026-10-07T11:56:13.234Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -669,15 +516,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 8523,
+                  "duration": 8387,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:17.530Z",
+                  "startTime": "2026-10-07T11:56:15.782Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -715,15 +562,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 7506,
+                  "duration": 8001,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:26.077Z",
+                  "startTime": "2026-10-07T11:56:24.212Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -759,15 +606,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 538,
+                  "duration": 627,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:27.997Z",
+                  "startTime": "2026-10-07T11:56:24.460Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -795,15 +642,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 583,
+                  "duration": 592,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:28.548Z",
+                  "startTime": "2026-10-07T11:56:25.097Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -832,14 +679,14 @@
               "results": [
                 {
                   "workerIndex": 3,
-                  "parallelIndex": 1,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 598,
+                  "duration": 671,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:33.953Z",
+                  "startTime": "2026-10-07T11:56:32.714Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -867,15 +714,15 @@
               "projectName": "pixel-7",
               "results": [
                 {
-                  "workerIndex": 3,
+                  "workerIndex": 2,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 464,
+                  "duration": 648,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:34.643Z",
+                  "startTime": "2026-10-07T11:56:33.067Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -904,14 +751,14 @@
               "results": [
                 {
                   "workerIndex": 5,
-                  "parallelIndex": 0,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 589,
+                  "duration": 722,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:36.203Z",
+                  "startTime": "2026-10-07T11:56:34.215Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -940,14 +787,14 @@
               "results": [
                 {
                   "workerIndex": 5,
-                  "parallelIndex": 0,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 447,
+                  "duration": 505,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:36.890Z",
+                  "startTime": "2026-10-07T11:56:35.106Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -976,14 +823,14 @@
               "results": [
                 {
                   "workerIndex": 7,
-                  "parallelIndex": 1,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 685,
+                  "duration": 631,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:41.817Z",
+                  "startTime": "2026-10-07T11:56:40.814Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1012,14 +859,14 @@
               "results": [
                 {
                   "workerIndex": 7,
-                  "parallelIndex": 1,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 511,
+                  "duration": 507,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:42.659Z",
+                  "startTime": "2026-10-07T11:56:41.613Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1047,15 +894,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 9,
+                  "workerIndex": 8,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 626,
+                  "duration": 769,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:44.140Z",
+                  "startTime": "2026-10-07T11:56:42.686Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1083,15 +930,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 9,
+                  "workerIndex": 8,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 488,
+                  "duration": 578,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:44.897Z",
+                  "startTime": "2026-10-07T11:56:43.667Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1122,12 +969,12 @@
                   "workerIndex": 11,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1747,
+                  "duration": 1847,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:50.203Z",
+                  "startTime": "2026-10-07T11:56:49.521Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1158,12 +1005,12 @@
                   "workerIndex": 11,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 2639,
+                  "duration": 2826,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-07T11:50:52.143Z",
+                  "startTime": "2026-10-07T11:56:51.662Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1181,9 +1028,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-07T11:49:55.503Z",
-    "duration": 59318.792,
-    "expected": 26,
+    "startTime": "2026-10-07T11:56:06.193Z",
+    "duration": 48349.64,
+    "expected": 22,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
