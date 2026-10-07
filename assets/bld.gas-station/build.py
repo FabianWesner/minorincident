@@ -4,8 +4,6 @@ All applied signage and surface details stand at least 3 mm proud.
 """
 import argparse, json, math, random, sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy, bmesh
 from mathutils import Vector
 
@@ -41,8 +39,8 @@ door=empty('door_front',(-.94,-1.55,.24),root)
 
 def finish(o,name,mat,parent,bevel=0,segments=2):
     o.name=name;o.data.materials.clear();o.data.materials.append(M[mat if mat in M else 'pal_'+mat])
-    if bevel >= .015:
-        mod=o.modifiers.new('rounded edges','BEVEL');mod.width=bevel;mod.segments=2 if bevel>=.06 else 1
+    if bevel:
+        mod=o.modifiers.new('rounded edges','BEVEL');mod.width=bevel;mod.segments=segments
         bpy.context.view_layer.objects.active=o;bpy.ops.object.modifier_apply(modifier=mod.name)
         mod=o.modifiers.new('weighted normals','WEIGHTED_NORMAL');bpy.ops.object.modifier_apply(modifier=mod.name)
     bpy.context.view_layer.update();w=o.matrix_world.copy();o.parent=parent;o.matrix_world=w
@@ -323,7 +321,6 @@ def merge_by_material(objects,suffix=''):
             bpy.context.scene.cursor.location=parent.matrix_world.translation;bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
             bpy.ops.object.transform_apply(location=False,rotation=True,scale=True)
     return objects
-prune_hidden_faces([o for o in bpy.context.scene.objects if o.type == "MESH"], occlusion=True, game_camera=True, defer=True)
 meshes=merge_by_material([o for o in bpy.context.scene.objects if o.type=='MESH'])
 for o in meshes:o.data.calc_loop_triangles()
 raw_tri=sum(len(o.data.loop_triangles) for o in meshes)
@@ -366,7 +363,7 @@ root['lods']=json.dumps({'LOD0':'model.glb','LOD1':'model.lod1.glb','LOD2':'mode
 if a.glb:
     asset=list(scene.objects);bpy.ops.object.select_all(action='DESELECT')
     for o in asset:o.select_set(True)
-    def export(path):stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod([o for o in bpy.context.scene.objects if o.select_get()], str(path)); bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
+    def export(path):bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
     path=Path(a.glb).resolve();export(path)
     anchors=[o for o in asset if 'ss_light' in o]
     anchor_data={o:o['ss_light'] for o in anchors}
@@ -376,7 +373,7 @@ if a.glb:
         copies=[]
         for original in meshes:
             if level==2:
-                if original.parent.name.startswith('lamp_shop'):continue
+                if original.parent==interior or original.parent.name.startswith('lamp_shop'):continue
                 token=original.data.materials[0].name
                 if token.startswith('emi_'):continue
                 source=original.data.color_attributes['ao'].data

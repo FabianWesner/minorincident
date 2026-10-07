@@ -16,8 +16,7 @@ from mathutils import Vector
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 sys.path.insert(0, str(REPO / 'tools/blender'))
-from sslib import palette, ao, lod0
-from sslib.lod0 import prepare_export_lod
+from sslib import palette, ao
 
 ASSET = {'id': 'bld.clinic-annex', 'category': 'building'}
 SEED = 19102
@@ -92,10 +91,10 @@ def finish(ob, token, group='body', bevel=0, emission=False):
     if emission:
         bs.inputs['Emission Strength'].default_value = 3.5 if token == 'tealLight' else 2.2
     ob.data.materials.append(mat)
-    if bevel >= .015 and level < 2:
+    if bevel and level < 2:
         mod = ob.modifiers.new('Soft toy edges', 'BEVEL')
         mod.width = bevel
-        mod.segments = (2 if bevel >= .08 else 1) if level == 0 else 1
+        mod.segments = (3 if bevel >= .05 else 2 if bevel >= .03 else 1) if level == 0 else 1
         bpy.context.view_layer.objects.active = ob
         bpy.ops.object.modifier_apply(modifier=mod.name)
         mod = ob.modifiers.new('Weighted corner normals', 'WEIGHTED_NORMAL')
@@ -265,9 +264,6 @@ def light(name, pos, targets, kind='window', color='light_window_warm', flicker=
 
 
 def merge():
-    if level == 0:
-        grouped = {ob: group for (group, _), objects in parts.items() for ob in objects}
-        lod0.prune_hidden_faces(list(grouped), grouped, occlusion=True, game_camera=True, defer=True)
     result = []
     for (group, material), objects in parts.items():
         bpy.ops.object.select_all(action='DESELECT')
@@ -617,15 +613,13 @@ def bake(meshes):
             value = max(.66, color.color[0])
             color.color = (value, value, value, 1)
 
-    lod0.stabilize_ao(meshes)
-
 
 def export(path):
     bpy.ops.object.select_all(action='DESELECT')
     for ob in bpy.context.scene.objects:
         if ob.type in {'MESH', 'EMPTY'}:
             ob.select_set(True)
-    prepare_export_lod(list(bpy.context.scene.objects), str(path)); bpy.ops.export_scene.gltf(filepath=str(path), export_format='GLB', use_selection=True,
+    bpy.ops.export_scene.gltf(filepath=str(path), export_format='GLB', use_selection=True,
         export_apply=True, export_yup=True, export_extras=True, export_cameras=False,
         export_lights=False, export_vertex_color='NAME', export_vertex_color_name='ao',
         export_all_vertex_colors=False)
