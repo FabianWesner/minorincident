@@ -16,7 +16,7 @@
     "test:e2e:webkit": "sh tools/e2e-lock.sh playwright test --project=webkit",
     "test:visual": "sh tools/e2e-lock.sh playwright test tests/visual --project=chromium",
     "test:perf": "sh tools/e2e-lock.sh playwright test tests/perf --project=chromium",
-    "test:smoke": "vitest run -t @smoke --maxWorkers=2 && sh tools/e2e-lock.sh playwright test --grep @smoke",
+    "test:smoke": "sh tools/sim-lock.sh vitest run -t @smoke --maxWorkers=2 && sh tools/e2e-lock.sh playwright test --grep @smoke",
     "verify": "tsx tools/verify.ts",
     "sim": "tsx tools/sim-runner/index.ts",
     "assets:optimize": "tsx tools/assets/optimize.ts",
