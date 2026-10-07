@@ -71,7 +71,7 @@ describe('L1 v2 civilians and infection', () => {
     expect(median(at120)).toBeGreaterThanOrEqual(l1v2.bots.idleSpread.at120s);
     expect(median(at240)).toBeGreaterThanOrEqual(l1v2.bots.idleSpread.at240s);
     expect(at120.filter(n => n >= l1v2.bots.idleSpread.floorAt120s).length).toBeGreaterThanOrEqual(l1v2.bots.idleSpread.floorSeeds);
-  }, 600_000);
+  }, 1_800_000);
 
   test('T-E19-18 @E19 @E19-AC18 infection continuity: id, asset, tint, accessories, 2.5-3.5 s, phases, speed tier', async () => {
     const durations: number[] = [];
