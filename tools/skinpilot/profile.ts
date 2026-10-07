@@ -47,7 +47,7 @@ try {
       const start = performance.now();
       character.update(pose, tick, 1, mode === 'ride' ? { pedal, steer: 0 } : undefined);
       if (skin) character.applyRideContacts(mode === 'ride' ? contacts : undefined);
-      else if (mode === 'ride') character.seatPelvis(contacts.seat, -.04);
+      else if (mode === 'ride') { character.seatPelvis(contacts.seat, -.04); character.holdHandlebar(contacts.handL, contacts.handR); }
       const matrices = performance.now(); character.updateMatrixWorld(true); for (const mesh of meshes) mesh.skeleton.update();
       const end = performance.now();
       if (tick > 300) { samples.push(end - start); matrixSamples.push(end - matrices); }
