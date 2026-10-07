@@ -45,6 +45,7 @@ for (const skin of [0, 1]) test(`bike skin=${skin} mounts level on the start sid
   });
   writeFileSync(info.outputPath('bike-turn-live.json'), JSON.stringify(live, null, 2));
   for (const f of live) expect(new Quaternion().fromArray(f.rider.orientation).angleTo(new Quaternion().fromArray(f.bike.orientation)) * 180 / Math.PI).toBeLessThan(1);
+  console.log('bike turn measurement', JSON.stringify({ skin, fixedFrames: frames.length, liveFrames: live.length, yawChangeDegrees: Math.abs(frames.at(-1)!.bike.transform.yaw - frames[0].bike.transform.yaw) * 180 / Math.PI, maxFrameMismatchDegrees: Math.max(...frames.map(f => new Quaternion().fromArray(f.rider.orientation).angleTo(new Quaternion().fromArray(f.view.orientation)) * 180 / Math.PI)), maxLiveFrameMismatchDegrees: Math.max(...live.map(f => new Quaternion().fromArray(f.rider.orientation).angleTo(new Quaternion().fromArray(f.bike.orientation)) * 180 / Math.PI)) }));
 });
 
 test.describe('bike ACTION after the garage bat', () => {
