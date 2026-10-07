@@ -6,6 +6,17 @@ import manifest from '../../../src/assets/manifest.json';
 import { atLeast, type AssetDef } from '../../../src/assets/types';
 import { parseInventory } from '../../../tools/assets/inventory';
 import { validateDocument, geometryHash, validateAssets } from '../../../tools/assets/validate';
+import { lodTriangleLimit } from '../../../tools/assets/delivery';
+
+test('cheap LODs retain silhouettes while dense scenery still has a ratio budget', () => {
+  expect(lodTriangleLimit(1800, 2)).toBe(1800);
+  expect(lodTriangleLimit(12000, 2)).toBe(3000);
+  expect(lodTriangleLimit(100000, 1)).toBe(15500);
+  expect(lodTriangleLimit(100000, 2)).toBe(4500);
+  const { def } = fixture(); def.id = 'wpn.test'; def.category = 'weapon';
+  expect(lodTriangleLimit(5800, 1, def)).toBe(5800);
+  expect(lodTriangleLimit(8000, 1, def)).toBe(3000);
+});
 
 test('T-E17-02 @E17-AC02 validates geometry and rejects independent contract violations', () => {
   const { doc, def } = fixture();

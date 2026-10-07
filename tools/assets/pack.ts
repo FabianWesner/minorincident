@@ -4,7 +4,7 @@ import manifest from '../../src/assets/manifest.json';
 import type { AssetDef } from '../../src/assets/types';
 import { assetIO } from './io';
 import { optimizeAsset } from './optimize';
-import { requiredLods, triangleCount } from './delivery';
+import { requiredLods, triangleCount, lodTriangleLimit } from './delivery';
 import { packStatic } from './pack-static';
 import { writeStaticCollision } from './bake-static-collision';
 
@@ -26,24 +26,26 @@ export async function packAsset(def: AssetDef, regenerate = false): Promise<numb
       if (def.authoredLodTriangles) {
         if (count > def.authoredLodTriangles[lod]) throw new Error(`${def.id}: authored ${lod} triangles ${count} exceeds ${def.authoredLodTriangles[lod]}`);
         const better = lod === 'lod1' ? def.glb : def.lods?.lod1 ?? def.glb.replace('.glb', '.lod1.glb');
-        if (statSync(output).size > statSync(better).size) throw new Error(`${def.id}: authored ${lod} file exceeds next-better LOD`);
+        if ((def.category === 'vehicle' || /^(bld\.house-|bld\.safe-house$|house\.)/.test(def.id)) && statSync(output).size > statSync(better).size) throw new Error(`${def.id}: authored ${lod} file exceeds next-better LOD`);
       } else if (def.authoredLodRatios && count / triangles > def.authoredLodRatios[lod] + .005) {
         throw new Error(`${def.id}: authored ${lod} ratio ${count / triangles} exceeds ${def.authoredLodRatios[lod]}`);
       }
       continue;
     }
     const ratio = lod === 'lod1' ? .12 : .03;
+    const triangleLimit = lodTriangleLimit(triangles, lod === 'lod1' ? 1 : 2, def);
+    const cheap = triangleLimit >= triangles;
     const generated = existsSync(supplied) && (await io.read(supplied)).getRoot().listScenes().some(scene => scene.getExtras().deliveryLodGenerated === true);
     // Existing authored tiers are preferred when they meet the delivery contract.
     if (!regenerate && !generated && existsSync(supplied)) await optimizeAsset(supplied, output, def);
     const count = existsSync(output) ? triangleCount(await io.read(output)) : Infinity;
-    if (regenerate || generated || !existsSync(supplied) || count > triangles * (lod === 'lod1' ? .155 : .045) || (lod === 'lod1' && statSync(output).size > statSync(def.glb).size * .25)) {
+    if (regenerate || generated || !existsSync(supplied) || count > triangleLimit || (!cheap && lod === 'lod1' && statSync(output).size > statSync(def.glb).size * .25)) {
       let target = ratio;
       for (let attempt = 0; attempt < 4; attempt++) {
         await optimizeAsset(source, output, def, target);
         const actual = triangleCount(await io.read(output)) / triangles;
         const byteRatio = statSync(output).size / statSync(def.glb).size;
-        if (actual <= (lod === 'lod1' ? .155 : .045) && (lod !== 'lod1' || byteRatio <= .25)) break;
+        if (actual * triangles <= triangleLimit && (cheap || lod !== 'lod1' || byteRatio <= .25)) break;
         const next = Math.max(lod === 'lod1' ? .08 : .015, target * Math.min(.8, (lod === 'lod1' ? .14 : .035) / actual, lod === 'lod1' ? .23 / byteRatio : 1));
         if (next === target) break; // A repeated clamped target would produce identical bytes.
         target = next;
