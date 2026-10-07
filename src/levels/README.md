@@ -15,7 +15,7 @@ the retired M1 map (diner, hardware store) stays reachable as `compositions['L1-
 - at the exit five infected leave through the front door (the technician turned in place by `outbreak.turnNow`, same id and look), the side door and the window on headings 125/55/350/180/235 degrees, sent out with `ai.rush`; the `accident` checkpoint is captured at that moment, `bat` at the pickup;
 - from there the outbreak is systemic (lanes C and D); the controller only counts pedestrians turned and escaped for the result.
 
-Checkpoints snapshot `state.l1`, all entities, the outbreak layer (`snapshot()`/`load()`) and optional duck-typed seams (`l1Seams.ts`); the beat-9 horde (house doors, then `ensureHorde` as fallback) starts when the courier leaves the garage with the bat; the bicycle is never moved by scripts.
+Checkpoints snapshot `state.l1`, all entities, the outbreak layer (`snapshot()`/`load()`) and optional duck-typed seams (`l1Seams.ts`) for `loadCheckpoint` (tests/debug); a death in L1 restores nothing (PO rule 2026-10-07): `LevelOneOutbreak.respawn` only places the courier at a safe point near the last checkpoint. After the lab exits the only unbitten infected are the ten residents of one house near the garage, who come out one by one when the courier leaves the garage with the bat; the bicycle is never moved by scripts.
 
 Tests: `tests/levels/L1.test.ts` (graph, bots `complete`/`newbie`/`idle`/`evade-only` and the duel harness from
 `tools/sim-runner/l1Bots.ts`, accident order, checkpoints), `tests/e2e/levels/L1.spec.ts` (real-input playthrough, photo spots),
