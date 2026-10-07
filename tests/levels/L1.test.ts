@@ -264,10 +264,10 @@ describe('L1 v2 mission', () => {
     const run = runL1(w, mission, 'complete', { seed: 5 });
     expect(run.outcome).toBe('complete');
     expect(mission.state.gates['fire-shutter']).toBe(false);
-    expect(mission.state.subtitle).toBe('Delivery complete. Outbreak: not contained.');
+    expect(mission.state.subtitle?.text).toBe('Delivery complete. Outbreak: not contained.');
     expect(mission.state.phase).toBe('result');
     expect(w.storyLock).toBeNull();
-    expect(storyLines['firestation.caption']).toBe(mission.state.subtitle);
+    expect(storyLines['firestation.caption']).toBe(mission.state.subtitle?.text);
     expect(mission.state.result).toMatchObject({ delivered: true, turned: expect.any(Number), escaped: expect.any(Number), infected: expect.any(Number) });
   }, HEAVY);
 
