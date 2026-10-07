@@ -1,5 +1,6 @@
 // Adapted from folio-2025 Menu.js / Modals.js by Bruno Simon (MIT, 41046b5):
 // named screens, visibility classes, first focus, and separate gameplay input context.
+import homePlaceholders from '../../public/ui/home/placeholders.json';
 import type { Game } from '../Game';
 import { newCampaign, type Level } from '../sim/progression/Campaign';
 import { defaultBindings, type Action } from '../data/bindings';
@@ -35,7 +36,7 @@ export class GameUI {
   init(): void {
     if (!this.enabled) return;
     document.body.classList.add('full-ui');document.body.classList.toggle('debug-ui',this.game.params.has('debug'));
-    document.body.classList.toggle('touch-ui', navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches); this.root.className = 'menus';
+    document.body.classList.toggle('touch-ui', navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches); this.root.className = 'menus'; this.root.prepend(homeArt());
     this.pauseButton.setAttribute('aria-label', 'Pause');
     const pauseLabel = node('span', 'pause-label', 'Pause');
     this.pauseButton.replaceChildren(node('span', 'pause-icon', 'Ⅱ '), pauseLabel);
@@ -267,4 +268,23 @@ export class GameUI {
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   };
   dispose(): void { window.removeEventListener('keydown', this.key, true); document.removeEventListener('click', this.missionAccept); this.root.remove(); this.pauseButton.remove(); this.hud.dispose(); document.body.classList.remove('full-ui', 'touch-ui'); delete document.body.dataset.uiScreen; }
+}
+
+/**
+ * Title-screen background (PO #1): art-directed landscape/portrait crops, AVIF with WebP fallback at several widths
+ * (public/ui/home, < 250 KB each), object-fit cover, a tiny blurred placeholder behind it while the image loads.
+ */
+function homeArt(): HTMLElement {
+  const sizes = { landscape: [640, 1280, 1920, 2560], portrait: [640, 1080, 1290] } as const;
+  const picture = document.createElement('picture'); picture.className = 'home-art'; picture.setAttribute('aria-hidden', 'true');
+  picture.style.backgroundImage = `url(${homePlaceholders.landscape})`;
+  const portraitQuery = '(orientation: portrait)';
+  for (const [kind, media] of [['portrait', portraitQuery], ['landscape', undefined]] as const) for (const [type, ext] of [['image/avif', 'avif'], ['image/webp', 'webp']] as const) {
+    const source = document.createElement('source'); source.type = type; if (media) source.media = media;
+    source.srcset = sizes[kind].map(w => `/ui/home/home-${kind}-${w}.${ext} ${w}w`).join(', '); source.sizes = '100vw'; picture.append(source);
+  }
+  const img = document.createElement('img'); img.alt = ''; img.decoding = 'async'; img.src = '/ui/home/home-landscape-1280.webp'; img.draggable = false;
+  img.addEventListener('load', () => { picture.style.backgroundImage = 'none'; });
+  const shade = document.createElement('span'); shade.className = 'home-art-shade';
+  picture.append(img, shade); return picture;
 }
