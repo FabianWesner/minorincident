@@ -4,7 +4,9 @@ import type { CrowdPosePalette } from './CrowdPosePalette';
 /** Draw-submission and ankle probes, read only by the query-gated test API. */
 export class CrowdFigureProbe {
   private readonly enabled = typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
-  readonly figures: { id: number; instanceKey?: string; clip: string; phase: number; drawn: boolean; feet: number[][] }[] = [];
+  /** Detail tier of the batch that drew the figure (guards against close figures in the far silhouette tier). */
+  lod?: 'lod0' | 'lod1' | 'lod2';
+  readonly figures: { id: number; instanceKey?: string; lod?: 'lod0' | 'lod1' | 'lod2'; clip: string; phase: number; drawn: boolean; feet: number[][] }[] = [];
   private readonly matrix = new Matrix4();
   private readonly point = new Vector3();
   begin(): void { this.figures.length = 0; }
@@ -18,6 +20,6 @@ export class CrowdFigureProbe {
       this.matrix.fromArray(pose, part * 16);
       return this.point.setFromMatrixPosition(this.matrix).applyMatrix4(instance).toArray();
     });
-    this.figures.push({ id, clip, phase, drawn: false, feet });
+    this.figures.push({ id, lod: this.lod, clip, phase, drawn: false, feet });
   }
 }

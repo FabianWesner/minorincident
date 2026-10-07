@@ -84,7 +84,7 @@ class CivilianBatch extends Group {
   private readonly shirt = new Color();
   private readonly registry = new AssetRegistry(() => {});
   source = 'placeholder';
-  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase()) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); }
+  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase()) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = distant ? 'lod2' : 'lod1'; }
   async init(): Promise<void> {
     const loaded = await this.registry.loadAsset(this.model, this.distant ? 'lod2' : 'lod1');
     await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
@@ -183,7 +183,7 @@ class CivilianBatch extends Group {
       // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
       if (!this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
-      if ((this.visibility.lod(e.id, pixels, low) === 'lod2') !== this.distant) continue;
+      if ((this.visibility.lod(e.id, pixels) === 'lod2') !== this.distant) continue;
       if (!e.civilian && e.infected && keepsLook(e)) { if (this.place(e, index, alpha)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
       if (!c || c.pet || e.hidden || c.state === 'infected') continue;
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
@@ -233,9 +233,9 @@ class CivilianBatch extends Group {
       const glow = c.eyesGlow ? e.infection ? Math.min(1, (this.world.tick - (e.infection.endsTick - 78)) / 30) : Math.min(1, Math.max(0, (c.veins - .12) / .65)) : 0;
       this.overlay.setXYZ(index, c.veins, Math.max(0, glow) + (e.infection ? 2 : 0), e.infection ? Math.min(1, Math.max(0, (e.infection.progress - .35) / .4)) : 0); index++; shadowPixels = Math.max(shadowPixels, pixels);
     }
-    // Full sun silhouettes matter in the close game camera. Wider views retain
+    // Full sun silhouettes matter in the close game camera (high tier; low keeps the shared contact shadows). Wider views retain
     // the shared contact shadows; hysteresis prevents caster toggling at an edge.
-    this.mesh.castShadow = !this.distant && shadowPixels > (this.mesh.castShadow ? 128 : 156);
+    this.mesh.castShadow = !low && !this.distant && shadowPixels > (this.mesh.castShadow ? 128 : 156);
     this.mesh.count = index; this.mesh.visible = index > 0;
     if (index) {
       for (const attribute of [this.mesh.instanceMatrix, this.frame, this.tint, this.overlay]) {
