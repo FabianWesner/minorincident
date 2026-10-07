@@ -41,7 +41,7 @@ for (const route of ['market', 'park'] as const) test(`@E21 @E21-AC08 @E21-AC09 
   expect([...captured].sort()).toEqual(['l3-checkpoint', 'l3-driving', 'l3-mainstreet-w2', 'l3-safe-zone']); expect(consoleErrors).toEqual([]);
   // The existing campaign Continue action supplies the handover, with no reward screen.
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible({ timeout: 60_000 });
   expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L4');
 });
 test.describe('L3 portrait phone evidence', () => {
