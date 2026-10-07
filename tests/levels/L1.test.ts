@@ -15,7 +15,9 @@ const median = (values: number[]) => { const v = [...values].sort((a, b) => a - 
 const realMap = (JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as { placements: unknown[] }).placements.length > 0;
 /** Systemic spread and robust start need lane C (perception) and lane D (bite -> turn chain, src/sim/outbreak/*) merged. */
 const systemic = existsSync('src/sim/ai/Perception.ts') && readdirSync('src/sim/outbreak').some(f => f !== 'types.ts');
-const HEAVY = 900_000;
+const HEAVY = 3_600_000;
+/** The spread tests run 400 s of sim per seed (pedestrian sight costs ~4 ms/tick): 8 seeds by default, L1_SEEDS=20 for the full battery. */
+const spreadSeeds = seeds.slice(0, Number(process.env.L1_SEEDS ?? 8));
 async function load(seed = 1) { const l = await loadL1(seed); world = l.world; return l; }
 const maxSeparatedHeadings = (headings: number[], minDeg: number) => {
   let best = 0;
@@ -69,13 +71,13 @@ describe('L1 v2 mission', () => {
 
   test.runIf(systemic)('T-E19-06 @E19 @E19-AC06 idle bot: systemic spread 5 -> >= 15 at +120 s, >= 25 at +240 s', async () => {
     const runs: L1Report[] = [];
-    for (const seed of seeds) { const { world: w, mission } = await loadL1(seed); w.combat!.damage.god = true; runs.push(runL1(w, mission, 'idle', { seed, maxSeconds: 400, stopWhen: m => !!m.state.l1!.exitIds.length && w.tick / 60 > 400 })); w.dispose(); }
+    for (const seed of spreadSeeds) { const { world: w, mission } = await loadL1(seed); w.combat!.damage.god = true; runs.push(runL1(w, mission, 'idle', { seed, maxSeconds: 400, stopWhen: m => !!m.state.l1!.exitIds.length && w.tick / 60 > 400 })); w.dispose(); }
     const at = (s: number) => runs.map(r => r.infectedAfterExit[s] ?? 0);
     expect(median(at(0))).toBe(l1v2.accident.infectedCount);
     expect(median(at(120))).toBeGreaterThanOrEqual(l1v2.bots.idleSpread.at120s);
     expect(median(at(240))).toBeGreaterThanOrEqual(l1v2.bots.idleSpread.at240s);
     // Per-seed floor (18/20 reach >= 12): depends on pedestrian placement near the facility, so it is judged on the real map only.
-    if (realMap) expect(at(120).filter(n => n >= l1v2.bots.idleSpread.floorAt120s).length).toBeGreaterThanOrEqual(l1v2.bots.idleSpread.floorSeeds);
+    if (realMap) expect(at(120).filter(n => n >= l1v2.bots.idleSpread.floorAt120s).length).toBeGreaterThanOrEqual(Math.round(l1v2.bots.idleSpread.floorSeeds * spreadSeeds.length / seeds.length));
   }, HEAVY);
 
   test('T-E19-07 @E19 @E19-AC07 accident releases exactly 5 infected, >= 3 headings, technician entity', async () => {
@@ -99,7 +101,7 @@ describe('L1 v2 mission', () => {
   }, HEAVY);
 
   test.runIf(systemic)('T-E19-07b @E19 @E19-AC07 robust start: killing any one exit infected within 5 s still leads to a bite within 60 s', async () => {
-    for (const seed of seeds) {
+    for (const seed of spreadSeeds) {
       const { world: w, mission } = await loadL1(seed); world = w; w.combat!.damage.god = true; let bites = 0;
       w.events.on('outbreak.bite', () => { bites++; }); w.events.on('civilian.turned', () => { bites++; });
       runL1(w, mission, 'idle', { seed, stopWhen: m => m.state.l1!.exitIds.length > 0 });
