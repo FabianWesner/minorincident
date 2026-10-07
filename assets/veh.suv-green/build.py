@@ -12,7 +12,8 @@ import bmesh
 from mathutils import Vector
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
-from sslib.lod import simplify as simplify_lod
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE = Path(__file__).resolve().parent
 p = argparse.ArgumentParser()
@@ -74,6 +75,7 @@ body=empty('body',parent=root)
 
 
 def finish(o,name,mat,parent=body,bevel=.02):
+    if DISTANCE: bevel = 0
     o.name=name
     o.data.materials.append(M[mat])
     if bevel:
@@ -85,6 +87,7 @@ def finish(o,name,mat,parent=body,bevel=.02):
 
 
 def box(name,loc,size,mat,parent=body,bevel=.02,rot=None):
+    if DISTANCE: bevel = 0
     verts=[(x*size[0]/2,y*size[1]/2,z*size[2]/2) for x,y,z in
            [(-1,-1,-1),(-1,-1,1),(-1,1,-1),(-1,1,1),(1,-1,-1),(1,-1,1),(1,1,-1),(1,1,1)]]
     faces=[(0,4,6,2),(1,3,7,5),(0,1,5,4),(2,6,7,3),(0,2,3,1),(4,5,7,6)]
@@ -95,6 +98,7 @@ def box(name,loc,size,mat,parent=body,bevel=.02,rot=None):
 
 
 def mesh(name,verts,faces,mat,parent=body,bevel=.01):
+    if DISTANCE: bevel = 0
     me=bpy.data.meshes.new(name); me.from_pydata(verts,[],faces); me.update()
     bm=bmesh.new();bm.from_mesh(me);bmesh.ops.recalc_face_normals(bm,faces=bm.faces);bm.to_mesh(me);bm.free()
     o=bpy.data.objects.new(name,me); scene.collection.objects.link(o)
@@ -102,6 +106,7 @@ def mesh(name,verts,faces,mat,parent=body,bevel=.01):
 
 
 def prism(name,points,y0,y1,mat,parent=body,bevel=.02):
+    if DISTANCE: bevel = 0
     n=len(points)
     verts=[(x,y,z) for y in (y0,y1) for x,z in points]
     faces=[tuple(range(n-1,-1,-1)),tuple(range(n,2*n))]
@@ -117,6 +122,7 @@ def rod(name,start,end,width,mat,parent=body):
 
 
 def cyl(name,loc,r,depth,mat,parent=body,axis='Y',vertices=48):
+    if DISTANCE: vertices = min(vertices, 12 if DISTANCE == 1 else 8)
     bpy.ops.mesh.primitive_cylinder_add(vertices=vertices,radius=r,depth=depth,location=loc)
     o=bpy.context.object
     if axis=='Y':o.rotation_euler.x=math.pi/2
@@ -126,7 +132,7 @@ def cyl(name,loc,r,depth,mat,parent=body,axis='Y',vertices=48):
 
 
 def torus(name,loc,major,minor,mat,parent=body):
-    bpy.ops.mesh.primitive_torus_add(major_segments=64,minor_segments=12,location=loc,major_radius=major,minor_radius=minor,rotation=(math.pi/2,0,0))
+    bpy.ops.mesh.primitive_torus_add(major_segments=(16 if DISTANCE == 1 else 12) if DISTANCE else (64),minor_segments=(4 if DISTANCE == 1 else 3) if DISTANCE else (12),location=loc,major_radius=major,minor_radius=minor,rotation=(math.pi/2,0,0))
     o=bpy.context.object
     for f in o.data.polygons:f.use_smooth=True
     return finish(o,name,mat,parent,0)
@@ -138,8 +144,9 @@ def subtract(obj,cutter):
     m=obj.modifiers.new('Aperture','BOOLEAN');m.operation='DIFFERENCE';m.object=cutter
     bpy.ops.object.modifier_apply(modifier=m.name)
     bpy.data.objects.remove(cutter,do_unlink=True)
+ARCH_STEPS=(12 if DISTANCE==1 else 6) if DISTANCE else 32
 for x in (-1.43,1.39):
-    points=[(x-.525,-.15),(x+.525,-.15)]+[(x+.525*math.cos(i*math.pi/32),.44+.525*math.sin(i*math.pi/32)**.55) for i in range(33)]
+    points=[(x-.525,-.15),(x+.525,-.15)]+[(x+.525*math.cos(i*math.pi/ARCH_STEPS),.44+.525*math.sin(i*math.pi/ARCH_STEPS)**.55) for i in range(ARCH_STEPS+1)]
     cutter=prism('cut',points,-1.25,1.25,'black',bevel=0)
     for m in list(cutter.modifiers):cutter.modifiers.remove(m)
     subtract(shell,cutter)
@@ -304,6 +311,9 @@ for s in (-1,1):
 for name,loc in [('driverSeat',(.23,-.43,.94)),('exitL',(.35,-1.45,0)),('exitR',(.35,1.45,0))]:empty(name,loc,root)
 col=empty('col:chassis',(0,0,1.03),root);col['collider']='cuboid';col['shape']='cuboid';col['size']=[4.4,1.9,1.7]
 
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, fit_dimensions=True, omit=('tread', 'lug', 'rivet', 'Dark vent', 'Rubber seal'), far_omit=('wiper', 'mirror stem', 'handle', 'seat', 'steering', 'roof rail', 'gauge', 'rib', 'rim spoke', 'Wheel arch cladding', 'Rock slider', 'Bumper guard','Grille brace','Roof rib', 'rim', 'Hub','Sidewall','Paint chip','Tyre barrel','Headlamp reflector'))
+
 def clean_mesh(o):
     bm=bmesh.new();bm.from_mesh(o.data)
     bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=1e-6)
@@ -394,15 +404,6 @@ if a.glb:
     # Independently exported LODs preserve all node names and joint transforms.
     meshes=[o for o in scene.objects if o.type=='MESH']
     originals={o:o.data for o in meshes}
-    for suffix,ratio in [('lod1',.55),('lod2',.25)]:
-        for o in meshes:
-            o.data=originals[o].copy()
-        for o in scene.objects:
-            if o.type=='MESH':
-                simplify_lod(o, ratio, planar_only=o.data.materials[0] == M['glass'])
-        export_glb(HERE/('model.'+suffix+'.glb'))
-        for o in meshes:
-            reduced=o.data;o.data=originals[o];bpy.data.meshes.remove(reduced)
     print('GLB OK',report)
 if a.render:
     world=bpy.data.worlds.new('Studio');scene.world=world;world.use_nodes=True
@@ -437,3 +438,6 @@ if a.render:
         scene.render.resolution_x=width;scene.render.resolution_y=height;scene.render.resolution_percentage=100
         scene.render.filepath=str(path);bpy.ops.render.render(write_still=True)
         print('RENDER OK',path)
+
+if a.glb and not DISTANCE:
+    build_native_lods(__file__)

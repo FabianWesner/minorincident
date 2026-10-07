@@ -46,6 +46,8 @@ export class Vehicles {
   }
   prePhysics(frame: InputFrame, scheme: Scheme): void {
     const player = this.world.entities.get(1)!;
+    // Cleanup/respawn runs on foot; a dead driver must leave even when both doors are blocked.
+    if (player.health.current <= 0 && this.active !== null) this.eject(this.cars.get(this.active)!);
     for (const car of this.cars.values()) {
       const state = car.entity.vehicle!, drive = car.physics.intent;
       car.physics.boostScale = this.progressionBoost;

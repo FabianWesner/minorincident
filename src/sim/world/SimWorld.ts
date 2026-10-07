@@ -4,7 +4,7 @@ import { Npcs } from '../npc/Npcs';
 import { populateHorde } from '../../../tests/fixtures/scenarios/performance';
 import { InfectedSystem } from '../ai/InfectedSystem';
 import { Mission } from '../missions/Mission';
-import type { MissionDef } from '../missions/types';
+import type { ActorDef, MissionDef } from '../missions/types';
 import { Vehicles } from '../vehicles/Vehicles';
 import { installVfxScenario } from '../../../tests/fixtures/scenarios/vfx';
 import { survivor } from '../../data/survivor';
@@ -61,6 +61,20 @@ export class SimWorld implements Lifecycle {
   get inputFrame(): InputFrame { return this.effectiveInput; }
   /** Attach a validated mission after scenario/composition assembly. */
   loadMission(def: MissionDef): Mission { const next=new Mission(this,def);this.missions?.dispose();return this.missions=next; }
+  /** Mission actors use the same component/physics owners as authored gameplay placements. */
+  spawnMissionActor(def: ActorDef, at: { x: number; z: number }): EntitySnapshot {
+    let id: number;
+    if (def.kind === 'vehicle') id = this.vehicles!.spawn(def.archetype, at);
+    else if (def.kind === 'device') id = this.interactables!.spawn(def.archetype.slice(7) as import('../interact/Interactables').DeviceKind, at, def.device);
+    else if (def.kind === 'pickup') id = this.pickups!.spawn('item', at, def.item);
+    else if (def.kind === 'prop') id = this.hazards!.spawn(def.archetype.slice(5) as import('../interact/Hazards').DestructibleKind, at, { hp: def.hp });
+    else {
+      const entity = this.entities.create({ kind: def.kind, archetype: def.archetype, faction: def.faction, transform: { ...at, y: .7, yaw: 0 }, health: { current: def.hp, max: def.hp }, combat: { radius: .4, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
+      if (entity.kind === 'escort') this.npcs?.escorts.attach(entity);
+      this.spatial.set(entity.id, at.x, at.z); return entity;
+    }
+    return this.entities.get(id)!;
+  }
   vehicles: Vehicles | null = null;
   /** Level-owned records survive player death; scenario unload clears them. */
   mission: GameStateSnapshot['mission'] = null;

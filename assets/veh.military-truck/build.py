@@ -12,11 +12,12 @@ import bmesh
 from mathutils import Vector
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
-from sslib.lod import export_lods, rebuild_from_baked
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE = Path(__file__).resolve().parent
 if '--lod-only' in sys.argv:
-    rebuild_from_baked(HERE/'model.glb', planar_nodes=('body_pal_khakiSeam',), ratios=(.55,.23))
+    build_native_lods(__file__)
     sys.exit(0)
 
 ROOT = HERE.parents[1]
@@ -60,6 +61,7 @@ for name, loc in {'body':(0,0,0), 'doorL':(1.20,-1.08,1.60), 'doorR':(1.20,1.08,
     owners[name] = empty(name, loc, root)
 
 def finish(o, name, mat, owner='body', bevel=0, smooth=False):
+    if DISTANCE: bevel = 0
     o.name = name
     # Keep rigid assemblies economical while preserving their material character.
     if owner.startswith('wheel'):
@@ -83,18 +85,21 @@ def finish(o, name, mat, owner='body', bevel=0, smooth=False):
     return o
 
 def box(name, loc, size, mat='olive', bevel=.025, owner='body', rot=None):
+    if DISTANCE: bevel = 0
     bpy.ops.mesh.primitive_cube_add(size=1, location=loc)
     o=bpy.context.object; o.dimensions=size
     if rot: o.rotation_euler=rot
     return finish(o,name,mat,owner,bevel,True)
 
 def cyl(name,loc,r,depth,mat='oliveSeam',axis='Y',owner='body',n=32):
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 8)
     bpy.ops.mesh.primitive_cylinder_add(vertices=n, radius=r, depth=depth, location=loc)
     o=bpy.context.object
     o.rotation_euler=(math.pi/2,0,0) if axis=='Y' else ((0,math.pi/2,0) if axis=='X' else (0,0,0))
     return finish(o,name,mat,owner,.008,True)
 
 def rod(name,a,b,r=.015,mat='oliveSeam',owner='body',n=12):
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 8)
     a,b=Vector(a),Vector(b)
     bpy.ops.mesh.primitive_cylinder_add(vertices=n,radius=r,depth=(b-a).length,location=(a+b)/2)
     o=bpy.context.object; o.rotation_euler=(b-a).to_track_quat('Z','Y').to_euler()
@@ -106,7 +111,8 @@ def mesh(name,verts,faces,mat,owner='body',smooth=False):
     return finish(o,name,mat,owner,0,smooth)
 
 def ring(name,loc,major,minor,mat,owner='body',axis='Y',n=40):
-    bpy.ops.mesh.primitive_torus_add(major_segments=n,minor_segments=10,location=loc,major_radius=major,minor_radius=minor)
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 8)
+    bpy.ops.mesh.primitive_torus_add(major_segments=(16 if DISTANCE == 1 else 12) if DISTANCE else (n),minor_segments=(4 if DISTANCE == 1 else 3) if DISTANCE else (10),location=loc,major_radius=major,minor_radius=minor)
     o=bpy.context.object
     if axis=='Y': o.rotation_euler.x=math.pi/2
     elif axis=='X': o.rotation_euler.y=math.pi/2
@@ -114,7 +120,7 @@ def ring(name,loc,major,minor,mat,owner='body',axis='Y',n=40):
 
 def text(name,body,loc,size,owner='body',plane='front'):
     bpy.ops.object.text_add(location=loc)
-    o=bpy.context.object; o.data.body=body; o.data.align_x='CENTER'; o.data.align_y='CENTER'; o.data.size=size; o.data.extrude=.0015; o.data.bevel_depth=.0006
+    o=bpy.context.object; o.data.body=body; o.data.align_x='CENTER'; o.data.align_y='CENTER'; o.data.size=size; o.data.extrude=0 if DISTANCE else (.0015); o.data.bevel_depth=0 if DISTANCE else (.0006)
     o.rotation_euler=(math.pi/2,0,math.pi/2) if plane=='front' else ((math.pi/2,0,0) if plane=='side' else (0,0,math.pi/2))
     bpy.ops.object.convert(target='MESH')
     return finish(bpy.context.object,name,'picketWhite',owner)
@@ -245,7 +251,8 @@ for s in [-1,1]:
 # Canvas: scalloped tension bays, sewn arch ribs, hanging tie straps.
 # Cross section rises above the cab with a shallow pitched crown, rounded shoulders.
 section=[(-1.13,1.88),(-1.16,2.30),(-1.15,3.10),(-1.04,3.40),(-.85,3.52),(-.42,3.55),(0,3.59),(.42,3.55),(.85,3.52),(1.04,3.40),(1.15,3.10),(1.16,2.30),(1.13,1.88)]
-xs=[-3.30+i*(3.28/24) for i in range(25)]
+CANVAS_SPANS=(4 if DISTANCE==1 else 1) if DISTANCE else 24
+xs=[-3.30+i*(3.28/CANVAS_SPANS) for i in range(CANVAS_SPANS+1)]
 verts=[]
 for i,x in enumerate(xs):
     phase=(i%6)/6; sag=math.sin(math.pi*phase)
@@ -257,16 +264,16 @@ for i,x in enumerate(xs):
         zz=z-(.075*sag if z>3.30 else 0)
         verts.append((x,yy,zz))
 faces=[]
-for i in range(24):
+for i in range(CANVAS_SPANS):
     for j in range(12):
         a=i*13+j; b=(i+1)*13+j
         faces.extend([(a,b,a+1),(a+1,b,b+1)])
 # Pulled-in curtain centers produce large diagonal folds on both end caps.
-for row,x,indent in [(0,-3.30,.08),(24,-.02,-.08)]:
+for row,x,indent in [(0,-3.30,.08),(CANVAS_SPANS,-.02,-.08)]:
     center=len(verts); verts.append((x+indent,0,2.70))
     for j in range(13):
         face=(center,row*13+j,row*13+(j+1)%13)
-        faces.append(tuple(reversed(face)) if row==24 else face)
+        faces.append(tuple(reversed(face)) if row==CANVAS_SPANS else face)
 mesh('folded canvas',verts,faces,'khakiSeam')
 # Narrow stitched seam arches are proud of the cloth; scalloped hem is folded outward.
 for x in [-3.30,-2.48,-1.66,-.84,-.02]:
@@ -307,6 +314,9 @@ for s,label in [(-1,'L'),(1,'R')]:
     anchor['ss_light']=json.dumps({'type':'point','color':'light_siren_red','intensity':2,'range':3,'powerGroup':'self','emissiveNodes':['lightsBrake_emi_sirenRed'],'tiers':'all'})
 anchor=empty('light:clearance',(.79,0,2.87),root)
 anchor['ss_light']=json.dumps({'type':'point','color':'light_window_warm','intensity':.5,'range':2,'powerGroup':'self','emissiveNodes':['lampsRoof_emi_windowGlow','lightsBrake_emi_windowGlow'],'tiers':'all'})
+
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('tread block', 'lug', 'stake rivet', 'sidewall', 'rim lip', 'seat', 'steering', 'canvas arch seam', 'leaf spring','tie eye','canvas tie','bumper stencil','damper','hub cap'), far_omit=('seat', 'steering', 'strap', 'stitch', 'tie', 'latch', 'bolt', 'wire', 'rim', 'vent slot', 'hub cap', 'wheel dish', 'rim recess', 'hood split', 'damper', 'guide ring', 'tailgate hinge', 'rope', 'stencil', 'canvas hem', 'window rubber', 'grille slat','tow eye','hub','star circle','bed stake','hinge','axle','differential','grille bar'))
 
 # Join within each rigid assembly by material, preserving bevel geometry.
 def consolidate():
@@ -374,7 +384,6 @@ if args.glb:
         for o in [root,*root.children_recursive]: o.select_set(True)
         bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False,export_vertex_color='ACTIVE')
     target=Path(args.glb).resolve(); export(target)
-    export_lods(target, meshes, planar_nodes=('body_pal_khakiSeam',), ratios=(.55,.23))
 
 if args.render:
     # Neutral dark diorama studio; all staging is created after asset export.
@@ -408,3 +417,6 @@ if args.render:
         scene.render.resolution_x=960; scene.render.resolution_y=540; scene.cycles.samples=24
         bpy.ops.render.render(write_still=True)
         print('RENDER OK',scene.render.filepath)
+
+if args.glb and not DISTANCE:
+    build_native_lods(__file__)

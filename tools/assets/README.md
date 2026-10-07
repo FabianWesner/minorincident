@@ -19,8 +19,10 @@ and missing source `model.lod1.glb` / `model.lod2.glb` beside each export.
 Use an asset ID or category prefix instead of `--all` for an incremental pack.
 Assets with `authoredLodRatios` keep reviewed Blender-authored tiers and their
 hard normals. Packing checks the declared triangle ceilings and refuses missing
-tiers or `--regenerate`; rebuild those from their `build.py` source. This repair
-uses 60%/30% ceilings for play-distance buildings/vehicles; the small printed
+tiers or `--regenerate`; rebuild those from their `build.py` source. The initial repair
+used ratio ceilings; native distance variants now use `authoredLodTriangles`
+(12,000/4,000 for buildings, 6,000/2,000 for vehicles) and may never be larger
+than the next-better tier. These explicit caps apply to the repaired chain; the small printed
 lab sign kit retains its glyph geometry at every tier. Other
 authored tiers are preferred; generated tiers record their provenance and are
 regenerated from LOD0. `--regenerate` rebuilds all selected distance tiers.
@@ -102,3 +104,29 @@ work; a passing readiness guard does not complete those criteria.
 saves small 3×2 contact sheets to each asset’s `renders/lod-check.png`, using
 shipped GLBs, game palette/light, 36° elevation, and 45°/225° azimuths. It uses
 one headless Chromium process with ANGLE/Metal and requires an existing server.
+
+Native distance builds use the same source primitives without bevels, drop
+interior furnishings/small trims, flatten wheel faces and use fewer cylinder/curve
+samples. No triangle-collapse decimator runs on these tiers. Source scripts accept
+`--distance-tier 1|2 --glb assets/<id>/model.lodN.glb`; full source exports and
+`--lod-only` rebuild both native tiers. Use the existing `blender_run.py` wrapper
+from the main checkout, with CPU Cycles. A minimal interior floor, rigid owners,
+roof groups, lamps and sockets remain addressable. `distance-stats.json` records
+exact omissions and raw triangle counts.
+
+`compactMeshopt` uses the smallest supported lossless attribute encoding
+(level 3, bitstream version 0 or 1); geometry, AO, normals and quantization
+precision remain identical. It brings mainstreet-brick and school-elementary
+LOD0 below 1500 KiB. The game decoder is verified by contact-sheet loading.
+
+House and vehicle distance caps are absolute: houses LOD1 ≤ 12,000 / LOD2
+≤ 4,000 triangles; every manifest vehicle LOD1 ≤ 6,000 / LOD2 ≤ 2,000.
+Validation enforces these independently of declared budgets and authored ratios,
+including pending registrations that already have production GLBs.
+Native exports preserve detailed-source batch names and late sockets. Sources
+that fit their hero geometry to manifest dimensions also fit their native tiers.
+
+For five-angle side-by-side LOD0/1/2 sheets using shipped geometry:
+`E2E_PORT=3349 sh tools/e2e-lock.sh npm run assets:turntable -- <id>,<id> --lod-contact --output test-results/asset-fix-2`
+Each asset gets `<output>/<id>/lod-contact.png`. This mode needs no reference
+image, fails on placeholders, and uses one headless Chromium process with Metal.

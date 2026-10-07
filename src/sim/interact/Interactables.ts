@@ -108,11 +108,12 @@ export class Interactables {
       if (c.powered && c.kind === 'generator') { c.fuel = Math.max(0, c.fuel - 1 / 60); if (c.fuel <= 1e-9) { c.fuel = 0; c.powered = false; c.completed = false; c.progress = 0; } }
       const distance = (e.transform.x - p.transform.x) ** 2 + (e.transform.z - p.transform.z) ** 2;
       if (c.completed && isDoor(c.kind) && distance > c.radius ** 2) { c.completed = false; c.progress = 0; c.cycle++; }
-      if (p.health.current > 0 && c.enabled && !c.completed && distance <= c.radius ** 2 && distance < nearest) { nearest = distance; this.activeId = e.id; }
+      if (this.world.vehicles?.active == null && p.health.current > 0 && c.enabled && !c.completed && distance <= c.radius ** 2 && distance < nearest) { nearest = distance; this.activeId = e.id; }
     }
     for (const e of this.world.entities.iterate()) {
       const c = e.interactable; if (!c || c.completed) continue;
       if (e.id !== this.activeId) { c.progress = Math.max(0, c.progress - 2 / (c.holdTime * 60)); continue; }
+      if (!c.instant && (Math.hypot(input.move.x, input.move.z) > .05 || Math.hypot(p.survivor?.velocity.x ?? 0, p.survivor?.velocity.z ?? 0) > .1)) { c.progress = Math.max(0, c.progress - 2 / (c.holdTime * 60)); continue; }
       c.hint = c.barricaded ? 'barricaded' : c.key && !p.inventory?.includes(c.key) ? 'locked' : c.requires.some(id => !p.inventory?.includes(id)) ? 'missing item' : c.kind === 'generator' && c.fuel <= 0 ? 'fuel' : '';
       if (c.hint || c.interruptedAt === this.world.tick) continue;
       c.progress = input.interact && c.instant ? 1 : Math.min(1, c.progress + 1 / (c.holdTime * 60));

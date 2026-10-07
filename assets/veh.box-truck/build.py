@@ -13,6 +13,8 @@ from mathutils import Vector
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
 from sslib.lod import hard_normals, refresh_normals
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE = Path(__file__).resolve().parent
 if '--normals-only' in sys.argv:
@@ -26,6 +28,7 @@ p.add_argument('--samples', type=int, default=24)
 p.add_argument('--width', type=int, default=960); p.add_argument('--height', type=int, default=540)
 a = p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 def build_scene(lod=0, bake=False):
+    if DISTANCE: lod=DISTANCE
     bpy.ops.wm.read_factory_settings(use_empty=True)
     scene = bpy.context.scene
     scene.unit_settings.system = 'METRIC'
@@ -51,11 +54,12 @@ def build_scene(lod=0, bake=False):
     body=empty('body',parent=root)
 
     def finish(o,name,token,parent=body,bevel=.02):
+        if DISTANCE: bevel = 0
         o.name=name
         omit=('rivet','tread','lug','rim vent','roof seam','step grip','fleet marking')
         if lod and any(key in name for key in omit):
             bpy.data.objects.remove(o,do_unlink=True); return None
-        if lod==2 and any(key in name for key in ('house window','attic window','rim bead','sidewall ring','hub cap','lock bracket','hinge pin','tank strap','marker base','reflective tape','box marker','wheel arch')):
+        if lod==2 and any(key in name for key in ('house window','attic window','rim bead','sidewall ring','hub cap','lock bracket','hinge pin','tank strap','marker base','reflective tape','box marker','wheel arch', 'stripe slogan', 'company service', 'house roof', 'mirror support', 'dish', 'hub', 'box marker','company name','roof marker','rim')):
             bpy.data.objects.remove(o,do_unlink=True); return None
         o.data.materials.append(M[token])
         if lod and name not in ('cargo box','cab','door panel','mirror housing','fuel tank','front bumper','grille frame','rear door'):
@@ -67,12 +71,14 @@ def build_scene(lod=0, bake=False):
         return o
 
     def box(name,loc,size,token,parent=body,bevel=.02,rot=None):
+        if DISTANCE: bevel = 0
         bpy.ops.mesh.primitive_cube_add(size=1,location=loc); o=bpy.context.object; o.scale=size
         bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
         if rot: o.rotation_euler=rot
         return finish(o,name,token,parent,min(bevel,min(size)*.4))
 
     def prism(name,points,y0,y1,token,parent=body,bevel=.02):
+        if DISTANCE: bevel = 0
         n=len(points); verts=[(x,y,z) for y in (y0,y1) for x,z in points]
         faces=[tuple(range(n-1,-1,-1)),tuple(range(n,2*n))]+[(i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n)]
         me=bpy.data.meshes.new(name); me.from_pydata(verts,[],faces); me.update()
@@ -81,6 +87,7 @@ def build_scene(lod=0, bake=False):
         return finish(o,name,token,parent,bevel)
 
     def cylinder(name,loc,radius,depth,token,parent=body,axis='Y',vertices=32):
+        if DISTANCE: vertices = min(vertices, 12 if DISTANCE == 1 else 8)
         bpy.ops.mesh.primitive_cylinder_add(vertices=min(vertices,16 if lod==1 else 6) if lod else vertices,radius=radius,depth=depth,location=loc)
         o=bpy.context.object
         o.rotation_euler=(math.pi/2,0,0) if axis=='Y' else (0,math.pi/2,0) if axis=='X' else (0,0,0)
@@ -90,20 +97,20 @@ def build_scene(lod=0, bake=False):
     def rod(name,start,end,radius,token,parent=body):
         start,end=Vector(start),Vector(end)
         o=cylinder(name,(start+end)/2,radius,(end-start).length,token,parent,axis='Z',vertices=12)
-        o.rotation_euler=(end-start).to_track_quat('Z','Y').to_euler()
+        if o is not None: o.rotation_euler=(end-start).to_track_quat('Z','Y').to_euler()
         return o
 
     def torus(name,loc,major,minor,token,parent=body):
-        bpy.ops.mesh.primitive_torus_add(major_radius=major,minor_radius=minor,major_segments=64 if lod==0 else 24 if lod==1 else 12,minor_segments=16 if lod==0 else 6 if lod==1 else 4,location=loc,rotation=(math.pi/2,0,0))
+        bpy.ops.mesh.primitive_torus_add(major_radius=major,minor_radius=minor,major_segments=(16 if DISTANCE == 1 else 12) if DISTANCE else (64 if lod==0 else 24 if lod==1 else 12),minor_segments=(4 if DISTANCE == 1 else 3) if DISTANCE else (16 if lod==0 else 6 if lod==1 else 4),location=loc,rotation=(math.pi/2,0,0))
         o=bpy.context.object
         for f in o.data.polygons: f.use_smooth=True
         return finish(o,name,token,parent,0)
 
     def text(name,label,loc,size,token,side=-1,parent=body,width=None):
         if lod==2: return None
-        cu=bpy.data.curves.new(name,'FONT'); cu.body=label; cu.size=size; cu.extrude=.004 if lod==0 else 0; cu.bevel_depth=.001 if lod==0 else 0; cu.bevel_resolution=1
+        cu=bpy.data.curves.new(name,'FONT'); cu.body=label; cu.size=size; cu.extrude= 0 if DISTANCE else (.004 if lod==0 else 0); cu.bevel_depth= 0 if DISTANCE else (.001 if lod==0 else 0); cu.bevel_resolution=1
         cu.font=FONT
-        cu.align_x='CENTER'; cu.align_y='CENTER'; cu.resolution_u=5 if lod==0 else 2
+        cu.align_x='CENTER'; cu.align_y='CENTER'; cu.resolution_u= 2 if DISTANCE else (5 if lod==0 else 2)
         o=bpy.data.objects.new(name,cu); scene.collection.objects.link(o); o.location=loc
         o.rotation_euler=(math.pi/2,0,math.pi if side==1 else 0)
         bpy.context.view_layer.update()
@@ -248,6 +255,9 @@ def build_scene(lod=0, bake=False):
     for name,loc,size in [('cargo',(-.95,0,2.59),(4.5,2.3,2.61)),('cab',(2.24,0,1.99),(1.88,2.04,2.14)),('chassis',(-.1,0,.63),(6.4,2.18,1.13))]:
         o=empty('col:'+name,loc,root); o['collider']='cuboid'; o['shape']='cuboid'; o['size']=list(size)
 
+    if DISTANCE:
+        export_variant(Path(__file__).parent, DISTANCE, omit=('rivet', 'tread', 'lug', 'rim vent', 'roof seam', 'step grip', 'fleet marking','sidewall ring','rim bead','hinge pin'), far_omit=('rim bead', 'sidewall ring', 'hub cap', 'hinge pin', 'tank strap', 'marker base', 'reflective tape', 'wheel arch', 'stripe slogan', 'company service', 'house roof', 'mirror support', 'dish', 'hub', 'box marker','company name','roof marker','rim'))
+
     # Apply modeling modifiers, then merge only within each joint/material group.
     meshes=[o for o in scene.objects if o.type=='MESH']
     for o in meshes:
@@ -312,12 +322,6 @@ if a.glb:
     lod_stats=json.loads(stats_path.read_text()) if stats_path.exists() else {}
     if a.lod:
         lod_stats[str(a.lod)]={'triangles':metadata['triangles'],'draw_calls':metadata['draw_calls']}
-    else:
-        for lod in (1,2):
-            _,objects,stats=build_scene(lod,bake=True)
-            export_scene(Path(a.glb).with_name('model.lod'+str(lod)+'.glb'),objects)
-            lod_stats[str(lod)]={'triangles':stats['triangles'],'draw_calls':stats['draw_calls']}
-        if a.render: M,asset_objects,_=build_scene()
     stats_path.write_text(json.dumps(lod_stats,indent=2)+'\n')
 scene=bpy.context.scene
 if a.render:
@@ -342,3 +346,6 @@ if a.render:
     scene.view_settings.view_transform='AgX'; scene.render.image_settings.file_format='PNG'; scene.render.filepath=str(Path(a.render).resolve())
     bpy.ops.render.render(write_still=True)
 print('OK',json.dumps(metadata))
+
+if a.glb and not DISTANCE:
+    build_native_lods(__file__)

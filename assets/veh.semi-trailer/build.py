@@ -13,6 +13,8 @@ from mathutils import Vector, Matrix
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
 from sslib.lod import hard_normals, refresh_normals
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE = Path(__file__).resolve().parent
 if '--normals-only' in sys.argv:
@@ -26,6 +28,7 @@ p.add_argument('--samples', type=int, default=24)
 p.add_argument('--width', type=int, default=960); p.add_argument('--height', type=int, default=540)
 a = p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 def build_scene(lod=0, bake=False):
+    if DISTANCE: lod=DISTANCE
     bpy.ops.wm.read_factory_settings(use_empty=True)
     scene = bpy.context.scene
     scene.unit_settings.system = 'METRIC'
@@ -52,6 +55,7 @@ def build_scene(lod=0, bake=False):
     body=empty('body',parent=root)
 
     def finish(o,name,token,parent=body,bevel=.02):
+        if DISTANCE: bevel = 0
         o.name=name
         omit=('rivet','tread','lug','rim vent','roof seam','step grip','fleet marking')
         if lod and any(key in name for key in omit):
@@ -69,6 +73,7 @@ def build_scene(lod=0, bake=False):
         return o
 
     def box(name,loc,size,token,parent=body,bevel=.02,rot=None):
+        if DISTANCE: bevel = 0
         hx,hy,hz=(v/2 for v in size)
         verts=[(x*hx,y*hy,z*hz) for x,y,z in [(-1,-1,-1),(-1,-1,1),(-1,1,-1),(-1,1,1),(1,-1,-1),(1,-1,1),(1,1,-1),(1,1,1)]]
         faces=[(2,6,4,0),(5,7,3,1),(4,5,1,0),(3,7,6,2),(1,3,2,0),(6,7,5,4)]
@@ -78,6 +83,7 @@ def build_scene(lod=0, bake=False):
         return finish(o,name,token,parent,0 if min(size)<.03 else min(bevel,min(size)*.4))
 
     def prism(name,points,y0,y1,token,parent=body,bevel=.02):
+        if DISTANCE: bevel = 0
         n=len(points); verts=[(x,y,z) for y in (y0,y1) for x,z in points]
         faces=[tuple(range(n-1,-1,-1)),tuple(range(n,2*n))]+[(i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n)]
         me=bpy.data.meshes.new(name); me.from_pydata(verts,[],faces); me.update()
@@ -86,6 +92,7 @@ def build_scene(lod=0, bake=False):
         return finish(o,name,token,parent,bevel)
 
     def cylinder(name,loc,radius,depth,token,parent=body,axis='Y',vertices=32):
+        if DISTANCE: vertices = min(vertices, 12 if DISTANCE == 1 else 8)
         n=min(vertices,16 if lod==1 else 6) if lod else vertices
         phase=math.pi/6 if lod==2 and name=='tyre' else 0
         verts=[(radius*math.cos(math.tau*i/n+phase),radius*math.sin(math.tau*i/n+phase),z) for z in (-depth/2,depth/2) for i in range(n)]
@@ -103,6 +110,7 @@ def build_scene(lod=0, bake=False):
         return o
 
     def torus(name,loc,major,minor,token,parent=body):
+        if DISTANCE: return cylinder(name,loc,major+minor,minor*2,token,parent,vertices=12 if DISTANCE==1 else 8)
         if lod==2:
             return cylinder(name,loc,major+minor,minor*2,token,parent,vertices=12)
         n=48 if lod==0 else 24 if lod==1 else 12
@@ -121,9 +129,9 @@ def build_scene(lod=0, bake=False):
 
     def text(name,label,loc,size,token,side=-1,parent=body,width=None):
         if lod==2: return None
-        cu=bpy.data.curves.new(name,'FONT'); cu.body=label; cu.size=size; cu.extrude=.004 if lod==0 else 0; cu.bevel_depth=0; cu.bevel_resolution=1
+        cu=bpy.data.curves.new(name,'FONT'); cu.body=label; cu.size=size; cu.extrude= 0 if DISTANCE else (.004 if lod==0 else 0); cu.bevel_depth= 0 if DISTANCE else (0); cu.bevel_resolution=1
         cu.font=FONT
-        cu.align_x='CENTER'; cu.align_y='CENTER'; cu.resolution_u=5 if lod==0 else 2
+        cu.align_x='CENTER'; cu.align_y='CENTER'; cu.resolution_u= 2 if DISTANCE else (5 if lod==0 else 2)
         o=bpy.data.objects.new(name,cu); scene.collection.objects.link(o); o.location=loc
         o.rotation_euler=(math.pi/2,0,math.pi if side==1 else 0)
         bpy.context.view_layer.update()
@@ -133,7 +141,7 @@ def build_scene(lod=0, bake=False):
 
     def arch(name,x,y,r,width,token):
         # Solid open semicircular fender: continuous bevelled surface.
-        n=32 if lod==0 else 12 if lod==1 else 6
+        n=(8 if DISTANCE==1 else 4) if DISTANCE else (32 if lod==0 else 12 if lod==1 else 6)
         verts=[]
         for yy in (y-width/2,y+width/2):
             for rr in (r,r+.075):
@@ -333,6 +341,9 @@ def build_scene(lod=0, bake=False):
     for name,loc,size in [('trailer',(-2.8,0,3.03),(11.2,2.5,3.05)),('cab',(4.7,0,2.55),(3.1,2.6,2.95)),('hood',(7.1,0,1.75),(2.15,2.1,1.4)),('chassis',(0,0,.75),(16.7,2.45,1.5))]:
         o=empty('col:'+name,loc,root); o['collider']='cuboid'; o['shape']='cuboid'; o['size']=list(size)
 
+    if DISTANCE:
+        export_variant(Path(__file__).parent, DISTANCE, omit=('rivet', 'tread', 'lug', 'roof seam', 'step grip', 'rim vent', 'rim bead', 'shield perforation','rim bowl','hub cap','damper','reflective tape','leaf spring','fleet marking','company service','tank strap','side panel seam','sleeper louvre'), far_omit=('rim bead', 'sidewall ring', 'hub cap', 'hinge pin', 'tank strap', 'marker base', 'wheel arch', 'company service', 'fleet marking', 'reflective tape', 'rear mudguard','front fender','damper','rim','hub','hose','mirror support','company name','side panel seam','sleeper louvre','side marker','axle','leaf spring','trailer crossmember','sill marker','mirror stay','hatch edge','locking rod','exhaust','door hinge','lock bracket','tank strap','roof marker','corner marker','registration'))
+
     meshes=[o for o in scene.objects if o.type=='MESH']
     graph=bpy.context.evaluated_depsgraph_get()
     evaluated=[(o,bpy.data.meshes.new_from_object(o.evaluated_get(graph),depsgraph=graph)) for o in meshes]
@@ -385,12 +396,6 @@ def export_scene(path,objects):
 if a.glb:
     export_scene(a.glb,objects)
     lod_stats={}
-    for lod in ((1,2) if a.lod==0 else ()):
-        _,lo,ss=build_scene(lod,bake=True)
-        for obj in lo:
-            if obj.type=='MESH': hard_normals(obj)
-        export_scene(Path(a.glb).with_name('model.lod'+str(lod)+'.glb'),lo)
-        lod_stats[str(lod)]={k:ss[k] for k in ('triangles','draw_calls')}
     if a.lod==0: (HERE/'lod-stats.json').write_text(json.dumps(lod_stats,indent=2)+'\n')
     if a.render: M,objects,_=build_scene(a.lod)
 scene=bpy.context.scene
@@ -422,3 +427,6 @@ if a.render:
         scene.render.filepath=str(path.with_name('game.png' if path.name=='hero.png' else path.stem.replace('-ref','-game')+'.png').resolve())
         bpy.ops.render.render(write_still=True)
 print('OK',json.dumps(stats))
+
+if a.glb and not DISTANCE:
+    build_native_lods(__file__)
