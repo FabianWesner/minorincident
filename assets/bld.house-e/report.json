@@ -2,9 +2,9 @@
   "id": "bld.house-e",
   "tier": "hero",
   "triangles": {
-    "lod0": 74808,
-    "lod1": 10071,
-    "lod2": 2552
+    "lod0": 58164,
+    "lod1": 4614,
+    "lod2": 1969
   },
   "draw_calls": 39,
   "materials": [
@@ -36,62 +36,12 @@
   },
   "nodes_ok": true,
   "within_budget": true,
-  "ao": "32-sample deterministic CPU Cycles COLOR_0, stylized shade 0.68\u20131.0, alpha 1",
-  "matches_reference": true,
-  "done": true,
-  "webgl2_ok": true,
+  "ao": "Cycles CPU, deterministic seed 17, 32 samples, COLOR_0",
+  "matches_reference": false,
+  "done": false,
+  "webgl2_ok": false,
   "webgpu_ok": false,
   "gaps": [
     "Back and small furnished interior are inferred from the single reference view."
-  ],
-  "optimized": true,
-  "validation_ok": true,
-  "deterministic": true,
-  "binary_identical_rebuild": true,
-  "rounds": 4,
-  "webgpu_check": "Manual, per repository policy; not run",
-  "stationary_frame_difference": 0,
-  "review": "assets/bld.house-e/review.md",
-  "comparison": "assets/bld.house-e/renders/comparison.png",
-  "lod2": "Authored structural primitives; continuous walls/roof/porch and plant cores",
-  "lod_details": [
-    {
-      "level": 0,
-      "triangles": 74808,
-      "draw_calls": 39,
-      "file_kb": 942.17,
-      "geometry_hash": "bfd09423340e401aaf4819c10d355131a5ad5d123496429e7614c6175bf3faee"
-    },
-    {
-      "level": 1,
-      "triangles": 10071,
-      "draw_calls": 39,
-      "file_kb": 227.43,
-      "geometry_hash": "f7a02cc852c821e926168f92b58a129904de864fbe26cd26dcd83cfc0ed3b777"
-    },
-    {
-      "level": 2,
-      "triangles": 2552,
-      "draw_calls": 24,
-      "file_kb": 69.35,
-      "geometry_hash": "b12d2ebc36f454c2166f3bdccc8c9a588fc93831768c489632f082c08fe1d635"
-    }
-  ],
-  "binary_sha256": {
-    "lod0": "b6c45e82b778655814a13259fa83750e3ef9564df892f7be2791792748a77f60",
-    "lod1": "49e218f432ab7733c112541db78ef1c0dd995dd19817ec89f67cad28da740421",
-    "lod2": "f4fc98710e21914fc3b6517fe3f314170456d9af91f610b7592cab0e84c544f6"
-  },
-  "repository_checks": {
-    "typecheck": "pass",
-    "lint": "pass",
-    "unit": {
-      "passed": 200,
-      "todo": 2,
-      "files_passed": 65,
-      "files_skipped": 2,
-      "max_workers": 4
-    },
-    "verify_E17": "Deferred to integration after registration; manifest remains placeholder"
-  }
+  ]
 }

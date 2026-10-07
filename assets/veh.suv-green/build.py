@@ -5,8 +5,10 @@ All geometry is grouped by moving assembly and material before export.
 import argparse
 import json
 import math
-from pathlib import Path
 import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
+from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy
 import bmesh
 from mathutils import Vector
@@ -73,8 +75,8 @@ body=empty('body',parent=root)
 def finish(o,name,mat,parent=body,bevel=.02):
     o.name=name
     o.data.materials.append(M[mat])
-    if bevel:
-        mod=o.modifiers.new('Soft edges','BEVEL'); mod.width=bevel; mod.segments=2
+    if bevel >= .01:
+        mod=o.modifiers.new('Soft edges','BEVEL'); mod.width=bevel; mod.segments=2 if bevel >= .04 else 1
         mod=o.modifiers.new('Weighted normals','WEIGHTED_NORMAL'); mod.keep_sharp=True
     o.parent=parent
     o.matrix_parent_inverse=parent.matrix_world.inverted()
@@ -123,7 +125,7 @@ def cyl(name,loc,r,depth,mat,parent=body,axis='Y',vertices=48):
 
 
 def torus(name,loc,major,minor,mat,parent=body):
-    bpy.ops.mesh.primitive_torus_add(major_segments=64,minor_segments=12,location=loc,major_radius=major,minor_radius=minor,rotation=(math.pi/2,0,0))
+    bpy.ops.mesh.primitive_torus_add(major_segments=40,minor_segments=8,location=loc,major_radius=major,minor_radius=minor,rotation=(math.pi/2,0,0))
     o=bpy.context.object
     for f in o.data.polygons:f.use_smooth=True
     return finish(o,name,mat,parent,0)
@@ -309,6 +311,7 @@ def clean_mesh(o):
     if bad:bmesh.ops.delete(bm,geom=bad,context='FACES')
     bm.to_mesh(o.data);bm.free();o.data.update()
 
+prune_hidden_faces([o for o in scene.objects if o.type == "MESH"], defer=True)
 # Apply modifiers then join only within each joint/material partition.
 for o in list(scene.objects):
     if o.type!='MESH':continue
@@ -386,7 +389,7 @@ report={'id':'veh.suv-green','tier':'Hero','triangles':triangles,'draw_calls':le
 if a.glb:
     bpy.ops.object.select_all(action='SELECT')
     def export_glb(path):
-        bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
+        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(Path(path).resolve())); bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
     export_glb(a.glb)
     # Independently exported LODs preserve all node names and joint transforms.
     meshes=[o for o in scene.objects if o.type=='MESH']

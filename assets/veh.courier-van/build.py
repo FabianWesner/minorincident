@@ -4,6 +4,8 @@ All applied trim is at least 3 mm proud. No image textures are exported.
 """
 import math, sys, json
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
+from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bmesh, bpy
 from mathutils import Matrix, Vector
 HERE = Path(__file__).resolve().parent
@@ -86,10 +88,10 @@ def finish(obj, mat, parent, bevel=0.0, segs=2, smooth=True, harden=True, angle=
             p.use_smooth = smooth
     if LEVEL:bevel=0
     if LEVEL==1:segs=1
-    if bevel > 0:
+    if bevel >= .01:
         b = obj.modifiers.new('bevel', 'BEVEL')
         b.width = bevel
-        b.segments = segs
+        b.segments = min(segs, 2 if bevel >= .04 else 1)
         b.limit_method = 'ANGLE'
         b.angle_limit = math.radians(angle)
         b.harden_normals = harden
@@ -167,7 +169,7 @@ def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.00
     return finish(from_bm(name, bm), mat, parent, bevel=bevel, segs=2)
 
 
-def lathe(name, profile, center, axis, mat, parent=None, segs=40, smooth=True):
+def lathe(name, profile, center, axis, mat, parent=None, segs=32, smooth=True):
     """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
     if LEVEL==2 and name in {'rim_lip','hub_cap','sidewall_rib','steering'}:return None
     if LEVEL:segs=min(segs,16 if LEVEL==1 else 8)
@@ -205,10 +207,10 @@ def cylinder(name, center, r, depth, axis, mat, parent=None, segs=40, bevel=0.0)
     if LEVEL and name in {'lug','lock','clamp_bolt','hinge_pin'}:return None
     prof = [(1e-4, -depth / 2), (r, -depth / 2), (r, depth / 2), (1e-4, depth / 2)]
     o = lathe(name, prof, center, axis, mat, parent, segs)
-    if bevel:
+    if bevel >= .01:
         b = o.modifiers.new('bevel', 'BEVEL')
         b.width = bevel
-        b.segments = 2
+        b.segments = 2 if bevel >= .04 else 1
         b.limit_method = 'ANGLE'
         o.modifiers.move(len(o.modifiers) - 1, 0)
     return o
@@ -230,7 +232,7 @@ def cut(target, cutter_obj):
     bpy.data.objects.remove(cutter_obj)
 
 
-def raw_cyl(name, center, r, depth, axis='y', segs=64):
+def raw_cyl(name, center, r, depth, axis='y', segs=32):
     bm = bmesh.new()
     if LEVEL:segs=min(segs,24 if LEVEL==1 else 12)
     bmesh.ops.create_cone(bm, cap_ends=True, segments=segs, radius1=r, radius2=r, depth=depth)
@@ -454,6 +456,8 @@ def build_vehicle(level):
             if p in moving:return p
             p=p.parent
         return None
+    if LEVEL == 0:
+        prune_hidden_faces([o for o in CAR.objects if o.type == "MESH"], {o: motion_owner(o) for o in CAR.objects if o.type == "MESH"}, defer=True)
     buckets={}
     for o in list(CAR.objects):
         if o.type=='MESH':buckets.setdefault((motion_owner(o),o.data.materials[0].name),[]).append(o)
@@ -514,7 +518,7 @@ if arg('--glb'):
     def export_glb(path):
         bpy.ops.object.select_all(action='DESELECT')
         for o in CAR.objects:o.select_set(True)
-        bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_lights=False,export_cameras=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
+        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(Path(path).resolve())); bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_lights=False,export_cameras=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
         print('GLB OK',path)
     export_glb(arg('--glb'))
     hero_collection,hero_meshes,hero_root=CAR,meshes,root

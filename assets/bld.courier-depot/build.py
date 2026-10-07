@@ -10,6 +10,8 @@ import random
 import struct
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
+from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy
 from mathutils import Matrix, Vector
 
@@ -517,6 +519,8 @@ def build(lod=0):
                 t=j*math.tau/6
                 cylinder('Conifer branch',(-.03+.19*math.cos(t),-2.38+.19*math.sin(t),z-.06),r*.43,.35,'foliage',r2=.018,n=6)
 
+    if high:
+        prune_hidden_faces(meshes, defer=True)
     # Resolve global authoring geometry into each parent joint; merge per material.
     bpy.context.view_layer.update()
     groups={}
@@ -650,7 +654,7 @@ if args.glb:
         report,objects=build(level)
         ao.bake_all(objects,samples=32)
         path=output if level==0 else output.with_name(output.stem+'.lod'+str(level)+'.glb')
-        bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',export_apply=True,export_yup=True,
+        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(path), lod1_ratio=.06); bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',export_apply=True,export_yup=True,
                                  export_extras=True,export_cameras=False,export_lights=False)
         reports['lod'+str(level)]=report
     (HERE/'report.json').write_text(json.dumps({'id':ASSET['id'],'tier':'Hero','lods':reports,
