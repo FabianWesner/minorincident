@@ -185,6 +185,8 @@ export class LevelOneOutbreak {
     const walkS = total / story.techWalkMs, pauseS = story.takeBoxS;
     // Any press during the beat fast-forwards to the moment the technician has the box.
     if (this.story.skipping && (tick - l1.handoverAt) / TICKS < walkS + pauseS) l1.handoverAt = tick - Math.ceil((walkS + pauseS) * TICKS);
+    // The technician holds the signing pose until the line has been read.
+    if (!this.story.skipping && this.story.reading && tick - l1.handoverAt >= Math.ceil((walkS + pauseS) * TICKS) - 1) l1.handoverAt++;
     const t = (tick - l1.handoverAt) / TICKS;
     const point = (m: number) => m <= out1 ? { x: spawn.x + (door.x - spawn.x) * m / out1, z: spawn.z + (door.z - spawn.z) * m / out1 }
       : { x: door.x + (l1.hx - door.x) * (m - out1) / out2, z: door.z + (l1.hz - door.z) * (m - out1) / out2 };

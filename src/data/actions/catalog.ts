@@ -10,8 +10,8 @@ const gun = (id: string, damage: number, range: number, fireRate: number, magazi
 const thrown = (id: string, damage: number, radius: number, fuse: number): ActionDef => ({ ...base, id: `weapon.${id}`, category: 'throwable', viewAssetId: `thr.${id === 'grenade' ? 'frag-grenade' : id}`, iconId: `icon.${id}`, damage, range: 12, arc: 0, maxTargets: 1000, windup: 0, active: 1 / 60, recovery: 0.2, cooldown: 0.25, charges: 2, recharge: 12, projectile: { speed: 12, gravity: 9.81, pierce: 0 }, splash: { radius, falloff: 0.5 }, fuse, knockback: damage ? 0.5 : 0, stagger: damage ? 0.5 : 0, noiseRadius: damage ? noiseForAction(`weapon.${id}`).radius : 0, aimIndicator: 'arc', tier: 1, upgradeHooks: ['damage', 'charges', 'recharge', 'radius'] });
 const ability = (id: string, radius: number, duration: number, cooldown: number, kind: NonNullable<ActionDef['effect']>['kind']): ActionDef => ({ ...base, id: `ability.${id}`, category: 'ability', damage: 0, range: radius, arc: 360, maxTargets: 1000, windup: 0, active: 1 / 60, recovery: 0.2, cooldown, knockback: 0, stagger: 0, noiseRadius: 0, aimIndicator: 'circle', tier: 2, effect: { kind, radius, duration }, viewAssetId: `ability.${id}`, iconId: `icon.${id}`, upgradeHooks: ['cooldown', 'duration', 'radius'] });
 export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries(([
-  // E19 §5.6: unarmed 9 per hit (5 hits per 40 HP), one body per punch; per-move timing/knockback in meleeCombos.
-  { ...melee('fists', 'wpn.fists', 9, 1.3, 75, 0.4, 0, 0.2), maxTargets: 1, stagger: 0 },
+  // E19 §5.6 + PO #11: unarmed 9 per hit (5 hits per 40 HP); 1.45 m reach so punches land on infected waiting at arm's length, one body per punch; per-move timing/knockback in meleeCombos.
+  { ...melee('fists', 'wpn.fists', 9, 1.45, 80, 0.4, 0, 0.2), maxTargets: 1, stagger: 0 },
   melee('kick', 'wpn.kick', 18, 1.5, 60, 0.65, 0, 1.2),
   { ...fixtures['weapon.bat'], damage: 22, knockback: 2.6, stagger: 0.4 },
   melee('crowbar', 'wpn.crowbar', 30, 1.8, 95, 0.6, 0),
