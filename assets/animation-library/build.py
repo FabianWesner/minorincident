@@ -364,8 +364,9 @@ guard=p(hip=hip(y=-.025),armL=z(38),foreArmL=z(95),armR=z(42),foreArmR=z(95),
 unarmed=[
     ('jab',p(armL=z(35),foreArmL=z(110)),p(armL=z(92),foreArmL=z(4)),p(armL=z(100),foreArmL=z(18)),12),
     ('cross',p(armR=(0,-20,25),foreArmR=z(112)),p(armR=(0,18,94),foreArmR=z(6)),p(armR=(0,40,102),foreArmR=z(22)),25),
-    ('front-kick',p(legR=z(58),shinR=z(-110),torso=z(8)),p(legR=z(95),shinR=z(-8),footR=z(-18),torso=z(12),armR=z(-25)),p(legR=z(74),shinR=z(-35),torso=z(8)),8),
-    ('roundhouse-kick',p(legR=(12,-25,50),shinR=z(-100)),p(legR=(38,45,98),shinR=z(-8),torso=(0,20,12),armL=z(65)),p(legR=(25,80,70),shinR=z(-30),torso=(0,35,8)),38),
+    # E19 QA1-06: kicks must read at the game camera: high chamber, full extension, torso counter-lean, arms out.
+    ('front-kick',p(legR=z(80),shinR=z(-125),torso=z(10),armL=z(55),armR=z(40)),p(legR=z(112),shinR=z(-4),footR=z(-22),torso=z(24),armL=(-30,0,70),armR=(30,0,-35)),p(legR=z(90),shinR=z(-30),torso=z(16),armL=z(45)),8),
+    ('roundhouse-kick',p(legR=(20,-30,70),shinR=z(-120),armL=z(60)),p(legR=(55,50,108),shinR=z(-4),torso=(-18,25,18),armL=(-30,0,80),armR=(25,0,-40)),p(legR=(35,85,80),shinR=z(-28),torso=(-8,40,10)),48),
     ('uppercut',p(hip=hip(y=-.065),armR=z(8),foreArmR=z(100)),p(armR=(0,15,134),foreArmR=z(38),torso=z(-8)),p(armR=(0,28,142),foreArmR=z(48),torso=z(-5)),18),
     ('knee',p(legR=z(28),shinR=z(-115),armL=z(65),armR=z(65)),p(legR=z(108),shinR=z(-130),torso=z(-14),foreArmL=z(60),foreArmR=z(60)),p(legR=z(86),shinR=z(-115),torso=z(-8)),12),
     ('spinning-backfist',p(armR=(0,-65,65),foreArmR=z(75)),p(armR=(0,-110,100),foreArmR=z(12)),p(armR=(0,-125,88),foreArmR=z(20)),110),
