@@ -76,7 +76,12 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.stats.deaths)).toBe(1);
     // The ending is now a reach volume: entering it during paused setup would finish before recording.
     // Stand outside the open bay, then capture the player's real click and actual crossing.
-    await page.evaluate(p => { const a = window.__SS__!; a.teleport('player', { x: p.x, z: p.z - 3 }); a.step(1); }, at('fire-bay-door'));
+    await page.evaluate(p => {
+      const a = window.__SS__!; a.teleport('player', { x: p.x, z: p.z - 3 });
+      a.camera.preset('D-GROVE/W0/l1-safe');
+      a.camera.cinematic({ position: [p.x - 12, 16, p.z - 12], target: [p.x, 0, p.z] }, true);
+      a.step(1);
+    }, at('fire-bay-door'));
     await page.evaluate(() => window.__SS__!.screenshotReady());
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.phase)).toBe('playing');
     await measure('fire-station-end', async () => {
