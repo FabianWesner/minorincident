@@ -54,8 +54,8 @@ copyright 2025 Bruno Simon):
 | `Zones.js` (41046b5) | `src/sim/ai/InfectedSystem.ts` — perception enter/alert transitions without singleton dependencies |
 | `PreRenderer.js` (41046b5) | `src/render/PreRenderer.ts`, `src/render/GameView.ts`, `src/Game.ts` — hidden-variant shader warm-up at level load (compileAsync and a 32px render in the gameplay pass) |
 
-| `Physics/PhysicsVehicle.js` (41046b5) | `src/sim/vehicles/VehicleBody.ts` — fixed-step four-wheel raycast suspension, engine taper, low centre of mass and bounded stuck history |
-| `World/VisualVehicle.js` (41046b5) | `src/render/VehicleView.ts` — authoritative wheel pivots/suspension, brake lamps and emergency lamp animation |
+| `Physics/PhysicsVehicle.js`, `Player.js` (41046b5) | `src/sim/vehicles/VehicleBody.ts`, `Vehicles.ts` — fixed-step four-wheel raycast suspension, engine taper, idle/reverse braking, low centre of mass, bounded stuck history and mass-scaled upside-down jump/roll recovery. Recovery delays use simulation ticks in place of GSAP timers; speed-scaled steering and rear handbrake grip are our arcade tuning. |
+| `World/VisualVehicle.js` (41046b5) | `src/render/VehicleView.ts` — fixed-tick wheel steering/suspension smoothing, interpolated chassis roll and wheel transforms, brake lamps and emergency lamp animation |
 | `Explosions.js` (41046b5) | `src/sim/combat/Damage.ts` — radial splash falloff and direction-scaled impulse, without singleton/render dependencies |
 
 | `Noises.js`, `World/Confetti.js`, `World/Leaves.js`, `Trails.js` (41046b5) | `src/render/vfx/FxPool.ts` — fixed instancing, shader burst trajectories, shared sine noise and tracer slots |

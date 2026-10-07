@@ -4,6 +4,7 @@ import { bicycleGeometry as geometry } from '../../data/bicycleGeometry';
 import { inside } from '../../levels/districts/validate';
 import { l1v2 } from '../../data/l1v2';
 import { survivor } from '../../data/survivor';
+import { bicycleHandling } from '../../data/vehicles';
 import type { InputFrame } from '../../input/InputFrame';
 import type { NoBikeZone, Vec2 } from '../outbreak/types';
 import type { SimWorld } from '../world/SimWorld';
@@ -14,6 +15,8 @@ export interface BicycleState {
   mounted: boolean; heading: number; speed: number;
   /** Pedal crank phase and handlebar angle for the view; both derived, never read by the sim. */
   pedal: number; steer: number;
+  /** Smoothed frame lean in radians; optional for older checkpoints. */
+  lean?: number;
   /** Stand-to-mount timer in ticks; mounting re-arms only after the player has left the bicycle. */
   standTicks: number; armed: boolean; lockUntil: number;
 }
@@ -45,7 +48,7 @@ export class Bicycle {
   constructor(private readonly world: SimWorld) {}
   /** Creates the bicycle at `pos`; the integrator/mission calls this once per level (anchor `bike-start`). */
   spawn(pos: Vec2, heading = 0): number {
-    const state: BicycleState = { mounted: false, heading, speed: 0, pedal: 0, steer: 0, standTicks: 0, armed: true, lockUntil: 0 };
+    const state: BicycleState = { mounted: false, heading, speed: 0, pedal: 0, steer: 0, lean: 0, standTicks: 0, armed: true, lockUntil: 0 };
     const parking = this.parkingSpot(pos.x, pos.z, heading, [0, .6, 1.2, 1.8, 2.4, 3, 4, 5, 6, 8]);
     if (!parking) throw new Error('No clear pavement for courier bicycle');
     const spot = parking; heading = parking.heading; state.heading = heading;
@@ -142,9 +145,11 @@ export class Bicycle {
     // faster (speedScale); the bicycle's own heading model is for direct WASD/stick steering. The steering-
     // model version pinned itself on fence corners where the route turns tighter than the bike can.
     if (frame.navigation) {
+      const heading = b.heading;
       const v = loco.velocity, speed = Math.hypot(v.x, v.z);
       if (speed > .2) { const desired = Math.atan2(v.z, v.x), err = Math.atan2(Math.sin(desired - b.heading), Math.cos(desired - b.heading)); b.steer = Math.max(-1, Math.min(1, err * 2)); b.heading = desired; } else b.steer = 0;
       b.speed = actual; b.pedal += b.speed * FIXED_DT * 1.8;
+      this.lean(b, Math.atan2(Math.sin(b.heading - heading), Math.cos(b.heading - heading)) / FIXED_DT);
       const off = { down: false, held: false, up: false };
       const routed: InputFrame = { ...frame, left: off, right: { ...off }, selector: 0, interact: !!claimed && frame.interact };
       delete routed.attackTarget; return routed;
@@ -159,14 +164,16 @@ export class Bicycle {
       // Sharp turns shed speed; a turn straight behind slows to a crawl before swinging round.
       target = speedMs * want * Math.max(.3, Math.cos(Math.min(Math.abs(err), Math.PI / 2)) ** .5);
     }
-    b.steer += (steerTarget - b.steer) * Math.min(1, 8 * FIXED_DT);
-    const radius = 1.6 + (6 - 1.6) * r;
+    b.steer += (steerTarget - b.steer) * Math.min(1, bicycleHandling.steeringResponse * FIXED_DT);
+    const radius = bicycleHandling.slowTurnRadius + (bicycleHandling.fastTurnRadius - bicycleHandling.slowTurnRadius) * r;
     // At an obstacle, the rider can still walk the front wheel round to pull away.
     // Using only achieved speed here locks the heading forever when the capsule is stopped.
     const steeringSpeed = want > 0 ? Math.max(b.speed, .8) : b.speed;
-    b.heading += b.steer * (steeringSpeed / radius) * FIXED_DT;
+    const turnRate = b.steer * steeringSpeed / radius;
+    b.heading += turnRate * FIXED_DT;
     const accel = accelToMs / accelS, change = target > b.speed ? accel * FIXED_DT : (want > 0 ? 9 : 3) * FIXED_DT;
     b.speed += Math.max(-change, Math.min(change, target - b.speed));
+    this.lean(b, turnRate);
     if (want > 0) b.pedal += b.speed * FIXED_DT * 1.8; // cadence follows speed; freewheeling while coasting
     const m = b.speed / speedMs;
     // The attack buttons are disabled while riding; a coasting bicycle with no input keeps its heading.
@@ -174,6 +181,10 @@ export class Bicycle {
     const next: InputFrame = { ...frame, move: { x: Math.cos(b.heading) * m, z: Math.sin(b.heading) * m }, left: off, right: { ...off }, selector: 0, interact: !!claimed && frame.interact };
     delete next.attackTarget; delete next.navigation; // the bicycle has its own acceleration and turning model
     return next;
+  }
+  private lean(b: BicycleState, turnRate: number): void {
+    const target = Math.max(-bicycleHandling.maxLean, Math.min(bicycleHandling.maxLean, Math.atan(b.speed * turnRate / 9.81)));
+    b.lean = (b.lean ?? 0) + (target - (b.lean ?? 0)) * (1 - Math.exp(-bicycleHandling.leanResponse * FIXED_DT));
   }
   /** Keeps the parked/ridden bicycle on the rider after physics. */
   postPhysics(): void {
@@ -230,7 +241,7 @@ export class Bicycle {
   }
   private dismount(bike: EntitySnapshot, player: EntitySnapshot, at?: Vec2): void {
     const b = bike.bicycle!;
-    b.mounted = false; b.speed = 0; b.steer = 0; b.armed = false; b.lockUntil = this.world.tick + 18;
+    b.mounted = false; b.speed = 0; b.steer = 0; b.lean = 0; b.armed = false; b.lockUntil = this.world.tick + 18;
     delete player.riding;
     // Park beside the rider on level pavement; if the local area has no safe spot, retain the last safe parking location.
     const x = at?.x ?? player.transform.x, z = at?.z ?? player.transform.z, spot = this.parkingSpot(x, z, b.heading);

@@ -10,3 +10,7 @@ Final exports after QA: LOD0 18,906 triangles, LOD1 2,568, LOD2 620; 28 total dr
 
 ## Orchestrator railway readability correction
 Track extended to 10.68 m along Y, about 3.2 m beyond each 4.3 m road edge. Exposed sleepers are dark timber with warm top plates and steel rail chairs. Rails use a wider foot/web/head profile; redundant bright guard rails were removed. Gray aggregate and a continuous ballast bed distinguish the railway from the soil. A separate timber plank deck fills the crossing between the rails and outer approach margins. Both authored LODs retain the same extended track/deck silhouette. Track extension foundation boxes meet the central tile without overlapping coplanar faces.
+
+## Art registration (2026-10-07)
+
+Measured delivered bounds (X/Y/Z, metres): 7.4269, 3.7377, 10.8. Source, named pivots/sockets, palette, front marker and delivered tiers are validated by the production validator. Runtime status is integrated. Five-angle LOD contact evidence: `test-results/art-register/kit.rail-crossing/lod-contact.png`.

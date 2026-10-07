@@ -7,3 +7,7 @@ Purposeful parts: four two-axle bogies, rail-wheel flanges and hubs, axle bearin
 All wear and markings are offset geometry, minimum 3 mm clearance, with no images or real railroad marks. Static parts merge by material; each wheel is one draw call. Palette token values follow art-direction spec. AO is baked into the ao color attribute on export.
 
 Production refinement: small bevels use one segment, main forms two. A 0.74 collapse removes redundant bevel facets, followed by zero-area face cleanup. LOD1 and LOD2 are authored as explicit closed lightweight forms, rather than extreme decimation. LOD1 retains flanged wheels, selected bevels, vent fins, door ribs, steps and broad paint loss. LOD2 retains the silhouette, major bands, lamps, wheel/door pivots and end ladders with eight-sided wheels and fewer ribs. Their AO attributes use a uniform soft value of 0.9. AO is Cycles-baked at 32 samples then compressed to 0.65–1.0 for soft stylized contact shadows, avoiding corner-sample blackening on large painted faces.
+
+## Art registration (2026-10-07)
+
+Measured delivered bounds (X/Y/Z, metres): 24.748, 4.8149, 3.8798. Source, named pivots/sockets, palette, front marker and delivered tiers are validated by the production validator. Runtime status is integrated. Five-angle LOD contact evidence: `test-results/art-register/veh.train-freight/lod-contact.png`.
