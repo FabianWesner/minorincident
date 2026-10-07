@@ -31,7 +31,7 @@ const kind = (url: string, mime: string): string => {
 
 type Req = { url: string; kind: string; bytes: number; status: number; cached: boolean; phase: 'boot' | 'menu' | 'level' | 'background'; start: number; end: number; wall: number };
 export type LoadRun = {
-  profile: string; cache: 'cold' | 'warm'; firstPaintMs: number; titleMs: number; playableMs: number; startToPlayableMs: number; startToBeginMs: number; beginToPlayableMs: number; clickToPlayableExcludingReadingMs: number; firstFramesMaxMs: number; firstFramesOver50: number;
+  profile: string; cache: 'cold' | 'warm'; firstPaintMs: number; titleMs: number; playableMs: number; startToPlayableMs: number; startToBeginMs: number; beginToPlayableMs: number; clickToPlayableExcludingReadingMs: number; firstFramesMaxMs: number; firstFramesOver50: number; menuLongTaskMaxMs: number; menuInpMs: number;
   requests: number; bytes: number; bootBytes: number; menuBytes: number; levelBytes: number; criticalBytes: number; uniqueCriticalBytes: number; criticalRequests: number; backgroundBytes: number; byKind: Record<string, { requests: number; bytes: number }>;
   levelByKind: Record<string, { requests: number; bytes: number }>;
   longTasks: { count: number; totalMs: number; maxMs: number; over50AfterStart: number; top: { start: number; ms: number }[] };
@@ -48,7 +48,8 @@ async function throttle(cdp: CDPSession, profile: ProfileName): Promise<void> {
 
 // Plain JS source (not a serialized TS function: tsx/esbuild may inject helpers such as __name).
 const init = `(() => {
-  window.__lt = [];
+  window.__lt = []; window.__ev = [];
+  new PerformanceObserver(list => { for (const e of list.getEntries()) window.__ev.push({ start: e.startTime, ms: e.duration, type: e.name }); }).observe({ type: 'event', durationThreshold: 16, buffered: true });
   new PerformanceObserver(list => { for (const e of list.getEntries()) window.__lt.push({ start: e.startTime, ms: e.duration }); }).observe({ type: 'longtask', buffered: true });
   // In-page phase marks (Playwright polling lags a busy main thread): title shown, first playable frame.
   // The boot scenario also passes through the 'game' screen before the title: only after Start counts.
@@ -83,7 +84,9 @@ export async function measureOnce(page: Page, cdp: CDPSession, base: string, pro
   await page.click('[data-testid=start-game]');
   await page.click('[data-testid=character-female]');
   // Optional menu "reading time" between the title and choosing L1 (default 0: click immediately).
-  const menuMs = Number(process.env.LOAD_MENU_MS ?? 0); if (menuMs) await page.waitForTimeout(menuMs);
+  // Menu time is spent interacting (back/forward between screens every 400 ms) to measure INP.
+  const menuMs = Number(process.env.LOAD_MENU_MS ?? 0);
+  for (const until = Date.now() + menuMs; Date.now() < until;) { await page.click('[data-testid=levels-back]'); await page.click('[data-testid=character-female]'); await page.waitForTimeout(400); }
   phase = 'level';
   await page.click('[data-testid=level-L1]');
   await page.waitForFunction(() => (window as unknown as { __begin?: number }).__begin !== undefined, undefined, { timeout: 300_000, polling: 16 });
@@ -93,11 +96,11 @@ export async function measureOnce(page: Page, cdp: CDPSession, base: string, pro
   phase = 'background';
   const result = await page.evaluate(async () => {
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-    const w = window as unknown as { __lt: { start: number; ms: number }[]; __start: number; __title?: number; __playable?: number; __begin: number; __beginClick: number; __frames: number[] };
+    const w = window as unknown as { __ev: { start: number; ms: number; type: string }[]; __lt: { start: number; ms: number }[]; __start: number; __title?: number; __playable?: number; __begin: number; __beginClick: number; __frames: number[] };
     while (w.__playable === undefined) await new Promise(r => requestAnimationFrame(r));
     while (w.__frames.length < 180) await new Promise(r => requestAnimationFrame(r));
     const paint = performance.getEntriesByType('paint').find(e => e.name === 'first-contentful-paint') ?? performance.getEntriesByType('paint')[0];
-    return { begin: w.__begin, beginClick: w.__beginClick, frames: w.__frames, origin: performance.timeOrigin, title: w.__title ?? 0, playable: w.__playable, start: w.__start, firstPaint: paint?.startTime ?? -1, lt: w.__lt, measures: performance.getEntriesByType('measure').map(m => ({ name: m.name, ms: Math.round(m.duration), at: Math.round(m.startTime - w.__start) })) };
+    return { ev: w.__ev, begin: w.__begin, beginClick: w.__beginClick, frames: w.__frames, origin: performance.timeOrigin, title: w.__title ?? 0, playable: w.__playable, start: w.__start, firstPaint: paint?.startTime ?? -1, lt: w.__lt, measures: performance.getEntriesByType('measure').map(m => ({ name: m.name, ms: Math.round(m.duration), at: Math.round(m.startTime - w.__start) })) };
   });
   // Let background streaming settle before the next run reuses the context.
   await page.waitForTimeout(Number(process.env.LOAD_SETTLE_MS ?? 1500));
@@ -107,7 +110,7 @@ export async function measureOnce(page: Page, cdp: CDPSession, base: string, pro
   const sum = (list: Req[]) => { const out: Record<string, { requests: number; bytes: number }> = {}; for (const r of list) { (out[r.kind] ??= { requests: 0, bytes: 0 }); out[r.kind].requests++; out[r.kind].bytes += r.bytes; } return out; };
   const lt = result.lt;
   return {
-    profile, cache, firstPaintMs: Math.round(result.firstPaint), titleMs: Math.round(titleMs), playableMs: Math.round(result.playable), startToPlayableMs: Math.round(result.playable - result.start), startToBeginMs: Math.round(result.begin - result.start), beginToPlayableMs: Math.round(result.playable - result.beginClick), clickToPlayableExcludingReadingMs: Math.round(result.playable - result.start - (result.beginClick - result.begin)), firstFramesMaxMs: Math.round(Math.max(...result.frames)), firstFramesOver50: result.frames.filter(f => f > 50).length,
+    profile, cache, firstPaintMs: Math.round(result.firstPaint), titleMs: Math.round(titleMs), playableMs: Math.round(result.playable), startToPlayableMs: Math.round(result.playable - result.start), startToBeginMs: Math.round(result.begin - result.start), beginToPlayableMs: Math.round(result.playable - result.beginClick), clickToPlayableExcludingReadingMs: Math.round(result.playable - result.start - (result.beginClick - result.begin)), firstFramesMaxMs: Math.round(Math.max(...result.frames)), firstFramesOver50: result.frames.filter(f => f > 50).length, menuLongTaskMaxMs: Math.round(Math.max(0, ...result.lt.filter(t => t.start > result.title && t.start < result.start).map(t => t.ms))), menuInpMs: Math.round(Math.max(0, ...result.ev.filter(e => e.start > result.title && e.start <= result.start).map(e => e.ms))),
     requests: settled.length, bytes: settled.reduce((n, r) => n + r.bytes, 0), bootBytes: settled.filter(r => r.phase === 'boot').reduce((n, r) => n + r.bytes, 0), menuBytes: settled.filter(r => r.phase === 'menu').reduce((n, r) => n + r.bytes, 0), levelBytes: settled.filter(r => r.phase === 'level').reduce((n, r) => n + r.bytes, 0), criticalBytes: settled.filter(r => r.phase !== 'background').reduce((n, r) => n + r.bytes, 0), uniqueCriticalBytes: [...settled.filter(r => r.phase !== 'background').reduce((map, r) => map.set(r.url, Math.max(map.get(r.url) ?? 0, r.bytes)), new Map<string, number>()).values()].reduce((n, b) => n + b, 0), criticalRequests: settled.filter(r => r.phase !== 'background').length, backgroundBytes: settled.filter(r => r.phase === 'background').reduce((n, r) => n + r.bytes, 0),
     byKind: sum(settled), levelByKind: sum(settled.filter(r => r.phase === 'level')),
     longTasks: { count: lt.length, totalMs: Math.round(lt.reduce((n, t) => n + t.ms, 0)), maxMs: Math.round(Math.max(0, ...lt.map(t => t.ms))), over50AfterStart: lt.filter(t => t.start > result.playable).length, top: [...lt].sort((a, b) => b.ms - a.ms).slice(0, 8).map(t => ({ start: Math.round(t.start), ms: Math.round(t.ms) })) },
@@ -149,5 +152,5 @@ if (process.argv[1]?.endsWith('load-measure.ts')) {
   await browser.close();
   const json = JSON.stringify({ base, at: new Date().toISOString(), runs: all }, null, 2);
   if (out) writeFileSync(out, json); else console.log(json);
-  for (const r of all) console.log(`${r.profile.padEnd(8)} ${r.cache.padEnd(5)} FCP ${r.firstPaintMs} title ${r.titleMs} L1->Begin ${r.startToBeginMs} Begin->playable ${r.beginToPlayableMs} total ${r.startToPlayableMs} ms (excl. briefing reading ${r.clickToPlayableExcludingReadingMs}), first 3 s frames max ${r.firstFramesMaxMs} (>50: ${r.firstFramesOver50}) | ${r.requests} req ${(r.bytes / 1e6).toFixed(2)} MB (boot ${(r.bootBytes / 1e6).toFixed(2)}, menu ${(r.menuBytes / 1e6).toFixed(2)}, level ${(r.levelBytes / 1e6).toFixed(2)}, critical ${(r.criticalBytes / 1e6).toFixed(2)} in ${r.criticalRequests} req, background ${(r.backgroundBytes / 1e6).toFixed(2)}) | long tasks ${r.longTasks.count} / ${r.longTasks.totalMs} ms, max ${r.longTasks.maxMs} | load ${r.loadAverage.toFixed(1)}\n   ${r.measures.filter(m => m.at >= 0).map(m => `${m.name}=${m.ms}@${m.at}`).join(' ')}${r.errors.length ? `\n   errors: ${r.errors.slice(0, 5).join(' | ')}` : ''}`);
+  for (const r of all) console.log(`${r.profile.padEnd(8)} ${r.cache.padEnd(5)} FCP ${r.firstPaintMs} title ${r.titleMs} L1->Begin ${r.startToBeginMs} Begin->playable ${r.beginToPlayableMs} total ${r.startToPlayableMs} ms (excl. briefing reading ${r.clickToPlayableExcludingReadingMs}), first 3 s frames max ${r.firstFramesMaxMs} (>50: ${r.firstFramesOver50}), menu long task max ${r.menuLongTaskMaxMs} INP ${r.menuInpMs} | ${r.requests} req ${(r.bytes / 1e6).toFixed(2)} MB (boot ${(r.bootBytes / 1e6).toFixed(2)}, menu ${(r.menuBytes / 1e6).toFixed(2)}, level ${(r.levelBytes / 1e6).toFixed(2)}, critical ${(r.criticalBytes / 1e6).toFixed(2)} in ${r.criticalRequests} req, background ${(r.backgroundBytes / 1e6).toFixed(2)}) | long tasks ${r.longTasks.count} / ${r.longTasks.totalMs} ms, max ${r.longTasks.maxMs} | load ${r.loadAverage.toFixed(1)}\n   ${r.measures.filter(m => m.at >= 0).map(m => `${m.name}=${m.ms}@${m.at}`).join(' ')}${r.errors.length ? `\n   errors: ${r.errors.slice(0, 5).join(' | ')}` : ''}`);
 }

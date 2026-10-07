@@ -26,13 +26,27 @@ export class Grass extends Mesh {
       positions.push(x - dx, .015, z - dz, x + dx, .015, z + dz, x, height, z);
       tips.push(0, 0, 1);
     };
-    // Keep grass out of solid footprints and pedestrian paths.
-    const valid = (x: number, z: number) => !layout.placements.some(p => {
-      if (p.assetId === 'prop.flower') return false;
-      if (p.assetId.includes('tree')) return Math.abs(x - p.position[0]) < .35 && Math.abs(z - p.position[2]) < .35;
-      return x > p.visualAabb.min[0] - .1 && x < p.visualAabb.max[0] + .1 && z > p.visualAabb.min[2] - .1 && z < p.visualAabb.max[2] + .1;
-    })
-      && !layout.surfaces.some(s => (s.surface === 'tile' || s.surface === 'asphalt') && x > Math.min(...s.polygon.map(p => p[0])) && x < Math.max(...s.polygon.map(p => p[0])) && z > Math.min(...s.polygon.map(p => p[1])) && z < Math.max(...s.polygon.map(p => p[1])));
+    // Keep grass out of solid footprints and pedestrian paths. Same tests as before, but bounds are
+    // precomputed and bucketed in a 4 m grid (D-GROVE: ~1.6 s -> a few ms per district).
+    const cell = 4, grid = new Map<number, (((x: number, z: number) => boolean))[]>();
+    const key = (cx: number, cz: number) => cx * 100003 + cz;
+    const insert = (minX: number, maxX: number, minZ: number, maxZ: number, test: (x: number, z: number) => boolean) => {
+      for (let cx = Math.floor(minX / cell); cx <= Math.floor(maxX / cell); cx++) for (let cz = Math.floor(minZ / cell); cz <= Math.floor(maxZ / cell); cz++) {
+        const list = grid.get(key(cx, cz)); if (list) list.push(test); else grid.set(key(cx, cz), [test]);
+      }
+    };
+    for (const p of layout.placements) {
+      if (p.assetId === 'prop.flower') continue;
+      if (p.assetId.includes('tree')) { const px = p.position[0], pz = p.position[2]; insert(px - .36, px + .36, pz - .36, pz + .36, (x, z) => Math.abs(x - px) < .35 && Math.abs(z - pz) < .35); continue; }
+      const minX = p.visualAabb.min[0] - .1, maxX = p.visualAabb.max[0] + .1, minZ = p.visualAabb.min[2] - .1, maxZ = p.visualAabb.max[2] + .1;
+      insert(minX, maxX, minZ, maxZ, (x, z) => x > minX && x < maxX && z > minZ && z < maxZ);
+    }
+    for (const s of layout.surfaces) {
+      if (s.surface !== 'tile' && s.surface !== 'asphalt') continue;
+      const minX = Math.min(...s.polygon.map(p => p[0])), maxX = Math.max(...s.polygon.map(p => p[0])), minZ = Math.min(...s.polygon.map(p => p[1])), maxZ = Math.max(...s.polygon.map(p => p[1]));
+      insert(minX, maxX, minZ, maxZ, (x, z) => x > minX && x < maxX && z > minZ && z < maxZ);
+    }
+    const valid = (x: number, z: number) => !(grid.get(key(Math.floor(x / cell), Math.floor(z / cell))) ?? []).some(test => test(x, z));
     let sparseCount = 0;
     for (const density of [5, 23]) {
       for (const lawn of layout.lawns) {
