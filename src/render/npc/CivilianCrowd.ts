@@ -107,8 +107,9 @@ class CivilianBatch extends Group {
     const bloody = mix(skin, vec3(.36, .02, .03), blood.mul(overlay.z).mul(.9));
     const base = mix(bloody, mix(vec3(.02), vec3(1, .015, .025), overlay.y), eye);
     const eyeColor = vec3(1, .005, .02);
-    // Bright eyes (bloom) plus a faint red rim in the sockets so the glow reads as a patch at 15-20 m.
-    const glow = eyeColor.div(luminance(eyeColor)).mul(eye.mul(6).add(socket.mul(.35))).mul(overlay.y);
+    // Red glowing eyes in dark sockets. Kept below the bloom whiteout point: the emissive is a pure red (no luminance
+    // normalisation, which pushed it to ~14x and bloomed the whole head white) at a capped strength.
+    const glow = eyeColor.mul(eye).mul(overlay.y).mul(2.2);
     const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     this.mesh = new InstancedMesh(baked.geometry, material, 128); this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = this.mesh.receiveShadow = true;
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1); this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; };
