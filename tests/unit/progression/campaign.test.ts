@@ -59,6 +59,6 @@ describe('campaign',()=>{
     expect([2,3,4,5,6].map(level=>gearTier(preset(`L${level as 2|3|4|5|6}-default`)))).toEqual([0,1,2,3,4]);
   });
   test('@E13 saves round-trip at each pending phase; rewards cannot be claimed twice',()=>{
-    const save=newCampaign();save.ownedActions.push('weapon.bat');beginRewards(save,1);expect(validateSave(save)).toBe(true);expect(()=>revealCards(save)).toThrow();chooseWeapon(save,'weapon.bat');expect(()=>chooseWeapon(save,'weapon.machete')).toThrow();revealCards(save);expect(validateSave(save)).toBe(true);pickUpgrades(save,save.pending!.cards.slice(0,2));expect(validateSave(save)).toBe(true);finishRewards(save,save.racks);expect(()=>beginRewards(save,1)).toThrow();
+    const save=newCampaign();save.ownedActions.push('weapon.bat');beginRewards(save,1);expect(validateSave(save)).toBe(true);expect(save.pending!.weaponChosen).toBe(true);expect(()=>chooseWeapon(save,'weapon.machete')).toThrow();revealCards(save);expect(validateSave(save)).toBe(true);pickUpgrades(save,save.pending!.cards.slice(0,2));expect(validateSave(save)).toBe(true);finishRewards(save,save.racks);expect(()=>beginRewards(save,1)).toThrow();
   });
 });

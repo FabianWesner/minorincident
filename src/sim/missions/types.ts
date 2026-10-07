@@ -72,7 +72,7 @@ export interface L1State {
   exitIds: number[]; exitHeadingsDeg: number[]; runs: { id: number; dx: number; dz: number; speed: number; until: number; via?: { x: number; z: number }; rushAt?: number }[];
   turnedIds: number[]; escapedIds: number[];
   /** Beat 9: the horde near the garage was produced; further streams spawned along the route to the fire station. */
-  hordeDone: boolean; routeSpawns: number; routeNextAt: number;
+  graceUntil: number; hordeDone: boolean; routeSpawns: number; routeNextAt: number;
 }
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number }
 export interface MissionState {

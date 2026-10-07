@@ -130,6 +130,15 @@ describe('L1 v2 mission', () => {
     expect(m2.state.items).toContain('bat'); w2.dispose();
   }, HEAVY);
 
+  test('T-E19-05b @E19 grace: a newbie standing still at the door keeps >= 60 HP for 8 s after the infected exit', async () => {
+    for (const seed of [1, 2, 3, 4, 5, 6]) {
+      const { world: w, mission } = await loadL1(seed); world = w; let from = 0;
+      runL1(w, mission, 'idle', { seed, stopWhen: m => { if (m.state.l1!.exitIds.length && !from) from = w.tick; return from > 0 && w.tick - from >= 8 * 60; } });
+      expect(w.entities.get(1)!.health.current, `seed ${seed}`).toBeGreaterThanOrEqual(60);
+      w.dispose(); world = undefined;
+    }
+  }, HEAVY);
+
   test('T-E19-09 @E19 beat 9 the director produces >= 6 infected near the garage exit and a stream ahead on the route', async () => {
     const { world: w, mission } = await load(2); w.combat!.damage.god = true;
     runL1(w, mission, 'complete', { seed: 2, stopWhen: m => m.state.steps.weapon.status === 'completed' });

@@ -12,11 +12,12 @@ export interface CampaignSave {
   pending?:{level:Level; cards:string[]; phase:'unlock'|'cards'|'racks'; weaponChosen:boolean};
 }
 export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
-  1:[],2:['weapon.molotov'],3:[],
+  // L1 v2 (spec section 10): the baseball bat found in the garage is the permanent unlock, not a choice.
+  1:['weapon.bat'],2:['weapon.molotov'],3:[],
   4:['weapon.machine-gun','weapon.rocket-launcher','weapon.pipe-bomb'],5:[],6:[],
 };
 export const meleeChoices=['weapon.bat','weapon.crowbar','weapon.machete'] as const;
-export const weaponChoices:Partial<Record<Level,readonly string[]>>={1:meleeChoices,2:['weapon.pistol','weapon.shotgun'],3:['weapon.smg','weapon.hunting-rifle']};
+export const weaponChoices:Partial<Record<Level,readonly string[]>>={2:['weapon.pistol','weapon.shotgun'],3:['weapon.smg','weapon.hunting-rifle']};
 export function newCampaign(character:SurvivorVariant='female',seed=1):CampaignSave {
   if(!Number.isSafeInteger(seed)||!['female','male'].includes(character))throw new RangeError('Invalid campaign');
   return {version:1,seed,character,unlockedLevel:1,completedLevels:0,ownedActions:['weapon.fists','weapon.kick'],upgrades:[],racks:{LEFT:['weapon.fists'],RIGHT:['weapon.kick']},settings:{},usage:{}};
