@@ -13,10 +13,10 @@ import type { KeyframeAnimator } from '../../src/render/characters/KeyframeAnima
 
 /** Record every 60 Hz pose, including transitions. Playback renders these exact
  * poses, allowing an honest before/after comparison after the implementation changes. */
-export const scenarios = ['walk', 'run', 'start-stop', 'turn90', 'turn180', 'unarmed', 'bat', 'hurt', 'bike'] as const;
+export const scenarios = ['idle', 'walk', 'run', 'start-stop', 'turn90', 'turn180', 'unarmed', 'bat', 'hurt', 'bike'] as const;
 export type Scenario = typeof scenarios[number];
-export type Frame = { tick: number; actor: number[]; joints: Record<string, number[]>; bike: number[] | null; pedal: number; steer: number; clip: string; speed: number; phase: number; knees: number[]; ankles: number[][]; hips: number[][]; pelvis: number[]; cpuMs: number };
-export type Recording = { revision: string; label: string; variant: SurvivorVariant; skin: boolean; scenario: Scenario; fps: number; frames: Frame[] };
+export type Frame = { tick: number; actor: number[]; joints: Record<string, number[]>; bike: number[] | null; pedal: number; steer: number; clip: string; speed: number; phase: number; knees: number[]; ankles: number[][]; hips: number[][]; pelvis: number[]; cpuMs: number; chestPitch: number; headPitch: number; elbows: number[] };
+export type Recording = { revision: string; label: string; variant: SurvivorVariant; skin: boolean; scenario: Scenario; fps: number; gaitSupport?: [number, number]; frames: Frame[] };
 const out = process.argv[2] ?? 'test-results/player-anim/before';
 const label = process.argv[3] ?? 'before';
 const only = process.argv[4];
@@ -84,10 +84,14 @@ try {
         hips.push(hip.toArray()); ankles.push(foot.toArray()); knees.push(knee.clone().sub(hip).angleTo(foot.clone().sub(knee)) * 180 / Math.PI);
       }
       const phase = (c.animator as unknown as { phase: number }).phase;
+      const forward = new Vector3(1, 0, 0).applyQuaternion(character.quaternion);
+      const pelvis = point(r.hip), chest = point(r.armL).add(point(r.armR)).multiplyScalar(.5);
+      const pitch = (p: Vector3) => { const d = p.sub(pelvis); return Math.atan2(d.dot(forward), d.y) * 180 / Math.PI; };
+      const elbows = (['L', 'R'] as const).map(side => point(r[`foreArm${side}`]).sub(point(r[`arm${side}`])).angleTo(point(r[`hand${side}`]).sub(point(r[`foreArm${side}`]))) * 180 / Math.PI);
       frames.push({ tick, actor: pack(character), joints: Object.fromEntries(characterNodes.map(n => [n, pack(r[n])])), bike: scenario === 'bike' ? pack(bike) : null,
-        pedal, steer, clip: c.animator.clip, speed, phase, knees, hips, ankles, pelvis: point(r.hip).toArray(), cpuMs });
+        pedal, steer, clip: c.animator.clip, speed, phase, knees, hips, ankles, pelvis: pelvis.toArray(), chestPitch: pitch(chest), headPitch: pitch(point(r.head)), elbows, cpuMs });
     }
-    const data: Recording = { revision, label, variant, skin: character.skinActive, scenario, fps: 60, frames };
+    const data: Recording = { revision, label, variant, skin: character.skinActive, scenario, fps: 60, gaitSupport: [.5, .22], frames };
     writeFileSync(`${out}/${variant}-${scenario}.json`, JSON.stringify(data));
     const steady = frames.filter(f => f.tick > 90 && f.tick < 145);
     console.log(variant, scenario, 'skin', data.skin, 'knee max', Math.max(...steady.flatMap(f => f.knees)).toFixed(2));
