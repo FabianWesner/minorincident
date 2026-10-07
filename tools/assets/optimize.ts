@@ -19,7 +19,7 @@ import { palette } from '../../src/assets/palette';
 export function normalizeForward(document: Document, def: AssetDef): void {
   const root = document.getRoot();
   for (const scene of root.listScenes()) {
-    if (scene.getExtras().forwardNormalized === '+X') continue;
+    if (scene.getExtras().forwardNormalized === '+X' && def.frontNodes.every(name => root.listNodes().some(node => node.getName() === name))) continue;
     const bounds = getBounds(scene), center = bounds.min.map((v, i) => (v + bounds.max[i]) / 2);
     const markers = root.listNodes().filter(n => def.frontNodes.includes(n.getName()));
     let angle = 0;
