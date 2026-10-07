@@ -151,6 +151,7 @@ export class CrowdView extends Group {
       this.batches.set(`${def.id}:${lod}`, { poses, lod, role: def.id, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
+  private hasRole(id: string): boolean { return this.batches.has(`${id}:lod1`) || this.batches.has(`${id}:lod2`); }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   update(view?: View, alpha = 1): void {
     for (const [id, pose] of this.corpses) if (!this.world.entities.get(id)?.infected || this.world.entities.get(id)!.health.current > 0 || this.world.tick - pose.deadAt > this.corpseTicks) this.corpses.delete(id);
@@ -189,9 +190,9 @@ export class CrowdView extends Group {
       // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
       if (keepsLook(e)) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); continue; }
       const availableLod = this.low ? 'lod2' : 'lod1';
-      const role = this.batches.has(`${e.archetype}:${availableLod}`) ? e.archetype : 'infected.runner';
+      const role = this.hasRole(e.archetype) ? e.archetype : 'infected.runner';
       const variant = e.infected?.model ?? e.infected?.variant;
-      const key = variant && this.batches.has(`${variant}:${availableLod}`) ? variant : role;
+      const key = variant && this.hasRole(variant) ? variant : role;
       const def = this.definitions.get(key)!;
       const dimensions = this.registry.definition(def.asset).dimensions;
       this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);

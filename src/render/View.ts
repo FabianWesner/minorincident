@@ -8,6 +8,7 @@ export interface CameraPose { position: [number, number, number]; target: [numbe
 /** Narrow-FOV follow camera. Presentation seconds are supplied by Game; never read by sim. */
 export class View {
   readonly camera = new PerspectiveCamera(25, 16 / 9, 0.1, 600);
+  viewportHeight = 900;
   readonly focus = new Vector3();
   readonly cameraTarget = new Vector3();
   readonly azimuth = Math.PI / 4;
@@ -37,6 +38,7 @@ export class View {
   private shakeTime = 0;
   /** Close isometric combat framing; portrait retains at least seven metres of ground width. */
   resize(width: number, height: number): void {
+    this.viewportHeight = height;
     this.camera.aspect = width / height;
     this.defaultRadius = width >= height ? 19 : Math.max(19, 7 / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
     this.radius = this.defaultRadius * this.zoomRatio;

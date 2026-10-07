@@ -38,3 +38,11 @@ export function crowdLod(pixels: number, previous: 'lod1' | 'lod2' | undefined, 
   if (low) return 'lod2';
   return pixels > (previous === 'lod1' ? 72 : previous === 'lod2' ? 88 : 80) ? 'lod1' : 'lod2';
 }
+
+/** Small dressing keeps its authored silhouette while avoiding subpixel detail.
+ * Tall foliage and buildings keep the distance policy. */
+export function propLod(pixels: number, previous?: Lod): Lod {
+  const hero = previous === 'lod0' ? 112 : previous ? 144 : 128;
+  const far = previous === 'lod2' ? 46 : previous ? 34 : 40;
+  return pixels > hero ? 'lod0' : pixels > far ? 'lod1' : 'lod2';
+}

@@ -150,14 +150,18 @@ class CivilianBatch extends Group {
     const renderTick = Math.max(0, this.world.tick + alpha - 1);
     for (const e of this.world.entities.iterate()) {
       if (index >= 128) break;
+      // Match once before projection: the other nineteen model/LOD batches
+      // need no culling work for this person (or for ordinary infected).
+      const c = e.civilian;
+      const model = e.appearance?.asset ?? c?.model ?? (c ? ['inf.suburban-mom', 'inf.bathrobe-neighbor'].includes(c.variant) ? 'npc.civilian-woman-a' : 'npc.civilian-man-a' : null);
+      if (model !== this.model) continue;
       // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
       if (!this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
       if ((this.visibility.lod(e.id, pixels, low) === 'lod2') !== this.distant) continue;
       if (!e.civilian && e.infected && keepsLook(e)) { if (e.appearance!.asset === this.model && this.place(e, index, alpha)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
-      const c = e.civilian; if (!c || c.pet || e.hidden || c.state === 'infected') continue;
+      if (!c || c.pet || e.hidden || c.state === 'infected') continue;
 
-      if ((e.appearance?.asset ?? c.model ?? (['inf.suburban-mom','inf.bathrobe-neighbor'].includes(c.variant) ? 'npc.civilian-woman-a' : 'npc.civilian-man-a')) !== this.model) continue;
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
       const rising = c.state === 'rising', startle = c.state === 'alarmed' && !!c.l1;
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
