@@ -61,5 +61,11 @@ test('static bodies preserve flock instances and removed body parts @E07', () =>
   expect(new Set(pool.snapshot().figures.map(f => f.instanceKey)).size).toBe(20);
   const parts = (pool.children[0] as InstancedMesh).geometry.getAttribute('_parts');
   for (let i = 0; i < parts.count; i++) expect(parts.getX(i)).not.toBe(baked.clip.parts.indexOf('head'));
+  // Gore settings invalidate frozen geometry without changing body identities.
+  pool.reset();
+  for (let bird = 0; bird < 20; bird++) pool.place(e, 'flock', baked.geometry, material, baked.clip, frame, new Matrix4(), new Color('white'), [0, 0, 0], `9/${bird}`);
+  expect(pool.snapshot().instances).toBe(20);
+  const restored = (pool.children[0] as InstancedMesh).geometry.getAttribute('_parts');
+  expect(Array.from({ length: restored.count }, (_, i) => restored.getX(i))).toContain(baked.clip.parts.indexOf('head'));
   pool.dispose(); baked.geometry.dispose(); material.dispose();
 });

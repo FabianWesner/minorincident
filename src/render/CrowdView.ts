@@ -285,8 +285,8 @@ export class CrowdView extends Group {
     const position = this.limbPosition(id, limb); if (!position) return;
     const feedback = this.feedback.get(id) ?? { mask: 0, strength: 0 }; feedback.mask |= 1 << limb; this.feedback.set(id, feedback); return position;
   }
-  clearGore(): void { for (const feedback of this.feedback.values()) feedback.mask = 0; }
-  setGoreEnabled(enabled: boolean): void { this.goreEnabled = enabled; }
+  clearGore(): void { for (const feedback of this.feedback.values()) feedback.mask = 0; this.staticCorpses.reset(); }
+  setGoreEnabled(enabled: boolean): void { if (this.goreEnabled !== enabled) this.staticCorpses.reset(); this.goreEnabled = enabled; }
   getGoreState() { return [...this.feedback].map(([id, f]) => ({ id, detached: ['armL', 'armR', 'legL', 'legR', 'head'].filter((_, i) => f.mask & (1 << i)), caps: ['armL_cap', 'armR_cap', 'legL_cap', 'legR_cap', 'head_cap'].filter((_, i) => f.mask & (1 << i)), visible: !this.world.entities.get(id)?.infected?.hidden })); }
   getState() {
     let instances = 0, draws = 0, objects = 0, nonInstanced = 0;

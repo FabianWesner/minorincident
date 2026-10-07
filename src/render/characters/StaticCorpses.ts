@@ -59,7 +59,7 @@ export class StaticCorpses extends Group {
     page.probe.figures.push({ id: e.id, instanceKey, clip: 'death-back', phase: 1, drawn: false, feet: [] });
   }
   snapshot() { return { instances: this.bodies.size, draws: [...this.chunks.values()].reduce((n, pages) => n + pages.length, 0), figures: [...this.chunks.values()].flatMap(pages => pages.flatMap(page => page.probe.figures)) }; }
-  private reset(): void {
+  reset(): void {
     for (const pages of this.chunks.values()) for (const { mesh } of pages) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); }
     this.chunks.clear(); this.bodies.clear(); this.clear();
   }
