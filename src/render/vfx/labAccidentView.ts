@@ -10,30 +10,28 @@ import type { DistrictWorld } from '../../sim/world/DistrictWorld';
 const GLOW = 3.5;
 export function labAccidentTargets(scene: Object3D, shake: (strength: number) => void, camera?: (x: number, z: number, weight: number) => void): LabAccidentTargets {
   const meshes = new Set<Mesh>();
-  const material = new MeshBasicNodeMaterial({ vertexColors: true });
-  let bound = 0, last = 1;
+  const lit = new MeshBasicNodeMaterial({ vertexColors: true });
+  const fire = new MeshBasicNodeMaterial({ color: 0xff7a22 });
+  const broken = new MeshBasicNodeMaterial({ color: 0x15110e });
+  let current: MeshBasicNodeMaterial = lit, polls = 0;
   const bind = (): void => {
     scene.traverse(node => {
       if (!node.name.startsWith('inst:bld.clinic-annex')) return;
-      node.traverse(child => { if (child instanceof Mesh && child.name === 'window-light' && !meshes.has(child)) { meshes.add(child); child.material = material; } });
+      node.traverse(child => { if (child instanceof Mesh && child.name === 'window-light' && !meshes.has(child)) meshes.add(child); });
     });
-    bound++;
   };
-  const apply = (intensity: number): void => { last = intensity; material.color.setScalar(GLOW * intensity); };
+  const use = (material: MeshBasicNodeMaterial): void => {
+    // LOD swaps create new batches: rebind about twice a second while the accident drives the windows.
+    if (!meshes.size || polls++ % 30 === 0) bind();
+    current = material;
+    for (const m of meshes) if (m.material !== material) m.material = material;
+  };
   return {
     shake,
     camera,
-    windowLight(intensity) {
-      // LOD swaps create new batches: rebind about twice a second while the accident drives the light.
-      if (!meshes.size || bound % 30 === 0) bind();
-      bound++;
-      apply(intensity);
-    },
-    windowGlass(state, amount) {
-      if (!meshes.size) bind();
-      if (state === 'bow') apply(Math.max(last, 1 + amount));
-      else apply(0.06);
-    },
+    windowLight(intensity) { use(lit); lit.color.setScalar(GLOW * intensity); },
+    windowFire(intensity) { use(fire); fire.color.setRGB(1, 0.48, 0.13).multiplyScalar(2.2 * Math.max(0.1, intensity)); },
+    windowGlass(state) { if (state === 'shatter') use(broken); else if (current === lit) lit.color.setScalar(GLOW * 2); },
   };
 }
 /** Anchor lookup in world metres over all loaded districts. */
