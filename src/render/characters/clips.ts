@@ -86,7 +86,9 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
           if (!additive) q.premultiply(node.quaternion);
           values.push(q.x, q.y, q.z, q.w);
         }
-        tracks.push(new QuaternionKeyframeTrack(`${nodeName}.quaternion`, times, values));
+        const rotation = new QuaternionKeyframeTrack(`${nodeName}.quaternion`, times, values);
+        if (skinned && name.startsWith('unarmed-') && !skinClips.has(name)) softenChamber(rotation, source.duration);
+        tracks.push(rotation);
       } else {
         for (let i = 0; i < times.length; i++) for (let c = 0; c < 3; c++) {
           let delta = track?.values[i * 3 + c] ?? 0;
@@ -101,6 +103,32 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
   }
   if (!additive && !gait && gaitShape[name]) plantLocomotion(root, name, source.duration, tracks, gait);
   return new AnimationClip(name, source.duration, tracks);
+}
+
+/** Authored fallback kicks exported a held guard then a 100+ degree chamber
+ * jump. A spherical quadratic uses that chamber as the anticipation control
+ * pose, reaches the original contact exactly, and leaves recovery untouched. */
+function softenChamber(track: QuaternionKeyframeTrack, duration: number): void {
+  const from = new Quaternion(), chamber = new Quaternion();
+  let jump = -1;
+  for (let i = 1; i < track.times.length && track.times[i] < duration * .1; i++) {
+    from.fromArray(track.values, (i - 1) * 4); chamber.fromArray(track.values, i * 4);
+    if (from.angleTo(chamber) > Math.PI / 7) { jump = i; break; }
+  }
+  if (jump < 0) return;
+  const sample = track.InterpolantFactoryMethodLinear(), contactTime = duration * .2;
+  from.fromArray(track.values, 0); chamber.fromArray(track.values, jump * 4);
+  const contact = new Quaternion().fromArray(sample.evaluate(contactTime));
+  const times = [...new Set([0, ...track.times, contactTime])].sort((a, b) => a - b), values: number[] = [];
+  const a = new Quaternion(), b = new Quaternion();
+  for (const t of times) {
+    if (t < contactTime) {
+      const u = t / contactTime;
+      a.copy(from).slerp(chamber, u).slerp(b.copy(chamber).slerp(contact, u), u);
+    } else a.fromArray(sample.evaluate(t));
+    a.toArray(values, values.length);
+  }
+  track.times = new Float32Array(times); track.values = new Float32Array(values);
 }
 
 /** Bake flat-ground support into target-specific tracks. The authored pelvis keeps
