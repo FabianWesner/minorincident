@@ -45,6 +45,10 @@ export class CourierGroundContacts {
   /** Diagnostics for tests and evidence: pivot clamps on locked feet, steps taken. */
   pivots = 0;
   steps = 0;
+  /** Roundhouse pivot (set by the animator for the spin): the lead (left) foot stays planted and turns on its ball
+   * with the body; the right foot lifts and circles with the hips, landing as a short step when the spin ends. */
+  pivot = false;
+  private pivoting = false;
   constructor(private readonly rig: CharacterRig) {
     rig.root.updateWorldMatrix(true, true);
     rig.root.getWorldPosition(this.origin); rig.root.getWorldQuaternion(this.frame);
@@ -59,7 +63,7 @@ export class CourierGroundContacts {
     });
   }
   /** Contacts resume from the clip pose on the next grounded frame. */
-  reset(): void { for (const foot of this.feet) { foot.locked = false; foot.fresh = true; foot.swing = undefined; foot.phase = -1; } this.heading = undefined; this.moving = false; this.pelvisHeight = undefined; this.shift = 0; }
+  reset(): void { this.pivoting = false; for (const foot of this.feet) { foot.locked = false; foot.fresh = true; foot.swing = undefined; foot.phase = -1; } this.heading = undefined; this.moving = false; this.pelvisHeight = undefined; this.shift = 0; }
   /** Ankle target (world), yaw, pitch and lock state of foot `index`, for tests and evidence. */
   contact(index: number): { target: Vector3; yaw: number; locked: boolean; pitch: number } { const f = this.feet[index]; return { target: f.target, yaw: f.yaw, locked: f.locked, pitch: f.pitch }; }
   update(phase: number, stride: number, run: number, weight: number, speed: number, dt: number): void {
@@ -125,6 +129,19 @@ export class CourierGroundContacts {
       const value = twist / limit + drift + (Math.sign(yawRate) === foot.side ? .1 : 0);
       if (value > score) { score = value; candidate = foot; }
     }
+    if (candidate && this.pivot) candidate = undefined;
+    if (this.pivot) {
+      const trail = this.feet[1];
+      if (!trail.swing) {
+        trail.swing = { from: trail.target.clone(), fromYaw: trail.yaw, fromPitch: trail.pitch, offset: new Vector3(), start: this.time, duration: .2, gait: false, u: 0, knee0: kneeNow(trail), dip: 0, land: undefined, releaseP: 0 };
+        trail.locked = false; this.steps++;
+      }
+    } else if (this.pivoting) {
+      // Spin over: the circling foot finishes as the second half of a short step onto its neutral plant.
+      const swing = this.feet[1].swing;
+      if (swing) Object.assign(swing, { gait: false, start: this.time - .1, duration: .2, from: this.feet[1].target.clone() });
+    }
+    this.pivoting = this.pivot;
     if (candidate) {
       candidate.swing = { from: candidate.target.clone(), fromYaw: candidate.yaw, fromPitch: candidate.pitch, offset: new Vector3(), start: this.time, duration: moving ? .14 : .17, gait: false, u: 0, knee0: kneeNow(candidate), dip: 0, land: undefined, releaseP: 0 };
       candidate.locked = false; this.steps++;
@@ -136,7 +153,12 @@ export class CourierGroundContacts {
       const p = (phase + index * .5) % 1, previous = foot.phase;
       foot.phase = moving ? p : -1;
       const landYaw = heading + toeOut * foot.side;
-      if (foot.swing) {
+      if (this.pivot && foot.swing && foot === this.feet[1]) {
+        // Mid-air, following its neutral spot round the body (u held at the knee-peak half of a step).
+        const swing = foot.swing;
+        neutralOf(foot, foot.target); swing.land = (swing.land ?? new Vector3()).copy(foot.target);
+        foot.yaw = landYaw; foot.pitch = 0; swing.dip = 0; swing.u = .5;
+      } else if (foot.swing) {
         const swing = foot.swing;
         let u: number, landed: boolean;
         if (swing.gait) {
@@ -174,6 +196,8 @@ export class CourierGroundContacts {
         }
       }
       if (foot.locked) {
+        // Roundhouse: the planted lead foot turns with the body on the spot.
+        if (this.pivot) foot.plantYaw = landYaw;
         // Hold the plant; only the pivot clamp lets a planted foot yaw (counted).
         let twist = wrap(landYaw - foot.plantYaw);
         if (Math.abs(twist) > twistPivot) { foot.plantYaw += twist - Math.sign(twist) * twistPivot; this.pivots++; twist = Math.sign(twist) * twistPivot; }
