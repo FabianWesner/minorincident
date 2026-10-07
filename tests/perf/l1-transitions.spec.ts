@@ -68,7 +68,7 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
     await measure('accident', () => page.waitForFunction(() => window.__SS__!.events().some(e => e.type === 'l1.screams'), undefined, { timeout: 20_000 }), 1_500);
     await measure('infected-exit', () => page.waitForFunction(() => window.__SS__!.missions.state()!.l1!.exitIds.length === 5, undefined, { timeout: 20_000 }), 4_000);
     await place('garage-door');
-    await page.evaluate(() => window.__SS__!.cheats.completeObjective('escape'));
+    await page.evaluate(() => { const a = window.__SS__!; if (a.missions.state()!.steps.escape.status === 'active') a.cheats.completeObjective('escape'); });
     await place('garage-bat'); await measure('weapon-pickup', interact, 3_000);
     expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.bat');
     await measure('death-respawn', () => page.evaluate(() => window.__SS__!.survivor.damage(100)), 3_500);
