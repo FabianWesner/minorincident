@@ -63,10 +63,10 @@ Worst case in `blast-stress`, measured over 7 s after the first blast: car explo
 
 | Profile | Frame p95 / budget | Sim p95 / budget | Max frame |
 | --- | --- | --- | --- |
-| Desktop high, 1600×900 | 9.8 / 16.7 ms | 0.6 / 4 ms | 161 ms (a single hitch about 2.1 s after the first blast) |
-| Phone low, 390×844, 4× CPU throttle | 13.8 / 33.4 ms | 2.6 / 6 ms | 152 ms (same hitch) |
+| Desktop high, 1600×900 | 9.8 / 16.7 ms | 0.7 / 4 ms | 39-44 ms (one frame about 2 s after the first blast; was 161 ms before the final main merge) |
+| Phone low, 390×844, 4× CPU throttle | 13.1-14.3 / 33.4 ms | 2.6 / 6 ms | 45-48 ms (same frame; was 152 ms) |
 
-Before the last main merge the hitch was about 40 ms. It falls exactly 120 ticks after the blast kills, which is when dead infected turn into static corpse records. The likely cause is the first static-corpse pipeline use from the crowd lane, not E27. This is unconfirmed.
+The frame falls exactly 120 ticks after the blast kills, when dead infected become static corpse pages (crowd-feel `StaticCorpses`: first page bakes geometry and compiles a material). After merging main (crowd LOD/visibility fixes, light field) the worst frame is 39-48 ms in three runs, under the 50 ms target; no E27 or corpse code was changed. A remaining first-use cost of this size is in the crowd lane's corpse path (a prewarm of the first page would remove it).
 
 This uses the synthetic fixture with placeholder props. It is not a real-phone GPU measurement.
 
