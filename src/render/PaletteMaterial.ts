@@ -1,6 +1,6 @@
 // Adapted from Bruno Simon folio-2025 Materials/MeshDefaultMaterial.js (MIT).
 import { MeshLambertNodeMaterial, type Texture, type Node, type Color } from 'three/webgpu';
-import { Fn, Discard, attribute, float, max, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection } from 'three/tsl';
+import { Fn, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
 import { surfaceDetail } from './SurfaceDetail';
@@ -44,7 +44,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const lit = albedo.mul(lighting.color.rgb.add(ambient)).mul(lighting.intensity);
       // E25 light field: practical pools (lamps, windows, headlights, fires) light ground, walls and figures.
       // At night the moon/hero shadow map also darkens the pools behind casters (fieldShadow).
-      const field = lighting.field.sample().mul(normalWorld.y.mul(.35).add(.65)).mul(mix(float(1), caughtShadow, lighting.fieldShadow));
+      // Inside a hero shadow the pool keeps a dim bounce in the shadow tint (specs/06 §4: colored, never black).
+      const pool = lighting.field.sample().mul(normalWorld.y.mul(.35).add(.65));
+      const shadowedPool = mix(vec3(luminance(pool)).mul(lighting.shadowHue).mul(.3), pool, caughtShadow);
+      const field = mix(pool, shadowedPool, lighting.fieldShadow);
       // Night rim: the survivor (a world-space capsule around the feet) and flagged crowd figures.
       const fresnel = normalView.dot(positionViewDirection).clamp(0, 1).oneMinus().smoothstep(.62, .95);
       const heroMask = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(1.3, .6).mul(positionWorld.y.sub(lighting.hero.y).smoothstep(.1, .3));
