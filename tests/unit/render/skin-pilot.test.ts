@@ -264,6 +264,8 @@ test.each(['female', 'male'] as const)('courier %s chest and head stay over the 
         if (scenario === 'run' && tick > 90) { expect(pitch).toBeGreaterThanOrEqual(8); expect(pitch).toBeLessThanOrEqual(12); }
       }
       if (tick > 90 && ['idle', 'walk', 'run'].includes(scenario)) for (const side of ['L', 'R'] as const) {
+        const facing = new Vector3(1, 0, 0).applyQuaternion(rig.hip.quaternion.clone().multiply(rig.torso.quaternion));
+        expect(Math.abs(Math.atan2(-facing.z, facing.x)) * 180 / Math.PI).toBeLessThan(13);
         const upper = rig[`foreArm${side}`].getWorldPosition(new Vector3()).sub(rig[`arm${side}`].getWorldPosition(new Vector3()));
         const lower = rig[`hand${side}`].getWorldPosition(new Vector3()).sub(rig[`foreArm${side}`].getWorldPosition(new Vector3()));
         const elbow = upper.angleTo(lower) * 180 / Math.PI;
