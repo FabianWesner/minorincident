@@ -56,10 +56,13 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
         await page.evaluate(() => window.__ASSET__!.ready);
         await page.locator('#toolbar').evaluate(el => { el.style.display = 'none'; });
         const sheet = new PNG({ width: 1440, height: 1800 });
+        const views: { quality: string; azimuth: number; triangles: number }[] = [];
         for (const [row, azimuth] of [45, 135, 225, 315, 0].entries()) {
           for (const [column, quality] of (['high', 'lod1', 'lod2'] as const).entries()) {
             await page.evaluate(async ({ quality, azimuth }) => { await window.__ASSET__!.inspectionView!(quality, azimuth); }, { quality, azimuth });
-            if (await page.evaluate(() => window.__ASSET__!.info().placeholder)) throw new Error(`${id}:${quality}: placeholder`);
+            const info = await page.evaluate(() => window.__ASSET__!.info());
+            if (info.placeholder) throw new Error(`${id}:${quality}: placeholder`);
+            views.push({ quality, azimuth, triangles: info.triangles });
             await page.evaluate(({ id, quality, azimuth }) => {
               let label = document.querySelector<HTMLDivElement>('#lod-label');
               if (!label) { label = document.createElement('div'); label.id = 'lod-label'; label.style.cssText = 'position:fixed;top:0;left:0;color:white;background:#17151bcc;font:14px sans-serif;padding:5px'; document.body.append(label); }
@@ -69,6 +72,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
           }
         }
         writeFileSync(`${directory}/lod-contact.png`, PNG.sync.write(sheet));
+        writeFileSync(`${directory}/lod-contact.json`, JSON.stringify({ id, views }, null, 2) + '\n');
         console.log(`${directory}/lod-contact.png`);
         continue;
       }
