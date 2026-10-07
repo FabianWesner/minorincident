@@ -8,6 +8,8 @@ export interface DamageEvent {
   base: number; multiplier: number; type: 'melee' | 'bullet' | 'explosive' | 'status' | 'vehicle'; knockback: number; stagger: number;
   /** Authored melee impact freeze (render-only); absent = 50 ms. */
   hitStopMs?: number; knockdown?: boolean;
+  /** Crowd sweep (roundhouse): keeps its authored shove/stagger beyond the normal-hit caps, without a knockdown. */
+  sweep?: boolean;
 }
 /** Directional shields only stop front bullets; splash is radial and ignores shields. */
 export function damageAmount(hit: DamageEvent, target: EntitySnapshot): number {
@@ -47,7 +49,7 @@ export class Damage {
     // Keep ordinary player melee in reach even after knockback upgrades. Special
     // kicks/ground slam retain their authored shove; raw damage is never a finisher.
     const special = hit.knockdown || hit.actionId === 'weapon.kick' || hit.actionId === 'ability.ground-slam';
-    const normal = source.id === 1 && hit.type === 'melee' && !special;
+    const normal = source.id === 1 && hit.type === 'melee' && !special && !hit.sweep;
     const knockback = normal ? Math.min(.4, hit.knockback) : hit.knockback;
     const stagger = normal ? Math.min(.25, hit.stagger) : hit.stagger;
     const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback, amount, damageType: hit.type, ...(hit.type === 'vehicle' ? { cause: 'vehicle' as const } : {}) };
