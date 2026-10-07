@@ -28,7 +28,6 @@ test.describe('L1 v2 real-input playthrough', () => {
     await page.getByRole('button', { name: 'Continue', exact: true }).click();
     await expect(page.locator('body')).toContainText(/bat/i);
     await expect(page.locator('body')).not.toContainText(/crowbar/i);
-    await page.screenshot({ path: `${output}/unlock-after-continue.png` });
   });
 
   test('T-E19-22 @E19 @E19-AC22 headless real-input playthrough from title to result, 9 photo spots, end caption', async ({ page }) => {
