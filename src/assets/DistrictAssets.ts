@@ -137,7 +137,13 @@ export class DistrictAssets {
   }
   async asset(id: string, lit = true, lod: AssetQuality = 'lod1'): Promise<Group> {
     const def = worldAssets[id];
-    if (!def) throw new Error(`Unknown asset: ${id}`);
+    // Registered decals, camp kits and character dressing have no world footprint.
+    // Keep their original materials (including decal alpha/texture) in static instances.
+    if (!def) {
+      const key = `dressing:${id}:${lod}`;
+      if (!this.cache.has(key)) this.cache.set(key, this.assets.loadAsset(id, lod).then(root => { const group = new Group(); group.add(root); return this.remember(group); }));
+      return this.cache.get(key)!;
+    }
     const productionId = productionIds[id] ?? id;
     if (atLeast(this.assets.definition(productionId).status, "integrated")) {
       const canonical = this.canonical(id, lod);
