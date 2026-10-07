@@ -10,7 +10,7 @@ export const dialogue: Record<string, string> = {
   'L2.twist': 'They got out. You didn’t.',
   'L3.briefing': 'Civic Center gates close at 16:00. You have twelve minutes.',
   'L3.drive': 'Keys are in the sedan. Enter at the driver door. Accelerate through cones and infected; brake before turns.',
-  'L3.routes': 'Supermarket: shorter road, Riot police line. Park: longer road, Sprinters; stay in the car.',
+  'L3.routes': 'Choose a route. Supermarket: bypass the Riot line on foot and collect supplies. Park road: Sprinters; stop at the shelter for evacuees. Both lead to Civic Center.',
   'L3.checkpoint': 'Heavy barrier ahead. Leave the car and clear the checkpoint. A Bloated burst or propane blast can break the barrier.',
   'L3.gates': 'Gate guards: You made it. Come inside — we are opening the gate.',
   'L3.twist': 'The safe zone has fallen.',

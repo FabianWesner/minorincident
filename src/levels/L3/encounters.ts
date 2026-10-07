@@ -50,6 +50,7 @@ export function installLevelThree(world: SimWorld, mission: Mission): void {
     parkedCar();
   } });
   world.events.on('vehicle.entered', () => once('tutorial-spawned', () => {
+    mission.radio('L3.routes');
     const car = world.vehicles!.cars.get(mission.state.actors.sedan)!;
     const p = car.entity.transform;
     // Driver faces north from the forecourt onto Main Street; targets form a small street cluster.

@@ -55,6 +55,7 @@ test('@E21 @E21-AC04 parked sedan blocks foot navigation until the native driver
     const bot = new LevelThreeBot(w);
     for (let i = 0; i < 600 && w.vehicles!.active === null; i++) { w.applyInput(bot.sample(), 'keyboard'); w.update(); }
     expect(w.vehicles!.active).toBe(car.entity.id);
+    expect(m.state.subtitle?.id).toBe('L3.routes');
     expect(w.infected!.nav.clear(car.entity.transform.x, car.entity.transform.z, .3)).toBe(true);
   } finally { w.dispose(); }
 });
