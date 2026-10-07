@@ -119,7 +119,7 @@ export class KeyframeAnimator {
     const holding = !!pose.carrying && !strike && name !== 'hand-over' && name !== 'ride';
     this.carryWeight = Math.max(0, Math.min(1, this.carryWeight + (holding ? 1 : -1) * dt / .15));
     if (this.carryWeight > 0) for (const [node, target] of this.carryPose) node.quaternion.slerp(target, this.carryWeight);
-    if (this.lunge > 0 && !upper) { const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1; this.rig.hip.position.x += .2 / scale * this.lunge * this.lunge * (3 - 2 * this.lunge); }
+    if (this.lunge > 0 && !upper) { const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1; this.rig.hip.position.x += .14 / scale * this.lunge * this.lunge * (3 - 2 * this.lunge); }
     for (const node of Object.values(this.rig)) node.quaternion.normalize();
     if (pose.animation === 'die') settleGroundPose(this.rig.root);
     const target = this.rig.torso.rotation.z * -.3;

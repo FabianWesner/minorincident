@@ -15,7 +15,7 @@ test.describe('L1 v2 real-input playthrough', () => {
   test.fixme('T-E19-13 @E19 @E19-AC13 walk modifier: run by default, hold Walk at 2.0 m/s on keyboard and mouse', async () => {});
 
   test('T-E19-22 @E19 @E19-AC22 headless real-input playthrough from title to result, 9 photo spots, end caption', async ({ page }) => {
-    test.setTimeout(900_000); page.setDefaultTimeout(20_000); mkdirSync(output, { recursive: true });
+    test.setTimeout(900_000); page.setDefaultTimeout(45_000); mkdirSync(output, { recursive: true }); // local headless preview needs ~19 s from Begin mission to the playable L1
     await menuStart(page);
     await page.evaluate(() => { window.__SS__!.pause(); window.__SS__!.cheats.god(true); }); // survival aid only: all movement, interaction and combat input stays real
     const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);
@@ -30,7 +30,13 @@ test.describe('L1 v2 real-input playthrough', () => {
       for (let i = 0; i < 400; i++) {
         const p = (await player()).transform, d = Math.hypot(target.x - p.x, target.z - p.z);
         if (d <= stop || (await mission()).phase !== 'playing') return;
-        const k = Math.min(6, d) / d, point = await page.evaluate(q => window.__SS__!.input.project(q), { x: p.x + (target.x - p.x) * k, z: p.z + (target.z - p.z) * k });
+        // Click on screen only: 6 m toward the goal can project below the viewport at the follow camera (it then
+        // never reaches the canvas, which read as "click-to-move stalls"). Shorten the step until it is visible.
+        let k = Math.min(6, d) / d, point = await page.evaluate(q => window.__SS__!.input.project(q), { x: p.x + (target.x - p.x) * k, z: p.z + (target.z - p.z) * k });
+        const view = page.viewportSize()!;
+        for (let shrink = 0; shrink < 6 && (point.x < 20 || point.y < 20 || point.x > view.width - 20 || point.y > view.height - 20); shrink++) {
+          k *= .7; point = await page.evaluate(q => window.__SS__!.input.project(q), { x: p.x + (target.x - p.x) * k, z: p.z + (target.z - p.z) * k });
+        }
         await page.mouse.click(point.x, point.y); await step(30);
       }
       throw new Error(`Could not walk to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
