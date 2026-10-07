@@ -11,6 +11,7 @@ export class EntityStore {
   /** Adopt a prewarmed pooled record without creating a new entity object. */
   adopt(entity: EntitySnapshot): void { entity.id = this.nextId++; this.entities.set(entity.id, entity); }
   delete(id: number): void { this.entities.delete(id); }
+  replace(entity: EntitySnapshot): void { this.entities.set(entity.id, entity); }
   /** Checkpoint records keep numeric IDs stable for scripted actor references. */
   restore(records: EntitySnapshot[], player: EntitySnapshot): void {
     this.entities.clear(); this.nextId = 1;

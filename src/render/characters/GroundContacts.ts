@@ -30,12 +30,12 @@ export class GroundContacts {
   reset(): void { for (const foot of this.feet) foot.phase = -1; }
   /** Mixer bindings skip unchanged values. Undo our last offset before it runs. */
   restore(): void { this.rig.hip.position.y += this.lowering; this.lowering = 0; }
-  update(phase: number, stride: number, run: number, weight: number): void {
+  update(phase: number, stride: number, run: number, weight: number, support?: number): void {
     const rig = this.rig;
     rig.root.updateWorldMatrix(true, true);
     rig.root.getWorldPosition(this.origin); rig.root.getWorldQuaternion(this.frame); rig.root.getWorldScale(this.scale);
     this.forward.set(1, 0, 0).applyQuaternion(this.frame); this.forward.y = 0; this.forward.normalize();
-    const stance = .55 - .31 * run, lift = (.06 + .055 * run) * this.scale.y;
+    const stance = support ?? .55 - .31 * run, lift = (.06 + .055 * run) * this.scale.y;
     for (const [index, foot] of this.feet.entries()) {
       const p = (phase + index * .5) % 1;
       this.lateral.set(0, 0, foot.z * this.scale.y).applyQuaternion(this.frame);

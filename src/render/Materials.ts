@@ -1,5 +1,5 @@
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
-import { DataTexture, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node } from 'three/webgpu';
+import { DataTexture, FrontSide, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node, type Side } from 'three/webgpu';
 import { attribute, color, mix, positionGeometry, positionLocal, sin, uniform, vec2, vec3, texture, luminance, varying } from 'three/tsl';
 import { palette, paletteTokens, type PaletteToken } from '../data/palette';
 import { surfaceDetail } from './SurfaceDetail';
@@ -42,26 +42,26 @@ export class Materials {
     const offset = index.lessThan(0).select(paletteTokens.length, this.lighting.worldPaletteEnabled.mul(paletteTokens.length));
     return texture(this.texture, vec2(index.add(offset).add(.5).div(paletteTokens.length * 2), .5)).rgb;
   }
-  world(token: PaletteToken, emissive = 0, vertexColors = false): PaletteMaterial {
-    const key = `world:${token}:${emissive}:${vertexColors}`;
+  world(token: PaletteToken, emissive = 0, vertexColors = false, side: Side = FrontSide): PaletteMaterial {
+    const key = `world:${token}:${emissive}:${vertexColors}:${side}`;
     let material = this.cache.get(key);
     if (!material) {
       const swatch = this.sample(uniform(paletteTokens.indexOf(token)));
       const base = vertexColors ? swatch.mul(attribute('color', 'vec3')) : surfaceDetail(token, swatch, this.look.nodes);
       material = new PaletteMaterial(token, this.texture, this.lighting, 0, undefined, false, { base, glow: emissive ? base.div(luminance(base).max(.001)).mul(emissive) : undefined });
-      material.color.set(palette[token]); material.vertexColors = vertexColors;
+      material.color.set(palette[token]); material.vertexColors = vertexColors; material.side = side;
       material.name = `${emissive ? 'emi' : 'pal'}_${token}`; material.userData.emissiveStrength = emissive; this.cache.set(key, material);
     }
     return material;
   }
   /** Imported palette identity remains available to batching and figure bake consumers. */
-  asset(token: PaletteToken, emissive = 0, vertexColors = false): PaletteMaterial {
-    const key = `asset:${token}:${emissive}:${vertexColors}`;
+  asset(token: PaletteToken, emissive = 0, vertexColors = false, side: Side = FrontSide): PaletteMaterial {
+    const key = `asset:${token}:${emissive}:${vertexColors}:${side}`;
     let material = this.cache.get(key);
     if (!material) {
       const base = texture(this.texture, vec2((paletteTokens.indexOf(token) + .5) / (paletteTokens.length * 2), .5)).rgb.mul(vertexColors ? attribute('color', 'vec3') : 1);
       material = new PaletteMaterial(token, this.texture, this.lighting, 0, undefined, false, { base, glow: emissive ? base.div(luminance(base).max(.001)).mul(emissive) : undefined });
-      material.color.set(palette[token]); material.vertexColors = vertexColors;
+      material.color.set(palette[token]); material.vertexColors = vertexColors; material.side = side;
       material.name = `${emissive ? 'emi' : 'pal'}_${token}`; material.userData.emissiveStrength = emissive; this.cache.set(key, material);
     }
     return material;

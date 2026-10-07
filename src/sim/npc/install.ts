@@ -41,7 +41,7 @@ function campaignWalls(world: SimWorld, districts: DistrictWorld = world.distric
   for (const c of districts.boundaries) walls.push({ x: (c.min[0] + c.max[0]) / 2, z: (c.min[2] + c.max[2]) / 2, y: .525, halfX: (c.max[0] - c.min[0]) / 2, halfZ: (c.max[2] - c.min[2]) / 2, halfY: .525 });
   return walls;
 }
-/** Refresh collision and paths after E10 swaps decay; W2+ removes ambient traffic. */
+/** Refresh collision and paths after E10 swaps decay; W2+ parks ambient traffic. */
 export function rebuildNpcNavigation(world: SimWorld): void {
   if (!world.npcs || !world.infected || !world.districts) return;
   const walls = world.combat!.definition.walls!;
@@ -50,7 +50,7 @@ export function rebuildNpcNavigation(world: SimWorld): void {
     const brain = e.civilian ?? e.escort ?? e.companion ?? e.infected;
     if (brain) { brain.path.length = 0; brain.goal = -1; }
     if (e.traffic) {
-      if (world.districts.composition.tier > 1) { world.spatial.delete(e.id); world.entities.delete(e.id); }
+      if (world.districts.composition.tier > 1) { e.traffic.speed = e.traffic.desired = 0; e.traffic.stopped = true; e.traffic.panic = false; }
       else { e.traffic.panic = world.districts.composition.tier === 1; e.traffic.desired = e.traffic.panic ? 9 : 6; }
     }
   }

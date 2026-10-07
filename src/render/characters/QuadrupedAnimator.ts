@@ -1,5 +1,7 @@
 import { AnimationMixer, LoopOnce, Quaternion, Vector3, type AnimationAction, type Object3D } from 'three';
 import { cadenceStride, retargetClip, strides, strideScale } from './clips';
+import { GaitPhase } from './GaitPhase';
+import { PawContacts } from './PawContacts';
 
 /** E19 §5.8 corgi warning, sim-owned by the companion (lane F: `companion.warn`), plus
  * the threat's position for the head look (the caller resolves `warn.threat`). */
@@ -21,11 +23,15 @@ export class QuadrupedAnimator {
   private readonly turn = new Quaternion();
   private readonly rootTurn = new Quaternion();
   private speed = 0;
+  private readonly phase = new GaitPhase();
+  private readonly contacts: PawContacts;
+  gaitPhase = 0;
   clip = 'corgi-idle';
   constructor(private readonly root: Object3D) {
     this.mixer = new AnimationMixer(root);
     for (const name of ['corgi-idle','corgi-walk','corgi-trot','corgi-gallop','corgi-sit', ...Object.values(warningClips)]) this.actions.set(name, this.mixer.clipAction(retargetClip(root, name)));
     this.head = root.getObjectByName('head');
+    this.contacts = new PawContacts(root);
   }
   update(time: number, speed: number, distance: number, warning?: CorgiWarning | null): void {
     const dt = Math.max(0, time - this.time); this.time = time;
@@ -41,9 +47,12 @@ export class QuadrupedAnimator {
       if (name === 'corgi-sit' || name === 'corgi-stiffen' || name === 'corgi-bark') { this.action.setLoop(LoopOnce, 1); this.action.clampWhenFinished = true; }
       previous?.crossFadeTo(this.action, name === 'corgi-bark' || name === 'corgi-stiffen' ? .08 : .16, false); this.clip = name;
     }
-    if (strides[name]) { this.action.time = distance / cadenceStride(name, strideScale(this.root), speed) % 1 * this.action.getClip().duration; this.action.setEffectiveTimeScale(0); }
+    const phase = this.phase.sample(0, distance, name, strideScale(this.root), speed);
+    this.gaitPhase = phase;
+    if (strides[name]) { this.action.time = phase * this.action.getClip().duration; this.action.setEffectiveTimeScale(0); }
     else this.action.setEffectiveTimeScale(1);
-    this.mixer.update(dt);
+    this.contacts.restore(); this.mixer.update(dt);
+    if (strides[name]) this.contacts.update(phase, cadenceStride(name, strideScale(this.root), speed), name); else this.contacts.reset();
     // Head look: yaw toward the threat, capped at ±50°, eased over ~200 ms.
     let target = 0;
     if (warning?.toward && warning.stage !== 'nervous' && warning.stage !== 'none') {
