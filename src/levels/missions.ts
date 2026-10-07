@@ -33,6 +33,8 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       for (const name of ['player-start', 'parcel-counter', 'lab-door', 'lab-gate', 'lab-exit-front', 'lab-exit-side', 'lab-exit-window', 'lab-smoke-vent', 'lab-smoke-window', 'lab-tech-spawn', 'lab-bike-rack', 'garage-door', 'garage-bat', 'fire-bay-door', 'fire-bay-trigger', 'elm-horde-entry', ...[1, 2, 3, 4, 5, 6].map(i => `edge-in-${i}`)]) anchor(name, 'D-GROVE', name);
       // Click-to-move stops ~2 m from its target: the reach volume must be forgiving.
       def.anchors['fire-bay-trigger'].radius = 3;
+      // Doors that director infected emerge from (spec PO request 2026-10-07).
+      for (let i = 1; i <= 80; i++) { try { anchor(`refuge-door-${i}`, 'D-GROVE', `refuge-door-${i}`); } catch { break; } }
       def.items.push('parcel', 'bat'); def.states.push('delivered', 'exited', 'away'); def.checkpoints.push('accident', 'bat');
       def.gates['fire-shutter'] = { anchor: 'fire-bay-door', open: true };
       const pickup = interact('pickup', 'Pick up the package at the courier depot', 'parcel-counter', 1);

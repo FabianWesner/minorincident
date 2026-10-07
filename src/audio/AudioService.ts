@@ -74,6 +74,7 @@ export class AudioService implements Lifecycle {
     arc: L1ArcDirector | null = null;
     private arcFrame: ArcFrame | null = null;
     private generation = 0;
+    private ambienceDuckUntil = 0;
     private readonly corgiWarnAt = new Map<string, number>();
     private level = 'L1';
     private tier = 0;
@@ -165,6 +166,8 @@ export class AudioService implements Lifecycle {
         this.startBedsAndMusic();
         if (this.background)
             this.host.pause();
+        // Lazy banks arrive in the background once the level is running.
+        setTimeout(() => { if (generation === this.generation && !this.disposed) void this.registry.preloadLazy(); }, 300);
     }
     /** Decay rebuilds presentation/acoustics in the same world; keep mission cues and score. */
     refreshAcoustics(): void {
@@ -704,6 +707,12 @@ export class AudioService implements Lifecycle {
                 const weapon = event.actionId.split('.').at(-1)!;
                 const targetPosition = target?.transform ?? position;
                 this.play(audioCues[`flesh.${weapon}`] ? `flesh.${weapon}` : 'flesh.fists', { position: targetPosition }, source);
+                // Layered hit: transient (flesh) + body of the weapon + low thump, each with its own variation.
+                const body = weapon === 'bat' ? 'wood' : /crowbar|machete/.test(weapon) ? 'metal' : 'punch', heavy = weapon === 'kick' || weapon === 'bat' || event.amount >= 20;
+                this.play(`impact.body.${body}`, { position: targetPosition, gain: heavy ? 1 : 0.8 }, source);
+                this.play('impact.thump', { position: targetPosition, gain: heavy ? 1 : 0.6 }, source);
+                this.graph.buses.ambience.gain.setTargetAtTime(0.7, this.context.currentTime, 0.02);
+                this.ambienceDuckUntil = this.context.currentTime + 0.5;
             }
         }
         if (event.type === 'infected.attack')
@@ -722,6 +731,10 @@ export class AudioService implements Lifecycle {
     update(): void {
         if (!this.available())
             return;
+        if (this.ambienceDuckUntil && this.context.currentTime > this.ambienceDuckUntil) {
+            this.ambienceDuckUntil = 0;
+            this.graph.buses.ambience.gain.setTargetAtTime(1, this.context.currentTime, 0.25); // combat ducks ambience 3 dB, then it recovers
+        }
         this.startBedsAndMusic();
         const player = this.world.entities.get(1);
         if (!player)
