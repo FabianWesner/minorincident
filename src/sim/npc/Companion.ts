@@ -81,7 +81,12 @@ export class Companion {
         if (distance > 3.2 || !ai.nav.visible(e.transform, player.transform, .35)) c.following = true;
         if (distance < 2.05 && ai.nav.visible(e.transform, player.transform, .35)) c.following = false;
         const riding = this.world.vehicles?.bicycle.riding === true, frozen = this.safe && this.warn(e, c, player.transform) && distance < 6;
-        if (frozen) { if (c.velocity) c.velocity.x = c.velocity.z = 0; }
+        if (frozen) {
+          if (c.velocity) c.velocity.x = c.velocity.z = 0;
+          // Only a standing corgi looks at the threat; a moving one always faces its travel direction.
+          const threat = this.world.entities.get(c.warn!.threat);
+          if (threat) e.transform.yaw = -Math.atan2(threat.transform.z - e.transform.z, threat.transform.x - e.transform.x);
+        }
         // While the player rides, the corgi's speed cap rises to 7.5 m/s (a short 15 % catch-up when it falls > 4 m behind) and it runs alongside (spec 5.10).
         else if (c.following) this.world.npcs!.move(e, riding ? this.riderSide(player.transform) : player.transform, riding ? Math.min(l1v2.corgi.riderSpeedCapMs * (distance > 4 ? 1.15 : 1), l1v2.corgi.riderSpeedCapMs * .9 + Math.max(0, distance - 3) * 2) : Math.min(8, 4.5 + Math.max(0, distance - 4) * 2), c, riding ? 1.5 : 2);
         else if (c.velocity) c.velocity.x = c.velocity.z = 0;
@@ -93,9 +98,10 @@ export class Companion {
         this.world.events.emit({ type: 'corgi.bark', tick: this.world.tick, id: e.id, threatId: enemy.id, direction: { x: dx / (distance || 1), z: dz / (distance || 1) } }); break;
       }
       // The presented heading always follows the actual travel direction: never run backwards while the bounded turn catches up.
-      const v = c.velocity; if (v && Math.hypot(v.x, v.z) > 1.5) {
+      // The bounded turn (faceMotion) does the smoothing; this only caps its lag at 0.3 rad (17 degrees) so it never crab-walks.
+      const v = c.velocity; if (v && Math.hypot(v.x, v.z) > .5) {
         const heading = -Math.atan2(v.z, v.x), error = Math.atan2(Math.sin(heading - e.transform.yaw), Math.cos(heading - e.transform.yaw));
-        if (Math.abs(error) > .6) { e.transform.yaw = heading; if (e.locomotion) e.locomotion.omega = 0; }
+        if (Math.abs(error) > .3) { e.transform.yaw = heading - Math.sign(error) * .3; if (e.locomotion) e.locomotion.omega = 0; }
       }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
@@ -124,7 +130,6 @@ export class Companion {
       return false;
     }
     const dx = threat.transform.x - e.transform.x, dz = threat.transform.z - e.transform.z, length = Math.hypot(dx, dz) || 1;
-    e.transform.yaw = -Math.atan2(dz, dx); // look toward it
     const stage = best <= tuning.barkM ? 'bark' : best <= tuning.growlM ? 'growl' : 'stiffen', order = ['none', 'nervous', 'stiffen', 'growl', 'bark'];
     w.threat = threat.id;
     if (order.indexOf(stage) > order.indexOf(w.stage) || w.stage === 'nervous') { w.stage = stage; if (stage !== 'bark') this.emitWarn(e, threat.id, stage, best, { x: dx / length, z: dz / length }); }
