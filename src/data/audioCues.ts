@@ -101,9 +101,9 @@ export const ambienceTiers = [
     { beds: ['wind', 'fire'], oneShots: ['debris', 'dog', 'helicopter'] },
 ] as const;
 for (const [i, id] of [...new Set(ambienceTiers.flatMap(t => [...t.beds]))].entries())
-    cue(`bed.${id}`, 'ambience', 'bed', ['birds', 'traffic', 'sirens'].includes(id) ? 12 : 2, 100 + i * 210, { gain: 0.18, loop: true });
+    cue(`bed.${id}`, 'ambience', 'bed', ['birds', 'traffic', 'sirens', 'wind'].includes(id) ? 12 : 2, 100 + i * 210, { gain: 0.18, loop: true });
 for (const [i, id] of [...new Set(ambienceTiers.flatMap(t => [...t.oneShots]))].entries())
-    cue(`ambient.${id}`, 'ambience', id === 'gunshot' || id === 'explosion' ? 'shot' : id === 'dog' || id === 'shout' || id === 'scream' ? 'vocal' : 'noise', 0.6, 160 + i * 70, { caption: id === 'alarm' ? 'Car alarm' : id === 'scream' ? 'Distant scream' : undefined });
+    cue(`ambient.${id}`, 'ambience', id === 'gunshot' || id === 'explosion' ? 'shot' : id === 'dog' || id === 'shout' || id === 'scream' ? 'vocal' : 'noise', 0.6, 160 + i * 70, { gain: id === 'dog' ? 0.2 : 0.35, caption: id === 'alarm' ? 'Car alarm' : id === 'scream' ? 'Distant scream' : undefined });
 export const musicLevels = { L1: 120, L2: 120, L3: 128, L4: 96, L5: 120, L6: 120 } as const;
 export const musicLayers = ['base', 'pulse', 'drive', 'peak'] as const;
 for (const [level, bpm] of Object.entries(musicLevels))
@@ -145,7 +145,7 @@ for (const original of Object.values(audioCues)) {
 }
 /** L1 v2 sound arc (lane H): calm layer, accident beats, chaos layer, fire-station interior. One sprite category. */
 const arc = { category: 'l1arc', rateSpread: 0.04 } as const;
-cue('l1.calm.chatter', 'ambience', 'chatter', 2, 260, { ...arc, loop: true, gain: 0.22, antiSpam: 0 });
+cue('l1.calm.chatter', 'ambience', 'chatter', 8, 260, { ...arc, loop: true, gain: 0.22, antiSpam: 0 });
 cue('l1.calm.talk', 'ambience', 'vocal', 0.9, 170, { ...arc, gain: 0.2, antiSpam: 2 });
 cue('l1.calm.traffic', 'ambience', 'noise', 1.2, 120, { ...arc, gain: 0.18, antiSpam: 3 });
 cue('l1.calm.bike-tick', 'ambience', 'step', 0.25, 2400, { ...arc, gain: 0.14, antiSpam: 1 });
