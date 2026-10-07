@@ -45,6 +45,9 @@ import { EntityAssets } from './EntityAssets';
 import { loadMeasure } from '../assets/loadTiming';
 import { loadGate } from '../assets/loadGate';
 import { lodPolicy } from './lodPolicy';
+import { layoutLights } from './WorldLights';
+import { auraLight } from './LightField';
+import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 export class GameView implements Lifecycle {
@@ -211,7 +214,7 @@ export class GameView implements Lifecycle {
         if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, lodPolicy.lod1From))); loadMeasure('view:hero-lod0', p); }
         this.pendingPreparation = { shared, instanceCapacity };
       }
-      this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
+      this.scene.add(this.districts);this.lighting.field.setStatic(layoutLights(this.world.districts));this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
       this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
       this.scene.add(this.character);
     } else if (this.world.player) {
@@ -365,7 +368,7 @@ export class GameView implements Lifecycle {
     if (!next) return false;
     if (this.districts) this.districts.visible = false;
     this.districts = next; next.visible = true; next.setQuality(this.quality);
-    next.updateLods(this.view); this.lighting?.set(next.world.composition.timeOfDay);
+    next.updateLods(this.view); this.lighting?.set(next.world.composition.timeOfDay); this.lighting?.field.setStatic(layoutLights(next.world));
     return true;
   }
   /** The fire-station ending: the bay shutter rolls down at the slam (small shake), thuds shake the camera lightly,
@@ -581,7 +584,7 @@ export class GameView implements Lifecycle {
     this.flashOverlay.style.opacity = String(Math.max(this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
     this.fixtureProps?.update();
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
-    this.lighting?.update(this.view); this.districts?.updateLods(this.view);
+    this.lighting?.update(this.view); this.updateLights(); this.districts?.updateLods(this.view);
     this.districts?.cull(this.view, this.quality);
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
@@ -630,6 +633,21 @@ export class GameView implements Lifecycle {
       this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
     if (profileStart) this.renderCpuMs = performance.now() - renderStart;
+  }
+  /** E25 light field of the loaded scene (E27 transients hook in here). */
+  get lightField() { return this.lighting?.field ?? null; }
+  /** E25 light field: layout pools plus per-frame vehicle lamps and the survivor aura, one pass before the scene. */
+  private updateLights(): void {
+    const lighting = this.lighting; if (!lighting) return;
+    const field = lighting.field, hero = this.character?.visible && this.world.entities.get(1) ? this.character.position : null;
+    if (hero) lighting.hero.value.copy(hero); else lighting.hero.value.set(0, -100, 0);
+    if (field.active) {
+      const aura = timeOfDayPresets[lighting.preset].aura ?? 0;
+      if (hero && aura > 0) field.push(auraLight(hero.x, hero.z, aura));
+      this.vehicles?.pushLights(field);
+    }
+    field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
+    field.render(this.renderer);
   }
   async ready(): Promise<void> {
     await this.warming;

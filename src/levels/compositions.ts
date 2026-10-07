@@ -25,7 +25,8 @@ export const compositions: Record<string, LevelComposition> =
       {
         id: `L${i + 1}`,
         tier: i as LevelComposition["tier"],
-        timeOfDay: i < 3 ? "L1" : i < 5 ? "L4" : "L6",
+        // E25 level moods (specs/06 §2): L1 morning, L2 midday, L3 afternoon (below), L4 golden hour, L5 dusk, L6 night.
+        timeOfDay: (["L1", "L2", "L1", "L4", "L5", "L6"] as const)[i],
         districts: districts.map((id) => ({ id, origin: districtOrigins[id] })),
       },
     ]),

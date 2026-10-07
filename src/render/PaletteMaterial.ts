@@ -1,6 +1,6 @@
 // Adapted from Bruno Simon folio-2025 Materials/MeshDefaultMaterial.js (MIT).
 import { MeshLambertNodeMaterial, type Texture, type Node, type Color } from 'three/webgpu';
-import { Fn, Discard, attribute, float, max, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color } from 'three/tsl';
+import { Fn, Discard, attribute, float, max, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
 import { surfaceDetail } from './SurfaceDetail';
@@ -13,6 +13,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly bloodCoverage = uniform(0);
   /** Render-only emissive hit pulse. */
   readonly hitFlash = uniform(0);
+  /** E25 night readability: 1 on crowd figures (infected/civilians) for a moonlit silhouette rim. */
+  readonly figureRim = uniform(0);
   constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; glow?: Node<'vec3'>; opacity?: Node<'float'> }) {
     super(); this.name = `${emissive ? 'emi' : 'pal'}_${token}`;
     this.normalNode = normalView;
@@ -40,7 +42,14 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const albedo = mix(surface, lighting.bounce, bounce);
       const ambient = mix(lighting.groundAmbient, lighting.skyAmbient, normalWorld.y.mul(0.5).add(0.5)).mul(lighting.look.nodes.ambientStrength).mul(lighting.look.nodes.hemisphereIntensity.mul(2));
       const lit = albedo.mul(lighting.color.rgb.add(ambient)).mul(lighting.intensity);
-      const shaded = mix(lit, surface.mul(lighting.shadow), shadow);
+      // E25 light field: practical pools (lamps, windows, headlights, fires) light ground, walls and figures.
+      // At night the moon/hero shadow map also darkens the pools behind casters (fieldShadow).
+      const field = lighting.field.sample().mul(normalWorld.y.mul(.35).add(.65)).mul(mix(float(1), caughtShadow, lighting.fieldShadow));
+      // Night rim: the survivor (a world-space capsule around the feet) and flagged crowd figures.
+      const fresnel = normalView.dot(positionViewDirection).clamp(0, 1).oneMinus().pow(3);
+      const heroMask = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(1.3, .6).mul(positionWorld.y.sub(lighting.hero.y).smoothstep(.1, .3));
+      const rim = lighting.rimColor.mul(fresnel.mul(max(heroMask, this.figureRim)).mul(lighting.rim));
+      const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field)).add(rim);
       const controlled = mix(luminance(shaded), shaded, lighting.look.nodes.saturation);
       const output = emissive > 0 ? base.div(luminance(base).max(0.001)).mul(emissive) : mix(controlled.add(nodes?.glow ?? 0), lighting.radialFog, rangeFogFactor(lighting.fogNear, lighting.fogFar));
       return vec4(output.add(this.hitFlash), this.fade.mul(nodes?.opacity ?? 1));
