@@ -84,7 +84,7 @@ test('crowd draw visibility stays continuous for 60 seconds after the L1 outbrea
   }
 });
 
-test('20 infected corpses remain drawn after travelling 60 m away and returning @smoke @E07', async ({ page }) => {
+test('20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07', async ({ page }) => {
   test.skip(stage === 'before'); test.setTimeout(180_000);
   await boot(page);
   const proof = await page.evaluate(async () => {
@@ -92,11 +92,18 @@ test('20 infected corpses remain drawn after travelling 60 m away and returning 
     const ids = Array.from({ length: 20 }, (_, i) => a.spawn('infected.runner', { x: 3 + i % 5, z: -2 + Math.floor(i / 5) }, { state: 'idle' }));
     a.cheats.killAll(); await a.step(121); a.camera.cinematic({ position: [13, 12, 14], target: [5, .5, 0] }); await a.screenshotReady();
     const first = ids.filter(id => a.crowdFigures().some(f => f.id === id && f.drawn));
-    a.teleport('player', { x: 65, z: 0 }); a.camera.follow(); await a.step(3601);
-    a.teleport('player', { x: 0, z: 0 }); a.camera.cinematic({ position: [13, 12, 14], target: [5, .5, 0] }); await a.screenshotReady();
-    return { first: first.length, final: ids.filter(id => a.crowdFigures().some(f => f.id === id && f.drawn)).length, retained: ids.filter(id => a.getEntity(id)?.corpse).length };
+    // Stay inside the finite arena floor and exercise the actual walking controller.
+    a.input.set({ moveTarget: { x: -50, z: 45 }, walk: true }); a.camera.follow(); await a.step(3000); a.input.clear();
+    const away = a.getEntity(1)!.transform; await a.step(3601);
+    const waited = a.getEntity(1)!.transform;
+    a.input.set({ moveTarget: { x: 0, z: 0 }, walk: true }); await a.step(3000); a.input.clear();
+    const returned = a.getEntity(1)!.transform;
+    a.camera.cinematic({ position: [13, 12, 14], target: [5, .5, 0] }); await a.screenshotReady();
+    return { first: first.length, final: ids.filter(id => a.crowdFigures().some(f => f.id === id && f.drawn)).length, retained: ids.filter(id => a.getEntity(id)?.corpse).length, awayDistance: Math.hypot(away.x, away.z), waitedDistance: Math.hypot(waited.x, waited.z), awayY: waited.y, returnedDistance: Math.hypot(returned.x, returned.z) };
   });
-  expect(proof).toEqual({ first: 20, final: 20, retained: 20 });
+  expect(proof).toMatchObject({ first: 20, final: 20, retained: 20 });
+  expect(proof.awayDistance).toBeGreaterThanOrEqual(60); expect(proof.waitedDistance).toBeGreaterThanOrEqual(60);
+  expect(proof.awayY).toBeGreaterThan(.5); expect(proof.returnedDistance).toBeLessThan(.2);
   mkdirSync(output, { recursive: true }); writeFileSync(`${output}/permanence.json`, JSON.stringify(proof, null, 2));
   await page.locator('canvas').screenshot({ path: `${output}/corpse-return.png` });
   await page.close(); rmSync(await page.video()!.path(), { force: true });
