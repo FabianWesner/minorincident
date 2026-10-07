@@ -13,14 +13,18 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // E19 §5.6 + PO #11: unarmed 9 per hit (5 hits per 40 HP); 1.45 m reach so punches land on infected waiting at arm's length, one body per punch; per-move timing/knockback in meleeCombos.
   { ...melee('fists', 'wpn.fists', 9, 1.45, 80, 0.4, 0, 0.2), maxTargets: 1, stagger: 0 },
   { ...melee('kick', 'wpn.kick', 18, 1.5, 60, 0.65, 0, 1.2), knockdown: true },
-  { ...fixtures['weapon.bat'], damage: 22, knockback: .25, stagger: .2 },
+  // PO 2026-10-07 (00 §6.2): >= 3 infected within the bat's reach turn the click into a 360° roundhouse that strikes the
+  // 3 nearest (12 each, <= 0.8 m shove, a stagger that breaks their bites; 0.8 s lockout, <= 1.25 per second). Tuned by
+  // the crowd battery: the PO's "fight a few, not all at once" - stand vs 4-6 wins, stand vs 10 loses (l1-crowd.test).
+  { ...fixtures['weapon.bat'], damage: 22, knockback: .25, stagger: .2, roundhouse: { threshold: 3, radius: 2.2, maxTargets: 3, damage: 12, knockback: .7, stagger: .3, windup: .12, active: .2, recovery: .28, cooldown: .8, hitStopMs: 45 } },
   melee('crowbar', 'wpn.crowbar', 30, 1.8, 95, 0.6, 0),
   melee('machete', 'wpn.machete', 32, 1.8, 110, 0.45, 0, 0.2),
   melee('knife', 'wpn.knife', 18, 1.3, 60, 0.3, 0, 0.1),
   { ...melee('nail-bat', 'wpn.nail-bat', 38, 2, 100, 0.55, 1), upgradeHooks: ['damage', 'knockback', 'status'] },
   melee('shovel', 'wpn.shovel', 40, 2.2, 110, 0.75, 1, 0.4),
   melee('police-baton', 'wpn.police-baton', 22, 1.7, 85, 0.35, 1, 0.3),
-  melee('fire-axe', 'wpn.fire-axe', 65, 2.1, 100, 0.85, 2, 0.4),
+  // E20 §5.3: the same crowd sweep, stronger: >= 3 within 2.5 m, 25 damage each, 2.5 m push, 0.8 s stagger, 1.0 s total.
+  { ...melee('fire-axe', 'wpn.fire-axe', 65, 2.1, 100, 0.85, 2, 0.4), roundhouse: { threshold: 3, radius: 2.5, maxTargets: 1000, damage: 25, knockback: 2.5, stagger: .8, windup: .25, active: .25, recovery: .5, cooldown: 1, hitStopMs: 60 } },
   melee('katana', 'wpn.katana', 48, 2.3, 130, 0.45, 2, 0.2),
   fixtures['weapon.pistol'],
   { ...gun('shotgun', 150, 18, 2, 6, 2, 12), pellets: 8, distanceFalloff: { start: 4, end: 12, minimum: 0.1 }, maxTargets: 8, knockback: 0, stagger: 0.3 },

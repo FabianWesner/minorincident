@@ -9,6 +9,10 @@ export interface ActionDef {
   hitStopMs?: number;
   /** Explicit heavy finisher/special; ordinary damage never implies a knockdown. */
   knockdown?: boolean;
+  /** Crowd sweep (00 §6.2 bat roundhouse, E20 §5.3 axe): when >= `threshold` living infected stand within `radius` at
+   * swing start, the same input plays a 360° roundhouse hitting every one of them in sweep order. Seconds/metres/HP;
+   * knockback here is the sweep's shove (it bypasses the 0.4 m normal-hit cap but never knocks down). */
+  roundhouse?: RoundhouseDef;
   id: string; category: 'melee' | 'ranged' | 'throwable' | 'ability'; sideAgnostic: true;
   damage: number; range: number; arc: number; spread: number; maxTargets: number;
   windup: number; active: number; recovery: number; cooldown: number; fireRate: number;
@@ -19,6 +23,7 @@ export interface ActionDef {
   aimIndicator: 'line' | 'cone' | 'arc' | 'circle'; tier: number;
   upgradeHooks: string[]; viewAssetId: string; iconId: string;
 }
+export interface RoundhouseDef { threshold: number; radius: number; maxTargets: number; damage: number; knockback: number; stagger: number; windup: number; active: number; recovery: number; cooldown: number; hitStopMs: number }
 export const ticks = (seconds: number): number => Math.ceil(seconds * 60 - 1e-9);
 /** Boot validation is shared by fixture data and the E06 catalog. Durations are seconds. */
 export function validateAction(def: ActionDef): ActionDef {
@@ -31,6 +36,8 @@ export function validateAction(def: ActionDef): ActionDef {
   if (def.pellets !== undefined && (!Number.isInteger(def.pellets) || def.pellets < 1 || def.pellets > 32)) throw new Error('Invalid pellets');
   if (def.distanceFalloff && (!Number.isFinite(def.distanceFalloff.start) || !Number.isFinite(def.distanceFalloff.end) || def.distanceFalloff.start < 0 || def.distanceFalloff.end <= def.distanceFalloff.start || !Number.isFinite(def.distanceFalloff.minimum) || def.distanceFalloff.minimum < 0 || def.distanceFalloff.minimum > 1)) throw new Error('Invalid distance falloff');
   if (def.effect && (!['fire', 'lure', 'smoke', 'shield', 'adrenaline', 'turret'].includes(def.effect.kind) || !Number.isFinite(def.effect.radius) || def.effect.radius <= 0 || !Number.isFinite(def.effect.duration) || def.effect.duration <= 0)) throw new Error('Invalid action effect');
+  const sweep = def.roundhouse;
+  if (sweep && (def.category !== 'melee' || !Number.isInteger(sweep.threshold) || sweep.threshold < 2 || !Number.isInteger(sweep.maxTargets) || sweep.maxTargets < sweep.threshold || !(sweep.radius > 0) || !(sweep.active > 0) || [sweep.damage, sweep.knockback, sweep.stagger, sweep.windup, sweep.recovery, sweep.cooldown, sweep.hitStopMs].some(n => !Number.isFinite(n) || n < 0))) throw new Error(`Invalid ${def.id}.roundhouse`);
   if (def.range === 0 || def.active === 0 || def.maxTargets < 1 || def.arc > 360 || def.spread > 180) throw new Error('Invalid hit query');
   for (const key of ['maxTargets', 'magazine', 'charges', 'tier'] as const) if (!Number.isInteger(def[key])) throw new Error(`Invalid integer ${key}`);
   if (def.magazine && (!def.reloadTime || !def.fireRate)) throw new Error('Magazine requires reload and fire rate');
