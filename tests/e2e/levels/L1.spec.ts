@@ -154,6 +154,12 @@ test.describe('L1 v2 real-input playthrough', () => {
         victim = await page.evaluate(() => window.__SS__!.getState().entities.find(e => e.infection?.phase === 'collapse' || e.infection?.phase === 'eyes'));
       }
       expect(victim, 'A systemic pedestrian transformation is available for visual review').toBeDefined();
+      // Observe the same victim until its eye glow appears; an early collapse can still look like a normal bend.
+      const victimId = victim!.id;
+      for (let i = 0; i < 42 && victim!.infection?.phase !== 'eyes'; i++) {
+        await step(5); victim = await page.evaluate(id => window.__SS__!.getState().entities.find(e => e.id === id), victimId);
+      }
+      expect(victim!.infection?.phase).toBe('eyes');
       await snap('l1-spread', victim!.transform); shots.add('l1-spread');
       writeFileSync(`${output}/spread-victim.json`, JSON.stringify(victim, null, 2) + '\n');
     }
