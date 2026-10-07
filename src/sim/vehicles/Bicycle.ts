@@ -67,6 +67,10 @@ export class Bicycle {
       b.speed = 0;
       const d = Math.hypot(player.transform.x - bike.transform.x, player.transform.z - bike.transform.z);
       if (d > 2) b.armed = true;
+      // Wedged bike (under an awning, inside props): when the courier is close, it steps out to the nearest clear spot.
+      if (d <= 3 && this.world.tick % 20 === 0 && !this.clearAt(bike.transform.x, bike.transform.z, -bike.transform.yaw)) {
+        const spot = this.clearSpot(player.transform.x, player.transform.z, -bike.transform.yaw); if (spot) { bike.transform.x = spot.x; bike.transform.z = spot.z; }
+      }
       const still = Math.hypot(frame.move.x, frame.move.z) < .05;
       b.standTicks = d <= MOUNT_RANGE && still && b.armed ? b.standTicks + 1 : 0;
       const free = alive && d <= MOUNT_RANGE && this.world.tick >= b.lockUntil && !this.atNoBikeZone(player.transform) && !this.world.vehicles?.active;
@@ -105,21 +109,22 @@ export class Bicycle {
       const routed: InputFrame = { ...frame, left: off, right: { ...off }, selector: 0, interact: !!claimed && frame.interact };
       delete routed.attackTarget; return routed;
     }
-    const want = Math.min(1, Math.hypot(frame.move.x, frame.move.z));
-    let target = 0;
+    // Bicycle kinematics: the steering angle shrinks with speed (turn radius 1.6 m crawling, 6 m flat out), the heading changes by
+    // speed / radius, so the bike never pivots on the spot; speed ramps (0 to 7 m/s in 1.5 s), brakes hard, coasts gently.
+    const want = Math.min(1, Math.hypot(frame.move.x, frame.move.z)), r = b.speed / speedMs;
+    let target = 0, steerTarget = 0;
     if (want > 0) {
       const desired = Math.atan2(frame.move.z, frame.move.x), err = Math.atan2(Math.sin(desired - b.heading), Math.cos(desired - b.heading));
-      // Click-to-move rides the on-foot navigation route (QA1-02): follow its waypoints tightly and slow
-      // into turns so the bicycle rounds fences instead of cutting into them.
-      const routed = !!frame.navigation;
-      const omega = Math.max(routed ? 4 : 1.5, b.speed / minTurnRadiusM), turn = Math.sign(err) * Math.min(Math.abs(err), omega * FIXED_DT);
-      b.heading += turn; b.steer = Math.max(-1, Math.min(1, turn / (omega * FIXED_DT || 1)));
-      // Sharp turns shed speed so the bicycle never pivots at full speed.
-      target = routed ? speedMs * want * Math.max(.12, Math.cos(Math.min(Math.abs(err), Math.PI / 2)) ** 2) : speedMs * want * Math.max(.35, Math.cos(Math.min(Math.abs(err), Math.PI / 2)) ** .5);
-    } else b.steer = 0;
-    const accel = accelToMs / accelS, change = target > b.speed ? accel * FIXED_DT : (want > 0 ? 9 : 6) * FIXED_DT;
+      steerTarget = Math.max(-1, Math.min(1, err / .7));
+      // Sharp turns shed speed; a turn straight behind slows to a crawl before swinging round.
+      target = speedMs * want * Math.max(.3, Math.cos(Math.min(Math.abs(err), Math.PI / 2)) ** .5);
+    }
+    b.steer += (steerTarget - b.steer) * Math.min(1, 8 * FIXED_DT);
+    const radius = 1.6 + (6 - 1.6) * r;
+    b.heading += b.steer * (b.speed / radius) * FIXED_DT;
+    const accel = accelToMs / accelS, change = target > b.speed ? accel * FIXED_DT : (want > 0 ? 9 : 3) * FIXED_DT;
     b.speed += Math.max(-change, Math.min(change, target - b.speed));
-    b.pedal += b.speed * FIXED_DT * 1.8;
+    if (want > 0) b.pedal += b.speed * FIXED_DT * 1.8; // cadence follows speed; freewheeling while coasting
     const m = b.speed / speedMs;
     // The attack buttons are disabled while riding; a coasting bicycle with no input keeps its heading.
     const off = { down: false, held: false, up: false };
@@ -140,14 +145,30 @@ export class Bicycle {
     if (b.mounted) { Object.assign(bike.transform, { x: player.transform.x, z: player.transform.z, yaw: -b.heading }); player.riding = bike.id; }
     else delete player.riding;
   }
+  /** True when the whole frame (three points along the axis) stands on walkable, unblocked nav cells. */
+  private clearAt(x: number, z: number, heading: number): boolean {
+    const nav = this.world.infected?.nav; if (!nav) return true;
+    const fx = Math.cos(heading), fz = Math.sin(heading);
+    return [-.8, 0, .8].every(a => nav.clear(x + fx * a, z + fz * a, .4));
+  }
+  /** Nearest reachable parking spot around (px, pz): clear frame, never in prop clusters or doorways, within mount range (1.5 m) of the rider. */
+  clearSpot(px: number, pz: number, heading: number): Vec2 | null {
+    for (const radius of [.9, 1.2, 1.4]) for (let i = 0; i < 8; i++) {
+      // left of the rider first, then right, behind, ahead
+      const a = heading + Math.PI / 2 + [0, Math.PI, Math.PI / 2, -Math.PI / 2, Math.PI / 4, -Math.PI / 4, 3 * Math.PI / 4, -3 * Math.PI / 4][i];
+      const x = px + Math.cos(a) * radius, z = pz + Math.sin(a) * radius;
+      if (this.clearAt(x, z, heading) && !this.inNoBikeZone({ x, z })) return { x, z };
+    }
+    return null;
+  }
   private dismount(bike: EntitySnapshot, player: EntitySnapshot, at?: Vec2): void {
     const b = bike.bicycle!;
     b.mounted = false; b.speed = 0; b.steer = 0; b.armed = false; b.lockUntil = this.world.tick + 18;
     delete player.riding;
     // The bicycle stays exactly where it was left; scripts never move it.
     // It is leaned against the left side of where the rider stood, so the rider does not overlap the frame.
-    const x = at?.x ?? player.transform.x, z = at?.z ?? player.transform.z;
-    Object.assign(bike.transform, { x: x - Math.sin(b.heading) * .9, z: z + Math.cos(b.heading) * .9, yaw: -b.heading });
+    const x = at?.x ?? player.transform.x, z = at?.z ?? player.transform.z, spot = this.clearSpot(x, z, b.heading) ?? { x: x - Math.sin(b.heading) * .9, z: z + Math.cos(b.heading) * .9 };
+    Object.assign(bike.transform, { x: spot.x, z: spot.z, yaw: -b.heading });
     this.world.player!.locomotion.reset();
   }
 }
