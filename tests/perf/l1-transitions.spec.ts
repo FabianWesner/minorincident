@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from 'node:fs';
 import { devices } from '@playwright/test';
 import { test, expect } from '../e2e/fixtures';
 import { menuStart } from '../e2e/ui-helpers';
@@ -46,7 +46,10 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
       await cdp.send('Tracing.end'); const { stream } = await completed; let trace = '';
       for (;;) { const chunk = await cdp.send('IO.read', { handle: stream }); trace += chunk.data; if (chunk.eof) break; }
       await cdp.send('IO.close', { handle: stream });
-      writeFileSync(`${output}/${phase}-${mode}-${label}-trace.json`, trace);
+      const tracePath = `${output}/${phase}-${mode}-${label}-trace.json`;
+      // RAF samples are the acceptance evidence. Keep bulky Chrome diagnostics only for failures/baseline profiling.
+      if (samples[label].max > 50 || phase === 'before' || process.env.HITCH_CPU_PROFILE === '1') writeFileSync(tracePath, trace);
+      else if (existsSync(tracePath)) unlinkSync(tracePath);
     };
     // Anchors come from the layout; setup teleports (paused, outside any measurement) put the player at each transition.
     const layout = JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as { anchors: Record<string, { position: number[] }> };
