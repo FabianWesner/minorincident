@@ -1,3 +1,6 @@
+import { LevelThreeBot, type LevelThreeRoute } from '../../src/debug/bot/LevelThreeBot';
+import { preset } from '../../src/sim/progression/Campaign';
+import { applyCampaign } from '../../src/sim/progression/apply';
 import { readFileSync } from 'node:fs';
 import { Rng } from '../../src/core/Rng';
 import { emptyInput, type InputFrame } from '../../src/input/InputFrame';
@@ -11,6 +14,7 @@ export type CompletionPolicy = 'complete' | 'newbie';
 /** Same contract for individual levels and the fast completion battery. Times are simulation seconds. */
 export interface LevelReport {
   level: MissionId; policy: CompletionPolicy; seed: number; completed: boolean;
+  timerRemaining?: number; runovers?: number; smashed?: number; maxConcurrentInfected?: number;
   time: number; deaths: number; kills: number; damageTaken: number;
   failures: Record<string, number>; objectiveTimeline: { id: string; t: number }[];
   furthestObjective: string | null; activeObjectives: string[];
@@ -22,6 +26,7 @@ export async function loadLevel(level: MissionId, seed: number): Promise<SimWorl
   try {
     await world.init(); const composition = compositions[level];
     world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed);
+    if (level === 'L3') applyCampaign(world, preset('L3-default'));
     world.loadMission(resolveCampaignMission(level, world.districts!)).begin();
     return world;
   } catch (error) { world.dispose(); throw error; }
@@ -32,7 +37,7 @@ function findDrive(t: Trigger): Extract<Trigger, { kind: 'drive' }> | undefined 
   if (t.kind === 'all' || t.kind === 'any') return t.triggers.map(findDrive).find(Boolean);
 }
 /** Inputs and ordinary Begin/Retry/Skip menu actions only; no teleport, loadout injection or cheats. */
-export async function runLevel(level: MissionId, policy: CompletionPolicy, seed: number, maxSeconds = 1200): Promise<LevelReport> {
+export async function runLevel(level: MissionId, policy: CompletionPolicy, seed: number, maxSeconds = 1200, forcedRoute: LevelThreeRoute = 'market'): Promise<LevelReport> {
   const report: LevelReport = { level, policy, seed, completed: false, time: 0, deaths: 0, kills: 0, damageTaken: 0, failures: {}, objectiveTimeline: [], furthestObjective: null, activeObjectives: [], outcome: 'tick-budget', blocker: null };
   let world: SimWorld;
   try { world = await loadLevel(level, seed); }
@@ -43,6 +48,11 @@ export async function runLevel(level: MissionId, policy: CompletionPolicy, seed:
     if (level === 'L1') {
       const l1 = runL1(world, mission, policy, { seed, maxSeconds });
       report.outcome = l1.outcome === 'complete' ? 'complete' : 'tick-budget';
+    } else if (level === 'L3') {
+      const bot = new LevelThreeBot(world, policy, forcedRoute);
+      for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
+      report.timerRemaining = (mission.state.deadlineTicks ?? 0) / 60;
+      report.runovers = mission.state.counters.runovers; report.smashed = mission.state.counters.smashed; report.maxConcurrentInfected = mission.state.counters['max-infected'];
     } else {
       let lastProgress = 0, bestDistance = Infinity, progress = '', frame: InputFrame = emptyInput();
       const route = { path: [] as number[], goal: -1, pathIndex: 0 }, waypoint = { x: 0, z: 0 };
@@ -121,7 +131,7 @@ export async function runLevel(level: MissionId, policy: CompletionPolicy, seed:
     report.furthestObjective = report.activeObjectives[0] ?? report.objectiveTimeline.at(-1)?.id ?? report.furthestObjective;
     if (!report.completed) {
       const step = mission.def.steps.find(s => s.id === report.furthestObjective), player = world.entities.get(1)!, anchor = step ? mission.def.anchors[step.anchor] : null;
-      const actors = Object.fromEntries(Object.entries(mission.state.actors).map(([id, entity]) => { const e = world.entities.get(entity)!; return [id, { x: e.transform.x, z: e.transform.z, hp: e.health.current, state: e.escort?.state ?? e.interactable?.hint ?? e.vehicle?.damage, ...(e.vehicle ? { driver: e.vehicle.driver, speed: e.vehicle.speed, yaw: e.transform.yaw } : {}) }]; }));
+      const actors = Object.fromEntries(Object.entries(mission.state.actors).filter(([, entity]) => world.entities.get(entity)).map(([id, entity]) => { const e = world.entities.get(entity)!; return [id, { x: e.transform.x, z: e.transform.z, hp: e.health.current, state: e.escort?.state ?? e.interactable?.hint ?? e.vehicle?.damage, ...(e.vehicle ? { driver: e.vehicle.driver, speed: e.vehicle.speed, yaw: e.transform.yaw } : {}) }]; }));
       report.failures[report.outcome] = (report.failures[report.outcome] ?? 0) + 1;
       report.blocker = { objective: step?.id ?? null, detail: mission.state.failure ?? `${report.outcome}: ${step?.text ?? 'no active objective'}`, player: { x: player.transform.x, z: player.transform.z }, ...(anchor ? { distance: distance(player.transform, anchor) } : {}), actors };
     }
