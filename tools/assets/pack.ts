@@ -18,12 +18,18 @@ export async function packAsset(def: AssetDef, regenerate = false): Promise<numb
   for (const lod of requiredLods(def, triangles)) {
     const supplied = `assets/${def.id}/model.${lod}.glb`, output = def.lods?.[lod] ?? def.glb.replace('.glb', `.${lod}.glb`);
     if (!output) throw new Error(`${def.id}: missing ${lod} manifest path`);
-    if (def.authoredLodRatios) {
+    if (def.authoredLodRatios || def.authoredLodTriangles) {
       if (regenerate) throw new Error(`${def.id}: rebuild reviewed LODs from the Blender source`);
       if (!existsSync(supplied)) throw new Error(`${def.id}: missing authored ${lod}`);
       await optimizeAsset(supplied, output, def);
-      const actual = triangleCount(await io.read(output)) / triangles;
-      if (actual > def.authoredLodRatios[lod] + .005) throw new Error(`${def.id}: authored ${lod} ratio ${actual} exceeds ${def.authoredLodRatios[lod]}`);
+      const count = triangleCount(await io.read(output));
+      if (def.authoredLodTriangles) {
+        if (count > def.authoredLodTriangles[lod]) throw new Error(`${def.id}: authored ${lod} triangles ${count} exceeds ${def.authoredLodTriangles[lod]}`);
+        const better = lod === 'lod1' ? def.glb : def.lods?.lod1 ?? def.glb.replace('.glb', '.lod1.glb');
+        if (statSync(output).size > statSync(better).size) throw new Error(`${def.id}: authored ${lod} file exceeds next-better LOD`);
+      } else if (def.authoredLodRatios && count / triangles > def.authoredLodRatios[lod] + .005) {
+        throw new Error(`${def.id}: authored ${lod} ratio ${count / triangles} exceeds ${def.authoredLodRatios[lod]}`);
+      }
       continue;
     }
     const ratio = lod === 'lod1' ? .12 : .03;

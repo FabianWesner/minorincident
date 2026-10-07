@@ -15,6 +15,13 @@ import bmesh
 import bpy
 from mathutils import Matrix, Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
+if '--lod-only' in sys.argv:
+    build_native_lods(__file__)
+    sys.exit(0)
+
 HERE = Path(__file__).resolve().parent
 ARGS = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 
@@ -94,6 +101,7 @@ def group(name, location=(0, 0, 0), parent=None):
 
 
 def finish(obj, mat, parent, bevel=0.0, segs=3, smooth=True, harden=True, angle=40):
+    if DISTANCE: bevel = 0
     TRUCK.objects.link(obj)
     if isinstance(mat, str):
         mat = M[mat]
@@ -181,6 +189,8 @@ def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.00
 
 
 def lathe(name, profile, center, axis, mat, parent=None, segs=48, smooth=True):
+    if DISTANCE: segs = min(segs, 12 if DISTANCE == 1 else 6)
+    if DISTANCE == 2 and name.endswith('_tyre'): profile = [profile[i] for i in (0, 1, 4, 5, 8, 9)]
     """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
     bm = bmesh.new()
     rings = []
@@ -212,6 +222,7 @@ def lathe(name, profile, center, axis, mat, parent=None, segs=48, smooth=True):
 
 
 def cylinder(name, center, r, depth, axis, mat, parent=None, segs=32, bevel=0.0):
+    if DISTANCE: segs = min(segs, 12 if DISTANCE == 1 else 6)
     prof = [(1e-4, -depth / 2), (r, -depth / 2), (r, depth / 2), (1e-4, depth / 2)]
     o = lathe(name, prof, center, axis, mat, parent, segs)
     if bevel:
@@ -229,7 +240,7 @@ def text(name, body, size, center, facing, mat, parent=None, depth=0.008, font=F
     cu.body = body
     cu.font = bpy.data.fonts.load(font, check_existing=True)
     cu.size = size
-    cu.extrude = depth / 2
+    cu.extrude = 0 if DISTANCE else depth / 2
     cu.align_x = 'CENTER'
     cu.align_y = 'CENTER'
     cu.space_character = spacing
@@ -271,6 +282,7 @@ def cut(target, cutter_obj, mat=None):
 
 
 def raw_cyl(name, center, r, depth, axis='y', segs=48):
+    if DISTANCE: segs = min(segs, 12 if DISTANCE == 1 else 6)
     bm = bmesh.new()
     bmesh.ops.create_cone(bm, cap_ends=True, segments=segs, radius1=r, radius2=r, depth=depth)
     rot = {'y': Matrix.Rotation(PI / 2, 4, 'X'), 'x': Matrix.Rotation(PI / 2, 4, 'Y'), 'z': Matrix.Identity(4)}[axis]
@@ -292,10 +304,13 @@ def raw_box(name, center, size):
 
 
 def arc(cx, cz, r, a0, a1, n):
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 6)
     return [(cx + r * math.cos(a0 + (a1 - a0) * i / n), cz + r * math.sin(a0 + (a1 - a0) * i / n)) for i in range(n + 1)]
 
 
 def rrect(x0, z0, x1, z1, r, n=3):
+    if DISTANCE: return [(x0,z0),(x1,z0),(x1,z1),(x0,z1)]
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 6)
     pts = []
     pts += arc(x1 - r, z0 + r, r, -PI / 2, 0, n)
     pts += arc(x1 - r, z1 - r, r, 0, PI / 2, n)
@@ -334,7 +349,7 @@ for side,sn in SIDES:
  for i,(a,b) in enumerate(windows):
   # real shallow recesses in yellow skin
   cut(body,raw_box('window_recess',((a+b)/2,side*1.3,2.58),(b-a+.07,.12,1.06)))
-  plate('window_%s_%d'%(sn,i),rrect(a,2.08,b,3.09,.055),side,.012,'glass','body',y_skin=1.255)
+  plate('window_%s_%d'%(sn,i),rrect(a-.035 if DISTANCE else a,2.05 if DISTANCE else 2.08,b+.035 if DISTANCE else b,3.11 if DISTANCE else 3.09,.055),side,.012,'glass','body',y_skin=1.255)
   frame('window_gasket_%s_%d'%(sn,i),a,2.08,b,3.09,side,'black','body',bar=.035,r=.055,depth=.035,y_skin=1.28)
   plate('window_reflection_%s_%d'%(sn,i),[(a+.045,2.72),(b-.04,3.04),(b-.04,2.85),(a+.045,2.53)],side,.002,'reflection','body',y_skin=1.277,bevel=0)
  text('school_bus_lettering_'+sn,'SCHOOL BUS',.65,(-2.13,side*1.341,1.63),'-y' if side<0 else '+y','black','body',stretch=1.2)
@@ -594,6 +609,20 @@ def batch():
             for c in ao.data:
                 c.color = (1,1,1,1)
 
+if DISTANCE:
+    front = group('lightsFront', parent='veh.school-bus')
+    brake = group('lightsBrake', parent='veh.school-bus')
+    for obj in list(TRUCK.objects):
+        if obj.type != 'MESH': continue
+        target = front if obj.name.startswith('headlamp_lens') else brake if obj.name.startswith('rear_tail_lamp') else None
+        if target:
+            world = obj.matrix_world.copy(); obj.parent = target; obj.matrix_world = world
+    for sn, side in [('near', -1), ('far', 1)]:
+        box('door_black_edge_'+sn, (1.045, side*1.365, 1.83), (.025,.02,2.53), 'rim', 'door_'+sn+'_0', 0)
+
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('window_gasket', 'lettering', 'rear_school_bus', 'tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('window_recess', 'mirror_arm', 'roof_transverse_seam', 'header_marker', 'rear_side_reflector', 'front_fender', 'rub_rail', 'arch_lip', 'window_reflection', 'warning_bezel', 'lens_ring', 'window_frame', 'window_rubber', 'lens_rib', 'lamp_ring', 'side_red_marker', 'side_amber_marker', 'wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*', '*red_lens', 'rear_tail_lamp'))
+
 batch()
 root = GROUPS['veh.school-bus']
 root['ss_physics'] = {'class':'heavy','mass':6500,'friction':.8,'restitution':.05,
@@ -654,3 +683,7 @@ if arg('--render'):
     scene.render.filepath=str(Path(arg('--render')).resolve())
     bpy.ops.render.render(write_still=True)
     print('RENDER OK',arg('--render'))
+
+# Every full source export refreshes the native distance tiers.
+if "--glb" in sys.argv and not DISTANCE:
+    build_native_lods(__file__)

@@ -8,6 +8,13 @@ from pathlib import Path
 import bpy, bmesh
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
+if '--lod-only' in sys.argv:
+    build_native_lods(__file__)
+    sys.exit(0)
+
 HERE = Path(__file__).resolve().parent
 ASSET = {'id': 'veh.helicopter', 'category': 'vehicle'}
 p = argparse.ArgumentParser()
@@ -49,6 +56,7 @@ def empty(name, loc=(0,0,0), parent='root'):
 empty('root',parent=None)
 
 def finish(o, material, group='body', bevel=0, smooth=True):
+    if DISTANCE: bevel = 0
     for c in list(o.users_collection): c.objects.unlink(o)
     model.objects.link(o); o.data.materials.append(M[material])
     for f in o.data.polygons:f.use_smooth=smooth
@@ -71,7 +79,7 @@ def box(name,loc,size,material,group='body',bevel=.02,rot=None):
     return finish(o,material,group,min(bevel,min(size)*.4))
 
 def ellipsoid(name,loc,size,material,group='body'):
-    bpy.ops.mesh.primitive_uv_sphere_add(segments=32,ring_count=16,location=loc)
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=(12 if DISTANCE == 1 else 8) if DISTANCE else 32,ring_count=(6 if DISTANCE == 1 else 4) if DISTANCE else 16,location=loc)
     o=bpy.context.object; o.name=name; o.scale=size
     bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
     return finish(o,material,group)
@@ -83,7 +91,7 @@ def cyl(name,loc,r,depth,material,axis='Z',group='body'):
     return finish(o,material,group,.008)
 
 def tube(name,pts,r,material,group='body'):
-    cu=bpy.data.curves.new(name,'CURVE'); cu.dimensions='3D'; cu.bevel_depth=r; cu.bevel_resolution=2
+    cu=bpy.data.curves.new(name,'CURVE'); cu.dimensions='3D'; cu.bevel_depth=r; cu.bevel_resolution=0 if DISTANCE else 2
     s=cu.splines.new('POLY'); s.points.add(len(pts)-1)
     for point,co in zip(s.points,pts):point.co=(*co,1)
     o=bpy.data.objects.new(name,cu); model.objects.link(o)
@@ -125,6 +133,8 @@ def surf(x,t,proud=0):
     return (x,y+proud*st,zz+proud*ct)
 
 def patch(name,x0,x1,t0,t1,material,group='body',proud=.012,nx=12,nt=8):
+    if DISTANCE: nx = min(nx, 4 if DISTANCE == 1 else 2)
+    if DISTANCE: nt = min(nt, 4 if DISTANCE == 1 else 2)
     vs=[surf(x0+(x1-x0)*i/nx,t0+(t1-t0)*j/nt,proud) for i in range(nx+1) for j in range(nt+1)]
     fs=[(i*(nt+1)+j,(i+1)*(nt+1)+j,(i+1)*(nt+1)+j+1,i*(nt+1)+j+1) for i in range(nx) for j in range(nt)]
     return mesh(name,vs,fs,material,group)
@@ -133,6 +143,7 @@ xs=[]
 for j in range(len(PROFILE)-1):
     xs += [PROFILE[j][0]+(PROFILE[j+1][0]-PROFILE[j][0])*i/4 for i in range(4)]
 xs.append(PROFILE[-1][0]); n=64
+if DISTANCE: xs = [section[0] for section in PROFILE]; n = 16 if DISTANCE == 1 else 12
 vs=[surf(x,2*math.pi*k/n) for x in xs for k in range(n)]
 fs=[(i*n+k,(i+1)*n+k,(i+1)*n+(k+1)%n,i*n+(k+1)%n) for i in range(len(xs)-1) for k in range(n)]
 fs += [tuple(range(n-1,-1,-1)),tuple((len(xs)-1)*n+k for k in range(n))]
@@ -295,6 +306,9 @@ root=groups['root']; root['asset_id']=ASSET['id']; root['forward']='+X'
 root['ss_physics']={'class':'heavy','mass':2200,'friction':.75,'restitution':.05,'pushable':False,'kickable':False,'flammable':True,'centerOfMass':[0,0,1.8]}
 col=empty('col:cabin',(.33,0,1.68)); col['collider']='cuboid'; col['shape']='cuboid'; col['size']=[4.8,2.0,2.3]
 col=empty('col:tail',(-3.8,0,2.42)); col['collider']='cuboid'; col['shape']='cuboid'; col['size']=[4.0,.52,.52]
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('RESCUE', 'tail registration', 'tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('rubber window seal', 'windscreen seal', 'door perimeter', 'retaining screw', 'searchlight gimbal', 'nose lower equipment', 'wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*',))
+
 # Apply modifiers and join each motion/material pair, keeping all pivots intact.
 for o in list(model.objects):
     if o.type!='MESH':continue
@@ -403,3 +417,7 @@ if a.render:
         game_name='game.png' if render_path.stem=='hero' else render_path.stem.replace('-ref','')+'-game.png'
         scene.render.filepath=str(render_path.with_name(game_name)); bpy.ops.render.render(write_still=True)
         print('GAME RENDER OK')
+
+# Every full source export refreshes the native distance tiers.
+if "--glb" in sys.argv and not DISTANCE:
+    build_native_lods(__file__)

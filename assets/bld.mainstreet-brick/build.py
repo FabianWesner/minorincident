@@ -5,11 +5,12 @@ import bpy, bmesh
 from mathutils import Vector
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
-from sslib.lod import export_lods, rebuild_from_baked
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE = Path(__file__).resolve().parent
 if '--lod-only' in sys.argv:
-    rebuild_from_baked(HERE/'model.glb')
+    build_native_lods(__file__)
     sys.exit(0)
 
 parser = argparse.ArgumentParser()
@@ -53,6 +54,7 @@ def attach(o,name,mat,parent):
     parts.append(o); return o
 
 def box(name,loc,size,mat='sidewalk',parent=body,bevel=.025,rot=None):
+    if DISTANCE: bevel = 0
     bevel=min(bevel,min(size)*.3); key=(tuple(round(v,5) for v in size),mat,round(bevel,5))
     if key not in cache:
         sx,sy,sz=[v/2 for v in size]
@@ -71,6 +73,7 @@ def box(name,loc,size,mat='sidewalk',parent=body,bevel=.025,rot=None):
     return attach(o,name,mat,parent)
 
 def mesh(name,verts,faces,mat,parent=body,bevel=0):
+    if DISTANCE: bevel = 0
     me=bpy.data.meshes.new(name); me.from_pydata(verts,[],faces); me.update()
     o=bpy.data.objects.new(name,me); bpy.context.collection.objects.link(o)
     if bevel:
@@ -91,7 +94,7 @@ def cylinder(name,loc,radius,depth,mat,parent=body):
 
 def text(name,string,x,y,z,size,mat,parent=body):
     curve=bpy.data.curves.new(name,'FONT'); curve.body=string; curve.align_x='CENTER'; curve.align_y='CENTER'
-    curve.size=size; curve.extrude=.006; curve.bevel_depth=.001; curve.bevel_resolution=0; curve.resolution_u=4
+    curve.size=size; curve.extrude= 0 if DISTANCE else (.006); curve.bevel_depth= 0 if DISTANCE else (.001); curve.bevel_resolution=0; curve.resolution_u= 2 if DISTANCE else (4)
     curve.offset=.006
     o=bpy.data.objects.new(name,curve); bpy.context.collection.objects.link(o)
     o.location=(x,y,z); o.rotation_euler=(math.pi/2,0,math.pi/2)
@@ -117,8 +120,13 @@ for x in [-2.65,2.65]:
 box('left_wall',(0,-3.90,3.65),(5.1,.20,6.54),'brick')
 box('right_wall',(0,3.90,3.65),(5.1,.20,6.54),'windowGlow')
 # Side/rear mortar is dark; front mortar warmer and slightly recessed.
-for x in [-2.755,2.755]:box('mortar_front',(x,0,3.65),(.06,8,6.54),'woodWarm' if x>0 else 'brick',bevel=0)
-box('mortar_side',(0,-4.015,3.65),(5.5,.06,6.54),'woodWarm',bevel=0)
+if DISTANCE:
+    for x in [-2.755,2.755]:
+        box('mortar_front',(x,-1.6,3.65),(.06,4.8,6.54),'brick',bevel=0)
+        box('mortar_front',(x,2.4,3.65),(.06,3.2,6.54),'windowGlow',bevel=0)
+else:
+    for x in [-2.755,2.755]:box('mortar_front',(x,0,3.65),(.06,8,6.54),'woodWarm' if x>0 else 'brick',bevel=0)
+box('mortar_side',(0,-4.015,3.65),(5.5,.06,6.54),'brick' if DISTANCE else 'woodWarm',bevel=0)
 for row in range(32):
     z=.49+row*.216
     for start,end,mat in [(-4,.8,'brick'),(.8,4,'windowGlow')]:
@@ -322,6 +330,8 @@ for z in [.48,.65,.82]:
 box('planter_soil',(1.60,-4.48,.79),(1.24,.40,.07),'uiDark')
 
 def shrub(x,y,z,r=.27,flowers=False):
+    if DISTANCE:
+        sphere('distance shrub',(x,y,z+.18),(r,r,.22),'foliage'); return
     for i in range(10):
         ang=i*2.4; rr=r*(.3+.7*rng.random())
         o=sphere('leaf_cluster',(x+math.cos(ang)*rr,y+math.sin(ang)*rr,z+.08+rng.random()*.21),(.08,.055,.21),'foliage' if i%3 else 'grass')
@@ -337,6 +347,9 @@ for y in [-1.6,2.4]:box('shop_counter',(1.3,y,.94),(.65,1.8,.95),'woodWarm',inte
 # Collision stays an empty and never contributes rendering geometry.
 collider=empty('col:building',(0,0,3.88),root)
 collider['collider']='cuboid'; collider['size']=[5.5,8,7]; collider['shape']='cuboid'
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('face_brick', 'side_brick', 'pier_course', 'cupcake', 'pastry', 'bread_score'), far_omit=('leaf_cluster', 'planter_bloom', 'sill_joint', 'wall_joint', 'face_brick', 'side_brick', 'pier_course', 'cupcake', 'pastry', 'coping_stone', 'roof_membrane_seam', 'chimney_course', 'rear_course', 'right_course', 'box_access', 'service_conduit','window_pot','window_plant','fan_','bakery_scallop','pharmacy_scallop','window_mullion','lintel_keystone','bread','loaf','medicine_bottle','bottle_cap','display_shelf','pharmacy_shelf','hvac_bolt','rear_mullion','rear_jamb'))
+
 # Join static parts by material within removable/hinged assemblies.
 for parent in sorted({o.parent for o in parts},key=lambda o:o.name):
     for mat in M.values():
@@ -370,7 +383,6 @@ if args.glb:
     def export(path):
         bpy.ops.export_scene.gltf(filepath=str(path.resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
     export(Path(args.glb))
-    export_lods(Path(args.glb), meshes)
 
 print('BUILD OK',tri,'triangles',len(meshes),'draw calls')
 if args.render:
@@ -395,3 +407,6 @@ if args.render:
         path=Path(args.render).with_name('game.png' if Path(args.render).stem=='hero' else Path(args.render).stem+'-game.png')
         scene.render.filepath=str(path.resolve()); bpy.ops.render.render(write_still=True)
     print('RENDER OK')
+
+if args.glb and not DISTANCE:
+    build_native_lods(__file__)

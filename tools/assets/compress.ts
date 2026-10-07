@@ -9,7 +9,7 @@ interface GlbJson { buffers: { byteLength: number }[]; bufferViews: View[]; acce
  * The decoded bytes stay identical; no geometry, normals, colors or animation change.
  * NodeIO otherwise emits one compression header per tiny material primitive.
  */
-export async function consolidateMeshopt(input: Uint8Array): Promise<Uint8Array> {
+export async function consolidateMeshopt(input: Uint8Array, compact = false): Promise<Uint8Array> {
   await Promise.all([MeshoptDecoder.ready, MeshoptEncoder.ready]);
   const glb = Buffer.from(input), jsonLength = glb.readUInt32LE(12);
   const json = JSON.parse(glb.subarray(20, 20 + jsonLength).toString()) as GlbJson;
@@ -43,7 +43,13 @@ export async function consolidateMeshopt(input: Uint8Array): Promise<Uint8Array>
     const joined = new Uint8Array(group.bytes); offset = 0;
     for (const part of group.parts) { joined.set(part, offset); offset += part.length; }
     const count = joined.length / compressed.byteStride;
-    const encoded = MeshoptEncoder.encodeGltfBuffer(joined, count, compressed.byteStride, compressed.mode);
+    let encoded = MeshoptEncoder.encodeGltfBuffer(joined, count, compressed.byteStride, compressed.mode);
+    if (compact && compressed.mode === 'ATTRIBUTES') {
+      for (const version of [0, 1]) {
+        const candidate = MeshoptEncoder.encodeVertexBufferLevel(joined, count, compressed.byteStride, 3, version);
+        if (candidate.length < encoded.length) encoded = candidate;
+      }
+    }
     const extension = { ...compressed, byteOffset: append(encoded), byteLength: encoded.length, count };
     views.push({ ...group.view, byteOffset: fallbackOffset, byteLength: joined.length, extensions: { EXT_meshopt_compression: extension } });
     fallbackOffset += joined.length; fallbackOffset += (4 - fallbackOffset % 4) % 4;

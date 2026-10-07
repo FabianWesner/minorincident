@@ -12,6 +12,13 @@ import bpy
 import bmesh
 from mathutils import Euler, Matrix, Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
+if '--lod-only' in sys.argv:
+    build_native_lods(__file__)
+    sys.exit(0)
+
 HERE = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser()
 parser.add_argument('--render')
@@ -78,6 +85,7 @@ for s in (-1,1):
         groups[name]['animated']=True
 
 def finish(o,name,mat,group='body',bevel=0):
+    if DISTANCE: bevel = 0
     o.name = name
     o.data.materials.append(M[mat])
     if bevel:
@@ -122,6 +130,7 @@ def beam(name,a,b,width,mat,group='body',depth=None):
     return o
 
 def cylinder(name,pos,r,depth,mat,group='body',axis='Y',vertices=48):
+    if DISTANCE: vertices = min(vertices, 12 if DISTANCE == 1 else 6)
     bpy.ops.mesh.primitive_cylinder_add(vertices=vertices,radius=r,depth=depth,location=pos)
     o=bpy.context.object
     o.rotation_euler=(math.pi/2,0,0) if axis=='Y' else (0,math.pi/2,0) if axis=='X' else (0,0,0)
@@ -129,6 +138,7 @@ def cylinder(name,pos,r,depth,mat,group='body',axis='Y',vertices=48):
     return finish(o,name,mat,group,0 if name=='rim ventilation' else .008)
 
 def ring(name,cx,cy,cz,profile,mat,group,n=64):
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 6)
     verts=[]
     for r,y in profile:
         verts += [(cx+r*math.sin(2*math.pi*i/n),cy+y,cz+r*math.cos(2*math.pi*i/n)) for i in range(n)]
@@ -145,6 +155,10 @@ def hood_z(x,y):
 
 def grid_shell(name,n,m,point,group='body',bevel=.025):
     """Close a two-sided surface grid with a bevelled perimeter."""
+    if DISTANCE:
+        original_n, original_m, original_point = n, m, point
+        n = m = 4 if DISTANCE == 1 else 2
+        point = lambda i, j, outer: original_point(i * original_n / n, j * original_m / m, outer)
     verts=[point(i,j,outer) for outer in (False,True) for j in range(m+1) for i in range(n+1)]
     count=(n+1)*(m+1); faces=[]
     for level in (0,1):
@@ -345,6 +359,9 @@ for s in (-1,1):
         e.rotation_euler=Vector((1,0,-.12)).to_track_quat('-Z','Y').to_euler()
         e['ss_light']=json.dumps({'type':'spot' if typ=='headlight' else 'point','color':color,'intensity':intensity,'range':18 if typ=='headlight' else 3,'angle':48,'penumbra':.35,'pool':True,'beam':'soft' if typ=='headlight' else 'none','flare':True,'reflect':True,'shadow':'hero' if typ=='headlight' else 'none','heroPriority':2,'flicker':'none','animation':None,'powerGroup':'self','breakable':True,'emissiveNodes':['lampHead'+suffix] if typ=='headlight' else ['lampBrake'+suffix,'lightsBrake'],'tiers':'all'})
 # Merge each motion/static group by material: few draw calls, correct preserved pivots.
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, fit_dimensions=True, omit=('tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*',))
+
 joined=[]
 for group,parent in groups.items():
     for mat in M.values():
@@ -494,3 +511,7 @@ if args.render:
         scene.render.filepath=str(render_path.with_name(render_path.stem[:-4]+'-game.png').resolve())
         bpy.ops.render.render(write_still=True)
         print('RENDER OK',scene.render.filepath)
+
+# Every full source export refreshes the native distance tiers.
+if "--glb" in sys.argv and not DISTANCE:
+    build_native_lods(__file__)
