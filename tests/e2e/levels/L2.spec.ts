@@ -60,7 +60,7 @@ function helpers(page: Page) {
 }
 
 test.describe('L2 The Failed Rescue in the browser', () => {
-  test('T-E20-18 @E20 @E20-AC18 @E20-AC16 real-input playthrough from the station to the closing gate, photo spots on the way', async ({ page }) => {
+  test('T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review', async ({ page }) => {
     test.setTimeout(1_500_000); page.setDefaultTimeout(120_000); mkdirSync(output, { recursive: true });
     await boot(page, `${testUrl}&ui=1`);
     await page.evaluate(() => window.__SS__!.loadLevel('L2', { seed: 1, progression: 'L2-default' }));
