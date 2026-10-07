@@ -7,7 +7,7 @@ import { defaultBindings, type Action } from '../data/bindings';
 import { Hud } from './Hud';
 import { button, node } from './dom';
 import { Settings, type UISettings } from './Settings';
-import { audioCredits } from '../data/audioCredits';
+import { audioCredits, codeCredits, originalCredit, type Credit } from '../data/credits';
 import './ui.css';
 
 type Screen = 'title' | 'character' | 'levels' | 'pause' | 'settings' | 'credits' | 'upgrades' | 'rack' | 'loading' | null;
@@ -62,7 +62,7 @@ export class GameUI {
       button('continue-game', 'Continue', () => { void this.continueSaved(); }),
       button('title-levels', 'Level select', () => { const saved = this.game.saves.load(); if (saved.status === 'ok') { this.game.campaign = saved.save; this.show('levels'); } }),
       button('title-settings', 'Settings', () => { this.back = 'title'; this.show('settings'); }),
-      button('title-credits', 'Credits', () => this.show('credits')));
+      button('title-credits', 'Credits & Licenses', () => this.show('credits')));
     const character = this.panel('character', 'Choose your survivor', 'Same courage. Your style.');
     for (const variant of ['female', 'male'] as const) character.append(button(`character-${variant}`, variant === 'female' ? 'Female survivor' : 'Male survivor', () => {
       this.variant = variant; this.game.world.player?.select(variant, 0);
@@ -91,18 +91,28 @@ export class GameUI {
       button('pause-settings', 'Settings', () => { this.back = 'pause'; this.show('settings'); }),
       button('pause-hide-ui', 'Hide UI (H)', () => this.hideUi(true)),
       button('pause-title', 'Title screen', () => this.show('title')));
-    const credits = this.panel('credits', 'Credits', 'Minor Incident · Technology adapted from Bruno Simon’s folio-2025 (MIT), Three.js and Rapier.');
-    const audio = node('div', 'audio-credits');
-    audio.append(node('h2', 'audio-credits-heading', 'Music and sound'));
-    for (const credit of audioCredits) {
-      const row = document.createElement('p'), author = document.createElement('a'), license = document.createElement('a');
-      author.textContent = credit.author; author.href = credit.author === 'Zander Noriega' ? 'https://soundcloud.com/zander-noriega' : credit.url;
-      license.textContent = credit.license; license.href = credit.licenseUrl;
-      row.append(`${credit.title} — `, author, ' · ', license);
-      audio.append(row);
-    }
-    audio.append(node('p', 'audio-credit-edits', 'Recordings edited for the game: excerpts, EQ, fades, loudness normalization and encoding.'));
-    credits.append(audio);
+    const credits = this.panel('credits', 'Credits & Licenses', 'Minor Incident · Every third-party library, recording and technology reference, with its license.');
+    // Generated from package.json and the audio ledger (tools/credits/generate.ts), so the list stays complete.
+    const list = node('div', 'credits-list'); list.className = 'credits-list';
+    list.tabIndex = 0; list.setAttribute('role', 'region'); list.setAttribute('aria-label', 'Credits and licenses');
+    const link = (id: string, label: string, href: string) => { const a = node('a', id, label); a.href = href; a.target = '_blank'; a.rel = 'noopener'; return a; };
+    const section = (id: string, heading: string, entries: readonly Credit[], note?: string) => {
+      list.append(node('h2', `credits-${id}-heading`, heading));
+      if (note) list.append(node('p', `credits-${id}-note`, note));
+      entries.forEach((credit, i) => {
+        const row = node('p', `credits-${id}-${i}`); row.className = 'credit-row';
+        row.append(credit.url ? link(`credits-${id}-${i}-source`, credit.title, credit.url) : credit.title, ' — ',
+          credit.authorUrl ? link(`credits-${id}-${i}-author`, credit.author, credit.authorUrl) : credit.author, ' · ',
+          link(`credits-${id}-${i}-license`, credit.license, credit.licenseUrl));
+        if (credit.detail) row.append(node('small', `credits-${id}-${i}-detail`, credit.detail));
+        if (credit.files) row.append(node('small', `credits-${id}-${i}-files`, `Files: ${credit.files.join(', ')}`));
+        list.append(row);
+      });
+    };
+    section('code', 'Code libraries and technology', codeCredits);
+    section('audio', 'Music, sound and voices', audioCredits, 'Recordings edited for the game: excerpts, EQ, pitch, fades, compression, loudness normalization and encoding.');
+    section('original', 'Original work', [originalCredit]);
+    credits.append(list);
     credits.append(button('credits-back', 'Back', () => this.show('title')));
     const settings = this.panel('settings', 'Settings', 'Make yourself comfortable. Changes save automatically.');
     const form = node('div', 'settings-fields'); form.className = 'settings-fields';
