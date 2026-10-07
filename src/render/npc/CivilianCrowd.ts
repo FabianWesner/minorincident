@@ -32,6 +32,20 @@ type Clip = typeof civilianClips[number];
 const clipOr = (name: string, fallback: Clip): Clip => (civilianClips as readonly string[]).includes(name) ? name as Clip : fallback;
 const tierGait = { frail: clipOr('infected-frail', 'infected-run'), average: clipOr('infected-lurch', 'infected-run'), athletic: clipOr('infected-sprint', 'infected-run') } as const;
 const civStartle = clipOr('civ-startle', 'hurt'), civFlee = clipOr('civ-flee', 'run'), civGrabbed = clipOr('civ-grabbed', 'hurt');
+/**
+ * The infected clip always follows the actual ground speed: idle/search below 0.2 m/s, lurch (frail shuffle) below run
+ * speed, the tier gait above it. An attack swing only plays while (nearly) standing; a lunge or shove that moves the
+ * body faster than 1.2 m/s keeps the legs running. Distance-driven phase (strides) makes the legs match the speed.
+ */
+export function infectedClip(state: string, speed: number, tier: 'frail' | 'average' | 'athletic', windup: boolean): Clip {
+  if (state === 'dead') return 'death-back';
+  if (state === 'attack' && speed < 1.2) return windup ? 'windup' : 'swing';
+  if (speed > 2.6) return tierGait[tier];
+  if (speed > .2) return slowGait[tier];
+  return state === 'search' ? infectedSearch : infectedIdle;
+}
+/** Locomotion clips (their phase is driven by distance travelled). */
+export const locomotionClips = new Set<string>(['infected-frail', 'infected-lurch', 'infected-sprint', 'infected-run', 'shamble', 'run', 'walk', 'npc-walk', 'npc-walk-relaxed', 'npc-carry', 'npc-cane', 'civ-flee']);
 /** Wandering infected never jog upright: below run speed every tier lurches (frail shuffles), arms forward. */
 const slowGait = { frail: clipOr('infected-frail', 'shamble'), average: clipOr('infected-lurch', 'shamble'), athletic: clipOr('infected-lurch', 'shamble') } as const;
 const infectedIdle = clipOr('infected-idle', 'idle'), infectedSearch = clipOr('infected-search', 'idle');
@@ -190,15 +204,17 @@ class CivilianBatch extends Group {
   private place(e: EntitySnapshot, index: number, player: { x: number; z: number }, alpha: number): boolean {
     const b = e.infected!, tick = this.world.tick, distance = Math.hypot(e.transform.x - player.x, e.transform.z - player.z);
     if (e.hidden || b.hidden || (distance > 30) !== this.distant || b.state === 'dead' && tick - b.deadAt > 540) return false;
-    const motion = this.motion.sample(e.id, tick, e.transform.x, e.transform.z), reaction = e.combat?.reaction, age = reaction ? (tick - reaction.started) / 60 : Infinity;
-    let clip: Clip = b.state === 'dead' ? 'death-back' : b.state === 'attack' ? tick < b.until ? 'windup' : 'swing' : motion.speed > 2.6 ? tierGait[e.appearance!.tier] : motion.speed > .06 ? slowGait[e.appearance!.tier] : (b.state as string) === 'search' ? infectedSearch : infectedIdle;
+    // PO "skating": the sim publishes the actual post-collision ground motion every tick (AgentMotion) - use it, not a
+    // per-batch sampler that goes stale when the figure crosses the near/far batch boundary.
+    const motion = e.motion ?? this.motion.sample(e.id, tick, e.transform.x, e.transform.z), reaction = e.combat?.reaction, age = reaction ? (tick - reaction.started) / 60 : Infinity;
+    let clip: Clip = infectedClip(b.state, motion.speed, e.appearance!.tier, tick < b.until);
     if (reaction && age < (reaction.heavy ? 1.34 : .43) && b.state !== 'dead') clip = reaction.heavy ? age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
     const duration = authoredClips.get(clip)!.duration, renderTick = Math.max(0, tick + alpha - 1);
     const phase = b.state === 'dead' ? Math.min(1, (tick - b.deadAt) / 60 / duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && age < 1.34 ? Math.min(1, age / (reaction.heavy ? .7 : .43)) : strides[clip] ? motion.distance / (strides[clip] * this.strideScale) % 1 : (renderTick / 60 + e.id * .137) / duration % 1;
     const presented = this.presentation.sample(e.id, e.transform, tick, alpha);
     // Hunched silhouette: the whole body leans forward (pivot at the feet) on top of the tier gait's arms-forward pose.
     // QA2b: the read holds in every state - standing/searching infected sway and twitch on top of the hunch.
-    const still = motion.speed <= .06 && b.state !== 'dead', t = tick / 60 + e.id * .71;
+    const still = motion.speed <= .2 && b.state !== 'dead', t = tick / 60 + e.id * .71;
     this.transform.makeRotationY(presented.yaw + (still ? Math.sin(t * 1.7) * .14 + (Math.sin(t * 7.3) > .93 ? .18 : 0) : 0));
     if (b.state !== 'dead' && !reaction) { this.transform.multiply(this.lean).multiply(this.sway.makeRotationX((e.id % 2 ? .17 : -.17) + Math.sin(t * 1.3) * .04)); if (still) this.transform.multiply(this.sway.makeRotationZ(-.14 - Math.abs(Math.sin(t * 2.3)) * .1)); }
     this.transform.setPosition(presented.x, presented.y - .7, presented.z);

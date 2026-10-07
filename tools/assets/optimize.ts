@@ -198,6 +198,13 @@ function shareVertexStreams(document: Document): void {
     if (primitives.length < 2 || primitives.some(p => p.listTargets().length)) continue;
     const semantics = primitives[0].listSemantics().sort();
     if (primitives.some(p => p.listSemantics().sort().join('|') !== semantics.join('|'))) continue;
+    // Streams must all share a layout before rebasing any indices. Blender's
+    // imported AO may be RGB on one palette primitive and RGBA on another.
+    if (primitives.some(p => semantics.some(semantic => {
+      const first = primitives[0].getAttribute(semantic)!, attribute = p.getAttribute(semantic)!;
+      return attribute.getType() !== first.getType() || attribute.getComponentType() !== first.getComponentType()
+        || attribute.getNormalized() !== first.getNormalized() || attribute.getCount() !== p.getAttribute('POSITION')!.getCount();
+    }))) continue;
     const offsets: number[] = []; let count = 0;
     for (const primitive of primitives) { offsets.push(count); count += primitive.getAttribute('POSITION')!.getCount(); }
     for (const semantic of semantics) {
@@ -405,7 +412,8 @@ export async function optimizeExports(def: AssetDef): Promise<void> {
     const supplied = existsSync(canonical) ? canonical : `assets/${def.id}/model.${lod}.glb`, output = def.lods?.[lod];
     if (!output) throw new Error(`${def.id}: missing manifest ${lod} path`);
     const generatedRatio = def.generatedLodRatios?.[lod];
-    const handMade = generatedRatio === undefined && existsSync(supplied);
+    if (def.authoredLodRatios && !existsSync(supplied)) throw new Error(`${def.id}: missing authored ${lod}`);
+    const handMade = (def.authoredLodRatios !== undefined || generatedRatio === undefined) && existsSync(supplied);
     // Leave room for retained rigid parts and infected stump caps within the LOD1 budget.
     const targetRatio = lod === 'lod1' && (def.category === 'infected' || def.category === 'character') ? .10 : ratio;
     await optimizeAsset(handMade ? supplied : source, output, def, handMade ? 1 : generatedRatio ?? targetRatio);

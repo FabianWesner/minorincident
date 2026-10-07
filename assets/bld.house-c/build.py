@@ -4,6 +4,9 @@ from pathlib import Path
 import bpy, bmesh
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import simplify as simplify_lod
+
 P=Path(__file__).resolve().parent
 fingerprint=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 p=argparse.ArgumentParser()
@@ -260,7 +263,7 @@ def build_scene():
   normals=bmesh.new();normals.from_mesh(o.data);bmesh.ops.recalc_face_normals(normals,faces=list(normals.faces));normals.to_mesh(o.data);normals.free()
   bevel=o.modifiers.new('soft edges','BEVEL');bevel.width=.03;bevel.segments=1;bevel.limit_method='WEIGHT';bpy.context.view_layer.objects.active=o;bpy.ops.object.modifier_apply(modifier=bevel.name)
   if a.lod:
-   dec=o.modifiers.new('LOD simplification','DECIMATE');dec.ratio={1:.12,2:.035}[a.lod];bpy.context.view_layer.objects.active=o;bpy.ops.object.modifier_apply(modifier=dec.name)
+   simplify_lod(o, {1:.55,2:.25}[a.lod])
   clean=bmesh.new();clean.from_mesh(o.data);bmesh.ops.triangulate(clean,faces=list(clean.faces))
   tiny=[face for face in clean.faces if face.calc_area()<1e-8]
   if tiny:bmesh.ops.delete(clean,geom=tiny,context='FACES_ONLY')
@@ -300,9 +303,14 @@ def build_scene():
  return report,export_objects
 
 cache=P/'scene.blend'
-if not a.lod and cache.exists() and (P/'scene.sha256').exists() and (P/'scene.sha256').read_text()==fingerprint:
+if cache.exists() and (P/'scene.sha256').exists() and (P/'scene.sha256').read_text()==fingerprint:
  bpy.ops.wm.open_mainfile(filepath=str(cache))
  report=json.loads((P/'geometry.json').read_text());export_objects=list(bpy.context.scene.objects)
+ if a.lod:
+  for o in export_objects:
+   if o.type=='MESH':simplify_lod(o, {1:.55,2:.25}[a.lod], planar_only=o.data.materials[0].name.startswith('emi_'))
+  report['triangles']=sum(len(o.data.loop_triangles) for o in export_objects if o.type=='MESH')
+  (P/('geometry-lod%d.json'%a.lod)).write_text(json.dumps(report,indent=2))
 else:
  report,export_objects=build_scene()
  if not a.lod:

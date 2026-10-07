@@ -12,7 +12,14 @@ import bpy
 import bmesh
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import export_lods, rebuild_from_baked
+
 HERE = Path(__file__).resolve().parent
+if '--lod-only' in sys.argv:
+    rebuild_from_baked(HERE/'model.glb', planar_prefixes=(), planar_nodes=('body_pal_schoolBusYellow', 'body_pal_picketWhite'))
+    sys.exit(0)
+
 p = argparse.ArgumentParser()
 p.add_argument('--render'); p.add_argument('--view', default='ref')
 p.add_argument('--samples', type=int, default=24)
@@ -284,66 +291,7 @@ if args.glb:
     ao.bake_all(meshes,samples=32)
     base=statistics(); lods={}
     assert base['triangles']<=20000, 'Helipad LOD0 exceeds its 20k triangle budget'
-    originals={o:o.data.copy() for o in meshes}
-    export_objects=list(scene.objects)
-    for suffix,ratio in [('',1),('.lod1',.12),('.lod2',.03)]:
-        for o in meshes:
-            if ratio<1 and o.name != 'body_pal_picketWhite':
-                o.data=originals[o].copy()
-                bpy.context.view_layer.objects.active=o
-                # Remove fine detached detail before collapse, keeping coherent lamp shells.
-                detail=o.vertex_groups.get('LOD_detail')
-                if detail:
-                    bm=bmesh.new(); bm.from_mesh(o.data)
-                    weights=bm.verts.layers.deform.active
-                    if weights:
-                        small=[v for v in bm.verts if v[weights].get(detail.index,0)>.5]
-                        bmesh.ops.delete(bm,geom=small,context='VERTS')
-                    bm.to_mesh(o.data); bm.free()
-                # Keep support slabs exact: collapse can tilt their tops through the deck.
-                foundation=None
-                if o.vertex_groups.get('LOD_support'):
-                    foundation=o.copy(); foundation.data=o.data.copy()
-                    scene.collection.objects.link(foundation)
-                    index=o.vertex_groups['LOD_support'].index
-                    for target,keep in ((foundation,True),(o,False)):
-                        bm=bmesh.new(); bm.from_mesh(target.data)
-                        weights=bm.verts.layers.deform.active
-                        remove=[v for v in bm.verts if (v[weights].get(index,0)>.5)!=keep]
-                        bmesh.ops.delete(bm,geom=remove,context='VERTS')
-                        bm.to_mesh(target.data); bm.free()
-                mod=o.modifiers.new('Distance simplification','DECIMATE')
-                minimum={'body_pal_asphalt':.15,'body_pal_uiDark':.25,'body_pal_sidewalk':.08,'body_pal_schoolBusYellow':.25}.get(o.name,0)
-                if o.parent!=body: minimum=.27 if ratio==.12 else .12
-                mod.ratio=max(ratio,minimum)
-                if o.vertex_groups.get('LOD_preserve'):
-                    mod.vertex_group='LOD_preserve'; mod.invert_vertex_group=True; mod.vertex_group_factor=100
-                bpy.ops.object.modifier_apply(modifier=mod.name)
-                if foundation:
-                    bpy.ops.object.select_all(action='DESELECT')
-                    o.select_set(True); foundation.select_set(True)
-                    bpy.context.view_layer.objects.active=o; bpy.ops.object.join()
-        if ratio<1:
-            # Far camera depth precision needs more separation between thin paint/deck layers.
-            for o in meshes:
-                if o.name=='body_pal_picketWhite':
-                    o.data=originals[o].copy()
-                    for v in o.data.vertices: v.co.z+=.04
-                elif o.name=='body_pal_schoolBusYellow':
-                    for v in o.data.vertices:
-                        if v.co.z>.74 and math.hypot(v.co.x,v.co.y)<4: v.co.z+=.04
-                elif o.name=='body_pal_uiDark':
-                    for v in o.data.vertices:
-                        if abs(v.co.x)<4.75 and abs(v.co.y)<4.75: v.co.z-=.025
-        bpy.ops.object.select_all(action='DESELECT')
-        for o in export_objects: o.select_set(True)
-        path=Path(args.glb)
-        path=path.with_name(path.stem+suffix+path.suffix)
-        bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
-        lods[suffix or 'lod0']=statistics()
-    for o in meshes: o.data=originals[o]
-    (HERE/'metrics.json').write_text(json.dumps({'lod0':base,'lods':lods},indent=2))
-    print('OK exported helipad '+json.dumps({k:v['triangles'] for k,v in lods.items()}))
+    export_lods(Path(args.glb), meshes, planar_prefixes=(), planar_nodes=('body_pal_schoolBusYellow', 'body_pal_picketWhite'))
 
 if args.render:
     # Studio-only objects are added after GLB export.
