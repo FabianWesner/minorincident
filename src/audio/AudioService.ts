@@ -498,7 +498,7 @@ export class AudioService implements Lifecycle {
             this.play('stinger.twist', { time: at });
         }
         else
-            this.play(kind === 'extraction' && level === 'L6' ? 'stinger.dawn' : `stinger.${kind === 'extraction' ? 'complete' : kind}`);
+            this.play(kind === 'extraction' && level === 'L1' ? 'l1.outro.sting' : kind === 'extraction' && level === 'L6' ? 'stinger.dawn' : `stinger.${kind === 'extraction' ? 'complete' : kind}`);
     }
     /** Event → cue adapter. Real producer events and lab tests go through this identical path. */
     event(event: GameEvent): void {
@@ -512,8 +512,6 @@ export class AudioService implements Lifecycle {
             this.arc?.event(event.type, t);
             return;
         }
-        if (event.type === 'level.completed' && this.level === 'L1')
-            this.play('l1.outro.sting');
         if (event.type === 'sim.tick') {
             this.update();
             return;
