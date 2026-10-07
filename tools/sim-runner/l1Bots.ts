@@ -48,7 +48,7 @@ class Walker {
 }
 
 /** Runs one profile to the result screen (or the time limit) and reports. */
-export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opts: { seed?: number; maxSeconds?: number; stopWhen?: (mission: Mission) => boolean } = {}): L1Report {
+export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opts: { seed?: number; maxSeconds?: number; stopWhen?: (mission: Mission) => boolean; onExit?: (world: SimWorld, mission: Mission) => void } = {}): L1Report {
   const seed = opts.seed ?? world.seed, maxTicks = (opts.maxSeconds ?? 900) * 60, rng = new Rng(seed, `bot-${profile}`);
   const walker = new Walker(), seen = new Set<string>(), timeline: L1Report['timeline'] = [];
   const infectedAfterExit: Record<number, number> = {};
@@ -64,7 +64,7 @@ export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opt
     if (opts.stopWhen?.(mission)) break;
     const player = world.entities.get(1)!, p = player.transform, l1 = mission.state.l1!, t = world.tick / 60;
     for (const id of mission.state.completedObjectives) if (!seen.has(id)) { seen.add(id); timeline.push({ id, t }); }
-    if (l1.exitIds.length && !exitTick) exitTick = world.tick;
+    if (l1.exitIds.length && !exitTick) { exitTick = world.tick; opts.onExit?.(world, mission); }
     if (exitTick) for (const s of [0, 60, 120, 240]) if (!(s in infectedAfterExit) && world.tick - exitTick >= s * 60) infectedAfterExit[s] = alive().length;
     maxInfected = Math.max(maxInfected, alive().length);
     if (mission.state.phase === 'cinematic') { world.update(); continue; }
