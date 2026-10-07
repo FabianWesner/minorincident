@@ -89,11 +89,11 @@ Classification below is based on the rendered signal and the synthesis equations
 | `vehicle.sputter` | noise / 1 s | Vehicle sound event of matching phase | Noise transient; no pitched sweep | Retained physical/system placeholder |
 | `vehicle.fire` | noise / 1 s | Vehicle sound event of matching phase | Noise transient; no pitched sweep | Retained physical/system placeholder |
 | `vehicle.skid` | noise / 1 s | Vehicle sound event of matching phase | Noise transient; no pitched sweep | Retained physical/system placeholder |
-| `dialogue.radio` | vocal / 3 s | dialogue, dialogue.line | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Retained physical/system placeholder |
-| `dialogue.emergency` | vocal / 3 s | Radio/dialogue event of matching line | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Retained physical/system placeholder |
-| `dialogue.safe-zone` | vocal / 3 s | Radio/dialogue event of matching line | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Retained physical/system placeholder |
+| `dialogue.radio` | vocal / 3 s | dialogue, dialogue.line | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Recorded crowd |
+| `dialogue.emergency` | vocal / 3 s | Radio/dialogue event of matching line | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Recorded crowd |
+| `dialogue.safe-zone` | vocal / 3 s | Radio/dialogue event of matching line | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Recorded crowd |
 | `ui.tick` | tone / 0.1 s | level.started, sim.tick, scenario.loaded, scenario.unloaded, story.say, civilian.state, civilian.finished, escort.downed, ai.alerted, combat.effect, combat.hit-stop, barricade.built, barricade.broken, barricade.repaired, music.intensity, attack.resolved, checkpoint.restored, checkpoint.set, cinematic.completed, cinematic.started, entity.spawned, interact.interrupted, migration.started, mission.briefing, mission.signal, mission.spawned, objective.started, progression.requested, vehicle.feedback, vehicle.recovering, vfx.effect, world.blocker.changed, world.tier-requested, outbreak.bite, outbreak.distraction, outbreak.civilian-escaped, outbreak.infection | Steady sine / beep; no warble | Silent marker |
-| `civilian.hey` | vocal / 0.4 s | civilian.bark | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Retained physical/system placeholder |
+| `civilian.hey` | vocal / 0.4 s | civilian.bark | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Recorded sfx2-rv-attack1 |
 | `bed.wind` | bed / 2 s | Matching world-tier ambience bed | Noise + steady tones; no pitch sweep | Retained physical/system placeholder |
 | `bed.horns` | bed / 2 s | Matching world-tier ambience bed | Noise + steady tones; no pitch sweep | Retained physical/system placeholder |
 | `bed.helicopter` | bed / 2 s | Matching world-tier ambience bed | Noise + steady tones; no pitch sweep | Retained physical/system placeholder |
@@ -121,8 +121,8 @@ Classification below is based on the rendered signal and the synthesis equations
 | `diegetic.ice-cream.warped` | music / 2 s | Positional diegetic event of matching kind | HIGH: eight short stepped notes; warped: 3 Hz gate | Recorded morning |
 | `diegetic.car-radio` | music / 2 s | Positional diegetic event of matching kind | HIGH: eight short stepped notes; warped: 3 Hz gate | Recorded morning |
 | `diegetic.school-bell` | music / 2 s | Positional diegetic event of matching kind | HIGH: eight short stepped notes; warped: 3 Hz gate | Recorded sfx2-k-impactBell_heavy_001 |
-| `diegetic.pa` | vocal / 2 s | Positional diegetic event of matching kind | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Retained physical/system placeholder |
-| `diegetic.megaphone` | vocal / 2 s | Positional diegetic event of matching kind | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Retained physical/system placeholder |
+| `diegetic.pa` | vocal / 2 s | Positional diegetic event of matching kind | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Recorded crowd |
+| `diegetic.megaphone` | vocal / 2 s | Positional diegetic event of matching kind | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Recorded crowd |
 | `telegraph.riot.v1` | step / 0.4 s | Matching infected windup | Short resonant thud; no pitch sweep | Retained physical/system placeholder |
 | `telegraph.riot.v2` | step / 0.4 s | Matching infected windup | Short resonant thud; no pitch sweep | Retained physical/system placeholder |
 | `telegraph.riot.v3` | step / 0.4 s | Matching infected windup | Short resonant thud; no pitch sweep | Retained physical/system placeholder |
@@ -183,9 +183,9 @@ Classification below is based on the rendered signal and the synthesis equations
 | `explosion.crackle.v1` | noise / 0.4 s | prop.ignited, vehicle.burning (variant) | Noise transient; no pitched sweep | Retained physical/system placeholder |
 | `explosion.crackle.v2` | noise / 0.4 s | prop.ignited, vehicle.burning (variant) | Noise transient; no pitched sweep | Retained physical/system placeholder |
 | `explosion.crackle.v3` | noise / 0.4 s | prop.ignited, vehicle.burning (variant) | Noise transient; no pitched sweep | Retained physical/system placeholder |
-| `civilian.hey.v1` | vocal / 0.4 s | civilian.bark (variant) | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Retained physical/system placeholder |
-| `civilian.hey.v2` | vocal / 0.4 s | civilian.bark (variant) | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Retained physical/system placeholder |
-| `civilian.hey.v3` | vocal / 0.4 s | civilian.bark (variant) | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Retained physical/system placeholder |
+| `civilian.hey.v1` | vocal / 0.4 s | civilian.bark (variant) | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Recorded sfx2-rv-attack2 |
+| `civilian.hey.v2` | vocal / 0.4 s | civilian.bark (variant) | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Recorded sfx2-rv-attack3 |
+| `civilian.hey.v3` | vocal / 0.4 s | civilian.bark (variant) | HIGH: pitch drift, 5 Hz vibrato, syllable repetition | Recorded sfx2-rv-jump1 |
 | `l1.flicker.buzz` | buzz / 1.5 s | l1.flicker | MODERATE: rapid gating; no pitch sweep | Retained physical/system placeholder |
 | `l1.ringing` | tone / 1.2 s | l1.ringing | Steady sine / beep; no warble | Recorded sfx2-k-impactBell_heavy_001 |
 | `l1.chaos.run` | step / 0.3 s | L1 chaos scheduled running Foley | Short resonant thud; no pitch sweep | Retained physical/system placeholder |
@@ -211,14 +211,16 @@ Classification below is based on the rendered signal and the synthesis equations
 | Explosion arming tell | Recorded metal tap |
 | Jukebox / ice cream / car radio | Running free guitar excerpt; degraded variants use gentle fixed detuning / low-pass |
 | School bell | Recorded bell hit |
+| Civilian hey / reaction | Recorded female human exertions, four variants |
+| Radio / emergency / safe-zone / PA / megaphone | Recorded human speech ambience, radio-band filtered; authored message remains in captions |
 
 ## Scope and licenses
 
 Reused existing source masters and pinned download/member hashes. No new source recordings, dependencies, categories or requests on the critical load path. Existing sprite durations/offsets and lazy category membership are preserved. Attribution for the CC-BY 3.0 guitar remains in THIRD_PARTY_NOTICES.md and both regenerated segment ledgers; Kenney Impact Sounds are CC0. Source licenses were checked on [the album page](https://opengameart.org/content/peace-is-king-here) and [Kenney Impact Sounds](https://kenney.nl/assets/impact-sounds).
 
-Remaining procedural combat/world effects and vocal placeholders are listed above; this change focuses on event/UI music and tones. Those voices still warrant a separate recording pass. The synth buzz is an authored failing-light effect. Room-response synthesis remains required for acoustics.
+Remaining procedural combat/world effects are listed above; this change covers all procedural melody and modulated-voice event cues. Civilian greeting placeholders now use recorded human exertions. Radio/PA/megaphone use recorded crowd speech through a radio-band filter: natural speech ambience, not spoken versions of the authored lines. Captions carry the exact authored message, as before. The synth buzz is an authored failing-light effect. Room-response synthesis remains required for acoustics.
 
-Initial audio budget (both formats): 3,949,029 → 3,944,377 bytes (−4,652 bytes); limit 4,194,304 bytes. New music stays in lazy banks. Thirty-one replacement WAV excerpts are in `/tmp/audio-stingers-after/`.
+Initial audio budget (both formats): 3,949,029 → 3,938,621 bytes (-10,408 bytes); limit 4,194,304 bytes. New music and dialogue stay in lazy banks. Forty replacement WAV excerpts are in `/tmp/audio-stingers-after/`.
 
 No specs edited. The tinnitus ring now comes from a real bell decay and the heartbeat from recorded percussion; durations and low-health/low-pass behavior remain. Product listening approval remains a human check.
 

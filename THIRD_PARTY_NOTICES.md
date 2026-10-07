@@ -128,6 +128,12 @@ https://kenney.nl/assets/impact-sounds;
 https://creativecommons.org/publicdomain/zero/1.0/.
 Edits include excerpting, low-pass/high-pass filtering, fixed detuning and fades;
 exact per-cue sources and hashes are in the segment ledgers.
+Radio/PA/megaphone speech ambience reuses **Crowd Shouting/Speaking Ambience —
+StarNinjas** (CC0, attribution below), with a radio-band filter. Civilian reactions
+reuse **Female RPG Voice Starter Pack — cicifyre** (CC0):
+https://opengameart.org/content/female-rpg-voice-starter-pack;
+https://creativecommons.org/publicdomain/zero/1.0/.
+These are human speech ambience/reactions; exact authored messages are in captions.
 No Bruno SFX or John Murphy music, samples or melodies are used.
 
 All third-party recordings below were modified: excerpts, EQ, fades, loudness

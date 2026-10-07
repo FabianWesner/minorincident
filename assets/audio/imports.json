@@ -4438,6 +4438,47 @@
       "source": "sfx2-k-impactMetal_light_000",
       "start": 0,
       "filter": "lowpass=f=3000"
+    },
+    "civilian.hey": {
+      "source": "sfx2-rv-attack1",
+      "start": 0
+    },
+    "civilian.hey.v1": {
+      "source": "sfx2-rv-attack2",
+      "start": 0
+    },
+    "civilian.hey.v2": {
+      "source": "sfx2-rv-attack3",
+      "start": 0
+    },
+    "civilian.hey.v3": {
+      "source": "sfx2-rv-jump1",
+      "start": 0
+    },
+    "dialogue.radio": {
+      "source": "crowd",
+      "start": 8,
+      "filter": "highpass=f=400,lowpass=f=3000"
+    },
+    "dialogue.emergency": {
+      "source": "crowd",
+      "start": 11,
+      "filter": "highpass=f=400,lowpass=f=3000"
+    },
+    "dialogue.safe-zone": {
+      "source": "crowd",
+      "start": 14,
+      "filter": "highpass=f=400,lowpass=f=3000"
+    },
+    "diegetic.pa": {
+      "source": "crowd",
+      "start": 17,
+      "filter": "highpass=f=400,lowpass=f=3000"
+    },
+    "diegetic.megaphone": {
+      "source": "crowd",
+      "start": 20,
+      "filter": "highpass=f=400,lowpass=f=3000"
     }
   },
   "streams": {
