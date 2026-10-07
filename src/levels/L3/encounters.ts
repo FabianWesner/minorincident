@@ -9,6 +9,14 @@ export function installLevelThree(world: SimWorld, mission: Mission): void {
   const barrier = mission.def.anchors.barrier;
   const barrierId = world.vehicles!.obstacles.spawn('wall', barrier);
   const obstacle = () => world.vehicles!.obstacles.items.find(o => o.entity.id === barrierId);
+  const parkedCar = (): void => {
+    const car = world.vehicles!.cars.get(mission.state.actors.sedan);
+    if (!car) return;
+    const p = car.entity.transform, d = car.physics.def, c = Math.abs(Math.cos(p.yaw)), s = Math.abs(Math.sin(p.yaw));
+    world.events.emit({ type: 'world.blocker.changed', tick: world.tick, id: car.entity.id, blocked: car.entity.vehicle!.driver === null, wall: { ...p, halfX: (c*d.length+s*d.width)/2, halfY: .7, halfZ: (s*d.length+c*d.width)/2 } });
+  };
+  world.events.on('vehicle.exited', parkedCar);
+  world.events.on('vehicle.entered', parkedCar);
   const smash = (position: { x: number; z: number }, radius: number): void => {
     const item = obstacle();
     if (!item || item.broken || Math.hypot(position.x - barrier.x, position.z - barrier.z) > radius) return;
@@ -17,6 +25,7 @@ export function installLevelThree(world: SimWorld, mission: Mission): void {
   };
   world.events.on('checkpoint.restored', () => {
     for (const item of world.vehicles!.obstacles.items) world.events.emit({ type: 'world.blocker.changed', tick: world.tick, id: item.entity.id, blocked: !item.broken, wall: { ...item.entity.transform, halfX: item.halfX, halfY: .5, halfZ: item.halfZ } });
+    parkedCar();
   });
   world.events.on('hazard.exploded', e => { if (e.type === 'hazard.exploded') smash(e.position, e.radius); });
   world.events.on('combat.kill', e => { if (e.type === 'combat.kill' && e.sourceId === mission.state.actors.sedan && world.entities.get(e.targetId)?.faction === 'infected') { mission.count('runovers'); mission.state.stats.kills++; } });
@@ -38,6 +47,7 @@ export function installLevelThree(world: SimWorld, mission: Mission): void {
     const car = world.vehicles!.cars.get(mission.state.actors.sedan)!;
     car.physics.body.setRotation({ x: 0, y: Math.SQRT1_2, z: 0, w: Math.SQRT1_2 }, true);
     car.entity.transform.yaw = Math.PI / 2;
+    parkedCar();
   } });
   world.events.on('vehicle.entered', () => once('tutorial-spawned', () => {
     const car = world.vehicles!.cars.get(mission.state.actors.sedan)!;

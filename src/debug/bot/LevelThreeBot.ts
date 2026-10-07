@@ -75,7 +75,7 @@ export class LevelThreeBot {
     } else frame.move = this.walker.step(w, at, Math.min(1, at.radius / 2), step.id) ?? frame.move;
     if (step.complete.kind === 'interact' && dist(p, at) <= at.radius) frame.interact = true;
     // Keep moving inside the gate until a real follower has crossed its volume.
-    if (step.complete.kind === 'escort' && !enemy && dist(p, at) < at.radius) frame.move = this.walker.step(w, { x: at.x, z: at.z+3 }, .4, 'patient-gate') ?? frame.move;
+    if (step.complete.kind === 'escort' && !enemy) frame.move = this.walker.step(w, { x: at.x, z: at.z+3 }, .4, 'patient-gate') ?? frame.move;
     return frame;
   }
 }
