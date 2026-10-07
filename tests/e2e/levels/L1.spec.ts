@@ -45,10 +45,11 @@ test.describe('L1 v2 real-input playthrough', () => {
       if (!assisted) return;
       if (name === 'l1-accident') await page.evaluate(() => { for (let i = 0; i < 4; i++) window.__SS__!.vfx.stepRender(1); });
       await page.evaluate(n => window.__SS__!.camera.preset('D-GROVE/W0/' + n), name);
-      if (focus) await page.evaluate(({ p, reverse }) => {
+      if (focus) await page.evaluate(({ p, reverse, name }) => {
         const a = window.__SS__!;
-        a.camera.cinematic({ position: [p.x + (reverse ? -22 : 22), 26, p.z + (reverse ? -22 : 22)], target: [p.x, 0, p.z] });
-      }, { p: focus, reverse });
+        const offset = name === 'l1-spread' ? 12 : 22;
+        a.camera.cinematic({ position: [p.x + (reverse ? -offset : offset), 26, p.z + (reverse ? -offset : offset)], target: [p.x, 0, p.z] });
+      }, { p: focus, reverse, name });
       await page.evaluate(() => window.__SS__!.screenshotReady());
       await page.screenshot({ path: `${output}/${name}.png` }); await page.evaluate(() => window.__SS__!.camera.follow()); await step(1);
     };
@@ -58,6 +59,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     /** Click the actual destination once; nearby intermediate clicks can select the near side of a whole block. */
     const go = async (target: { x: number; z: number }, stop = 1.2) => {
       await waitBeat();
+      const activeBefore = Object.entries((await mission()).steps).find(([, s]) => s.status === 'active')?.[0];
       const start = (await player()).transform;
       if (Math.hypot(target.x - start.x, target.z - start.z) <= stop) return;
       // Frame both ends for a real ground click. This changes presentation only; routing remains the game's own.
@@ -76,7 +78,9 @@ test.describe('L1 v2 real-input playthrough', () => {
       for (let i = 0; i < 400; i++) {
         await step(30);
         const p = (await player()).transform;
-        if (Math.hypot(target.x - p.x, target.z - p.z) <= stop || (await mission()).phase !== 'playing' || (await mission()).l1!.beat?.id === 'firestation') return;
+        const m = await mission();
+        // An objective trigger can stop movement and start a beat before the requested stop radius.
+        if (Math.hypot(target.x - p.x, target.z - p.z) <= stop || m.phase !== 'playing' || m.l1!.beat?.id === 'firestation' || (activeBefore && m.steps[activeBefore].status === 'completed')) return;
       }
       throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
     };
@@ -162,7 +166,7 @@ test.describe('L1 v2 real-input playthrough', () => {
       if (assisted && active === 'firestation' && (await mission()).l1!.beat?.id === 'firestation') {
         for (let i = 0; i < 120 && (await mission()).l1!.say?.text !== caption; i++) await step(10);
         expect((await mission()).l1!.say?.text).toBe(caption);
-        shots.add('l1-safe'); await snap('l1-safe'); await waitBeat();
+        shots.add('l1-safe'); await snap('l1-safe', at('fire-bay-door'), true); await waitBeat();
       }
       if (active === 'weapon') {
         await interact(); await step(40);
