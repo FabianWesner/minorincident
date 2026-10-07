@@ -42,7 +42,7 @@ class CivilianBatch extends Group {
   private texture!: DataTexture;
   private readonly childScale = new Vector3(.7, .7, .7);
   private readonly transform = new Matrix4();
-  private readonly lean = new Matrix4().makeRotationZ(-.2);
+  private readonly lean = new Matrix4().makeRotationZ(-.34);
   private readonly presentation = new MotionPresentation();
   private readonly motion = new MotionPhase();
   private strideScale = 1;
@@ -82,7 +82,7 @@ class CivilianBatch extends Group {
       const p = partOf.getX(i);
       if (veins[i]) continue;
       // Irregular splatter on the shirt front (stable per vertex), so blood reads on clothes at the game camera.
-      const splat = p === torso && rel(1, i, 0) > .5 && rel(1, i, 1) > .25 && Math.abs(Math.sin(position.getComponent(i, 0) * 91.7 + position.getComponent(i, 1) * 47.3 + position.getComponent(i, 2) * 63.1) * 43758.5) % 1 > .4;
+      const splat = p === torso && rel(1, i, 0) > .5 && rel(1, i, 1) > .25 && Math.abs(Math.sin(position.getComponent(i, 0) * 91.7 + position.getComponent(i, 1) * 47.3 + position.getComponent(i, 2) * 63.1) * 43758.5) % 1 > .25;
       if (p === head && shirtOf.getX(i) < 0 && rel(0, i, 0) > .62 && rel(0, i, 1) < .42 || p === torso && rel(1, i, 1) > .8 && rel(1, i, 2) > .55 && rel(1, i, 0) > .35 || splat) veins[i] = 2;
       // Sunken, bruised eye sockets around the (glowing) eyes.
       else if (p === head && shirtOf.getX(i) < 0 && rel(0, i, 0) > .55 && rel(0, i, 1) > .45 && rel(0, i, 1) < .75) veins[i] = 3;
@@ -101,15 +101,16 @@ class CivilianBatch extends Group {
     // QA1-10: the infected must read at the default zoom - clearly ash-green skin (full shift at the 40 % sim blend),
     // dark sockets, grimy clothes (same colours, 25 % darker) and blood; hair, clothes and body stay the person's own.
     const sick = mix(vec3(luminance(clothing)).mul(.6), vec3(.42, .58, .30), .8), skinShift = parts.y.lessThan(0).select(decay.mul(2.5).min(1), 0);
-    const sunken = mix(sick, vec3(.12, .05, .1), socket.mul(.85));
-    const grimy = clothing.mul(overlay.z.mul(-.25).add(1));
+    const sunken = mix(sick, vec3(.18, .02, .03), socket.mul(.9));
+    const grimy = clothing.mul(overlay.z.mul(-.42).add(1));
     const skin = mix(grimy, sunken, skinShift);
     const bloody = mix(skin, vec3(.36, .02, .03), blood.mul(overlay.z).mul(.9));
     const base = mix(bloody, mix(vec3(.02), vec3(1, .015, .025), overlay.y), eye);
     const eyeColor = vec3(1, .005, .02);
     // Red glowing eyes in dark sockets. Kept below the bloom whiteout point: the emissive is a pure red (no luminance
     // normalisation, which pushed it to ~14x and bloomed the whole head white) at a capped strength.
-    const glow = eyeColor.mul(eye).mul(overlay.y).mul(2.2);
+    // The sockets glow a dim red around the eyes so the read survives 10-15 m, still far below the bloom whiteout.
+    const glow = eyeColor.mul(eye.mul(2.2).add(socket.mul(.75))).mul(overlay.y);
     const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     this.mesh = new InstancedMesh(baked.geometry, material, 128); this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = this.mesh.receiveShadow = true;
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1); this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; };
