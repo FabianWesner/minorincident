@@ -8,6 +8,8 @@ import math
 import random
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
+from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 
 import bpy
 import bmesh
@@ -86,11 +88,11 @@ def build(level=0):
         o.name = name
         if not o.data.materials:
             o.data.materials.append(material(token))
-        if bevel and high:
+        if bevel >= .02 and high:
             bpy.context.view_layer.objects.active = o
             mod = o.modifiers.new('soft bevel', 'BEVEL')
             mod.width = bevel
-            mod.segments = 2 if bevel >= .02 else 1
+            mod.segments = 2 if bevel >= .06 else 1
             bpy.ops.object.modifier_apply(modifier=mod.name)
             mod = o.modifiers.new('weighted normals', 'WEIGHTED_NORMAL')
             bpy.ops.object.modifier_apply(modifier=mod.name)
@@ -121,7 +123,8 @@ def build(level=0):
         return o
 
     def cyl(name, loc, radius, depth, token, parent=body, axis='z', n=None):
-        key=('cylinder',radius,depth,token,n or segments)
+        n = n or (12 if high and radius <= .065 else segments)
+        key=('cylinder',radius,depth,token,n)
         if key not in cache:
             bpy.ops.mesh.primitive_cylinder_add(vertices=n or segments,radius=radius,depth=depth)
             o=bpy.context.object
@@ -146,7 +149,7 @@ def build(level=0):
             q=Vector(p)
             if not pts or (q-pts[-1]).length>1e-6:
                 pts.append(q)
-        sides=12 if high else 4
+        sides=(8 if radius <= .025 else 12) if high else 4
         vertices=[]
         for j,p in enumerate(pts):
             before=pts[(j-1)%len(pts)] if closed or j else p
@@ -556,6 +559,8 @@ def build(level=0):
             a = j*math.tau/12
             cyl('bin_rib',(2.60+.265*math.cos(a),8.53+.265*math.sin(a),.73),.015,.79,'uiDark',n=6)
 
+    if high:
+        prune_hidden_faces([o for o in bpy.context.scene.objects if o.type == "MESH"], occlusion=True, game_camera=True, defer=True)
     # Merge by shared material inside each visibility/joint assembly.
     groups = [body,roof,inside,door,*windows.values()]
     for parent in groups:
@@ -600,7 +605,8 @@ def build(level=0):
         a['ss_light'] = json.dumps({'type':'window' if name=='windows' else 'neon' if name=='sign' else 'point','color':'light_window_warm','intensity':1.8,'range':5,'pool':True,'beam':'none','flare':False,'reflect':True,'shadow':'none','heroPriority':1,'flicker':'none','animation':None,'powerGroup':'self','breakable':True,'emissiveNodes':[o.name for o in meshes if o.parent.name in emission_nodes and o.data.materials[0].name.startswith('emi_')],'tiers':'all'})
     bpy.context.view_layer.update()
     points = [o.matrix_world @ v.co for o in meshes for v in o.data.vertices]
-    center = [(min(p[k] for p in points)+max(p[k] for p in points))/2 for k in [0,1]]
+    # Preserve the original authored hinge/socket frame when bevel bounds change.
+    center = [.69870162, 0]
     for child in root.children:
         child.location.x -= center[0]
         child.location.y -= center[1]
@@ -707,7 +713,7 @@ if args.glb:
         ao.bake_all(meshes,samples=32)
         bpy.ops.object.select_all(action='SELECT')
         output=path if level==0 else path.with_name(path.stem+'.lod'+str(level)+path.suffix)
-        bpy.ops.export_scene.gltf(filepath=str(output),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
+        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(output)); bpy.ops.export_scene.gltf(filepath=str(output),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
         reports['lod'+str(level)]=report
         print('BUILD OK',level,report['triangles'],'triangles',report['draw_calls'],'draw calls')
     (HERE/'report.json').write_text(json.dumps({**previous,'id':ASSET['id'],'tier':'hero','lods':reports,'renderer':'Eevee','backface_culling':True,'webgl2_ok':False,'webgpu_ok':False},indent=2)+'\n')

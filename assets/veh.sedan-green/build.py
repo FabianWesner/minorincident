@@ -7,6 +7,8 @@ import math
 import random
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
+from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy
 import bmesh
 from mathutils import Vector, Matrix, Euler
@@ -112,7 +114,7 @@ def cyl(name,pos,r,depth,key,group='body',axis='Y',n=40,detail=0):
     bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
     return finish(o,name,key,group,.005,detail)
 
-def ring(name,x,y,z,profile,key,group='body',n=64,detail=0):
+def ring(name,x,y,z,profile,key,group='body',n=32,detail=0):
     vs=[(x+r*math.sin(i*math.tau/n),y+dy,z+r*math.cos(i*math.tau/n)) for r,dy in profile for i in range(n)]
     fs=[(j*n+i,j*n+(i+1)%n,((j+1)%len(profile))*n+(i+1)%n,((j+1)%len(profile))*n+i) for j in range(len(profile)) for i in range(n)]
     o=mesh(name,vs,fs,key,group,detail=detail)
@@ -271,19 +273,20 @@ cyl('exhaust opening',(-2.317,-.54,.425),.036,.011,'dark',axis='X')
 # Rounded multi-ring tires, staggered treads, stamped steel rims and recessed vents.
 for g in ('wheelFL','wheelFR','wheelRL','wheelRR'):
     x,y,z=groups[g].location; s=1 if y>0 else -1
-    ring('tire',x,y,z,[(.25,-.135),(.33,-.135),(.39,-.106),(.414,-.071),(.42,-.04),(.42,.04),(.414,.071),(.39,.106),(.33,.135),(.25,.135)],'dark',g,n=80)
+    ring('tire',x,y,z,[(.25,-.135),(.33,-.135),(.39,-.106),(.414,-.071),(.42,-.04),(.42,.04),(.414,.071),(.39,.106),(.33,.135),(.25,.135)],'dark',g,n=40)
     for row in (-1,0,1):
         for i in range(48):
             ang=math.tau*(i+.33*(row%2))/48
             center=Vector((x+.418*math.sin(ang),y+row*.063,z+.418*math.cos(ang)))
             rot=Euler((0,ang,.13 if row else -.13)).to_matrix()
-            outline=[(-.015,-.022),(.015,-.022),(.019,-.018),(.019,.018),(.015,.022),(-.015,.022),(-.019,.018),(-.019,-.018)]
+            # The tread's 4 mm corner chamfer is below game-camera resolution.
+            outline=[(-.019,-.022),(.019,-.022),(.019,.022),(-.019,.022)]
             vs=[center+rot@Vector((u,v,h)) for h in (-.0065,.0065) for u,v in outline]
-            fs=[tuple(reversed(range(8))),tuple(range(8,16))]+[(j,(j+1)%8,(j+1)%8+8,j+8) for j in range(8)]
+            fs=[tuple(reversed(range(4))),tuple(range(4,8))]+[(j,(j+1)%4,(j+1)%4+4,j+4) for j in range(4)]
             mesh('tread',vs,fs,'dark',g,detail=2)
     outer=y+s*.135
     ring('rim lip',x,outer,z,[(.238,-.003*s),(.268,.006*s),(.278,.019*s),(.272,.032*s),(.248,.039*s),(.231,.014*s)],'silver',g)
-    cyl('rim dish',(x,outer+s*.018,z),.246,.023,'silver',g,n=64)
+    cyl('rim dish',(x,outer+s*.018,z),.246,.023,'silver',g,n=32)
     for i in range(8):
         ang=i*math.tau/8
         o=cyl('rim pocket',(x+.193*math.sin(ang),outer+s*.035,z+.193*math.cos(ang)),.030,.009,'dark',g,n=24,detail=2)
@@ -293,7 +296,7 @@ for g in ('wheelFL','wheelFR','wheelRL','wheelRR'):
         ang=i*math.tau/4+.4
         cyl('lug nut',(x+.084*math.sin(ang),outer+s*.077,z+.084*math.cos(ang)),.014,.019,'silver',g,n=6,detail=2)
     cyl('center badge',(x,outer+s*.075,z),.035,.009,'silver',g,n=24,detail=2)
-    ring('sidewall ridge',x,y+s*.133,z,[(.314,0),(.322,s*.005),(.328,s*.005),(.331,0)],'dark',g,n=80,detail=2)
+    ring('sidewall ridge',x,y+s*.133,z,[(.314,0),(.322,s*.005),(.328,s*.005),(.331,0)],'dark',g,n=32,detail=2)
 # Small irregular raised chips: all minimum 6mm above the finished paint.
 def chip(x,y,z,r,group='body',horizontal=False):
     n=7; pts=[]
@@ -323,6 +326,7 @@ for s in (-1,1):
     for typ,g,token,intensity,direction in [('headlight','lampHead'+suffix,'light_window_warm',6,(1,0,-.12)),('brake','lampBrake'+suffix,'light_siren_red',2,(-1,0,0))]:
         e=empty('light:'+typ+suffix,parent=groups[g]); e.rotation_euler=Vector(direction).to_track_quat('-Z','Y').to_euler()
         e['ss_light']=json.dumps({'type':'spot' if typ=='headlight' else 'point','color':token,'intensity':intensity,'range':18 if typ=='headlight' else 3,'angle':48,'penumbra':.35,'pool':True,'beam':'soft' if typ=='headlight' else 'none','flare':True,'reflect':True,'shadow':'hero' if typ=='headlight' else 'none','heroPriority':2,'flicker':'none','animation':None,'powerGroup':'self','breakable':True,'emissiveNodes':[g+'_'+M['head' if typ=='headlight' else 'red'].name],'tiers':'all'})
+prune_hidden_faces(parts, occlusion=True, defer=True)
 # Merge by material within the appropriate rigid motion group.
 joined=[]
 for group,parent in groups.items():
@@ -376,7 +380,7 @@ if a.glb:
     def export(path):
         bpy.ops.object.select_all(action='DESELECT')
         for o in asset_objects: o.select_set(True)
-        bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False,export_texcoords=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
+        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(path)); bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False,export_texcoords=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
     export(target)
     for level,ratio in [(1,.125),(2,.04)]:
         originals={o:o.data for o in joined}

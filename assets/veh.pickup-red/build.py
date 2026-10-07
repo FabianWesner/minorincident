@@ -6,6 +6,8 @@ import math
 import sys
 import json
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
+from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 
 import bmesh
 import bpy
@@ -176,7 +178,7 @@ def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.00
     return finish(from_bm(name, bm), mat, parent, bevel=bevel, segs=2)
 
 
-def lathe(name, profile, center, axis, mat, parent=None, segs=40, smooth=True):
+def lathe(name, profile, center, axis, mat, parent=None, segs=32, smooth=True):
     """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
     bm = bmesh.new()
     rings = []
@@ -259,7 +261,7 @@ def cut(target, cutter_obj):
     bpy.data.objects.remove(cutter_obj)
 
 
-def raw_cyl(name, center, r, depth, axis='y', segs=64):
+def raw_cyl(name, center, r, depth, axis='y', segs=32):
     bm = bmesh.new()
     bmesh.ops.create_cone(bm, cap_ends=True, segments=segs, radius1=r, radius2=r, depth=depth)
     rot = {'y': Matrix.Rotation(PI / 2, 4, 'X'), 'x': Matrix.Rotation(PI / 2, 4, 'Y'), 'z': Matrix.Identity(4)}[axis]
@@ -665,6 +667,7 @@ def motion_owner(o):
         p=p.parent
     return None
 
+prune_hidden_faces([o for o in TRUCK.objects if o.type == "MESH"], {o: motion_owner(o) for o in TRUCK.objects if o.type == "MESH"}, defer=True)
 buckets={}
 for o in list(TRUCK.objects):
     if o.type=='MESH':
@@ -771,7 +774,7 @@ print('BUILD OK',json.dumps(report))
 def export_glb(path):
     bpy.ops.object.select_all(action='DESELECT')
     for o in TRUCK.objects:o.select_set(True)
-    bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',
+    stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(Path(path).resolve())); bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',
         use_selection=True,export_apply=True,export_yup=True,export_extras=True,
         export_lights=False,export_cameras=False,export_vertex_color='NAME',
         export_vertex_color_name='ao',export_all_vertex_colors=False)
@@ -781,13 +784,45 @@ if arg('--glb'):
     # Standalone LOD variants retain every joint and contract node.
     original={o:o.data for o in meshes}
     rest_locations={o:o.location.copy() for o in root.children}
+    # Keep the separate roof shell at LOD2: whole-car collapse otherwise removes
+    # its upper surface and shortens the silhouette by almost 30 centimetres.
+    highest_obj, highest_vertex = max(((o, i) for o, data in original.items() for i in {i for face in data.polygons for i in face.vertices}),
+        key=lambda pair: (pair[0].matrix_world @ original[pair[0]].vertices[pair[1]].co).z)
+    roof_mesh = original[highest_obj].copy()
+    bm = bmesh.new(); bm.from_mesh(roof_mesh); bm.verts.ensure_lookup_table()
+    bm.faces.ensure_lookup_table()
+    top = (highest_obj.matrix_world @ original[highest_obj].vertices[highest_vertex].co).z
+    roof_faces = [face for face in bm.faces
+                  if all((highest_obj.matrix_world @ vertex.co).z >= top - .12 for vertex in face.verts)]
+    roof_indices = {face.index for face in roof_faces}
+    bmesh.ops.delete(bm, geom=[face for face in bm.faces if face not in roof_faces], context='FACES_ONLY')
+    bm.to_mesh(roof_mesh); bm.free()
     for level,ratio in [(1,.14),(2,.045)]:
         for o,me in original.items():
             o.data=me.copy()
+            if level == 2 and o == highest_obj:
+                bm = bmesh.new(); bm.from_mesh(o.data); bm.faces.ensure_lookup_table()
+                bmesh.ops.delete(bm, geom=[bm.faces[i] for i in roof_indices], context='FACES_ONLY')
+                bm.to_mesh(o.data); bm.free()
             bpy.context.view_layer.objects.active=o
-            d=o.modifiers.new('LOD reduction','DECIMATE');d.ratio=ratio
+            d=o.modifiers.new('LOD reduction','DECIMATE');d.ratio=1 if o.parent.name.startswith(('lightsFront','lightsBrake','lampHead','lampBrake')) else ratio
             bpy.ops.object.modifier_apply(modifier=d.name)
             clean_mesh(o)
+        fixed_roof = None
+        if level == 2:
+            fixed_roof = highest_obj.copy(); fixed_roof.data = roof_mesh.copy()
+            fixed_roof.name = 'lod2_roof_shell'; fixed_roof['lod_geometry_fixed'] = True
+            TRUCK.objects.link(fixed_roof)
+            bpy.context.view_layer.objects.active = fixed_roof
+            modifier = fixed_roof.modifiers.new('Distant roof shell', 'DECIMATE')
+            modifier.ratio = .08
+            bpy.ops.object.modifier_apply(modifier=modifier.name)
+            # Retain the assembly height if roof collapse drops its top point.
+            highest = max((fixed_roof.data.vertices[i] for i in {i for face in fixed_roof.data.polygons for i in face.vertices}), key=lambda v: (fixed_roof.matrix_world @ v.co).z)
+            point = fixed_roof.matrix_world @ highest.co
+            point.z = top
+            highest.co = fixed_roof.matrix_world.inverted() @ point
+            clean_mesh(fixed_roof)
         # Decimation can remove the lowest tyre point; keep each LOD on the ground.
         bpy.context.view_layer.update()
         points=[o.matrix_world@v.co for o in meshes for v in o.data.vertices]
@@ -797,6 +832,7 @@ if arg('--glb'):
         for o in root.children:o.location-=offset
         bpy.context.view_layer.update()
         export_glb(HERE/f'model.lod{level}.glb')
+        if fixed_roof is not None: bpy.data.objects.remove(fixed_roof, do_unlink=True)
         for o,loc in rest_locations.items():o.location=loc.copy()
         for o,me in original.items():o.data=me
 if arg('--render'):

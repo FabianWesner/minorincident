@@ -8,6 +8,8 @@ import math
 import random
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
+from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy
 import bmesh
 from mathutils import Euler, Matrix, Vector
@@ -80,8 +82,8 @@ for s in (-1,1):
 def finish(o,name,mat,group='body',bevel=0):
     o.name = name
     o.data.materials.append(M[mat])
-    if bevel:
-        mod=o.modifiers.new('soft edges','BEVEL'); mod.width=bevel; mod.segments=1 if name in {'lug','plate bolt','fuel lock','cowl vent','headlamp prism','bed floor rib','bed stake rib','grille bar','grille upright','wiper arm','wiper blade','leaf spring','shock'} else 3
+    if bevel and (bevel >= .01 or 'headlamp' in name):
+        mod=o.modifiers.new('soft edges','BEVEL'); mod.width=bevel; mod.segments=3 if 'headlamp' in name else 2 if bevel >= .04 else 1
         if name in ('crowned dented hood','dented door skin'): mod.limit_method='ANGLE'; mod.angle_limit=.6
         bpy.context.view_layer.objects.active=o
         bpy.ops.object.modifier_apply(modifier=mod.name)
@@ -121,14 +123,14 @@ def beam(name,a,b,width,mat,group='body',depth=None):
     o.rotation_euler=(b-a).to_track_quat('Z','Y').to_euler()
     return o
 
-def cylinder(name,pos,r,depth,mat,group='body',axis='Y',vertices=48):
+def cylinder(name,pos,r,depth,mat,group='body',axis='Y',vertices=32):
     bpy.ops.mesh.primitive_cylinder_add(vertices=vertices,radius=r,depth=depth,location=pos)
     o=bpy.context.object
     o.rotation_euler=(math.pi/2,0,0) if axis=='Y' else (0,math.pi/2,0) if axis=='X' else (0,0,0)
     bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
     return finish(o,name,mat,group,0 if name=='rim ventilation' else .008)
 
-def ring(name,cx,cy,cz,profile,mat,group,n=64):
+def ring(name,cx,cy,cz,profile,mat,group,n=32):
     verts=[]
     for r,y in profile:
         verts += [(cx+r*math.sin(2*math.pi*i/n),cy+y,cz+r*math.cos(2*math.pi*i/n)) for i in range(n)]
@@ -275,12 +277,12 @@ for s in (-1,1):
     box('rear indicator',(-2.56,s*.965,1.051),(.033,.127,.057),'amber',.009,'lightsBrake')
     cylinder('tailgate hinge',(-2.505,s*.68,.909),.035,.18,'metal','tailgate')
 def tread(pos,angle,skew,group):
-    # An eight-sided chamfered prism reads identically to a tiny bevelled cube.
-    x,y,h,b=.031,.0405,.017,.006
-    outline=[(-x+b,-y),(x-b,-y),(x,-y+b),(x,y-b),(x-b,y),(-x+b,y),(-x,y-b),(-x,-y+b)]
+    # Drop the tread block's sub-centimetre corner chamfers at game zoom.
+    x,y,h=.031,.0405,.017
+    outline=[(-x,-y),(x,-y),(x,y),(-x,y)]
     rot=Euler((0,angle,skew)).to_matrix(); centre=Vector(pos)
     verts=[centre+rot@Vector((u,v,z)) for z in (-h,h) for u,v in outline]
-    faces=[tuple(reversed(range(8))),tuple(range(8,16))]+[(i,(i+1)%8,(i+1)%8+8,i+8) for i in range(8)]
+    faces=[tuple(reversed(range(4))),tuple(range(4,8))]+[(i,(i+1)%4,(i+1)%4+4,i+4) for i in range(4)]
     mesh('tread block',verts,faces,'dark',group)
 
 # Four rich wheels: rounded profile, three staggered rows of tread, inset steel rims,
@@ -344,6 +346,7 @@ for s in (-1,1):
         e=empty('light:'+typ+suffix,parent=groups[parent]); e.location=Vector((x,s*(.76 if typ=='headlight' else .965),z))-groups[parent].location
         e.rotation_euler=Vector((1,0,-.12)).to_track_quat('-Z','Y').to_euler()
         e['ss_light']=json.dumps({'type':'spot' if typ=='headlight' else 'point','color':color,'intensity':intensity,'range':18 if typ=='headlight' else 3,'angle':48,'penumbra':.35,'pool':True,'beam':'soft' if typ=='headlight' else 'none','flare':True,'reflect':True,'shadow':'hero' if typ=='headlight' else 'none','heroPriority':2,'flicker':'none','animation':None,'powerGroup':'self','breakable':True,'emissiveNodes':['lampHead'+suffix] if typ=='headlight' else ['lampBrake'+suffix,'lightsBrake'],'tiers':'all'})
+prune_hidden_faces(parts, occlusion=True, defer=True)
 # Merge each motion/static group by material: few draw calls, correct preserved pivots.
 joined=[]
 for group,parent in groups.items():
@@ -429,7 +432,7 @@ if args.glb:
     def export(path):
         bpy.ops.object.select_all(action='DESELECT')
         for o in asset_objects: o.select_set(True)
-        bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False,export_texcoords=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
+        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(path)); bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False,export_texcoords=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
     scene.render.engine='CYCLES'; scene.cycles.samples=32; scene.cycles.seed=29
     scene.render.bake.target='VERTEX_COLORS'; scene.render.bake.use_clear=True
     bpy.ops.object.select_all(action='DESELECT')
