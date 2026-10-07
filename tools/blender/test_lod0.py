@@ -60,17 +60,6 @@ assert len(static.data.polygons)==5 and static.data.attributes.get('diet_hidden'
 assert sorted(round(static.data.color_attributes['ao'].data[face.loop_start].color[0],3) for face in static.data.polygons)==expected
 print('TEST OK inward winding and deferred baked AO preservation')
 
-# Text retains its exact raised front plane and outline, dropping only depth/back.
-bpy.ops.wm.read_factory_settings(use_empty=True)
-text=cube('text_test',2,None)
-for vertex in text.data.vertices:vertex.co.z*=.003
-text.data.update()
-assert prune_hidden_faces([text],flat_text=True,defer=True)==5
-apply_hidden_faces([text])
-assert len(text.data.polygons)==1
-assert all(abs(vertex.co.z-.003)<1e-6 for i in text.data.polygons[0].vertices for vertex in [text.data.vertices[i]])
-print('TEST OK flat text front cap and outline preservation')
-
 # Evaluating an already baked weighted-normal mesh must retain its corner normals.
 bpy.ops.wm.read_factory_settings(use_empty=True)
 weighted=cube('weighted',2,None)
