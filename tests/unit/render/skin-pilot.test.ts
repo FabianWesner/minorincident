@@ -29,16 +29,17 @@ test.each([2, 4.5])('skin pilot plants stance feet at actual %s m/s with capped 
   expect(alignSkeleton(scene)).toHaveLength(1);
   const rig = resolveRig(scene), actor = new Group(); actor.add(scene);
   const animator = new KeyframeAnimator(rig, skinClips), state = pose();
-  let samples = 0, maxSlide = 0, previousPhase = -1, previous: Vector3 | undefined;
+  let samples = 0, maxSlide = 0, maxCadence = 0, previousPhase = -1, previous: Vector3 | undefined;
   for (let tick = 1; tick <= 240; tick++) {
     actor.position.x += speed / 60; state.velocity.x = speed; animator.update(state, tick); actor.updateMatrixWorld(true);
     const gait = (animator as unknown as { actions: Map<string, AnimationAction> }).actions.get(speed > 2.5 ? 'run' : 'walk')!;
     const phase = gait.time / gait.getClip().duration, foot = rig.footL.getWorldPosition(new Vector3());
     const stance = speed > 2.5 ? .24 : .55 - .31 * ((2 - 1.9) / (3.3 - 1.9)) ** 2 * (3 - 2 * (2 - 1.9) / (3.3 - 1.9));
     if (tick > 90 && previous && phase > previousPhase && phase < stance && previousPhase < stance) { samples++; maxSlide = Math.max(maxSlide, foot.distanceTo(previous)); }
+    if (tick > 90) maxCadence = Math.max(maxCadence, ((phase - previousPhase + 1) % 1) * 60);
     previousPhase = phase; previous = foot;
   }
-  expect(samples).toBeGreaterThan(15); expect(maxSlide).toBeLessThan(.008);
+  expect(samples).toBeGreaterThan(15); expect(maxSlide).toBeLessThan(.001); expect(maxCadence).toBeLessThan(speed > 2.5 ? 2.701 : 2.011);
   const meshes: SkinnedMesh[] = []; scene.traverse(node => { if (node instanceof SkinnedMesh) meshes.push(node); });
   expect(meshes).toHaveLength(1);
   const before = rig.footL.getWorldPosition(new Vector3()); animator.update(state, 240); actor.updateMatrixWorld(true);
@@ -72,6 +73,9 @@ test('skin pilot hands and soles follow bike sockets under heading, lean, steeri
       }
       skin.skeleton.update();
     }
+    const frozen = character.getObjectByName('handL')!.getWorldPosition(new Vector3());
+    character.position.set(0, 0, 0); character.quaternion.identity(); character.update(state, 90, 1, { pedal: 90 * .075, steer: 0 }); character.applyRideContacts(targets); character.updateMatrixWorld(true);
+    expect(character.getObjectByName('handL')!.getWorldPosition(new Vector3()).distanceTo(frozen)).toBeLessThan(1e-6);
     character.update(state, 91, 1); character.applyRideContacts(); expect(character.getState().clip).toBe('dismount');
     for (let tick = 92; tick <= 120; tick++) { character.position.set(0, 0, 0); character.update(state, tick, 1); character.applyRideContacts(); }
     expect(character.getState().rideWeight).toBe(0); expect(character.getState().clip).toBe('idle');
