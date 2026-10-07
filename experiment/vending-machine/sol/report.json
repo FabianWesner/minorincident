@@ -1,0 +1,23 @@
+{
+  "slug": "vending-machine",
+  "iterations": 4,
+  "triangles": 65816,
+  "meshes": 147,
+  "glb_bytes": 2621440,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "self_fidelity_0_1": 0.84,
+  "matches": [
+    "Blue-violet rounded cabinet with red recessed front",
+    "Reference-traced Fizz branding",
+    "Eight detailed cans in two rows with four selection buttons",
+    "Recessed delivery flap, screws, feet and removable top lid",
+    "Finished rear and sides with vents and geometry-based wear"
+  ],
+  "gaps": [
+    "Surface wear is simpler and cleaner than the reference",
+    "Can splash artwork is approximated",
+    "Lighting and paint response differ between studio and game viewer"
+  ],
+  "notes": "Self-contained bpy build with four refinement rounds, a 96-sample hero render and error-free checks in both Three.js backends."
+}

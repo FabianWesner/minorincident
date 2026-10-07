@@ -7,3 +7,7 @@ LOD0 now uses three merged brass bundles with nine broad six-sided copper tips, 
 Budget override: ≤2,500 triangles, ≤6 draw calls. Actual LOD0: 1,016 triangles / 6 calls. LOD1: 508 triangles / 6 calls. LOD2: 250 triangles / 6 calls. Every `--glb model.glb` export also regenerates `model.lod1.glb` and `model.lod2.glb`, using deterministic Blender decimation while retaining the scene hierarchy.
 
 Texture-free Principled palette materials; baked corner AO. Olive/brass/copper colour separation and open-case silhouette take priority over individual ammunition detail. No reference images or manifest entries changed.
+
+## Art registration (2026-10-07)
+
+Measured delivered bounds (X/Y/Z, metres): 0.4588, 0.5437, 0.6385. Source, named pivots/sockets, palette, front marker and delivered tiers are validated by the production validator. Runtime status is integrated. Five-angle LOD contact evidence: `test-results/art-register/pick.pistol-ammo/lod-contact.png`.
