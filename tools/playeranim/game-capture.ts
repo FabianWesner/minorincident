@@ -59,28 +59,30 @@ for (const variant of ['female', 'male'] as const) {
       frames.length = 0;
     };
     if (!bikeOnly) {
-    await scene('idle', 90); await move(1, 0, true); await scene('walk', 180); await move(); await scene('stop', 90);
-    encode('idle-walk-stop');
-    await move(1); await scene('run', 90); await move(-1); await scene('turn180', 75); await move(); await scene('turn-stop', 30);
-    await page.evaluate(() => { const a = window.__SS__!; a.input.clear(); a.setLoadout(['weapon.fists'], ['weapon.kick']); });
-    await scene('unarmed', 240, true);
-    await page.evaluate(() => { const a = window.__SS__!; a.input.clear(); a.setLoadout(['weapon.bat'], ['weapon.fists']); });
-    await scene('bat', 150, true); await scene('fight-recovery', 60);
-    encode('run-turn-fight');
-    await page.evaluate(() => { window.__SS__!.input.clear(); window.__SS__!.survivor.damage(1); }); await scene('hurt', 45);
-    frames.length = 0;
+      await scene('idle', 90); await move(1, 0, true); await scene('walk', 180); await move(); await scene('stop', 90);
+      encode('idle-walk-stop');
+      await move(1); await scene('run', 90); await move(-1); await scene('turn180', 75); await move(); await scene('turn-stop', 30);
+      await page.evaluate(() => { const a = window.__SS__!; a.input.clear(); a.setLoadout(['weapon.fists'], ['weapon.kick']); });
+      await scene('unarmed', 240, true);
+      await page.evaluate(() => { const a = window.__SS__!; a.input.clear(); a.setLoadout(['weapon.bat'], ['weapon.fists']); });
+      await scene('bat', 150, true); await scene('fight-recovery', 60);
+      encode('run-turn-fight');
+      await page.evaluate(() => { window.__SS__!.input.clear(); window.__SS__!.survivor.damage(1); }); await scene('hurt', 45);
+      frames.length = 0;
     }
     await page.evaluate(async () => {
       const a = window.__SS__!, b = a.query({ kind: 'bicycle' })[0]; a.input.clear(); a.cheats.killAll();
-      a.teleport(b.id, { x: -58, z: -2 }); a.teleport('player', { x: -57.1, z: -2 });
+      a.teleport('player', { x: b.transform.x + .9, z: b.transform.z });
       for (let i = 0; i < 2; i++) { a.vfx.stepRender(1 / 60); await a.step(1); }
       a.input.set({ interact: true }); a.vfx.stepRender(1 / 60); await a.step(1); a.input.set({ interact: false });
       if (!a.getState().player!.riding) throw new Error(`Mount failed: ${JSON.stringify({ player: a.getState().player, bike: a.query({ kind: 'bicycle' })[0], input: a.getState().input })}`);
     });
     await scene('mount', 45);
+    // Reposition the already mounted bike into the open street for ride/exit stills.
+    await page.evaluate(() => window.__SS__!.teleport('player', { x: -58, z: -2 }));
     await move(1); await scene('ride', 90); await move(); await scene('ride-stop', 60);
     await page.evaluate(async () => { const a = window.__SS__!; a.input.clear(); a.input.set({ interact: true }); a.vfx.stepRender(1 / 60); await a.step(1); a.input.set({ interact: false }); });
-    await scene('dismount', 60); encode('bike');
+    await scene('dismount', 60); frames.length = 0;
     const events = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'));
     if (!bikeOnly && (!events.some(e => e.actionId === 'weapon.fists') || !events.some(e => e.actionId === 'weapon.bat'))) throw new Error('Fast clicks did not produce both attack chains');
     results.push({ variant, errors: guard.errors, events, samples });
