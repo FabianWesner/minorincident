@@ -8,6 +8,8 @@ export interface InputFrame {
   drive?: { throttle: number; steer: number };
   /** Touch/keyboard vehicle brake. */
   brake?: boolean;
+  /** Rear-wheel handbrake; RIGHT (K / touch RIGHT) while driving. */
+  handbrake?: boolean;
   /** Explicit pointer commands; absent means keep the current command. */
   moveTarget?: Vec2;
   /** Mouse LMB fires the active carried action; Shift locks feet for the swing. */
