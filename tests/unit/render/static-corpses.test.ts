@@ -1,4 +1,4 @@
-import { Color, InstancedMesh, Matrix4, MeshLambertNodeMaterial } from 'three/webgpu';
+import { Color, InstancedMesh, Matrix4, MeshLambertNodeMaterial, Vector3 } from 'three/webgpu';
 import { expect, test } from 'vitest';
 import { packCrowdParts } from '../../../src/assets/crowd';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
@@ -26,7 +26,15 @@ test('static corpse pages grow beyond the old population cap and survive camera 
   }
   expect(pool.snapshot()).toMatchObject({ instances: 260, draws: 3 });
   pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(260);
-  expect(pool.children.every(mesh => (mesh as InstancedMesh).frustumCulled === false)).toBe(true);
+  for (const child of pool.children) {
+    const mesh = child as InstancedMesh; expect(mesh.frustumCulled).toBe(true);
+    const local = mesh.geometry.boundingSphere!, matrix = new Matrix4();
+    for (let index = 0; index < mesh.count; index++) {
+      mesh.getMatrixAt(index, matrix);
+      const center = new Vector3().copy(local.center).applyMatrix4(matrix);
+      expect(mesh.boundingSphere!.center.distanceTo(center) + local.radius).toBeLessThanOrEqual(mesh.boundingSphere!.radius + 1e-5);
+    }
+  }
   // Restore removes only bodies absent from the checkpoint; the next sync repopulates its saved bodies.
   records.delete(1); pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(0);
   pool.dispose(); baked.geometry.dispose(); material.dispose();
