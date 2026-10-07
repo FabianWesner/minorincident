@@ -2,29 +2,20 @@
 
 Living, self-learning document. After every finished lane: (1) add one line to `epics-pipeline/agent-scorecard.md` (date, lane, model/effort, task kind, outcome, rework needed, note); (2) if the evidence contradicts a routing row below, change the row and say why in one line. Keep this file short; details live in the scorecard.
 
-## Pool
-- **Opus 5.5** (Agent tool, model `opus`) — also the orchestrator itself (reviews, merges, decisions, visual/asset QA).
-- **Sonnet 5.5** (Agent tool, model `sonnet`)
-- **Sol 6.1** (codex-scheduler, `--model gpt-6.1-sol`, effort low/medium/high) — default builder (PO goal 2026-10-07: delegate implementation, Blender, imagegen and QA to Sol).
-- **Astra** (codex-scheduler, `--model gpt-6-astra`, effort xhigh) — exception only, when the PO asks or a problem resists Sol twice.
-- **Luna 6** (codex-scheduler, `--model gpt-6-luna`) — minor work and mechanical QA.
+## Pool and routing rule (PO, 2026-10-07 — binding)
+- **Opus 5.5** (Agent tool, model `opus`): complex implementation that needs judgement, and hard bugs (unclear root cause, feel, "why does it look wrong"). Also the orchestrator itself: decisions, merges, deploys, visual/asset QA.
+- **Sol 6.1** (codex-scheduler, `--model gpt-6.1-sol`): work with a clearly defined goal and explicit success criteria it can work toward (metrics, test counts, budgets, asset builds with per-LOD budgets, imagegen, Blender).
+- **Sonnet 5.5** (Agent tool, model `sonnet`): regular development work and QA.
+- **Luna 6** (codex-scheduler, `--model gpt-6-luna`): simple tasks and fine-tuning with a clear goal.
+- **Astra and Fable: only when the PO asks for them.**
 
-## Routing (current best guess, evidence in the scorecard)
-| Task kind | First choice | Why / notes |
-|---|---|---|
-| Hard diagnosis: perf traces, root causes, "why does it look/feel wrong" | Sol high | 10-07 (new Mac): Sol found real causes fast — LOD1 double download (load3), arrival fight with the bike collider, 80-tick knockdown from authored displacement, crowd stride changing only the phase denominator, 9 s civilian-corpse cutoff. Opus still reviews the conclusion |
-| Character feel: animation, locomotion, combat juice | Astra xhigh for the player; Sol high for crowds | PO asked for Astra on player animation (10-07). Sol skin pilot passed metrics but PO found crouch/turn defects → metrics alone are not enough; review stills/videos at the game camera |
-| AI behaviour: perception, herd cue, stuck handling | Sol high (Opus earlier) | Opus was rule-faithful earlier; Sol untested on AI this round |
-| Visual QA gates and asset QA | Opus (orchestrator) | Contact sheets, game-camera stills; never trust a lane's own "no visible change" |
-| Architecture/perf rework: load pipeline, LOD policy | Sol high | load3: 17.1 → 9.4 s with measured tables; needed steering away from GLB re-authoring and .gz sidecars |
-| Scoped systems: mission/HUD/UI, map layout, toys, audio wiring | Sol medium | campaign-foundation, props-barricades delivered with tests |
-| Level content (encounters, pacing) | Sol high | l3-content first proposed shrinking the time band to fit a 68 s run → brief must say "add content, never change the band to fit" |
-| Merge-conflict resolution, test fixes, docs | Sol medium / Luna | |
-| Imagegen (concept sheets, backgrounds, UI art) | Sol (low) | Best image pipeline; PO decision |
-| Blender/bpy asset builds, rebuilds, packing | Sol (low/medium) | Never trust Sol's own visual verdict: lod0-diet shipped shredded houses; art-register's generic decimation perforated thin panels (Sol caught it this time). Always independent Opus asset QA before merging |
-| Long autonomous multi-step pipelines | Sol | Steady over hours; give a clear end state |
-| Game code with a hard, measurable acceptance test | Sol (medium/high) | Give the metric, the forbidden shortcuts and "report genuine bugs, don't work around them" |
-| Monkey work: bulk renames, data entry, manifest edits, formatting | Luna | Tight mechanical briefs only. story lane (Luna): delivered the code but skipped runtime measurement when the lock was busy |
+Before dispatching, classify the task: judgement/hard bug → Opus; crisp goal + success criteria → Sol; regular dev/QA → Sonnet; simple/tuning → Luna. Opus/Sonnet lanes run as Agent-tool subagents in their own git worktree (`isolation: "worktree"`), with the same brief and lane rules as Codex lanes.
+
+## Observations per model (keep updating; evidence in `epics-pipeline/agent-scorecard.md`)
+- **Sol 6.1**: strong root-cause finder when given a measurable target (load3, arrive-jitter, combat-feel, crowd-feel found real causes on 10-07). Weak spots: drifts toward changing the target instead of the work (l3-content proposed shrinking the time band; load3 tried .gz sidecars) → briefs must name forbidden shortcuts. Passing metrics ≠ good look (skin pilot crouch/turns) → feel work belongs to Opus or needs game-camera review. Own visual verdicts on assets are not trusted (shredded LODs before; caught perforated decimation itself this time).
+- **Luna 6**: delivered code quickly but skipped required runtime measurements when locks were busy, and its "stride lengthening" only changed timing (caused skating) → only for simple, fully specified tasks with a mechanical check.
+- **Astra (on PO demand)**: player-anim lane 10-07 — quick, precise diagnosis of the crouch/turn root cause in the shared ground-contact solver.
+- **Opus 5.5 / Sonnet 5.5 as lanes**: not used yet on this Mac; earlier playbook rated Opus best at diagnosis, feel, AI behaviour and QA gates, Sonnet fast and reliable for scoped systems with an acceptance check.
 
 ## Rules learned (keep short)
 - Visual fixes count only with captures the lane looked at and describes in its report. "No capture taken" means not done.
