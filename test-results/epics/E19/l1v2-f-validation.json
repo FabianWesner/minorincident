@@ -1,0 +1,68 @@
+{
+  "commits": [
+    "64d6f046",
+    "92466db0",
+    "fc26a330"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": "pass"
+    },
+    {
+      "command": "npm run lint",
+      "status": "pass"
+    },
+    {
+      "command": "npm run build",
+      "status": "pass"
+    },
+    {
+      "command": "sh tools/sim-lock.sh sh -c 'npm run test:unit -- --maxWorkers=2 > /tmp/l1v2-f-unit.log 2>&1'",
+      "status": "pass",
+      "testsPassed": 235,
+      "filesPassed": 75
+    },
+    {
+      "command": "sh tools/sim-lock.sh sh -c 'npx vitest run tests/sim/l1-toys.test.ts --maxWorkers=2 > /tmp/l1v2-f-targeted-details.log 2>&1'",
+      "status": "pass",
+      "testsPassed": 16
+    },
+    {
+      "command": "E2E_PORT=3346 npm run test:smoke",
+      "status": "pass",
+      "simPassed": 5,
+      "browserPassed": 22
+    },
+    {
+      "command": "E2E_PORT=3346 sh tools/e2e-lock.sh sh -c 'npx playwright test tests/e2e/bicycle.spec.ts --project=chromium --workers=1 > /tmp/l1v2-f-rider.log 2>&1'",
+      "status": "pass",
+      "testsPassed": 1
+    },
+    {
+      "command": "E2E_PORT=3346 sh tools/sim-lock.sh sh -c 'npm run verify -- E19 > /tmp/l1v2-f-verify.log 2>&1'",
+      "status": "cancelled-by-orchestrator",
+      "printedTestsPassed": 63,
+      "completedFiles": 18,
+      "printedFailures": 0,
+      "completeTotals": null,
+      "followUpLane": "l1-closure"
+    }
+  ],
+  "resolvedEnvironmentFailures": [
+    {
+      "test": "WebKit S-11",
+      "cause": "Missing Playwright WebKit binary; fixed by npx playwright install webkit"
+    },
+    {
+      "test": "WebKit S-01",
+      "cause": "Missing Playwright WebKit binary; fixed by npx playwright install webkit"
+    },
+    {
+      "test": "WebKit S-10-foundation",
+      "cause": "Missing Playwright WebKit binary; fixed by npx playwright install webkit"
+    }
+  ],
+  "screenshot": "courier-bike-rider.png",
+  "specChanges": false
+}
