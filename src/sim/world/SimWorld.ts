@@ -72,6 +72,7 @@ export class SimWorld implements Lifecycle {
   /** Story beats (E19 PO UAT): while set, player input is replaced by `scripted` (or nothing); any press
    * (click, key, tap, move) marks `skip` for the beat owner to fast-forward. */
   storyLock: { scripted: InputFrame | null; skip: boolean } | null = null;
+  private storyHeld = false;
   private readonly drivingCombatInput = emptyInput();
   private scheme: import('../../input/InputFrame').Scheme = 'mouse-only';
   private rng: Rng | null = null;
@@ -97,9 +98,11 @@ export class SimWorld implements Lifecycle {
     }
     this.events.on('sim.tick', () => {
       let raw = this.input;
+      // A press is an edge: a key or stick already held when the beat starts (walking into it) does not skip it.
+      const pressed = raw.left.down || raw.right.down || raw.interact || raw.pause || !!raw.moveTarget || !!raw.attackTarget || Math.hypot(raw.move.x, raw.move.z) > .5;
+      const press = pressed && !this.storyHeld; this.storyHeld = pressed;
       if (this.storyLock) {
-        const pressed = raw.left.down || raw.right.down || raw.interact || raw.pause || !!raw.moveTarget || !!raw.attackTarget || Math.hypot(raw.move.x, raw.move.z) > .5;
-        if (pressed) this.storyLock.skip = true;
+        if (press) this.storyLock.skip = true;
         raw = this.storyLock.scripted ?? emptyInput();
       }
       const frame = this.controls.resolve(raw); this.effectiveInput = this.vehicles?.bicycle.filter(frame) ?? frame;

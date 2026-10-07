@@ -376,7 +376,7 @@ export class GameView implements Lifecycle {
         for (const [i, at] of [40, 70, 95].entries()) if (since >= at && this.endingShakes === i) { this.view.shake(.25); this.endingShakes = i + 1; }
       }
     } else if (this.shutter) { this.scene.remove(this.shutter); this.shutter.traverse((o: import('three').Object3D) => { if (o instanceof Mesh) o.geometry.dispose(); }); this.shutter = null; this.endingShakes = -1; }
-    const fade = slam !== undefined ? Math.max(0, Math.min(1, (tick - slam - 110) / 60)) : done ? 1 : 0;
+    const fade = slam !== undefined ? beat!.fadeAt !== undefined ? Math.max(0, Math.min(1, (tick - beat!.fadeAt) / 60)) : 0 : done ? 1 : 0;
     this.endingFade.style.opacity = String(fade);
   }
   /** Real render seconds, deliberately independent of sim ticks/time scale. */
