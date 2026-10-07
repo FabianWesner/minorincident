@@ -46,3 +46,15 @@ test('@E21 @E21-AC07 L3 timeout retries with restored checkpoint timer plus 60s'
     m.restore(); expect(m.state.deadlineTicks).toBe(remaining+3600); expect(m.state.steps.checkpoint.status).toBe('active');
   } finally { w.dispose(); }
 });
+test('@E21 @E21-AC04 parked sedan blocks foot navigation until the native driver enters', async () => {
+  const w = await loadLevel('L3', 1);
+  try {
+    const m = w.missions!; m.completeObjective('forecourt'); m.completeObjective('car');
+    const car = w.vehicles!.cars.get(m.state.actors.sedan)!;
+    expect(w.infected!.nav.clear(car.entity.transform.x, car.entity.transform.z, .3)).toBe(false);
+    const bot = new LevelThreeBot(w);
+    for (let i = 0; i < 600 && w.vehicles!.active === null; i++) { w.applyInput(bot.sample(), 'keyboard'); w.update(); }
+    expect(w.vehicles!.active).toBe(car.entity.id);
+    expect(w.infected!.nav.clear(car.entity.transform.x, car.entity.transform.z, .3)).toBe(true);
+  } finally { w.dispose(); }
+});
