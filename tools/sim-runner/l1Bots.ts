@@ -128,22 +128,24 @@ export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opt
         if (dist(at, p) <= 1.4) press = true; else { goal = { x: at.x, z: at.z }; stop = 1; key = 'to-bike'; }
       }
       if (detour && (world.tick > detour.until || dist(p, detour) < 1)) { detour = null; walker.reset(); }
+      const enteringBay = profile === 'evade-only' && step?.id === 'firestation' && dist(p, anchor('fire-bay-trigger')) <= 14;
+      if (enteringBay && detour) { detour = null; walker.reset(); }
       // Retreat along a connected route if a crowd is winning; fight isolated blockers.
-      if (!detour && goal && nearest && player.health.current < 35 && threats.filter(e => dist(e.transform, p) < 4).length >= 3) {
+      if (!enteringBay && !detour && goal && nearest && player.health.current < 35 && threats.filter(e => dist(e.transform, p) < 4).length >= 3) {
         const at = walker.detour(world, goal, nearest.transform);
         if (at) detour = { ...at, until: world.tick + 180 };
       }
       if (newbie) {
         if (!detour && rng.next() < .0006) { const names = Object.keys(mission.def.anchors); const a = anchor(names[Math.floor(rng.next() * names.length)]); detour = { x: a.x, z: a.z, until: world.tick + 360 }; }
         }
-      if (detour) { goal = detour; stop = .8; key = `detour-${detour.until}`; fight = null; }
-      let dir = goal ? walker.step(world, goal, stop, key) : null;
-      if (profile === 'evade-only' && nearest && dist(nearest.transform, p) < 8 && goal) {
-        // Keep the objective direction but bias away from the closest threat.
-        const away = { x: p.x - nearest.transform.x, z: p.z - nearest.transform.z }, d = Math.hypot(away.x, away.z) || 1;
-        dir = { x: (dir?.x ?? 0) * .6 + away.x / d, z: (dir?.z ?? 0) * .6 + away.z / d };
-        const n = Math.hypot(dir.x, dir.z) || 1; dir = { x: dir.x / n, z: dir.z / n };
+      // Raw away-vectors can drive into the garage wall forever. Choose an actual connected escape route.
+      // Once near the bay, keep running toward shelter with normal input instead of relying on an ending auto-walk.
+      if (profile === 'evade-only' && !enteringBay && !detour && nearest && dist(nearest.transform, p) < 8 && goal) {
+        const at = walker.detour(world, goal, nearest.transform);
+        if (at) detour = { ...at, until: world.tick + 240 };
       }
+      if (detour) { goal = detour; stop = .8; key = `detour-${detour.until}`; fight = null; }
+      const dir = goal ? walker.step(world, goal, stop, key) : null;
       move = fight ? { x: 0, z: 0 } : dir ?? { x: 0, z: 0 };
     }
     const target = fight && fight.health.current > 0 ? fight : null;
