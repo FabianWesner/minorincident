@@ -36,27 +36,125 @@ test('courier facing ignores sub-degree arrival noise across the yaw wrap @E04',
   expect(character.quaternion.angleTo(rotation)).toBeGreaterThan(.3);
 });
 
-test.each(['female', 'male'] as const)('skin rollout plants %s stance feet with capped cadence @E04', async variant => { for (const speed of [2, 4.5]) {
-  const scene = await model(`public/assets/models/char.courier-${variant}.skin.glb`);
-  expect(alignSkeleton(scene)).toHaveLength(1);
-  const rig = resolveRig(scene), actor = new Group(); actor.add(scene);
+/** Grounded heel/toe contacts from the foot node (sole offsets match CourierGroundContacts). */
+type Contact = { heel: Vector3; toe: Vector3; yaw: number };
+function contacts(rig: ReturnType<typeof resolveRig>, sole: number): Contact[] {
+  return (['L', 'R'] as const).map(side => {
+    const f = rig[`foot${side}`], fwd = new Vector3(1, 0, 0).transformDirection(f.matrixWorld);
+    return { heel: f.localToWorld(new Vector3(-.05, -sole, 0)), toe: f.localToWorld(new Vector3(.085, -sole, 0)), yaw: Math.atan2(-fwd.z, fwd.x) };
+  });
+}
+type Sample = { tick: number; speed: number; feet: Contact[]; pelvis: number; legs: Quaternion[]; knees: number[]; airborne: number };
+/** Drive the fitted courier like the sim does: speed ramps, yaw turns at a bounded rate, travel follows the yaw. */
+async function drive(variant: 'female' | 'male', ticks: number, plan: (t: number) => { speed: number; yaw: number; rate: number }) {
+  const scene = await model(`public/assets/models/char.courier-${variant}.skin.glb`); alignSkeleton(scene);
+  const rig = resolveRig(scene), actor = new CharacterView(); actor.add(scene); actor.updateMatrixWorld(true);
+  const sole = rig.footL.getWorldPosition(new Vector3()).y;
   const animator = new KeyframeAnimator(rig, skinClips), state = pose(); state.variant = variant;
-  let samples = 0, maxSlide = 0, maxCadence = 0, previousPhase = -1, previous: Vector3 | undefined;
-  for (let tick = 1; tick <= 240; tick++) {
-    actor.position.x += speed / 60; state.velocity.x = speed; animator.update(state, tick); actor.updateMatrixWorld(true);
-    const gait = (animator as unknown as { actions: Map<string, AnimationAction> }).actions.get(speed > 2.5 ? 'run' : 'walk')!;
-    const phase = gait.time / gait.getClip().duration, foot = rig.footL.getWorldPosition(new Vector3());
-    const stance = speed > 2.5 ? .22 : .5 - .28 * ((2 - 1.9) / (3.3 - 1.9)) ** 2 * (3 - 2 * (2 - 1.9) / (3.3 - 1.9));
-    if (tick > 90 && previous && phase > previousPhase && phase < stance && previousPhase < stance) { samples++; maxSlide = Math.max(maxSlide, foot.distanceTo(previous)); }
-    if (tick > 90) maxCadence = Math.max(maxCadence, ((phase - previousPhase + 1) % 1) * 60);
-    previousPhase = phase; previous = foot;
+  const ground = (animator as unknown as { ground: { pivots: number; steps: number; contact(i: number): { locked: boolean } } }).ground;
+  const samples: Sample[] = []; let speed = 0, yaw = 0;
+  for (let tick = 1; tick <= ticks; tick++) {
+    const want = plan(tick / 60);
+    speed += Math.sign(want.speed - speed) * Math.min(Math.abs(want.speed - speed), (want.speed > speed ? 36 : 54) / 60);
+    const delta = Math.atan2(Math.sin(want.yaw - yaw), Math.cos(want.yaw - yaw));
+    yaw += Math.sign(delta) * Math.min(Math.abs(delta), want.rate / 60);
+    actor.face(yaw, tick / 60); actor.position.x += Math.cos(yaw) * speed / 60; actor.position.z -= Math.sin(yaw) * speed / 60;
+    state.velocity = { x: Math.cos(yaw) * speed, z: -Math.sin(yaw) * speed };
+    animator.update(state, tick); actor.updateMatrixWorld(true);
+    const knees = (['L', 'R'] as const).map(side => { const hip = rig[`leg${side}`].getWorldPosition(new Vector3()), knee = rig[`shin${side}`].getWorldPosition(new Vector3()), ankle = rig[`foot${side}`].getWorldPosition(new Vector3()); return knee.clone().sub(hip).angleTo(ankle.sub(knee)) * 180 / Math.PI; });
+    samples.push({ tick, speed, feet: contacts(rig, sole), pelvis: rig.hip.getWorldPosition(new Vector3()).y, legs: [rig.legL, rig.shinL, rig.legR, rig.shinR].map(n => n.quaternion.clone()), knees, airborne: [0, 1].filter(i => !ground.contact(i).locked).length });
   }
-  expect(samples).toBeGreaterThan(15); expect(maxSlide).toBeLessThan(.001); expect(maxCadence).toBeLessThan(speed > 2.5 ? 3.201 : 2.511);
-  const meshes: SkinnedMesh[] = []; scene.traverse(node => { if (node instanceof SkinnedMesh) meshes.push(node); });
-  expect(meshes).toHaveLength(1);
-  const before = rig.footL.getWorldPosition(new Vector3()); animator.update(state, 240); actor.updateMatrixWorld(true);
-  expect(rig.footL.getWorldPosition(new Vector3()).distanceTo(before)).toBeLessThan(1e-6);
-} });
+  return { samples, ground, actor };
+}
+/** Contact metrics as in tools/playeranim/metrics.ts: a foot is grounded while its lowest sole point is within 1.2 cm of the floor. */
+function footwork(samples: Sample[], from = 0) {
+  const frames = samples.filter(s => s.tick >= from), floor = Math.min(...samples.flatMap(s => s.feet.flatMap(c => [c.heel.y, c.toe.y])));
+  const slides: number[] = [], drifts: number[] = [], lifts: number[] = [];
+  for (let i = 0; i < 2; i++) {
+    let slide = 0, drift = 0, startYaw: number | undefined, previous: Sample | undefined;
+    for (const f of frames) {
+      const c = f.feet[i], lowest = Math.min(c.heel.y, c.toe.y); lifts.push(lowest - floor);
+      if (lowest < floor + .012) {
+        if (startYaw === undefined) startYaw = c.yaw;
+        else if (previous) {
+          const pc = previous.feet[i], toe = c.toe.y < floor + .012 && pc.toe.y < floor + .012;
+          const a = toe ? c.toe : c.heel, b = toe ? pc.toe : pc.heel;
+          slide += Math.hypot(a.x - b.x, a.z - b.z);
+          drift = Math.max(drift, Math.abs(Math.atan2(Math.sin(c.yaw - startYaw), Math.cos(c.yaw - startYaw))) * 180 / Math.PI);
+        }
+        previous = f;
+      } else if (startYaw !== undefined) { slides.push(slide); drifts.push(drift); slide = 0; drift = 0; startYaw = undefined; previous = undefined; }
+    }
+    if (startYaw !== undefined) { slides.push(slide); drifts.push(drift); }
+  }
+  const pelvisStep = Math.max(0, ...frames.slice(1).map((f, i) => Math.abs(f.pelvis - frames[i].pelvis)));
+  const legStep = Math.max(0, ...frames.slice(1).flatMap((f, i) => f.legs.map((q, j) => q.angleTo(frames[i].legs[j]) * 180 / Math.PI)));
+  return { contacts: slides.length, slideMax: Math.max(0, ...slides), driftMax: Math.max(0, ...drifts), liftMax: Math.max(...lifts), pelvisStep, legStep };
+}
+
+test.each(['female', 'male'] as const)('courier %s walks and runs on world-locked feet with a readable knee arc @E04', async variant => {
+  for (const speed of [2, 4.5]) {
+    const { samples, ground } = await drive(variant, 300, t => ({ speed: t < .5 ? 0 : speed, yaw: 0, rate: 0 }));
+    const steady = samples.filter(s => s.tick > 90), m = footwork(samples, 90);
+    expect(m.contacts, `${variant} ${speed} m/s contacts`).toBeGreaterThan(12);
+    expect(m.slideMax, `${variant} ${speed} m/s slide`).toBeLessThan(.025);
+    expect(m.driftMax, `${variant} ${speed} m/s yaw drift`).toBeLessThan(1);
+    expect(ground.pivots).toBe(0);
+    // Swing feet clear the ground (the old fitted gait skimmed at 8 mm) and the knee flexes like a step, not a stilt.
+    expect(m.liftMax).toBeGreaterThan(speed > 2.5 ? .08 : .04);
+    const kneeMax = Math.max(...steady.flatMap(s => s.knees));
+    expect(kneeMax).toBeGreaterThan(speed > 2.5 ? 70 : 55); expect(kneeMax).toBeLessThan(speed > 2.5 ? 95 : 80);
+    // No vaulting: moderate pelvis bob, continuous joints.
+    expect(m.pelvisStep, `${variant} ${speed} m/s pelvis step`).toBeLessThan(.025);
+    expect(m.legStep, `${variant} ${speed} m/s leg step`).toBeLessThan(speed > 2.5 ? 40 : 32);
+    // Walking keeps one foot on the ground; running flies briefly.
+    if (speed < 2.5) expect(steady.filter(s => s.airborne === 2).length).toBe(0);
+    else expect(steady.filter(s => s.airborne === 2).length).toBeGreaterThan(0);
+  }
+});
+
+test.each(['female', 'male'] as const)('courier %s turns with steps instead of pivoting or skating @E04', async variant => {
+  // Click-to-move turns: 180° from standing and while walking, 90° while walking, all at the sim's 4.5 rad/s;
+  // a keyboard 180° while running follows the presentation cap of 6 rad/s.
+  const cases: { name: string; ticks: number; plan: (t: number) => { speed: number; yaw: number; rate: number }; minSteps: number }[] = [
+    { name: 'pivot180', ticks: 240, plan: t => ({ speed: 0, yaw: t >= 1 ? Math.PI : 0, rate: 4.5 }), minSteps: 3 },
+    { name: 'walk-turn180', ticks: 300, plan: t => ({ speed: t < .5 ? 0 : 2, yaw: t >= 2 ? Math.PI : 0, rate: 4.5 }), minSteps: 0 },
+    { name: 'walk-turn90', ticks: 300, plan: t => ({ speed: t < .5 ? 0 : 2, yaw: t >= 2 ? Math.PI / 2 : 0, rate: 4.5 }), minSteps: 0 },
+    { name: 'run-turn180', ticks: 300, plan: t => ({ speed: t < .5 ? 0 : t >= 2.5 && t < 2.9 ? 1.5 : 4.5, yaw: t >= 2.5 ? Math.PI : 0, rate: 6 }), minSteps: 0 },
+  ];
+  for (const c of cases) {
+    const { samples, ground } = await drive(variant, c.ticks, c.plan);
+    const m = footwork(samples, 30);
+    // Running touchdowns keep part of the body speed (short legs cannot reach a fully matched heel strike), so the
+    // contact frame of a 6 rad/s running turn may carry up to ~4 cm; walking and standing turns stay under 2 cm.
+    expect(m.slideMax, `${variant} ${c.name} slide`).toBeLessThan(c.name.startsWith('run') ? .045 : .02);
+    expect(m.driftMax, `${variant} ${c.name} planted yaw drift`).toBeLessThan(6);
+    expect(ground.pivots, `${variant} ${c.name} pivots`).toBe(0);
+    expect(ground.steps, `${variant} ${c.name} steps`).toBeGreaterThanOrEqual(c.minSteps);
+    expect(m.legStep, `${variant} ${c.name} leg step`).toBeLessThan(c.name.startsWith('run') ? 40 : 35);
+    if (c.name === 'pivot180') {
+      // Standing: never both feet in the air; the turn settles with both feet locked under the body, facing the new heading.
+      expect(samples.filter(s => s.airborne === 2).length).toBe(0);
+      const settled = samples.filter(s => s.tick > 150);
+      expect(settled.every(s => s.airborne === 0)).toBe(true);
+      for (const c2 of settled[0].feet) expect(Math.abs(Math.atan2(Math.sin(c2.yaw - Math.PI), Math.cos(c2.yaw - Math.PI)))).toBeLessThan(.2);
+      expect(settled[0].feet[0].heel.distanceTo(settled[0].feet[1].heel)).toBeLessThan(.3);
+    }
+  }
+});
+
+test.each(['female', 'male'] as const)('courier %s stops onto locked feet without a sliding settle @E04', async variant => {
+  const { samples, ground } = await drive(variant, 240, t => ({ speed: t < .5 ? 0 : t < 2 ? 4.5 : 0, yaw: 0, rate: 0 }));
+  const m = footwork(samples, 110);
+  expect(m.slideMax, `${variant} stop slide`).toBeLessThan(.02);
+  expect(ground.pivots).toBe(0);
+  // Half a second after the stop both feet are planted, side by side, and stay put.
+  const settled = samples.filter(s => s.tick > 165);
+  expect(settled.every(s => s.airborne === 0)).toBe(true);
+  for (const s of settled) for (let i = 0; i < 2; i++) expect(s.feet[i].heel.distanceTo(settled[0].feet[i].heel)).toBeLessThan(.001);
+  expect(Math.abs(settled[0].feet[0].heel.z - settled[0].feet[1].heel.z)).toBeLessThan(.3);
+  expect(Math.abs(settled[0].feet[0].heel.x - settled[0].feet[1].heel.x)).toBeLessThan(.2);
+});
 
 test('skin pilot kick lunge recovers without accumulating mixer offsets @E04', async () => {
   const scene = await model('public/assets/models/char.courier-female.skin.glb'); alignSkeleton(scene);
@@ -114,60 +212,6 @@ test.each(['female', 'male'] as const)('skin rollout %s hands and soles follow b
   } finally { character.dispose(); loader.mockRestore(); }
 });
 
-test.each(['female', 'male'] as const)('skin rollout %s keeps knees, turn reach and sharp-stop stance bounded @E04', async variant => {
-  const scene = await model(`public/assets/models/char.courier-${variant}.skin.glb`); alignSkeleton(scene);
-  const rig = resolveRig(scene), actor = new Group(); actor.add(scene);
-  const animator = new KeyframeAnimator(rig, skinClips), state = pose(); state.variant = variant;
-  let separation = 0, reach = 0, worstTick = 0;
-  for (let tick = 1; tick <= 420; tick++) {
-    const speed = tick <= 150 ? 2 : tick <= 300 ? 4.5 : tick <= 330 ? 2 : 0;
-    const yaw = tick <= 300 ? 0 : Math.min(Math.PI, (tick - 300) * Math.PI / 12);
-    actor.rotation.y = yaw; actor.position.x += Math.cos(yaw) * speed / 60; actor.position.z -= Math.sin(yaw) * speed / 60;
-    state.velocity = { x: Math.cos(yaw) * speed, z: -Math.sin(yaw) * speed };
-    animator.update(state, tick); actor.updateMatrixWorld(true);
-    const feet = [];
-    for (const side of ['L', 'R'] as const) {
-      const hip = rig[`leg${side}`].getWorldPosition(new Vector3()), knee = rig[`shin${side}`].getWorldPosition(new Vector3()), ankle = rig[`foot${side}`].getWorldPosition(new Vector3());
-      if (tick > 90 && tick < 150 || tick > 240 && tick < 300) {
-        const flex = knee.clone().sub(hip).normalize().angleTo(ankle.clone().sub(knee).normalize()) * 180 / Math.PI;
-        expect(flex).toBeLessThan(speed === 2 ? 25.5 : 45.1);
-      }
-      if (tick > 300) reach = Math.max(reach, hip.distanceTo(ankle));
-      feet.push(ankle);
-    }
-    if (tick > 300 && feet[0].distanceTo(feet[1]) > separation) { separation = feet[0].distanceTo(feet[1]); worstTick = tick; }
-    // A turn releases the old stance over 100 ms; requiring an instant narrow
-    // stance would permit exactly the foot teleport this regression guards.
-    if (tick > 307 && tick <= 312) expect(feet[0].distanceTo(feet[1])).toBeLessThan(.28);
-    if (tick > 360) expect(feet[0].distanceTo(feet[1])).toBeLessThan(.23);
-  }
-  expect(reach).toBeLessThan((rig.shinL.position.length() + rig.footL.position.length()) * 1.001); expect(separation, `largest separation at ${worstTick}`).toBeLessThan(.56);
-});
-
-test.each(['female', 'male'] as const)('courier %s has continuous swing feet and bounded pelvis through the speed range @E04', async variant => {
-  for (const speed of [.3, .8, 1.4, 2, 2.7, 3.3, 4.5]) {
-    const scene = await model(`public/assets/models/char.courier-${variant}.skin.glb`); alignSkeleton(scene);
-    const rig = resolveRig(scene), actor = new Group(); actor.add(scene);
-    const animator = new KeyframeAnimator(rig, skinClips), state = pose(); state.variant = variant;
-    let previous: Vector3[] | undefined, lastHip = 0, peakHipStep = 0, peakFootStep = 0;
-    for (let tick = 1; tick <= 240; tick++) {
-      actor.position.x += speed / 60; state.velocity.x = speed; animator.update(state, tick); actor.updateMatrixWorld(true);
-      const feet = [rig.footL, rig.footR].map(n => n.getWorldPosition(new Vector3()));
-      const hip = rig.hip.getWorldPosition(new Vector3()).y;
-      if (tick > 90 && previous) {
-        peakFootStep = Math.max(peakFootStep, ...feet.map((f, i) => f.distanceTo(previous![i])));
-        peakHipStep = Math.max(peakHipStep, Math.abs(hip - lastHip));
-        // Stance stays at anatomical hip width; the pilot swung into a wide lunge.
-        expect(Math.abs(feet[0].z - feet[1].z)).toBeLessThan(.23);
-      }
-      previous = feet; lastHip = hip;
-    }
-    // The old sign-changing swing limiter jumped 24 cm in one 60 Hz frame.
-    expect(peakFootStep, `${variant} ${speed} m/s`).toBeLessThan(.17);
-    expect(peakHipStep, `${variant} ${speed} m/s`).toBeLessThan(.023);
-  }
-});
-
 test.each(['female', 'male'] as const)('courier %s chains every melee beat on the sim contact tick and freezes exactly @E04', async variant => {
   const scene = await model(`public/assets/models/char.courier-${variant}.skin.glb`); alignSkeleton(scene);
   const rig = resolveRig(scene), animator = new KeyframeAnimator(rig, skinClips), state = pose(); state.variant = variant;
@@ -181,7 +225,8 @@ test.each(['female', 'male'] as const)('courier %s chains every melee beat on th
     for (; tick < end; tick++) {
       animator.update(state, tick);
       if (previous) for (const [i, leg] of legs.entries()) {
-        expect(leg.quaternion.angleTo(previous[i]) * 180 / Math.PI, `${variant} ${actionId} ${combo} tick ${tick}`).toBeLessThan(46);
+        // Feet stay world-locked through planted strikes, so the authored pelvis snap at contact lands in the leg joints (bat-3: ~58°).
+        expect(leg.quaternion.angleTo(previous[i]) * 180 / Math.PI, `${variant} ${actionId} ${combo} tick ${tick}`).toBeLessThan(60);
       }
       previous = legs.map(leg => leg.quaternion.clone());
       if (tick === state.attack.activeAt - 1) {

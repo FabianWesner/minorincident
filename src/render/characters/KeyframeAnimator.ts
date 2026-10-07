@@ -92,7 +92,11 @@ export class KeyframeAnimator {
     const speed = traveled !== undefined && dt > 0 ? (traveled > 3 ? 0 : traveled / dt) : Math.hypot(pose.velocity.x, pose.velocity.z);
     let name = speed > 2.5 ? 'run' : speed > (this.moving ? .06 : .16) ? 'walk' : 'idle';
     const moving = name !== 'idle';
-    if (moving !== this.moving) { this.moving = moving; this.transitionUntil = time + (moving ? .18 : .22); name = moving ? 'start' : 'stop'; }
+    if (moving !== this.moving) {
+      this.moving = moving; this.transitionUntil = time + (moving ? .18 : .22); name = moving ? 'start' : 'stop';
+      // Fitted courier: start mid-stance so the first step is a real step (one foot swings at once, the other releases within reach).
+      if (moving && this.skin) this.phase = .26;
+    }
     else if (time < this.transitionUntil) name = this.clip === 'start' ? 'start' : 'stop';
     if (!moving && turn) name = turn > 0 ? 'turn-left' : 'turn-right';
     const combat = pose.attack;
@@ -127,9 +131,9 @@ export class KeyframeAnimator {
     {
       const s = this.locoSpeed, move = smooth(.04, .55, s), run = smooth(1.9, 3.3, s);
       // PO 27 (walk micro-vibration): stride-matching the short chibi legs gave 9 steps/s walking and up to 15 steps/s
-      // running, which reads as the figure vibrating. Cadence is capped (rigid walk/run 2.0/2.7, fitted skin 2.5/2.7 cycles/s);
+      // running, which reads as the figure vibrating. Cadence is capped (rigid walk/run 2.0/2.7, fitted skin 2.9/2.9 cycles/s);
       // above that the stride lengthens instead (small slide at the game camera beats a buzzing gait).
-      const stride = Math.max((this.strides.walk + (this.strides.run - this.strides.walk) * run) * strideScale(this.rig.root), s / (this.skin ? 2.5 + .2 * run : 2 + .7 * run));
+      const stride = Math.max((this.strides.walk + (this.strides.run - this.strides.walk) * run) * strideScale(this.rig.root), s / (this.skin ? 2.9 : 2 + .7 * run));
       groundStride = stride; groundRun = run;
       if (s > .01) this.phase = (this.phase + (this.skin ? speed : s) * dt / stride) % 1;
       const weights: [string, number][] = [['idle', 1 - move], ['walk', move * (1 - run)], ['run', move * run]];
