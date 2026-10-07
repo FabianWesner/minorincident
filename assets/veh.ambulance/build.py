@@ -16,6 +16,8 @@ from mathutils import Matrix, Vector
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
 from sslib.lod import hard_normals, refresh_normals
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE = Path(__file__).resolve().parent
 if '--normals-only' in sys.argv:
@@ -102,6 +104,7 @@ def group(name, location=(0, 0, 0), parent=None):
 
 
 def finish(obj, mat, parent, bevel=0.0, segs=2, smooth=True, harden=True, angle=40):
+    if DISTANCE: bevel = 0
     TRUCK.objects.link(obj)
     if isinstance(mat, str):
         mat = M[mat]
@@ -137,6 +140,7 @@ def from_bm(name, bm):
 
 
 def box(name, center, size, mat, parent=None, bevel=0.02, segs=2, rot=(0, 0, 0)):
+    if DISTANCE: bevel = 0
     bm = bmesh.new()
     bmesh.ops.create_cube(bm, size=1.0)
     bmesh.ops.scale(bm, vec=Vector(size), verts=bm.verts)
@@ -147,6 +151,7 @@ def box(name, center, size, mat, parent=None, bevel=0.02, segs=2, rot=(0, 0, 0))
 
 
 def prism(name, pts_xz, y0, y1, mat, parent=None, bevel=0.03, segs=2):
+    if DISTANCE: bevel = 0
     """2D side silhouette (x, z) extruded across y0..y1."""
     bm = bmesh.new()
     vs = [bm.verts.new((x, y0, z)) for x, z in pts_xz]
@@ -160,6 +165,7 @@ def prism(name, pts_xz, y0, y1, mat, parent=None, bevel=0.03, segs=2):
 
 
 def plate(name, pts_xz, side, depth, mat, parent=None, y_skin=W, bevel=0.006, segs=2, lift=0.0):
+    if DISTANCE: bevel = 0
     """Flat shape lying on a side skin. side=-1 near (-Y), +1 far (+Y). pts in world (x, z)."""
     y0 = side * (y_skin + lift)
     y1 = side * (y_skin + lift + depth)
@@ -167,6 +173,7 @@ def plate(name, pts_xz, side, depth, mat, parent=None, y_skin=W, bevel=0.006, se
 
 
 def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.005, lift=0.0):
+    if DISTANCE: bevel = 0
     """Frame between two loops with equal vertex count, on a side skin."""
     bm = bmesh.new()
     y0 = side * (y_skin + lift)
@@ -189,6 +196,7 @@ def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.00
 
 
 def lathe(name, profile, center, axis, mat, parent=None, segs=32, smooth=True):
+    if DISTANCE: segs = min(segs, 12 if DISTANCE == 1 else 8)
     """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
     bm = bmesh.new()
     rings = []
@@ -220,6 +228,7 @@ def lathe(name, profile, center, axis, mat, parent=None, segs=32, smooth=True):
 
 
 def cylinder(name, center, r, depth, axis, mat, parent=None, segs=32, bevel=0.0):
+    if DISTANCE: bevel = 0; segs = min(segs, 12 if DISTANCE == 1 else 8)
     prof = [(1e-4, -depth / 2), (r, -depth / 2), (r, depth / 2), (1e-4, depth / 2)]
     o = lathe(name, prof, center, axis, mat, parent, segs)
     if bevel:
@@ -237,11 +246,11 @@ def text(name, body, size, center, facing, mat, parent=None, depth=0.008, font=F
     cu.body = body
     cu.font = bpy.data.fonts.load(font, check_existing=True)
     cu.size = size
-    cu.extrude = depth / 2
+    cu.extrude = 0 if DISTANCE else ( depth / 2)
     cu.align_x = 'CENTER'
     cu.align_y = 'CENTER'
     cu.space_character = spacing
-    cu.resolution_u = 3
+    cu.resolution_u = 2 if DISTANCE else ( 3)
     o = bpy.data.objects.new(name, cu)
     o.location = center
     o.scale = (stretch, 1, 1)
@@ -279,6 +288,7 @@ def cut(target, cutter_obj, mat=None):
 
 
 def raw_cyl(name, center, r, depth, axis='y', segs=64):
+    if DISTANCE: segs=min(segs, 12 if DISTANCE==1 else 6)
     bm = bmesh.new()
     bmesh.ops.create_cone(bm, cap_ends=True, segments=segs, radius1=r, radius2=r, depth=depth)
     rot = {'y': Matrix.Rotation(PI / 2, 4, 'X'), 'x': Matrix.Rotation(PI / 2, 4, 'Y'), 'z': Matrix.Identity(4)}[axis]
@@ -300,10 +310,12 @@ def raw_box(name, center, size):
 
 
 def arc(cx, cz, r, a0, a1, n):
+    if DISTANCE: n=min(n, 12 if DISTANCE==1 else 6)
     return [(cx + r * math.cos(a0 + (a1 - a0) * i / n), cz + r * math.sin(a0 + (a1 - a0) * i / n)) for i in range(n + 1)]
 
 
 def rrect(x0, z0, x1, z1, r, n=5):
+    if DISTANCE: n=min(n, 2 if DISTANCE==1 else 1)
     pts = []
     pts += arc(x1 - r, z0 + r, r, -PI / 2, 0, n)
     pts += arc(x1 - r, z1 - r, r, 0, PI / 2, n)
@@ -386,7 +398,7 @@ for side,sname in SIDES:
   plate(name,pts,side,.009,'medical','patient_box',skin+.007,bevel=.001)
   # white staff and sinusoidal serpent rendered as tube
   box(name+'staff',(cx,side*(skin+.026),cz),(.022,.01,r*1.5),'white','patient_box',.009)
-  cu=bpy.data.curves.new(name+'snake','CURVE');cu.dimensions='3D';cu.bevel_depth=r*.035;cu.bevel_resolution=2
+  cu=bpy.data.curves.new(name+'snake','CURVE');cu.dimensions='3D';cu.bevel_depth= 0 if DISTANCE else (r*.035);cu.bevel_resolution=2
   sp=cu.splines.new('POLY');sp.points.add(39)
   for k in range(40):
    t=k/39;sp.points[k].co=(cx+math.sin(t*PI*5)*r*.105,side*(skin+.040),cz-r*.65+t*r*1.30,1)
@@ -672,6 +684,23 @@ for obj in list(TRUCK.objects):
         obj.select_set(True); bpy.context.view_layer.objects.active=obj
         bpy.ops.object.convert(target='MESH')
 
+if DISTANCE:
+    # Use the same rigid/light ownership as the detailed export contract.
+    for obj in list(TRUCK.objects):
+        if obj.type!='MESH' or not obj.data.materials:continue
+        parent=obj.parent
+        while parent and parent not in motion:parent=parent.parent
+        owner=parent if parent in motion else GROUPS['patient_box']
+        mat=obj.data.materials[0]
+        if mat==M['head']:owner=lamp_groups['lightsFront']
+        elif mat in (M['lamp'],M['blue']):
+            owner=lamp_groups['lightsBrake'] if obj.name.startswith('rear_light_') else lamp_groups['sirenL' if obj.matrix_world.translation.y<0 else 'sirenR']
+        world=obj.matrix_world.copy();obj.parent=owner;obj.matrix_world=world
+        obj.data.materials.clear();obj.data.materials.append(mat)
+        for face in obj.data.polygons:face.material_index=0
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('tread', 'lug', 'rivet', 'seat', 'steering', 'sidewall_rib','rim_lip','sidewall_line','hub_cap','clamp_bolt','corner_fastener','sidewall_bead','rim_hole','step_diamond','cab_door_seam','arch_trim','hood_crease','bar_led','led_','locker_frame','scene_light','scene_lens','door_frame','window_gasket','snake'), far_omit=('seat', 'steering', 'handle', 'wiper', 'rib', 'badge', 'rim spoke', 'seam', 'medical', 'cot', 'shelf','town_identity','rear_label','arch_trim','door_frame','window_gasket','step_diamond','vent_slit','sidewall_bead','rim_lip','corner_fastener','hinge','upper_side_trim','headlight_crossbar','headlight_vertical','patient_cross','text','_rim','_hub','locker','cabin','head_rest','dash','grille_chrome','grille_vertical','_led','marker','hood_vent','roof_edge','side_transom','side_crossbar','lens_rib','ambulance_lettering'), flat_parts=('wheel*_rim',))
+
 batches = defaultdict(list)
 for obj in list(TRUCK.objects):
     if obj.type != 'MESH': continue
@@ -769,23 +798,12 @@ if arg('--glb'):
     # afterwards so the studio preview always renders LOD0.
     original={obj:obj.data for obj in meshes}
     lod_counts={}
-    for level,ratio in [(1,.14),(2,.035)]:
-        for obj,data in original.items():
-            obj.data=data.copy()
-            bpy.context.view_layer.objects.active=obj
-            dec=obj.modifiers.new('lod_density','DECIMATE');dec.ratio=ratio
-            bpy.ops.object.modifier_apply(modifier=dec.name)
-        for obj in meshes: hard_normals(obj)
-        lodpath=Path(arg('--glb')).with_name('model.lod'+str(level)+'.glb').resolve()
-        bpy.ops.export_scene.gltf(filepath=str(lodpath),export_format='GLB',
-            use_selection=True,export_apply=True,export_yup=True,export_extras=True,
-            export_lights=False,export_cameras=False,export_all_vertex_colors=True)
-        lod_counts['LOD'+str(level)]=sum(len(obj.data.loop_triangles) for obj in meshes if not obj.data.calc_loop_triangles())
-        for obj,data in original.items():
-            temporary=obj.data;obj.data=data;bpy.data.meshes.remove(temporary)
     (HERE/'lod-metrics.json').write_text(json.dumps(lod_counts,indent=2)+'\n')
 if arg('--render'):
     stage(arg('--view','ref'))
     scene.render.filepath=str(Path(arg('--render')).resolve())
     bpy.ops.render.render(write_still=True)
     print('RENDER OK',arg('--render'))
+
+if arg('--glb') and not DISTANCE:
+    build_native_lods(__file__)

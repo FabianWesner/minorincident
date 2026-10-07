@@ -12,6 +12,13 @@ import bpy
 import bmesh
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
+if '--lod-only' in sys.argv:
+    build_native_lods(__file__)
+    sys.exit(0)
+
 HERE = Path(__file__).resolve().parent
 p = argparse.ArgumentParser()
 p.add_argument('--render'); p.add_argument('--view', default='ref')
@@ -57,6 +64,7 @@ def motion(name,pos):
     return groups[name]
 
 def finish(o,name,key,group='body',bevel=0):
+    if DISTANCE: bevel = 0
     # Motion groups use a compact palette to keep the full consist at 40 calls.
     if group in ('doorL','doorR') and key in ('slate','steel'): key='dark'
     if group.startswith('boxcarDoor') and key=='steel': key='dark'
@@ -85,6 +93,7 @@ def side(name,points,y,depth,key,group='body',bevel=.012):
     return mesh(name,vs,fs,key,group,bevel)
 
 def cyl(name,pos,r,depth,key='slate',axis='Y',group='body',n=32,bevel=.009):
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 6)
     bpy.ops.mesh.primitive_cylinder_add(vertices=n,radius=r,depth=depth,location=pos)
     o=bpy.context.object
     o.rotation_euler=(math.pi/2,0,0) if axis=='Y' else (0,math.pi/2,0) if axis=='X' else (0,0,0)
@@ -92,11 +101,13 @@ def cyl(name,pos,r,depth,key='slate',axis='Y',group='body',n=32,bevel=.009):
     return finish(o,name,key,group,bevel)
 
 def rod(name,start,end,r=.03,key='yellow',group='body'):
+    segments = (6 if DISTANCE == 1 else 4) if DISTANCE else 12
     start,end=Vector(start),Vector(end)
-    o=cyl(name,(start+end)/2,r,(end-start).length,key,'Z',group,12,0)
+    o=cyl(name,(start+end)/2,r,(end-start).length,key,'Z',group,segments,0)
     o.rotation_euler=(end-start).to_track_quat('Z','Y').to_euler(); return o
 
 def ring(name,pos,profile,key='slate',group='body',axis='Y',n=48):
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 6)
     x,y,z=pos; vs=[]
     for radius,off in profile:
         for i in range(n):
@@ -156,6 +167,11 @@ for x in (1.95,9.5,-9.275,-3.325):
 box('engine hood',(4.48,0,2.82),(8.52,2.42,2.54),'slate',.085)
 box('long hood roof',(4.5,0,4.13),(8.6,2.5,.16),'slate',.06)
 for s in (-1,1):
+    if DISTANCE == 2:
+        # Preserve the broad paint bands with six closed boxes at far distance.
+        box('hood lower red band',(4.2025,s*1.265,2.08),(8.038,.045,.58),'red',0)
+        box('hood gold band',(4.2025,s*1.293,2.61),(8.038,.055,.5),'yellow',0)
+        box('hood upper red band',(4.2025,s*1.265,3.07),(8.038,.045,.42),'red',0)
     for i in range(10):
         x=.58+i*.805
         box('engine access panel',(x,s*1.23,2.61),(.78,.046,1.98),'slate',.023)
@@ -323,12 +339,12 @@ for s in (-1,1):
              (x+.04,1.83),(x+.17,1.94),(x+.31,1.72),(x+.34,1.59)]
         side('lower paint loss',pts,s*1.514,.007,'rust',bevel=0)
         wear_bounds.append((x,1.86,s*1.514,.37,'body'))
-    for i in range(140):
+    for i in range(8 if DISTANCE else 140):
         x=rng.uniform(-11.42,-1.18)
         if -7.72<x<-4.9: continue
         z=rng.uniform(1.62,2.24) if i<100 else rng.uniform(2.12,4.16)
         chip(x,z,s*1.513,rng.uniform(.04,.24))
-    for i in range(53):
+    for i in range(4 if DISTANCE else 53):
         x=rng.uniform(.4,7.5); z=rng.choice([rng.uniform(1.8,2.1),rng.uniform(3.34,3.54)])
         chip(x,z,s*(1.296 if z<2.1 else 1.261),rng.uniform(.02,.085))
     for i in range(16):
@@ -349,6 +365,9 @@ for s in (-1,1):
         e=empty('light:'+typ+('L' if s==1 else 'R'),parent=groups[g]); e.location=Vector(pos)-groups[g].location
         e.rotation_euler=Vector((1 if typ=='headlight' else -1,0,-.15)).to_track_quat('-Z','Y').to_euler()
         e['ss_light']=json.dumps({'type':'spot' if typ=='headlight' else 'point','color':col,'intensity':6 if typ=='headlight' else 2,'range':22 if typ=='headlight' else 4,'angle':48,'penumbra':.35,'pool':True,'beam':'soft' if typ=='headlight' else 'none','flare':True,'reflect':True,'shadow':'hero' if typ=='headlight' else 'none','heroPriority':2,'flicker':'none','animation':None,'powerGroup':'self','breakable':True,'emissiveNodes':[g+'_'+M['head' if typ=='headlight' else 'brake'].name],'tiers':'all'})
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('door corrugation', 'wheel dish', 'rolled rim', 'axle', 'brake link', 'step upright', 'boxcar ladder', 'engine access panel', 'roof seam', 'vent vertical fin', 'fan screen', 'lower paint loss', 'ladder rung', 'spring coil', 'tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('fan opening', 'headlamp bezel', 'rail down', 'safety stanchion', 'safety rail', 'wheel dish', 'crossmember', 'door corrugation', 'boxcar rib', 'grab', 'walkway', 'tank strap', 'wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*', 'rail wheel'))
+
 # Join only static / same motion group parts by material.
 joined=[]
 for group,parent in groups.items():
@@ -550,3 +569,7 @@ if a.render:
             scene.cycles.samples=24; scene.render.resolution_x=960; scene.render.resolution_y=540
         scene.render.filepath=str(out.with_name('game.png' if out.stem=='hero' else out.stem.replace('-ref','-game')+'.png'))
         bpy.ops.render.render(write_still=True); print('RENDER OK',scene.render.filepath)
+
+# Every full source export refreshes the native distance tiers.
+if "--glb" in sys.argv and not DISTANCE:
+    build_native_lods(__file__)

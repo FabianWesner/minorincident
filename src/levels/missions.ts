@@ -84,7 +84,7 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       def.items.push('fuse'); def.actors[fuseActor].item = 'fuse';
       const fuse = step('fuse','collect','Recover the fuse via the zoo',zoo,{ kind: 'items', ids: ['fuse'] },['hub']); fuse.onStart = [{ kind: 'spawn', group: fuseActor }];
       const lever = device('crossing','Raise the rail crossing gates',crossing,'lever',3,['fuse']); def.actors['device-crossing'].device!.requires = ['fuse']; checkpoint(lever);
-      const wreck = actor('blockade',bridge,'prop',180); def.actors[wreck].archetype = 'prop.barricade';
+      const wreck = actor('blockade',bridge,'barricade',180); def.actors[wreck].archetype = 'barricade.bridge-blockade';
       const blockade = step('blockade','custom','Clear the bridge wreck blockade',bridge,{ kind: 'destroy', actor: wreck },['hub']); blockade.onStart = [{ kind: 'spawn', group: wreck }]; checkpoint(blockade);
       end = reach('bridge','Return to the bridge',bridge,['breaker-3','crossing','blockade']).id; break;
     }

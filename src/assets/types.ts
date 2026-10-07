@@ -11,6 +11,10 @@ export interface AssetDef {
   decalTexture?: string;
   actionCategory?: 'melee' | 'ranged' | 'throwable' | 'ability';
   id: string;
+  /** Alternate inventory ID sharing a canonical model and its node/LOD contract. */
+  aliasOf?: string;
+  /** Presentation supplied by images, UI or procedural effects rather than a GLB. */
+  nonModel?: 'ui' | 'ability' | 'procedural';
   /** District code placeholder palette and collision ownership. */
   world?: { token: import("../data/palette").PaletteToken; solid: boolean };
   category: 'vehicle' | 'character' | 'infected' | 'weapon' | 'prop' | 'building' | 'tile' | 'fx' | 'ui';
@@ -27,10 +31,14 @@ export interface AssetDef {
   generatedLodRatios?: { lod1?: number; lod2?: number };
   /** Reviewed authored tiers: preserve geometry/normals instead of delivery decimation. */
   authoredLodRatios?: { lod1: number; lod2: number };
+  /** Reviewed distance variants: absolute caps; native vehicles/houses also have monotone file sizes. */
+  authoredLodTriangles?: { lod1: number; lod2: number };
   dimensions: { x: number; y: number; z: number; tolerance: number };
   forward: '+X';
   /** Uniform metres conversion applied to the entire exported assembly once. */
   sourceScale?: number;
+  /** Stronger lossless attribute compression for large scenery exports. */
+  compactMeshopt?: boolean;
   /** Forward in the standalone export, when it has no front marker (glTF Y-up). */
   sourceForward?: '+X' | '-X' | '+Z' | '-Z';
   frontNodes: string[];

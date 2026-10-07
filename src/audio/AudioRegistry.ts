@@ -30,7 +30,7 @@ export class AudioRegistry {
             })());
         return this.loads.get(category)!;
     }
-    async prepare(level = 'L1'): Promise<void> { const categories = new Set(Object.values(audioCues).filter(c => c.initial || c.category === `music-${level}`).map(c => c.category)); await Promise.all([...categories].map(c => this.load(c))); }
+    async prepare(level = 'L1', beds = true): Promise<void> { const categories = new Set(Object.values(audioCues).filter(c => c.initial && (beds || c.category !== 'ambience' && !c.category.startsWith('music-L')) || beds && c.category === `music-${level}`).map(c => c.category)); await Promise.all([...categories].map(c => this.load(c))); }
     /** Background load of the lazy banks (props, vehicles, dialogue) one after another, so they never compete with level start. */
     async preloadLazy(): Promise<void> { for (const category of new Set(Object.values(audioCues).filter(c => !c.initial && !c.category.startsWith('music-L')).map(c => c.category))) await this.load(category).catch(() => { }); }
     get(id: string, time: number, key = id, ignoreSpam = false): {

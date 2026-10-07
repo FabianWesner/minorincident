@@ -43,18 +43,19 @@ async function push(assetId = 'prop.trash-bin') {
   return { world, prop, dir };
 }
 
-describe('PO #15 pushable props', () => {
-  test('small props are dynamic, sleeping bodies outside the static collision and nav bake', async () => {
+describe('E26 authored pushable props', () => {
+  test('authored movable props are dynamic, sleeping bodies outside the static collision and nav bake', async () => {
     const world = await grove();
     const props = world.props!.items;
     expect(props.length).toBeGreaterThan(40);
     expect(props.filter(p => !p.fixed).every(p => p.body.isDynamic() && p.body.isSleeping())).toBe(true);
     // Only placements authored into static geometry stay fixed.
-    expect(props.filter(p => p.fixed).length).toBeLessThan(props.length * .1);
+    expect(props.filter(p => p.fixed).every(p => p.body.isFixed())).toBe(true);
     const ids = new Set(props.map(p => p.id.split('/')[1]));
     for (const d of world.districts!.districts) expect(d.decay.colliders.some(c => ids.has(c.id.split('/')[0]))).toBe(false);
-    // Large props stay static.
-    expect(props.some(p => /bench|hydrant|lamp|fence|veh\.|dumpster/.test(p.assetId))).toBe(false);
+    // Medium and heavy props now follow their authored permission; buildings/vehicles retain their systems.
+    expect(props.some(p => p.assetId === 'prop.bench')).toBe(true);
+    expect(props.some(p => /hydrant|lamp|veh\./.test(p.assetId))).toBe(false);
     // Pushed props never block paths: the nav bake ignores them (a bake that included them has fewer open cells).
     const open = (nav: { cells: Uint8Array }) => nav.cells.reduce((n, c) => n + (c ? 1 : 0), 0);
     const withProps = bakeNav(world.districts!.districts.map(d => ({ layout: d.layout, origin: d.origin,

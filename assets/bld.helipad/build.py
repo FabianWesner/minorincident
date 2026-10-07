@@ -13,11 +13,12 @@ import bmesh
 from mathutils import Vector
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
-from sslib.lod import export_lods, rebuild_from_baked
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE = Path(__file__).resolve().parent
 if '--lod-only' in sys.argv:
-    rebuild_from_baked(HERE/'model.glb', planar_prefixes=(), planar_nodes=('body_pal_schoolBusYellow', 'body_pal_picketWhite'))
+    build_native_lods(__file__)
     sys.exit(0)
 
 p = argparse.ArgumentParser()
@@ -69,6 +70,7 @@ collider['size'] = [10,10,.75]
 
 
 def mesh(name, vertices, faces, token, parent=body, bevel=0):
+    if DISTANCE: bevel = 0
     data=bpy.data.meshes.new(name); data.from_pydata(vertices,[],faces); data.update()
     o=bpy.data.objects.new(name,data); scene.collection.objects.link(o)
     o.data.materials.append(M[token]); o.parent=parent
@@ -86,6 +88,7 @@ def mesh(name, vertices, faces, token, parent=body, bevel=0):
 
 
 def box(name, c, size, token, parent=body, bevel=.025):
+    if DISTANCE: bevel = 0
     x,y,z=[s/2 for s in size]
     vs=[(-x,-y,-z),(x,-y,-z),(x,y,-z),(-x,y,-z),(-x,-y,z),(x,-y,z),(x,y,z),(-x,y,z)]
     o=mesh(name,vs,[(3,2,1,0),(4,5,6,7),(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7)],token,parent,min(bevel,min(size)*.3))
@@ -94,6 +97,7 @@ def box(name, c, size, token, parent=body, bevel=.025):
 
 
 def cylinder(name, c, r, height, token, parent=body, sides=24, bevel=.01):
+    if DISTANCE: bevel = 0; sides = min(sides, 12 if DISTANCE == 1 else 8)
     vs=[(r*math.cos(2*math.pi*i/sides),r*math.sin(2*math.pi*i/sides),z) for z in (-height/2,height/2) for i in range(sides)]
     fs=[tuple(reversed(range(sides))),tuple(range(sides,2*sides))]
     fs += [(i,(i+1)%sides,(i+1)%sides+sides,i+sides) for i in range(sides)]
@@ -198,7 +202,7 @@ def hazard(side,u,width=1.60):
 hazard(0,-2.502); hazard(1,.0,3.27)
 
 # Broad landing circle and square-ended H, separately raised above the pavement.
-N=96; outer=3.72; inner=3.44
+N=(48 if DISTANCE==1 else 32) if DISTANCE else 96; outer=3.72; inner=3.44
 vs=[(r*math.cos(2*math.pi*i/N),r*math.sin(2*math.pi*i/N),z) for z in (.759,.767) for r in (inner,outer) for i in range(N)]
 fs=[]
 for i in range(N):
@@ -259,6 +263,9 @@ for index,(x,y) in enumerate([(-4.35,-4.35),(4.35,-4.35),(4.35,4.35),(-4.35,4.35
     anchor=empty('light:landing_%d'%index,(0,0,.60),lamp)
     anchor['ss_light']=json.dumps({'type':'point','color':'light_sodium','intensity':2.5,'range':3.5,'pool':True,'beam':'none','flare':True,'reflect':True,'shadow':'none','heroPriority':1,'flicker':'none','animation':None,'powerGroup':'self','breakable':True,'emissiveNodes':['lamp_%d_emi_windowGlow'%index],'tiers':'all'})
 
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('Fresnel lens rib', 'Worn paint fleck', 'Circle paint chip', 'H paint chip', 'Deck crack', 'Crack branch', 'Concrete fixing recess', 'Concrete spall', 'Foot bolt'), far_omit=('Bolt', 'fixing', 'lamp guard','Concrete pore','Lens protective upright','Lens lower gasket','Foot rim'))
+
 # Apply bevels and join static geometry by material and parent motion group.
 for o in list(scene.objects):
     if o.type=='MESH':
@@ -291,7 +298,6 @@ if args.glb:
     ao.bake_all(meshes,samples=32)
     base=statistics(); lods={}
     assert base['triangles']<=20000, 'Helipad LOD0 exceeds its 20k triangle budget'
-    export_lods(Path(args.glb), meshes, planar_prefixes=(), planar_nodes=('body_pal_schoolBusYellow', 'body_pal_picketWhite'))
 
 if args.render:
     # Studio-only objects are added after GLB export.
@@ -326,3 +332,6 @@ if args.render:
     tree.links.new(rl.outputs['Image'],gl.inputs['Image']); tree.links.new(gl.outputs['Image'],output.inputs['Image'])
     scene.render.filepath=args.render; bpy.ops.render.render(write_still=True)
     print('OK rendered '+args.render)
+
+if args.glb and not DISTANCE:
+    build_native_lods(__file__)

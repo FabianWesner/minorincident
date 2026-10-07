@@ -97,6 +97,7 @@ Gamepad support is **not in v1** (Q17). Action keys can be rebound; 1/2/3 and Sh
 
 - Damage = base × upgrade multipliers × (crit 1.5 for headshots by precision weapons on non-armored heads; optional).
 - **Knockback** and **stagger** come from data. Heavy hits stagger infected for 0.3–0.8 s.
+- **Fast clicks until dead** (product owner, 2026-10-07): the core melee loop is rapid clicking on one target until it dies. Normal hits never knock an infected down and never push it out of reach: knockback ≤ 0.4 m, flinch ≤ 0.25 s, and the next click always connects without waiting. Knockdowns only come from the last hit (death), explicit heavy finishers and special actions; a downed infected stays hittable (ground hits) and the player never has to wait for it to stand up. The courier auto-follows a target that slid slightly out of reach.
 - **Status effects:** burning (DoT, panic movement), stunned, slowed, toxic (from hazmat).
 - **Friendly fire:** explosives hurt the player at 30% and hurt civilians or escorts at 100%. This makes positioning matter while staying forgiving.
 - The player dies at 0 HP. They respawn at the last checkpoint and keep the level's pickups. There are no lives.

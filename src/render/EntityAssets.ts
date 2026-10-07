@@ -51,7 +51,9 @@ export class EntityAssets extends Group {
   }
   async ready(): Promise<void> {
     for (const entity of this.world.entities.iterate()) {
-      if (entity.id === 1 || this.world.npcs && (entity.companion || entity.escort || entity.civilian) || this.world.vehicles?.cars.has(entity.id) || entity.faction === 'infected' || this.pending.has(entity.id)) continue;
+      // BicycleView owns the animated cargo bike. Loading it again here draws a
+      // second rigid bike and downloads an unused phone LOD1 alongside its rig.
+      if (entity.kind === 'physics-prop' || entity.id === 1 || entity.bicycle || this.world.npcs && (entity.companion || entity.escort || entity.civilian) || this.world.vehicles?.cars.has(entity.id) || entity.faction === 'infected' || this.pending.has(entity.id)) continue;
       const id = productionObstacleAssets[entity.archetype] ?? actorAssets[entity.archetype] ?? (manifest.some(a => a.id === entity.archetype) ? entity.archetype : entity.kind === 'escort' || entity.faction === 'civilian' ? 'npc.civilian-man-a' : undefined);
       if (!id) continue;
       const target = this.view?.cameraTarget ?? this.world.entities.get(1)!.transform;

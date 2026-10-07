@@ -118,3 +118,13 @@ test('@E12 driver death ejects and reaches checkpoint respawn through the normal
   world.player!.damage(1000, world.tick); ticks(1); expect(world.vehicles!.active).toBe(null); expect(world.entities.get(1)!.hidden).toBe(false);
   ticks(120); expect(world.entities.get(1)!.health.current).toBe(100); expect(mission.state.stats.deaths).toBe(1); expect(mission.state.phase).toBe('playing');
 });
+test('@E26 mission barricade actors use real HP/blockers, emit filtered break events and restore at checkpoints', async () => {
+  const def = definition({ kind: 'event', type: 'barricade.broken', actor: 'rail', count: 1 });
+  def.actors.rail = { kind: 'barricade', archetype: 'barricade.bridge-blockade', faction: 'environment', anchor: 'goal', hp: 180 };
+  def.groups.rail = ['rail']; def.onStart = [{ kind: 'spawn', group: 'rail' }];
+  const mission = await load(def); mission.begin(); const id = mission.state.actors.rail;
+  expect(world.barricades!.barricadeIntact('barricade.bridge-blockade')).toBe(true); expect(world.entities.get(id)!.kind).toBe('barricade');
+  mission.checkpoint('C'); world.hazards!.hit(id, 180, 'bullet'); ticks(1);
+  expect(mission.state.phase).toBe('result'); expect(world.barricades!.barricadeIntact('barricade.bridge-blockade')).toBe(false);
+  mission.restore('C'); expect(world.barricades!.barricadeIntact('barricade.bridge-blockade')).toBe(true); expect(world.entities.get(id)!.health.current).toBe(180);
+});

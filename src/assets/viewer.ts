@@ -33,9 +33,9 @@ export async function assetViewer(): Promise<void> {
   const controls = new OrbitControls(camera, renderer.domElement);
   const events: PlaceholderLog[] = [];
   const registry = new AssetRegistry((event) => { events.push(event); console.info(event.type, event.id, event.reason); }, { renderer,
-    // Explicit production inspection leaves normal registry status gates in place.
+    // Explicit inspection shows pending source files without stale registration metadata.
     manifest: (import.meta.env.DEV || params.has('test')) && params.has('production')
-      ? (manifest as AssetDef[]).map(def => def.id === id ? { ...def, status: 'integrated', ...(params.has('inspection') ? { requiredNodes: [], animatedNodes: [], sockets: [] } : {}) } : def) : undefined,
+      ? (manifest as AssetDef[]).map(def => def.id === id ? { ...def, status: 'integrated', ...(params.has('inspection') ? { requiredNodes: [], animatedNodes: [], sockets: [], dimensions: { ...def.dimensions, tolerance: Number.POSITIVE_INFINITY } } : {}) } : def) : undefined,
   });
   const decay = document.querySelector<HTMLSelectElement>('#decay')!;
   for (const name of registry.definition(id).decayVariants) { const option = new Option(name,name); decay.add(option); }

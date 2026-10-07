@@ -11,6 +11,13 @@ import bpy
 import bmesh
 from mathutils import Vector, Matrix, Euler
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
+if '--lod-only' in sys.argv:
+    build_native_lods(__file__)
+    sys.exit(0)
+
 HERE = Path(__file__).resolve().parent
 p = argparse.ArgumentParser()
 p.add_argument('--render'); p.add_argument('--view', default='ref')
@@ -67,6 +74,7 @@ for s in (-1,1):
 bpy.context.view_layer.update()
 
 def finish(o,name,key,group='body',bevel=0,detail=0):
+    if DISTANCE: bevel = 0
     o.name=name; o.data.materials.append(M[key])
     if bevel:
         mod=o.modifiers.new('soft bevel','BEVEL'); mod.width=bevel
@@ -107,12 +115,14 @@ def beam(name,v1,v2,w,key,group='body',detail=0):
     o.rotation_euler=(v2-v1).to_track_quat('Z','Y').to_euler(); return o
 
 def cyl(name,pos,r,depth,key,group='body',axis='Y',n=40,detail=0):
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 6)
     bpy.ops.mesh.primitive_cylinder_add(vertices=n,radius=r,depth=depth,location=pos)
     o=bpy.context.object; o.rotation_euler=(math.pi/2,0,0) if axis=='Y' else (0,math.pi/2,0) if axis=='X' else (0,0,0)
     bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
     return finish(o,name,key,group,.005,detail)
 
 def ring(name,x,y,z,profile,key,group='body',n=64,detail=0):
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 6)
     vs=[(x+r*math.sin(i*math.tau/n),y+dy,z+r*math.cos(i*math.tau/n)) for r,dy in profile for i in range(n)]
     fs=[(j*n+i,j*n+(i+1)%n,((j+1)%len(profile))*n+(i+1)%n,((j+1)%len(profile))*n+i) for j in range(len(profile)) for i in range(n)]
     o=mesh(name,vs,fs,key,group,detail=detail)
@@ -149,7 +159,7 @@ deck('hood',.83,2.17,1.205,1.11)
 deck('trunk',-2.17,-1.53,1.13,1.195)
 # Broad crowned roof has a soft perimeter, not a flat overhanging board.
 roof_verts=[]; roof_faces=[]
-n,m=8,6
+n,m=(4,3) if DISTANCE == 1 else (2,2) if DISTANCE == 2 else (8,6)
 for level in (0,1):
     for i in range(n+1):
         x=-1.22+1.68*i/n
@@ -323,6 +333,9 @@ for s in (-1,1):
     for typ,g,token,intensity,direction in [('headlight','lampHead'+suffix,'light_window_warm',6,(1,0,-.12)),('brake','lampBrake'+suffix,'light_siren_red',2,(-1,0,0))]:
         e=empty('light:'+typ+suffix,parent=groups[g]); e.rotation_euler=Vector(direction).to_track_quat('-Z','Y').to_euler()
         e['ss_light']=json.dumps({'type':'spot' if typ=='headlight' else 'point','color':token,'intensity':intensity,'range':18 if typ=='headlight' else 3,'angle':48,'penumbra':.35,'pool':True,'beam':'soft' if typ=='headlight' else 'none','flare':True,'reflect':True,'shadow':'hero' if typ=='headlight' else 'none','heroPriority':2,'flicker':'none','animation':None,'powerGroup':'self','breakable':True,'emissiveNodes':[g+'_'+M['head' if typ=='headlight' else 'red'].name],'tiers':'all'})
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, fit_dimensions=True, omit=('tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*',))
+
 # Merge by material within the appropriate rigid motion group.
 joined=[]
 for group,parent in groups.items():
@@ -428,3 +441,7 @@ if a.render:
             scene.render.resolution_x=960; scene.render.resolution_y=540; scene.cycles.samples=24
         bpy.ops.render.render(write_still=True)
         print('RENDER OK',scene.render.filepath)
+
+# Every full source export refreshes the native distance tiers.
+if "--glb" in sys.argv and not DISTANCE:
+    build_native_lods(__file__)

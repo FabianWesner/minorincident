@@ -11,6 +11,13 @@ import bpy
 import bmesh
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
+if '--lod-only' in sys.argv:
+    build_native_lods(__file__)
+    sys.exit(0)
+
 HERE = Path(__file__).resolve().parent
 p = argparse.ArgumentParser()
 p.add_argument('--render'); p.add_argument('--glb'); p.add_argument('--view', default='ref')
@@ -70,6 +77,7 @@ body=empty('body',parent=root)
 
 
 def finish(o,name,mat,parent=body,bevel=.02):
+    if DISTANCE: bevel = 0
     o.name=name
     o.data.materials.append(M[mat])
     if bevel:
@@ -111,6 +119,7 @@ def rod(name,start,end,width,mat,parent=body):
 
 
 def cyl(name,loc,r,depth,mat,parent=body,axis='Y',vertices=48):
+    if DISTANCE: vertices = min(vertices, 12 if DISTANCE == 1 else 6)
     bpy.ops.mesh.primitive_cylinder_add(vertices=vertices,radius=r,depth=depth,location=loc)
     o=bpy.context.object
     if axis=='Y':o.rotation_euler.x=math.pi/2
@@ -120,7 +129,7 @@ def cyl(name,loc,r,depth,mat,parent=body,axis='Y',vertices=48):
 
 
 def torus(name,loc,major,minor,mat,parent=body):
-    bpy.ops.mesh.primitive_torus_add(major_segments=64,minor_segments=12,location=loc,major_radius=major,minor_radius=minor,rotation=(math.pi/2,0,0))
+    bpy.ops.mesh.primitive_torus_add(major_segments=(16 if DISTANCE == 1 else 12) if DISTANCE else 64,minor_segments=(4 if DISTANCE == 1 else 3) if DISTANCE else 12,location=loc,major_radius=major,minor_radius=minor,rotation=(math.pi/2,0,0))
     o=bpy.context.object
     for f in o.data.polygons:f.use_smooth=True
     return finish(o,name,mat,parent,0)
@@ -286,6 +295,9 @@ def clean_mesh(o):
     if bad:bmesh.ops.delete(bm,geom=bad,context='FACES')
     bm.to_mesh(o.data);bm.free();o.data.update()
 
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('Arch lip', 'Window seal', 'Door moulding', 'Lens fluting', 'wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*',))
+
 # Apply modifiers then join only within each joint/material partition.
 for o in list(scene.objects):
     if o.type!='MESH':continue
@@ -383,3 +395,7 @@ if a.render:
         scene.render.resolution_x=width;scene.render.resolution_y=height;scene.render.resolution_percentage=100
         scene.render.filepath=str(path);bpy.ops.render.render(write_still=True)
         print('RENDER OK',path)
+
+# Every full source export refreshes the native distance tiers.
+if "--glb" in sys.argv and not DISTANCE:
+    build_native_lods(__file__)

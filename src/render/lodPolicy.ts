@@ -7,6 +7,15 @@ export type Lod = 'lod0' | 'lod1' | 'lod2';
 export const lodPolicy = { lod1From: 45, lod2From: 90, hysteresis: 4 } as const;
 /** Low tier (phones) keeps its measured budget: LOD1 near, LOD2 beyond 16 m (props always LOD2). */
 export const lowLodPolicy = { lod1From: 0, lod2From: 16, hysteresis: 2 } as const;
+/** Initial phone download: props only draw LOD2; LOD1 is needed only around the spawn.
+ * Other buildings start with LOD2 and acquire their close tier after play starts. */
+export function initialDistrictLods(low: boolean, prop: boolean, distance: number, streaming = false, heroAtSpawn = false): Lod[] {
+  // WebGL warms spawn LOD0 before play; WebGPU keeps the original nearby LOD1
+  // until its hero swaps. Intermediate tiers outside the spawn stream later.
+  if (!low) return streaming && (heroAtSpawn || distance > lodPolicy.lod1From) ? ['lod2'] : ['lod1', 'lod2'];
+  if (prop || distance > lowLodPolicy.lod2From) return ['lod2'];
+  return streaming ? ['lod1'] : ['lod1', 'lod2'];
+}
 const rank: Record<Lod, number> = { lod0: 0, lod1: 1, lod2: 2 };
 const bands: Lod[] = ['lod0', 'lod1', 'lod2'];
 export function pickLod(distance: number, previous?: Lod, policy: { lod1From: number; lod2From: number; hysteresis: number } = lodPolicy): Lod {

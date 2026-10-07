@@ -45,10 +45,11 @@ test('T-LOAD-01 @perf @load production L1 load: critical download, title and Sta
     const base = `${tls ? 'https' : 'http'}://127.0.0.1:${port}/`;
     runs.push(...await measure(browser, base, 'desktop'));
     runs.push(...await measure(browser, base, 'mobile', ['cold']));
+    runs.push(...await measure(browser, base, 'phone', ['cold']));
   } finally { await browser.close(); await stop(); }
   const summary = runs.map(run => ({ ...run, files: undefined, slowest: run.slowest.slice(0, 5) }));
   writeFileSync(`${output}/load.json`, JSON.stringify({ at: new Date().toISOString(), protocol: tls ? 'h2' : 'http/1.1', budgets, runs: summary }, null, 2) + '\n');
-  const [desktopCold, desktopWarm, mobileCold] = runs;
+  const [desktopCold, desktopWarm, mobileCold, phoneCold] = runs;
   for (const run of runs) expect(run.errors.filter(e => e.startsWith('pageerror')), `${run.profile} ${run.cache}`).toEqual([]);
   expect(desktopCold.uniqueCriticalBytes).toBeLessThanOrEqual(budgets.criticalBytes);
   expect(desktopCold.criticalRequests).toBeLessThanOrEqual(budgets.criticalRequests);
@@ -61,4 +62,11 @@ test('T-LOAD-01 @perf @load production L1 load: critical download, title and Sta
   expect(desktopCold.startToPlayableMs).toBeLessThanOrEqual(budgets.desktopCold);
   expect(mobileCold.startToPlayableMs).toBeLessThanOrEqual(budgets.mobileCold);
   expect(desktopWarm.startToPlayableMs).toBeLessThanOrEqual(budgets.warm);
+  expect(phoneCold.startToPlayableMs).toBeLessThanOrEqual(budgets.mobileCold);
+  // These district props draw LOD2 everywhere on phones. Their never-drawn LOD1
+  // must neither delay startup nor compete with later building-tier streaming.
+  for (const id of ['prop.bench', 'prop.bbq', 'prop.picket-fence']) {
+    expect(phoneCold.files.some(file => file.url.endsWith(`/${id}.lod2.glb`)), id).toBe(true);
+    expect(phoneCold.files.some(file => file.url.endsWith(`/${id}.lod1.glb`)), id).toBe(false);
+  }
 });
