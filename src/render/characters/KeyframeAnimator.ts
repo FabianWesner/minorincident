@@ -4,6 +4,8 @@ import type { AnimationState, SurvivorState } from '../../data/survivor';
 import { authoredClips, retargetClip, settleGroundPose, strides, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 
+const locoStates = new Set(['idle', 'walk', 'run', 'start', 'stop', 'turn-left', 'turn-right']);
+const smooth = (a: number, b: number, x: number): number => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 /** Rider state from the bicycle (crank angle in radians, steer −1..1). */
 export interface RidePose { pedal: number; steer: number }
 /** Authored glTF actions, 140 ms crossfades, speed-matched strides and upper-body layers.
@@ -25,6 +27,9 @@ export class KeyframeAnimator {
   private readonly backpack: Object3D | undefined;
   private readonly backpackRest: number;
   private carryWeight = 0;
+  private mode = '';
+  private locoSpeed = 0;
+  private locoWeight = 1;
   private lunge = 0;
   private readonly scaleScratch = new Vector3();
   private readonly carryPose: [Object3D, Quaternion][] = [];
@@ -56,7 +61,7 @@ export class KeyframeAnimator {
   }
   update(pose: SurvivorState, tick: number, alpha = 1, turn = 0, ride?: RidePose): void {
     const time = (tick + alpha - 1) / 60, dt = Math.max(0, time - this.lastTime); this.lastTime = time;
-    if (dt === 0 && this.base) return;
+    if (dt === 0 && this.evaluations > 0) return;
     this.state = pose.animation;
     // The view parent follows the collision-resolved, interpolated sim position.
     const position = this.rig.root.parent ? this.rig.root.getWorldPosition(this.worldPosition) : undefined;
@@ -83,20 +88,33 @@ export class KeyframeAnimator {
     else if (!strike && !['idle','walk','run'].includes(pose.animation)) name = pose.animation;
     // E19 courier: seated pedalling while riding (mount/dismount play as actions).
     else if (ride) name = 'ride';
-    if (this.clip !== name || strike && !upper && this.attackTick !== pose.animationTick || !this.base) {
-      const previous = this.base; this.base = this.play(name, !!strides[name] || name === 'idle');
-      if (previous && previous !== this.base) previous.crossFadeTo(this.base, strike ? .06 : .2, false);
-      this.clip = name;
+    // PO #2/#4 (puppet walk, flicker): locomotion is a speed blend-space (idle / walk / run weighted by a
+    // smoothed ground speed, all on one stride-matched phase), never discrete clip restarts; start/stop/turn
+    // pops are gone. Other actions fade over it.
+    const loco = locoStates.has(name), fade = strike ? .06 : .2;
+    this.locoSpeed += (speed - this.locoSpeed) * (1 - Math.exp(-dt / .1));
+    if (!loco && (this.mode !== name || strike && !upper && this.attackTick !== pose.animationTick || !this.base)) {
+      this.base?.fadeOut(fade); this.base = this.play(name, !!strides[name] || name === 'idle').fadeIn(fade);
+      this.mode = name; this.clip = name;
+    } else if (loco && this.mode !== 'loco') { this.base?.fadeOut(.2); this.base = undefined; this.mode = 'loco'; }
+    this.locoWeight = Math.max(0, Math.min(1, this.locoWeight + (loco ? 1 : -1) * dt / (loco ? .2 : fade)));
+    {
+      const s = this.locoSpeed, move = smooth(.04, .55, s), run = smooth(1.9, 3.3, s);
+      const stride = (strides.walk + (strides.run - strides.walk) * run) * strideScale(this.rig.root);
+      if (s > .01) this.phase = (this.phase + s * dt / stride) % 1;
+      const weights: [string, number][] = [['idle', 1 - move], ['walk', move * (1 - run)], ['run', move * run]];
+      for (const [clip, w] of weights) {
+        const action = this.actions.get(clip)!;
+        if (!action.isRunning()) action.reset().setLoop(LoopRepeat, Infinity).play();
+        action.enabled = true; action.stopFading();
+        if (clip !== 'idle') { action.time = this.phase * action.getClip().duration; action.setEffectiveTimeScale(0); } else action.setEffectiveTimeScale(1);
+        action.setEffectiveWeight(w * this.locoWeight);
+      }
+      if (loco) this.clip = weights.reduce((a, b) => b[1] > a[1] ? b : a)[0];
     }
     if (name === 'ride' && this.base && ride) {
       // Pedalling follows the bike's crank; no stride accumulation while seated.
       this.base.time = ((ride.pedal / (Math.PI * 2)) % 1 + 1) % 1 * this.base.getClip().duration; this.base.setEffectiveTimeScale(0);
-    } else if (strides[name] && this.base) {
-      this.phase = (this.phase + speed * dt / (strides[name] * strideScale(this.rig.root))) % 1;
-      // Keep the outgoing gait on the same support phase throughout crossfade.
-      for (const [clip, action] of this.actions) if (strides[clip]) {
-        action.time = this.phase * action.getClip().duration; action.setEffectiveTimeScale(0);
-      }
     }
     if (upper && strike && this.attackTick !== pose.animationTick) { this.overlay?.fadeOut(.12); this.overlay = this.play(`${strike}:upper`, false).fadeIn(.05); }
     else if (!upper && this.overlay) { this.overlay.fadeOut(.12); this.overlay = undefined; }
