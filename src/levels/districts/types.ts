@@ -73,6 +73,8 @@ export interface DistrictLayout {
   acousticZones: { id: string; preset: string; polygon: Point[] }[];
   surfaces: {
     surface: "asphalt" | "grass" | "wood" | "tile" | "metal" | "gravel";
+    /** Top of authored paving boxes; absent on older exports and flat semantic zones. */
+    height?: number;
     polygon: Point[];
   }[];
   layers: { tier: Tier; remove: string[]; disableLights: string[] }[];

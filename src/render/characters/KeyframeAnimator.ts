@@ -3,7 +3,7 @@ import { meleeChains } from '../../data/meleeCombos';
 import type { AnimationState, SurvivorState } from '../../data/survivor';
 import { authoredClips, retargetClip, skinClips, skinGait, settleGroundPose, strides, strideScale } from './clips';
 import type { CharacterRig } from './rig';
-import { GroundContacts } from './GroundContacts';
+import { CourierGroundContacts } from './CourierGroundContacts';
 
 const locoStates = new Set(['idle', 'walk', 'run', 'start', 'stop', 'turn-left', 'turn-right']);
 const smooth = (a: number, b: number, x: number): number => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
@@ -46,12 +46,12 @@ export class KeyframeAnimator {
   private riding = false;
   private rideChangedAt = -1;
   rideWeight = 0;
-  private readonly ground: GroundContacts | undefined;
+  private readonly ground: CourierGroundContacts | undefined;
   private readonly sampledPose: { node: Object3D; position: Vector3; rotation: Quaternion }[] = [];
   constructor(private readonly rig: CharacterRig, clipSource?: typeof skinClips) {
     this.skin = clipSource === skinClips;
     if (this.skin) for (const node of Object.values(rig)) this.sampledPose.push({ node, position: node.position.clone(), rotation: node.quaternion.clone() });
-    if (this.skin) this.ground = new GroundContacts(rig);
+    if (this.skin) this.ground = new CourierGroundContacts(rig);
     this.strides = clipSource === skinClips ? { ...strides, ...Object.fromEntries(Object.entries(skinGait).map(([k, g]) => [k, g.stride])) } : strides;
     this.mixer = new AnimationMixer(rig.root);
     this.backpack = rig.root.getObjectByName('backpackSocket'); this.backpackRest = this.backpack?.rotation.z ?? 0;

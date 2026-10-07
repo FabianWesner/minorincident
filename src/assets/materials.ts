@@ -29,9 +29,10 @@ export class AssetMaterials {
         if (root.userData.diner && token === 'survivorRed') for (let parent = node.parent; parent; parent = parent.parent) if (parent.name === 'door_front') { open = true; break; }
         const emissive = match[1] === 'emi' || open || world && token === 'windowGlow' ? 2 : 0;
         const vertexColors = !emissive && node.geometry.hasAttribute('color');
-        const material = world ? this.shading.world(token, emissive, vertexColors) : this.shading.asset(token, emissive, vertexColors);
+        // Preserve authored thin hair/cloth faces in both palette and crowd bakes.
+        const material = world ? this.shading.world(token, emissive, vertexColors, source.side) : this.shading.asset(token, emissive, vertexColors, source.side);
         // Hydrants are an explicit D2 saturated-red exception; use the figure identity swatch.
-        const result = hydrant && token === 'survivorRed' ? this.shading.asset(token, emissive, vertexColors) : material;
+        const result = hydrant && token === 'survivorRed' ? this.shading.asset(token, emissive, vertexColors, source.side) : material;
         result.userData.sharedPalette = true;
         return result;
       };

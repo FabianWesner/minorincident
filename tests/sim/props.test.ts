@@ -44,6 +44,14 @@ async function push(assetId = 'prop.trash-bin') {
 }
 
 describe('E26 authored pushable props', () => {
+  test('a fallen knocked prop keeps its ID, displaced location and health', async () => {
+    const world = await grove(), prop = world.props!.items.find(p => !p.fixed)!;
+    const hp = world.entities.get(prop.entityId)!.health.current, x = prop.home.p[0] + 3, z = prop.home.p[2] + 3;
+    prop.body.setTranslation({ x, y: -6, z }, true); world.props!.postPhysics();
+    expect(world.entities.get(prop.entityId)!.health.current).toBe(hp);
+    expect(prop.body.isEnabled()).toBe(true); expect(prop.pose.p[0]).toBe(x); expect(prop.pose.p[2]).toBe(z);
+    expect(prop.pose.p[1]).toBeGreaterThan(0);
+  });
   test('authored movable props are dynamic, sleeping bodies outside the static collision and nav bake', async () => {
     const world = await grove();
     const props = world.props!.items;
@@ -107,8 +115,11 @@ describe('E26 authored pushable props', () => {
     expect(prop.pose).toEqual(prop.home);
     world.props!.restore(saved);
     expect(prop.pose).toEqual(pose);
-    world.setTier(1);
-    const rebuilt = world.props!.items.find(i => i.id === prop.id);
-    if (rebuilt) { expect(rebuilt.pose.p).toEqual(pose.p); expect(rebuilt.body.translation().x).toBeCloseTo(pose.p[0], 4); }
+    for (const tier of [1, 2, 3, 4, 5] as const) {
+      world.setTier(tier);
+      const rebuilt = world.props!.items.find(i => i.id === prop.id)!;
+      expect(rebuilt).toBeDefined(); expect(rebuilt.entityId).toBe(prop.entityId);
+      expect(rebuilt.pose.p).toEqual(pose.p); expect(rebuilt.body.translation().x).toBeCloseTo(pose.p[0], 4);
+    }
   });
 });

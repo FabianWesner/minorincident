@@ -1,0 +1,17 @@
+
+Running 6 tests using 1 worker
+
+{"phase":"before","run":1,"tier":"high","p95":35.79999999999927,"sim":4.199999809265137,"update":0.9000005722045898,"render":31.300000190734863,"triangles":1812429,"draws":66,"profile":{"other":{"drawCalls":29,"triangles":44578},"shadows":{"drawCalls":29,"triangles":312651},"crowd":{"drawCalls":8,"triangles":1455200}}}
+  ✓  1 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › high › horde budget high run 1 @E18-AC01 @E18-AC09 @perf (18.8s)
+{"phase":"before","run":2,"tier":"high","p95":30.599999999998545,"sim":4.100000381469727,"update":1,"render":29.399999618530273,"triangles":1812429,"draws":66,"profile":{"other":{"drawCalls":29,"triangles":44578},"shadows":{"drawCalls":29,"triangles":312651},"crowd":{"drawCalls":8,"triangles":1455200}}}
+  ✓  2 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › high › horde budget high run 2 @E18-AC01 @E18-AC09 @perf (17.7s)
+{"phase":"before","run":3,"tier":"high","p95":32.20000000000073,"sim":4.5,"update":1,"render":29.800000190734863,"triangles":1812429,"draws":66,"profile":{"other":{"drawCalls":29,"triangles":44578},"shadows":{"drawCalls":29,"triangles":312651},"crowd":{"drawCalls":8,"triangles":1455200}}}
+  ✓  3 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › high › horde budget high run 3 @E18-AC01 @E18-AC09 @perf (16.6s)
+{"phase":"before","run":1,"tier":"low","p95":15.399999999999636,"sim":5.100000381469727,"update":1.8000001907348633,"render":9.199999809265137,"triangles":857605,"draws":65,"profile":{"other":{"drawCalls":29,"triangles":13106},"shadows":{"drawCalls":29,"triangles":285779},"crowd":{"drawCalls":7,"triangles":558720}}}
+  ✓  4 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › low › horde budget low run 1 @E18-AC01 @E18-AC09 @perf (23.0s)
+{"phase":"before","run":2,"tier":"low","p95":15.399999999999636,"sim":5.09999942779541,"update":1.9000005722045898,"render":9,"triangles":857605,"draws":65,"profile":{"other":{"drawCalls":29,"triangles":13106},"shadows":{"drawCalls":29,"triangles":285779},"crowd":{"drawCalls":7,"triangles":558720}}}
+  ✓  5 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › low › horde budget low run 2 @E18-AC01 @E18-AC09 @perf (22.1s)
+{"phase":"before","run":3,"tier":"low","p95":15.5,"sim":5,"update":1.6999998092651367,"render":8.699999809265137,"triangles":857605,"draws":65,"profile":{"other":{"drawCalls":29,"triangles":13106},"shadows":{"drawCalls":29,"triangles":285779},"crowd":{"drawCalls":7,"triangles":558720}}}
+  ✓  6 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › low › horde budget low run 3 @E18-AC01 @E18-AC09 @perf (20.6s)
+
+  6 passed (2.0m)

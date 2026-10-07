@@ -32,12 +32,13 @@
     {
       "command": [
         "sh",
-        "tools/e2e-lock.sh",
+        "tools/sim-lock.sh",
         "npx",
         "vitest",
         "run",
         "-t",
         "@(?:E18)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
         "--reporter=default",
         "--reporter=json",
         "--outputFile=test-results/epics/E18/vitest.json"
@@ -57,7 +58,7 @@
         "@E18-AC08|@E18-AC09|WebGPU low tier parity",
         "--workers=2"
       ],
-      "exitCode": 0
+      "exitCode": 1
     },
     {
       "command": [
@@ -68,6 +69,7 @@
         "test",
         "tests/perf/e18-desktop.spec.ts",
         "tests/perf/e18-devices.spec.ts",
+        "tests/perf/horde-budget.spec.ts",
         "--project=chromium",
         "--workers=1"
       ],

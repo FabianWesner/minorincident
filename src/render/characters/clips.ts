@@ -23,7 +23,7 @@ export function cadenceStride(name: string, scale: number, speed: number): numbe
   return Math.max(authored, Math.max(0, speed) / cyclesPerSecond);
 }
 /** Planted support per gait: stance fraction of the cycle and swing-foot lift (m). */
-const gaitShape: Record<string, { stance: number; lift: number }> = {
+export const gaitShape: Record<string, { stance: number; lift: number }> = {
   walk: { stance: .6, lift: .055 }, shamble: { stance: .6, lift: .055 }, 'npc-walk': { stance: .6, lift: .055 }, 'npc-walk-relaxed': { stance: .6, lift: .055 },
   run: { stance: .5, lift: .085 }, 'infected-run': { stance: .5, lift: .085 }, 'civ-flee': { stance: .5, lift: .08 },
   'infected-frail': { stance: .56, lift: .03 }, 'infected-lurch': { stance: .5, lift: .07 }, 'infected-sprint': { stance: .4, lift: .12 },

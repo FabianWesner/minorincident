@@ -31,7 +31,7 @@ import { Occlusion } from './Occlusion';
 import { PostFx } from './PostFx';
 import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
 import type { TimeOfDay } from '../data/timeOfDay';
-import { Vector3 } from 'three';
+import { Quaternion, Vector3 } from 'three';
 import { VehicleFeedback } from './vfx/VehicleFeedback';
 import { Vfx, type VfxSettings } from './vfx/Vfx';
 import { LabAccidentFx } from './vfx/labAccident';
@@ -61,6 +61,8 @@ export class GameView implements Lifecycle {
   contextLost = false;
   private lostRendererDisposal: Promise<void> | null = null;
   renderedFrames = 0;
+  updateCpuMs = 0;
+  renderCpuMs = 0;
   private readonly meshes: Mesh[] = [];
   private vehicles: VehicleView | null = null;
   private bicycle: BicycleView | null = null;
@@ -107,6 +109,7 @@ export class GameView implements Lifecycle {
   private frozenStarted = -1;
   private frozenPose: SurvivorState | null = null;
   private destination: Mesh | null = null;
+  private readonly bikeOrientation = new Quaternion();
   private cube: Mesh | null = null;
   private character: CharacterView | null = null;
   private wireframe: PhysicsWireframe | null = null;
@@ -162,7 +165,7 @@ export class GameView implements Lifecycle {
     const changed = this.quality !== tier; this.quality = tier; this.resize();
     if (changed && this.postFx) { const enabled = this.postFx.bloomEnabled.value; this.postFx.dispose(); this.postFx = new PostFx(this.renderer, this.scene, this.camera, tier, this.look); this.postFx.bloomEnabled.value = enabled; this.postFx.setDof(this.dofEnabled); this.postFx.applyLook(); }
     this.lighting?.setQuality(tier); this.districts?.setQuality(tier);
-    this.vfx?.set({ quality: tier }); this.crowd?.setQuality(tier);
+    this.vfx?.set({ quality: tier }); this.crowd?.setQuality(tier); this.npcs?.setQuality(tier);
   }
   /** Three's WebGL fallback reports loss but does not rebuild its backend on restore.
    * Recreate renderer GPU state on the same canvas so touch/pointer listeners survive. */
@@ -308,7 +311,7 @@ export class GameView implements Lifecycle {
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */
   private startActors(character: Promise<unknown>): Promise<unknown> {
-    if (this.world.npcs && this.materials) this.npcs = new NpcView(this.world, this.materials);
+    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials); this.npcs.setQuality(this.quality); }
     if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
     if (this.world.combat && this.character) this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer);
     if (this.character && this.world.combat) this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!);
@@ -427,6 +430,11 @@ export class GameView implements Lifecycle {
   }
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
+    if (this.world.scenario === 'L3' && ['l3-mainstreet-w2', 'l3-driving', 'l3-checkpoint', 'l3-safe-zone'].includes(name)) {
+      const anchors = this.world.missions!.def.anchors;
+      const target = name === 'l3-driving' ? this.world.entities.get(this.world.missions!.state.actors.sedan)?.transform ?? anchors.sedan : name === 'l3-mainstreet-w2' ? { x: anchors.sedan.x, z: anchors.sedan.z-6 } : anchors[name === 'l3-checkpoint' ? 'barrier' : 'camp'];
+      this.view.preset(name, { position: [target.x+20, 24, target.z+22], target: [target.x, .4, target.z] }); this.update(1); return;
+    }
     const reviewSpot = lookViewpoints.find(spot => spot.id === name);
     if (reviewSpot) {
       this.view.reset(reviewSpot); this.view.spot = name;
@@ -492,10 +500,11 @@ export class GameView implements Lifecycle {
   }
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
   project(x: number, y: number, z: number): number[] { return this.projection.set(x, y, z).project(this.camera).toArray(); }
+  crowdFigures() { return [...(this.crowd?.getState().figures ?? []), ...(this.npcs?.snapshot().civilians.figures ?? [])]; }
   getState() {
     const materialInventory = new Map<string, { name: string; palette: boolean; plainLit: boolean; emissive: number }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial, plainLit: (material instanceof MeshLambertNodeMaterial || material instanceof MeshStandardMaterial) && !(material instanceof PaletteMaterial), emissive: material.userData.emissiveStrength ?? 0 }); });
-    return { quality: this.quality, pixelRatio: this.renderer.getPixelRatio(), postFx: this.postFx?.snapshot() ?? null, moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
+    return { bicycle: this.bicycle?.snapshot() ?? null, quality: this.quality, pixelRatio: this.renderer.getPixelRatio(), postFx: this.postFx?.snapshot() ?? null, moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
       npcs: this.npcs?.snapshot() ?? null,
       vehicles: [...(this.vehicles?.snapshot() ?? []), ...(this.vehicleFeedback?.getState() ?? []).map(v => ({ ...v, wheels: [], brake: 0, sirens: [], placeholder: true }))], entityAssets: this.entityAssets?.getState() ?? null, character: this.character?.getState() ?? null, crowd: this.crowd?.getState() ?? null, actions: this.actions?.getState() ?? null,
       vfx: this.vfx?.snapshot() ?? null, infected: this.crowd?.getGoreState() ?? [],
@@ -504,6 +513,7 @@ export class GameView implements Lifecycle {
   }
   private syncMission(): void {
     const mission = this.world.missions, cinematic = mission?.state.cinematic;
+    if (mission?.def.id === 'L3') this.districts?.setEmergencyPower(!mission.state.states.collapsed);
     if (cinematic && this.cinematicId !== cinematic.id) { this.cinematicId = cinematic.id; this.view.cinematic(mission!.def.cinematics[cinematic.id]); }
     else if (!cinematic && this.cinematicId) { this.cinematicId = null; this.view.follow(); }
     if (mission?.state.timeOfDay && this.lighting?.preset !== mission.state.timeOfDay) this.lighting?.set(mission.state.timeOfDay);
@@ -516,17 +526,21 @@ export class GameView implements Lifecycle {
       const target = this.world.controls.moveTarget; this.destination.visible = target != null;
       if (target) this.destination.position.set(target.x, .12, target.z);
     }
+    const profileStart = this.renderer.profile ? performance.now() : 0;
     this.syncMission();
     const current = this.world.entities.get(1)?.transform, previous = this.world.previousPlayer;
     const survivor = this.world.entities.get(1)?.survivor;
+    if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.scene.add(this.bicycle); }
+    this.bicycle?.update(this.camera); // Sample one bike frame for its saddle, lean and rider.
     if (this.character && current && survivor) {
       // Portrait hero readability supplements the seven-metre camera floor; collision stays in metres.
       this.character.scale.setScalar(this.camera.aspect < 1 ? 1.25 : 1);
       this.character.position.set(lerp(previous?.x ?? current.x, current.x, alpha), lerp(previous?.y ?? current.y, current.y, alpha) - 0.7, lerp(previous?.z ?? current.z, current.z, alpha));
-      this.bicycle?.update(this.camera); // the saddle's world position below needs this frame's bike pose
       const from = previous?.yaw ?? current.yaw;
       const striking = !!survivor.attack && this.world.tick < survivor.attack.endsAt;
-      this.character.face(from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60, striking);
+      const riding = this.world.entities.get(1)?.riding;
+      const mountedFrame = riding !== undefined && this.bicycle?.frameOrientation(this.bikeOrientation);
+      this.character.face(mountedFrame ? current.yaw : from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60, striking, mountedFrame ? this.bikeOrientation : undefined);
       const stopped = this.vfx?.hitStop.active(this.vfx.time) ?? false;
       if (stopped && this.vfx!.hitStop.started !== this.frozenStarted && this.frozenPose) {
         this.frozenStarted = this.vfx!.hitStop.started; this.hitStopTick = this.world.tick;
@@ -536,7 +550,6 @@ export class GameView implements Lifecycle {
         this.frozenPose.checkpoint = checkpoint; Object.assign(checkpoint, survivor.checkpoint);
       }
       // E19 courier: the bicycle sim (lane F) marks the rider; the bike's crank/steer drive the pose.
-      const riding = (this.world.entities.get(1) as { riding?: number } | undefined)?.riding;
       const bike = riding === undefined ? undefined : (this.world.entities.get(riding) as { bicycle?: { pedal: number; steer: number } } | undefined)?.bicycle;
       this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
         riding === undefined ? undefined : { pedal: bike?.pedal ?? this.world.tick * .12, steer: bike?.steer ?? 0 });
@@ -560,8 +573,6 @@ export class GameView implements Lifecycle {
     if (this.character) this.character.visible = !this.world.entities.get(1)?.hidden;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.vehicles); }
     this.vehicles?.update(alpha);
-    if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.scene.add(this.bicycle); }
-    this.bicycle?.update(this.camera);
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
     this.crowd?.update(this.view, alpha); this.contactShadows?.update(); this.actions?.update();
@@ -578,6 +589,9 @@ export class GameView implements Lifecycle {
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;
+    this.renderer.beginProfile(this.camera);
+    const renderStart = profileStart ? performance.now() : 0;
+    if (profileStart) this.updateCpuMs = renderStart - profileStart;
     if(this.foliageMask) {
       const backgroundNode=this.scene.backgroundNode; this.scene.backgroundNode=null;
       const background=this.scene.background, fog=this.scene.fog, shadow=this.renderer.shadowMap.enabled;
@@ -615,6 +629,7 @@ export class GameView implements Lifecycle {
       for (const [mesh, material] of this.savedMaterials) mesh.material = material;
       this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
+    if (profileStart) this.renderCpuMs = performance.now() - renderStart;
   }
   async ready(): Promise<void> {
     await this.warming;

@@ -35,6 +35,7 @@ export class Vehicles {
   }
   canInteract(): boolean {
     if (this.active != null) return true;
+    if (this.bicycle.canInteract()) return true;
     const player = this.world.entities.get(1);
     if (!player || player.health.current <= 0) return false;
     for (const car of this.cars.values()) {

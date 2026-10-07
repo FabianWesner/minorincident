@@ -118,7 +118,7 @@ class Layout:
         if tier==0 and pos[1]<.4 and size[1]<.4 and token in ['woodWarm','sidewalk','uiDark']:
             x,z=pos[0],pos[2]; hx,hz=size[0]/2,size[2]/2
             surface='wood' if token=='woodWarm' else 'metal' if name=='rail' else 'gravel' if token=='uiDark' else 'tile'
-            self.data['surfaces'].append(dict(surface=surface,polygon=[[x-hx,z-hz],[x+hx,z-hz],[x+hx,z+hz],[x-hx,z+hz],[x-hx,z-hz]]))
+            self.data['surfaces'].append(dict(surface=surface,height=pos[1]+size[1]/2,polygon=[[x-hx,z-hz],[x+hx,z-hz],[x+hx,z+hz],[x-hx,z+hz],[x-hx,z-hz]]))
         return o
     def anchor(self,name,pos):
         self.data['anchors'][name]=dict(position=pos,yaw=0)

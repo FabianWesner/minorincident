@@ -1,0 +1,8516 @@
+{
+  "mission": {
+    "id": "L3",
+    "phase": "result",
+    "completedObjectives": [
+      "forecourt",
+      "car",
+      "park-route",
+      "park-rescue",
+      "park-cover",
+      "approach",
+      "checkpoint",
+      "checkpoint-cover",
+      "patient",
+      "gates"
+    ],
+    "volumes": [
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "killedBosses": [],
+    "deadlineTicks": 24646,
+    "steps": {
+      "forecourt": {
+        "status": "completed",
+        "started": 0,
+        "kills": [
+          168,
+          169,
+          171,
+          170,
+          172,
+          173,
+          175,
+          174,
+          176,
+          179,
+          177,
+          178,
+          180,
+          181
+        ],
+        "events": {
+          "combat.kill:*": 14,
+          "combat.kill:forecourt-wave-0-0": 1,
+          "combat.kill:forecourt-wave-0-1": 1,
+          "combat.kill:forecourt-wave-1-1": 1,
+          "combat.kill:forecourt-wave-1-0": 1,
+          "combat.kill:forecourt-wave-2-0": 1,
+          "combat.kill:forecourt-wave-2-1": 1,
+          "combat.kill:forecourt-wave-3-1": 1,
+          "combat.kill:forecourt-wave-3-0": 1,
+          "combat.kill:forecourt-wave-4-0": 1,
+          "combat.kill:forecourt-wave-5-1": 1,
+          "combat.kill:forecourt-wave-4-1": 1,
+          "combat.kill:forecourt-wave-5-0": 1,
+          "combat.kill:forecourt-wave-6-0": 1,
+          "combat.kill:forecourt-wave-6-1": 1
+        },
+        "interaction": 513
+      },
+      "car": {
+        "status": "completed",
+        "started": 2100,
+        "kills": [],
+        "events": {},
+        "interaction": 2
+      },
+      "market-route": {
+        "status": "cancelled",
+        "started": 2282,
+        "kills": [
+          185,
+          186,
+          187,
+          188,
+          189,
+          190,
+          192,
+          191,
+          194,
+          193
+        ],
+        "events": {
+          "L3.sprinter-introduced:*": 1,
+          "vehicle.entered:*": 1,
+          "vehicle.entered:sedan": 1,
+          "combat.kill:*": 10,
+          "combat.kill:tutorial-0": 1,
+          "combat.kill:tutorial-1": 1,
+          "combat.kill:tutorial-2": 1,
+          "combat.kill:tutorial-3": 1,
+          "combat.kill:tutorial-4": 1,
+          "combat.kill:tutorial-5": 1,
+          "combat.kill:tutorial-7": 1,
+          "combat.kill:tutorial-6": 1,
+          "combat.kill:tutorial-9": 1,
+          "combat.kill:tutorial-8": 1
+        },
+        "interaction": 0,
+        "driveArrived": true
+      },
+      "park-route": {
+        "status": "completed",
+        "started": 2282,
+        "kills": [
+          185,
+          186,
+          187,
+          188,
+          189,
+          190,
+          192,
+          191,
+          194,
+          193
+        ],
+        "events": {
+          "L3.sprinter-introduced:*": 1,
+          "vehicle.entered:*": 1,
+          "vehicle.entered:sedan": 1,
+          "combat.kill:*": 10,
+          "combat.kill:tutorial-0": 1,
+          "combat.kill:tutorial-1": 1,
+          "combat.kill:tutorial-2": 1,
+          "combat.kill:tutorial-3": 1,
+          "combat.kill:tutorial-4": 1,
+          "combat.kill:tutorial-5": 1,
+          "combat.kill:tutorial-7": 1,
+          "combat.kill:tutorial-6": 1,
+          "combat.kill:tutorial-9": 1,
+          "combat.kill:tutorial-8": 1
+        },
+        "interaction": 1,
+        "driveArrived": true
+      },
+      "market-bypass": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "market-supplies": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "market-cover": {
+        "status": "pending",
+        "started": 0,
+        "kills": [],
+        "events": {},
+        "interaction": 0
+      },
+      "park-rescue": {
+        "status": "completed",
+        "started": 3279,
+        "kills": [],
+        "events": {
+          "vehicle.exited:*": 1,
+          "vehicle.exited:sedan": 1
+        },
+        "interaction": 2
+      },
+      "park-cover": {
+        "status": "completed",
+        "started": 3533,
+        "kills": [
+          183,
+          201,
+          203,
+          200,
+          202,
+          204,
+          205,
+          207,
+          206,
+          208,
+          209,
+          211,
+          210,
+          212,
+          213,
+          215,
+          214,
+          216,
+          217,
+          219,
+          218,
+          220,
+          222,
+          221,
+          223,
+          225,
+          224,
+          226,
+          229,
+          227,
+          228,
+          230,
+          233,
+          231,
+          234,
+          232,
+          235
+        ],
+        "events": {
+          "combat.kill:*": 37,
+          "combat.kill:sprinter-1": 1,
+          "combat.kill:park-cover-wave-0-1": 1,
+          "combat.kill:park-cover-wave-1-1": 1,
+          "combat.kill:park-cover-wave-0-0": 1,
+          "combat.kill:park-cover-wave-1-0": 1,
+          "combat.kill:park-cover-wave-2-0": 1,
+          "combat.kill:park-cover-wave-2-1": 1,
+          "combat.kill:park-cover-wave-3-1": 1,
+          "combat.kill:park-cover-wave-3-0": 1,
+          "combat.kill:park-cover-wave-4-0": 1,
+          "combat.kill:park-cover-wave-4-1": 1,
+          "combat.kill:park-cover-wave-5-1": 1,
+          "combat.kill:park-cover-wave-5-0": 1,
+          "combat.kill:park-cover-wave-6-0": 1,
+          "combat.kill:park-cover-wave-6-1": 1,
+          "combat.kill:park-cover-wave-7-1": 1,
+          "combat.kill:park-cover-wave-7-0": 1,
+          "combat.kill:park-cover-wave-8-0": 1,
+          "combat.kill:park-cover-wave-8-1": 1,
+          "combat.kill:park-cover-wave-9-1": 1,
+          "combat.kill:park-cover-wave-9-0": 1,
+          "vehicle.entered:*": 1,
+          "vehicle.entered:sedan": 1,
+          "vehicle.exited:*": 1,
+          "vehicle.exited:sedan": 1,
+          "combat.kill:park-cover-wave-10-0": 1,
+          "combat.kill:park-cover-wave-11-0": 1,
+          "combat.kill:park-cover-wave-10-1": 1,
+          "combat.kill:park-cover-wave-11-1": 1,
+          "combat.kill:park-cover-wave-12-1": 1,
+          "combat.kill:park-cover-wave-12-0": 1,
+          "combat.kill:park-cover-wave-13-0": 1,
+          "combat.kill:park-cover-wave-14-1": 1,
+          "combat.kill:park-cover-wave-13-1": 1,
+          "combat.kill:park-cover-wave-14-0": 1,
+          "combat.kill:park-cover-wave-15-0": 1,
+          "combat.kill:park-cover-wave-16-1": 1,
+          "combat.kill:park-cover-wave-15-1": 1,
+          "combat.kill:park-cover-wave-17-0": 1,
+          "combat.kill:park-cover-wave-16-0": 1,
+          "combat.kill:park-cover-wave-17-1": 1
+        },
+        "interaction": 1
+      },
+      "approach": {
+        "status": "completed",
+        "started": 9418,
+        "kills": [],
+        "events": {
+          "vehicle.entered:*": 1,
+          "vehicle.entered:sedan": 1,
+          "vehicle.exited:*": 1,
+          "vehicle.exited:sedan": 1
+        },
+        "interaction": 23,
+        "driveArrived": true
+      },
+      "checkpoint": {
+        "status": "completed",
+        "started": 10230,
+        "kills": [
+          237,
+          238,
+          239,
+          72,
+          236
+        ],
+        "events": {
+          "L3.bloated-introduced:*": 1,
+          "combat.kill:*": 5,
+          "combat.kill:checkpoint-0": 1,
+          "combat.kill:checkpoint-1": 1,
+          "combat.kill:checkpoint-2": 1,
+          "prop.broken:*": 1,
+          "combat.kill:bloated-intro": 1
+        },
+        "interaction": 96
+      },
+      "checkpoint-cover": {
+        "status": "completed",
+        "started": 10430,
+        "kills": [
+          245,
+          71,
+          107,
+          244,
+          247,
+          246,
+          184,
+          249,
+          248,
+          250,
+          251,
+          253,
+          252,
+          254,
+          255,
+          257,
+          256,
+          259,
+          258,
+          261,
+          260,
+          262,
+          263,
+          265,
+          264,
+          266,
+          267,
+          269,
+          268,
+          271,
+          270,
+          273,
+          272,
+          275,
+          274,
+          276,
+          279,
+          277,
+          278,
+          281,
+          280,
+          283,
+          282,
+          285,
+          284,
+          287,
+          286,
+          289,
+          288,
+          290,
+          109,
+          70,
+          291
+        ],
+        "events": {
+          "combat.kill:*": 53,
+          "combat.kill:checkpoint-cover-wave-0-1": 1,
+          "prop.broken:*": 2,
+          "L3.barrier-destroyed:*": 1,
+          "combat.kill:checkpoint-cover-wave-0-0": 1,
+          "combat.kill:checkpoint-cover-wave-1-1": 1,
+          "combat.kill:checkpoint-cover-wave-1-0": 1,
+          "combat.kill:sprinter-2": 1,
+          "combat.kill:checkpoint-cover-wave-2-1": 1,
+          "combat.kill:checkpoint-cover-wave-2-0": 1,
+          "player.damaged:*": 6,
+          "combat.kill:checkpoint-cover-wave-3-0": 1,
+          "combat.kill:checkpoint-cover-wave-3-1": 1,
+          "combat.kill:checkpoint-cover-wave-4-1": 1,
+          "combat.kill:checkpoint-cover-wave-4-0": 1,
+          "combat.kill:checkpoint-cover-wave-5-0": 1,
+          "combat.kill:checkpoint-cover-wave-5-1": 1,
+          "combat.kill:checkpoint-cover-wave-6-1": 1,
+          "combat.kill:checkpoint-cover-wave-6-0": 1,
+          "combat.kill:checkpoint-cover-wave-7-1": 1,
+          "combat.kill:checkpoint-cover-wave-7-0": 1,
+          "combat.kill:checkpoint-cover-wave-8-1": 1,
+          "combat.kill:checkpoint-cover-wave-8-0": 1,
+          "combat.kill:checkpoint-cover-wave-9-0": 1,
+          "combat.kill:checkpoint-cover-wave-9-1": 1,
+          "combat.kill:checkpoint-cover-wave-10-1": 1,
+          "combat.kill:checkpoint-cover-wave-10-0": 1,
+          "combat.kill:checkpoint-cover-wave-11-0": 1,
+          "combat.kill:checkpoint-cover-wave-11-1": 1,
+          "combat.kill:checkpoint-cover-wave-12-1": 1,
+          "combat.kill:checkpoint-cover-wave-12-0": 1,
+          "combat.kill:checkpoint-cover-wave-13-1": 1,
+          "combat.kill:checkpoint-cover-wave-13-0": 1,
+          "combat.kill:checkpoint-cover-wave-14-1": 1,
+          "combat.kill:checkpoint-cover-wave-14-0": 1,
+          "combat.kill:checkpoint-cover-wave-15-1": 1,
+          "combat.kill:checkpoint-cover-wave-15-0": 1,
+          "combat.kill:checkpoint-cover-wave-16-0": 1,
+          "combat.kill:checkpoint-cover-wave-17-1": 1,
+          "combat.kill:checkpoint-cover-wave-16-1": 1,
+          "combat.kill:checkpoint-cover-wave-17-0": 1,
+          "combat.kill:checkpoint-cover-wave-18-1": 1,
+          "combat.kill:checkpoint-cover-wave-18-0": 1,
+          "combat.kill:checkpoint-cover-wave-19-1": 1,
+          "combat.kill:checkpoint-cover-wave-19-0": 1,
+          "combat.kill:checkpoint-cover-wave-20-1": 1,
+          "combat.kill:checkpoint-cover-wave-20-0": 1,
+          "combat.kill:checkpoint-cover-wave-21-1": 1,
+          "combat.kill:checkpoint-cover-wave-21-0": 1,
+          "combat.kill:checkpoint-cover-wave-22-1": 1,
+          "combat.kill:checkpoint-cover-wave-22-0": 1,
+          "combat.kill:checkpoint-cover-wave-23-0": 1,
+          "combat.kill:checkpoint-cover-wave-23-1": 1
+        },
+        "interaction": 1968
+      },
+      "patient": {
+        "status": "completed",
+        "started": 17630,
+        "kills": [],
+        "events": {},
+        "interaction": 2
+      },
+      "gates": {
+        "status": "completed",
+        "started": 18045,
+        "kills": [],
+        "events": {},
+        "interaction": 176
+      }
+    },
+    "actors": {
+      "forecourt-wave-0-0": 168,
+      "forecourt-wave-0-1": 169,
+      "forecourt-wave-1-0": 170,
+      "forecourt-wave-1-1": 171,
+      "forecourt-wave-2-0": 172,
+      "forecourt-wave-2-1": 173,
+      "forecourt-wave-3-0": 174,
+      "forecourt-wave-3-1": 175,
+      "forecourt-wave-4-0": 176,
+      "forecourt-wave-4-1": 177,
+      "forecourt-wave-5-0": 178,
+      "forecourt-wave-5-1": 179,
+      "forecourt-wave-6-0": 180,
+      "forecourt-wave-6-1": 181,
+      "sedan": 182,
+      "sprinter-1": 183,
+      "sprinter-2": 184,
+      "tutorial-0": 185,
+      "tutorial-1": 186,
+      "tutorial-2": 187,
+      "tutorial-3": 188,
+      "tutorial-4": 189,
+      "tutorial-5": 190,
+      "tutorial-6": 191,
+      "tutorial-7": 192,
+      "tutorial-8": 193,
+      "tutorial-9": 194,
+      "park-cover-wave-0-0": 200,
+      "park-cover-wave-0-1": 201,
+      "park-cover-wave-1-0": 202,
+      "park-cover-wave-1-1": 203,
+      "park-cover-wave-2-0": 204,
+      "park-cover-wave-2-1": 205,
+      "park-cover-wave-3-0": 206,
+      "park-cover-wave-3-1": 207,
+      "park-cover-wave-4-0": 208,
+      "park-cover-wave-4-1": 209,
+      "park-cover-wave-5-0": 210,
+      "park-cover-wave-5-1": 211,
+      "park-cover-wave-6-0": 212,
+      "park-cover-wave-6-1": 213,
+      "park-cover-wave-7-0": 214,
+      "park-cover-wave-7-1": 215,
+      "park-cover-wave-8-0": 216,
+      "park-cover-wave-8-1": 217,
+      "park-cover-wave-9-0": 218,
+      "park-cover-wave-9-1": 219,
+      "park-cover-wave-10-0": 220,
+      "park-cover-wave-10-1": 221,
+      "park-cover-wave-11-0": 222,
+      "park-cover-wave-11-1": 223,
+      "park-cover-wave-12-0": 224,
+      "park-cover-wave-12-1": 225,
+      "park-cover-wave-13-0": 226,
+      "park-cover-wave-13-1": 227,
+      "park-cover-wave-14-0": 228,
+      "park-cover-wave-14-1": 229,
+      "park-cover-wave-15-0": 230,
+      "park-cover-wave-15-1": 231,
+      "park-cover-wave-16-0": 232,
+      "park-cover-wave-16-1": 233,
+      "park-cover-wave-17-0": 234,
+      "park-cover-wave-17-1": 235,
+      "bloated-intro": 236,
+      "checkpoint-0": 237,
+      "checkpoint-1": 238,
+      "checkpoint-2": 239,
+      "checkpoint-cover-wave-0-0": 244,
+      "checkpoint-cover-wave-0-1": 245,
+      "checkpoint-cover-wave-1-0": 246,
+      "checkpoint-cover-wave-1-1": 247,
+      "checkpoint-cover-wave-2-0": 248,
+      "checkpoint-cover-wave-2-1": 249,
+      "checkpoint-cover-wave-3-0": 250,
+      "checkpoint-cover-wave-3-1": 251,
+      "checkpoint-cover-wave-4-0": 252,
+      "checkpoint-cover-wave-4-1": 253,
+      "checkpoint-cover-wave-5-0": 254,
+      "checkpoint-cover-wave-5-1": 255,
+      "checkpoint-cover-wave-6-0": 256,
+      "checkpoint-cover-wave-6-1": 257,
+      "checkpoint-cover-wave-7-0": 258,
+      "checkpoint-cover-wave-7-1": 259,
+      "checkpoint-cover-wave-8-0": 260,
+      "checkpoint-cover-wave-8-1": 261,
+      "checkpoint-cover-wave-9-0": 262,
+      "checkpoint-cover-wave-9-1": 263,
+      "checkpoint-cover-wave-10-0": 264,
+      "checkpoint-cover-wave-10-1": 265,
+      "checkpoint-cover-wave-11-0": 266,
+      "checkpoint-cover-wave-11-1": 267,
+      "checkpoint-cover-wave-12-0": 268,
+      "checkpoint-cover-wave-12-1": 269,
+      "checkpoint-cover-wave-13-0": 270,
+      "checkpoint-cover-wave-13-1": 271,
+      "checkpoint-cover-wave-14-0": 272,
+      "checkpoint-cover-wave-14-1": 273,
+      "checkpoint-cover-wave-15-0": 274,
+      "checkpoint-cover-wave-15-1": 275,
+      "checkpoint-cover-wave-16-0": 276,
+      "checkpoint-cover-wave-16-1": 277,
+      "checkpoint-cover-wave-17-0": 278,
+      "checkpoint-cover-wave-17-1": 279,
+      "checkpoint-cover-wave-18-0": 280,
+      "checkpoint-cover-wave-18-1": 281,
+      "checkpoint-cover-wave-19-0": 282,
+      "checkpoint-cover-wave-19-1": 283,
+      "checkpoint-cover-wave-20-0": 284,
+      "checkpoint-cover-wave-20-1": 285,
+      "checkpoint-cover-wave-21-0": 286,
+      "checkpoint-cover-wave-21-1": 287,
+      "checkpoint-cover-wave-22-0": 288,
+      "checkpoint-cover-wave-22-1": 289,
+      "checkpoint-cover-wave-23-0": 290,
+      "checkpoint-cover-wave-23-1": 291,
+      "patient": 292,
+      "turned-patient-0": 293,
+      "turned-patient-1": 294,
+      "turned-patient-2": 295
+    },
+    "items": [],
+    "states": {
+      "checkpoint-clear": true,
+      "collapsed": true,
+      "tutorial-spawned": true,
+      "market-spawned": false,
+      "park-spawned": true,
+      "checkpoint-spawned": true,
+      "forecourt-clear": true,
+      "market-cover-clear": false,
+      "park-cover-clear": true,
+      "checkpoint-cover-clear": true
+    },
+    "counters": {
+      "runovers": 10,
+      "smashed": 3,
+      "max-infected": 12,
+      "forecourt-waves": 7,
+      "market-cover-waves": 0,
+      "park-cover-waves": 18,
+      "checkpoint-cover-waves": 24
+    },
+    "gates": {
+      "perimeter": false
+    },
+    "marker": null,
+    "checkpoint": "checkpoint",
+    "tier": 2,
+    "timeOfDay": null,
+    "subtitle": {
+      "id": "L3.twist",
+      "text": "The safe zone has fallen.",
+      "until": 18854
+    },
+    "cinematic": null,
+    "failure": null,
+    "stats": {
+      "time": 309.23333333333335,
+      "kills": 113,
+      "damage": 75.83417948015779,
+      "deaths": 0,
+      "rescued": 1,
+      "optionalObjectives": []
+    },
+    "result": {
+      "time": 309.23333333333335,
+      "kills": 113,
+      "damage": 75.83417948015779,
+      "deaths": 0,
+      "rescued": 1,
+      "optionalObjectives": []
+    }
+  },
+  "entities": [
+    {
+      "kind": "player",
+      "archetype": "player.survivor",
+      "transform": {
+        "x": 61.795753479003906,
+        "y": 0.7099999785423279,
+        "z": 123.04998779296875,
+        "yaw": -1.3590274710123782,
+        "radius": 3
+      },
+      "health": {
+        "current": 99.19915385317412,
+        "max": 100
+      },
+      "faction": "survivor",
+      "id": 1,
+      "locomotion": {
+        "vx": 0.53746024943958,
+        "vz": -0.1354403432713145,
+        "ax": -3.155927983718989,
+        "az": 0.7952959682137368,
+        "omega": 0.000005198404557649194,
+        "updatedAt": -1
+      },
+      "survivor": {
+        "variant": "female",
+        "gearTier": 1,
+        "animation": "run",
+        "animationTick": 18541,
+        "velocity": {
+          "x": 0.8169794082641602,
+          "z": 3.800039291381836
+        },
+        "grounded": true,
+        "invulnerableUntil": 17600,
+        "checkpoint": {
+          "x": 45.791324615478516,
+          "y": 0.7200999855995178,
+          "z": 113.51713562011719,
+          "yaw": 0.029694384387698225,
+          "radius": 3
+        },
+        "diedAt": null,
+        "attack": {
+          "actionId": "weapon.bat",
+          "combo": 1,
+          "started": 17561,
+          "activeAt": 17565,
+          "recoveryAt": 17569,
+          "endsAt": 17579
+        }
+      },
+      "weapons": {
+        "selectedSide": "LEFT",
+        "LEFT": {
+          "rack": [
+            {
+              "id": "weapon.bat",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 17579
+            },
+            {
+              "id": "weapon.kick",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 0.9696843151742166,
+            "z": -0.24436106257976217
+          },
+          "aimPoint": {
+            "x": 54.13820441155394,
+            "z": 109.33157492801705
+          },
+          "swapUntil": 0
+        },
+        "RIGHT": {
+          "rack": [
+            {
+              "id": "ability.corgi-lure",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.pistol",
+              "magazine": 8,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        }
+      },
+      "combat": {
+        "radius": 0.3,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "hidden": false
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 50,
+        "y": -0.001703113317489624,
+        "z": 50,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 2
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 62,
+        "y": -0.001703113317489624,
+        "z": 62,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 3
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 50,
+        "y": -0.001703113317489624,
+        "z": 62,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 4
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 62,
+        "y": -0.001703113317489624,
+        "z": 50,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 5
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bin",
+      "faction": "environment",
+      "transform": {
+        "x": 33,
+        "y": -0.0017032027244567871,
+        "z": 51.400001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.6201250006556511,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 6
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 38,
+        "y": -0.0017032027244567871,
+        "z": 51.400001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 7
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bin",
+      "faction": "environment",
+      "transform": {
+        "x": 39,
+        "y": -0.0017032027244567871,
+        "z": 60.599998474121094,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.6201250006556511,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 8
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 44,
+        "y": -0.0017032027244567871,
+        "z": 60.599998474121094,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 9
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bin",
+      "faction": "environment",
+      "transform": {
+        "x": 51,
+        "y": -0.0017032027244567871,
+        "z": 51.400001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.6201250006556511,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 10
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 62,
+        "y": -0.0017032027244567871,
+        "z": 60.599998474121094,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 11
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bin",
+      "faction": "environment",
+      "transform": {
+        "x": 69,
+        "y": -0.0017032027244567871,
+        "z": 51.400001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.6201250006556511,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 12
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 74,
+        "y": -0.0017032027244567871,
+        "z": 51.400001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 13
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bin",
+      "faction": "environment",
+      "transform": {
+        "x": 75,
+        "y": -0.0017032027244567871,
+        "z": 60.599998474121094,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.6201250006556511,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 14
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 80,
+        "y": -0.0017032027244567871,
+        "z": 60.599998474121094,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 15
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.shopping-cart",
+      "faction": "environment",
+      "transform": {
+        "x": 66,
+        "y": -0.0017030835151672363,
+        "z": 47.79999923706055,
+        "yaw": 0.3
+      },
+      "health": {
+        "current": 180,
+        "max": 180
+      },
+      "combat": {
+        "radius": 0.5,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 16
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 37.5,
+        "y": -0.0017032027244567871,
+        "z": 49.272499084472656,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 17
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 46.5,
+        "y": -0.0017032027244567871,
+        "z": 49.272499084472656,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 18
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 65.5,
+        "y": -0.0017032027244567871,
+        "z": 49.099998474121094,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 19
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 74.5,
+        "y": -0.0017032027244567871,
+        "z": 49.099998474121094,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 20
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 37.5,
+        "y": -0.0017032027244567871,
+        "z": 76.65499877929688,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 21
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 46.5,
+        "y": -0.0017032027244567871,
+        "z": 76.65499877929688,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 22
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 61.5,
+        "y": -0.001703113317489624,
+        "z": 70,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 23
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.barricade",
+      "faction": "environment",
+      "transform": {
+        "x": 45,
+        "y": -0.0017032623291015625,
+        "z": 73,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 1.1250001192092896,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 24
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bags",
+      "faction": "environment",
+      "transform": {
+        "x": 63,
+        "y": -0.0017030835151672363,
+        "z": 73,
+        "yaw": 0
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.46564435958862305,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 25
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 61.5,
+        "y": -0.001703113317489624,
+        "z": 65,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 26
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.barricade",
+      "faction": "environment",
+      "transform": {
+        "x": 45,
+        "y": -0.0017032623291015625,
+        "z": 70,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 1.1250001192092896,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 27
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bags",
+      "faction": "environment",
+      "transform": {
+        "x": 63,
+        "y": -0.0017030835151672363,
+        "z": 67,
+        "yaw": 0
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.46564435958862305,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 28
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 61.5,
+        "y": -0.001703113317489624,
+        "z": 60,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 29
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.barricade",
+      "faction": "environment",
+      "transform": {
+        "x": 45,
+        "y": -0.0017032623291015625,
+        "z": 67,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 1.1250001192092896,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 30
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bags",
+      "faction": "environment",
+      "transform": {
+        "x": 63,
+        "y": -0.0017030835151672363,
+        "z": 61,
+        "yaw": 0
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.46564435958862305,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 31
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 61.5,
+        "y": -0.001703113317489624,
+        "z": 55,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 32
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.barricade",
+      "faction": "environment",
+      "transform": {
+        "x": 45,
+        "y": -0.0017032623291015625,
+        "z": 64,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 1.1250001192092896,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 33
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bags",
+      "faction": "environment",
+      "transform": {
+        "x": 63,
+        "y": -0.0017030835151672363,
+        "z": 55,
+        "yaw": 0
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.46564435958862305,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 34
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": -6,
+        "y": -0.001703113317489624,
+        "z": 50,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 35
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 6,
+        "y": -0.001703113317489624,
+        "z": 62,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 36
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": -6,
+        "y": -0.001703113317489624,
+        "z": 62,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 37
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 6,
+        "y": -0.001703113317489624,
+        "z": 50,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 38
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bin",
+      "faction": "environment",
+      "transform": {
+        "x": -23,
+        "y": -0.0017032027244567871,
+        "z": 51.400001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.6201250006556511,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 39
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": -18,
+        "y": -0.0017032027244567871,
+        "z": 51.400001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 40
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bin",
+      "faction": "environment",
+      "transform": {
+        "x": -17,
+        "y": -0.0017032027244567871,
+        "z": 60.599998474121094,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.6201250006556511,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 41
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": -12,
+        "y": -0.0017032027244567871,
+        "z": 60.599998474121094,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 42
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bin",
+      "faction": "environment",
+      "transform": {
+        "x": -5,
+        "y": -0.0017032027244567871,
+        "z": 51.400001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.6201250006556511,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 43
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 6,
+        "y": -0.0017032027244567871,
+        "z": 60.599998474121094,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 44
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bin",
+      "faction": "environment",
+      "transform": {
+        "x": 13,
+        "y": -0.0017032027244567871,
+        "z": 51.400001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.6201250006556511,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 45
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 18,
+        "y": -0.0017032027244567871,
+        "z": 51.400001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 46
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bin",
+      "faction": "environment",
+      "transform": {
+        "x": 19,
+        "y": -0.0017032027244567871,
+        "z": 60.599998474121094,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.6201250006556511,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 47
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 24,
+        "y": -0.0017032027244567871,
+        "z": 60.599998474121094,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 48
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.shopping-cart",
+      "faction": "environment",
+      "transform": {
+        "x": 10,
+        "y": -0.0017030835151672363,
+        "z": 47.79999923706055,
+        "yaw": 0.3
+      },
+      "health": {
+        "current": 180,
+        "max": 180
+      },
+      "combat": {
+        "radius": 0.5,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 49
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": -18.5,
+        "y": -0.0017032027244567871,
+        "z": 47.400001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 50
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": -9.5,
+        "y": -0.0017032027244567871,
+        "z": 47.400001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 51
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 9.5,
+        "y": -0.0017032027244567871,
+        "z": 46.900001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 52
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 18.5,
+        "y": -0.0017032027244567871,
+        "z": 46.900001525878906,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 53
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": -18.5,
+        "y": -0.0017032027244567871,
+        "z": 77.27249908447266,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 54
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": -9.5,
+        "y": -0.0017032027244567871,
+        "z": 77.27249908447266,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 55
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 9.5,
+        "y": -0.0017032027244567871,
+        "z": 76.25125122070312,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 56
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 18.5,
+        "y": -0.0017032027244567871,
+        "z": 76.25125122070312,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.855,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 57
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.barricade",
+      "faction": "environment",
+      "transform": {
+        "x": -5,
+        "y": -0.0017032623291015625,
+        "z": 54,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 1.1250001192092896,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 58
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": -6,
+        "y": -0.001703113317489624,
+        "z": 106,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 59
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 6,
+        "y": -0.001703113317489624,
+        "z": 118,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 60
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": -6,
+        "y": -0.001703113317489624,
+        "z": 118,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 61
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 6,
+        "y": -0.001703113317489624,
+        "z": 106,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 62
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 50,
+        "y": -0.001703113317489624,
+        "z": 106,
+        "yaw": 0
+      },
+      "health": {
+        "current": 9.852813742385711,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 63
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 62,
+        "y": -0.001703113317489624,
+        "z": 118,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 64
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 50.272850036621094,
+        "y": -0.00002822279930114746,
+        "z": 117.95928192138672,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 65
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 62,
+        "y": -0.001703113317489624,
+        "z": 106,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 66
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 53,
+        "y": -0.001703113317489624,
+        "z": 124,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 67
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 59.934814453125,
+        "y": 0.1549483835697174,
+        "z": 124.3702621459961,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 68
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 54.386112213134766,
+        "y": -0.000027686357498168945,
+        "z": 102.4269790649414,
+        "yaw": 0
+      },
+      "health": {
+        "current": 25,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 69
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 54,
+        "y": -0.001703113317489624,
+        "z": 106,
+        "yaw": 0
+      },
+      "health": {
+        "current": 0,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 70
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 53.999176025390625,
+        "y": -0.000027924776077270508,
+        "z": 109.0010986328125,
+        "yaw": 0
+      },
+      "health": {
+        "current": 0,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 71
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.traffic-cone",
+      "faction": "environment",
+      "transform": {
+        "x": 53.999176025390625,
+        "y": -0.000027924776077270508,
+        "z": 112.0010986328125,
+        "yaw": 0
+      },
+      "health": {
+        "current": 0,
+        "max": 25
+      },
+      "combat": {
+        "radius": 0.24,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 10418,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 72
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.barricade",
+      "faction": "environment",
+      "transform": {
+        "x": 54.178775787353516,
+        "y": 0.5804926156997681,
+        "z": 101.01962280273438,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 1.1250001192092896,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 73
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.barricade",
+      "faction": "environment",
+      "transform": {
+        "x": 55.957584381103516,
+        "y": -0.00003445148468017578,
+        "z": 114.87142181396484,
+        "yaw": 1.5707963267948966
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 1.1250001192092896,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 74
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.medical-cooler",
+      "faction": "environment",
+      "transform": {
+        "x": 63,
+        "y": -0.0017030835151672363,
+        "z": 126,
+        "yaw": 0
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.395,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 75
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.bench",
+      "faction": "environment",
+      "transform": {
+        "x": 66,
+        "y": -0.0017030835151672363,
+        "z": 131,
+        "yaw": 0
+      },
+      "health": {
+        "current": 120,
+        "max": 120
+      },
+      "combat": {
+        "radius": 0.95,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 76
+    },
+    {
+      "kind": "physics-prop",
+      "archetype": "prop.trash-bags",
+      "faction": "environment",
+      "transform": {
+        "x": 61,
+        "y": -0.0017030835151672363,
+        "z": 132,
+        "yaw": 0
+      },
+      "health": {
+        "current": 80,
+        "max": 80
+      },
+      "combat": {
+        "radius": 0.46564435958862305,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 77
+    },
+    {
+      "kind": "companion",
+      "archetype": "char.corgi",
+      "faction": "survivor",
+      "transform": {
+        "x": 60.711222882238744,
+        "z": 123.23704973297302,
+        "y": 0.3,
+        "yaw": 6.57325257870269
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "companion": {
+        "state": "follow",
+        "courage": 67.45505492346052,
+        "until": 12859,
+        "barkAt": 13760,
+        "hurtAt": 12319,
+        "pickup": null,
+        "path": [
+          42735,
+          42511,
+          42512,
+          42513,
+          42514,
+          42515
+        ],
+        "goal": 42515,
+        "pathIndex": 5,
+        "following": false,
+        "velocity": {
+          "x": 0,
+          "z": 0
+        }
+      },
+      "id": 106,
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 1047.6452408833022
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": 18554
+      }
+    },
+    {
+      "kind": "obstacle",
+      "archetype": "obstacle.wall",
+      "transform": {
+        "x": 54,
+        "z": 112,
+        "radius": 4,
+        "y": 0.5,
+        "yaw": 0
+      },
+      "health": {
+        "current": 0,
+        "max": 1
+      },
+      "faction": "neutral",
+      "id": 107
+    },
+    {
+      "kind": "hazard",
+      "archetype": "hazard.propane",
+      "faction": "environment",
+      "health": {
+        "current": 20,
+        "max": 20
+      },
+      "transform": {
+        "x": 49,
+        "z": 76,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "id": 108,
+      "hazard": {
+        "kind": "propane",
+        "radius": 5,
+        "fuseAt": 0,
+        "exploded": false,
+        "activeUntil": 0,
+        "leaked": false
+      },
+      "combat": {
+        "radius": 0.6,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      }
+    },
+    {
+      "kind": "hazard",
+      "archetype": "hazard.propane",
+      "faction": "environment",
+      "health": {
+        "current": 0,
+        "max": 20
+      },
+      "transform": {
+        "x": 53,
+        "z": 109,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "id": 109,
+      "hazard": {
+        "kind": "propane",
+        "radius": 5,
+        "fuseAt": 17564,
+        "exploded": true,
+        "activeUntil": 0,
+        "leaked": false
+      },
+      "combat": {
+        "radius": 0.6,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 17558,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.jogger",
+      "faction": "civilian",
+      "transform": {
+        "x": -16.245164992457042,
+        "z": 34.32610968189874,
+        "y": 0.7,
+        "yaw": -171.96665435402358
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-man-b",
+        "variant": "inf.jogger",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "jog",
+        "waypoints": [
+          {
+            "x": -19,
+            "z": 31
+          },
+          {
+            "x": -16,
+            "z": 31
+          },
+          {
+            "x": -16,
+            "z": 34
+          },
+          {
+            "x": -19,
+            "z": 34
+          }
+        ],
+        "waypoint": 3,
+        "pauseUntil": 18536,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": -19,
+          "z": 31
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 138,
+      "locomotion": {
+        "vx": -1.3812554009798292,
+        "vz": -0.15325215848717796,
+        "ax": -4.334273399210558,
+        "az": -0.5579868248658149,
+        "omega": -3.7999998555772114,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": -1.3812554009797395,
+          "z": -0.15325215848733365
+        },
+        "speed": 1.3897311635049163,
+        "moving": true,
+        "distance": 385.13620187559565
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.cashier",
+      "faction": "civilian",
+      "transform": {
+        "x": -13.076318543401495,
+        "z": 32.56998584114945,
+        "y": 0.7,
+        "yaw": -136.71217162091625
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-woman-a",
+        "variant": "inf.cashier",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "shop",
+        "waypoints": [
+          {
+            "x": -13,
+            "z": 31
+          },
+          {
+            "x": -10,
+            "z": 31
+          },
+          {
+            "x": -10,
+            "z": 34
+          },
+          {
+            "x": -13,
+            "z": 34
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 18479,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": -13,
+          "z": 31
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 139,
+      "locomotion": {
+        "vx": 0.07237207653614094,
+        "vz": -1.488801153588322,
+        "ax": 0.0021605526733510213,
+        "az": -0.04444577890288712,
+        "omega": 0.0518213958634733,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.07237207653613353,
+          "z": -1.4888011535882129
+        },
+        "speed": 1.4905591542732364,
+        "moving": true,
+        "distance": 293.7942123669682
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.bbq-dad",
+      "faction": "civilian",
+      "transform": {
+        "x": -0.9909730701087914,
+        "z": 30.873852310192476,
+        "y": 0.7,
+        "yaw": -136.73071925459706
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-woman-b",
+        "variant": "inf.bbq-dad",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "walk-dog",
+        "waypoints": [
+          {
+            "x": -1,
+            "z": 31
+          },
+          {
+            "x": 2,
+            "z": 31
+          },
+          {
+            "x": 2,
+            "z": 34
+          },
+          {
+            "x": -1,
+            "z": 34
+          }
+        ],
+        "waypoint": 1,
+        "pauseUntil": 18632,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": -1,
+          "z": 31
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 140,
+      "locomotion": {
+        "vx": 0.008401352853299036,
+        "vz": -0.11740192013005986,
+        "ax": -0.03859485492120156,
+        "az": 0.5393310924816347,
+        "omega": -8.430836532769663e-8,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.008401352853297794,
+          "z": -0.117401920130078
+        },
+        "speed": 0.11770213923287387,
+        "moving": true,
+        "distance": 300.6529561735098
+      }
+    },
+    {
+      "kind": "pet",
+      "archetype": "npc.dog",
+      "faction": "civilian",
+      "transform": {
+        "x": -0.9965175283468621,
+        "z": 31.830421084583975,
+        "y": 0.3,
+        "yaw": -136.60448537401032
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": "dog",
+        "owner": 140,
+        "model": "npc.civilian-elderly",
+        "variant": "inf.dog-retriever",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "pet",
+        "waypoints": [
+          {
+            "x": -1,
+            "z": 31
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 0,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": -1,
+          "z": 31
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 141,
+      "motion": {
+        "velocity": {
+          "x": -0.040884589632905755,
+          "z": -0.8534027912735809
+        },
+        "speed": 0.8543815739018428,
+        "moving": true,
+        "distance": 238.96086171176788
+      },
+      "locomotion": {
+        "vx": -0.040884589632906886,
+        "vz": -0.8534027912735469,
+        "ax": 0.1712905093457369,
+        "az": 2.7310012194733404,
+        "omega": -0.08308715512773962,
+        "updatedAt": 18554
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.suburban-mom",
+      "faction": "civilian",
+      "transform": {
+        "x": 13.97151896993019,
+        "z": 30.99861548199467,
+        "y": 0.7,
+        "yaw": -94.29635332654172
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-man-a",
+        "variant": "inf.suburban-mom",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "bus-stop",
+        "waypoints": [
+          {
+            "x": 11,
+            "z": 31
+          },
+          {
+            "x": 14,
+            "z": 31
+          },
+          {
+            "x": 14,
+            "z": 34
+          },
+          {
+            "x": 11,
+            "z": 34
+          }
+        ],
+        "waypoint": 2,
+        "pauseUntil": 18776,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 11,
+          "z": 31
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 142,
+      "locomotion": {
+        "vx": 0.7645803422660602,
+        "vz": 0.03716773051368563,
+        "ax": -2.7947537564165192,
+        "az": -0.1358583901892284,
+        "omega": 2.495433536565526e-7,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.7645803422660791,
+          "z": 0.03716773051358757
+        },
+        "speed": 0.7654832068512315,
+        "moving": true,
+        "distance": 210.958262574988
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.delivery-driver",
+      "faction": "civilian",
+      "transform": {
+        "x": 23.00707759281414,
+        "z": 30.85445698701043,
+        "y": 0.7,
+        "yaw": -136.70787102728684
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-man-b",
+        "variant": "inf.delivery-driver",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "carry-belongings",
+        "waypoints": [
+          {
+            "x": 23,
+            "z": 31
+          },
+          {
+            "x": 26,
+            "z": 31
+          },
+          {
+            "x": 26,
+            "z": 34
+          },
+          {
+            "x": 23,
+            "z": 34
+          }
+        ],
+        "waypoint": 1,
+        "pauseUntil": 18568,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 23,
+          "z": 31
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 143,
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 296.0404750051778
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.bathrobe-neighbor",
+      "faction": "civilian",
+      "transform": {
+        "x": 38.09434239206685,
+        "z": 32.05927514487032,
+        "y": 0.7,
+        "yaw": -96.01301997241855
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-woman-a",
+        "variant": "inf.bathrobe-neighbor",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "chat",
+        "waypoints": [
+          {
+            "x": 35,
+            "z": 31
+          },
+          {
+            "x": 38,
+            "z": 31
+          },
+          {
+            "x": 38,
+            "z": 34
+          },
+          {
+            "x": 35,
+            "z": 34
+          }
+        ],
+        "waypoint": 2,
+        "pauseUntil": 18494,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 35,
+          "z": 31
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 144,
+      "locomotion": {
+        "vx": -0.07140920590082889,
+        "vz": 1.4689644574478384,
+        "ax": -0.006676868350306458,
+        "az": 0.13735039019025014,
+        "omega": 1.900000000000002,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": -0.07140920590074984,
+          "z": 1.4689644574480099
+        },
+        "speed": 1.4706991031250758,
+        "moving": true,
+        "distance": 212.45988604008545
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.jogger",
+      "faction": "civilian",
+      "transform": {
+        "x": 44.33856925431978,
+        "z": 31.040344487585585,
+        "y": 0.7,
+        "yaw": -169.7651236244987
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-woman-b",
+        "variant": "inf.jogger",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "jog",
+        "waypoints": [
+          {
+            "x": 41,
+            "z": 31
+          },
+          {
+            "x": 44,
+            "z": 31
+          },
+          {
+            "x": 44,
+            "z": 34
+          },
+          {
+            "x": 41,
+            "z": 34
+          }
+        ],
+        "waypoint": 2,
+        "pauseUntil": 18618,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 41,
+          "z": 31
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 145,
+      "locomotion": {
+        "vx": 0.06458171250596535,
+        "vz": 0.007729658202130399,
+        "ax": -0.30217327307266284,
+        "az": -0.03616597213339056,
+        "omega": -0.000012558783021938073,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.06458171250599776,
+          "z": 0.007729658202038081
+        },
+        "speed": 0.06504264144488353,
+        "moving": true,
+        "distance": 382.58160268811105
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.cashier",
+      "faction": "civilian",
+      "transform": {
+        "x": 46.85982697617391,
+        "z": 33.88351042832614,
+        "y": 0.7,
+        "yaw": -135.59039113575014
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-elderly",
+        "variant": "inf.cashier",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "shop",
+        "waypoints": [
+          {
+            "x": 47,
+            "z": 31
+          },
+          {
+            "x": 50,
+            "z": 31
+          },
+          {
+            "x": 50,
+            "z": 34
+          },
+          {
+            "x": 47,
+            "z": 34
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 18538,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 47,
+          "z": 31
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 146,
+      "locomotion": {
+        "vx": 0.038602228021565384,
+        "vz": -0.7940895046604189,
+        "ax": 0.13310205827135377,
+        "az": -2.7380530331807282,
+        "omega": -3.2000000000000006,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.038602228021460405,
+          "z": -0.7940895046604624
+        },
+        "speed": 0.795027215521657,
+        "moving": true,
+        "distance": 293.42696053832066
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.bbq-dad",
+      "faction": "civilian",
+      "transform": {
+        "x": 52.833652583578136,
+        "z": 33.98938336223455,
+        "y": 0.7,
+        "yaw": -135.15988483640666
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-man-a",
+        "variant": "inf.bbq-dad",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "walk-dog",
+        "waypoints": [
+          {
+            "x": 53,
+            "z": 31
+          },
+          {
+            "x": 56,
+            "z": 31
+          },
+          {
+            "x": 56,
+            "z": 34
+          },
+          {
+            "x": 53,
+            "z": 34
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 18570,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 53,
+          "z": 31
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 147,
+      "locomotion": {
+        "vx": -0.035537735560178516,
+        "vz": -0.0025417413518640654,
+        "ax": 0.16643234574487273,
+        "az": 0.011903625949287084,
+        "omega": -7.684624551674406e-8,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": -0.23220075595929757,
+          "z": -0.0056482477937436215
+        },
+        "speed": 0.23226944218129253,
+        "moving": true,
+        "distance": 298.4891829503082
+      }
+    },
+    {
+      "kind": "pet",
+      "archetype": "npc.dog",
+      "faction": "civilian",
+      "transform": {
+        "x": 53.69788914452184,
+        "z": 34.00303491929065,
+        "y": 0.3,
+        "yaw": -135.04470755144075
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": "dog",
+        "owner": 147,
+        "model": "npc.civilian-man-b",
+        "variant": "inf.dog-retriever",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "pet",
+        "waypoints": [
+          {
+            "x": 53,
+            "z": 31
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 0,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 53,
+          "z": 31
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 148,
+      "motion": {
+        "velocity": {
+          "x": -0.22971059646266667,
+          "z": 0.01427944520685287
+        },
+        "speed": 0.23015399341017226,
+        "moving": true,
+        "distance": 237.5757436420085
+      },
+      "locomotion": {
+        "vx": -0.30837580462212494,
+        "vz": 0.01303684263005564,
+        "ax": 1.3339583573542995,
+        "az": -0.05953238309303862,
+        "omega": -0.018310598517226415,
+        "updatedAt": 18554
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.suburban-mom",
+      "faction": "civilian",
+      "transform": {
+        "x": 68.14549199232502,
+        "z": 31.007072647390594,
+        "y": 0.7,
+        "yaw": -94.29635330575198
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-woman-a",
+        "variant": "inf.suburban-mom",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "bus-stop",
+        "waypoints": [
+          {
+            "x": 65,
+            "z": 31
+          },
+          {
+            "x": 68,
+            "z": 31
+          },
+          {
+            "x": 68,
+            "z": 34
+          },
+          {
+            "x": 65,
+            "z": 34
+          }
+        ],
+        "waypoint": 2,
+        "pauseUntil": 18559,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 65,
+          "z": 31
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 149,
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 212.09144103567883
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.delivery-driver",
+      "faction": "civilian",
+      "transform": {
+        "x": 71.00238735828884,
+        "z": 30.95088946265056,
+        "y": 0.7,
+        "yaw": -136.70785413404496
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-woman-b",
+        "variant": "inf.delivery-driver",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "carry-belongings",
+        "waypoints": [
+          {
+            "x": 71,
+            "z": 31
+          },
+          {
+            "x": 74,
+            "z": 31
+          },
+          {
+            "x": 74,
+            "z": 34
+          },
+          {
+            "x": 71,
+            "z": 34
+          }
+        ],
+        "waypoint": 1,
+        "pauseUntil": 18644,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 71,
+          "z": 31
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 150,
+      "locomotion": {
+        "vx": 0.022236611387841464,
+        "vz": -0.4574311024860698,
+        "ax": -0.09282437588329456,
+        "az": 1.909497623414475,
+        "omega": 5.8046029610896396e-8,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.022236611387427274,
+          "z": -0.45743110248601226
+        },
+        "speed": 0.457971265919123,
+        "moving": true,
+        "distance": 296.9290925982942
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.bathrobe-neighbor",
+      "faction": "civilian",
+      "transform": {
+        "x": 1.7649106694485568,
+        "z": 36.9885718525555,
+        "y": 0.7,
+        "yaw": -94.29635349115853
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-elderly",
+        "variant": "inf.bathrobe-neighbor",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "chat",
+        "waypoints": [
+          {
+            "x": -1,
+            "z": 37
+          },
+          {
+            "x": 2,
+            "z": 37
+          },
+          {
+            "x": 2,
+            "z": 40
+          },
+          {
+            "x": -1,
+            "z": 40
+          }
+        ],
+        "waypoint": 1,
+        "pauseUntil": 18425,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": -1,
+          "z": 37
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 151,
+      "locomotion": {
+        "vx": 1.3268643754121887,
+        "vz": 0.06450144583544243,
+        "ax": -1.9569795474565062,
+        "az": -0.09513256412669993,
+        "omega": 0.0000022249452401680156,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 1.3268643754121934,
+          "z": 0.06450144583524775
+        },
+        "speed": 1.328431220369661,
+        "moving": true,
+        "distance": 211.9844102984229
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.jogger",
+      "faction": "civilian",
+      "transform": {
+        "x": 22.857422270017196,
+        "z": 38.21807387133042,
+        "y": 0.7,
+        "yaw": -174.59246979389832
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-man-a",
+        "variant": "inf.jogger",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "jog",
+        "waypoints": [
+          {
+            "x": 23,
+            "z": 37
+          },
+          {
+            "x": 26,
+            "z": 37
+          },
+          {
+            "x": 26,
+            "z": 40
+          },
+          {
+            "x": 23,
+            "z": 40
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 18493,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 23,
+          "z": 37
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 152,
+      "locomotion": {
+        "vx": 0.28490712445969596,
+        "vz": -2.4340261561332888,
+        "ax": 0.026925425509088496,
+        "az": -0.23003001444199717,
+        "omega": 1.700000000000002,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.28490712445965016,
+          "z": -2.434026156133484
+        },
+        "speed": 2.450643874231792,
+        "moving": true,
+        "distance": 391.9058331218027
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.cashier",
+      "faction": "civilian",
+      "transform": {
+        "x": 29.007049615873147,
+        "z": 36.85498179085327,
+        "y": 0.7,
+        "yaw": -136.70785412921455
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-man-b",
+        "variant": "inf.cashier",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "shop",
+        "waypoints": [
+          {
+            "x": 29,
+            "z": 37
+          },
+          {
+            "x": 32,
+            "z": 37
+          },
+          {
+            "x": 32,
+            "z": 40
+          },
+          {
+            "x": 29,
+            "z": 40
+          }
+        ],
+        "waypoint": 1,
+        "pauseUntil": 18570,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 29,
+          "z": 37
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 153,
+      "locomotion": {
+        "vx": 0.0014899347234205466,
+        "vz": -0.03064956576693764,
+        "ax": -0.006985824709750628,
+        "az": 0.14370595604768988,
+        "omega": 6.517393868361471e-11,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.0014899347234376137,
+          "z": -0.030649565767078002
+        },
+        "speed": 0.03068575870319235,
+        "moving": false,
+        "distance": 297.41724289674136
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.bbq-dad",
+      "faction": "civilian",
+      "transform": {
+        "x": 55.989582408791065,
+        "z": 40.1583210362962,
+        "y": 0.7,
+        "yaw": -133.58905511213533
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-woman-a",
+        "variant": "inf.bbq-dad",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "walk-dog",
+        "waypoints": [
+          {
+            "x": 53,
+            "z": 37
+          },
+          {
+            "x": 56,
+            "z": 37
+          },
+          {
+            "x": 56,
+            "z": 40
+          },
+          {
+            "x": 53,
+            "z": 40
+          }
+        ],
+        "waypoint": 3,
+        "pauseUntil": 18580,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 53,
+          "z": 37
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 154,
+      "locomotion": {
+        "vx": -0.002952706254430457,
+        "vz": 0.04130308975582614,
+        "ax": 0.013809656925646636,
+        "az": -0.19317246302325589,
+        "omega": -3.571441623404336e-8,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": -0.006328054027022745,
+          "z": 0.26681338253965237
+        },
+        "speed": 0.266888413705091,
+        "moving": true,
+        "distance": 296.1938848334805
+      }
+    },
+    {
+      "kind": "pet",
+      "archetype": "npc.dog",
+      "faction": "civilian",
+      "transform": {
+        "x": 56.00251668129823,
+        "z": 39.29416961355423,
+        "y": 0.3,
+        "yaw": -133.47324554749477
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": "dog",
+        "owner": 154,
+        "model": "npc.civilian-woman-b",
+        "variant": "inf.dog-retriever",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "pet",
+        "waypoints": [
+          {
+            "x": 53,
+            "z": 37
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 0,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 53,
+          "z": 37
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 155,
+      "motion": {
+        "velocity": {
+          "x": 0.01645598989043151,
+          "z": 0.2641274073150157
+        },
+        "speed": 0.26463954144879065,
+        "moving": true,
+        "distance": 236.0374795581209
+      },
+      "locomotion": {
+        "vx": 0.015105850781426332,
+        "vz": 0.3543315244285656,
+        "ax": -0.06859701922430274,
+        "az": -1.5089101939866703,
+        "omega": -0.022032719832887713,
+        "updatedAt": 18554
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.suburban-mom",
+      "faction": "civilian",
+      "transform": {
+        "x": 58.987496828458255,
+        "z": 37.25720373680833,
+        "y": 0.7,
+        "yaw": -92.72555720144605
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-elderly",
+        "variant": "inf.suburban-mom",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "bus-stop",
+        "waypoints": [
+          {
+            "x": 59,
+            "z": 37
+          },
+          {
+            "x": 62,
+            "z": 37
+          },
+          {
+            "x": 62,
+            "z": 40
+          },
+          {
+            "x": 59,
+            "z": 40
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 18426,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 59,
+          "z": 37
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 156,
+      "locomotion": {
+        "vx": 0.0660869885708713,
+        "vz": -1.3594807012031676,
+        "ax": -0.08501040859160294,
+        "az": 1.7487558804060255,
+        "omega": 0.0000026699310128420603,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.06608698857107242,
+          "z": -1.3594807012033527
+        },
+        "speed": 1.361086061570962,
+        "moving": true,
+        "distance": 209.50514439008052
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.delivery-driver",
+      "faction": "civilian",
+      "transform": {
+        "x": 76.93453736224777,
+        "z": 38.34663713082835,
+        "y": 0.7,
+        "yaw": -136.70853222950996
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-man-a",
+        "variant": "inf.delivery-driver",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "carry-belongings",
+        "waypoints": [
+          {
+            "x": 77,
+            "z": 37
+          },
+          {
+            "x": 80,
+            "z": 37
+          },
+          {
+            "x": 80,
+            "z": 40
+          },
+          {
+            "x": 77,
+            "z": 40
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 18470,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 77,
+          "z": 37
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 157,
+      "locomotion": {
+        "vx": 0.07259990700824316,
+        "vz": -1.4934584646898892,
+        "ax": 0.001094619446500205,
+        "az": -0.02251750374564895,
+        "omega": 0.008137203616146966,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.07259990700816843,
+          "z": -1.493458464689894
+        },
+        "speed": 1.4952220344321743,
+        "moving": true,
+        "distance": 296.49058798450545
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.bathrobe-neighbor",
+      "faction": "civilian",
+      "transform": {
+        "x": -1.087169384390494,
+        "z": 44.79316834338006,
+        "y": 0.7,
+        "yaw": -92.75142731882647
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-man-b",
+        "variant": "inf.bathrobe-neighbor",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "chat",
+        "waypoints": [
+          {
+            "x": -1,
+            "z": 43
+          },
+          {
+            "x": 2,
+            "z": 43
+          },
+          {
+            "x": 2,
+            "z": 46
+          },
+          {
+            "x": -1,
+            "z": 46
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 18488,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": -1,
+          "z": 43
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 158,
+      "locomotion": {
+        "vx": 0.07192699600368051,
+        "vz": -1.4796159588605464,
+        "ax": 0.004256560407144515,
+        "az": -0.08756204287946652,
+        "omega": 0.7000000000000022,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.07192699600367725,
+          "z": -1.4796159588607338
+        },
+        "speed": 1.4813631825009967,
+        "moving": true,
+        "distance": 208.24136601983633
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.jogger",
+      "faction": "civilian",
+      "transform": {
+        "x": 24.619448471347468,
+        "z": 46.18955777975731,
+        "y": 0.7,
+        "yaw": -173.27127144298302
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-woman-a",
+        "variant": "inf.jogger",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "jog",
+        "waypoints": [
+          {
+            "x": 23,
+            "z": 43
+          },
+          {
+            "x": 26,
+            "z": 43
+          },
+          {
+            "x": 26,
+            "z": 46
+          },
+          {
+            "x": 23,
+            "z": 46
+          }
+        ],
+        "waypoint": 3,
+        "pauseUntil": 18503,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 23,
+          "z": 43
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 159,
+      "locomotion": {
+        "vx": -2.37916671170469,
+        "vz": -0.27848342662485814,
+        "ax": -0.48399982269301906,
+        "az": -0.05665257858825676,
+        "omega": 0.5000000000000019,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": -2.379166711704599,
+          "z": -0.2784834266246605
+        },
+        "speed": 2.3954096227968793,
+        "moving": true,
+        "distance": 389.14352173157226
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.cashier",
+      "faction": "civilian",
+      "transform": {
+        "x": 28.85461005703475,
+        "z": 45.990828087109804,
+        "y": 0.7,
+        "yaw": -135.14705780241692
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-woman-b",
+        "variant": "inf.cashier",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "shop",
+        "waypoints": [
+          {
+            "x": 29,
+            "z": 43
+          },
+          {
+            "x": 32,
+            "z": 43
+          },
+          {
+            "x": 32,
+            "z": 46
+          },
+          {
+            "x": 29,
+            "z": 46
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 18552,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 29,
+          "z": 43
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 160,
+      "locomotion": {
+        "vx": 0.003588411489349899,
+        "vz": -0.07381749831912629,
+        "ax": 0.10207536338477291,
+        "az": -2.09980042351407,
+        "omega": -0.4,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.0035884114894457753,
+          "z": -0.07381749831893103
+        },
+        "speed": 0.07390466666647628,
+        "moving": false,
+        "distance": 295.258316146372
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.bbq-dad",
+      "faction": "civilian",
+      "transform": {
+        "x": 53.01129631175735,
+        "z": 42.79949129967857,
+        "y": 0.7,
+        "yaw": -136.73064768407096
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-elderly",
+        "variant": "inf.bbq-dad",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "walk-dog",
+        "waypoints": [
+          {
+            "x": 53,
+            "z": 43
+          },
+          {
+            "x": 56,
+            "z": 43
+          },
+          {
+            "x": 56,
+            "z": 46
+          },
+          {
+            "x": 53,
+            "z": 46
+          }
+        ],
+        "waypoint": 1,
+        "pauseUntil": 18600,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 53,
+          "z": 43
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 161,
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.001180733523113986,
+          "z": -0.061509940576911504
+        },
+        "speed": 0.06152127210508402,
+        "moving": true,
+        "distance": 303.3087612691668
+      }
+    },
+    {
+      "kind": "pet",
+      "archetype": "npc.dog",
+      "faction": "civilian",
+      "transform": {
+        "x": 52.9947048283989,
+        "z": 43.663819393544024,
+        "y": 0.3,
+        "yaw": -136.61805382920693
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": "dog",
+        "owner": 161,
+        "model": "npc.civilian-man-a",
+        "variant": "inf.dog-retriever",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "pet",
+        "waypoints": [
+          {
+            "x": 53,
+            "z": 43
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 0,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 53,
+          "z": 43
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 162,
+      "motion": {
+        "velocity": {
+          "x": -0.004270919330195966,
+          "z": -0.059250744246099885
+        },
+        "speed": 0.059404473279726845,
+        "moving": true,
+        "distance": 242.01055948801616
+      },
+      "locomotion": {
+        "vx": -0.0036805525683761813,
+        "vz": -0.09000571453448644,
+        "ax": 0.017218405431424444,
+        "az": 0.4151426663303335,
+        "omega": -0.004283284156284022,
+        "updatedAt": 18554
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.suburban-mom",
+      "faction": "civilian",
+      "transform": {
+        "x": 62.12718579831561,
+        "z": 43.38365082119479,
+        "y": 0.7,
+        "yaw": -95.76468663908285
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-man-b",
+        "variant": "inf.suburban-mom",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "bus-stop",
+        "waypoints": [
+          {
+            "x": 59,
+            "z": 43
+          },
+          {
+            "x": 62,
+            "z": 43
+          },
+          {
+            "x": 62,
+            "z": 46
+          },
+          {
+            "x": 59,
+            "z": 46
+          }
+        ],
+        "waypoint": 2,
+        "pauseUntil": 18523,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 59,
+          "z": 43
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 163,
+      "locomotion": {
+        "vx": -0.060591771557810765,
+        "vz": 1.2464381547085286,
+        "ax": -0.054684781052716805,
+        "az": 1.1249249829400274,
+        "omega": -3.499999999999999,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": -0.060591771557909624,
+          "z": 1.2464381547084713
+        },
+        "speed": 1.247910027323118,
+        "moving": true,
+        "distance": 214.38646389669006
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.delivery-driver",
+      "faction": "civilian",
+      "transform": {
+        "x": 76.87181068857197,
+        "z": 45.53027835117688,
+        "y": 0.7,
+        "yaw": -136.84705725398754
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-woman-a",
+        "variant": "inf.delivery-driver",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "carry-belongings",
+        "waypoints": [
+          {
+            "x": 77,
+            "z": 43
+          },
+          {
+            "x": 80,
+            "z": 43
+          },
+          {
+            "x": 80,
+            "z": 46
+          },
+          {
+            "x": 77,
+            "z": 46
+          }
+        ],
+        "waypoint": 0,
+        "pauseUntil": 18519,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": 77,
+          "z": 43
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 164,
+      "locomotion": {
+        "vx": 0.060118848903804485,
+        "vz": -1.3099799900632845,
+        "ax": 0.0697041285377486,
+        "az": -0.852924029049012,
+        "omega": -2.4999999999999982,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.06011884890369856,
+          "z": -1.3099799900632547
+        },
+        "speed": 1.311358780181698,
+        "moving": true,
+        "distance": 296.2574142124781
+      }
+    },
+    {
+      "kind": "civilian",
+      "archetype": "npc.bathrobe-neighbor",
+      "faction": "civilian",
+      "transform": {
+        "x": 2.0562338177350403,
+        "z": 49.002733634737616,
+        "y": 0.7,
+        "yaw": -94.29635330977678
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "civilian": {
+        "state": "calm",
+        "ambient": true,
+        "adult": true,
+        "pet": null,
+        "owner": null,
+        "model": "npc.civilian-woman-b",
+        "variant": "inf.bathrobe-neighbor",
+        "scheduleStep": 0,
+        "activityUntil": 0,
+        "activityStarted": 0,
+        "lastTravelProgress": 0,
+        "routine": "chat",
+        "waypoints": [
+          {
+            "x": -1,
+            "z": 49
+          },
+          {
+            "x": 2,
+            "z": 49
+          },
+          {
+            "x": 2,
+            "z": 52
+          },
+          {
+            "x": -1,
+            "z": 52
+          }
+        ],
+        "waypoint": 2,
+        "pauseUntil": 18726,
+        "entered": 0,
+        "until": 0,
+        "downTicks": 0,
+        "eyesGlow": false,
+        "veins": 0,
+        "attacker": 0,
+        "threat": {
+          "x": -1,
+          "z": 49
+        },
+        "path": [],
+        "goal": -1,
+        "pathIndex": 0,
+        "gore": false,
+        "knockedUntil": 0
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 165,
+      "locomotion": {
+        "vx": 0.4273968231496262,
+        "vz": 0.02077658692891093,
+        "ax": -1.8020567602255144,
+        "az": -0.0876014675395688,
+        "omega": 4.8360709779079235e-8,
+        "updatedAt": 18554
+      },
+      "motion": {
+        "velocity": {
+          "x": 0.42739682314961946,
+          "z": 0.02077658692897444
+        },
+        "speed": 0.42790152021557987,
+        "moving": true,
+        "distance": 214.19407745941655
+      }
+    },
+    {
+      "kind": "pickup",
+      "archetype": "pickup.medkit",
+      "faction": "environment",
+      "health": {
+        "current": 1,
+        "max": 1
+      },
+      "transform": {
+        "x": 55.696144104003906,
+        "z": 64.69947814941406,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "pickup": {
+        "kind": "medkit",
+        "item": null,
+        "radius": 0.9,
+        "collected": false
+      },
+      "id": 166
+    },
+    {
+      "kind": "pickup",
+      "archetype": "pickup.medkit",
+      "faction": "environment",
+      "health": {
+        "current": 1,
+        "max": 1
+      },
+      "transform": {
+        "x": 55.47739028930664,
+        "z": 71.85199737548828,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "pickup": {
+        "kind": "medkit",
+        "item": null,
+        "radius": 0.9,
+        "collected": false
+      },
+      "id": 167
+    },
+    {
+      "kind": "vehicle",
+      "archetype": "vehicle.sedan",
+      "transform": {
+        "x": 45.52751159667969,
+        "z": 112.07424926757812,
+        "radius": 3,
+        "y": 0.7354346513748169,
+        "yaw": 0.029675363214438033
+      },
+      "faction": "survivor",
+      "health": {
+        "current": 300,
+        "max": 300
+      },
+      "vehicle": {
+        "speed": 1.4731873681628648e-8,
+        "forwardSpeed": -2.6425922888855914e-9,
+        "steer": 1.5e-323,
+        "braking": true,
+        "boosting": false,
+        "driver": null,
+        "attached": [
+          248,
+          256,
+          272
+        ],
+        "damage": "normal",
+        "explodeAt": null,
+        "stuck": false,
+        "recoveringUntil": 0
+      },
+      "id": 182
+    },
+    {
+      "kind": "obstacle",
+      "archetype": "obstacle.cone",
+      "transform": {
+        "x": 56,
+        "z": 67,
+        "y": 0.5,
+        "yaw": 0
+      },
+      "health": {
+        "current": 0,
+        "max": 1
+      },
+      "faction": "neutral",
+      "id": 195
+    },
+    {
+      "kind": "obstacle",
+      "archetype": "obstacle.cone",
+      "transform": {
+        "x": 56,
+        "z": 64,
+        "y": 0.5,
+        "yaw": 0
+      },
+      "health": {
+        "current": 0,
+        "max": 1
+      },
+      "faction": "neutral",
+      "id": 196
+    },
+    {
+      "kind": "obstacle",
+      "archetype": "obstacle.cone",
+      "transform": {
+        "x": 54.5,
+        "z": 61,
+        "y": 0.5,
+        "yaw": 0
+      },
+      "health": {
+        "current": 0,
+        "max": 1
+      },
+      "faction": "neutral",
+      "id": 197
+    },
+    {
+      "kind": "pickup",
+      "archetype": "pickup.medkit",
+      "faction": "environment",
+      "health": {
+        "current": 1,
+        "max": 1
+      },
+      "transform": {
+        "x": 19.484189987182617,
+        "z": 112.73509979248047,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "pickup": {
+        "kind": "medkit",
+        "item": null,
+        "radius": 0.9,
+        "collected": false
+      },
+      "id": 198
+    },
+    {
+      "kind": "pickup",
+      "archetype": "pickup.medkit",
+      "faction": "environment",
+      "health": {
+        "current": 1,
+        "max": 1
+      },
+      "transform": {
+        "x": -0.055357202887535095,
+        "z": 93.0063247680664,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "pickup": {
+        "kind": "medkit",
+        "item": null,
+        "radius": 0.9,
+        "collected": false
+      },
+      "id": 199
+    },
+    {
+      "kind": "pickup",
+      "archetype": "pickup.medkit",
+      "faction": "environment",
+      "health": {
+        "current": 1,
+        "max": 1
+      },
+      "transform": {
+        "x": 46,
+        "z": 112,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "pickup": {
+        "kind": "medkit",
+        "item": null,
+        "radius": 0.9,
+        "collected": false
+      },
+      "id": 240
+    },
+    {
+      "kind": "pickup",
+      "archetype": "pickup.medkit",
+      "faction": "environment",
+      "health": {
+        "current": 1,
+        "max": 1
+      },
+      "transform": {
+        "x": 46.15,
+        "z": 112,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "pickup": {
+        "kind": "medkit",
+        "item": null,
+        "radius": 0.9,
+        "collected": false
+      },
+      "id": 241
+    },
+    {
+      "kind": "pickup",
+      "archetype": "pickup.medkit",
+      "faction": "environment",
+      "health": {
+        "current": 1,
+        "max": 1
+      },
+      "transform": {
+        "x": 46.3,
+        "z": 112,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "pickup": {
+        "kind": "medkit",
+        "item": null,
+        "radius": 0.9,
+        "collected": false
+      },
+      "id": 242
+    },
+    {
+      "kind": "pickup",
+      "archetype": "pickup.medkit",
+      "faction": "environment",
+      "health": {
+        "current": 1,
+        "max": 1
+      },
+      "transform": {
+        "x": 46.45,
+        "z": 112,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "pickup": {
+        "kind": "medkit",
+        "item": null,
+        "radius": 0.9,
+        "collected": false
+      },
+      "id": 243
+    },
+    {
+      "id": 280,
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "faction": "infected",
+      "health": {
+        "current": 0,
+        "max": 40
+      },
+      "transform": {
+        "x": 42.40162846592432,
+        "y": 0.7,
+        "z": 114.38612508307953,
+        "yaw": 0.04144740454177102
+      },
+      "infected": {
+        "state": "dead",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 16091,
+        "speed": 4.2,
+        "until": 15971,
+        "cooldown": 0,
+        "attackId": 55,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": 15965,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          42.25,
+          3,
+          111.25,
+          38.77526255420235,
+          3,
+          112.60098092731253,
+          40.42485053403777,
+          3,
+          109.25765783793378,
+          41.46687881583443,
+          3,
+          112.83720066392797,
+          38.28057270925329,
+          3,
+          110.90163790897674,
+          41.93750935660555,
+          3,
+          110.17654195640038,
+          39.73079405242659,
+          3,
+          113.18143086441229,
+          39.3281830963618,
+          3,
+          109.47510462388149,
+          42.1286438535379,
+          3,
+          111.93607380912279,
+          38.40131046550826,
+          3,
+          112.01311663922411,
+          41.097687828631294,
+          3,
+          109.43852950750217,
+          40.84857255126227,
+          3,
+          113.15832672801996,
+          38.519574815995604,
+          3,
+          110.2471896078703,
+          42.20335026474031,
+          3,
+          110.82055530828875,
+          39.099746403833116,
+          3,
+          112.88612855989533,
+          39.9929717856904,
+          3,
+          109.26658463829463,
+          41.77930272843575,
+          3,
+          112.53888834458186,
+          38.251708214724886,
+          3,
+          111.33264345649835,
+          41.667652994939296,
+          3,
+          109.83923425546988,
+          40.15762582849095,
+          3,
+          113.24786561420883
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.runner",
+        "path": [],
+        "pathIndex": 15,
+        "goal": -1,
+        "dx": 0.9949260331356782,
+        "dz": -0.10060908800353732,
+        "grabHits": 1,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 16044,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": [],
+        "reaction": {
+          "index": 2,
+          "started": 15964,
+          "until": 16044,
+          "direction": {
+            "x": -0.9855181799703867,
+            "z": 0.16956979963382734
+          },
+          "from": {
+            "x": 45.653838459826645,
+            "z": 113.82654474428794
+          },
+          "to": {
+            "x": 42.40162846592432,
+            "z": 114.38612508307953
+          },
+          "heavy": true
+        }
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 44.76780218228461
+      }
+    },
+    {
+      "id": 281,
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "faction": "infected",
+      "health": {
+        "current": 0,
+        "max": 40
+      },
+      "transform": {
+        "x": 52.81094263732927,
+        "y": 0.7,
+        "z": 113.22653145578943,
+        "yaw": -0.12
+      },
+      "infected": {
+        "state": "dead",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 0,
+        "speed": 4.2,
+        "until": 16001,
+        "cooldown": 0,
+        "attackId": 0,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": 15896,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          54.25,
+          3,
+          113.25,
+          50.77526255420235,
+          3,
+          114.60098092731253,
+          52.42485053403777,
+          3,
+          111.25765783793378,
+          53.46687881583443,
+          3,
+          114.83720066392797,
+          50.28057270925329,
+          3,
+          112.90163790897674,
+          53.93750935660555,
+          3,
+          112.17654195640038,
+          51.73079405242659,
+          3,
+          115.18143086441229,
+          51.3281830963618,
+          3,
+          111.47510462388149,
+          54.1286438535379,
+          3,
+          113.93607380912279,
+          50.40131046550826,
+          3,
+          114.01311663922411,
+          53.097687828631294,
+          3,
+          111.43852950750217,
+          52.84857255126227,
+          3,
+          115.15832672801996,
+          50.519574815995604,
+          3,
+          112.2471896078703,
+          54.20335026474031,
+          3,
+          112.82055530828875,
+          51.099746403833116,
+          3,
+          114.88612855989533,
+          51.9929717856904,
+          3,
+          111.26658463829463,
+          53.77930272843575,
+          3,
+          114.53888834458186,
+          50.251708214724886,
+          3,
+          113.33264345649835,
+          53.667652994939296,
+          3,
+          111.83923425546988,
+          52.15762582849095,
+          3,
+          115.24786561420883
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.runner",
+        "path": [],
+        "pathIndex": 0,
+        "goal": -1,
+        "dx": 0.40558994300059537,
+        "dz": 0.914055139549455,
+        "grabHits": 2,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 15975,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": [],
+        "reaction": {
+          "index": 4,
+          "started": 15895,
+          "until": 15975,
+          "direction": {
+            "x": 0.9961505433792408,
+            "z": -0.08765896945118219
+          },
+          "from": {
+            "x": 52.5120974743155,
+            "z": 113.25282914662478
+          },
+          "to": {
+            "x": 52.81094263732927,
+            "z": 113.22653145578943
+          },
+          "heavy": true
+        }
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 39.07529047726897
+      }
+    },
+    {
+      "id": 282,
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "faction": "infected",
+      "health": {
+        "current": 0,
+        "max": 30
+      },
+      "transform": {
+        "x": 46.403110511791176,
+        "y": 0.7,
+        "z": 110.48478915089264,
+        "yaw": -0.013297836585608343
+      },
+      "infected": {
+        "state": "dead",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 16380,
+        "speed": 6.5,
+        "until": 16260,
+        "cooldown": 0,
+        "attackId": 56,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": 16248,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          42.25,
+          3,
+          111.25,
+          38.77526255420235,
+          3,
+          112.60098092731253,
+          40.42485053403777,
+          3,
+          109.25765783793378,
+          41.46687881583443,
+          3,
+          112.83720066392797,
+          38.28057270925329,
+          3,
+          110.90163790897674,
+          41.93750935660555,
+          3,
+          110.17654195640038,
+          39.73079405242659,
+          3,
+          113.18143086441229,
+          39.3281830963618,
+          3,
+          109.47510462388149,
+          42.1286438535379,
+          3,
+          111.93607380912279,
+          38.40131046550826,
+          3,
+          112.01311663922411,
+          41.097687828631294,
+          3,
+          109.43852950750217,
+          40.84857255126227,
+          3,
+          113.15832672801996,
+          38.519574815995604,
+          3,
+          110.2471896078703,
+          42.20335026474031,
+          3,
+          110.82055530828875,
+          39.099746403833116,
+          3,
+          112.88612855989533,
+          39.9929717856904,
+          3,
+          109.26658463829463,
+          41.77930272843575,
+          3,
+          112.53888834458186,
+          38.251708214724886,
+          3,
+          111.33264345649835,
+          41.667652994939296,
+          3,
+          109.83923425546988,
+          40.15762582849095,
+          3,
+          113.24786561420883
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.sprinter",
+        "path": [],
+        "pathIndex": 5,
+        "goal": -1,
+        "dx": 0.9929132923741596,
+        "dz": 0.1188410443689669,
+        "grabHits": 1,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 16327,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": [],
+        "reaction": {
+          "index": 1,
+          "started": 16247,
+          "until": 16327,
+          "direction": {
+            "x": -0.9999230293780685,
+            "z": -0.01240706731610688
+          },
+          "from": {
+            "x": 46.7030874206046,
+            "z": 110.48851127108746
+          },
+          "to": {
+            "x": 46.403110511791176,
+            "z": 110.48478915089264
+          },
+          "heavy": true
+        }
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 45.45431828346476
+      }
+    },
+    {
+      "id": 283,
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "faction": "infected",
+      "health": {
+        "current": 0,
+        "max": 30
+      },
+      "transform": {
+        "x": 52.45984073598788,
+        "y": 0.7,
+        "z": 113.38589284572805,
+        "yaw": 0
+      },
+      "infected": {
+        "state": "dead",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 0,
+        "speed": 6.5,
+        "until": 0,
+        "cooldown": 0,
+        "attackId": 0,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": 16189,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          54.25,
+          3,
+          113.25,
+          50.77526255420235,
+          3,
+          114.60098092731253,
+          52.42485053403777,
+          3,
+          111.25765783793378,
+          53.46687881583443,
+          3,
+          114.83720066392797,
+          50.28057270925329,
+          3,
+          112.90163790897674,
+          53.93750935660555,
+          3,
+          112.17654195640038,
+          51.73079405242659,
+          3,
+          115.18143086441229,
+          51.3281830963618,
+          3,
+          111.47510462388149,
+          54.1286438535379,
+          3,
+          113.93607380912279,
+          50.40131046550826,
+          3,
+          114.01311663922411,
+          53.097687828631294,
+          3,
+          111.43852950750217,
+          52.84857255126227,
+          3,
+          115.15832672801996,
+          50.519574815995604,
+          3,
+          112.2471896078703,
+          54.20335026474031,
+          3,
+          112.82055530828875,
+          51.099746403833116,
+          3,
+          114.88612855989533,
+          51.9929717856904,
+          3,
+          111.26658463829463,
+          53.77930272843575,
+          3,
+          114.53888834458186,
+          50.251708214724886,
+          3,
+          113.33264345649835,
+          53.667652994939296,
+          3,
+          111.83923425546988,
+          52.15762582849095,
+          3,
+          115.24786561420883
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.sprinter",
+        "path": [],
+        "pathIndex": 0,
+        "goal": -1,
+        "dx": 0,
+        "dz": 0,
+        "grabHits": 1,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 16268,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": [],
+        "reaction": {
+          "index": 2,
+          "started": 16188,
+          "until": 16268,
+          "direction": {
+            "x": 0.8393629439515267,
+            "z": 0.543571382912149
+          },
+          "from": {
+            "x": 52.25,
+            "z": 113.25
+          },
+          "to": {
+            "x": 52.45984073598788,
+            "z": 113.38589284572805
+          },
+          "heavy": true
+        }
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 39.02100000000001
+      }
+    },
+    {
+      "id": 284,
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "faction": "infected",
+      "health": {
+        "current": 0,
+        "max": 40
+      },
+      "transform": {
+        "x": 43.116916703084925,
+        "y": 0.7,
+        "z": 112.07380003569642,
+        "yaw": -1.4152324971607533,
+        "radius": 3
+      },
+      "infected": {
+        "state": "dead",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 16742,
+        "speed": 4.2,
+        "until": 16622,
+        "cooldown": 16688,
+        "attackId": 57,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": 16648,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          42.25,
+          3,
+          111.25,
+          38.77526255420235,
+          3,
+          112.60098092731253,
+          40.42485053403777,
+          3,
+          109.25765783793378,
+          41.46687881583443,
+          3,
+          112.83720066392797,
+          38.28057270925329,
+          3,
+          110.90163790897674,
+          41.93750935660555,
+          3,
+          110.17654195640038,
+          39.73079405242659,
+          3,
+          113.18143086441229,
+          39.3281830963618,
+          3,
+          109.47510462388149,
+          42.1286438535379,
+          3,
+          111.93607380912279,
+          38.40131046550826,
+          3,
+          112.01311663922411,
+          41.097687828631294,
+          3,
+          109.43852950750217,
+          40.84857255126227,
+          3,
+          113.15832672801996,
+          38.519574815995604,
+          3,
+          110.2471896078703,
+          42.20335026474031,
+          3,
+          110.82055530828875,
+          39.099746403833116,
+          3,
+          112.88612855989533,
+          39.9929717856904,
+          3,
+          109.26658463829463,
+          41.77930272843575,
+          3,
+          112.53888834458186,
+          38.251708214724886,
+          3,
+          111.33264345649835,
+          41.667652994939296,
+          3,
+          109.83923425546988,
+          40.15762582849095,
+          3,
+          113.24786561420883
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.runner",
+        "path": [],
+        "pathIndex": 5,
+        "goal": -1,
+        "dx": 0.365165933039843,
+        "dz": 0.930942447924221,
+        "grabHits": 2,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 16727,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": [],
+        "reaction": {
+          "index": 4,
+          "started": 16647,
+          "until": 16727,
+          "direction": {
+            "x": 0.4041589442525253,
+            "z": -0.9146887709929997
+          },
+          "from": {
+            "x": 43.116916703084925,
+            "z": 112.34820666699432
+          },
+          "to": {
+            "x": 43.116916703084925,
+            "z": 112.07380003569642
+          },
+          "heavy": true
+        }
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 42.88348551773138
+      }
+    },
+    {
+      "id": 285,
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "faction": "infected",
+      "health": {
+        "current": 0,
+        "max": 40
+      },
+      "transform": {
+        "x": 52.79695340316901,
+        "y": 0.7,
+        "z": 113.3078098154356,
+        "yaw": 0
+      },
+      "infected": {
+        "state": "dead",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 0,
+        "speed": 4.2,
+        "until": 0,
+        "cooldown": 0,
+        "attackId": 0,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": 16493,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          54.25,
+          3,
+          113.25,
+          50.77526255420235,
+          3,
+          114.60098092731253,
+          52.42485053403777,
+          3,
+          111.25765783793378,
+          53.46687881583443,
+          3,
+          114.83720066392797,
+          50.28057270925329,
+          3,
+          112.90163790897674,
+          53.93750935660555,
+          3,
+          112.17654195640038,
+          51.73079405242659,
+          3,
+          115.18143086441229,
+          51.3281830963618,
+          3,
+          111.47510462388149,
+          54.1286438535379,
+          3,
+          113.93607380912279,
+          50.40131046550826,
+          3,
+          114.01311663922411,
+          53.097687828631294,
+          3,
+          111.43852950750217,
+          52.84857255126227,
+          3,
+          115.15832672801996,
+          50.519574815995604,
+          3,
+          112.2471896078703,
+          54.20335026474031,
+          3,
+          112.82055530828875,
+          51.099746403833116,
+          3,
+          114.88612855989533,
+          51.9929717856904,
+          3,
+          111.26658463829463,
+          53.77930272843575,
+          3,
+          114.53888834458186,
+          50.251708214724886,
+          3,
+          113.33264345649835,
+          53.667652994939296,
+          3,
+          111.83923425546988,
+          52.15762582849095,
+          3,
+          115.24786561420883
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.runner",
+        "path": [],
+        "pathIndex": 0,
+        "goal": -1,
+        "dx": 0,
+        "dz": 0,
+        "grabHits": 2,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 16572,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": [],
+        "reaction": {
+          "index": 2,
+          "started": 16492,
+          "until": 16572,
+          "direction": {
+            "x": 0.9944609190220807,
+            "z": 0.10510699566517362
+          },
+          "from": {
+            "x": 52.49861512746239,
+            "z": 113.27627771673605
+          },
+          "to": {
+            "x": 52.79695340316901,
+            "z": 113.3078098154356
+          },
+          "heavy": true
+        }
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 39.595000000000006
+      }
+    },
+    {
+      "id": 286,
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "faction": "infected",
+      "health": {
+        "current": 0,
+        "max": 40
+      },
+      "transform": {
+        "x": 42.81480194107636,
+        "y": 0.7,
+        "z": 114.31007371426792,
+        "yaw": 0.061761532587530366
+      },
+      "infected": {
+        "state": "dead",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 16998,
+        "speed": 4.2,
+        "until": 16878,
+        "cooldown": 0,
+        "attackId": 58,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": 16872,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          42.25,
+          3,
+          111.25,
+          38.77526255420235,
+          3,
+          112.60098092731253,
+          40.42485053403777,
+          3,
+          109.25765783793378,
+          41.46687881583443,
+          3,
+          112.83720066392797,
+          38.28057270925329,
+          3,
+          110.90163790897674,
+          41.93750935660555,
+          3,
+          110.17654195640038,
+          39.73079405242659,
+          3,
+          113.18143086441229,
+          39.3281830963618,
+          3,
+          109.47510462388149,
+          42.1286438535379,
+          3,
+          111.93607380912279,
+          38.40131046550826,
+          3,
+          112.01311663922411,
+          41.097687828631294,
+          3,
+          109.43852950750217,
+          40.84857255126227,
+          3,
+          113.15832672801996,
+          38.519574815995604,
+          3,
+          110.2471896078703,
+          42.20335026474031,
+          3,
+          110.82055530828875,
+          39.099746403833116,
+          3,
+          112.88612855989533,
+          39.9929717856904,
+          3,
+          109.26658463829463,
+          41.77930272843575,
+          3,
+          112.53888834458186,
+          38.251708214724886,
+          3,
+          111.33264345649835,
+          41.667652994939296,
+          3,
+          109.83923425546988,
+          40.15762582849095,
+          3,
+          113.24786561420883
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.runner",
+        "path": [],
+        "pathIndex": 19,
+        "goal": -1,
+        "dx": 0.9946967365103179,
+        "dz": -0.1028513605924737,
+        "grabHits": 1,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 16951,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": [],
+        "reaction": {
+          "index": 2,
+          "started": 16871,
+          "until": 16951,
+          "direction": {
+            "x": -0.9880714411513939,
+            "z": 0.1539961920990499
+          },
+          "from": {
+            "x": 46.07543769687593,
+            "z": 113.8018862803411
+          },
+          "to": {
+            "x": 42.81480194107636,
+            "z": 114.31007371426792
+          },
+          "heavy": true
+        }
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 46.0515889355099
+      }
+    },
+    {
+      "id": 287,
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "faction": "infected",
+      "health": {
+        "current": 0,
+        "max": 40
+      },
+      "transform": {
+        "x": 52.797903234320415,
+        "y": 0.7,
+        "z": 113.2020203603997,
+        "yaw": 0
+      },
+      "infected": {
+        "state": "dead",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 0,
+        "speed": 4.2,
+        "until": 0,
+        "cooldown": 0,
+        "attackId": 0,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": 16809,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          54.25,
+          3,
+          113.25,
+          50.77526255420235,
+          3,
+          114.60098092731253,
+          52.42485053403777,
+          3,
+          111.25765783793378,
+          53.46687881583443,
+          3,
+          114.83720066392797,
+          50.28057270925329,
+          3,
+          112.90163790897674,
+          53.93750935660555,
+          3,
+          112.17654195640038,
+          51.73079405242659,
+          3,
+          115.18143086441229,
+          51.3281830963618,
+          3,
+          111.47510462388149,
+          54.1286438535379,
+          3,
+          113.93607380912279,
+          50.40131046550826,
+          3,
+          114.01311663922411,
+          53.097687828631294,
+          3,
+          111.43852950750217,
+          52.84857255126227,
+          3,
+          115.15832672801996,
+          50.519574815995604,
+          3,
+          112.2471896078703,
+          54.20335026474031,
+          3,
+          112.82055530828875,
+          51.099746403833116,
+          3,
+          114.88612855989533,
+          51.9929717856904,
+          3,
+          111.26658463829463,
+          53.77930272843575,
+          3,
+          114.53888834458186,
+          50.251708214724886,
+          3,
+          113.33264345649835,
+          53.667652994939296,
+          3,
+          111.83923425546988,
+          52.15762582849095,
+          3,
+          115.24786561420883
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.runner",
+        "path": [],
+        "pathIndex": 0,
+        "goal": -1,
+        "dx": 0,
+        "dz": 0,
+        "grabHits": 2,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 16888,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": [],
+        "reaction": {
+          "index": 4,
+          "started": 16808,
+          "until": 16888,
+          "direction": {
+            "x": 0.9961873731607648,
+            "z": -0.08723942660893153
+          },
+          "from": {
+            "x": 52.49904702237218,
+            "z": 113.22819218838237
+          },
+          "to": {
+            "x": 52.797903234320415,
+            "z": 113.2020203603997
+          },
+          "heavy": true
+        }
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 39.86900000000001
+      }
+    },
+    {
+      "id": 288,
+      "kind": "infected",
+      "archetype": "infected.bloated",
+      "faction": "infected",
+      "health": {
+        "current": 0,
+        "max": 120
+      },
+      "transform": {
+        "x": 41.20801993291849,
+        "y": 0.7,
+        "z": 110.11247331613357,
+        "yaw": -0.07854882135647917
+      },
+      "infected": {
+        "state": "dead",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 0,
+        "speed": 2.5,
+        "until": 17333,
+        "cooldown": 0,
+        "attackId": 59,
+        "special": "explode",
+        "hidden": false,
+        "deadAt": 17273,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          42.25,
+          3,
+          111.25,
+          38.77526255420235,
+          3,
+          112.60098092731253,
+          40.42485053403777,
+          3,
+          109.25765783793378,
+          41.46687881583443,
+          3,
+          112.83720066392797,
+          38.28057270925329,
+          3,
+          110.90163790897674,
+          41.93750935660555,
+          3,
+          110.17654195640038,
+          39.73079405242659,
+          3,
+          113.18143086441229,
+          39.3281830963618,
+          3,
+          109.47510462388149,
+          42.1286438535379,
+          3,
+          111.93607380912279,
+          38.40131046550826,
+          3,
+          112.01311663922411,
+          41.097687828631294,
+          3,
+          109.43852950750217,
+          40.84857255126227,
+          3,
+          113.15832672801996,
+          38.519574815995604,
+          3,
+          110.2471896078703,
+          42.20335026474031,
+          3,
+          110.82055530828875,
+          39.099746403833116,
+          3,
+          112.88612855989533,
+          39.9929717856904,
+          3,
+          109.26658463829463,
+          41.77930272843575,
+          3,
+          112.53888834458186,
+          38.251708214724886,
+          3,
+          111.33264345649835,
+          41.667652994939296,
+          3,
+          109.83923425546988,
+          40.15762582849095,
+          3,
+          113.24786561420883
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.bloated",
+        "path": [],
+        "pathIndex": 9,
+        "goal": -1,
+        "dx": 0,
+        "dz": 0,
+        "grabHits": 4,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.5,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 17352,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": [],
+        "reaction": {
+          "index": 3,
+          "started": 17220,
+          "until": 17300,
+          "direction": {
+            "x": -0.9967069477806383,
+            "z": -0.08108797842962692
+          },
+          "from": {
+            "x": 44.74632915683909,
+            "z": 110.40034105577962
+          },
+          "to": {
+            "x": 41.45719622916293,
+            "z": 110.1327507269619
+          },
+          "heavy": true,
+          "groundDeath": true
+        }
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 45.2937674438385
+      }
+    },
+    {
+      "id": 289,
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "faction": "infected",
+      "health": {
+        "current": 0,
+        "max": 30
+      },
+      "transform": {
+        "x": 52.45962701678501,
+        "y": 0.7,
+        "z": 113.3862222956561,
+        "yaw": 0,
+        "radius": 3
+      },
+      "infected": {
+        "state": "dead",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 0,
+        "speed": 6.5,
+        "until": 0,
+        "cooldown": 0,
+        "attackId": 0,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": 17089,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          54.25,
+          3,
+          113.25,
+          50.77526255420235,
+          3,
+          114.60098092731253,
+          52.42485053403777,
+          3,
+          111.25765783793378,
+          53.46687881583443,
+          3,
+          114.83720066392797,
+          50.28057270925329,
+          3,
+          112.90163790897674,
+          53.93750935660555,
+          3,
+          112.17654195640038,
+          51.73079405242659,
+          3,
+          115.18143086441229,
+          51.3281830963618,
+          3,
+          111.47510462388149,
+          54.1286438535379,
+          3,
+          113.93607380912279,
+          50.40131046550826,
+          3,
+          114.01311663922411,
+          53.097687828631294,
+          3,
+          111.43852950750217,
+          52.84857255126227,
+          3,
+          115.15832672801996,
+          50.519574815995604,
+          3,
+          112.2471896078703,
+          54.20335026474031,
+          3,
+          112.82055530828875,
+          51.099746403833116,
+          3,
+          114.88612855989533,
+          51.9929717856904,
+          3,
+          111.26658463829463,
+          53.77930272843575,
+          3,
+          114.53888834458186,
+          50.251708214724886,
+          3,
+          113.33264345649835,
+          53.667652994939296,
+          3,
+          111.83923425546988,
+          52.15762582849095,
+          3,
+          115.24786561420883
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.sprinter",
+        "path": [],
+        "pathIndex": 0,
+        "goal": -1,
+        "dx": 0,
+        "dz": 0,
+        "grabHits": 1,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 17168,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": [],
+        "reaction": {
+          "index": 2,
+          "started": 17088,
+          "until": 17168,
+          "direction": {
+            "x": 0.8385080671400108,
+            "z": 0.5448891826244335
+          },
+          "from": {
+            "x": 52.25,
+            "z": 113.25
+          },
+          "to": {
+            "x": 52.45962701678501,
+            "z": 113.3862222956561
+          },
+          "heavy": true
+        }
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 39.843
+      }
+    },
+    {
+      "id": 290,
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "faction": "infected",
+      "health": {
+        "current": 0,
+        "max": 40
+      },
+      "transform": {
+        "x": 40.00563964480442,
+        "y": 0.7,
+        "z": 111.30280167429817,
+        "yaw": 0
+      },
+      "infected": {
+        "state": "dead",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 0,
+        "speed": 4.2,
+        "until": 17337,
+        "cooldown": 0,
+        "attackId": 0,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": 17391,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          42.25,
+          3,
+          111.25,
+          38.77526255420235,
+          3,
+          112.60098092731253,
+          40.42485053403777,
+          3,
+          109.25765783793378,
+          41.46687881583443,
+          3,
+          112.83720066392797,
+          38.28057270925329,
+          3,
+          110.90163790897674,
+          41.93750935660555,
+          3,
+          110.17654195640038,
+          39.73079405242659,
+          3,
+          113.18143086441229,
+          39.3281830963618,
+          3,
+          109.47510462388149,
+          42.1286438535379,
+          3,
+          111.93607380912279,
+          38.40131046550826,
+          3,
+          112.01311663922411,
+          41.097687828631294,
+          3,
+          109.43852950750217,
+          40.84857255126227,
+          3,
+          113.15832672801996,
+          38.519574815995604,
+          3,
+          110.2471896078703,
+          42.20335026474031,
+          3,
+          110.82055530828875,
+          39.099746403833116,
+          3,
+          112.88612855989533,
+          39.9929717856904,
+          3,
+          109.26658463829463,
+          41.77930272843575,
+          3,
+          112.53888834458186,
+          38.251708214724886,
+          3,
+          111.33264345649835,
+          41.667652994939296,
+          3,
+          109.83923425546988,
+          40.15762582849095,
+          3,
+          113.24786561420883
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.runner",
+        "path": [],
+        "pathIndex": 0,
+        "goal": -1,
+        "dx": 0,
+        "dz": 0,
+        "grabHits": 2,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 17470,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": [],
+        "reaction": {
+          "index": 3,
+          "started": 17333,
+          "until": 17413,
+          "direction": {
+            "x": 0,
+            "z": 0
+          },
+          "from": {
+            "x": 40.25,
+            "z": 111.25
+          },
+          "to": {
+            "x": 40.25,
+            "z": 111.25
+          },
+          "heavy": true,
+          "groundDeath": true
+        }
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 39.980000000000004
+      }
+    },
+    {
+      "id": 291,
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "faction": "infected",
+      "health": {
+        "current": 0,
+        "max": 40
+      },
+      "transform": {
+        "x": 54.13820441155394,
+        "y": 0.7,
+        "z": 109.33157492801705,
+        "yaw": 1.1675179160176745
+      },
+      "infected": {
+        "state": "dead",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 17699,
+        "speed": 4.2,
+        "until": 17579,
+        "cooldown": 0,
+        "attackId": 60,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": 17565,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          54.25,
+          3,
+          113.25,
+          50.77526255420235,
+          3,
+          114.60098092731253,
+          52.42485053403777,
+          3,
+          111.25765783793378,
+          53.46687881583443,
+          3,
+          114.83720066392797,
+          50.28057270925329,
+          3,
+          112.90163790897674,
+          53.93750935660555,
+          3,
+          112.17654195640038,
+          51.73079405242659,
+          3,
+          115.18143086441229,
+          51.3281830963618,
+          3,
+          111.47510462388149,
+          54.1286438535379,
+          3,
+          113.93607380912279,
+          50.40131046550826,
+          3,
+          114.01311663922411,
+          53.097687828631294,
+          3,
+          111.43852950750217,
+          52.84857255126227,
+          3,
+          115.15832672801996,
+          50.519574815995604,
+          3,
+          112.2471896078703,
+          54.20335026474031,
+          3,
+          112.82055530828875,
+          51.099746403833116,
+          3,
+          114.88612855989533,
+          51.9929717856904,
+          3,
+          111.26658463829463,
+          53.77930272843575,
+          3,
+          114.53888834458186,
+          50.251708214724886,
+          3,
+          113.33264345649835,
+          53.667652994939296,
+          3,
+          111.83923425546988,
+          52.15762582849095,
+          3,
+          115.24786561420883
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.runner",
+        "path": [],
+        "pathIndex": 0,
+        "goal": -1,
+        "dx": -0.9696858192907838,
+        "dz": 0.24435509380072548,
+        "grabHits": 2,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 17644,
+        "attacking": true,
+        "damageMultiplier": 1,
+        "statuses": [],
+        "reaction": {
+          "index": 2,
+          "started": 17564,
+          "until": 17644,
+          "direction": {
+            "x": 0,
+            "z": 0
+          },
+          "from": {
+            "x": 54.13820441155394,
+            "z": 109.33157492801705
+          },
+          "to": {
+            "x": 54.13820441155394,
+            "z": 109.33157492801705
+          },
+          "heavy": true
+        }
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 44.31076278078184
+      }
+    },
+    {
+      "kind": "escort",
+      "archetype": "npc.escort",
+      "faction": "escort",
+      "transform": {
+        "x": 59.12683225334656,
+        "z": 123.54669551798209,
+        "radius": 2,
+        "y": 0.7,
+        "yaw": 6.795272543526184
+      },
+      "health": {
+        "current": 300,
+        "max": 300
+      },
+      "combat": {
+        "radius": 0.4,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "id": 292,
+      "escort": {
+        "state": "follow",
+        "order": "follow",
+        "child": false,
+        "gore": false,
+        "failed": false,
+        "downedAt": 0,
+        "progress": 0,
+        "latched": false,
+        "path": [],
+        "pathIndex": 8,
+        "goal": -1,
+        "cover": null,
+        "attackAt": 0
+      },
+      "motion": {
+        "velocity": {
+          "x": 2.8908378728388584,
+          "z": -1.5782572557091612
+        },
+        "speed": 3.2936058617020505,
+        "moving": true,
+        "distance": 66.33176463322307
+      },
+      "locomotion": {
+        "vx": 2.8908378728388144,
+        "vz": -1.5782572557090766,
+        "ax": -3.1921976081885095,
+        "az": 2.8303525200463397,
+        "omega": -0.1482911530475459,
+        "updatedAt": 18554
+      }
+    },
+    {
+      "id": 293,
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "faction": "infected",
+      "health": {
+        "current": 40,
+        "max": 40
+      },
+      "transform": {
+        "x": 64.25,
+        "y": 0.7,
+        "z": 127.25,
+        "yaw": 0
+      },
+      "infected": {
+        "state": "idle",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 0,
+        "speed": 4.2,
+        "until": 0,
+        "cooldown": 0,
+        "attackId": 0,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": -1,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          66.25,
+          3,
+          127.25,
+          62.77526255420235,
+          3,
+          128.60098092731252,
+          64.42485053403777,
+          3,
+          125.25765783793378,
+          65.46687881583442,
+          3,
+          128.83720066392797,
+          62.28057270925329,
+          3,
+          126.90163790897674,
+          65.93750935660556,
+          3,
+          126.17654195640038,
+          63.73079405242659,
+          3,
+          129.18143086441228,
+          63.3281830963618,
+          3,
+          125.47510462388149,
+          66.12864385353791,
+          3,
+          127.93607380912279,
+          62.40131046550826,
+          3,
+          128.0131166392241,
+          65.0976878286313,
+          3,
+          125.43852950750217,
+          64.84857255126228,
+          3,
+          129.15832672801997,
+          62.519574815995604,
+          3,
+          126.2471896078703,
+          66.20335026474031,
+          3,
+          126.82055530828875,
+          63.099746403833116,
+          3,
+          128.88612855989533,
+          63.9929717856904,
+          3,
+          125.26658463829463,
+          65.77930272843575,
+          3,
+          128.53888834458186,
+          62.251708214724886,
+          3,
+          127.33264345649835,
+          65.6676529949393,
+          3,
+          125.83923425546988,
+          64.15762582849095,
+          3,
+          129.24786561420882
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.runner",
+        "path": [],
+        "pathIndex": 0,
+        "goal": -1,
+        "dx": 0,
+        "dz": 0,
+        "grabHits": 0,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": 18554
+      }
+    },
+    {
+      "id": 294,
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "faction": "infected",
+      "health": {
+        "current": 40,
+        "max": 40
+      },
+      "transform": {
+        "x": 65.24651165715726,
+        "y": 0.7,
+        "z": 127.25348834284274,
+        "yaw": 0
+      },
+      "infected": {
+        "state": "idle",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 0,
+        "speed": 4.2,
+        "until": 0,
+        "cooldown": 0,
+        "attackId": 0,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": -1,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          67.25,
+          3,
+          127.25,
+          63.77526255420235,
+          3,
+          128.60098092731252,
+          65.42485053403777,
+          3,
+          125.25765783793378,
+          66.46687881583442,
+          3,
+          128.83720066392797,
+          63.28057270925329,
+          3,
+          126.90163790897674,
+          66.93750935660556,
+          3,
+          126.17654195640038,
+          64.73079405242659,
+          3,
+          129.18143086441228,
+          64.3281830963618,
+          3,
+          125.47510462388149,
+          67.12864385353791,
+          3,
+          127.93607380912279,
+          63.40131046550826,
+          3,
+          128.0131166392241,
+          66.0976878286313,
+          3,
+          125.43852950750217,
+          65.84857255126228,
+          3,
+          129.15832672801997,
+          63.519574815995604,
+          3,
+          126.2471896078703,
+          67.20335026474031,
+          3,
+          126.82055530828875,
+          64.09974640383312,
+          3,
+          128.88612855989533,
+          64.9929717856904,
+          3,
+          125.26658463829463,
+          66.77930272843575,
+          3,
+          128.53888834458186,
+          63.251708214724886,
+          3,
+          127.33264345649835,
+          66.6676529949393,
+          3,
+          125.83923425546988,
+          65.15762582849095,
+          3,
+          129.24786561420882
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.runner",
+        "path": [],
+        "pathIndex": 0,
+        "goal": -1,
+        "dx": 0,
+        "dz": 0,
+        "grabHits": 0,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": 18554
+      }
+    },
+    {
+      "id": 295,
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "faction": "infected",
+      "health": {
+        "current": 40,
+        "max": 40
+      },
+      "transform": {
+        "x": 65.7513953371371,
+        "y": 0.7,
+        "z": 126.7486046628629,
+        "yaw": 0
+      },
+      "infected": {
+        "state": "idle",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 0,
+        "speed": 4.2,
+        "until": 0,
+        "cooldown": 0,
+        "attackId": 0,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": -1,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          67.75,
+          3,
+          126.75,
+          64.27526255420236,
+          3,
+          128.10098092731252,
+          65.92485053403777,
+          3,
+          124.75765783793378,
+          66.96687881583442,
+          3,
+          128.33720066392797,
+          63.78057270925329,
+          3,
+          126.40163790897674,
+          67.43750935660556,
+          3,
+          125.67654195640038,
+          65.23079405242659,
+          3,
+          128.68143086441228,
+          64.8281830963618,
+          3,
+          124.97510462388149,
+          67.62864385353791,
+          3,
+          127.43607380912279,
+          63.90131046550826,
+          3,
+          127.51311663922411,
+          66.5976878286313,
+          3,
+          124.93852950750217,
+          66.34857255126228,
+          3,
+          128.65832672801997,
+          64.0195748159956,
+          3,
+          125.7471896078703,
+          67.70335026474031,
+          3,
+          126.32055530828875,
+          64.59974640383312,
+          3,
+          128.38612855989533,
+          65.4929717856904,
+          3,
+          124.76658463829463,
+          67.27930272843575,
+          3,
+          128.03888834458186,
+          63.751708214724886,
+          3,
+          126.83264345649835,
+          67.1676529949393,
+          3,
+          125.33923425546988,
+          65.65762582849095,
+          3,
+          128.74786561420882
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "infected.runner",
+        "path": [],
+        "pathIndex": 0,
+        "goal": -1,
+        "dx": 0,
+        "dz": 0,
+        "grabHits": 0,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": 18554
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "sim.tick",
+      "tick": 18485
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18486
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18487
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18488
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18489
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18490
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18491
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18492
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18493
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18494
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18495
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18496
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18497
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18498
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18499
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18500
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18501
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18502
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18503
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18504
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18505
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18506
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18507
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18508
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18509
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18510
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18511
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18512
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18513
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18514
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18515
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18516
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18517
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18518
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18519
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18520
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18521
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18522
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18523
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18524
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18525
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18526
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18527
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18528
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18529
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18530
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18531
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18532
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18533
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18534
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18535
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18536
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18537
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18538
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18539
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18540
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18541
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18542
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18543
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18544
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18545
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18546
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18547
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18548
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18549
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18550
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18551
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18552
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18553
+    },
+    {
+      "type": "sim.tick",
+      "tick": 18554
+    },
+    {
+      "type": "escort.rescued",
+      "id": 292,
+      "tick": 18554
+    },
+    {
+      "type": "objective.completed",
+      "id": "gates",
+      "tick": 18554
+    },
+    {
+      "type": "cinematic.started",
+      "id": "twist",
+      "tick": 18554
+    },
+    {
+      "type": "mission.signal",
+      "name": "L3.patient-turned",
+      "tick": 18554
+    },
+    {
+      "type": "mission.signal",
+      "name": "L3.floodlights-failed",
+      "tick": 18554
+    },
+    {
+      "type": "mission.signal",
+      "name": "L3.perimeter-collapsed",
+      "tick": 18554
+    },
+    {
+      "type": "gate.changed",
+      "id": "perimeter",
+      "open": false,
+      "tick": 18554
+    },
+    {
+      "type": "dialogue.line",
+      "id": "L3.twist",
+      "text": "The safe zone has fallen.",
+      "tick": 18554
+    },
+    {
+      "type": "cinematic.completed",
+      "id": "twist",
+      "tick": 18554
+    },
+    {
+      "type": "level.completed",
+      "id": "L3",
+      "result": {
+        "time": 309.23333333333335,
+        "kills": 113,
+        "damage": 75.83417948015779,
+        "deaths": 0,
+        "rescued": 1,
+        "optionalObjectives": []
+      },
+      "tick": 18554
+    }
+  ]
+}

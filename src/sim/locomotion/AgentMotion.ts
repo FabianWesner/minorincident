@@ -23,7 +23,7 @@ export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGri
   e.transform.yaw = faceMotion(state, e.transform.yaw, actualX, actualZ);
   if (e.companion) Object.assign(e.companion.velocity ??= { x: 0, z: 0 }, { x: actualX, z: actualZ });
 }
-function actor(e: EntitySnapshot): boolean { return !!(e.infected || e.civilian || e.companion || e.escort); }
+function actor(e: EntitySnapshot): boolean { return !e.corpse && !!(e.infected || e.civilian || e.companion || e.escort); }
 // Corgi hiding still follows at the survivor's heels; it must retain its response.
 function forced(e: EntitySnapshot, tick: number, world: SimWorld): boolean {
   return !!(world.npcs?.civilians.holds(e.id) || e.hidden || e.health.current <= 0 || e.attachedTo !== undefined || (e.infectionRise && tick < e.infectionRise.until) || e.infected?.hidden || e.infected?.perched || (e.infected && e.infected.grabUntil > tick) || (e.combat && e.combat.staggerUntil > tick) || ['grabbed','down','rising','finished','infected'].includes(e.civilian?.state ?? '') || (e.civilian && e.civilian.knockedUntil > tick) || ['downed','dead'].includes(e.escort?.state ?? ''));
@@ -33,7 +33,7 @@ function forced(e: EntitySnapshot, tick: number, world: SimWorld): boolean {
 export function installAgentMotion(world: SimWorld): void {
   const previous = new Map<number, { x: number; z: number }>();
   world.events.on('sim.tick', () => {
-    for (const [id] of previous) if (!world.entities.get(id)) previous.delete(id);
+    for (const [id] of previous) if (!world.entities.get(id) || world.entities.get(id)!.corpse) previous.delete(id);
     for (const e of world.entities.iterate()) if (actor(e)) {
       const p = previous.get(e.id) ?? { x: e.transform.x, z: e.transform.z }; p.x = e.transform.x; p.z = e.transform.z; previous.set(e.id, p);
       if (forced(e, world.tick, world) && e.locomotion) resetResponse(e.locomotion);
