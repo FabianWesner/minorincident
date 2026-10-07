@@ -36,3 +36,5 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E13-AC07 | Progression presets `L2-default…L6-default` exist and produce valid saves; `loadLevel('L5', {progression:'L5-default'})` starts with the expected loadout | sim |
 | E13-AC08 | The gear tier follows progression (tiers 0–4 reached at L1–L5 ends on the default path) and is visible on the avatar (E04-AC10) | sim/visual |
 | E13-AC09 | Between-level flow: result → unlock reveal → upgrade cards → rack setup → briefing → level, navigable with mouse-only, keyboard-only, and touch (e2e per scheme) | e2e |
+
+> **PO decision 2026-10-07:** the between-level reward UI (unlock reveal, "Pick 2 of 3 upgrades", rack setup) is removed from the flow. The data model stays (unlocks, upgrade cards, racks); after the result screen `Continue` finishes the pending phases with the old defaults (first weapon alternative, first two offered upgrades, best melee LEFT) and goes straight to the next level. L1's permanent unlock is the baseball bat. Story/next-step screens will be authored by the PO.

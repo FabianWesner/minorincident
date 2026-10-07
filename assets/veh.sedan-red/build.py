@@ -5,10 +5,8 @@ All geometry is grouped by moving assembly and material before export.
 import argparse
 import json
 import math
-import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
+import sys
 import bpy
 import bmesh
 from mathutils import Vector
@@ -74,8 +72,8 @@ body=empty('body',parent=root)
 def finish(o,name,mat,parent=body,bevel=.02):
     o.name=name
     o.data.materials.append(M[mat])
-    if bevel >= .01:
-        mod=o.modifiers.new('Soft edges','BEVEL'); mod.width=bevel; mod.segments=2 if bevel >= .04 else 1
+    if bevel:
+        mod=o.modifiers.new('Soft edges','BEVEL'); mod.width=bevel; mod.segments=2
         mod=o.modifiers.new('Weighted normals','WEIGHTED_NORMAL'); mod.keep_sharp=True
     bpy.context.view_layer.update()
     mw=o.matrix_world.copy(); o.parent=parent; o.matrix_world=mw
@@ -122,7 +120,7 @@ def cyl(name,loc,r,depth,mat,parent=body,axis='Y',vertices=48):
 
 
 def torus(name,loc,major,minor,mat,parent=body):
-    bpy.ops.mesh.primitive_torus_add(major_segments=40,minor_segments=8,location=loc,major_radius=major,minor_radius=minor,rotation=(math.pi/2,0,0))
+    bpy.ops.mesh.primitive_torus_add(major_segments=64,minor_segments=12,location=loc,major_radius=major,minor_radius=minor,rotation=(math.pi/2,0,0))
     o=bpy.context.object
     for f in o.data.polygons:f.use_smooth=True
     return finish(o,name,mat,parent,0)
@@ -294,7 +292,6 @@ for o in list(scene.objects):
     bpy.context.view_layer.objects.active=o
     for mod in list(o.modifiers):bpy.ops.object.modifier_apply(modifier=mod.name)
     clean_mesh(o)
-prune_hidden_faces([o for o in scene.objects if o.type == "MESH"], defer=True)
 partitions={}
 for o in list(scene.objects):
     if o.type=='MESH':partitions.setdefault((o.parent.name,o.data.materials[0].name),[]).append(o)
@@ -338,7 +335,7 @@ report={'id':'veh.sedan-red','tier':'Hero','triangles':triangles,'draw_calls':le
 (HERE/'build-stats.json').write_text(json.dumps(report,indent=2)+'\n')
 if a.glb:
     bpy.ops.object.select_all(action='SELECT')
-    stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(Path(a.glb).resolve())); bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
+    bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
     # Independently exported LODs preserve all node names and joint transforms.
     meshes=[o for o in scene.objects if o.type=='MESH']
     originals={o:o.data for o in meshes}
@@ -351,7 +348,7 @@ if a.glb:
                 bpy.context.view_layer.objects.active=o
                 bpy.ops.object.modifier_apply(modifier=d.name)
                 clean_mesh(o)
-        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(HERE/('model.'+suffix+'.glb'))); bpy.ops.export_scene.gltf(filepath=str(HERE/('model.'+suffix+'.glb')),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
+        bpy.ops.export_scene.gltf(filepath=str(HERE/('model.'+suffix+'.glb')),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_vertex_color='NAME',export_vertex_color_name='ao',export_all_vertex_colors=False)
         for o in meshes:
             reduced=o.data;o.data=originals[o];bpy.data.meshes.remove(reduced)
     print('GLB OK',report)

@@ -9,8 +9,6 @@ import math
 import random
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy
 from mathutils import Matrix, Vector
 
@@ -60,10 +58,10 @@ def finish(o, material, group=root, bevel=0, segments=2):
         c.objects.unlink(o)
     asset.objects.link(o)
     o.data.materials.append(M[material])
-    if bevel >= .015:
+    if bevel:
         mod = o.modifiers.new('Soft edges', 'BEVEL')
         mod.width = bevel
-        mod.segments = 2 if bevel >= .06 else 1
+        mod.segments = segments
     if o.type == 'MESH':
         mod = o.modifiers.new('Corner normals', 'WEIGHTED_NORMAL')
         mod.keep_sharp = True
@@ -435,7 +433,6 @@ for x,y in [(-4.15,3.65),(-4.15,2.15)]:
         leaf.rotation_euler=(.4*math.sin(a),.4*math.cos(a),a)
 
 # Apply geometry operations once, then merge within each functional parent/material.
-prune_hidden_faces(parts, occlusion=True, game_camera=True, defer=True)
 lod_parts = [(o.name, o.parent, o.data.copy(), o.matrix_world.copy(), bool(o.get('lettering')), o.get('lod_shape', 'custom')) for o in parts] if args.glb else []
 depsgraph = bpy.context.evaluated_depsgraph_get()
 evaluated = [(o, bpy.data.meshes.new_from_object(o.evaluated_get(depsgraph), depsgraph=depsgraph), o.matrix_world.copy()) for o in parts]
@@ -549,7 +546,7 @@ if args.glb:
     def export(path,objects):
         bpy.ops.object.select_all(action='DESELECT')
         for o in asset.objects:o.select_set(o.type=='EMPTY' or o in objects)
-        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(path)); bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_vertex_color='ACTIVE',export_all_vertex_colors=False,export_cameras=False,export_lights=False)
+        bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_vertex_color='ACTIVE',export_all_vertex_colors=False,export_cameras=False,export_lights=False)
     ao.bake_all(meshes,samples=32);stats=statistics();export(output,meshes)
     lods={}
     for o in meshes:asset.objects.unlink(o)
