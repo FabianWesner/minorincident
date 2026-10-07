@@ -354,3 +354,30 @@ class Grove:
 
     def report(self):
         return self.problems
+
+
+def security_fence(g, x0, z0, x1, z1, gaps=(), height=1.9):
+    """Chain-link style security fence (no chain-link model exists): silver posts, top/bottom rails, thin bars; one collider per run
+    between gaps [(centre, width)] measured along the run."""
+    l = g.l
+    ax = 0 if abs(z1 - z0) < 1e-6 else 1
+    a0, a1 = sorted((x0, x1) if ax == 0 else (z0, z1))
+    base = z0 if ax == 0 else x0
+    spans, start = [], a0
+    for c, w in sorted(gaps):
+        if c - w / 2 > start + .05: spans.append((start, c - w / 2))
+        start = max(start, c + w / 2)
+    if start < a1 - .05: spans.append((start, a1))
+    def pos(a, y): return [a, y, base] if ax == 0 else [base, y, a]
+    for s0, s1 in spans:
+        n = max(1, round((s1 - s0) / 2.0))
+        for i in range(n + 1):
+            l.box('sec-post', 'silver', [.1, height, .1], pos(s0 + (s1 - s0) * i / n, height / 2))
+        mid = (s0 + s1) / 2
+        for y in (.15, height - .06):
+            l.box('sec-rail', 'silver', [s1 - s0, .06, .05] if ax == 0 else [.05, .06, s1 - s0], pos(mid, y))
+        k = int((s1 - s0) / .28)
+        for i in range(1, k):
+            l.box('sec-bar', 'silver', [.025, height - .3, .025], pos(s0 + (s1 - s0) * i / k, height / 2))
+        size = [s1 - s0, height, .12] if ax == 0 else [.12, height, s1 - s0]
+        g.collide_only('sec-fence', size, pos(mid, height / 2))
