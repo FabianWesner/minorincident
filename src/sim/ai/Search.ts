@@ -29,6 +29,8 @@ export interface L1Brain {
   tier: InfectedSpeedTier;
   /** Chase speed: tier base x individual jitter, fixed for life (section 5.4). */
   runSpeed: number;
+  /** Extra notice beat (ticks) on a fresh sighting, fixed per entity (section 5.4, PO 2026-10-07). */
+  reaction?: number;
   wanderSpeed: number;
   targetId: number;
   /** Last seen position and heading (unit, 0 when unknown) of the chased human. */

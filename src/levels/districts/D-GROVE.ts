@@ -23,6 +23,16 @@ export const gameplay: DistrictGameplay = {
     { id: "lab-door", position: anchor("lab-door") },
     { id: "garage-bat", position: anchor("garage-bat") },
   ],
+  // PO 2026-10-07: 2-3 med packs at sensible, discoverable spots on the post-accident route (+50 % HP each, one-shot,
+  // never respawned): in the Henderson garage beside the bat, at the west junction 5 m off Elm Street halfway to the
+  // station, and on the car-wash sidewalk before the final stretch. Nav-cell centres, reachable from the garage door.
+  interactions: {
+    pickups: [
+      { kind: "medkit", position: { x: 21.8, z: 37.8 } },
+      { kind: "medkit", position: { x: -29.8, z: 35.3 } },
+      { kind: "medkit", position: { x: -58.3, z: 35.3 } },
+    ],
+  },
   civilianRoutes: [[anchor("bus-stop"), anchor("cafe-patio"), anchor("parcel-door")]],
   safePoints: [anchor("fire-bay-trigger")],
   photoSpots: [
