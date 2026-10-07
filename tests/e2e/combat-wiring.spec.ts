@@ -24,14 +24,19 @@ test('T-E05-13 @E05 @E05-AC13 real cursor LMB RMB wheel matches sim side/rack st
     await move(0, 0.8);
     let state = await page.evaluate(() => window.__SS__!.getState().player!.weapons!);
     expect(state.selectedSide).toBe('LEFT'); expect(state.LEFT.aim.z).toBeCloseTo(1); expect(state.RIGHT.aim).toEqual({ x: 1, z: 0 });
+    // 00 §5.3 (PO 2026-10-06): RMB cycles the carried actions instead of firing a RIGHT attack, and the wheel
+    // zooms (M1-05) instead of cycling a rack. The browser and the headless replay must still agree every tick.
+    const before = JSON.stringify({ side: state.selectedSide, left: state.LEFT.index, right: state.RIGHT.index });
     await page.mouse.down({ button: 'right' }); await sample(); await page.mouse.up({ button: 'right' }); await sample(); await move(-0.8, 0);
     state = await page.evaluate(() => window.__SS__!.getState().player!.weapons!);
-    expect(state.selectedSide).toBe('RIGHT'); expect(state.LEFT.aim.z).toBeCloseTo(1); expect(state.RIGHT.aim.x).toBeCloseTo(-1);
+    expect(JSON.stringify({ side: state.selectedSide, left: state.LEFT.index, right: state.RIGHT.index })).not.toBe(before);
+    expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack' && e.side === 'RIGHT').length)).toBe(0);
+    const racks = JSON.stringify(state), zoom = await page.evaluate(() => window.__SS__!.getState().render.camera.targetZoom);
     await page.mouse.wheel(0, 120); await page.evaluate(() => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))); await sample();
-    state = await page.evaluate(() => window.__SS__!.getState().player!.weapons!);
-    expect(state.RIGHT.index).toBe(1); expect(state.LEFT.index).toBe(0); expect(state.RIGHT.swapUntil).toBe(world.tick + 15);
     for (let i = 0; i < 15; i++) await sample();
-    expect(await page.evaluate(() => window.__SS__!.events().some((e) => e.type === 'loadout.switched' && e.side === 'RIGHT'))).toBe(true);
+    state = await page.evaluate(() => window.__SS__!.getState().player!.weapons!);
+    expect({ side: state.selectedSide, left: state.LEFT.index, right: state.RIGHT.index }).toEqual({ side: JSON.parse(racks).selectedSide, left: JSON.parse(racks).LEFT.index, right: JSON.parse(racks).RIGHT.index });
+    expect(await page.evaluate(() => window.__SS__!.getState().render.camera.targetZoom)).toBeGreaterThan(zoom);
     writeFileSync(`${output}/wiring.json`, JSON.stringify(states, null, 2));
   } finally { world.dispose(); }
 });

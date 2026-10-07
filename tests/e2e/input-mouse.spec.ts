@@ -71,7 +71,8 @@ test('T-E03-14 @E03 @E03-AC14 click ground walks, retargets, stops and held grou
   await arena(page); const dest = await point(page, 4);
   await page.mouse.click(dest.x, dest.y); const frame = await tick(page);
   expect(frame.moveTarget!.x).toBeCloseTo(4, 2);
-  await tick(page, 20); expect((await position(page)).x).toBeGreaterThan(.5);
+  // motion-stage1 starts click-to-move with a jerk-limited ramp (no instant 36 m/s² kick): ~0.4 m after 20 ticks.
+  await tick(page, 20); expect((await position(page)).x).toBeGreaterThan(.35);
   const other = await point(page, 3, 2); await page.mouse.click(other.x, other.y); await tick(page, 120);
   const stopped = await position(page); expect(Math.hypot(stopped.x - 3, stopped.z - 2)).toBeLessThan(.15);
   await page.mouse.move(1400, 200); await tick(page, 120);
@@ -139,7 +140,8 @@ test('T-E03-15-held @E03 @E03-AC15 held LMB target repeats and target death stop
   const id = await page.evaluate(() => window.__SS__!.spawn('infected.dummy', { x: 4, z: 0 }, { hp: 1000 }));
   const target = await point(page, 4); await page.mouse.move(target.x, target.y); await page.mouse.down(); await tick(page, 80);
   const away = await point(page, -4, 3); await page.mouse.move(away.x, away.y); await tick(page, 100);
-  expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack').length)).toBeGreaterThan(2);
+  // E19 §5.6: every bat hit knocks the target 2.6–3.3 m away, so a held command re-approaches between swings.
+  expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack').length)).toBeGreaterThanOrEqual(2);
   await page.mouse.up(); await tick(page, 40);
   const count = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack').length);
   await tick(page, 90); expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack').length)).toBe(count);
@@ -171,7 +173,8 @@ test('T-E03-15-live @E03 @E03-AC15 real LMB follows a moving infected and attack
   });
   const target = await point(page, 5); await page.mouse.click(target.x, target.y);
   expect((await tick(page)).attackTarget).toEqual({ id, side: 'LEFT' });
-  await tick(page, 10); expect((await position(page)).x).toBeGreaterThan(.1);
+  // motion-stage1's jerk-limited start: the courier is under way within 10 ticks (~0.1 m), not at full run.
+  await tick(page, 10); expect((await position(page)).x).toBeGreaterThan(.05);
   await tick(page, 100);
   const events = await page.evaluate(() => window.__SS__!.events());
   expect(events.some(e => e.type === 'combat.attack' && e.sourceId === 1 && e.side === 'LEFT')).toBe(true);
