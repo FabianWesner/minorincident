@@ -35,12 +35,18 @@ export class LabAccidentFx {
   private blastAt = -1;
   private sparkAt = 0;
   private focus: Vec2 = { x: 0, z: 0 };
+  private fightFade = 1;
+  private fighting(p: { x: number; z: number } | undefined): boolean {
+    if (!p) return false;
+    for (const e of this.world.entities.iterate()) if (e.infected && e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 4) return true;
+    return false;
+  }
   private smokeAt = -1;
   private nextSmoke = 0;
   private vents: Vec2[] = [];
   private dry = false;
   private time = 0;
-  constructor(world: SimWorld, private readonly host: LabAccidentHost, private readonly targets: LabAccidentTargets, private readonly anchor: (name: string) => Vec2 | undefined = () => undefined) {
+  constructor(private readonly world: SimWorld, private readonly host: LabAccidentHost, private readonly targets: LabAccidentTargets, private readonly anchor: (name: string) => Vec2 | undefined = () => undefined) {
     this.rng = new Rng(world.seed, 'lab-accident');
     for (const type of ['l1.flicker', 'l1.blast', 'l1.smoke', 'l1.infectedExit'] as L1AccidentEventName[])
       this.stops.push(world.events.on(type, this.receive as (e: GameEvent) => void));
@@ -65,8 +71,7 @@ export class LabAccidentFx {
   private blast(p: Vec2): void {
     this.blastAt = this.time;
     const v = this.anchor('lab-smoke-vent') ?? this.anchor('lab-smoke-window') ?? p;
-    // Aim past the vent (away from the camera) so the column rising above the roof stays in frame.
-    this.focus = { x: v.x - 3, z: v.z - 3 };
+    this.focus = v;
     this.state.shattered = false;
     this.state.shake = 1;
     this.targets.windowGlass?.('bow', 0);
@@ -146,10 +151,13 @@ export class LabAccidentFx {
       const phase = (this.time - this.sparkAt) % 1.3, lit = !this.flashReduction && phase < 0.12 ? 0.5 : 0.06;
       this.targets.windowLight?.(lit);
     } else if (s.shattered) this.targets.windowLight?.(0.06);
-    if (this.blastAt >= 0 || this.time - this.sparkAt < 5) {
-      // Camera looks toward the facility for ~4 s: ramp in over 0.4 s, hold, release over 1.2 s.
-      const t = this.time - (this.sparkAt - 1), w = Math.min(1, t / 0.4, Math.max(0, (4.5 - t) / 1.2)) * (this.flashReduction ? 0.3 : 0.7);
-      if (this.sparkAt > 0) this.targets.camera?.(this.focus.x, this.focus.z, Math.max(0, w));
+    if (this.sparkAt > 0 && this.time - (this.sparkAt - 1) < 6) {
+      // Gentle story pull: ease in 0.6 s, hold 3 s, ease out 1 s toward the midpoint of courier and vent, weight 0.45.
+      // Never while the player is fighting (an infected within 4 m): the weight eases to zero.
+      const t = this.time - (this.sparkAt - 1), p = this.world.entities.get(1)?.transform;
+      const base = Math.max(0, Math.min(1, t / 0.6, (4.6 - t) / 1)) * (this.flashReduction ? 0.2 : 0.45);
+      this.fightFade += ((this.fighting(p) ? 0 : 1) - this.fightFade) * Math.min(1, seconds * 6);
+      if (p) this.targets.camera?.((p.x + this.focus.x) / 2, (p.z + this.focus.z) / 2, base * this.fightFade);
     }
     if (this.smokeAt >= 0) {
       // The column persists as a landmark for the rest of the level.

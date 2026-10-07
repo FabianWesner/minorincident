@@ -6,7 +6,7 @@ import type { SimWorld } from '../../../src/sim/world/SimWorld';
 function rig(flashReduction = false) {
   const events = new EventBus<{ tick: number; type: string; anchor?: string }>(), spawns: { color: number; time: number; life: number }[] = [], shakes: number[] = [], lights: number[] = [], glass: string[] = [];
   const host: LabAccidentHost = { time: 0, particles: { budget: 2048, spawn: (now: number, life: number, _x: number, _y: number, _z: number, _a: number, _b: number, _c: number, _s: number, _sh: number, color: number) => { spawns.push({ color, time: now, life }); return 0; } } as unknown as LabAccidentHost["particles"] };
-  const fx = new LabAccidentFx({ seed: 5, events } as unknown as SimWorld, host, { shake: s => shakes.push(s), windowLight: l => lights.push(l), windowGlass: s => glass.push(s) },
+  const fx = new LabAccidentFx({ seed: 5, events, entities: { get: () => ({ transform: { x: 60, z: -8 } }), iterate: () => [] } } as unknown as SimWorld, host, { shake: s => shakes.push(s), windowLight: l => lights.push(l), windowGlass: s => glass.push(s) },
     name => ({ 'lab-exit-window': { x: 60, z: -20 }, 'lab-smoke-vent': { x: 62, z: -22 }, 'lab-smoke-window': { x: 60, z: -20 }, 'lab-exit-front': { x: 58, z: -12 } } as Record<string, { x: number; z: number }>)[name]);
   fx.flashReduction = flashReduction;
   const run = (seconds: number) => { for (let i = 0; i < Math.round(seconds * 60); i++) { host.time += 1 / 60; fx.advance(1 / 60); } };
