@@ -1,6 +1,8 @@
 """Sunset Grove house B. Deterministic, texture-free, metres, +X front, Z up."""
 import argparse, json, math, random, sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
+from sslib.lod0 import stabilize_ao, prepare_export_lod
 import bpy, bmesh
 from mathutils import Vector
 HERE=Path(__file__).resolve().parent
@@ -259,7 +261,7 @@ if a.glb:
     bpy.ops.object.select_all(action='DESELECT')
     for o in asset:o.select_set(True)
     def export_glb(path):
-        bpy.ops.export_scene.gltf(filepath=str(path.resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
+        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(path.resolve())); bpy.ops.export_scene.gltf(filepath=str(path.resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
     export_glb(Path(a.glb))
     original={o:o.data for o in meshes}
     lod_stats=[]

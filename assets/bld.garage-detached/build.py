@@ -8,6 +8,8 @@ import math
 import random
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
+from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy
 import bmesh
 from mathutils import Vector
@@ -387,6 +389,8 @@ def build(lod=0):
             if not o.name.startswith(('workshop floor','mower','stool','shovel','leaning')):
                 o.location.x+=.45
     bat_socket.location.x+=.45
+    if lod == 0:
+        prune_hidden_faces([o for o in scene.objects if o.type == "MESH"], defer=True)
     # Evaluate soft bevels then join only within semantic groups and palette materials.
     bpy.context.view_layer.update()
     groups={}
@@ -459,7 +463,7 @@ def export_chain(path):
         assert len(objects)<=40
         ao.bake_all(objects,samples=32)
         target=Path(path).with_name('model'+('' if lod==0 else '.lod'+str(lod))+'.glb')
-        bpy.ops.export_scene.gltf(filepath=str(target.resolve()),export_format='GLB',export_apply=True,
+        stabilize_ao(list(bpy.context.scene.objects)); prepare_export_lod(list(bpy.context.scene.objects), str(target.resolve())); bpy.ops.export_scene.gltf(filepath=str(target.resolve()),export_format='GLB',export_apply=True,
              export_yup=True,export_extras=True,export_cameras=False,export_lights=False,
              export_all_vertex_colors=True)
     (HERE/'metrics.json').write_text(json.dumps(metrics,indent=2)+'\n')
