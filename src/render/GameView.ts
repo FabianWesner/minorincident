@@ -502,6 +502,7 @@ export class GameView implements Lifecycle {
     this.entityAssets?.update();
     this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha);
     this.flashOverlay.style.opacity = String(Math.max(this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
+    if (this.world.props) this.districts?.syncProps(this.world.props.items);
     this.lighting?.update(this.view); this.districts?.updateLods(this.view);
     this.districts?.cull(this.view, this.quality);
     const locked = this.world.controls.snapshot()?.attack;

@@ -13,6 +13,7 @@ import {
 import { crossValidate } from "../../levels/districts/crossValidate";
 import { placementColliders } from "../../levels/districts/staticCollision";
 import { bakeNav } from "./NavGrid";
+import { pushableProps } from "../../data/pushableProps";
 /** Sim-side level assembly. Render consumes the same immutable loaded layouts/placements. */
 export class DistrictWorld {
   readonly districts;
@@ -41,7 +42,10 @@ export class DistrictWorld {
         gameplayLayers = gameplay.decay.filter(
           (l) => l.tier <= composition.tier,
         );
-      decay.colliders = placementColliders(decay.placements, decay.colliders);
+      // Pushable props are dynamic bodies (PropSystem): no static collider, no nav-grid footprint.
+      const pushables = decay.placements.filter((p) => pushableProps[p.assetId]);
+      const pushed = new Set(pushables.map((p) => p.id));
+      decay.colliders = placementColliders(decay.placements, decay.colliders).filter((c) => !pushed.has(c.id.split("/")[0]));
       const off = new Set(gameplayLayers.flatMap((l) => l.powerOut));
       decay.lights = decay.lights.filter((id) => !off.has(id));
       return {
@@ -50,6 +54,7 @@ export class DistrictWorld {
         gameplay,
         decay,
         blockers: gameplayLayers.flatMap((l) => l.blockers),
+        pushables,
       };
     });
     for (const d of this.districts) for (const c of d.decay.colliders) if (c.walkable) {

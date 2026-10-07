@@ -28,7 +28,9 @@ export class Physics implements Lifecycle {
     this.playerBody = this.world.createRigidBody((scenario.survivor ? RAPIER.RigidBodyDesc.kinematicPositionBased() : RAPIER.RigidBodyDesc.dynamic()).setTranslation(p.x, p.y, p.z).lockRotations());
     this.playerCollider = this.world.createCollider((scenario.survivor ? RAPIER.ColliderDesc.capsule(survivor.height / 2 - survivor.radius, survivor.radius) : RAPIER.ColliderDesc.cuboid(0.5, 0.5, 0.5)).setFriction(0).setCollisionGroups(0x00010001), this.playerBody);
     for (const wall of scenario.walls ?? []) this.world.createCollider(RAPIER.ColliderDesc.cuboid(wall.halfX, wall.halfY, wall.halfZ).setTranslation(wall.x, wall.y, wall.z));
-    if (scenario.survivor) { this.characterController = this.world.createCharacterController(0.005); this.characterController.setSlideEnabled(true); this.characterController.enableAutostep(.4, .2, true); this.characterController.enableSnapToGround(0.1); }
+    if (scenario.survivor) { this.characterController = this.world.createCharacterController(0.005); this.characterController.setSlideEnabled(true); this.characterController.enableAutostep(.4, .2, false); this.characterController.enableSnapToGround(0.1);
+      // PO #15: walking into a dynamic prop shoves it (contact impulses) instead of stepping onto it.
+      this.characterController.setApplyImpulsesToDynamicBodies(true); this.characterController.setCharacterMass(70); }
     // Populate query structures before the first character sweep.
     if (scenario.survivor) this.world.step();
   }

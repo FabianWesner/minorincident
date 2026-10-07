@@ -8,6 +8,7 @@ import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Materials } from './Materials';
 import type { View } from './View';
 import type { windPhase } from './Grass';
+import { seeThrough } from './SeeThrough';
 
 /** Original leaf-cluster signed distance field, built from pointed oval leaves. No reference bitmap is shipped. */
 export function leafClusterSdf(size = 128): Uint8Array {
@@ -61,11 +62,11 @@ export class Foliage extends Group {
   private readonly geometry = crownGeometry();
   private readonly sdf = new DataTexture(leafClusterSdf(), 128, 128, RGBAFormat);
   private readonly batches: Batch[] = [];
-  private readonly player = uniform(new Vector2(-10, -10));
+  private readonly player = seeThrough.center;
   private readonly target = uniform(new Vector2(-10, -10));
-  private readonly playerDepth = uniform(0);
+  private readonly playerDepth = seeThrough.depth;
   private readonly targetDepth = uniform(0);
-  private readonly holeRadius = uniform(.1);
+  private readonly holeRadius = seeThrough.radius;
   private readonly frustum = new Frustum();
   private readonly projection = new Matrix4();
   private readonly bounds = new Sphere();
