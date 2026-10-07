@@ -35,6 +35,8 @@ import type { PaletteToken } from '../data/palette';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 
+/** Assets whose decimated LOD1/LOD2 show torn roofs or panels (asset QA 2026-10-07): near views use LOD0 until regenerated. */
+const BROKEN_LOD1 = new Set(['bld.house-a', 'bld.house-c', 'bld.mainstreet-brick', 'bld.bus-stop', 'veh.suv-green', 'bld.gas-station']);
 interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; id: string; lit: boolean; loaded: boolean }
 /** Shared static instances; detailed prototypes stream only into the close view. */
 export class DistrictView extends Group {
@@ -154,7 +156,7 @@ export class DistrictView extends Group {
         await Promise.all(
           [...references].map(async ([key, refs]) => {
             const [id, power] = key.split(":");
-            const prototypes = await Promise.all(['lod1', 'lod1', 'lod2'].map(lod => this.registry.asset(id, power === 'true', lod as 'lod0' | 'lod1' | 'lod2')));
+            const prototypes = await Promise.all((BROKEN_LOD1.has(id) ? ['lod0', 'lod0', 'lod1'] : ['lod1', 'lod1', 'lod2']).map(lod => this.registry.asset(id, power === 'true', lod as 'lod0' | 'lod1' | 'lod2')));
             // L1 uses the shared vertex-attribute instancing path; live counts stay
             // unchanged while shader code no longer depends on placement capacity.
             const capacity = Math.max(refs.length, this.instanceCapacity ?? refs.length);
