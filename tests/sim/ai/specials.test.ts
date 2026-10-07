@@ -29,6 +29,12 @@ test('T-E07-06d @E07 @E07-AC06 nurse revives one downed runner once', async () =
   const w = await arena(), runner = spawn(w, 'runner', 2, 0, 'idle'), nurse = spawn(w, 'nurse', 1); runner.health.current = 0; step(w, 25);
   expect(runner.health.current).toBe(40); expect(nurse.infected!.reviveUsed).toBe(true); runner.health.current = 0; step(w, 120); expect(runner.health.current).toBe(0); expect(w.events.events().filter((e) => e.type === 'infected.revived')).toHaveLength(1);
 });
+test('@E07 a nurse can revive a settled static corpse with its original ID', async () => {
+  const w = await arena(), runner = spawn(w, 'runner', 2, 0, 'idle'), id = runner.id; runner.health.current = 0; step(w, 180);
+  expect(w.entities.get(id)?.corpse).toBe(true); spawn(w, 'nurse', 1); step(w, 30);
+  expect(w.entities.get(id)).toMatchObject({ id, health: { current: 40 }, infected: { revived: true } });
+  expect(w.entities.get(id)?.corpse).toBeUndefined(); expect(w.infected!.active.some(e => e.id === id)).toBe(true);
+});
 test('T-E07-06e @E07 @E07-AC06 brute charge displaces player at least 3 m after 0.8 s', async () => {
   const w = await arena(); spawn(w, 'brute', 5); step(w, 48); expect(Math.abs(w.entities.get(1)!.transform.x)).toBeLessThan(0.01); step(w, 45); expect(Math.abs(w.entities.get(1)!.transform.x)).toBeGreaterThanOrEqual(3);
 });

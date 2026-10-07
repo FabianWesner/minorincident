@@ -1,6 +1,18 @@
 import { expect, test } from 'vitest';
 import { groveWorld, step, anchor } from './l1-grove';
 import { missionControls } from '../../../src/sim/missions/controls';
+import { npcWorld } from './helpers';
+
+test('quality and density never recycle a visible pedestrian or pet', async () => {
+  const w = await npcWorld();
+  try {
+    w.npcs!.configure(4, 'high', 8);
+    const ids = [...w.entities.iterate()].filter(e => e.civilian?.ambient).map(e => e.id);
+    w.npcs!.setQuality('low'); step(w, 600);
+    expect(ids.length).toBeGreaterThan(8);
+    for (const id of ids) expect(w.entities.get(id)).toBeDefined();
+  } finally { w.dispose(); }
+});
 
 test('20 corpses keep their IDs and positions after leaving 60 m and returning @smoke', async () => {
   const { w } = await groveWorld(1, { civilians: 0 });

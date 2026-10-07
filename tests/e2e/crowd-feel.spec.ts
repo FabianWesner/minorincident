@@ -19,6 +19,8 @@ test('crowd draw visibility stays continuous for 60 seconds after the L1 outbrea
   const capture = page.evaluate(async () => {
     const a = window.__SS__!;
     const histories = new Map<number, { missing: number; seen: boolean }>();
+    const recentlySeen = new Map<number, number>();
+    let unexplainedDepartures = 0;
     let infectedSamples = 0, movingInfectedSamples = 0, civilianSamples = 0;
     let flickerEvents = 0, sustainedDisappearances = 0, duplicateDraws = 0, frames = 0, onScreenSamples = 0;
     const start = performance.now(); a.resume();
@@ -34,6 +36,7 @@ test('crowd draw visibility stays continuous for 60 seconds after the L1 outbrea
         const p = a.camera.project(e.transform.x, e.transform.y, e.transform.z);
         if (Math.abs(p[0]) > .9 || Math.abs(p[1]) > .9 || Math.abs(p[2]) > 1) continue;
         eligible.add(e.id);
+        recentlySeen.set(e.id, a.tick());
         onScreenSamples++;
         if (e.infected) { infectedSamples++; if ((e.motion?.speed ?? 0) > .5) movingInfectedSamples++; } else if (e.civilian) civilianSamples++;
         let h = histories.get(e.id);
@@ -44,9 +47,16 @@ test('crowd draw visibility stays continuous for 60 seconds after the L1 outbrea
         } else { h.missing++; if (h.missing === 4) sustainedDisappearances++; }
       }
       for (const id of histories.keys()) if (!eligible.has(id)) histories.delete(id);
+      for (const [id, seenAt] of recentlySeen) {
+        if (a.tick() - seenAt > 3600) { recentlySeen.delete(id); continue; }
+        if (!a.getEntity(id)) {
+          if (!a.events(seenAt).some(e => e.type === 'outbreak.civilian-escaped' && e.id === id)) unexplainedDepartures++;
+          recentlySeen.delete(id);
+        }
+      }
     }
     a.pause();
-    return { seconds: (performance.now() - start) / 1000, frames, onScreenSamples, infectedSamples, movingInfectedSamples, civilianSamples, figures: histories.size, flickerEvents, sustainedDisappearances, duplicateDraws, eventsPerMinute: flickerEvents };
+    return { seconds: (performance.now() - start) / 1000, frames, onScreenSamples, infectedSamples, movingInfectedSamples, civilianSamples, figures: histories.size, flickerEvents, sustainedDisappearances, duplicateDraws, unexplainedDepartures, eventsPerMinute: flickerEvents };
   });
   for (const [i, seconds] of [5, 15, 40].entries()) {
     await page.waitForTimeout(seconds * 1000);
@@ -65,6 +75,7 @@ test('crowd draw visibility stays continuous for 60 seconds after the L1 outbrea
     expect(result.flickerEvents).toBe(0);
     expect(result.sustainedDisappearances).toBe(0);
     expect(result.duplicateDraws).toBe(0);
+    expect(result.unexplainedDepartures).toBe(0);
   }
 });
 
