@@ -27,8 +27,10 @@ export function installCharacterSeparation(world: SimWorld): void {
         if (e.companion && !e.companion.following && e.companion.state === 'follow' && !other.survivor) continue;
         const otherRadius = radii.get(other.id)!; if (!otherRadius) continue;
         // Combat spacing between an infected and a human fighter (larger fighters still need to enter their authored
-        // melee/grab range). Infected among themselves keep body contact, so hordes and migration streams stay packed.
-        const gap = (e.infected ? 1 : 0) + (other.infected ? 1 : 0) === 1 ? Math.max(.015, Math.min(.3, 1.05 - r - otherRadius)) : .015;
+        // melee/grab range). Infected among themselves keep a small air gap (E19-AC23: a horde reads as separate bodies,
+        // not one blob) yet stay a dense group; everyone else keeps body contact.
+        const infected = (e.infected ? 1 : 0) + (other.infected ? 1 : 0);
+        const gap = infected === 1 ? Math.max(.015, Math.min(.3, 1.05 - r - otherRadius)) : infected === 2 ? .22 : .015;
         const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, reach = r + otherRadius + gap;
         if (dx * dx + dz * dz >= reach * reach) continue;
         const distance = Math.hypot(dx, dz), overlap = reach - distance;
