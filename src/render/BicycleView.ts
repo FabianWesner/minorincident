@@ -5,7 +5,8 @@ import { atLeast, type AssetDef } from '../assets/types';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
 
-const ASSET = 'veh.courier-bike', WHEEL_R = { F: .335, R: .405 };
+/** The delivered cargo bike is courier-sized (2.8 m); the game courier is chibi (1.4 m), so the bike is drawn at toy scale: saddle at the hips, cargo box below the rider's chest. */
+const ASSET = 'veh.courier-bike', WHEEL_R = { F: .335, R: .405 }, SCALE = .6;
 /**
  * The delivered model (assets/veh.courier-bike, packed to public/assets/models) carries the vehicle node contract
  * (wheelF/wheelR/handlebar/seat/basket) while the manifest still lists the richer pedal contract of a placeholder entry.
@@ -67,7 +68,7 @@ export class BicycleView extends Group {
     const lean = new Group(), root = new Group(); lean.add(model); root.add(lean); this.add(root);
     const find = (name: string) => model.getObjectByName(name);
     const wheelF = find('wheelF'), wheelR = find('wheelR'); for (const w of [wheelF, wheelR]) if (w) w.rotation.order = 'YXZ';
-    model.traverse(n => { if (n instanceof Mesh) { n.castShadow = true; n.receiveShadow = true; } });
+    model.scale.setScalar(SCALE); model.traverse(n => { if (n instanceof Mesh) { n.castShadow = true; n.receiveShadow = true; } });
     this.rig = { root, model, wheelF, wheelR, handlebar: find('handlebar'), crank: find('crank'), pedals: [find('pedalL'), find('pedalR')].filter((n): n is Object3D => !!n), lean, offset: 0, wheelAngle: 0, last: null, leanAngle: 0 };
   }
   update(): void {
@@ -78,15 +79,15 @@ export class BicycleView extends Group {
     rig.root.visible = true; rig.root.position.set(t.x, 0, t.z); rig.root.rotation.y = t.yaw;
     if (rig.last) { const d = Math.hypot(t.x - rig.last.x, t.z - rig.last.z); rig.wheelAngle += d; }
     rig.last = { x: t.x, z: t.z };
-    if (rig.wheelF) { rig.wheelF.rotation.z = -rig.wheelAngle / WHEEL_R.F; rig.wheelF.rotation.y = b.steer * .4; }
-    if (rig.wheelR) rig.wheelR.rotation.z = -rig.wheelAngle / WHEEL_R.R;
+    if (rig.wheelF) { rig.wheelF.rotation.z = -rig.wheelAngle / (WHEEL_R.F * SCALE); rig.wheelF.rotation.y = b.steer * .4; }
+    if (rig.wheelR) rig.wheelR.rotation.z = -rig.wheelAngle / (WHEEL_R.R * SCALE);
     if (rig.handlebar) rig.handlebar.rotation.y = b.steer * .5;
     if (rig.crank) { rig.crank.rotation.z = -b.pedal; for (const p of rig.pedals) p.rotation.z = b.pedal; }
     // Toy feel: lean into the turn and bob slightly with every pedal stroke while riding.
     const riding = b.mounted, speed = b.speed / 7.5;
     // The rider's capsule sits on the saddle (the model's seat is behind its centre): slide the model forward while riding.
     const seat = rig.model.getObjectByName('seat')?.position.x ?? -.58;
-    rig.offset = lerp(rig.offset, riding ? -seat : 0, .25); rig.lean.position.x = rig.offset;
+    rig.offset = lerp(rig.offset, riding ? -seat * SCALE : 0, .25); rig.lean.position.x = rig.offset;
     rig.leanAngle = lerp(rig.leanAngle, riding ? -b.steer * speed * .32 : 0, .2);
     rig.lean.rotation.x = rig.leanAngle; rig.lean.position.y = riding ? Math.abs(Math.sin(b.pedal * 2)) * .012 * speed : 0;
   }
