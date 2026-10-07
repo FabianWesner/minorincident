@@ -17,9 +17,9 @@ async function clickDuel(weapon: string, clicks = Infinity, brain = false) {
     if (target.health.current > 0) distances.push(Math.hypot(target.transform.x - p.x, target.transform.z - p.z));
   });
   for (let tick = 0; tick < 600 && target.health.current > 0; tick++) {
-    const frame = emptyInput(); frame.aimSource = 'pointer'; frame.pointerTarget = true; frame.mouseAttack = true;
+    const frame = emptyInput(); frame.aimSource = 'pointer'; frame.pointerTarget = true;
     if (tick % 12 === 0 && tick / 12 < clicks) {
-      frame.left = { down: true, held: false, up: true }; frame.attackTarget = { id, side: 'LEFT' };
+      frame.mouseAttack = true; frame.left = { down: true, held: false, up: true }; frame.attackTarget = { id, side: 'LEFT' };
     }
     w.applyInput(frame, 'mouse-only'); w.update();
     if (target.health.current > 0 && target.combat!.reaction) {
@@ -100,4 +100,20 @@ test('@E05 @E05-AC07 ordinary high damage and upgrades cannot cause a knockdown'
     type: 'melee', knockback: 2, stagger: .5 });
   expect(target.health.current).toBe(170); expect(target.transform.x).toBeCloseTo(1.4);
   expect(target.combat!.reaction!.heavy).toBe(false); expect(target.combat!.staggerUntil).toBe(15);
+});
+
+test('@E05 released mouse target clicks on the kick side keep using the normal unarmed chain', async () => {
+  const w = await arena(); equip(w, ['weapon.fists'], ['weapon.kick']);
+  w.combat!.runner.loadout.state.selectedSide = 'RIGHT';
+  const id = w.spawnDummy('infected.runner', { x: 1.7, z: 0 }, { hp: 40 }), target = w.entities.get(id)!;
+  for (let tick = 0; tick < 180 && target.health.current > 0; tick++) {
+    const frame = emptyInput(); frame.pointerTarget = true;
+    if (tick % 12 === 0) { frame.mouseAttack = true; frame.attackTarget = { id, side: 'LEFT' }; frame.left = { down: true, held: false, up: true }; }
+    w.applyInput(frame, 'mouse-only'); w.update();
+    if (target.health.current > 0) expect(target.combat!.reaction?.heavy).not.toBe(true);
+  }
+  expect(target.health.current).toBe(0);
+  const attacks = w.events.events().filter(e => e.type === 'combat.attack');
+  expect(attacks.length).toBeGreaterThanOrEqual(5);
+  for (const attack of attacks) expect(attack).toMatchObject({ actionId: 'weapon.fists', side: 'RIGHT' });
 });
