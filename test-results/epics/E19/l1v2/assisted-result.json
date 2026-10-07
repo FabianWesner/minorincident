@@ -1,0 +1,188 @@
+{
+  "id": "L1",
+  "phase": "result",
+  "completedObjectives": [
+    "pickup",
+    "deliver",
+    "escape",
+    "weapon",
+    "firestation"
+  ],
+  "volumes": [
+    true
+  ],
+  "killedBosses": [],
+  "deadlineTicks": null,
+  "steps": {
+    "pickup": {
+      "status": "completed",
+      "started": 0,
+      "kills": [],
+      "events": {},
+      "interaction": 60
+    },
+    "deliver": {
+      "status": "completed",
+      "started": 901,
+      "kills": [],
+      "events": {
+        "l1.delivered:*": 1
+      },
+      "interaction": 567
+    },
+    "escape": {
+      "status": "completed",
+      "started": 4143,
+      "kills": [],
+      "events": {},
+      "interaction": 0
+    },
+    "weapon": {
+      "status": "completed",
+      "started": 4144,
+      "kills": [],
+      "events": {},
+      "interaction": 26
+    },
+    "firestation": {
+      "status": "completed",
+      "started": 5471,
+      "kills": [],
+      "events": {
+        "interact.completed:*": 1
+      },
+      "interaction": 1
+    }
+  },
+  "actors": {},
+  "items": [
+    "parcel",
+    "bat"
+  ],
+  "states": {
+    "delivered": true,
+    "exited": true,
+    "away": true,
+    "safe": true
+  },
+  "counters": {},
+  "gates": {
+    "fire-shutter": false
+  },
+  "marker": null,
+  "checkpoint": "bat",
+  "tier": 0,
+  "timeOfDay": null,
+  "subtitle": {
+    "id": "L1.twist",
+    "text": "Delivery complete. Outbreak: not contained.",
+    "until": 8892
+  },
+  "cinematic": null,
+  "failure": null,
+  "stats": {
+    "time": 144.2,
+    "kills": 0,
+    "damage": 0,
+    "deaths": 0,
+    "rescued": 0,
+    "optionalObjectives": []
+  },
+  "result": {
+    "time": 144.2,
+    "kills": 0,
+    "damage": 0,
+    "deaths": 0,
+    "rescued": 0,
+    "optionalObjectives": [],
+    "delivered": true,
+    "infected": 26,
+    "turned": 13,
+    "escaped": 19
+  },
+  "l1": {
+    "phase": "spread",
+    "carrying": false,
+    "delivered": true,
+    "away": true,
+    "techId": 370,
+    "hx": 65.94093033681185,
+    "hz": -13.54933538398729,
+    "handoverAt": 2864,
+    "deliveredAt": 3303,
+    "flickerAt": 3587,
+    "exitAt": 4143,
+    "warned": true,
+    "fired": 5,
+    "exitIds": [
+      370,
+      373,
+      375,
+      377,
+      379
+    ],
+    "exitHeadingsDeg": [
+      125,
+      95,
+      170,
+      215,
+      250
+    ],
+    "runs": [],
+    "turnedIds": [
+      351,
+      341,
+      350,
+      327,
+      348,
+      328,
+      329,
+      326,
+      325,
+      346,
+      324,
+      368,
+      366,
+      409
+    ],
+    "escapedIds": [
+      344,
+      338,
+      342,
+      339,
+      352,
+      340,
+      353,
+      349,
+      369,
+      345,
+      367,
+      320,
+      334,
+      335,
+      365,
+      318,
+      359,
+      360,
+      330
+    ],
+    "graceUntil": 0,
+    "hordeDone": true,
+    "routeSpawns": 2,
+    "routeNextAt": 7770,
+    "clerkId": 0,
+    "beat": null,
+    "say": {
+      "id": 409,
+      "text": "Get in!",
+      "at": 8532,
+      "until": 8682
+    },
+    "beatsDone": [
+      "pickup",
+      "handover",
+      "garage"
+    ],
+    "firefighterId": 409
+  }
+}

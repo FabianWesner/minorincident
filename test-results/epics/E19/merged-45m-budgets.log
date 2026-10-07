@@ -1,0 +1,64 @@
+
+Running 3 tests using 1 worker
+
+  ✘  1 [chromium] › tests/perf/l1-spots.spec.ts:9:63 › T-E19-24 @E19 @E19-AC24 @perf high-tier budgets at l1-morning (27.3s)
+  ✓  2 [chromium] › tests/perf/l1-spots.spec.ts:9:63 › T-E19-24 @E19 @E19-AC24 @perf high-tier budgets at l1-accident (27.8s)
+  ✘  3 [chromium] › tests/perf/l1-spots.spec.ts:9:63 › T-E19-24 @E19 @E19-AC24 @perf high-tier budgets at l1-horde (29.1s)
+
+
+  1) [chromium] › tests/perf/l1-spots.spec.ts:9:63 › T-E19-24 @E19 @E19-AC24 @perf high-tier budgets at l1-morning
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1500000
+    Received:    1776301
+
+      51 |   expect(proof.perf.quality.tier).toBe('high'); expect(proof.ticks).toBeGreaterThanOrEqual(300);
+      52 |   expect(Math.round(proof.p95Ms * 1e6) / 1e6).toBeLessThanOrEqual(16.7);
+    > 53 |   expect(proof.maxDrawCalls).toBeLessThanOrEqual(600); expect(proof.maxTriangles).toBeLessThanOrEqual(1_500_000);
+         |                                                                                   ^
+      54 |   expect(heap.usedSize).toBeLessThanOrEqual(400_000_000);
+      55 | });
+      56 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l1-closure/tests/perf/l1-spots.spec.ts:53:83
+
+    Error Context: test-results/playwright/run-3317/perf-l1-spots-T-E19-24-E19-3a9e9--tier-budgets-at-l1-morning-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3317/perf-l1-spots-T-E19-24-E19-3a9e9--tier-budgets-at-l1-morning-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3317/perf-l1-spots-T-E19-24-E19-3a9e9--tier-budgets-at-l1-morning-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/perf/l1-spots.spec.ts:9:63 › T-E19-24 @E19 @E19-AC24 @perf high-tier budgets at l1-horde
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1500000
+    Received:    2595107
+
+      51 |   expect(proof.perf.quality.tier).toBe('high'); expect(proof.ticks).toBeGreaterThanOrEqual(300);
+      52 |   expect(Math.round(proof.p95Ms * 1e6) / 1e6).toBeLessThanOrEqual(16.7);
+    > 53 |   expect(proof.maxDrawCalls).toBeLessThanOrEqual(600); expect(proof.maxTriangles).toBeLessThanOrEqual(1_500_000);
+         |                                                                                   ^
+      54 |   expect(heap.usedSize).toBeLessThanOrEqual(400_000_000);
+      55 | });
+      56 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l1-closure/tests/perf/l1-spots.spec.ts:53:83
+
+    Error Context: test-results/playwright/run-3317/perf-l1-spots-T-E19-24-E19-2d4a6-gh-tier-budgets-at-l1-horde-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3317/perf-l1-spots-T-E19-24-E19-2d4a6-gh-tier-budgets-at-l1-horde-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3317/perf-l1-spots-T-E19-24-E19-2d4a6-gh-tier-budgets-at-l1-horde-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/perf/l1-spots.spec.ts:9:63 › T-E19-24 @E19 @E19-AC24 @perf high-tier budgets at l1-morning
+    [chromium] › tests/perf/l1-spots.spec.ts:9:63 › T-E19-24 @E19 @E19-AC24 @perf high-tier budgets at l1-horde
+  1 passed (1.5m)
