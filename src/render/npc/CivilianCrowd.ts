@@ -2,7 +2,9 @@ import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGe
 import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { StaticCorpses } from '../characters/StaticCorpses';
-import { CrowdLocomotion } from '../characters/CrowdLocomotion';
+import { CrowdFootwork, CrowdLocomotion } from '../characters/CrowdLocomotion';
+import { InfectedMoves } from '../characters/InfectedMoves';
+import { infectedDefinitions } from '../../data/infected';
 import { GaitPhase } from '../characters/GaitPhase';
 import { CrowdFigureProbe } from '../characters/CrowdFigureProbe';
 import { Color, DoubleSide, FrontSide, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
@@ -17,7 +19,7 @@ import { loadGate } from '../../assets/loadGate';
 import { RoutineProps } from './RoutineProps';
 import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
-import { MotionPresentation } from '../characters/MotionPresentation';
+import { MotionPresentation, crowdTurnRate } from '../characters/MotionPresentation';
 import { MotionPhase } from '../characters/MotionPhase';
 import { authoredClips, strides } from '../characters/clips';
 import { disposeCharacter } from '../characters/rig';
@@ -34,6 +36,7 @@ const shirtMaterials: Record<string, string[]> = {
   'npc.civilian-elderly': ['pal_vest'],
 };
 type Clip = typeof civilianClips[number];
+const windups = new Map(infectedDefinitions.map(d => [d.id, d.windup]));
 /** Lane G's civilian panic and infected tier clips when baked, else the closest shared clip. */
 const clipOr = (name: string, fallback: Clip): Clip => (civilianClips as readonly string[]).includes(name) ? name as Clip : fallback;
 const tierGait = { frail: clipOr('infected-frail', 'infected-run'), average: clipOr('infected-lurch', 'infected-run'), athletic: clipOr('infected-sprint', 'infected-run') } as const;
@@ -71,7 +74,6 @@ class CivilianBatch extends Group {
   private readonly transform = new Matrix4();
   private readonly lean = new Matrix4().makeRotationZ(-.34);
   private readonly sway = new Matrix4();
-  private readonly presentation = new MotionPresentation();
   private readonly motion = new MotionPhase();
   private strideScale = 1;
   private readonly colors = civilianRoles.map(d => new Color(d.color));
@@ -84,7 +86,7 @@ class CivilianBatch extends Group {
   private readonly shirt = new Color();
   private readonly registry = new AssetRegistry(() => {});
   source = 'placeholder';
-  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase()) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = distant ? 'lod2' : 'lod1'; }
+  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate)) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = distant ? 'lod2' : 'lod1'; }
   async init(): Promise<void> {
     const loaded = await this.registry.loadAsset(this.model, this.distant ? 'lod2' : 'lod1');
     await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
@@ -92,7 +94,7 @@ class CivilianBatch extends Group {
     this.source = placeholder ? 'placeholder' : 'glb';
     const baked = bakeInfected(model, [], false, civilianClips), color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     this.strideScale = baked.strideScale;
-    this.locomotion = new CrowdLocomotion(model, baked.clip);
+    this.locomotion = new CrowdLocomotion(model, baked.clip, this.footwork); this.probe.sole = this.locomotion.sole;
     // QA1-07: the civilian GLBs have no tintable `pal_infectedShirt`; their main garment materials take the per-person
     // tint instead, keeping each shade's brightness ratio (dark seams stay darker), so 5 silhouettes x 12 tints differ.
     const garment = shirtMaterials[this.model], shirtColors: Color[] = [];
@@ -216,7 +218,8 @@ class CivilianBatch extends Group {
       let frame = civilianClips.indexOf(clip) * framesPerClip + (storyFrame ?? phase) * (framesPerClip - 1);
       const sourceFrame = frame;
     const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
-      if (strides[clip] && speed > .06) { frame = this.poses.correct(e.id, frame, ...blend, pose => this.locomotion.correct(e.id, pose, this.transform, phase, clip, this.strideScale * (c.adult ? 1 : .7), speed)); blend[1] = 1; } else { this.locomotion.reset(e.id); if (blend[1] < 1) { frame = this.poses.correct(e.id, frame, ...blend, () => {}); blend[1] = 1; } }
+      // The near batch is the pixel band: the courier's footwork there, stance plants or the baked clip further out.
+      frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale * (c.adult ? 1 : .7), speed, renderTick / 60, !this.distant);
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
       // A dropped hand prop (startle, bite) stays dropped: `appearance.handProp` is cleared by the outbreak layer.
@@ -259,20 +262,29 @@ class CivilianBatch extends Group {
     // per-batch sampler that goes stale when the figure crosses the near/far batch boundary.
     const motion = e.motion ?? this.motion.sample(e.id, tick, e.transform.x, e.transform.z), reaction = e.combat?.reaction, age = reaction ? (tick - reaction.started) / 60 : Infinity;
     let clip: Clip = infectedClip(b.state, motion.speed, e.appearance!.tier, tick < b.until);
-    if (reaction && tick < reaction.until && b.state !== 'dead' && motion.speed <= .06) clip = reaction.heavy ? age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
+    // Heavy reactions (deaths, finishers, blasts) knock the body down and get it up again; light hits flinch (InfectedMoves).
+    const heavy = !!reaction?.heavy && tick < reaction.until && b.state !== 'dead';
+    if (heavy) clip = age < .7 ? 'knockdown' : 'get-up';
     const duration = authoredClips.get(clip)!.duration, renderTick = Math.max(0, tick + alpha - 1);
-    const phase = b.state === 'dead' ? reaction?.groundDeath ? 1 : Math.min(1, (tick - b.deadAt) / 60 / duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && !strides[clip] && tick < reaction.until ? Math.min(1, age / (reaction.heavy ? .7 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), clip, this.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
+    const phase = b.state === 'dead' ? reaction?.groundDeath ? 1 : Math.min(1, (tick - b.deadAt) / 60 / duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / .64) : heavy ? Math.min(1, age / .7) : strides[clip] ? this.gait.sample(e.id, Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), clip, this.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
     const presented = this.presentation.sample(e.id, e.transform, tick, alpha);
     // Hunched silhouette: the whole body leans forward (pivot at the feet) on top of the tier gait's arms-forward pose.
     // QA2b: the read holds in every state - standing/searching infected sway and twitch on top of the hunch.
-    const still = motion.speed <= .2 && b.state !== 'dead', t = tick / 60 + e.id * .71;
+    const still = motion.speed <= .2 && b.state !== 'dead', t = tick / 60 + e.id * .71, near = !this.distant;
+    const moving = !!strides[clip] && motion.speed > .06;
+    const { layers, style } = this.moves.sample(e, b.state, b.until, (windups.get(e.archetype) ?? .5), renderTick, presented.yaw, motion.speed, moving ? clip : undefined);
     this.transform.makeRotationY(presented.yaw + (still ? Math.sin(t * 1.7) * .14 + (Math.sin(t * 7.3) > .93 ? .18 : 0) : 0));
-    if (b.state !== 'dead' && !reaction && still) { this.transform.multiply(this.lean).multiply(this.sway.makeRotationX((e.id % 2 ? .17 : -.17) + Math.sin(t * 1.3) * .04)); if (still) this.transform.multiply(this.sway.makeRotationZ(-.14 - Math.abs(Math.sin(t * 2.3)) * .1)); }
+    if (b.state !== 'dead' && !heavy && still) {
+      // Near the camera the hunch bends at the hips over planted feet; far away the whole body leans from the feet.
+      const lean = .34 + .14 + Math.abs(Math.sin(t * 2.3)) * .1, roll = (e.id % 2 ? .17 : -.17) + Math.sin(t * 1.3) * .04;
+      if (near) { layers.lean = lean; layers.roll = roll; }
+      else this.transform.multiply(this.lean).multiply(this.sway.makeRotationX(roll)).multiply(this.sway.makeRotationZ(-.14 - Math.abs(Math.sin(t * 2.3)) * .1));
+    }
     this.transform.setPosition(presented.x, presented.y - .7, presented.z);
     let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
     const sourceFrame = frame;
       const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
-    if (strides[clip] && motion.speed > .06) { frame = this.poses.correct(e.id, frame, ...blend, pose => this.locomotion.correct(e.id, pose, this.transform, phase, clip, this.strideScale, motion.speed)); blend[1] = 1; } else { this.locomotion.reset(e.id); if (blend[1] < 1) { frame = this.poses.correct(e.id, frame, ...blend, () => {}); blend[1] = 1; } }
+    if (!e.corpse) frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, motion.speed, renderTick / 60, near, layers.lean || layers.lunge || layers.flinch || layers.lurch ? layers : undefined, style);
     if (e.corpse) {
       this.tintOf(e, index, 1);
       this.corpses.place(e, this.model, this.mesh.geometry, this.mesh.material as MeshLambertNodeMaterial, this.bakedClip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.transform, this.shirt, [.4, 0, 1]);
@@ -293,11 +305,16 @@ export class CivilianCrowd extends Group {
   private readonly props: RoutineProps;
   private readonly visibility = new CrowdVisibility();
   private readonly gait = new GaitPhase();
+  /** Fully solved footwork figures per frame: every close pedestrian on desktop, the closest few on phones. */
+  private readonly footwork = new CrowdFootwork(48);
+  private readonly moves = new InfectedMoves();
+  /** Shared across the near/far batches so a figure crossing the band keeps its displayed turn. */
+  private readonly presentation = new MotionPresentation(crowdTurnRate);
   private low = false;
-  setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; }
-  constructor(private readonly world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.batches=['npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly','npc.depot-clerk','npc.firefighter-alive'].flatMap(model=>[new CivilianBatch(world,model,false,this.visibility,shading,this.props,this.gait),new CivilianBatch(world,model,true,this.visibility,shading,this.props,this.gait)]); this.add(...this.batches); }
+  setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; this.footwork.cap = this.low ? 16 : 48; }
+  constructor(private readonly world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.batches=['npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly','npc.depot-clerk','npc.firefighter-alive'].flatMap(model=>[new CivilianBatch(world,model,false,this.visibility,shading,this.props,this.gait,this.footwork,this.moves,this.presentation),new CivilianBatch(world,model,true,this.visibility,shading,this.props,this.gait,this.footwork,this.moves,this.presentation)]); this.add(...this.batches); }
   async init(): Promise<void> { const started = performance.now(); await Promise.all(this.batches.map(b=>b.init())); loadMeasure('view:civilian-crowd', started); this.update(); }
-  update(alpha = 1, camera?: import('three').Camera): void { this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
+  update(alpha = 1, camera?: import('three').Camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
   dispose(): void { this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
 }
