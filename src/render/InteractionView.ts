@@ -124,6 +124,9 @@ export class InteractionView extends Group {
       led.visible = active ? tick % 12 < 6 : tick % 90 < 30; led.scale.setScalar(active ? 1.8 : 1);
       for (const b of object.children.filter(c => c.name === 'beacon')) b.visible = active && (tick % 16 < 8) === (b.position.z < 0);
       if (!e.interactable!.enabled && !active) led.visible = false;
+      // Clear on-car highlight while the player stands in range of an armed car: big steady LED and amber roof lights.
+      const p = this.world.entities.get(1)?.transform, near = !!p && !active && e.interactable!.enabled && (p.x - e.transform.x) ** 2 + (p.z - e.transform.z) ** 2 <= e.interactable!.radius ** 2;
+      if (near) { led.visible = true; led.scale.setScalar(4 + Math.sin(tick / 6)); for (const b of object.children.filter(c => c.name === 'beacon')) b.visible = true; }
     } else if (e.toy?.kind === 'carwash') {
       const foam = object.getObjectByName('foam')!, active = tick < e.toy.until; foam.visible = active;
       if (active) foam.traverse(c => { if (c.name === 'brush') c.rotation.y += .3; });
