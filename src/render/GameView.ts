@@ -67,6 +67,25 @@ export class GameView implements Lifecycle {
   private readonly preparedDistrictViews = new Map<SimWorld['districts'], DistrictView>();
   private pendingPreparation: { shared: NonNullable<GameView['districtResources']>; instanceCapacity?: number } | null = null;
   private preparation: Promise<void> | null = null;
+  /** Pending L1 shader warm-up while the briefing is shown (see load()). */
+  warming: Promise<void> | null = null;
+  /** Speculative menu-time level load: keep the mission UI hidden until the player picks the level. */
+  missionHidden = false;
+  /** Menu-time (speculative) load: pace heavy steps one per frame and yield to player input. */
+  background = false;
+  private frozenFrame: HTMLCanvasElement | null = null;
+  /** Show a still copy of the current frame (e.g. the title backdrop) over the canvas while a level
+   * loads and warms up behind the menus/briefing; drawing is suspended until unfreeze(). */
+  freeze(): void {
+    if (this.frozenFrame) return;
+    const source = this.renderer.domElement, copy = document.createElement('canvas');
+    copy.width = source.width; copy.height = source.height;
+    copy.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none';
+    try { this.update(1); copy.getContext('2d')?.drawImage(source, 0, 0); } catch { /* best effort */ }
+    source.after(copy); this.frozenFrame = copy;
+  }
+  unfreeze(): void { this.frozenFrame?.remove(); this.frozenFrame = null; if (!this.warming) this.update(1); }
+  get frozen(): boolean { return this.frozenFrame !== null; }
   private generation = 0;
   private npcs: NpcView | null = null;
   private interactions: InteractionView | null = null;
@@ -243,18 +262,34 @@ export class GameView implements Lifecycle {
     // bound. The first update below warms those programs in their render context.
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.districts?.ready()]);
     t = loadMeasure('view:lod-ready', t);
-    if (this.world.scenario === 'L1') {
+    const warm = async (): Promise<void> => {
+      await loadGate.foreground(); // node builds cannot be sliced: never during the menus
       this.lighting?.update(this.view);
       // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const unwarm = this.labWindows?.prewarmWindows();
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
-      try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); }))); }
+      try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : undefined); }
       finally { restore?.(); unwarm?.(); }
-    } else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
-    loadMeasure('view:warm-up', t);
-    this.idPass = this.params.get('idpass') === '1'; this.update(1);
-    this.startPreparation();
+    };
+    const finish = (): void => {
+      loadMeasure('view:warm-up', t);
+      this.idPass = this.params.get('idpass') === '1'; this.update(1);
+      this.startPreparation();
+    };
+    if (this.world.scenario === 'L1' && this.params.get('test') !== '1') {
+      // Load lane: the shader warm-up runs while the mission briefing is up instead of behind the
+      // loading screen. Until it finishes the view does not draw and the game clock does not advance
+      // (Game checks `warming`), so 'Begin mission' is never blocked and play starts warmed.
+      // The warm-up draws into a 32x32 buffer: keep the canvas hidden behind the briefing meanwhile.
+      const generation = this.generation, canvas = this.renderer.domElement, done = () => { canvas.style.visibility = ''; this.unfreeze(); };
+      canvas.style.visibility = 'hidden';
+      this.warming = warm().then(() => { done(); if (generation === this.generation) { this.warming = null; finish(); } }, error => { done(); if (generation === this.generation) { this.warming = null; console.error(error); } });
+      return;
+    }
+    if (this.world.scenario === 'L1') await warm();
+    else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
+    finish();
   }
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */
@@ -415,6 +450,8 @@ export class GameView implements Lifecycle {
     if (mission?.state.timeOfDay && this.lighting?.preset !== mission.state.timeOfDay) this.lighting?.set(mission.state.timeOfDay);
   }
   update(alpha = 1): void {
+    if (this.missionHidden && this.missionUI) this.missionUI.root.hidden = true;
+    if (this.warming || this.frozenFrame) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
     if (this.contextLost) return;
     if (this.destination) {
       const target = this.world.controls.moveTarget; this.destination.visible = target != null;
@@ -462,7 +499,7 @@ export class GameView implements Lifecycle {
     if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.scene.add(this.bicycle); }
     this.bicycle?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
-    this.marker?.update(); this.missionUI?.update(this.camera,innerWidth,innerHeight);
+    this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
     this.crowd?.update(this.view, alpha); this.contactShadows?.update(); this.actions?.update();
     this.entityAssets?.update();
     this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha);
@@ -514,10 +551,12 @@ export class GameView implements Lifecycle {
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
   }
   async ready(): Promise<void> {
+    await this.warming;
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
   reset(): void {
-    this.generation++; this.pendingPreparation = null; this.preparation = null; loadGate.setPaced(false);
+    this.generation++; this.pendingPreparation = null; this.preparation = null; this.warming = null;
+    if (this.background) { loadGate.setPaced(true); loadGate.background = true; } else loadGate.setPaced(false);
     this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;
     if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }
     if (this.labAccident) { this.scene.remove(this.labAccident.column); this.labAccident.dispose(); this.labAccident = null; }
