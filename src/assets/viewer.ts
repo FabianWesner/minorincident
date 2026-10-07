@@ -11,6 +11,7 @@ export interface AssetViewerApi {
   ready: Promise<void>;
   view(index: number): Promise<void>;
   visibility(name: string, visible: boolean): Promise<void>;
+  inspectionView?(quality: 'high' | 'lod1' | 'lod2', azimuth: number, roofVisible?: boolean): Promise<void>;
   deliveryView?(quality: 'high' | 'lod1' | 'lod2', distance: number): Promise<void>;
   info(): { placeholder: boolean; drawCalls: number; triangles: number; nodes: string[]; events: PlaceholderLog[] };
   goreProbe?(limb: string): Promise<{ hiddenBefore: boolean; visibleAfter: boolean; capTriangles: number; jointError: number }>;
@@ -93,8 +94,21 @@ export async function assetViewer(): Promise<void> {
     controls.target.copy(center); controls.update(); camera.lookAt(center);
     await renderer.compileAsync(scene, camera); render(); render();
   }
+  async function inspectionView(quality: 'high' | 'lod1' | 'lod2', azimuth: number, roofVisible = true): Promise<void> {
+    document.querySelector<HTMLSelectElement>('#quality')!.value = quality;
+    await load();
+    const roof = object.getObjectByName('roof'); if (roof) roof.visible = roofVisible;
+    const angle = azimuth * Math.PI / 180, elevation = Math.PI * .2;
+    const width = Math.abs(Math.sin(angle)) * size.x + Math.abs(Math.cos(angle)) * size.z;
+    const depth = Math.abs(Math.cos(angle)) * size.x + Math.abs(Math.sin(angle)) * size.z;
+    const height = Math.cos(elevation) * size.y + Math.sin(elevation) * depth;
+    const distance = Math.max(width / camera.aspect, height) / Math.tan(camera.fov * Math.PI / 360) * .65;
+    camera.position.set(center.x + Math.cos(angle) * Math.cos(elevation) * distance, center.y + Math.sin(elevation) * distance, center.z + Math.sin(angle) * Math.cos(elevation) * distance);
+    controls.target.copy(center); controls.update(); camera.lookAt(center);
+    await renderer.compileAsync(scene, camera); render(); render();
+  }
   const ready = load();
-  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, deliveryView, visibility: async (name, visible) => {
+  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, deliveryView, inspectionView, visibility: async (name, visible) => {
     const node = object.getObjectByName(name);
     if (!node) throw new Error(`Missing asset node ${name}`);
     node.visible = visible; await view(4);

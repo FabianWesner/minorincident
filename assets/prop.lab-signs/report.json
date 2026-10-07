@@ -2,9 +2,9 @@
   "id": "prop.lab-signs",
   "tier": "side",
   "triangles": {
-    "lod0": 8934,
-    "lod1": 1030,
-    "lod2": 301
+    "lod0": 8958,
+    "lod1": 8916,
+    "lod2": 8916
   },
   "draw_calls": 19,
   "materials": [
@@ -19,18 +19,18 @@
   "dimensions_blender": [
     0.2960944175720215,
     4.052500009536743,
-    1.3550000190734863
+    1.2674999237060547
   ],
   "bbox_blender": {
     "min": [
       -0.14804720878601074,
       -2.026250123977661,
-      0
+      0.0
     ],
     "max": [
       0.14804720878601074,
       2.026249885559082,
-      1.3550000190734863
+      1.2674999237060547
     ]
   },
   "nodes": [
@@ -49,72 +49,5 @@
   ],
   "baked_ao": true,
   "backface_culling": true,
-  "render_engine": "Eevee",
-  "delivery": {
-    "lod0": {
-      "triangles": 8934,
-      "bytes": 84656,
-      "draw_calls": 19,
-      "dimensions": [
-        0.29609057160173563,
-        1.3550000190734863,
-        4.0524858276768425
-      ],
-      "hash": "b4cd3b04f0488022915f36e5b47198b1e767b7276c809521bceeaac5da3adfd5",
-      "nodes_ok": true,
-      "meshopt": true,
-      "backface_culling": true
-    },
-    "lod1": {
-      "triangles": 1030,
-      "bytes": 23308,
-      "draw_calls": 19,
-      "dimensions": [
-        0.29597245525553606,
-        1.3550000190734863,
-        4.032023593072587
-      ],
-      "hash": "3be870320cc6d01b4c4cb6dec19946f9472f469a4894c89dbc792ad2d85adbce",
-      "nodes_ok": true,
-      "meshopt": true,
-      "backface_culling": true
-    },
-    "lod2": {
-      "triangles": 301,
-      "bytes": 15676,
-      "draw_calls": 19,
-      "dimensions": [
-        0.2961068051660356,
-        1.3550000190734863,
-        4.0507897152765935
-      ],
-      "hash": "9be62b9e9f27dad7346484fb9baac1d3058d90e0c533260fb6df8d1f0eb82a54",
-      "nodes_ok": true,
-      "meshopt": true,
-      "backface_culling": true
-    }
-  },
-  "source_triangles": {
-    "lod0": 8958,
-    "lod1": 1078,
-    "lod2": 390
-  },
-  "matches_reference": true,
-  "done": true,
-  "nodes_ok": true,
-  "deterministic": true,
-  "webgl2_ok": null,
-  "webgpu_ok": null,
-  "browser_note": "WebGL2 smoke check could not obtain shared browser lock; WebGPU review is manual.",
-  "checks": {
-    "typecheck": "passed",
-    "lint": "passed",
-    "unit": "200 passed, 2 skipped, 2 todo",
-    "asset_validation": "passed all three LODs",
-    "epic_verify": "not applicable: asset-only task without epic assignment"
-  },
-  "gaps": [
-    "Pending manifest integration; placeholder tier/dimensions need reconciliation.",
-    "Browser checks pending."
-  ]
+  "render_engine": "Eevee"
 }

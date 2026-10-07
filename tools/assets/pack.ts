@@ -18,6 +18,14 @@ export async function packAsset(def: AssetDef, regenerate = false): Promise<numb
   for (const lod of requiredLods(def, triangles)) {
     const supplied = `assets/${def.id}/model.${lod}.glb`, output = def.lods?.[lod] ?? def.glb.replace('.glb', `.${lod}.glb`);
     if (!output) throw new Error(`${def.id}: missing ${lod} manifest path`);
+    if (def.authoredLodRatios) {
+      if (regenerate) throw new Error(`${def.id}: rebuild reviewed LODs from the Blender source`);
+      if (!existsSync(supplied)) throw new Error(`${def.id}: missing authored ${lod}`);
+      await optimizeAsset(supplied, output, def);
+      const actual = triangleCount(await io.read(output)) / triangles;
+      if (actual > def.authoredLodRatios[lod] + .005) throw new Error(`${def.id}: authored ${lod} ratio ${actual} exceeds ${def.authoredLodRatios[lod]}`);
+      continue;
+    }
     const ratio = lod === 'lod1' ? .12 : .03;
     const generated = existsSync(supplied) && (await io.read(supplied)).getRoot().listScenes().some(scene => scene.getExtras().deliveryLodGenerated === true);
     // Existing authored tiers are preferred when they meet the delivery contract.

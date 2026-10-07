@@ -10,7 +10,15 @@ import bpy
 import bmesh
 from mathutils import Matrix, Vector
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import export_lods, rebuild_from_baked
+
 HERE = Path(__file__).resolve().parent
+if '--lod-only' in sys.argv:
+    rebuild_from_baked(HERE/'model.glb')
+    sys.exit(0)
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--render')
 parser.add_argument('--view', default='ref')
@@ -379,32 +387,8 @@ export(args.glb)
 triangles,draws=metrics()
 report={'id':'bld.school-elementary','tier':'Hero','triangles':triangles,'draw_calls':draws,'materials':sorted(m.name for m in M.values()),'nodes_ok':all(n in groups for n in ['root','roof','interior','door_L','door_R']),'within_budget':triangles<=100000 and draws<=40,'rounds':4,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
 (HERE/'build-metrics.json').write_text(json.dumps(report,indent=2))
-# LODs use decimation; the far LOD omits individual brick relief.
-originals={o:o.data.copy() for o in model.objects if o.type=='MESH'}
-for suffix,ratio in [('lod1',.125),('lod2',.0505)]:
-    for obj,mesh in originals.items():
-        obj.data=mesh.copy()
-        if suffix=='lod2' and obj.parent==groups['body'] and obj.data.materials[0]==M['brick']:
-            bm=bmesh.new(); bm.from_mesh(obj.data)
-            unseen=set(bm.verts); remove=[]
-            while unseen:
-                seed=unseen.pop(); component={seed}; stack=[seed]
-                while stack:
-                    v=stack.pop()
-                    for edge in v.link_edges:
-                        other=edge.other_vert(v)
-                        if other in unseen:
-                            unseen.remove(other); component.add(other); stack.append(other)
-                extent=[max(v.co[k] for v in component)-min(v.co[k] for v in component) for k in range(3)]
-                if max(extent)<.65: remove.extend(component)
-            bmesh.ops.delete(bm,geom=remove,context='VERTS')
-            bm.to_mesh(obj.data); bm.free()
-        bpy.context.view_layer.objects.active=obj
-        dec=obj.modifiers.new('LOD simplification','DECIMATE'); dec.ratio=ratio
-        bpy.ops.object.modifier_apply(modifier=dec.name)
-    export(HERE/('model.'+suffix+'.glb'))
-    (HERE/(suffix+'-metrics.json')).write_text(json.dumps(dict(zip(['triangles','draw_calls'],metrics()))))
-for obj,mesh in originals.items(): obj.data=mesh
+# Preserve closed masonry and rooftop silhouettes at play distance.
+export_lods(Path(args.glb), [o for o in model.objects if o.type=='MESH'])
 
 if args.render:
     scene.render.engine='CYCLES'; scene.cycles.samples=args.samples; scene.cycles.use_denoising=True
