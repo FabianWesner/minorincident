@@ -14,6 +14,7 @@ export class CrowdLocomotion {
   private readonly restParents: Matrix4[];
   private readonly world: Matrix4[];
   private readonly inverse = new Matrix4();
+  private readonly scale = new Vector3();
   private readonly rig: CharacterRig;
   private readonly contacts = new Map<number, GroundContacts>();
   private readonly paws = new Map<number, PawContacts>();
@@ -41,7 +42,7 @@ export class CrowdLocomotion {
     this.reach = this.rig.legL && this.rig.shinL && this.rig.footL
       ? this.rig.legL.getWorldPosition(new Vector3()).distanceTo(this.rig.shinL.getWorldPosition(new Vector3())) + this.rig.shinL.getWorldPosition(new Vector3()).distanceTo(this.rig.footL.getWorldPosition(new Vector3())) : 0;
   }
-  stance(name: string, stride: number): number { return Math.min(gaitShape[name]?.stance ?? .5, this.reach * .75 / Math.max(.001, stride)); }
+  stance(name: string, stride: number, rootScale = 1): number { return Math.min(gaitShape[name]?.stance ?? .5, this.reach * rootScale * .75 / Math.max(.001, stride)); }
   correct(id: number, pose: Float32Array, instance: Matrix4, phase: number, name: string, scale: number, speed: number): void {
     if (!this.animal && (!this.reach || !gaitShape[name])) return;
     let contacts = this.contacts.get(id);
@@ -66,7 +67,7 @@ export class CrowdLocomotion {
       let paws = this.paws.get(id);
       if (!paws) { paws = new PawContacts(this.frame, this.model); this.paws.set(id, paws); }
       paws.update(phase, stride, 'corgi-trot');
-    } else contacts!.update(phase, stride, run, 1, this.stance(name, stride));
+    } else contacts!.update(phase, stride, run, 1, this.stance(name, stride, this.frame.getWorldScale(this.scale).y));
     this.inverse.copy(instance).invert();
     this.nodes.forEach((node, i) => this.world[i].multiplyMatrices(this.inverse, node.matrixWorld).toArray(pose, i * 16));
   }
