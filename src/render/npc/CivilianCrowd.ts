@@ -18,6 +18,14 @@ import { createCivilianPlaceholder } from './placeholders';
 import { loadMeasure } from '../../assets/loadTiming';
 import { keepsLook } from '../../sim/outbreak/appearance';
 import type { EntitySnapshot } from '../../sim/world/types';
+/** Main garment materials per civilian model (first = reference shade) that take the per-person shirt tint. */
+const shirtMaterials: Record<string, string[]> = {
+  'npc.civilian-man-a': ['pal_polo', 'pal_poloDark', 'pal_poloLight'],
+  'npc.civilian-man-b': ['pal_schoolBusYellow', 'pal_hoodieShade'],
+  'npc.civilian-woman-a': ['pal_survivorRed'],
+  'npc.civilian-woman-b': ['pal_lavender', 'pal_lavenderLight', 'pal_lavenderShadow'],
+  'npc.civilian-elderly': ['pal_vest'],
+};
 type Clip = typeof civilianClips[number];
 /** Lane G's civilian panic and infected tier clips when baked, else the closest shared clip. */
 const clipOr = (name: string, fallback: Clip): Clip => (civilianClips as readonly string[]).includes(name) ? name as Clip : fallback;
@@ -34,6 +42,7 @@ class CivilianBatch extends Group {
   private texture!: DataTexture;
   private readonly childScale = new Vector3(.7, .7, .7);
   private readonly transform = new Matrix4();
+  private readonly lean = new Matrix4().makeRotationZ(-.2);
   private readonly presentation = new MotionPresentation();
   private readonly motion = new MotionPhase();
   private strideScale = 1;
@@ -52,6 +61,16 @@ class CivilianBatch extends Group {
     this.source = placeholder ? 'placeholder' : 'glb';
     const baked = bakeInfected(model, [], false, civilianClips), color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     this.strideScale = baked.strideScale;
+    // QA1-07: the civilian GLBs have no tintable `pal_infectedShirt`; their main garment materials take the per-person
+    // tint instead, keeping each shade's brightness ratio (dark seams stay darker), so 5 silhouettes x 12 tints differ.
+    const garment = shirtMaterials[this.model], shirtColors: Color[] = [];
+    if (garment && !placeholder) model.traverse(node => { const m = (node as import('three').Mesh).material as import('three').MeshStandardMaterial | undefined; if (m && !Array.isArray(m) && garment.includes(m.name) && m.color) shirtColors[garment.indexOf(m.name)] = m.color.clone(); });
+    const shirtAttr = baked.geometry.getAttribute('_shirt'), main = shirtColors.find(Boolean);
+    if (main) for (let i = 0; i < color.count; i++) {
+      if (shirtAttr.getX(i) < 0) continue;
+      const r = color.getX(i), g = color.getY(i), b = color.getZ(i);
+      if (shirtColors.some(c => c && Math.abs(c.r - r) < .002 && Math.abs(c.g - g) < .002 && Math.abs(c.b - b) < .002)) shirtAttr.setX(i, Math.min(1.6, Math.max(.35, (.2126 * r + .7152 * g + .0722 * b) / Math.max(.02, .2126 * main.r + .7152 * main.g + .0722 * main.b))));
+    }
     // Packed mark channel: 1 = vein decal vertex, 2 = blood mask (lower face; collar bite on the torso).
     const position = baked.geometry.getAttribute('position'), partOf = baked.geometry.getAttribute('_part_index'), shirtOf = baked.geometry.getAttribute('_shirt');
     const head = baked.clip.parts.indexOf('head'), torso = baked.clip.parts.indexOf('torso'), bounds = [head, torso].map(() => ({ min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] }));
@@ -63,7 +82,7 @@ class CivilianBatch extends Group {
       const p = partOf.getX(i);
       if (veins[i]) continue;
       // Irregular splatter on the shirt front (stable per vertex), so blood reads on clothes at the game camera.
-      const splat = p === torso && rel(1, i, 0) > .55 && rel(1, i, 1) > .35 && Math.abs(Math.sin(position.getComponent(i, 0) * 91.7 + position.getComponent(i, 1) * 47.3 + position.getComponent(i, 2) * 63.1) * 43758.5) % 1 > .55;
+      const splat = p === torso && rel(1, i, 0) > .5 && rel(1, i, 1) > .25 && Math.abs(Math.sin(position.getComponent(i, 0) * 91.7 + position.getComponent(i, 1) * 47.3 + position.getComponent(i, 2) * 63.1) * 43758.5) % 1 > .4;
       if (p === head && shirtOf.getX(i) < 0 && rel(0, i, 0) > .62 && rel(0, i, 1) < .42 || p === torso && rel(1, i, 1) > .8 && rel(1, i, 2) > .55 && rel(1, i, 0) > .35 || splat) veins[i] = 2;
       // Sunken, bruised eye sockets around the (glowing) eyes.
       else if (p === head && shirtOf.getX(i) < 0 && rel(0, i, 0) > .55 && rel(0, i, 1) > .45 && rel(0, i, 1) < .75) veins[i] = 3;
@@ -75,16 +94,21 @@ class CivilianBatch extends Group {
     packCrowdParts(baked.geometry);
     const parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
     const overlay = attribute('_overlay', 'vec3'), eye = parts.z, vein = parts.w.greaterThan(.5).select(parts.w.lessThan(1.5).select(1, 0), 0), blood = parts.w.greaterThan(1.5).select(parts.w.lessThan(2.5).select(1, 0), 0), socket = parts.w.greaterThan(2.5).select(1, 0), decay = overlay.x;
-    const clothing = mix(attribute('color', 'vec3'), variant.xyz, parts.y.max(0));
+    // parts.y > 0: tinted garment, value = the shade's brightness relative to the main garment colour.
+    const clothing = parts.y.greaterThan(0).select(variant.xyz.mul(parts.y), attribute('color', 'vec3'));
     // Same clothes and body: only the skin blends toward ash-green, blood darkens mouth and bite, eyes ignite.
     // Skin only: drained grey-green (desaturated, darker), at up to 70 % for the 40 % sim blend so it reads at distance.
-    const sick = mix(vec3(luminance(clothing)).mul(.7), vec3(.36, .46, .30), .65), skinShift = parts.y.lessThan(0).select(decay.mul(1.75).min(1), 0);
-    const sunken = mix(sick, vec3(.16, .1, .16), socket.mul(.8));
-    const skin = mix(clothing, sunken, skinShift);
+    // QA1-10: the infected must read at the default zoom - clearly ash-green skin (full shift at the 40 % sim blend),
+    // dark sockets, grimy clothes (same colours, 25 % darker) and blood; hair, clothes and body stay the person's own.
+    const sick = mix(vec3(luminance(clothing)).mul(.6), vec3(.42, .58, .30), .8), skinShift = parts.y.lessThan(0).select(decay.mul(2.5).min(1), 0);
+    const sunken = mix(sick, vec3(.12, .05, .1), socket.mul(.85));
+    const grimy = clothing.mul(overlay.z.mul(-.25).add(1));
+    const skin = mix(grimy, sunken, skinShift);
     const bloody = mix(skin, vec3(.36, .02, .03), blood.mul(overlay.z).mul(.9));
     const base = mix(bloody, mix(vec3(.02), vec3(1, .015, .025), overlay.y), eye);
     const eyeColor = vec3(1, .005, .02);
-    const glow = eyeColor.div(luminance(eyeColor)).mul(eye).mul(overlay.y).mul(2);
+    // Bright eyes (bloom) plus a faint red rim in the sockets so the glow reads as a patch at 15-20 m.
+    const glow = eyeColor.div(luminance(eyeColor)).mul(eye.mul(6).add(socket.mul(.35))).mul(overlay.y);
     const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     this.mesh = new InstancedMesh(baked.geometry, material, 128); this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = this.mesh.receiveShadow = true;
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1); this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; };
@@ -154,12 +178,13 @@ class CivilianBatch extends Group {
     const b = e.infected!, tick = this.world.tick, distance = Math.hypot(e.transform.x - player.x, e.transform.z - player.z);
     if (e.hidden || b.hidden || (distance > 30) !== this.distant || b.state === 'dead' && tick - b.deadAt > 540) return false;
     const motion = this.motion.sample(e.id, tick, e.transform.x, e.transform.z), reaction = e.combat?.reaction, age = reaction ? (tick - reaction.started) / 60 : Infinity;
-    let clip: Clip = b.state === 'dead' ? 'death-back' : b.state === 'attack' ? tick < b.until ? 'windup' : 'swing' : motion.speed > 2 ? tierGait[e.appearance!.tier] : motion.speed > .06 ? 'shamble' : (b.state as string) === 'search' ? infectedSearch : infectedIdle;
+    let clip: Clip = b.state === 'dead' ? 'death-back' : b.state === 'attack' ? tick < b.until ? 'windup' : 'swing' : motion.speed > .06 ? tierGait[e.appearance!.tier] : (b.state as string) === 'search' ? infectedSearch : infectedIdle;
     if (reaction && age < (reaction.heavy ? 1.34 : .43) && b.state !== 'dead') clip = reaction.heavy ? age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
     const duration = authoredClips.get(clip)!.duration, renderTick = Math.max(0, tick + alpha - 1);
     const phase = b.state === 'dead' ? Math.min(1, (tick - b.deadAt) / 60 / duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && age < 1.34 ? Math.min(1, age / (reaction.heavy ? .7 : .43)) : strides[clip] ? motion.distance / (strides[clip] * this.strideScale) % 1 : (renderTick / 60 + e.id * .137) / duration % 1;
     const presented = this.presentation.sample(e.id, e.transform, tick, alpha);
-    this.transform.makeRotationY(presented.yaw); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
+    // Hunched silhouette: the whole body leans forward (pivot at the feet) on top of the tier gait's arms-forward pose.
+    this.transform.makeRotationY(presented.yaw); if (b.state !== 'dead' && !reaction) this.transform.multiply(this.lean); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
     const frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1), blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
     this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, frame);
     this.tintOf(e, index, blend[0] * 2 + blend[1]); this.overlay.setXYZ(index, .4, b.state === 'dead' ? 0 : 1, 1);

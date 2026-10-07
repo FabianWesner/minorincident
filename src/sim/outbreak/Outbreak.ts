@@ -4,7 +4,7 @@ import { civilianRoles, l1Pedestrians } from '../../data/npcs';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { CivilianActivity, CivilianProp, CivilianState, Point } from '../npc/types';
-import type { Appearance } from './appearance';
+import { keepsLook, type Appearance } from './appearance';
 import { HumanTargets } from './humans';
 import type { BiteEvent, InfectionPhase, LosBlockerRegistry, SpeedTier, Vec2 } from './types';
 
@@ -111,7 +111,7 @@ export class Outbreak {
     const e = this.world.entities.get(id)!, c = e.civilian!;
     e.transform.yaw = options.yaw ?? this.rng.next() * Math.PI * 2;
     const tier: SpeedTier = options.tier ?? (model === 'npc.civilian-elderly' || role === 'bathrobe-neighbor' ? 'frail' : role === 'jogger' || this.rng.next() < l1Pedestrians.athleticShare ? 'athletic' : 'average');
-    e.appearance = { entityId: id, asset: model, tint: options.tint ?? l1Pedestrians.shirts[Math.floor(this.rng.next() * l1Pedestrians.shirts.length)],
+    e.appearance = { entityId: id, asset: model, tint: this.freeTint(position, model, options.tint ?? l1Pedestrians.shirts[Math.floor(this.rng.next() * l1Pedestrians.shirts.length)], id),
       accessories: [...(options.accessories ?? [])], handProp: options.handProp ?? schedule.find(s => s.prop)?.prop ?? null, tier } satisfies Appearance;
     c.l1 = { walkSpeed: options.walkSpeed ?? this.range(civ.walkSpeed) * (model === 'npc.civilian-elderly' ? .7 : 1), fleeSpeed: this.range(civ.fleeSpeed) * (tier === 'frail' ? .9 : 1),
       startleTicks: ticks(this.range(civ.startleS)), refuge: null, target: null, repickAt: 0, noticed: -1 };
@@ -119,6 +119,18 @@ export class Outbreak {
     return id;
   }
 
+  /**
+   * QA1-07: never two people with the same silhouette and shirt within 25 m (pedestrians and infected alike, e.g. lab
+   * staff spawned with one requested tint). Keeps the requested tint when it is free, else the next free palette tint.
+   */
+  private freeTint(at: Vec2, asset: string, tint: string, self: number): string {
+    const taken = new Set<string>();
+    for (const o of this.world.entities.iterate()) if (o.id !== self && o.appearance?.asset === asset && keepsLook(o) && Math.hypot(o.transform.x - at.x, o.transform.z - at.z) < 25) taken.add(o.appearance.tint.toLowerCase());
+    if (!taken.has(tint.toLowerCase())) return tint;
+    const shirts = l1Pedestrians.shirts, start = Math.max(0, shirts.indexOf(tint as typeof shirts[number]));
+    for (let k = 1; k <= shirts.length; k++) { const t = shirts[(start + k) % shirts.length]; if (!taken.has(t)) return t; }
+    return tint;
+  }
   update(): void {
     const world = this.world, ai = world.infected!, tick = world.tick;
     if (this.started < 0 && ai.active.some(a => a.health.current > 0)) { this.started = tick; this.topUpAt = tick; }
