@@ -31,11 +31,12 @@ import type { CameraPose } from "./View";
 import type { View } from './View';
 import { AmbientLife } from './AmbientLife';
 import { Foliage } from './Foliage';
+import { pickLod, type Lod } from './lodPolicy';
 import type { PaletteToken } from '../data/palette';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 
-interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; id: string; lit: boolean; loaded: boolean }
+interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; id: string; lit: boolean; loaded: boolean; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */
 export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
@@ -166,7 +167,7 @@ export class DistrictView extends Group {
               batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
             }
             const dimensions = new Box3().setFromObject(prototypes[1]).getSize(new Vector3());
-            this.lodBatches.push({ hero, near, far, refs, id, lit: power === 'true', loaded: false, origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55 });
+            this.lodBatches.push({ hero, near, far, refs, id, lit: power === 'true', loaded: false, bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55 });
           }),
         );
         // Dynamic nav-blockers use the same positions/extents as their Rapier colliders.
@@ -328,7 +329,10 @@ export class DistrictView extends Group {
         this.bounds.center.set(x, ref.position.y + height / 2, z); this.bounds.radius = radius;
         if (!this.frustum.intersectsSphere(this.bounds)) continue;
         const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
-        (distance > (this.low ? 16 : 30) || this.low && worldAssets[entry.id].category === 'prop' ? far : !this.low && distance <= 12 ? hero : near).references.push(ref);
+        // High tier: LOD0 inside the play view (lodPolicy, with hysteresis). Low tier keeps its budget.
+        const band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' ? 'lod2' : 'lod1') : pickLod(distance, entry.bands[index]);
+        entry.bands[index] = band;
+        (band === 'lod2' ? far : band === 'lod1' ? near : hero).references.push(ref);
       }
       for (const batch of [hero, near, far]) {
         batch.visible = batch.references.length > 0;
