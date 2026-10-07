@@ -74,8 +74,13 @@ export class LevelThreeBot {
       if (dist(p, enemy.transform) < 2.5 && w.combat!.query.visible(p, enemy.transform)) { frame.attackTarget = { id: enemy.id, side: 'LEFT' }; frame.left.held = true; frame.move = { x: 0, z: 0 }; }
     } else frame.move = this.walker.step(w, at, Math.min(1, at.radius / 2), step.id) ?? frame.move;
     if (step.complete.kind === 'interact' && dist(p, at) <= at.radius) frame.interact = true;
-    // Keep moving inside the gate until a real follower has crossed its volume.
-    if (step.complete.kind === 'escort' && !enemy) frame.move = this.walker.step(w, { x: at.x, z: at.z+3 }, .4, 'patient-gate') ?? frame.move;
+    // Escort followers stop behind a stationary player. Keep walking inside
+    // the gate area until the patient crosses it, regardless of arrival direction.
+    if (step.complete.kind === 'escort' && !enemy) {
+      const inside = [{ x: at.x, z: at.z }, { x: at.x+1, z: at.z-1 }, { x: at.x+1, z: at.z+1 }, { x: at.x-1, z: at.z+1 }, { x: at.x-1, z: at.z-1 }];
+      if (dist(p, inside[this.waypoint]) < .6) this.waypoint = this.waypoint === inside.length-1 ? 1 : this.waypoint+1;
+      frame.move = this.walker.step(w, inside[this.waypoint], .25, `patient-gate-${this.waypoint}`) ?? frame.move;
+    }
     return frame;
   }
 }
