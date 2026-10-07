@@ -42,7 +42,7 @@ test('T-LOAD-01 @perf @load production L1 load: critical download, title and Sta
   const browser = await chromium.launch({ headless: true, args: [...launchArgs, ...(tls ? [`--ignore-certificate-errors-spki-list=${tls.spki}`] : [])] });
   const runs: LoadRun[] = [];
   try {
-    const base = `${tls ? 'https' : 'http'}://127.0.0.1:${port}/?renderer=webgl`;
+    const base = `${tls ? 'https' : 'http'}://127.0.0.1:${port}/`;
     runs.push(...await measure(browser, base, 'desktop'));
     runs.push(...await measure(browser, base, 'mobile', ['cold']));
     runs.push(...await measure(browser, base, 'phone', ['cold']));
