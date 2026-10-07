@@ -82,7 +82,9 @@ describe('L1 v2 bicycle', () => {
     expect(world.entities.get(1)!.survivor!.animation).not.toBe('attack');
   });
   test('T-E19-16e @E19 @E19-AC16 riding feel: no pivoting on the spot, the turn radius grows with speed, speed ramps and coasts', async () => {
-    await grove(); const e = bike().entity!; Object.assign(e.transform, { x: 0, z: 3.5, yaw: 0 }); const start = { x: e.transform.x, z: e.transform.z }; teleport({ x: start.x + 1, z: start.z }); press(); expect(bike().riding).toBe(true);
+    // Measure steering on an open fixture: a faster turn must not run into Grove's props.
+    world = new SimWorld(); await world.init(); world.loadScenario('survivor', 1);
+    bike().spawn({ x: 1, z: 0 }); teleport({ x: 2, z: 0 }); press(); expect(bike().riding).toBe(true);
     const b = () => bike().entity!.bicycle!, h0 = b().heading;
     world.setInput({ move: { x: -Math.cos(h0), z: -Math.sin(h0) } }); step(12);
     expect(Math.abs(b().heading - h0)).toBeLessThan(.25); // asked to reverse from a standstill: no instant pivot
