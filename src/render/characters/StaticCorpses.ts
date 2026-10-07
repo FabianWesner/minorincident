@@ -44,7 +44,7 @@ export class StaticCorpses extends Group {
       const stains = new InstancedBufferAttribute(new Float32Array(128 * 3), 3);
       geometry.setAttribute('_state', state); geometry.setAttribute('_variant', colors); geometry.setAttribute('_overlay', stains);
       const frozen = new MeshLambertNodeMaterial().copy(material); frozen.positionNode = null; frozen.normalNode = null;
-      const mesh = new InstancedMesh(geometry, frozen, 128); mesh.count = 0; mesh.frustumCulled = false;
+      const mesh = new InstancedMesh(geometry, frozen, 128); mesh.count = 0;
       mesh.castShadow = false; mesh.receiveShadow = true;
       const probe = new CrowdFigureProbe(); mesh.onAfterRender = () => probe.draw();
       page = { mesh, tint: colors, overlay: stains, probe }; pages.push(page); this.add(mesh);
@@ -53,6 +53,9 @@ export class StaticCorpses extends Group {
     page.mesh.setMatrixAt(index, instance); page.tint.setXYZW(index, tint.r, tint.g, tint.b, 1);
     page.overlay.setXYZ(index, overlay[0], overlay[1], overlay[2]);
     page.mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
+    // Frozen pages need no per-frame bounds work. Recompute when a body joins,
+    // covering every final death vertex so culling cannot drop a visible body.
+    page.mesh.computeBoundingSphere();
     page.probe.figures.push({ id: e.id, instanceKey, clip: 'death-back', phase: 1, drawn: false, feet: [] });
   }
   snapshot() { return { instances: this.bodies.size, draws: [...this.chunks.values()].reduce((n, pages) => n + pages.length, 0), figures: [...this.chunks.values()].flatMap(pages => pages.flatMap(page => page.probe.figures)) }; }
