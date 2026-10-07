@@ -27,7 +27,7 @@ for (const profile of ['Pixel 7', 'iPhone 14'] as const) {
         expect(state.viewport.scrollWidth).toBeLessThanOrEqual(width); expect(state.viewport.scrollHeight).toBeLessThanOrEqual(height);
         expect(state.canvas.width).toBe(Math.floor(width * 1.5)); expect(state.canvas.height).toBe(Math.floor(height * 1.5));
         for (const rect of state.controls) { expect(rect.x).toBeGreaterThanOrEqual(0); expect(rect.y).toBeGreaterThanOrEqual(0); expect(rect.right).toBeLessThanOrEqual(width); expect(rect.bottom).toBeLessThanOrEqual(height); }
-        proof.push(state); mkdirSync(output, { recursive: true }); await page.screenshot({ path: `${output}/${profile.replaceAll(' ', '-')}-${width}.png` });
+        proof.push(state); mkdirSync(output, { recursive: true }); await page.screenshot({ path: `${output}/${profile.replaceAll(' ', '-')}-${width}.png`, scale: 'css' });
         await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await page.evaluate(() => window.__SS__!.step(1));
         expect(await page.evaluate(() => window.__SS__!.getState().input.frame.move)).toEqual({ x: 0, z: 0 });
       }
