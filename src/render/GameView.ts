@@ -417,7 +417,7 @@ export class GameView implements Lifecycle {
   preset(name: string): void {
     if (this.world.scenario === 'L3' && ['l3-mainstreet-w2', 'l3-driving', 'l3-checkpoint', 'l3-safe-zone'].includes(name)) {
       const anchors = this.world.missions!.def.anchors;
-      const target = name === 'l3-driving' ? this.world.entities.get(this.world.missions!.state.actors.sedan)?.transform ?? anchors.sedan : anchors[name === 'l3-mainstreet-w2' ? 'sedan' : name === 'l3-checkpoint' ? 'barrier' : 'camp'];
+      const target = name === 'l3-driving' ? this.world.entities.get(this.world.missions!.state.actors.sedan)?.transform ?? anchors.sedan : name === 'l3-mainstreet-w2' ? { x: anchors.sedan.x, z: anchors.sedan.z-6 } : anchors[name === 'l3-checkpoint' ? 'barrier' : 'camp'];
       this.view.preset(name, { position: [target.x+20, 24, target.z+22], target: [target.x, .4, target.z] }); this.update(1); return;
     }
     const reviewSpot = lookViewpoints.find(spot => spot.id === name);
