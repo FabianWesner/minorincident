@@ -46,7 +46,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // At night the moon/hero shadow map also darkens the pools behind casters (fieldShadow).
       const field = lighting.field.sample().mul(normalWorld.y.mul(.35).add(.65)).mul(mix(float(1), caughtShadow, lighting.fieldShadow));
       // Night rim: the survivor (a world-space capsule around the feet) and flagged crowd figures.
-      const fresnel = normalView.dot(positionViewDirection).clamp(0, 1).oneMinus().pow(3);
+      const fresnel = normalView.dot(positionViewDirection).clamp(0, 1).oneMinus().smoothstep(.62, .95);
       const heroMask = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(1.3, .6).mul(positionWorld.y.sub(lighting.hero.y).smoothstep(.1, .3));
       const rim = lighting.rimColor.mul(fresnel.mul(max(heroMask, this.figureRim)).mul(lighting.rim));
       const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field)).add(rim);
