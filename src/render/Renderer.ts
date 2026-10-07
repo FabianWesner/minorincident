@@ -2,6 +2,7 @@
 import { NodeBuilder, WebGPURenderer, type Object3D, type Camera } from 'three/webgpu';
 
 import { worldAssets } from '../assets/worldDefinitions';
+import { installTextureRanges } from './TextureRanges';
 
 // Load lane: three emits small instance-matrix arrays (and bone/range arrays) as per-object uniform
 // buffers named after the node id ('NodeBuffer_<id>'), so every InstancedMesh below the uniform limit
@@ -19,6 +20,7 @@ export class Renderer extends WebGPURenderer {
   private readonly assets = new WeakMap<Object3D, string>();
   override async init(): Promise<this> {
     await super.init();
+    installTextureRanges(this.backend);
     if (!this.profile) return this;
     const backend = this.backend as unknown as { draw(object: { object: Object3D; camera: Camera }, info: Renderer['info']): void };
     const draw = backend.draw.bind(backend);
