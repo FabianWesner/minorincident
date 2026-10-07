@@ -17,7 +17,12 @@ exports were inspected unchanged.
 Blender or changing `model.glb`. It writes runtime GLBs under `public/assets/models`
 and missing source `model.lod1.glb` / `model.lod2.glb` beside each export.
 Use an asset ID or category prefix instead of `--all` for an incremental pack.
-Authored tiers are preferred; generated tiers record their provenance and are
+Assets with `authoredLodRatios` keep reviewed Blender-authored tiers and their
+hard normals. Packing checks the declared triangle ceilings and refuses missing
+tiers or `--regenerate`; rebuild those from their `build.py` source. This repair
+uses 60%/30% ceilings for play-distance buildings/vehicles; the small printed
+lab sign kit retains its glyph geometry at every tier. Other
+authored tiers are preferred; generated tiers record their provenance and are
 regenerated from LOD0. `--regenerate` rebuilds all selected distance tiers.
 Targets are 12% / 3% of LOD0; retries stop before destroying small rigid parts.
 Simplification measures error per connected component and per axis, preserving
@@ -92,3 +97,8 @@ briefs and reviews are in `tools/assets/templates/`. Final status requires an
 existing comparison, all must items passing and at least 70% of should items.
 Milestone production and the infected gore-probe review remain separate batch
 work; a passing readiness guard does not complete those criteria.
+
+`E2E_PORT=3349 sh tools/e2e-lock.sh npx tsx tools/assets/lod-check.ts <id> ...`
+saves small 3×2 contact sheets to each asset’s `renders/lod-check.png`, using
+shipped GLBs, game palette/light, 36° elevation, and 45°/225° azimuths. It uses
+one headless Chromium process with ANGLE/Metal and requires an existing server.

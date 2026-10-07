@@ -105,6 +105,8 @@ export interface GameStateSnapshot {
   interactions?: { activeId: number | null; debris: ReturnType<import('../../physics/DebrisPool').DebrisPool['snapshot']>; hazards: ReturnType<import('../interact/Hazards').Hazards['snapshot']> | null };
   controls?: NonNullable<ReturnType<import('../entities/ControlIntent').ControlIntent['snapshot']>>;
   combat?: ReturnType<import('../combat/Combat').Combat['snapshot']>;
+  /** Displaced pushable props (PO #15), placement order. */
+  props?: import('../interact/PropSystem').PropSnapshot;
   input: { scheme: Scheme; frame: InputFrame };
   seed: number;
   scenario: string | null;
