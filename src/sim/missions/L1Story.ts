@@ -2,7 +2,6 @@ import type { Mission } from './Mission';
 import type { L1State } from './types';
 import type { EntitySnapshot } from '../world/types';
 import type { CivilianProp } from '../npc/types';
-import { emptyInput } from '../../input/InputFrame';
 
 const TICKS = 60;
 type BeatId = NonNullable<L1State['beat']>['id'];
@@ -12,7 +11,10 @@ export const storyLines: Record<string, string> = {
   'handover.tech': '…Thanks. Don’t hang around.',
   'garage.courier': 'This’ll do.',
   'firestation.firefighter': 'In here! Quick!',
+  'firestation.caption': 'The fire station shutter holds, for now.',
 };
+/** PO: reading time per bubble, max(2.5 s, 1 s + 70 ms per character), in ticks. */
+export const readTicks = (text: string): number => Math.ceil(Math.max(2.5, 1 + .07 * [...text].length) * TICKS);
 /** Beat timing in ticks (deterministic; all from the mission tick). */
 const beat = { clerkWalkMs: 1.6, giveTicks: 54, contactTicks: 26, byeTicks: 40, garageTicks: 120, fireTicks: 6 * TICKS, fireTriggerM: 14 };
 
@@ -39,10 +41,15 @@ export class L1Story {
     // A pending click-to-move must not resume after the beat.
     world.controls.reset(); world.player?.locomotion.reset();
   }
+  /** Speaker 0 is the narration caption. The bubble stays up for its reading time and the beat holds meanwhile. */
   say(id: number, key: string): void {
-    const e = this.world.entities.get(id); if (!e) return;
-    this.world.events.emit({ type: 'story.say', tick: this.world.tick, id, text: storyLines[key], position: { x: e.transform.x, z: e.transform.z } });
+    const e = this.world.entities.get(id || 1); if (!e) return;
+    const text = storyLines[key], tick = this.world.tick;
+    this.l1.say = { id, text, at: tick, until: tick + readTicks(text) };
+    this.world.events.emit({ type: 'story.say', tick, id, text, position: { x: e.transform.x, z: e.transform.z } });
   }
+  /** True while the current bubble still needs reading time. */
+  get reading(): boolean { const s = this.l1.say; return !!s && this.world.tick < s.until; }
   private finish(): void {
     const l1 = this.l1, b = l1.beat; if (!b) return;
     (l1.beatsDone ??= []).push(b.id); l1.beat = null; this.world.storyLock = null;
@@ -99,12 +106,16 @@ export class L1Story {
       if (Math.hypot(player.transform.x - trigger.x, player.transform.z - trigger.z) <= beat.fireTriggerM && player.health.current > 0) this.firestation();
     }
     const b = l1.beat; if (!b) return;
-    const lock = world.storyLock, t = tick - b.start;
+    const lock = world.storyLock;
+    // A press while a bubble still reads completes the bubble; the next press skips the beat.
+    if (lock?.skip && this.reading) { l1.say!.until = tick; lock.skip = false; }
+    // The beat holds its pose until the bubble has been read (the hold points pause the beat clock).
+    const t = tick - b.start;
     if (b.id === 'pickup') this.updatePickup(t, !!lock?.skip);
-    else if (b.id === 'garage') { if (t >= beat.garageTicks || lock?.skip) this.finish(); }
+    else if (b.id === 'garage') { if (t >= beat.garageTicks && !this.reading || lock?.skip) this.finish(); }
     else if (b.id === 'firestation') this.updateFire(t, !!lock?.skip);
     else if (b.id === 'handover') { if (lock?.skip) this.finish(); }
-    if (l1.beat && tick >= l1.beat.until) this.finish();
+    if (l1.beat && tick >= l1.beat.until && !this.reading) this.finish();
   }
 
   private updatePickup(t: number, skip: boolean): void {
@@ -114,6 +125,8 @@ export class L1Story {
     const walk = Math.max(1, Math.round(Math.hypot(meet.x - home.x, meet.z - home.z) / beat.clerkWalkMs * TICKS));
     const give = walk, contact = give + beat.contactTicks, bye = give + beat.giveTicks, back = bye + beat.byeTicks, gone = back + walk;
     if (skip && t < back) { b.start -= back - t; t = back; }
+    // Keep waving until the clerk's line has been read.
+    if (t === back && this.reading) { b.start++; t--; }
     if (t < give) { const k = t / walk; this.place(clerk, home.x + (meet.x - home.x) * k, home.z + (meet.z - home.z) * k, meet); this.present(clerk, 'npc-carry', 'parcel'); }
     else if (t < bye) {
       this.place(clerk, meet.x, meet.z, player.transform);
@@ -127,27 +140,60 @@ export class L1Story {
     } else { clerk.hidden = true; if (clerk.civilian) clerk.civilian.story = null; this.place(clerk, home.x, home.z, home); l1.clerkId = 0; this.finish(); }
   }
 
-  /** Beat 4: a firefighter waves her in; she runs into the bay (scripted move) and the shutter closes. */
+  /** Beat 4 (the ending): a firefighter waves from the open bay; the courier and the corgi run inside on a scripted
+   * path (input locked, chasers closing behind), the shutter slams, infected bang on it, a caption, a fade, then the
+   * result (the objective completes on `safe`). */
   private firestation(): void {
-    const door = this.anchor('fire-bay-door'), trigger = this.anchor('fire-bay-trigger');
-    const inward = { x: door.x + (door.x - trigger.x) * .3, z: door.z + (door.z - trigger.z) * .3 };
-    const id = this.pedestrian(inward, 'npc.firefighter-alive', 'firefighter', '#b5332b');
+    const door = this.anchor('fire-bay-door'), trigger = this.anchor('fire-bay-trigger'), player = this.world.entities.get(1)!;
+    const dx = door.x - trigger.x, dz = door.z - trigger.z, d = Math.hypot(dx, dz) || 1;
+    const inside = { x: door.x + dx / d * 2.6, z: door.z + dz / d * 2.6 }, waving = { x: door.x - dz / d * 1.6 + dx / d * .4, z: door.z + dx / d * 1.6 + dz / d * .4 };
+    const id = this.pedestrian(waving, 'npc.firefighter-alive', 'firefighter', '#b5332b');
     this.l1.firefighterId = id;
-    const scripted = { ...emptyInput(), moveTarget: { x: trigger.x, z: trigger.z } };
-    this.start('firestation', id, inward, scripted);
-    const ff = this.world.entities.get(id); if (ff) this.place(ff, inward.x, inward.z, trigger);
+    this.start('firestation', id, door);
+    const b = this.l1.beat!; b.until = this.world.tick + 30 * TICKS;
+    // Frame the open bay itself (the run-in happens there), not the midpoint of the approach.
+    b.fx = door.x - dx / d * 2; b.fz = door.z - dz / d * 2; b.ax = door.x; b.az = door.z; b.mx = inside.x; b.mz = inside.z; b.sx = player.transform.x; b.sz = player.transform.z;
+    const ff = this.world.entities.get(id); if (ff) this.place(ff, waving.x, waving.z, trigger);
     this.present(ff, 'npc-wave-in'); this.say(id, 'firestation.firefighter');
   }
   private updateFire(t: number, skip: boolean): void {
-    const world = this.world, trigger = this.anchor('fire-bay-trigger'), ff = world.entities.get(this.l1.firefighterId ?? 0);
-    if (ff) this.present(ff, 'npc-wave-in');
-    if (world.storyLock && t > 0) world.storyLock.scripted = { ...emptyInput(), ...(t === 1 ? { moveTarget: { x: trigger.x, z: trigger.z } } : {}) };
-    if (skip) {
-      const player = world.entities.get(1)!; Object.assign(player.transform, { x: trigger.x, z: trigger.z });
-      world.physics.playerBody!.setTranslation(player.transform, true); world.spatial.set(1, trigger.x, trigger.z);
-      this.finish();
+    const world = this.world, b = this.l1.beat!, tick = world.tick, player = world.entities.get(1)!, trigger = this.anchor('fire-bay-trigger');
+    const ff = world.entities.get(this.l1.firefighterId ?? 0), corgi = [...world.entities.iterate()].find(e => e.companion);
+    const path = [{ x: b.sx ?? player.transform.x, z: b.sz ?? player.transform.z }, { x: trigger.x, z: trigger.z }, { x: b.ax, z: b.az }, { x: b.mx, z: b.mz }];
+    const lengths = path.slice(1).map((p, i) => Math.hypot(p.x - path[i].x, p.z - path[i].z)), total = lengths.reduce((a, c) => a + c, 0);
+    const at = (m: number) => { let rest = Math.max(0, Math.min(total, m)); for (let i = 0; i < lengths.length; i++) { if (rest <= lengths[i] || i === lengths.length - 1) { const k = lengths[i] ? Math.min(1, rest / lengths[i]) : 1; return { x: path[i].x + (path[i + 1].x - path[i].x) * k, z: path[i].z + (path[i + 1].z - path[i].z) * k }; } rest -= lengths[i]; } return path[path.length - 1]; };
+    const lead = 24, runTicks = lead + Math.ceil(total / 4.6 * TICKS);
+    if (skip && !b.slam) { b.start -= Math.max(0, runTicks + 20 - t); t = runTicks + 20; }
+    // The firefighter keeps waving (courier waiting) until the call has been read.
+    else if (t === lead && this.reading) { b.start++; t--; }
+    if (player.survivor) player.survivor.invulnerableUntil = tick + 30;
+    // The firefighter waves first, then turns in ahead of the courier.
+    if (ff && !ff.hidden) { if (t < runTicks - 20) this.present(ff, 'npc-wave-in'); else { ff.hidden = true; if (ff.civilian) ff.civilian.story = null; } }
+    if (t >= lead && t <= runTicks) {
+      const m = (t - lead) / TICKS * 4.6, p = at(m), q = at(m + .3);
+      this.move(player, p.x, p.z, q);
+      if (corgi && !corgi.hidden) { const c = at(m - 1.3), cq = at(m - 1); this.move(corgi, c.x, c.z, cq); }
     }
-    if (this.mission.state.steps.firestation?.status === 'completed' || t >= beat.fireTicks) this.finish();
+    if (t > runTicks && !player.hidden) { player.hidden = true; if (corgi) corgi.hidden = true; }
+    if (!b.slam && t >= runTicks + 20) {
+      b.slam = tick;
+      world.events.emit({ type: 'gate.changed', tick, id: 'fire-shutter', open: false });
+    }
+    if (b.slam) {
+      const since = tick - b.slam;
+      if (since === 40 || since === 70 || since === 95) {
+        const door = this.anchor('fire-bay-door');
+        world.events.emit({ type: 'story.thud', tick, position: { x: door.x, z: door.z } });
+      }
+      if (since === 30) this.say(0, 'firestation.caption');
+      // Fade to black once the caption has been read, then the result.
+      if (since > 30 && b.fadeAt === undefined && !this.reading) b.fadeAt = tick;
+      if (b.fadeAt !== undefined && tick >= b.fadeAt + 70) { this.mission.setState('safe', true); this.finish(); }
+    }
+  }
+  private move(e: EntitySnapshot, x: number, z: number, face: { x: number; z: number }): void {
+    this.place(e, x, z, face);
+    if (e.id === 1) { this.world.physics.playerBody!.setTranslation(e.transform, true); }
   }
 
   /** Beat 2 presentation hooks, called from the existing technician choreography. */
