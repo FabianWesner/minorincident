@@ -1,3 +1,4 @@
+import { LevelThreeBot, type LevelThreeRoute } from './bot/LevelThreeBot';
 import { missionControls } from '../sim/missions/controls';
 import { installL1Outbreak } from '../sim/outbreak/install';
 import { Driver } from './bot/Driver';
@@ -60,6 +61,7 @@ export interface SSTestApi {
   /** E06 action IDs spawn pickups; E09 vehicle.* IDs spawn drivable vehicles. Infected options include hearing fixtures. */
   spawn(defId: string, pos: { x: number; z: number }, opts?: object): number;
   /** E11 authoring/debug hooks. Spawn opts are DeviceOptions/HazardOptions or {item:string}. */
+  barricades: { intact(slotId: string): boolean; all(groupId: string): boolean; slots(): { id: number; state: import('../sim/interact/Barricades').BarricadeState }[] };
   interact: { giveItem(id: string): void; refuel(id: number, seconds: number): void; barricade(id: number, on: boolean): void; hit(id: number, amount: number, type: import('../sim/combat/Damage').DamageEvent['type']): number };
   teleport(entityId: number | 'player', pos: { x: number; z: number }): void;
   /** E04: cosmetic selection and sim entry points; weapon and mission resolution remain separate. */
@@ -68,7 +70,7 @@ export interface SSTestApi {
     present(patch: { riding?: boolean; carrying?: string | null }): void };
   setLoadout(left: string[], right: string[]): void;
   cheats: { god(on: boolean): void; infiniteCharges(on: boolean): void; killAll(): void; completeObjective(id?: string): void };
-  bot: { start(policy?: 'complete' | 'newbie' | 'idle' | 'aggressive' | 'driver'): void; stop(): void; status(): BotStatus };
+  bot: { start(policy?: 'complete' | 'newbie' | 'idle' | 'aggressive' | 'driver', options?: { route?: LevelThreeRoute }): void; stop(): void; status(): BotStatus };
   /** E02: scenario photo spots, follow, bounded shake, cinematic blend, and NDC world projection. */
   camera: { preset(name: string): void; follow(): void; shake(intensity: number): void; project(x: number, y: number, z: number): number[]; cinematic(pose: import('../render/View').CameraPose, instant?: boolean): void };
   /** E02 presentation patch: cameraShake, bloom, cheapDof, timeOfDay; idPass/occludersVisible are test probes. */
@@ -108,7 +110,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
     look: { get: () => structuredClone({ worldLook: game.view.look.values, palette: game.view.look.palette }), set: patch => game.view.setLook(patch), export: () => game.view.look.export(), reset: () => game.view.resetLook() },
-    version: '1.10.0', ready, npcs: { civilian: (role, pos, opts) => game.world.npcs!.civilians.spawn(role, pos, opts), escort: (pos, child) => game.world.npcs!.escorts.spawn(pos, child), grab: (id, attacker) => game.world.npcs!.civilians.grab(id, attacker, true), courage: amount => { for (const e of game.world.entities.iterate()) if (e.companion) game.world.npcs!.companion.hit(e, amount); }, quality: tier => game.world.npcs!.setQuality(tier),
+    version: '1.11.0', ready, npcs: { civilian: (role, pos, opts) => game.world.npcs!.civilians.spawn(role, pos, opts), escort: (pos, child) => game.world.npcs!.escorts.spawn(pos, child), grab: (id, attacker) => game.world.npcs!.civilians.grab(id, attacker, true), courage: amount => { for (const e of game.world.entities.iterate()) if (e.companion) game.world.npcs!.companion.hit(e, amount); }, quality: tier => game.world.npcs!.setQuality(tier),
       l1Outbreak: setup => { installL1Outbreak(game.world, setup); return { civilians: game.world.npcs!.civilians.outbreak!.liveCivilians() }; },
       l1Stats: () => ({ ...game.world.npcs?.civilians.outbreak?.stats, live: game.world.npcs?.civilians.outbreak?.liveCivilians() ?? 0 }) }, missions: { ...missionControls(game.world), load: (def) => { game.ui.reset(); missionControls(game.world).load(def); game.ui.loaded(); } },
     campaign: {state:()=>structuredClone(game.campaign),menu:()=>game.campaignUI.showMenu(game.saves.load()),save:()=>game.saveCampaign(),restore:save=>{if(!validateSave(save))throw new Error('Invalid campaign');game.campaign=structuredClone(save);game.applyCampaign();}},
@@ -151,6 +153,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       if (game.world.combat) return game.world.spawnDummy(id, pos, opts);
       throw new Error('Load an infected or combat scenario before spawning');
     },
+    barricades: { intact: id => game.world.barricades?.barricadeIntact(id) ?? false, all: id => game.world.barricades?.allBarricaded(id) ?? false, slots: () => game.world.entities.values().filter(e => e.barricade).map(e => ({ id: e.id, state: structuredClone(e.barricade!) })) },
     interact: {
       giveItem: id => game.world.interactables!.giveItem(id), refuel: (id, seconds) => game.world.interactables!.refuel(id, seconds),
       barricade: (id, on) => game.world.interactables!.barricade(id, on), hit: (id, amount, type) => game.world.hazards!.hit(id, amount, type),
@@ -170,7 +173,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     },
     setLoadout: (left, right) => { if (!game.world.combat) throw new Error('Load combat-arena before setting loadout'); game.world.combat.setLoadout(left, right); },
     cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) e.health.current = 0; }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
-    bot: { start: (policy) => { if (policy !== 'driver' || game.world.scenario !== 'drive-course') pending('E19', 'bot.start'); game.driver = new Driver(game.world); }, stop: () => { game.driver = null; }, status: () => ({ running: !!game.driver && !game.driver.finished, policy: game.driver ? 'driver' : null }) },
+    bot: { start: (policy, options) => { if (game.world.scenario === 'L3' && (policy === 'complete' || policy === 'newbie')) { game.driver = new LevelThreeBot(game.world, policy, options?.route); return; } if (policy !== 'driver' || game.world.scenario !== 'drive-course') pending('E19', 'bot.start'); game.driver = new Driver(game.world); }, stop: () => { game.driver = null; }, status: () => ({ running: !!game.driver && !game.driver.finished, policy: game.driver instanceof LevelThreeBot ? game.driver.policy : game.driver ? 'driver' : null }) },
     camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose, instant) => game.view.view.cinematic(pose, instant) },
     settings: { set: (patch) => { if (patch.textSize !== undefined || patch.colorblind !== undefined || patch.quality !== undefined) { game.ui.settings.patch(patch); game.ui.applySettings(); } if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.audio.set(patch); if (patch.quality !== undefined) game.setQuality(patch.quality); const quality = patch.quality !== undefined ? game.quality.tier : undefined; game.view.settings({ ...patch, quality }); const keys=['cameraShake','flashReduction','gore','quality','muted','captions','noiseRings','mono','haptics','tinnitus','bloom','cheapDof','vfx','aimAssist','textSize','colorblind'];game.campaignSettings(Object.fromEntries(Object.entries(patch).filter(([key])=>keys.includes(key))) as CampaignSettings); } },
     vfx: {

@@ -1,0 +1,1698 @@
+[
+ {
+  "slug": "xp-sol-ambulance",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:34Z",
+  "finished_at": "2026-10-05T08:07:54Z",
+  "tokens_total": 2101723,
+  "tokens_input": 2083854,
+  "tokens_cached": 1986816,
+  "tokens_output": 17869,
+  "error": null,
+  "report": {
+   "slug": "ambulance",
+   "iterations": 5,
+   "triangles": 103924,
+   "meshes": 682,
+   "glb_bytes": 2614528,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.79,
+   "matches": [
+    "White box ambulance proportions and continuous red side stripe",
+    "Blue star-of-life emblems and real-font AMBULANCE lettering",
+    "Wheel arch cut-outs, shaped tyres, steel rims, chrome grille and bumpers",
+    "Red/blue lightbar, cabinet frames, mirrored sides and rear double doors",
+    "Tinted cab glazing with seats and steering wheel; named wheel and door pivots"
+   ],
+   "gaps": [
+    "Cab and hood contours are more angular than the reference",
+    "Lamp optics, medical serpent and small hardware are simplified",
+    "Studio paint and metal response differs from the reference lighting"
+   ],
+   "notes": "Completed four Cycles compare/fix rounds plus browser correction; final GLB passed WebGPU and WebGL2 with no console errors."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186914.322829,
+    "waited_s": 35.3,
+    "ran_s": 16.8,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/ambulance/sol/renders/review1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187015.4358752,
+    "waited_s": 12.6,
+    "ran_s": 14.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/ambulance/sol/renders/review2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187102.15201,
+    "waited_s": 20.4,
+    "ran_s": 27.8,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/ambulance/sol/renders/review3.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187224.5063272,
+    "waited_s": 33.3,
+    "ran_s": 28.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/ambulance/sol/renders/review4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187349.419738,
+    "waited_s": 17.1,
+    "ran_s": 20.7,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/ambulance/sol/renders/review5.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/ambulance/sol/model.glb",
+     "--blend",
+     "experiment/ambulance/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187463.4430048,
+    "waited_s": 21.2,
+    "ran_s": 58.7,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/ambulance/sol/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--glb",
+     "experiment/ambulance/sol/model.glb",
+     "--blend",
+     "experiment/ambulance/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187596.203218,
+    "waited_s": 0.0,
+    "ran_s": 13.1,
+    "render": false,
+    "exit": 0,
+    "args": [
+     "--",
+     "--glb",
+     "experiment/ambulance/sol/model.glb",
+     "--blend",
+     "experiment/ambulance/sol/model.blend"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-sol-bus-stop",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:34Z",
+  "finished_at": "2026-10-05T08:09:13Z",
+  "tokens_total": 2018511,
+  "tokens_input": 2001659,
+  "tokens_cached": 1941120,
+  "tokens_output": 16852,
+  "error": null,
+  "report": {
+   "slug": "bus-stop",
+   "iterations": 5,
+   "triangles": 40104,
+   "meshes": 142,
+   "glb_bytes": 1571800,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.81,
+   "matches": [
+    "Purple barrel canopy with five raised ribs and riveted fascia",
+    "Open steel shelter with tapered post feet and rear rails",
+    "Orange slatted bench with curved cast supports and fasteners",
+    "STILL HERE TOGETHER slogan, cut-out house icon and opposite map panel",
+    "Both sides and rear modeled with named assembly groups"
+   ],
+   "gaps": [
+    "Street map is an approximation of the reference artwork",
+    "Paint wear and timber distress are less organic than the painted reference"
+   ],
+   "notes": "Script-built asset with packed baked textures, five comparison/fix rounds, and error-free WebGPU and WebGL2 checks."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186929.4163682,
+    "waited_s": 5.1,
+    "ran_s": 12.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/bus-stop/sol/renders/review-1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187006.865838,
+    "waited_s": 98.1,
+    "ran_s": 8.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/bus-stop/sol/renders/review-2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187202.4432309,
+    "waited_s": 4.1,
+    "ran_s": 14.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/bus-stop/sol/renders/review-3.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187344.513866,
+    "waited_s": 30.2,
+    "ran_s": 11.9,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/bus-stop/sol/renders/review-4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/bus-stop/sol/model.glb",
+     "--blend",
+     "experiment/bus-stop/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187515.438615,
+    "waited_s": 28.2,
+    "ran_s": 40.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/bus-stop/sol/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--glb",
+     "experiment/bus-stop/sol/model.glb",
+     "--blend",
+     "experiment/bus-stop/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187659.155736,
+    "waited_s": 0.0,
+    "ran_s": 25.1,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/bus-stop/sol/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-sol-gas-pump",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:34Z",
+  "finished_at": "2026-10-05T08:04:14Z",
+  "tokens_total": 2013643,
+  "tokens_input": 2002879,
+  "tokens_cached": 1952896,
+  "tokens_output": 10764,
+  "error": null,
+  "report": {
+   "slug": "gas-pump",
+   "iterations": 4,
+   "triangles": 69604,
+   "meshes": 147,
+   "glb_bytes": 1589380,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.79,
+   "matches": [
+    "Rounded red cabinet and tapered cast base",
+    "Raised faceted star on double-sided ivory globe",
+    "Recessed mechanical counters with real-font numerals",
+    "Cream access door, chrome trim, screws and grille badge",
+    "Hanging rubber hose and separate metal nozzle assembly",
+    "Modeled rear meter and named assembly groups"
+   ],
+   "gaps": [
+    "Wear is more uniform and less mottled than the reference",
+    "Nozzle is slightly more angular than the reference",
+    "Rear face has less weathering than the front"
+   ],
+   "notes": "Four render refinement rounds completed; both browser backends passed without errors, with standard and fitted captures saved."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186845.11877,
+    "waited_s": 0.5,
+    "ran_s": 1.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/sol/renders/review1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186866.383088,
+    "waited_s": 3.5,
+    "ran_s": 17.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/sol/renders/review1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186919.673532,
+    "waited_s": 2.5,
+    "ran_s": 20.1,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/sol/renders/review2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186985.836141,
+    "waited_s": 48.0,
+    "ran_s": 28.9,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/sol/renders/review3.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187124.556673,
+    "waited_s": 25.9,
+    "ran_s": 40.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/gas-pump/sol/renders/review4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187229.843709,
+    "waited_s": 56.6,
+    "ran_s": 55.4,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--glb",
+     "experiment/gas-pump/sol/model.glb",
+     "--blend",
+     "experiment/gas-pump/sol/model.blend",
+     "--render",
+     "experiment/gas-pump/sol/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-sol-jukebox",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:48Z",
+  "finished_at": "2026-10-05T08:07:44Z",
+  "tokens_total": 1743875,
+  "tokens_input": 1727820,
+  "tokens_cached": 1663232,
+  "tokens_output": 16055,
+  "error": null,
+  "report": {
+   "slug": "jukebox",
+   "iterations": 4,
+   "triangles": 108420,
+   "meshes": 270,
+   "glb_bytes": 3732128,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.8,
+   "matches": [
+    "Arched walnut cabinet and ruby crown",
+    "Double illuminated upper arch and lower U-shaped lighting",
+    "Song-card selector with six ruby buttons",
+    "Nickel diamond fretwork, brass woven grille and scroll ornaments",
+    "Finished sides, rear service panel and brass feet"
+   ],
+   "gaps": [
+    "Fine crown and grille ornamentation simplified",
+    "Reference ageing and glass reflections approximated",
+    "Neon appears less saturated in realtime lighting"
+   ],
+   "notes": "Four comparison rounds completed, with 266 Blender mesh objects producing 270 exported meshes and error-free checks on both backends."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186963.8632221,
+    "waited_s": 17.2,
+    "ran_s": 22.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/jukebox/sol/renders/review1.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791187049.7509382,
+    "waited_s": 13.1,
+    "ran_s": 20.4,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/jukebox/sol/renders/review2.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791187181.0295339,
+    "waited_s": 35.8,
+    "ran_s": 18.8,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/jukebox/sol/renders/review3.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791187341.30164,
+    "waited_s": 0.5,
+    "ran_s": 32.9,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/jukebox/sol/renders/review4.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24",
+     "--glb",
+     "experiment/jukebox/sol/model.glb",
+     "--blend",
+     "experiment/jukebox/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187496.001222,
+    "waited_s": 31.8,
+    "ran_s": 66.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/jukebox/sol/renders/hero.png",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--samples",
+     "96",
+     "--glb",
+     "experiment/jukebox/sol/model.glb",
+     "--blend",
+     "experiment/jukebox/sol/model.blend"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-sol-light-tower",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:34Z",
+  "finished_at": "2026-10-05T08:08:22Z",
+  "tokens_total": 1735583,
+  "tokens_input": 1721381,
+  "tokens_cached": 1662208,
+  "tokens_output": 14202,
+  "error": null,
+  "report": {
+   "slug": "light-tower",
+   "iterations": 5,
+   "triangles": 96980,
+   "meshes": 544,
+   "glb_bytes": 2000524,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.79,
+   "matches": [
+    "Yellow chamfered generator cabinet with recessed service vents and controls",
+    "Four treaded tyres, metal rims, bumpers and rear fenders",
+    "Offset telescopic mast with collars, lock knob and cable",
+    "Two deep independently aimed emissive floodlights",
+    "Fuel cap, rounded carrying handle and mirrored service panels"
+   ],
+   "gaps": [
+    "Reference weathering and subtle surface irregularities are omitted",
+    "Lamp housing contours and tyre tread patterns are simplified"
+   ],
+   "notes": "Five review comparisons completed; final 1600x900 hero and GLB verified on WebGPU and WebGL2 with no errors."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186884.2227352,
+    "waited_s": 3.5,
+    "ran_s": 11.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/sol/renders/review1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186951.932023,
+    "waited_s": 2.0,
+    "ran_s": 14.9,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/sol/renders/review2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187041.1632278,
+    "waited_s": 20.2,
+    "ran_s": 18.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/sol/renders/review3.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187154.879497,
+    "waited_s": 17.2,
+    "ran_s": 12.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/sol/renders/review4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/light-tower/sol/model.glb",
+     "--blend",
+     "experiment/light-tower/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187249.9784908,
+    "waited_s": 19.7,
+    "ran_s": 17.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/sol/renders/review5.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/light-tower/sol/model.glb",
+     "--blend",
+     "experiment/light-tower/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187380.143362,
+    "waited_s": 6.6,
+    "ran_s": 33.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/sol/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--glb",
+     "experiment/light-tower/sol/model.glb",
+     "--blend",
+     "experiment/light-tower/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187593.218863,
+    "waited_s": 0.0,
+    "ran_s": 27.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/light-tower/sol/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--glb",
+     "experiment/light-tower/sol/model.glb",
+     "--blend",
+     "experiment/light-tower/sol/model.blend"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-sol-pickup-truck",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:34Z",
+  "finished_at": "2026-10-05T08:09:02Z",
+  "tokens_total": 2010438,
+  "tokens_input": 1993911,
+  "tokens_cached": 1929216,
+  "tokens_output": 16527,
+  "error": null,
+  "report": {
+   "slug": "pickup-truck",
+   "iterations": 5,
+   "triangles": 149447,
+   "meshes": 253,
+   "glb_bytes": 3234708,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.74,
+   "matches": [
+    "Red and ivory single-cab pickup proportions",
+    "Open ribbed bed and detailed tailgate",
+    "Chrome grille, diamond badge, warm headlights and registration plate",
+    "Perforated steel rims, chunky tyres and separate wheel pivots",
+    "Both sides modelled with door handles, mirrors, glazing and interior"
+   ],
+   "gaps": [
+    "Body and wheel arches are more angular and circular than the reference",
+    "Interior and lamp optics are simplified",
+    "Clean finish omits reference wear and surface detail"
+   ],
+   "notes": "Five comparison rounds completed; final Cycles hero and both Three.js backends verified below the 150k triangle budget."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186917.4848268,
+    "waited_s": 4.0,
+    "ran_s": 21.7,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/sol/renders/review1.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791186989.072181,
+    "waited_s": 14.7,
+    "ran_s": 24.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/sol/renders/review2.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791187095.772933,
+    "waited_s": 0.0,
+    "ran_s": 21.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/sol/renders/review3.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791187203.979689,
+    "waited_s": 16.7,
+    "ran_s": 37.1,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/sol/renders/review4.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24",
+     "--glb",
+     "experiment/pickup-truck/sol/model.glb",
+     "--blend",
+     "experiment/pickup-truck/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187334.5501702,
+    "waited_s": 14.6,
+    "ran_s": 110.4,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/sol/renders/review5.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24",
+     "--glb",
+     "experiment/pickup-truck/sol/model.glb",
+     "--blend",
+     "experiment/pickup-truck/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187545.5738811,
+    "waited_s": 38.9,
+    "ran_s": 99.1,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/pickup-truck/sol/renders/hero.png",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--samples",
+     "96",
+     "--glb",
+     "experiment/pickup-truck/sol/model.glb",
+     "--blend",
+     "experiment/pickup-truck/sol/model.blend"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-sol-police-car",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:40Z",
+  "finished_at": "2026-10-05T08:07:15Z",
+  "tokens_total": 2816434,
+  "tokens_input": 2800432,
+  "tokens_cached": 2732416,
+  "tokens_output": 16002,
+  "error": null,
+  "report": {
+   "slug": "police-car",
+   "iterations": 5,
+   "triangles": 83438,
+   "meshes": 456,
+   "glb_bytes": 2354816,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.68,
+   "matches": [
+    "Black hood, trunk and fenders with white roof and doors",
+    "Four-door sedan silhouette and bilateral POLICE/911 lettering",
+    "Push bumper, spotlight, mirrors, antenna and red-blue LED lightbar",
+    "Cut-out steel-wheel vents, treaded tyres and named wheel pivots",
+    "Both sides and rear detailed with lamps, plates and handles"
+   ],
+   "gaps": [
+    "Body and cabin surfaces are more angular than the reference",
+    "Badge ornament and grille pattern are simplified",
+    "Tinted glazing reveals only a simplified interior"
+   ],
+   "notes": "Built entirely with bpy, refined through five render comparisons, and validated in both Three.js backends; hero rendered at 1600x900 with 96 samples."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186894.47597,
+    "waited_s": 0.0,
+    "ran_s": 15.9,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/sol/renders/review1.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791186964.5989099,
+    "waited_s": 29.8,
+    "ran_s": 14.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/sol/renders/review2.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791187048.5348191,
+    "waited_s": 5.1,
+    "ran_s": 14.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/sol/renders/review3.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791187125.629753,
+    "waited_s": 66.3,
+    "ran_s": 14.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/sol/renders/review4.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791187272.735688,
+    "waited_s": 58.6,
+    "ran_s": 17.8,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/sol/renders/review5.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24",
+     "--glb",
+     "experiment/police-car/sol/model.glb",
+     "--blend",
+     "experiment/police-car/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187368.875184,
+    "waited_s": 51.5,
+    "ran_s": 65.8,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/sol/renders/hero.png",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--samples",
+     "96",
+     "--glb",
+     "experiment/police-car/sol/model.glb",
+     "--blend",
+     "experiment/police-car/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187499.0108669,
+    "waited_s": 29.8,
+    "ran_s": 59.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/police-car/sol/renders/hero.png",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--samples",
+     "96",
+     "--glb",
+     "experiment/police-car/sol/model.glb",
+     "--blend",
+     "experiment/police-car/sol/model.blend"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-sol-portable-toilet",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:34Z",
+  "finished_at": "2026-10-05T08:08:37Z",
+  "tokens_total": 1752276,
+  "tokens_input": 1739589,
+  "tokens_cached": 1680768,
+  "tokens_output": 12687,
+  "error": null,
+  "report": {
+   "slug": "portable-toilet",
+   "iterations": 5,
+   "triangles": 32828,
+   "meshes": 214,
+   "glb_bytes": 733084,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.83,
+   "matches": [
+    "Cobalt molded shell and salmon arched roof with three ribs",
+    "Raised arched door, restroom pictograms, bronze hinges and recessed handle",
+    "Mirrored recessed side panels and pallet forklift cutouts"
+   ],
+   "gaps": [
+    "Clean materials omit reference scratches and mottled surface wear",
+    "Some molded contours and pictogram proportions are simplified"
+   ],
+   "notes": "Built entirely with bpy, with a hinge-pivot door assembly, five comparison rounds and verified Cycles and Three.js renders."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186859.759101,
+    "waited_s": 0.0,
+    "ran_s": 9.9,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/portable-toilet/sol/renders/review-1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186913.562155,
+    "waited_s": 28.8,
+    "ran_s": 11.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/portable-toilet/sol/renders/review-2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187023.990953,
+    "waited_s": 18.7,
+    "ran_s": 11.8,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/portable-toilet/sol/renders/review-3.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187123.510775,
+    "waited_s": 11.2,
+    "ran_s": 15.8,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/portable-toilet/sol/renders/review-4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187216.134315,
+    "waited_s": 81.7,
+    "ran_s": 17.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/portable-toilet/sol/renders/review-5.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/portable-toilet/sol/model.glb",
+     "--blend",
+     "experiment/portable-toilet/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187487.1841521,
+    "waited_s": 0.0,
+    "ran_s": 40.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/portable-toilet/sol/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--glb",
+     "experiment/portable-toilet/sol/model.glb",
+     "--blend",
+     "experiment/portable-toilet/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187645.492361,
+    "waited_s": 0.0,
+    "ran_s": 2.3,
+    "render": false,
+    "exit": 0,
+    "args": [
+     "--",
+     "--glb",
+     "experiment/portable-toilet/sol/model.glb",
+     "--blend",
+     "experiment/portable-toilet/sol/model.blend"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-sol-school-bus",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:34Z",
+  "finished_at": "2026-10-05T08:02:45Z",
+  "tokens_total": 1494554,
+  "tokens_input": 1483857,
+  "tokens_cached": 1392128,
+  "tokens_output": 10697,
+  "error": null,
+  "report": {
+   "slug": "school-bus",
+   "iterations": 4,
+   "triangles": 108552,
+   "meshes": 519,
+   "glb_bytes": 3060128,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.82,
+   "matches": [
+    "Yellow rounded roof and compact bus silhouette",
+    "Five framed side windows and split folding doors",
+    "Raised black rub rails and real-font SCHOOL BUS lettering",
+    "Octagonal STOP paddle, warning lamps, mirrors and detailed steel wheels",
+    "Both sides and rear emergency door modelled"
+   ],
+   "gaps": [
+    "Reference wear and chipped paint omitted",
+    "Bonnet and front fender curves are simplified",
+    "Opaque tinted windows omit interior seating"
+   ],
+   "notes": "Four compare/fix rounds completed; GLB validated on both Three.js backends with no console errors."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186916.730966,
+    "waited_s": 6.1,
+    "ran_s": 11.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/school-bus/sol/renders/review1.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791186979.552767,
+    "waited_s": 30.3,
+    "ran_s": 13.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/school-bus/sol/renders/review2.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791187072.6543539,
+    "waited_s": 18.2,
+    "ran_s": 16.1,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/school-bus/sol/renders/review3.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791187154.9355059,
+    "waited_s": 26.8,
+    "ran_s": 10.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/school-bus/sol/renders/review4.png",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--samples",
+     "24"
+    ]
+   },
+   {
+    "start": 1791187240.4695108,
+    "waited_s": 0.0,
+    "ran_s": 9.9,
+    "render": false,
+    "exit": 0,
+    "args": [
+     "--",
+     "--glb",
+     "experiment/school-bus/sol/model.glb",
+     "--blend",
+     "experiment/school-bus/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187268.224787,
+    "waited_s": 14.1,
+    "ran_s": 34.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/school-bus/sol/renders/hero.png",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--samples",
+     "96"
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "xp-sol-vending-machine",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "status": "done",
+  "started_at": "2026-10-05T07:51:34Z",
+  "finished_at": "2026-10-05T08:10:19Z",
+  "tokens_total": 2597545,
+  "tokens_input": 2580016,
+  "tokens_cached": 2446080,
+  "tokens_output": 17529,
+  "error": null,
+  "report": {
+   "slug": "vending-machine",
+   "iterations": 4,
+   "triangles": 65816,
+   "meshes": 147,
+   "glb_bytes": 2621440,
+   "webgpu_ok": true,
+   "webgl2_ok": true,
+   "self_fidelity_0_1": 0.84,
+   "matches": [
+    "Blue-violet rounded cabinet with red recessed front",
+    "Reference-traced Fizz branding",
+    "Eight detailed cans in two rows with four selection buttons",
+    "Recessed delivery flap, screws, feet and removable top lid",
+    "Finished rear and sides with vents and geometry-based wear"
+   ],
+   "gaps": [
+    "Surface wear is simpler and cleaner than the reference",
+    "Can splash artwork is approximated",
+    "Lighting and paint response differ between studio and game viewer"
+   ],
+   "notes": "Self-contained bpy build with four refinement rounds, a 96-sample hero render and error-free checks in both Three.js backends."
+  },
+  "blender_calls": [
+   {
+    "start": 1791186897.110997,
+    "waited_s": 2.0,
+    "ran_s": 15.3,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/sol/renders/review1.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186962.0854762,
+    "waited_s": 2.0,
+    "ran_s": 2.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/sol/renders/review2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791186996.414722,
+    "waited_s": 26.8,
+    "ran_s": 17.7,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/sol/renders/review2.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187163.028227,
+    "waited_s": 21.7,
+    "ran_s": 18.9,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/sol/renders/review3.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187215.9660559,
+    "waited_s": 80.3,
+    "ran_s": 1.6,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/sol/renders/review3.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187318.1511402,
+    "waited_s": 8.6,
+    "ran_s": 17.5,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/sol/renders/review3.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540"
+    ]
+   },
+   {
+    "start": 1791187433.552784,
+    "waited_s": 51.0,
+    "ran_s": 44.2,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/sol/renders/review4.png",
+     "--view",
+     "ref",
+     "--samples",
+     "24",
+     "--width",
+     "960",
+     "--height",
+     "540",
+     "--glb",
+     "experiment/vending-machine/sol/model.glb",
+     "--blend",
+     "experiment/vending-machine/sol/model.blend"
+    ]
+   },
+   {
+    "start": 1791187677.072511,
+    "waited_s": 1.5,
+    "ran_s": 42.0,
+    "render": true,
+    "exit": 0,
+    "args": [
+     "--",
+     "--render",
+     "experiment/vending-machine/sol/renders/hero.png",
+     "--view",
+     "ref",
+     "--samples",
+     "96",
+     "--width",
+     "1600",
+     "--height",
+     "900",
+     "--glb",
+     "experiment/vending-machine/sol/model.glb",
+     "--blend",
+     "experiment/vending-machine/sol/model.blend"
+    ]
+   }
+  ]
+ }
+]

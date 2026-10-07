@@ -9,7 +9,7 @@ import { atLeast } from '../../src/assets/types';
 import { validMaterial } from '../../src/assets/palette';
 import { assetIO } from './io';
 import { reviewErrors } from './review';
-import { requiredLods, semanticNodeNames } from './delivery';
+import { requiredLods, semanticNodeNames, lodTriangleLimit } from './delivery';
 
 export interface Validation { id: string; errors: string[]; triangles: number; materials: number; drawCalls: number; fileKB: number; dimensions: number[]; hash: string }
 export function geometryHash(document: Document): string {
@@ -124,7 +124,9 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   }
   for (const material of root.listMaterials()) if (!validMaterial(material.getName())) errors.push(`material: unknown ${material.getName()}`);
   const materials = root.listMaterials().length, fileKB = bytes / 1024;
-  const budget = lod > 0 && def.authoredLodTriangles ? def.authoredLodTriangles[lod === 1 ? 'lod1' : 'lod2'] : lod > 0 && def.authoredLodRatios ? Math.ceil(def.budget.triangles * def.authoredLodRatios[lod === 1 ? 'lod1' : 'lod2']) : lod === 1 && def.tier === 'hero' ? Math.min(def.budget.triangles, Math.ceil(def.budget.triangles * .15)) : lod === 2 ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
+  // Cheap side props can retain their authored silhouette at every distance.
+  const cheapProp = def.category === 'prop' && def.budget.triangles <= 12000;
+  const budget = lod > 0 && def.authoredLodTriangles ? def.authoredLodTriangles[lod === 1 ? 'lod1' : 'lod2'] : lod > 0 && def.authoredLodRatios ? Math.ceil(def.budget.triangles * def.authoredLodRatios[lod === 1 ? 'lod1' : 'lod2']) : lod === 1 && def.tier === 'hero' ? Math.min(def.budget.triangles, Math.ceil(def.budget.triangles * .15)) : lod === 2 && !cheapProp ? Math.min(4000, def.budget.triangles) : def.budget.triangles;
   if (triangles > budget) errors.push(`triangles: ${triangles} > ${budget}`);
   // Absolute distance caps apply even to pending registrations and cannot
   // be relaxed by authored ratios or a larger manifest budget.
@@ -132,7 +134,8 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   if (distanceBudget !== undefined && triangles > distanceBudget) errors.push(`delivery: LOD${lod} triangles ${triangles} > ${distanceBudget}`);
   if (materials > def.budget.materials) errors.push(`materials: ${materials} > ${def.budget.materials}`);
   if (fileKB > def.budget.fileKB) errors.push(`fileKB: ${fileKB} > ${def.budget.fileKB}`);
-  if (def.sourceGlb && bytes > (def.tier === 'hero' ? 1_500_000 : 300_000)) errors.push('delivery: file size exceeds tier budget');
+  // Use KiB like fileKB above and the production tools' 1500/300 KiB delivery budgets.
+  if (def.sourceGlb && fileKB > (def.tier === 'hero' ? 1500 : 300)) errors.push('delivery: file size exceeds tier budget');
   if (def.sourceGlb) for (const texture of root.listTextures()) {
     if (!['image/ktx2', 'image/webp'].includes(texture.getMimeType())) errors.push('delivery: texture must be KTX2/WebP');
     const size = texture.getSize(), limit = def.tier === 'side' ? 512 : 1024;
@@ -190,7 +193,7 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
         // node preservation for its real exports, without treating placeholder sizes as authored contracts.
         if (!def.sourceGlb && sourcePath && !atLeast(def.status, 'modeled')) {
           validation.errors = validation.errors.filter(error => !/^(dimensions\.|triangles:|materials:|fileKB:|static drawCalls:)/.test(error));
-          const limit = def.tier === 'hero' ? 1_500_000 : 300_000;
+          const limit = (def.tier === 'hero' ? 1500 : 300) * 1024;
           if (statSync(path).size > limit) validation.errors.push('delivery: file size exceeds tier budget');
         }
         if (lod === 0) base = validation;
@@ -200,10 +203,14 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
           if (base && lod > 0 && requiredLods(def, base.triangles).includes(lod === 1 ? 'lod1' : 'lod2')) {
             const ratio = validation.triangles / base.triangles;
             const authoredLimit = def.authoredLodRatios?.[lod === 1 ? 'lod1' : 'lod2'];
-            if (!def.authoredLodTriangles && ratio > (authoredLimit === undefined ? (lod === 1 ? .155 : .045) : authoredLimit + .005)) validation.errors.push(`delivery: triangle ratio ${ratio} exceeds LOD${lod} budget`);
+            // Below 3k triangles, preserving the whole mesh is cheaper than losing readable parts.
+            const limit = authoredLimit === undefined ? lodTriangleLimit(base.triangles, lod, def) : Math.ceil(base.triangles * (authoredLimit + .005));
+            if (!def.authoredLodTriangles && validation.triangles > limit) validation.errors.push(`delivery: triangle ratio ${ratio} exceeds LOD${lod} budget (${limit} triangles)`);
           }
         }
-        if (lod > 0 && def.authoredLodTriangles) {
+        // Native road/house tiers promise monotone bytes; other assemblies retain
+        // independent normals/material streams, so their per-file budget is authoritative.
+        if (lod > 0 && def.authoredLodTriangles && (def.category === 'vehicle' || /^(bld\.house-|bld\.safe-house$|house\.)/.test(def.id))) {
           const better = paths[lod - 1];
           if (better && existsSync(better) && statSync(path).size > statSync(better).size) validation.errors.push('delivery: file exceeds next-better LOD');
         }

@@ -14,6 +14,9 @@ export function attachErrorGuard(page: Page): { errors: string[]; dispose(): voi
 }
 export const test = base.extend<{ errorGuard: void }>({
   errorGuard: [async ({ page }, use) => {
+    if (process.env.E2E_SKIN !== undefined) await page.addInitScript(skin => {
+      const url = new URL(location.href); if (!url.searchParams.has('skin')) { url.searchParams.set('skin', skin); history.replaceState(null, '', url); }
+    }, process.env.E2E_SKIN);
     const guard = attachErrorGuard(page);
     await use(); guard.dispose();
     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);

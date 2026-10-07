@@ -66,7 +66,7 @@ describe('L1 v2 bicycle', () => {
     world.setInput({ moveTarget: anchor('parcel-counter') }); step(180);
     expect(bike().riding).toBe(false);
     const parked = { ...bike().entity!.transform };
-    for (const along of [-.8, 0, .8]) expect(world.infected!.nav.clear(parked.x + Math.cos(parked.yaw) * along, parked.z - Math.sin(parked.yaw) * along, .4)).toBe(true);
+    expect(bike().clearAt(parked.x, parked.z, -parked.yaw)).toBe(true);
     expect(Math.hypot(parked.x - depot.x, parked.z - depot.z)).toBeLessThan(1.5);
     // The story owns the hand-over; press interact to remount beside the parked frame with the parcel.
     world.entities.get(1)!.survivor!.carrying = 'parcel';
@@ -82,7 +82,9 @@ describe('L1 v2 bicycle', () => {
     expect(world.entities.get(1)!.survivor!.animation).not.toBe('attack');
   });
   test('T-E19-16e @E19 @E19-AC16 riding feel: no pivoting on the spot, the turn radius grows with speed, speed ramps and coasts', async () => {
-    await grove(); const e = bike().entity!; Object.assign(e.transform, { x: 0, z: 0 }); const start = { x: e.transform.x, z: e.transform.z }; teleport({ x: start.x + 1, z: start.z }); step(30); expect(bike().riding).toBe(true);
+    // Measure steering on an open fixture: a faster turn must not run into Grove's props.
+    world = new SimWorld(); await world.init(); world.loadScenario('survivor', 1);
+    bike().spawn({ x: 1, z: 0 }); teleport({ x: 2, z: 0 }); press(); expect(bike().riding).toBe(true);
     const b = () => bike().entity!.bicycle!, h0 = b().heading;
     world.setInput({ move: { x: -Math.cos(h0), z: -Math.sin(h0) } }); step(12);
     expect(Math.abs(b().heading - h0)).toBeLessThan(.25); // asked to reverse from a standstill: no instant pivot
@@ -91,6 +93,20 @@ describe('L1 v2 bicycle', () => {
     const radius = (steps: number) => { world.setInput({ move: { x: Math.cos(b().heading), z: Math.sin(b().heading) } }); step(steps); const h = b().heading; world.setInput({ move: { x: Math.cos(h + 1), z: Math.sin(h + 1) } }); step(8); return b().speed / Math.max(1e-3, Math.abs(b().heading - h) / (8 / 60)); };
     const slow = radius(10), fast = radius(150); expect(fast).toBeGreaterThan(slow);
     world.setInput({ move: { x: 0, z: 0 } }); const v = b().speed; step(30); expect(b().speed).toBeLessThan(v); expect(b().speed).toBeGreaterThan(v - 3.5); // coasts gently
+  });
+  test('T-E09-bike-lean @E09 cargo frame leans into both turns and returns upright when coasting to rest', async () => {
+    // Open fixture: the lean turns must not run into Grove's props.
+    world = new SimWorld(); await world.init(); world.loadScenario('survivor', 1);
+    bike().spawn({ x: 1, z: 0 }); teleport({ x: 2, z: 0 }); press(); expect(bike().riding).toBe(true);
+    const b = bike().entity!.bicycle!;
+    for (const direction of [1, -1]) {
+      world.setInput({ move: { x: Math.cos(b.heading), z: Math.sin(b.heading) } }); step(120);
+      for (let i = 0; i < 30; i++) { world.setInput({ move: { x: Math.cos(b.heading + direction), z: Math.sin(b.heading + direction) } }); step(1); }
+      expect((b.lean ?? 0) * direction).toBeGreaterThan(.05);
+      expect(Math.abs(b.lean ?? 0)).toBeLessThanOrEqual(.32);
+    }
+    world.setInput({ move: { x: 0, z: 0 } }); step(240);
+    expect(b.speed).toBe(0); expect(Math.abs(b.lean ?? 0)).toBeLessThan(.01);
   });
   test('T-E19-16c @E19 @E19-AC16 riding into the facility forecourt auto-dismounts at the edge; no mounting inside', async () => {
     await grove();

@@ -7,3 +7,7 @@ Parts: sculpted shell with cut wheel wells, white four-door cabin, separate wind
 Four door origins sit at front hinges; wheel origins sit at axle centres. Lamp, searchlight, and siren nodes have local joint origins. Static meshes join by material; moving assemblies join only within their parent. Explicit LOD builds retain these groups and sockets. Every panel and lettering layer is separated from the underlying skin by at least 3 mm. No image textures or real brands.
 
 Final full silhouette bounds, including mirrors/push bar/aerial: 5.292 × 2.483 × 2.500 m. The script centres these bounds on X/Y and lifts the tyre contact to z=0. Explicit LOD1 is 7,872 triangles (10.5%); LOD2 is 2,488 triangles (3.3%). Both retain closed major forms, raised POLICE lettering, windows, wheels, lamps and motion pivots.
+
+## Art registration (2026-10-07)
+
+Measured delivered bounds (X/Y/Z, metres): 5.292, 2.4826, 2.4999. Source, named pivots/sockets, palette, front marker and delivered tiers are validated by the production validator. Runtime status is integrated. Five-angle LOD contact evidence: `test-results/art-register/veh.police-suv/lod-contact.png`.

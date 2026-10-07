@@ -1,5 +1,8 @@
 // Adapted from folio-2025 Rendering.js / Viewport.js by Bruno Simon (MIT), commit 41046b5.
-import { NodeBuilder, WebGPURenderer } from 'three/webgpu';
+import { NodeBuilder, WebGPURenderer, type Object3D, type Camera } from 'three/webgpu';
+
+import { worldAssets } from '../assets/worldDefinitions';
+import { installTextureRanges } from './TextureRanges';
 
 // Load lane: three emits small instance-matrix arrays (and bone/range arrays) as per-object uniform
 // buffers named after the node id ('NodeBuffer_<id>'), so every InstancedMesh below the uniform limit
@@ -10,8 +13,45 @@ import { NodeBuilder, WebGPURenderer } from 'three/webgpu';
 
 /** Automatic WebGPU → WebGL2 fallback; backend is read after renderer.init(), not inferred from navigator. */
 export class Renderer extends WebGPURenderer {
+  /** Opt-in submitted geometry breakdown, including actual shadow passes (not estimates). */
+  profile: Record<string, { drawCalls: number; triangles: number }> | null = null;
+  profileAssets: Record<string, { drawCalls: number; triangles: number }> | null = null;
+  private readonly categories = new WeakMap<Object3D, string>();
+  private readonly assets = new WeakMap<Object3D, string>();
+  override async init(): Promise<this> {
+    await super.init();
+    installTextureRanges(this.backend);
+    if (!this.profile) return this;
+    const backend = this.backend as unknown as { draw(object: { object: Object3D; camera: Camera }, info: Renderer['info']): void };
+    const draw = backend.draw.bind(backend);
+    backend.draw = (renderObject, info) => {
+      const calls = info.render.drawCalls, triangles = info.render.triangles;
+      draw(renderObject, info);
+      let category = this.categories.get(renderObject.object);
+      if (!category) {
+        category = 'other';
+        for (let node: Object3D | null = renderObject.object; node; node = node.parent) {
+          if (node.name === 'infected-crowd' || node.name === 'civilian-crowd') { category = 'crowd'; break; }
+          if (node.name.startsWith('inst:')) { const id = node.name.slice(5); this.assets.set(renderObject.object, id); category = worldAssets[id]?.category === 'building' ? 'buildings' : 'props'; break; }
+        }
+        this.categories.set(renderObject.object, category);
+      }
+      if (renderObject.camera !== this.profileCamera) category = 'shadows';
+      const total = this.profile![category] ??= { drawCalls: 0, triangles: 0 };
+      total.drawCalls += info.render.drawCalls - calls; total.triangles += info.render.triangles - triangles;
+      const asset = this.assets.get(renderObject.object);
+      if (asset) {
+        const total = this.profileAssets![`${category === 'shadows' ? 'shadow' : 'view'}:${asset}`] ??= { drawCalls: 0, triangles: 0 };
+        total.drawCalls += info.render.drawCalls - calls; total.triangles += info.render.triangles - triangles;
+      }
+    };
+    return this;
+  }
+  private profileCamera: Camera | null = null;
+  beginProfile(camera: Camera): void { if (this.profile) { this.profile = {}; this.profileAssets = {}; this.profileCamera = camera; } }
   constructor(params: URLSearchParams, canvas?: HTMLCanvasElement) {
     super({ antialias: true, forceWebGL: params.get('renderer') === 'webgl', ...(canvas ? { canvas } : {}) });
+    if (params.has('profile')) { this.profile = {}; this.profileAssets = {}; }
     // Game owns recovery and pauses before another draw can reach the lost backend.
     const report = this.onDeviceLost;
     this.onDeviceLost = info => { if (info.api !== 'WebGL') report.call(this, info); };

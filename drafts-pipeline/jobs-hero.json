@@ -1,0 +1,179 @@
+[
+ {
+  "slug": "hero-crop",
+  "prompt_file": "briefs/hero-crop.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1500
+ },
+ {
+  "slug": "hero-up-char_survivor-female",
+  "prompt_file": "briefs/hero-up-char.survivor-female.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "deps": [
+   "hero-crop"
+  ],
+  "max_seconds": 1500
+ },
+ {
+  "slug": "hero-up-char_survivor-male",
+  "prompt_file": "briefs/hero-up-char.survivor-male.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "deps": [
+   "hero-crop"
+  ],
+  "max_seconds": 1500
+ },
+ {
+  "slug": "hero-up-char_corgi",
+  "prompt_file": "briefs/hero-up-char.corgi.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "deps": [
+   "hero-crop"
+  ],
+  "max_seconds": 1500
+ },
+ {
+  "slug": "hero-up-inf_common-worker",
+  "prompt_file": "briefs/hero-up-inf.common-worker.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "deps": [
+   "hero-crop"
+  ],
+  "max_seconds": 1500
+ },
+ {
+  "slug": "hero-up-inf_baseball-cap",
+  "prompt_file": "briefs/hero-up-inf.baseball-cap.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "deps": [
+   "hero-crop"
+  ],
+  "max_seconds": 1500
+ },
+ {
+  "slug": "hero-up-inf_schoolgirl",
+  "prompt_file": "briefs/hero-up-inf.schoolgirl.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "deps": [
+   "hero-crop"
+  ],
+  "max_seconds": 1500
+ },
+ {
+  "slug": "hero-up-inf_brute",
+  "prompt_file": "briefs/hero-up-inf.brute.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "deps": [
+   "hero-crop"
+  ],
+  "max_seconds": 1500
+ },
+ {
+  "slug": "hero-build-char_survivor-female",
+  "prompt_file": "briefs/hero-build-char.survivor-female.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "hero-up-char_survivor-female"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "hero-build-char_survivor-male",
+  "prompt_file": "briefs/hero-build-char.survivor-male.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "hero-up-char_survivor-male"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "hero-build-char_corgi",
+  "prompt_file": "briefs/hero-build-char.corgi.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "hero-up-char_corgi"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "hero-build-inf_common-worker",
+  "prompt_file": "briefs/hero-build-inf.common-worker.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "hero-up-inf_common-worker"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "hero-build-inf_baseball-cap",
+  "prompt_file": "briefs/hero-build-inf.baseball-cap.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "hero-up-inf_baseball-cap"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "hero-build-inf_schoolgirl",
+  "prompt_file": "briefs/hero-build-inf.schoolgirl.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "hero-up-inf_schoolgirl"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "hero-build-inf_brute",
+  "prompt_file": "briefs/hero-build-inf.brute.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "hero-up-inf_brute"
+  ],
+  "max_seconds": 5400
+ }
+]

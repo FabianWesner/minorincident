@@ -1,0 +1,1506 @@
+{
+  "profile": "phone: 10 Mbps down / 3 Mbps up / 150 ms RTT, touch 412x915 DPR1; desktop 50 Mbps down / 10 Mbps up / 20 ms RTT, 1600x900",
+  "renderer": "automatic, WebGPU on this headless Metal host",
+  "baseline": "0f885ece, preload=0 prevents baseline speculative preload deadlock",
+  "after": "9e356544 frozen startup policy build; subsequent fixes dispose unloaded resources and preserve streamed shadows",
+  "runs": {
+    "before": [
+      {
+        "profile": "phone",
+        "cache": "cold",
+        "firstPaintMs": 1812,
+        "titleMs": 4404,
+        "playableMs": 21538,
+        "startToPlayableMs": 16967,
+        "startToBeginMs": 16814,
+        "beginToPlayableMs": 113,
+        "clickToPlayableExcludingReadingMs": 16927,
+        "firstFramesMaxMs": 18,
+        "firstFramesOver50": 0,
+        "menuLongTaskMaxMs": 0,
+        "menuInpMs": 24,
+        "requests": 336,
+        "bytes": 26650253,
+        "bootBytes": 4109666,
+        "menuBytes": 0,
+        "levelBytes": 21248397,
+        "criticalBytes": 25358063,
+        "uniqueCriticalBytes": 25358063,
+        "criticalRequests": 330,
+        "backgroundBytes": 1292190,
+        "criticalBodyBytes": 22999844,
+        "backend": "",
+        "errors": [
+          "warning Calling [RenderPassEncoder (unlabeled)].Draw with a vertex count of 0 is unusual."
+        ],
+        "loadAverage": 4.67333984375,
+        "measures": [
+          {
+            "name": "view:actors",
+            "ms": 201,
+            "at": -482
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 0,
+            "at": -281
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 100,
+            "at": -281
+          },
+          {
+            "name": "level:layouts",
+            "ms": 91,
+            "at": 3
+          },
+          {
+            "name": "level:boot-audio-wait",
+            "ms": 0,
+            "at": 94
+          },
+          {
+            "name": "level:sim",
+            "ms": 81,
+            "at": 94
+          },
+          {
+            "name": "level:view",
+            "ms": 16632,
+            "at": 175
+          },
+          {
+            "name": "view:districts+character",
+            "ms": 15496,
+            "at": 176
+          },
+          {
+            "name": "view:civilian-crowd",
+            "ms": 6327,
+            "at": 189
+          },
+          {
+            "name": "view:infected-crowd",
+            "ms": 4087,
+            "at": 191
+          },
+          {
+            "name": "view:actors",
+            "ms": 0,
+            "at": 15673
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 5,
+            "at": 15673
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 1224,
+            "at": 15677
+          },
+          {
+            "name": "L1 shader compilation",
+            "ms": 0,
+            "at": 15680
+          },
+          {
+            "name": "L1 warm-up draw",
+            "ms": 1153,
+            "at": 15680
+          },
+          {
+            "name": "L1 driver warm-up",
+            "ms": 1220,
+            "at": 15680
+          },
+          {
+            "name": "level:audio",
+            "ms": 1,
+            "at": 16807
+          },
+          {
+            "name": "L1 warm-up instanced draw",
+            "ms": 67,
+            "at": 16833
+          },
+          {
+            "name": "L1 warm-up solo draws",
+            "ms": 0,
+            "at": 16900
+          }
+        ]
+      },
+      {
+        "profile": "desktop",
+        "cache": "cold",
+        "firstPaintMs": 368,
+        "titleMs": 1192,
+        "playableMs": 7518,
+        "startToPlayableMs": 6104,
+        "startToBeginMs": 5955,
+        "beginToPlayableMs": 116,
+        "clickToPlayableExcludingReadingMs": 6071,
+        "firstFramesMaxMs": 19,
+        "firstFramesOver50": 0,
+        "menuLongTaskMaxMs": 0,
+        "menuInpMs": 32,
+        "requests": 362,
+        "bytes": 32782748,
+        "bootBytes": 4694553,
+        "menuBytes": 2998730,
+        "levelBytes": 22329098,
+        "criticalBytes": 30022381,
+        "uniqueCriticalBytes": 30022381,
+        "criticalRequests": 343,
+        "backgroundBytes": 2760367,
+        "criticalBodyBytes": 28594045,
+        "backend": "",
+        "errors": [
+          "warning Calling [RenderPassEncoder (unlabeled)].Draw with a vertex count of 0 is unusual."
+        ],
+        "loadAverage": 4.58203125,
+        "measures": [
+          {
+            "name": "view:actors",
+            "ms": 75,
+            "at": -409
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 0,
+            "at": -334
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 98,
+            "at": -334
+          },
+          {
+            "name": "level:layouts",
+            "ms": 19,
+            "at": 3
+          },
+          {
+            "name": "level:boot-audio-wait",
+            "ms": 0,
+            "at": 22
+          },
+          {
+            "name": "level:sim",
+            "ms": 79,
+            "at": 22
+          },
+          {
+            "name": "level:view",
+            "ms": 5844,
+            "at": 102
+          },
+          {
+            "name": "view:districts+character",
+            "ms": 3559,
+            "at": 102
+          },
+          {
+            "name": "view:civilian-crowd",
+            "ms": 1387,
+            "at": 116
+          },
+          {
+            "name": "view:infected-crowd",
+            "ms": 1799,
+            "at": 118
+          },
+          {
+            "name": "view:actors",
+            "ms": 0,
+            "at": 3662
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 975,
+            "at": 3662
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 1396,
+            "at": 4637
+          },
+          {
+            "name": "L1 shader compilation",
+            "ms": 0,
+            "at": 4640
+          },
+          {
+            "name": "L1 warm-up draw",
+            "ms": 1325,
+            "at": 4640
+          },
+          {
+            "name": "L1 driver warm-up",
+            "ms": 1392,
+            "at": 4640
+          },
+          {
+            "name": "level:audio",
+            "ms": 2,
+            "at": 5946
+          },
+          {
+            "name": "L1 warm-up instanced draw",
+            "ms": 68,
+            "at": 5965
+          },
+          {
+            "name": "L1 warm-up solo draws",
+            "ms": 0,
+            "at": 6033
+          }
+        ]
+      },
+      {
+        "profile": "phone",
+        "cache": "cold",
+        "firstPaintMs": 1796,
+        "titleMs": 4419,
+        "playableMs": 21779,
+        "startToPlayableMs": 17207,
+        "startToBeginMs": 17020,
+        "beginToPlayableMs": 71,
+        "clickToPlayableExcludingReadingMs": 17090,
+        "firstFramesMaxMs": 19,
+        "firstFramesOver50": 0,
+        "menuLongTaskMaxMs": 0,
+        "menuInpMs": 40,
+        "requests": 336,
+        "bytes": 24922545,
+        "bootBytes": 4109689,
+        "menuBytes": 0,
+        "levelBytes": 19021019,
+        "criticalBytes": 23130708,
+        "uniqueCriticalBytes": 23130708,
+        "criticalRequests": 329,
+        "backgroundBytes": 1791837,
+        "criticalBodyBytes": 22999817,
+        "backend": "",
+        "errors": [
+          "warning Calling [RenderPassEncoder (unlabeled)].Draw with a vertex count of 0 is unusual."
+        ],
+        "loadAverage": 7.544921875,
+        "measures": [
+          {
+            "name": "view:actors",
+            "ms": 198,
+            "at": -470
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 0,
+            "at": -273
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 105,
+            "at": -272
+          },
+          {
+            "name": "level:layouts",
+            "ms": 108,
+            "at": 3
+          },
+          {
+            "name": "level:boot-audio-wait",
+            "ms": 0,
+            "at": 111
+          },
+          {
+            "name": "level:sim",
+            "ms": 83,
+            "at": 111
+          },
+          {
+            "name": "level:view",
+            "ms": 16817,
+            "at": 194
+          },
+          {
+            "name": "view:districts+character",
+            "ms": 15526,
+            "at": 194
+          },
+          {
+            "name": "view:civilian-crowd",
+            "ms": 6300,
+            "at": 208
+          },
+          {
+            "name": "view:infected-crowd",
+            "ms": 4089,
+            "at": 210
+          },
+          {
+            "name": "view:actors",
+            "ms": 0,
+            "at": 15721
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 5,
+            "at": 15721
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 1356,
+            "at": 15726
+          },
+          {
+            "name": "L1 shader compilation",
+            "ms": 0,
+            "at": 15729
+          },
+          {
+            "name": "L1 warm-up draw",
+            "ms": 1302,
+            "at": 15730
+          },
+          {
+            "name": "L1 driver warm-up",
+            "ms": 1352,
+            "at": 15730
+          },
+          {
+            "name": "level:audio",
+            "ms": 3,
+            "at": 17011
+          },
+          {
+            "name": "L1 warm-up instanced draw",
+            "ms": 49,
+            "at": 17032
+          },
+          {
+            "name": "L1 warm-up solo draws",
+            "ms": 0,
+            "at": 17081
+          }
+        ]
+      },
+      {
+        "profile": "desktop",
+        "cache": "cold",
+        "firstPaintMs": 380,
+        "titleMs": 1225,
+        "playableMs": 7951,
+        "startToPlayableMs": 6491,
+        "startToBeginMs": 6244,
+        "beginToPlayableMs": 97,
+        "clickToPlayableExcludingReadingMs": 6341,
+        "firstFramesMaxMs": 17,
+        "firstFramesOver50": 0,
+        "menuLongTaskMaxMs": 0,
+        "menuInpMs": 40,
+        "requests": 364,
+        "bytes": 31107284,
+        "bootBytes": 4694530,
+        "menuBytes": 2976909,
+        "levelBytes": 20123834,
+        "criticalBytes": 27795273,
+        "uniqueCriticalBytes": 27795273,
+        "criticalRequests": 342,
+        "backgroundBytes": 3312011,
+        "criticalBodyBytes": 29255557,
+        "backend": "",
+        "errors": [
+          "warning Calling [RenderPassEncoder (unlabeled)].Draw with a vertex count of 0 is unusual."
+        ],
+        "loadAverage": 8.8828125,
+        "measures": [
+          {
+            "name": "view:actors",
+            "ms": 75,
+            "at": -439
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 0,
+            "at": -363
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 111,
+            "at": -363
+          },
+          {
+            "name": "level:layouts",
+            "ms": 21,
+            "at": 3
+          },
+          {
+            "name": "level:boot-audio-wait",
+            "ms": 0,
+            "at": 24
+          },
+          {
+            "name": "level:sim",
+            "ms": 85,
+            "at": 24
+          },
+          {
+            "name": "level:view",
+            "ms": 6119,
+            "at": 109
+          },
+          {
+            "name": "view:districts+character",
+            "ms": 3633,
+            "at": 110
+          },
+          {
+            "name": "view:civilian-crowd",
+            "ms": 1507,
+            "at": 125
+          },
+          {
+            "name": "view:infected-crowd",
+            "ms": 1810,
+            "at": 127
+          },
+          {
+            "name": "view:actors",
+            "ms": 0,
+            "at": 3744
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 1001,
+            "at": 3744
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 1571,
+            "at": 4745
+          },
+          {
+            "name": "L1 shader compilation",
+            "ms": 0,
+            "at": 4749
+          },
+          {
+            "name": "L1 warm-up draw",
+            "ms": 1503,
+            "at": 4749
+          },
+          {
+            "name": "L1 driver warm-up",
+            "ms": 1567,
+            "at": 4749
+          },
+          {
+            "name": "level:audio",
+            "ms": 3,
+            "at": 6228
+          },
+          {
+            "name": "L1 warm-up instanced draw",
+            "ms": 64,
+            "at": 6251
+          },
+          {
+            "name": "L1 warm-up solo draws",
+            "ms": 0,
+            "at": 6316
+          }
+        ]
+      },
+      {
+        "profile": "phone",
+        "cache": "cold",
+        "firstPaintMs": 1792,
+        "titleMs": 4419,
+        "playableMs": 21697,
+        "startToPlayableMs": 17116,
+        "startToBeginMs": 16972,
+        "beginToPlayableMs": 115,
+        "clickToPlayableExcludingReadingMs": 17087,
+        "firstFramesMaxMs": 18,
+        "firstFramesOver50": 0,
+        "menuLongTaskMaxMs": 0,
+        "menuInpMs": 40,
+        "requests": 336,
+        "bytes": 26650203,
+        "bootBytes": 4109689,
+        "menuBytes": 0,
+        "levelBytes": 21248347,
+        "criticalBytes": 25358036,
+        "uniqueCriticalBytes": 25358036,
+        "criticalRequests": 330,
+        "backgroundBytes": 1292167,
+        "criticalBodyBytes": 22999817,
+        "backend": "",
+        "errors": [
+          "warning Calling [RenderPassEncoder (unlabeled)].Draw with a vertex count of 0 is unusual."
+        ],
+        "loadAverage": 9.19482421875,
+        "measures": [
+          {
+            "name": "view:actors",
+            "ms": 201,
+            "at": -482
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 0,
+            "at": -281
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 103,
+            "at": -281
+          },
+          {
+            "name": "level:layouts",
+            "ms": 99,
+            "at": 3
+          },
+          {
+            "name": "level:boot-audio-wait",
+            "ms": 0,
+            "at": 103
+          },
+          {
+            "name": "level:sim",
+            "ms": 83,
+            "at": 103
+          },
+          {
+            "name": "level:view",
+            "ms": 16779,
+            "at": 186
+          },
+          {
+            "name": "view:districts+character",
+            "ms": 15526,
+            "at": 186
+          },
+          {
+            "name": "view:civilian-crowd",
+            "ms": 6293,
+            "at": 200
+          },
+          {
+            "name": "view:infected-crowd",
+            "ms": 4090,
+            "at": 202
+          },
+          {
+            "name": "view:actors",
+            "ms": 0,
+            "at": 15713
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 6,
+            "at": 15714
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 1329,
+            "at": 15719
+          },
+          {
+            "name": "L1 shader compilation",
+            "ms": 0,
+            "at": 15722
+          },
+          {
+            "name": "L1 warm-up draw",
+            "ms": 1260,
+            "at": 15722
+          },
+          {
+            "name": "L1 driver warm-up",
+            "ms": 1325,
+            "at": 15722
+          },
+          {
+            "name": "level:audio",
+            "ms": 1,
+            "at": 16965
+          },
+          {
+            "name": "L1 warm-up instanced draw",
+            "ms": 65,
+            "at": 16982
+          },
+          {
+            "name": "L1 warm-up solo draws",
+            "ms": 0,
+            "at": 17047
+          }
+        ]
+      },
+      {
+        "profile": "desktop",
+        "cache": "cold",
+        "firstPaintMs": 372,
+        "titleMs": 1219,
+        "playableMs": 7783,
+        "startToPlayableMs": 6349,
+        "startToBeginMs": 6161,
+        "beginToPlayableMs": 71,
+        "clickToPlayableExcludingReadingMs": 6232,
+        "firstFramesMaxMs": 17,
+        "firstFramesOver50": 0,
+        "menuLongTaskMaxMs": 0,
+        "menuInpMs": 32,
+        "requests": 364,
+        "bytes": 31107253,
+        "bootBytes": 4694530,
+        "menuBytes": 2976909,
+        "levelBytes": 20623450,
+        "criticalBytes": 28294889,
+        "uniqueCriticalBytes": 28294889,
+        "criticalRequests": 343,
+        "backgroundBytes": 2812364,
+        "criticalBodyBytes": 29277195,
+        "backend": "",
+        "errors": [
+          "warning Calling [RenderPassEncoder (unlabeled)].Draw with a vertex count of 0 is unusual."
+        ],
+        "loadAverage": 8.671875,
+        "measures": [
+          {
+            "name": "view:actors",
+            "ms": 77,
+            "at": -423
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 0,
+            "at": -346
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 114,
+            "at": -346
+          },
+          {
+            "name": "level:layouts",
+            "ms": 20,
+            "at": 4
+          },
+          {
+            "name": "level:boot-audio-wait",
+            "ms": 0,
+            "at": 23
+          },
+          {
+            "name": "level:sim",
+            "ms": 85,
+            "at": 23
+          },
+          {
+            "name": "level:view",
+            "ms": 6045,
+            "at": 108
+          },
+          {
+            "name": "view:districts+character",
+            "ms": 3625,
+            "at": 108
+          },
+          {
+            "name": "view:civilian-crowd",
+            "ms": 1407,
+            "at": 122
+          },
+          {
+            "name": "view:infected-crowd",
+            "ms": 1815,
+            "at": 125
+          },
+          {
+            "name": "view:actors",
+            "ms": 0,
+            "at": 3734
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 994,
+            "at": 3734
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 1489,
+            "at": 4728
+          },
+          {
+            "name": "L1 shader compilation",
+            "ms": 0,
+            "at": 4731
+          },
+          {
+            "name": "L1 warm-up draw",
+            "ms": 1434,
+            "at": 4731
+          },
+          {
+            "name": "L1 driver warm-up",
+            "ms": 1484,
+            "at": 4731
+          },
+          {
+            "name": "level:audio",
+            "ms": 2,
+            "at": 6152
+          },
+          {
+            "name": "L1 warm-up instanced draw",
+            "ms": 50,
+            "at": 6165
+          },
+          {
+            "name": "L1 warm-up solo draws",
+            "ms": 0,
+            "at": 6215
+          }
+        ]
+      }
+    ],
+    "after": [
+      {
+        "profile": "phone",
+        "cache": "cold",
+        "firstPaintMs": 1804,
+        "titleMs": 3894,
+        "playableMs": 13581,
+        "startToPlayableMs": 9489,
+        "startToBeginMs": 9322,
+        "beginToPlayableMs": 64,
+        "clickToPlayableExcludingReadingMs": 9385,
+        "firstFramesMaxMs": 19,
+        "firstFramesOver50": 0,
+        "menuLongTaskMaxMs": 0,
+        "menuInpMs": 24,
+        "requests": 137,
+        "bytes": 16357926,
+        "bootBytes": 3452771,
+        "menuBytes": 0,
+        "levelBytes": 9733868,
+        "criticalBytes": 13186639,
+        "uniqueCriticalBytes": 13186639,
+        "criticalRequests": 121,
+        "backgroundBytes": 3171287,
+        "criticalBodyBytes": 13055726,
+        "backend": "",
+        "errors": [
+          "warning Calling [RenderPassEncoder (unlabeled)].Draw with a vertex count of 0 is unusual."
+        ],
+        "loadAverage": 8.0078125,
+        "measures": [
+          {
+            "name": "view:actors",
+            "ms": 201,
+            "at": -516
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 0,
+            "at": -314
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 99,
+            "at": -314
+          },
+          {
+            "name": "level:layouts",
+            "ms": 263,
+            "at": -199
+          },
+          {
+            "name": "level:sim",
+            "ms": 84,
+            "at": 64
+          },
+          {
+            "name": "level:boot-audio-wait",
+            "ms": 0,
+            "at": 65
+          },
+          {
+            "name": "level:view",
+            "ms": 9161,
+            "at": 148
+          },
+          {
+            "name": "view:districts+character",
+            "ms": 8051,
+            "at": 149
+          },
+          {
+            "name": "view:civilian-crowd",
+            "ms": 3919,
+            "at": 162
+          },
+          {
+            "name": "view:infected-crowd",
+            "ms": 2713,
+            "at": 164
+          },
+          {
+            "name": "view:actors",
+            "ms": 0,
+            "at": 8200
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 5,
+            "at": 8201
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 1177,
+            "at": 8205
+          },
+          {
+            "name": "L1 shader compilation",
+            "ms": 0,
+            "at": 8208
+          },
+          {
+            "name": "L1 warm-up draw",
+            "ms": 1122,
+            "at": 8208
+          },
+          {
+            "name": "L1 driver warm-up",
+            "ms": 1174,
+            "at": 8208
+          },
+          {
+            "name": "L1 warm-up instanced draw",
+            "ms": 52,
+            "at": 9330
+          },
+          {
+            "name": "L1 warm-up solo draws",
+            "ms": 0,
+            "at": 9382
+          }
+        ]
+      },
+      {
+        "profile": "desktop",
+        "cache": "cold",
+        "firstPaintMs": 376,
+        "titleMs": 1117,
+        "playableMs": 6630,
+        "startToPlayableMs": 5194,
+        "startToBeginMs": 4995,
+        "beginToPlayableMs": 70,
+        "clickToPlayableExcludingReadingMs": 5066,
+        "firstFramesMaxMs": 19,
+        "firstFramesOver50": 0,
+        "menuLongTaskMaxMs": 112,
+        "menuInpMs": 32,
+        "requests": 197,
+        "bytes": 28511627,
+        "bootBytes": 4037633,
+        "menuBytes": 14698699,
+        "levelBytes": 4078089,
+        "criticalBytes": 22814421,
+        "uniqueCriticalBytes": 22814421,
+        "criticalRequests": 172,
+        "backgroundBytes": 5697206,
+        "criticalBodyBytes": 22815261,
+        "backend": "",
+        "errors": [
+          "warning Calling [RenderPassEncoder (unlabeled)].Draw with a vertex count of 0 is unusual."
+        ],
+        "loadAverage": 10.6103515625,
+        "measures": [
+          {
+            "name": "view:actors",
+            "ms": 76,
+            "at": -520
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 0,
+            "at": -444
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 109,
+            "at": -444
+          },
+          {
+            "name": "level:layouts",
+            "ms": 49,
+            "at": -319
+          },
+          {
+            "name": "level:boot-audio-wait",
+            "ms": 0,
+            "at": -271
+          },
+          {
+            "name": "level:sim",
+            "ms": 80,
+            "at": -271
+          },
+          {
+            "name": "level:view",
+            "ms": 5172,
+            "at": -191
+          },
+          {
+            "name": "view:districts+character",
+            "ms": 2883,
+            "at": -190
+          },
+          {
+            "name": "view:civilian-crowd",
+            "ms": 1360,
+            "at": -174
+          },
+          {
+            "name": "view:infected-crowd",
+            "ms": 1585,
+            "at": -173
+          },
+          {
+            "name": "view:actors",
+            "ms": 0,
+            "at": 2694
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 1045,
+            "at": 2694
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 1328,
+            "at": 3739
+          },
+          {
+            "name": "L1 shader compilation",
+            "ms": 0,
+            "at": 3742
+          },
+          {
+            "name": "L1 warm-up draw",
+            "ms": 1257,
+            "at": 3742
+          },
+          {
+            "name": "L1 driver warm-up",
+            "ms": 1325,
+            "at": 3742
+          },
+          {
+            "name": "L1 warm-up instanced draw",
+            "ms": 67,
+            "at": 4999
+          },
+          {
+            "name": "L1 warm-up solo draws",
+            "ms": 0,
+            "at": 5067
+          }
+        ]
+      },
+      {
+        "profile": "phone",
+        "cache": "cold",
+        "firstPaintMs": 1784,
+        "titleMs": 3866,
+        "playableMs": 13427,
+        "startToPlayableMs": 9367,
+        "startToBeginMs": 9226,
+        "beginToPlayableMs": 114,
+        "clickToPlayableExcludingReadingMs": 9341,
+        "firstFramesMaxMs": 19,
+        "firstFramesOver50": 0,
+        "menuLongTaskMaxMs": 0,
+        "menuInpMs": 32,
+        "requests": 137,
+        "bytes": 16357857,
+        "bootBytes": 3452771,
+        "menuBytes": 0,
+        "levelBytes": 9733845,
+        "criticalBytes": 13186616,
+        "uniqueCriticalBytes": 13186616,
+        "criticalRequests": 121,
+        "backgroundBytes": 3171241,
+        "criticalBodyBytes": 13055703,
+        "backend": "",
+        "errors": [
+          "warning Calling [RenderPassEncoder (unlabeled)].Draw with a vertex count of 0 is unusual."
+        ],
+        "loadAverage": 8.94677734375,
+        "measures": [
+          {
+            "name": "view:actors",
+            "ms": 204,
+            "at": -501
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 0,
+            "at": -297
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 88,
+            "at": -297
+          },
+          {
+            "name": "level:layouts",
+            "ms": 261,
+            "at": -195
+          },
+          {
+            "name": "level:boot-audio-wait",
+            "ms": 0,
+            "at": 66
+          },
+          {
+            "name": "level:sim",
+            "ms": 78,
+            "at": 66
+          },
+          {
+            "name": "level:view",
+            "ms": 9069,
+            "at": 144
+          },
+          {
+            "name": "view:districts+character",
+            "ms": 8015,
+            "at": 145
+          },
+          {
+            "name": "view:civilian-crowd",
+            "ms": 3915,
+            "at": 158
+          },
+          {
+            "name": "view:infected-crowd",
+            "ms": 2703,
+            "at": 160
+          },
+          {
+            "name": "view:actors",
+            "ms": 0,
+            "at": 8161
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 4,
+            "at": 8161
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 1135,
+            "at": 8166
+          },
+          {
+            "name": "L1 shader compilation",
+            "ms": 0,
+            "at": 8168
+          },
+          {
+            "name": "L1 warm-up draw",
+            "ms": 1065,
+            "at": 8169
+          },
+          {
+            "name": "L1 driver warm-up",
+            "ms": 1132,
+            "at": 8169
+          },
+          {
+            "name": "L1 warm-up instanced draw",
+            "ms": 67,
+            "at": 9233
+          },
+          {
+            "name": "L1 warm-up solo draws",
+            "ms": 0,
+            "at": 9300
+          }
+        ]
+      },
+      {
+        "profile": "desktop",
+        "cache": "cold",
+        "firstPaintMs": 372,
+        "titleMs": 1088,
+        "playableMs": 6385,
+        "startToPlayableMs": 4967,
+        "startToBeginMs": 4811,
+        "beginToPlayableMs": 99,
+        "clickToPlayableExcludingReadingMs": 4911,
+        "firstFramesMaxMs": 19,
+        "firstFramesOver50": 0,
+        "menuLongTaskMaxMs": 106,
+        "menuInpMs": 32,
+        "requests": 197,
+        "bytes": 28511645,
+        "bootBytes": 4037633,
+        "menuBytes": 14698717,
+        "levelBytes": 4078066,
+        "criticalBytes": 22814416,
+        "uniqueCriticalBytes": 22814416,
+        "criticalRequests": 172,
+        "backgroundBytes": 5697229,
+        "criticalBodyBytes": 22815256,
+        "backend": "",
+        "errors": [
+          "warning Calling [RenderPassEncoder (unlabeled)].Draw with a vertex count of 0 is unusual."
+        ],
+        "loadAverage": 7.8046875,
+        "measures": [
+          {
+            "name": "view:actors",
+            "ms": 77,
+            "at": -519
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 0,
+            "at": -442
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 97,
+            "at": -441
+          },
+          {
+            "name": "level:layouts",
+            "ms": 51,
+            "at": -330
+          },
+          {
+            "name": "level:boot-audio-wait",
+            "ms": 0,
+            "at": -279
+          },
+          {
+            "name": "level:sim",
+            "ms": 77,
+            "at": -279
+          },
+          {
+            "name": "level:view",
+            "ms": 5003,
+            "at": -202
+          },
+          {
+            "name": "view:districts+character",
+            "ms": 2867,
+            "at": -202
+          },
+          {
+            "name": "view:civilian-crowd",
+            "ms": 1285,
+            "at": -188
+          },
+          {
+            "name": "view:infected-crowd",
+            "ms": 1557,
+            "at": -186
+          },
+          {
+            "name": "view:actors",
+            "ms": 0,
+            "at": 2666
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 958,
+            "at": 2667
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 1278,
+            "at": 3624
+          },
+          {
+            "name": "L1 shader compilation",
+            "ms": 0,
+            "at": 3627
+          },
+          {
+            "name": "L1 warm-up draw",
+            "ms": 1189,
+            "at": 3627
+          },
+          {
+            "name": "L1 driver warm-up",
+            "ms": 1275,
+            "at": 3627
+          },
+          {
+            "name": "L1 warm-up instanced draw",
+            "ms": 86,
+            "at": 4816
+          },
+          {
+            "name": "L1 warm-up solo draws",
+            "ms": 0,
+            "at": 4902
+          }
+        ]
+      },
+      {
+        "profile": "phone",
+        "cache": "cold",
+        "firstPaintMs": 1788,
+        "titleMs": 3865,
+        "playableMs": 13446,
+        "startToPlayableMs": 9383,
+        "startToBeginMs": 9239,
+        "beginToPlayableMs": 115,
+        "clickToPlayableExcludingReadingMs": 9353,
+        "firstFramesMaxMs": 21,
+        "firstFramesOver50": 0,
+        "menuLongTaskMaxMs": 0,
+        "menuInpMs": 32,
+        "requests": 137,
+        "bytes": 16357880,
+        "bootBytes": 3452771,
+        "menuBytes": 0,
+        "levelBytes": 9733845,
+        "criticalBytes": 13186616,
+        "uniqueCriticalBytes": 13186616,
+        "criticalRequests": 121,
+        "backgroundBytes": 3171264,
+        "criticalBodyBytes": 13055703,
+        "backend": "",
+        "errors": [
+          "warning Calling [RenderPassEncoder (unlabeled)].Draw with a vertex count of 0 is unusual."
+        ],
+        "loadAverage": 6.72802734375,
+        "measures": [
+          {
+            "name": "view:actors",
+            "ms": 202,
+            "at": -501
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 0,
+            "at": -299
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 88,
+            "at": -299
+          },
+          {
+            "name": "level:layouts",
+            "ms": 262,
+            "at": -199
+          },
+          {
+            "name": "level:boot-audio-wait",
+            "ms": 0,
+            "at": 63
+          },
+          {
+            "name": "level:sim",
+            "ms": 78,
+            "at": 63
+          },
+          {
+            "name": "level:view",
+            "ms": 9087,
+            "at": 142
+          },
+          {
+            "name": "view:districts+character",
+            "ms": 8017,
+            "at": 142
+          },
+          {
+            "name": "view:civilian-crowd",
+            "ms": 3917,
+            "at": 156
+          },
+          {
+            "name": "view:infected-crowd",
+            "ms": 2703,
+            "at": 157
+          },
+          {
+            "name": "view:actors",
+            "ms": 0,
+            "at": 8161
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 5,
+            "at": 8161
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 1152,
+            "at": 8165
+          },
+          {
+            "name": "L1 shader compilation",
+            "ms": 0,
+            "at": 8168
+          },
+          {
+            "name": "L1 warm-up draw",
+            "ms": 1081,
+            "at": 8168
+          },
+          {
+            "name": "L1 driver warm-up",
+            "ms": 1148,
+            "at": 8168
+          },
+          {
+            "name": "L1 warm-up instanced draw",
+            "ms": 67,
+            "at": 9249
+          },
+          {
+            "name": "L1 warm-up solo draws",
+            "ms": 0,
+            "at": 9316
+          }
+        ]
+      },
+      {
+        "profile": "desktop",
+        "cache": "cold",
+        "firstPaintMs": 372,
+        "titleMs": 1091,
+        "playableMs": 6399,
+        "startToPlayableMs": 4982,
+        "startToBeginMs": 4822,
+        "beginToPlayableMs": 116,
+        "clickToPlayableExcludingReadingMs": 4938,
+        "firstFramesMaxMs": 18,
+        "firstFramesOver50": 0,
+        "menuLongTaskMaxMs": 107,
+        "menuInpMs": 32,
+        "requests": 195,
+        "bytes": 28459670,
+        "bootBytes": 4037633,
+        "menuBytes": 14698717,
+        "levelBytes": 4078066,
+        "criticalBytes": 22814416,
+        "uniqueCriticalBytes": 22814416,
+        "criticalRequests": 172,
+        "backgroundBytes": 5645254,
+        "criticalBodyBytes": 22815256,
+        "backend": "",
+        "errors": [
+          "warning Calling [RenderPassEncoder (unlabeled)].Draw with a vertex count of 0 is unusual."
+        ],
+        "loadAverage": 6.75732421875,
+        "measures": [
+          {
+            "name": "view:actors",
+            "ms": 74,
+            "at": -510
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 0,
+            "at": -436
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 96,
+            "at": -436
+          },
+          {
+            "name": "level:layouts",
+            "ms": 52,
+            "at": -326
+          },
+          {
+            "name": "level:boot-audio-wait",
+            "ms": 0,
+            "at": -274
+          },
+          {
+            "name": "level:sim",
+            "ms": 77,
+            "at": -274
+          },
+          {
+            "name": "level:view",
+            "ms": 5005,
+            "at": -197
+          },
+          {
+            "name": "view:districts+character",
+            "ms": 2853,
+            "at": -197
+          },
+          {
+            "name": "view:civilian-crowd",
+            "ms": 1285,
+            "at": -183
+          },
+          {
+            "name": "view:infected-crowd",
+            "ms": 1551,
+            "at": -182
+          },
+          {
+            "name": "view:actors",
+            "ms": 0,
+            "at": 2657
+          },
+          {
+            "name": "view:lod-ready",
+            "ms": 963,
+            "at": 2657
+          },
+          {
+            "name": "view:warm-up",
+            "ms": 1296,
+            "at": 3620
+          },
+          {
+            "name": "L1 shader compilation",
+            "ms": 0,
+            "at": 3623
+          },
+          {
+            "name": "L1 warm-up draw",
+            "ms": 1209,
+            "at": 3623
+          },
+          {
+            "name": "L1 driver warm-up",
+            "ms": 1292,
+            "at": 3623
+          },
+          {
+            "name": "L1 warm-up instanced draw",
+            "ms": 84,
+            "at": 4832
+          },
+          {
+            "name": "L1 warm-up solo draws",
+            "ms": 0,
+            "at": 4916
+          }
+        ]
+      }
+    ]
+  }
+}

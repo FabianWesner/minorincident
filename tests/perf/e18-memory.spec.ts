@@ -4,10 +4,11 @@ import { qualityBudgets } from '../../src/core/Quality';
 for (const tier of ['high', 'low'] as const) test(`T-E18-05-${tier} @E18-AC05 @perf five L1/L6 loads release heap and GPU resources`, async ({ page, context }) => {
   test.setTimeout(300_000); await boot(page); await page.evaluate(t => window.__SS__!.settings.set({ quality: t }), tier);
   const cdp = await context.newCDPSession(page), loads = [];
-  // Three retires stale per-camera render lists after 10 rendered frames. Settle 12
-  // frames after every load, then collect garbage; no earlier L6 load is prewarmed.
+  // Begin the mission so its deferred tiers can stream, then settle that residency
+  // through screenshotReady. Comparing an incomplete first load with settled later
+  // loads would count deferred assets as leaks. Retire render lists over 12 more frames.
   for (const id of ['L1', 'L6', 'L1', 'L6', 'L1']) {
-    await page.evaluate(async id => { const a = window.__SS__!; await a.loadLevel(id); a.pause(); for (let frame = 0; frame < 6; frame++) await a.screenshotReady(); }, id);
+    await page.evaluate(async id => { const a = window.__SS__!; await a.loadLevel(id); a.missions.begin(); a.pause(); for (let frame = 0; frame < 6; frame++) await a.screenshotReady(); }, id);
     await cdp.send('HeapProfiler.collectGarbage');
     const heap = await cdp.send('Runtime.getHeapUsage');
     loads.push({ id, ...await page.evaluate(() => window.__SS__!.perf()), heapBytes: heap.usedSize });

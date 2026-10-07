@@ -9,3 +9,7 @@ Reference painterly fabric mottling and timber wear are simplified into cloth to
 ## E26 repetition budget revision
 
 LOD0 is now 2,440 triangles and five draws (79% fewer triangles). Sack shells use single-segment bevelled boxes and eight-segment, three-sided seam tubes. Timber has one bevel segment; all nails, raised grain and individual stitches were removed. The original root, body, collider and palette detail node names remain in every LOD, with removed detail nodes retained as empties. Material palette and four-tier layout are unchanged. The build script accepts --lod: LOD1 is 968 triangles/four draws; LOD2 is 456 triangles/four draws. Exports are model.glb, model.lod1.glb and model.lod2.glb. The revised budget is ≤3,000 triangles.
+
+## Art registration (2026-10-07)
+
+Measured delivered bounds (X/Y/Z, metres): 1.4, 1.1455, 1.19. Source, named pivots/sockets, palette, front marker and delivered tiers are validated by the production validator. Runtime status is integrated. Five-angle LOD contact evidence: `test-results/art-register/prop.sandbag-pallet/lod-contact.png`.

@@ -1,0 +1,37 @@
+{
+  "slug": "police-car",
+  "iterations": 3,
+  "triangles": 9766,
+  "meshes": 30,
+  "materials": [
+    "pal_uiDark",
+    "pal_schoolBusYellow",
+    "pal_picketWhite",
+    "emi_sirenRed",
+    "emi_windowGlow",
+    "emi_policeBlue",
+    "pal_glassDark",
+    "pal_sidewalk"
+  ],
+  "glb_bytes": 606200,
+  "within_budget": true,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "identity_features": [
+    "Black hood and trunk with cream doors and roof",
+    "Extruded POLICE lettering on hood and both sides",
+    "Gold door shields with chunky stars",
+    "Segmented emissive red-blue light bar",
+    "Oversized tyre-rim-hub wheels with flared arches",
+    "Broad glowing headlights, slatted grille and deep push bumper"
+  ],
+  "dropped_details": [
+    "Bolts and lug nuts",
+    "Wipers and hinges",
+    "Tyre tread blocks",
+    "Tiny lettering and badge ornament",
+    "Gauges and interior fittings",
+    "Fine trim and grille mesh"
+  ],
+  "notes": "Richer toy forms remain readable at the game camera; 30 Three.js mesh primitives correspond to 19 glTF meshes, with separate hinged doors, axle-centered wheels and named lamps."
+}

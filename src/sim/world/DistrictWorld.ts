@@ -9,6 +9,7 @@ import {
   resolveDecay,
   resolvePosition,
   minimapData,
+  inside,
 } from "../../levels/districts/validate";
 import { crossValidate } from "../../levels/districts/crossValidate";
 import { placementColliders } from "../../levels/districts/staticCollision";
@@ -117,6 +118,12 @@ export class DistrictWorld {
     for (const a of this.supports.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) {
       if (x >= a.min[0] && x <= a.max[0] && z >= a.min[2] && z <= a.max[2]) height = Math.max(height, a.max[1]);
     }
+    return height;
+  }
+  /** Visible paving is baked into the layout GLB rather than the solid-prop collider set. */
+  pavingHeight(x: number, z: number): number {
+    let height = this.groundHeight(x, z);
+    for (const d of this.districts) for (const s of d.layout.surfaces) if (s.height !== undefined && inside([x - d.origin[0], z - d.origin[1]], s.polygon)) height = Math.max(height, s.height);
     return height;
   }
   getState() {

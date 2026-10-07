@@ -34,6 +34,8 @@ export function disposeCharacter(model: Group): void {
     const mesh = object as import('three').Mesh;
     if (!mesh.isMesh) return;
     resources.add(mesh.geometry);
+    const skin = mesh as import('three').SkinnedMesh;
+    if (skin.isSkinnedMesh) resources.add(skin.skeleton);
     for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) if (!material.userData.sharedPalette) resources.add(material);
   });
   for (const resource of resources) resource.dispose();

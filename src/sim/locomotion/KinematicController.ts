@@ -92,6 +92,10 @@ export class KinematicController {
     const controller = this.physics.characterController!, collider = this.physics.playerCollider!;
     controller.computeColliderMovement(collider, this.displacement, undefined, collider.collisionGroups());
     controller.computedMovement(this.displacement);
+    // Rapier's skin-contact correction can alternate by tens of micrometres on a
+    // resting capsule. Keep that numerical noise from accumulating into visible
+    // idle vibration; real falls, steps and horizontal pushes still move it.
+    if (magnitude === 0 && Math.hypot(this.velocity.x, this.velocity.z) < .001 && Math.hypot(this.displacement.x, this.displacement.z) < 1e-6 && Math.abs(this.displacement.y) < .0001) this.displacement.y = 0;
     this.next.x = transform.x + this.displacement.x; this.next.y = transform.y + this.displacement.y; this.next.z = transform.z + this.displacement.z;
     this.physics.playerBody!.setNextKinematicTranslation(this.next);
     if (navigation && Math.hypot(this.displacement.x - this.velocity.x * FIXED_DT, this.displacement.z - this.velocity.z * FIXED_DT) > .001) {

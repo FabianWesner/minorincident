@@ -73,6 +73,8 @@ export interface DistrictLayout {
   acousticZones: { id: string; preset: string; polygon: Point[] }[];
   surfaces: {
     surface: "asphalt" | "grass" | "wood" | "tile" | "metal" | "gravel";
+    /** Top of authored paving boxes; absent on older exports and flat semantic zones. */
+    height?: number;
     polygon: Point[];
   }[];
   layers: { tier: Tier; remove: string[]; disableLights: string[] }[];
@@ -89,6 +91,7 @@ export interface DistrictGameplay {
   objectives: { id: string; position: PositionRef }[];
   interactables: { id: string; position: PositionRef }[];
   /** E11 runtime objects, distinct from E10's landmark placement markers. */
+  barricades?: import('../../sim/interact/Barricades').BarricadeSlot[];
   interactions?: import('../loader').InteractionPlacements;
   civilianRoutes: PositionRef[][];
   safePoints: PositionRef[];
@@ -113,7 +116,7 @@ export interface LevelComposition {
     id: DistrictId;
     origin: Point;
     overrides?: Partial<
-      Pick<DistrictGameplay, "spawns" | "triggers" | "objectives" | "interactions">
+      Pick<DistrictGameplay, "spawns" | "triggers" | "objectives" | "interactions" | "barricades">
     >;
   }[];
 }

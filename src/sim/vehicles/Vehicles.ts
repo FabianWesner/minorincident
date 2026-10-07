@@ -35,6 +35,7 @@ export class Vehicles {
   }
   canInteract(): boolean {
     if (this.active != null) return true;
+    if (this.bicycle.canInteract()) return true;
     const player = this.world.entities.get(1);
     if (!player || player.health.current <= 0) return false;
     for (const car of this.cars.values()) {
@@ -51,7 +52,7 @@ export class Vehicles {
     for (const car of this.cars.values()) {
       const state = car.entity.vehicle!, drive = car.physics.intent;
       car.physics.boostScale = this.progressionBoost;
-      drive.throttle = drive.steer = 0; drive.brake = true; drive.boost = false;
+      drive.throttle = drive.steer = 0; drive.brake = true; drive.boost = drive.handbrake = false;
       if (this.active === car.entity.id && frame.interact) this.exit(car);
       if (car.entity.health.current > 0 && this.active === car.entity.id) {
         if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
@@ -68,6 +69,7 @@ export class Vehicles {
           drive.brake = (scheme === 'mouse-only' && !frame.left.held) || distance < (scheme === 'mouse-only' ? 1.2 : .05) || !!frame.brake;
         }
         drive.boost = scheme !== 'mouse-only' && frame.left.held;
+        drive.handbrake = frame.handbrake ?? frame.right.held;
         if ((scheme !== 'mouse-only' && frame.left.down) || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
         if (state.recoveringUntil > this.world.tick && !drive.brake) { drive.throttle = -.8; drive.steer = .6; drive.brake = false; }
       } else if (this.active === null && player.health.current > 0 && car.entity.health.current > 0 && this.world.tick >= car.noEnterUntil && car.physics.speed < 1) {
@@ -77,9 +79,10 @@ export class Vehicles {
         car.doorTicks = near && still ? car.doorTicks + 1 : 0;
         if (near && (car.doorTicks >= 36 || frame.interact)) this.enter(car);
       } else car.doorTicks = 0;
-      state.steer = drive.steer * car.physics.def.steering; state.braking = drive.brake; state.boosting = drive.boost;
+      state.boosting = drive.boost;
       this.impacts(car);
       car.physics.prePhysics();
+      state.steer = car.physics.steeringAngle; state.braking = car.physics.braking;
     }
   }
   private localPoint(car: Car, x: number, z: number): void {
@@ -227,7 +230,10 @@ export class Vehicles {
         this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(player.transform); this.world.spatial.set(1, player.transform.x, player.transform.z);
       }
       this.infected(car); this.damageState(car);
-      if (state.stuck && state.recoveringUntil <= this.world.tick && this.active === car.entity.id) {
+      if (this.active === car.entity.id && car.entity.health.current > 0 && car.physics.recoverFlip()) {
+        state.recoveringUntil = 0;
+        this.world.events.emit({ type: 'vehicle.recovering', tick: this.world.tick, sourceId: car.entity.id });
+      } else if (state.stuck && state.recoveringUntil <= this.world.tick && this.active === car.entity.id) {
         state.recoveringUntil = this.world.tick + 90; car.physics.clearStuck();
         this.world.events.emit({ type: 'vehicle.recovering', tick: this.world.tick, sourceId: car.entity.id });
       }

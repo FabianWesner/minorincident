@@ -1,7 +1,7 @@
 import { modelLod } from './lodPolicy';
 import { paletteTokens } from '../data/palette';
 // Adapted from Bruno Simon folio-2025 VisualVehicle.js (MIT, 41046b5): wheel pivots/suspension and lamps.
-import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, SphereGeometry, TorusGeometry, type Object3D } from 'three/webgpu';
+import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, type Object3D } from 'three/webgpu';
 import { productionObstacleAssets } from './EntityAssets';
 import { AssetRegistry } from '../assets/registry';
 import { atLeast } from '../assets/types';
@@ -28,6 +28,7 @@ export class VehicleView extends Group {
   private bloodEnabled = true;
   private readonly feedbackEvents = new Map<number, VehicleFeedbackEvent>();
   private disposed = false;
+  private readonly chassisRotation = new Quaternion();
   private readonly pending = new Map<number, Promise<void>>();
   constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) { super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.fireMaterial.color.multiplyScalar(3); }
   async load(): Promise<void> { for (const car of this.world.vehicles!.cars.values()) await this.addCar(car.entity.id); this.update(1); }
@@ -82,8 +83,13 @@ export class VehicleView extends Group {
       if (!record || record.lod !== lod) { if (!this.pending.has(id)) { this.pending.set(id, this.addCar(id).finally(() => { this.pending.delete(id); })); } if (!record) continue; }
       const body = car.physics, p = body.transform, prev = body.previous, state = car.entity.vehicle!;
       record.parent.position.set(lerp(prev.x, p.x, alpha), lerp(prev.y, p.y, alpha), lerp(prev.z, p.z, alpha));
-      record.parent.quaternion.copy(body.rotation);
-      for (let i = 0; i < 4; i++) { const wheel = record.wheels[i], physics = body.wheels[i]; wheel.node.rotation.y = wheel.steer + physics.steer; wheel.node.rotation.z = wheel.spin + physics.rotation; wheel.node.position.y = wheel.y + body.def.suspension - physics.suspension; }
+      record.parent.quaternion.copy(body.previousRotation).slerp(this.chassisRotation.copy(body.rotation), alpha);
+      for (let i = 0; i < 4; i++) {
+        const wheel = record.wheels[i], physics = body.wheels[i], previous = body.previousWheels[i];
+        wheel.node.rotation.y = wheel.steer + lerp(previous.steer, physics.steer, alpha);
+        wheel.node.rotation.z = wheel.spin + lerp(previous.rotation, physics.rotation, alpha);
+        wheel.node.position.y = wheel.y + body.def.suspension - lerp(previous.suspension, physics.suspension, alpha);
+      }
       record.brake.color.set('#ff2d2d').multiplyScalar(state.braking ? 4 : .15);
       for (let i = 0; i < record.sirens.length; i++) record.sirens[i].color.set(i === 0 ? '#ff2d2d' : '#2f6bff').multiplyScalar((Math.floor(this.world.tick / 30) % 2 === i) ? 4 : .1);
       record.door.position.y = .025 + body.def.suspension + body.def.wheelRadius + .15 - p.y;
