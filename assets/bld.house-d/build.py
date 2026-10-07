@@ -9,8 +9,6 @@ import random
 import sys
 import subprocess
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
-from sslib.lod0 import stabilize_ao, prune_hidden_faces, prepare_export_lod
 import bpy
 import bmesh
 from mathutils import Vector, Matrix
@@ -98,10 +96,10 @@ def mesh(name, verts, faces, token, parent=body, bevel=.018, segments=2):
     o.data.materials.append(M[token])
     o.parent = parent
     o.matrix_parent_inverse = parent.matrix_world.inverted()
-    if bevel and (bevel >= .015 or parent == roof):
+    if bevel:
         mod = o.modifiers.new('soft edges', 'BEVEL')
         mod.width = bevel
-        mod.segments = segments if parent == roof else 2 if bevel >= .06 else 1
+        mod.segments = segments
         mod.limit_method = 'ANGLE'
         mod.harden_normals = True
         normal = o.modifiers.new('weighted normals', 'WEIGHTED_NORMAL')
@@ -159,7 +157,7 @@ def cone(name, pos, radius1, radius2, depth, token, parent=body, vertices=12):
     o.matrix_parent_inverse = parent.matrix_world.inverted()
     b = o.modifiers.new('rounded rim', 'BEVEL')
     b.width = .01
-    b.segments = 1
+    b.segments = 2
     o.modifiers.new('weighted normals', 'WEIGHTED_NORMAL')
     return o
 
@@ -638,7 +636,6 @@ for group in [*windows,door,*[o for o in root.children if o.name.startswith('lam
     light_records.append((group.name,pos,owner.name+'_'+M['glow'].name))
 
 # Merge by material inside each visibility/articulation group, as the shared pipeline does.
-prune_hidden_faces([o for o in scene.objects if o.type == "MESH"], occlusion=True, game_camera=True, defer=True)
 shared_export.merge_by_material(root,protected)
 asset=[root,*root.children_recursive]
 meshes=[o for o in asset if o.type=='MESH']
@@ -709,7 +706,7 @@ if a.glb:
     tone_ao(meshes)
     path=Path(a.glb).resolve()
     path.parent.mkdir(parents=True,exist_ok=True)
-    stabilize_ao(meshes); prepare_export_lod(meshes, path); shared_export.glb(root,path)
+    shared_export.glb(root,path)
     originals={o:o.data for o in meshes}
     for level,ratio in [(1,.14),(2,1)]:
         for obj in meshes:
@@ -736,7 +733,7 @@ if a.glb:
             nonempty=[o for o in meshes if len(o.data.polygons)]
             ao.bake_all(nonempty,samples=32);tone_ao(nonempty)
         triangles['lod'+str(level)]=stats()
-        stabilize_ao(meshes); prepare_export_lod(meshes, path.with_name(path.stem+'.lod'+str(level)+'.glb')); shared_export.glb(root,path.with_name(path.stem+'.lod'+str(level)+'.glb'))
+        shared_export.glb(root,path.with_name(path.stem+'.lod'+str(level)+'.glb'))
         for obj in meshes:
             reduced=obj.data;obj.data=originals[obj];bpy.data.meshes.remove(reduced)
     # Optimize in place using the project's canonical meshopt/quantization pipeline.

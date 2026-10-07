@@ -64,6 +64,16 @@ describe('L1 v2 mission', () => {
     if (realMap) expect(t).toBeGreaterThanOrEqual(l1v2.bots.newbieMedianS[0]);
   }, HEAVY);
 
+  test('T-E19-10 @E19 the weapon objective and its garage-door marker are live right after the exits, zombies keep acting', async () => {
+    const { world: w, mission } = await load(2); w.combat!.damage.god = true;
+    runL1(w, mission, 'complete', { seed: 2, stopWhen: m => m.state.l1!.exitIds.length > 0 });
+    for (let i = 0; i < 5; i++) w.update();
+    expect(mission.state.steps.weapon.status).toBe('active'); expect(mission.state.marker).toBe('garage-door');
+    const before = w.infected!.active.filter(e => e.health.current > 0).map(e => `${e.transform.x.toFixed(1)},${e.transform.z.toFixed(1)}`).join('|');
+    for (let i = 0; i < 120; i++) w.update();
+    expect(w.infected!.active.filter(e => e.health.current > 0).map(e => `${e.transform.x.toFixed(1)},${e.transform.z.toFixed(1)}`).join('|')).not.toBe(before);
+  }, HEAVY);
+
   test('T-E19-evade @E19 @E19-AC03 evade-only bot never attacks and still finishes', async () => {
     const { world: w, mission } = await load(3); let attacks = 0;
     w.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1) attacks++; });
@@ -219,7 +229,7 @@ describe('L1 v2 mission', () => {
     expect(mocks.bicycle.at).toEqual([5, 5]); expect(w.npcs!.civilians.outbreak!.stats.turned).toBe(0);
     expect(w.infected!.active.filter(e => e.health.current > 0).map(e => e.id).sort()).toEqual(alive);
     expect(w.entities.get(techId)?.infected).toBeDefined();
-    expect(mission.state.steps.escape.status).toBe('active'); expect(mission.state.steps.pickup.status).toBe('completed');
+    expect(['escape', 'weapon'].some(id => mission.state.steps[id].status === 'active')).toBe(true); expect(mission.state.steps.pickup.status).toBe('completed');
     // The bat checkpoint carries the bat through a death.
     runL1(w, mission, 'complete', { seed: 4, stopWhen: m => m.state.checkpoint === 'bat' });
     expect(mission.state.checkpoint).toBe('bat');

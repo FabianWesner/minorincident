@@ -258,6 +258,49 @@ describe('L1 v2 infected perception', () => {
     console.info(`[herd] acquired after ${Math.min(...times).toFixed(2)}-${Math.max(...times).toFixed(2)} s on ${times.length}/20 seeds`);
   });
 
+  test('T-E19-yard @E19 @E19-AC10 PO-QA #12: an infected in a fenced yard paths out through the gap, or gives up instead of pressing on the fence', async () => {
+    /** Low picket fence: blocks walking, not sight. */
+    const fence = (w: SimWorld, id: number, x: number, z: number, halfX: number, halfZ: number) => w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id, wall: { x, y: 0.3, z, halfX, halfY: 0.3, halfZ }, blocked: true } as never);
+    let escaped = 0, gaveUp = 0;
+    for (const seed of seeds.slice(0, 10)) for (const closed of [false, true]) {
+      const { w, humans } = await l1World(seed);
+      // Yard 6 x 6 m around (20, 20): fences east (towards the player), north, south; west side open unless `closed`.
+      fence(w, 930, 23, 20, 0.1, 3.1); fence(w, 931, 20, 16.9, 3.1, 0.1); fence(w, 932, 20, 23.1, 3.1, 0.1);
+      if (closed) fence(w, 933, 16.9, 20, 0.1, 3.1);
+      const e = zombie(w, 21, 20, 0);
+      humans.add(1, 'player', 27, 20);
+      let pressedTicks = 0, out = false, left = false;
+      for (let i = 0; i < 20 * 60; i++) {
+        w.update();
+        if (brain(e).mode === 'chase' && e.transform.x > 21.8 && Math.hypot(e.locomotion?.vx ?? 0, e.locomotion?.vz ?? 0) < 0.3) pressedTicks++;
+        if (e.transform.x > 23.5 || e.transform.x < 16.5) out = true;
+        if (brain(e).mode !== 'chase' && brain(e).ignoreId === 1) left = true;
+        if (out) break;
+      }
+      if (!closed) { expect(out, `seed ${seed} open yard`).toBe(true); escaped++; }
+      else { expect(out).toBe(false); expect(left, `seed ${seed} closed yard gives up`).toBe(true); gaveUp++; }
+      expect(pressedTicks).toBeLessThan(5 * 60);
+      w.dispose(); worlds.length = 0;
+    }
+    console.info(`[yard] open yard escaped ${escaped}/10, closed yard gave up ${gaveUp}/10`);
+  }, 120_000);
+
+  test('T-E19-rehit @E19 @E19-AC14 PO-QA #13: after a heavy knockback the infected re-engages, also past a thin post at arm reach', async () => {
+    for (const seed of seeds.slice(0, 10)) for (const post of [false, true]) {
+      const { w } = await l1World(seed, true);
+      w.combat!.damage.god = true;
+      if (post) wall(w, 940, -0.65, 0, 0.08, 0.08);
+      const e = zombie(w, -5, 0.8, 0); // sees the survivor past the post, which sits on the final reach line
+      let swings = 0; w.events.on('telegraph', (ev) => { if (ev.type === 'telegraph' && ev.sourceId === e.id) swings++; });
+      for (let i = 0; i < 300 && swings === 0; i++) w.update();
+      expect(swings, `seed ${seed} post ${post} mode ${brain(e).mode} x ${e.transform.x.toFixed(2)}`).toBe(1);
+      w.combat!.damage.apply({ sourceId: 1, targetId: e.id, attackId: 99, actionId: 'weapon.bat', origin: { x: 0, z: 0 }, direction: { x: -1, z: 0 }, base: 22, multiplier: 1, type: 'melee', stagger: 0.4, knockback: 3 });
+      for (let i = 0; i < 4 * 60 && swings < 2; i++) w.update();
+      expect(swings, `seed ${seed} post ${post}`).toBeGreaterThanOrEqual(2);
+      w.dispose(); worlds.length = 0;
+    }
+  });
+
   test('T-E19-11 @E19 @E19-AC11 car alarm attracts non-chasing infected within 30 m; 20 s, then search and wander', async () => {
     for (const seed of seeds) {
       const { w, humans, perception } = await l1World(seed);

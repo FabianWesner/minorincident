@@ -51,9 +51,13 @@ export class L1Story {
   private release(): void { this.world.storyLock = null; }
   private pedestrian(at: { x: number; z: number }, model: string, role: string, tint: string): number {
     const outbreak = this.world.npcs?.civilians.outbreak; if (!outbreak) return 0;
-    // Story actors appear from doorways/interiors that are off the walk grid: spawn on the courier's (valid) spot, then place.
-    const p = this.world.entities.get(1)!.transform;
-    const id = outbreak.spawnPedestrian({ x: p.x, z: p.z }, { role, model, tint, tier: 'average' }), e = this.world.entities.get(id)!, c = e.civilian!;
+    // Story actors appear from doorways/interiors that are off the walk grid: spawn on the nearest walkable cell, then place.
+    const nav = this.world.infected?.nav, p = this.world.entities.get(1)!.transform;
+    let spot = { x: p.x, z: p.z };
+    if (nav) { const cell = nav.nearestCell(at.x, at.z) >= 0 ? nav.nearestCell(at.x, at.z) : nav.nearestCell(p.x, p.z); if (cell >= 0) spot = { x: nav.x(cell), z: nav.z(cell) }; }
+    let id = 0;
+    try { id = outbreak.spawnPedestrian(spot, { role, model, tint, tier: 'average' }); } catch { return 0; }
+    const e = this.world.entities.get(id)!, c = e.civilian!;
     c.ambient = false; c.pauseUntil = Number.MAX_SAFE_INTEGER; c.routine = 'staff'; c.state = 'calm';
     Object.assign(e.transform, { x: at.x, z: at.z }); this.world.spatial.set(id, at.x, at.z);
     return id;

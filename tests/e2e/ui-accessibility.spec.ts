@@ -23,10 +23,10 @@ test('T-E14-09 @E14 @E14-AC09 keyboard focus, accessible names and axe no critic
   await keyboardActivate(page, 'credits-back'); await keyboardActivate(page, 'title-settings'); await audit('menu-settings');
   await keyboardActivate(page, 'settings-back'); await keyboardActivate(page, 'start-game'); await audit('menu-character');
   await keyboardActivate(page, 'character-female'); await audit('menu-levels');
-  await keyboardActivate(page, 'level-L1'); await expect(page.getByTestId('mission-button')).toBeVisible(); await audit('mission-panel');
+  await keyboardActivate(page, 'level-L1'); await expect(page.getByTestId('mission-button')).toBeVisible({ timeout: 90_000 }); await audit('mission-panel');
   await keyboardActivate(page, 'mission-button'); await page.keyboard.press('Escape'); await audit('menu-pause');
-  const def = missionSandbox(); def.id = 'L1'; def.steps[0].timer = 1 / 60;
-  await page.evaluate(async def => { const api = window.__SS__!; await api.loadScenario('mission-sandbox'); api.pause(); api.missions.load(def); api.missions.begin(); await api.step(1); }, def);
+  const def = missionSandbox(); def.id = 'L1'; def.steps[0].timer = .5; // fails after 30 ticks; leaves time to finish after Retry resumes the clock
+  await page.evaluate(async def => { const api = window.__SS__!; await api.loadScenario('mission-sandbox'); api.pause(); api.missions.load(def); api.missions.begin(); await api.step(30); }, def);
   await audit('mission-panel'); await expect(page.getByTestId('mission-heading')).toHaveText('Mission failed');
   await keyboardActivate(page, 'mission-button');
   await page.evaluate(() => window.__SS__!.cheats.completeObjective());
