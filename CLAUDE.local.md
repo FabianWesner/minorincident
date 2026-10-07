@@ -35,6 +35,7 @@ Living, self-learning document. After every finished lane: (1) add one line to `
 - Lanes never use `git stash pop` in worktrees (repo-wide stash list). Use a WIP commit instead.
 - Git-ignored files (`epics-pipeline/`, `folio-2025/`) are not in worktrees: give lanes absolute paths.
 - This Mac (10 cores/16 GB): ~5 heavy lanes is comfortable, 9 works but the shared locks become the bottleneck (E19 verify holds a sim slot for 40+ min). Lanes must release locks between batches and skip redundant full-suite reruns; the orchestrator runs the full unit suite on main after merging.
+- Disk is tight: remove a lane worktree (scheduler worktree-remove) right after merging it; keep ≥ 10 GB free (disk guard monitor alerts below 6 GB).
 - Tell a lane to stop a slow verification and hand it to the follow-up lane rather than waiting (l1v2-f).
 - Bot time bands: never pad, never shrink the band to fit a thin level — add the missing content.
 - PROD (minor-incident.com) is the public beta: deploy after each green batch (typecheck, unit, build, smoke) straight to PROD after the orchestrator's own QA. QA env (`BRANCH=qa`) only when the PO must test before a merge (PO rule 10-07). Every deploy gets an entry in `epics-pipeline/deploylog.json` → `deploylog.py` → deploy-log artifact.
