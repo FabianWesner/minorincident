@@ -65,3 +65,10 @@ Visual screenshots and the honest §7 checklist are in `review.md` and `compare/
 All runs use the machine-wide browser lock, port 3330, ≤2 Playwright workers (native pass one) and ≤4 Vitest workers. This worktree owns its node_modules. No push, deploy, secret read, protected-reference edit, later asset registration or main merge was performed. The whole source diff was reviewed; tier/retention hooks are limited to measured costs. Only the explicitly authorized AC08 note and status change edit specs; no numerical acceptance budget was weakened.
 
 Source commits: `904d176`, `c876e2e`, `12e8273`, `25baeb4`, `cb05ab7`, `d479538`, `2f3a076`; original evidence `7f0814c`; refreshed evidence/report/status committed separately.
+
+
+## perf-horde follow-up (2026-10-07)
+
+The original report above is historical. The horde/L1 budget follow-up is documented in [horde/report.md](horde/report.md), with raw data and [visual review](horde/review.md). Three-run median p95: desktop high **32.2 → 10.8ms** (200 infected + 40 retained civilians); phone-low **15.4 → 12.6ms** (100 + 40, CPU4× emulation). Triangles: **1,812,429 → 661,341** high and **857,605 → 213,879** low. All six L1 camera spots fit their triangle/draw caps. The paired measurements explicitly disclose shared browser overlap from the old lock-inode race; final single-run verification confirms 9.7ms/10.0ms after persistent-lock fixes.
+
+Typecheck/lint/build pass; full units **264 pass**; smoke **5 CPU + 22 browser pass**. Final `SIM_SLOTS=3 PERF_HORDE_PHASE=verify E2E_PORT=3374 npm run verify -- E18` is **FAIL, exit 1**: 25 selected CPU pass; 35 headless browser pass and **4 campaign-counter failures**; 5 native browser pass and 4 manual/deferred skips. Remaining failures: L6 high 713 draws/3.454M triangles; L6 low 575/745k; L5 high 498/1.803M; L5 low 459/398k. Dense wreck/sedan view+shadow geometry dominates the high-tier excess; secondary-camera and other draws dominate the low-tier excess. Exact per-asset causes, commands, deviations and individual repeated Node timing failures are in the follow-up report. These failures keep the full E18 release gate open. No spec criterion was weakened.

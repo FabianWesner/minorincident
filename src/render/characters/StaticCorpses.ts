@@ -1,4 +1,4 @@
-import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshLambertNodeMaterial, Vector3 } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial, Vector3 } from 'three/webgpu';
 import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
 import { CrowdFigureProbe } from './CrowdFigureProbe';
@@ -38,6 +38,16 @@ export class StaticCorpses extends Group {
           } else for (let c = 0; c < original.itemSize; c++) data[output * original.itemSize + c] = original.getComponent(i, c);
         }
         geometry.setAttribute(name, new BufferAttribute(data, original.itemSize));
+      }
+      // The shared crowd geometry is indexed: keep triangles whose vertices all survive, renumbered.
+      const index = source.getIndex();
+      if (index) {
+        const renumber = new Map(kept.map((old, i) => [old, i])), triangles: number[] = [];
+        for (let i = 0; i < index.count; i += 3) {
+          const a = renumber.get(index.getX(i)), b = renumber.get(index.getX(i + 1)), c = renumber.get(index.getX(i + 2));
+          if (a !== undefined && b !== undefined && c !== undefined) triangles.push(a, b, c);
+        }
+        geometry.setIndex(kept.length > 65535 ? new Uint32BufferAttribute(triangles, 1) : new Uint16BufferAttribute(triangles, 1));
       }
       const state = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
       const colors = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);

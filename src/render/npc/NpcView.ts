@@ -35,6 +35,7 @@ export class NpcView extends Group {
     this.bark.setAttribute('role', 'status'); this.bark.setAttribute('data-corgi-warning', ''); this.bark.style.cssText = 'position:fixed;display:none;pointer-events:none;color:#ffcd63;background:#292537;border:2px solid #ffcd63;border-radius:14px;padding:8px;font:700 16px system-ui;z-index:7'; document.querySelector('#game')!.appendChild(this.bark);
     this.off = world.events.on('corgi.bark', event => { if (event.type === 'corgi.bark') { this.barkUntil = event.tick + 180; this.threatId = event.threatId; this.bark.dataset.direction = `${event.direction.x},${event.direction.z}`; } });
   }
+  setQuality(tier: 'high' | 'low'): void { this.civilians.setQuality(tier); }
   async init(): Promise<void> {
     await this.civilians.init(); const loaded = await this.registry.loadAsset('char.corgi');
     this.dog = loaded.userData.placeholder ? createCorgiPlaceholder() : loaded as Group; this.dogSource = loaded.userData.placeholder ? 'placeholder' : 'glb'; if (loaded.userData.placeholder) this.placeholders.push(this.dog);
@@ -50,7 +51,7 @@ export class NpcView extends Group {
     });
   }
   update(camera: Camera, alpha = 1): void {
-    this.civilians.update(alpha); let cars = 0;
+    this.civilians.update(alpha, camera); let cars = 0;
     for (const [id, hero] of this.heroes) if (!this.world.entities.get(id)) { this.remove(hero.root); hero.badge?.remove(); this.heroes.delete(id); }
     for (const e of this.world.entities.iterate()) {
       if (e.traffic || e.convoy) { this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(e.transform.x, .6, e.transform.z); this.cars.setMatrixAt(cars++, this.transform); continue; }

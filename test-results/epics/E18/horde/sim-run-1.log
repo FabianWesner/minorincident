@@ -1,0 +1,26 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde
+
+ ❯ tests/sim/performance/horde.test.ts (3 tests | 1 failed | 1 skipped) 3602ms
+   × T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms 2250ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/sim/performance/horde.test.ts > T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms
+AssertionError: expected 6.170917000000372 to be less than or equal to 4
+ ❯ tests/sim/performance/horde.test.ts:8:98
+      6|     const proof = await measureHorde(scenario);
+      7|     mkdirSync('test-results/epics/E18', { recursive: true }); writeFil…
+      8|     expect(proof.minInfected).toBe(count); expect(proof.cap).toBe(coun…
+       |                                                                                                  ^
+      9|   });
+     10| }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 2 passed | 9 skipped (12)
+   Start at  14:48:15
+   Duration  5.90s (tests 85%, transform 11%, import 4%)
+

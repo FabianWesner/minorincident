@@ -1,8 +1,8 @@
 {
   "config": {
     "argv": [
-      "/Users/fabianwesner/Library/Application Support/Herd/config/nvm/versions/node/v22.22.2/bin/node",
-      "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/node_modules/.bin/playwright",
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/node_modules/.bin/playwright",
       "test",
       "--grep",
       "@(?:E18)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
@@ -10,8 +10,8 @@
       "@E18-AC08|@E18-AC09|WebGPU low tier parity",
       "--workers=2"
     ],
-    "configFile": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/playwright.config.ts",
-    "rootDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
     "failOnFlakyTests": false,
     "forbidOnly": false,
     "fullyParallel": true,
@@ -27,7 +27,7 @@
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -35,7 +35,7 @@
         },
         "id": "chromium",
         "name": "chromium",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
         "testIgnore": [
           "**/webgpu.spec.ts"
         ],
@@ -45,7 +45,7 @@
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -53,16 +53,18 @@
         },
         "id": "pixel-7",
         "name": "pixel-7",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
-          "**/input-touch.spec.ts"
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -70,16 +72,18 @@
         },
         "id": "pixel-7-landscape",
         "name": "pixel-7-landscape",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
-          "**/input-touch.spec.ts"
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -87,16 +91,18 @@
         },
         "id": "iphone-14",
         "name": "iphone-14",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
-          "**/input-touch.spec.ts"
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -104,16 +110,18 @@
         },
         "id": "iphone-14-landscape",
         "name": "iphone-14-landscape",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts",
-          "**/input-touch.spec.ts"
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
         ],
         "timeout": 60000
       },
       {
-        "outputDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/test-results/playwright/run",
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -121,7 +129,7 @@
         },
         "id": "webkit",
         "name": "webkit",
-        "testDir": "/Users/fabianwesner/Workspace/suburban-survivors/.claude/worktrees/e18-epic/tests",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests",
         "testIgnore": [],
         "testMatch": [
           "**/smoke.spec.ts"
@@ -153,8 +161,8 @@
     "version": "1.63.0",
     "workers": 2,
     "webServer": {
-      "command": "npx vite preview --host 127.0.0.1 --port 3330 --strictPort --configLoader runner",
-      "url": "http://127.0.0.1:3330",
+      "command": "npx vite preview --host 127.0.0.1 --port 3374 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3374",
       "reuseExistingServer": false,
       "timeout": 30000
     }
@@ -186,12 +194,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 6157,
+                  "duration": 6055,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:20:39.222Z",
+                  "startTime": "2026-10-07T13:25:20.773Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -221,15 +229,15 @@
               "projectName": "pixel-7",
               "results": [
                 {
-                  "workerIndex": 2,
-                  "parallelIndex": 1,
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5720,
+                  "duration": 5947,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:08.526Z",
+                  "startTime": "2026-10-07T13:27:16.347Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -259,15 +267,15 @@
               "projectName": "pixel-7-landscape",
               "results": [
                 {
-                  "workerIndex": 4,
-                  "parallelIndex": 1,
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5743,
+                  "duration": 5842,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:15.350Z",
+                  "startTime": "2026-10-07T13:27:23.472Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -297,15 +305,15 @@
               "projectName": "iphone-14",
               "results": [
                 {
-                  "workerIndex": 6,
-                  "parallelIndex": 0,
+                  "workerIndex": 10,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 5769,
+                  "duration": 5753,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:17.164Z",
+                  "startTime": "2026-10-07T13:27:25.063Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -335,15 +343,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 8,
-                  "parallelIndex": 1,
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5878,
+                  "duration": 5800,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:23.356Z",
+                  "startTime": "2026-10-07T13:27:31.083Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -373,15 +381,15 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 10,
-                  "parallelIndex": 0,
+                  "workerIndex": 14,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 7200,
+                  "duration": 7748,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:25.278Z",
+                  "startTime": "2026-10-07T13:27:32.667Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -397,13 +405,60 @@
       ]
     },
     {
+      "title": "e2e/controls-playtest.spec.ts",
+      "file": "e2e/controls-playtest.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E03",
+            "E03-AC14",
+            "E03-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 16979,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T13:25:20.770Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2750c3bdceeb5e094725-03dcd144480ffdfe041b",
+          "file": "e2e/controls-playtest.spec.ts",
+          "line": 8,
+          "column": 1
+        }
+      ]
+    },
+    {
       "title": "e2e/driving.spec.ts",
       "file": "e2e/driving.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [
         {
-          "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real right-click exit",
+          "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
           "ok": true,
           "tags": [
             "smoke",
@@ -418,15 +473,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 3929,
+                  "duration": 3230,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:20:39.214Z",
+                  "startTime": "2026-10-07T13:25:26.934Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -434,9 +489,9 @@
               "status": "expected"
             }
           ],
-          "id": "5e6c768bb370cc6a9717-48a8369a19aa5e31510a",
+          "id": "5e6c768bb370cc6a9717-6d653d77642b28f98199",
           "file": "e2e/driving.spec.ts",
-          "line": 20,
+          "line": 16,
           "column": 1
         }
       ]
@@ -470,15 +525,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 15420,
+                      "duration": 8596,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-06T06:20:43.290Z",
+                      "startTime": "2026-10-07T13:25:30.178Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -515,15 +570,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 22051,
+                      "duration": 8534,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-06T06:20:45.518Z",
+                      "startTime": "2026-10-07T13:25:37.858Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -561,15 +616,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 7661,
+                  "duration": 11196,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:20:58.735Z",
+                  "startTime": "2026-10-07T13:25:38.798Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -600,12 +655,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1716,
+                  "duration": 1627,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:21:06.409Z",
+                  "startTime": "2026-10-07T13:25:46.404Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -633,15 +688,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1612,
+                  "duration": 980,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:21:07.589Z",
+                  "startTime": "2026-10-07T13:25:48.042Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -672,12 +727,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 2700,
+                  "duration": 2564,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:21:08.148Z",
+                  "startTime": "2026-10-07T13:25:49.030Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -688,6 +743,98 @@
           "id": "c33ab9c34c8c4e5a0817-162554b02bf10cb33049",
           "file": "e2e/e18-quality.spec.ts",
           "line": 51,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/menus-mouse.spec.ts",
+      "file": "e2e/menus-mouse.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+          "ok": true,
+          "tags": [
+            "E14",
+            "E14-AC03",
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8305,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T13:25:50.012Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "985816c1468952bd1927-cecdef361888236d9f37",
+          "file": "e2e/menus-mouse.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/save.spec.ts",
+      "file": "e2e/save.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+          "ok": true,
+          "tags": [
+            "E13",
+            "E13-AC05",
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8648,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T13:25:51.610Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4fc26a16ee2fb292eca8-e64e10e112418c30083b",
+          "file": "e2e/save.spec.ts",
+          "line": 35,
           "column": 1
         }
       ]
@@ -716,12 +863,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1512,
+                  "duration": 469,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:21:09.235Z",
+                  "startTime": "2026-10-07T13:25:58.330Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -752,12 +899,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 2701,
+                  "duration": 512,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:21:10.771Z",
+                  "startTime": "2026-10-07T13:25:58.811Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -785,15 +932,15 @@
               "projectName": "pixel-7",
               "results": [
                 {
-                  "workerIndex": 3,
-                  "parallelIndex": 0,
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 684,
+                  "duration": 617,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:14.335Z",
+                  "startTime": "2026-10-07T13:27:22.524Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -821,15 +968,15 @@
               "projectName": "pixel-7",
               "results": [
                 {
-                  "workerIndex": 2,
-                  "parallelIndex": 1,
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 587,
+                  "duration": 492,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:14.367Z",
+                  "startTime": "2026-10-07T13:27:22.542Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -857,15 +1004,15 @@
               "projectName": "pixel-7-landscape",
               "results": [
                 {
-                  "workerIndex": 5,
-                  "parallelIndex": 0,
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 653,
+                  "duration": 582,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:15.505Z",
+                  "startTime": "2026-10-07T13:27:23.588Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -893,15 +1040,15 @@
               "projectName": "pixel-7-landscape",
               "results": [
                 {
-                  "workerIndex": 5,
-                  "parallelIndex": 0,
+                  "workerIndex": 9,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 516,
+                  "duration": 457,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:16.274Z",
+                  "startTime": "2026-10-07T13:27:24.289Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -929,15 +1076,15 @@
               "projectName": "iphone-14",
               "results": [
                 {
-                  "workerIndex": 7,
-                  "parallelIndex": 1,
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 644,
+                  "duration": 524,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:21.570Z",
+                  "startTime": "2026-10-07T13:27:29.669Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -965,15 +1112,15 @@
               "projectName": "iphone-14",
               "results": [
                 {
-                  "workerIndex": 7,
-                  "parallelIndex": 1,
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 556,
+                  "duration": 434,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:22.319Z",
+                  "startTime": "2026-10-07T13:27:30.284Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1001,15 +1148,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 9,
-                  "parallelIndex": 0,
+                  "workerIndex": 13,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 713,
+                  "duration": 598,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:23.477Z",
+                  "startTime": "2026-10-07T13:27:31.225Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1037,15 +1184,15 @@
               "projectName": "iphone-14-landscape",
               "results": [
                 {
-                  "workerIndex": 9,
-                  "parallelIndex": 0,
+                  "workerIndex": 13,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 521,
+                  "duration": 452,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:24.377Z",
+                  "startTime": "2026-10-07T13:27:31.939Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1073,15 +1220,15 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 11,
-                  "parallelIndex": 1,
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1512,
+                  "duration": 1599,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:29.737Z",
+                  "startTime": "2026-10-07T13:27:37.244Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1109,15 +1256,15 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 11,
-                  "parallelIndex": 1,
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 2445,
+                  "duration": 2487,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:23:31.504Z",
+                  "startTime": "2026-10-07T13:27:39.011Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1154,15 +1301,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4984,
+                  "duration": 5614,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:21:10.874Z",
+                  "startTime": "2026-10-07T13:25:59.336Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1177,7 +1324,79 @@
         },
         {
           "title": "T-E18-01-high-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
-          "ok": true,
+          "ok": false,
+          "tags": [
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 6967,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m600\u001b[39m\nReceived:    \u001b[31m713\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m600\u001b[39m\nReceived:    \u001b[31m713\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts:18:36",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts",
+                      "column": 36,
+                      "line": 18
+                    },
+                    "snippet": "  16 |     expect(proof.first.drawCalls).toBe(proof.second.drawCalls); expect(proof.first.triangles).toBe(proof.second.triangles);\n  17 |     expect(proof.second.quality.tier).toBe(tier); expect(proof.state.render.lighting!.shadowSize).toBe(qualityBudgets[tier].shadowSize); if (proof.state.render.postFx) expect(proof.state.render.postFx.bloomMips).toBe(qualityBudgets[tier].bloomMips); expect(proof.second.drawCalls).toBeGreaterThan(0);\n> 18 |     expect(proof.second.drawCalls).toBeLessThanOrEqual(qualityBudgets[tier].drawCalls); expect(proof.second.triangles).toBeLessThanOrEqual(qualityBudgets[tier].triangles);\n     |                                    ^\n  19 |     expect(proof.state.ai!.count).toBe(qualityBudgets[tier].infected); expect(proof.state.ai!.cap).toBe(qualityBudgets[tier].infected);\n  20 |     await page.locator('canvas').screenshot({ path: `${output}/${name}-${tier}.png` });\n  21 |   });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts",
+                        "column": 36,
+                        "line": 18
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m600\u001b[39m\nReceived:    \u001b[31m713\u001b[39m\n\n  16 |     expect(proof.first.drawCalls).toBe(proof.second.drawCalls); expect(proof.first.triangles).toBe(proof.second.triangles);\n  17 |     expect(proof.second.quality.tier).toBe(tier); expect(proof.state.render.lighting!.shadowSize).toBe(qualityBudgets[tier].shadowSize); if (proof.state.render.postFx) expect(proof.state.render.postFx.bloomMips).toBe(qualityBudgets[tier].bloomMips); expect(proof.second.drawCalls).toBeGreaterThan(0);\n> 18 |     expect(proof.second.drawCalls).toBeLessThanOrEqual(qualityBudgets[tier].drawCalls); expect(proof.second.triangles).toBeLessThanOrEqual(qualityBudgets[tier].triangles);\n     |                                    ^\n  19 |     expect(proof.state.ai!.count).toBe(qualityBudgets[tier].infected); expect(proof.state.ai!.cap).toBe(qualityBudgets[tier].infected);\n  20 |     await page.locator('canvas').screenshot({ path: `${output}/${name}-${tier}.png` });\n  21 |   });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts:18:36"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T13:26:00.271Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374/perf-e18-counters-T-E18-01-61fea-unters-stay-in-tier-budgets-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374/perf-e18-counters-T-E18-01-61fea-unters-stay-in-tier-budgets-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts",
+                    "column": 36,
+                    "line": 18
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e59cb90cf0e163e84967-76f30396dcd1efd744b7",
+          "file": "perf/e18-counters.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "T-E18-01-high-perf-l5-bridge @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+          "ok": false,
           "tags": [
             "E18-AC01",
             "perf"
@@ -1193,55 +1412,53 @@
                 {
                   "workerIndex": 0,
                   "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 40185,
-                  "errors": [],
+                  "status": "failed",
+                  "duration": 5662,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1500000\u001b[39m\nReceived:    \u001b[31m1803047\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1500000\u001b[39m\nReceived:    \u001b[31m1803047\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts:18:120",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts",
+                      "column": 120,
+                      "line": 18
+                    },
+                    "snippet": "  16 |     expect(proof.first.drawCalls).toBe(proof.second.drawCalls); expect(proof.first.triangles).toBe(proof.second.triangles);\n  17 |     expect(proof.second.quality.tier).toBe(tier); expect(proof.state.render.lighting!.shadowSize).toBe(qualityBudgets[tier].shadowSize); if (proof.state.render.postFx) expect(proof.state.render.postFx.bloomMips).toBe(qualityBudgets[tier].bloomMips); expect(proof.second.drawCalls).toBeGreaterThan(0);\n> 18 |     expect(proof.second.drawCalls).toBeLessThanOrEqual(qualityBudgets[tier].drawCalls); expect(proof.second.triangles).toBeLessThanOrEqual(qualityBudgets[tier].triangles);\n     |                                                                                                                        ^\n  19 |     expect(proof.state.ai!.count).toBe(qualityBudgets[tier].infected); expect(proof.state.ai!.cap).toBe(qualityBudgets[tier].infected);\n  20 |     await page.locator('canvas').screenshot({ path: `${output}/${name}-${tier}.png` });\n  21 |   });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts",
+                        "column": 120,
+                        "line": 18
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1500000\u001b[39m\nReceived:    \u001b[31m1803047\u001b[39m\n\n  16 |     expect(proof.first.drawCalls).toBe(proof.second.drawCalls); expect(proof.first.triangles).toBe(proof.second.triangles);\n  17 |     expect(proof.second.quality.tier).toBe(tier); expect(proof.state.render.lighting!.shadowSize).toBe(qualityBudgets[tier].shadowSize); if (proof.state.render.postFx) expect(proof.state.render.postFx.bloomMips).toBe(qualityBudgets[tier].bloomMips); expect(proof.second.drawCalls).toBeGreaterThan(0);\n> 18 |     expect(proof.second.drawCalls).toBeLessThanOrEqual(qualityBudgets[tier].drawCalls); expect(proof.second.triangles).toBeLessThanOrEqual(qualityBudgets[tier].triangles);\n     |                                                                                                                        ^\n  19 |     expect(proof.state.ai!.count).toBe(qualityBudgets[tier].infected); expect(proof.state.ai!.cap).toBe(qualityBudgets[tier].infected);\n  20 |     await page.locator('canvas').screenshot({ path: `${output}/${name}-${tier}.png` });\n  21 |   });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts:18:120"
+                    }
+                  ],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:21:13.597Z",
+                  "startTime": "2026-10-07T13:26:04.957Z",
                   "annotations": [],
-                  "attachments": []
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374/perf-e18-counters-T-E18-01-0cb4b-unters-stay-in-tier-budgets-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374/perf-e18-counters-T-E18-01-0cb4b-unters-stay-in-tier-budgets-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts",
+                    "column": 120,
+                    "line": 18
+                  }
                 }
               ],
-              "status": "expected"
-            }
-          ],
-          "id": "e59cb90cf0e163e84967-76f30396dcd1efd744b7",
-          "file": "perf/e18-counters.spec.ts",
-          "line": 6,
-          "column": 3
-        },
-        {
-          "title": "T-E18-01-high-perf-l5-bridge @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
-          "ok": true,
-          "tags": [
-            "E18-AC01",
-            "perf"
-          ],
-          "tests": [
-            {
-              "timeout": 180000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "chromium",
-              "projectName": "chromium",
-              "results": [
-                {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
-                  "status": "passed",
-                  "duration": 32192,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2026-10-06T06:21:15.899Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
+              "status": "unexpected"
             }
           ],
           "id": "e59cb90cf0e163e84967-6493930f2b426d5efe67",
@@ -1265,15 +1482,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
+                  "workerIndex": 2,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1145,
+                  "duration": 2919,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:21:48.128Z",
+                  "startTime": "2026-10-07T13:26:08.360Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1288,7 +1505,7 @@
         },
         {
           "title": "T-E18-01-low-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
-          "ok": true,
+          "ok": false,
           "tags": [
             "E18-AC01",
             "perf"
@@ -1302,20 +1519,55 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
-                  "status": "passed",
-                  "duration": 19061,
-                  "errors": [],
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4818,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m300\u001b[39m\nReceived:    \u001b[31m575\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m300\u001b[39m\nReceived:    \u001b[31m575\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts:18:36",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts",
+                      "column": 36,
+                      "line": 18
+                    },
+                    "snippet": "  16 |     expect(proof.first.drawCalls).toBe(proof.second.drawCalls); expect(proof.first.triangles).toBe(proof.second.triangles);\n  17 |     expect(proof.second.quality.tier).toBe(tier); expect(proof.state.render.lighting!.shadowSize).toBe(qualityBudgets[tier].shadowSize); if (proof.state.render.postFx) expect(proof.state.render.postFx.bloomMips).toBe(qualityBudgets[tier].bloomMips); expect(proof.second.drawCalls).toBeGreaterThan(0);\n> 18 |     expect(proof.second.drawCalls).toBeLessThanOrEqual(qualityBudgets[tier].drawCalls); expect(proof.second.triangles).toBeLessThanOrEqual(qualityBudgets[tier].triangles);\n     |                                    ^\n  19 |     expect(proof.state.ai!.count).toBe(qualityBudgets[tier].infected); expect(proof.state.ai!.cap).toBe(qualityBudgets[tier].infected);\n  20 |     await page.locator('canvas').screenshot({ path: `${output}/${name}-${tier}.png` });\n  21 |   });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts",
+                        "column": 36,
+                        "line": 18
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m300\u001b[39m\nReceived:    \u001b[31m575\u001b[39m\n\n  16 |     expect(proof.first.drawCalls).toBe(proof.second.drawCalls); expect(proof.first.triangles).toBe(proof.second.triangles);\n  17 |     expect(proof.second.quality.tier).toBe(tier); expect(proof.state.render.lighting!.shadowSize).toBe(qualityBudgets[tier].shadowSize); if (proof.state.render.postFx) expect(proof.state.render.postFx.bloomMips).toBe(qualityBudgets[tier].bloomMips); expect(proof.second.drawCalls).toBeGreaterThan(0);\n> 18 |     expect(proof.second.drawCalls).toBeLessThanOrEqual(qualityBudgets[tier].drawCalls); expect(proof.second.triangles).toBeLessThanOrEqual(qualityBudgets[tier].triangles);\n     |                                    ^\n  19 |     expect(proof.state.ai!.count).toBe(qualityBudgets[tier].infected); expect(proof.state.ai!.cap).toBe(qualityBudgets[tier].infected);\n  20 |     await page.locator('canvas').screenshot({ path: `${output}/${name}-${tier}.png` });\n  21 |   });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts:18:36"
+                    }
+                  ],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:21:49.280Z",
+                  "startTime": "2026-10-07T13:26:11.580Z",
                   "annotations": [],
-                  "attachments": []
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374/perf-e18-counters-T-E18-01-3fc8e-unters-stay-in-tier-budgets-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374/perf-e18-counters-T-E18-01-3fc8e-unters-stay-in-tier-budgets-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts",
+                    "column": 36,
+                    "line": 18
+                  }
                 }
               ],
-              "status": "expected"
+              "status": "unexpected"
             }
           ],
           "id": "e59cb90cf0e163e84967-910b099e204389976385",
@@ -1325,7 +1577,7 @@
         },
         {
           "title": "T-E18-01-low-perf-l5-bridge @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
-          "ok": true,
+          "ok": false,
           "tags": [
             "E18-AC01",
             "perf"
@@ -1339,20 +1591,55 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 17612,
-                  "errors": [],
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 4249,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m300\u001b[39m\nReceived:    \u001b[31m459\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m300\u001b[39m\nReceived:    \u001b[31m459\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts:18:36",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts",
+                      "column": 36,
+                      "line": 18
+                    },
+                    "snippet": "  16 |     expect(proof.first.drawCalls).toBe(proof.second.drawCalls); expect(proof.first.triangles).toBe(proof.second.triangles);\n  17 |     expect(proof.second.quality.tier).toBe(tier); expect(proof.state.render.lighting!.shadowSize).toBe(qualityBudgets[tier].shadowSize); if (proof.state.render.postFx) expect(proof.state.render.postFx.bloomMips).toBe(qualityBudgets[tier].bloomMips); expect(proof.second.drawCalls).toBeGreaterThan(0);\n> 18 |     expect(proof.second.drawCalls).toBeLessThanOrEqual(qualityBudgets[tier].drawCalls); expect(proof.second.triangles).toBeLessThanOrEqual(qualityBudgets[tier].triangles);\n     |                                    ^\n  19 |     expect(proof.state.ai!.count).toBe(qualityBudgets[tier].infected); expect(proof.state.ai!.cap).toBe(qualityBudgets[tier].infected);\n  20 |     await page.locator('canvas').screenshot({ path: `${output}/${name}-${tier}.png` });\n  21 |   });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts",
+                        "column": 36,
+                        "line": 18
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m300\u001b[39m\nReceived:    \u001b[31m459\u001b[39m\n\n  16 |     expect(proof.first.drawCalls).toBe(proof.second.drawCalls); expect(proof.first.triangles).toBe(proof.second.triangles);\n  17 |     expect(proof.second.quality.tier).toBe(tier); expect(proof.state.render.lighting!.shadowSize).toBe(qualityBudgets[tier].shadowSize); if (proof.state.render.postFx) expect(proof.state.render.postFx.bloomMips).toBe(qualityBudgets[tier].bloomMips); expect(proof.second.drawCalls).toBeGreaterThan(0);\n> 18 |     expect(proof.second.drawCalls).toBeLessThanOrEqual(qualityBudgets[tier].drawCalls); expect(proof.second.triangles).toBeLessThanOrEqual(qualityBudgets[tier].triangles);\n     |                                    ^\n  19 |     expect(proof.state.ai!.count).toBe(qualityBudgets[tier].infected); expect(proof.state.ai!.cap).toBe(qualityBudgets[tier].infected);\n  20 |     await page.locator('canvas').screenshot({ path: `${output}/${name}-${tier}.png` });\n  21 |   });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts:18:36"
+                    }
+                  ],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:21:53.820Z",
+                  "startTime": "2026-10-07T13:26:11.389Z",
                   "annotations": [],
-                  "attachments": []
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374/perf-e18-counters-T-E18-01-e6d22-unters-stay-in-tier-budgets-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/test-results/playwright/run-3374/perf-e18-counters-T-E18-01-e6d22-unters-stay-in-tier-budgets-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-horde/tests/perf/e18-counters.spec.ts",
+                    "column": 36,
+                    "line": 18
+                  }
                 }
               ],
-              "status": "expected"
+              "status": "unexpected"
             }
           ],
           "id": "e59cb90cf0e163e84967-50e82f685c37f41f9b17",
@@ -1384,15 +1671,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
+                  "workerIndex": 4,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 7618,
+                  "duration": 7728,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:22:08.352Z",
+                  "startTime": "2026-10-07T13:26:16.384Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1429,15 +1716,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 5,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 62504,
+                  "duration": 58043,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:22:11.442Z",
+                  "startTime": "2026-10-07T13:26:17.538Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1466,15 +1753,15 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
+                  "workerIndex": 4,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 52117,
+                  "duration": 30567,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-06T06:22:15.982Z",
+                  "startTime": "2026-10-07T13:26:24.202Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1488,15 +1775,105 @@
           "column": 46
         }
       ]
+    },
+    {
+      "title": "perf/l1-budgets.spec.ts",
+      "file": "perf/l1-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "L1 game camera photo spots high @E18-AC01 @perf",
+          "ok": true,
+          "tags": [
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 17712,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"phase\":\"verify\",\"tier\":\"high\",\"spots\":[{\"spot\":\"V1\",\"triangles\":1482769,\"draws\":131,\"profile\":{\"other\":{\"drawCalls\":53,\"triangles\":179344},\"shadows\":{\"drawCalls\":62,\"triangles\":698698},\"buildings\":{\"drawCalls\":6,\"triangles\":421820},\"props\":{\"drawCalls\":9,\"triangles\":175457},\"crowd\":{\"drawCalls\":1,\"triangles\":7450}},\"assets\":{\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":77116},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":74456},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":264828},\"shadow:prop.street-lamp\":{\"drawCalls\":1,\"triangles\":13300},\"shadow:prop.street-tree-blossom\":{\"drawCalls\":1,\"triangles\":1516},\"shadow:veh.sedan-green\":{\"drawCalls\":1,\"triangles\":66863},\"shadow:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":53310},\"shadow:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":38112},\"shadow:prop.trash-bags\":{\"drawCalls\":1,\"triangles\":1452},\"shadow:prop.garden-bush-small\":{\"drawCalls\":1,\"triangles\":166},\"shadow:prop.hedge\":{\"drawCalls\":1,\"triangles\":830},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":77684},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":13676},\"view:bld.house-c\":{\"drawCalls\":2,\"triangles\":269328},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":74808},\"view:veh.sedan-green\":{\"drawCalls\":2,\"triangles\":67911},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":53310},\"view:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":38112},\"view:prop.trash-bags\":{\"drawCalls\":1,\"triangles\":1452},\"view:prop.garden-bush-small\":{\"drawCalls\":1,\"triangles\":166},\"view:prop.hedge\":{\"drawCalls\":1,\"triangles\":830}}},{\"spot\":\"V2\",\"triangles\":1252357,\"draws\":147,\"profile\":{\"other\":{\"drawCalls\":47,\"triangles\":170764},\"shadows\":{\"drawCalls\":87,\"triangles\":654386},\"buildings\":{\"drawCalls\":4,\"triangles\":230176},\"props\":{\"drawCalls\":7,\"triangles\":184087},\"crowd\":{\"drawCalls\":2,\"triangles\":12944}},\"assets\":{\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":154232},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":74456},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":88276},\"shadow:prop.street-lamp\":{\"drawCalls\":1,\"triangles\":19950},\"shadow:veh.sedan-green\":{\"drawCalls\":1,\"triangles\":66863},\"shadow:prop.privacy-fence\":{\"drawCalls\":2,\"triangles\":32142},\"shadow:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":63520},\"shadow:prop.crates\":{\"drawCalls\":1,\"triangles\":1160},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":155368},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":20514},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":74808},\"view:veh.sedan-green\":{\"drawCalls\":2,\"triangles\":67911},\"view:prop.privacy-fence\":{\"drawCalls\":2,\"triangles\":32142},\"view:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":63520}}},{\"spot\":\"V3\",\"triangles\":1403885,\"draws\":191,\"profile\":{\"other\":{\"drawCalls\":78,\"triangles\":216168},\"shadows\":{\"drawCalls\":94,\"triangles\":702145},\"props\":{\"drawCalls\":12,\"triangles\":152308},\"buildings\":{\"drawCalls\":5,\"triangles\":322892},\"crowd\":{\"drawCalls\":2,\"triangles\":10372}},\"assets\":{\"shadow:bld.house-d\":{\"drawCalls\":1,\"triangles\":81846},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":148912},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":88276},\"shadow:bld.house-a\":{\"drawCalls\":1,\"triangles\":83500},\"shadow:prop.street-lamp\":{\"drawCalls\":1,\"triangles\":19950},\"shadow:prop.street-tree\":{\"drawCalls\":1,\"triangles\":1516},\"shadow:prop.street-sign\":{\"drawCalls\":1,\"triangles\":9556},\"shadow:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":17770},\"shadow:veh.sedan-blue\":{\"drawCalls\":1,\"triangles\":35132},\"shadow:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":6964},\"shadow:prop.picket-fence\":{\"drawCalls\":2,\"triangles\":57920},\"shadow:prop.wheelbarrow\":{\"drawCalls\":1,\"triangles\":1266},\"shadow:prop.hedge\":{\"drawCalls\":1,\"triangles\":166},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":20514},\"view:bld.house-c\":{\"drawCalls\":2,\"triangles\":89776},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":149616},\"view:bld.house-a\":{\"drawCalls\":1,\"triangles\":83500},\"view:prop.street-tree\":{\"drawCalls\":1,\"triangles\":1516},\"view:prop.street-sign\":{\"drawCalls\":1,\"triangles\":9556},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":17770},\"view:veh.sedan-blue\":{\"drawCalls\":2,\"triangles\":36636},\"view:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":6964},\"view:prop.picket-fence\":{\"drawCalls\":2,\"triangles\":57920},\"view:prop.wheelbarrow\":{\"drawCalls\":1,\"triangles\":1266},\"view:prop.hedge\":{\"drawCalls\":1,\"triangles\":166}}},{\"spot\":\"V4\",\"triangles\":1118803,\"draws\":155,\"profile\":{\"other\":{\"drawCalls\":48,\"triangles\":171860},\"shadows\":{\"drawCalls\":90,\"triangles\":547637},\"buildings\":{\"drawCalls\":6,\"triangles\":242268},\"props\":{\"drawCalls\":11,\"triangles\":157038}},\"assets\":{\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":77116},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":74456},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":88276},\"shadow:prop.street-lamp\":{\"drawCalls\":1,\"triangles\":13300},\"shadow:prop.street-tree\":{\"drawCalls\":1,\"triangles\":3032},\"shadow:prop.privacy-fence\":{\"drawCalls\":2,\"triangles\":60886},\"shadow:veh.sedan-blue\":{\"drawCalls\":1,\"triangles\":35132},\"shadow:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1784},\"shadow:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":38112},\"shadow:prop.fire-hydrant\":{\"drawCalls\":1,\"triangles\":2580},\"shadow:prop.hedge\":{\"drawCalls\":1,\"triangles\":332},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":77684},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":13676},\"view:bld.house-c\":{\"drawCalls\":2,\"triangles\":89776},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":74808},\"view:prop.street-tree\":{\"drawCalls\":1,\"triangles\":3032},\"view:prop.privacy-fence\":{\"drawCalls\":2,\"triangles\":60886},\"view:veh.sedan-blue\":{\"drawCalls\":2,\"triangles\":36636},\"view:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1784},\"view:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":38112},\"view:prop.fire-hydrant\":{\"drawCalls\":1,\"triangles\":2580},\"view:prop.hedge\":{\"drawCalls\":1,\"triangles\":332}}},{\"spot\":\"V5\",\"triangles\":931115,\"draws\":178,\"profile\":{\"other\":{\"drawCalls\":66,\"triangles\":219436},\"shadows\":{\"drawCalls\":94,\"triangles\":448353},\"buildings\":{\"drawCalls\":4,\"triangles\":160410},\"props\":{\"drawCalls\":12,\"triangles\":90560},\"crowd\":{\"drawCalls\":2,\"triangles\":12356}},\"assets\":{\"shadow:bld.house-d\":{\"drawCalls\":1,\"triangles\":81846},\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":77116},\"shadow:prop.street-lamp\":{\"drawCalls\":1,\"triangles\":19950},\"shadow:prop.street-sign\":{\"drawCalls\":1,\"triangles\":9556},\"shadow:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":10662},\"shadow:veh.sedan-blue\":{\"drawCalls\":1,\"triangles\":35132},\"shadow:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":6964},\"shadow:prop.picket-fence\":{\"drawCalls\":2,\"triangles\":13456},\"shadow:prop.lab-signs\":{\"drawCalls\":1,\"triangles\":8934},\"shadow:prop.bench\":{\"drawCalls\":1,\"triangles\":9268},\"shadow:prop.fire-hydrant\":{\"drawCalls\":1,\"triangles\":2580},\"shadow:prop.bike-rack\":{\"drawCalls\":1,\"triangles\":8460},\"shadow:prop.garden-bush-small\":{\"drawCalls\":1,\"triangles\":166},\"view:bld.house-d\":{\"drawCalls\":2,\"triangles\":82726},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":77684},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":20514},\"view:prop.street-sign\":{\"drawCalls\":1,\"triangles\":9556},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":10662},\"view:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":6964},\"view:prop.picket-fence\":{\"drawCalls\":2,\"triangles\":13456},\"view:prop.lab-signs\":{\"drawCalls\":1,\"triangles\":8934},\"view:prop.fire-hydrant\":{\"drawCalls\":1,\"triangles\":2580},\"view:prop.bench\":{\"drawCalls\":1,\"triangles\":9268},\"view:prop.bike-rack\":{\"drawCalls\":1,\"triangles\":8460},\"view:prop.garden-bush-small\":{\"drawCalls\":1,\"triangles\":166}}},{\"spot\":\"V6\",\"triangles\":729616,\"draws\":155,\"profile\":{\"other\":{\"drawCalls\":48,\"triangles\":181668},\"shadows\":{\"drawCalls\":96,\"triangles\":386898},\"buildings\":{\"drawCalls\":3,\"triangles\":93153},\"props\":{\"drawCalls\":6,\"triangles\":60662},\"crowd\":{\"drawCalls\":2,\"triangles\":7235}},\"assets\":{\"shadow:bld.clinic-annex\":{\"drawCalls\":2,\"triangles\":92661},\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":77116},\"shadow:prop.street-lamp\":{\"drawCalls\":1,\"triangles\":13300},\"shadow:kit.edge-roadwork\":{\"drawCalls\":1,\"triangles\":11092},\"shadow:prop.lab-signs\":{\"drawCalls\":1,\"triangles\":26802},\"shadow:prop.bike-rack\":{\"drawCalls\":1,\"triangles\":8460},\"view:bld.clinic-annex\":{\"drawCalls\":3,\"triangles\":93153},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":13676},\"view:kit.edge-roadwork\":{\"drawCalls\":2,\"triangles\":11724},\"view:prop.lab-signs\":{\"drawCalls\":1,\"triangles\":26802},\"view:prop.bike-rack\":{\"drawCalls\":1,\"triangles\":8460}}}]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T13:26:54.795Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0b66cb51b1aa2f276122-a02aad4bbb1a1d6848e1",
+          "file": "perf/l1-budgets.spec.ts",
+          "line": 5,
+          "column": 46
+        },
+        {
+          "title": "L1 game camera photo spots low @E18-AC01 @perf",
+          "ok": true,
+          "tags": [
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 9685,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"phase\":\"verify\",\"tier\":\"low\",\"spots\":[{\"spot\":\"V1\",\"triangles\":246816,\"draws\":116,\"profile\":{\"other\":{\"drawCalls\":53,\"triangles\":86566},\"shadows\":{\"drawCalls\":47,\"triangles\":106883},\"buildings\":{\"drawCalls\":6,\"triangles\":38075},\"props\":{\"drawCalls\":9,\"triangles\":11292},\"crowd\":{\"drawCalls\":1,\"triangles\":4000}},\"assets\":{\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":5260},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":10023},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":21864},\"shadow:veh.sedan-green\":{\"drawCalls\":1,\"triangles\":3120},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":5380},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":1300},\"view:bld.house-c\":{\"drawCalls\":2,\"triangles\":22624},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":10071},\"view:veh.sedan-green\":{\"drawCalls\":2,\"triangles\":3336},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":3780},\"view:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":1860},\"view:prop.trash-bags\":{\"drawCalls\":1,\"triangles\":20},\"view:prop.garden-bush-small\":{\"drawCalls\":1,\"triangles\":166},\"view:prop.hedge\":{\"drawCalls\":1,\"triangles\":830}}},{\"spot\":\"V2\",\"triangles\":262940,\"draws\":133,\"profile\":{\"other\":{\"drawCalls\":47,\"triangles\":82976},\"shadows\":{\"drawCalls\":75,\"triangles\":145155},\"buildings\":{\"drawCalls\":4,\"triangles\":20831},\"props\":{\"drawCalls\":6,\"triangles\":10402},\"crowd\":{\"drawCalls\":1,\"triangles\":3576}},\"assets\":{\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":10520},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":10023},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":10932},\"shadow:veh.sedan-green\":{\"drawCalls\":1,\"triangles\":3120},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":10760},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":1950},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":10071},\"view:veh.sedan-green\":{\"drawCalls\":2,\"triangles\":3336},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":2016},\"view:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":3100}}},{\"spot\":\"V3\",\"triangles\":334564,\"draws\":170,\"profile\":{\"other\":{\"drawCalls\":78,\"triangles\":127900},\"shadows\":{\"drawCalls\":75,\"triangles\":150232},\"props\":{\"drawCalls\":11,\"triangles\":14248},\"buildings\":{\"drawCalls\":5,\"triangles\":36720},\"crowd\":{\"drawCalls\":1,\"triangles\":5464}},\"assets\":{\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":20046},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":10932},\"shadow:bld.house-a\":{\"drawCalls\":1,\"triangles\":5266},\"shadow:veh.sedan-blue\":{\"drawCalls\":1,\"triangles\":3216},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":1950},\"view:bld.house-c\":{\"drawCalls\":2,\"triangles\":11312},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":20142},\"view:bld.house-a\":{\"drawCalls\":1,\"triangles\":5266},\"view:prop.street-tree\":{\"drawCalls\":1,\"triangles\":1516},\"view:prop.street-sign\":{\"drawCalls\":1,\"triangles\":1752},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":1260},\"view:veh.sedan-blue\":{\"drawCalls\":2,\"triangles\":3312},\"view:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1144},\"view:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":3100},\"view:prop.wheelbarrow\":{\"drawCalls\":1,\"triangles\":48},\"view:prop.hedge\":{\"drawCalls\":1,\"triangles\":166}}},{\"spot\":\"V4\",\"triangles\":270032,\"draws\":138,\"profile\":{\"other\":{\"drawCalls\":48,\"triangles\":83512},\"shadows\":{\"drawCalls\":74,\"triangles\":145399},\"buildings\":{\"drawCalls\":6,\"triangles\":25299},\"props\":{\"drawCalls\":10,\"triangles\":15822}},\"assets\":{\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":10023},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":10932},\"shadow:veh.sedan-blue\":{\"drawCalls\":1,\"triangles\":3216},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":3916},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":1300},\"view:bld.house-c\":{\"drawCalls\":2,\"triangles\":11312},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":10071},\"view:prop.street-tree\":{\"drawCalls\":1,\"triangles\":3032},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":3528},\"view:veh.sedan-blue\":{\"drawCalls\":2,\"triangles\":3312},\"view:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1144},\"view:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":1860},\"view:prop.fire-hydrant\":{\"drawCalls\":1,\"triangles\":1314},\"view:prop.hedge\":{\"drawCalls\":1,\"triangles\":332}}},{\"spot\":\"V5\",\"triangles\":306040,\"draws\":156,\"profile\":{\"other\":{\"drawCalls\":66,\"triangles\":131568},\"shadows\":{\"drawCalls\":74,\"triangles\":135696},\"buildings\":{\"drawCalls\":4,\"triangles\":15054},\"props\":{\"drawCalls\":11,\"triangles\":17690},\"crowd\":{\"drawCalls\":1,\"triangles\":6032}},\"assets\":{\"shadow:bld.house-d\":{\"drawCalls\":1,\"triangles\":11016},\"shadow:veh.sedan-blue\":{\"drawCalls\":1,\"triangles\":3216},\"view:bld.house-d\":{\"drawCalls\":2,\"triangles\":11138},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":3916},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":1950},\"view:prop.street-sign\":{\"drawCalls\":1,\"triangles\":1752},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":756},\"view:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1144},\"view:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":930},\"view:prop.lab-signs\":{\"drawCalls\":1,\"triangles\":8892},\"view:prop.fire-hydrant\":{\"drawCalls\":1,\"triangles\":1314},\"view:prop.bench\":{\"drawCalls\":1,\"triangles\":546},\"view:prop.bike-rack\":{\"drawCalls\":1,\"triangles\":240},\"view:prop.garden-bush-small\":{\"drawCalls\":1,\"triangles\":166}}},{\"spot\":\"V6\",\"triangles\":285375,\"draws\":144,\"profile\":{\"other\":{\"drawCalls\":48,\"triangles\":93880},\"shadows\":{\"drawCalls\":85,\"triangles\":134020},\"buildings\":{\"drawCalls\":3,\"triangles\":12872},\"props\":{\"drawCalls\":6,\"triangles\":39940},\"crowd\":{\"drawCalls\":2,\"triangles\":4663}},\"assets\":{\"shadow:bld.clinic-annex\":{\"drawCalls\":2,\"triangles\":12424},\"view:bld.clinic-annex\":{\"drawCalls\":3,\"triangles\":12872},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":1300},\"view:kit.edge-roadwork\":{\"drawCalls\":2,\"triangles\":11724},\"view:prop.lab-signs\":{\"drawCalls\":1,\"triangles\":26676},\"view:prop.bike-rack\":{\"drawCalls\":1,\"triangles\":240}}}]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T13:27:12.523Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0b66cb51b1aa2f276122-4affaaea0485ecedcda4",
+          "file": "perf/l1-budgets.spec.ts",
+          "line": 5,
+          "column": 46
+        }
+      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-06T06:20:37.612Z",
-    "duration": 176367.687,
-    "expected": 34,
+    "startTime": "2026-10-07T13:25:19.738Z",
+    "duration": 141797.093,
+    "expected": 35,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 4,
     "flaky": 0
   }
 }
