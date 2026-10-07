@@ -71,7 +71,17 @@ export class GameUI {
     character.append(button('character-back', 'Back', () => this.show('title')));
     const levels = this.panel('levels', 'Choose a level', 'Start in Sunset Grove.');
     const names = ['Stop the Outbreak', 'Get Them Out', 'Reach the Safe Zone', 'Open the Escape Route', 'Hold the Line', 'Get Out'];
-    for (let i = 1; i <= 6; i++) levels.append(button(`level-L${i}`, `L${i} · ${names[i - 1]}`, () => { void this.load(`L${i}`); }));
+    const lockHint = document.createElement('p'); lockHint.className = 'lock-hint'; lockHint.setAttribute('role', 'status'); lockHint.hidden = true;
+    for (let i = 1; i <= 6; i++) {
+      const b = button(`level-L${i}`, `L${i} · ${names[i - 1]}`, () => {
+        // Locked levels stay focusable (aria-disabled) so a tap or keyboard focus can explain why; activation is blocked.
+        if (b.getAttribute('aria-disabled') === 'true') { lockHint.textContent = `Complete Level ${i - 1} first`; lockHint.hidden = false; return; }
+        void this.load(`L${i}`);
+      });
+      b.addEventListener('focus', () => { if (b.getAttribute('aria-disabled') === 'true') { lockHint.textContent = `Complete Level ${i - 1} first`; lockHint.hidden = false; } else lockHint.hidden = true; });
+      levels.append(b);
+    }
+    levels.append(lockHint);
     levels.append(button('levels-back', 'Back', () => this.show('character')));
     const pause = this.panel('pause', 'Game paused', 'Take a breath. The neighborhood can wait.');
     pause.append(button('resume-game', 'Resume', () => this.resume()),
@@ -201,7 +211,7 @@ export class GameUI {
       const names = ['Stop the Outbreak', 'Get Them Out', 'Reach the Safe Zone', 'Open the Escape Route', 'Hold the Line', 'Get Out'], unlocked = this.game.campaign?.unlockedLevel ?? 1;
       for (let i = 1; i <= 6; i++) {
         const b = this.root.querySelector<HTMLButtonElement>(`[data-testid=level-L${i}]`)!, locked = i > unlocked;
-        b.disabled = locked; b.classList.toggle('is-locked', locked); b.textContent = `${locked ? '🔒 ' : ''}L${i} · ${names[i - 1]}`;
+        if (locked) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled'); b.classList.toggle('is-locked', locked); b.textContent = `${locked ? '🔒 ' : ''}L${i} · ${names[i - 1]}`;
         if (locked) { b.title = `Complete Level ${i - 1} first`; b.setAttribute('aria-label', `Level ${i}, locked. Complete Level ${i - 1} first`); } else { b.removeAttribute('title'); b.removeAttribute('aria-label'); }
       }
     }

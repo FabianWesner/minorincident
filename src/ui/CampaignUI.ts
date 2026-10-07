@@ -35,8 +35,9 @@ export class CampaignUI {
   private characterSelect():void {this.screen('Choose your survivor');for(const character of ['female','male']as const)this.button(character==='female'?'Female survivor':'Male survivor',async()=>{await this.game.startCampaign(character);});this.focus();}
   private levelSelect():void {
     this.screen('Level select');const save=this.menuSave??this.game.campaign;if(!save)return;
-    for(let level=1;level<=6;level++){const b=this.button(`Level ${level}`,async()=>{await this.game.continueCampaign(save,level as Level);});const locked=level>save.unlockedLevel;b.disabled=locked;b.classList.toggle('is-locked',locked);if(locked){b.textContent=`🔒 Level ${level}`;b.title=`Complete Level ${level-1} first`;b.setAttribute('aria-label',`Level ${level}, locked. Complete Level ${level-1} first`);}}
-    this.button('Back',()=>this.showMenu({status:'ok',save}));this.focus();
+    const hint=document.createElement('p');hint.className='lock-hint';hint.setAttribute('role','status');hint.hidden=true;
+    for(let level=1;level<=6;level++){const b:HTMLButtonElement=this.button(`Level ${level}`,async()=>{if(b.getAttribute('aria-disabled')==='true'){hint.textContent=`Complete Level ${level-1} first`;hint.hidden=false;return;}await this.game.continueCampaign(save,level as Level);});const locked=level>save.unlockedLevel;if(locked)b.setAttribute('aria-disabled','true');b.classList.toggle('is-locked',locked);if(locked){b.textContent=`🔒 Level ${level}`;b.title=`Complete Level ${level-1} first`;b.setAttribute('aria-label',`Level ${level}, locked. Complete Level ${level-1} first`);}}
+    this.content.append(hint);this.button('Back',()=>this.showMenu({status:'ok',save}));this.focus();
   }
   /** A paused result screen can still hand off to progression; no sim polling/allocation when idle. */
   update():void {
