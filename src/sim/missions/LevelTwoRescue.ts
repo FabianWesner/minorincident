@@ -328,7 +328,7 @@ export class LevelTwoRescue {
       if (!ai.director.offscreen(a) || Math.hypot(a.x - p.x, a.z - p.z) < 25) continue;
       const cluster = q.id === -2, id = this.emerge(q.door, q.home, q.home);
       if (!id) { if (ai.director.count >= ai.director.cap) break; continue; }
-      q.id = id; q.at = world.tick; spawned++;
+      const e = world.entities.get(id)!; q.id = id; q.at = world.tick; q.x = e.transform.x; q.z = e.transform.z; q.seen = !ai.director.offscreen(e.transform); spawned++;
       (cluster ? s.clusterIds : s.escapeIds).push(id);
     }
   }

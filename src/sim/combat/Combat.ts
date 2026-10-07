@@ -10,6 +10,7 @@ import { HitQuery } from './HitQuery';
 import { AimAssist } from './AimAssist';
 import { Status } from './Status';
 import { ticks } from '../../data/actions/schema';
+import { fireAxe } from '../../data/l2';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import type { EntitySnapshot } from '../world/types';
 import type { SimWorld } from '../world/SimWorld';
@@ -65,9 +66,25 @@ export class Combat {
     this.effects.update(); this.pickups.update();
   }
   private readonly switched = (side: 'LEFT' | 'RIGHT', actionId: string): void => { this.world.events.emit({ type: 'loadout.switched', tick: this.world.tick, sourceId: 1, side, actionId }); };
+  /** E20 §5.3: with >= 3 infected within 2.5 m at swing start the axe input becomes a 360 degree roundhouse. */
+  private axeStyle(attack: Attack, source: EntitySnapshot): void {
+    const axe = fireAxe, def = attack.def;
+    let near = 0;
+    for (const id of this.query.nearby(source.transform, axe.roundhouseM)) {
+      const e = this.world.entities.get(id);
+      if (e && e.faction === 'infected' && e.health.current > 0 && !e.hidden && !e.infected?.hidden && Math.hypot(e.transform.x - source.transform.x, e.transform.z - source.transform.z) <= axe.roundhouseM) near++;
+    }
+    attack.style = near >= axe.surroundedCount ? 'roundhouse' : 'single';
+    if (attack.style === 'single') return;
+    const total = axe.roundhouse.seconds, windup = total * .3, active = total * .15;
+    attack.def = { ...def, damage: axe.roundhouse.damage * (def.damage / axe.single.damage), range: axe.roundhouseM, arc: 360, maxTargets: 1000, knockback: axe.roundhouse.knockbackM, stagger: axe.roundhouse.staggerS, windup, active, recovery: total - windup - active, cooldown: total };
+    attack.activeAt = attack.started + ticks(windup); attack.recoveryAt = attack.started + ticks(windup + active); attack.endsAt = attack.started + ticks(total);
+    this.runner.loadout.current(attack.side).readyAt = attack.endsAt;
+  }
   private readonly started = (attack: Attack): void => {
     this.world.controls.attacked(attack.side);
     const source = this.world.entities.get(attack.sourceId)!;
+    if (attack.def.id === 'weapon.fire-axe') this.axeStyle(attack, source);
     if (attack.def.category === 'ranged') {
       this.assist.apply(source.id, source.transform, attack.aim, attack.def.range);
       if (attack.def.spread && (attack.def.pellets ?? 1) === 1) {
@@ -75,7 +92,7 @@ export class Combat {
         attack.aim.x = Math.cos(angle); attack.aim.z = Math.sin(angle);
       }
     }
-    this.world.events.emit({ type: 'combat.attack', tick: this.world.tick, attackId: attack.id, actionId: attack.def.id, combo: attack.combo, sourceId: source.id, side: attack.side, position: { ...source.transform }, direction: { ...attack.aim } });
+    this.world.events.emit({ type: 'combat.attack', tick: this.world.tick, attackId: attack.id, actionId: attack.def.id, combo: attack.combo, sourceId: source.id, side: attack.side, position: { ...source.transform }, direction: { ...attack.aim }, ...(attack.style ? { style: attack.style } : {}) });
     if (attack.def.category === 'ranged') this.effects.noise(source.transform, attack.def.noiseRadius, attack.def.id);
     if (source.survivor) source.survivor.attack = { actionId: attack.def.id, combo: attack.combo, started: attack.started, activeAt: attack.activeAt, recoveryAt: attack.recoveryAt, endsAt: attack.endsAt };
     this.world.player?.act(attack.def.id === 'weapon.kick' ? 'kick' : attack.def.category === 'melee' || attack.def.category === 'ability' ? 'swing' : attack.def.category === 'throwable' ? 'throw' : 'shoot', this.world.tick, attack.endsAt - attack.started);
@@ -91,7 +108,7 @@ export class Combat {
     const def = attack.def, distanceFalloff = def.distanceFalloff;
     if (distanceFalloff) falloff *= 1 - (1 - distanceFalloff.minimum) * Math.max(0, Math.min(1, (distance - distanceFalloff.start) / (distanceFalloff.end - distanceFalloff.start)));
     const alive = target.health.current > 0;
-    const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, direction: this.direction, base: def.damage * falloff, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, radius: def.splash?.radius ?? def.range, spread: def.spread, knockback: def.knockback * falloff, stagger: def.stagger, knockdown: def.knockdown, ...(def.hitStopMs === undefined ? {} : { hitStopMs: def.hitStopMs }) });
+    const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, direction: this.direction, base: def.damage * falloff, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, radius: def.splash?.radius ?? def.range, spread: def.spread, knockback: def.knockback * falloff, stagger: def.stagger, knockdown: def.knockdown, ...(attack.style === 'roundhouse' ? { shove: true } : {}), ...(def.hitStopMs === undefined ? {} : { hitStopMs: def.hitStopMs }) });
     if (alive && target.health.current === 0 && def.category === 'melee') this.effects.noise(origin, def.noiseRadius, def.id);
     if (alive && target.faction === 'infected' && (amount || def.damage === 0) && def.status) this.status.apply(target, def.status, attack.sourceId, def.id, attack.id);
   }

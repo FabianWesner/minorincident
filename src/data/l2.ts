@@ -50,6 +50,14 @@ export const l2 = {
   bots: { seeds: 20, completeMedianS: [105, 210] as P, newbieMedianS: [120, 240] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 1 },
 } as const;
 
+/** Section 5.3: the fire axe (E06 rule introduced in L2). The single swing is the catalog action (`weapon.fire-axe`). */
+export const fireAxe = {
+  single: { damage: 45, arcDeg: 100, reachM: 2.1, swingS: .75 },
+  /** Automatic roundhouse when this many infected are within `roundhouseM` at swing start (orchestrator default for "surrounded"). */
+  surroundedCount: 3, roundhouseM: 2.5,
+  roundhouse: { damage: 25, knockbackM: 2.5, staggerS: .8, seconds: 1 },
+} as const;
+
 /** Named world points authored into the L2 layout copy (resolved through the ordinary mission anchor lookup). */
 export const l2Anchors: Record<string, P> = {
   'l2-start': [-73.6, 44.6],
