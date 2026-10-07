@@ -46,6 +46,9 @@ compositions[groveDistrictId] = {
   districts: [{ id: groveDistrictId, origin: [0, 0] }],
 };
 compositions.L1 = { ...compositions[groveDistrictId], id: "L1" };
+// L3 needs four touching slabs: its original Main Street placement was diagonal
+// to the supermarket, leaving a fenced, missing district on the driving route.
+compositions.L3.districts[0].origin = [56, 56];
 /** The retired M1 map (diner, hardware store, gas forecourt): kept only for its geometry/physics regression suites. */
 compositions["L1-M1"] = {
   id: "L1",
