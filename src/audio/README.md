@@ -85,9 +85,16 @@ Per-file grants, authors and provenance are in `assets/audio/LICENSES.md` and
 `L1Arc.ts` (`L1ArcDirector`) is pure logic on audio time: calm layer until the `l1.flicker`/`l1.blast` events, accident cues
 (buzz, muffled blast, glass rattle, ~1.2 s ringing + the tinnitus low-pass, bell, screams), calm beds -12 dB within 3 s then
 faded out, and a chaos layer whose intensity follows the live infected count (cap `l1v2.sound.chaosMaxInfected`).
-`AudioService` feeds it the `l1.*` events and applies the frame. Cues live in sprite `l1arc` (self-made MIT synthesis, ledger
+`AudioService` feeds it the `l1.*` events and applies the frame. Cues live in sprite `l1arc` (recordings plus residual MIT system effects, ledger
 in `public/assets/audio/LICENSES.md`). The fire-station interior is any `interior-*` acoustic zone during chaos (muffles the
 ambience bus, adds a hush bed); `level.completed` plays `l1.outro.sting`.
+
+Event stingers use recorded acoustic guitar, with one completion cue in L1.
+Low HP loops a recorded soft impact rather than a fast melody. Audible UI cues
+use metal Foley taps, and blast ringing uses a recorded bell decay. Diegetic
+music uses recorded guitar/bell excerpts. No category, offset or lazy-load contract
+changes. See `docs/reports/audio-stingers.md` for the complete procedural inventory
+and per-event replacements.
 
 ## Infected voices and credits
 

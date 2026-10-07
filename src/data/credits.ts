@@ -262,27 +262,6 @@ export const audioCredits: readonly Credit[] = [
         ]
     },
     {
-        "title": "Interface Sounds",
-        "author": "Kenney",
-        "url": "https://kenney.nl/assets/interface-sounds",
-        "license": "CC0",
-        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-        "files": [
-            "click_001.ogg",
-            "click_002.ogg",
-            "click_003.ogg",
-            "click_004.ogg",
-            "select_001.ogg",
-            "select_002.ogg",
-            "select_003.ogg",
-            "select_004.ogg",
-            "switch_001.ogg",
-            "switch_002.ogg",
-            "switch_003.ogg",
-            "switch_004.ogg"
-        ]
-    },
-    {
         "title": "Zombie moans",
         "author": "Darsycho",
         "url": "https://opengameart.org/content/zombie-moans",
@@ -516,6 +495,16 @@ export const audioCredits: readonly Credit[] = [
         ]
     },
     {
+        "title": "Aggressive NPC sounds",
+        "author": "mujtaba-io",
+        "url": "https://opengameart.org/content/aggressive-npc-sounds-hey-i-will-kill-you",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "hey_aggressive_mujtaba.wav"
+        ]
+    },
+    {
         "title": "Voice Effects Zombie-Skeleton-Monster Human Male",
         "author": "ArcadeParty",
         "url": "https://opengameart.org/content/zombie-skeleton-monster-voice-effects",
@@ -541,16 +530,6 @@ export const audioCredits: readonly Credit[] = [
         "files": [
             "impactsplat03.mp3.flac",
             "impactsplat07.mp3.flac"
-        ]
-    },
-    {
-        "title": "Aggressive NPC sounds",
-        "author": "mujtaba-io",
-        "url": "https://opengameart.org/content/aggressive-npc-sounds-hey-i-will-kill-you",
-        "license": "CC0",
-        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-        "files": [
-            "hey_aggressive_mujtaba.wav"
         ]
     }
 ];

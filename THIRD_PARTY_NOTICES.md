@@ -119,6 +119,19 @@ Recordings and original system cues share the sprite files in `public/assets/aud
 every encoded file, SHA256, source URL, author, license URL and per-cue sprite segment.
 Source masters and download hashes are pinned in `assets/audio/imports.json`.
 Original synthesized system cues remain self-made MIT (`src/audio/synthesis.ts`).
+Event stingers use excerpts of bbatv / bbatv1's **comfort in uncertainty**
+(CC-BY 3.0, album attribution below). The L1 outro is one 2.5-second excerpt,
+not a synthesized melody over a second completion cue. Jukebox, ice-cream and
+car-radio music use **Running free** from the same album. UI taps, the low-health
+percussion pulse and ringing decays reuse **Impact Sounds — Kenney**, CC0:
+https://kenney.nl/assets/impact-sounds;
+https://creativecommons.org/publicdomain/zero/1.0/.
+Edits include excerpting, low-pass/high-pass filtering, fixed detuning and fades;
+exact per-cue sources and hashes are in the segment ledgers.
+Radio/PA/megaphone speech ambience reuses **Crowd Shouting/Speaking Ambience —
+StarNinjas** (CC0, attribution below), with a radio-band filter. The civilian
+"Hey!" is a spoken CC0 recording by mujtaba-io (listed below).
+These are human speech ambience/reactions; exact authored messages are in captions.
 No Bruno SFX or John Murphy music, samples or melodies are used.
 
 All third-party recordings below were modified: excerpts, EQ, fades, loudness
@@ -156,7 +169,6 @@ Every recording below was modified for the game: excerpts, EQ, pitch, fades, com
 - Sirens and Alarm Noise — aquinn. Source: https://opengameart.org/content/sirens-and-alarm-noise. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: siren_0.mp3.
 - 12 wet towel impacts — Iwan Gabovitch (qubodup). Source: https://opengameart.org/content/12-wet-towel-hittingfallingpunching-floor-sounds. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: wet_towel_on_floor-01.flac, wet_towel_on_floor-02.flac, wet_towel_on_floor-03.flac, wet_towel_on_floor-04.flac.
 - Dog barking mono — Brandon Morris. Source: https://opengameart.org/content/dog-barking-mono. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: dog_barking_mono.wav.
-- Interface Sounds — Kenney. Source: https://kenney.nl/assets/interface-sounds. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: click_001.ogg, click_002.ogg, click_003.ogg, click_004.ogg, select_001.ogg, select_002.ogg, select_003.ogg, select_004.ogg, switch_001.ogg, switch_002.ogg, switch_003.ogg, switch_004.ogg.
 - Zombie moans — Darsycho. Source: https://opengameart.org/content/zombie-moans. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: darsycho__zombie-moans_0.ogg.
 - Ambient Bird Sounds — isaiah658. Source: https://opengameart.org/content/ambient-bird-sounds. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: birds-isaiah658_0.ogg.
 - High traffic road sounds — IgnasD. Source: https://opengameart.org/content/high-traffic-road-sounds. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: gatve Varniu_2.ogg.
@@ -172,9 +184,9 @@ Every recording below was modified for the game: excerpts, EQ, pitch, fades, com
 - Female RPG Voice Starter Pack (type 2, medium voice) — cicifyre. Source: https://opengameart.org/content/female-rpg-voice-starter-pack. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: attack1.wav, attack2.wav, attack3.wav, damaged1.wav, damaged2.wav, damaged3.wav, jump1.wav, jump2.wav, jump3.wav.
 - 100 CC0 Metal and Wood SFX — rubberduck. Source: https://opengameart.org/content/100-cc0-metal-and-wood-sfx. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: metal_close_01.ogg, metal_hit_01.ogg, metal_hit_02.ogg, metal_hit_03.ogg, metal_hit_04.ogg, metal_open_01.ogg, wood_close_01.ogg, wood_close_02.ogg, wood_cracking_01.ogg, wood_cracking_02.ogg, wood_cracking_03.ogg, wood_cracking_04.ogg, wood_hit_01.ogg, wood_hit_02.ogg, wood_hit_03.ogg, wood_hit_04.ogg, wood_slam_01.ogg, wood_slam_02.ogg, wood_slam_03.ogg, wood_slam_04.ogg.
 - Car Sound Effects Pack (Low Quality) — GGBotNet. Source: https://opengameart.org/content/car-sound-effects-pack-low-quality. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: Car_Horn.ogg.
+- Aggressive NPC sounds — mujtaba-io. Source: https://opengameart.org/content/aggressive-npc-sounds-hey-i-will-kill-you. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: hey_aggressive_mujtaba.wav.
 - Voice Effects Zombie-Skeleton-Monster Human Male — ArcadeParty. Source: https://opengameart.org/content/zombie-skeleton-monster-voice-effects. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: zombieDeath1.wav, zombieDeath2.wav, zombieDeath3.wav, zombieDeath4.wav, zombieYell2.wav, zombieYell4.wav, zombieYell7.wav, zombieYell9.wav.
 - 8 wet squish/slurp impacts — Independent.nu. Source: https://opengameart.org/content/8-wet-squish-slurp-impacts. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: impactsplat03.mp3.flac, impactsplat07.mp3.flac.
-- Aggressive NPC sounds — mujtaba-io. Source: https://opengameart.org/content/aggressive-npc-sounds-hey-i-will-kill-you. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: hey_aggressive_mujtaba.wav.
 
 ## Original work
 

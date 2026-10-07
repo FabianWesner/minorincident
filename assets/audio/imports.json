@@ -3189,16 +3189,19 @@
       "start": 0
     },
     "ui.click": {
-      "source": "ui-click-0",
-      "start": 0
+      "source": "sfx2-k-impactMetal_light_000",
+      "start": 0,
+      "filter": "lowpass=f=3000"
     },
     "ui.switch": {
-      "source": "ui-switch-0",
-      "start": 0
+      "source": "sfx2-k-impactMetal_light_000",
+      "start": 0,
+      "filter": "lowpass=f=3000"
     },
     "ui.pickup": {
-      "source": "ui-select-0",
-      "start": 0
+      "source": "sfx2-k-impactMetal_light_000",
+      "start": 0,
+      "filter": "lowpass=f=3000"
     },
     "infected.vocal": {
       "source": "darsycho-moans",
@@ -3412,23 +3415,23 @@
       "filter": "highpass=f=5500"
     },
     "stinger.objective": {
-      "source": "blinding",
-      "start": 32,
+      "source": "aftermath",
+      "start": 16,
       "filter": "afade=t=out:st=0.3:d=0.7"
     },
     "stinger.weapon": {
-      "source": "blinding",
-      "start": 32,
+      "source": "aftermath",
+      "start": 16,
       "filter": "afade=t=out:st=0.3:d=0.7"
     },
     "stinger.elite": {
-      "source": "blinding",
-      "start": 32,
+      "source": "aftermath",
+      "start": 16,
       "filter": "afade=t=out:st=0.3:d=0.7"
     },
     "stinger.twist": {
-      "source": "blinding",
-      "start": 32,
+      "source": "aftermath",
+      "start": 16,
       "filter": "afade=t=out:st=0.3:d=0.7"
     },
     "stinger.complete": {
@@ -4101,40 +4104,49 @@
       "start": 1.69
     },
     "ui.click.v1": {
-      "source": "ui-click-1",
-      "start": 0
+      "source": "sfx2-k-impactMetal_light_001",
+      "start": 0,
+      "filter": "lowpass=f=3000"
     },
     "ui.click.v2": {
-      "source": "ui-click-2",
-      "start": 0
+      "source": "sfx2-k-impactMetal_light_002",
+      "start": 0,
+      "filter": "lowpass=f=3000"
     },
     "ui.click.v3": {
-      "source": "ui-click-3",
-      "start": 0
+      "source": "sfx2-k-impactMetal_light_003",
+      "start": 0,
+      "filter": "lowpass=f=3000"
     },
     "ui.switch.v1": {
-      "source": "ui-switch-1",
-      "start": 0
+      "source": "sfx2-k-impactMetal_light_001",
+      "start": 0,
+      "filter": "lowpass=f=3000"
     },
     "ui.switch.v2": {
-      "source": "ui-switch-2",
-      "start": 0
+      "source": "sfx2-k-impactMetal_light_002",
+      "start": 0,
+      "filter": "lowpass=f=3000"
     },
     "ui.switch.v3": {
-      "source": "ui-switch-3",
-      "start": 0
+      "source": "sfx2-k-impactMetal_light_003",
+      "start": 0,
+      "filter": "lowpass=f=3000"
     },
     "ui.pickup.v1": {
-      "source": "ui-select-1",
-      "start": 0
+      "source": "sfx2-k-impactMetal_light_001",
+      "start": 0,
+      "filter": "lowpass=f=3000"
     },
     "ui.pickup.v2": {
-      "source": "ui-select-2",
-      "start": 0
+      "source": "sfx2-k-impactMetal_light_002",
+      "start": 0,
+      "filter": "lowpass=f=3000"
     },
     "ui.pickup.v3": {
-      "source": "ui-select-3",
-      "start": 0
+      "source": "sfx2-k-impactMetal_light_003",
+      "start": 0,
+      "filter": "lowpass=f=3000"
     },
     "infected.vocal.v1": {
       "source": "darsycho-moans",
@@ -4932,8 +4944,9 @@
       "filter": "asetrate=33600,aresample=48000,lowpass=f=1800"
     },
     "ui.respawn": {
-      "source": "ui-select-0",
-      "start": 0
+      "source": "sfx2-k-impactMetal_light_000",
+      "start": 0,
+      "filter": "lowpass=f=3000"
     },
     "bike.bell": {
       "source": "sfx2-k-impactBell_heavy_000",
@@ -4967,6 +4980,109 @@
     "l1.bell": {
       "source": "sfx2-k-impactBell_heavy_001",
       "start": 0
+    },
+    "l1.outro.sting": {
+      "source": "aftermath",
+      "start": 16,
+      "filter": "afade=t=out:st=1.5:d=1"
+    },
+    "stinger.low-hp": {
+      "source": "sfx2-k-impactSoft_heavy_000",
+      "start": 0,
+      "filter": "asetrate=38400,aresample=48000,lowpass=f=260,afade=t=out:st=0.12:d=0.18"
+    },
+    "diegetic.jukebox": {
+      "source": "morning",
+      "start": 16,
+      "filter": "afade=t=out:st=1.8:d=0.2"
+    },
+    "diegetic.car-radio": {
+      "source": "morning",
+      "start": 16,
+      "filter": "afade=t=out:st=1.8:d=0.2"
+    },
+    "diegetic.ice-cream": {
+      "source": "morning",
+      "start": 16,
+      "filter": "afade=t=out:st=1.8:d=0.2"
+    },
+    "diegetic.jukebox.warped": {
+      "source": "morning",
+      "start": 16,
+      "filter": "asetrate=45600,aresample=48000,lowpass=f=1800"
+    },
+    "diegetic.ice-cream.warped": {
+      "source": "morning",
+      "start": 16,
+      "filter": "asetrate=45600,aresample=48000,lowpass=f=1800"
+    },
+    "diegetic.school-bell": {
+      "source": "sfx2-k-impactBell_heavy_001",
+      "start": 0
+    },
+    "tinnitus": {
+      "source": "sfx2-k-impactBell_heavy_001",
+      "start": 0.12,
+      "filter": "highpass=f=1400,afade=t=out:st=0.3:d=0.8"
+    },
+    "l1.ringing": {
+      "source": "sfx2-k-impactBell_heavy_001",
+      "start": 0.12,
+      "filter": "highpass=f=1400,afade=t=out:st=0.3:d=0.8"
+    },
+    "explosion.tell": {
+      "source": "sfx2-k-impactMetal_light_000",
+      "start": 0,
+      "filter": "lowpass=f=3000"
+    },
+    "civilian.hey": {
+      "source": "mujtaba-hey",
+      "start": 0,
+      "filter": "afade=t=out:st=0.6:d=0.15",
+      "level": -21
+    },
+    "civilian.hey.v1": {
+      "source": "mujtaba-hey",
+      "start": 0,
+      "filter": "asetrate=44640,aresample=48000,afade=t=out:st=0.6:d=0.15",
+      "level": -21
+    },
+    "civilian.hey.v2": {
+      "source": "mujtaba-hey",
+      "start": 0,
+      "filter": "asetrate=51360,aresample=48000,afade=t=out:st=0.6:d=0.15",
+      "level": -21
+    },
+    "civilian.hey.v3": {
+      "source": "mujtaba-hey",
+      "start": 0,
+      "filter": "asetrate=42240,aresample=48000,afade=t=out:st=0.6:d=0.15",
+      "level": -21
+    },
+    "dialogue.radio": {
+      "source": "crowd",
+      "start": 8,
+      "filter": "highpass=f=400,lowpass=f=3000"
+    },
+    "dialogue.emergency": {
+      "source": "crowd",
+      "start": 11,
+      "filter": "highpass=f=400,lowpass=f=3000"
+    },
+    "dialogue.safe-zone": {
+      "source": "crowd",
+      "start": 14,
+      "filter": "highpass=f=400,lowpass=f=3000"
+    },
+    "diegetic.pa": {
+      "source": "crowd",
+      "start": 17,
+      "filter": "highpass=f=400,lowpass=f=3000"
+    },
+    "diegetic.megaphone": {
+      "source": "crowd",
+      "start": 20,
+      "filter": "highpass=f=400,lowpass=f=3000"
     },
     "infected.alert": {
       "source": "ap-zombieYell2",
@@ -5052,30 +5168,6 @@
       "source": "inu-impactsplat03",
       "start": 0,
       "filter": "afade=t=out:st=0.45:d=0.15",
-      "level": -21
-    },
-    "civilian.hey": {
-      "source": "mujtaba-hey",
-      "start": 0,
-      "filter": "afade=t=out:st=0.6:d=0.15",
-      "level": -21
-    },
-    "civilian.hey.v1": {
-      "source": "mujtaba-hey",
-      "start": 0,
-      "filter": "asetrate=44640,aresample=48000,afade=t=out:st=0.6:d=0.15",
-      "level": -21
-    },
-    "civilian.hey.v2": {
-      "source": "mujtaba-hey",
-      "start": 0,
-      "filter": "asetrate=51360,aresample=48000,afade=t=out:st=0.6:d=0.15",
-      "level": -21
-    },
-    "civilian.hey.v3": {
-      "source": "mujtaba-hey",
-      "start": 0,
-      "filter": "asetrate=42240,aresample=48000,afade=t=out:st=0.6:d=0.15",
       "level": -21
     }
   },
