@@ -59,7 +59,8 @@ test('@E19 @E19-AC22 fire-station invitation repeats without moving or protectin
     const p = world.entities.get(1)!, outside = { x: door.x, z: door.z - 2 };
     Object.assign(p.transform, outside); world.physics.playerBody!.setTranslation(p.transform, true); world.clearInput();
     const calls: number[] = []; world.events.on('story.say', e => { if (e.type === 'story.say' && e.text === 'Get in!') calls.push(e.tick); });
-    const id = world.infected!.spawn('infected.runner', { x: door.x, z: door.z - 25 }, { state: 'chase' });
+    const nav = world.infected!.nav, cell = nav.nearestCell(door.x, door.z - 25, .45);
+    const id = world.infected!.spawn('infected.runner', { x: nav.x(cell), z: nav.z(cell) }, { state: 'chase' });
     const chaser = world.entities.get(id)!, before = { ...chaser.transform };
     for (let i = 0; i < 250; i++) world.update();
     expect(calls.length).toBeGreaterThanOrEqual(2); expect(calls[1] - calls[0]).toBe(240);
