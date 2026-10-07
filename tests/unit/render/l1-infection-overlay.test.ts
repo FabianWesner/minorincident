@@ -23,6 +23,8 @@ test('T-E19-18 @E19 @E19-AC18 a turned pedestrian renders as the same person: ow
     let mesh = batch(); const tint = mesh.geometry.getAttribute('_variant'), overlay = mesh.geometry.getAttribute('_overlay');
     const clip = () => infectedClips[Math.floor(batch().geometry.getAttribute('_clip_frame').getX(0) / framesPerClip)];
     expect(clip()).toBe('infection-collapse'); expect(overlay.getX(0)).toBeCloseTo(.2); expect(overlay.getZ(0)).toBeGreaterThan(0);
+    // AC23 readability: the turning flag (y >= 2) drives the body pulse; the eyes are not lit yet in the collapse.
+    expect(overlay.getY(0)).toBe(2);
     const shirt = [tint.getX(0), tint.getY(0), tint.getZ(0)];
     // Risen: no civilian component, an infected brain; still drawn by the same model batch with the same tint.
     delete person.civilian; delete person.infection;
