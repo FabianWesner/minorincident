@@ -7,6 +7,8 @@ import { audioCategories, audioCues, categoryDuration } from '../../src/data/aud
 import { synthesize, wave } from '../../src/audio/synthesis';
 import imports from '../../assets/audio/imports.json';
 const scoreOnly = process.argv.includes('--score-only');
+/** `--score-only calm-L1` rebuilds only the named streams; plain `--score-only` rebuilds every stream. */
+const scoreNames = new Set(scoreOnly ? process.argv.slice(2).filter(arg => arg !== '--score-only') : []);
 const selected = new Set(scoreOnly ? [] : process.argv.length > 2 ? process.argv.slice(2) : audioCategories);
 for (const category of selected)
     if (!audioCategories.includes(category))
@@ -115,14 +117,18 @@ try {
             licenses.push(`| ${file} | ${ids.length ? 'CC0 / CC-BY / self-made (MIT); see segment map' : 'self-made (MIT)'} | ${notice(ids)} | ${hash(`${output}/${file}`)} |`);
         }
     }
-    for (const [state, stream] of Object.entries(imports.streams)) {
+    for (const [state, stream] of Object.entries(imports.streams) as [string, { source: string; start: number; duration: number; crossfade?: number }][]) {
         const name = `score-${state}`;
-        if (scoreOnly || process.argv.length <= 2 || !existsSync(`${output}/${name}.webm`)) {
-            const wav = join(temp, `${name}.wav`);
-            // Preserve the guitar recordings' stereo image; only positional SFX sprites are mono.
-            run(['-y', '-i', master(stream.source), '-t', String(stream.duration),
-                '-af', `atrim=start=${stream.start}:duration=${stream.duration},asetpts=PTS-STARTPTS,loudnorm=I=-18:TP=-2:LRA=9,afade=t=in:d=0.04,afade=t=out:st=${stream.duration - 0.04}:d=0.04`,
-                '-ar', String(rate), '-ac', '2', wav]);
+        if ((scoreOnly && (!scoreNames.size || scoreNames.has(state))) || process.argv.length <= 2 || !existsSync(`${output}/${name}.webm`)) {
+            const wav = join(temp, `${name}.wav`), { start, duration, crossfade } = stream;
+            // Preserve the recordings' stereo image; only positional SFX sprites are mono.
+            // `crossfade`: start..start+duration is a whole number of bars, so the tail is blended (equal power)
+            // into the bars just before `start`; the file then loops into its first sample without a seam.
+            // Loops get one static gain plus a peak limiter: dynamic loudnorm would leave a level step at the seam.
+            const loop = crossfade
+                ? ['-filter_complex', `[0:a]asplit[a][b];[a]atrim=start=${start}:duration=${duration},asetpts=PTS-STARTPTS[body];[b]atrim=start=${start - crossfade}:duration=${crossfade},asetpts=PTS-STARTPTS[head];[body][head]acrossfade=d=${crossfade}:c1=qsin:c2=qsin[out]`, '-map', '[out]']
+                : ['-af', `atrim=start=${start}:duration=${duration},asetpts=PTS-STARTPTS,loudnorm=I=-18:TP=-2:LRA=9,afade=t=in:d=0.04,afade=t=out:st=${duration - 0.04}:d=0.04`];
+            run(['-y', '-i', master(stream.source), ...(crossfade ? [] : ['-t', String(duration)]), ...loop, '-ar', String(rate), '-ac', '2', wav]);
             // Measure the completed excerpt, then trim it: single-pass normalization can drift
             // on a slow build when an output duration cuts the normalizer's lookahead tail.
             const analysis = spawnSync('ffmpeg', ['-hide_banner', '-i', wav, '-af', 'loudnorm=I=-18:TP=-2:LRA=9:print_format=json', '-f', 'null', '-'], { encoding: 'utf8' });
@@ -130,12 +136,12 @@ try {
             const match = analysis.stderr.match(/\{\s*"input_i"[\s\S]*?\}/);
             if (!match) throw new Error(`Missing music loudness measurement: ${state}`);
             const measured = JSON.parse(match[0]) as { input_i: string; input_tp: string };
-            const trim = Math.min(-18 - Number(measured.input_i), -2 - Number(measured.input_tp));
+            const trim = crossfade ? -18 - Number(measured.input_i) : Math.min(-18 - Number(measured.input_i), -2 - Number(measured.input_tp));
             for (const [ext, codec] of [['webm', 'libopus'], ['m4a', 'aac']])
-                run(['-y', '-i', wav, '-af', `volume=${trim}dB`, '-c:a', codec, '-b:a', '96k', ...(ext === 'm4a' ? ['-movflags', '+faststart'] : []), `${output}/${name}.${ext}`]);
+                run(['-y', '-i', wav, '-af', `volume=${trim}dB${crossfade ? ',alimiter=limit=0.7:attack=2:release=60:level=false' : ''}`, '-c:a', codec, '-b:a', '96k', ...(ext === 'm4a' ? ['-movflags', '+faststart'] : []), `${output}/${name}.${ext}`]);
         }
         for (const ext of ['webm', 'm4a'])
-            licenses.push(`| ${name}.${ext} | ${imports.sources[stream.source as keyof typeof imports.sources].license} | ${notice([stream.source])}; excerpt ${stream.start}–${stream.start + stream.duration}s | ${hash(`${output}/${name}.${ext}`)} |`);
+            licenses.push(`| ${name}.${ext} | ${imports.sources[stream.source as keyof typeof imports.sources].license} | ${notice([stream.source])}; excerpt ${stream.start}–${stream.start + stream.duration}s${stream.crossfade ? `, ${stream.crossfade}s loop crossfade` : ''} | ${hash(`${output}/${name}.${ext}`)} |`);
     }
     licenses.push('', '## Exact source per sprite slice', '', '| Cue | Source recording | Start in master (s) | Sprite offset / duration (s) |', '| --- | --- | --- | --- |');
     for (const [id, recipe] of Object.entries(imports.cues)) {

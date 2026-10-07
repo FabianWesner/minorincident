@@ -53,6 +53,8 @@ No Bruno SFX or John Murphy recordings/samples are used.
 | score-combat.m4a | CC-BY 3.0 | CC-BY 3.0: Blinding Lights — Zander Noriega; [source](https://opengameart.org/content/blinding-lights); [license](https://creativecommons.org/licenses/by/3.0/); excerpt 32–128s | 3748e707c2458a11e57382865943d712aeb309391341ba0476a59c4d04ef78ca |
 | score-aftermath.webm | CC-BY 3.0 | CC-BY 3.0: comfort in uncertainty — bbatv / bbatv1; [source](https://opengameart.org/content/peace-is-king-here); [license](https://creativecommons.org/licenses/by/3.0/); excerpt 16–112s | a80f9d93ff2465c3870fc7a0674c0186a8705438867d55447ff3545d5f93ff62 |
 | score-aftermath.m4a | CC-BY 3.0 | CC-BY 3.0: comfort in uncertainty — bbatv / bbatv1; [source](https://opengameart.org/content/peace-is-king-here); [license](https://creativecommons.org/licenses/by/3.0/); excerpt 16–112s | 915f60457cb92f7c3e7926e372a0b5c7781ba6d768e4f5d8bb3c2f60a33cdf98 |
+| score-calm-L1.webm | CC-BY 4.0 | CC-BY 4.0: Jazz Brunch — Kevin MacLeod (incompetech.com); [source](https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700074); [license](https://creativecommons.org/licenses/by/4.0/); excerpt 15.348–207.348s, 3s loop crossfade | 448e7b025f4591ac978be6e968bfa6e820f6e1fe15bc024b3da2b4ab78c804aa |
+| score-calm-L1.m4a | CC-BY 4.0 | CC-BY 4.0: Jazz Brunch — Kevin MacLeod (incompetech.com); [source](https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700074); [license](https://creativecommons.org/licenses/by/4.0/); excerpt 15.348–207.348s, 3s loop crossfade | 8fb96119d2f7ae2032bacd0932de4612ac1a58575739527096ee57474b41eae8 |
 
 ## Exact source per sprite slice
 

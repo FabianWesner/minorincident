@@ -1,7 +1,9 @@
 import { assetUrl } from '../assets/assetUrl';
 import type { MusicState } from './MusicDirector';
 
-interface Deck { media: HTMLAudioElement; source: MediaElementAudioSourceNode; gain: GainNode; retire: number; }
+interface Deck { media: HTMLAudioElement; source: MediaElementAudioSourceNode; gain: GainNode; retire: number; file: string; }
+/** Level-specific recordings replace a state's shared score (`score-<file>`); other levels keep `score-<state>`. */
+const levelStreams: Record<string, Partial<Record<MusicState, string>>> = { L1: { calm: 'calm-L1' } };
 /** Long recordings stay in the browser's streaming media cache, never decodeAudioData at boot.
  * All decks feed the existing music bus, so twist silence, ducking, mono and limiting still apply.
  * Keep the outgoing recording audible until its replacement actually starts, then fade on a bar.
@@ -13,11 +15,17 @@ export class StreamedMusic {
     private requested: MusicState | null = null;
     private target: { state: MusicState; requested: number; epoch: number; bar: number } | null = null;
     state: MusicState | null = null;
+    /** Mission level; set before the first transition of a world. */
+    level = '';
     readonly errors: string[] = [];
     readonly transitions: { state: MusicState; requested: number; time: number }[] = [];
     constructor(private readonly context: AudioContext, private readonly bus: AudioNode) {}
     private deck(state: MusicState): Deck {
+        const file = levelStreams[this.level]?.[state] ?? state;
+        const format = (media: HTMLAudioElement) => media.canPlayType('audio/webm; codecs="opus"') ? 'webm' : 'm4a';
         let deck = this.decks.get(state);
+        // One deck per state: a level switch (only after reset, all decks paused) repoints its source.
+        if (deck && deck.file !== file) { deck.media.src = assetUrl(`/assets/audio/score-${file}.${format(deck.media)}`); deck.file = file; }
         if (deck) return deck;
         const media = new Audio();
         // Decks are created lazily on their first state request. Keep that stream
@@ -25,12 +33,11 @@ export class StreamedMusic {
         // request in Chromium when the mission intro or pause menu opens.
         media.preload = 'auto';
         media.loop = true;
-        const format = media.canPlayType('audio/webm; codecs="opus"') ? 'webm' : 'm4a';
-        media.src = assetUrl(`/assets/audio/score-${state}.${format}`);
+        media.src = assetUrl(`/assets/audio/score-${file}.${format(media)}`);
         const source = this.context.createMediaElementSource(media), gain = this.context.createGain();
         gain.gain.value = 0;
         source.connect(gain).connect(this.bus);
-        deck = { media, source, gain, retire: Infinity };
+        deck = { media, source, gain, retire: Infinity, file };
         this.decks.set(state, deck);
         return deck;
     }
@@ -93,7 +100,7 @@ export class StreamedMusic {
         if (target && target.state !== this.state)
             await this.transition(target.state, target.requested, target.epoch, target.bar);
     }
-    snapshot() { return { state: this.state, transitions: [...this.transitions], decks: [...this.decks].map(([state, d]) => ({ state, paused: d.media.paused, position: d.media.currentTime, gain: d.gain.gain.value })) }; }
+    snapshot() { return { state: this.state, transitions: [...this.transitions], decks: [...this.decks].map(([state, d]) => ({ state, file: d.file, paused: d.media.paused, position: d.media.currentTime, gain: d.gain.gain.value })) }; }
     reset(): void {
         ++this.generation;
         // Keep at most four cached decks across world loads. Removing src aborts an
