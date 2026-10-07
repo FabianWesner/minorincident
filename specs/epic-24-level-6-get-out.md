@@ -10,7 +10,7 @@ E23, all systems / M3 exit, credits.
 
 | Segment | Revisited place (tier W5) | Beats | Target |
 | --- | --- | --- | --- |
-| 1. Home, burning | D-RES cul-de-sac (L1 start) | The same photo spot as L1 morning, now burning. Radio: an extraction chopper at the substation helipad at dawn. Grab a car. | 1:00 |
+| 1. Home, burning | D-GROVE (L1 start, Maple Corner / Fire Station 3 area) | The same photo spot as L1 morning, now burning. Radio: an extraction chopper at the substation helipad at dawn. Grab a car. | 1:00 |
 | 2. School | D-SCHOOL (L2) | The road is blocked by a burned bus; go on foot through the overrun schoolyard; Armored elites. Short objective: open the gate (generator). | 1:30 |
 | 3. Mall | D-SHOP (L3 route A) | Cut through the supermarket and mall (interior combat, a Butcher elite in the food court). | 1:30 |
 | 4. Fire station | D-CIVIC (L4 hub) | Find the **fire engine** (start it: 3 s interact); the survivor group is gone (story prop: radio left behind). | 0:45 |

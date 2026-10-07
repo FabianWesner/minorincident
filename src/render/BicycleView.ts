@@ -96,6 +96,12 @@ export class BicycleView extends Group {
     rig.lean.getWorldQuaternion(this.contacts.orientation);
     return this.contacts;
   }
+  /** Authored palm contact points follow the handlebar's steering and frame lean. */
+  gripsWorld(left: Vector3, right: Vector3): boolean {
+    const rig = this.rig, l = rig?.model.getObjectByName('grip_l'), r = rig?.model.getObjectByName('grip_r');
+    if (!rig || !l || !r) return false;
+    rig.root.updateMatrixWorld(true); l.getWorldPosition(left); r.getWorldPosition(right); return true;
+  }
   private readonly prompt = document.createElement('div');
   private readonly projection = new Vector3();
   update(camera?: Camera): void {

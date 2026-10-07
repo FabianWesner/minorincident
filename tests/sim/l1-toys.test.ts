@@ -47,6 +47,34 @@ describe('L1 v2 bicycle', () => {
     bike().entity!.transform.x += 5; world.entities.restore(snapshot, player);
     expect(bike().entity!.transform.x).toBeCloseTo(left.x, 6);
   });
+  test('T-E19-16f @E19 @E19-AC16 mounting between rack bars steps onto the apron; a stopped rider can pull away from a wall', async () => {
+    await grove();
+    teleport({ x: -68.1, z: 7.6 });
+    Object.assign(bike().entity!.transform, { x: -67, z: 7.6 }); press();
+    expect(bike().riding).toBe(true);
+    expect(world.infected!.nav.clear(pos().x, pos().z, .45)).toBe(true);
+    world.setInput({ move: { x: -1, z: 0 } }); step(240);
+    const stopped = pos();
+    world.setInput({ move: { x: 1, z: 0 } }); step(360);
+    expect(bike().riding).toBe(true); expect(pos().x - stopped.x).toBeGreaterThan(4);
+  });
+  test('T-E19-16g @E19 @E19-AC16 arriving at the depot parks on clear ground and permits remount after the parcel hand-over', async () => {
+    await grove(); const depot = anchor('parcel-door');
+    const approach = { x: depot.x, z: depot.z + 5.5 };
+    teleport(approach); Object.assign(bike().entity!.transform, { x: approach.x + 1, z: approach.z }); press();
+    expect(bike().riding).toBe(true);
+    world.setInput({ moveTarget: anchor('parcel-counter') }); step(180);
+    expect(bike().riding).toBe(false);
+    const parked = { ...bike().entity!.transform };
+    for (const along of [-.8, 0, .8]) expect(world.infected!.nav.clear(parked.x + Math.cos(parked.yaw) * along, parked.z - Math.sin(parked.yaw) * along, .4)).toBe(true);
+    expect(Math.hypot(parked.x - depot.x, parked.z - depot.z)).toBeLessThan(1.5);
+    // The story owns the hand-over; press interact to remount beside the parked frame with the parcel.
+    world.entities.get(1)!.survivor!.carrying = 'parcel';
+    world.clearInput(); teleport({ x: parked.x + .9, z: parked.z }); step(1); press();
+    expect(bike().riding).toBe(true);
+    world.setInput({ moveTarget: { x: parked.x, z: parked.z + 6 } }); step(180); expect(bike().riding).toBe(true);
+    expect(pos().z - parked.z).toBeGreaterThan(5);
+  });
   test('T-E19-16b @E19 @E19-AC16 stand still next to it for 0.4 s to mount; attacks are disabled while riding', async () => {
     await grove();
     const start = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }; teleport({ x: start.x + 1, z: start.z }); step(20); expect(bike().riding).toBe(false); step(10); expect(bike().riding).toBe(true);
@@ -54,7 +82,7 @@ describe('L1 v2 bicycle', () => {
     expect(world.entities.get(1)!.survivor!.animation).not.toBe('attack');
   });
   test('T-E19-16e @E19 @E19-AC16 riding feel: no pivoting on the spot, the turn radius grows with speed, speed ramps and coasts', async () => {
-    await grove(); const e = bike().entity!, start = { x: e.transform.x, z: e.transform.z }; teleport({ x: start.x + 1, z: start.z }); step(30); expect(bike().riding).toBe(true);
+    await grove(); const e = bike().entity!; Object.assign(e.transform, { x: 0, z: 0 }); const start = { x: e.transform.x, z: e.transform.z }; teleport({ x: start.x + 1, z: start.z }); step(30); expect(bike().riding).toBe(true);
     const b = () => bike().entity!.bicycle!, h0 = b().heading;
     world.setInput({ move: { x: -Math.cos(h0), z: -Math.sin(h0) } }); step(12);
     expect(Math.abs(b().heading - h0)).toBeLessThan(.25); // asked to reverse from a standstill: no instant pivot

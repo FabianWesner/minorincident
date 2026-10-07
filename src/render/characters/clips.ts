@@ -15,6 +15,13 @@ export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .
 /** Skin pilot gait: longer strides at a calmer cadence (the library run cycles ~5×/s at 4.5 m/s on
  * chibi legs and reads as scurrying/vibration); raw strides before the rig's leg proportion. */
 export const skinGait: Record<string, { stride: number; stance: number; lift: number }> = { walk: { stride: 1.05, stance: .55, lift: .06 }, run: { stride: 1.75, stance: .32, lift: .1 } };
+/** Keep short authored strides from buzzing at speed; longer strides preserve planted feet as speed rises. */
+export function cadenceStride(name: string, scale: number, speed: number): number {
+  const authored = (strides[name] ?? 0) * scale;
+  const cyclesPerSecond = name.startsWith('corgi-') ? name === 'corgi-walk' ? 2 : 2.7
+    : name === 'run' || name === 'infected-run' || name === 'infected-sprint' || name === 'civ-flee' ? 2.7 : 2;
+  return Math.max(authored, Math.max(0, speed) / cyclesPerSecond);
+}
 /** Planted support per gait: stance fraction of the cycle and swing-foot lift (m). */
 const gaitShape: Record<string, { stance: number; lift: number }> = {
   walk: { stance: .6, lift: .055 }, shamble: { stance: .6, lift: .055 }, 'npc-walk': { stance: .6, lift: .055 }, 'npc-walk-relaxed': { stance: .6, lift: .055 },
