@@ -144,7 +144,7 @@ export class InputSystem implements Lifecycle {
   private readonly token = (code: string, held: boolean): void => {
     const action = held ? this.bindings.action(code) : this.heldTokens.get(code);
     if (!action) return;
-    if (held && code === 'Mouse0') this.clicks.push({ x: this.pointer.x, y: this.pointer.y, shift: this.shift() });
+    if (held && code === 'Mouse0') this.clicks.push({ x: this.pointer.x, y: this.pointer.y, shift: this.shiftForMouse() });
     else if (held && code === 'Mouse2') { this.selectors.push({ direction: 1, active: true }); this.heldTokens.set(code, action); return; }
     else if (held && (action.startsWith('move') || action === 'left' || action === 'right' || action === 'interact')) { this.cancelMove = true; if (!action.startsWith('move')) this.pointerGround = false; }
     if (held) this.heldTokens.set(code, action); else this.heldTokens.delete(code);
@@ -157,6 +157,9 @@ export class InputSystem implements Lifecycle {
     else if (![...this.heldTokens.values()].includes(action)) this.active.delete(action);
   };
   private shift(): boolean { return this.keyboard.pressed.has('ShiftLeft') || this.keyboard.pressed.has('ShiftRight'); }
+  /** Attack-in-place needs Shift held *now*: the mouse event's own flag wins over a possibly stale key state (a missed
+   * Shift keyup otherwise turned every later click into a swing; PO, after respawn). */
+  private shiftForMouse(): boolean { return this.pointer.shift && this.shift(); }
   private axis(positive: Action, negative: Action): number { return Number(this.active.has(positive)) - Number(this.active.has(negative)); }
   private aiming(): boolean { return this.active.has('aimUp') || this.active.has('aimDown') || this.active.has('aimLeft') || this.active.has('aimRight'); }
   /** Camera azimuth projected onto ground; pitch does not distort movement. */
@@ -223,7 +226,8 @@ export class InputSystem implements Lifecycle {
       if (this.drivingContext) continue;
       let picked: EntitySnapshot | null = null, best = Infinity;
       for (const target of candidates!) {
-        if ((target.faction !== 'infected' && !(target.faction === 'environment' && target.combat)) || target.health.current <= 0 || target.hidden || target.infected?.hidden) continue;
+        // A plain click only targets live infected; props (cars, bins, toys) never turn a click-to-move into a fight (PO, after respawn).
+        if (target.faction !== 'infected' || target.health.current <= 0 || target.hidden || target.infected?.hidden) continue;
         const p = target.transform, rect = this.canvas.getBoundingClientRect();
         this.projected.set(p.x, p.y, p.z).project(this.camera);
         const sx = rect.left + (this.projected.x + 1) * rect.width / 2, sy = rect.top + (1 - this.projected.y) * rect.height / 2;
@@ -239,7 +243,7 @@ export class InputSystem implements Lifecycle {
     if (this.pointer.isHeld(0)) {
       frame.mouseAttack = true;
       if (this.pointerTarget) frame.pointerTarget = true;
-      if (this.shift() && !this.drivingContext) {
+      if (this.shiftForMouse() && !this.drivingContext) {
         frame.attackInPlace = true; frame.cancelMove = true;
         delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerTarget; this.pointerGround = false; this.pointerTarget = false;
       }
