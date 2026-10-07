@@ -31,6 +31,8 @@ type Clip = typeof civilianClips[number];
 const clipOr = (name: string, fallback: Clip): Clip => (civilianClips as readonly string[]).includes(name) ? name as Clip : fallback;
 const tierGait = { frail: clipOr('infected-frail', 'infected-run'), average: clipOr('infected-lurch', 'infected-run'), athletic: clipOr('infected-sprint', 'infected-run') } as const;
 const civStartle = clipOr('civ-startle', 'hurt'), civFlee = clipOr('civ-flee', 'run'), civGrabbed = clipOr('civ-grabbed', 'hurt');
+/** Wandering infected never jog upright: below run speed every tier lurches (frail shuffles), arms forward. */
+const slowGait = { frail: clipOr('infected-frail', 'shamble'), average: clipOr('infected-lurch', 'shamble'), athletic: clipOr('infected-lurch', 'shamble') } as const;
 const infectedIdle = clipOr('infected-idle', 'idle'), infectedSearch = clipOr('infected-search', 'idle');
 /** One human crowd draw regardless of density; poses, veins, eyes and clothing vary per instance. */
 class CivilianBatch extends Group {
@@ -43,6 +45,7 @@ class CivilianBatch extends Group {
   private readonly childScale = new Vector3(.7, .7, .7);
   private readonly transform = new Matrix4();
   private readonly lean = new Matrix4().makeRotationZ(-.34);
+  private readonly sway = new Matrix4();
   private readonly presentation = new MotionPresentation();
   private readonly motion = new MotionPhase();
   private strideScale = 1;
@@ -110,7 +113,8 @@ class CivilianBatch extends Group {
     // Red glowing eyes in dark sockets. Kept below the bloom whiteout point: the emissive is a pure red (no luminance
     // normalisation, which pushed it to ~14x and bloomed the whole head white) at a capped strength.
     // The sockets glow a dim red around the eyes so the read survives 10-15 m, still far below the bloom whiteout.
-    const glow = eyeColor.mul(eye.mul(2.2).add(socket.mul(.75))).mul(overlay.y);
+    // A faint ash-green self-glow on infected skin so the colour shift survives building shadow (far below bloom).
+    const glow = eyeColor.mul(eye.mul(2.2).add(socket.mul(.75))).mul(overlay.y).add(vec3(.05, .1, .03).mul(skinShift).mul(overlay.z));
     const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     this.mesh = new InstancedMesh(baked.geometry, material, 128); this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = this.mesh.receiveShadow = true;
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1); this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; };
@@ -180,13 +184,17 @@ class CivilianBatch extends Group {
     const b = e.infected!, tick = this.world.tick, distance = Math.hypot(e.transform.x - player.x, e.transform.z - player.z);
     if (e.hidden || b.hidden || (distance > 30) !== this.distant || b.state === 'dead' && tick - b.deadAt > 540) return false;
     const motion = this.motion.sample(e.id, tick, e.transform.x, e.transform.z), reaction = e.combat?.reaction, age = reaction ? (tick - reaction.started) / 60 : Infinity;
-    let clip: Clip = b.state === 'dead' ? 'death-back' : b.state === 'attack' ? tick < b.until ? 'windup' : 'swing' : motion.speed > .06 ? tierGait[e.appearance!.tier] : (b.state as string) === 'search' ? infectedSearch : infectedIdle;
+    let clip: Clip = b.state === 'dead' ? 'death-back' : b.state === 'attack' ? tick < b.until ? 'windup' : 'swing' : motion.speed > 2.6 ? tierGait[e.appearance!.tier] : motion.speed > .06 ? slowGait[e.appearance!.tier] : (b.state as string) === 'search' ? infectedSearch : infectedIdle;
     if (reaction && age < (reaction.heavy ? 1.34 : .43) && b.state !== 'dead') clip = reaction.heavy ? age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
     const duration = authoredClips.get(clip)!.duration, renderTick = Math.max(0, tick + alpha - 1);
     const phase = b.state === 'dead' ? Math.min(1, (tick - b.deadAt) / 60 / duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && age < 1.34 ? Math.min(1, age / (reaction.heavy ? .7 : .43)) : strides[clip] ? motion.distance / (strides[clip] * this.strideScale) % 1 : (renderTick / 60 + e.id * .137) / duration % 1;
     const presented = this.presentation.sample(e.id, e.transform, tick, alpha);
     // Hunched silhouette: the whole body leans forward (pivot at the feet) on top of the tier gait's arms-forward pose.
-    this.transform.makeRotationY(presented.yaw); if (b.state !== 'dead' && !reaction) this.transform.multiply(this.lean); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
+    // QA2b: the read holds in every state - standing/searching infected sway and twitch on top of the hunch.
+    const still = motion.speed <= .06 && b.state !== 'dead', t = tick / 60 + e.id * .71;
+    this.transform.makeRotationY(presented.yaw + (still ? Math.sin(t * 1.7) * .14 + (Math.sin(t * 7.3) > .93 ? .18 : 0) : 0));
+    if (b.state !== 'dead' && !reaction) { this.transform.multiply(this.lean).multiply(this.sway.makeRotationX((e.id % 2 ? .17 : -.17) + Math.sin(t * 1.3) * .04)); if (still) this.transform.multiply(this.sway.makeRotationZ(-.14 - Math.abs(Math.sin(t * 2.3)) * .1)); }
+    this.transform.setPosition(presented.x, presented.y - .7, presented.z);
     const frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1), blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
     this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, frame);
     this.tintOf(e, index, blend[0] * 2 + blend[1]); this.overlay.setXYZ(index, .4, b.state === 'dead' ? 0 : 1, 1);
