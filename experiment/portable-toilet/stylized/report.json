@@ -1,0 +1,33 @@
+{
+  "slug": "portable-toilet",
+  "iterations": 2,
+  "triangles": 1468,
+  "meshes": 8,
+  "materials": [
+    "pal_policeBlue",
+    "pal_picketWhite",
+    "pal_uiDark",
+    "pal_sidewalk"
+  ],
+  "glb_bytes": 116208,
+  "within_budget": true,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "identity_features": [
+    "blue upright cubicle",
+    "cream barrel roof",
+    "arched front door",
+    "oversized restroom pictogram",
+    "chunky dark handle",
+    "broad molded side panels"
+  ],
+  "dropped_details": [
+    "bolts",
+    "hinges",
+    "tiny latch indicator",
+    "fine roof ribs",
+    "panel seams",
+    "lettering"
+  ],
+  "notes": "Static geometry is merged by material with a hinged door pivot retained, and both Three.js backends render without errors."
+}

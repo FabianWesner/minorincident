@@ -1,0 +1,36 @@
+{
+  "slug": "police-car",
+  "iterations": 2,
+  "triangles": 3922,
+  "meshes": 17,
+  "materials": [
+    "pal_uiDark",
+    "emi_sirenRed",
+    "emi_policeBlue",
+    "emi_windowGlow",
+    "pal_glassDark",
+    "pal_picketWhite",
+    "pal_schoolBusYellow",
+    "pal_sidewalk"
+  ],
+  "glb_bytes": 274208,
+  "within_budget": true,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "identity_features": [
+    "Black hood and trunk with white doors and roof",
+    "Chunky red-blue roof light bar",
+    "Oversized faceted wheels",
+    "Broad warm headlights and dark grille",
+    "Thick front push bumper",
+    "Simple gold door shield"
+  ],
+  "dropped_details": [
+    "Lettering and fine badge artwork",
+    "Panel seams and door handles",
+    "Wipers and hinges",
+    "Tire tread and lug nuts",
+    "Fine trim and grille mesh"
+  ],
+  "notes": "Toy proportions and material-merged static geometry retain readable police-car cues; glassDark is the sole added palette token, and mesh count follows Three.js rendered primitives."
+}
