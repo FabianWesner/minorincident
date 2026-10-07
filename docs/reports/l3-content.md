@@ -13,10 +13,33 @@ Status: in progress, pending final orchestrator vision review.
 
 ## Calibration
 
-The initial short version completed in under 90 seconds and did not satisfy AC03. It was expanded with real encounters and objective travel; the criterion was preserved and no bot idle delays were added. The expanded newbie seed 1 completed in 336.95 s, with zero deaths, 116 kills, ten runovers, three obstacle smashes, 383.05 s remaining and peak 12 concurrent infected. Final 20-seed medians and validation totals are recorded below after completion.
+The initial short version completed in under 90 seconds and did not satisfy AC03. It was expanded with real encounters and objective travel; the criterion was preserved and no bot idle delays were added. Defense objectives require clearing all their actual infected waves as well as protecting the evacuation area. The shared browser/Node newbie policy samples ordinary controls every 250 ms.
+
+Main was merged again in `39bdd545`, including the Bruno-derived vehicle handling and faster combat. The first complete 60-run battery on that handling passed every calibration criterion:
+
+| Policy / forced route | Completed | Median time | Maximum deaths | Median time left |
+| --- | --- | --- | --- | --- |
+| Complete / supermarket | 20/20 | 312.09 s | 0 | 407.91 s |
+| Complete / park | 20/20 | 295.85 s | 0 | 424.15 s |
+| Newbie / alternating routes | 20/20 | 355.93 s (5:55.93) | 0 | 364.07 s |
+
+Complete-route medians differ by 5.49%. Every complete run records at least nine runovers and three obstacle smashes; peak concurrent infected is 12 across all 60 runs. A fresh full verification rerun also covers the final route broadcast, production HUD countdown, portrait phone evidence and corrected legacy deadline fixture.
+
+## Additional fixes and evidence
+
+- The parked sedan registers a navigation blocker while empty and clears it on native entry. The bot steps away from the conservative navigation box beside an angled chassis, avoiding the browser park-route stall.
+- The final patient follows ordinary escort navigation. Walking inside the destination volume gathers the patient through the gate from either arrival direction.
+- First sedan entry announces both route alternatives. The production HUD shows the L3 deadline before the objective text; other levels retain their tracker text.
+- Browser evidence includes both full routes at time scale 2, four named photo spots per route, a matching W0 Main Street comparison, and a 390×844 phone view. Long L3 tests retain screenshots and progress JSON instead of large network traces.
 
 ## Scope / outstanding art
 
 No specification criterion was changed. No new models or dependencies were added. `decay.dropped-belongings` is missing; existing trash bags, benches, shopping carts and medical coolers provide temporary abandoned belongings dressing. The finished camp and paramedic exports were integrated by art-register and merged from main into this lane.
 
 Validation totals and the final vision checklist are in `test-results/epics/E21/`.
+
+## Known remaining regression
+
+After the handling merge, `npm run test:levels` completes L1/L2/L3/L4/L5 on 3/3 seeds each (15/18 total), but L6 stalls at its `drive` objective on all three seeds. The fire engine remains near (13.215, 105.277), almost stationary and about 96.7 m from its destination. L3 changes only its own composition entry and layout copies; the L6 route still needs work in its owning lane.
+
+E21 remains `in-progress` for the orchestrator's final vision review. Static screenshots cannot establish the duration/readability of attack telegraphs; that review remains explicit in `review.md`.
