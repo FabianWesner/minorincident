@@ -199,7 +199,7 @@ export class NavGrid {
           if (d < distance && this.visible(position, point, radius)) { from = cell; distance = d; }
         }
       }
-      if (!this.path(from, to, route.path, budget, nearest)) return false;
+      if (!(nearest ? this.reachPath(from, target, route.path, budget) : this.path(from, to, route.path, budget))) return false;
       // Align with that visible start before rounding the first corner.
       if (from >= 0) route.path.unshift(from);
       route.goal = to; route.pathIndex = 0;
@@ -209,34 +209,71 @@ export class NavGrid {
       if (next !== undefined && !this.visible(position, { x: this.x(next), z: this.z(next) }, radius)) break;
       route.pathIndex++;
     }
-    for (let i = route.path.length - 1; i >= route.pathIndex; i--) {
+    // Look ahead a bounded window: line tests over a whole cross-district path cost ~30 ms per call.
+    for (let i = Math.min(route.path.length - 1, route.pathIndex + 40); i >= route.pathIndex; i--) {
       waypoint.x = this.x(route.path[i]); waypoint.z = this.z(route.path[i]);
       if (this.visible(position, waypoint, radius)) { route.pathIndex = i; return true; }
     }
     route.goal = -1; return false;
   }
+  private reachParent: Int32Array | null = null;
+  private reachQueue: Int32Array | null = null;
+  private reachSeen: Uint32Array | null = null;
+  private reachStamp = 0;
+  private reachDepth: Int32Array | null = null;
+  private readonly reach = { active: false, key: -1, from: -1, tx: 0, tz: 0, head: 0, tail: 0, best: -1, bestD: Infinity, far: -1, farD: Infinity, stamp: 0 };
+  /** Player route (E19 QA1-02): a breadth-first flood from the player's cell (own workspace, never starved by
+   * the crowd's shared A*), time-sliced at `budget` cells per call so no click costs a frame (~1–4 ms for a full
+   * district flood on desktop otherwise). The goal is the reachable cell closest to the click (the click when
+   * reachable; early exit). Returns true with `result` filled when done, false while still flooding. */
+  reachPath(from: number, target: { x: number; z: number }, result: number[], budget = Infinity): boolean {
+    const count = this.width * this.depth, r = this.reach;
+    this.reachParent ??= new Int32Array(count); this.reachQueue ??= new Int32Array(count); this.reachSeen ??= new Uint32Array(count); this.reachDepth ??= new Int32Array(count);
+    const parent = this.reachParent, queue = this.reachQueue, seen = this.reachSeen, depth = this.reachDepth;
+    const key = this.cell(target.x, target.z);
+    if (!r.active || r.key !== key) {
+      if (from < 0 || this.blocked[from]) { r.active = false; result.length = 0; return false; }
+      Object.assign(r, { active: true, key, from, head: 0, tail: 0, best: from, bestD: Infinity, far: -1, farD: Infinity, stamp: ++this.reachStamp,
+        tx: (target.x - this.center.x + this.ground.width / 2) / this.cellSize - .5, tz: (target.z - this.center.z + this.ground.depth / 2) / this.cellSize - .5 });
+      seen[from] = r.stamp; parent[from] = -1; depth[from] = 0; queue[r.tail++] = from;
+    }
+    let steps = 0, done = false;
+    while (r.head < r.tail) {
+      if (steps++ >= budget) return false;
+      const cell = queue[r.head++], d = (cell % this.width - r.tx) ** 2 + (Math.floor(cell / this.width) - r.tz) ** 2;
+      if (d < r.bestD) { r.bestD = d; r.best = cell; }
+      if (d < .5 && depth[cell] >= 4) { done = true; break; } // the click itself is reachable: no need to flood the district
+      if (depth[cell] >= 8 && d < r.farD) { r.farD = d; r.far = cell; }
+      for (let k = 0; k < 4; k++) { const n = this.neighbor(cell, k); if (n >= 0 && !this.blocked[n] && seen[n] !== r.stamp) { seen[n] = r.stamp; parent[n] = cell; depth[n] = depth[cell] + 1; queue[r.tail++] = n; } }
+    }
+    void done;
+    // Repeated clicks behind the same fence must still make progress: when the closest reachable spot is where
+    // the player already stands, take the closest one at least 4 m of walking away (slides along the fence and
+    // around its end, toward the click).
+    let best = r.best;
+    if (depth[best] < 4 && r.far >= 0 && r.bestD > 4) best = r.far;
+    result.length = 0;
+    for (let cell = best; cell !== r.from && cell >= 0; cell = parent[cell]) result.push(cell);
+    result.reverse(); r.active = false; r.key = -1;
+    // The route begins at the flood's start cell (the player may have moved a few cells while it ran).
+    if (r.from !== from && r.from >= 0) result.unshift(r.from);
+    return true;
+  }
   /** Budgeted A*; caller retries later if the tick budget is exhausted. Writes into a reused path array. */
-  private closest = -1;
-  private closestH = Infinity;
-  path(from: number, to: number, result: number[], budget: number, nearest = false): boolean {
+  path(from: number, to: number, result: number[], budget: number): boolean {
     result.length = 0; this.expansions = 0;
     if (from < 0 || to < 0 || this.blocked[from] || this.blocked[to]) return false;
     if (!this.searching || this.searchFrom !== from || this.searchTo !== to) {
       this.searchFrom = from; this.searchTo = to; this.searching = true;
-      this.heap.length = 0; this.push(from, 0); this.closest = -1; this.closestH = Infinity;
+      this.heap.length = 0; this.push(from, 0);
       this.cost.fill(Infinity); this.parent.fill(-1); this.open.fill(0); this.cost[from] = 0; this.open[from] = 1;
     }
     const tx = to % this.width, tz = Math.floor(to / this.width);
     while (this.expansions < budget) {
       let best = -1;
       while (this.heap.length) { const candidate = this.pop(); if (this.open[candidate] === 1) { best = candidate; break; } }
-      if (best < 0) {
-        this.searching = false;
-        if (!nearest || this.closest < 0 || this.closest === from) return false;
-        for (let cell = this.closest; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true;
-      }
+      if (best < 0) { this.searching = false; return false; }
       this.expansions++; this.open[best] = 2;
-      const h = Math.abs(best % this.width - tx) + Math.abs(Math.floor(best / this.width) - tz); if (h < this.closestH) { this.closestH = h; this.closest = best; }
       if (best === to) { this.searching = false; for (let cell = to; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true; }
       for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n]) { this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(n % this.width - tx) + Math.abs(Math.floor(n / this.width) - tz)) * 1.00001); } }
     }

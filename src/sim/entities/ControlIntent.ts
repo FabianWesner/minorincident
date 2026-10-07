@@ -78,13 +78,14 @@ export class ControlIntent {
     const p = this.world.entities.get(1)!.transform, nav = this.world.infected?.nav;
     if (this.world.player) this.world.player.locomotion.navigationGrid = nav ?? null;
     // Leave room for the capsule's acceleration while turning a pulled corner.
-    // The player's own route may search the whole district (one agent) and falls back to the closest reachable
-    // cell when a click lands in a fenced yard (QA1-02: riding clicks along the line to a goal stalled).
-    if (nav && !nav.steer(p, target, this.route, survivor.radius + .1, this.waypoint, 40000, true)) {
-      // Grid paths omit their starting cell; reconnect from its safe center.
+    // The player's own route floods the district in 3000-cell slices (< 1 ms/tick even at 4x CPU throttle) and
+    // falls back to the closest reachable cell when a click lands in a fenced yard (QA1-02).
+    if (nav && !nav.steer(p, target, this.route, survivor.radius + .1, this.waypoint, 3000, true)) {
+      // While the route flood is still running (a few ticks at most), head straight for the click; the corner
+      // clearance below keeps that from walking into walls. Without a walkable start, reconnect from its centre.
       const cell = nav.nearestCell(p.x, p.z);
       if (cell < 0) { frame.move.x = frame.move.z = 0; return; }
-      this.waypoint.x = nav.x(cell); this.waypoint.z = nav.z(cell);
+      if (nav.blocked[nav.cell(p.x, p.z)]) { this.waypoint.x = nav.x(cell); this.waypoint.z = nav.z(cell); } else { this.waypoint.x = target.x; this.waypoint.z = target.z; }
     }
     // Arrived as close as the fences allow (fallback route end): stop instead of re-searching every tick.
     const last = this.route.path[this.route.path.length - 1];
