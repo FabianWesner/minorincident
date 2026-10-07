@@ -11,7 +11,7 @@ import { GaitPhase } from '../../../src/render/characters/GaitPhase';
 
 test('crowd stance ankles travel at most 3 cm at actual walk/run speeds and headings', async () => {
   const results: { asset: string; clip: string; speed: number; beforeCm: number; afterCm: number }[] = [];
-  for (const asset of ['npc.civilian-man-a', 'npc.civilian-woman-a', 'npc.lab-tech-a']) {
+  for (const asset of ['npc.civilian-man-a', 'npc.civilian-woman-a', 'npc.lab-tech-a', 'inf.common-worker.lod1']) {
     const bytes = readFileSync(`public/assets/models/${asset}.glb`);
     const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
     const baked = bakeInfected(scene, [], false, civilianClips), palette = new CrowdPosePalette(baked.clip, 1);

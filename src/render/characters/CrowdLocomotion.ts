@@ -53,7 +53,8 @@ export class CrowdLocomotion {
     this.nodes.forEach((_, i) => this.world[i].fromArray(pose, i * 16));
     this.nodes.forEach((node, i) => {
       const parent = this.parents[i];
-      this.inverse.copy(parent < 0 ? new Matrix4() : this.world[parent]).invert().multiply(this.world[i]).decompose(node.position, node.quaternion, node.scale);
+      if (parent < 0) this.inverse.identity(); else this.inverse.copy(this.world[parent]).invert();
+      this.inverse.multiply(this.world[i]).decompose(node.position, node.quaternion, node.scale);
     });
     this.frame.matrixAutoUpdate = false; this.frame.matrix.copy(instance); this.frame.updateMatrixWorld(true);
     const stride = cadenceStride(name, scale, speed), run = /run|sprint|flee/.test(name) ? 1 : 0;
