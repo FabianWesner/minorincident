@@ -50,7 +50,7 @@ test.describe('L3 portrait phone evidence', () => {
     mkdirSync(output, { recursive: true });
     await boot(page, `${testUrl}&ui=1`);
     await page.evaluate(() => window.__SS__!.loadLevel('L3', { seed: 1, progression: 'L3-default' }));
-    await page.evaluate(() => { const api = window.__SS__!; api.pause(); api.missions.begin(); api.camera.preset('l3-mainstreet-w2'); });
+    await page.evaluate(() => { const api = window.__SS__!; api.pause(); api.missions.begin(); api.camera.follow(); });
     await page.evaluate(() => window.__SS__!.screenshotReady());
     await expect(page.getByTestId('objective-text')).toContainText('Gates close in 12:00');
     await page.screenshot({ path: `${output}/l3-phone-390.png` });
