@@ -15,7 +15,7 @@ export class CrowdVisibility {
     if (camera) this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
   }
   pixels(x: number, y: number, z: number, height: number): number {
-    if (!this.camera) return 100;
+    if (!this.camera) return 200;
     this.point.set(x, y, z).applyMatrix4(this.camera.matrixWorldInverse);
     return height * this.camera.projectionMatrix.elements[5] * this.height / (2 * Math.max(.1, -this.point.z));
   }

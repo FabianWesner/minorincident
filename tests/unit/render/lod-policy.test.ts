@@ -33,11 +33,11 @@ test('@load phone initial downloads include only tiers used at the spawn', () =>
 
 test('@E18-AC01 crowd screen-size hysteresis holds detail through boundary jitter and forces low tier', async () => {
   const { crowdLod } = await import('../../../src/render/lodPolicy');
-  expect(crowdLod(81, undefined, false)).toBe('lod1');
-  expect(crowdLod(73, 'lod1', false)).toBe('lod1');
-  expect(crowdLod(71, 'lod1', false)).toBe('lod2');
-  expect(crowdLod(87, 'lod2', false)).toBe('lod2');
-  expect(crowdLod(89, 'lod2', false)).toBe('lod1');
+  expect(crowdLod(161, undefined, false)).toBe('lod1');
+  expect(crowdLod(145, 'lod1', false)).toBe('lod1');
+  expect(crowdLod(143, 'lod1', false)).toBe('lod2');
+  expect(crowdLod(175, 'lod2', false)).toBe('lod2');
+  expect(crowdLod(177, 'lod2', false)).toBe('lod1');
   expect(crowdLod(300, 'lod1', true)).toBe('lod2');
 });
 

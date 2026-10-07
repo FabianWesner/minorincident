@@ -53,11 +53,11 @@ test('@E19 civilian variety keeps authored gait, sim idle hysteresis and raised 
     // occur in exactly one loaded batch on every update, including tier changes.
     const camera = new PerspectiveCamera(30, 1, .1, 100);
     camera.position.set(3, 2.7, 30); camera.lookAt(3, 2.7, 0); camera.updateMatrixWorld();
-    for (const pixels of [100, 75, 71, 75, 87, 89, 75, 71, 100]) {
+    for (const pixels of [200, 145, 143, 145, 175, 177, 145, 143, 200]) {
       camera.fov = 2 * Math.atan(1.8 * 900 / (2 * 30 * pixels)) * 180 / Math.PI; camera.updateProjectionMatrix();
       crowd.update(1, camera); expect(crowd.snapshot().instances).toBe(1);
     }
-    for (const [pixels, caster] of [[170, true], [140, true], [127, false], [140, false], [170, true]] as const) {
+    for (const [pixels, caster] of [[200, true], [145, true], [143, false], [150, false], [200, true]] as const) {
       camera.fov = 2 * Math.atan(1.8 * 900 / (2 * 30 * pixels)) * 180 / Math.PI; camera.updateProjectionMatrix();
       crowd.update(1, camera); expect(crowd.snapshot().instances).toBe(1);
       expect(meshes.find(n => n.count === 1)!.castShadow).toBe(caster);

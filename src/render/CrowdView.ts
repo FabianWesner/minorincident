@@ -1,5 +1,6 @@
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from './CrowdVisibility';
+import { simplifyCrowdLod } from './characters/crowdLodGeometry';
 import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
@@ -106,6 +107,10 @@ export class CrowdView extends Group {
       // instanced attributes are attached: same surfaces, fewer animated vertices.
       deinterleaveGeometry(baked.geometry);
       const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
+      if (lod === 'lod2' && !fallback) {
+        await simplifyCrowdLod(baked.geometry);
+        if (this.disposed) { baked.geometry.dispose(); return; }
+      }
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
       packCrowdParts(baked.geometry);
       const tint = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4);
