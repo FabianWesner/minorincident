@@ -14,6 +14,17 @@ test('quality and density never recycle a visible pedestrian or pet @E07', async
   } finally { w.dispose(); }
 });
 
+test('decay parks existing traffic without deleting its identity or pose @E07', async () => {
+  const { w } = await groveWorld(1, { civilians: 0 });
+  try {
+    const id = w.npcs!.traffic.spawn([{ x: 50, z: -10 }, { x: 58, z: -10 }]);
+    step(w, 30); const car = w.entities.get(id)!, pose = { ...car.transform };
+    w.setTier(2); step(w, 60);
+    expect(w.entities.get(id)).toBe(car); expect(car.transform).toEqual(pose);
+    expect(car.traffic).toMatchObject({ speed: 0, desired: 0, stopped: true });
+  } finally { w.dispose(); }
+});
+
 test('20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07', async () => {
   const { w } = await groveWorld(1, { civilians: 0 });
   try {
