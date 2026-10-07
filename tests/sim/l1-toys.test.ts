@@ -95,8 +95,10 @@ describe('L1 v2 bicycle', () => {
     world.setInput({ move: { x: 0, z: 0 } }); const v = b().speed; step(30); expect(b().speed).toBeLessThan(v); expect(b().speed).toBeGreaterThan(v - 3.5); // coasts gently
   });
   test('T-E09-bike-lean @E09 cargo frame leans into both turns and returns upright when coasting to rest', async () => {
-    await grove(); const e = bike().entity!; Object.assign(e.transform, { x: 0, z: 0 }); teleport({ x: 1, z: 0 }); step(30);
-    const b = e.bicycle!;
+    // Open fixture: the lean turns must not run into Grove's props.
+    world = new SimWorld(); await world.init(); world.loadScenario('survivor', 1);
+    bike().spawn({ x: 1, z: 0 }); teleport({ x: 2, z: 0 }); press(); expect(bike().riding).toBe(true);
+    const b = bike().entity!.bicycle!;
     for (const direction of [1, -1]) {
       world.setInput({ move: { x: Math.cos(b.heading), z: Math.sin(b.heading) } }); step(120);
       for (let i = 0; i < 30; i++) { world.setInput({ move: { x: Math.cos(b.heading + direction), z: Math.sin(b.heading + direction) } }); step(1); }
