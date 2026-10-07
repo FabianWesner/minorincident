@@ -57,6 +57,21 @@ test('T-E07-17b @E07 @E07-AC17 cat uses layout-authored perch points', async () 
   expect(cat.transform.x).toBe(5.1); expect(cat.transform.y).toBe(2.2); step(w, 1); expect(cat.infected!.hidden).toBe(true);
 });
 
+test('T-E07-17c @E07 @E07-AC14 perched and clinging cats leave visible grounded corpses', async () => {
+  const w = await arena(); w.loadScenario('animal-lab');
+  const perched = spawn(w, 'cat', 6, 0, 'idle'), clinging = spawn(w, 'cat', 8, 0, 'idle');
+  expect(perched.infected!.hidden).toBe(true); expect(perched.transform.y).toBeGreaterThan(.7);
+  clinging.infected!.hidden = false; clinging.infected!.grabUntil = w.tick + 120; clinging.transform.y = 1.8;
+  const ids = [perched.id, clinging.id]; perched.health.current = clinging.health.current = 0;
+  step(w, 121);
+  for (const id of ids) {
+    const body = w.entities.get(id)!;
+    expect(body.corpse).toBe(true); expect(body.infected!.hidden).toBe(false);
+    expect(body.infected!.perched).toBe(false); expect(body.infected!.grabUntil).toBe(0);
+    expect(body.transform.y).toBeCloseTo(.7, 6); expect(body.motion).toBeUndefined();
+  }
+});
+
 test('T-E07-18b @E07 @E07-AC18 rays and shotgun cones hit individual birds rather than deleting the flock', async () => {
   const w = await arena(), flock = spawn(w, 'crow', 5, 0, 'idle'), b = flock.infected!;
   for (let i = 0; i < 20; i++) { b.birdPositions[i * 3] = 5; b.birdPositions[i * 3 + 2] = i - 10; }

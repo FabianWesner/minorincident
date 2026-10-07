@@ -320,6 +320,9 @@ export class InfectedSystem {
     const b = e.infected!;
     if (b.state !== 'dead') {
       b.state = 'dead'; b.deadAt = this.world.tick; b.grabUntil = 0;
+      // A killed ambusher is a visible ground body, even if it died on a perch
+      // or while clinging. The living-only reveal path no longer runs for it.
+      if (b.special === 'cling') { b.hidden = false; b.perched = false; e.transform.y = (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .7; }
       if (e.archetype === 'infected.crow') { for (let i = 0; i < 20; i++) if (b.birdAlive[i]) b.birdDeadMask = (b.birdDeadMask ?? 0) | 1 << i; b.birds = 0; b.birdAlive.fill(0); }
       if (b.special === 'explode') { b.attackId = ++this.sequence; b.until = this.world.tick + 60; this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: 'explode', duration: 1 }); }
     }
