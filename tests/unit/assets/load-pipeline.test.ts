@@ -5,11 +5,22 @@ import { districtAssetUrls } from '../../../src/assets/DistrictAssets';
 import type { AssetDef } from '../../../src/assets/types';
 import { EntityAssets } from '../../../src/render/EntityAssets';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
+import { CharacterView } from '../../../src/render/characters/CharacterView';
+import { Mesh, MeshBasicNodeMaterial } from 'three/webgpu';
+import type { Materials } from '../../../src/render/Materials';
 import { assetVersions, versionedDirs } from '../../../tools/build/load-plugins';
 import { parseHeaders } from '../../../tools/performance/cdn-server';
 import { readFileSync } from 'node:fs';
 
 afterEach(() => { vi.unstubAllGlobals(); });
+
+test('@load the character view releases its separately attached parcel geometries', () => {
+  const view = new CharacterView(), material = new MeshBasicNodeMaterial();
+  (view as unknown as { makeParcel(materials: Materials): void }).makeParcel({ fromColor: () => material } as unknown as Materials);
+  let disposed = 0;
+  view.traverse(node => { if (node instanceof Mesh) node.geometry.addEventListener('dispose', () => disposed++); });
+  view.dispose(); expect(disposed).toBe(2); expect(view.getObjectByName('carried-parcel')).toBeUndefined(); material.dispose();
+});
 
 test('@load the generic actor view leaves the animated bicycle to BicycleView', async () => {
   const world = { entities: { *iterate() { yield { id: 3, bicycle: {} }; } } } as unknown as SimWorld;
