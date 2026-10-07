@@ -171,7 +171,7 @@ export class InfectedSystem {
         e.transform.x = player.transform.x; e.transform.y = player.transform.y + 0.3; e.transform.z = player.transform.z; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
       if (b.state === 'idle' || b.state === 'wander') {
-        if (distance <= 14 && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180)) && this.world.combat!.query.visible(e.transform, player.transform)) this.alert(e);
+        if (distance <= 14 && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180)) && this.world.combat!.query.visible(e.transform, player.transform) && !this.world.combat!.effects.smokeBlocks(e.transform, player.transform)) this.alert(e);
         if (b.state === 'wander') {
           moveAgent(e, b.dx * b.speed / 2, b.dz * b.speed / 2, this.nav, this.world.tick); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
           if (this.world.tick >= b.until) b.state = 'idle';
@@ -184,6 +184,13 @@ export class InfectedSystem {
       if (b.state === 'stagger') b.state = 'chase';
       if (b.state === 'attack') {
         if (this.world.tick >= b.until && this.resolve(e)) { if (b.special === 'combo-grab' && b.combo < 2) { b.combo++; this.windup(e); continue; } b.state = 'chase'; b.cooldown = this.world.tick + (b.special === 'scream' ? 300 : 60); e.combat!.attacking = false; }
+        continue;
+      }
+      // E27-AC08: smoke on the sight line (or around the infected) breaks the chase; it wanders until sight returns.
+      if (b.state === 'chase' && this.world.combat?.effects.smokeBlocks(e.transform, player.transform)) {
+        b.state = 'wander'; b.until = this.world.tick + 90; e.combat!.attacking = false;
+        const angle = this.rng.next() * Math.PI * 2; b.dx = Math.cos(angle); b.dz = Math.sin(angle);
+        this.world.events.emit({ type: 'ai.lostTarget', tick: this.world.tick, sourceId: e.id, targetId: 1, cause: 'smoke' });
         continue;
       }
       if (b.state === 'chase') {
