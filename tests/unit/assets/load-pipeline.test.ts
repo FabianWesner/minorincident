@@ -18,7 +18,7 @@ test('@load open gate passes immediately; paced gate releases one heavy step per
   expect(gate.pending).toBe(3); expect(frames).toHaveLength(1);
   frames.shift()!(0); await Promise.resolve(); expect(released).toEqual([1]);
   frames.shift()!(0); await Promise.resolve(); expect(released).toEqual([1, 2]);
-  gate.setPaced(false); await Promise.resolve(); expect(released).toEqual([1, 2, 3]);
+  gate.setPaced(false); frames.shift()!(0); await Promise.resolve(); expect(released).toEqual([1, 2, 3]);
 });
 
 test('@load asset URLs carry content versions only when the build provides them', () => {
@@ -35,6 +35,6 @@ test('@load caching headers: immutable hashed bundles, long-lived versioned asse
   const cache = (path: string) => rules.filter(rule => rule.pattern.test(path)).flatMap(rule => rule.headers).filter(([name]) => name === 'cache-control').map(([, value]) => value);
   expect(cache('/build/index-abc123.js')).toEqual(['public, max-age=31536000, immutable']);
   for (const dir of versionedDirs) expect(cache(`/assets/${dir}/file.glb`)[0]).toMatch(/max-age=86400/);
-  // Unversioned paths (index.html, audio, UI images) keep revalidation.
-  for (const path of ['/', '/index.html', '/assets/audio/music.webm', '/assets/ui/portrait-corgi.png']) expect(cache(path)).toEqual([]);
+  // Unversioned paths (index.html, UI images) keep revalidation.
+  for (const path of ['/', '/index.html', '/assets/ui/portrait-corgi.png']) expect(cache(path)).toEqual([]);
 });

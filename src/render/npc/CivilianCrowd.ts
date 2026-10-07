@@ -7,6 +7,7 @@ import { AssetRegistry } from '../../assets/registry';
 import { civilianRoles } from '../../data/npcs';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { bakeInfected, framesPerClip, civilianClips } from '../characters/bakeInfected';
+import { loadGate } from '../../assets/loadGate';
 import { RoutineProps } from './RoutineProps';
 import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
@@ -60,6 +61,7 @@ class CivilianBatch extends Group {
   constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly shading?: Materials, private readonly props?: RoutineProps) { super(); this.name = 'civilian-crowd'; }
   async init(): Promise<void> {
     const loaded = await this.registry.loadAsset(this.model, this.distant ? 'lod2' : 'lod1');
+    await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
     const placeholder = loaded.userData.placeholder, model = placeholder ? createCivilianPlaceholder() : loaded as Group;
     this.source = placeholder ? 'placeholder' : 'glb';
     const baked = bakeInfected(model, [], false, civilianClips), color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');

@@ -14,6 +14,7 @@ import type { SimWorld } from '../sim/world/SimWorld';
 import { createInfectedPlaceholder } from './characters/infectedPlaceholder';
 import type { View } from './View';
 import { bakeInfected, framesPerClip, infectedClips } from './characters/bakeInfected';
+import { loadGate } from '../assets/loadGate';
 import { authoredClips, strides } from './characters/clips';
 import { CrowdPosePalette } from './characters/CrowdPosePalette';
 import { MotionPresentation } from './characters/MotionPresentation';
@@ -90,6 +91,7 @@ export class CrowdView extends Group {
   private async loadBatch(def: { id: string; asset: string; windup: number }, lod: 'lod0' | 'lod1' | 'lod2'): Promise<void> {
       const role = def.id.startsWith('infected.') ? def.id.slice(9) : 'runner', asset = def.asset;
       const loaded = await this.registry.loadAsset(asset, lod) as Group;
+      await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
       if (this.disposed) return;
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback), capacity = role === 'crow' ? 800 : 350;
