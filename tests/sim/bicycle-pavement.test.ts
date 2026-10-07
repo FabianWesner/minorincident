@@ -60,8 +60,8 @@ test('garage bat pickup permits walking back to the parked bike, ACTION remount 
     w.infected!.director.levelCap = 0;
     const parked = { ...b.entity!.transform };
     w.setInput({ moveTarget: { x: parked.x, z: parked.z } }); step(w, 1); w.setInput({ moveTarget: undefined });
-    for (let i = 0; i < 600 && Math.hypot(p.transform.x - parked.x, p.transform.z - parked.z) > 1.5; i++) step(w, 1);
-    expect(w.vehicles!.canInteract()).toBe(true);
+    for (let i = 0; i < 600 && !w.vehicles!.canInteract(); i++) step(w, 1);
+    expect(w.vehicles!.canInteract(), JSON.stringify({ player: p.transform, bike: b.entity!.transform, target: w.controls.moveTarget, inZone: b.atNoBikeZone(p.transform), storyLock: w.storyLock })).toBe(true);
     w.setInput({ interact: true }); step(w, 1); w.setInput({ interact: false }); expect(b.riding).toBe(true); assertPavement(w);
     const start = { ...p.transform }; const goal = { x: start.x - 30, z: start.z };
     w.setInput({ moveTarget: goal }); step(w, 1); w.setInput({ moveTarget: undefined });
