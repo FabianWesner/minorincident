@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import type { Page } from '@playwright/test';
 import { test, expect } from '../fixtures';
 import { menuStart } from '../ui-helpers';
@@ -12,7 +12,6 @@ const caption = 'Delivery complete. Outbreak: not contained.';
 test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
 
 test.describe('L1 v2 real-input playthrough', () => {
-  test.fixme('T-E19-13 @E19 @E19-AC13 walk modifier: run by default, hold Walk at 2.0 m/s on keyboard and mouse', async () => {});
 
   test('T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07)', async ({ page }) => {
     test.setTimeout(300_000); page.setDefaultTimeout(90_000);
@@ -32,15 +31,24 @@ test.describe('L1 v2 real-input playthrough', () => {
     expect(save!.ownedActions).toContain('weapon.bat'); expect(save!.upgrades).toHaveLength(2);
   });
 
-  test('T-E19-22 @E19 @E19-AC22 headless real-input playthrough from title to result, 9 photo spots, end caption', async ({ page }) => {
+  for (const assisted of [false, true]) test(assisted
+    ? 'T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review'
+    : 'T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result', async ({ page }) => {
     test.setTimeout(900_000); page.setDefaultTimeout(60_000); mkdirSync(output, { recursive: true }); // local headless preview needs ~19 s from Begin mission to the playable L1
     await menuStart(page);
-    await page.evaluate(() => { window.__SS__!.pause(); window.__SS__!.cheats.god(true); }); // survival aid only: all movement, interaction and combat input stays real
+    await page.evaluate(() => window.__SS__!.pause());
+    if (assisted) await page.evaluate(() => window.__SS__!.cheats.god(true));
     const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);
     const mission = () => page.evaluate(() => window.__SS__!.missions.state()!);
     const player = () => page.evaluate(() => window.__SS__!.getState().player!);
-    const snap = async (name: string) => {
-      await page.evaluate(n => window.__SS__!.camera.preset('D-GROVE/W0/' + n), name); await page.evaluate(() => window.__SS__!.screenshotReady());
+    const snap = async (name: string, focus?: { x: number; z: number }) => {
+      if (!assisted) return;
+      await page.evaluate(n => window.__SS__!.camera.preset('D-GROVE/W0/' + n), name);
+      if (focus) await page.evaluate(p => {
+        const a = window.__SS__!;
+        a.camera.cinematic({ position: [p.x + 22, 26, p.z + 22], target: [p.x, 0, p.z] }); a.vfx.stepRender(1.1);
+      }, focus);
+      await page.evaluate(() => window.__SS__!.screenshotReady());
       await page.screenshot({ path: `${output}/${name}.png` }); await page.evaluate(() => window.__SS__!.camera.follow()); await step(1);
     };
     /** Click-to-move toward a world point: real mouse clicks on the ground, the game paths around obstacles. */
@@ -76,14 +84,24 @@ test.describe('L1 v2 real-input playthrough', () => {
     expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons)).toBeUndefined();
     await snap('l1-morning');
 
+    const mount = async () => {
+      const bike = await page.evaluate(() => window.__SS__!.query({ kind: 'bicycle' })[0]);
+      await go(bike.transform, 1.4);
+      if (!(await player()).riding) await interact();
+      expect((await player()).riding, 'Courier mounts using real input').toBe(bike.id);
+    };
+    if (!assisted) await mount();
+
     // Beat 2: the depot counter.
     await go(at('parcel-counter'), 1.2); await step(70);
     if (!(await mission()).completedObjectives.includes('pickup')) { await interact(); await step(4); }
     expect((await mission()).completedObjectives).toContain('pickup');
     await snap('l1-pickup');
 
-    // Beats 3 and 4: to the facility, then hand over; the bicycle is optional (F), the walk is the contract.
-    await go(at('lab-door'), 1.2); await snap('l1-facility');
+    // Remount the bike parked at the depot, ride to the forecourt and auto-dismount.
+    if (!assisted) await mount();
+    await go(at('lab-door'), 1.2);
+    expect((await player()).riding).toBeUndefined(); await snap('l1-facility');
     await interact();
     for (let i = 0; i < 60 && !(await mission()).l1!.delivered; i++) await step(30);
     expect((await mission()).l1!.delivered).toBe(true);
@@ -99,16 +117,31 @@ test.describe('L1 v2 real-input playthrough', () => {
     // Beat 6: five infected exit; get away.
     for (let i = 0; i < 40 && (await mission()).l1!.exitIds.length === 0; i++) await step(30);
     expect((await mission()).l1!.exitIds).toHaveLength(5);
-    await step(60); await snap('l1-escape');
+    await step(assisted ? 300 : 60); await snap('l1-escape');
 
     // Beats 7 to 10: follow the objective, fight what blocks the way, interact at the garage, reach the fire station.
     const shots = new Set<string>(); let guard = 0;
+    if (assisted) {
+      // Follow a systemic victim for the spread photo: its location depends on the AI, not a scripted photo anchor.
+      await go(at('garage-door'), 1.5);
+      let victim = await page.evaluate(() => window.__SS__!.getState().entities.find(e => e.infection?.phase === 'collapse' || e.infection?.phase === 'eyes'));
+      for (let i = 0; i < 480 && !victim; i++) {
+        await step(15);
+        victim = await page.evaluate(() => window.__SS__!.getState().entities.find(e => e.infection?.phase === 'collapse' || e.infection?.phase === 'eyes'));
+      }
+      expect(victim, 'A systemic pedestrian transformation is available for visual review').toBeDefined();
+      await snap('l1-spread', victim!.transform); shots.add('l1-spread');
+      writeFileSync(`${output}/spread-victim.json`, JSON.stringify(victim, null, 2) + '\n');
+    }
     while (guard++ < 400) {
       const m = await mission();
       if (m.phase === 'cinematic' || m.phase === 'result') break;
       const active = Object.entries(m.steps).find(([, s]) => s.status === 'active')?.[0];
       if (!active) { await step(30); continue; }
       if (await fightNearby(page)) continue;
+      if (assisted && active === 'firestation' && !shots.has('l1-horde')) {
+        await step(600); shots.add('l1-horde'); await snap('l1-horde');
+      }
       const goal = at(goals[active]);
       await go(goal, active === 'weapon' ? 1.2 : active === 'firestation' ? 2.5 : 1.5);
       if (active === 'weapon') {
@@ -118,6 +151,7 @@ test.describe('L1 v2 real-input playthrough', () => {
       if (active === 'escape' && !shots.has('l1-spread')) { shots.add('l1-spread'); await snap('l1-spread'); }
       if (active === 'firestation' && !shots.has('l1-horde')) { shots.add('l1-horde'); await snap('l1-horde'); }
     }
+    if (assisted) expect(shots.has('l1-spread') && shots.has('l1-horde')).toBe(true);
     expect((await mission()).completedObjectives).toEqual(['pickup', 'deliver', 'escape', 'weapon', 'firestation']);
     expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.bat');
     await step(2);
@@ -127,5 +161,6 @@ test.describe('L1 v2 real-input playthrough', () => {
     expect((await mission()).phase).toBe('result');
     await expect(page.getByTestId('mission-heading')).toHaveText(caption);
     await expect(page.getByTestId('result-delivered')).toHaveText('✓');
+    writeFileSync(`${output}/${assisted ? 'assisted' : 'unassisted'}-result.json`, JSON.stringify(await mission(), null, 2) + '\n');
   });
 });
