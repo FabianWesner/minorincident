@@ -14,11 +14,10 @@ test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enabl
 test.describe('L1 v2 real-input playthrough', () => {
   test.fixme('T-E19-13 @E19 @E19-AC13 walk modifier: run by default, hold Walk at 2.0 m/s on keyboard and mouse', async () => {});
 
-  test('T-E19-unlock @E19 result screen, real click on Continue: the unlock panel shows the bat, not a crowbar', async ({ page }) => {
-    test.setTimeout(300_000); page.setDefaultTimeout(60_000); mkdirSync(output, { recursive: true });
+  test('T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07)', async ({ page }) => {
+    test.setTimeout(300_000); page.setDefaultTimeout(90_000);
     await menuStart(page);
     await page.evaluate(() => window.__SS__!.pause());
-    // Objectives are advanced with the test cheat (the walk is covered by the playthrough); the screens are real clicks.
     for (let i = 0; i < 12; i++) {
       const phase = await page.evaluate(() => window.__SS__!.missions.state()!.phase);
       if (phase === 'cinematic' || phase === 'result') break;
@@ -26,8 +25,11 @@ test.describe('L1 v2 real-input playthrough', () => {
     }
     for (let i = 0; i < 40 && (await page.evaluate(() => window.__SS__!.missions.state()!.phase)) !== 'result'; i++) await page.evaluate(() => window.__SS__!.step(30));
     await page.getByRole('button', { name: 'Continue', exact: true }).click();
-    await expect(page.locator('body')).toContainText(/bat/i);
-    await expect(page.locator('body')).not.toContainText(/crowbar/i);
+    await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible();
+    expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L2');
+    await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal/);
+    const save = await page.evaluate(() => window.__SS__!.campaign.state());
+    expect(save!.ownedActions).toContain('weapon.bat'); expect(save!.upgrades).toHaveLength(2);
   });
 
   test('T-E19-22 @E19 @E19-AC22 headless real-input playthrough from title to result, 9 photo spots, end caption', async ({ page }) => {

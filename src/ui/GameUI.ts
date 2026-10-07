@@ -195,7 +195,15 @@ export class GameUI {
       const saved = this.game.saves.load();
       for (const id of ['continue-game', 'title-levels']) this.root.querySelector<HTMLButtonElement>(`[data-testid=${id}]`)!.hidden = saved.status !== 'ok';
     }
-    if (screen === 'levels') for (let i = 1; i <= 6; i++) this.root.querySelector<HTMLButtonElement>(`[data-testid=level-L${i}]`)!.disabled = i > (this.game.campaign?.unlockedLevel ?? 1);
+    if (screen === 'levels') {
+      // PO: levels after L1 stay greyed out and unfocusable until the campaign has actually unlocked them.
+      const names = ['Stop the Outbreak', 'Get Them Out', 'Reach the Safe Zone', 'Open the Escape Route', 'Hold the Line', 'Get Out'], unlocked = this.game.campaign?.unlockedLevel ?? 1;
+      for (let i = 1; i <= 6; i++) {
+        const b = this.root.querySelector<HTMLButtonElement>(`[data-testid=level-L${i}]`)!, locked = i > unlocked;
+        b.disabled = locked; b.classList.toggle('is-locked', locked); b.textContent = `${locked ? '🔒 ' : ''}L${i} · ${names[i - 1]}`;
+        if (locked) { b.title = `Complete Level ${i - 1} first`; b.setAttribute('aria-label', `Level ${i}, locked. Complete Level ${i - 1} first`); } else { b.removeAttribute('title'); b.removeAttribute('aria-label'); }
+      }
+    }
     for (const [name, panel] of this.screens) panel.hidden = name !== screen;
     this.root.hidden = screen === null;
     if (screen === null && this.root.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();
