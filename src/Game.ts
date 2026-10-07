@@ -231,8 +231,7 @@ export class Game {
   private wasDead = false;
   private simTick(): void {
     this.input.setDriving(this.world.vehicles?.active != null);
-    const mission = this.world.missions, at = this.world.entities.get(1)?.transform;
-    const missionInteract = !!mission && !!at && mission.def.steps.some(step => step.type === 'interact' && mission.state.steps[step.id].status === 'active' && Math.hypot(at.x - mission.def.anchors[step.anchor].x, at.z - mission.def.anchors[step.anchor].z) <= mission.def.anchors[step.anchor].radius);
+    const missionInteract = this.world.missions?.interactionAvailable() === true;
     this.input.touch.setInteractable(this.world.vehicles?.canInteract() === true || this.world.interactables?.activeId != null || missionInteract);
     const player = this.world.entities.get(1)?.transform;
     // PO: after a respawn, held buttons/targets/modifiers from the fight before death must not carry over.

@@ -20,8 +20,10 @@ export function validateMission(def: MissionDef): string[] {
         if (!t.ids.length || !['all', 'any'].includes(t.mode)) errors.push('Invalid objective trigger');
         t.ids.forEach(id => ref(id, [...ids], 'objective')); break;
       case 'volume': ref(t.anchor, def.anchors, 'anchor'); if (t.actor) ref(t.actor, def.actors, 'actor'); if (!['inside', 'enter', 'exit'].includes(t.edge)) errors.push('Invalid volume edge'); break;
-      case 'interact': ref(t.anchor, def.anchors, 'anchor'); positive(t.seconds, 'interaction duration'); break;
+      case 'interact': ref(t.anchor, def.anchors, 'anchor'); positive(t.seconds, 'interaction duration'); if (t.actor) ref(t.actor, def.actors, 'actor'); break;
       case 'kills': t.actors.forEach(id => ref(id, def.actors, 'actor')); if (!t.actors.length) errors.push('Missing kill targets'); if (t.count !== undefined) { positive(t.count, 'kill count'); if (t.count > t.actors.length || !Number.isInteger(t.count)) errors.push('Invalid kill count'); } break;
+      case 'hold': ref(t.anchor, def.anchors, 'anchor'); positive(t.seconds, 'hold duration'); break;
+      case 'destroy': ref(t.actor, def.actors, 'actor'); break;
       case 'timer': positive(t.seconds, 'timer'); break;
       case 'dead': ref(t.actor, def.actors, 'actor'); break;
       case 'escort': case 'drive': ref(t.actor, def.actors, 'actor'); ref(t.anchor, def.anchors, 'anchor'); break;
@@ -47,6 +49,7 @@ export function validateMission(def: MissionDef): string[] {
     case 'timeOfDay': if (!['L1','L2','L3','L4','L5','L6','golden'].includes(a.value)) errors.push('Invalid time of day'); break;
     default: errors.push('Unknown action kind');
   } };
+  if (def.deadline) { positive(def.deadline.seconds, 'mission deadline'); if (!Number.isFinite(def.deadline.retryGraceSeconds) || def.deadline.retryGraceSeconds < 0) errors.push('Invalid retry grace'); }
   for (const [id, a] of Object.entries(def.anchors)) if (![a.x, a.z, a.radius].every(Number.isFinite) || a.radius <= 0) errors.push(`Invalid anchor: ${id}`);
   for (const a of Object.values(def.actors)) { ref(a.anchor, def.anchors, 'anchor'); positive(a.hp, 'actor HP'); }
   for (const group of Object.values(def.groups)) group.forEach(id => ref(id, def.actors, 'actor'));
