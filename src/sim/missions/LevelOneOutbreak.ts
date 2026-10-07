@@ -19,14 +19,16 @@ const story = {
   variants: ['inf.delivery-driver', 'inf.cashier', 'inf.bbq-dad', 'inf.suburban-mom', 'inf.bathrobe-neighbor'],
   techRole: 'delivery-driver', techModel: 'npc.lab-tech-a', techTint: '#f1f1ec',
   /** Fair moment (QA1-05): windows burst first, the side door next, the front door (and the technician) last. */
-  exitDelayS: { 'lab-exit-window': 0, 'lab-exit-side': .8, 'lab-exit-front': 2.5 } as Record<string, number>,
+  exitDelayS: { 'lab-exit-window': 3, 'lab-exit-side': 3.5, 'lab-exit-front': 4.5 } as Record<string, number>,
+  /** Grace for a player at the door: exits are disoriented ~3 s, bites on the player hit softly for the first 8 s. */
+  graceDamage: .25, graceS: 8, staggerS: 1.5,
   blastPushM: 3.2, blastPushRangeM: 12,
   eventOrder: ['l1.flicker', 'l1.blast', 'l1.ringing', 'l1.smoke', 'l1.screams'] as const,
 };
 const fresh = (): L1State => ({
   phase: 'morning', carrying: false, delivered: false, away: false, techId: 0, hx: 0, hz: 0,
   handoverAt: 0, deliveredAt: 0, flickerAt: 0, exitAt: 0, warned: false, fired: 0,
-  exitIds: [], exitHeadingsDeg: [], runs: [], turnedIds: [], escapedIds: [], hordeDone: false, routeSpawns: 0, routeNextAt: 0,
+  exitIds: [], exitHeadingsDeg: [], runs: [], turnedIds: [], escapedIds: [], graceUntil: 0, hordeDone: false, routeSpawns: 0, routeNextAt: 0,
 });
 
 /**
@@ -93,7 +95,7 @@ export class LevelOneOutbreak {
   /** Checkpoint restore: shift the story timeline by the time that passed since capture. */
   restore(delta: number): void {
     const l1 = this.l1;
-    for (const key of ['handoverAt', 'deliveredAt', 'flickerAt', 'exitAt'] as const) if (l1[key]) l1[key] += delta;
+    for (const key of ['handoverAt', 'deliveredAt', 'flickerAt', 'exitAt', 'graceUntil'] as const) if (l1[key]) l1[key] += delta;
     for (const run of l1.runs) run.until += delta;
   }
 
@@ -113,6 +115,14 @@ export class LevelOneOutbreak {
     if (!l1.delivered) this.handover(tick, player);
     else if (l1.phase === 'calm' || l1.phase === 'accident') this.accident(tick);
     if (l1.runs.length) this.run(tick);
+    if (l1.graceUntil && tick >= l1.graceUntil) {
+      l1.graceUntil = 0;
+      for (const id of l1.exitIds) { const e = world.entities.get(id); if (e?.combat && e.infected) e.combat.damageMultiplier = 1; }
+    }
+    if (l1.phase === 'spread' && tick % 300 === 0 && l1.graceUntil === 0 && world.npcs?.civilians.outbreak?.stats.bites === 0) {
+      // Robust start: until the first bite, idle exit infected are re-sent to the nearest pedestrian wherever they are.
+      for (const id of l1.exitIds) { const e = world.entities.get(id), t = e && e.health.current > 0 ? this.pedestrianTarget(e.transform, 120) : null; if (t) world.infected!.rush(id, t, tick + 10 * TICKS); }
+    }
     if (l1.phase === 'spread') this.horde(tick, player);
     if (l1.phase === 'spread' && !l1.away) {
       const lab = this.anchor('lab-gate');
@@ -173,12 +183,7 @@ export class LevelOneOutbreak {
     if (tick >= l1.exitAt) { this.emit('l1.infectedExit'); this.release(tick); }
   }
   private emit(type: L1AccidentEventName): void {
-    if (type === 'l1.blast') {
-      // The pressure wave shoves a player standing near the building back toward the forecourt edge.
-      const { world } = this.mission, player = world.entities.get(1)!, v = this.anchor('lab-smoke-vent');
-      const dx = player.transform.x - v.x, dz = player.transform.z - v.z, d = Math.hypot(dx, dz);
-      if (d < story.blastPushRangeM && d > 0.01) world.knockback(player, { x: dx / d, z: dz / d }, story.blastPushM);
-    }
+    if (type === 'l1.blast') this.blastPush();
     const a = this.anchor(story.anchors[type]);
     this.mission.world.events.emit({ type, tick: this.mission.world.tick, anchor: story.anchors[type], position: { x: a.x, z: a.z } });
   }
@@ -195,7 +200,9 @@ export class LevelOneOutbreak {
         const id = i === 0 ? this.infectTechnician(at) : this.spawnInfected(at, story.variants[i]);
         if (id === 0) continue;
         l1.exitIds.push(id); l1.exitHeadingsDeg.push(heading);
-        const target = this.farPoint(at, rad);
+        const target = this.pedestrianTarget(at) ?? this.farPoint(at, rad);
+        const exiting = world.entities.get(id);
+        if (exiting?.combat) { exiting.combat.damageMultiplier = story.graceDamage; exiting.combat.staggerUntil = tick + Math.round(story.staggerS * TICKS); }
         if (i === 0) {
           // The technician is still inside: scripted indoor leg to the front door, then the real infected AI is rushed outward.
           l1.runs.push({ id, dx: target.x, dz: target.z, speed, until: tick + 60 * TICKS, via: { x: at.x, z: at.z } });
@@ -209,6 +216,7 @@ export class LevelOneOutbreak {
         }
       }
     }
+    l1.graceUntil = tick + story.graceS * TICKS;
     world.combat?.setLoadout(['weapon.fists'], ['weapon.fists']);
     this.mission.setState('exited', true);
     this.mission.requestCheckpoint('accident');
@@ -267,6 +275,31 @@ export class LevelOneOutbreak {
     if (outbreak.ensureHorde(ahead, ahead) > 0) {
       l1.routeSpawns++; l1.routeNextAt = tick + 15 * TICKS;
       for (const e of world.infected!.active) if (!before.has(e.id) && e.health.current > 0) world.infected!.rush(e.id, { x: p.x, z: p.z }, tick + 20 * TICKS);
+    }
+  }
+  /** The nearest live pedestrian within 30 m of an exit: the first infected go for them before the player. */
+  private pedestrianTarget(at: { x: number; z: number }, maxM = 30): { x: number; z: number } | null {
+    let best: { x: number; z: number } | null = null, bestD = maxM;
+    for (const e of this.mission.world.entities.iterate()) {
+      if (!e.civilian?.l1 || e.hidden || e.infection || e.id === this.l1.techId || !['calm', 'alarmed', 'flee'].includes(e.civilian.state)) continue;
+      const d = Math.hypot(e.transform.x - at.x, e.transform.z - at.z); if (d < bestD) { bestD = d; best = { x: e.transform.x, z: e.transform.z }; }
+    }
+    return best;
+  }
+  /** Blast push along a clear direction (open ground, no prop or parked bicycle at the end), preferring away from the vent. */
+  private blastPush(): void {
+    const { world } = this.mission, player = world.entities.get(1)!, v = this.anchor('lab-smoke-vent'), nav = world.infected?.nav;
+    const dx = player.transform.x - v.x, dz = player.transform.z - v.z, d = Math.hypot(dx, dz);
+    if (!nav || d >= story.blastPushRangeM || d < .01) return;
+    const base = Math.atan2(dz, dx), p = player.transform;
+    for (const turn of [0, .5, -.5, 1, -1, 1.5, -1.5]) {
+      const a = base + turn, ux = Math.cos(a), uz = Math.sin(a);
+      for (let dist = story.blastPushM; dist >= 1.2; dist -= .8) {
+        const end = { x: p.x + ux * dist, z: p.z + uz * dist };
+        if (!nav.clear(end.x, end.z, .6) || !nav.visible(p, end, .5)) continue;
+        if ([...world.entities.iterate()].some(o => o.id !== 1 && (o.bicycle || o.interactable || o.hazard || o.destructible) && Math.hypot(o.transform.x - end.x, o.transform.z - end.z) < 1.6)) continue;
+        world.knockback(player, { x: ux, z: uz }, dist); return;
+      }
     }
   }
   /** A point 32 m from the exit along a heading, snapped to clear ground. */
