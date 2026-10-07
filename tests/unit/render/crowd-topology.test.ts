@@ -11,11 +11,16 @@ test('common-worker crowd triangles keep one rigid owner and bounded posed edges
   for (const lod of ['', '.lod1', '.lod2']) {
     const bytes = readFileSync(`public/assets/models/inf.common-worker${lod}.glb`);
     const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+    // The repaired tiers are authored closed solids. Reapplying the generated
+    // delivery collapse would recreate the torn surfaces found in production.
+    if (lod) expect(scene.userData.deliveryLodGenerated, lod).not.toBe(true);
     const sides: Record<string, number> = {}, negative: string[] = []; scene.updateMatrixWorld(true); scene.traverse(n => { if (n instanceof Mesh) { const m = Array.isArray(n.material) ? n.material[0] : n.material; sides[m.name] = m.side; if (n.matrixWorld.determinant() < 0) negative.push(n.name); } });
     const materials = new AssetMaterials(); materials.swap(scene);
     scene.traverse(n => { if (n instanceof Mesh) for (const m of Array.isArray(n.material) ? n.material : [n.material]) expect(m.side, `${lod}:${m.name}`).toBe(sides[m.name]); });
     const baked = bakeInfected(scene), pos = baked.geometry.getAttribute('position'), owners = baked.geometry.getAttribute('_part_index');
     expect(baked.doubleSided, lod).toBe(Object.values(sides).includes(DoubleSide));
+    const colors = baked.geometry.getAttribute('color'), emissive = baked.geometry.getAttribute('_emissive');
+    for (let i = 0; i < colors.count; i++) if (Math.max(colors.getX(i), colors.getY(i), colors.getZ(i)) < .04) expect(emissive.getX(i), `${lod}: dark hair/cloth`).toBe(0);
     const matrices = baked.clip.parts.map(() => new Matrix4()), points = [new Vector3(), new Vector3(), new Vector3()];
     let maxEdge = 0, maxArea = 0, mixedOwners = 0;
     for (const name of ['idle', 'run', 'shamble', 'death-back'] as const) for (const f of [0, 6, 12, 23]) {
@@ -31,6 +36,6 @@ test('common-worker crowd triangles keep one rigid owner and bounded posed edges
     metrics.push({ lod: lod || 'lod0', triangles: pos.count / 3, maxEdge, maxArea, mixedOwners, sides, negative });
     baked.geometry.dispose(); materials.dispose();
   }
-  mkdirSync('test-results/crowd-feel', { recursive: true }); writeFileSync('test-results/crowd-feel/topology.json', JSON.stringify(metrics, null, 2));
+  mkdirSync('test-results/epics/E07/crowd-feel', { recursive: true }); writeFileSync('test-results/epics/E07/crowd-feel/topology.json', JSON.stringify(metrics, null, 2));
   for (const m of metrics) { expect(m.mixedOwners, m.lod).toBe(0); expect(m.maxEdge, m.lod).toBeLessThan(.9); expect(m.maxArea, m.lod).toBeLessThan(.15); }
 });
