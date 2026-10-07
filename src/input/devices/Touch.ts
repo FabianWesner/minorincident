@@ -15,6 +15,7 @@ export class Touch {
   readonly aim: Vec2 = { x: 0, z: 0 };
   aiming = false;
   get holdingLeft(): boolean { for (const c of this.contacts.values()) if (c.action === 'left') return true; return false; }
+  get holdingRight(): boolean { for (const c of this.contacts.values()) if (c.action === 'right') return true; return false; }
   setInteractable(on: boolean): void { this.element.querySelector<HTMLButtonElement>('[data-touch-action=interact]')!.disabled = !on; }
   private readonly slots = new Map<'left' | 'right', { button: HTMLButtonElement; icon: HTMLImageElement; hint: HTMLSpanElement }>();
   private driving = false;
@@ -45,7 +46,7 @@ export class Touch {
     this.setInteractable(on);
     this.driving = on;
     for (const [side, slot] of this.slots) {
-      text(slot.hint, side.toUpperCase());
+      text(slot.hint, on ? side === 'left' ? 'BOOST' : 'DRIFT' : side.toUpperCase());
       slot.icon.hidden = on;
       slot.button.setAttribute('aria-label', `Touch ${side}`);
     }

@@ -1,0 +1,19 @@
+# Task: upscale one concept-sheet item into a clean modeling reference
+
+Workspace: /Users/fabianwesner/Workspace/suburban-survivors. Work ONLY inside `assets/npc.police-officer/`.
+
+Input: `assets/npc.police-officer/reference.png` — a crop of one item (Police officer (alive): navy uniform, vest, cap, radio) from the concept sheet
+`initial-drafts/emergency-responders-and-survivor-allies.png`. Output: `assets/npc.police-officer/reference-upscaled.png` and `assets/npc.police-officer/prompt.md`.
+
+Use the built-in imagegen tool in edit mode (load reference.png with view_image first; also load the full sheet
+for style context). Produce a high-resolution, clean reference of THE SAME item:
+- Same design, proportions, colours, markings and camera angle. Do not redesign; only clarify.
+- Same stylized chunky low-poly toy look as the sheet (warm saturated colours, soft golden-hour light, slight bevels).
+- Isolated: only this item, centred, fully in frame with a margin; remove labels, panel borders and neighbours.
+- Background: plain neutral dark grey (#2a2730), no shadow clutter (as specified in specs/03-asset-pipeline.md §3).
+- Character turnaround: front, left side, back and three-quarter views side by side, same scale, relaxed stance, arms slightly away from the body (specs/03 §3).
+Generate once; regenerate once only if clearly wrong. Copy the chosen file from $CODEX_HOME/generated_images.
+Write the prompt you used, the tool and today's date into prompt.md.
+
+Final message = exactly one JSON object:
+{"id": "npc.police-officer", "output": "assets/npc.police-officer/reference-upscaled.png", "width": <px>, "height": <px>, "attempts": <n>, "notes": "<one sentence>"}

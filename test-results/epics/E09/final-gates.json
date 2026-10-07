@@ -1,74 +1,31 @@
-[
-  {
-    "name": "typecheck",
-    "command": [
-      "npm",
-      "run",
-      "typecheck"
-    ],
-    "exitCode": 0,
-    "elapsedSeconds": 4.81
+{
+  "base": "642f8fe0",
+  "typecheck": 0,
+  "lint": 0,
+  "build": 0,
+  "unit": {
+    "passed": 257,
+    "files": 77
   },
-  {
-    "name": "lint",
-    "command": [
-      "npm",
-      "run",
-      "lint"
-    ],
-    "exitCode": 0,
-    "elapsedSeconds": 2.882
+  "smoke": {
+    "simPassed": 5,
+    "browserPassed": 22
   },
-  {
-    "name": "build",
-    "command": [
-      "npm",
-      "run",
-      "build"
-    ],
-    "exitCode": 0,
-    "elapsedSeconds": 3.358
+  "verify": {
+    "target": "E09",
+    "simPassed": 38,
+    "browserPassed": 33,
+    "exitCode": 0
   },
-  {
-    "name": "unit",
-    "command": [
-      "npm",
-      "run",
-      "test:unit"
-    ],
-    "exitCode": 0,
-    "elapsedSeconds": 24.731
+  "vehicleBrowserPassed": 8,
+  "bikePassed": 27,
+  "levels": {
+    "completed": 12,
+    "runs": 18,
+    "failedLevels": [
+      "L3",
+      "L6"
+    ]
   },
-  {
-    "name": "sim",
-    "command": [
-      "npm",
-      "run",
-      "test:sim"
-    ],
-    "exitCode": 0,
-    "elapsedSeconds": 8.491
-  },
-  {
-    "name": "smoke",
-    "command": [
-      "npm",
-      "run",
-      "test:smoke"
-    ],
-    "exitCode": 0,
-    "elapsedSeconds": 48.914
-  },
-  {
-    "name": "verify",
-    "command": [
-      "npm",
-      "run",
-      "verify",
-      "--",
-      "E09"
-    ],
-    "exitCode": 0,
-    "elapsedSeconds": 46.855
-  }
-]
+  "mainRetestPending": true
+}
