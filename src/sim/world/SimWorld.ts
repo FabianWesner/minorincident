@@ -1,3 +1,5 @@
+import { levelThreeLayouts } from '../../levels/L3/layout';
+import { installLevelThree } from '../../levels/L3/encounters';
 import { ControlIntent } from '../entities/ControlIntent';
 import { installCampaignNpcs, rebuildNpcNavigation, prepareNpcNavigation } from '../npc/install';
 import { Npcs } from '../npc/Npcs';
@@ -63,7 +65,7 @@ export class SimWorld implements Lifecycle {
   missions: Mission | null = null;
   get inputFrame(): InputFrame { return this.effectiveInput; }
   /** Attach a validated mission after scenario/composition assembly. */
-  loadMission(def: MissionDef): Mission { const next=new Mission(this,def);this.missions?.dispose();return this.missions=next; }
+  loadMission(def: MissionDef): Mission { const next=new Mission(this,def);this.missions?.dispose();this.missions=next;if(def.id==='L3' && this.districts)installLevelThree(this,next);return next; }
   /** Mission actors use the same component/physics owners as authored gameplay placements. */
   spawnMissionActor(def: ActorDef, at: { x: number; z: number }): EntitySnapshot {
     let id: number;
@@ -185,7 +187,7 @@ export class SimWorld implements Lifecycle {
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
   loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1):void {
-    const districts=new DistrictWorld(composition,layouts,seed);
+    const districts=new DistrictWorld(composition,composition.id==='L3'?levelThreeLayouts(layouts):layouts,seed);
     this.loadScenario('survivor',seed);this.scenario=composition.id;this.districts=districts;
     this.player!.locomotion.groundHeight = (x, z) => this.districts?.groundHeight(x, z) ?? 0;
     this.interactables!.nav = districts.nav;

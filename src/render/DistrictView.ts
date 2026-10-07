@@ -43,6 +43,7 @@ interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedG
 export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
   readonly batches: InstancedGroup[] = [];
+  private readonly dressingBatches: InstancedGroup[] = [];
   readonly windows: Mesh[] = [];
   private readonly lodBatches: LodBatch[] = [];
   private readonly pending = new Map<LodBatch, Promise<void>>();
@@ -159,10 +160,26 @@ export class DistrictView extends Group {
           if (!references.has(key)) references.set(key, []);
           references.get(key)!.push(reference);
         });
+        // L3 authors parking and emergency dressing in its loaded layout. Its
+        // references must use those positions, rather than the unchanged baked GLB.
+        if (this.world.composition.id === 'L3') {
+          references.clear();
+          for (const p of d.decay.placements) {
+            const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}`;
+            const reference = new Object3D(); reference.position.fromArray(p.position); reference.rotation.y = p.yaw; reference.scale.fromArray(p.scale);
+            if (p.tint) reference.userData.tint = p.tint;
+            if (!references.has(key)) references.set(key, []);
+            references.get(key)!.push(reference);
+          }
+        }
         for (const [colors, refs] of crowns) this.foliage.addCrowns(refs, crownTokens.get(colors) ?? ['foliageDark', 'foliageLight'], d.origin);
         await Promise.all(
           [...references].map(async ([key, refs]) => {
             const [id, power] = key.split(":");
+            if (!worldAssets[id]) {
+              const prototype = await this.registry.asset(id, power === 'true', 'lod0');
+              const batch = new InstancedGroup(prototype, refs); this.dressingBatches.push(batch); root.add(batch); return;
+            }
             const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;
             const farLoaded = initialLods.get(id)?.has('lod2') ?? true;
             const prototypes = await Promise.all([nearLoaded ? 'lod1' : 'lod2', farLoaded ? 'lod2' : 'lod1'].map(lod => this.registry.asset(id, power === 'true', lod as 'lod1' | 'lod2')));
@@ -287,6 +304,13 @@ export class DistrictView extends Group {
     // Low preserves building/vehicle/hero shadows and omits detailed prop shadow casters.
     for (const batch of this.batches) if (worldAssets[batch.name.slice(5)].category === 'prop') batch.traverse(node => {
       if (node instanceof Mesh) { node.userData.qualityCastShadow ??= node.castShadow; node.castShadow = tier === 'high' && node.userData.qualityCastShadow; }
+    });
+  }
+  /** L3 collapse extinguishes Civic emissives; ordinary checkpoint restore powers them again. */
+  setEmergencyPower(powered: boolean): void {
+    const root = this.children.find(child => child.name === 'D-CIVIC');
+    root?.traverse(node => {
+      if (node instanceof Mesh && !Array.isArray(node.material) && (node.name === 'window-light' || node.material.name.startsWith('emi_'))) node.visible = powered;
     });
   }
   setFoliageReveal(enabled: boolean): void { this.foliage.reveal = enabled; }
@@ -509,6 +533,7 @@ export class DistrictView extends Group {
     this.ambient?.dispose();
     this.foliage.dispose();
     for (const b of this.batches) b.dispose();
+    for (const b of this.dressingBatches) b.dispose(); this.dressingBatches.length = 0;
     for (const g of this.grass) g.dispose();
     for (const g of this.ownedGeometry) g.dispose();
     for (const m of this.ownedMaterials) m.dispose();

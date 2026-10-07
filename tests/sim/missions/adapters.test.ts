@@ -95,11 +95,11 @@ test('@E21 @E21-AC07 L3 uses a single 12-minute deadline; graph transitions do n
   const def = campaignMission('L3', () => ({ x: 10, z: 0, radius: 2 }));
   expect(def.deadline).toEqual({ seconds: 720, retryGraceSeconds: 60 }); expect(def.steps.every(s => s.timer === undefined)).toBe(true);
   const mission = await load(def); mission.begin(); ticks(120); expect(mission.state.deadlineTicks).toBe(43080);
-  mission.completeObjective('car'); expect(mission.state.deadlineTicks).toBe(43080);
+  mission.completeObjective('forecourt'); mission.completeObjective('car'); expect(mission.state.deadlineTicks).toBe(43080);
   ticks(60); mission.checkpoint('checkpoint'); const remaining = mission.state.deadlineTicks!;
   ticks(remaining - 1); expect(mission.state.phase).toBe('playing'); ticks(1);
   expect(mission.state.phase).toBe('retry'); expect(world.events.events()).toContainEqual({ type: 'mission.failed', tick: 43200, reason: 'timeout' });
-  ticks(120); expect(world.tick).toBe(43200); mission.restore(); expect(mission.state.deadlineTicks).toBe(remaining + 3600); expect(mission.state.completedObjectives).toEqual(['car']);
+  ticks(120); expect(world.tick).toBe(43200); mission.restore(); expect(mission.state.deadlineTicks).toBe(remaining + 3600); expect(mission.state.completedObjectives).toEqual(['forecourt', 'car']);
   ticks(remaining + 3600); expect(mission.state.failure).toBe('timeout'); mission.restore(); expect(mission.state.deadlineTicks).toBe(remaining + 3600); // no accumulating grace
 });
 test('@E21 @E21-AC07 ordinary checkpoint restore gets no timeout grace; cinematics pause the global clock', async () => {
