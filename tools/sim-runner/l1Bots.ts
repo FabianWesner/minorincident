@@ -53,6 +53,7 @@ export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opt
   const walker = new Walker(), seen = new Set<string>(), timeline: L1Report['timeline'] = [];
   const infectedAfterExit: Record<number, number> = {};
   const bike = world.vehicles?.bicycle, useBike = profile === 'complete' && !!bike?.entity;
+  const stuck: { at: { x: number; z: number } | null; n: number } = { at: null, n: 0 };
   let rode = false, press = false, maxInfected = 0, bites = 0, exitTick = 0, detour: { x: number; z: number; until: number } | null = null, decideAt = 0, move = { x: 0, z: 0 }, fight: EntitySnapshot | null = null;
   const stopBites = world.events.on('outbreak.bite', () => { bites++; });
   const stopCivTurn = world.events.on('civilian.turned', () => { bites++; });
@@ -80,6 +81,14 @@ export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opt
       let goal: { x: number; z: number } | null = null, stop = 1.2, key = step?.id ?? 'wait';
       press = false;
       if (bike?.riding) rode = true;
+      // A jammed bicycle (wide turns against corners): after 3 s without progress the courier steps off and walks.
+      if (world.tick % 60 === 0) { if (stuck.at && dist(stuck.at, p) < .6 && move.x * move.x + move.z * move.z > 0) stuck.n++; else stuck.n = 0; stuck.at = { x: p.x, z: p.z }; }
+      if (bike?.riding && stuck.n >= 3) { press = true; stuck.n = 0; }
+      else if (stuck.n >= 3 && step) {
+        // Jammed on foot (a gate, a hedge corner): side-step 5 m perpendicular to the goal for 3 s, then re-plan.
+        const g = anchor(goals[step.id]), d = dist(g, p) || 1, sign = rng.next() < .5 ? -1 : 1;
+        detour = { x: p.x - (g.z - p.z) / d * 5 * sign, z: p.z + (g.x - p.x) / d * 5 * sign, until: world.tick + 180 }; stuck.n = 0;
+      }
       if (step) goal = anchor(goals[step.id]);
       else if (l1.delivered && !l1.exitIds.length) { goal = anchor('lab-door'); stop = 3; key = 'calm'; }
       if (step?.id === 'deliver' || step?.id === 'pickup') stop = .9;
@@ -88,11 +97,11 @@ export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opt
         const at = bike!.entity!.transform;
         if (dist(at, p) <= 1.4) press = true; else { goal = { x: at.x, z: at.z }; stop = 1; key = 'to-bike'; }
       }
+      if (detour && world.tick > detour.until) detour = null;
       if (newbie) {
-        if (detour && world.tick > detour.until) detour = null;
         if (!detour && rng.next() < .0006) { const names = Object.keys(mission.def.anchors); const a = anchor(names[Math.floor(rng.next() * names.length)]); detour = { x: a.x, z: a.z, until: world.tick + 360 }; }
-        if (detour) { goal = detour; stop = 2; key = 'detour'; }
-      }
+        }
+      if (detour) { goal = detour; stop = 2; key = 'detour'; }
       let dir = goal ? walker.step(world, goal, stop, key) : null;
       if (profile === 'evade-only' && nearest && dist(nearest.transform, p) < 8 && goal) {
         // Keep the objective direction but bias away from the closest threat.

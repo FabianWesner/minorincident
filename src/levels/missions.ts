@@ -30,7 +30,7 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
     case 'L1': {
       // L1 v2 (specs/epic-19 section 3): courier job, hand-over, accident, systemic spread, bat, fire station.
       def.l1 = true;
-      for (const name of ['player-start', 'parcel-counter', 'lab-door', 'lab-gate', 'lab-exit-front', 'lab-exit-side', 'lab-exit-window', 'lab-smoke-vent', 'lab-smoke-window', 'lab-tech-spawn', 'garage-door', 'garage-bat', 'fire-bay-door', 'fire-bay-trigger', 'elm-horde-entry']) anchor(name, 'D-GROVE', name);
+      for (const name of ['player-start', 'parcel-counter', 'lab-door', 'lab-gate', 'lab-exit-front', 'lab-exit-side', 'lab-exit-window', 'lab-smoke-vent', 'lab-smoke-window', 'lab-tech-spawn', 'garage-door', 'garage-bat', 'fire-bay-door', 'fire-bay-trigger', 'elm-horde-entry', ...[1, 2, 3, 4, 5, 6].map(i => `edge-in-${i}`)]) anchor(name, 'D-GROVE', name);
       // Click-to-move stops ~2 m from its target: the reach volume must be forgiving.
       def.anchors['fire-bay-trigger'].radius = 3;
       def.items.push('parcel', 'bat'); def.states.push('delivered', 'exited', 'away'); def.checkpoints.push('accident', 'bat');
