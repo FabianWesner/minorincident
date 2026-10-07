@@ -93,16 +93,16 @@ Every acceptance criterion `E<NN>-ACxx` has a test `T-E<NN>-xx` with the tag `@E
 | E17 Assets | 11 | static, unit, e2e, visual, vision | `tools/assets/validate.ts`, `tests/unit/assets/*.test.ts`, `tests/e2e/turntable.spec.ts` |
 | E18 Performance | 9 | perf, e2e, manual | `tests/perf/*.spec.ts` |
 | E19 L1 (v2, 2026-10-06) | 24 | sim, real-input e2e, vision, perf | `tests/levels/L1.test.ts` (graph, bots, spread, checkpoints), `tests/sim/ai/l1-perception.test.ts` (cone, closest target, search, car alarm, speed tiers), `tests/sim/npc/l1-civilians.test.ts` (density, panic, bite, continuity), `tests/sim/l1-toys.test.ts` (bicycle, gates, dumpster, car wash, corgi), `tests/unit/layouts/d-grove.test.ts` (crossing time, routes, LOS blockers), `tests/e2e/levels/L1.spec.ts` (real-input playthrough, walk modifier, photo spots), `tests/perf/l1-transitions.spec.ts` |
-| E20 L2 | 12 | sim, e2e, vision | `tests/levels/L2.test.ts`, `tests/e2e/levels/L2.spec.ts` |
-| E21 L3 | 9 | sim, e2e, vision | `tests/levels/L3.test.ts`, `tests/e2e/levels/L3.spec.ts` |
-| E22 L4 | 11 | sim, e2e, vision, perf | `tests/levels/L4.test.ts`, `tests/e2e/levels/L4.spec.ts` |
-| E23 L5 | 11 | sim, unit, perf, e2e, vision | `tests/levels/L5.test.ts`, `tests/e2e/levels/L5.spec.ts` |
-| E24 L6 | 11 | sim, unit, e2e, perf, vision, visual | `tests/levels/L6.test.ts`, `tests/levels/campaign.test.ts` |
+| E20 L2 The Failed Rescue (2026-10-07) | 20 | sim, static, unit, visual, real-input e2e, vision, perf | `tests/levels/L2.test.ts`, `tests/e2e/levels/L2.spec.ts` |
+| E21 L3 The Police Collapse (2026-10-07) | 21 | sim, static, unit, visual, real-input e2e, vision, perf | `tests/levels/L3.test.ts`, `tests/e2e/levels/L3.spec.ts` |
+| E22 L4 The Safe City Falls (2026-10-07) | 20 | sim, static, unit, visual, real-input e2e, vision, perf | `tests/levels/L4.test.ts`, `tests/e2e/levels/L4.spec.ts` |
+| E23 L5 Aftermath (2026-10-07) | 19 | sim, static, unit, e2e (offline audio), real-input e2e, vision, perf | `tests/levels/L5.test.ts`, `tests/e2e/levels/L5.spec.ts` |
+| E24 L6 The Subway (2026-10-07) | 19 | sim, unit, visual, real-input e2e, vision, perf | `tests/levels/L6.test.ts`, `tests/levels/campaign.test.ts` |
 | E25 Lighting | 16 | static, visual, e2e, sim, perf, vision | `tests/visual/lighting/*.spec.ts`, `tests/sim/power.test.ts`, `tools/assets/validate.ts` (light anchors) |
 | E26 Props/Barricades | 16 | static, sim, perf, e2e, visual, vision | `tests/sim/props/*.test.ts`, `tests/sim/barricades.test.ts`, `tests/visual/barricade-ui.spec.ts` |
 | E27 Explosions/Fire/Smoke | 15 | unit, sim, visual, e2e, perf, vision | `tests/sim/explosions.test.ts`, `tests/visual/blast-sequence.spec.ts`, `tests/visual/smoke.spec.ts` |
 | E28 Weather | 12 | sim, visual, e2e, perf, vision | `tests/sim/weather.test.ts`, `tests/visual/weather.spec.ts` |
-| **Total** | **362** | | |
+| **Total** | **407** | | |
 
 A static test (`tests/unit/traceability.test.ts`) parses every `specs/epic-*.md` acceptance table and fails if any AC ID has no tagged test **once that epic is marked in progress or done** in `specs/status.json`. The specs and the tests can therefore not drift apart.
 
