@@ -14,6 +14,7 @@ PACKS = {
   'r100': dict(pack='rubberduck-100-v2', file='sfx_100_v2.zip', dir='sfx_100_v2', pre='', title='100 CC0 SFX #2', author='rubberduck', url='https://opengameart.org/content/100-cc0-sfx-2', dl='https://opengameart.org/sites/default/files/sfx_100_v2.zip', ext='.ogg'),
   'rwm': dict(pack='rubberduck-wood-metal', file='100-CC0-wood-metal-SFX.zip', dir='100-CC0-wood-metal-SFX', pre='', title='100 CC0 Metal and Wood SFX', author='rubberduck', url='https://opengameart.org/content/100-cc0-metal-and-wood-sfx', dl='https://opengameart.org/sites/default/files/100-CC0-wood-metal-SFX.zip', ext='.ogg'),
   'car': dict(pack='ggbotnet-car-sfx', file='car_sound_effects_pack.zip', dir='car', pre='', title='Car Sound Effects Pack (Low Quality)', author='GGBotNet', url='https://opengameart.org/content/car-sound-effects-pack-low-quality', dl='https://opengameart.org/sites/default/files/car_sound_effects_pack.zip', ext='.ogg'),
+  'rv': dict(pack='cicifyre-rpg-voice', file='rpg-voice-starter-pack.zip', dir='rpgvoice', pre='RPG Voice Starter Pack/Type 2/', title='Female RPG Voice Starter Pack (type 2, medium voice)', author='cicifyre', url='https://opengameart.org/content/female-rpg-voice-starter-pack', dl='https://opengameart.org/sites/default/files/RPG%20Voice%20Starter%20Pack.zip', ext='.wav'),
   'sc': dict(pack='qubodup-slightscreams', file='slightscreams.7z', dir='slightscreams', pre='', title='15 vocal male strain/hurt/pain/jump sounds', author='qubodup', url='https://opengameart.org/content/15-vocal-male-strainhurtpainjump-sounds', dl='https://opengameart.org/sites/default/files/slightscreams.7z', ext='.flac'),
 }
 used = {}
@@ -54,8 +55,9 @@ fam('impact.thump', [(k, up(0.8) + ',lowpass=f=260') for k, _ in ks('impactSoft_
 EFF, HURT = (2, 4, 5, 7, 9, 12, 13, 15), (6, 8, 3, 11, 14, 1, 10, 6)
 sc = lambda n: f'sc:slightscream-{n:02d}'
 fam('bark.male.effort', [(sc(n), None) for n in EFF[:4]]); fam('bark.male.hurt', [(sc(n), None) for n in HURT[:4]])
-fam('bark.female.effort', [(sc(n), up(1.2)) for n in EFF[4:]]); fam('bark.female.hurt', [(sc(n), up(1.22)) for n in HURT[4:]])
-fam('bark.male.quip', [(sc(n), None) for n in (4, 7, 9, 12)]); fam('bark.female.quip', [(sc(n), up(1.2)) for n in (13, 15, 5, 2)])
+# female courier: real female CC0 takes, never a pitch-shifted male
+fam('bark.female.effort', [('rv:attack1', None), ('rv:attack2', None), ('rv:attack3', None), ('rv:jump1', None)]); fam('bark.female.hurt', [('rv:damaged1', None), ('rv:damaged2', None), ('rv:damaged3', None), ('rv:damaged1', 'atempo=0.96')])
+fam('bark.male.quip', [(sc(n), None) for n in (4, 7, 9, 12)]); fam('bark.female.quip', [('rv:attack2', None), ('rv:jump2', None), ('rv:jump3', None), ('rv:attack3', None)])
 # props, glass, doors
 fam('prop.wood', [(f'rwm:wood_hit_0{i}', None) for i in (1, 2, 3, 4)]); fam('prop.metal', [(f'rwm:metal_hit_0{i}', None) for i in (1, 2, 3, 4)])
 fam('prop.plastic', ks('impactTin_medium', 0)); fam('prop.glass', [('r75:bfh1_glass_hit_01', None), ('r75:bfh1_glass_hit_02', None), ('k:impactGlass_medium_000', None), ('k:impactGlass_medium_001', None)])
