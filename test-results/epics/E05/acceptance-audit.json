@@ -30,6 +30,18 @@
       {
         "title": "T-E05-03 @E05 @E05-AC03 bat arc/range/maxTargets boundaries, once per swing",
         "report": "vitest.json"
+      },
+      {
+        "title": "@E05 @E05-AC03 @E05-AC07 @E06 ten rapid released clicks keep weapon.fists in reach and kill",
+        "report": "vitest.json"
+      },
+      {
+        "title": "@E05 @E05-AC03 @E05-AC07 @E06 ten rapid released clicks keep weapon.bat in reach and kill",
+        "report": "vitest.json"
+      },
+      {
+        "title": "@E05 @E05-AC03 downed and rising infected take click damage and die before getting up",
+        "report": "vitest.json"
       }
     ]
   },
@@ -69,6 +81,18 @@
     "tests": [
       {
         "title": "T-E05-07 @E05 @E05-AC07 authored displacement along hit direction; stagger cancels infected attack",
+        "report": "vitest.json"
+      },
+      {
+        "title": "@E05 @E05-AC03 @E05-AC07 @E06 ten rapid released clicks keep weapon.fists in reach and kill",
+        "report": "vitest.json"
+      },
+      {
+        "title": "@E05 @E05-AC03 @E05-AC07 @E06 ten rapid released clicks keep weapon.bat in reach and kill",
+        "report": "vitest.json"
+      },
+      {
+        "title": "@E05 @E05-AC07 ordinary high damage and upgrades cannot cause a knockdown",
         "report": "vitest.json"
       }
     ]
@@ -138,7 +162,11 @@
     "status": "PASS",
     "tests": [
       {
-        "title": "T-E05-14 @E05 @E05-AC14 measure every reference weapon \u00d7 archetype TTK in authored bands",
+        "title": "T-E05-14 T-E06-10 @E05 @E05-AC14 @E06 @E06-AC10 measure every reference weapon \u00d7 archetype TTK in authored bands",
+        "report": "vitest.json"
+      },
+      {
+        "title": "@E05 @E05-AC14 @E06 @E06-AC10 click TTK measurement",
         "report": "vitest.json"
       }
     ]

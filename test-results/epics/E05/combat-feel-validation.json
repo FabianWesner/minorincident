@@ -1,0 +1,106 @@
+{
+  "branch": "lane/combat-feel",
+  "base": "aff15c89",
+  "gameplayCommit": "fdb30ffe",
+  "toolingCommit": "2bc1aa8c",
+  "verify": {
+    "command": "SIM_WAIT=300 npm run verify -- E05",
+    "exitCode": 0,
+    "simPassed": 39,
+    "simSkipped": 616,
+    "browserPassed": 26,
+    "browserFailed": 0,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E05)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E05/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E05)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+        ],
+        "exitCode": 0
+      }
+    ]
+  },
+  "unit": {
+    "command": "SIM_WAIT=300 sh tools/sim-lock.sh npx vitest run tests/unit --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E05/unit.json",
+    "exitCode": 0,
+    "passed": 256,
+    "failed": 0,
+    "files": 77
+  },
+  "combat": {
+    "command": "SIM_WAIT=300 sh tools/sim-lock.sh npx vitest run tests/sim/combat tests/sim/weapons.test.ts --maxWorkers=2 --reporter=default --reporter=json --outputFile=test-results/epics/E05/combat-check.json",
+    "exitCode": 0,
+    "passed": 105,
+    "failed": 0
+  },
+  "fastClicks": {
+    "command": "npx vitest run tests/sim/combat/fast-clicks.test.ts --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E05/fast-clicks.json",
+    "exitCode": 0,
+    "passed": 8,
+    "failed": 0
+  },
+  "smoke": {
+    "command": "E2E_WAIT=300 E2E_PORT=3318 npm run test:smoke",
+    "exitCode": 0,
+    "simPassed": 5,
+    "simSkipped": 650,
+    "browserPassed": 22,
+    "browserFailed": 0
+  },
+  "initialUnitAttempt": {
+    "passed": 255,
+    "failed": 1,
+    "failure": "static test exceeded existing 180s timeout under shared Mac load; subsequent full passes 256/256 without changing timeout"
+  },
+  "cleanup": {
+    "buildDeleted": true,
+    "playwrightIntermediatesDeleted": true,
+    "imagesWidth": 1600,
+    "videosCreated": 0
+  }
+}
