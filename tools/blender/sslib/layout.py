@@ -131,7 +131,7 @@ class Layout:
         p=dict(id=id,assetId=asset,position=pos,yaw=yaw,scale=list(scale),minTier=tier,maxTier=5,allowRoad=allowed,visualAabb=aabb,lightGroup=f'block-{len(self.data["placements"])%4}')
         if tint: p['tint']=tint
         self.data['placements'].append(p)
-        o=empty('inst:'+asset+':'+str(len(self.data['placements'])),pos,yaw,scale); o['assetId']=asset; o['lightGroup']=p['lightGroup']
+        o=empty('inst:'+asset+':'+str(len(self.data['placements'])),pos,-yaw if getattr(self,'yaw_matches_collision',False) else yaw,scale); o['assetId']=asset; o['lightGroup']=p['lightGroup']
         if tint: o['tint']=tint
         o['minTier']=tier; o['maxTier']=5; self.empties.append(o)
         for i,crown in enumerate(m.get('foliage',{}).get('crowns',[])):
