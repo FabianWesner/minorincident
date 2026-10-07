@@ -1,0 +1,492 @@
+[
+  {
+    "title": "T-E16-06 @E16 @E16-AC06 native convolution gives ordered measured RT60 within preset bands",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: Insufficient reverb decay\n\n   at ../tools/audio/measure.ts:118\n\n  116 |     }\n  117 |     if (count < 10)\n> 118 |         throw new Error('Insufficient reverb decay');\n      |               ^\n  119 |     const slope = (count * sxy - sx * sy) / (count * sxx - sx * sx);\n  120 |     return -60 / slope;\n  121 | }\n    at rt60 (/Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tools/audio/measure.ts:118:15)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/offline.spec.ts:17:96"
+    ]
+  },
+  {
+    "title": "T-E16-07 @E16 @E16-AC07 one building reduces measured centroid \u226530% and level 4\u20138dB",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.7\u001b[39m\nReceived:    \u001b[31mNaN\u001b[39m\n\n  31 |     const data = { clearCentroid: centroid(clear.pcm), wallCentroid: centroid(wall.pcm), levelLoss: rmsDb(clear.pcm, 0, 0.3) - rmsDb(wall.pcm, 0, 0.3) };\n  32 |     artifact('occlusion', data);\n> 33 |     expect(data.wallCentroid / data.clearCentroid).toBeLessThanOrEqual(0.7);\n     |                                                    ^\n  34 |     expect(data.levelLoss).toBeGreaterThanOrEqual(4);\n  35 |     expect(data.levelLoss).toBeLessThanOrEqual(8);\n  36 | });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/offline.spec.ts:33:52"
+    ]
+  },
+  {
+    "title": "T-E16-08 @E16 @E16-AC08 15m/s pass-by has a measured 6\u201312% pitch drop",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31mNaN\u001b[39m\n\n  39 |     const r = await render(page, { scenario: 'doppler' }, 'doppler'), approach = pitch(r.pcm, 0.3, 0.8), departure = pitch(r.pcm, 3.2, 3.7), drop = (approach - departure) / approach;\n  40 |     artifact('doppler', { approach, departure, drop });\n> 41 |     expect(drop).toBeGreaterThanOrEqual(0.06);\n     |                  ^\n  42 |     expect(drop).toBeLessThanOrEqual(0.12);\n  43 | });\n  44 | test('T-E16-11 @E16 @E16-AC11 each twist gives one second below \u221250dBFS then a stinger; L6 dawn reprise', async ({ page }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/offline.spec.ts:41:18"
+    ]
+  },
+  {
+    "title": "T-E16-11 @E16 @E16-AC11 each twist gives one second below \u221250dBFS then a stinger; L6 dawn reprise",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-13b @E16 @E16-AC13 burnt W5 streets measure at least 10dB quieter than W2",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-14a @E16 @E16-AC14 measured radio and mega duck envelopes respect protected buses",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-16 @E16 @E16-AC16 60s production graph mix meets EBU R128 loudness, true peak and dialogue dominance",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m6\u001b[39m\nReceived:    \u001b[31m-68.05481004105155\u001b[39m\n\n  90 |     expect(measured.truePeak).toBeLessThanOrEqual(-1);\n  91 |     for (const db of dominance)\n> 92 |         expect(db).toBeGreaterThanOrEqual(6);\n     |                    ^\n  93 |     expect(mix.result.voices).toBeLessThanOrEqual(32);\n  94 | });\n  95 | test('T-E16-17b @E16 @E16-AC17 mono sums both channels to equal output', async ({ page }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/offline.spec.ts:92:20"
+    ]
+  },
+  {
+    "title": "T-E16-17b @E16 @E16-AC17 mono sums both channels to equal output",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m1\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  102 |     }\n  103 |     expect(difference).toBeLessThan(1 / 32768);\n> 104 |     expect(stereoDiff).toBeGreaterThan(1);\n      |                        ^\n  105 | });\n  106 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/offline.spec.ts:104:24"
+    ]
+  },
+  {
+    "title": "@E16 recorded diner incident and store fight: live PCM tap, streaming, mix and stinger timing",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"calm\"\u001b[39m\nReceived: \u001b[31m\"tension\"\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  64 |     const firstTick = await page.evaluate(() => window.__SS__!.tick());\n  65 |     await expect.poll(() => page.evaluate(() => window.__SS__!.tick())).toBeGreaterThan(firstTick + 30);\n> 66 |     await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.streamed.state)).toBe('calm');\n     |                                                                                                        ^\n  67 |     const measurements: unknown[] = [];\n  68 |     const stop = async (name: string) => {\n  69 |         const capture = await page.evaluate(() => window.__audioCapture.stop()), bytes = Buffer.from(capture.wav, 'base64'), path = join(previewRoot, `${name}.wav`);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/preview.spec.ts:66:104"
+    ]
+  },
+  {
+    "title": "@E16 L1 completion plays a single recorded outro without the second completion overlay",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-01b @E16 @E16-AC01 every production cue decodes in both native Opus and AAC",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-03-infected.runner @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.runner\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.crawler @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.crawler\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.brute @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.brute\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.screamer @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.screamer\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.sprinter @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.sprinter\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.riot @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.riot\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.bloated @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.bloated\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.firefighter @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.firefighter\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.hazmat @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.hazmat\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.armored @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.armored\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.butcher @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.butcher\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.nurse @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.nurse\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.dog @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.dog\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.cat @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.cat\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.crow @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.crow\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.lion @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.lion\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.gorilla @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.gorilla\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-infected.flamingo @E16 @E16-AC03 real archetype events play before damage",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: infected.flamingo\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  54 |         const telegraphs = data.events.filter(e => e.type === 'telegraph' && e.sourceId === data.source), attacks = data.events.filter(e => e.type === 'infected.attack' && e.sourceId === data.source);\n  55 |         expect(telegraphs.length, def.id).toBeGreaterThan(0);\n> 56 |         expect(data.audio.cues.some(c => c.cue === `telegraph.${def.id.split('.')[1]}`), def.id).toBe(true);\n     |                                                                                                  ^\n  57 |         for (const attack of attacks) {\n  58 |             if (attack.type !== 'infected.attack')\n  59 |                 continue;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:56:98"
+    ]
+  },
+  {
+    "title": "T-E16-03-gain @E16 @E16-AC03 offscreen gain is +3dB and protected",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'gain')\n    at eval (eval at evaluate (:311:30), <anonymous>:33:40)\n    at async <anonymous>:337:30\n    at eval (eval at evaluate (:311:30), <anonymous>:33:40)\n    at async <anonymous>:337:30\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:70:29"
+    ]
+  },
+  {
+    "title": "T-E16-05b @E16 @E16-AC05 150-infected crowd plays only clusters plus four nearby vocals",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  86 |     });\n  87 |     const clusters = data.emitters.filter(v => v.cue.startsWith('horde.loop.'));\n> 88 |     expect(clusters.length).toBeGreaterThanOrEqual(3);\n     |                             ^\n  89 |     expect(clusters.length).toBeLessThanOrEqual(6);\n  90 |     const vocals = data.emitters.filter(v => v.cue === 'infected.vocal');\n  91 |     expect(vocals.length).toBeGreaterThan(0);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:88:29"
+    ]
+  },
+  {
+    "title": "T-E16-09 @E16 @E16-AC09 sim walking reads asphalt\u2192grass\u2192wood\u2192glass from the surface map",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-10b @E16 @E16-AC10 real alerted count activates drive within a bar; offline schedules stay on grid",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "@E16 a canceled first alert keeps the streamed score aligned with the calm director",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-12 @E16 @E16-AC12 positional jukebox/jingle variants and radio lowpass/emergency duck",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"diegetic.jukebox\"\u001b[39m\nReceived array: \u001b[31m[]\u001b[39m\n\n  172 |     const ids = data.cues.map(c => c.cue);\n  173 |     for (const kind of ['jukebox', 'ice-cream']) {\n> 174 |         expect(ids).toContain(`diegetic.${kind}`);\n      |                     ^\n  175 |         expect(ids).toContain(`diegetic.${kind}.warped`);\n  176 |     }\n  177 |     for (const v of data.voices.filter(v => v.cue.startsWith('diegetic.') || v.cue === 'dialogue.radio')) {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:174:21"
+    ]
+  },
+  {
+    "title": "T-E16-14b @E16 @E16-AC14 tinnitus only within 4m and respects its setting; overlaps compose ducks",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-15 @E16 @E16-AC15 light-lab, prop-yard and blast-lab use real bus event\u2192cue adapters",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"generator.pull\"\u001b[39m\nReceived array: \u001b[31m[\"explosion.tell\", \"explosion.crack\", \"explosion.boom\", \"explosion.sub\", \"explosion.debris\", \"explosion.roar\", \"explosion.crackle\"]\u001b[39m\n\n  228 |     const ids = data.cues.map(c => c.cue);\n  229 |     for (const phase of ['pull', 'sputter', 'idle'])\n> 230 |         expect(ids).toContain(`generator.${phase}`);\n      |                     ^\n  231 |     for (const phase of ['hum', 'flicker', 'break', 'power-off'])\n  232 |         expect(ids).toContain(`lamp.${phase}`);\n  233 |     for (const beat of explosionBeats)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:230:21"
+    ]
+  },
+  {
+    "title": "T-E16-17a @E16 @E16-AC17 captions show important direction cues and noise rings obey settings",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-audio-captions]')\nExpected substring: \u001b[32m\"[Screamer shrieking \u2014 left]\"\u001b[39m\nReceived string:    \u001b[31m\"\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('[data-audio-captions]') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-audio-captions]')\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to <output hidden=\"\" role=\"status\" aria-live=\"polite\" data-audio-captions=\"\"></output>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n\n\n  246 |     await start(page);\n  247 |     await page.evaluate(() => { const a = window.__SS__!; a.settings.set({ captions: true, noiseRings: true }); a.audio.emit({ type: 'noise', tick: 0, sourceId: 100, position: { x: -12, y: 0.7, z: 12 }, kind: 'scream', actionId: 'infected.screamer', radius: 20, loudness: 1 }); a.audio.emit({ type: 'noise', tick: 0, sourceId: 1, actionId: 'weapon.pistol', kind: 'ranged', position: { x: 0, y: 0.7, z: 0 }, radius: 25, loudness: 1 }); });\n> 248 |     await expect(page.locator('[data-audio-captions]')).toContainText('[Screamer shrieking \u2014 left]');\n      |                                                         ^\n  249 |     await expect(page.locator('[data-noise-ring]')).toBeVisible();\n  250 |     // A short-range melee ring fits entirely on screen beside the pistol's 25m ring.\n  251 |     await page.evaluate(() => window.__SS__!.audio.emit({ type: 'noise', tick: 0, sourceId: 1, actionId: 'weapon.fists', kind: 'melee', position: { x: 0, y: 0.7, z: 0 }, radius: 6, loudness: 1 }));\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:248:57"
+    ]
+  },
+  {
+    "title": "T-E16-01c @E16 @E16-AC01 full L1 composition coverage bot logs zero missing cues with graph active/output muted",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: page.evaluate: Error: Audio bot blocked near 65.25,-11.25\n    at K (http://127.0.0.1:3377/build/testApi-CDg9FVGo.js:2:2164)\n    at async eval (eval at evaluate (:311:30), <anonymous>:3:16)\n    at async <anonymous>:337:30\n    at K (http://127.0.0.1:3377/build/testApi-CDg9FVGo.js:2:2164)\n    at async eval (eval at evaluate (:311:30), <anonymous>:3:16)\n    at async <anonymous>:337:30\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:271:29"
+    ]
+  },
+  {
+    "title": "T-E16-02b @E16 @E16-AC02 production audio consumes the same pistol noise as AI exactly once",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected length: \u001b[32m1\u001b[39m\nReceived length: \u001b[31m0\u001b[39m\nReceived array:  \u001b[31m[]\u001b[39m\n\n  292 |     expect(data.noise).toHaveLength(1);\n  293 |     expect(data.noise[0]).toMatchObject({ radius: 25 });\n> 294 |     expect(data.cues).toHaveLength(1);\n      |                       ^\n  295 |     expect(data.inside).toBe('alerted');\n  296 |     expect(data.outside).toBe('idle');\n  297 |     artifact('noise-consumers', data);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/audio/runtime.spec.ts:294:23"
+    ]
+  },
+  {
+    "title": "T-E16-perf @E16 @E16-AC04 @E16-AC05 @perf 150 infected with native audio stay within sim/voice budgets",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-SFX2-01 @E16 every cue fires without errors after the lazy banks arrive",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "pixel-7",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+    "project": "pixel-7",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "pixel-7-landscape",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+    "project": "pixel-7-landscape",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "iphone-14",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+    "project": "iphone-14",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "iphone-14-landscape",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+    "project": "iphone-14-landscape",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "webkit",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend",
+    "project": "webkit",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "M1 @E16 real E11 destruction and E12 radio share audio with both E07/E15 telegraphs",
+    "project": "chromium",
+    "status": "failed",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContainEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected value: \u001b[32mObjectContaining {\"cue\": \"prop.break\", \"position\": ObjectContaining {\"x\": 15, \"z\": 0}, \"sourceId\": 11}\u001b[39m\nReceived array: \u001b[31m[]\u001b[39m\n\n  20 |     return { fence, fenceAudio, alarm, propane, hazards, geometric, runner, infected, mission, events: a.events() };\n  21 |   });\n> 22 |   expect(proof.fenceAudio.cues).toContainEqual(expect.objectContaining({ cue: 'prop.break', sourceId: proof.fence, position: expect.objectContaining({ x: 15, z: 0 }) }));\n     |                                 ^\n  23 |   expect(proof.fenceAudio.cues.some(c => c.cue.startsWith('gore.'))).toBe(false);\n  24 |   expect(proof.hazards.cues).toContainEqual(expect.objectContaining({ cue: 'ambient.alarm', sourceId: proof.alarm }));\n  25 |   expect(proof.hazards.cues).toContainEqual(expect.objectContaining({ cue: 'explosion.tell', sourceId: proof.propane }));\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/audio-stingers/tests/e2e/integration-m1.spec.ts:22:33"
+    ]
+  },
+  {
+    "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "chromium",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "pixel-7",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "pixel-7",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "pixel-7-landscape",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "pixel-7-landscape",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "iphone-14",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "iphone-14",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "iphone-14-landscape",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "iphone-14-landscape",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "webkit",
+    "status": "passed",
+    "errors": []
+  },
+  {
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "webkit",
+    "status": "passed",
+    "errors": []
+  }
+]

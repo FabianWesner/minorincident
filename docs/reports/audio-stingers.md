@@ -2,9 +2,9 @@
 
 ## Inventory method
 
-Baseline: lane HEAD matched main at job start. There are 170 procedural sprite slices (including variants), each rendered as mono 48 kHz PCM WAV at `/tmp/audio-stingers-before/<cue>.wav`. `src/audio/synthesis.ts` runs in the asset builder, not in gameplay. The browser only plays encoded sprites. The only runtime synthesis is convolution noise: seven reverb presets at high/low quality (14 WAVs named `reverb.<preset>.<quality>.wav` in the same directory). These are room responses, not event tones.
+Baseline: lane HEAD matched main at job start. There are 170 procedural sprite slices (including variants), each rendered as mono 48 kHz PCM WAV (subsequently deleted per the disk-space cleanup request) at `/tmp/audio-stingers-before/<cue>.wav`. `src/audio/synthesis.ts` runs in the asset builder, not in gameplay. The browser only plays encoded sprites. The only runtime synthesis is convolution noise: seven reverb presets at high/low quality (14 WAVs named `reverb.<preset>.<quality>.wav` in the same directory). These are room responses, not event tones.
 
-Classification below is based on the rendered signal and the synthesis equations; it is not a human listening approval. Music placeholders step through eight notes per duration; voiced placeholders combine pitch drift with 5 Hz vibrato and 2–3 Hz syllable gates. Buzz uses 11/3.7 Hz amplitude dropouts, not pitch sweeps. Plain tones have no pitch modulation.
+Classification below is based on the synthesis equations and source recipe coverage; the WAVs were rendered for review, not human listening approval. Music placeholders step through eight notes per duration; voiced placeholders combine pitch drift with 5 Hz vibrato and 2–3 Hz syllable gates. Buzz uses 11/3.7 Hz amplitude dropouts, not pitch sweeps. Plain tones have no pitch modulation.
 
 ## Runtime synthesis inventory
 
@@ -197,8 +197,9 @@ Classification below is based on the rendered signal and the synthesis equations
 
 | Event | Sound |
 | --- | --- |
-| Objective completion / civilian saved / escort rescued or revived | `stinger.objective`: 1 s acoustic guitar excerpt, comfort in uncertainty, 16 s |
-| Weapon pickup | CC0 metal pickup tap plus 1 s acoustic `stinger.weapon` |
+| Objective started (except escape) | Existing adaptive score response; no standalone stinger |
+| Objective completion / civilian saved / escort rescued or revived / explicit objective stinger | `stinger.objective`: 1 s acoustic guitar excerpt, comfort in uncertainty, 16 s |
+| Pickup collected (weapon, ammo or supplies) | CC0 metal pickup tap plus 1 s acoustic `stinger.weapon` |
 | Escape / elite / explicit elite stinger | 1 s acoustic `stinger.elite` |
 | Twist | Existing 1 s score silence, then 1 s acoustic `stinger.twist` |
 | L1 completion | One 2.5 s acoustic `l1.outro.sting`, fading over its last second; score resolves to aftermath. Removed double completion overlay |
@@ -220,10 +221,36 @@ Reused existing source masters and pinned download/member hashes. No new source 
 
 Remaining procedural combat/world effects are listed above; this change covers all procedural melody and modulated-voice event cues. Civilian greeting placeholders now use recorded human exertions. Radio/PA/megaphone use recorded crowd speech through a radio-band filter: natural speech ambience, not spoken versions of the authored lines. Captions carry the exact authored message, as before. The synth buzz is an authored failing-light effect. Room-response synthesis remains required for acoustics.
 
-Initial audio budget (both formats): 3,949,029 → 3,938,621 bytes (-10,408 bytes); limit 4,194,304 bytes. New music and dialogue stay in lazy banks. Forty replacement WAV excerpts are in `/tmp/audio-stingers-after/`.
+Initial audio budget (both formats): 3,949,029 → 3,938,621 bytes (-10,408 bytes); limit 4,194,304 bytes. New music and dialogue stay in lazy banks. Forty replacement WAV excerpts were rendered in `/tmp/audio-stingers-after/`, then deleted per the disk-space cleanup request.
 
 No specs edited. The tinnitus ring now comes from a real bell decay and the heartbeat from recorded percussion; durations and low-health/low-pass behavior remain. Product listening approval remains a human check.
 
 ## Validation
 
-Pending; commands and actual results will be appended after validation.
+- `npm run typecheck`: passed (exit 0).
+- `npm run lint`: passed (exit 0).
+- `sh tools/sim-lock.sh npm run test:unit -- --maxWorkers=2`: passed, 77 files / 258 tests.
+- `E2E_PORT=3377 AUDIO_PREVIEW_DIR=test-results/epics/E16/audio-preview npm run verify -- E16`: typecheck, lint, build and selected unit/smoke checks passed (10 files / 23 tests, 626 skipped); browser stage finished with 39 passed / 32 failed (exit 1). All 22 included `@smoke` tests passed; the new single-recorded-outro regression passed.
+
+An earlier verification attempt overlapped the final audio-bank rebuild and failed one hash-ledger assertion (22 passed / 1 failed). The completed rebuild restored matching hashes; the final selected unit run above passed all 23 tests. No assertions were weakened.
+
+
+### Main comparison and remaining failures
+
+Clean main checkout `6dee9147` was built with `npm run build` (passed), then tested with:
+
+```sh
+E2E_PORT=3378 AUDIO_PREVIEW_DIR=test-results/epics/E16/audio-preview sh tools/e2e-lock.sh npx playwright test --grep '@(?:E16)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$)'
+```
+
+Main: 38 passed / 32 failed (exit 1). Lane: 39 passed / the exact same 32 failed. No new failures or resolved baseline failures. Main lacks the added single-outro regression. The comparison covers every selected browser test, not a sample. Machine-readable results: `test-results/epics/E16/audio-stingers-browser.json` and `audio-stingers-main-comparison.json`.
+
+Existing failures include silent spatial/offline renders (reverb, occlusion, Doppler, stereo and dialogue dominance), missing scenario audio cues/telegraphs/captions, the diner preview checkpoint, the L1 coverage bot blocked near 65.25,-11.25, and M1 integration. These baseline failures remain open; E16 is no worse than main but is **not green**. No acceptance thresholds or assertions were changed. Product listening approval also remains open.
+
+### Commits and cleanup
+
+- `ccff57c2`: recorded stingers/Foley, single L1 outro, source attribution and regression coverage.
+- `55200dcb`: remaining modulated event voices replaced by recorded human reactions/speech; rebuilt banks and updated inventory.
+- Follow-up documentation commit records validation and baseline comparison.
+
+Deleted the before/after/room-response review WAVs, downloaded build master cache, generated lane build, preview renders and failure trace intermediates once measurements/results were recorded. The temporary main checkout and its build are removed after comparison. Existing tracked acceptance WAVs/screenshots are retained without replacement by the failed run. No specs changed, no new sources/dependencies, no push or deployment.
