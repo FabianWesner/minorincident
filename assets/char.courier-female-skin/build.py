@@ -21,7 +21,9 @@ ARGS = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 def arg(key, default=None):
     return ARGS[ARGS.index(key) + 1] if key in ARGS else default
 
-source = REPO / 'assets/char.courier-female/build.py'
+SEX = arg('--variant', 'female')
+assert SEX in ('female', 'male')
+source = REPO / f'assets/char.courier-{SEX}/build.py'
 marker = '# Store exact rest-world extents'
 text = source.read_text(); assert text.count(marker) == 1
 saved = sys.argv; sys.argv = [sys.argv[0], '--']
@@ -229,7 +231,7 @@ for b in arm_data.bones:
 
 # runtime metadata, gltf extras
 rig.name = 'courierRig'
-skin['asset_id'] = 'char.courier-female'; skin['skinned'] = True
+skin['asset_id'] = f'char.courier-{SEX}'; skin['skinned'] = True
 front = bpy.data.objects.new('front', None); scene.collection.objects.link(front); front.location = (.39, -.061, .728)
 for o in list(collection.objects): bpy.data.objects.remove(o, do_unlink=True)
 for o in list(scene.collection.objects):
@@ -237,11 +239,13 @@ for o in list(scene.collection.objects):
 
 skin.data.calc_loop_triangles()
 max_inf = max((len([g for g in v.groups if g.weight > 1e-4]) for v in skin.data.vertices), default=0)
-stats = {'id': 'char.courier-female.skin', 'triangles': len(skin.data.loop_triangles), 'vertices': len(skin.data.vertices),
+stats = {'id': f'char.courier-{SEX}.skin', 'triangles': len(skin.data.loop_triangles), 'vertices': len(skin.data.vertices),
          'bones': len(arm_data.bones), 'deform_bones': sum(b.use_deform for b in arm_data.bones), 'max_influences_before_limit': max_inf,
          'voxel': VOXEL, 'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest()}
 print('SKIN OK', json.dumps(stats))
-(HERE / 'report.json').write_text(json.dumps(stats, indent=2) + '\n')
+report_dir = Path(arg('--glb')).resolve().parent if arg('--glb') else HERE
+report_dir.mkdir(parents=True, exist_ok=True)
+(report_dir / 'report.json').write_text(json.dumps(stats, indent=2) + '\n')
 
 if arg('--glb'):
     out = Path(arg('--glb')).resolve(); out.parent.mkdir(parents=True, exist_ok=True)

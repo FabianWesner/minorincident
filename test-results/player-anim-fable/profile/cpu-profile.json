@@ -1,0 +1,260 @@
+{
+  "platform": "darwin",
+  "cpu": "Apple M4",
+  "node": "v26.0.0",
+  "method": "300 warm-up, 2000 timed frames; CharacterView.update + ride contacts + matrix propagation + Skeleton.update; no simulation/render",
+  "results": {
+    "female-skin0-idle": {
+      "frames": 2000,
+      "cpuMsP50": 0.009291999999959444,
+      "cpuMsP95": 0.02562500000004775,
+      "cpuMsMean": 0.011837856500000328,
+      "matrixAndSkeletonMsP95": 0.01191599999998516,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "female-skin0-walk": {
+      "frames": 2000,
+      "cpuMsP50": 0.012042000000008102,
+      "cpuMsP95": 0.017749999999978172,
+      "cpuMsMean": 0.01289685900000049,
+      "matrixAndSkeletonMsP95": 0.005667000000016742,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "female-skin0-run": {
+      "frames": 2000,
+      "cpuMsP50": 0.009625000000028194,
+      "cpuMsP95": 0.010125000000016371,
+      "cpuMsMean": 0.00983487500000004,
+      "matrixAndSkeletonMsP95": 0.005541999999991276,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "female-skin0-jab": {
+      "frames": 2000,
+      "cpuMsP50": 0.009583000000020547,
+      "cpuMsP95": 0.01783299999999599,
+      "cpuMsMean": 0.01141748700000022,
+      "matrixAndSkeletonMsP95": 0.0060839999999871,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "female-skin0-kick": {
+      "frames": 2000,
+      "cpuMsP50": 0.010125000000016371,
+      "cpuMsP95": 0.015499999999974534,
+      "cpuMsMean": 0.011528784499999176,
+      "matrixAndSkeletonMsP95": 0.006499999999959982,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "female-skin0-bat": {
+      "frames": 2000,
+      "cpuMsP50": 0.00975000000005366,
+      "cpuMsP95": 0.012208999999984371,
+      "cpuMsMean": 0.0109698005000011,
+      "matrixAndSkeletonMsP95": 0.0060420000000931395,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "female-skin0-ride": {
+      "frames": 2000,
+      "cpuMsP50": 0.03558300000008785,
+      "cpuMsP95": 0.04549999999994725,
+      "cpuMsMean": 0.03783081649999804,
+      "matrixAndSkeletonMsP95": 0.00583300000005238,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "female-skin1-idle": {
+      "frames": 2000,
+      "cpuMsP50": 0.02612499999997908,
+      "cpuMsP95": 0.0576659999999265,
+      "cpuMsMean": 0.029798971000001756,
+      "matrixAndSkeletonMsP95": 0.01274999999998272,
+      "skinnedMeshes": 2,
+      "bones": 19
+    },
+    "female-skin1-walk": {
+      "frames": 2000,
+      "cpuMsP50": 0.028624999999919964,
+      "cpuMsP95": 0.04020799999989322,
+      "cpuMsMean": 0.031373184500001004,
+      "matrixAndSkeletonMsP95": 0.007959000000028027,
+      "skinnedMeshes": 2,
+      "bones": 19
+    },
+    "female-skin1-run": {
+      "frames": 2000,
+      "cpuMsP50": 0.026957999999922322,
+      "cpuMsP95": 0.031125000000201908,
+      "cpuMsMean": 0.02939795450000031,
+      "matrixAndSkeletonMsP95": 0.007749999999987267,
+      "skinnedMeshes": 2,
+      "bones": 19
+    },
+    "female-skin1-jab": {
+      "frames": 2000,
+      "cpuMsP50": 0.026583999999957086,
+      "cpuMsP95": 0.0730829999999969,
+      "cpuMsMean": 0.032619563000001336,
+      "matrixAndSkeletonMsP95": 0.019457999999985987,
+      "skinnedMeshes": 2,
+      "bones": 19
+    },
+    "female-skin1-kick": {
+      "frames": 2000,
+      "cpuMsP50": 0.014000000000123691,
+      "cpuMsP95": 0.017500000000154614,
+      "cpuMsMean": 0.015000609000001986,
+      "matrixAndSkeletonMsP95": 0.007875000000012733,
+      "skinnedMeshes": 2,
+      "bones": 19
+    },
+    "female-skin1-bat": {
+      "frames": 2000,
+      "cpuMsP50": 0.027166999999963082,
+      "cpuMsP95": 0.03375000000005457,
+      "cpuMsMean": 0.029135074500001794,
+      "matrixAndSkeletonMsP95": 0.007916000000022905,
+      "skinnedMeshes": 2,
+      "bones": 19
+    },
+    "female-skin1-ride": {
+      "frames": 2000,
+      "cpuMsP50": 0.04287500000009459,
+      "cpuMsP95": 0.07416599999987739,
+      "cpuMsMean": 0.047068125500001314,
+      "matrixAndSkeletonMsP95": 0.00808299999994233,
+      "skinnedMeshes": 2,
+      "bones": 19
+    },
+    "male-skin0-idle": {
+      "frames": 2000,
+      "cpuMsP50": 0.016041999999970358,
+      "cpuMsP95": 0.01766700000007404,
+      "cpuMsMean": 0.01714749499999789,
+      "matrixAndSkeletonMsP95": 0.011582999999973254,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "male-skin0-walk": {
+      "frames": 2000,
+      "cpuMsP50": 0.018416000000115673,
+      "cpuMsP95": 0.020958000000064203,
+      "cpuMsMean": 0.01971585000000141,
+      "matrixAndSkeletonMsP95": 0.011666999999988548,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "male-skin0-run": {
+      "frames": 2000,
+      "cpuMsP50": 0.01633399999991525,
+      "cpuMsP95": 0.0185830000000351,
+      "cpuMsMean": 0.0175254040000018,
+      "matrixAndSkeletonMsP95": 0.011374999999816282,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "male-skin0-jab": {
+      "frames": 2000,
+      "cpuMsP50": 0.01625000000012733,
+      "cpuMsP95": 0.017624999999952706,
+      "cpuMsMean": 0.016799732999999605,
+      "matrixAndSkeletonMsP95": 0.011166000000002896,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "male-skin0-kick": {
+      "frames": 2000,
+      "cpuMsP50": 0.01587500000005093,
+      "cpuMsP95": 0.017542000000048574,
+      "cpuMsMean": 0.016887934499997415,
+      "matrixAndSkeletonMsP95": 0.011084000000209926,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "male-skin0-bat": {
+      "frames": 2000,
+      "cpuMsP50": 0.01616599999988466,
+      "cpuMsP95": 0.018250000000080036,
+      "cpuMsMean": 0.017086683500003117,
+      "matrixAndSkeletonMsP95": 0.011374999999588908,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "male-skin0-ride": {
+      "frames": 2000,
+      "cpuMsP50": 0.07029199999988123,
+      "cpuMsP95": 0.17675000000008367,
+      "cpuMsMean": 0.08168577050000227,
+      "matrixAndSkeletonMsP95": 0.026542000000063126,
+      "skinnedMeshes": 0,
+      "bones": 0
+    },
+    "male-skin1-idle": {
+      "frames": 2000,
+      "cpuMsP50": 0.024459000000206288,
+      "cpuMsP95": 0.025666999999884865,
+      "cpuMsMean": 0.025044329999997443,
+      "matrixAndSkeletonMsP95": 0.007833000000118773,
+      "skinnedMeshes": 2,
+      "bones": 19
+    },
+    "male-skin1-walk": {
+      "frames": 2000,
+      "cpuMsP50": 0.027458000000024185,
+      "cpuMsP95": 0.028959000000213564,
+      "cpuMsMean": 0.02805009349999773,
+      "matrixAndSkeletonMsP95": 0.007542000000285043,
+      "skinnedMeshes": 2,
+      "bones": 19
+    },
+    "male-skin1-run": {
+      "frames": 2000,
+      "cpuMsP50": 0.026667000000088592,
+      "cpuMsP95": 0.028874999999970896,
+      "cpuMsMean": 0.027025644500009775,
+      "matrixAndSkeletonMsP95": 0.00820800000019517,
+      "skinnedMeshes": 2,
+      "bones": 19
+    },
+    "male-skin1-jab": {
+      "frames": 2000,
+      "cpuMsP50": 0.025542000000314147,
+      "cpuMsP95": 0.02687500000001819,
+      "cpuMsMean": 0.025773731499999484,
+      "matrixAndSkeletonMsP95": 0.007916999999906693,
+      "skinnedMeshes": 2,
+      "bones": 19
+    },
+    "male-skin1-kick": {
+      "frames": 2000,
+      "cpuMsP50": 0.013082999999824096,
+      "cpuMsP95": 0.013916999999764812,
+      "cpuMsMean": 0.013194655999998077,
+      "matrixAndSkeletonMsP95": 0.007959000000028027,
+      "skinnedMeshes": 2,
+      "bones": 19
+    },
+    "male-skin1-bat": {
+      "frames": 2000,
+      "cpuMsP50": 0.025750000000243745,
+      "cpuMsP95": 0.028792000000066764,
+      "cpuMsMean": 0.027452307500006327,
+      "matrixAndSkeletonMsP95": 0.007999999999810825,
+      "skinnedMeshes": 2,
+      "bones": 19
+    },
+    "male-skin1-ride": {
+      "frames": 2000,
+      "cpuMsP50": 0.041625000000294676,
+      "cpuMsP95": 0.04300000000012005,
+      "cpuMsMean": 0.0421613849999917,
+      "matrixAndSkeletonMsP95": 0.007333999999900698,
+      "skinnedMeshes": 2,
+      "bones": 19
+    }
+  }
+}

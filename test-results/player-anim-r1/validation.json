@@ -1,0 +1,220 @@
+{
+  "date": "2026-10-07",
+  "gameplayCommit": "ca68bf9a",
+  "captureHarnessCommit": "500c9a22",
+  "mainIntegrated": "745e83f6",
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exitCode": 0,
+    "evidence": "gates/verify-E04.log"
+  },
+  "lint": {
+    "command": "npm run lint",
+    "exitCode": 0,
+    "evidence": "gates/verify-E04.log"
+  },
+  "checks": [
+    {
+      "name": "unit-final",
+      "command": [
+        "sh",
+        "tools/sim-lock.sh",
+        "npm",
+        "run",
+        "test:unit",
+        "--",
+        "--maxWorkers=2"
+      ],
+      "env": {
+        "E2E_PORT": "3378",
+        "SIM_WAIT": "1"
+      },
+      "exitCode": 0,
+      "vitest": {
+        "passed": 291,
+        "skipped": 0,
+        "failed": 0
+      }
+    },
+    {
+      "name": "verify-E04",
+      "command": [
+        "npm",
+        "run",
+        "verify",
+        "--",
+        "E04"
+      ],
+      "env": {
+        "E2E_PORT": "3378",
+        "SIM_WAIT": "1",
+        "E2E_SKIN": "1"
+      },
+      "exitCode": 0,
+      "vitest": {
+        "passed": 52,
+        "skipped": 677,
+        "failed": 0
+      },
+      "browser": {
+        "passed": 30,
+        "skipped": 0,
+        "failed": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "name": "bicycle-combat-arrival",
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/e2e/bicycle.spec.ts",
+        "tests/e2e/bicycle-stability.spec.ts",
+        "tests/e2e/combat-wiring.spec.ts",
+        "tests/e2e/arrival-stability.spec.ts",
+        "--project=chromium",
+        "--workers=2"
+      ],
+      "env": {
+        "E2E_PORT": "3378",
+        "SIM_WAIT": "1",
+        "E2E_SKIN": "1"
+      },
+      "exitCode": 0,
+      "browser": {
+        "passed": 10,
+        "skipped": 0,
+        "failed": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "name": "smoke-skin0",
+      "command": [
+        "npm",
+        "run",
+        "test:smoke"
+      ],
+      "env": {
+        "E2E_PORT": "3378",
+        "SIM_WAIT": "1",
+        "E2E_SKIN": "0"
+      },
+      "exitCode": 0,
+      "vitest": {
+        "passed": 6,
+        "skipped": 723,
+        "failed": 0
+      },
+      "browser": {
+        "passed": 23,
+        "skipped": 0,
+        "failed": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "name": "smoke-skin1",
+      "command": [
+        "npm",
+        "run",
+        "test:smoke"
+      ],
+      "env": {
+        "E2E_PORT": "3378",
+        "SIM_WAIT": "1",
+        "E2E_SKIN": "1"
+      },
+      "exitCode": 0,
+      "vitest": {
+        "passed": 6,
+        "skipped": 723,
+        "failed": 0
+      },
+      "browser": {
+        "passed": 23,
+        "skipped": 0,
+        "failed": 0,
+        "flaky": 0
+      }
+    }
+  ],
+  "capture": {
+    "variants": 2,
+    "consoleErrors": 0,
+    "attackEventsPerVariant": 19
+  },
+  "media": {
+    "stills": 34,
+    "maxWidth": 1600,
+    "videos": [
+      {
+        "file": "game-female-idle-walk-stop.webm",
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 800,
+            "height": 600,
+            "r_frame_rate": "20/1"
+          }
+        ],
+        "format": {
+          "duration": "6.000000",
+          "size": "631719"
+        }
+      },
+      {
+        "file": "game-female-run-turn-fight.webm",
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 800,
+            "height": 600,
+            "r_frame_rate": "20/1"
+          }
+        ],
+        "format": {
+          "duration": "10.750000",
+          "size": "1136598"
+        }
+      },
+      {
+        "file": "game-male-idle-walk-stop.webm",
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 800,
+            "height": 600,
+            "r_frame_rate": "20/1"
+          }
+        ],
+        "format": {
+          "duration": "6.000000",
+          "size": "630392"
+        }
+      },
+      {
+        "file": "game-male-run-turn-fight.webm",
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "width": 800,
+            "height": 600,
+            "r_frame_rate": "20/1"
+          }
+        ],
+        "format": {
+          "duration": "10.750000",
+          "size": "1123968"
+        }
+      }
+    ]
+  }
+}

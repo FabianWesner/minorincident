@@ -16,7 +16,7 @@ import { skinClips } from './clips';
 import { LimbIK } from './LimbIK';
 import { RiderContacts } from './RiderContacts';
 
-type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { animator: KeyframeAnimator; gear: Group[]; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
+type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; gear: Group[]; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
 export class CharacterView extends Group {
   private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
@@ -28,9 +28,9 @@ export class CharacterView extends Group {
   private turn = 0;
   private readonly bloodMaterials: PaletteMaterial[] = [];
   /** `outfit` picks the hero model set: L1 v2 plays the courier (E19), later levels the survivor. Same rig and clips. */
-  /** Skinned-figure pilot: ?skin=1 swaps the female courier for one welded, bone-weighted mesh (same rig names/clips). */
+  /** Both couriers share the fitted skinned rig and clips; skin=0 keeps the release fallback. */
   skinned = false;
-  private rider: { arms: [LimbIK, LimbIK]; legs: [LimbIK, LimbIK]; soleHeight: number } | undefined;
+  private readonly riders = new Map<SurvivorVariant, { arms: [LimbIK, LimbIK]; legs: [LimbIK, LimbIK]; soleHeight: number }>();
   private readonly lastContacts = new RiderContacts();
   private readonly contactTarget = new Vector3();
   private readonly pole = new Vector3();
@@ -39,26 +39,36 @@ export class CharacterView extends Group {
   private readonly riderLean = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), -.7);
   private readonly riderGaze = this.riderLean.clone().invert();
   private readonly mountOffset = new Vector3();
+  private readonly transitionOffset = new Vector3();
+  private readonly lastPresented = new Vector3();
+  private readonly lastPresentedRotation = new Quaternion();
+  private readonly transitionRotation = new Quaternion();
+  private contactHistory = false;
+  private rideAttached = false;
   private contactEvaluation = -1;
   private readonly appliedOffset = new Vector3();
   private readonly appliedRotation = new Quaternion();
   cpuMs = 0;
-  get skinActive(): boolean { return !!this.rider && this.variant === 'female'; }
+  get skinActive(): boolean { return this.riders.has(this.variant); }
+  /** Held gear remains stowed until the hands have released the bicycle. */
+  get rideWeight(): number { return this.characters.get(this.variant)?.animator.rideWeight ?? 0; }
   async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     for (const variant of ['female', 'male'] as const) {
       const id = `char.${outfit}-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
+      let isSkin = false;
       const character = await loadCharacter(variant, async () => {
         if (!def || !atLeast(def.status, 'integrated')) {
           const reason = def ? `status ${def.status}` : 'missing manifest entry';
           throw new Error(reason);
         }
-        const skinned = skin && id === 'char.courier-female';
+        const skinned = skin && outfit === 'courier';
         const scene = (await loader.loadAsync('/' + (skinned ? def.glb.replace(/\.glb$/, '.skin.glb') : low ? def.lods?.lod1 ?? def.glb : def.glb).replace(/^public\//, ''))).scene;
-        if (skinned && alignSkeleton(scene).length) this.skinned = true;
+        if (skinned && alignSkeleton(scene).length) isSkin = true;
         return scene;
       }, def?.dimensions.y);
-      if (variant === 'female' && character.source === 'placeholder') this.skinned = false;
+      isSkin &&= character.source === 'glb';
+      this.skinned ||= isSkin;
       if (character.source === 'placeholder') console.info(JSON.stringify({ type: 'asset.placeholder', id, reason: character.reason }));
       const vertexMaterial = materials.fromVertexColors(`character:${variant}`);
       vertexMaterial.bloodCoverage.value = 0; vertexMaterial.userData.sharedPalette = true;
@@ -103,20 +113,21 @@ export class CharacterView extends Group {
       attachment(3, character.rig.head, [0.23, 0.055, 0.4], [0, 0.14, 0], 'survivorRed');
       attachment(4, character.rig.torso, [0.14, 0.25, 0.37], [0.16, 0.08, 0], 'policeBlue');
       attachment(4, character.rig.head, [0.08, 0.11, 0.16], [0.18, 0.005, 0], 'uiDark');
-      const pilot = skin && this.skinned && variant === 'female' && outfit === 'courier';
+      const pilot = isSkin;
       if (pilot) {
         const r = character.rig;
-        this.rider = { arms: [new LimbIK(r.armL, r.foreArmL, r.handL), new LimbIK(r.armR, r.foreArmR, r.handR)],
+        this.riders.set(variant, { arms: [new LimbIK(r.armL, r.foreArmL, r.handL), new LimbIK(r.armR, r.foreArmR, r.handR)],
           legs: [new LimbIK(r.legL, r.shinL, r.footL), new LimbIK(r.legR, r.shinR, r.footR)],
-          soleHeight: r.footL.getWorldPosition(this.scratchA).y - r.root.getWorldPosition(this.scratchB).y };
+          soleHeight: r.footL.getWorldPosition(this.scratchA).y - r.root.getWorldPosition(this.scratchB).y });
       }
-      this.characters.set(variant, { ...character, animator: new KeyframeAnimator(character.rig, pilot ? skinClips : undefined), gear, sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator: new KeyframeAnimator(character.rig, pilot ? skinClips : undefined), gear, sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
     this.makeParcel(materials);
   }
   update(pose: SurvivorState, tick: number, alpha: number, ride?: RidePose): void {
     const started = performance.now();
     const before = this.characters.get(pose.variant)?.animator.evaluations;
+    if (this.variant !== pose.variant) { this.contactEvaluation = -1; this.contactHistory = false; this.rideAttached = false; }
     this.variant = pose.variant; this.tier = pose.gearTier;
     for (const [variant, character] of this.characters) {
       character.model.visible = variant === pose.variant;
@@ -136,27 +147,36 @@ export class CharacterView extends Group {
   /** Seat and limb contacts are applied after the mixer. Mount/dismount fades
    * use the presentation clock; the bike and survivor simulation never change. */
   applyRideContacts(contacts?: RiderContacts): void {
-    const character = this.characters.get(this.variant), rider = this.rider;
-    if (!rider || this.variant !== 'female' || !character) return;
+    const character = this.characters.get(this.variant), rider = this.riders.get(this.variant);
+    if (!rider || !character) return;
     const started = performance.now(), weight = character.animator.rideWeight;
     if (this.contactEvaluation === character.animator.evaluations) {
       this.position.add(this.appliedOffset);
-      this.quaternion.copy(contacts?.orientation ?? this.appliedRotation);
+      this.quaternion.copy(contacts && weight >= 1 ? contacts.orientation : this.appliedRotation);
       if (contacts && weight >= 1) this.seatPelvis(contacts.seat, -.04);
       return;
     }
     this.contactEvaluation = character.animator.evaluations;
     this.appliedOffset.copy(this.position).multiplyScalar(-1);
+    if (!!contacts !== this.rideAttached) {
+      // The sim seats/exits instantly. Start the visual transfer at the last
+      // presented position, including the parked-bike capsule clearance.
+      this.transitionOffset.copy(this.contactHistory ? this.lastPresented : this.position).sub(this.position);
+      this.transitionRotation.copy(this.contactHistory ? this.lastPresentedRotation : this.quaternion);
+      this.rideAttached = !!contacts;
+    }
+    this.position.addScaledVector(this.transitionOffset, contacts ? 1 - weight : weight);
+    if (contacts) this.quaternion.copy(this.transitionRotation).slerp(contacts.orientation, weight);
+    else if (weight > 0) this.quaternion.slerp(this.transitionRotation, weight);
     if (contacts) {
       for (const name of ['seat', 'handL', 'handR', 'footL', 'footR'] as const) this.lastContacts[name].copy(contacts[name]);
       this.lastContacts.orientation.copy(contacts.orientation);
     }
     if (contacts && weight > 0) {
-      this.quaternion.slerp(contacts.orientation, weight);
       this.updateMatrixWorld(true); character.rig.hip.getWorldPosition(this.scratchA);
       this.mountOffset.copy(contacts.seat).sub(this.scratchA); this.mountOffset.y -= .04;
       this.position.addScaledVector(this.mountOffset, weight);
-    } else if (weight > 0) this.position.addScaledVector(this.mountOffset, weight);
+    }
     if (weight > 0) {
       character.rig.torso.quaternion.slerp(this.riderLean, weight);
       character.rig.head.quaternion.premultiply(this.contactRotation.identity().slerp(this.riderGaze, weight));
@@ -176,6 +196,7 @@ export class CharacterView extends Group {
       this.updateMatrixWorld(true);
     }
     this.appliedOffset.add(this.position); this.appliedRotation.copy(this.quaternion);
+    this.lastPresented.copy(this.position); this.lastPresentedRotation.copy(this.quaternion); this.contactHistory = true;
     this.cpuMs += performance.now() - started;
   }
   /** Riding: moves the whole figure so its pelvis lands on `target` (world, the saddle) after this frame's pose update. */
@@ -223,7 +244,9 @@ export class CharacterView extends Group {
     // slerped quaternion) wraps beyond +-90 deg, which made the turn rate flip sign and the courier wobble while walking
     // diagonally (PO: walk micro-vibration).
     if (this.facingTime < 0 || time < this.facingTime) this.facing = yaw;
-    const dt = Math.max(0, time - this.facingTime), delta = Math.atan2(Math.sin(yaw - this.facing), Math.cos(yaw - this.facing));
+    const dt = Math.max(0, time - this.facingTime);
+    let delta = Math.atan2(Math.sin(yaw - this.facing), Math.cos(yaw - this.facing));
+    if (!striking && Math.abs(delta) < .006) delta = 0;
     this.turn = Math.abs(delta) > .12 ? Math.sign(delta) : 0;
     const amount = Math.abs(delta) > 0 ? Math.min(1 - Math.exp(-(striking ? 60 : 24) * dt), (striking ? 40 : 6) * dt / Math.abs(delta)) : 1;
     this.facing += delta * amount; this.quaternion.setFromAxisAngle(this.facingAxis, this.facing); this.facingTime = time;
@@ -235,8 +258,8 @@ export class CharacterView extends Group {
   socket(side: 'LEFT' | 'RIGHT') { return this.characters.get(this.variant)!.sockets[side]; }
   getState() {
     const character = this.characters.get(this.variant);
-    return { position: this.position.toArray(), orientation: this.quaternion.toArray(), yaw: this.facing, pelvis: character?.rig.hip.getWorldPosition(this.scratchA).toArray() ?? null, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
-      evaluations: character?.animator.evaluations ?? 0, skinned: this.skinned, cpuMs: this.cpuMs, rideWeight: character?.animator.rideWeight ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
+    return { modelId: character?.assetId, position: this.position.toArray(), orientation: this.quaternion.toArray(), yaw: this.facing, pelvis: character?.rig.hip.getWorldPosition(this.scratchA).toArray() ?? null, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
+      evaluations: character?.animator.evaluations ?? 0, skinned: this.skinActive, cpuMs: this.cpuMs, rideWeight: character?.animator.rideWeight ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
   }
-  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.parcel?.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); }); this.parcel = null; this.characters.clear(); this.bloodMaterials.length = 0; this.clear(); }
+  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.parcel?.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); }); this.parcel = null; this.characters.clear(); this.riders.clear(); this.bloodMaterials.length = 0; this.clear(); }
 }
