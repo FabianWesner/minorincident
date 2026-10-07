@@ -81,7 +81,7 @@ export type GameEvent = import('../interact/Barricades').BarricadeEvent
   | { tick: number; type: 'interact.completed'; id: number; kind: import('../interact/Interactables').DeviceKind; cycle: number }
   | { tick: number; type: 'interact.interrupted'; id: number; progress: number }
   | { tick: number; type: 'vehicle.obstacle-broken'; targetId: number }
-  | { tick: number; type: 'vehicle.entered' | 'vehicle.exited' | 'vehicle.grabbed' | 'vehicle.shaken'; sourceId: number; targetId: number }
+  | { tick: number; type: 'vehicle.entered' | 'vehicle.exited' | 'vehicle.grabbed' | 'vehicle.shaken'; sourceId: number; targetId: number; /** E20: absent = driver (E09); the L2 fire truck seats the player as a passenger. */ role?: 'driver' | 'passenger' }
   | { tick: number; type: 'vehicle.smoking' | 'vehicle.burning' | 'vehicle.exploded' | 'vehicle.recovering'; sourceId: number }
   | { tick: number; type: 'noise'; sourceId: number; actionId: string; position: { x: number; y: number; z: number }; radius: number; loudness: number; kind: string; duration?: number }
   | { tick: number; type: 'entity.spawned'; id: number }

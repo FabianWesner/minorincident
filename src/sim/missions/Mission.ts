@@ -1,6 +1,7 @@
 // Zones enter/leave latching and named respawns adapted from Bruno Simon folio-2025
 // Zones.js / Respawns.js (MIT, 41046b5). State belongs to the fixed-step sim.
 import { LevelOneOutbreak } from './LevelOneOutbreak';
+import { LevelTwoRescue } from './LevelTwoRescue';
 import { captureSeams, restoreSeams } from './l1Seams';
 import { dialogue } from '../../data/dialogue';
 import { SimPhase } from '../../core/EventBus';
@@ -25,10 +26,13 @@ export class Mission {
   private readonly pendingCheckpoints: string[] = [];
   private finishApplied = false;
   private readonly l1: LevelOneOutbreak | null;
+  /** E20 set-piece controller (def.l2). */
+  readonly l2: LevelTwoRescue | null;
   private readonly startTick: number;
   constructor(readonly world: SimWorld, readonly def: MissionDef) {
     const errors = validateMission(def); if (errors.length) throw new Error(errors.join('\n'));
     this.l1 = def.l1 ? new LevelOneOutbreak(this) : null;
+    this.l2 = def.l2 ? new LevelTwoRescue(this) : null;
     this.startTick = world.tick;
     this.state = {
       id: def.id, phase: 'briefing', completedObjectives: [], volumes: [], killedBosses: [], deadlineTicks: def.deadline ? Math.ceil(def.deadline.seconds * 60) : null,
@@ -57,7 +61,7 @@ export class Mission {
   /** A briefing is explicit; callers may accept it immediately for deterministic fixtures. */
   begin(): void {
     if (this.state.phase !== 'briefing') return;
-    this.l1?.prepare();
+    this.l1?.prepare(); this.l2?.prepare();
     this.state.phase = 'playing'; this.run(this.def.onStart); this.activate(); this.flushCheckpoint();
     this.checkpoints.set('start', this.capture());
     this.world.events.emit({ type: 'level.started', tick: this.world.tick, id: this.def.id });
@@ -102,7 +106,7 @@ export class Mission {
   }
   private update(): void {
     if (this.state.phase !== 'playing') return;
-    this.l1?.update();
+    this.l1?.update(); this.l2?.update();
     const alive=this.world.entities.get(1)!.health.current>0;
     this.state.stats.time = (this.world.tick - this.startTick) / 60;
     if (this.state.deadlineTicks !== null && --this.state.deadlineTicks <= 0) { this.state.deadlineTicks = 0; this.fail('timeout'); return; }
@@ -141,7 +145,7 @@ export class Mission {
   }
   private complete(def: ObjectiveDef): void {
     this.state.steps[def.id].status = 'completed'; this.state.completedObjectives.push(def.id);
-    this.l1?.completed(def.id);
+    this.l1?.completed(def.id); this.l2?.completed(def.id);
     if (def.optional && !this.state.stats.optionalObjectives.includes(def.id)) this.state.stats.optionalObjectives.push(def.id);
     if (def.choice) for (const sibling of this.def.steps) if (sibling.id !== def.id && sibling.choice === def.choice) this.state.steps[sibling.id].status = 'cancelled';
     if (def.type === 'escort' && def.complete.kind === 'escort') this.rescue(this.state.actors[def.complete.actor]);
@@ -164,6 +168,8 @@ export class Mission {
     this.state.phase = 'result'; this.state.stats.time = (this.world.tick - this.startTick) / 60;
     this.state.result = { ...structuredClone(this.state.stats), ...this.l1?.result() };
     this.emit({ type: 'level.completed', id: this.def.id, result: this.state.result });
+    // E20: no caption card or reward screen after L2; the campaign continues straight into L3.
+    if (this.def.l2) this.continue();
   }
   continue(): void { if (this.state.phase === 'result') { this.state.phase = 'progression'; this.emit({ type: 'progression.requested', id: this.def.id }); } }
   private fail(reason: FailReason, def?: ObjectiveDef): void {
@@ -312,6 +318,7 @@ export class Mission {
     this.world.hazards?.debris.reset(); this.world.interactables?.rebuildBlockers(); this.world.barricades?.rebuild();
     for(const [gate,handle]of this.gateHandles)this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[gate]);
     this.zones.forEach(zone => { zone.inside=this.state.volumes[zone.index];zone.entered=zone.exited=false; });
+    this.l2?.restore(delta);
     this.emit({ type: 'checkpoint.restored', id });
   }
   dispose(): void { this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }

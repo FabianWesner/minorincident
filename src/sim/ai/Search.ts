@@ -26,6 +26,8 @@ export interface SearchPlan {
 /** Per-infected L1 brain; `mode`, `looking`, `lookYaw` and `search` are the animation surface for lane G. */
 export interface L1Brain {
   mode: L1Mode;
+  /** E20: a wandering group member drifts back toward its home once farther than this (0 / absent = free wander). */
+  leashM?: number;
   tier: InfectedSpeedTier;
   /** Chase speed: tier base x individual jitter, fixed for life (section 5.4). */
   runSpeed: number;
@@ -109,7 +111,7 @@ export function wanderGoal(brain: L1Brain, rng: Rng, nav: ProbeTerrain & { visib
     const angle = rng.next() * Math.PI * 2, r = 6 + rng.next() * 10, x = from.x + Math.cos(angle) * r, z = from.z + Math.sin(angle) * r;
     if (!nav.clear(x, z, agentRadius) || !nav.visible(from, { x, z }, agentRadius)) continue;
     const open = (nav.clear(x, z, 2) ? 0.5 : 0) + (nav.clear(x, z, 3.5) ? 0.5 : 0);
-    const away = Math.max(-1, Math.min(1, (Math.hypot(x - brain.homeX, z - brain.homeZ) - homeDistance) / r));
+    const away = Math.max(-1, Math.min(1, (Math.hypot(x - brain.homeX, z - brain.homeZ) - homeDistance) / r)) * (brain.leashM && homeDistance > brain.leashM ? -2 : 1);
     const score = open * 0.9 + away * 0.6 + Math.min(1, crowd(x, z) / 4) * 1.2 + rng.next() * 0.8;
     if (score > best) { best = score; brain.goalX = x; brain.goalZ = z; }
   }
