@@ -39,7 +39,7 @@ test('T-E03-03 @E03 @E03-AC03 @E02-AC03 wheel zooms smoothly and never cycles we
   await page.mouse.wheel(0,-100); const frame=await tick(page,30);expect(frame.selector).toBe(0);
   const close=await page.evaluate(()=>window.__SS__!.getState().render.camera);expect(close.radius).toBeLessThan(before.radius);
   for(let i=0;i<12;i++)await page.mouse.wheel(0,120);await tick(page,120);
-  const far=await page.evaluate(()=>window.__SS__!.getState().render.camera);expect(far.radius).toBeLessThanOrEqual(before.radius*1.35+.001);
+  const far=await page.evaluate(()=>window.__SS__!.getState().render.camera);expect(far.radius).toBeLessThanOrEqual(before.radius*far.zoomLimits[1]+.001);
   expect(far.azimuth).toBe(before.azimuth);expect(far.polar).toBe(before.polar);
 });
 

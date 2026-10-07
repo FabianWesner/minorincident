@@ -155,7 +155,8 @@ export class GameView implements Lifecycle {
       // L1 objective transitions swap to prepared decay variants without a hitch (M1-22): they load
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low');
+      // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', this.world.districts.composition.id === 'L1' ? 'courier' : 'survivor');
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       await Promise.all([this.districts.load(1), character, ...variants.map(variant => variant.load(1))]);
