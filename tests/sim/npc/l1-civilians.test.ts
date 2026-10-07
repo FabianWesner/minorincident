@@ -32,7 +32,9 @@ describe('L1 v2 civilians and infection', () => {
           const n = moving || facing ? 0 : (still.get(e.id) ?? 0) + 1; still.set(e.id, n); if (n > worst) { worst = n; worstId = e.id; }
         }
       }
-      expect(worst, `seed ${seed}, civilian ${worstId}: ${JSON.stringify(w.entities.get(worstId))}`).toBeLessThanOrEqual(l1v2.civilians.idleFacingNowhereMaxS * 60);
+      const offender = w.entities.get(worstId)!;
+      const near = [...w.entities.iterate()].filter(e => e !== offender && e.combat && Math.hypot(e.transform.x - offender.transform.x, e.transform.z - offender.transform.z) < 2).map(e => ({ id: e.id, kind: e.kind, transform: e.transform, owner: e.civilian?.owner, state: e.civilian?.state, motion: e.motion }));
+      expect(worst, `seed ${seed}, civilian ${worstId}: ${JSON.stringify(offender)}; neighbors: ${JSON.stringify(near)}`).toBeLessThanOrEqual(l1v2.civilians.idleFacingNowhereMaxS * 60);
       // Notice: an infected in plain sight -> 0.3-0.8 s startle (alarmed) -> flee, then moving at the flee speed.
       const ai = w.infected!, ahead = (e: { transform: { x: number; z: number; yaw: number } }) => ai.nav.nearestCell(e.transform.x + Math.cos(e.transform.yaw) * 7, e.transform.z - Math.sin(e.transform.yaw) * 7);
       // A calm pedestrian with an infected placed in plain sight ahead (clear line of sight on the real map).
