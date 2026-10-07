@@ -21,7 +21,7 @@ const commands: string[][] = [
       ? [
         ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'M1-22|T-E19-24', '--workers=2'],
         // Transition frame budgets must not compete with another context loading GPU programs.
-        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/l1-transitions.spec.ts', '--project=chromium', '--workers=1'],
+        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/l1-transitions.spec.ts', 'tests/perf/l1-spots.spec.ts', '--project=chromium', '--workers=1'],
       ]
     : target === 'E18'
       ? [
