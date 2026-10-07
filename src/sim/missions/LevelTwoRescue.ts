@@ -57,8 +57,7 @@ export class LevelTwoRescue {
     if (!world.infected || !world.npcs) return;
     const tier = world.infected.director.tier;
     // Refuges are the town edges only: houses near the rescue are locked, so fleeing people run long streets.
-    const market = this.anchor('l2-door-front');
-    const edges = Object.keys(this.mission.def.anchors).filter(n => n.startsWith('edge-in-')).map(id => ({ id, ...this.anchor(id) })).filter(e => Math.hypot(e.x - market.x, e.z - market.z) >= l2.rescue.refugeMinM);
+    const edges = l2.rescue.refuges.map(id => ({ id, ...this.anchor(id) }));
     const outbreak = world.npcs.civilians.outbreak ?? new Outbreak(world, { refuges: edges, entries: edges, tier, topUp: false });
     world.npcs.civilians.outbreak = outbreak;
     world.infected.director.levelCap = l2.escape.caps.high;
@@ -278,7 +277,8 @@ export class LevelTwoRescue {
     for (const id of s.crewIds) { const a = world.entities.get(id)?.civilian?.ally; if (a) { a.engaged = true; a.run = null; a.forceUntil = 0; a.post = { ...this.anchor('l2-forecourt') }; a.runSpeed = l2.allies.firefighter.moveMs; } }
     // The ambush, keyed to this exact moment: ten infected from three building doors, >= 60 degrees apart.
     let k = 0;
-    for (const [door, count] of l2.rescue.ambushDoors) for (let i = 0; i < count; i++) s.ambush.push({ id: 0, door, at: tick + ticks(.05 + i * .45 + (k++ % 3) * .1) });
+    const scale = this.world.infected!.director.tier === 'low' ? l2.escape.lowScale : 1;
+    for (const [door, count] of l2.rescue.ambushDoors) for (let i = 0; i < Math.ceil(count * scale); i++) s.ambush.push({ id: 0, door, at: tick + ticks(.05 + i * .45 + (k++ % 3) * .1) });
     this.emergeAmbush(tick);
     if (!this.mission.state.states['doors-open']) this.mission.setState('doors-open', true);
     this.mission.requestCheckpoint('doors');
@@ -316,12 +316,14 @@ export class LevelTwoRescue {
     const forecourt = this.anchor('l2-forecourt'), market = this.anchor('l2-door-front');
     const near = (home: Point) => doors.map(d => ({ d, a: this.anchor(d) })).filter(({ a }) => Math.hypot(a.x - forecourt.x, a.z - forecourt.z) >= 42 && Math.hypot(a.x - market.x, a.z - market.z) >= 42)
       .sort((p, q) => Math.hypot(p.a.x - home.x, p.a.z - home.z) - Math.hypot(q.a.x - home.x, q.a.z - home.z));
+    const scale = this.world.infected!.director.tier === 'low' ? l2.escape.lowScale : 1;
+    // The bridge cluster first: under the shared cap it must exist before the looser street groups.
+    const [cx, cz] = l2.cluster.home, home = { x: cx, z: cz }, list = near(home).slice(0, 4);
+    for (let i = 0; i < Math.ceil(l2.cluster.count * scale); i++) s.pending.push({ id: -2, door: list[i % list.length].d, at: 0, home });
     for (const [x, z, size] of l2.escape.groups) {
       const home = { x, z }, list = near(home).slice(0, 2);
-      for (let i = 0; i < size; i++) s.pending.push({ id: 0, door: list[i % list.length].d, at: 0, home });
+      for (let i = 0; i < Math.ceil(size * scale); i++) s.pending.push({ id: 0, door: list[i % list.length].d, at: 0, home });
     }
-    const [cx, cz] = l2.cluster.home, home = { x: cx, z: cz }, list = near(home).slice(0, 4);
-    for (let i = 0; i < l2.cluster.count; i++) s.pending.push({ id: -2, door: list[i % list.length].d, at: 0, home });
     // A few people still out on the streets, trying to get somewhere.
     for (const [x, z] of l2.escape.civilians) { const p = this.snap({ x, z }, .4); this.outbreak().spawnPedestrian(p, { waypoints: [p, this.snap({ x: x + 6, z }, .4)] }); }
     s.escapeSpawned = true; this.emergePending(true);

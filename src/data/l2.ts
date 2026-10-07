@@ -12,13 +12,13 @@ export const l2 = {
   ride: { cruiseMs: 7.6, cornerMs: 4.2, accelMs2: 2.6, zoomOut: 1.15, exitWithinS: 4, controlWithinS: .5, boardInteractS: .6 },
   /** Beat 4-5: arrival, doors, release and the ambush reveal. */
   rescue: {
-    forceDoorsS: 4, trapped: { high: 30, low: 20 }, releaseOverS: 11, ambush: 20, crewHp: 100,
+    forceDoorsS: 4, trapped: { high: 30, low: 20 }, releaseOverS: 11, ambush: 24, crewHp: 100,
     /** Emergence points of the ambush (refuge doors 26-38 m from the front door, three directions >= 60 degrees apart). */
-    ambushDoors: [['refuge-door-1', 7], ['refuge-door-17', 7], ['refuge-door-8', 6]] as readonly (readonly [string, number])[],
+    ambushDoors: [['refuge-door-1', 8], ['refuge-door-17', 8], ['refuge-door-8', 8]] as readonly (readonly [string, number])[],
     /** Where each ambush street runs: the loading door, the forecourt, Main Row in front of the market. */
     ambushRush: { 'refuge-door-1': [-50, -36], 'refuge-door-17': [-46, -38], 'refuge-door-8': [-48, -34] } as Record<string, P>,
-    /** Fleeing people run for town edges at least this far from the market (the nearby houses are locked). */
-    refugeMinM: 70,
+    /** Fleeing people run for the north and east town edges (the nearby houses are locked); the south stays the courier's way out. */
+    refuges: ['edge-in-3', 'edge-in-4'] as readonly string[],
     /** Trapped people visible at the open storefront before the release (x, z, yaw): east glass and south glass. */
     atGlass: [[-52.2, -43.6, 0], [-52.3, -41.6, 0], [-52.2, -39.8, 0], [-57.6, -38.4, -Math.PI / 2], [-55.4, -38.5, -Math.PI / 2], [-53.6, -38.4, -Math.PI / 2]] as readonly (readonly [number, number, number])[],
     radioAfterS: 45, radioAwayM: 25,
@@ -34,13 +34,15 @@ export const l2 = {
   escape: {
     /** Group homes of the wandering infected (x, z, size); spawned at emergence doors when the escape starts. */
     groups: [
-      [-46, 2, 5], [-12, 2, 4], [30, 2, 4], [-12, -12, 3], [32, -12, 3], [-46, 12, 2], [-10, 12, 3], [70, -20, 3], [-82, 10, 2],
+      [-46, 2, 5], [-12, 2, 4], [30, 2, 4], [-12, -12, 3], [32, -12, 3], [-46, 12, 2], [-10, 12, 2], [70, -20, 2], [-82, 10, 1],
     ] as readonly (readonly [number, number, number])[],
     leashM: 6, civilians: [[-30, 0], [-45, 30], [5, -31], [30, 30], [50, 5], [-64, -22], [14, 15], [-20, -15], [40, -20]] as readonly P[],
     caps: { high: 60, low: 30 },
+    /** Low tier (phone): ambush, street groups and cluster are halved with the cap. */
+    lowScale: .5,
   },
   /** Section 5.5: the dense cluster on the Elm Street approach to the bridge and its two openings. */
-  cluster: { home: [60, 30] as P, count: 14, radiusM: 7, triggerM: 30 },
+  cluster: { home: [60, 30] as P, count: 13, radiusM: 7, triggerM: 30 },
   /** Section 5.6: the police bridge checkpoint at the east end of Elm Street. */
   /** Officers hold fire until the evacuee is this close to the gate (they do not clear the approach from the line). */
   checkpoint: { gateX: 76, gateZ: [24.6, 35.6] as P, closeWithinS: 1.5, holdS: 2, officers: 4, civilians: 8, policeVehicles: 3, shootM: 15, coverM: 20 },
