@@ -447,6 +447,8 @@ export class InfectedSystem {
     const distance = Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z), lunge = l1v2.infected.lungeRangeM;
     if (target.kind === 'player') {
       if (distance <= lunge && this.world.tick >= b.cooldown && this.l1!.lineOfSight(e.transform, target.position)) { b.combo = 0; this.windup(e); return; }
+      // QA2-04: hold at arm's reach between swings instead of walking into the courier's body.
+      if (distance < .95) { e.transform.yaw = -Math.atan2(target.position.z - e.transform.z, target.position.x - e.transform.x); return; }
       this.steerL1(e, brain, target.position, brain.runSpeed, true, true);
       return;
     }

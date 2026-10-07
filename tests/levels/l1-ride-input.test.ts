@@ -22,6 +22,9 @@ test('E19 @E19 QA1-01 E at the parcel counter while riding picks up the parcel a
   expect(mission.state.steps.pickup.status).toBe('completed');
   expect(w.vehicles!.bicycle.riding).toBe(true);
   w.setInput({ interact: true }); w.update(); w.clearInput(); w.update();
+  expect(w.vehicles!.bicycle.riding).toBe(true); // a late E right after the pickup still belongs to the counter
+  for (let i = 0; i < 100; i++) w.update();
+  w.setInput({ interact: true }); w.update(); w.clearInput(); w.update();
   expect(w.vehicles!.bicycle.riding).toBe(false); // nothing else claims the next press: dismount
 });
 
