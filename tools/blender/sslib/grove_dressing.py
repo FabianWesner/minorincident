@@ -37,6 +37,8 @@ class Grove:
         self.solids = []      # (label, x0, z0, x1, z1, ymax) of every non-walkable footprint, for the overlap check
         self.problems = []
         self.cars = {}
+        self.vis_h = []  # house footprints (trees only)
+        self.vis = []   # visual footprints of buildings and vehicles (x0, z0, x1, z1): trunks and small props keep out of them
         self.rng = random.Random(1)
         self.sidewalks = []
         self.lawn_rects = []
@@ -116,8 +118,21 @@ class Grove:
         sc = (scale, scale, scale) if isinstance(scale, (int, float)) else tuple(scale)
         l = self.l
         boxes = self.footprint(asset, x, z, yaw, sc)
-        if soft and not self.fits(boxes, margin):
-            return None
+        dx_, dy_, dz_ = self.dims(asset)
+        ex, ez = abs(math.cos(yaw)) * dx_ * sc[0] + abs(math.sin(yaw)) * dz_ * sc[2], abs(math.sin(yaw)) * dx_ * sc[0] + abs(math.cos(yaw)) * dz_ * sc[2]
+        isveh, isbld = asset.startswith('veh.'), asset.startswith('bld.')
+        if soft:
+            if not self.fits(boxes, margin): return None
+            if asset.startswith('prop.street-tree'):   # trunk never in a building/vehicle footprint
+                if any(a0 - .4 < x < a1 + .4 and b0 - .4 < z < b1 + .4 for a0, b0, a1, b1 in self.vis + self.vis_h): return None
+            elif not isbld and (isveh or asset.startswith('prop.')) and not asset.startswith(('prop.hedge', 'prop.privacy', 'prop.picket', 'prop.street-lamp', 'prop.flower')):
+                # small props / cars: visual footprint clear of vehicles and non-house buildings
+                for a0, b0, a1, b1 in self.vis:
+                    if min(x + ex / 2, a1) - max(x - ex / 2, a0) > .1 and min(z + ez / 2, b1) - max(z - ez / 2, b0) > .1: return None
+        if isveh or (isbld and not asset.startswith('bld.house')):
+            self.vis.append((x - ex / 2, z - ez / 2, x + ex / 2, z + ez / 2))
+        elif isbld:
+            self.vis_h.append((x - ex / 2, z - ez / 2, x + ex / 2, z + ez / 2))
         pid = l.place(asset, [x, y, z], yaw=yaw, scale=sc, tint=tint)
         if asset in HOLLOW and self.placeholder(asset):
             # Placeholder box: replace the footprint collider by walls with door gaps (see shell()).
@@ -222,7 +237,19 @@ class Grove:
             ax = r['ax']; lo, hi = r['cuts'][0], r['cuts'][-1]
             half = r['w'] / 2
             token = 'asphalt' if r['kind'] == 'road' else 'uiDark'
-            segs = [(lo, hi)]
+            line = r['a'][1 - ax]
+            # A road that ends at the centre line of a street that does not run through it (L / T corner such as Main Row meeting
+            # Larch St) needs its asphalt and sidewalks carried over the corner; otherwise the street ends in a notch of grass.
+            ext = {}   # end -> (asphalt extension, {side: sidewalk extension})
+            if r['kind'] == 'road':
+                for end, e in ((0, lo), (1, hi)):
+                    for o in roads:
+                        if o is r or o['ax'] == ax or o['kind'] != 'road' or abs(o['a'][ax] - e) > 1e-6: continue
+                        olo, ohi = sorted((o['a'][1 - ax], o['b'][1 - ax]))
+                        if not (olo - 1e-6 <= line <= ohi + 1e-6): continue
+                        if olo < line - half - 1e-6 and ohi > line + half + 1e-6: continue   # o runs through: its own box covers the end
+                        ext[end] = (o['w'] / 2, {-1: 0.0 if olo < line - 1e-6 else o['w'] / 2 + sidewalk, 1: 0.0 if ohi > line + 1e-6 else o['w'] / 2 + sidewalk})
+            segs = [(lo - ext.get(0, (0,))[0], hi + ext.get(1, (0,))[0])]
             if r['kind'] != 'road':
                 # Alleys are drawn kerb to kerb between the streets they join, so no gravel lies under the asphalt.
                 segs = []
@@ -238,7 +265,6 @@ class Grove:
                 data['surfaces'].append(dict(surface='asphalt' if r['kind'] == 'road' else 'gravel', polygon=self.rect_poly(pos, size)))
             if r['kind'] != 'road':
                 continue
-            line = r['a'][1 - ax]
             # kerb lip, gutter, sidewalk strips with gaps where side streets join
             for side in (-1, 1):
                 gaps = []
@@ -250,11 +276,13 @@ class Grove:
                         if olo - 1e-6 <= line <= ohi + 1e-6 or True:
                             gaps.append((c - o['w'] / 2, c + o['w'] / 2))
                 gaps.sort()
-                segs, start = [], lo
+                slo = lo - ext.get(0, (0, {}))[1].get(side, 0.0) if 0 in ext else lo
+                shi = hi + ext.get(1, (0, {}))[1].get(side, 0.0) if 1 in ext else hi
+                segs, start = [], slo
                 for g0, g1 in gaps:
                     if g0 > start: segs.append((start, g0))
                     start = max(start, g1)
-                if start < hi: segs.append((start, hi))
+                if start < shi: segs.append((start, shi))
                 for s0, s1 in segs:
                     if s1 - s0 < .3: continue
                     m = (s0 + s1) / 2; ln = s1 - s0
