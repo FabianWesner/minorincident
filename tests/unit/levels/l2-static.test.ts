@@ -28,7 +28,7 @@ test('T-E20-15 @E20 @E20-AC15 W1 dressing manifest: section 5.7 minimum counts, 
   expect(tier).toBe(1);
   const live = layout.placements.filter(p => p.minTier <= tier && p.maxTier >= tier).map(p => p.assetId);
   for (const banned of ['decay.burned-facade', 'decay.collapsed-facade', 'decay.rubble-pile', 'decay.crater']) expect(live).not.toContain(banned);
-  expect(live).toContain('bld.supermarket'); expect(live).toContain('kit.police-checkpoint'); expect(live).toContain('bld.river-bridge');
+  expect(live).toContain('bld.supermarket'); expect(live).toContain('veh.police-suv'); expect(live).toContain('prop.barricade'); expect(live).toContain('bld.river-bridge');
 });
 
 test('T-E20-16 @E20 @E20-AC16 midday preset: high sun (polar <= 0.40, >= 0.30 above L1) and a probe shadow <= 0.6x the L1 length', () => {

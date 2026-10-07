@@ -14,7 +14,7 @@ export const l2Routes: Record<L2Opening, readonly P[]> = {
   // Side path: Main Row west, Maple south, Elm to Juniper, alley-s east, the edge strip to the south gate of the checkpoint.
   side: [{ x: -50, z: -32 }, { x: -62, z: -31 }, { x: -64, z: -26 }, { x: -64, z: 2 }, { x: -64, z: 29.5 }, { x: -31, z: 30 }, { x: -30.6, z: 47.8 }, { x: 20, z: 48 }, { x: 60, z: 48 }, { x: 81.6, z: 48 }, { x: 81.8, z: 42 }, { x: 81.5, z: 36.8 }, { x: 81.4, z: 32.4 }],
   // Car alarm: Main Row east, Larch south to the parked car by the cluster, set it off, double back west along alley-r1 and take Elm Street to the main gate.
-  alarm: [{ x: -44, z: -31 }, { x: -12, z: -31 }, { x: 20, z: -31 }, { x: 49.8, z: -30.5 }, { x: 50, z: -2 }, { x: 50.4, z: 12 }, { x: 50.6, z: 15.4 }, { x: 40, z: 15.2 }, { x: 14.2, z: 15.2 }, { x: 14.2, z: 29.6 }, { x: 40, z: 30 }, { x: 60, z: 30.5 }, { x: 70, z: 30 }, { x: 78.6, z: 30 }],
+  alarm: [{ x: -44, z: -31 }, { x: -12, z: -31 }, { x: 20, z: -31 }, { x: 49.8, z: -30.5 }, { x: 50, z: -2 }, { x: 50.6, z: 8.6 }, { x: 50.6, z: 12 }, { x: 40, z: 15.2 }, { x: 14.2, z: 15.2 }, { x: 14.2, z: 29.6 }, { x: 40, z: 30 }, { x: 60, z: 30.5 }, { x: 70, z: 30 }, { x: 78.6, z: 30 }],
 };
 /** Route index at which the `alarm` opening sets the car off. */
 const ALARM_AT = 6;
@@ -66,10 +66,10 @@ export class LevelTwoBot {
     const near = this.threats(p, 2.6), skip = newbie && this.rng.next() < .15;
     if (this.profile === 'idle') return frame;
     if (this.profile === 'aggressive') {
-      // Stays within 15 m of the doors and fights everything that comes.
+      // Stays within 15 m of the doors and fights everything that comes at it (and whatever it sees close by).
       const door = a['l2-door-front'];
       if (near[0]) { strike(near[0]); return frame; }
-      const prey = this.threats(door, 15)[0];
+      const prey = this.threats(p, 8).find(e => dist(e.transform, door) <= 15);
       if (prey) go(prey.transform, 1.6, `prey-${prey.id}`); else go(a['l2-forecourt'], 2, 'hold');
       return frame;
     }

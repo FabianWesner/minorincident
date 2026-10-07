@@ -3,6 +3,7 @@ import { Rng } from '../../core/Rng';
 import { l2, l2TruckRoute } from '../../data/l2';
 import { Outbreak } from '../outbreak/Outbreak';
 import { allyState } from '../outbreak/Allies';
+import { l2Dressing } from '../../levels/L2/layout';
 import type { Mission } from './Mission';
 import type { L2State } from './types';
 import type { EntitySnapshot } from '../world/types';
@@ -67,6 +68,7 @@ export class LevelTwoRescue {
     this.spawnTruck();
     this.spawnStation();
     this.spawnCheckpoint();
+    this.spawnCorpses();
     this.s.trappedIds = this.spawnTrapped(tier === 'low' ? l2.rescue.trapped.low : l2.rescue.trapped.high);
     for (const id of ['door-front', 'door-loading']) this.wall(id, true);
     // Seeded calm length: the alarm sounds 20-30 s in (a retry replays the same timing).
@@ -115,17 +117,26 @@ export class LevelTwoRescue {
   }
   private spawnCheckpoint(): void {
     const o = this.outbreak();
-    const posts: Point[] = [{ x: 77.4, z: 27.2 }, { x: 77.4, z: 33 }, { x: 78.6, z: 29.2 }, { x: 78.6, z: 31.2 }];
+    // Behind the line, back from the gate: out of sight (> 16 m) of the cluster's block, close enough to cover the gate.
+    const posts: Point[] = [{ x: 79.4, z: 27.4 }, { x: 79.4, z: 32.8 }, { x: 80.6, z: 29.2 }, { x: 80.6, z: 31.2 }];
     for (const post of posts.slice(0, l2.checkpoint.officers)) {
       const p = this.snap(post, .35);
       const id = o.spawnPedestrian(p, { role: 'officer', model: 'npc.police-officer', tint: '#2f4858', tier: 'average', schedule: [{ activity: 'look', anchor: 'l2/post', target: p, facing: { x: 60, z: 30 }, ticks: 60 * 60 }] });
       const e = this.world.entities.get(id)!; e.civilian!.ally = allyState('officer', p, true); e.transform.yaw = Math.PI;
       this.s.officerIds.push(id);
     }
-    const line: Point[] = [{ x: 80.6, z: 28.6 }, { x: 81.4, z: 30.4 }, { x: 82.2, z: 27.4 }, { x: 83.4, z: 29.6 }, { x: 82.6, z: 31.8 }, { x: 83.8, z: 33.4 }, { x: 81.4, z: 33 }, { x: 84.2, z: 27.2 }];
+    const line: Point[] = [{ x: 82.2, z: 28.6 }, { x: 82.6, z: 30.6 }, { x: 83.2, z: 27.4 }, { x: 84, z: 29.6 }, { x: 83.4, z: 31.8 }, { x: 84.2, z: 33.2 }, { x: 82.2, z: 33 }, { x: 84.4, z: 27.8 }];
     for (const at of line.slice(0, l2.checkpoint.civilians)) {
       const p = this.snap(at, .35);
       this.s.lineIds.push(o.spawnPedestrian(p, { schedule: [{ activity: 'look', anchor: 'l2/line', target: p, facing: { x: 95, z: 30 }, ticks: 60 * 60 }] }));
+    }
+  }
+  /** W1 dead bystanders: pedestrians already finished when L2 starts (lying in the crowd's death pose, never targets). */
+  private spawnCorpses(): void {
+    const o = this.outbreak();
+    for (const d of l2Dressing) if (d.entity && d.kind === 'corpse') {
+      const p = this.snap({ x: d.x, z: d.z }, .35), id = o.spawnPedestrian(p, { model: d.assetId, yaw: d.yaw, schedule: this.schedule(p, p) }), e = this.world.entities.get(id)!;
+      e.civilian!.state = 'finished'; e.civilian!.entered = this.world.tick - 600; e.appearance!.handProp = null;
     }
   }
   /** Trapped civilians wait inside the market (hidden), released through both doors after the crew forces them. */
@@ -166,6 +177,8 @@ export class LevelTwoRescue {
   }
   private alarm(): void {
     const { world } = this.mission, tick = world.tick;
+    // A few people still out on the streets, trying to get somewhere (civilians only: the town has no infected yet).
+    for (const [x, z] of l2.escape.civilians) { const p = this.snap({ x, z }, .4); this.outbreak().spawnPedestrian(p, { waypoints: [p, this.snap({ x: x + 6, z }, .4)] }); }
     this.s.phase = 'alarm'; this.s.alarmAt = tick;
     world.events.emit({ type: 'l2.alarm', tick });
     if (!this.mission.state.states.alarm) this.mission.setState('alarm', true);
@@ -324,8 +337,6 @@ export class LevelTwoRescue {
       const home = { x, z }, list = near(home).slice(0, 2);
       for (let i = 0; i < Math.ceil(size * scale); i++) s.pending.push({ id: 0, door: list[i % list.length].d, at: 0, home });
     }
-    // A few people still out on the streets, trying to get somewhere.
-    for (const [x, z] of l2.escape.civilians) { const p = this.snap({ x, z }, .4); this.outbreak().spawnPedestrian(p, { waypoints: [p, this.snap({ x: x + 6, z }, .4)] }); }
     s.escapeSpawned = true; this.emergePending(true);
   }
   private emergePending(all = false): void {
@@ -381,8 +392,9 @@ export class LevelTwoRescue {
       this.emergeAmbush(tick);
       this.release(tick);
       const door = this.anchor('l2-door-front'), away = Math.hypot(player.transform.x - door.x, player.transform.z - door.z) >= l2.rescue.radioAwayM;
-      // The street population exists once the courier breaks away (an idle courier keeps the whole cap at the rescue).
-      if (!s.escapeSpawned && away) this.spawnEscape();
+      // The street population exists once the courier breaks away or the fall-back call goes out (+45 s): the outbreak is
+      // already in the streets, whatever happens at the doors. Under the shared cap it waits for free slots.
+      if (!s.escapeSpawned && (away || s.radioAt)) this.spawnEscape();
       if (!s.radioAt) {
         if (tick - s.doorsOpenAt >= ticks(l2.rescue.radioAfterS) || away) {
           s.radioAt = tick; s.phase = 'escape'; world.events.emit({ type: 'l2.radio', tick }); this.mission.radio('L2.radio');

@@ -57,7 +57,7 @@ export function runL2(world: SimWorld, mission: Mission, profile: L2Profile, opt
   let passenger = false, seatedEveryTick = true, controlAt = 0;
   const doors = { order: [] as string[], nearBefore: 0, firstCivOutS: null as number | null, firstAmbushVisibleS: null as number | null, emerged3s: 0, doors3s: [] as string[], allOutS: null as number | null, nonBiteNearRescue: 0 };
   const audit = { sightViolations: 0, nonSightAlerts: 0, emergeFar: 0, emergeSeen: 0, emerged: 0 };
-  const bites = new Map<number, number>(), crewTurns: L2Report['crewTurns'] = [], known = new Set<number>();
+  const outside = new Set<number>(), bites = new Map<number, number>(), crewTurns: L2Report['crewTurns'] = [], known = new Set<number>();
   let radio: L2Report['radio'] = null, cluster: L2Report['cluster'] = null, gate: L2Report['gate'] = null, insideAfter = 0;
   const offs = [
     ...(['l2.alarm', 'l2.truckDeparted', 'l2.truckArrived', 'l2.crewExit', 'l2.firefightersAtDoors', 'l2.doorsOpen', 'l2.radio', 'l2.gateClosed'] as const).map(type => world.events.on(type, e => { timeline.push({ type: e.type, t: e.tick / 60 }); doors.order.push(e.type); })),
@@ -104,8 +104,9 @@ export function runL2(world: SimWorld, mission: Mission, profile: L2Profile, opt
       const since = (t - s.doorsOpenAt) / 60;
       // Through the doors = visible and outside the market footprint (some wait visibly at the glass before the release).
       const out = (id: number) => { const e = world.entities.get(id); return !e || (!e.hidden && !(e.transform.x > -59.8 && e.transform.x < -51.3 && e.transform.z > -46.7 && e.transform.z < -37.6)); };
-      if (doors.firstCivOutS === null && s.trappedIds.some(out)) doors.firstCivOutS = since;
-      if (doors.allOutS === null && s.trappedIds.every(out)) doors.allOutS = since;
+      for (const id of s.trappedIds) if (!outside.has(id) && out(id)) outside.add(id);
+      if (doors.firstCivOutS === null && outside.size) doors.firstCivOutS = since;
+      if (doors.allOutS === null && outside.size === s.trappedIds.length) doors.allOutS = since;
       if (doors.firstAmbushVisibleS === null && s.ambushIds.some(id => { const e = world.entities.get(id); return !!e && !e.hidden && world.infected!.director.visible(e.transform); })) doors.firstAmbushVisibleS = since;
       if (since <= 3) { doors.emerged3s = s.ambush.filter(q => q.id > 0).length; doors.doors3s = [...new Set(s.ambush.filter(q => q.id > 0).map(q => q.door))]; }
       for (const e of alive()) if (!known.has(e.id)) {

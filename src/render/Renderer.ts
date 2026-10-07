@@ -34,6 +34,8 @@ export class Renderer extends WebGPURenderer {
           if (node.name === 'infected-crowd' || node.name === 'civilian-crowd') { category = 'crowd'; break; }
           if (node.name.startsWith('inst:')) { const id = node.name.slice(5); this.assets.set(renderObject.object, id); category = worldAssets[id]?.category === 'building' ? 'buildings' : 'props'; break; }
         }
+        // Uncategorised draws are attributed to their top-level scene group (debug profile only).
+        if (category === 'other') { let top: Object3D = renderObject.object; while (top.parent && top.parent.parent) top = top.parent; this.assets.set(renderObject.object, `other/${top.name || top.type}`); }
         this.categories.set(renderObject.object, category);
       }
       if (renderObject.camera !== this.profileCamera) category = 'shadows';

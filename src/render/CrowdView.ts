@@ -91,7 +91,8 @@ export class CrowdView extends Group {
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
     const l1Roles = new Set<string>(this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => d.id === 'D-GROVE') ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
-    const definitions = this.world.scenario === 'L1' ? allDefinitions.filter(def => l1Roles.has(def.id)) : allDefinitions;
+    const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2';
+    const definitions = grove ? allDefinitions.filter(def => l1Roles.has(def.id)) : allDefinitions;
     for (const def of definitions) {
       this.definitions.set(def.id, def);
       if (!this.low) {
@@ -100,7 +101,7 @@ export class CrowdView extends Group {
       }
     }
     // The low tier only ever draws LOD2 (see update); it never loads LOD0/LOD1.
-    const lods: ('lod0' | 'lod1' | 'lod2')[] = this.low ? ['lod2'] : this.world.scenario === 'L1' ? ['lod0', 'lod1', 'lod2'] : ['lod1', 'lod2'];
+    const lods: ('lod0' | 'lod1' | 'lod2')[] = this.low ? ['lod2'] : grove ? ['lod0', 'lod1', 'lod2'] : ['lod1', 'lod2'];
     await Promise.all(definitions.flatMap(def => lods.map(lod => this.loadBatch(def, lod))));
     loadMeasure('view:infected-crowd', started);
     this.update();

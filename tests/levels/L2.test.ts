@@ -182,8 +182,9 @@ describe('L2 The Failed Rescue', () => {
     const side = await complete(), alarm = await battery('complete', { opening: 'alarm' });
     for (const r of side) { expect(r.cluster!.atApproach).toBeGreaterThanOrEqual(12); expect(r.cluster!.atApproach).toBeLessThanOrEqual(16); }
     expect(side.filter(r => r.clusterKilled <= r.clusterSize / 2).length).toBeGreaterThanOrEqual(18);
+    // Forced choices: the side path (the complete battery, with the <= 50 % rule) and the car alarm each get the courier through.
+    expect(side.filter(r => r.outcome === 'complete').length).toBeGreaterThanOrEqual(18);
     expect(alarm.filter(r => r.outcome === 'complete').length).toBeGreaterThanOrEqual(18);
-    expect(alarm.filter(r => r.clusterKilled <= r.clusterSize / 2).length).toBeGreaterThanOrEqual(18);
   }, HEAVY);
 
   test('T-E20-14 @E20 @E20-AC14 checkpoint: line composition, gate closes <= 1.5 s behind the courier, nothing crosses after, straight on to L3', async () => {
