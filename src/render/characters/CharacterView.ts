@@ -91,12 +91,19 @@ export class CharacterView extends Group {
     }
     // E19 story: the courier parcel sits between her hands while she carries it.
     const character = this.characters.get(this.variant);
-    if (this.parcel) this.parcel.visible = !!pose.carrying && !!character;
+    if (this.parcel) this.parcel.visible = !!pose.carrying && !!character && !ride; // riding: the parcel rides in the cargo box (BicycleView)
     if (this.parcel?.visible && character) {
       this.updateMatrixWorld(true);
       const l = character.rig.handL.getWorldPosition(this.scratchA), r = character.rig.handR.getWorldPosition(this.scratchB);
       this.parcel.position.copy(this.worldToLocal(l.add(r).multiplyScalar(.5))); this.parcel.position.y += .04;
     }
+  }
+  /** Riding: moves the whole figure so its pelvis lands on `target` (world, the saddle) after this frame's pose update. */
+  seatPelvis(target: Vector3, lift = 0): void {
+    const character = this.characters.get(this.variant); if (!character) return;
+    this.updateMatrixWorld(true); character.rig.hip.getWorldPosition(this.scratchA);
+    this.position.x += target.x - this.scratchA.x; this.position.z += target.z - this.scratchA.z; this.position.y += target.y + lift - this.scratchA.y;
+    this.updateMatrixWorld(true);
   }
   private parcel: Group | null = null;
   private readonly scratchA = new Vector3();

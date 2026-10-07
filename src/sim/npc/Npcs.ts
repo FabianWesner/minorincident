@@ -105,6 +105,7 @@ export class Npcs {
       if (e.infected) for (const key of ['until', 'cooldown', 'activeUntil', 'grabUntil', 'grabNextTick', 'scatterUntil'] as const) if (e.infected[key]) e.infected[key] += delta;
     }
     this.civilians.restore(); this.civilians.outbreak?.restore(delta);
+    this.companion.respawnNear();
   }
   /** Stop density maintenance (L1 v2 owns its population through the outbreak layer). */
   setAmbient(count: number): void { this.ambientTarget = count; }

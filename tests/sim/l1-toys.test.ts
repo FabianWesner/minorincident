@@ -29,7 +29,7 @@ const pos = () => { const t = world.entities.get(1)!.transform; return { x: t.x,
 describe('L1 v2 bicycle', () => {
   test('T-E19-16a @E19 @E19-AC16 mount by interact, 7.5 m/s above every infected tier, dismount keeps the bicycle in place', async () => {
     await grove();
-    const start = anchor('bike-start'); expect(bike().entity?.bicycle?.mounted).toBe(false);
+    const start = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }; expect(bike().entity?.bicycle?.mounted).toBe(false);
     teleport({ x: start.x + 1, z: start.z }); step(2); press();
     expect(bike().riding).toBe(true);
     world.setInput({ move: { x: 1, z: 0 } });
@@ -49,9 +49,20 @@ describe('L1 v2 bicycle', () => {
   });
   test('T-E19-16b @E19 @E19-AC16 stand still next to it for 0.4 s to mount; attacks are disabled while riding', async () => {
     await grove();
-    const start = anchor('bike-start'); teleport({ x: start.x + 1, z: start.z }); step(20); expect(bike().riding).toBe(false); step(10); expect(bike().riding).toBe(true);
+    const start = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }; teleport({ x: start.x + 1, z: start.z }); step(20); expect(bike().riding).toBe(false); step(10); expect(bike().riding).toBe(true);
     world.setInput({ left: { down: true, held: true, up: false }, move: { x: 1, z: 0 } }); step(30);
     expect(world.entities.get(1)!.survivor!.animation).not.toBe('attack');
+  });
+  test('T-E19-16e @E19 @E19-AC16 riding feel: no pivoting on the spot, the turn radius grows with speed, speed ramps and coasts', async () => {
+    await grove(); const e = bike().entity!, start = { x: e.transform.x, z: e.transform.z }; teleport({ x: start.x + 1, z: start.z }); step(30); expect(bike().riding).toBe(true);
+    const b = () => bike().entity!.bicycle!, h0 = b().heading;
+    world.setInput({ move: { x: -Math.cos(h0), z: -Math.sin(h0) } }); step(12);
+    expect(Math.abs(b().heading - h0)).toBeLessThan(.25); // asked to reverse from a standstill: no instant pivot
+    expect(b().speed).toBeLessThan(2.5); // eased in
+    // radius = speed / turn rate grows with speed
+    const radius = (steps: number) => { world.setInput({ move: { x: Math.cos(b().heading), z: Math.sin(b().heading) } }); step(steps); const h = b().heading; world.setInput({ move: { x: Math.cos(h + 1), z: Math.sin(h + 1) } }); step(8); return b().speed / Math.max(1e-3, Math.abs(b().heading - h) / (8 / 60)); };
+    const slow = radius(10), fast = radius(150); expect(fast).toBeGreaterThan(slow);
+    world.setInput({ move: { x: 0, z: 0 } }); const v = b().speed; step(30); expect(b().speed).toBeLessThan(v); expect(b().speed).toBeGreaterThan(v - 3.5); // coasts gently
   });
   test('T-E19-16c @E19 @E19-AC16 riding into the facility forecourt auto-dismounts at the edge; no mounting inside', async () => {
     await grove();
@@ -66,7 +77,7 @@ describe('L1 v2 bicycle', () => {
   });
   test('T-E19-16d @E19 @E19-AC16 an infected touching the rider stops the bicycle and dismounts, with zero damage', async () => {
     await grove(); world.enableInfected();
-    const start = anchor('bike-start'); teleport({ x: start.x + 1, z: start.z }); step(2); press();
+    const start = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }; teleport({ x: start.x + 1, z: start.z }); step(2); press();
     world.setInput({ move: { x: 1, z: 0 } }); step(40);
     const hp = world.entities.get(1)!.health.current, p = pos();
     world.infected!.spawn('infected.runner', { x: p.x + 1.2, z: p.z }, { state: 'idle' }); step(40);
@@ -172,5 +183,21 @@ describe('L1 v2 corgi', () => {
     expect(b.riding).toBe(true);
     let gap = 0; for (let i = 0; i < 480; i++) { world.update(); const p = world.entities.get(1)!.transform; gap = Math.max(gap, i > 300 && i < 400 ? Math.hypot(dog.transform.x - p.x, dog.transform.z - p.z) : 0); }
     expect(gap).toBeLessThan(5); // after the start-up lag it keeps pace at the 7.5 m/s cap
+  });
+  test('T-E19-17d @E19 @E19-AC17 after a respawn the corgi is snapped next to the courier facing her, and never runs backwards', async () => {
+    await dogWorld(); const dog = [...world.entities.iterate()].find(e => e.companion)!, p = world.entities.get(1)!.transform;
+    // stale pre-respawn state: far away, facing away, with leftover motion response
+    Object.assign(dog.transform, { x: p.x + 25, z: p.z, yaw: Math.PI }); dog.locomotion = { vx: 3, vz: 0, ax: 1, az: 0, omega: 2, updatedAt: world.tick };
+    world.npcs!.restore(0);
+    expect(Math.hypot(dog.transform.x - p.x, dog.transform.z - p.z)).toBeLessThan(2.6);
+    const toPlayer = -Math.atan2(p.z - dog.transform.z, p.x - dog.transform.x);
+    expect(Math.abs(Math.atan2(Math.sin(toPlayer - dog.transform.yaw), Math.cos(toPlayer - dog.transform.yaw)))).toBeLessThan(.01);
+    // the courier moves off; every tick the corgi moves faster than 1.5 m/s its heading is within 0.6 rad of its velocity
+    world.setInput({ move: { x: 1, z: 0 } }); let worst = 0;
+    for (let i = 0; i < 240; i++) {
+      world.update(); const v = dog.companion!.velocity;
+      if (v && Math.hypot(v.x, v.z) > 1.5) worst = Math.max(worst, Math.abs(Math.atan2(Math.sin(-Math.atan2(v.z, v.x) - dog.transform.yaw), Math.cos(-Math.atan2(v.z, v.x) - dog.transform.yaw))));
+    }
+    expect(worst).toBeLessThan(.7);
   });
 });

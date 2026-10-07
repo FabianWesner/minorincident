@@ -140,7 +140,7 @@ def row(name, x0, x1, facing, line, rear, kinds, drives=None, gate_at=None):
         g.place(asset, hx, hz, yaw, scale, tint=next_tint())
         ox, oz = rot(yaw, dx_door, dz_door)
         door = (hx + ox, hz + oz)
-        doors.append(door)
+        doors.append((door[0], line - sgn * .5))   # refuge point on the pavement at the gate, never inside the closed yard
         out.append(dict(x=hx, z=hz, door=door, lot=(lx0, lx1)))
         # front picket fence with a gap at the door path and one at the driveway
         gaps = [(door[0], 1.7)]
@@ -169,7 +169,7 @@ def row(name, x0, x1, facing, line, rear, kinds, drives=None, gate_at=None):
         g.lawn(lx0 + .3, min(line, line + sgn * 3.0), lx1 - .3, max(line, line + sgn * 3.0))
         # back yard: a tree crown rising behind the house (large mass for the top-down camera)
         bz = (hz + sgn * depth / 2 + rear) / 2
-        g.place('prop.street-tree' if (i + len(doors)) % 2 else 'prop.street-tree-blossom', hx, bz, 0, 1.0, soft=True)
+        g.place('prop.street-tree' if (i + len(doors)) % 2 else 'prop.street-tree-blossom', hx + (1.5 if (i % 2) else -1.5), bz, 0, .8, soft=True)   # offset + smaller: canopies stay off the house fronts
         variant = len(doors) % 5
         gx = (lx0 + 1.7) if door[0] > hx else (lx1 - 1.7)   # clutter on the side away from the door path
         gz = line + sgn * 2.6
@@ -226,8 +226,8 @@ g.place(cafe, cafe_x, cafe_z, FACE_YAW['E'])
 if g.placeholder(cafe):
     g.shell('cafe', cafe_x, cafe_z, 'E', cdx, cdz, [('front', 0, 2.4)])
 anchors['cafe-patio'] = (CAFE_FRONT_X + 1.0, cafe_z)
-anchors['bike-start'] = (-72.4, 3.8)
-g.place('prop.bike-rack', -72.4, 5.5, PI / 2)
+anchors['bike-start'] = (-68.1, 7.2)      # the bike stands in the rack, 2.4 m from the courier spawn: both in the first frame
+g.place('prop.bike-rack', -68.1, 7.2, 0.0)
 anchors['player-start'] = (-66.4, 9.0)
 doors.append((CAFE_FRONT_X + 1.0, cafe_z))
 # patio dressing on the sidewalk side: planters, a bench facing the street, bin
@@ -277,6 +277,7 @@ if g.placeholder(depot):
 anchors['parcel-door'] = (depot_x, SHOP_FRONT + .9)
 anchors['parcel-counter'] = (depot_x, SHOP_FRONT + 1.0)   # real depot collision is a closed shell: hand-over happens at the door
 doors.append(anchors['parcel-door'])
+g.path(PASS_X - 3.2, SHOP_FRONT - .1, PASS_X + 3.2, SHOP_FRONT + 3.0, 'uiDark')   # paved apron under the van
 g.place('veh.courier-van', PASS_X, SHOP_FRONT + 1.7 - .35, 0, 1.0, soft=True)
 # shop-front dressing: A-frame / vending / bench between the planters, lamps come with the kerb line below
 g.path(depot_x - 4.0, SHOP_FRONT - .2, depot_x + 4.0, ZN - 4.5, 'sidewalk')     # open paved plaza in front of the counter (>= 3 m clear)
@@ -311,7 +312,6 @@ g.path(ax_ - 1.4, FENCE_Z, ax_ + 1.4, -4.5, 'sidewalk')
 for sx_ in (ax_ - 4.4, ax_ + 4.4):    # "AUTHORIZED PERSONNEL ONLY", hazard, deliveries, keypad
     g.place('prop.lab-signs', sx_, FENCE_Z + .9, FACE_YAW['S'], 1.0, soft=True)
 g.place('prop.lab-signs', 57.8, -7.9, FACE_YAW['S'], 1.0, soft=True)   # "NO BICYCLES BEYOND THIS POINT" by the rack
-g.place('veh.pickup-white', CX1 - 3.2, -23.0, PI / 2, 1.0, soft=True)  # unmarked white vehicle inside the compound
 for tx_, tz_ in ((CX0 + 2.2, -24.0), (CX1 - 2.2, -24.0)):
     g.place('prop.street-tree-blossom' if tx_ < 66 else 'prop.street-tree', tx_, tz_, 0, .8, soft=True)
 anchors['lab-gate'] = (ax_, FENCE_Z)
@@ -327,7 +327,8 @@ anchors['lab-bike-rack-front'] = (57.8, -5.3)
 g.place('prop.bike-rack', 57.8, -6.8, PI / 2)
 doors.append(anchors['lab-door'])
 # staff parking east of the compound, a van and a sedan
-g.place('veh.sedan-white', 81.2, -14.5, -PI / 2, 1.0, soft=True)
+g.place('veh.pickup-white', 79.4, -21.5, PI / 2, 1.0, soft=True)   # unmarked white vehicle at the staff parking
+g.place('veh.sedan-white', 79.4, -14.0, -PI / 2, 1.0, soft=True)
 g.path(79.8, -26, 82.6, -11.5, 'uiDark')
 g.hedge(79.0, -28.5, 83.0, -28.5, scale=1.15)
 g.hedge(79.0, -10.0, 83.0, -10.0, scale=1.15)
@@ -490,8 +491,7 @@ lamps()
 for (cx, cz) in [(XW, Z0), (X2, Z0), (X3, Z0), (X4, Z0), (XW, ZS), (X2, ZS), (X3, ZS), (X4, ZS), (XW, ZN), (X2, ZN), (X3, ZN), (X4, ZN)]:
     g.place('prop.street-sign', cx + 3.5, cz + 3.5, 0, .8, soft=True)
     g.place('prop.fire-hydrant', cx - 3.5, cz - 3.5, 0, .8, soft=True)
-for x, z in [(-47, -3.6), (-9, 3.6), (31, -3.6), (68, 3.6), (-20, ZS - 3.6), (36, ZS + 3.6)]:
-    g.place('prop.utility-pole', x, z, PI / 2, 1.0, soft=True)
+# no utility poles: their baked wires dangle unconnected (PO #8)
 DUMPSTERS = {'dumpster-1': (-52.0, -15.5), 'dumpster-1-end': (-58.5, -15.5), 'dumpster-2': (36.0, 15.0), 'dumpster-2-end': (27.0, 15.0)}
 
 ALLEY_ITEMS = ['prop.trash-bags', 'prop.recycling-bin', 'prop.crates', 'prop.broken-chair', 'prop.carpet', 'prop.trash-bin']
