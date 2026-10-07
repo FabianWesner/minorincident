@@ -219,7 +219,7 @@ export class InfectedSystem {
       for (const e of this.active) if (e.health.current <= 0 && (!oldest || e.infected!.deadAt < oldest.infected!.deadAt)) oldest = e;
       if (oldest) this.release(oldest); corpses--;
     }
-    for (let i = this.active.length - 1; i >= 0; i--) if (this.active[i].health.current <= 0 && this.world.tick - this.active[i].infected!.deadAt >= 2760) this.release(this.active[i]);
+    for (let i = this.active.length - 1; i >= 0; i--) if (!this.l1 && this.active[i].health.current <= 0 && this.world.tick - this.active[i].infected!.deadAt >= 2760) this.release(this.active[i]);
     // The player consumes borrowed transform references, never renderer state.
     for (const e of this.active) if (e.health.current > 0) this.crowd.push(this.obstacle(e));
     if (this.world.player) this.world.player.locomotion.crowd = this.crowd;
@@ -313,7 +313,7 @@ export class InfectedSystem {
         this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId: target.id, special: 'explode', amount });
       }
     }
-    if (this.world.tick - b.deadAt >= 2700) e.transform.y = 0.7 - (this.world.tick - b.deadAt - 2700) / 60;
+    if (!this.l1 && this.world.tick - b.deadAt >= 2700) e.transform.y = 0.7 - (this.world.tick - b.deadAt - 2700) / 60;
   }
   /** Gameplay conversion is independent of gore; renderer reads only the detached flag. */
   loseLeg(id: number, gore: 'Full' | 'Reduced' | 'Off'): void {

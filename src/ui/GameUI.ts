@@ -1,5 +1,6 @@
 // Adapted from folio-2025 Menu.js / Modals.js by Bruno Simon (MIT, 41046b5):
 // named screens, visibility classes, first focus, and separate gameplay input context.
+import homePlaceholders from '../../public/ui/home/placeholders.json';
 import type { Game } from '../Game';
 import { newCampaign, type Level } from '../sim/progression/Campaign';
 import { defaultBindings, type Action } from '../data/bindings';
@@ -35,7 +36,7 @@ export class GameUI {
   init(): void {
     if (!this.enabled) return;
     document.body.classList.add('full-ui');document.body.classList.toggle('debug-ui',this.game.params.has('debug'));
-    document.body.classList.toggle('touch-ui', navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches); this.root.className = 'menus';
+    document.body.classList.toggle('touch-ui', navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches); this.root.className = 'menus'; this.root.prepend(homeArt());
     this.pauseButton.setAttribute('aria-label', 'Pause');
     const pauseLabel = node('span', 'pause-label', 'Pause');
     this.pauseButton.replaceChildren(node('span', 'pause-icon', 'Ⅱ '), pauseLabel);
@@ -195,7 +196,15 @@ export class GameUI {
       const saved = this.game.saves.load();
       for (const id of ['continue-game', 'title-levels']) this.root.querySelector<HTMLButtonElement>(`[data-testid=${id}]`)!.hidden = saved.status !== 'ok';
     }
-    if (screen === 'levels') for (let i = 1; i <= 6; i++) this.root.querySelector<HTMLButtonElement>(`[data-testid=level-L${i}]`)!.disabled = i > (this.game.campaign?.unlockedLevel ?? 1);
+    if (screen === 'levels') {
+      // PO: levels after L1 stay greyed out and unfocusable until the campaign has actually unlocked them.
+      const names = ['Stop the Outbreak', 'Get Them Out', 'Reach the Safe Zone', 'Open the Escape Route', 'Hold the Line', 'Get Out'], unlocked = this.game.campaign?.unlockedLevel ?? 1;
+      for (let i = 1; i <= 6; i++) {
+        const b = this.root.querySelector<HTMLButtonElement>(`[data-testid=level-L${i}]`)!, locked = i > unlocked;
+        b.disabled = locked; b.classList.toggle('is-locked', locked); b.textContent = `${locked ? '🔒 ' : ''}L${i} · ${names[i - 1]}`;
+        if (locked) { b.title = `Complete Level ${i - 1} first`; b.setAttribute('aria-label', `Level ${i}, locked. Complete Level ${i - 1} first`); } else { b.removeAttribute('title'); b.removeAttribute('aria-label'); }
+      }
+    }
     for (const [name, panel] of this.screens) panel.hidden = name !== screen;
     this.root.hidden = screen === null;
     if (screen === null && this.root.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();
@@ -259,4 +268,23 @@ export class GameUI {
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   };
   dispose(): void { window.removeEventListener('keydown', this.key, true); document.removeEventListener('click', this.missionAccept); this.root.remove(); this.pauseButton.remove(); this.hud.dispose(); document.body.classList.remove('full-ui', 'touch-ui'); delete document.body.dataset.uiScreen; }
+}
+
+/**
+ * Title-screen background (PO #1): art-directed landscape/portrait crops, AVIF with WebP fallback at several widths
+ * (public/ui/home, < 250 KB each), object-fit cover, a tiny blurred placeholder behind it while the image loads.
+ */
+function homeArt(): HTMLElement {
+  const sizes = { landscape: [640, 1280, 1920, 2560], portrait: [640, 1080, 1290] } as const;
+  const picture = document.createElement('picture'); picture.className = 'home-art'; picture.setAttribute('aria-hidden', 'true');
+  picture.style.backgroundImage = `url(${homePlaceholders.landscape})`;
+  const portraitQuery = '(orientation: portrait)';
+  for (const [kind, media] of [['portrait', portraitQuery], ['landscape', undefined]] as const) for (const [type, ext] of [['image/avif', 'avif'], ['image/webp', 'webp']] as const) {
+    const source = document.createElement('source'); source.type = type; if (media) source.media = media;
+    source.srcset = sizes[kind].map(w => `/ui/home/home-${kind}-${w}.${ext} ${w}w`).join(', '); source.sizes = '100vw'; picture.append(source);
+  }
+  const img = document.createElement('img'); img.alt = ''; img.decoding = 'async'; img.src = '/ui/home/home-landscape-1280.webp'; img.draggable = false;
+  img.addEventListener('load', () => { picture.style.backgroundImage = 'none'; });
+  const shade = document.createElement('span'); shade.className = 'home-art-shade';
+  picture.append(img, shade); return picture;
 }
