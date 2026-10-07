@@ -8,7 +8,7 @@ export class ControlIntent {
   moveTarget: Vec2 | null = null;
   private readonly route = { path: [] as number[], goal: -1, pathIndex: 0 };
   private readonly waypoint = { x: 0, z: 0 };
-  private attack: { id: number; side: 'LEFT' | 'RIGHT'; started: boolean } | null = null;
+  private attack: { id: number; side: 'LEFT' | 'RIGHT'; started: boolean; until?: number } | null = null;
   constructor(private readonly world: SimWorld) {}
   snapshot() { return this.moveTarget || this.attack ? structuredClone({ moveTarget: this.moveTarget, attack: this.attack }) : null; }
   attacked(side: 'LEFT' | 'RIGHT'): void { if (this.attack?.side === side) this.attack.started = true; }
@@ -32,7 +32,11 @@ export class ControlIntent {
       const point = nav ? nav.clear(raw.moveTarget.x, raw.moveTarget.z, survivor.radius) ? [raw.moveTarget.x, raw.moveTarget.z] : cell !== undefined && cell >= 0 ? [nav.x(cell), nav.z(cell)] : this.world.districts?.nav.clamp([raw.moveTarget.x, raw.moveTarget.z]) : this.world.districts?.nav.clamp([raw.moveTarget.x, raw.moveTarget.z]);
       this.moveTarget = point ? { x: point[0], z: point[1] } : { ...raw.moveTarget }; this.attack = null;
     }
-    if (raw.attackTarget) { this.attack = { ...raw.attackTarget, started: false }; this.moveTarget = null; }
+    if (raw.attackTarget) {
+      const running = this.world.combat?.runner.running[raw.attackTarget.side];
+      this.attack = { ...raw.attackTarget, started: false, ...(running && this.world.tick < running.endsAt ? { until: this.world.tick + 12 } : {}) };
+      this.moveTarget = null;
+    }
     if (!this.moveTarget && !this.attack && !raw.pointerGround && !raw.pointerTarget && raw.aimSource !== 'assist') return raw;
     const frame: InputFrame = { ...raw, move: { ...raw.move }, left: { ...raw.left }, right: { ...raw.right } };
     if (raw.pointerGround) frame.left = { down: false, held: false, up: raw.left.up };
@@ -41,7 +45,7 @@ export class ControlIntent {
     if (attack && combat) {
       const target = this.world.entities.get(attack.id), button = attack.side === 'LEFT' ? frame.left : frame.right;
       // One click approaches and attacks once; holding repeats until released or retargeted.
-      if (!target || target.health.current <= 0 || target.hidden || target.infected?.hidden || (attack.started && !button.held)) this.attack = null;
+      if (!target || target.health.current <= 0 || target.hidden || target.infected?.hidden || (attack.started && !button.held) || (attack.until !== undefined && this.world.tick > attack.until && !button.held)) this.attack = null;
       else {
         const p = player.transform, t = target.transform, dx = t.x - p.x, dz = t.z - p.z, distance = Math.hypot(dx, dz);
         const def = action(combat.runner.loadout.current(attack.side).id), range = def.range * .85;
@@ -54,7 +58,7 @@ export class ControlIntent {
         else {
           // Stop at range rather than drifting through the target during wind-up.
           frame.navigation = true; frame.move = { x: 0, z: 0 };
-          if (!combat.runner.running[attack.side] && combat.runner.loadout.usable(attack.side, this.world.tick)) {
+          if ((!combat.runner.running[attack.side] || this.world.tick >= combat.runner.running[attack.side]!.endsAt) && combat.runner.loadout.usable(attack.side, this.world.tick)) {
             button.down = true;
           }
         }

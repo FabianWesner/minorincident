@@ -91,7 +91,7 @@ export class Combat {
     const def = attack.def, distanceFalloff = def.distanceFalloff;
     if (distanceFalloff) falloff *= 1 - (1 - distanceFalloff.minimum) * Math.max(0, Math.min(1, (distance - distanceFalloff.start) / (distanceFalloff.end - distanceFalloff.start)));
     const alive = target.health.current > 0;
-    const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, direction: this.direction, base: def.damage * falloff, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, radius: def.splash?.radius ?? def.range, spread: def.spread, knockback: def.knockback * falloff, stagger: def.stagger, ...(def.hitStopMs === undefined ? {} : { hitStopMs: def.hitStopMs }) });
+    const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, direction: this.direction, base: def.damage * falloff, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, radius: def.splash?.radius ?? def.range, spread: def.spread, knockback: def.knockback * falloff, stagger: def.stagger, knockdown: def.knockdown, ...(def.hitStopMs === undefined ? {} : { hitStopMs: def.hitStopMs }) });
     if (alive && target.health.current === 0 && def.category === 'melee') this.effects.noise(origin, def.noiseRadius, def.id);
     if (alive && target.faction === 'infected' && (amount || def.damage === 0) && def.status) this.status.apply(target, def.status, attack.sourceId, def.id, attack.id);
   }
@@ -174,6 +174,7 @@ export class Combat {
   }
   snapshot() {
     const attack = (a: Attack) => ({ id: a.id, sourceId: a.sourceId, side: a.side, actionId: a.def.id, combo: a.combo, inPlace: a.inPlace, aim: a.aim, aimPoint: a.aimPoint, started: a.started, activeAt: a.activeAt, recoveryAt: a.recoveryAt, endsAt: a.endsAt, resolved: a.resolved, hit: [...a.hit] });
-    return { ...(this.effects.zones.length ? { zones: this.effects.snapshot() } : {}), sequence: this.runner.lastAttackId, chains: this.runner.snapshotChains(), rng: this.rng.snapshot(), god: this.damage.god, infiniteCharges: this.runner.infiniteCharges, aimAssist: this.assist.setting, water: this.status.water, running: Object.values(this.runner.running).map(attack), projectiles: this.projectiles.map((p) => ({ ...p, attack: attack(p.attack) })) };
+    const buffered = this.runner.snapshotBuffer();
+    return { ...(this.effects.zones.length ? { zones: this.effects.snapshot() } : {}), ...(Object.keys(buffered).length ? { buffered } : {}), sequence: this.runner.lastAttackId, chains: this.runner.snapshotChains(), rng: this.rng.snapshot(), god: this.damage.god, infiniteCharges: this.runner.infiniteCharges, aimAssist: this.assist.setting, water: this.status.water, running: Object.values(this.runner.running).map(attack), projectiles: this.projectiles.map((p) => ({ ...p, attack: attack(p.attack) })) };
   }
 }
