@@ -16,6 +16,8 @@ p.add_argument('--view',default='ref');p.add_argument('--samples',type=int,defau
 p.add_argument('--width',type=int,default=960);p.add_argument('--height',type=int,default=540)
 a=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
+for material in list(bpy.data.materials):
+    bpy.data.materials.remove(material)
 rng=random.Random(240)
 M={}
 for token,h in {'asphalt':'695359','sidewalk':'b9a4a0','grass':'6f8f3a','foliage':'7da23c','woodWarm':'99613f','picketWhite':'f2e6dc','brick':'a8483a','survivorRed':'d9363e','schoolBusYellow':'f2b630','uiDark':'25222c','windowGlow':'ffc773'}.items():
