@@ -129,6 +129,26 @@ describe('L1 v2 mission', () => {
     expect(m2.state.items).toContain('bat'); w2.dispose();
   }, HEAVY);
 
+  test('T-E19-09 @E19 beat 9 the director produces >= 6 infected near the garage exit and a stream ahead on the route', async () => {
+    const { world: w, mission } = await load(2); w.combat!.damage.god = true;
+    runL1(w, mission, 'complete', { seed: 2, stopWhen: m => m.state.steps.weapon.status === 'completed' });
+    const g = mission.def.anchors['garage-door'], near = () => w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - g.x, e.transform.z - g.z) <= l1v2.director.hordeRadiusM).length;
+    for (let i = 0; i < 60 * 40 && !mission.state.l1!.hordeDone; i++) w.update();
+    expect(mission.state.l1!.hordeDone).toBe(true);
+    for (let i = 0; i < 60 * 30 && near() < l1v2.director.hordeMinInfectedNearGarage; i++) w.update();
+    expect(near()).toBeGreaterThanOrEqual(l1v2.director.hordeMinInfectedNearGarage);
+  }, HEAVY);
+
+  test('T-E19-05 @E19 fair accident: the blast pushes a player at the door back, front-door infected wait 2.5 s, staff are varied', async () => {
+    const { world: w, mission } = await load(3); w.combat!.damage.god = true;
+    runL1(w, mission, 'idle', { seed: 3, stopWhen: m => m.state.l1!.exitIds.length > 0 });
+    const door = mission.def.anchors['lab-door'], p = w.entities.get(1)!.transform;
+    expect(Math.hypot(p.x - door.x, p.z - door.z)).toBeGreaterThan(2.5);
+    const ids = mission.state.l1!.exitIds, models = ids.map(i => w.entities.get(i)!.appearance!.asset);
+    expect(models[0]).toBe('npc.lab-tech-a'); expect(new Set(models).size).toBe(models.length);
+    const tints = ids.map(i => w.entities.get(i)!.appearance!.tint); expect(new Set(tints).size).toBe(tints.length);
+  }, HEAVY);
+
   test('T-E19-19 @E19 @E19-AC19 accident beat order flicker -> blast -> ringing -> smoke -> screams within 8 s after a 4-6 s calm', async () => {
     for (const seed of [1, 2, 3, 4, 5, 6]) {
       const { world: w, mission } = await loadL1(seed); world = w;

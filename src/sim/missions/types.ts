@@ -69,8 +69,10 @@ export interface L1State {
   techId: number;
   /** Handover and accident timeline in sim ticks; 0 = not scheduled. */
   hx: number; hz: number; handoverAt: number; deliveredAt: number; flickerAt: number; exitAt: number; warned: boolean; fired: number;
-  exitIds: number[]; exitHeadingsDeg: number[]; runs: { id: number; dx: number; dz: number; speed: number; until: number; via?: { x: number; z: number } }[];
+  exitIds: number[]; exitHeadingsDeg: number[]; runs: { id: number; dx: number; dz: number; speed: number; until: number; via?: { x: number; z: number }; rushAt?: number }[];
   turnedIds: number[]; escapedIds: number[];
+  /** Beat 9: the horde near the garage was produced; further streams spawned along the route to the fire station. */
+  hordeDone: boolean; routeSpawns: number; routeNextAt: number;
 }
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number }
 export interface MissionState {
