@@ -45,7 +45,7 @@ function bicyclePlaceholder(): Group {
   part(crank, 'pedalL', new BoxGeometry(.14, .03, .08), dark, 0, .17, .12); part(crank, 'pedalR', new BoxGeometry(.14, .03, .08), dark, 0, -.17, -.12);
   return root;
 }
-interface Rig { root: Group; model: Object3D; wheelF?: Object3D; wheelR?: Object3D; handlebar?: Object3D; crank?: Object3D; pedals: Object3D[]; lean: Group; parcel: Group; top: Vector3; glint: Mesh; placed: number; offset: number; wheelAngle: number; last: { x: number; z: number } | null; leanAngle: number }
+interface Rig { root: Group; model: Object3D; wheelF?: Object3D; wheelR?: Object3D; handlebar?: Object3D; crank?: Object3D; pedals: Object3D[]; lean: Group; seat?: Object3D; kickstand?: Object3D; kick: number; parcel: Group; top: Vector3; glint: Mesh; placed: number; offset: number; wheelAngle: number; last: { x: number; z: number } | null; leanAngle: number }
 /**
  * Courier bicycle (spec 5.10). Follows the authoritative bicycle entity; wheels roll with the travelled distance, the crank
  * turns with the pedal phase, the handlebar and front wheel steer, and the frame leans into turns like a toy. Uses the
@@ -82,7 +82,12 @@ export class BicycleView extends Group {
     for (const [w, h, d, color, y] of [[.3, .24, .26, '#b98a55', .12], [.31, .045, .08, '#2aa198', .24]] as const) { const m = new Mesh(new BoxGeometry(w, h, d), new MeshBasicNodeMaterial({ color })); m.position.y = y; m.castShadow = true; parcel.add(m); }
     lean.add(parcel);
     const glint = new Mesh(new OctahedronGeometry(.22), new MeshBasicNodeMaterial({ color: '#58ffe0', depthTest: false, transparent: true, opacity: .9 })); glint.renderOrder = 80; root.add(glint);
-    this.rig = { parcel, top, glint, placed: 0, root, model, wheelF, wheelR, handlebar: find('handlebar'), crank: find('crank'), pedals: [find('pedalL'), find('pedalR')].filter((n): n is Object3D => !!n), lean, offset: 0, wheelAngle: 0, last: null, leanAngle: 0 };
+    this.rig = { seat: find('seat') ?? find('driverSeat'), kickstand: find('kickstand'), kick: 0, parcel, top, glint, placed: 0, root, model, wheelF, wheelR, handlebar: find('handlebar'), crank: find('crank'), pedals: [find('pedalL') ?? find('pedal_l'), find('pedalR') ?? find('pedal_r')].filter((n): n is Object3D => !!n), lean, offset: 0, wheelAngle: 0, last: null, leanAngle: 0 };
+  }
+  /** World position of the saddle (the `seat` node); the rider's pelvis is placed here every frame. */
+  seatWorld(out: Vector3): boolean {
+    const rig = this.rig; if (!rig?.seat) return false;
+    rig.root.updateMatrixWorld(true); rig.seat.getWorldPosition(out); return true;
   }
   private readonly prompt = document.createElement('div');
   private readonly projection = new Vector3();
@@ -100,9 +105,8 @@ export class BicycleView extends Group {
     if (rig.crank) { rig.crank.rotation.z = -b.pedal; for (const p of rig.pedals) p.rotation.z = b.pedal; }
     // Toy feel: lean into the turn and bob slightly with every pedal stroke while riding.
     const riding = b.mounted, speed = b.speed / 7.5;
-    // The rider's capsule sits on the saddle (the model's seat is behind its centre): slide the model forward while riding.
-    const seat = rig.model.getObjectByName('seat')?.position.x ?? -.58;
-    rig.offset = lerp(rig.offset, riding ? -seat * SCALE : 0, .25); rig.lean.position.x = rig.offset;
+    // Kickstand folds up while riding and is down when parked (`kickstand` node of the rebuilt model; absent on the old one).
+    rig.kick = lerp(rig.kick, riding ? 1 : 0, .2); if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * 1.3;
     rig.leanAngle = lerp(rig.leanAngle, riding ? -b.steer * speed * .32 : 0, .2);
     rig.lean.rotation.x = rig.leanAngle; rig.lean.position.y = riding ? Math.abs(Math.sin(b.pedal * 2)) * .012 * speed : 0;
     // Parcel in the cargo box: she carries it (sim `survivor.carrying`) and is riding; it drops in over ~0.35 s.

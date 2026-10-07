@@ -53,6 +53,17 @@ describe('L1 v2 bicycle', () => {
     world.setInput({ left: { down: true, held: true, up: false }, move: { x: 1, z: 0 } }); step(30);
     expect(world.entities.get(1)!.survivor!.animation).not.toBe('attack');
   });
+  test('T-E19-16e @E19 @E19-AC16 riding feel: no pivoting on the spot, the turn radius grows with speed, speed ramps and coasts', async () => {
+    await grove(); const e = bike().entity!, start = { x: e.transform.x, z: e.transform.z }; teleport({ x: start.x + 1, z: start.z }); step(30); expect(bike().riding).toBe(true);
+    const b = () => bike().entity!.bicycle!, h0 = b().heading;
+    world.setInput({ move: { x: -Math.cos(h0), z: -Math.sin(h0) } }); step(12);
+    expect(Math.abs(b().heading - h0)).toBeLessThan(.25); // asked to reverse from a standstill: no instant pivot
+    expect(b().speed).toBeLessThan(2.5); // eased in
+    // radius = speed / turn rate grows with speed
+    const radius = (steps: number) => { world.setInput({ move: { x: Math.cos(b().heading), z: Math.sin(b().heading) } }); step(steps); const h = b().heading; world.setInput({ move: { x: Math.cos(h + 1), z: Math.sin(h + 1) } }); step(8); return b().speed / Math.max(1e-3, Math.abs(b().heading - h) / (8 / 60)); };
+    const slow = radius(10), fast = radius(150); expect(fast).toBeGreaterThan(slow);
+    world.setInput({ move: { x: 0, z: 0 } }); const v = b().speed; step(30); expect(b().speed).toBeLessThan(v); expect(b().speed).toBeGreaterThan(v - 3.5); // coasts gently
+  });
   test('T-E19-16c @E19 @E19-AC16 riding into the facility forecourt auto-dismounts at the edge; no mounting inside', async () => {
     await grove();
     const zone = layout.zones!['lab-nobike-zone'], west = Math.min(...zone.map(p => p[0])), mid = (Math.min(...zone.map(p => p[1])) + Math.max(...zone.map(p => p[1]))) / 2;
