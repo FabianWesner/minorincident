@@ -31,11 +31,14 @@
     },
     {
       "command": [
+        "sh",
+        "tools/sim-lock.sh",
         "npx",
         "vitest",
         "run",
         "-t",
         "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
         "--reporter=default",
         "--reporter=json",
         "--outputFile=test-results/epics/E07/vitest.json"
