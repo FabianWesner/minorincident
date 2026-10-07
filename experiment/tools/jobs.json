@@ -1,0 +1,212 @@
+[
+ {
+  "slug": "xp-up-ambulance",
+  "prompt_file": "../ambulance/upscale-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1200
+ },
+ {
+  "slug": "xp-3d-ambulance",
+  "prompt_file": "../ambulance/build-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "xp-up-ambulance"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "xp-up-bus-stop",
+  "prompt_file": "../bus-stop/upscale-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1200
+ },
+ {
+  "slug": "xp-3d-bus-stop",
+  "prompt_file": "../bus-stop/build-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "xp-up-bus-stop"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "xp-up-gas-pump",
+  "prompt_file": "../gas-pump/upscale-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1200
+ },
+ {
+  "slug": "xp-3d-gas-pump",
+  "prompt_file": "../gas-pump/build-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "xp-up-gas-pump"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "xp-up-jukebox",
+  "prompt_file": "../jukebox/upscale-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1200
+ },
+ {
+  "slug": "xp-3d-jukebox",
+  "prompt_file": "../jukebox/build-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "xp-up-jukebox"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "xp-up-light-tower",
+  "prompt_file": "../light-tower/upscale-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1200
+ },
+ {
+  "slug": "xp-3d-light-tower",
+  "prompt_file": "../light-tower/build-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "xp-up-light-tower"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "xp-up-pickup-truck",
+  "prompt_file": "../pickup-truck/upscale-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1200
+ },
+ {
+  "slug": "xp-3d-pickup-truck",
+  "prompt_file": "../pickup-truck/build-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "xp-up-pickup-truck"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "xp-up-police-car",
+  "prompt_file": "../police-car/upscale-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1200
+ },
+ {
+  "slug": "xp-3d-police-car",
+  "prompt_file": "../police-car/build-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "xp-up-police-car"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "xp-up-portable-toilet",
+  "prompt_file": "../portable-toilet/upscale-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1200
+ },
+ {
+  "slug": "xp-3d-portable-toilet",
+  "prompt_file": "../portable-toilet/build-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "xp-up-portable-toilet"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "xp-up-school-bus",
+  "prompt_file": "../school-bus/upscale-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1200
+ },
+ {
+  "slug": "xp-3d-school-bus",
+  "prompt_file": "../school-bus/build-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "xp-up-school-bus"
+  ],
+  "max_seconds": 5400
+ },
+ {
+  "slug": "xp-up-vending-machine",
+  "prompt_file": "../vending-machine/upscale-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6.1-sol",
+  "effort": "low",
+  "sandbox": "workspace-write",
+  "max_seconds": 1200
+ },
+ {
+  "slug": "xp-3d-vending-machine",
+  "prompt_file": "../vending-machine/build-brief.md",
+  "workspace": "/Users/fabianwesner/Workspace/suburban-survivors",
+  "model": "gpt-6-luna",
+  "effort": "high",
+  "sandbox": "danger-full-access",
+  "deps": [
+   "xp-up-vending-machine"
+  ],
+  "max_seconds": 5400
+ }
+]
