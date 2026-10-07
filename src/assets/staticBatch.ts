@@ -77,7 +77,7 @@ function* merge(parts: Part[]): Generator<void, BufferGeometry> {
 function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage = false): Generator<void, Group> {
   source.updateMatrixWorld(true);
   const world = source.userData.paletteWorld !== false;
-  const buckets = new Map<boolean, Part[]>(), meshes: Mesh[] = [];
+  const buckets = new Map<number, Part[]>(), meshes: Mesh[] = [], split = source.userData.splitRoof === true;
   source.traverse(node => {
     if (!(node instanceof Mesh) || node.userData.foliageProxy) return;
     for (let parent: Object3D | null = node; parent; parent = parent.parent) if (!parent.visible || parent.userData.foliageProxy) return;
@@ -85,6 +85,8 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
   });
   for (const node of meshes) {
     const material = (Array.isArray(node.material) ? node.material[0] : node.material) as Material & { color: import('three').Color; vertexColors: boolean };
+    // Enterable buildings keep their roof as a separate mesh so the view can lift it while the player is inside.
+    let roof = false; if (split) for (let parent: Object3D | null = node; parent; parent = parent.parent) if (parent.name === 'roof') roof = true;
     const emissive = material.name.startsWith('emi_') || material.userData.emissiveStrength > 0;
     // Decode quantized attributes before applying transforms (integer arrays clamp).
     const position = yield* decode(node.geometry.getAttribute('position')), normal = yield* decode(node.geometry.getAttribute('normal'));
@@ -114,11 +116,13 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
       indices[i] = (quantize ? perVertex ? swatch(r, g, b) : constant : tokenIndex) - hydrantShift;
       if (i % slice === slice - 1) yield;
     }
-    if (!buckets.has(emissive)) buckets.set(emissive, []);
-    buckets.get(emissive)!.push({ position, normal, color: colors, palette: indices, index: node.geometry.index ? node.geometry.index.array : null });
+    const bucket = (emissive ? 1 : 0) + (roof ? 2 : 0);
+    if (!buckets.has(bucket)) buckets.set(bucket, []);
+    buckets.get(bucket)!.push({ position, normal, color: colors, palette: indices, index: node.geometry.index ? node.geometry.index.array : null });
   }
   const result = new Group();
-  for (const [emissive, parts] of buckets) {
+  for (const [bucket, parts] of buckets) {
+    const emissive = (bucket & 1) === 1, isRoof = bucket >= 2;
     // Keep shared vertices: expanding detailed meshes to triangle soup triples
     // the retained position/normal/color arrays. Normalize only mixed primitives.
     const geometry = yield* merge(parts);
@@ -127,7 +131,7 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     const material = materials ? foliage ? materials.foliage(world) : materials.shaded(base, glow) : emissive && lit ? new MeshBasicNodeMaterial({ vertexColors: true }) : new MeshLambertNodeMaterial({ vertexColors: true });
     material.userData.emissiveStrength = emissive && lit ? 2 : 0;
     material.name = emissive ? 'emi_static-windows' : 'pal_static-colors';
-    const mesh = new Mesh(geometry, material); mesh.name = emissive ? 'window-light' : 'static-body';
+    const mesh = new Mesh(geometry, material); mesh.name = isRoof ? (emissive ? 'roof-light' : 'roof') : emissive ? 'window-light' : 'static-body';
     mesh.castShadow = !emissive; mesh.receiveShadow = true; result.add(mesh);
   }
   return result;

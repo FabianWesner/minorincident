@@ -21,7 +21,7 @@ import {
   type Material,
 } from "three/webgpu";
 import type { DistrictWorld } from "../sim/world/DistrictWorld";
-import type { DistrictAssets } from "../assets/DistrictAssets";
+import { ROOFED, type DistrictAssets } from "../assets/DistrictAssets";
 import type { Materials } from "./Materials";
 import { worldAssets } from "../assets/worldDefinitions";
 import { InstancedGroup } from "./InstancedGroup";
@@ -279,7 +279,16 @@ export class DistrictView extends Group {
     });
   }
   setFoliageReveal(enabled: boolean): void { this.foliage.reveal = enabled; }
-  updateFoliage(view: View, player?: { x: number; y: number; z: number }, target?: { x: number; y: number; z: number }): void { this.foliage.update(view, player, target); }
+  updateFoliage(view: View, player?: { x: number; y: number; z: number }, target?: { x: number; y: number; z: number }): void { this.foliage.update(view, player, target); if (player) this.updateRoofs(player); }
+  /** Unique enterable buildings (garage, depot, annex, cafe) lift their roof while the courier is inside the footprint: in-house action stays visible. */
+  private updateRoofs(player: { x: number; z: number }): void {
+    for (const entry of this.lodBatches) {
+      if (!ROOFED.has(entry.id)) continue;
+      const { x, z } = worldAssets[entry.id].dimensions, half = Math.min(x, z) * .45;
+      const inside = entry.refs.some(r => Math.abs(player.x - (r.position.x + entry.origin[0])) < half && Math.abs(player.z - (r.position.z + entry.origin[1])) < half);
+      for (const group of [entry.hero, entry.near, entry.far]) group.traverse(o => { if (o instanceof Mesh && /^roof/.test(o.name)) o.visible = !inside; });
+    }
+  }
   setFoliageVisible(visible: boolean): void { this.foliage.visible = visible; }
   applyLook(): void {
     const v = this.materials.look.values;
