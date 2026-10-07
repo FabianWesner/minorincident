@@ -421,6 +421,7 @@ export class DistrictView extends Group {
     // Allocate full placement capacity, then retain only currently visible refs.
     const old = lod === 'lod0' ? entry.hero : lod === 'lod1' ? entry.near : entry.far;
     const replacement = new InstancedGroup(prototype, entry.refs.slice(), old.capacity);
+    if (this.low && lod === 'lod2') replacement.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
     if (this.warmHero) { await this.warmHero(replacement); if (this.disposed) { replacement.dispose(); return; } }
     if (this.swapSlot) { await this.swapSlot(); if (this.disposed) { replacement.dispose(); return; } }
     replacement.references.splice(0, replacement.references.length, ...old.references);
