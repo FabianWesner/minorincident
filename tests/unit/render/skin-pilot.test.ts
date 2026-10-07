@@ -181,7 +181,7 @@ test.each(['female', 'male'] as const)('courier %s chains every melee beat on th
     for (; tick < end; tick++) {
       animator.update(state, tick);
       if (previous) for (const [i, leg] of legs.entries()) {
-        expect(leg.quaternion.angleTo(previous[i]) * 180 / Math.PI, `${variant} ${actionId} ${combo} tick ${tick}`).toBeLessThan(60);
+        expect(leg.quaternion.angleTo(previous[i]) * 180 / Math.PI, `${variant} ${actionId} ${combo} tick ${tick}`).toBeLessThan(46);
       }
       previous = legs.map(leg => leg.quaternion.clone());
       if (tick === state.attack.activeAt - 1) {
@@ -197,6 +197,39 @@ test.each(['female', 'male'] as const)('courier %s chains every melee beat on th
   expect(animator.missingClips).toBe(0);
 });
 
+test.each(['female', 'male'] as const)('courier %s mount and dismount preserve the last presented position across the sim seat/exit snap @E04', async variant => {
+  const loader = vi.spyOn(GLTFLoader.prototype, 'loadAsync').mockImplementation(async path => ({ scene: await model(`public${path}`) }) as never);
+  const material = () => Object.assign(new MeshLambertMaterial({ vertexColors: true }), { bloodCoverage: { value: 0 } });
+  const materials = { fromVertexColors: material, fromColor: material, get: material, unique: material } as unknown as Materials;
+  const character = new CharacterView(), state = pose(); state.variant = variant;
+  try {
+    await character.init(materials, false, false, 'courier', true);
+    const bike = await model('public/assets/models/veh.courier-bike.glb'); bike.scale.setScalar(.6); bike.rotation.y = 1.4; bike.updateMatrixWorld(true);
+    const contacts = new RiderContacts(); bike.getWorldQuaternion(contacts.orientation);
+    for (const [name, node] of [['seat', 'seat'], ['handL', 'grip_l'], ['handR', 'grip_r'], ['footL', 'pedal_l'], ['footR', 'pedal_r']] as const) bike.getObjectByName(node)!.getWorldPosition(contacts[name]);
+    character.position.set(.85, 0, .2); character.face(0, 1 / 60); character.update(state, 1, 1); character.applyRideContacts();
+    const standing = character.position.clone(), standingRotation = character.quaternion.clone();
+    for (let tick = 2; tick <= 40; tick++) {
+      character.position.set(0, 0, 0); character.face(1.4, tick / 60, false, contacts.orientation);
+      character.update(state, tick, 1, { pedal: 0, steer: 0 }); character.applyRideContacts(contacts);
+      if (tick === 2) {
+        expect(character.position.distanceTo(standing)).toBeLessThan(1e-6);
+        expect(character.quaternion.angleTo(standingRotation)).toBeLessThan(1e-6);
+      }
+      // Frozen evaluations retain the same partial mount, including orientation.
+      const p = character.position.clone(), q = character.quaternion.clone();
+      character.position.set(0, 0, 0); character.face(1.4, tick / 60, false, contacts.orientation);
+      character.update(state, tick, 1, { pedal: 0, steer: 0 }); character.applyRideContacts(contacts);
+      expect(character.position.distanceTo(p)).toBeLessThan(1e-6); expect(character.quaternion.angleTo(q)).toBeLessThan(1e-6);
+    }
+    const seated = character.position.clone();
+    character.position.set(.85, 0, .2); character.update(state, 41, 1); character.applyRideContacts();
+    expect(character.position.distanceTo(seated)).toBeLessThan(1e-6);
+    for (let tick = 42; tick <= 75; tick++) { character.position.set(.85, 0, .2); character.update(state, tick, 1); character.applyRideContacts(); }
+    expect(character.position.distanceTo(standing)).toBeLessThan(1e-6); expect(character.getState().rideWeight).toBe(0);
+  } finally { character.dispose(); loader.mockRestore(); }
+});
+
 test('courier authored anticipation repair preserves the exact contact pose @E04', async () => {
   const scene = await model('public/assets/models/char.courier-female.skin.glb'); alignSkeleton(scene);
   for (const name of ['unarmed-front-kick', 'unarmed-roundhouse-kick', 'unarmed-knee', 'unarmed-spinning-backfist']) {
@@ -206,6 +239,36 @@ test('courier authored anticipation repair preserves the exact contact pose @E04
       const a = new Quaternion().fromArray(source.InterpolantFactoryMethodLinear().evaluate(before.duration * .2));
       const b = new Quaternion().fromArray(track.InterpolantFactoryMethodLinear().evaluate(after.duration * .2));
       expect(a.normalize().angleTo(b.normalize()), `${name} ${track.name}`).toBeLessThan(1e-5);
+    }
+  }
+});
+
+test.each(['female', 'male'] as const)('courier %s chest and head stay over the hips through idle, gait, start, stop and 90/180 turns @E04', async variant => {
+  for (const scenario of ['idle', 'walk', 'run', 'start-stop', 'turn90', 'turn180']) {
+    const scene = await model(`public/assets/models/char.courier-${variant}.skin.glb`); alignSkeleton(scene);
+    const rig = resolveRig(scene), actor = new CharacterView(); actor.add(scene);
+    const animator = new KeyframeAnimator(rig, skinClips), state = pose(); state.variant = variant;
+    let speed = 0;
+    for (let tick = 1; tick <= 360; tick++) {
+      const target = tick < 30 || scenario === 'idle' || scenario === 'start-stop' && tick > 180 ? 0 : scenario === 'run' || scenario === 'start-stop' && tick > 100 ? 4.5 : 2;
+      speed += Math.sign(target - speed) * Math.min(Math.abs(target - speed), (target > speed ? 36 : 54) / 60);
+      const yaw = tick > 150 && scenario.startsWith('turn') ? scenario === 'turn90' ? Math.PI / 2 : Math.PI : 0;
+      actor.face(yaw, tick / 60); actor.position.x += Math.cos(yaw) * speed / 60; actor.position.z -= Math.sin(yaw) * speed / 60;
+      state.velocity = { x: Math.cos(yaw) * speed, z: -Math.sin(yaw) * speed };
+      animator.update(state, tick); actor.updateMatrixWorld(true);
+      const hip = rig.hip.getWorldPosition(new Vector3()), forward = new Vector3(1, 0, 0).applyQuaternion(actor.quaternion);
+      const chest = rig.armL.getWorldPosition(new Vector3()).add(rig.armR.getWorldPosition(new Vector3())).multiplyScalar(.5);
+      for (const [joint, point] of [['chest', chest], ['head', rig.head.getWorldPosition(new Vector3())]] as const) {
+        const d = point.sub(hip), pitch = Math.atan2(d.dot(forward), d.y) * 180 / Math.PI;
+        expect(pitch, `${scenario} ${joint} tick ${tick}`).toBeGreaterThanOrEqual(0);
+        if (scenario === 'run' && tick > 90) { expect(pitch).toBeGreaterThanOrEqual(8); expect(pitch).toBeLessThanOrEqual(12); }
+      }
+      if (tick > 90 && ['idle', 'walk', 'run'].includes(scenario)) for (const side of ['L', 'R'] as const) {
+        const upper = rig[`foreArm${side}`].getWorldPosition(new Vector3()).sub(rig[`arm${side}`].getWorldPosition(new Vector3()));
+        const lower = rig[`hand${side}`].getWorldPosition(new Vector3()).sub(rig[`foreArm${side}`].getWorldPosition(new Vector3()));
+        const elbow = upper.angleTo(lower) * 180 / Math.PI;
+        expect(elbow).toBeGreaterThan(10); expect(elbow).toBeLessThan(100);
+      }
     }
   }
 });

@@ -39,6 +39,12 @@ export class CharacterView extends Group {
   private readonly riderLean = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), -.7);
   private readonly riderGaze = this.riderLean.clone().invert();
   private readonly mountOffset = new Vector3();
+  private readonly transitionOffset = new Vector3();
+  private readonly lastPresented = new Vector3();
+  private readonly lastPresentedRotation = new Quaternion();
+  private readonly transitionRotation = new Quaternion();
+  private contactHistory = false;
+  private rideAttached = false;
   private contactEvaluation = -1;
   private readonly appliedOffset = new Vector3();
   private readonly appliedRotation = new Quaternion();
@@ -119,7 +125,7 @@ export class CharacterView extends Group {
   update(pose: SurvivorState, tick: number, alpha: number, ride?: RidePose): void {
     const started = performance.now();
     const before = this.characters.get(pose.variant)?.animator.evaluations;
-    if (this.variant !== pose.variant) this.contactEvaluation = -1;
+    if (this.variant !== pose.variant) { this.contactEvaluation = -1; this.contactHistory = false; this.rideAttached = false; }
     this.variant = pose.variant; this.tier = pose.gearTier;
     for (const [variant, character] of this.characters) {
       character.model.visible = variant === pose.variant;
@@ -144,22 +150,31 @@ export class CharacterView extends Group {
     const started = performance.now(), weight = character.animator.rideWeight;
     if (this.contactEvaluation === character.animator.evaluations) {
       this.position.add(this.appliedOffset);
-      this.quaternion.copy(contacts?.orientation ?? this.appliedRotation);
+      this.quaternion.copy(contacts && weight >= 1 ? contacts.orientation : this.appliedRotation);
       if (contacts && weight >= 1) this.seatPelvis(contacts.seat, -.04);
       return;
     }
     this.contactEvaluation = character.animator.evaluations;
     this.appliedOffset.copy(this.position).multiplyScalar(-1);
+    if (!!contacts !== this.rideAttached) {
+      // The sim seats/exits instantly. Start the visual transfer at the last
+      // presented position, including the parked-bike capsule clearance.
+      this.transitionOffset.copy(this.contactHistory ? this.lastPresented : this.position).sub(this.position);
+      this.transitionRotation.copy(this.contactHistory ? this.lastPresentedRotation : this.quaternion);
+      this.rideAttached = !!contacts;
+    }
+    this.position.addScaledVector(this.transitionOffset, contacts ? 1 - weight : weight);
+    if (contacts) this.quaternion.copy(this.transitionRotation).slerp(contacts.orientation, weight);
+    else if (weight > 0) this.quaternion.slerp(this.transitionRotation, weight);
     if (contacts) {
       for (const name of ['seat', 'handL', 'handR', 'footL', 'footR'] as const) this.lastContacts[name].copy(contacts[name]);
       this.lastContacts.orientation.copy(contacts.orientation);
     }
     if (contacts && weight > 0) {
-      this.quaternion.slerp(contacts.orientation, weight);
       this.updateMatrixWorld(true); character.rig.hip.getWorldPosition(this.scratchA);
       this.mountOffset.copy(contacts.seat).sub(this.scratchA); this.mountOffset.y -= .04;
       this.position.addScaledVector(this.mountOffset, weight);
-    } else if (weight > 0) this.position.addScaledVector(this.mountOffset, weight);
+    }
     if (weight > 0) {
       character.rig.torso.quaternion.slerp(this.riderLean, weight);
       character.rig.head.quaternion.premultiply(this.contactRotation.identity().slerp(this.riderGaze, weight));
@@ -179,6 +194,7 @@ export class CharacterView extends Group {
       this.updateMatrixWorld(true);
     }
     this.appliedOffset.add(this.position); this.appliedRotation.copy(this.quaternion);
+    this.lastPresented.copy(this.position); this.lastPresentedRotation.copy(this.quaternion); this.contactHistory = true;
     this.cpuMs += performance.now() - started;
   }
   /** Riding: moves the whole figure so its pelvis lands on `target` (world, the saddle) after this frame's pose update. */

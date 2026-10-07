@@ -57,7 +57,7 @@ export function retargetClip(root: Object3D, name: string, additive = false, ove
   if (!rest) { rest = []; root.traverse(node => rest!.push({ node, position: node.position.clone(), quaternion: node.quaternion.clone() })); restPoses.set(root, rest); }
   const current = rest.map(({ node }) => ({ node, position: node.position.clone(), quaternion: node.quaternion.clone() }));
   for (const pose of rest) { pose.node.position.copy(pose.position); pose.node.quaternion.copy(pose.quaternion); }
-  try { return buildRetargetedClip(root, name, additive, overrides?.get(name) ?? authoredClips.get(name), overrides === skinClips ? skinGait[name] : undefined, overrides === skinClips); }
+  try { return buildRetargetedClip(root, name, additive, overrides === skinClips && /^(mount|dismount)$/.test(name) ? skinClips.get('idle') : overrides?.get(name) ?? authoredClips.get(name), overrides === skinClips ? skinGait[name] : undefined, overrides === skinClips); }
   finally { for (const pose of current) { pose.node.position.copy(pose.position); pose.node.quaternion.copy(pose.quaternion); } }
 }
 function buildRetargetedClip(root: Object3D, name: string, additive: boolean, source = authoredClips.get(name), gait?: { stride: number; stance: number; lift: number }, skinned = false): AnimationClip {
@@ -87,12 +87,12 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
           values.push(q.x, q.y, q.z, q.w);
         }
         const rotation = new QuaternionKeyframeTrack(`${nodeName}.quaternion`, times, values);
-        if (skinned && name.startsWith('unarmed-') && !skinClips.has(name)) softenChamber(rotation, source.duration);
+        if (skinned && name.startsWith('unarmed-') && !skinClips.has(name)) softenChamber(rotation, source.duration, name === 'unarmed-knee');
         tracks.push(rotation);
       } else {
         for (let i = 0; i < times.length; i++) for (let c = 0; c < 3; c++) {
           let delta = track?.values[i * 3 + c] ?? 0;
-          if (skinLocomotion && nodeName === 'hip') delta = c === 2 ? delta * .15 : 0;
+          if (skinLocomotion && nodeName === 'hip') delta = c === 2 ? delta * .3 - .008 * Math.sin(times[i] / source.duration * Math.PI * 2) : 0;
           if (skinPlanted && nodeName === 'hip') delta *= .2;
           if (c === 1 && nodeName === 'hip' && groundClips.test(name)) delta *= Math.max(0, hipHeight - .15) / .55;
           values.push(delta + (additive ? 0 : node.position.getComponent(c)));
@@ -101,14 +101,50 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
       }
     }
   }
+  if (!additive && skinned && /^(idle|walk|run|mount|dismount)$/.test(name)) fitCourierLocomotion(root, name, source.duration, tracks);
   if (!additive && !gait && gaitShape[name]) plantLocomotion(root, name, source.duration, tracks, gait);
   return new AnimationClip(name, source.duration, tracks);
+}
+
+/** Fit the retained motion to the courier's short torso and hanging-arm rest pose.
+ * The source walk's spine delta leans backwards relative to its idle reference;
+ * attenuating only the pelvis made that worse. Measure the actual hip-to-chest
+ * line, keeping source twist/roll, and fit pitch and relaxed arms in that frame.
+ * Baked once per rig: the mixer still owns fades, phase and frozen evaluations. */
+function fitCourierLocomotion(root: Object3D, name: string, duration: number, tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[]): void {
+  const rotation = (node: string) => tracks.find(t => t.name === `${node}.quaternion`)!;
+  const hip = rotation('hip').InterpolantFactoryMethodLinear(), torso = rotation('torso').InterpolantFactoryMethodLinear(), head = rotation('head').InterpolantFactoryMethodLinear();
+  const chestOffset = root.getObjectByName('armL')!.position.clone().add(root.getObjectByName('armR')!.position).multiplyScalar(.5);
+  const spineOffset = root.getObjectByName('torso')!.position;
+  const times: number[] = [], values = new Map(['torso', 'head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR'].map(n => [n, [] as number[]]));
+  const h = new Quaternion(), q = new Quaternion(), correction = new Quaternion(), axis = new Vector3(0, 0, 1);
+  const frames = Math.round(duration * 60);
+  for (let i = 0; i <= frames; i++) {
+    const time = i / frames * duration, phase = i / frames * Math.PI * 2;
+    times.push(time); h.fromArray(hip.evaluate(time)); q.fromArray(torso.evaluate(time));
+    const world = h.clone().multiply(q), base = spineOffset.clone().applyQuaternion(h), chest = chestOffset.clone().applyQuaternion(world);
+    const target = (name === 'run' ? 10 + Math.cos(phase * 2) : name === 'walk' ? 4 + .7 * Math.cos(phase * 2) : 2.5 + .7 * Math.sin(phase)) * Math.PI / 180;
+    const angle = Math.atan2(chest.x, chest.y) - target + Math.asin(Math.max(-1, Math.min(1, (base.x * Math.cos(target) - base.y * Math.sin(target)) / Math.hypot(chest.x, chest.y))));
+    correction.setFromAxisAngle(axis, angle);
+    q.copy(h).invert().multiply(correction).multiply(world).toArray(values.get('torso')!, i * 4);
+    // Keep the large face looking ahead while the spine inclines.
+    q.copy(world).invert().multiply(correction.clone().invert()).multiply(world).multiply(new Quaternion().fromArray(head.evaluate(time))).toArray(values.get('head')!, i * 4);
+    for (const [side, sign] of [['L', 1], ['R', -1]] as const) {
+      const swing = -Math.cos(phase) * sign;
+      const shoulder = name === 'run' ? -12 + swing * 30 : name === 'walk' ? swing * 22 : -4 + 2 * Math.sin(phase + sign * .4);
+      const elbow = name === 'run' ? 72 + 8 * swing : name === 'walk' ? 24 + 8 * swing : 20 + 3 * Math.sin(phase + sign);
+      new Quaternion().setFromAxisAngle(axis, shoulder * Math.PI / 180).toArray(values.get(`arm${side}`)!, i * 4);
+      new Quaternion().setFromAxisAngle(axis, elbow * Math.PI / 180).toArray(values.get(`foreArm${side}`)!, i * 4);
+      new Quaternion().toArray(values.get(`hand${side}`)!, i * 4);
+    }
+  }
+  for (const [node, v] of values) tracks[tracks.indexOf(rotation(node))] = new QuaternionKeyframeTrack(`${node}.quaternion`, times, v);
 }
 
 /** Authored fallback kicks exported a held guard then a 100+ degree chamber
  * jump. A spherical quadratic uses that chamber as the anticipation control
  * pose, reaches the original contact exactly, and leaves recovery untouched. */
-function softenChamber(track: QuaternionKeyframeTrack, duration: number): void {
+function softenChamber(track: QuaternionKeyframeTrack, duration: number, direct = false): void {
   const from = new Quaternion(), chamber = new Quaternion();
   let jump = -1;
   for (let i = 1; i < track.times.length && track.times[i] < duration * .1; i++) {
@@ -124,7 +160,10 @@ function softenChamber(track: QuaternionKeyframeTrack, duration: number): void {
   for (const t of times) {
     if (t < contactTime) {
       const u = t / contactTime;
-      a.copy(from).slerp(chamber, u).slerp(b.copy(chamber).slerp(contact, u), u);
+      // The four-tick knee cannot afford a separate, deeper chamber: travel
+      // directly to contact at constant angular speed instead of overshooting.
+      if (direct) a.copy(from).slerp(contact, u);
+      else a.copy(from).slerp(chamber, u).slerp(b.copy(chamber).slerp(contact, u), u);
     } else a.fromArray(sample.evaluate(t));
     a.toArray(values, values.length);
   }

@@ -35,6 +35,10 @@ export class KeyframeAnimator {
   private locoWeight = 1;
   private lunge = 0;
   private readonly scaleScratch = new Vector3();
+  private readonly chest = new Vector3();
+  private readonly spine = new Vector3();
+  private readonly postureRotation = new Quaternion();
+  private readonly postureAxis = new Vector3(0, 0, 1);
   private readonly carryPose: [Object3D, Quaternion][] = [];
   state: AnimationState = 'idle';
   clip = 'idle';
@@ -123,9 +127,9 @@ export class KeyframeAnimator {
     {
       const s = this.locoSpeed, move = smooth(.04, .55, s), run = smooth(1.9, 3.3, s);
       // PO 27 (walk micro-vibration): stride-matching the short chibi legs gave 9 steps/s walking and up to 15 steps/s
-      // running, which reads as the figure vibrating. Cadence is capped (rigid walk/run 2.0/2.7, fitted skin 2.5/3.2 cycles/s);
+      // running, which reads as the figure vibrating. Cadence is capped (rigid walk/run 2.0/2.7, fitted skin 2.5/2.7 cycles/s);
       // above that the stride lengthens instead (small slide at the game camera beats a buzzing gait).
-      const stride = Math.max((this.strides.walk + (this.strides.run - this.strides.walk) * run) * strideScale(this.rig.root), s / (this.skin ? 2.5 + .7 * run : 2 + .7 * run));
+      const stride = Math.max((this.strides.walk + (this.strides.run - this.strides.walk) * run) * strideScale(this.rig.root), s / (this.skin ? 2.5 + .2 * run : 2 + .7 * run));
       groundStride = stride; groundRun = run;
       if (s > .01) this.phase = (this.phase + (this.skin ? speed : s) * dt / stride) % 1;
       const weights: [string, number][] = [['idle', 1 - move], ['walk', move * (1 - run)], ['run', move * run]];
@@ -163,6 +167,7 @@ export class KeyframeAnimator {
     for (const p of this.sampledPose) { p.node.position.copy(p.position); p.node.quaternion.copy(p.rotation); }
     this.mixer.update(dt);
     for (const p of this.sampledPose) { p.position.copy(p.node.position); p.rotation.copy(p.node.quaternion); }
+    if (this.skin && name !== 'die') this.keepTorsoForward();
     const plantedAction = !ride && (name === 'hurt' || !!strike && !/kick|knee|spinning/.test(strike));
     if (this.skin && this.lunge > 0 && !upper) {
       const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1;
@@ -186,5 +191,21 @@ export class KeyframeAnimator {
     this.secondaryVelocity += ((target - this.secondary) * 90 - this.secondaryVelocity * 15) * springDt; this.secondary += this.secondaryVelocity * springDt;
     if (this.backpack) this.backpack.rotation.z = this.backpackRest + this.secondary;
     this.evaluations++;
+  }
+  /** A forward support line also survives action fades and hit recoil. Source
+   * twist and roll remain; only backward pitch is softly limited. Use the
+   * anatomical shoulders rather than an Euler angle or a camera projection. */
+  private keepTorsoForward(): void {
+    const r = this.rig;
+    this.postureRotation.copy(r.hip.quaternion).multiply(r.torso.quaternion);
+    this.chest.copy(r.armL.position).add(r.armR.position).multiplyScalar(.5).applyQuaternion(this.postureRotation);
+    this.spine.copy(r.torso.position).applyQuaternion(r.hip.quaternion);
+    const pitch = Math.atan2(this.chest.x + this.spine.x, this.chest.y + this.spine.y);
+    if (pitch >= .12) return;
+    const target = .015 + .025 * Math.log1p(Math.exp((pitch - .015) / .025));
+    const angle = Math.atan2(this.chest.x, this.chest.y) - target + Math.asin(Math.max(-1, Math.min(1,
+      (this.spine.x * Math.cos(target) - this.spine.y * Math.sin(target)) / Math.hypot(this.chest.x, this.chest.y))));
+    this.postureAxis.set(0, 0, 1).applyQuaternion(this.postureRotation.copy(r.hip.quaternion).invert());
+    r.torso.quaternion.premultiply(this.postureRotation.setFromAxisAngle(this.postureAxis, angle));
   }
 }
