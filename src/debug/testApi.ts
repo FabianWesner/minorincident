@@ -60,6 +60,7 @@ export interface SSTestApi {
   /** E06 action IDs spawn pickups; E09 vehicle.* IDs spawn drivable vehicles. Infected options include hearing fixtures. */
   spawn(defId: string, pos: { x: number; z: number }, opts?: object): number;
   /** E11 authoring/debug hooks. Spawn opts are DeviceOptions/HazardOptions or {item:string}. */
+  barricades: { intact(slotId: string): boolean; all(groupId: string): boolean; slots(): { id: number; state: import('../sim/interact/Barricades').BarricadeState }[] };
   interact: { giveItem(id: string): void; refuel(id: number, seconds: number): void; barricade(id: number, on: boolean): void; hit(id: number, amount: number, type: import('../sim/combat/Damage').DamageEvent['type']): number };
   teleport(entityId: number | 'player', pos: { x: number; z: number }): void;
   /** E04: cosmetic selection and sim entry points; weapon and mission resolution remain separate. */
@@ -108,7 +109,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
     look: { get: () => structuredClone({ worldLook: game.view.look.values, palette: game.view.look.palette }), set: patch => game.view.setLook(patch), export: () => game.view.look.export(), reset: () => game.view.resetLook() },
-    version: '1.10.0', ready, npcs: { civilian: (role, pos, opts) => game.world.npcs!.civilians.spawn(role, pos, opts), escort: (pos, child) => game.world.npcs!.escorts.spawn(pos, child), grab: (id, attacker) => game.world.npcs!.civilians.grab(id, attacker, true), courage: amount => { for (const e of game.world.entities.iterate()) if (e.companion) game.world.npcs!.companion.hit(e, amount); }, quality: tier => game.world.npcs!.setQuality(tier),
+    version: '1.11.0', ready, npcs: { civilian: (role, pos, opts) => game.world.npcs!.civilians.spawn(role, pos, opts), escort: (pos, child) => game.world.npcs!.escorts.spawn(pos, child), grab: (id, attacker) => game.world.npcs!.civilians.grab(id, attacker, true), courage: amount => { for (const e of game.world.entities.iterate()) if (e.companion) game.world.npcs!.companion.hit(e, amount); }, quality: tier => game.world.npcs!.setQuality(tier),
       l1Outbreak: setup => { installL1Outbreak(game.world, setup); return { civilians: game.world.npcs!.civilians.outbreak!.liveCivilians() }; },
       l1Stats: () => ({ ...game.world.npcs?.civilians.outbreak?.stats, live: game.world.npcs?.civilians.outbreak?.liveCivilians() ?? 0 }) }, missions: { ...missionControls(game.world), load: (def) => { game.ui.reset(); missionControls(game.world).load(def); game.ui.loaded(); } },
     campaign: {state:()=>structuredClone(game.campaign),menu:()=>game.campaignUI.showMenu(game.saves.load()),save:()=>game.saveCampaign(),restore:save=>{if(!validateSave(save))throw new Error('Invalid campaign');game.campaign=structuredClone(save);game.applyCampaign();}},
@@ -151,6 +152,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       if (game.world.combat) return game.world.spawnDummy(id, pos, opts);
       throw new Error('Load an infected or combat scenario before spawning');
     },
+    barricades: { intact: id => game.world.barricades?.barricadeIntact(id) ?? false, all: id => game.world.barricades?.allBarricaded(id) ?? false, slots: () => game.world.entities.values().filter(e => e.barricade).map(e => ({ id: e.id, state: structuredClone(e.barricade!) })) },
     interact: {
       giveItem: id => game.world.interactables!.giveItem(id), refuel: (id, seconds) => game.world.interactables!.refuel(id, seconds),
       barricade: (id, on) => game.world.interactables!.barricade(id, on), hit: (id, amount, type) => game.world.hazards!.hit(id, amount, type),

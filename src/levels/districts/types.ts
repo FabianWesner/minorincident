@@ -89,6 +89,7 @@ export interface DistrictGameplay {
   objectives: { id: string; position: PositionRef }[];
   interactables: { id: string; position: PositionRef }[];
   /** E11 runtime objects, distinct from E10's landmark placement markers. */
+  barricades?: import('../../sim/interact/Barricades').BarricadeSlot[];
   interactions?: import('../loader').InteractionPlacements;
   civilianRoutes: PositionRef[][];
   safePoints: PositionRef[];
@@ -113,7 +114,7 @@ export interface LevelComposition {
     id: DistrictId;
     origin: Point;
     overrides?: Partial<
-      Pick<DistrictGameplay, "spawns" | "triggers" | "objectives" | "interactions">
+      Pick<DistrictGameplay, "spawns" | "triggers" | "objectives" | "interactions" | "barricades">
     >;
   }[];
 }

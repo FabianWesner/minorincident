@@ -136,6 +136,7 @@ export class InteractionView extends Group {
     }
   }
   private async create(e: EntitySnapshot, lod: AssetQuality): Promise<Object3D> {
+    if (e.barricade) return this.barricadeObject(e);
     if (e.toy || this.world.toys?.gateIds.includes(e.id)) { const object = this.toyObject(e); await this.attachModels(e, object); return object; }
     const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined, id = this.assetId(e);
     if (id) {
@@ -157,6 +158,21 @@ export class InteractionView extends Group {
     else body.scale.set(.8, 1, .6);
     body.position.y = body.scale.y / 2; body.castShadow = true; body.receiveShadow = true; g.add(body); return g;
   }
+  private barricadeObject(e: EntitySnapshot): Group {
+    const s = e.barricade!.slot, g = new Group(), width = Math.hypot(s.b.x - s.a.x, s.b.z - s.a.z);
+    g.rotation.y = -Math.atan2(s.b.z - s.a.z, s.b.x - s.a.x);
+    const ghost = new Group(); ghost.name = 'slot-ghost';
+    for (let x = -width / 2; x < width / 2; x += .35) for (const y of [.06, s.height]) {
+      const dash = new Mesh(this.box, this.white); dash.scale.set(Math.min(.2, width / 2 - x), .035, .04); dash.position.set(x + dash.scale.x / 2, y, 0); ghost.add(dash);
+    }
+    const brace = new Group(); brace.name = 'slot-brace';
+    for (const y of [s.height * .3, s.height * .75]) {
+      const plank = new Mesh(this.box, this.materials.get('woodWarm')); plank.scale.set(width, .16, .12); plank.position.set(0, y, (s.depth ?? .7) / 2 + .12); plank.castShadow = true; brace.add(plank);
+    }
+    const crack = new Mesh(this.box, this.materials.get('uiDark')); crack.name = 'slot-crack'; crack.scale.set(.04, s.height * .75, .14); crack.position.set(0, s.height / 2, (s.depth ?? .7) / 2 + .2); crack.rotation.z = .35; brace.add(crack);
+    if (s.boardUp) for (let row = 0; row < 4; row++) { const plank = new Mesh(this.box, this.materials.get('woodWarm')); plank.scale.set(1, .08, .3); plank.position.set(width / 2 + .7, .05 + row * .08, .2); g.add(plank); }
+    g.add(ghost, brace); return g;
+  }
   update(camera: Camera): void {
     let selected: EntitySnapshot | null = null, nearest = 64;
     const player = this.world.entities.get(1);
@@ -169,8 +185,17 @@ export class InteractionView extends Group {
         object.visible = !pickup?.collected && !e.destructible?.broken && !e.hazard?.exploded;
         if (e.interactable?.open && !this.world.toys?.gateIds.includes(e.id)) object.rotation.y += Math.PI / 2;
         this.animateToy(e, object);
+        if (e.barricade) {
+          const b = e.barricade, s = b.slot;
+          object.rotation.y = -Math.atan2(s.b.z - s.a.z, s.b.x - s.a.x);
+          object.getObjectByName('slot-ghost')!.visible = !b.intact && !!player && Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z) <= 8;
+          object.getObjectByName('slot-brace')!.visible = b.intact;
+          object.getObjectByName('slot-crack')!.visible = b.intact && e.health.current < e.health.max * .7;
+          const age = this.world.tick - b.hitTick;
+          if (b.intact && age < 12) object.position.x += Math.sin(age * 2) * .045 * (1 - age / 12);
+        }
       }
-      if (player && e.interactable?.enabled && !e.interactable.completed) {
+      if (player && e.interactable && (e.interactable.enabled || e.barricade && !e.barricade.intact) && !e.interactable.completed) {
         const d = (e.transform.x - player.transform.x) ** 2 + (e.transform.z - player.transform.z) ** 2;
         if (d < nearest) { nearest = d; selected = e; }
       }
@@ -183,7 +208,7 @@ export class InteractionView extends Group {
       // Leave the survivor's head/torso clear when they stand just behind the device.
       this.projection.set(selected.transform.x, 2.8, selected.transform.z).project(camera);
       this.panel.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.panel.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`;
-      const label = c.label, caption = c.hint || (nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring');
+      const label = selected.barricade && !selected.barricade.intact ? `${c.label} · ${Math.round(selected.barricade.coverage * 100)}% coverage` : c.label, caption = selected.barricade && !c.enabled ? 'Push props into the rail · 80% needed' : c.hint || (nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring');
       if (this.label.textContent !== label) this.label.textContent = label;
       if (this.caption.textContent !== caption) this.caption.textContent = caption;
       this.panel.dataset.entityId = String(selected.id); this.panel.dataset.hint = c.hint;
