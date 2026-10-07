@@ -76,3 +76,29 @@ test('packing mixed RGB and RGBA AO keeps each primitive stream and its indices 
     for (const index of primitive.getIndices()!.getArray()!) expect(index).toBeLessThan(count);
   }
 });
+
+// Native vehicles keep absolute caps and decreasing files, including metadata.
+test('native distance packing enforces absolute triangle caps and decreasing bytes', async () => {
+  const directory = mkdtempSync('assets/prop.native-lod-test-');
+  try {
+    const io = await assetIO(), { def } = fixture();
+    def.id = directory.slice('assets/'.length);
+    def.category = 'vehicle';
+    def.sourceGlb = join(directory, 'model.glb'); def.glb = join(directory, 'packed/model.glb');
+    def.lods = { lod1: join(directory, 'packed/model.lod1.glb'), lod2: join(directory, 'packed/model.lod2.glb') };
+    def.authoredLodTriangles = { lod1: 1, lod2: 1 }; mkdirSync(join(directory, 'packed'));
+    for (const level of [0,1,2]) {
+      const { doc } = fixture();
+      doc.getRoot().listScenes()[0].setExtras({ padding: 'x'.repeat(level === 0 ? 4096 : level === 1 ? 2048 : 0) });
+      await io.write(join(directory, `model${level ? `.lod${level}` : ''}.glb`), doc);
+    }
+    await packAsset(def);
+    def.authoredLodTriangles.lod1 = 0;
+    await expect(packAsset(def)).rejects.toThrow('triangles 1 exceeds 0');
+    def.authoredLodTriangles.lod1 = 1;
+    const { doc } = fixture();
+    doc.getRoot().listScenes()[0].setExtras({ padding: 'x'.repeat(8192) });
+    await io.write(join(directory, 'model.lod2.glb'), doc);
+    await expect(packAsset(def)).rejects.toThrow('file exceeds next-better LOD');
+  } finally { rmSync(directory, { recursive: true, force: true }); }
+});

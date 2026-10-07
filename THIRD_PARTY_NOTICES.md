@@ -1,5 +1,18 @@
 # Minor Incident third-party notices
 
+## Skinned courier pilot
+
+`src/render/characters/library.skin.json` retargets Mesh2Motion's human base and
+addon animation clips to our original courier geometry and joint contract.
+Source: [Mesh2Motion/mesh2motion-app](https://github.com/Mesh2Motion/mesh2motion-app),
+pinned commit `79f3f61a9852ef70234a5a4a7c13ed87f7a71833`.
+The rig and animation assets use
+[CC0 1.0 Universal](https://github.com/Mesh2Motion/mesh2motion-app/blob/79f3f61a9852ef70234a5a4a7c13ed87f7a71833/LICENSE-CC0.MD).
+Our courier mesh is original; the offline adaptation does not redistribute
+upstream tool code or optional model packs. Kick and mount/dismount use the
+project's authored clips; saddle/grip/pedal contacts are solved in presentation.
+Rebuild with `tools/skinpilot/retarget.ts` and the pinned external checkout.
+
 The following source adaptations use Bruno Simon's folio-2025 (MIT,
 copyright 2025 Bruno Simon):
 

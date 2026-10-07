@@ -1,11 +1,41 @@
 import { afterEach, expect, test, vi } from 'vitest';
 import { LoadGate } from '../../../src/assets/loadGate';
 import { assetUrl } from '../../../src/assets/assetUrl';
+import { districtAssetUrls } from '../../../src/assets/DistrictAssets';
+import type { AssetDef } from '../../../src/assets/types';
+import { EntityAssets } from '../../../src/render/EntityAssets';
+import type { SimWorld } from '../../../src/sim/world/SimWorld';
+import { CharacterView } from '../../../src/render/characters/CharacterView';
+import { Mesh, MeshBasicNodeMaterial } from 'three/webgpu';
+import type { Materials } from '../../../src/render/Materials';
 import { assetVersions, versionedDirs } from '../../../tools/build/load-plugins';
 import { parseHeaders } from '../../../tools/performance/cdn-server';
 import { readFileSync } from 'node:fs';
 
 afterEach(() => { vi.unstubAllGlobals(); });
+
+test('@load the character view releases its separately attached parcel geometries', () => {
+  const view = new CharacterView(), material = new MeshBasicNodeMaterial();
+  (view as unknown as { makeParcel(materials: Materials): void }).makeParcel({ fromColor: () => material } as unknown as Materials);
+  let disposed = 0;
+  view.traverse(node => { if (node instanceof Mesh) node.geometry.addEventListener('dispose', () => disposed++); });
+  view.dispose(); expect(disposed).toBe(2); expect(view.getObjectByName('carried-parcel')).toBeUndefined(); material.dispose();
+});
+
+test('@load the generic actor view leaves the animated bicycle to BicycleView', async () => {
+  const world = { entities: { *iterate() { yield { id: 3, bicycle: {} }; } } } as unknown as SimWorld;
+  const view = new EntityAssets(world);
+  await view.ready();
+  expect(view.getState().actors).toEqual([]);
+  view.dispose();
+});
+
+test('@load prefetch requests only the selected district tiers and deduplicates fallback models', () => {
+  const def = { id: 'bld.house-a', status: 'integrated', glb: 'public/assets/models/house.glb', lods: { lod1: 'public/assets/models/house.lod1.glb', lod2: 'public/assets/models/house.lod2.glb' } } as AssetDef;
+  expect(districtAssetUrls(def.id, () => def, ['lod2'])).toEqual(['/assets/models/house.lod2.glb']);
+  expect(districtAssetUrls(def.id, () => def)).toEqual(['/assets/models/house.lod1.glb', '/assets/models/house.lod2.glb']);
+  expect(districtAssetUrls(def.id, () => ({ ...def, lods: undefined }))).toEqual(['/assets/models/house.glb']);
+});
 
 test('@load open gate passes immediately; paced gate releases one heavy step per frame', async () => {
   const frames: FrameRequestCallback[] = [];

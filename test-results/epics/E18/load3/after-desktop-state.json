@@ -1,0 +1,231 @@
+{
+  "note": "Capture metadata extracted from getState(); entity/material arrays omitted.",
+  "errors": [],
+  "state": {
+    "tick": 600,
+    "seed": 1,
+    "scenario": "L1",
+    "player": {
+      "kind": "player",
+      "archetype": "player.survivor",
+      "transform": {
+        "x": -66.4000015258789,
+        "y": 0.7049978971481323,
+        "z": 9,
+        "yaw": 0.3205919885488634
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "faction": "survivor",
+      "id": 1,
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "survivor": {
+        "variant": "female",
+        "gearTier": 0,
+        "animation": "idle",
+        "animationTick": 0,
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "grounded": true,
+        "invulnerableUntil": 0,
+        "checkpoint": {
+          "x": -66.4,
+          "y": 0.705,
+          "z": 9,
+          "yaw": 0.3205919885488634
+        },
+        "diedAt": null
+      },
+      "combat": {
+        "radius": 0.3,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "riding": 3
+    },
+    "mission": {
+      "id": "L1",
+      "phase": "playing",
+      "completedObjectives": [],
+      "volumes": [],
+      "killedBosses": [],
+      "steps": {
+        "pickup": {
+          "status": "active",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "deliver": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "escape": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "weapon": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        },
+        "firestation": {
+          "status": "pending",
+          "started": 0,
+          "kills": [],
+          "events": {},
+          "interaction": 0
+        }
+      },
+      "actors": {},
+      "items": [],
+      "states": {
+        "delivered": false,
+        "exited": false,
+        "away": false,
+        "safe": false
+      },
+      "counters": {},
+      "gates": {
+        "fire-shutter": true
+      },
+      "marker": "parcel-counter",
+      "checkpoint": null,
+      "tier": 0,
+      "timeOfDay": null,
+      "subtitle": null,
+      "cinematic": null,
+      "failure": null,
+      "stats": {
+        "time": 10,
+        "kills": 0,
+        "damage": 0,
+        "deaths": 0,
+        "rescued": 0,
+        "optionalObjectives": []
+      },
+      "result": null,
+      "l1": {
+        "phase": "morning",
+        "carrying": false,
+        "delivered": false,
+        "away": false,
+        "techId": 142,
+        "hx": 0,
+        "hz": 0,
+        "handoverAt": 0,
+        "deliveredAt": 0,
+        "flickerAt": 0,
+        "exitAt": 0,
+        "warned": false,
+        "fired": 0,
+        "exitIds": [],
+        "exitHeadingsDeg": [],
+        "runs": [],
+        "turnedIds": [],
+        "escapedIds": [],
+        "graceUntil": 0,
+        "hordeDone": false,
+        "routeSpawns": 0,
+        "routeNextAt": 0
+      }
+    },
+    "perf": {
+      "entities": 72,
+      "bodies": 77,
+      "colliders": 4678,
+      "listeners": 174
+    },
+    "render": {
+      "backend": "webgpu",
+      "quality": "high",
+      "pixelRatio": 1,
+      "postFx": {
+        "bloomMips": 5,
+        "dof": true,
+        "dofRepeats": 18,
+        "dofResolution": 1,
+        "bloomStrength": 0.25
+      },
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.45
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "focus": [
+          -66.40000152587886,
+          0,
+          9
+        ],
+        "target": [
+          -66.40000152587886,
+          0,
+          9
+        ],
+        "position": [
+          -55.530834872342865,
+          11.16791979355699,
+          19.869166653536006
+        ],
+        "spot": null
+      },
+      "lighting": {
+        "shadowSize": 2048,
+        "preset": "L1",
+        "sunDirection": [
+          -0.45306504091915484,
+          0.7109135380122773,
+          0.5378977692534064
+        ],
+        "sunColor": "#ffd9b0",
+        "sky": "#f2c7a5",
+        "fog": "#c7a2c9",
+        "fogNear": 65,
+        "fogFar": 170,
+        "intensity": 1.22,
+        "shadowColor": "6b4fc2",
+        "coreShadowEdges": [
+          1,
+          -0.25
+        ],
+        "shadowRadius": 2,
+        "normalBias": 0.08,
+        "shadowArea": 16.408023949380695,
+        "fogColors": [
+          "#f2c7a5",
+          "#c7a2c9"
+        ]
+      }
+    }
+  }
+}
