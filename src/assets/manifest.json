@@ -3239,11 +3239,11 @@
       "lod1": "public/assets/models/veh.fire-engine.lod1.glb",
       "lod2": "public/assets/models/veh.fire-engine.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
-    },
-    "sourceGlb": "assets/veh.fire-engine/model.glb"
+    "sourceGlb": "assets/veh.fire-engine/model.glb",
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    }
   },
   {
     "id": "veh.sedan-red",
@@ -3299,6 +3299,10 @@
     "world": {
       "token": "survivorRed",
       "solid": true
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3355,6 +3359,10 @@
     "world": {
       "token": "policeBlue",
       "solid": false
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3412,9 +3420,9 @@
       "token": "picketWhite",
       "solid": false
     },
-    "authoredLodRatios": {
-      "lod1": 0.383,
-      "lod2": 0.253
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3468,7 +3476,11 @@
     },
     "decayVariants": [],
     "sourceForward": "+X",
-    "sourceScale": 0.91666669
+    "sourceScale": 0.91666669,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    }
   },
   {
     "id": "veh.suv-dark",
@@ -3524,6 +3536,10 @@
     "world": {
       "token": "uiDark",
       "solid": false
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3580,6 +3596,10 @@
     "world": {
       "token": "survivorRed",
       "solid": false
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3639,6 +3659,10 @@
     "world": {
       "token": "picketWhite",
       "solid": false
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3698,6 +3722,10 @@
     "world": {
       "token": "foliageDark",
       "solid": false
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3758,9 +3786,9 @@
       "token": "tealDark",
       "solid": false
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3813,7 +3841,11 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    }
   },
   {
     "id": "veh.police-suv",
@@ -3862,6 +3894,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.police-suv.lod1.glb",
       "lod2": "public/assets/models/veh.police-suv.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3915,9 +3951,9 @@
     },
     "decayVariants": [],
     "sourceForward": "+X",
-    "authoredLodRatios": {
-      "lod1": 0.48,
-      "lod2": 0.368
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -3967,6 +4003,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.jeep-red.lod1.glb",
       "lod2": "public/assets/models/veh.jeep-red.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -4041,9 +4081,9 @@
       "token": "schoolBusYellow",
       "solid": true
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4091,9 +4131,9 @@
       "token": "backpackTeal",
       "solid": true
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4139,9 +4179,9 @@
       "token": "brick",
       "solid": true
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4177,6 +4217,10 @@
     "lods": {
       "lod1": "public/assets/models/bld.safe-house.lod1.glb",
       "lod2": "public/assets/models/bld.safe-house.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4297,9 +4341,9 @@
       "token": "survivorRed",
       "solid": true
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4341,9 +4385,9 @@
       "lod1": "public/assets/models/bld.gas-station.lod1.glb",
       "lod2": "public/assets/models/bld.gas-station.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4430,10 +4474,11 @@
       "token": "brick",
       "solid": true
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
-    }
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "compactMeshopt": true
   },
   {
     "id": "bld.bus-stop",
@@ -4476,9 +4521,9 @@
       "token": "backpackTeal",
       "solid": false
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4555,10 +4600,11 @@
     },
     "sourceForward": "+X",
     "script": "assets/bld.school-elementary/build.py",
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
-    }
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "compactMeshopt": true
   },
   {
     "id": "int.gym-cafeteria",
@@ -4807,9 +4853,9 @@
       "lod1": "public/assets/models/bld.fire-station.lod1.glb",
       "lod2": "public/assets/models/bld.fire-station.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -5891,9 +5937,9 @@
       "token": "backpackTeal",
       "solid": false
     },
-    "authoredLodRatios": {
-      "lod1": 0.427,
-      "lod2": 0.311
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -7130,9 +7176,9 @@
       "lod1": "public/assets/models/veh.military-truck.lod1.glb",
       "lod2": "public/assets/models/veh.military-truck.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -7190,9 +7236,9 @@
       "token": "canvasTan",
       "solid": false
     },
-    "authoredLodRatios": {
-      "lod1": 0.551,
-      "lod2": 0.442
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -7246,9 +7292,9 @@
       "lod1": "public/assets/models/veh.semi-trailer.lod1.glb",
       "lod2": "public/assets/models/veh.semi-trailer.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.643,
-      "lod2": 0.524
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -7300,6 +7346,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.helicopter.lod1.glb",
       "lod2": "public/assets/models/veh.helicopter.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -7349,6 +7399,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.train-freight.lod1.glb",
       "lod2": "public/assets/models/veh.train-freight.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -7599,9 +7653,9 @@
       "lod1": "public/assets/models/bld.helipad.lod1.glb",
       "lod2": "public/assets/models/bld.helipad.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -8550,6 +8604,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.fuel-truck.lod1.glb",
       "lod2": "public/assets/models/veh.fuel-truck.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -10642,6 +10700,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.sedan-green.lod1.glb",
       "lod2": "public/assets/models/veh.sedan-green.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
     }
   },
   {
@@ -12397,9 +12459,9 @@
       "lod1": "public/assets/models/bld.garage-detached.lod1.glb",
       "lod2": "public/assets/models/bld.garage-detached.lod2.glb"
     },
-    "authoredLodRatios": {
-      "lod1": 0.6,
-      "lod2": 0.3
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -12556,7 +12618,11 @@
     },
     "decayVariants": [],
     "sourceGlb": "assets/veh.courier-bike/model.glb",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    }
   },
   {
     "id": "prop.package-courier",
@@ -13026,7 +13092,7 @@
     "id": "bld.house-d",
     "category": "building",
     "status": "integrated",
-    "tier": "side",
+    "tier": "hero",
     "glb": "public/assets/models/bld.house-d.glb",
     "dimensions": {
       "x": 9,
@@ -13061,13 +13127,17 @@
     "lods": {
       "lod1": "public/assets/models/bld.house-d.lod1.glb",
       "lod2": "public/assets/models/bld.house-d.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
     "id": "bld.house-e",
     "category": "building",
     "status": "integrated",
-    "tier": "side",
+    "tier": "hero",
     "glb": "public/assets/models/bld.house-e.glb",
     "dimensions": {
       "x": 8.569,
@@ -13102,6 +13172,10 @@
     "lods": {
       "lod1": "public/assets/models/bld.house-e.lod1.glb",
       "lod2": "public/assets/models/bld.house-e.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {

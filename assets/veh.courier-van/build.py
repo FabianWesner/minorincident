@@ -8,6 +8,8 @@ import bmesh, bpy
 from mathutils import Matrix, Vector
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
 from sslib.lod import hard_normals, refresh_normals
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE = Path(__file__).resolve().parent
 if '--normals-only' in sys.argv:
@@ -83,6 +85,7 @@ def group(name, location=(0, 0, 0), parent=None):
 
 
 def finish(obj, mat, parent, bevel=0.0, segs=2, smooth=True, harden=True, angle=40):
+    if DISTANCE: bevel = 0
     CAR.objects.link(obj)
     if isinstance(mat, str):
         mat = M[mat]
@@ -120,6 +123,7 @@ def from_bm(name, bm):
 
 
 def box(name, center, size, mat, parent=None, bevel=0.02, segs=2, rot=(0, 0, 0)):
+    if DISTANCE: bevel = 0
     if LEVEL and name in {'tread','vent_slats','head_lens_flute','antenna','antenna_base'}:return None
     if LEVEL==2 and name in {'cargo_floor','chassis','fog_lens','cargo_panel_reveal','cargo_panel','rear_panel_reveal','rear_panel','mirror_face','seat','seat_back','headrest','dashboard','steering_spoke','hood_vent','mudflap','panel_seam','rocker','plate_mount','blank_plate','lower_intake','front_indicator','side_indicator','tail_side','wiper','cab_bulkhead'}:return None
     bm = bmesh.new()
@@ -132,6 +136,7 @@ def box(name, center, size, mat, parent=None, bevel=0.02, segs=2, rot=(0, 0, 0))
 
 
 def prism(name, pts_xz, y0, y1, mat, parent=None, bevel=0.03, segs=2):
+    if DISTANCE: bevel = 0
     """2D side silhouette (x, z) extruded across y0..y1."""
     bm = bmesh.new()
     vs = [bm.verts.new((x, y0, z)) for x, z in pts_xz]
@@ -145,6 +150,7 @@ def prism(name, pts_xz, y0, y1, mat, parent=None, bevel=0.03, segs=2):
 
 
 def plate(name, pts_xz, side, depth, mat, parent=None, y_skin=W, bevel=0.006, segs=2, lift=0.0):
+    if DISTANCE: bevel = 0
     """Flat shape lying on a side skin. side=-1 near (-Y), +1 far (+Y). pts in world (x, z)."""
     y0 = side * (y_skin + lift)
     y1 = side * (y_skin + lift + depth)
@@ -152,6 +158,7 @@ def plate(name, pts_xz, side, depth, mat, parent=None, y_skin=W, bevel=0.006, se
 
 
 def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.005, lift=0.0):
+    if DISTANCE: bevel = 0
     """Frame between two loops with equal vertex count, on a side skin."""
     if LEVEL==2 and name=='window_rubber':return None
     bm = bmesh.new()
@@ -175,6 +182,7 @@ def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.00
 
 
 def lathe(name, profile, center, axis, mat, parent=None, segs=40, smooth=True):
+    if DISTANCE: segs = min(segs, 12 if DISTANCE == 1 else 8)
     """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
     if LEVEL==2 and name in {'rim_lip','hub_cap','sidewall_rib','steering'}:return None
     if LEVEL:segs=min(segs,16 if LEVEL==1 else 8)
@@ -208,6 +216,7 @@ def lathe(name, profile, center, axis, mat, parent=None, segs=40, smooth=True):
 
 
 def cylinder(name, center, r, depth, axis, mat, parent=None, segs=40, bevel=0.0):
+    if DISTANCE: bevel = 0; segs = min(segs, 12 if DISTANCE == 1 else 8)
     if LEVEL==2 and name=='axle':return None
     if LEVEL and name in {'lug','lock','clamp_bolt','hinge_pin'}:return None
     prof = [(1e-4, -depth / 2), (r, -depth / 2), (r, depth / 2), (1e-4, depth / 2)]
@@ -238,6 +247,7 @@ def cut(target, cutter_obj):
 
 
 def raw_cyl(name, center, r, depth, axis='y', segs=64):
+    if DISTANCE: segs=min(segs, 12 if DISTANCE==1 else 6)
     bm = bmesh.new()
     if LEVEL:segs=min(segs,24 if LEVEL==1 else 12)
     bmesh.ops.create_cone(bm, cap_ends=True, segments=segs, radius1=r, radius2=r, depth=depth)
@@ -338,7 +348,7 @@ def build_vehicle(level):
         plate('medical_cross',pts,s,.015,'teal',STATIC,y_skin=1.040,bevel=.010)
         def text_side(label,name,center,size,owner):
             if LEVEL==2:return
-            cu=bpy.data.curves.new(name,'FONT');cu.body=label;cu.align_x='CENTER';cu.align_y='CENTER';cu.size=size;cu.font=BOLD_FONT;cu.resolution_u=5 if LEVEL==0 else 2;cu.extrude=.004 if LEVEL==0 else 0;cu.bevel_depth=.001 if LEVEL==0 else 0;cu.bevel_resolution=1
+            cu=bpy.data.curves.new(name,'FONT');cu.body=label;cu.align_x='CENTER';cu.align_y='CENTER';cu.size=size;cu.font=BOLD_FONT;cu.resolution_u= 2 if DISTANCE else (5 if LEVEL==0 else 2);cu.extrude= 0 if DISTANCE else (.004 if LEVEL==0 else 0);cu.bevel_depth= 0 if DISTANCE else (.001 if LEVEL==0 else 0);cu.bevel_resolution=1
             ob=bpy.data.objects.new(name,cu);CAR.objects.link(ob);ob.location=center
             # text local X along +X / -X, local Y upwards, normal outward.
             ob.rotation_euler=(PI/2,0,0) if s<0 else (PI/2,0,PI)
@@ -461,6 +471,9 @@ def build_vehicle(level):
             if p in moving:return p
             p=p.parent
         return None
+    if DISTANCE:
+        export_variant(Path(__file__).parent, DISTANCE, omit=('tread', 'lug', 'rivet', 'seat', 'steering', 'sidewall_rib','rim_lip','sidewall_line','hub_cap','clamp_bolt','corner_fastener','sidewall_bead'), far_omit=('cargo_panel_reveal', 'rack_crossbar', 'window_rubber', 'seat', 'steering', 'handle', 'wiper', 'rib', 'badge', 'rim spoke', 'seam', 'rim', 'hub', 'label', 'letter', 'logo', 'stripe', 'gasket', 'frame_ring', 'dial', 'louver','town_text','courier_text','medical_text','arch_molding','hinge_pin','lock','head_lens_flute','axle','rack_foot','rack_bracket','medical_cross','vent_slats','tail_side'), flat_parts=('steel_rim',))
+
     buckets={}
     for o in list(CAR.objects):
         if o.type=='MESH':buckets.setdefault((motion_owner(o),o.data.materials[0].name),[]).append(o)
@@ -529,19 +542,6 @@ if arg('--glb'):
     for o,name in saved_names.items():
         o.name='hero_archive_'+name;o.hide_render=True
     lod_stats={}
-    for level in ([1,2] if arg('--lod') is None else []):
-        CAR,meshes,lod_report=build_vehicle(level)
-        for obj in meshes: hard_normals(obj)
-        bpy.ops.object.select_all(action='DESELECT')
-        for o in meshes:
-            a=o.data.color_attributes.new(name='ao',type='BYTE_COLOR',domain='CORNER')
-            o.data.color_attributes.active_color=a;o.select_set(True)
-        bpy.context.view_layer.objects.active=meshes[0]
-        bpy.ops.object.bake(type='AO')
-        export_glb(HERE/f'model.lod{level}.glb')
-        lod_stats[str(level)]={'triangles':lod_report['triangles'],'draw_calls':lod_report['draw_calls']}
-        for o in list(CAR.objects):bpy.data.objects.remove(o,do_unlink=True)
-        bpy.data.collections.remove(CAR)
     for o,name in saved_names.items():
         o.name=name;o.hide_render=False
     CAR,meshes,root=hero_collection,hero_meshes,hero_root;LEVEL=0
@@ -581,3 +581,6 @@ if arg('--render'):
         if path.name=='hero.png':
             scene.cycles.samples=24;scene.render.resolution_x=960;scene.render.resolution_y=540
         scene.render.filepath=str(game_path.resolve());bpy.ops.render.render(write_still=True);print('RENDER OK game')
+
+if arg('--glb') and not DISTANCE:
+    build_native_lods(__file__)

@@ -5,6 +5,8 @@ import math
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 import bmesh
 import bpy
 from mathutils import Matrix, Vector
@@ -47,6 +49,7 @@ def build(ctx):
 
 
     def finish(obj, mat, parent, bevel=0.0, segs=2, smooth=True, harden=True, angle=40):
+        if DISTANCE: bevel=0
         TRUCK.objects.link(obj)
         if isinstance(mat, str):
             mat = M[mat]
@@ -82,6 +85,7 @@ def build(ctx):
 
 
     def box(name, center, size, mat, parent=None, bevel=0.02, segs=1, rot=(0, 0, 0)):
+        if DISTANCE: bevel=0
         bm = bmesh.new()
         bmesh.ops.create_cube(bm, size=1.0)
         bmesh.ops.scale(bm, vec=Vector(size), verts=bm.verts)
@@ -92,6 +96,7 @@ def build(ctx):
 
 
     def prism(name, pts_xz, y0, y1, mat, parent=None, bevel=0.03, segs=2):
+        if DISTANCE: bevel=0
         """2D side silhouette (x, z) extruded across y0..y1."""
         bm = bmesh.new()
         vs = [bm.verts.new((x, y0, z)) for x, z in pts_xz]
@@ -105,6 +110,7 @@ def build(ctx):
 
 
     def plate(name, pts_xz, side, depth, mat, parent=None, y_skin=W, bevel=0.006, segs=2, lift=0.0):
+        if DISTANCE: bevel=0
         """Flat shape lying on a side skin. side=-1 near (-Y), +1 far (+Y). pts in world (x, z)."""
         y0 = side * (y_skin + lift)
         y1 = side * (y_skin + lift + depth)
@@ -112,6 +118,7 @@ def build(ctx):
 
 
     def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.005, lift=0.0):
+        if DISTANCE: bevel=0
         """Frame between two loops with equal vertex count, on a side skin."""
         bm = bmesh.new()
         y0 = side * (y_skin + lift)
@@ -134,6 +141,7 @@ def build(ctx):
 
 
     def lathe(name, profile, center, axis, mat, parent=None, segs=28, smooth=True):
+        if DISTANCE: segs=min(segs,12 if DISTANCE==1 else 6)
         """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
         bm = bmesh.new()
         rings = []
@@ -165,6 +173,7 @@ def build(ctx):
 
 
     def cylinder(name, center, r, depth, axis, mat, parent=None, segs=20, bevel=0.0):
+        if DISTANCE: bevel=0; segs=min(segs,12 if DISTANCE==1 else 6)
         prof = [(1e-4, -depth / 2), (r, -depth / 2), (r, depth / 2), (1e-4, depth / 2)]
         o = lathe(name, prof, center, axis, mat, parent, segs)
         if bevel:
@@ -182,11 +191,11 @@ def build(ctx):
         cu.body = body
         cu.font = bpy.data.fonts.load(font, check_existing=True)
         cu.size = size
-        cu.extrude = depth / 2
+        cu.extrude = 0 if DISTANCE else (depth / 2)
         cu.align_x = 'CENTER'
         cu.align_y = 'CENTER'
         cu.space_character = spacing
-        cu.resolution_u = 6
+        cu.resolution_u = 2 if DISTANCE else (6)
         o = bpy.data.objects.new(name, cu)
         o.location = center
         o.scale = (stretch, 1, 1)
@@ -224,6 +233,8 @@ def build(ctx):
 
 
     def raw_cyl(name, center, r, depth, axis='y', segs=24):
+        if DISTANCE: segs=min(segs, 12 if DISTANCE==1 else 6)
+        if DISTANCE: segs=min(segs,12 if DISTANCE==1 else 6)
         bm = bmesh.new()
         bmesh.ops.create_cone(bm, cap_ends=True, segments=segs, radius1=r, radius2=r, depth=depth)
         rot = {'y': Matrix.Rotation(PI / 2, 4, 'X'), 'x': Matrix.Rotation(PI / 2, 4, 'Y'), 'z': Matrix.Identity(4)}[axis]
@@ -245,10 +256,12 @@ def build(ctx):
 
 
     def arc(cx, cz, r, a0, a1, n):
+        if DISTANCE: n=min(n, 12 if DISTANCE==1 else 6)
         return [(cx + r * math.cos(a0 + (a1 - a0) * i / n), cz + r * math.sin(a0 + (a1 - a0) * i / n)) for i in range(n + 1)]
 
 
     def rrect(x0, z0, x1, z1, r, n=5):
+        if DISTANCE: n=min(n, 2 if DISTANCE==1 else 1)
         pts = []
         pts += arc(x1 - r, z0 + r, r, -PI / 2, 0, n)
         pts += arc(x1 - r, z1 - r, r, 0, PI / 2, n)
@@ -258,12 +271,14 @@ def build(ctx):
 
 
     def frame(name, x0, z0, x1, z1, side, mat, parent, bar=0.04, r=0.04, depth=0.03, lift=0.0, y_skin=W):
+        if DISTANCE:
+            return box(name,((x0+x1)/2,side*(y_skin-.006),(z0+z1)/2),(x1-x0+2*bar,.005,z1-z0+2*bar),mat,parent,bevel=0)
         ring(name, rrect(x0 - bar, z0 - bar, x1 + bar, z1 + bar, r + bar * 0.6), rrect(x0, z0, x1, z1, r), side, depth, mat, parent, y_skin, lift=lift)
 
 
     def shutter(name, x0, x1, z0, z1, side, parent, y_skin=W, slat=0.072, mat='alu'):
         """Roller shutter: one rounded slat + array modifier (stays a single light mesh)."""
-        n = max(2, round((z1 - z0) / slat))
+        n = (4 if DISTANCE==1 else 1) if DISTANCE else max(2, round((z1 - z0) / slat))
         h = (z1 - z0) / n
         y = side * (y_skin + 0.012)
         o = box(name, ((x0 + x1) / 2, y, z0 + h / 2), (x1 - x0, 0.024, h * 0.94), mat, parent, bevel=h * 0.45, segs=2)
@@ -471,8 +486,8 @@ def build(ctx):
                 x = xa + (xb - xa) * k / n
                 box(f'ladder{s}_upright_{k}_{sname}', (x, side * yw, zl + h / 2), (0.05, 0.045, h), 'alu', 'ladder', bevel=0.01)
                 box(f'ladder{s}_bolt_{k}_{sname}', (x, side * (yw + 0.03), zl + h), (0.03, 0.02, 0.03), 'alu_dark', 'ladder', bevel=0.006)
-        n = max(4, round((xb - xa) / 0.25))
-        rung = cylinder(f'ladder{s}_rungs', (xa + (xb - xa) / n, 0, zl), 0.022, 2 * yw, 'y', 'chrome', 'ladder', segs=16)
+        n = (8 if DISTANCE==1 else 4) if DISTANCE else max(4, round((xb - xa) / 0.25))
+        rung = box(f'ladder{s}_rungs',(xa+(xb-xa)/n,0,zl),(.044,2*yw,.044),'chrome','ladder',bevel=0) if DISTANCE else cylinder(f'ladder{s}_rungs', (xa + (xb - xa) / n, 0, zl), 0.022, 2 * yw, 'y', 'chrome', 'ladder', segs=16)
         arr = rung.modifiers.new('rungs', 'ARRAY')
         arr.use_relative_offset = False
         arr.use_constant_offset = True
@@ -587,6 +602,8 @@ def build(ctx):
     root.location.x=-(minimum.x+maximum.x)/2*root.scale.x
     root.location.y=-(minimum.y+maximum.y)/2*root.scale.y
     bpy.context.view_layer.update()
+    if DISTANCE:
+        export_variant(Path(__file__).parent, DISTANCE, omit=('rivet','tread_block','lug','pump_hose','gauge','coupling','pump_valve','pump_fan','arch_trim','cab_door_seam','body_reflector','rear_door_frame','body_door_frame','cab_text','rear_text','grille','body_door_seam'), flat_parts=('wheel*_rim',), far_omit=('shutter_rail', 'shutter_bar', 'shutter_lip', 'shutter_post', 'pump_panel_ledge', 'roof_grab', 'gantry_base', 'side_marker', 'cab_marker', 'cab_roof_marker', 'rear_ladder_step', 'pump_bay_step', 'cab_step', 'front_bumper_step', 'rear_step', 'cab_light', 'reflector', 'roof_rail', 'rail_support', 'gauge','hose','handle','step_grip','bolt','wiper','seat','fire_text','cab_text','flame','mirror_arm','slat','pump_bay_rail','body_sill','body_roof_trim','rim','hub','ladder_turntable','front_text','body_roof_trim','cab_sill','body_sill','mirror_glass','ladder0_upright','ladder1_upright'))
     export.merge_by_material(root, {'body','wheelFL','wheelFR','wheelRL','wheelRR','ladder','sirenL','sirenR','lightsFront','lightsBrake'})
     return root
 
@@ -596,14 +613,13 @@ if __name__ == '__main__':
     import argparse
     from types import SimpleNamespace
     from sslib import ao
-    from sslib.lod import export_lods, rebuild_from_baked
     parser = argparse.ArgumentParser()
     parser.add_argument('--glb', required=True)
     parser.add_argument('--lod-only', action='store_true')
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
     output = Path(args.glb).resolve()
     if args.lod_only:
-        rebuild_from_baked(output)
+        build_native_lods(__file__)
     else:
         bpy.ops.wm.read_factory_settings(use_empty=True)
         root = build(SimpleNamespace(root=sockets.empty(ASSET['id']), quality='high', seed=17, decay=None))
@@ -611,5 +627,7 @@ if __name__ == '__main__':
         ao.bake_all(meshes, samples=32)
         output.parent.mkdir(parents=True, exist_ok=True)
         export.glb(root, output)
-        export_lods(output, meshes)
     print('OK fire engine source/LOD chain', output)
+
+if __name__ == '__main__' and not DISTANCE:
+    build_native_lods(__file__)

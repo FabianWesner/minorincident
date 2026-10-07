@@ -13,7 +13,8 @@ from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
-from sslib.lod import simplify as simplify_lod
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE = Path(__file__).resolve().parent
 parser = argparse.ArgumentParser()
@@ -86,6 +87,7 @@ door['open_angle'] = -100
 
 
 def mesh(name, verts, faces, token, parent=body, bevel=.018, segments=2):
+    if DISTANCE: bevel = 0
     me = bpy.data.meshes.new(name)
     # Mirror authoring Y so the porch sits on the reference camera's right.
     me.from_pydata([(x,-y,z) for x,y,z in verts], [], [tuple(reversed(f)) for f in faces])
@@ -107,6 +109,7 @@ def mesh(name, verts, faces, token, parent=body, bevel=.018, segments=2):
 
 
 def box(name, c, size, token, parent=body, bevel=.018, rot=(0, 0, 0), segments=2):
+    if DISTANCE: bevel = 0
     x, y, z = (v/2 for v in size)
     vs = [(-x,-y,-z),(-x,-y,z),(-x,y,-z),(-x,y,z),
           (x,-y,-z),(x,-y,z),(x,y,-z),(x,y,z)]
@@ -119,6 +122,7 @@ def box(name, c, size, token, parent=body, bevel=.018, rot=(0, 0, 0), segments=2
 
 
 def prism(name, xy, zfun, thickness, token, parent=roof, bevel=.012):
+    if DISTANCE: bevel = 0
     if sum(a[0]*b[1]-b[0]*a[1] for a,b in zip(xy,xy[1:]+xy[:1])) < 0:
         xy=list(reversed(xy))
     vs = [(x,y,zfun(x,y)+dz) for dz in (0, thickness) for x,y in xy]
@@ -137,6 +141,7 @@ def beam(name, a, b, width, depth, token, parent=roof):
 
 
 def cylinder(name, c, radius, depth, token, parent=body, axis='Z', vertices=24):
+    if DISTANCE: vertices = min(vertices, 12 if DISTANCE == 1 else 8)
     bm = bmesh.new()
     bmesh.ops.create_cone(bm, cap_ends=True, segments=vertices, radius1=radius,
                           radius2=radius, depth=depth)
@@ -169,6 +174,7 @@ def facade_point(origin, u, z, depth=0):
 
 
 def facade_box(name, origin, u, z, width, height, depth, offset, token, parent=body, bevel=.012):
+    if DISTANCE: bevel = 0
     c = facade_point(origin,u,z,offset)
     size = (depth,width,height) if origin[0] else (width,depth,height)
     return box(name,c,size,token,parent,bevel)
@@ -450,6 +456,9 @@ for y in [-2.18,-1.27,-.36]:
     box('cabinet_panel',(-1.68,y,.95),(.025,.82,.75),'picketWhite',interior,.019)
     box('cabinet_handle',(-1.652,y,1.20),(.025,.18,.023),'uiDark',interior,.006)
 
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('main_shingle', 'porch_shingle', 'floor_joint'), far_omit=('baluster', 'collar', 'deck_plank', 'mullion', 'ridge_cap', 'shutter_louver', 'lap_', 'curtain_fold', 'muntin'))
+
 # Merge static geometry by parent and material after evaluating all bevels.
 def merge_parts():
     buckets={}
@@ -558,15 +567,6 @@ def export(path):
 if args.glb:
     export(args.glb)
     # Same addressable groups and hinges at all densities. LODs ship alongside LOD0.
-    for level,ratio in [(1,.55),(2,.25)]:
-        copies=[]
-        for o in [o for o in asset.objects if o.type=='MESH']:
-            copies.append((o,o.data))
-            o.data=o.data.copy()
-            simplify_lod(o, ratio)
-        export(Path(args.glb).with_name(f'model.lod{level}.glb'))
-        for o,data in copies:
-            reduced=o.data; o.data=data; bpy.data.meshes.remove(reduced)
 
 
 def studio():
@@ -611,3 +611,6 @@ def studio():
     print('RENDER OK',args.render)
 
 if args.render: studio()
+
+if args.glb and not DISTANCE:
+    build_native_lods(__file__)
