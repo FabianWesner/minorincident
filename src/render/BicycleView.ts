@@ -3,6 +3,7 @@ import '../render/interaction.css';
 import { AssetRegistry } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
+import { RiderContacts } from './characters/RiderContacts';
 
 /** The delivered cargo bike is courier-sized (2.8 m); the game courier is chibi (1.4 m), so the bike is drawn at toy scale: saddle at the hips, cargo box below the rider's chest. */
 const ASSET = 'veh.courier-bike', WHEEL_R = { F: .335, R: .405 }, SCALE = .6;
@@ -75,6 +76,25 @@ export class BicycleView extends Group {
   seatWorld(out: Vector3): boolean {
     const rig = this.rig; if (!rig?.seat) return false;
     rig.root.updateMatrixWorld(true); rig.seat.getWorldPosition(out); return true;
+  }
+  private readonly contacts = new RiderContacts();
+  private riderNodes: { handL: Object3D; handR: Object3D; footL: Object3D; footR: Object3D } | undefined;
+  /** Sample the model's named attachment nodes after its crank/steer/lean update.
+   * No anatomy or saddle coordinates are duplicated in the rider. */
+  riderContacts(): RiderContacts | undefined {
+    const rig = this.rig; if (!rig) return;
+    if (!this.riderNodes) {
+      const left = rig.model.getObjectByName('grip_l'), right = rig.model.getObjectByName('grip_r');
+      const pedalL = rig.model.getObjectByName('pedal_l'), pedalR = rig.model.getObjectByName('pedal_r');
+      if (!left || !right || !pedalL || !pedalR) return;
+      this.riderNodes = { handL: left, handR: right, footL: pedalL, footR: pedalR };
+    }
+    if (!rig.seat) return;
+    rig.root.updateMatrixWorld(true);
+    rig.seat.getWorldPosition(this.contacts.seat);
+    for (const name of ['handL', 'handR', 'footL', 'footR'] as const) this.riderNodes[name].getWorldPosition(this.contacts[name]);
+    rig.lean.getWorldQuaternion(this.contacts.orientation);
+    return this.contacts;
   }
   private readonly prompt = document.createElement('div');
   private readonly projection = new Vector3();
