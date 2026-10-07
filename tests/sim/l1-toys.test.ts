@@ -173,4 +173,20 @@ describe('L1 v2 corgi', () => {
     let gap = 0; for (let i = 0; i < 480; i++) { world.update(); const p = world.entities.get(1)!.transform; gap = Math.max(gap, i > 300 && i < 400 ? Math.hypot(dog.transform.x - p.x, dog.transform.z - p.z) : 0); }
     expect(gap).toBeLessThan(5); // after the start-up lag it keeps pace at the 7.5 m/s cap
   });
+  test('T-E19-17d @E19 @E19-AC17 after a respawn the corgi is snapped next to the courier facing her, and never runs backwards', async () => {
+    await dogWorld(); const dog = [...world.entities.iterate()].find(e => e.companion)!, p = world.entities.get(1)!.transform;
+    // stale pre-respawn state: far away, facing away, with leftover motion response
+    Object.assign(dog.transform, { x: p.x + 25, z: p.z, yaw: Math.PI }); dog.locomotion = { vx: 3, vz: 0, ax: 1, az: 0, omega: 2, updatedAt: world.tick };
+    world.npcs!.restore(0);
+    expect(Math.hypot(dog.transform.x - p.x, dog.transform.z - p.z)).toBeLessThan(2.6);
+    const toPlayer = -Math.atan2(p.z - dog.transform.z, p.x - dog.transform.x);
+    expect(Math.abs(Math.atan2(Math.sin(toPlayer - dog.transform.yaw), Math.cos(toPlayer - dog.transform.yaw)))).toBeLessThan(.01);
+    // the courier moves off; every tick the corgi moves faster than 1.5 m/s its heading is within 0.6 rad of its velocity
+    world.setInput({ move: { x: 1, z: 0 } }); let worst = 0;
+    for (let i = 0; i < 240; i++) {
+      world.update(); const v = dog.companion!.velocity;
+      if (v && Math.hypot(v.x, v.z) > 1.5) worst = Math.max(worst, Math.abs(Math.atan2(Math.sin(-Math.atan2(v.z, v.x) - dog.transform.yaw), Math.cos(-Math.atan2(v.z, v.x) - dog.transform.yaw))));
+    }
+    expect(worst).toBeLessThan(.7);
+  });
 });

@@ -42,6 +42,7 @@ export class GameUI {
     this.pauseButton.replaceChildren(node('span', 'pause-icon', 'Ⅱ '), pauseLabel);
     this.build(); document.querySelector('#game')!.append(this.root, this.pauseButton);
     window.addEventListener('keydown', this.key, true);
+    window.addEventListener('pointerdown', this.unhide, true);
     document.addEventListener('click', this.missionAccept);
     this.hud.init(); this.hud.loaded();
     this.applySettings(); this.show('title'); this.started = true;
@@ -83,9 +84,12 @@ export class GameUI {
     }
     levels.append(lockHint);
     levels.append(button('levels-back', 'Back', () => this.show('character')));
-    const pause = this.panel('pause', 'Game paused', 'Take a breath. The neighborhood can wait.');
+    // PO: pausing freezes the game but leaves the scene fully visible; the menu is a compact bar on top (screenshots).
+    const pause = this.panel('pause', 'Paused', 'P / Esc to resume · H hides the UI for screenshots');
+    pause.setAttribute('aria-modal', 'false');
     pause.append(button('resume-game', 'Resume', () => this.resume()),
       button('pause-settings', 'Settings', () => { this.back = 'pause'; this.show('settings'); }),
+      button('pause-hide-ui', 'Hide UI (H)', () => this.hideUi(true)),
       button('pause-title', 'Title screen', () => this.show('title')));
     const credits = this.panel('credits', 'Credits', 'Minor Incident · Technology adapted from Bruno Simon’s folio-2025 (MIT), Three.js and Rapier.');
     const audio = node('div', 'audio-credits');
@@ -218,12 +222,18 @@ export class GameUI {
     for (const [name, panel] of this.screens) panel.hidden = name !== screen;
     this.root.hidden = screen === null;
     if (screen === null && this.root.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();
+    if (screen !== 'pause') document.body.classList.remove('ui-hidden');
     document.body.dataset.uiScreen = screen ?? 'game';
     if (screen) {
       this.game.clock.pause();
       this.screens.get(screen)?.querySelector<HTMLElement>('button, select, input')?.focus({ preventScroll: true });
     }
     this.pauseButton.hidden = screen !== null;
+  }
+  /** Clean screenshots: hides every HUD element and the pause bar; any key or click brings the bar back. */
+  hideUi(hidden: boolean): void {
+    document.body.classList.toggle('ui-hidden', hidden);
+    if (!hidden) this.screens.get('pause')?.querySelector<HTMLElement>('button')?.focus({ preventScroll: true });
   }
   pause(): void {
     if (!this.enabled || !this.game.campaignUI.root.hidden) return;
@@ -262,12 +272,18 @@ export class GameUI {
       this.game.input.clear(); this.game.clock.resume(); this.game.ticker.reset(); this.update();
     }
   };
+  private readonly unhide = (event: Event): void => { if (document.body.classList.contains('ui-hidden')) { event.preventDefault(); event.stopPropagation(); this.hideUi(false); } };
   private readonly key = (event: KeyboardEvent): void => {
     if (!this.enabled || !this.game.campaignUI.root.hidden) return;
     if (!event.repeat && this.game.input.bindings.action(event.code) === 'pause' && !(event.target as HTMLElement)?.closest('input,select,textarea')) {
       event.preventDefault(); event.stopImmediatePropagation();
-      if (this.screen === null) this.pause(); else if (this.screen === 'settings') this.show(this.back);
-      return; // Escape never resumes after a background pause.
+      // P and Esc toggle: pause, back out of settings, resume (a background auto-pause still needs the Resume button).
+      if (this.screen === null) this.pause(); else if (this.screen === 'settings') this.show(this.back); else if (this.screen === 'pause') this.resume();
+      return;
+    }
+    if (this.screen === 'pause' && !event.repeat && !(event.target as HTMLElement)?.closest('input,select,textarea')) {
+      if (document.body.classList.contains('ui-hidden')) { event.preventDefault(); this.hideUi(false); return; }
+      if (event.code === 'KeyH') { event.preventDefault(); this.hideUi(true); return; }
     }
     if (event.code !== 'Tab') return;
     const panel = this.screen ? this.screens.get(this.screen) : document.querySelector<HTMLElement>('.mission-panel:not([hidden])');
@@ -277,7 +293,7 @@ export class GameUI {
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   };
-  dispose(): void { window.removeEventListener('keydown', this.key, true); document.removeEventListener('click', this.missionAccept); this.root.remove(); this.pauseButton.remove(); this.hud.dispose(); document.body.classList.remove('full-ui', 'touch-ui'); delete document.body.dataset.uiScreen; }
+  dispose(): void { window.removeEventListener('keydown', this.key, true); window.removeEventListener('pointerdown', this.unhide, true); document.removeEventListener('click', this.missionAccept); this.root.remove(); this.pauseButton.remove(); this.hud.dispose(); document.body.classList.remove('full-ui', 'touch-ui'); delete document.body.dataset.uiScreen; }
 }
 
 /**
