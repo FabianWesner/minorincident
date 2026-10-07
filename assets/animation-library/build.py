@@ -381,8 +381,9 @@ for name,wind,strike,follow,twist in unarmed:
     action('unarmed-'+name,1,[(0,guard),(.035,{**guard,'hip':anticipation['hip']}),
         (.05,{**guard,'hip':anticipation['hip'],'torso':anticipation['torso'],'head':anticipation['head']}),
         (.075,anticipation),(.125,{**anticipation,**limb_blend(.4),'hip':contact['hip']}),
-        (.15,{**contact,**limb_blend(.6)}),(.20,contact),(.36,through),
-        (.66,{**guard,'torso':(0,twist*.12,0)}),(1,guard)])
+        (.15,{**contact,**limb_blend(.6)}),(.20,contact)]+
+        # Kicks hold the full extension (QA1-06: readable at the game camera) before the follow-through.
+        ([(.34,contact),(.46,through),(.72,{**guard,'torso':(0,twist*.12,0)})] if 'kick' in name else [(.36,through),(.66,{**guard,'torso':(0,twist*.12,0)})])+[(1,guard)])
 
 action('swing',.5,[(0,p()),(.1,p(armR=z(-30),torso=(0,-30,5))),(.2,p(armR=(0,55,100),foreArmR=z(8),torso=(0,35,-10))),(.5,p(armR=(0,85,100),torso=(0,45,-5))),(1,p())])
 action('kick',.65,[(0,p(armL=z(35),foreArmL=z(50))),(.12,p(hip=hip(y=-.03),legR=z(68),shinR=z(-110),torso=z(12))),
