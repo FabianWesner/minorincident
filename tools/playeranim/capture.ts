@@ -9,6 +9,7 @@ const out = process.argv[2] ?? 'test-results/player-anim', after = process.argv[
 const ffmpeg = process.env.FFMPEG_BIN ?? `${homedir()}/Library/Caches/ms-playwright/ffmpeg-1011/ffmpeg-mac`;
 const { page, close } = await open({ width: 1280, height: 960 });
 const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
+page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
 type API = { frame(i: number): void; frames: number };
 try {
   await page.route('**/recordings/**', route => route.fulfill({ contentType: 'application/json', body: readFileSync(resolve(out, new URL(route.request().url()).pathname.replace('/recordings/', ''))) }));
@@ -16,7 +17,7 @@ try {
     if (only && scenario !== only) continue;
     const stem = `${out}/${after}-${variant}-${scenario}`; mkdirSync(out, { recursive: true });
     await page.goto(`${origin}/preview/player-anim.html?variant=${variant}&scenario=${scenario}&after=${after}`);
-    await page.waitForFunction(() => !!(window as unknown as { __PLAYER_ANIM__?: API }).__PLAYER_ANIM__);
+    await page.waitForFunction(() => !!(window as unknown as { __PLAYER_ANIM__?: API }).__PLAYER_ANIM__, null, { timeout: 120_000 });
     const count = await page.evaluate(() => (window as unknown as { __PLAYER_ANIM__: API }).__PLAYER_ANIM__.frames);
     const frames: Buffer[] = [];
     for (let i = 0; i < count; i += 4) {
