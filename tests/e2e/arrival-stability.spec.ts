@@ -3,7 +3,9 @@ import { test, expect, boot, testUrl } from './fixtures';
 
 for (const skin of [0, 1]) test(`courier skin=${skin} arrival remains idle beside corgi and curb for 3 seconds @E03 @E04`, async ({ page }, info) => {
   await boot(page, `${testUrl}&skin=${skin}`);
-  await page.evaluate(async () => { await window.__SS__!.loadLevel('L1', { seed: 1 }); window.__SS__!.pause(); });
+  await page.evaluate(() => window.__SS__!.loadLevel('L1', { seed: 1 }));
+  await page.getByRole('button', { name: 'Begin mission' }).click();
+  await page.evaluate(() => window.__SS__!.pause());
   for (const target of [{ x: -66.4, z: 5.5 }, { x: -67.5, z: 3.2 }]) {
     const point = await page.evaluate(p => window.__SS__!.input.project(p), target);
     await page.mouse.click(point.x, point.y);
