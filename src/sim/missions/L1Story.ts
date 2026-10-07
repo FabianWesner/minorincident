@@ -11,7 +11,10 @@ export const storyLines: Record<string, string> = {
   'handover.tech': '…Thanks. Don’t hang around.',
   'garage.courier': 'This’ll do.',
   'firestation.firefighter': 'In here! Quick!',
+  'firestation.caption': 'The fire station shutter holds, for now.',
 };
+/** PO: reading time per bubble, max(2.5 s, 1 s + 70 ms per character), in ticks. */
+export const readTicks = (text: string): number => Math.ceil(Math.max(2.5, 1 + .07 * [...text].length) * TICKS);
 /** Beat timing in ticks (deterministic; all from the mission tick). */
 const beat = { clerkWalkMs: 1.6, giveTicks: 54, contactTicks: 26, byeTicks: 40, garageTicks: 120, fireTicks: 6 * TICKS, fireTriggerM: 14 };
 
@@ -38,10 +41,15 @@ export class L1Story {
     // A pending click-to-move must not resume after the beat.
     world.controls.reset(); world.player?.locomotion.reset();
   }
+  /** Speaker 0 is the narration caption. The bubble stays up for its reading time and the beat holds meanwhile. */
   say(id: number, key: string): void {
-    const e = this.world.entities.get(id); if (!e) return;
-    this.world.events.emit({ type: 'story.say', tick: this.world.tick, id, text: storyLines[key], position: { x: e.transform.x, z: e.transform.z } });
+    const e = this.world.entities.get(id || 1); if (!e) return;
+    const text = storyLines[key], tick = this.world.tick;
+    this.l1.say = { id, text, at: tick, until: tick + readTicks(text) };
+    this.world.events.emit({ type: 'story.say', tick, id, text, position: { x: e.transform.x, z: e.transform.z } });
   }
+  /** True while the current bubble still needs reading time. */
+  get reading(): boolean { const s = this.l1.say; return !!s && this.world.tick < s.until; }
   private finish(): void {
     const l1 = this.l1, b = l1.beat; if (!b) return;
     (l1.beatsDone ??= []).push(b.id); l1.beat = null; this.world.storyLock = null;
@@ -98,12 +106,16 @@ export class L1Story {
       if (Math.hypot(player.transform.x - trigger.x, player.transform.z - trigger.z) <= beat.fireTriggerM && player.health.current > 0) this.firestation();
     }
     const b = l1.beat; if (!b) return;
-    const lock = world.storyLock, t = tick - b.start;
+    const lock = world.storyLock;
+    // A press while a bubble still reads completes the bubble; the next press skips the beat.
+    if (lock?.skip && this.reading) { l1.say!.until = tick; lock.skip = false; }
+    // The beat holds its pose until the bubble has been read (the hold points pause the beat clock).
+    const t = tick - b.start;
     if (b.id === 'pickup') this.updatePickup(t, !!lock?.skip);
-    else if (b.id === 'garage') { if (t >= beat.garageTicks || lock?.skip) this.finish(); }
+    else if (b.id === 'garage') { if (t >= beat.garageTicks && !this.reading || lock?.skip) this.finish(); }
     else if (b.id === 'firestation') this.updateFire(t, !!lock?.skip);
     else if (b.id === 'handover') { if (lock?.skip) this.finish(); }
-    if (l1.beat && tick >= l1.beat.until) this.finish();
+    if (l1.beat && tick >= l1.beat.until && !this.reading) this.finish();
   }
 
   private updatePickup(t: number, skip: boolean): void {
@@ -113,6 +125,8 @@ export class L1Story {
     const walk = Math.max(1, Math.round(Math.hypot(meet.x - home.x, meet.z - home.z) / beat.clerkWalkMs * TICKS));
     const give = walk, contact = give + beat.contactTicks, bye = give + beat.giveTicks, back = bye + beat.byeTicks, gone = back + walk;
     if (skip && t < back) { b.start -= back - t; t = back; }
+    // Keep waving until the clerk's line has been read.
+    if (t === back && this.reading) { b.start++; t--; }
     if (t < give) { const k = t / walk; this.place(clerk, home.x + (meet.x - home.x) * k, home.z + (meet.z - home.z) * k, meet); this.present(clerk, 'npc-carry', 'parcel'); }
     else if (t < bye) {
       this.place(clerk, meet.x, meet.z, player.transform);
@@ -136,7 +150,7 @@ export class L1Story {
     const id = this.pedestrian(waving, 'npc.firefighter-alive', 'firefighter', '#b5332b');
     this.l1.firefighterId = id;
     this.start('firestation', id, door);
-    const b = this.l1.beat!; b.until = this.world.tick + 20 * TICKS;
+    const b = this.l1.beat!; b.until = this.world.tick + 30 * TICKS;
     // Frame the open bay itself (the run-in happens there), not the midpoint of the approach.
     b.fx = door.x - dx / d * 2; b.fz = door.z - dz / d * 2; b.ax = door.x; b.az = door.z; b.mx = inside.x; b.mz = inside.z; b.sx = player.transform.x; b.sz = player.transform.z;
     const ff = this.world.entities.get(id); if (ff) this.place(ff, waving.x, waving.z, trigger);
@@ -150,6 +164,8 @@ export class L1Story {
     const at = (m: number) => { let rest = Math.max(0, Math.min(total, m)); for (let i = 0; i < lengths.length; i++) { if (rest <= lengths[i] || i === lengths.length - 1) { const k = lengths[i] ? Math.min(1, rest / lengths[i]) : 1; return { x: path[i].x + (path[i + 1].x - path[i].x) * k, z: path[i].z + (path[i + 1].z - path[i].z) * k }; } rest -= lengths[i]; } return path[path.length - 1]; };
     const lead = 24, runTicks = lead + Math.ceil(total / 4.6 * TICKS);
     if (skip && !b.slam) { b.start -= Math.max(0, runTicks + 20 - t); t = runTicks + 20; }
+    // The firefighter keeps waving (courier waiting) until the call has been read.
+    else if (t === lead && this.reading) { b.start++; t--; }
     if (player.survivor) player.survivor.invulnerableUntil = tick + 30;
     // The firefighter waves first, then turns in ahead of the courier.
     if (ff && !ff.hidden) { if (t < runTicks - 20) this.present(ff, 'npc-wave-in'); else { ff.hidden = true; if (ff.civilian) ff.civilian.story = null; } }
@@ -169,8 +185,10 @@ export class L1Story {
         const door = this.anchor('fire-bay-door');
         world.events.emit({ type: 'story.thud', tick, position: { x: door.x, z: door.z } });
       }
-      if (since === 30) this.mission.radio('L1.shutter');
-      if (since >= 180) { this.mission.setState('safe', true); this.finish(); }
+      if (since === 30) this.say(0, 'firestation.caption');
+      // Fade to black once the caption has been read, then the result.
+      if (since > 30 && b.fadeAt === undefined && !this.reading) b.fadeAt = tick;
+      if (b.fadeAt !== undefined && tick >= b.fadeAt + 70) { this.mission.setState('safe', true); this.finish(); }
     }
   }
   private move(e: EntitySnapshot, x: number, z: number, face: { x: number; z: number }): void {

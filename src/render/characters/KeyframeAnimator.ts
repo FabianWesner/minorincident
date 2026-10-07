@@ -100,7 +100,10 @@ export class KeyframeAnimator {
     this.locoWeight = Math.max(0, Math.min(1, this.locoWeight + (loco ? 1 : -1) * dt / (loco ? .2 : fade)));
     {
       const s = this.locoSpeed, move = smooth(.04, .55, s), run = smooth(1.9, 3.3, s);
-      const stride = (strides.walk + (strides.run - strides.walk) * run) * strideScale(this.rig.root);
+      // PO 27 (walk micro-vibration): stride-matching the short chibi legs gave 9 steps/s walking and up to 15 steps/s
+      // running, which reads as the figure vibrating. Cadence is capped (walk 2.0, run 2.7 cycles/s = 4-5.4 steps/s);
+      // above that the stride lengthens instead (small slide at the game camera beats a buzzing gait).
+      const stride = Math.max((strides.walk + (strides.run - strides.walk) * run) * strideScale(this.rig.root), s / (2 + .7 * run));
       if (s > .01) this.phase = (this.phase + s * dt / stride) % 1;
       const weights: [string, number][] = [['idle', 1 - move], ['walk', move * (1 - run)], ['run', move * run]];
       for (const [clip, w] of weights) {

@@ -114,13 +114,16 @@ export class CharacterView extends Group {
   /** `striking` snaps the body onto the attack direction (QA1-06: strikes read side-on when the
    * 6 rad/s locomotion turn lags a 0.27 s jab); locomotion keeps the bounded turn. */
   face(yaw: number, time: number, striking = false): void {
-    if (this.facingTime < 0 || time < this.facingTime) this.rotation.y = yaw;
-    const dt = Math.max(0, time - this.facingTime), delta = Math.atan2(Math.sin(yaw - this.rotation.y), Math.cos(yaw - this.rotation.y));
+    // Facing is tracked as a scalar heading. Reading it back from `rotation.y` (an XYZ Euler decomposed from the
+    // slerped quaternion) wraps beyond +-90 deg, which made the turn rate flip sign and the courier wobble while walking
+    // diagonally (PO: walk micro-vibration).
+    if (this.facingTime < 0 || time < this.facingTime) this.facing = yaw;
+    const dt = Math.max(0, time - this.facingTime), delta = Math.atan2(Math.sin(yaw - this.facing), Math.cos(yaw - this.facing));
     this.turn = Math.abs(delta) > .12 ? Math.sign(delta) : 0;
-    this.facingTarget.setFromAxisAngle(this.facingAxis, yaw);
     const amount = Math.abs(delta) > 0 ? Math.min(1 - Math.exp(-(striking ? 60 : 24) * dt), (striking ? 40 : 6) * dt / Math.abs(delta)) : 1;
-    this.quaternion.slerp(this.facingTarget, amount); this.facingTime = time;
+    this.facing += delta * amount; this.quaternion.setFromAxisAngle(this.facingAxis, this.facing); this.facingTime = time;
   }
+  private facing = 0;
   /** Held views borrow these nodes; CharacterView retains ownership of the rig. */
   /** Rig node of the visible variant (kick trails follow the foot). */
   node(name: 'footR' | 'shinR') { return this.characters.get(this.variant)?.rig[name]; }

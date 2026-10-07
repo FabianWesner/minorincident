@@ -160,7 +160,7 @@ test.each([
   expect(animator.clip).toBe('run');
   expect(walk.time / walk.getClip().duration).toBeCloseTo(run.time / run.getClip().duration, 6);
   const before = run.time / run.getClip().duration; parent.position.x += 4.5 / 60; animator.update(pose,91);
-  expect(((run.time / run.getClip().duration - before) % 1 + 1) % 1).toBeCloseTo(4.5 / 60 / (strides.run * strideScale(rig.root)), 2);
+  expect(((run.time / run.getClip().duration - before) % 1 + 1) % 1).toBeCloseTo(4.5 / 60 / Math.max(strides.run * strideScale(rig.root), 4.5 / 2.7), 2);
   actionCalls.mockRestore();
 });
 

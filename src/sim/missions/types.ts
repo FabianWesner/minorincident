@@ -76,7 +76,9 @@ export interface L1State {
   /** PO UAT story beats: the running beat (camera framing + input lock), finished beats and the beat actors. */
   beat?: { id: 'pickup' | 'handover' | 'garage' | 'firestation'; start: number; until: number; actor: number; fx: number; fz: number; ax: number; az: number; mx: number; mz: number;
     /** Ending: where the run started and the tick the shutter slammed (render: shutter, shake, fade). */
-    sx?: number; sz?: number; slam?: number } | null;
+    sx?: number; sz?: number; slam?: number; fadeAt?: number } | null;
+  /** The story bubble on screen (speaker 0 = caption): readable until `until`, the beat holds while it reads. */
+  say?: { id: number; text: string; at: number; until: number } | null;
   beatsDone?: string[]; clerkId?: number; firefighterId?: number;
 }
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number }
