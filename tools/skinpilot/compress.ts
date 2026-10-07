@@ -5,7 +5,7 @@ import { MeshoptDecoder, MeshoptEncoder } from 'meshoptimizer';
 
 /** Skinned pilot GLB → runtime GLB: weld/dedup + lossless meshopt. No quantization: quantize() rescales the
  * skinned mesh node, which skinning ignores (figure came out 2 m tall). */
-const [input = 'assets/char.courier-female-skin/model.glb', output = 'public/assets/models/char.courier-female.skin.glb'] = process.argv.slice(2);
+const [input = 'assets/char.courier-female-skin/model.skin.glb', output = 'public/assets/models/char.courier-female.skin.glb'] = process.argv.slice(2);
 await Promise.all([MeshoptDecoder.ready, MeshoptEncoder.ready]);
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder, 'meshopt.encoder': MeshoptEncoder });
 const doc = await io.read(input);

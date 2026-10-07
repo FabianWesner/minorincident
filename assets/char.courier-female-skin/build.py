@@ -1,5 +1,5 @@
 """Skinned courier (pilot, ?skin=1): one welded deforming body + rigid head/hands/shoes/bag on bones.
-Rebuild: python3 experiment/tools/blender_run.py <log-slug> assets/char.courier-female-skin/build.py -- --glb assets/char.courier-female-skin/model.glb [--render out.png]
+Rebuild: python3 experiment/tools/blender_run.py <log-slug> assets/char.courier-female-skin/build.py -- --glb assets/char.courier-female-skin/model.skin.glb [--render out.png]
 then copy to public/assets/models/char.courier-female.skin.glb (meshopt: npx tsx tools/skinpilot/compress.ts).
 +X forward, Z up. Reuses build.py's accepted outfit/joints (read-only), then:
 1. spreads arms/legs so the voxel remesh cannot fuse arm-torso or thigh-thigh,

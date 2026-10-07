@@ -12,6 +12,7 @@ import type { PaletteMaterial } from '../PaletteMaterial';
 import { KeyframeAnimator, type RidePose } from './KeyframeAnimator';
 import { disposeCharacter, loadCharacter } from './rig';
 import { alignSkeleton } from './skin';
+import { skinClips } from './clips';
 
 type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { animator: KeyframeAnimator; gear: Group[]; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
@@ -85,7 +86,7 @@ export class CharacterView extends Group {
       attachment(3, character.rig.head, [0.23, 0.055, 0.4], [0, 0.14, 0], 'survivorRed');
       attachment(4, character.rig.torso, [0.14, 0.25, 0.37], [0.16, 0.08, 0], 'policeBlue');
       attachment(4, character.rig.head, [0.08, 0.11, 0.16], [0.18, 0.005, 0], 'uiDark');
-      this.characters.set(variant, { ...character, animator: new KeyframeAnimator(character.rig), gear, sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      this.characters.set(variant, { ...character, animator: new KeyframeAnimator(character.rig, skin && this.skinned && variant === 'female' && outfit === 'courier' ? skinClips : undefined), gear, sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
     this.makeParcel(materials);
   }
