@@ -55,3 +55,13 @@ Supplementary captures: [pickup](l1v2/l1-pickup.png), [escape](l1v2/l1-escape.pn
 ## Review findings / handoff
 
 No overall vision pass is claimed. Opus must score the five required scenes and decide whether any finding is P0/P1. Particular concerns: horde player/body overlap, strong opaque annex smoke, visible occlusion dithering at the garage/bay, reference fidelity after the shorter LOD distances, and sparse/bare yard areas in the morning view. The invitation also shows a pursuing infected overlapping the firefighter near the bay; the safe image has strong tree/occlusion dithering. The lane has not assigned those concerns final severities. The images and entity proof are ready for that review; static images cannot substitute for motion/attack-telegraph or human-feel assessment.
+
+## Orchestrator (Opus) AC23 verdict — 2026-10-07
+| Scene | Score | Finding |
+|---|---|---|
+| l1-morning | 8/10 | Living suburb: café, pedestrians, gardens, bikes. Some yards bare (P2). |
+| l1-facility | 7/10 | Fence, warning signs, medical branding read "guarded annex". OK. |
+| l1-accident | 7/10 | Contained damage, glass, smoke column; plume is opaque and covers the sign (P2). |
+| l1-spread | 5/10 | **P1**: the mid-transformation victim is a tiny figure at the fence; the transformation does not read at the game camera (no clear stagger/colour shift/glow cue, face hidden by the fence). |
+| l1-horde | 6/10 | **P1**: only a handful of infected visible near the player; it does not read "too many — run" (the minimap carries the message, the scene does not). Close bodies overlap. |
+**AC23: FAIL** (two scenes < 7, two P1). E19 stays in-progress until fixed and re-reviewed.
