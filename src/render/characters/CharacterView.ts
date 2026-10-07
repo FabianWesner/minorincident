@@ -91,7 +91,7 @@ export class CharacterView extends Group {
     }
     // E19 story: the courier parcel sits between her hands while she carries it.
     const character = this.characters.get(this.variant);
-    if (this.parcel) this.parcel.visible = !!pose.carrying && !!character;
+    if (this.parcel) this.parcel.visible = !!pose.carrying && !!character && !ride; // riding: the parcel rides in the cargo box (BicycleView)
     if (this.parcel?.visible && character) {
       this.updateMatrixWorld(true);
       const l = character.rig.handL.getWorldPosition(this.scratchA), r = character.rig.handR.getWorldPosition(this.scratchB);

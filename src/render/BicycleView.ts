@@ -1,4 +1,5 @@
-import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, TorusGeometry, type Object3D } from 'three/webgpu';
+import { Box3, BoxGeometry, Camera, Group, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
+import '../render/interaction.css';
 import { AssetRegistry } from '../assets/registry';
 import manifest from '../assets/manifest.json';
 import { atLeast, type AssetDef } from '../assets/types';
@@ -44,7 +45,7 @@ function bicyclePlaceholder(): Group {
   part(crank, 'pedalL', new BoxGeometry(.14, .03, .08), dark, 0, .17, .12); part(crank, 'pedalR', new BoxGeometry(.14, .03, .08), dark, 0, -.17, -.12);
   return root;
 }
-interface Rig { root: Group; model: Object3D; wheelF?: Object3D; wheelR?: Object3D; handlebar?: Object3D; crank?: Object3D; pedals: Object3D[]; lean: Group; offset: number; wheelAngle: number; last: { x: number; z: number } | null; leanAngle: number }
+interface Rig { root: Group; model: Object3D; wheelF?: Object3D; wheelR?: Object3D; handlebar?: Object3D; crank?: Object3D; pedals: Object3D[]; lean: Group; parcel: Group; top: Vector3; glint: Mesh; placed: number; offset: number; wheelAngle: number; last: { x: number; z: number } | null; leanAngle: number }
 /**
  * Courier bicycle (spec 5.10). Follows the authoritative bicycle entity; wheels roll with the travelled distance, the crank
  * turns with the pedal phase, the handlebar and front wheel steer, and the frame leans into turns like a toy. Uses the
@@ -56,7 +57,10 @@ export class BicycleView extends Group {
   private loading = false;
   private disposed = false;
   constructor(private readonly world: SimWorld, materials: Materials) {
-    super(); this.name = 'bicycle'; this.registry = new AssetRegistry(() => {}, { materials, manifest: definitions() });
+    super(); this.name = 'bicycle';
+    this.prompt.className = 'interaction-prompt'; this.prompt.dataset.testid = 'bike-prompt'; this.prompt.hidden = true; this.prompt.innerHTML = '<strong>Cargo bike</strong><span>Stand here or press E to ride</span>';
+    document.querySelector('#game')?.append(this.prompt);
+    this.registry = new AssetRegistry(() => {}, { materials, manifest: definitions() });
   }
   async load(): Promise<void> { await this.build(); this.update(); }
   private async build(): Promise<void> {
@@ -69,9 +73,20 @@ export class BicycleView extends Group {
     const find = (name: string) => model.getObjectByName(name);
     const wheelF = find('wheelF'), wheelR = find('wheelR'); for (const w of [wheelF, wheelR]) if (w) w.rotation.order = 'YXZ';
     model.scale.setScalar(SCALE); model.traverse(n => { if (n instanceof Mesh) { n.castShadow = true; n.receiveShadow = true; } });
-    this.rig = { root, model, wheelF, wheelR, handlebar: find('handlebar'), crank: find('crank'), pedals: [find('pedalL'), find('pedalR')].filter((n): n is Object3D => !!n), lean, offset: 0, wheelAngle: 0, last: null, leanAngle: 0 };
+    // Courier parcel that rides on the cargo box lid while she carries it (dropped in when she mounts), and a glint above the parked bike.
+    lean.updateMatrixWorld(true);
+    const basket = find('basket') ?? model, box = new Box3().setFromObject(basket), top = box.getCenter(new Vector3()); top.y = box.max.y;
+    // The delivered tub carries no measurable mesh under the `basket` node: fall back to its authored position (lid top ~0.85 m in model units).
+    if (!Number.isFinite(top.y)) top.set(.43 * SCALE, .85 * SCALE, 0);
+    const parcel = new Group(); parcel.visible = false;
+    for (const [w, h, d, color, y] of [[.3, .24, .26, '#b98a55', .12], [.31, .045, .08, '#2aa198', .24]] as const) { const m = new Mesh(new BoxGeometry(w, h, d), new MeshBasicNodeMaterial({ color })); m.position.y = y; m.castShadow = true; parcel.add(m); }
+    lean.add(parcel);
+    const glint = new Mesh(new OctahedronGeometry(.22), new MeshBasicNodeMaterial({ color: '#58ffe0', depthTest: false, transparent: true, opacity: .9 })); glint.renderOrder = 80; root.add(glint);
+    this.rig = { parcel, top, glint, placed: 0, root, model, wheelF, wheelR, handlebar: find('handlebar'), crank: find('crank'), pedals: [find('pedalL'), find('pedalR')].filter((n): n is Object3D => !!n), lean, offset: 0, wheelAngle: 0, last: null, leanAngle: 0 };
   }
-  update(): void {
+  private readonly prompt = document.createElement('div');
+  private readonly projection = new Vector3();
+  update(camera?: Camera): void {
     const bike = this.world.vehicles?.bicycle.entity;
     if (!bike?.bicycle) return;
     if (!this.rig) { void this.build(); return; }
@@ -90,6 +105,16 @@ export class BicycleView extends Group {
     rig.offset = lerp(rig.offset, riding ? -seat * SCALE : 0, .25); rig.lean.position.x = rig.offset;
     rig.leanAngle = lerp(rig.leanAngle, riding ? -b.steer * speed * .32 : 0, .2);
     rig.lean.rotation.x = rig.leanAngle; rig.lean.position.y = riding ? Math.abs(Math.sin(b.pedal * 2)) * .012 * speed : 0;
+    // Parcel in the cargo box: she carries it (sim `survivor.carrying`) and is riding; it drops in over ~0.35 s.
+    const carrying = !!this.world.entities.get(1)?.survivor?.carrying;
+    rig.placed = riding && carrying ? Math.min(1, rig.placed + 1 / 21) : 0;
+    rig.parcel.visible = rig.placed > 0;
+    if (rig.parcel.visible) { const k = rig.placed, e = 1 - (1 - k) ** 2; rig.parcel.position.set(rig.top.x, rig.top.y + (1 - e) * .7, rig.top.z); rig.parcel.scale.setScalar(.6 + .4 * e); }
+    // Parked bike: floating teal glint (readable from the start) and a ride prompt when close.
+    const player = this.world.entities.get(1)?.transform, dist = player ? Math.hypot(player.x - t.x, player.z - t.z) : Infinity;
+    rig.glint.visible = !riding && dist < 30; rig.glint.position.set(0, 1.5 + Math.sin(this.world.tick / 20) * .08, 0); rig.glint.rotation.y = this.world.tick / 25;
+    const near = !riding && dist <= 1.6 && !!camera; this.prompt.hidden = !near;
+    if (near && camera) { this.projection.set(t.x, 1.9, t.z).project(camera); this.prompt.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.prompt.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`; }
   }
-  dispose(): void { this.disposed = true; this.clear(); this.rig = null; void this.registry.dispose(); }
+  dispose(): void { this.prompt.remove(); this.disposed = true; this.clear(); this.rig = null; void this.registry.dispose(); }
 }
