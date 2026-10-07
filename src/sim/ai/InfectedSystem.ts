@@ -191,7 +191,11 @@ export class InfectedSystem {
         for (const target of this.barricades) if (!obstacle && !target.barricade && target.health.current > 0 && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2) { obstacle = target; break; }
         // Hold at an obstructing brace during cooldown. Seeking an unreachable goal here
         // makes the nearest-cell fallback pull attackers away between their hits.
-        if (obstacle) { if (this.world.tick >= b.cooldown) { this.windup(e); b.targetId = obstacle.id; } continue; }
+        if (obstacle) {
+          if (obstacle.barricade && !this.world.barricades!.withinReach(e, obstacle)) { this.seek(e, this.world.barricades!.approach(e, obstacle)); this.world.spatial.set(e.id, e.transform.x, e.transform.z); }
+          else if (this.world.tick >= b.cooldown) { this.windup(e); b.targetId = obstacle.id; }
+          continue;
+        }
         const def = infectedDef(e.archetype);
         let range = def.range;
         if (b.special === 'lunge') range = 2.5;
@@ -260,7 +264,7 @@ export class InfectedSystem {
     const b = e.infected!, player = this.world.entities.get(1)!, def = infectedDef(e.archetype);
     if (b.targetId) {
       const target = this.world.entities.get(b.targetId); b.targetId = 0;
-      if (target && target.health.current > 0 && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2 + (target.barricade ? target.combat?.radius ?? 0 : 0)) {
+      if (target && target.health.current > 0 && (target.barricade ? this.world.barricades!.withinReach(e, target) : Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2)) {
         const amount = this.world.combat!.damage.apply({ sourceId: e.id, targetId: target.id, attackId: b.attackId, actionId: e.archetype, origin: e.transform, direction: { x: 0, z: 0 }, base: this.barricadeDamage(e.id, def.damage), multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
         this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, targetId: target.id, attackId: b.attackId, special: 'barricade', amount });
       }

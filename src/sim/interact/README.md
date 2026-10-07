@@ -45,7 +45,7 @@ Mission API: `world.barricades.barricadeIntact(slotId)` and
 presentation feedback. Infected use their authored windup/damage plus 1 s cooldown;
 Brute damage is 5x and Butcher damage 8x. Short detours are preferred to attacks.
 
-Test API adds `barricades.intact/all/slots` and `perf().awakeProps/propUploads`.
+Test API version 1.11.0 adds `barricades.intact/all/slots` and `perf().awakeProps/propUploads`.
 Fixtures: `prop-yard` (300 sleeping props), `barricade-lab` (brace and board-up),
 `barricade-stress` (60 awake bodies and 30 attacking runners). Fixture props are
 instanced code boxes; campaign props retain their production GLB batches.
