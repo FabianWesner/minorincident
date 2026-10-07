@@ -4,6 +4,8 @@ import { AssetRegistry } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
 import { RiderContacts } from './characters/RiderContacts';
+import { bicycleHandling } from '../data/vehicles';
+import { l1v2 } from '../data/l1v2';
 
 /** The delivered cargo bike is courier-sized (2.8 m); the game courier is chibi (1.4 m), so the bike is drawn at toy scale: saddle at the hips, cargo box below the rider's chest. */
 const ASSET = 'veh.courier-bike', WHEEL_R = { F: .335, R: .405 }, SCALE = .6;
@@ -116,15 +118,16 @@ export class BicycleView extends Group {
     rig.root.visible = true; rig.root.position.set(t.x, Math.max(0, ground), t.z); rig.root.rotation.y = t.yaw;
     if (rig.last) { const d = Math.hypot(t.x - rig.last.x, t.z - rig.last.z); rig.wheelAngle += d; }
     rig.last = { x: t.x, z: t.z };
-    if (rig.wheelF) { rig.wheelF.rotation.z = -rig.wheelAngle / (WHEEL_R.F * SCALE); rig.wheelF.rotation.y = b.steer * .4; }
+    const steering = b.steer * bicycleHandling.maxSteering / (1 + b.speed / l1v2.bicycle.speedMs);
+    if (rig.wheelF) { rig.wheelF.rotation.z = -rig.wheelAngle / (WHEEL_R.F * SCALE); rig.wheelF.rotation.y = -steering; }
     if (rig.wheelR) rig.wheelR.rotation.z = -rig.wheelAngle / (WHEEL_R.R * SCALE);
-    if (rig.handlebar) rig.handlebar.rotation.y = b.steer * .5;
+    if (rig.handlebar) rig.handlebar.rotation.y = -steering;
     if (rig.crank) { rig.crank.rotation.z = -b.pedal; for (const p of rig.pedals) p.rotation.z = b.pedal; }
     // Toy feel: lean into the turn and bob slightly with every pedal stroke while riding.
     const riding = b.mounted, speed = b.speed / 7.5;
     // Kickstand folds up while riding and is down when parked (`kickstand` node of the rebuilt model; absent on the old one).
     rig.kick = riding ? lerp(rig.kick, 1, .2) : 0; if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * Math.PI / 2;
-    rig.leanAngle = lerp(rig.leanAngle, riding ? -b.steer * speed * .32 : 0, .2);
+    rig.leanAngle = riding ? b.lean ?? 0 : 0;
     rig.lean.rotation.x = rig.leanAngle; rig.lean.position.y = riding ? Math.abs(Math.sin(b.pedal * 2)) * .012 * speed : 0;
     // Parcel in the cargo box: she carries it (sim `survivor.carrying`) and is riding; it drops in over ~0.35 s.
     const carrying = !!this.world.entities.get(1)?.survivor?.carrying;

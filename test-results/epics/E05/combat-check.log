@@ -1,0 +1,19 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel
+
+ ✓ tests/sim/combat/combat.test.ts (19 tests) 244ms
+ ✓ tests/sim/combat/fast-clicks.test.ts (8 tests) 125ms
+ ✓ tests/sim/weapons.test.ts (69 tests) 669ms
+   ✓ T-E06-perf @E06 @perf sustained weapons, fire and 200 reactive infected stay below 4ms sim p95 349ms
+ ✓ tests/sim/combat/l1-duel.test.ts (2 tests) 951ms
+   ✓ E19 @E19 @E19-AC14 duel battery: newbie beats 1 (≥19/20) and 2 (≥14/20) unarmed; standing vs 5 dies within 20 s (≥18/20); bat kills in 2 949ms
+ ✓ tests/sim/combat/balance.test.ts (3 tests) 2784ms
+   ✓ T-E05-14 T-E06-10 @E05 @E05-AC14 @E06 @E06-AC10 measure every reference weapon × archetype TTK in authored bands 2600ms
+ ✓ tests/sim/combat/m1-feel.test.ts (4 tests) 144ms
+
+ Test Files  6 passed (6)
+      Tests  105 passed (105)
+   Start at  13:44:18
+   Duration  3.57s (tests 73%, transform 18%, import 9%)
+
+JSON report written to /Users/wesner/Workspace/minorincident/.claude/worktrees/combat-feel/test-results/epics/E05/combat-check.json

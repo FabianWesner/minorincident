@@ -36,6 +36,7 @@
         "run",
         "-t",
         "@(?:E09)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
         "--reporter=default",
         "--reporter=json",
         "--outputFile=test-results/epics/E09/vitest.json"

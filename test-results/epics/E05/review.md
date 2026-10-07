@@ -16,3 +16,12 @@ E05's acceptance table has no visual/vision criterion. This is a supplemental re
 | Full A/B/C/F look, proportions, asset/HUD review | N/A | Placeholder infected and a plain arena cannot establish the district, catalog, crowd or HUD art criteria. |
 
 Scoped result: all four applicable must items pass, 1/1 applicable should item passes. The comparison visibly shows the absence of district props, weapon models, attack FX and full HUD; no claim is made that this empty mechanics arena matches the mockup's content density.
+
+
+## Combat-feel review — 2026-10-07
+
+Opened the refreshed `combat-arena.png`, `ground-hit-fists.png`, and `ground-hit-bat.png` at 1600×900, DPR 1, headless Chromium/Metal WebGL2. The current arena uses the integrated character registry rather than the original blue placeholders. The player, bat, targets and purple shadows remain distinct against the simple ground.
+
+Both ground-hit captures show a clear white hit flash and blood beside the target, with the player close enough to continue striking. The fists capture is during the special kick's fall and the first ordinary punch; the bat capture shows the killed target in its settled ground death pose with a larger blood pool. White flash temporarily obscures body detail, as existing impact feedback intends. A still image cannot certify hit-stop timing; the sim tests assert one 40–70 ms hit-stop event per landed hit, and the real-click browser tests verify damage and death during the active knockdown window.
+
+This review covers the melee feedback change and preserves the original arena review's scope. No full-level art or device frame-rate claim is made. All three retained images are exactly 1600 px wide; no video was produced.

@@ -1,0 +1,914 @@
+{
+  "completed": 12,
+  "runs": 18,
+  "time": 2997.616666666667,
+  "deaths": 0,
+  "failures": {
+    "stalled": 6
+  },
+  "reports": [
+    {
+      "level": "L1",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 101.15,
+      "deaths": 0,
+      "kills": 6,
+      "damageTaken": 10,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "pickup",
+          "t": 10.85
+        },
+        {
+          "id": "deliver",
+          "t": 39.733333333333334
+        },
+        {
+          "id": "escape",
+          "t": 53.75
+        },
+        {
+          "id": "weapon",
+          "t": 69.83333333333333
+        },
+        {
+          "id": "firestation",
+          "t": 101.15
+        }
+      ],
+      "furthestObjective": "firestation",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    },
+    {
+      "level": "L1",
+      "policy": "complete",
+      "seed": 2,
+      "completed": true,
+      "time": 99.03333333333333,
+      "deaths": 0,
+      "kills": 4,
+      "damageTaken": 10,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "pickup",
+          "t": 11.95
+        },
+        {
+          "id": "deliver",
+          "t": 40.81666666666667
+        },
+        {
+          "id": "escape",
+          "t": 54.88333333333333
+        },
+        {
+          "id": "weapon",
+          "t": 71.05
+        },
+        {
+          "id": "firestation",
+          "t": 99.03333333333333
+        }
+      ],
+      "furthestObjective": "firestation",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    },
+    {
+      "level": "L1",
+      "policy": "complete",
+      "seed": 3,
+      "completed": true,
+      "time": 101.86666666666666,
+      "deaths": 0,
+      "kills": 4,
+      "damageTaken": 0,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "pickup",
+          "t": 12.533333333333333
+        },
+        {
+          "id": "deliver",
+          "t": 41.43333333333333
+        },
+        {
+          "id": "escape",
+          "t": 55.2
+        },
+        {
+          "id": "weapon",
+          "t": 71.28333333333333
+        },
+        {
+          "id": "firestation",
+          "t": 101.86666666666666
+        }
+      ],
+      "furthestObjective": "firestation",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    },
+    {
+      "level": "L2",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 102.45,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "neighbor",
+          "t": 0.7333333333333333
+        },
+        {
+          "id": "school",
+          "t": 16.083333333333332
+        },
+        {
+          "id": "brother",
+          "t": 16.683333333333334
+        },
+        {
+          "id": "escort-brother",
+          "t": 41.36666666666667
+        },
+        {
+          "id": "escort-alvarez",
+          "t": 42.016666666666666
+        },
+        {
+          "id": "board",
+          "t": 102.45
+        }
+      ],
+      "furthestObjective": "board",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    },
+    {
+      "level": "L2",
+      "policy": "complete",
+      "seed": 2,
+      "completed": true,
+      "time": 102.11666666666666,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "neighbor",
+          "t": 0.7333333333333333
+        },
+        {
+          "id": "school",
+          "t": 16.083333333333332
+        },
+        {
+          "id": "brother",
+          "t": 16.683333333333334
+        },
+        {
+          "id": "escort-brother",
+          "t": 41.36666666666667
+        },
+        {
+          "id": "escort-alvarez",
+          "t": 41.8
+        },
+        {
+          "id": "board",
+          "t": 102.11666666666666
+        }
+      ],
+      "furthestObjective": "board",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    },
+    {
+      "level": "L2",
+      "policy": "complete",
+      "seed": 3,
+      "completed": true,
+      "time": 102.5,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "neighbor",
+          "t": 0.7333333333333333
+        },
+        {
+          "id": "school",
+          "t": 16.083333333333332
+        },
+        {
+          "id": "brother",
+          "t": 16.683333333333334
+        },
+        {
+          "id": "escort-brother",
+          "t": 41.38333333333333
+        },
+        {
+          "id": "escort-alvarez",
+          "t": 42.083333333333336
+        },
+        {
+          "id": "board",
+          "t": 102.5
+        }
+      ],
+      "furthestObjective": "board",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    },
+    {
+      "level": "L3",
+      "policy": "complete",
+      "seed": 1,
+      "completed": false,
+      "time": 59.43333333333333,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {
+        "stalled": 1
+      },
+      "objectiveTimeline": [
+        {
+          "id": "car",
+          "t": 5.866666666666666
+        }
+      ],
+      "furthestObjective": "market-route",
+      "activeObjectives": [
+        "market-route",
+        "park-route"
+      ],
+      "outcome": "stalled",
+      "blocker": {
+        "objective": "market-route",
+        "detail": "stalled: Drive via the supermarket",
+        "player": {
+          "x": 35.68242263793945,
+          "z": 37.937469482421875
+        },
+        "distance": 11.047227847186585,
+        "actors": {
+          "sedan": {
+            "x": 36.20024871826172,
+            "z": 38.44894027709961,
+            "hp": 300,
+            "state": "normal",
+            "driver": null,
+            "speed": 0.02408815495005639,
+            "yaw": -0.0018795742329881372
+          }
+        }
+      }
+    },
+    {
+      "level": "L3",
+      "policy": "complete",
+      "seed": 2,
+      "completed": false,
+      "time": 59.43333333333333,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {
+        "stalled": 1
+      },
+      "objectiveTimeline": [
+        {
+          "id": "car",
+          "t": 5.866666666666666
+        }
+      ],
+      "furthestObjective": "market-route",
+      "activeObjectives": [
+        "market-route",
+        "park-route"
+      ],
+      "outcome": "stalled",
+      "blocker": {
+        "objective": "market-route",
+        "detail": "stalled: Drive via the supermarket",
+        "player": {
+          "x": 35.68242263793945,
+          "z": 37.937469482421875
+        },
+        "distance": 11.047227847186585,
+        "actors": {
+          "sedan": {
+            "x": 36.20024871826172,
+            "z": 38.44894027709961,
+            "hp": 300,
+            "state": "normal",
+            "driver": null,
+            "speed": 0.02408815495005639,
+            "yaw": -0.0018795742329881372
+          }
+        }
+      }
+    },
+    {
+      "level": "L3",
+      "policy": "complete",
+      "seed": 3,
+      "completed": false,
+      "time": 59.43333333333333,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {
+        "stalled": 1
+      },
+      "objectiveTimeline": [
+        {
+          "id": "car",
+          "t": 5.866666666666666
+        }
+      ],
+      "furthestObjective": "market-route",
+      "activeObjectives": [
+        "market-route",
+        "park-route"
+      ],
+      "outcome": "stalled",
+      "blocker": {
+        "objective": "market-route",
+        "detail": "stalled: Drive via the supermarket",
+        "player": {
+          "x": 35.68242263793945,
+          "z": 37.937469482421875
+        },
+        "distance": 11.047227847186585,
+        "actors": {
+          "sedan": {
+            "x": 36.20024871826172,
+            "z": 38.44894027709961,
+            "hp": 300,
+            "state": "normal",
+            "driver": null,
+            "speed": 0.02408815495005639,
+            "yaw": -0.0018795742329881372
+          }
+        }
+      }
+    },
+    {
+      "level": "L4",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 73.4,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 8,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "hub",
+          "t": 3.6166666666666667
+        },
+        {
+          "id": "breaker-1",
+          "t": 21.333333333333332
+        },
+        {
+          "id": "breaker-2",
+          "t": 24.333333333333332
+        },
+        {
+          "id": "breaker-3",
+          "t": 27.333333333333332
+        },
+        {
+          "id": "fuse",
+          "t": 39.516666666666666
+        },
+        {
+          "id": "crossing",
+          "t": 59.78333333333333
+        },
+        {
+          "id": "blockade",
+          "t": 73.38333333333334
+        },
+        {
+          "id": "bridge",
+          "t": 73.4
+        }
+      ],
+      "furthestObjective": "bridge",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    },
+    {
+      "level": "L4",
+      "policy": "complete",
+      "seed": 2,
+      "completed": true,
+      "time": 73.4,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 8,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "hub",
+          "t": 3.6166666666666667
+        },
+        {
+          "id": "breaker-1",
+          "t": 21.333333333333332
+        },
+        {
+          "id": "breaker-2",
+          "t": 24.333333333333332
+        },
+        {
+          "id": "breaker-3",
+          "t": 27.333333333333332
+        },
+        {
+          "id": "fuse",
+          "t": 39.516666666666666
+        },
+        {
+          "id": "crossing",
+          "t": 59.78333333333333
+        },
+        {
+          "id": "blockade",
+          "t": 73.38333333333334
+        },
+        {
+          "id": "bridge",
+          "t": 73.4
+        }
+      ],
+      "furthestObjective": "bridge",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    },
+    {
+      "level": "L4",
+      "policy": "complete",
+      "seed": 3,
+      "completed": true,
+      "time": 73.4,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 8,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "hub",
+          "t": 3.6166666666666667
+        },
+        {
+          "id": "breaker-1",
+          "t": 21.333333333333332
+        },
+        {
+          "id": "breaker-2",
+          "t": 24.333333333333332
+        },
+        {
+          "id": "breaker-3",
+          "t": 27.333333333333332
+        },
+        {
+          "id": "fuse",
+          "t": 39.516666666666666
+        },
+        {
+          "id": "crossing",
+          "t": 59.78333333333333
+        },
+        {
+          "id": "blockade",
+          "t": 73.38333333333334
+        },
+        {
+          "id": "bridge",
+          "t": 73.4
+        }
+      ],
+      "furthestObjective": "bridge",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    },
+    {
+      "level": "L5",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 559.9,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 16,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "prep-1",
+          "t": 27.966666666666665
+        },
+        {
+          "id": "hold-1",
+          "t": 117.96666666666667
+        },
+        {
+          "id": "fallback-1",
+          "t": 127.3
+        },
+        {
+          "id": "prep-2",
+          "t": 147.3
+        },
+        {
+          "id": "hold-2",
+          "t": 247.3
+        },
+        {
+          "id": "fallback-2",
+          "t": 272.28333333333336
+        },
+        {
+          "id": "prep-3",
+          "t": 292.28333333333336
+        },
+        {
+          "id": "hold-3",
+          "t": 402.28333333333336
+        },
+        {
+          "id": "fallback-3",
+          "t": 419.9
+        },
+        {
+          "id": "prep-4",
+          "t": 439.9
+        },
+        {
+          "id": "hold-4",
+          "t": 559.9
+        }
+      ],
+      "furthestObjective": "hold-4",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    },
+    {
+      "level": "L5",
+      "policy": "complete",
+      "seed": 2,
+      "completed": true,
+      "time": 559.9,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 16,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "prep-1",
+          "t": 27.966666666666665
+        },
+        {
+          "id": "hold-1",
+          "t": 117.96666666666667
+        },
+        {
+          "id": "fallback-1",
+          "t": 127.3
+        },
+        {
+          "id": "prep-2",
+          "t": 147.3
+        },
+        {
+          "id": "hold-2",
+          "t": 247.3
+        },
+        {
+          "id": "fallback-2",
+          "t": 272.28333333333336
+        },
+        {
+          "id": "prep-3",
+          "t": 292.28333333333336
+        },
+        {
+          "id": "hold-3",
+          "t": 402.28333333333336
+        },
+        {
+          "id": "fallback-3",
+          "t": 419.9
+        },
+        {
+          "id": "prep-4",
+          "t": 439.9
+        },
+        {
+          "id": "hold-4",
+          "t": 559.9
+        }
+      ],
+      "furthestObjective": "hold-4",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    },
+    {
+      "level": "L5",
+      "policy": "complete",
+      "seed": 3,
+      "completed": true,
+      "time": 559.9,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 16,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "prep-1",
+          "t": 27.966666666666665
+        },
+        {
+          "id": "hold-1",
+          "t": 117.96666666666667
+        },
+        {
+          "id": "fallback-1",
+          "t": 127.3
+        },
+        {
+          "id": "prep-2",
+          "t": 147.3
+        },
+        {
+          "id": "hold-2",
+          "t": 247.3
+        },
+        {
+          "id": "fallback-2",
+          "t": 272.28333333333336
+        },
+        {
+          "id": "prep-3",
+          "t": 292.28333333333336
+        },
+        {
+          "id": "hold-3",
+          "t": 402.28333333333336
+        },
+        {
+          "id": "fallback-3",
+          "t": 419.9
+        },
+        {
+          "id": "prep-4",
+          "t": 439.9
+        },
+        {
+          "id": "hold-4",
+          "t": 559.9
+        }
+      ],
+      "furthestObjective": "hold-4",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    },
+    {
+      "level": "L6",
+      "policy": "complete",
+      "seed": 1,
+      "completed": false,
+      "time": 103.43333333333334,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 8,
+      "failures": {
+        "stalled": 1
+      },
+      "objectiveTimeline": [
+        {
+          "id": "home",
+          "t": 7.833333333333333
+        },
+        {
+          "id": "school",
+          "t": 18.75
+        },
+        {
+          "id": "mall",
+          "t": 40.55
+        },
+        {
+          "id": "engine",
+          "t": 58.416666666666664
+        }
+      ],
+      "furthestObjective": "drive",
+      "activeObjectives": [
+        "drive"
+      ],
+      "outcome": "stalled",
+      "blocker": {
+        "objective": "drive",
+        "detail": "stalled: Drive through Main Street to the town edge",
+        "player": {
+          "x": 13.215161323547363,
+          "z": 105.27894592285156
+        },
+        "distance": 96.70100124001706,
+        "actors": {
+          "device-school": {
+            "x": -14,
+            "z": 47,
+            "hp": 100,
+            "state": ""
+          },
+          "device-engine": {
+            "x": 14,
+            "z": 105.16855,
+            "hp": 100,
+            "state": ""
+          },
+          "fire-engine": {
+            "x": 13.215161323547363,
+            "z": 105.27894592285156,
+            "hp": 1600,
+            "state": "normal",
+            "driver": 1,
+            "speed": 0.000024799383519583015,
+            "yaw": 0.026322024634529068
+          }
+        }
+      }
+    },
+    {
+      "level": "L6",
+      "policy": "complete",
+      "seed": 2,
+      "completed": false,
+      "time": 103.43333333333334,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 8,
+      "failures": {
+        "stalled": 1
+      },
+      "objectiveTimeline": [
+        {
+          "id": "home",
+          "t": 7.833333333333333
+        },
+        {
+          "id": "school",
+          "t": 18.75
+        },
+        {
+          "id": "mall",
+          "t": 40.55
+        },
+        {
+          "id": "engine",
+          "t": 58.416666666666664
+        }
+      ],
+      "furthestObjective": "drive",
+      "activeObjectives": [
+        "drive"
+      ],
+      "outcome": "stalled",
+      "blocker": {
+        "objective": "drive",
+        "detail": "stalled: Drive through Main Street to the town edge",
+        "player": {
+          "x": 13.215161323547363,
+          "z": 105.27894592285156
+        },
+        "distance": 96.70100124001706,
+        "actors": {
+          "device-school": {
+            "x": -14,
+            "z": 47,
+            "hp": 100,
+            "state": ""
+          },
+          "device-engine": {
+            "x": 14,
+            "z": 105.16855,
+            "hp": 100,
+            "state": ""
+          },
+          "fire-engine": {
+            "x": 13.215161323547363,
+            "z": 105.27894592285156,
+            "hp": 1600,
+            "state": "normal",
+            "driver": 1,
+            "speed": 0.000024799383519583015,
+            "yaw": 0.026322024634529068
+          }
+        }
+      }
+    },
+    {
+      "level": "L6",
+      "policy": "complete",
+      "seed": 3,
+      "completed": false,
+      "time": 103.43333333333334,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 8,
+      "failures": {
+        "stalled": 1
+      },
+      "objectiveTimeline": [
+        {
+          "id": "home",
+          "t": 7.833333333333333
+        },
+        {
+          "id": "school",
+          "t": 18.75
+        },
+        {
+          "id": "mall",
+          "t": 40.55
+        },
+        {
+          "id": "engine",
+          "t": 58.416666666666664
+        }
+      ],
+      "furthestObjective": "drive",
+      "activeObjectives": [
+        "drive"
+      ],
+      "outcome": "stalled",
+      "blocker": {
+        "objective": "drive",
+        "detail": "stalled: Drive through Main Street to the town edge",
+        "player": {
+          "x": 13.215161323547363,
+          "z": 105.27894592285156
+        },
+        "distance": 96.70100124001706,
+        "actors": {
+          "device-school": {
+            "x": -14,
+            "z": 47,
+            "hp": 100,
+            "state": ""
+          },
+          "device-engine": {
+            "x": 14,
+            "z": 105.16855,
+            "hp": 100,
+            "state": ""
+          },
+          "fire-engine": {
+            "x": 13.215161323547363,
+            "z": 105.27894592285156,
+            "hp": 1600,
+            "state": "normal",
+            "driver": 1,
+            "speed": 0.000024799383519583015,
+            "yaw": 0.026322024634529068
+          }
+        }
+      }
+    }
+  ]
+}

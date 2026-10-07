@@ -1,0 +1,13 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-feel
+
+stdout | tests/levels/l1-ride-input.test.ts > E19 @E19 QA1-02 click-to-move on the bicycle reaches garage-door around fences
+G-RIDE-ROUTE garage-door 90.0 70.5 true
+
+ ❯ tests/levels/l1-ride-input.test.ts (10 tests | 1 failed) 200544ms
+   × E19 @E19 QA1-02 click-to-move on the bicycle reaches garage-door around fences 104351ms
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 26 passed (27)
+   Start at  13:34:07
+   Duration  204.43s (tests 98%, transform 2%)
