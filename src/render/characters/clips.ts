@@ -116,19 +116,26 @@ function fitCourierLocomotion(root: Object3D, name: string, duration: number, tr
   const hip = rotation('hip').InterpolantFactoryMethodLinear(), torso = rotation('torso').InterpolantFactoryMethodLinear(), head = rotation('head').InterpolantFactoryMethodLinear();
   const chestOffset = root.getObjectByName('armL')!.position.clone().add(root.getObjectByName('armR')!.position).multiplyScalar(.5);
   const spineOffset = root.getObjectByName('torso')!.position;
+  const sourceHip = skinClips.get(name === 'mount' || name === 'dismount' ? 'idle' : name)!.tracks.find(t => t.node === 'hip' && t.path === 'rotation')!;
+  const unscaledHip = new QuaternionKeyframeTrack('hip', sourceHip.times, sourceHip.values).InterpolantFactoryMethodLinear();
   const times: number[] = [], values = new Map(['torso', 'head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR'].map(n => [n, [] as number[]]));
   const h = new Quaternion(), q = new Quaternion(), correction = new Quaternion(), axis = new Vector3(0, 0, 1);
   const frames = Math.round(duration * 60);
   for (let i = 0; i <= frames; i++) {
     const time = i / frames * duration, phase = i / frames * Math.PI * 2;
     times.push(time); h.fromArray(hip.evaluate(time)); q.fromArray(torso.evaluate(time));
-    const world = h.clone().multiply(q), base = spineOffset.clone().applyQuaternion(h), chest = chestOffset.clone().applyQuaternion(world);
+    // Local spine counter-rotation was authored against the full pelvis. Keep
+    // that relationship before reducing torso twist for the courier proportions.
+    const originalWorld = new Quaternion().fromArray(unscaledHip.evaluate(time)).multiply(q);
+    const world = originalWorld.clone(), forward = new Vector3(1, 0, 0).applyQuaternion(world);
+    world.premultiply(new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), -.6 * Math.atan2(-forward.z, forward.x)));
+    const base = spineOffset.clone().applyQuaternion(h), chest = chestOffset.clone().applyQuaternion(world);
     const target = (name === 'run' ? 10 + Math.cos(phase * 2) : name === 'walk' ? 4 + .7 * Math.cos(phase * 2) : 2.5 + .7 * Math.sin(phase)) * Math.PI / 180;
     const angle = Math.atan2(chest.x, chest.y) - target + Math.asin(Math.max(-1, Math.min(1, (base.x * Math.cos(target) - base.y * Math.sin(target)) / Math.hypot(chest.x, chest.y))));
     correction.setFromAxisAngle(axis, angle);
     q.copy(h).invert().multiply(correction).multiply(world).toArray(values.get('torso')!, i * 4);
     // Keep the large face looking ahead while the spine inclines.
-    q.copy(world).invert().multiply(correction.clone().invert()).multiply(world).multiply(new Quaternion().fromArray(head.evaluate(time))).toArray(values.get('head')!, i * 4);
+    q.copy(world).invert().multiply(correction.clone().invert()).multiply(originalWorld).multiply(new Quaternion().fromArray(head.evaluate(time))).toArray(values.get('head')!, i * 4);
     for (const [side, sign] of [['L', 1], ['R', -1]] as const) {
       const swing = -Math.cos(phase) * sign;
       const shoulder = name === 'run' ? -12 + swing * 30 : name === 'walk' ? swing * 22 : -4 + 2 * Math.sin(phase + sign * .4);
