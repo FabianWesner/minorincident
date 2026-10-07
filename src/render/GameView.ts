@@ -646,6 +646,7 @@ export class GameView implements Lifecycle {
       if (hero && aura > 0) field.push(auraLight(hero.x, hero.z, aura));
       this.vehicles?.pushLights(field);
     }
+    lighting.setHeroLight(hero && field.active ? field.heroAt(hero.x, hero.z) : null, hero ?? this.view.focus, this.world.tick / 60);
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
     field.render(this.renderer);
   }

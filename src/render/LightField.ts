@@ -17,6 +17,8 @@ export interface FieldLight {
   seed: number;
   /** Gameplay power/broken state; the renderer only reads it. */
   on: boolean;
+  /** Source height and `shadow: hero` eligibility (the night hero-shadow selection). */
+  y?: number; hero?: boolean;
 }
 export interface TransientLight { remove(): void }
 /** Light field strength per normalized §6 intensity unit (intensity 10 → 3 HDR at the pool centre). */
@@ -28,7 +30,7 @@ const linear = (token: LightToken | string): Color => color.set(token in lightPa
 /** The survivor's small night aura (specs/06 §2 readability rule), scaled by the preset's `aura`. */
 export const auraLight = (x: number, z: number, aura: number): FieldLight => footprint({ type: 'point', color: 'light_led_white', intensity: aura * 2, range: 2.6, flicker: 'none', position: [x, 1, z], direction: [0, -1, 0] });
 /** Convert an authored anchor (already in world space) to its ground footprint. */
-export function footprint(anchor: Pick<LightAnchor, 'type' | 'color' | 'intensity' | 'range' | 'angle' | 'flicker' | 'strobe'> & { position: [number, number, number]; direction: [number, number, number] }, ground = 0, seed = 0): FieldLight {
+export function footprint(anchor: Pick<LightAnchor, 'type' | 'color' | 'intensity' | 'range' | 'angle' | 'flicker' | 'strobe'> & Partial<Pick<LightAnchor, 'shadow'>> & { position: [number, number, number]; direction: [number, number, number] }, ground = 0, seed = 0): FieldLight {
   const [x, y, z] = anchor.position, [dx, dy, dz] = anchor.direction, height = Math.max(.3, y - ground);
   const horizontal = Math.hypot(dx, dz);
   let aimX = 0, aimZ = 0, radius = Math.min(anchor.range, 2 + height * 1.6), stretch = 1;
@@ -44,7 +46,7 @@ export function footprint(anchor: Pick<LightAnchor, 'type' | 'color' | 'intensit
     aimX = dx / horizontal * radius * .45; aimZ = dz / horizontal * radius * .45;
   }
   const c = linear(anchor.color), strength = anchor.intensity * fieldGain * (anchor.type === 'window' ? .7 : 1);
-  return { x, z, r: c.r * strength, g: c.g * strength, b: c.b * strength, radius, aimX, aimZ, stretch, flicker: anchor.flicker === 'fire' || anchor.type === 'fire' ? 1 : anchor.flicker === 'damaged' || anchor.flicker === 'fluorescent' ? 2 : 0, strobe: !!anchor.strobe || anchor.type === 'beacon', seed, on: true };
+  return { x, z, r: c.r * strength, g: c.g * strength, b: c.b * strength, radius, aimX, aimZ, stretch, flicker: anchor.flicker === 'fire' || anchor.type === 'fire' ? 1 : anchor.flicker === 'damaged' || anchor.flicker === 'fluorescent' ? 2 : 0, strobe: !!anchor.strobe || anchor.type === 'beacon', seed, on: true, y, hero: anchor.shadow === 'hero' };
 }
 
 /** Layer 2 of the lighting concept (specs/06 §3): one additive instanced draw into a small HDR target.
@@ -118,6 +120,17 @@ export class LightField {
     return { remove: () => { const i = this.transients.indexOf(entry); if (i >= 0) this.transients.splice(i, 1); } };
   }
   get active(): boolean { return this.strength.value > 0; }
+  /** The lit `shadow: hero` light whose pool covers (x, z) most strongly, for the single night shadow map. */
+  heroAt(x: number, z: number): FieldLight | null {
+    let best: FieldLight | null = null, score = 0;
+    for (const l of this.statics) {
+      if (!l.on || !l.hero) continue;
+      const d = Math.hypot(l.x + l.aimX - x, l.z + l.aimZ - z) / l.radius;
+      const s = d < .85 ? (1 - d) * (l.r + l.g + l.b) : 0;
+      if (s > score) { score = s; best = l; }
+    }
+    return best;
+  }
   /** Fill the instances for the window around the focus (nearest first when over the tier budget).
    * `time` is sim seconds, so flicker, strobes and transient fades are deterministic and freeze while paused. */
   update(focusX: number, focusZ: number, time: number): void {

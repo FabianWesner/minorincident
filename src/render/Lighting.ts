@@ -61,6 +61,12 @@ export class Lighting {
   readonly rimColor = uniform(new Color('#b9c6ff'));
   /** Weight of the sun/moon shadow map on light-field pools (hero shadows at night). */
   readonly fieldShadow = uniform(0);
+  /** Direction towards the shadow-casting light: the sun/moon, or the promoted hero lamp at night. */
+  private readonly shadowDirection = new Vector3(0, 1, 0);
+  private readonly heroTarget = new Vector3();
+  private heroTime = -1;
+  /** Name of the promoted hero light for diagnostics (null: the sun/moon casts). */
+  heroLight: string | null = null;
   constructor(private readonly scene: Scene, readonly look = new LookUniforms()) {
     this.bounce = look.nodes.bounce;
     this.coreShadowEdgeHigh = look.nodes.coreLightEdge; this.coreShadowEdgeLow = look.nodes.coreShadowEdge;
@@ -127,15 +133,29 @@ export class Lighting {
     }
     const radius = Math.max(8, visibleRadius) * 1.1;
     this.sun.target.position.copy(view.focus);
-    this.sun.position.copy(this.direction.value).multiplyScalar(radius * 2).add(view.focus);
+    this.sun.position.copy(this.heroTime >= 0 ? this.shadowDirection : this.direction.value).multiplyScalar(radius * 2).add(view.focus);
     const camera = this.sun.shadow.camera;
     camera.left = camera.bottom = -radius; camera.right = camera.top = radius;
     camera.near = 0.1; camera.far = radius * 4; camera.updateProjectionMatrix();
   }
+  /** Hero shadows within the one-shadow-map budget (specs/06 §4): at night the sun/moon shadow camera turns
+   * towards the strongest `shadow: hero` light covering the survivor, and the light-field pools take that
+   * shadow. Direction and weight crossfade over ~0.3 s, so promotion never pops. `time` is sim seconds. */
+  setHeroLight(light: { x: number; y?: number; z: number } | null, focus: { x: number; y: number; z: number }, time: number): void {
+    const seconds = this.heroTime < 0 ? 0 : Math.max(0, Math.min(.1, time - this.heroTime)); this.heroTime = time;
+    const night = this.field.strength.value >= .5;
+    const goal = light && night ? 1 : 0;
+    if (light && night) this.heroTarget.set(light.x - focus.x, Math.max(1.5, (light.y ?? 3) - focus.y), light.z - focus.z).normalize();
+    else this.heroTarget.copy(this.direction.value);
+    const k = seconds > 0 ? 1 - Math.exp(-seconds / .1) : 1;
+    if (this.shadowDirection.lengthSq() < .5 || seconds === 0) this.shadowDirection.copy(this.heroTarget);
+    else this.shadowDirection.lerp(this.heroTarget, k).normalize();
+    this.fieldShadow.value = seconds === 0 ? goal : this.fieldShadow.value + (goal - this.fieldShadow.value) * k;
+  }
   /** Includes live fog ranges so viewport changes can be checked without shader inspection. */
   getState() {
     const p = timeOfDay[this.preset];
-    return { shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`], rim: this.rim.value, fieldShadow: this.fieldShadow.value, lightField: this.field.snapshot() };
+    return { shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`], rim: this.rim.value, fieldShadow: this.fieldShadow.value, shadowDirection: this.shadowDirection.toArray(), lightField: this.field.snapshot() };
   }
   dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); this.field.dispose(); this.scene.backgroundNode = null; }
 }
