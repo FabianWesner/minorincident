@@ -12,7 +12,7 @@ const H = Math.PI / 2;
  */
 export const l2Dressing: readonly Dressing[] = [
   // Corpses (2 x 4 poses): an early fight on Juniper and one on Main Row.
-  { kind: 'corpse', assetId: 'inf.corpse-poses', x: -27.2, z: 9.5, yaw: .4, count: 4 },
+  { kind: 'corpse', assetId: 'inf.corpse-poses', x: -37.2, z: 8.6, yaw: .4, count: 4 },
   { kind: 'corpse', assetId: 'inf.corpse-poses', x: 10.5, z: -36.5, yaw: -.3, count: 4 },
   // Abandoned vehicles, doors open, pulled onto the kerb.
   { kind: 'abandoned', assetId: 'veh.sedan-blue', x: -47.5, z: 28.6, yaw: .12 },
@@ -20,6 +20,7 @@ export const l2Dressing: readonly Dressing[] = [
   { kind: 'abandoned', assetId: 'veh.pickup-white', x: 4, z: -28.6, yaw: Math.PI + .15 },
   { kind: 'abandoned', assetId: 'veh.sedan-white', x: 30, z: -33.4, yaw: .1 },
   { kind: 'abandoned', assetId: 'veh.courier-van', x: -61.6, z: -22, yaw: H + .1 },
+  { kind: 'abandoned', assetId: 'veh.box-truck', x: -70.4, z: -24, yaw: H - .08 },
   // Crashed: into a lamp post, into each other at the Juniper junction, nose into a hydrant.
   { kind: 'crashed', assetId: 'veh.wreck', x: -6.6, z: 26.4, yaw: .7 },
   { kind: 'crashed', assetId: 'veh.sedan-red', x: 11.2, z: -2.6, yaw: 2.3 },
@@ -34,7 +35,8 @@ export const l2Dressing: readonly Dressing[] = [
   ...([[-60, -34.4], [-41, -26.6], [-24, -34.6], [-2, -26.8], [18, -34.4], [-60, 33.2], [-36, 26.4], [-16, 26.6], [12, 33.3], [40, 33.2], [55, -3.5], [-62, 8]] as const)
     .map(([x, z], i) => ({ kind: 'bin' as const, assetId: i % 2 ? 'prop.trash-bags' : 'prop.trash-bin', x, z, yaw: i * 1.3 })),
   // Scattered belongings.
-  ...([[-44, -35.5], [-28.4, -20], [-8, 29], [20, 29.6], [48.4, -20], [-61.6, 20]] as const).map(([x, z], i) => ({ kind: 'belongings' as const, assetId: i % 3 === 2 ? 'prop.shopping-cart' : 'decay.dropped-belongings', x, z, yaw: i })),
+  // Scattered belongings (integrated stand-ins until `decay.dropped-belongings` lands): carts, parcels, crates, chairs.
+  ...([[-43.6, -35.2], [-28.4, -20], [-8, 34.6], [20, 34.4], [48.4, -20], [-61.6, 20]] as const).map(([x, z], i) => ({ kind: 'belongings' as const, assetId: ['prop.shopping-cart', 'prop.package-courier', 'prop.crates', 'prop.folding-chair', 'prop.broken-chair', 'prop.shopping-cart'][i], x, z, yaw: i })),
   // Broken shop and house windows.
   ...([[-66.2, -37.9], [-37.8, -37.9], [-19.6, -34.6], [5.6, -26.6], [-10.7, 33.6]] as const).map(([x, z]) => ({ kind: 'broken-window' as const, assetId: 'decay.broken-glass', x, z })),
   // Blood trails and pools.

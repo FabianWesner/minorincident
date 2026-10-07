@@ -155,7 +155,7 @@ export class Mission {
   completeObjective(id?: string): void {
     if (this.state.phase !== 'playing') throw new Error('Mission is not playing');
     let def = this.def.steps.find(s => this.state.steps[s.id].status === 'active' && (id === undefined || s.id === id));
-    if (!def && this.l1?.advance()) { this.activate(); def = this.def.steps.find(s => this.state.steps[s.id].status === 'active' && (id === undefined || s.id === id)); }
+    if (!def && (this.l1?.advance() || this.l2?.advance())) { this.activate(); def = this.def.steps.find(s => this.state.steps[s.id].status === 'active' && (id === undefined || s.id === id)); }
     if (!def) throw new Error(`No active objective: ${id ?? ''}`);
     this.complete(def); this.activate(); this.finish(); this.flushCheckpoint();
   }

@@ -102,8 +102,10 @@ export function runL2(world: SimWorld, mission: Mission, profile: L2Profile, opt
     if (!s.doorsOpenAt) doors.nearBefore = Math.max(doors.nearBefore, alive().filter(e => dist(e.transform, forecourt) < 40).length);
     else {
       const since = (t - s.doorsOpenAt) / 60;
-      if (doors.firstCivOutS === null && s.trappedIds.some(id => { const e = world.entities.get(id); return !!e && !e.hidden; })) doors.firstCivOutS = since;
-      if (doors.allOutS === null && s.trappedIds.every(id => !world.entities.get(id)?.hidden)) doors.allOutS = since;
+      // Through the doors = visible and outside the market footprint (some wait visibly at the glass before the release).
+      const out = (id: number) => { const e = world.entities.get(id); return !e || (!e.hidden && !(e.transform.x > -59.8 && e.transform.x < -51.3 && e.transform.z > -46.7 && e.transform.z < -37.6)); };
+      if (doors.firstCivOutS === null && s.trappedIds.some(out)) doors.firstCivOutS = since;
+      if (doors.allOutS === null && s.trappedIds.every(out)) doors.allOutS = since;
       if (doors.firstAmbushVisibleS === null && s.ambushIds.some(id => { const e = world.entities.get(id); return !!e && !e.hidden && world.infected!.director.visible(e.transform); })) doors.firstAmbushVisibleS = since;
       if (since <= 3) { doors.emerged3s = s.ambush.filter(q => q.id > 0).length; doors.doors3s = [...new Set(s.ambush.filter(q => q.id > 0).map(q => q.door))]; }
       for (const e of alive()) if (!known.has(e.id)) {
