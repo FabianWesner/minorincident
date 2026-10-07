@@ -622,25 +622,25 @@ export default {
       {
         "min": [
           -1.3475000143051148,
-          0.050000023841857866,
-          -0.65
+          0.2000000238418579,
+          -0.8
         ],
         "max": [
           0.2524999856948853,
-          1.650000023841858,
-          0.65
+          1.5000000238418578,
+          0.8
         ]
       },
       {
         "min": [
           -0.7075000143051148,
-          1.0299999046325683,
-          -0.83
+          1.5199999046325683,
+          -1.32
         ],
         "max": [
           -0.3875000143051147,
-          3.6699999046325686,
-          0.83
+          3.1799999046325684,
+          1.32
         ]
       }
     ],
@@ -760,13 +760,13 @@ export default {
       {
         "min": [
           -0.7279999995678663,
-          0.08449999618530274,
-          -0.1634999998807907
+          -3.814697252524368e-9,
+          -0.0789999998807907
         ],
         "max": [
           0.7560000004321337,
-          0.32349999618530273,
-          0.24450000011920928
+          0.4079999961853027,
+          0.16000000011920928
         ]
       }
     ],
@@ -1036,6 +1036,45 @@ export default {
     "source": "public/assets/models/veh.train-freight.glb",
     "hash": "b14241524bb4d7ec7c83215236f565f1160a10863ff6fc8f055c6977b07b396a"
   },
+  "decay.furniture-barricade": {
+    "class": "heavy",
+    "mass": 65,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.5,
+      0
+    ],
+    "pushable": true,
+    "kickable": false,
+    "barricadeValue": 1.3,
+    "barricadeHP": 250,
+    "vaultable": false,
+    "flammable": true,
+    "burnTime": 30,
+    "breakable": {
+      "hp": 160,
+      "debrisSet": "debris.wood-small"
+    },
+    "sounds": "prop.wood-medium",
+    "boxes": [
+      {
+        "min": [
+          -0.55,
+          -4.768371586472142e-9,
+          -1.26
+        ],
+        "max": [
+          0.55,
+          1.2599999952316283,
+          1.26
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.sofa.glb",
+    "hash": "2669279d4339ef08c67f781833ff15d1745264bed5b0af7d4ff678113b040b97"
+  },
   "prop.light-tower-trailer": {
     "class": "heavy",
     "centerOfMass": [
@@ -1066,13 +1105,13 @@ export default {
       {
         "min": [
           -0.15,
-          2.9049999713897705,
-          -0.65
+          3.1299999713897706,
+          -0.875
         ],
         "max": [
           0.15,
-          4.6549999713897705,
-          0.65
+          4.429999971389771,
+          0.875
         ]
       },
       {
@@ -1090,25 +1129,25 @@ export default {
       {
         "min": [
           0.8399999618530274,
-          -0.8600000107288361,
-          -0.48
+          -1.0728836041806744e-8,
+          -1.34
         ],
         "max": [
           1.2399999618530273,
-          1.819999989271164,
-          0.48
+          0.9599999892711639,
+          1.34
         ]
       },
       {
         "min": [
           -1.2800000429153442,
-          -0.8600000107288361,
-          -0.48
+          -1.0728836041806744e-8,
+          -1.34
         ],
         "max": [
           -0.8800000429153443,
-          1.819999989271164,
-          0.48
+          0.9599999892711639,
+          1.34
         ]
       },
       {
@@ -1400,13 +1439,13 @@ export default {
       {
         "min": [
           -0.083,
-          0.08200000655651092,
-          -0.165
+          6.5565109175214076e-9,
+          -0.083
         ],
         "max": [
           0.083,
-          0.24800000655651094,
-          0.165
+          0.33000000655651096,
+          0.083
         ]
       }
     ],
@@ -1875,7 +1914,43 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.package-courier.glb",
-    "hash": "8199b4efcc86cc0969145eaf9d2bebcb176e9936682059f8cba1a7005d0c8787"
+    "hash": "6c00a2d3622e29fc36d05f49e94e8a6aab4b8d5b96abd8867c07e461a345f1d7"
+  },
+  "prop.flower-bed": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.65,
+    "restitution": 0.08,
+    "centerOfMass": [
+      0,
+      0.32035153806209565,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "barricadeValue": 0.5,
+    "barricadeHP": 80,
+    "vaultable": true,
+    "flammable": false,
+    "burnTime": 20,
+    "explosive": null,
+    "sounds": "prop.metal-light",
+    "boxes": [
+      {
+        "min": [
+          -0.4894625246524811,
+          0,
+          -1.074912428855896
+        ],
+        "max": [
+          0.4894625246524811,
+          0.711892306804657,
+          1.074912428855896
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.flower-bed.large.glb",
+    "hash": "0329bbedb26f2b503521bb9229db973f2bd6b848ed8d94f19501bd68a068a67f"
   },
   "prop.flower-bed.large": {
     "class": "fixed",
