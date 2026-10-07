@@ -1,6 +1,6 @@
 # 06 · Lighting, Shadows and Reflections
 
-> **Light is the story of the game.** L1 is lit by the sun. L6 is lit by fires, floodlights, sirens, and headlights. As the town loses power, **every light the player sees is one someone is still fighting for.** Lights are both art and gameplay: they show safety, objectives, and danger.
+> **Light is the story of the game.** L1 is lit by the sun. L6 is lit by fluorescent tubes that fail into red emergency lights and a flashlight, until the survivors climb out into the night. As the town loses power, **every light the player sees is one someone is still fighting for.** Lights are both art and gameplay: they show safety, objectives, and danger.
 
 This document defines how lights, shadows, and reflections look and how they are built so they look **stunning on every tier** and stay testable. The implementation epic is [E25](epic-25-lighting-shadows-reflections.md). Base rendering (palette material, sun, bloom, camera) is in [E02](epic-02-rendering-camera-visual-style.md).
 
@@ -27,13 +27,15 @@ The `light-lab` scenario reproduces exactly this at night, and it is the first a
 | Level | Time | Key light | Signature practical lights | Shadow character | Reflection moments |
 | --- | --- | --- | --- | --- | --- |
 | L1 | late morning | high warm sun, cool sky fill | shop signs off, a few open-sign neons | short, crisp, soft blue-violet | car paint, shop windows (with interiors) |
-| L2 | midday | white sun | police light bars (red/blue sweeps) | short, hard | police car paint, school windows |
-| L3 | afternoon | lower warm sun | checkpoint floodlights (not yet needed), sirens, headlights on | longer, warm | gas station canopy lights on wet forecourt (leaking hose) |
-| L4 | golden hour (draft look) | low orange sun, **god rays** through trees and smoke | first power-outage blocks (dark windows next to lit ones), fires, substation arcs | **long dramatic shadows** | river surface, wet rail tracks |
-| L5 | dusk → blue hour | sun below the horizon, the sky does the lighting | **sodium street lamps**, light-tower trailers, gas-station canopy, convoy headlights, sirens, the mega-hazard fireball | from practical lights only (multi-directional) | wet road from burst hydrants, gas station puddles |
-| L6 | night → dawn | moonlight (cool, low intensity) | **fires everywhere**, floodlights, the fire-engine light bar, helicopter searchlight, flares at the helipad | flickering fire shadows, the moving searchlight shadow | wet streets, puddles, polished mall floors, the river; dawn backlight in the finale |
+| L2 | midday (preset `L2`) | high, hard white sun (clearly higher than L1) | station alarm beacons (red rotating), fire-truck and police light bars (red/blue sweeps) | short, hard | police car paint, shop glass at the rescue building |
+| L3 | late afternoon (preset `L3`) | lower, warmer, harsher sun through smoke haze | burning cars and houses, police light bars, muzzle flashes | **longer, warm** | broken shop glass, wrecked bus windows |
+| L4 | clean late afternoon, false safety (preset `L4`) | clear, saturated warm-neutral sun, little haze | lit shop interiors, army floodlights; then muzzle flashes, tracers, HMG and tank flashes, the fuel-truck fireball | long, crisp, then broken up by smoke columns | car paint, intact shop windows (shattering during the battle) |
+| L5 | sunset (preset `L5`, gloom ramp) | deep red/orange sun on the horizon, fading over the level | fires still burning in the ruins, the metro lookout's flashlight; street lamps dead (power out) | very long, red; fire flicker | puddles from burst mains, broken glass |
+| L6 | underground → night (presets `L6-subway`, then `L6`) | none underground; cool moonlight at the exit | fluorescent strips (`metro-main`), warm camp lights; after the breach red emergency lights and the **weapon flashlight**; fires on the skyline at the exit | flashlight and emergency-light shadows | wet tunnel floor, tiled walls |
 
-**Night readability rule:** at night the scene is dark but **never muddy**. The player is always readable: a soft hero rim light plus a small light-field aura follow the player, and in L6 a **weapon or backpack flashlight** follows the aim direction. Infected eyes and telegraphs are emissive and contrast with the darkness.
+> Rows L2–L6 rewritten for the PO's Level 2–6 redesign (2026-10-07, `po-levels-2-6-2026-10-07.md`): midday → late afternoon → false safety → sunset devastation → underground shelter → night.
+
+**Night readability rule:** at night the scene is dark but **never muddy**. The player is always readable: a soft hero rim light plus a small light-field aura follow the player, and in L6 (underground after the power fails) a **weapon flashlight** follows the aim direction. Infected eyes and telegraphs are emissive and contrast with the darkness.
 
 ## 3. Architecture: five lighting layers
 
@@ -158,7 +160,7 @@ Telegraph colors stay distinct from every light color (the colorblind-safe set i
 
 ## 11. Concept key frames (to produce)
 
-Codex imagegen produces **lighting key frames** that serve as vision-review targets (`assets/_keyframes/lighting/`, listed in `05-asset-inventory.md` §4.8):
+Codex imagegen produces **lighting key frames** that serve as vision-review targets (`assets/_keyframes/lighting/`, listed in `05-asset-inventory.md` §4.8; frames 2–4 and 6 are superseded by the redesign key frames `kf-l2-midday`, `kf-l3-late-afternoon-smoke`, `kf-l4-safe-city`, `kf-l5-sunset-ruins`, `kf-l6-subway-emergency`, `kf-l6-night-exit`, see `05` §6.5):
 
 1. `kf-light-trailer-night.png`: the light-tower trailer at night on a wet parking lot, with beams, pools, and infected shadows
 2. `kf-l4-goldenhour-godrays.png`: a Main Street blackout cascade at golden hour, god rays through smoke

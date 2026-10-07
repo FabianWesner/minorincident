@@ -23,6 +23,22 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 - [`Trails.js`](../folio-2025/sources/Game/Trails.js): tracer ribbons
 - [`World/Fireballs.js`](../folio-2025/sources/Game/World/Fireballs.js): rocket and grenade blasts
 
+## Campaign weapon rules (PO redesign, 2026-10-07)
+
+The redesigned campaign ([`po-levels-2-6-2026-10-07.md`](po-levels-2-6-2026-10-07.md)) uses four story weapons; the rest of the roster stays in the catalog (tests, scenarios, later content) but is **not handed out in L1–L6** (orchestrator default — PO may change):
+
+| Level | Weapon | Rule |
+| --- | --- | --- |
+| L1 | baseball bat | single target, 2 hits per 40 HP infected (E19 §5.6) |
+| L2 | **fire axe** (optional pickup) | stronger than the bat: a normal frontal swing (45 damage, one hit per 40 HP infected) when fewer than 3 infected are within 2.5 m; **the same input automatically becomes a 360° roundhouse** when ≥ 3 infected are within 2.5 m (25 damage to each, 2–3 m knockback, 0.8 s stagger): it creates space, it does not wipe the crowd (E20 §5.3) |
+| L3 | **handgun** (`weapon.pistol`) | first ranged weapon; single target (no pierce), 2 hits per infected, 22 m; does not replace the axe's crowd clearing (E21 §5.2) |
+| L4 | **machine gun** | strongest weapon; 10 rounds/s, pierce 1, suited to groups; **unlimited ammunition** (E22 §5.3) |
+| L5–L6 | — | **no new weapon**: escalation pauses; responsibility replaces firepower |
+
+**No ammunition system** (PO): the game has no ammo counter, no reserve, no ammo pickups, and the campaign handgun and machine gun never reload or overheat (orchestrator default: the fire rate is the only limit — PO may change this to a cosmetic reload rhythm). Consequences for this epic: the `magazine` / `reloadTime` fields and the `magazine` / `reloadTime` upgrade hooks remain in `ActionDef` for compatibility, but campaign weapons are configured bottomless; `pick.*-ammo` assets are decorative only; any criterion or UI that implies ammo management is **flagged as superseded for the campaign** (E06-AC01's "sane ranges" accept a bottomless magazine). Earlier weapons stay carried and selectable when a new one is acquired (00 §5.3 weapon cycling).
+
+The testable criteria for these rules live in the level epics (still `todo`) so this `done` epic's traceability stays intact: axe roundhouse **E20-AC10**, handgun **E21-AC04/AC05**, gunfire loud events **E21-AC06**, machine gun and unlimited ammo **E22-AC06**, the L5/L6 weapon pause **E23-AC12 / E24-AC05**.
+
 ## Acceptance criteria
 
 | ID | Criterion | Verification |
