@@ -3,7 +3,7 @@ import type { DistrictLayout, Placement } from '../districts/types';
 
 /** Kinds of the W1 "wounded, but still standing" dressing (E20 section 5.7); counted by the static AC15 test. */
 export type DressingKind = 'corpse' | 'abandoned' | 'crashed' | 'bin' | 'belongings' | 'broken-window' | 'blood' | 'emergency' | 'smoking' | 'fighting' | 'station' | 'checkpoint' | 'river';
-/** `entity`: not a static placement but an entity the L2 controller spawns (the dead bystanders). */
+/** `entity`: not a static placement: an entity the L2 controller spawns (dead bystanders) or L2Props code art (broken windows). */
 export interface Dressing { kind: DressingKind; assetId: string; x: number; z: number; yaw?: number; scale?: number; count?: number; lit?: boolean; entity?: boolean }
 const H = Math.PI / 2;
 /**
@@ -39,8 +39,12 @@ export const l2Dressing: readonly Dressing[] = [
   // Scattered belongings.
   // Scattered belongings (stand-ins from the town's own props until `decay.dropped-belongings` lands).
   ...([[-43.6, -35.2], [-28.4, -20], [-8, 34.6], [20, 34.4], [48.4, -20], [-61.6, 20]] as const).map(([x, z], i) => ({ kind: 'belongings' as const, assetId: ['prop.crates', 'prop.broken-chair', 'prop.carpet', 'prop.pallet', 'prop.wheelbarrow', 'prop.recycling-bin'][i], x, z, yaw: i })),
-  // Broken shop and house windows.
-  ...([[-66.2, -37.9], [-37.8, -37.9], [-19.6, -34.6], [5.6, -26.6], [-10.7, 33.6]] as const).map(([x, z]) => ({ kind: 'broken-window' as const, assetId: 'decay.broken-glass', x, z })),
+  // Broken shop and house windows (code art in L2Props until `decay.broken-glass` lands: a dark pane and glass on the pavement).
+  ...([[-66.2, -38.4, 0], [-35.6, -37.4, 0], [-19.6, -34.6, 0], [5.6, -26.6, Math.PI], [-10.7, 33.6, 0]] as const).map(([x, z, yaw]) => ({ kind: 'broken-window' as const, assetId: 'decay.broken-glass', x, z, yaw, entity: true })),
+  // Main Row by the courier depot (the L1 pickup spot): a car run into the kerb, a blood trail, spilled bags.
+  { kind: 'crashed', assetId: 'veh.sedan-red', x: -32.4, z: -29.4, yaw: 2.6 },
+  { kind: 'blood', assetId: 'decal.blood-trail', x: -35.4, z: -31.4, yaw: 1.2 },
+  { kind: 'bin', assetId: 'prop.trash-bags', x: -30.6, z: -35.8, yaw: .4 },
   // Blood trails and pools.
   ...([[-30.6, -12], [-30.6, 16], [0, -31], [-50, 30], [50, -8], [12, 30.4]] as const).map(([x, z], i) => ({ kind: 'blood' as const, assetId: i % 3 === 2 ? 'decal.blood-pool' : 'decal.blood-trail', x, z, yaw: i * .9 })),
   // Small signs of fighting: a dropped baton and a tear-gas canister by the police car.

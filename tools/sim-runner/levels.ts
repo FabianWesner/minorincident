@@ -1,4 +1,5 @@
 import { LevelThreeBot, type LevelThreeRoute } from '../../src/debug/bot/LevelThreeBot';
+import { LevelTwoBot } from '../../src/debug/bot/LevelTwoBot';
 import { preset } from '../../src/sim/progression/Campaign';
 import { applyCampaign } from '../../src/sim/progression/apply';
 import { readFileSync } from 'node:fs';
@@ -27,6 +28,7 @@ export async function loadLevel(level: MissionId, seed: number): Promise<SimWorl
     await world.init(); const composition = compositions[level];
     world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed);
     if (level === 'L3') applyCampaign(world, preset('L3-default'));
+    if (level === 'L2') applyCampaign(world, preset('L2-default'));
     world.loadMission(resolveCampaignMission(level, world.districts!)).begin();
     return world;
   } catch (error) { world.dispose(); throw error; }
@@ -48,6 +50,10 @@ export async function runLevel(level: MissionId, policy: CompletionPolicy, seed:
     if (level === 'L1') {
       const l1 = runL1(world, mission, policy, { seed, maxSeconds });
       report.outcome = l1.outcome === 'complete' ? 'complete' : 'tick-budget';
+    } else if (level === 'L2') {
+      // E20: the shared L2 policy (ordinary inputs only), same as the browser bot.
+      const bot = new LevelTwoBot(world, policy);
+      for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
     } else if (level === 'L3') {
       const bot = new LevelThreeBot(world, policy, forcedRoute);
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
