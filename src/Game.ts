@@ -1,6 +1,6 @@
 import { GameUI } from './ui/GameUI';
 import { CampaignUI } from './ui/CampaignUI';
-import { newCampaign, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
+import { completePending,newCampaign, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
 import { applyCampaign } from './sim/progression/apply';
 import { SaveStore } from './sim/progression/Save';
 import type { SurvivorVariant } from './data/survivor';
@@ -158,7 +158,7 @@ export class Game {
   }
   async continueCampaign(save:CampaignSave,level?:Level):Promise<void> {
     this.campaign=structuredClone(save);
-    if(save.pending&&!level){this.campaignUI.showRewards();return;}
+    if(save.pending){completePending(this.campaign);this.saveCampaign();}
     if(level&&level>save.unlockedLevel)throw new Error('Level is locked');
     const settings = { ...save.settings, quality: save.settings.quality === 'auto' ? matchMedia('(pointer:coarse)').matches ? 'low' as const : 'high' as const : save.settings.quality };
     this.view.settings(settings);this.audio.set(save.settings);

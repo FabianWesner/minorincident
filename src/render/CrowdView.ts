@@ -43,6 +43,8 @@ export class CrowdView extends Group {
   private readonly transform = new Matrix4();
   private readonly presentation = new MotionPresentation();
   private readonly motion = new MotionPhase();
+  /** L1 v2: corpses persist (pause/resume, checkpoint restore) until the sim's corpse cap recycles the oldest; other levels fade at 9 s. */
+  private get corpseTicks(): number { return this.world.infected?.l1 ? Infinity : 540; }
   private readonly corpses = new Map<number, { x: number; z: number; sourceX: number; sourceZ: number; deadAt: number }>();
   private readonly telegraphs: InstancedMesh[] = [];
   private readonly shadows: InstancedMesh;
@@ -138,7 +140,7 @@ export class CrowdView extends Group {
   }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   update(view?: View, alpha = 1): void {
-    for (const [id, pose] of this.corpses) if (!this.world.entities.get(id)?.infected || this.world.entities.get(id)!.health.current > 0 || this.world.tick - pose.deadAt > 540) this.corpses.delete(id);
+    for (const [id, pose] of this.corpses) if (!this.world.entities.get(id)?.infected || this.world.entities.get(id)!.health.current > 0 || this.world.tick - pose.deadAt > this.corpseTicks) this.corpses.delete(id);
     for (const batch of this.batches.values()) batch.count = 0;
     for (const mesh of this.telegraphs) mesh.count = 0; this.shadows.count = 0; this.caps.count = 0;
     for (const [id, feedback] of this.feedback) { const e = this.world.entities.get(id); if (!e?.combat || e.hidden || e.infected?.hidden) this.feedback.delete(id); else if (e.health.current > 0) feedback.mask = 0; }
@@ -147,7 +149,7 @@ export class CrowdView extends Group {
     if (view) this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     const heroes = new Set<number>();
     if (!this.low) {
-      const nearest = [...this.world.entities.iterate()].filter(e => e.faction === 'infected' && e.combat && (e.health.current > 0 || this.world.tick - (e.infected?.deadAt ?? 0) < 540) && !e.hidden && !e.infected?.hidden && e.archetype !== 'infected.crow')
+      const nearest = [...this.world.entities.iterate()].filter(e => e.faction === 'infected' && e.combat && (e.health.current > 0 || this.world.tick - (e.infected?.deadAt ?? 0) < this.corpseTicks) && !e.hidden && !e.infected?.hidden && e.archetype !== 'infected.crow')
         .map(e => ({ e, distance: Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z) }))
         .filter(({ e, distance }) => {
           if (distance > 12) return false;
@@ -163,7 +165,7 @@ export class CrowdView extends Group {
     for (const e of this.world.entities.iterate()) {
       if (e.id === 1 || e.faction !== 'infected' || !e.combat) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
-      if (e.hidden || e.infected?.hidden || distance > this.cullDistance || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > 540) continue;
+      if (e.hidden || e.infected?.hidden || distance > this.cullDistance || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > this.corpseTicks) continue;
       // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
       if (keepsLook(e)) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); continue; }
       const availableLod = this.low ? 'lod2' : 'lod1';

@@ -81,12 +81,25 @@ export function finishRewards(save:CampaignSave,racks:CampaignSave['racks']):voi
   if(save.pending?.phase!=='racks'||!validRacks(save,racks))throw new Error('Invalid racks');
   save.racks=structuredClone(racks);delete save.pending;
 }
+/**
+ * PO decision 2026-10-07: no reward screens between levels. The data model stays (unlocks, 2 upgrades, racks); this finishes
+ * whatever phase is pending with the defaults the old screens pre-selected: the first weapon alternative, the first two offered
+ * upgrades, and the best melee on LEFT / best other action on RIGHT.
+ */
+export function completePending(save:CampaignSave):void {
+  const p=save.pending;if(!p)return;
+  if(p.phase==='unlock'){const choices=weaponChoices[p.level];if(!p.weaponChosen&&choices)chooseWeapon(save,choices[0]);revealCards(save);}
+  if(save.pending!.phase==='cards')pickUpgrades(save,save.pending!.cards.slice(0,2));
+  if(save.pending?.phase==='racks'){
+    const size=rackSize(save.unlockedLevel),melee=save.ownedActions.filter(id=>catalog[id].category==='melee').reverse(),ranged=save.ownedActions.filter(id=>catalog[id].category!=='melee').reverse();
+    finishRewards(save,{LEFT:melee.slice(0,size),RIGHT:(ranged.length?ranged:['weapon.kick']).slice(0,size)});
+  }
+}
+export function autoRewards(save:CampaignSave,level:Level):void {beginRewards(save,level);completePending(save);}
 export function preset(name:ProgressionPreset):CampaignSave {
   if(!/^L[2-6]-default$/.test(name))throw new Error('Unknown progression preset');
   const target=Number(name[1]),save=newCampaign();
   for(let level=1;level<target;level++){
-    beginRewards(save,level as Level);const choices=weaponChoices[level as Level];if(choices)chooseWeapon(save,choices[0]);revealCards(save);pickUpgrades(save,save.pending!.cards.slice(0,2));
-    const size=rackSize(save.unlockedLevel),melee=save.ownedActions.filter(id=>catalog[id].category==='melee').reverse(),ranged=save.ownedActions.filter(id=>catalog[id].category!=='melee').reverse();
-    finishRewards(save,{LEFT:melee.slice(0,size),RIGHT:(ranged.length?ranged:['weapon.kick']).slice(0,size)});
+    autoRewards(save,level as Level);
   }return save;
 }
