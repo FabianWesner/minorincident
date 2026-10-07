@@ -1,33 +1,38 @@
-import { Mesh, type Material, type Object3D } from 'three/webgpu';
+import { Mesh, MeshBasicNodeMaterial, type Object3D } from 'three/webgpu';
 import type { LabAccidentTargets } from './labAccident';
 import type { Vec2 } from '../../sim/outbreak/types';
 import type { DistrictWorld } from '../../sim/world/DistrictWorld';
 
-/** Facility windows are the emissive assemblies `window_*` of the clinic annex (bld.clinic-annex). Their materials
- * are scaled for the flicker, the nodes bow outward for the pressure wave and are hidden when the glass shatters.
- * With no such node in the scene (building not placed yet) the hooks are silent no-ops. */
-const windowName = /^window_(front|side|rear|door_[LR])$/;
-interface Emissive { emissiveIntensity: number }
-export function labAccidentTargets(scene: Object3D, shake: (strength: number) => void): LabAccidentTargets {
-  const nodes: { node: Object3D; scale: number; materials: { material: Material & Emissive; base: number }[] }[] = [];
-  scene.traverse(node => {
-    if (!windowName.test(node.name)) return;
-    const materials = new Map<Material & Emissive, number>();
-    node.traverse(child => {
-      if (!(child instanceof Mesh)) return;
-      for (const m of Array.isArray(child.material) ? child.material : [child.material])
-        if ('emissiveIntensity' in m) materials.set(m as Material & Emissive, (m as Emissive).emissiveIntensity);
+/** The clinic annex ships static-batched: all its glowing windows are one `window-light` mesh inside the instanced group
+ * `inst:bld.clinic-annex` (one group per LOD). Individual `window_*` nodes do not survive batching, so the whole facade
+ * flickers: that mesh gets a private basic material (vertex colours x intensity) the first time the flicker starts, and
+ * the blast turns it dark (blown windows). Other buildings keep their shared window material. */
+const GLOW = 3.5;
+export function labAccidentTargets(scene: Object3D, shake: (strength: number) => void, camera?: (x: number, z: number, weight: number) => void): LabAccidentTargets {
+  const meshes = new Set<Mesh>();
+  const material = new MeshBasicNodeMaterial({ vertexColors: true });
+  let bound = 0, last = 1;
+  const bind = (): void => {
+    scene.traverse(node => {
+      if (!node.name.startsWith('inst:bld.clinic-annex')) return;
+      node.traverse(child => { if (child instanceof Mesh && child.name === 'window-light' && !meshes.has(child)) { meshes.add(child); child.material = material; } });
     });
-    nodes.push({ node, scale: node.scale.z, materials: [...materials].map(([material, base]) => ({ material, base })) });
-  });
+    bound++;
+  };
+  const apply = (intensity: number): void => { last = intensity; material.color.setScalar(GLOW * intensity); };
   return {
     shake,
-    windowLight(intensity) { for (const w of nodes) for (const m of w.materials) m.material.emissiveIntensity = m.base * intensity; },
+    camera,
+    windowLight(intensity) {
+      // LOD swaps create new batches: rebind about twice a second while the accident drives the light.
+      if (!meshes.size || bound % 30 === 0) bind();
+      bound++;
+      apply(intensity);
+    },
     windowGlass(state, amount) {
-      for (const w of nodes) {
-        if (state === 'bow') w.node.scale.z = w.scale * (1 + 0.12 * amount);
-        else { w.node.visible = false; for (const m of w.materials) m.material.emissiveIntensity = 0; }
-      }
+      if (!meshes.size) bind();
+      if (state === 'bow') apply(Math.max(last, 1 + amount));
+      else apply(0.06);
     },
   };
 }

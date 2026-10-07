@@ -14,28 +14,39 @@ export interface LabAccidentTargets {
   windowLight?(intensity: number): void;
   /** Window glass: bows outward (amount 0..1), then shatters. */
   windowGlass?(state: 'bow' | 'shatter', amount: number): void;
+  /** Pull the game camera toward the accident (world point, weight 0..1) so the player sees it. */
+  camera?(x: number, z: number, weight: number): void;
 }
 export interface LabAccidentHost { particles: FxPool; time: number }
-export interface LabAccidentState { light: number; bow: number; shattered: boolean; shake: number; smoking: boolean }
+export interface LabAccidentState { light: number; bow: number; shattered: boolean; shake: number; smoking: boolean; flash: number }
 
 const { blastShakeS } = l1v2.accident;
-const GLASS = 0xcfe9f2, DUST = 0x9a9488, SMOKE = 0x7d8f80 /* grey with a faint green tint */, PUFF = 0x96b76a;
-const SMOKE_S = 40, SMOKE_INTERVAL = 0.25;
+const GLASS = 0xcfe9f2, DUST = 0x9a9488, SMOKE = 0x7d8f80 /* grey with a faint green tint */, SMOKE_DARK = 0x424d45, PUFF = 0x96b76a;
+const SMOKE_INTERVAL = 0.04, ROOF_Y = 5;
+const FIRE = 0xffa040;
 
 export class LabAccidentFx {
-  readonly state: LabAccidentState = { light: 1, bow: 0, shattered: false, shake: 0, smoking: false };
+  readonly state: LabAccidentState = { light: 1, bow: 0, shattered: false, shake: 0, smoking: false, flash: 0 };
   flashReduction = false;
   private readonly rng: Rng;
   private readonly stops: (() => void)[] = [];
   private flickerFrom = -1;
   private flickerSteps: { at: number; level: number }[] = [];
   private blastAt = -1;
+  private sparkAt = 0;
+  private focus: Vec2 = { x: 0, z: 0 };
+  private fightFade = 1;
+  private fighting(p: { x: number; z: number } | undefined): boolean {
+    if (!p) return false;
+    for (const e of this.world.entities.iterate()) if (e.infected && e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 4) return true;
+    return false;
+  }
   private smokeAt = -1;
   private nextSmoke = 0;
   private vents: Vec2[] = [];
   private dry = false;
   private time = 0;
-  constructor(world: SimWorld, private readonly host: LabAccidentHost, private readonly targets: LabAccidentTargets, private readonly anchor: (name: string) => Vec2 | undefined = () => undefined) {
+  constructor(private readonly world: SimWorld, private readonly host: LabAccidentHost, private readonly targets: LabAccidentTargets, private readonly anchor: (name: string) => Vec2 | undefined = () => undefined) {
     this.rng = new Rng(world.seed, 'lab-accident');
     for (const type of ['l1.flicker', 'l1.blast', 'l1.smoke', 'l1.infectedExit'] as L1AccidentEventName[])
       this.stops.push(world.events.on(type, this.receive as (e: GameEvent) => void));
@@ -59,19 +70,29 @@ export class LabAccidentFx {
   }
   private blast(p: Vec2): void {
     this.blastAt = this.time;
+    const v = this.anchor('lab-smoke-vent') ?? this.anchor('lab-smoke-window') ?? p;
+    this.focus = v;
     this.state.shattered = false;
     this.state.shake = 1;
     this.targets.windowGlass?.('bow', 0);
     this.vents = [p];
     // Contained pressure wave: pale dust ring and glass leaving the window, nothing like a fireball.
     this.glassBurst(p);
-    this.dust(p, 14);
+    this.dust(p, 22);
+    this.fireBurst(p);
+    this.sparkAt = this.time + 1;
+  }
+  private fireBurst(p: Vec2): void {
+    for (let i = 0; i < 18; i++) {
+      const a = this.rng.next() * Math.PI * 2, sp = 2 + this.rng.next() * 3;
+      this.host.particles.spawn(this.host.time, this.life(0.35 + this.rng.next() * 0.25), p.x, 1.6 + this.rng.next(), p.z, Math.cos(a) * sp, 0.5 + this.rng.next() * 2, Math.sin(a) * sp, 0.5 + this.rng.next() * 0.5, 0, FIRE, 0);
+    }
   }
   private life(seconds: number): number { return this.dry ? 0.01 : seconds; }
   private glassBurst(p: Vec2): void {
     for (let i = 0; i < 28; i++) {
       const a = this.rng.next() * Math.PI * 2, s = 1.5 + this.rng.next() * 3.5;
-      this.host.particles.spawn(this.host.time, this.life(0.9 + this.rng.next() * 0.5), p.x, 1.4 + this.rng.next() * 0.8, p.z, Math.cos(a) * s, 1 + this.rng.next() * 2.5, Math.sin(a) * s, 0.05 + this.rng.next() * 0.05, 0, GLASS, 9.8);
+      this.host.particles.spawn(this.host.time, this.life(0.9 + this.rng.next() * 0.5), p.x, 1.4 + this.rng.next() * 0.8, p.z, Math.cos(a) * s, 1 + this.rng.next() * 2.5, Math.sin(a) * s, 0.1 + this.rng.next() * 0.08, 0, GLASS, 9.8);
     }
   }
   private dust(p: Vec2, n: number): void {
@@ -94,11 +115,13 @@ export class LabAccidentFx {
   /** Run each emit path once with instantly expiring particles so no first-use cost lands on the blast. */
   prewarm(): void {
     this.dry = true;
-    try { const p = { x: 0, z: 0 }; this.glassBurst(p); this.dust(p, 14); this.puff(p); this.smoke(p); } finally { this.dry = false; }
+    try { const p = { x: 0, z: 0 }; this.glassBurst(p); this.dust(p, 14); this.fireBurst(p); this.puff(p); this.smoke(p); } finally { this.dry = false; }
   }
-  private smoke(p: Vec2): void {
-    for (let i = 0; i < 2; i++)
-      this.host.particles.spawn(this.host.time, this.life(3.5), p.x + (this.rng.next() - 0.5) * 0.4, 2 + this.rng.next() * 0.4, p.z + (this.rng.next() - 0.5) * 0.4, (this.rng.next() - 0.5) * 0.3, 1.1 + this.rng.next() * 0.7, (this.rng.next() - 0.5) * 0.3, 0.55 + this.rng.next() * 0.5, 0, SMOKE, -0.15);
+  /** Thick smoke: big soft puffs rising several metres above the roof, drifting with a light wind. */
+  private smoke(p: Vec2, y = 2): void {
+    const n = this.host.particles.budget < 1024 ? 1 : 2;
+    for (let i = 0; i < n; i++)
+      this.host.particles.spawn(this.host.time, this.life(6), p.x + (this.rng.next() - 0.5) * 0.6, y + this.rng.next() * 0.4, p.z + (this.rng.next() - 0.5) * 0.6, 0.35 + (this.rng.next() - 0.5) * 0.4, 1.8 + this.rng.next() * 0.9, (this.rng.next() - 0.5) * 0.3, 2.4 + this.rng.next() * 1.6, 0, this.rng.next() < 0.4 ? SMOKE : SMOKE_DARK, -0.1);
   }
   /** Advance by render seconds; call after Vfx.advance. */
   advance(seconds: number): void {
@@ -120,13 +143,31 @@ export class LabAccidentFx {
       if (t >= 0.15 && !s.shattered) { s.shattered = true; this.targets.windowGlass?.('shatter', 1); }
       const k = Math.max(0, 1 - t / blastShakeS);
       s.shake = k;
-      if (k > 0) this.targets.shake((this.flashReduction ? 0.04 : 0.14) * k * k);
-      else this.blastAt = -1;
+      s.flash = Math.max(0, 1 - t / 0.3) * (this.flashReduction ? 0.15 : 0.75);
+      if (k > 0) this.targets.shake((this.flashReduction ? 0.05 : 0.3) * k * k);
+      else { this.blastAt = -1; s.flash = 0; }
+    } else if (s.shattered && this.time < this.sparkAt + 12) {
+      // Blown windows: dark, with the odd weak spark of a failing light (never a strobe).
+      const phase = (this.time - this.sparkAt) % 1.3, lit = !this.flashReduction && phase < 0.12 ? 0.5 : 0.06;
+      this.targets.windowLight?.(lit);
+    } else if (s.shattered) this.targets.windowLight?.(0.06);
+    if (this.sparkAt > 0 && this.time - (this.sparkAt - 1) < 6) {
+      // Gentle story pull: ease in 0.6 s, hold 3 s, ease out 1 s toward the midpoint of courier and vent, weight 0.45.
+      // Never while the player is fighting (an infected within 4 m): the weight eases to zero.
+      const t = this.time - (this.sparkAt - 1), p = this.world.entities.get(1)?.transform;
+      const base = Math.max(0, Math.min(1, t / 0.6, (4.6 - t) / 1)) * (this.flashReduction ? 0.2 : 0.45);
+      this.fightFade += ((this.fighting(p) ? 0 : 1) - this.fightFade) * Math.min(1, seconds * 6);
+      if (p) this.targets.camera?.((p.x + this.focus.x) / 2, (p.z + this.focus.z) / 2, base * this.fightFade);
     }
     if (this.smokeAt >= 0) {
-      if (this.time - this.smokeAt > SMOKE_S) { this.smokeAt = -1; s.smoking = false; }
-      else while (this.nextSmoke <= this.time) { for (const v of this.vents) this.smoke(v); this.nextSmoke += SMOKE_INTERVAL; }
+      // The column persists as a landmark for the rest of the level.
+      while (this.nextSmoke <= this.time) {
+        this.vents.forEach((v, i) => this.smoke(v, i === 0 ? ROOF_Y : 1.8));
+        this.nextSmoke += SMOKE_INTERVAL;
+      }
     }
   }
+  /** Full-screen flash strength 0..1 for the HUD flash overlay. */
+  get flash(): number { return this.state.flash; }
   dispose(): void { for (const stop of this.stops) stop(); this.stops.length = 0; }
 }
