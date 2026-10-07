@@ -20,7 +20,7 @@ const lampSpot = { x: 62.2, z: -1.4 };
 
 test.beforeAll(() => mkdirSync(out, { recursive: true }));
 
-test('T-E25-10 @E25 @vision game-camera mood per time-of-day preset: readable player, infected and pickups', async ({ page }) => {
+test('T-E25-moods @E25 @vision game-camera mood per time-of-day preset: readable player, infected and pickups', async ({ page }) => {
   test.setTimeout(180_000);
   await boot(page);
   await page.evaluate(async (spot) => {
