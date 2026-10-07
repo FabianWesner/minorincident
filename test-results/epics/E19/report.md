@@ -34,3 +34,23 @@ M1-10 explicitly authorizes E19 segment 2 and spawn rules; segment 3 now identif
 Actual production-build L1 routes start through menus and finish with zero deaths using mouse input or emulated iPhone touch. They exercise movement, hardware selection/interact and fists/kick/bat combat; state APIs only pause/advance time, read/project and prepare captures on these routes. Stage assertions require grabbed, bitten, down and rising, three turn events and four infected. UI assertions cover truthful objective text and expiration of toast/subtitle/prompt (the full HUD suppresses the legacy objective toast, so its deadline is checked through the hidden property), fading house tags, tag dimensions and absence of the overhead damage disc.
 
 All browsers were headless, serialized through `tools/e2e-lock.sh`, capped at two workers, with Metal WebGL2 flags on macOS. Tests used private port 3345. iPhone is emulated, not a physical-device measurement; WebGPU was not checked. Native M1 Max GPU results and final check exit codes are retained in the lane evidence. Desktop 1600×900 and iPhone portrait 390×844 captures were inspected at the game camera and deleted afterward as requested.
+
+
+## 2026-10-07 — L1 v2 bot reliability trial (`lane/bots`)
+
+Base: `71489230`. Only `tools/sim-runner/l1Bots.ts` changes behavior. The bot uses the nav grid's independent player flood for routes, brakes before short waypoints, samples stuck movement by elapsed ticks, chooses connected detour destinations, re-plans when detours end, ignores hidden/occluded infected, and retreats along connected routes when a crowd overwhelms it. Game rules, AI, map, combat values, tests and specs are unchanged.
+
+Evidence: [bots-trial.json](bots-trial.json), including every seed's objective timeline and final position.
+
+| Bot | Completion | Conventional median | Test upper-middle median | Deaths across 20 seeds |
+| --- | --- | --- | --- | --- |
+| complete | 20/20 | 100.89 s | 100.90 s | 0 |
+| newbie | 20/20 | 110.32 s | 111.30 s | 0 |
+
+The requested standalone `tests/levels/L1.test.ts -t "T-E19-02|T-E19-03|T-E19-end" --maxWorkers=2` run covers all 20 seeds for both bots. T-E19-end passes. T-E19-02 and T-E19-03 fail only their 240 s / 270 s lower bounds. The all-green timing goal is therefore **not achieved**; no mission delays or criterion changes were introduced.
+
+Node 22.22.2 validation: typecheck, lint and build pass; all 227 unit tests in 72 files pass. Heavy runs use the main checkout's `tools/sim-lock.sh` with at most two Vitest workers. The initial Node 21 unit run had one audio test failure because `Dirent.parentPath` is unavailable; Node 22 resolves it without code changes.
+
+`npm run verify -- E19` was attempted with its Vitest invocation locked, capped at two workers, fail-fast, and the L1 battery separated from the other selected tests. It stops after 63 passes and one failure in the existing bicycle click-to-move test; browser checks are not reached.
+
+Genuine game routing bug reproduced independently: **seed 1, position (-68.10, 7.60)**. Mount at the starting rack and issue one click-to-move command to the parcel counter (-37.8, -37.5). After 60 s the player remains mounted near the starting rack, 54.33 m from the counter (`tests/levels/l1-ride-input.test.ts`, QA1-02). The bot's keyboard steering / stuck dismount completes that seed. The game routing bug is reported, not changed. No bot seed encountered a mission-blocking nav pocket or infected-AI failure.

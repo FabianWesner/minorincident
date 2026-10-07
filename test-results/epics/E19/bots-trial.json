@@ -1,0 +1,114 @@
+{
+  "base": "71489230",
+  "runtime": "Node 22.22.2",
+  "summary": {
+    "complete": {
+      "completed": 20,
+      "seeds": 20,
+      "medianSeconds": 100.89166666666668,
+      "testUpperMedianSeconds": 100.9,
+      "minSeconds": 98.55,
+      "maxSeconds": 103.08333333333333,
+      "totalDeaths": 0
+    },
+    "newbie": {
+      "completed": 20,
+      "seeds": 20,
+      "medianSeconds": 110.31666666666666,
+      "testUpperMedianSeconds": 111.3,
+      "minSeconds": 99.48333333333333,
+      "maxSeconds": 116.86666666666666,
+      "totalDeaths": 0
+    }
+  },
+  "targetTests": {
+    "T-E19-02": "FAIL: median 100.9 < 240 seconds; completion 20/20 passes",
+    "T-E19-03": "FAIL: median 111.3 < 270 seconds; completion 20/20 and deaths pass",
+    "T-E19-end": "PASS"
+  },
+  "genuineGameBugsFound": [
+    {
+      "seed": 1,
+      "ticks": 3600,
+      "simSeconds": 60,
+      "position": {
+        "x": -68.0999984741211,
+        "y": 0.7049985527992249,
+        "z": 7.601999759674072,
+        "yaw": 0.31725865521553004
+      },
+      "goal": {
+        "x": -37.8,
+        "z": -37.5,
+        "radius": 2
+      },
+      "distance": 54.33489017062039,
+      "riding": true,
+      "test": "E19 QA1-02: bicycle click-to-move to parcel counter",
+      "behavior": "A single moveTarget click leaves the bicycle mounted near its starting rack after 60 s, 54.33 m from the counter. Bot keyboard steering and stuck dismount recover; game routing is unchanged."
+    }
+  ],
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "targetedLevelTests": {
+      "passed": 1,
+      "failed": 2,
+      "failures": "AC02/AC03 lower time bounds only"
+    },
+    "E19Verification": {
+      "passed": 63,
+      "failed": 1,
+      "failure": "Existing bicycle click-to-move routing failure, seed 1; fail-fast before browser checks",
+      "constraints": "Vitest wrapped in main tools/sim-lock.sh with 2 workers; L1.test.ts run separately"
+    },
+    "unitNode22": {
+      "passedTests": 227,
+      "passedFiles": 72,
+      "failedTests": 0
+    }
+  },
+  "runs": [
+    {"botTrial":true,"profile":"complete","seed":1,"seconds":98.55,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.2115604232051242},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":51.61666666666667},{"id":"weapon","t":78.73333333333333},{"id":"firestation","t":98.55}]},
+    {"botTrial":true,"profile":"complete","seed":2,"seconds":100.3,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0716248872502585},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":51.666666666666664},{"id":"weapon","t":78.83333333333333},{"id":"firestation","t":100.3}]},
+    {"botTrial":true,"profile":"complete","seed":3,"seconds":100.88333333333334,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.2116062564592442},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":51.36666666666667},{"id":"weapon","t":79.46666666666667},{"id":"firestation","t":100.88333333333334}]},
+    {"botTrial":true,"profile":"complete","seed":4,"seconds":100.9,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0715740222841657},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":50.416666666666664},{"id":"weapon","t":78.71666666666667},{"id":"firestation","t":100.9}]},
+    {"botTrial":true,"profile":"complete","seed":5,"seconds":102.03333333333333,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.071624826792673},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":52.56666666666667},{"id":"weapon","t":81.68333333333334},{"id":"firestation","t":102.03333333333333}]},
+    {"botTrial":true,"profile":"complete","seed":6,"seconds":99.86666666666666,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0695490526262557},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":50.85},{"id":"weapon","t":77.7},{"id":"firestation","t":99.86666666666666}]},
+    {"botTrial":true,"profile":"complete","seed":7,"seconds":100.81666666666666,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0715737915356476},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":51.5},{"id":"weapon","t":79.46666666666667},{"id":"firestation","t":100.81666666666666}]},
+    {"botTrial":true,"profile":"complete","seed":8,"seconds":101.45,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0716247906572853},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":51.06666666666667},{"id":"weapon","t":79.7},{"id":"firestation","t":101.45}]},
+    {"botTrial":true,"profile":"complete","seed":9,"seconds":100.5,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.211560338339625},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":50.85},{"id":"weapon","t":79.2},{"id":"firestation","t":100.5}]},
+    {"botTrial":true,"profile":"complete","seed":10,"seconds":100.53333333333333,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0715739144978977},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":51.71666666666667},{"id":"weapon","t":78.33333333333333},{"id":"firestation","t":100.53333333333333}]},
+    {"botTrial":true,"profile":"complete","seed":11,"seconds":100.58333333333333,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.211596171908756},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":52.05},{"id":"weapon","t":78.6},{"id":"firestation","t":100.58333333333333}]},
+    {"botTrial":true,"profile":"complete","seed":12,"seconds":101.73333333333333,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.2115605239568374},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":52.28333333333333},{"id":"weapon","t":80.3},{"id":"firestation","t":101.73333333333333}]},
+    {"botTrial":true,"profile":"complete","seed":13,"seconds":99.18333333333334,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.071624792087657},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":51.96666666666667},{"id":"weapon","t":78.86666666666666},{"id":"firestation","t":99.18333333333334}]},
+    {"botTrial":true,"profile":"complete","seed":14,"seconds":100.95,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.212325169028405},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":51.4},{"id":"weapon","t":79.46666666666667},{"id":"firestation","t":100.95}]},
+    {"botTrial":true,"profile":"complete","seed":15,"seconds":101.45,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0715739851232833},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":50.1},{"id":"weapon","t":79.31666666666666},{"id":"firestation","t":101.45}]},
+    {"botTrial":true,"profile":"complete","seed":16,"seconds":102.65,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0715739547429517},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":52.233333333333334},{"id":"weapon","t":80.11666666666666},{"id":"firestation","t":102.65}]},
+    {"botTrial":true,"profile":"complete","seed":17,"seconds":103.08333333333333,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.212218004249137},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":51.31666666666667},{"id":"weapon","t":79.21666666666667},{"id":"firestation","t":103.08333333333333}]},
+    {"botTrial":true,"profile":"complete","seed":18,"seconds":101.4,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.2134368932156168},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":51.11666666666667},{"id":"weapon","t":79.85},{"id":"firestation","t":101.4}]},
+    {"botTrial":true,"profile":"complete","seed":19,"seconds":100.11666666666666,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0716083338193165},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":51.18333333333333},{"id":"weapon","t":78.76666666666667},{"id":"firestation","t":100.11666666666666}]},
+    {"botTrial":true,"profile":"complete","seed":20,"seconds":101.53333333333333,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.071625003827102},"timeline":[{"id":"pickup","t":12.966666666666667},{"id":"deliver","t":37.6},{"id":"escape","t":50.35},{"id":"weapon","t":78.6},{"id":"firestation","t":101.53333333333333}]},
+    {"botTrial":true,"profile":"newbie","seed":1,"seconds":111.3,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0709585160449904},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":62.36666666666667},{"id":"weapon","t":89.58333333333333},{"id":"firestation","t":111.3}]},
+    {"botTrial":true,"profile":"newbie","seed":2,"seconds":103.93333333333334,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.2219133793520283},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":62.416666666666664},{"id":"weapon","t":81.61666666666666},{"id":"firestation","t":103.93333333333334}]},
+    {"botTrial":true,"profile":"newbie","seed":3,"seconds":106.6,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0707599379405894},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":62.11666666666667},{"id":"weapon","t":81.33333333333333},{"id":"firestation","t":106.6}]},
+    {"botTrial":true,"profile":"newbie","seed":4,"seconds":116.86666666666666,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.222567333180757},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":61.166666666666664},{"id":"weapon","t":94.6},{"id":"firestation","t":116.86666666666666}]},
+    {"botTrial":true,"profile":"newbie","seed":5,"seconds":108.46666666666667,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0707521112480096},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":63.31666666666667},{"id":"weapon","t":87.58333333333333},{"id":"firestation","t":108.46666666666667}]},
+    {"botTrial":true,"profile":"newbie","seed":6,"seconds":112.83333333333333,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.071169521954472},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":61.6},{"id":"weapon","t":89.6},{"id":"firestation","t":112.83333333333333}]},
+    {"botTrial":true,"profile":"newbie","seed":7,"seconds":114.41666666666667,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.212579517234648},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":62.25},{"id":"weapon","t":92.35},{"id":"firestation","t":114.41666666666667}]},
+    {"botTrial":true,"profile":"newbie","seed":8,"seconds":114.15,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0708072250920435},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":61.81666666666667},{"id":"weapon","t":90.58333333333333},{"id":"firestation","t":114.15}]},
+    {"botTrial":true,"profile":"newbie","seed":9,"seconds":109.33333333333333,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.211558916319913},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":61.6},{"id":"weapon","t":87.33333333333333},{"id":"firestation","t":109.33333333333333}]},
+    {"botTrial":true,"profile":"newbie","seed":10,"seconds":102.51666666666667,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0709607942934145},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":62.46666666666667},{"id":"weapon","t":78.88333333333334},{"id":"firestation","t":102.51666666666667}]},
+    {"botTrial":true,"profile":"newbie","seed":11,"seconds":115.61666666666666,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.2121618516042516},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":62.8},{"id":"weapon","t":93.1},{"id":"firestation","t":115.61666666666666}]},
+    {"botTrial":true,"profile":"newbie","seed":12,"seconds":104.21666666666667,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.070094579766897},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":63.03333333333333},{"id":"weapon","t":80.1},{"id":"firestation","t":104.21666666666667}]},
+    {"botTrial":true,"profile":"newbie","seed":13,"seconds":99.48333333333333,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.071170477484199},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":62.71666666666667},{"id":"weapon","t":79.13333333333334},{"id":"firestation","t":99.48333333333333}]},
+    {"botTrial":true,"profile":"newbie","seed":14,"seconds":113.2,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0715733746611984},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":62.15},{"id":"weapon","t":91.16666666666667},{"id":"firestation","t":113.2}]},
+    {"botTrial":true,"profile":"newbie","seed":15,"seconds":100.6,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.07089061334186},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":60.85},{"id":"weapon","t":77.38333333333334},{"id":"firestation","t":100.6}]},
+    {"botTrial":true,"profile":"newbie","seed":16,"seconds":100.41666666666667,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0715210918611064},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":62.983333333333334},{"id":"weapon","t":79.35},{"id":"firestation","t":100.41666666666667}]},
+    {"botTrial":true,"profile":"newbie","seed":17,"seconds":111.7,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.21176449468314},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":62.06666666666667},{"id":"weapon","t":89.41666666666667},{"id":"firestation","t":111.7}]},
+    {"botTrial":true,"profile":"newbie","seed":18,"seconds":113.2,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0682581474028496},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":61.86666666666667},{"id":"weapon","t":91.11666666666666},{"id":"firestation","t":113.2}]},
+    {"botTrial":true,"profile":"newbie","seed":19,"seconds":112.53333333333333,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":-3.0608487484436013},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":61.93333333333333},{"id":"weapon","t":90.36666666666666},{"id":"firestation","t":112.53333333333333}]},
+    {"botTrial":true,"profile":"newbie","seed":20,"seconds":99.53333333333333,"deaths":0,"phase":"result","position":{"x":-73.19999694824219,"y":0.7200000286102295,"z":36.244998931884766,"yaw":3.2122753022557813},"timeline":[{"id":"pickup","t":14.5},{"id":"deliver","t":48.35},{"id":"escape","t":61.1},{"id":"weapon","t":78.1},{"id":"firestation","t":99.53333333333333}]}
+  ]
+}
