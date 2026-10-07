@@ -3238,7 +3238,12 @@
     "lods": {
       "lod1": "public/assets/models/veh.fire-engine.lod1.glb",
       "lod2": "public/assets/models/veh.fire-engine.lod2.glb"
-    }
+    },
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
+    },
+    "sourceGlb": "assets/veh.fire-engine/model.glb"
   },
   {
     "id": "veh.sedan-red",
@@ -3406,6 +3411,10 @@
     "world": {
       "token": "picketWhite",
       "solid": false
+    },
+    "authoredLodRatios": {
+      "lod1": 0.383,
+      "lod2": 0.253
     }
   },
   {
@@ -3748,6 +3757,10 @@
     "world": {
       "token": "tealDark",
       "solid": false
+    },
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
     }
   },
   {
@@ -3901,7 +3914,11 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "authoredLodRatios": {
+      "lod1": 0.48,
+      "lod2": 0.368
+    }
   },
   {
     "id": "veh.jeep-red",
@@ -4023,6 +4040,10 @@
     "world": {
       "token": "schoolBusYellow",
       "solid": true
+    },
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
     }
   },
   {
@@ -4069,6 +4090,10 @@
     "world": {
       "token": "backpackTeal",
       "solid": true
+    },
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
     }
   },
   {
@@ -4113,6 +4138,10 @@
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
     }
   },
   {
@@ -4267,6 +4296,10 @@
     "world": {
       "token": "survivorRed",
       "solid": true
+    },
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
     }
   },
   {
@@ -4307,6 +4340,10 @@
     "lods": {
       "lod1": "public/assets/models/bld.gas-station.lod1.glb",
       "lod2": "public/assets/models/bld.gas-station.lod2.glb"
+    },
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
     }
   },
   {
@@ -4392,6 +4429,10 @@
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
     }
   },
   {
@@ -4434,6 +4475,10 @@
     "world": {
       "token": "backpackTeal",
       "solid": false
+    },
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
     }
   },
   {
@@ -4509,7 +4554,11 @@
       "lod2": "public/assets/models/bld.school-elementary.lod2.glb"
     },
     "sourceForward": "+X",
-    "script": "assets/bld.school-elementary/build.py"
+    "script": "assets/bld.school-elementary/build.py",
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
+    }
   },
   {
     "id": "int.gym-cafeteria",
@@ -4757,6 +4806,10 @@
     "lods": {
       "lod1": "public/assets/models/bld.fire-station.lod1.glb",
       "lod2": "public/assets/models/bld.fire-station.lod2.glb"
+    },
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
     }
   },
   {
@@ -5837,6 +5890,10 @@
     "world": {
       "token": "backpackTeal",
       "solid": false
+    },
+    "authoredLodRatios": {
+      "lod1": 0.427,
+      "lod2": 0.311
     }
   },
   {
@@ -7072,6 +7129,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.military-truck.lod1.glb",
       "lod2": "public/assets/models/veh.military-truck.lod2.glb"
+    },
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
     }
   },
   {
@@ -7128,6 +7189,10 @@
     "world": {
       "token": "canvasTan",
       "solid": false
+    },
+    "authoredLodRatios": {
+      "lod1": 0.551,
+      "lod2": 0.442
     }
   },
   {
@@ -7180,6 +7245,10 @@
     "lods": {
       "lod1": "public/assets/models/veh.semi-trailer.lod1.glb",
       "lod2": "public/assets/models/veh.semi-trailer.lod2.glb"
+    },
+    "authoredLodRatios": {
+      "lod1": 0.643,
+      "lod2": 0.524
     }
   },
   {
@@ -7529,6 +7598,10 @@
     "lods": {
       "lod1": "public/assets/models/bld.helipad.lod1.glb",
       "lod2": "public/assets/models/bld.helipad.lod2.glb"
+    },
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
     }
   },
   {
@@ -12323,6 +12396,10 @@
     "lods": {
       "lod1": "public/assets/models/bld.garage-detached.lod1.glb",
       "lod2": "public/assets/models/bld.garage-detached.lod2.glb"
+    },
+    "authoredLodRatios": {
+      "lod1": 0.6,
+      "lod2": 0.3
     }
   },
   {
@@ -13377,6 +13454,10 @@
     "world": {
       "token": "uiDark",
       "solid": false
+    },
+    "authoredLodRatios": {
+      "lod1": 1,
+      "lod2": 1
     }
   },
   {
