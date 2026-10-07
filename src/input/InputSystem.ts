@@ -179,7 +179,9 @@ export class InputSystem implements Lifecycle {
     frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; if (this.active.has('walk')) frame.walk = true; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
     frame.cancelMove = this.cancelMove; this.cancelMove = false;
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
-    this.driving.throttle = y ? -y : 0; this.driving.steer = x; frame.drive = this.driving; frame.brake = false;
+    const driveX = this.drivingContext && this.aiming() ? this.axis('aimRight', 'aimLeft') : x;
+    const driveY = this.drivingContext && this.aiming() ? this.axis('aimDown', 'aimUp') : y;
+    this.driving.throttle = driveY ? -driveY : 0; this.driving.steer = driveX; frame.drive = this.driving; frame.brake = false;
     if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') {
       this.screenVector(x, y, frame.move); const length = Math.hypot(frame.move.x, frame.move.z);
       if (length > 1) { frame.move.x /= length; frame.move.z /= length; }
@@ -252,7 +254,10 @@ export class InputSystem implements Lifecycle {
       frame.pointerGround = true;
       if (this.pointerGround === 'move' && frame.left.held && frame.aimPoint && !this.moving()) frame.moveTarget = { ...frame.aimPoint };
     }
-    if (this.drivingContext && this.scheme === 'touch' && this.touch.holdingLeft) frame.left.held = true;
+    if (this.drivingContext && this.scheme === 'touch') {
+      if (this.touch.holdingLeft) frame.left.held = true;
+      frame.right.held = this.touch.holdingRight;
+    }
     if (this.selectedActiveSlot !== undefined) { frame.selectedActiveSlot = this.selectedActiveSlot; this.selectedActiveSlot = undefined; }
     if (this.selectedSlot) { frame.selectedSlot = this.selectedSlot; this.selectedSlot = undefined; }
     const selection = this.selectors.shift();
