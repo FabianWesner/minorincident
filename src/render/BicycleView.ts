@@ -117,5 +117,14 @@ export class BicycleView extends Group {
     const near = !riding && dist <= 1.6 && !!camera; this.prompt.hidden = !near;
     if (near && camera) { this.projection.set(t.x, 1.9, t.z).project(camera); this.prompt.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.prompt.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`; }
   }
-  dispose(): void { this.prompt.remove(); this.disposed = true; this.clear(); this.rig = null; void this.registry.dispose(); }
+  dispose(): void {
+    this.prompt.remove(); this.disposed = true;
+    if (this.rig) {
+      const roots = [this.rig.parcel, this.rig.glint, ...(this.rig.model.userData.placeholder ? [this.rig.model] : [])];
+      const materials = new Set<MeshBasicNodeMaterial>();
+      for (const root of roots) root.traverse(node => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) materials.add(material as MeshBasicNodeMaterial); } });
+      for (const material of materials) material.dispose();
+    }
+    this.clear(); this.rig = null; void this.registry.dispose();
+  }
 }
