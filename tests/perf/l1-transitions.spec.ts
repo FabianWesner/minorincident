@@ -71,8 +71,15 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
     await measure('death-respawn', () => page.evaluate(() => window.__SS__!.survivor.damage(100)), 3_500);
     expect(await page.evaluate(() => window.__SS__!.getState().player!.health.current)).toBeGreaterThan(0);
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.stats.deaths)).toBe(1);
-    await place('fire-bay-trigger');
-    await measure('fire-station-end', () => page.evaluate(() => window.__SS__!.step(2)), 9_000);
+    // The ending is now a reach volume: entering it during paused setup would finish before recording.
+    // Stand outside the open bay, then capture the player's real click and actual crossing.
+    await page.evaluate(p => { const a = window.__SS__!; a.teleport('player', { x: p.x, z: p.z - 3 }); a.step(1); }, at('fire-bay-door'));
+    await page.evaluate(() => window.__SS__!.screenshotReady());
+    expect(await page.evaluate(() => window.__SS__!.missions.state()!.phase)).toBe('playing');
+    await measure('fire-station-end', async () => {
+      const point = await page.evaluate(p => window.__SS__!.input.project(p), at('fire-bay-trigger'));
+      await page.mouse.click(point.x, point.y);
+    }, 3_000);
     await expect(page.getByTestId('mission-heading')).toHaveText('Delivery complete. Outbreak: not contained.');
     const proof = await page.evaluate(() => { const a = window.__SS__!, gl = document.querySelector('canvas')!.getContext('webgl2')!, ext = gl.getExtension('WEBGL_debug_renderer_info'); return { gpu: ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) as string : null, mission: a.missions.state(), perf: a.perf() }; });
     writeFileSync(`${output}/${phase}-${mode}.json`, JSON.stringify({ samples, loading, ...proof }, null, 2));
