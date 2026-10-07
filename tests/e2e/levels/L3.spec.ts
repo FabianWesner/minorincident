@@ -1,10 +1,13 @@
-import { expect, test, attachErrorGuard, boot } from '../fixtures';
+import { expect, test, attachErrorGuard, boot, testUrl } from '../fixtures';
 import { mkdirSync, writeFileSync } from 'node:fs';
 const output = 'test-results/epics/E21';
+// These long playthroughs load the complete asset set twice. Screenshots and
+// progress JSON provide evidence without retaining gigabytes of network traces.
+test.use({ trace: 'off' });
 const policy = process.env.L3_BOT_POLICY === 'newbie' ? 'newbie' : 'complete';
 for (const route of ['market', 'park'] as const) test(`@E21 @E21-AC08 @E21-AC09 browser bot via ${route}, driving at timescale 2 and four photo spots`, async ({ page }) => {
   test.setTimeout(600_000); const consoleErrors = attachErrorGuard(page).errors; mkdirSync(output, { recursive: true });
-  await boot(page);
+  await boot(page, `${testUrl}&ui=1`);
   // Same seed, camera and lighting at W0 provide the decay comparison for vision review.
   await page.evaluate(() => window.__SS__!.loadLevel('L3', { seed: 1, tier: 0, progression: 'L3-default' }));
   await page.evaluate(() => { const api = window.__SS__!; api.pause(); api.missions.begin(); api.camera.preset('l3-mainstreet-w2'); });
@@ -20,7 +23,7 @@ for (const route of ['market', 'park'] as const) test(`@E21 @E21-AC08 @E21-AC09 
   await snap('l3-mainstreet-w2');
   for (let i = 0; i < 3000; i++) {
     const state = await page.evaluate(() => ({ player: window.__SS__!.getState().player, mission: window.__SS__!.missions.state() }));
-    if (i % 20 === 0) writeFileSync(`${output}/browser-progress-${route}.json`, JSON.stringify(state, null, 2));
+    if (i % 20 === 0) writeFileSync(`${output}/browser-progress-${route}.json`, JSON.stringify({ ...state, entities: await page.evaluate(() => window.__SS__!.getState().entities) }, null, 2));
     if (!captured.has('l3-driving') && state.player?.hidden) await snap('l3-driving');
     if (!captured.has('l3-checkpoint') && state.mission?.steps.checkpoint.status === 'active') await snap('l3-checkpoint');
     if (state.mission?.phase === 'cinematic' || state.mission?.phase === 'result') { await snap('l3-safe-zone'); break; }
