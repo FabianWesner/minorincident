@@ -122,7 +122,17 @@ npx tsx tools/crowdfoot/debug.ts inf.common-worker.lod1 infected 'runner turn 90
 
 ## Validation
 
-Validation results are listed in the final lane message.
+Run on the final code after `git merge main` (`4da3cd53`). All runs headless, ANGLE Metal, lane ports 3392–3396 (never 3300).
+
+| Command | Result |
+| --- | --- |
+| `npm run typecheck`, `npm run lint` | PASS |
+| `sh tools/sim-lock.sh npx vitest run tests/unit --maxWorkers=2` | **303 passed**, 89 files |
+| `E2E_PORT=3394 npm run verify -- E07` | Unit/sim: 60 passed, 2 failed (`T-E07-16` dogs flank, `T-E07-09` stream spline). Both are sim-only and fail identically on unmodified main `0ffaf16a`, so they are pre-existing. Verify stops there, so I ran the browser phase separately: `playwright --grep @E07` gave **9 passed** (crowd-drawn WebGL + WebGPU, corpses persist, crowd-feel 60 s no flicker, T-E07-12/13). |
+| `E2E_PORT=3394 npm run verify -- E08` | Unit/sim **35 passed**. Browser: 29 passed, 1 failed (`npc.spec` "ambient civilian rendering": 0 instances vs 30). It fails identically on main `0ffaf16a`, so it is pre-existing. |
+| `E2E_PORT=3394 npm run test:smoke` | **6 sim + 25 browser passed** |
+| `sh tools/e2e-lock.sh npx playwright test tests/perf/horde.spec.ts tests/perf/horde-budget.spec.ts tests/e2e/crowd-close-lod.spec.ts --workers=1` | **8 passed**: horde budget high p95 11.4 ms, low 16.3 ms; close-LOD guard WebGL + WebGPU, high + low |
+| `PERF_HORDE_RUNS=3` budget runs (table above) | high 12.2 / 11.8 / 11.9 ms, low 16.5 / 17.1 / 17.0 ms |
 
 ## Remaining weaknesses
 
