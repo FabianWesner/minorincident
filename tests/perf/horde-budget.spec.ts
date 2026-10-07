@@ -16,7 +16,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const proof = await page.evaluate(async tier => {
       const a = window.__SS__!; await a.ready; await a.loadScenario(tier === 'high' ? 'perf-horde-200' : 'perf-horde-100'); a.pause(); a.cheats.god(true); a.camera.preset('perf-horde');
       // Forty live civilians outside grabbing range, same load on both tiers.
-      for (let i = 0; i < 40; i++) a.npcs.civilian('jogger', { x: (i % 10) * 1.2 - 6, z: 6 + Math.floor(i / 10) * 1.2 }, { panicReaction: 'freeze', waypoints: [{ x: (i % 10) * 1.2 - 6, z: 6 + Math.floor(i / 10) * 1.2 }] });
+      for (let i = 0; i < 40; i++) a.npcs.civilian('jogger', { x: (i % 10) * 1.2 - 6, z: -20 + Math.floor(i / 10) * 1.2 }, { panicReaction: 'freeze', waypoints: [{ x: (i % 10) * 1.2 - 6, z: -20 + Math.floor(i / 10) * 1.2 }] });
       await a.step(0); await a.screenshotReady(); const fixed = a.perf(); a.resume();
       const frameMs: number[] = [], simMs: number[] = [], updateMs: number[] = [], renderMs: number[] = [];
       let previous = 0; const start = performance.now(); const startTick = a.tick();
