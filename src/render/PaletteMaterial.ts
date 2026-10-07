@@ -1,9 +1,10 @@
 // Adapted from Bruno Simon folio-2025 Materials/MeshDefaultMaterial.js (MIT).
 import { MeshLambertNodeMaterial, type Texture, type Node, type Color } from 'three/webgpu';
-import { Fn, attribute, float, max, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color } from 'three/tsl';
+import { Fn, Discard, attribute, float, max, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
 import { surfaceDetail } from './SurfaceDetail';
+import { seeThroughKeep } from './SeeThrough';
 
 /** Palette-sampled Lambert node material with Bruno's captured drop-shadow, core shade and terrain bounce. */
 export class PaletteMaterial extends MeshLambertNodeMaterial {
@@ -46,5 +47,13 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
     })();
     // Fog is applied above; avoid a second neutral scene-fog blend.
     this.fog = false;
+  }
+  /** Opt this (world) material into the shared dithered player see-through hole. Idempotent; the
+   * shadow pass uses its own override material, so cast shadows stay whole. */
+  seeThrough(): this {
+    if (this.userData.seeThrough) return this;
+    const output = this.outputNode!;
+    this.outputNode = Fn(() => { Discard(seeThroughKeep().not()); return output; })();
+    this.userData.seeThrough = true; this.needsUpdate = true; return this;
   }
 }
