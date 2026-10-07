@@ -10,7 +10,8 @@ Lane: `player-anim`. No simulation modules or specifications changed. No new dep
 - Fit walk/run cadence to the two bodies, capped at 2.5/3.2 cycles per second. Running has a shorter support interval, knee compression, and an independent pelvis path during flight. A constrained pelvis filter preserves reachable support and bounded knee flexion.
 - Release stale plants during turns, bound their horizontal radius, and settle feet with short alternating steps on stops. Idle/move hysteresis and a 0.006-radian heading deadband reject small arrival noise. Presentation does not change navigation or collision outcomes.
 - Ground punches, bat swings and hit reactions; preserve the authored kick/knee/spinning actions. Attack fades finish before the supplied simulation contact tick. Repeated hurt actions restart, and every procedural layer restores the original mixer input before the next sample, including frozen frames and bicycle contacts.
-- Both courier variants use their own fitted skin and cached limb solvers. `skin=0` remains the rigid fallback. The default decision is recorded with the final visual review below.
+- Repair the authored kick/knee/backfist anticipation export: its held guard jumped into a chamber in one source frame. A spherical quadratic uses that chamber as its control pose and retains the exact original 20% contact and recovery. This is computed while building clips, with no extra per-frame solver.
+- Both courier variants use their own fitted skin and cached limb solvers. `skin=0` remains the rigid fallback. Skins are now enabled by default following the side/game-angle review; explicit skin=0 and skin=1 overrides remain.
 
 ## Evidence and reproduction
 
@@ -35,7 +36,47 @@ The before JSON must be retained to reproduce the historical comparison. Re-runn
 
 ## Validation and review
 
-Final counts, measurements, default decision and visual findings are filled from the completed artifacts before lane handoff.
+Measured straight locomotion, at 2.0 / 4.5 m/s (every frame, ticks 91–289):
+
+| Measure | Female before → after | Male before → after |
+| --- | --- | --- |
+| Walk peak knee flexion | 103.0° → 26.1° | 89.2° → 25.3° |
+| Run peak knee flexion | 135.5° → 45.0° | 108.0° → 45.0° |
+| Walk stance ankle drift | <0.01 → <0.01 cm | 6.93 → <0.01 cm |
+| Run stance ankle drift | <0.01 → <0.01 cm | 26.38 → <0.01 cm |
+| Walk pelvis range per cycle | 6.20 → 5.00 cm | 2.82 → 4.58 cm |
+| Run pelvis range per cycle | 5.18 → 0.75 cm | 4.48 → 1.00 cm |
+| Walk leg angular speed p95 | 1080 → 585°/s | 878 → 482°/s |
+| Run leg angular speed p95 | 1462 → 893°/s | 1306 → 726°/s |
+
+The female walk exceeds a literal 25° cap by 1.1° at its peak; the requested limit was approximate. Male walking has more cyclic pelvis travel than the rigid baseline, because the revised gait preserves leg extension and planted feet. The range is periodic, not arrival vibration. The old pilot's planted-foot accuracy was already good; the improvement is posture, reach and continuity while retaining that accuracy.
+
+The isolated CPU probe covers 28 variant/skin/pose cases. The highest skinned p95 is **0.161 ms female riding / 0.119 ms male riding**, including matrix propagation and both loaded skeleton palettes, under the requested ~0.5 ms budget. Median riding values are 0.105 / 0.043 ms. An earlier probe measured 0.310 / 0.183 ms p95; both runs remained below budget. These are wall-clock measurements on the shared Apple M4, not an OS scheduling bound.
+
+Visual review of the fixed-time comparison frames: both revised couriers remain upright in walking and running, retain hip-width foot placement, and no longer reach into the pilot's deep trailing-foot lunge after a 180° turn. Bat follow-through and hit reaction keep a grounded lower body. Bicycle hands/feet maintain the existing socket contacts, now for both bodies. The paired videos retain the full motion for the orchestrator's cadence/transition review. Existing bulky sole and bag-strap geometry is visible in the close crops; this lane does not remesh that art.
+
+The final full-chain audit found a 103.45° leg step in the revised inherited unarmed clips (the old baseline reached 99.68°). `f31df286` reduces it to 54.44° while retaining exact contact poses. This is the four-tick knee windup; fast attacks still have higher joint speeds than locomotion. The regression caps every leg step below 60° across the entire unarmed/bat chain, including action boundaries, and checks contact-pose equality and frozen-frame stability.
+
+The actual L1 A/B run has identical final player and simulation state, zero console/request errors and zero missing clips. Both videos are 12.8 seconds. Skins save 30 draw calls in each captured scene; observed browser player CPU p95 is at most 0.20 ms (0.30 ms maximum sample).
+
+Default enabled in `20d3a85e`. Main's combat-feel and vehicle-feel changes were integrated in `49603096`. Their combat phase timings remain compatible with the contact-time regression tests. The lock-wrapper merge retained main's equivalent single-slot queue fix.
+
+Validation logs and machine-readable results are in `test-results/player-anim/` and its `gates/` directory.
+
+| Command | Result |
+| --- | --- |
+| `npm run typecheck` | PASS |
+| `npm run lint` | PASS |
+| `npm run build` | PASS |
+| `sh tools/sim-lock.sh npm run test:unit -- --maxWorkers=2` | 266 passed, 77 files; 0 failed |
+| `npx vitest run tests/unit/render/skin-pilot.test.ts --maxWorkers=2` | 14 passed; 0 failed |
+| `E2E_SKIN=0 E2E_PORT=3369 npm run test:smoke` | 5 simulation + 22 browser passed; 0 failed |
+| `E2E_SKIN=1 E2E_PORT=3369 npm run test:smoke` | 5 simulation + 22 browser passed; 0 failed |
+| `SIM_WAIT=60 E2E_SKIN=1 E2E_PORT=3368 npm run verify -- E04` | Final run pending |
+
+The smoke and verify commands use their own browser locks; they were not wrapped in another lock. Headless browser validation uses Chromium/ANGLE Metal, four mobile orientations and WebKit, with at most two workers.
+
+Two initial smoke attempts each had 21 browser passes and one failure from transient 404s while `dist` was replaced: skin-off overlapped the verification build; skin-on overlapped the full unit suite’s existing `tests/unit/static.test.ts`, which invokes another build internally. Subsequent smoke runs were scheduled after the full unit suite finished. Failed attempts remain in `gates/smoke-skin0-build-race.*` and `gates/smoke-skin1-unit-build-race.*`. No request-error allowlist or test assertion was weakened.
 
 ## Limits
 
