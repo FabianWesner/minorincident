@@ -58,3 +58,19 @@ test('@E21 @E21-AC04 parked sedan blocks foot navigation until the native driver
     expect(w.infected!.nav.clear(car.entity.transform.x, car.entity.transform.z, .3)).toBe(true);
   } finally { w.dispose(); }
 });
+test('@E21 @E21-AC04 bot leaves the conservative nav box beside an angled parked sedan', async () => {
+  const w = await loadLevel('L3', 1);
+  try {
+    const m = w.missions!; m.completeObjective('forecourt'); m.completeObjective('car');
+    const car = w.vehicles!.cars.get(m.state.actors.sedan)!, yaw = Math.PI / 4;
+    car.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true);
+    w.update(); w.events.emit({ type: 'vehicle.exited', tick: w.tick, sourceId: car.entity.id, targetId: 1 });
+    m.completeObjective('market-route');
+    const c = car.entity.transform, player = w.entities.get(1)!;
+    Object.assign(player.transform, { x: c.x+Math.sin(yaw)*1.55, z: c.z+Math.cos(yaw)*1.55 });
+    w.physics.playerBody!.setTranslation(player.transform, true);
+    expect(w.infected!.nav.clear(player.transform.x, player.transform.z, .45)).toBe(false);
+    const frame = new LevelThreeBot(w).sample();
+    expect(frame.move.x*Math.sin(yaw)+frame.move.z*Math.cos(yaw)).toBeGreaterThan(.9);
+  } finally { w.dispose(); }
+});

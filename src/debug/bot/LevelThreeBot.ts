@@ -65,6 +65,14 @@ export class LevelThreeBot {
       frame.interact = dist(p, door) < .65;
       return frame;
     }
+    // The nav grid uses an axis-aligned chassis box. At a slanted parking angle,
+    // a valid capsule position beside the door can lie inside that conservative
+    // box. Step away from the chassis with ordinary controls before routing.
+    if (car && dist(p, car.entity.transform) < car.physics.def.length / 2 + 2 && !w.infected!.nav.clear(p.x, p.z, .45)) {
+      const c = car.entity.transform, side = (p.x-c.x)*Math.sin(c.yaw)+(p.z-c.z)*Math.cos(c.yaw) >= 0 ? 1 : -1;
+      frame.move = { x: side*Math.sin(c.yaw), z: side*Math.cos(c.yaw) };
+      return frame;
+    }
     const waveIds = step.type === 'defend' ? new Set(Object.entries(m.state.actors).filter(([key]) => key.startsWith(`${step.id}-wave-`)).map(([, id]) => id)) : null;
     const enemies = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && (waveIds?.has(e.id) || dist(e.transform, p) < (step.id === 'checkpoint' ? 18 : 3)));
     enemies.sort((a, b) => dist(a.transform, p) - dist(b.transform, p));
