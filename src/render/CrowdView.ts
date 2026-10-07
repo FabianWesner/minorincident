@@ -228,7 +228,10 @@ export class CrowdView extends Group {
     const deadAt = deadAtTick, previous = this.corpses.get(e.id);
     if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z) return previous;
     const pose = { x: e.transform.x, z: e.transform.z, sourceX: e.transform.x, sourceZ: e.transform.z, deadAt };
-    const clear = (x: number, z: number) => this.world.infected?.nav.clear(x, z, .6) && [...this.corpses].every(([id, p]) => id === e.id || Math.hypot(x - p.x, z - p.z) >= 1.25);
+    // The body lies ~0.9 m behind its hips (death poses fall backwards): that strip must be clear too, so a
+    // corpse never lies through a fence or wall (PO #14).
+    const bx = -Math.cos(e.transform.yaw), bz = Math.sin(e.transform.yaw), nav = this.world.infected?.nav;
+    const clear = (x: number, z: number) => !!nav?.clear(x, z, .6) && nav.clear(x + bx * .5, z + bz * .5, .3) && nav.clear(x + bx * .95, z + bz * .95, .25) && [...this.corpses].every(([id, p]) => id === e.id || Math.hypot(x - p.x, z - p.z) >= 1.25);
     if (!clear(pose.x, pose.z)) search: for (const radius of [.7, 1.4, 2.1]) for (let i = 0; i < 8; i++) {
       const angle = e.transform.yaw + Math.PI / 2 + i * Math.PI / 4;
       const x = e.transform.x + Math.cos(angle) * radius, z = e.transform.z + Math.sin(angle) * radius;
