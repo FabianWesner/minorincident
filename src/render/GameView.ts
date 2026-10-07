@@ -45,6 +45,9 @@ import { EntityAssets } from './EntityAssets';
 import { loadMeasure } from '../assets/loadTiming';
 import { loadGate } from '../assets/loadGate';
 import { lodPolicy } from './lodPolicy';
+import { layoutLights } from './WorldLights';
+import { auraLight, pickupLight } from './LightField';
+import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 export class GameView implements Lifecycle {
@@ -131,9 +134,7 @@ export class GameView implements Lifecycle {
   private idPass = false;
   private readonly flashOverlay = document.createElement('div');
   /** E19 ending: black fade after the shutter slam, and the rolled-down bay shutter. */
-  private readonly endingFade = document.createElement('div');
   private shutter: Group | null = null;
-  private endingShakes = -1;
   private readonly idBackground = new MeshBasicNodeMaterial({ color: '#000000' });
   private readonly idPlayer = new MeshBasicNodeMaterial({ color: '#ff00ff' });
   private readonly savedMaterials = new Map<Mesh, Material | Material[]>();
@@ -149,8 +150,6 @@ export class GameView implements Lifecycle {
     this.missionUI = new MissionUI(this.world,()=>this.update(1));
     this.flashOverlay.style.cssText = 'position:fixed;inset:0;background:white;opacity:0;pointer-events:none;z-index:3';
     document.querySelector('#game')!.appendChild(this.flashOverlay);
-    this.endingFade.style.cssText = 'position:fixed;inset:0;background:#05060a;opacity:0;pointer-events:none;z-index:3;transition:none'; this.endingFade.dataset.testid = 'ending-fade';
-    document.querySelector('#game')!.appendChild(this.endingFade);
     window.addEventListener('resize', this.resize);
   }
   private readonly resize = (): void => {
@@ -211,7 +210,7 @@ export class GameView implements Lifecycle {
         if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, lodPolicy.lod1From))); loadMeasure('view:hero-lod0', p); }
         this.pendingPreparation = { shared, instanceCapacity };
       }
-      this.scene.add(this.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
+      this.scene.add(this.districts);this.lighting.field.setStatic(layoutLights(this.world.districts));this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
       this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
       this.scene.add(this.character);
     } else if (this.world.player) {
@@ -365,35 +364,24 @@ export class GameView implements Lifecycle {
     if (!next) return false;
     if (this.districts) this.districts.visible = false;
     this.districts = next; next.visible = true; next.setQuality(this.quality);
-    next.updateLods(this.view); this.lighting?.set(next.world.composition.timeOfDay);
+    next.updateLods(this.view); this.lighting?.set(next.world.composition.timeOfDay); this.lighting?.field.setStatic(layoutLights(next.world));
     return true;
   }
-  /** The fire-station ending: the bay shutter rolls down at the slam (small shake), thuds shake the camera lightly,
-   * then the screen fades to black and stays dark under the result panel. */
+  /** Close the bay only after the player enters. No ending camera, fade or scripted movement. */
   private updateEnding(): void {
-    const mission = this.world.missions?.state, l1 = mission?.l1, beat = l1?.beat, door = this.world.missions?.def.anchors['fire-bay-door'], trigger = this.world.missions?.def.anchors['fire-bay-trigger'];
-    const ending = beat?.id === 'firestation', slam = ending ? beat!.slam : undefined, tick = this.world.tick;
-    const done = !!l1?.beatsDone?.includes('firestation') && (mission?.phase === 'result' || mission?.phase === 'progression' || mission?.phase === 'cinematic');
-    if ((ending || done) && door && trigger && this.materials) {
+    const mission = this.world.missions, door = mission?.def.anchors['fire-bay-door'];
+    const closed = mission?.def.l1 && mission.state.gates['fire-shutter'] === false;
+    if (closed && door && this.materials) {
       if (!this.shutter) {
-        // The station model ships closed bay doors (static batch): an open dark bay is shown in front of them for
-        // the run-in, and the roll-down shutter covers it at the slam.
-        const dx = door.x - trigger.x, dz = door.z - trigger.z, d = Math.hypot(dx, dz) || 1, ground = this.world.districts?.groundHeight(door.x, door.z) ?? 0;
-        const group = new Group(); group.position.set(door.x + dx / d * 2.05, ground, door.z + dz / d * 2.05); group.rotation.y = Math.atan2(dx, dz);
-        const opening = new Mesh(new BoxGeometry(3.6, 3.2, .04), this.materials.fromColor('story:bay-dark', new Color('#120d12'))); opening.position.set(0, 1.6, .02); opening.name = 'bay-opening';
-        const shutter = new Mesh(new BoxGeometry(3.8, 3.4, .1), this.materials.fromColor('story:shutter', new Color('#b44a3e'))); shutter.position.set(0, 3.4, -.06); shutter.name = 'bay-shutter'; shutter.castShadow = true;
-        group.add(opening, shutter); this.shutter = group; this.scene.add(group);
+        const ground = this.world.districts?.groundHeight(door.x, door.z) ?? 0;
+        const group = new Group(); group.position.set(door.x, ground, door.z);
+        const shutter = new Mesh(new BoxGeometry(3.6, 3.2, .12), this.materials.fromColor('story:shutter', new Color('#b44a3e')));
+        shutter.position.y = 1.9; shutter.name = 'bay-shutter'; shutter.castShadow = true;
+        group.add(shutter); this.shutter = group; this.scene.add(group);
       }
-      const shutter = this.shutter.getObjectByName('bay-shutter')!, k = slam !== undefined ? Math.min(1, (tick - slam) / 24) : done ? 1 : 0;
-      shutter.visible = k > 0; shutter.scale.y = Math.max(.01, k * k); shutter.position.y = 3.4 - 1.7 * k * k;
-      if (slam !== undefined) {
-        const since = tick - slam;
-        if (since >= 24 && this.endingShakes < 0) { this.view.shake(.6); this.endingShakes = 0; }
-        for (const [i, at] of [40, 70, 95].entries()) if (since >= at && this.endingShakes === i) { this.view.shake(.25); this.endingShakes = i + 1; }
-      }
-    } else if (this.shutter) { this.scene.remove(this.shutter); this.shutter.traverse((o: import('three').Object3D) => { if (o instanceof Mesh) o.geometry.dispose(); }); this.shutter = null; this.endingShakes = -1; }
-    const fade = slam !== undefined ? beat!.fadeAt !== undefined ? Math.max(0, Math.min(1, (tick - beat!.fadeAt) / 60)) : 0 : done ? 1 : 0;
-    this.endingFade.style.opacity = String(fade);
+    } else if (this.shutter) {
+      this.scene.remove(this.shutter); this.shutter.traverse((o: import('three').Object3D) => { if (o instanceof Mesh) o.geometry.dispose(); }); this.shutter = null;
+    }
   }
   /** Real render seconds, deliberately independent of sim ticks/time scale. */
   frame(seconds: number): void { const dt = Math.min(1, seconds); this.playSeconds += dt; this.vfx?.advance(dt); this.labAccident?.advance(dt); }
@@ -417,8 +405,7 @@ export class GameView implements Lifecycle {
       // then back to the follow camera; no cut, same isometric angle.
       const beat = this.world.missions?.state.l1?.beat;
       if (beat && this.world.storyLock && !this.view.spot) {
-        // The fire-station bay faces away from the follow camera: the ending swings round to look at the open bay.
-        this.storyFocus.set(beat.fx, .8, beat.fz); this.storyOffset.setFromSphericalCoords(beat.id === 'firestation' ? 15 : 13, this.view.polar, this.view.azimuth + (beat.id === 'firestation' ? Math.PI : 0));
+        this.storyFocus.set(beat.fx, .8, beat.fz); this.storyOffset.setFromSphericalCoords(13, this.view.polar, this.view.azimuth);
         this.view.cinematic({ position: this.storyFocus.clone().add(this.storyOffset).toArray() as [number, number, number], target: this.storyFocus.toArray() as [number, number, number] });
         this.storyFraming = true;
       } else if (this.storyFraming) { this.storyFraming = false; this.view.follow(); }
@@ -581,7 +568,7 @@ export class GameView implements Lifecycle {
     this.flashOverlay.style.opacity = String(Math.max(this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
     this.fixtureProps?.update();
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
-    this.lighting?.update(this.view); this.districts?.updateLods(this.view);
+    this.lighting?.update(this.view); this.updateLights(); this.districts?.updateLods(this.view);
     this.districts?.cull(this.view, this.quality);
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
@@ -630,6 +617,29 @@ export class GameView implements Lifecycle {
       this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
     if (profileStart) this.renderCpuMs = performance.now() - renderStart;
+  }
+  /** E25 lighting-pass counters for perf(): light-field CPU ms and pools, shadow maps, the promoted hero shadow light. */
+  lightingPerf() {
+    const field = this.lighting?.field.snapshot();
+    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? 1 : 0, heroShadow: (this.lighting?.fieldShadow.value ?? 0) > .5 ? 1 : 0, preset: this.lighting!.preset } : null;
+  }
+  /** E25 light field of the loaded scene (E27 transients hook in here). */
+  get lightField() { return this.lighting?.field ?? null; }
+  /** E25 light field: layout pools plus per-frame vehicle lamps and the survivor aura, one pass before the scene. */
+  private updateLights(): void {
+    const lighting = this.lighting; if (!lighting) return;
+    const field = lighting.field, hero = this.character?.visible && this.world.entities.get(1) ? this.character.position : null;
+    if (hero) lighting.hero.value.copy(hero); else lighting.hero.value.set(0, -100, 0);
+    if (field.active) {
+      const aura = timeOfDayPresets[lighting.preset].aura ?? 0;
+      if (hero && aura > 0) field.push(auraLight(hero.x, hero.z, aura));
+      this.vehicles?.pushLights(field);
+      // Pickups keep a small cool glint pool so loot stays findable in the dark.
+      for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden) field.push(pickupLight(entity.transform.x, entity.transform.z));
+    }
+    lighting.setHeroLight(hero && field.active ? field.heroAt(hero.x, hero.z) : null, hero ?? this.view.focus, this.world.tick / 60);
+    field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
+    field.render(this.renderer);
   }
   async ready(): Promise<void> {
     await this.warming;

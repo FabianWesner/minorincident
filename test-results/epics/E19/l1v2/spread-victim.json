@@ -1,0 +1,217 @@
+{
+  "kind": "civilian",
+  "archetype": "npc.suburban-mom",
+  "faction": "civilian",
+  "transform": {
+    "x": 34.652103926714936,
+    "z": 33.30389774978322,
+    "y": 0.7,
+    "yaw": 25.616363700099388
+  },
+  "health": {
+    "current": 100,
+    "max": 100
+  },
+  "civilian": {
+    "state": "down",
+    "ambient": false,
+    "adult": true,
+    "pet": null,
+    "owner": null,
+    "model": "npc.civilian-man-a",
+    "variant": "inf.suburban-mom",
+    "schedule": [
+      {
+        "activity": "walk",
+        "anchor": "l1/walk",
+        "target": {
+          "x": 32,
+          "z": 33.9
+        },
+        "ticks": 1
+      },
+      {
+        "activity": "walk",
+        "anchor": "l1/walk",
+        "target": {
+          "x": 36,
+          "z": 33.9
+        },
+        "ticks": 1
+      },
+      {
+        "activity": "walk",
+        "anchor": "l1/walk",
+        "target": {
+          "x": 40,
+          "z": 33.9
+        },
+        "ticks": 1
+      },
+      {
+        "activity": "walk",
+        "anchor": "l1/walk",
+        "target": {
+          "x": 44,
+          "z": 34.35
+        },
+        "ticks": 1
+      },
+      {
+        "activity": "walk",
+        "anchor": "l1/walk",
+        "target": {
+          "x": 48,
+          "z": 34.35
+        },
+        "ticks": 1
+      },
+      {
+        "activity": "walk",
+        "anchor": "l1/walk",
+        "target": {
+          "x": 44,
+          "z": 33.449999999999996
+        },
+        "ticks": 1
+      },
+      {
+        "activity": "walk",
+        "anchor": "l1/walk",
+        "target": {
+          "x": 40,
+          "z": 33.449999999999996
+        },
+        "ticks": 1
+      },
+      {
+        "activity": "walk",
+        "anchor": "l1/walk",
+        "target": {
+          "x": 36,
+          "z": 33.449999999999996
+        },
+        "ticks": 1
+      }
+    ],
+    "scheduleStep": 4,
+    "activityUntil": 0,
+    "activityStarted": 0,
+    "lastTravelProgress": 0,
+    "routine": "bus-stop",
+    "waypoints": [
+      {
+        "x": 32,
+        "z": 33.9
+      },
+      {
+        "x": 36,
+        "z": 33.9
+      },
+      {
+        "x": 40,
+        "z": 33.9
+      },
+      {
+        "x": 44,
+        "z": 34.35
+      },
+      {
+        "x": 48,
+        "z": 34.35
+      },
+      {
+        "x": 44,
+        "z": 33.449999999999996
+      },
+      {
+        "x": 40,
+        "z": 33.449999999999996
+      },
+      {
+        "x": 36,
+        "z": 33.449999999999996
+      }
+    ],
+    "waypoint": 1,
+    "pauseUntil": 61,
+    "entered": 5358,
+    "until": 5474,
+    "downTicks": 0,
+    "eyesGlow": true,
+    "veins": 0.2793103448275862,
+    "attacker": 379,
+    "threat": {
+      "x": 35.437504312589546,
+      "z": 34.13067682708106
+    },
+    "path": [],
+    "goal": -1,
+    "pathIndex": 34,
+    "gore": false,
+    "knockedUntil": 0,
+    "l1": {
+      "walkSpeed": 1.4160056614084169,
+      "fleeSpeed": 3.627030054666102,
+      "startleTicks": 39,
+      "refuge": "refuge-door-41",
+      "target": {
+        "x": 39.2175,
+        "z": 26
+      },
+      "repickAt": 5282,
+      "noticed": 5002,
+      "progressFrom": {
+        "x": 44.93857937517193,
+        "z": 34.36491318367829
+      },
+      "progressAt": 4992
+    }
+  },
+  "combat": {
+    "radius": 0.35,
+    "armor": 0,
+    "shield": false,
+    "staggerUntil": 0,
+    "attacking": false,
+    "damageMultiplier": 1,
+    "statuses": []
+  },
+  "id": 351,
+  "appearance": {
+    "entityId": 351,
+    "asset": "npc.civilian-man-a",
+    "tint": "#ac7a91",
+    "accessories": [
+      "backpack"
+    ],
+    "handProp": null,
+    "tier": "average"
+  },
+  "motion": {
+    "velocity": {
+      "x": 0,
+      "z": 0
+    },
+    "speed": 0,
+    "moving": false,
+    "distance": 171.39374415481547
+  },
+  "locomotion": {
+    "vx": 0,
+    "vz": 0,
+    "ax": 0,
+    "az": 0,
+    "omega": 0,
+    "updatedAt": -1
+  },
+  "infection": {
+    "entityId": 351,
+    "progress": 0.6098901098901099,
+    "phase": "eyes",
+    "tier": "average",
+    "startedTick": 5328,
+    "endsTick": 5510,
+    "biteSourceId": 379
+  }
+}

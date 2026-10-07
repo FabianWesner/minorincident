@@ -1,0 +1,68 @@
+
+Running 6 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/levels/L1.spec.ts:16:3 › L1 v2 real-input playthrough › T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07) (11.6s)
+  ✘  2 [chromium] › tests/e2e/levels/L1.spec.ts:34:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result (49.1s)
+  ✓  3 [chromium] › tests/e2e/levels/L1.spec.ts:34:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review (54.8s)
+  ✓  4 [chromium] › tests/perf/e18-desktop.spec.ts:6:1 › T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms (17.0s)
+after desktop loading {"dataMs":21.200000762939453,"simMs":113.69999980926514,"viewMs":5520.599999427795,"warmUp":[{"name":"L1 shader compilation","ms":1278.0999994277954},{"name":"L1 warm-up draw","ms":1300.8000001907349},{"name":"L1 driver warm-up","ms":2882.5},{"name":"L1 warm-up instanced draw","ms":50},{"name":"L1 warm-up solo draws","ms":1531.6999998092651}]}
+after desktop measuring pickup
+after desktop pickup max=28.7ms
+after desktop measuring handover
+after desktop handover max=45.8ms
+after desktop measuring accident
+after desktop accident max=24.1ms
+after desktop measuring infected-exit
+after desktop infected-exit max=28.0ms
+after desktop measuring weapon-pickup
+after desktop weapon-pickup max=26.8ms
+after desktop measuring death-respawn
+after desktop death-respawn max=26.6ms
+after desktop measuring fire-station-end
+after desktop fire-station-end max=29.8ms
+  ✓  5 [chromium] › tests/perf/l1-transitions.spec.ts:18:3 › desktop › @E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget desktop (49.9s)
+after mobile loading {"dataMs":19.800000190734863,"simMs":114.19999980926514,"viewMs":5352,"warmUp":[{"name":"L1 shader compilation","ms":1281.1999998092651},{"name":"L1 warm-up draw","ms":1398.3000001907349},{"name":"L1 driver warm-up","ms":2848.6000003814697},{"name":"L1 warm-up instanced draw","ms":50.30000019073486},{"name":"L1 warm-up solo draws","ms":1399.8999996185303}]}
+after mobile measuring pickup
+after mobile pickup max=26.4ms
+after mobile measuring handover
+after mobile handover max=29.6ms
+after mobile measuring accident
+after mobile accident max=24.4ms
+after mobile measuring infected-exit
+after mobile infected-exit max=25.3ms
+after mobile measuring weapon-pickup
+after mobile weapon-pickup max=26.6ms
+after mobile measuring death-respawn
+after mobile death-respawn max=24.5ms
+after mobile measuring fire-station-end
+after mobile fire-station-end max=30.6ms
+  ✓  6 [chromium] › tests/perf/l1-transitions.spec.ts:18:3 › mobile › @E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget mobile (48.6s)
+
+
+  1) [chromium] › tests/e2e/levels/L1.spec.ts:34:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result
+
+    Error: Could not travel to {"x":66,"z":-12.3} from {"kind":"player","archetype":"player.survivor","transform":{"x":66.2160873413086,"y":0.7049985527992249,"z":-10.308212280273438,"yaw":1.6532286380276178},"health":{"current":100,"max":100},"faction":"survivor","id":1,"locomotion":{"vx":0,"vz":0,"ax":0,"az":0,"omega":0,"updatedAt":-1},"survivor":{"variant":"female","gearTier":0,"animation":"idle","animationTick":2022,"velocity":{"x":0,"z":0},"grounded":true,"invulnerableUntil":0,"checkpoint":{"x":-66.4,"y":0.705,"z":9,"yaw":0.3205919885488634},"diedAt":null,"carrying":"prop.package-courier"},"combat":{"radius":0.3,"armor":0,"shield":false,"staggerUntil":0,"attacking":false,"damageMultiplier":1,"statuses":[]}}
+
+      89 |         else if (i % 12 === 11) await clickDestination();
+      90 |       }
+    > 91 |       throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify(await player())}`);
+         |             ^
+      92 |     };
+      93 |     const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(1); };
+      94 |     const fightNearby = async (page: Page) => {
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-closure/tests/e2e/levels/L1.spec.ts:91:13)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l1-closure/tests/e2e/levels/L1.spec.ts:127:5
+
+    Error Context: test-results/playwright/run-3317/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3317/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3317/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/levels/L1.spec.ts:34:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result
+  5 passed (3.9m)

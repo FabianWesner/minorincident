@@ -61,7 +61,7 @@ export const l1v2 = {
   sound: { calmDropDb: 12, calmDropWithinS: 3, chaosCorrelationMin: 0.7, chaosMaxInfected: 30 },
   /** Section 9 bot gates (AC02, AC03, AC06). */
   bots: {
-    seeds: 20, completeMedianS: [240, 360], newbieMinSeeds: 18, newbieMedianS: [270, 420], newbieMaxMedianDeaths: 1,
+    seeds: 20, completeMedianS: [75, 180], newbieMinSeeds: 18, newbieMedianS: [90, 210], newbieMaxMedianDeaths: 1,
     idleSpread: { at120s: 15, at240s: 25, floorAt120s: 12, floorSeeds: 18, startCount: 5 },
   },
   /** Section 3 / AC24. */

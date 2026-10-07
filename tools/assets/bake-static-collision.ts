@@ -12,6 +12,23 @@ import type { Aabb } from '../../src/levels/districts/types';
 export async function bakeStaticCollision(path: string): Promise<Aabb[]> {
   const io = await assetIO(), doc = await io.read(path), boxes: Aabb[] = [];
   const point = new Vector3();
+  let authoredShell: Aabb[] | undefined;
+  // This asset deliberately authors an enterable shell. Connected decorative masonry
+  // otherwise produces a single AABB across both bay apertures. Sizes are Blender XYZ;
+  // the delivered GLB uses Y-up, so swap authored width/height before transforming.
+  if (path.includes('bld.fire-station')) {
+    const shell = doc.getRoot().listNodes().filter(node => node.getName().startsWith('col:') && node.getExtras().collider === 'cuboid');
+    if (!shell.length) throw new Error('Fire station is missing its authored collision shell');
+    authoredShell = shell.map(node => {
+      const size = node.getExtras().size as number[], matrix = new Matrix4().fromArray(node.getWorldMatrix());
+      const box: Aabb = { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] };
+      for (const x of [-size[0] / 2, size[0] / 2]) for (const y of [-size[2] / 2, size[2] / 2]) for (const z of [-size[1] / 2, size[1] / 2]) {
+        point.set(x, y, z).applyMatrix4(matrix);
+        for (let axis = 0; axis < 3; axis++) { box.min[axis] = Math.min(box.min[axis], point.getComponent(axis)); box.max[axis] = Math.max(box.max[axis], point.getComponent(axis)); }
+      }
+      return { min: box.min.map(v => +v.toFixed(4)) as Aabb['min'], max: box.max.map(v => +v.toFixed(4)) as Aabb['max'] };
+    });
+  }
   for (const node of doc.getRoot().listNodes()) {
     const mesh = node.getMesh(); if (!mesh) continue;
     const matrix = new Matrix4().fromArray(node.getWorldMatrix());
@@ -56,6 +73,7 @@ export async function bakeStaticCollision(path: string): Promise<Aabb[]> {
     }
   }
   const ground = boxes.filter(box => box.max[1] < .45);
+  if (authoredShell) return ground.filter(box => (box.max[0] - box.min[0]) * (box.max[2] - box.min[2]) >= .15).concat(authoredShell);
   for (let i = boxes.length - 1; i >= 0; i--) if (boxes[i].max[1] < .45) boxes.splice(i, 1);
   // Coalesce neighboring trim/bricks/leaves only when their union stays rectangular.
   // Separate canopy legs remain separate; an L-shaped wall cannot fill a forecourt.
@@ -92,7 +110,7 @@ export async function writeStaticCollision(): Promise<void> {
     const hash = createHash('sha256').update(readFileSync(source.glb)).digest('hex');
     const cached = staticCollision[def.id];
     // Alias fitting depends on manifest dimensions as well as source bytes.
-    if (!aliases[def.id] && cached?.source === source.glb && cached.hash === hash) {
+    if (def.id !== 'bld.fire-station' && !aliases[def.id] && cached?.source === source.glb && cached.hash === hash) {
       assets[def.id] = cached; continue;
     }
     let boxes = await bakeStaticCollision(source.glb);

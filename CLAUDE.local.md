@@ -15,7 +15,10 @@ Before dispatching, classify the task: judgement/hard bug → Opus; crisp goal +
 - **Sol 6.1**: strong root-cause finder when given a measurable target (load3, arrive-jitter, combat-feel, crowd-feel found real causes on 10-07). Weak spots: drifts toward changing the target instead of the work (l3-content proposed shrinking the time band; load3 tried .gz sidecars) → briefs must name forbidden shortcuts. Passing metrics ≠ good look (skin pilot crouch/turns) → feel work belongs to Opus or needs game-camera review. Own visual verdicts on assets are not trusted (shredded LODs before; caught perforated decimation itself this time).
 - **Luna 6**: delivered code quickly but skipped required runtime measurements when locks were busy, and its "stride lengthening" only changed timing (caused skating) → only for simple, fully specified tasks with a mechanical check.
 - **Astra (on PO demand)**: player-anim lane 10-07 — quick, precise diagnosis of the crouch/turn root cause in the shared ground-contact solver.
-- **Opus 5.5 / Sonnet 5.5 as lanes**: not used yet on this Mac; earlier playbook rated Opus best at diagnosis, feel, AI behaviour and QA gates, Sonnet fast and reliable for scoped systems with an acceptance check.
+- **Opus 5.5 (agent)**: excellent on hard bugs/judgement — P0 invisible crowd: WebGPU 8-vertex-buffer limit found and fixed in 34 min with a dual-backend guard; zombie-voice curation with license snapshots.
+- **Sonnet 5.5 (agent)**: reliable merge-conflict resolution and post-merge bug fixes (arrive-jitter, crowd-feel, ride contacts), no tolerance loosening.
+- **Headless smoke runs WebGL2 only by default — WebGPU-only failures slip through; the crowd-drawn smoke now covers both.
+- (older) Opus/Sonnet earlier playbook: earlier playbook rated Opus best at diagnosis, feel, AI behaviour and QA gates, Sonnet fast and reliable for scoped systems with an acceptance check.
 
 ## Rules learned (keep short)
 - Visual fixes count only with captures the lane looked at and describes in its report. "No capture taken" means not done.
@@ -30,3 +33,6 @@ Before dispatching, classify the task: judgement/hard bug → Opus; crisp goal +
 - Tell a lane to stop a slow verification and hand it to the follow-up lane rather than waiting (l1v2-f).
 - Bot time bands: never pad, never shrink the band to fit a thin level — add the missing content.
 - PROD (minor-incident.com) is the public beta: deploy after each green batch (typecheck, unit, build, smoke) straight to PROD after the orchestrator's own QA. QA env (`BRANCH=qa`) only when the PO must test before a merge (PO rule 10-07). Every deploy gets an entry in `epics-pipeline/deploylog.json` → `deploylog.py` → deploy-log artifact.
+- Smoke/verify had no check that crowd figures are actually drawn on screen; a merge made all pedestrians invisible on PROD (10-07). Every crowd/render merge needs a visible-figures guard before deploy.
+- Resumed scheduler jobs (`--resume-from`) come back with `sandbox=workspace-write` and cannot run Blender/git staging/localhost listeners: for build lanes re-run fresh (or `codex exec --dangerously-bypass-approvals-and-sandbox` in the lane worktree) instead of resuming (10-07, art-l2l3-qa).
+- PO picks the model for the player figure: Fable 5.1 took over from Astra on 10-07 (on demand only).

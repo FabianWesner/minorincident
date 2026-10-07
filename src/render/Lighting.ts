@@ -6,6 +6,7 @@ import { timeOfDay, type TimeOfDay } from '../data/timeOfDay';
 import type { View } from './View';
 import { worldLook } from '../data/worldLook';
 import { LookUniforms } from './LookUniforms';
+import { LightField } from './LightField';
 
 // r186's default PCF rotates five taps with per-pixel noise. A fixed weighted
 // grid keeps the soft penumbra without stipple, including the WebGL2 fallback.
@@ -52,6 +53,25 @@ export class Lighting {
   readonly fogB = this.fogColor;
   readonly fogGradient;
   preset: TimeOfDay = 'golden';
+  /** E25 layer 2: practical-light pools around the focus (LightField). */
+  readonly field = new LightField();
+  /** Night readability (specs/06 §2): the player's feet (xyz) for the hero rim, and the preset rim weight. */
+  readonly hero = uniform(new Vector3(0, -100, 0));
+  readonly rim = uniform(0);
+  readonly rimColor = uniform(new Color('#b9c6ff'));
+  /** Survivor-only fill at night (preset `aura`), warm lantern white. */
+  readonly heroFill = uniform(0);
+  readonly heroFillColor = uniform(new Color('#ffe9cf'));
+  /** Weight of the sun/moon shadow map on light-field pools (hero shadows at night). */
+  readonly fieldShadow = uniform(0);
+  /** The preset shadow colour at full brightness: the hue light-field pools keep inside hero shadows. */
+  readonly shadowHue = uniform(new Color());
+  /** Direction towards the shadow-casting light: the sun/moon, or the promoted hero lamp at night. */
+  private readonly shadowDirection = new Vector3(0, 1, 0);
+  private readonly heroTarget = new Vector3();
+  private heroTime = -1;
+  /** Name of the promoted hero light for diagnostics (null: the sun/moon casts). */
+  heroLight: string | null = null;
   constructor(private readonly scene: Scene, readonly look = new LookUniforms()) {
     this.bounce = look.nodes.bounce;
     this.coreShadowEdgeHigh = look.nodes.coreLightEdge; this.coreShadowEdgeLow = look.nodes.coreShadowEdge;
@@ -65,6 +85,7 @@ export class Lighting {
     this.scene.add(this.sun, this.sun.target, this.hemisphere); this.set('golden');
   }
   setQuality(tier: QualityTier): void {
+    this.field.setQuality(tier);
     const size = qualityBudgets[tier].shadowSize;
     if (this.sun.shadow.mapSize.x === size) return;
     this.sun.shadow.map?.dispose(); this.sun.shadow.map = null; this.sun.shadow.mapSize.set(size, size); this.sun.shadow.needsUpdate = true;
@@ -73,6 +94,7 @@ export class Lighting {
     if (!(name in timeOfDay)) throw new Error(`Unknown time-of-day preset: ${name}`);
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
+    this.field.strength.value = p.practical ?? 0; this.rim.value = p.rim ?? 0; this.heroFill.value = (p.aura ?? 0) * 3.2;
     this.direction.value.setFromSphericalCoords(1, p.polar, p.azimuth);
     this.color.value.set(p.sun); this.intensity.value = p.intensity; this.shadow.value.set(p.shadow);
     this.sun.color.set(p.sun); this.sun.intensity = p.intensity;
@@ -89,6 +111,7 @@ export class Lighting {
     this.color.value.set((this.look.has('sun') || this.preset === 'L1') ? v.sun : p.sun); this.sun.color.copy(this.color.value);
     this.intensity.value = (this.look.has('sunIntensity') || this.preset === 'L1') ? v.sunIntensity : p.intensity; this.sun.intensity = this.intensity.value;
     this.shadow.value.set((this.look.has('shadow') || this.preset === 'L1') ? v.shadow : p.shadow);
+    const s = this.shadow.value; this.shadowHue.value.copy(s).multiplyScalar(1 / Math.max(s.r, s.g, s.b, 1e-3));
     this.skyAmbient.value.set(v.skyAmbient); this.groundAmbient.value.set(v.groundAmbient); this.hemisphere.intensity = v.hemisphereIntensity;
     this.fogColor.value.set((this.look.has('fog') || this.preset === 'L1') ? v.fog : p.fog);
     this.fogA.value.set(this.look.has('fog') && !this.look.has('fogA') ? v.fog : this.look.has('sky') && !this.look.has('fogA') ? v.sky : (this.look.has('fogA') || this.preset === 'L1') ? v.fogA : p.sky);
@@ -116,15 +139,29 @@ export class Lighting {
     }
     const radius = Math.max(8, visibleRadius) * 1.1;
     this.sun.target.position.copy(view.focus);
-    this.sun.position.copy(this.direction.value).multiplyScalar(radius * 2).add(view.focus);
+    this.sun.position.copy(this.heroTime >= 0 ? this.shadowDirection : this.direction.value).multiplyScalar(radius * 2).add(view.focus);
     const camera = this.sun.shadow.camera;
     camera.left = camera.bottom = -radius; camera.right = camera.top = radius;
     camera.near = 0.1; camera.far = radius * 4; camera.updateProjectionMatrix();
   }
+  /** Hero shadows within the one-shadow-map budget (specs/06 §4): at night the sun/moon shadow camera turns
+   * towards the strongest `shadow: hero` light covering the survivor, and the light-field pools take that
+   * shadow. Direction and weight crossfade over ~0.3 s, so promotion never pops. `time` is sim seconds. */
+  setHeroLight(light: { x: number; y?: number; z: number } | null, focus: { x: number; y: number; z: number }, time: number): void {
+    const seconds = this.heroTime < 0 ? 0 : Math.max(0, Math.min(.1, time - this.heroTime)); this.heroTime = time;
+    const night = this.field.strength.value >= .5;
+    const goal = light && night ? 1 : 0;
+    if (light && night) this.heroTarget.set(light.x - focus.x, Math.max(1.5, (light.y ?? 3) - focus.y), light.z - focus.z).normalize();
+    else this.heroTarget.copy(this.direction.value);
+    const k = seconds > 0 ? 1 - Math.exp(-seconds / .1) : 1;
+    if (this.shadowDirection.lengthSq() < .5 || seconds === 0) this.shadowDirection.copy(this.heroTarget);
+    else this.shadowDirection.lerp(this.heroTarget, k).normalize();
+    this.fieldShadow.value = seconds === 0 ? goal : this.fieldShadow.value + (goal - this.fieldShadow.value) * k;
+  }
   /** Includes live fog ranges so viewport changes can be checked without shader inspection. */
   getState() {
     const p = timeOfDay[this.preset];
-    return { shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`] };
+    return { shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`], rim: this.rim.value, fieldShadow: this.fieldShadow.value, shadowDirection: this.shadowDirection.toArray(), lightField: this.field.snapshot() };
   }
-  dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); this.scene.backgroundNode = null; }
+  dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); this.field.dispose(); this.scene.backgroundNode = null; }
 }
