@@ -9,6 +9,13 @@ from pathlib import Path
 import bpy
 from mathutils import Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
+if '--lod-only' in sys.argv:
+    build_native_lods(__file__)
+    sys.exit(0)
+
 HERE = Path(__file__).resolve().parent
 ASSET = {'id': 'veh.suv-dark', 'category': 'vehicle', 'tier': 'Hero'}
 parser = argparse.ArgumentParser()
@@ -81,6 +88,7 @@ def build(quality=0):
 
 
     def finish(o, mat, group='body', bevel=.025):
+        if DISTANCE: bevel = 0
         detail = o.name.split('.')[0]
         omit = {'tread block', 'lug nut'}
         if quality == 2:
@@ -153,6 +161,7 @@ def build(quality=0):
 
 
     def cylinder(name, loc, radius, depth, mat, group='body', vertices=36):
+        if DISTANCE: vertices = min(vertices, 12 if DISTANCE == 1 else 6)
         bpy.ops.mesh.primitive_cylinder_add(vertices=min(vertices, 10 if quality == 2 else 20) if quality else vertices, radius=radius, depth=depth,
                                            location=loc, rotation=(math.pi/2, 0, 0))
         o = bpy.context.object
@@ -162,7 +171,7 @@ def build(quality=0):
 
     def torus(name, loc, major, minor, mat, group='body', rotation=(math.pi/2, 0, 0)):
         bpy.ops.mesh.primitive_torus_add(major_radius=major, minor_radius=minor,
-                                         major_segments=24 if quality else 36, minor_segments=6 if quality else 10,
+                                         major_segments=(16 if DISTANCE == 1 else 12) if DISTANCE else 24 if quality else 36, minor_segments=(4 if DISTANCE == 1 else 3) if DISTANCE else 6 if quality else 10,
                                          location=loc, rotation=rotation)
         o = bpy.context.object
         o.name = name
@@ -349,6 +358,9 @@ def build(quality=0):
     for o in skipped:
         bpy.data.objects.remove(o, do_unlink=True)
 
+    if DISTANCE:
+        export_variant(Path(__file__).parent, DISTANCE, omit=('tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('rounded tire shoulder', 'rack floor slat', 'rack foot', 'wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*',), owners={groups[g]: [o for (owner, token), objects in parts.items() if owner == g for o in objects] for g in groups})
+
     # Merge each static material and each moving assembly/material, keeping joint origins.
     for (group,mat),objects in parts.items():
         bpy.ops.object.select_all(action='DESELECT')
@@ -479,3 +491,7 @@ if args.render:
         scene.render.filepath=str(Path(args.render).with_name('game.png'))
         bpy.ops.render.render(write_still=True)
 print('OK',json.dumps(stats))
+
+# Every full source export refreshes the native distance tiers.
+if "--glb" in sys.argv and not DISTANCE:
+    build_native_lods(__file__)

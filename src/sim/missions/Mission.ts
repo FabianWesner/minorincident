@@ -31,7 +31,7 @@ export class Mission {
     this.l1 = def.l1 ? new LevelOneOutbreak(this) : null;
     this.startTick = world.tick;
     this.state = {
-      id: def.id, phase: 'briefing', completedObjectives: [], volumes: [], killedBosses: [],
+      id: def.id, phase: 'briefing', completedObjectives: [], volumes: [], killedBosses: [], deadlineTicks: def.deadline ? Math.ceil(def.deadline.seconds * 60) : null,
       steps: Object.fromEntries(def.steps.map(s => [s.id, { status: 'pending', started: 0, kills: [], events: {}, interaction: 0 }])),
       actors: {}, items: [], states: Object.fromEntries(def.states.map(id => [id, false])), counters: Object.fromEntries(def.counters.map(id => [id, 0])),
       gates: Object.fromEntries(Object.entries(def.gates).map(([id, gate]) => [id, gate.open])), marker: null, checkpoint: null, tier: world.districts?.composition.tier ?? null, timeOfDay: null,
@@ -48,7 +48,7 @@ export class Mission {
       else if (event.type === 'outbreak.bite' && event.turns) this.l1?.noteTurned(event.targetId);
       else if (event.type === 'outbreak.civilian-escaped') this.l1?.noteEscaped(event.id);
     }, SimPhase.missions));
-    for (const type of ['combat.kill', 'player.damaged', 'player.died', 'player.respawned', 'mission.signal', 'mission.failed'] as const) this.stops.push(world.events.on(type, event => this.event(event), SimPhase.missions));
+    for (const type of ['combat.kill', 'player.damaged', 'player.died', 'player.respawned', 'mission.signal', 'mission.failed', 'pickup.collected', 'vehicle.entered', 'vehicle.exited', 'interact.completed', 'prop.broken'] as const) this.stops.push(world.events.on(type, event => this.event(event), SimPhase.missions));
     this.emit({ type: 'mission.briefing', id: def.id, text: def.briefing });
   }
   private emit(event: Unticked<import('./events').MissionEvent>): void {
@@ -80,12 +80,18 @@ export class Mission {
       case 'start': return true;
       case 'objectives': return t.mode === 'all' ? t.ids.every(id => this.state.steps[id].status === 'completed') : t.ids.some(id => this.state.steps[id].status === 'completed');
       case 'volume': { const zone = this.zones.get(t); return t.edge === 'inside' ? this.inside(t.anchor, t.actor ? this.entity(t.actor) ?? null : undefined) : !!zone?.[t.edge === 'enter' ? 'entered' : 'exited']; }
-      case 'interact': return !!step && this.inside(t.anchor) && (this.world.inputFrame.interact || step.interaction >= Math.ceil(t.seconds * 60));
+      case 'interact': if (t.actor) return this.world.vehicles?.active == null && this.inside(t.anchor) && this.entity(t.actor)?.interactable?.completed === true; return !!step && this.inside(t.anchor) && (this.world.inputFrame.interact || step.interaction >= Math.ceil(t.seconds * 60));
       case 'kills': return t.actors.filter(id => this.deadBosses.has(id) || step?.kills.includes(this.state.actors[id])).length >= (t.count ?? t.actors.length);
       case 'timer': return !!step && this.world.tick - step.started >= Math.ceil(t.seconds * 60);
       case 'dead': { const e = this.entity(t.actor); return e?.escort ? e.escort.state === 'dead' : e?.health.current === 0; }
       case 'escort': return !!this.entity(t.actor) && this.entity(t.actor)!.health.current > 0 && this.inside(t.anchor, this.entity(t.actor) ?? null);
-      case 'drive': return this.state.states[`driving:${t.actor}`] === true && this.inside(t.anchor, this.entity(t.actor) ?? null);
+      case 'drive': {
+        const e = this.entity(t.actor), driven = !!e?.vehicle && e.vehicle.driver === 1 && this.world.vehicles?.active === e.id;
+        if (driven && e!.health.current > 0 && this.inside(t.anchor, e)) { if (step) step.driveArrived = true; if (!t.exit) return true; }
+        return !!t.exit && !!step?.driveArrived && !!e?.vehicle && e.health.current > 0 && e.vehicle.driver === null && this.world.vehicles?.active == null && this.inside(t.anchor);
+      }
+      case 'hold': return !!step && (step.holds?.[t.anchor] ?? 0) >= Math.ceil(t.seconds * 60);
+      case 'destroy': { const e = this.entity(t.actor); return !!e && e.health.current <= 0; }
       case 'items': return t.ids.every(id => this.state.items.includes(id));
       case 'state': return this.state.states[t.key] === t.equals;
       case 'count': return this.state.counters[t.key] >= t.atLeast;
@@ -99,6 +105,7 @@ export class Mission {
     this.l1?.update();
     const alive=this.world.entities.get(1)!.health.current>0;
     this.state.stats.time = (this.world.tick - this.startTick) / 60;
+    if (this.state.deadlineTicks !== null && --this.state.deadlineTicks <= 0) { this.state.deadlineTicks = 0; this.fail('timeout'); return; }
     if (this.state.subtitle && this.world.tick >= this.state.subtitle.until) this.state.subtitle = null;
     for (const zone of this.zones.values()) {
       const inside = this.inside(zone.anchor, zone.actor ? this.entity(zone.actor) ?? null : undefined);
@@ -107,6 +114,10 @@ export class Mission {
     // Only steps active at tick start can complete: no accidental cascading through a graph.
     for (const def of this.def.steps) {
       const step = this.state.steps[def.id]; if (step.status !== 'active') continue;
+      const holds = new Set<string>();
+      const visit = (t: Trigger): void => { if (t.kind === 'hold') holds.add(t.anchor); else if (t.kind === 'all' || t.kind === 'any') t.triggers.forEach(visit); };
+      visit(def.complete);
+      for (const anchor of holds) { step.holds ??= {}; step.holds[anchor] = alive && this.inside(anchor) ? (step.holds[anchor] ?? 0) + 1 : 0; }
       step.interaction = alive && this.inside(def.anchor) ? step.interaction + 1 : 0;
       const failure = def.fail.find(f => this.satisfied(f.trigger, step));
       if (failure) { this.fail(failure.reason, def); break; }
@@ -162,6 +173,7 @@ export class Mission {
     if (event.type === 'player.respawned') { if (this.state.phase === 'playing') this.restore(this.state.checkpoint ?? 'start'); return; }
     if (this.state.phase !== 'playing') return;
     if (event.type === 'mission.failed') { this.state.failure = event.reason; this.state.phase = 'retry'; return; }
+    if (event.type === 'pickup.collected' && 'kind' in event && event.kind === 'item' && event.item && this.def.items.includes(event.item)) this.collect(event.item);
     if (event.type === 'player.damaged') this.state.stats.damage += event.amount;
     if (event.type === 'player.died') this.state.stats.deaths++;
     if (event.type === 'combat.kill') {
@@ -171,7 +183,7 @@ export class Mission {
       for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(event.targetId)) step.kills.push(event.targetId);
     }
     const type = event.type === 'mission.signal' ? event.name : event.type;
-    const actor = event.type === 'combat.kill' ? event.targetId : event.type === 'mission.signal' ? event.actorId : undefined;
+    const actor = event.type === 'combat.kill' ? event.targetId : event.type === 'mission.signal' ? event.actorId : event.type === 'vehicle.entered' || event.type === 'vehicle.exited' ? event.sourceId : event.type === 'interact.completed' || event.type === 'prop.broken' ? event.id : undefined;
     for (const step of Object.values(this.state.steps)) if (step.status === 'active') {
       step.events[`${type}:*`] = (step.events[`${type}:*`] ?? 0) + 1;
       if (actor) for (const [id, entity] of Object.entries(this.state.actors)) if (entity === actor) step.events[`${type}:${id}`] = (step.events[`${type}:${id}`] ?? 0) + 1;
@@ -194,8 +206,7 @@ export class Mission {
       if (this.state.actors[id] || this.deadBosses.has(id)) continue;
       const def = this.def.actors[id], anchor = this.def.anchors[def.anchor];
       const convoy = def.archetype === 'defend.convoy' && this.world.npcs ? this.world.npcs.traffic.convoy(['res', 'fuel', 'checkpoint', 'bridge'].map(key => this.def.anchors[key])) : null;
-      const entity = convoy ? this.world.entities.get(convoy[0])! : this.world.entities.create({ kind: def.kind, archetype: def.archetype, faction: def.faction, transform: { x: anchor.x, z: anchor.z, y: 0.7, yaw: 0 }, health: { current: def.hp, max: def.hp }, combat: { radius: 0.4, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
-      if (entity.kind === 'escort') this.world.npcs?.escorts.attach(entity);
+      const entity = convoy ? this.world.entities.get(convoy[0])! : this.world.spawnMissionActor(def, anchor);
       this.state.actors[id] = entity.id; this.world.spatial.set(entity.id, anchor.x, anchor.z);
     }
     this.emit({ type: 'mission.spawned', id: group });
@@ -260,18 +271,21 @@ export class Mission {
   restore(id = this.state.checkpoint ?? 'start'): void {
     this.world.controls.reset();
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
+    const timeout = this.state.failure === 'timeout';
     const stats = this.state.stats, bosses=this.state.killedBosses, delta = this.world.tick - checkpoint.tick;
     Object.assign(this.state, structuredClone(checkpoint.state)); this.state.stats = stats; this.state.killedBosses=bosses; this.state.failure = null; this.state.phase = 'playing'; this.state.cinematic = null; this.state.result = null;
+    if (timeout && this.state.deadlineTicks !== null) this.state.deadlineTicks += Math.ceil((this.def.deadline?.retryGraceSeconds ?? 0) * 60);
     this.finishApplied = false; this.pendingCheckpoints.length=0; this.markerObjective=this.def.steps.find(s=>this.state.steps[s.id].status==='active')?.id??null; this.pendingMarker=null;
     for (const step of Object.values(this.state.steps)) if (step.status === 'active') step.started += delta;
     const entities = structuredClone(checkpoint.entities);
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) { const entity = entities.find(e => e.id === entityId); if (entity) entity.health.current = 0; }
     // Keep Player's live object because its controller holds that reference.
     const player = this.world.entities.get(1)!;
-    delete player.weapons;
+    delete player.weapons; delete player.inventory;
     Object.assign(player, entities[0]); player.health.current = player.health.max; player.survivor!.diedAt = null;
     for (const entity of entities) if (entity.vehicle) { if (entity.vehicle.explodeAt !== null) entity.vehicle.explodeAt += delta; if (entity.vehicle.recoveringUntil) entity.vehicle.recoveringUntil += delta; }
     if (!this.world.npcs && this.world.infected) { this.world.infected.pool.push(...this.world.infected.active); this.world.infected.active.length=0; }
+    for (const entity of entities) if (entity.interactable) entity.interactable.interruptedAt = -1;
     this.world.entities.restore(entities, player);
     if (!this.world.npcs && this.world.infected) {
       const ai=this.world.infected;

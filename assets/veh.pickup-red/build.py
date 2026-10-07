@@ -11,6 +11,13 @@ import bmesh
 import bpy
 from mathutils import Matrix, Vector
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
+if '--lod-only' in sys.argv:
+    build_native_lods(__file__)
+    sys.exit(0)
+
 HERE = Path(__file__).resolve().parent
 ARGS = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
 
@@ -90,6 +97,7 @@ def group(name, location=(0, 0, 0), parent=None):
 
 
 def finish(obj, mat, parent, bevel=0.0, segs=2, smooth=True, harden=True, angle=40):
+    if DISTANCE: bevel = 0
     TRUCK.objects.link(obj)
     if isinstance(mat, str):
         mat = M[mat]
@@ -177,6 +185,7 @@ def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.00
 
 
 def lathe(name, profile, center, axis, mat, parent=None, segs=40, smooth=True):
+    if DISTANCE: segs = min(segs, 12 if DISTANCE == 1 else 6)
     """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
     bm = bmesh.new()
     rings = []
@@ -208,6 +217,7 @@ def lathe(name, profile, center, axis, mat, parent=None, segs=40, smooth=True):
 
 
 def cylinder(name, center, r, depth, axis, mat, parent=None, segs=40, bevel=0.0):
+    if DISTANCE: segs = min(segs, 12 if DISTANCE == 1 else 6)
     prof = [(1e-4, -depth / 2), (r, -depth / 2), (r, depth / 2), (1e-4, depth / 2)]
     o = lathe(name, prof, center, axis, mat, parent, segs)
     if bevel:
@@ -260,6 +270,7 @@ def cut(target, cutter_obj):
 
 
 def raw_cyl(name, center, r, depth, axis='y', segs=64):
+    if DISTANCE: segs = min(segs, 12 if DISTANCE == 1 else 6)
     bm = bmesh.new()
     bmesh.ops.create_cone(bm, cap_ends=True, segments=segs, radius1=r, radius2=r, depth=depth)
     rot = {'y': Matrix.Rotation(PI / 2, 4, 'X'), 'x': Matrix.Rotation(PI / 2, 4, 'Y'), 'z': Matrix.Identity(4)}[axis]
@@ -281,10 +292,12 @@ def raw_box(name, center, size):
 
 
 def arc(cx, cz, r, a0, a1, n):
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 6)
     return [(cx + r * math.cos(a0 + (a1 - a0) * i / n), cz + r * math.sin(a0 + (a1 - a0) * i / n)) for i in range(n + 1)]
 
 
 def rrect(x0, z0, x1, z1, r, n=5):
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 6)
     pts = []
     pts += arc(x1 - r, z0 + r, r, -PI / 2, 0, n)
     pts += arc(x1 - r, z1 - r, r, 0, PI / 2, n)
@@ -298,6 +311,7 @@ def frame(name, x0, z0, x1, z1, side, mat, parent, bar=0.04, r=0.04, depth=0.03,
 
 
 def arch_top(cx,cz,r,n=20):
+    if DISTANCE: n = min(n, 12 if DISTANCE == 1 else 6)
     return [(cx+r*math.copysign(abs(math.cos(t))**.65,math.cos(t)),
              cz+r*math.sin(t)**.65) for t in [PI*i/n for i in range(n+1)]]
 
@@ -377,13 +391,14 @@ box('windshield',(.542,0,1.737),(.018,1.45,.73),'glass','cab',.035,4,rot=(0,-rak
 box('roof',(-.16,0,2.155),(.92,1.72,.13),'red','cab',.07,3)
 roof = bpy.data.objects['roof']
 # Bevel the outer silhouette first; the shallow stamp edges need a much smaller radius.
-bpy.context.view_layer.objects.active=roof
-bpy.ops.object.modifier_apply(modifier='bevel')
-for y in [-.49,0,.49]:
-    cut(roof,box('roof_channel',(-.16,y,2.234),(.65,.068,.043),None,
-                 bevel=.014,segs=3))
-b=roof.modifiers.new('stamp bevel','BEVEL');b.width=.006;b.segments=2
-b.harden_normals=True
+if not DISTANCE:
+    bpy.context.view_layer.objects.active=roof
+    bpy.ops.object.modifier_apply(modifier='bevel')
+    for y in [-.49,0,.49]:
+        cut(roof,box('roof_channel',(-.16,y,2.234),(.65,.068,.043),None,
+                     bevel=.014,segs=3))
+    b=roof.modifiers.new('stamp bevel','BEVEL');b.width=.006;b.segments=2
+    b.harden_normals=True
 box('rear_cab_glass',(-.705,0,1.75),(.016,1.36,.52),'glass','cab',.02)
 for y in [-.38,.38]:
     box('seat',(-.30,y,1.10),(.47,.53,.14),'black','cab',.06)
@@ -642,6 +657,9 @@ def canonical_face_loops(o):
     bm.to_mesh(o.data);bm.free();o.data.update()
 
 
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('tailgate_badge', 'tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('fender_flare', 'grille_slat', 'hood_edge', 'rocker_trim', 'wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*',))
+
 # Apply bevel/normal modifiers once, before joining and export.
 for o in sorted(TRUCK.objects,key=lambda item:item.name):
     if o.type!='MESH': continue
@@ -816,3 +834,7 @@ if arg('--render'):
         scene.render.filepath=str(render_path.with_name(game_name).resolve())
         bpy.ops.render.render(write_still=True)
         print('RENDER OK',scene.render.filepath)
+
+# Every full source export refreshes the native distance tiers.
+if "--glb" in sys.argv and not DISTANCE:
+    build_native_lods(__file__)

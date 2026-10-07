@@ -43,7 +43,7 @@ test('meshopt block consolidation keeps all decoded vertex and animation data id
   const io = await assetIO();
   const def = manifest.find(def => def.id === 'char.survivor-female')!;
   const original = await io.read(def.lods!.lod1!);
-  const split = await io.writeBinary(original), packed = await consolidateMeshopt(split);
+  const split = await io.writeBinary(original), packed = await consolidateMeshopt(split, true);
   const decoded = await io.readBinary(packed);
   const attributes = (document: typeof original) => document.getRoot().listMeshes().flatMap(mesh => mesh.listPrimitives().flatMap(primitive => [primitive.getIndices()!, ...primitive.listAttributes()].map(accessor => ({ type: accessor.getType(), normalized: accessor.getNormalized(), values: Array.from(accessor.getArray()!) }))));
   expect(attributes(decoded)).toEqual(attributes(original));

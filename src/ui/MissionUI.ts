@@ -76,7 +76,9 @@ export class MissionUI {
     this.marker.hidden=!playing||!anchor||!player;
     if(anchor&&player&&objective&&playing){
       const distance=Math.hypot(anchor.x-player.transform.x,anchor.z-player.transform.z);
-      this.text(this.tracker,`${objective.text} · ${Math.round(distance)}\u00a0m`);this.tracker.dataset.objective=objective.id;this.tracker.dataset.distance=String(distance);
+      const seconds = state.deadlineTicks === null ? null : Math.ceil(state.deadlineTicks / 60);
+      const timer = seconds === null ? '' : ` · ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+      this.text(this.tracker,`${objective.text} · ${Math.round(distance)}\u00a0m${timer}`);this.tracker.dataset.objective=objective.id;this.tracker.dataset.distance=String(distance);
       if(this.active!==objective.id){this.active=objective.id;this.text(this.toast,`New objective: ${objective.text}`);}
       this.toast.hidden=this.world.tick-state.steps[objective.id].started>=180;
       this.point.set(anchor.x,1.8,anchor.z).project(camera);

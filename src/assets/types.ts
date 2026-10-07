@@ -27,10 +27,14 @@ export interface AssetDef {
   generatedLodRatios?: { lod1?: number; lod2?: number };
   /** Reviewed authored tiers: preserve geometry/normals instead of delivery decimation. */
   authoredLodRatios?: { lod1: number; lod2: number };
+  /** Native distance variants: absolute triangle caps and monotone file sizes. */
+  authoredLodTriangles?: { lod1: number; lod2: number };
   dimensions: { x: number; y: number; z: number; tolerance: number };
   forward: '+X';
   /** Uniform metres conversion applied to the entire exported assembly once. */
   sourceScale?: number;
+  /** Stronger lossless attribute compression for large scenery exports. */
+  compactMeshopt?: boolean;
   /** Forward in the standalone export, when it has no front marker (glTF Y-up). */
   sourceForward?: '+X' | '-X' | '+Z' | '-Z';
   frontNodes: string[];

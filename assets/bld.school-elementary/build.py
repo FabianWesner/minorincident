@@ -12,11 +12,12 @@ from mathutils import Matrix, Vector
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
-from sslib.lod import export_lods, rebuild_from_baked
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE = Path(__file__).resolve().parent
 if '--lod-only' in sys.argv:
-    rebuild_from_baked(HERE/'model.glb')
+    build_native_lods(__file__)
     sys.exit(0)
 
 parser = argparse.ArgumentParser()
@@ -83,6 +84,7 @@ M['blue'].diffuse_color = linear('#354e70')
 
 
 def finish(obj, mat, parent='body', bevel=.02, segments=2):
+    if DISTANCE: bevel = 0
     model.objects.link(obj)
     obj.data.materials.append(M[mat])
     if bevel:
@@ -96,6 +98,7 @@ def finish(obj, mat, parent='body', bevel=.02, segments=2):
 
 
 def box(name, loc, size, mat, parent='body', bevel=.02, segments=2):
+    if DISTANCE: bevel = 0
     bm=bmesh.new(); bmesh.ops.create_cube(bm,size=1)
     bmesh.ops.scale(bm,vec=Vector(size),verts=bm.verts)
     mesh=bpy.data.meshes.new(name); bm.to_mesh(mesh); bm.free()
@@ -105,10 +108,12 @@ def box(name, loc, size, mat, parent='body', bevel=.02, segments=2):
 
 
 def front(name, u, z, w, h, mat, x=3.81, depth=.12, parent='body', bevel=.02):
+    if DISTANCE: bevel = 0
     return box(name,(x,-u,z),(depth,w,h),mat,parent,bevel)
 
 
 def cylinder(name, loc, radius, depth, mat, parent='body', axis='z', vertices=24):
+    if DISTANCE: vertices = min(vertices, 12 if DISTANCE == 1 else 8)
     bm=bmesh.new(); bmesh.ops.create_cone(bm,cap_ends=True,cap_tris=False,segments=vertices,radius1=radius,radius2=radius,depth=depth)
     mesh=bpy.data.meshes.new(name); bm.to_mesh(mesh); bm.free()
     obj=bpy.data.objects.new(name,mesh); obj.location=loc
@@ -117,6 +122,7 @@ def cylinder(name, loc, radius, depth, mat, parent='body', axis='z', vertices=24
 
 
 def profile(name, points, x0, x1, mat, parent='body', bevel=.025):
+    if DISTANCE: bevel = 0
     n=len(points)
     verts=[(x,-u,z) for x in [x0,x1] for u,z in points]
     faces=[tuple(reversed(range(n))),tuple(range(n,2*n))]
@@ -130,7 +136,7 @@ def profile(name, points, x0, x1, mat, parent='body', bevel=.025):
 def label(body,u,z,width,size):
     curve=bpy.data.curves.new(body,'FONT'); curve.body=body
     curve.align_x='CENTER'; curve.align_y='CENTER'; curve.size=size
-    curve.extrude=.012; curve.bevel_depth=.002; curve.bevel_resolution=1; curve.resolution_u=3
+    curve.extrude= 0 if DISTANCE else (.012); curve.bevel_depth= 0 if DISTANCE else (.002); curve.bevel_resolution=1; curve.resolution_u= 2 if DISTANCE else (3)
     font=Path('/System/Library/Fonts/Supplemental/Arial Bold.ttf')
     if font.exists(): curve.font=bpy.data.fonts.load(str(font))
     obj=bpy.data.objects.new(body,curve); model.objects.link(obj)
@@ -322,6 +328,9 @@ for y in [-4.3,-2.7,2.7,4.3]:
 # Collider extras are empties, never rendered meshes.
 col=group('col:building',(0,0,2.65)); col['collider']='cuboid'; col['size']=[7.5,12,5.3]
 
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('Side brick',), far_omit=('Running bond', 'Side brick', 'Desk', 'bolt', 'fastener', 'Paw pad', 'Paw toe', 'Roof seam', 'Grille louver', 'Warm desk silhouette','Door hinge','Room reflection'))
+
 # Apply all modifiers then merge by material within semantic parent groups.
 for obj in list(model.objects):
     if obj.type in {'MESH','FONT'}:
@@ -388,7 +397,6 @@ triangles,draws=metrics()
 report={'id':'bld.school-elementary','tier':'Hero','triangles':triangles,'draw_calls':draws,'materials':sorted(m.name for m in M.values()),'nodes_ok':all(n in groups for n in ['root','roof','interior','door_L','door_R']),'within_budget':triangles<=100000 and draws<=40,'rounds':4,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
 (HERE/'build-metrics.json').write_text(json.dumps(report,indent=2))
 # Preserve closed masonry and rooftop silhouettes at play distance.
-export_lods(Path(args.glb), [o for o in model.objects if o.type=='MESH'])
 
 if args.render:
     scene.render.engine='CYCLES'; scene.cycles.samples=args.samples; scene.cycles.use_denoising=True
@@ -423,3 +431,6 @@ if args.render:
         scene.render.filepath=str(Path(args.render).with_name(Path(args.render).stem.replace('-ref','-game')+'.png'))
         bpy.ops.render.render(write_still=True)
 print('OK',json.dumps(report))
+
+if args.glb and not DISTANCE:
+    build_native_lods(__file__)

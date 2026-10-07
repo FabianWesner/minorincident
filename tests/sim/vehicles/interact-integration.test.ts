@@ -25,7 +25,9 @@ test('M1 E09/E12 @E09 @E09-AC02 @E12 @E12-AC05 checkpoint rebinds vehicles to re
     const bodies = w.physics.bodyCount;
     w.vehicles!.damage(id, 50); w.vehicles!.spawn('vehicle.police', { x: 20, z: 0 });
     mission.restore('C');
-    expect(w.vehicles!.cars.size).toBe(1);
+    expect(w.vehicles!.cars.size).toBe(2); // authored sedan plus the real mission actor
+    const scripted = mission.state.actors.car;
+    expect(w.vehicles!.cars.get(scripted)!.entity).toBe(w.entities.get(scripted));
     expect(w.vehicles!.cars.get(id)!.entity).toBe(w.entities.get(id));
     expect(w.entities.get(id)!.health.current).toBe(w.entities.get(id)!.health.max);
     expect(w.physics.bodyCount).toBe(bodies);

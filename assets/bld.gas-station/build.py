@@ -8,11 +8,12 @@ import bpy, bmesh
 from mathutils import Vector
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
-from sslib.lod import export_lods, rebuild_from_baked
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
 
 HERE=Path(__file__).resolve().parent
 if '--lod-only' in sys.argv:
-    rebuild_from_baked(HERE/'model.glb')
+    build_native_lods(__file__)
     sys.exit(0)
 
 p=argparse.ArgumentParser()
@@ -45,6 +46,7 @@ roof=empty('roof',parent=root);interior=empty('interior',parent=root)
 door=empty('door_front',(-.94,-1.55,.24),root)
 
 def finish(o,name,mat,parent,bevel=0,segments=2):
+    if DISTANCE: bevel = 0
     o.name=name;o.data.materials.clear();o.data.materials.append(M[mat if mat in M else 'pal_'+mat])
     if bevel:
         mod=o.modifiers.new('rounded edges','BEVEL');mod.width=bevel;mod.segments=segments
@@ -54,18 +56,20 @@ def finish(o,name,mat,parent,bevel=0,segments=2):
     return o
 
 def box(name,loc,size,mat,parent=root,bevel=.028,segments=2):
+    if DISTANCE: bevel = 0
     bpy.ops.mesh.primitive_cube_add(size=1,location=loc);o=bpy.context.object;o.dimensions=size
     bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
     return finish(o,name,mat,parent,min(bevel,min(size)*.28),segments)
 
 def cyl(name,loc,r,d,mat,parent=root,n=24,axis='z',bevel=.008):
+    if DISTANCE: bevel = 0; n = min(n, 12 if DISTANCE == 1 else 8)
     bpy.ops.mesh.primitive_cylinder_add(vertices=n,radius=r,depth=d,location=loc);o=bpy.context.object
     if axis=='x':o.rotation_euler.y=math.pi/2
     if axis=='y':o.rotation_euler.x=math.pi/2
     return finish(o,name,mat,parent,bevel)
 
 def tube(name,pts,r,mat,parent=root,closed=False):
-    c=bpy.data.curves.new(name,'CURVE');c.dimensions='3D';c.resolution_u=1;c.bevel_depth=r;c.bevel_resolution=2
+    c=bpy.data.curves.new(name,'CURVE');c.dimensions='3D';c.resolution_u=1;c.bevel_depth=r;c.bevel_resolution=0 if DISTANCE else 2
     s=c.splines.new('POLY');s.points.add(len(pts)-1)
     for q,v in zip(s.points,pts):q.co=(*v,1)
     s.use_cyclic_u=closed;o=bpy.data.objects.new(name,c);bpy.context.collection.objects.link(o)
@@ -76,7 +80,7 @@ fonts={k:bpy.data.fonts.load('/System/Library/Fonts/Supplemental/'+v) for k,v in
 def text(word,loc,w,h,mat,parent=root,side=False,font='bold'):
     bpy.ops.object.select_all(action='DESELECT');bpy.ops.object.text_add(location=loc,rotation=(math.pi/2,0,0 if side else math.pi/2))
     o=bpy.context.object;o.data.body=word;o.data.font=fonts[font];o.data.align_x='CENTER';o.data.align_y='CENTER'
-    o.data.extrude=.006;o.data.bevel_depth=.002;o.data.resolution_u=4;o.data.bevel_resolution=0
+    o.data.extrude=0 if DISTANCE else (.006);o.data.bevel_depth=0 if DISTANCE else (.002);o.data.resolution_u=2 if DISTANCE else (4);o.data.bevel_resolution=0
     bpy.ops.object.convert(target='MESH');o=bpy.context.object
     xs=[v.co.x for v in o.data.vertices];ys=[v.co.y for v in o.data.vertices]
     cx=(min(xs)+max(xs))/2;cy=(min(ys)+max(ys))/2
@@ -328,6 +332,11 @@ def merge_by_material(objects,suffix=''):
             bpy.context.scene.cursor.location=parent.matrix_world.translation;bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
             bpy.ops.object.transform_apply(location=False,rotation=True,scale=True)
     return objects
+if DISTANCE==2:
+    box('distance forecourt',(0,.5,.245),(10.1,10.1,.09),'sidewalk',bevel=0)
+if DISTANCE:
+    export_variant(Path(__file__).parent, DISTANCE, omit=('paver_chip','stucco_patch','fascia_seam','coping_seam','plinth_joint','plinth_course','guard_chip','pump_screw','fascia_fastener'), far_omit=('bolt', 'rivet', 'leaf', 'grass', 'screw', 'pump_label','lettering','paver','hose','nozzle','price_segment','grade_button','card_slot','receipt_slot','payment_plate','fuel_label','decimal','paving_slab','letter_','fan_grill','vent_louver','sunset_stripe'))
+
 meshes=merge_by_material([o for o in bpy.context.scene.objects if o.type=='MESH'])
 for o in meshes:o.data.calc_loop_triangles()
 raw_tri=sum(len(o.data.loop_triangles) for o in meshes)
@@ -375,7 +384,6 @@ if a.glb:
     anchors=[o for o in asset if 'ss_light' in o]
     anchor_data={o:o['ss_light'] for o in anchors}
     distant={'pal_survivorRed':'pal_survivorRed','pal_policeBlue':'pal_policeBlue','pal_backpackTeal':'pal_policeBlue','pal_picketWhite':'pal_picketWhite','pal_schoolBusYellow':'pal_picketWhite','pal_windowGlow':'pal_picketWhite'}
-    export_lods(path, meshes)
 
 if a.render:
     world=bpy.data.worlds.new('studio');scene.world=world;world.use_nodes=True
@@ -398,3 +406,6 @@ if a.render:
         out=Path(a.render).resolve();scene.render.filepath=str(out.with_name('game.png' if out.name=='hero.png' else out.stem.replace('-ref','')+'-game.png'))
         bpy.ops.render.render(write_still=True)
     print('RENDER OK')
+
+if a.glb and not DISTANCE:
+    build_native_lods(__file__)
