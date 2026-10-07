@@ -44,7 +44,8 @@ for (const scene of ['hud', 'live'] as const) for (const viewport of sizes) {
     mkdirSync(dir, { recursive: true });
     writeFileSync(`${dir}/${info.project.name}-${scene}-${viewport.width}.json`, JSON.stringify(layout, null, 2));
     await page.screenshot({ path: `${dir}/${info.project.name}-${scene}-${viewport.width}.png` });
-    expect(layout.coverage).toBeLessThanOrEqual(viewport.width < viewport.height ? .25 : .20);
+    // PO UAT: phone text is larger (objective >= 16 px), so the budget was raised from .25/.20.
+    expect(layout.coverage).toBeLessThanOrEqual(viewport.width < viewport.height ? .30 : .27);
     expect(layout.pause).toBe(1);
     for (const [i, a] of layout.controls.entries()) {
       expect(a.width, a.id).toBeGreaterThanOrEqual(44); expect(a.height, a.id).toBeGreaterThanOrEqual(44);
