@@ -19,7 +19,7 @@ export class Debug {
     const controls = { timeScale: 1, timeOfDay: state.lighting?.preset ?? 'golden', bloom: true, cheapDof: state.postFx?.dof ?? false, cameraShake: true, quality: game.quality.setting };
     const rendering = this.pane.addFolder({ title: 'Rendering', expanded: false });
     rendering.addBinding(controls, 'quality', { options: { auto: 'auto', high: 'high', low: 'low' } }).on('change', ({ value }) => game.setQuality(value));
-    rendering.addBinding(controls, 'timeOfDay', { options: Object.fromEntries(['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'golden'].map((name) => [name, name])) }).on('change', ({ value }) => game.view.settings({ timeOfDay: value }));
+    rendering.addBinding(controls, 'timeOfDay', { options: Object.fromEntries(['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'golden', 'night'].map((name) => [name, name])) }).on('change', ({ value }) => game.view.settings({ timeOfDay: value }));
     for (const key of ['bloom', 'cheapDof', 'cameraShake'] as const) rendering.addBinding(controls, key).on('change', ({ value }) => game.view.settings({ [key]: value }));
     const status = document.createElement('output'); status.dataset.lookdev = 'status'; status.style.cssText = 'display:block;padding:8px;font:11px sans-serif;color:#ddd';
     const values: WorldLook = { ...game.view.look.values }, colours = { ...game.view.look.palette };

@@ -6,6 +6,7 @@ import { timeOfDay, type TimeOfDay } from '../data/timeOfDay';
 import type { View } from './View';
 import { worldLook } from '../data/worldLook';
 import { LookUniforms } from './LookUniforms';
+import { LightField } from './LightField';
 
 // r186's default PCF rotates five taps with per-pixel noise. A fixed weighted
 // grid keeps the soft penumbra without stipple, including the WebGL2 fallback.
@@ -52,6 +53,14 @@ export class Lighting {
   readonly fogB = this.fogColor;
   readonly fogGradient;
   preset: TimeOfDay = 'golden';
+  /** E25 layer 2: practical-light pools around the focus (LightField). */
+  readonly field = new LightField();
+  /** Night readability (specs/06 §2): the player's feet (xyz) for the hero rim, and the preset rim weight. */
+  readonly hero = uniform(new Vector3(0, -100, 0));
+  readonly rim = uniform(0);
+  readonly rimColor = uniform(new Color('#b9c6ff'));
+  /** Weight of the sun/moon shadow map on light-field pools (hero shadows at night). */
+  readonly fieldShadow = uniform(0);
   constructor(private readonly scene: Scene, readonly look = new LookUniforms()) {
     this.bounce = look.nodes.bounce;
     this.coreShadowEdgeHigh = look.nodes.coreLightEdge; this.coreShadowEdgeLow = look.nodes.coreShadowEdge;
@@ -65,6 +74,7 @@ export class Lighting {
     this.scene.add(this.sun, this.sun.target, this.hemisphere); this.set('golden');
   }
   setQuality(tier: QualityTier): void {
+    this.field.setQuality(tier);
     const size = qualityBudgets[tier].shadowSize;
     if (this.sun.shadow.mapSize.x === size) return;
     this.sun.shadow.map?.dispose(); this.sun.shadow.map = null; this.sun.shadow.mapSize.set(size, size); this.sun.shadow.needsUpdate = true;
@@ -73,6 +83,7 @@ export class Lighting {
     if (!(name in timeOfDay)) throw new Error(`Unknown time-of-day preset: ${name}`);
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
+    this.field.strength.value = p.practical ?? 0; this.rim.value = p.rim ?? 0;
     this.direction.value.setFromSphericalCoords(1, p.polar, p.azimuth);
     this.color.value.set(p.sun); this.intensity.value = p.intensity; this.shadow.value.set(p.shadow);
     this.sun.color.set(p.sun); this.sun.intensity = p.intensity;
@@ -124,7 +135,7 @@ export class Lighting {
   /** Includes live fog ranges so viewport changes can be checked without shader inspection. */
   getState() {
     const p = timeOfDay[this.preset];
-    return { shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`] };
+    return { shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`], rim: this.rim.value, fieldShadow: this.fieldShadow.value, lightField: this.field.snapshot() };
   }
-  dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); this.scene.backgroundNode = null; }
+  dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); this.field.dispose(); this.scene.backgroundNode = null; }
 }

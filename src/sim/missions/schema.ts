@@ -46,7 +46,7 @@ export function validateMission(def: MissionDef): string[] {
     case 'marker': ref(a.anchor, def.anchors, 'anchor'); break;
     case 'state': ref(a.key, def.states, 'state'); break;
     case 'tier': if (!Number.isInteger(a.tier) || a.tier < 0 || a.tier > 5) errors.push('Invalid tier'); break;
-    case 'timeOfDay': if (!['L1','L2','L3','L4','L5','L6','golden'].includes(a.value)) errors.push('Invalid time of day'); break;
+    case 'timeOfDay': if (!['L1','L2','L3','L4','L5','L6','golden','night'].includes(a.value)) errors.push('Invalid time of day'); break;
     default: errors.push('Unknown action kind');
   } };
   if (def.deadline) { positive(def.deadline.seconds, 'mission deadline'); if (!Number.isFinite(def.deadline.retryGraceSeconds) || def.deadline.retryGraceSeconds < 0) errors.push('Invalid retry grace'); }

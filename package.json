@@ -21,6 +21,7 @@
     "sim": "tsx tools/sim-runner/index.ts",
     "assets:optimize": "tsx tools/assets/optimize.ts",
     "assets:validate": "tsx tools/assets/validate.ts",
+    "assets:lights": "tsx tools/assets/lights.ts",
     "assets:crop": "tsx tools/assets/crop.ts",
     "assets:turntable": "tsx tools/assets/turntable.ts",
     "deploy": "npm run build && npx --yes wrangler@4 pages deploy dist --project-name minor-incident",
