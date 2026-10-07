@@ -1,5 +1,5 @@
 import { BufferAttribute, type BufferGeometry } from 'three';
-import { MeshoptSimplifier } from 'meshoptimizer';
+import { MeshoptSimplifier } from 'meshoptimizer/simplifier';
 
 /** Far rigid-part figures: only indices change. Original vertices, colors, eyes
  * and animation ownership survive; no triangle can span two animated parts. */

@@ -1,6 +1,7 @@
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from './CrowdVisibility';
 import { simplifyCrowdLod } from './characters/crowdLodGeometry';
+import { crowdLod } from './lodPolicy';
 import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
@@ -44,6 +45,8 @@ export class CrowdView extends Group {
   private readonly previousHeroes = new Set<number>();
   private readonly nearest: { id: number; distance: number }[] = [];
   private readonly heroBands = new Map<number, boolean>();
+  private readonly rolePixels = new Map<string, number>();
+  private readonly roleLods = new Map<string, 'lod1' | 'lod2'>();
   private readonly frustum = new Frustum();
   private readonly projection = new Matrix4();
   private readonly bounds = new Sphere(new Vector3(), 1);
@@ -169,17 +172,20 @@ export class CrowdView extends Group {
     this.visibility.begin(view?.camera, typeof innerHeight === 'number' ? innerHeight : 900);
     const heroes = this.heroIds; this.previousHeroes.clear();
     for (const id of heroes) this.previousHeroes.add(id);
-    heroes.clear(); this.nearest.length = 0;
+    heroes.clear(); this.nearest.length = 0; this.rolePixels.clear();
     if (!this.low) for (const e of this.world.entities.iterate()) {
       if (e.faction !== 'infected' || !e.combat || e.hidden || e.infected?.hidden || e.archetype === 'infected.crow' || keepsLook(e)) continue;
       if (e.health.current <= 0 && this.world.tick - (e.infected?.deadAt ?? 0) >= this.corpseTicks) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
-      if (distance > (this.previousHeroes.has(e.id) ? 13 : 12)) continue;
+      if (distance > this.cullDistance) continue;
       const variant = e.infected?.model ?? e.infected?.variant;
-      const key = variant && this.definitions.has(variant) ? variant : this.definitions.has(e.archetype) ? e.archetype : 'infected.runner';
+      const role = this.hasRole(e.archetype) ? e.archetype : 'infected.runner';
+      const key = variant && this.hasRole(variant) ? variant : role;
       const d = this.registry.definition(this.definitions.get(key)!.asset).dimensions;
       if (!this.visibility.visible(e.transform.x, e.transform.y - .7 + d.y / 2, e.transform.z, Math.hypot(d.x, d.y, d.z) / 2 + .6)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, d.y);
+      this.rolePixels.set(key, Math.max(this.rolePixels.get(key) ?? 0, pixels));
+      if (distance > (this.previousHeroes.has(e.id) ? 13 : 12)) continue;
       const hero = !view || pixels > (this.heroBands.get(e.id) ? 164 : 196);
       this.heroBands.set(e.id, hero); if (!hero) continue;
       // Hold an existing hero until a replacement is clearly closer.
@@ -187,6 +193,9 @@ export class CrowdView extends Group {
       let at = 0; while (at < this.nearest.length && this.nearest[at].distance <= score) at++;
       if (at < 8) { this.nearest.splice(at, 0, { id: e.id, distance: score }); if (this.nearest.length > 8) this.nearest.pop(); }
     }
+    // One background tier per role protects the largest visible silhouette and
+    // avoids a third active draw for every archetype in a mixed horde.
+    for (const [role, pixels] of this.rolePixels) this.roleLods.set(role, crowdLod(pixels, this.roleLods.get(role), false));
     for (const e of this.nearest) heroes.add(e.id);
     for (const e of this.world.entities.iterate()) {
       if (e.id === 1 || e.faction !== 'infected' || !e.combat) continue;
@@ -203,8 +212,7 @@ export class CrowdView extends Group {
       this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);
       this.bounds.radius = Math.hypot(dimensions.x, dimensions.y, dimensions.z) / 2;
       if (view && !this.frustum.intersectsSphere(this.bounds)) continue;
-      const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, dimensions.y);
-      let lod: 'lod0' | 'lod1' | 'lod2' = this.visibility.lod(e.id, pixels, this.low);
+      let lod: 'lod0' | 'lod1' | 'lod2' = this.low ? 'lod2' : this.roleLods.get(key) ?? 'lod2';
       if (heroes.has(e.id)) {
         if (this.batches.has(`${key}:lod0`)) lod = 'lod0';
         else if (!this.pending.has(key)) {
