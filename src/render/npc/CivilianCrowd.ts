@@ -147,6 +147,8 @@ class CivilianBatch extends Group {
     // A faint ash-green self-glow on infected skin so the colour shift survives building shadow (far below bloom).
     const glow = eyeColor.mul(eye.mul(2.2).add(socket.mul(.75))).mul(overlay.y).add(vec3(.05, .1, .03).mul(skinShift).mul(overlay.z));
     const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
+    // E25 night readability: crowd silhouettes take the preset's moonlit rim.
+    if ('figureRim' in material) material.figureRim.value = 1;
     material.side = baked.doubleSided ? DoubleSide : FrontSide;
     this.mesh = new InstancedMesh(baked.geometry, material, 350); this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = !this.distant; this.mesh.receiveShadow = true;
     this.mesh.instanceMatrix.setUsage(StreamDrawUsage);

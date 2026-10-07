@@ -15,12 +15,7 @@ import { dinerSign } from '../render/DinerSign';
 import { attribute } from 'three/tsl';
 import { staticBatch, staticBatchAsync } from './staticBatch';
 import { loadGate, loadGltf } from './loadGate';
-// E10's semantic building IDs predate the accepted production inventory.
-const productionIds: Record<string, string> = {
-  'bld.school': 'bld.school-elementary', 'bld.gym': 'int.gym-cafeteria',
-  'bld.supermarket': 'int.supermarket', 'bld.pharmacy': 'int.pharmacy-clinic',
-  'bld.hospital': 'bld.hospital-exterior', 'bld.substation': 'bld.power-substation',
-};
+import { productionIds } from './productionIds';
 /** Deduplicated runtime URLs for the placement tiers requested by HTTP prefetch. */
 export function districtAssetUrls(id: string, definition: (id: string) => import('./types').AssetDef, lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2']): string[] {
   const def = definition(productionIds[id] ?? id);
