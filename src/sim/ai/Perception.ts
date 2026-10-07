@@ -121,9 +121,10 @@ export class Perception {
    * Closest visible human; the current target is kept unless another visible human is at least the switch hysteresis
    * (1.5 m) closer. Returns undefined when nobody is visible.
    */
-  closest(e: EntitySnapshot, currentId: number): HumanTarget | undefined {
+  closest(e: EntitySnapshot, currentId: number, ignoreId = 0): HumanTarget | undefined {
     let best: HumanTarget | undefined, bestDistance = Infinity, current: HumanTarget | undefined, currentDistance = Infinity;
     for (const h of this.humans.within(e.transform, this.rangeM)) {
+      if (h.id === ignoreId) continue;
       const isCurrent = h.id === currentId;
       if (!(isCurrent ? this.tracks(e, h.position) : this.sees(e, h.position))) continue;
       const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z);
