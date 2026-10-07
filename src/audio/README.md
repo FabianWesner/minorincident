@@ -73,7 +73,12 @@ the authored diner incident and store fight, and exports loudness/peak/gap/log
 measurements alongside three previews. `AUDIO_PREVIEW_DIR` overrides their location.
 
 Streams start only in L1–L6 missions, with at most four cached, lazily created
-decks. Acoustic tier refreshes preserve the score and cue history. Four reserved
+decks (one per state). A level can replace a state's recording (`levelStreams` in
+`StreamedMusic.ts`): L1's calm morning streams `score-calm-L1`, a 192 s (80-bar)
+excerpt of Kevin MacLeod's "Jazz Brunch" (CC-BY 4.0) whose tail is crossfaded into
+the bars before its start, so the media loop has no seam. The bird/traffic/chatter
+calm ambience stays on its own bus underneath; the accident hands over to tension
+exactly as in other levels. Acoustic tier refreshes preserve the score and cue history. Four reserved
 slots keep combined sprite/media voices within 32 high / 16 low. Music files
 measure approximately −18 LUFS; SFX and voice bus trims are −2 and −1.5 dB.
 Per-file grants, authors and provenance are in `assets/audio/LICENSES.md` and
