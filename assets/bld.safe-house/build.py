@@ -3,6 +3,12 @@ import argparse, json, math, random, sys
 from pathlib import Path
 import bpy
 from mathutils import Vector
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.distance import tier_argument, export_variant, build_native_lods
+DISTANCE = tier_argument()
+if '--lod-only' in sys.argv:
+    build_native_lods(__file__)
+    sys.exit(0)
 HERE=Path(__file__).resolve().parent
 p=argparse.ArgumentParser()
 for k in ('render','glb'): p.add_argument('--'+k)
@@ -29,6 +35,7 @@ root=empty('root');root['asset_id']='bld.safe-house'
 body=empty('body',parent=root);roof=empty('roof',parent=root);interior=empty('interior',parent=root)
 door=empty('door_front',(2.29,-1.21,.675),root)
 def finish(o,name,mat,parent=body,bevel=0):
+    if DISTANCE: bevel = 0
     o.name=name;o.data.materials.append(M[mat]);bpy.context.view_layer.objects.active=o
     if bevel:
         mod=o.modifiers.new('rounded edges','BEVEL');mod.width=bevel;mod.segments=1;bpy.ops.object.modifier_apply(modifier=mod.name)
@@ -47,6 +54,7 @@ def beam(name,start,end,width,depth,mat='woodWarm',parent=body):
     v=Vector(end)-Vector(start);o=box(name,(Vector(start)+Vector(end))/2,(width,depth,v.length),mat,parent,.016);o.rotation_euler=v.to_track_quat('Z','Y').to_euler();return o
 
 def blob(name,loc,scale,mat,parent=body,segments=10,rings=5):
+    if DISTANCE: segments = min(segments, 6); rings = min(rings, 3)
     bpy.ops.mesh.primitive_uv_sphere_add(segments=segments,ring_count=rings,radius=1,location=loc);o=bpy.context.object;o.scale=scale;bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);return finish(o,name,mat,parent)
 
 def bolt(loc,parent=body):blob('iron nail',loc,(.023,.023,.023),'uiDark',parent,8,4)
@@ -154,7 +162,7 @@ for x in (-1.25,1.13):
 box('survivor sign',(.15,-3.21,2.0),(2.69,.085,1.53),'picketWhite',bevel=.04)
 sign_font=bpy.data.fonts.load('/System/Library/Fonts/Supplemental/Arial Narrow Bold.ttf')
 for z,txt in ((2.29,'SURVIVORS'),(1.70,'INSIDE')):
-    cu=bpy.data.curves.new('painted letters','FONT');cu.body=txt;cu.align_x='CENTER';cu.align_y='CENTER';cu.size=.46;cu.extrude=.004;cu.resolution_u=2;cu.font=sign_font;cu.size=.76 if txt=='INSIDE' else .57
+    cu=bpy.data.curves.new('painted letters','FONT');cu.body=txt;cu.align_x='CENTER';cu.align_y='CENTER';cu.size=.46;cu.extrude=0 if DISTANCE else .004;cu.resolution_u=1 if DISTANCE else 2;cu.font=sign_font;cu.size=.76 if txt=='INSIDE' else .57
     o=bpy.data.objects.new('painted '+txt,cu);bpy.context.collection.objects.link(o);o.location=(.15,-3.261,z);o.rotation_euler=(math.pi/2,0,0)
     bpy.context.view_layer.objects.active=o;o.select_set(True);bpy.ops.object.convert(target='MESH');finish(bpy.context.object,'painted '+txt,'uiDark',bevel=0)
     bpy.context.object.scale.x=(2.37 if txt=='SURVIVORS' else 1.65)/bpy.context.object.dimensions.x
@@ -224,6 +232,9 @@ front=empty('front',(3,0,1),root)
 col=empty('col:house',(-.25,0,2),root);col['collider']='cuboid';col['size']=[4.85,5.4,3.8]
 light=empty('light:front_window',(2.5,.35,1.96),root)
 light.rotation_euler=Vector((1,0,-.4)).to_track_quat('-Z','Y').to_euler()
+if DISTANCE:
+    export_variant(HERE, DISTANCE, omit=('shingle', 'iron nail', 'flower', 'weed'), far_omit=('lap siding', 'chimney brick', 'broad leaf', 'golden shrub tips', 'ridge cap', 'edging', 'picket', 'deck plank', 'rail collar', 'window mullion'))
+
 # Join by material within functional groups. The roof is a single hideable hierarchy.
 for parent in (body,roof,interior,door):
     for mat in M.values():
@@ -358,3 +369,6 @@ if a.render:
         name=Path(a.render).name.replace('-ref','-game') if '-ref' in Path(a.render).name else 'game.png'
         scene.render.filepath=str(Path(a.render).with_name(name).resolve());bpy.ops.render.render(write_still=True)
     print('RENDER OK')
+
+if '--glb' in sys.argv and not DISTANCE:
+    build_native_lods(__file__)

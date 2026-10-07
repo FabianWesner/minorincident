@@ -128,7 +128,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   if (triangles > budget) errors.push(`triangles: ${triangles} > ${budget}`);
   // Absolute distance caps apply even to pending registrations and cannot
   // be relaxed by authored ratios or a larger manifest budget.
-  const distanceBudget = lod > 0 ? def.category === 'vehicle' ? (lod === 1 ? 6000 : 2000) : /^(bld\.house-|house\.)/.test(def.id) ? (lod === 1 ? 12000 : 4000) : undefined : undefined;
+  const distanceBudget = lod > 0 ? def.category === 'vehicle' ? (lod === 1 ? 6000 : 2000) : /^(bld\.house-|bld\.safe-house$|house\.)/.test(def.id) ? (lod === 1 ? 12000 : 4000) : undefined : undefined;
   if (distanceBudget !== undefined && triangles > distanceBudget) errors.push(`delivery: LOD${lod} triangles ${triangles} > ${distanceBudget}`);
   if (materials > def.budget.materials) errors.push(`materials: ${materials} > ${def.budget.materials}`);
   if (fileKB > def.budget.fileKB) errors.push(`fileKB: ${fileKB} > ${def.budget.fileKB}`);
