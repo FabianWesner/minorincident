@@ -30,7 +30,7 @@ def stabilize_ao(objects):
                 color.data[i].color = mean
 
 
-def prune_hidden_faces(objects, groups=None, occlusion=False, game_camera=False, defer=False, flat_text=False):
+def prune_hidden_faces(objects, groups=None, occlusion=False, game_camera=False, defer=False):
     """Delete hidden faces; never cross a removable/hinged assembly.
 
     Volume occluders must be outward-wound, closed and convex. AABB broad phase and outward half-space
@@ -212,15 +212,6 @@ def prune_hidden_faces(objects, groups=None, occlusion=False, game_camera=False,
                         break
                 if covered:
                     hidden.append(face.index)
-        if flat_text and obj.name.startswith('text_') and data.vertices:
-            top = max(v.co.z for v in data.vertices)
-            depth = top - min(v.co.z for v in data.vertices)
-            if depth <= .02:
-                # These FONT conversions have a front cap in local +Z. Keep its
-                # exact outline/front plane; omit the sub-centimetre side depth
-                # and back cap. Deferred deletion preserves their baked shadow.
-                hidden.extend(face.index for face in data.polygons
-                              if face.normal.z <= .0001)
         hidden = sorted(set(index for index in hidden if (obj, index) not in protected))
         if not hidden:
             continue
