@@ -89,8 +89,13 @@ test('skin pilot hands and soles follow bike sockets under heading, lean, steeri
     const frozen = character.getObjectByName('handL')!.getWorldPosition(new Vector3());
     character.position.set(0, 0, 0); character.quaternion.identity(); character.update(state, 90, 1, { pedal: 90 * .075, steer: 0 }); character.applyRideContacts(targets); character.updateMatrixWorld(true);
     expect(character.getObjectByName('handL')!.getWorldPosition(new Vector3()).distanceTo(frozen)).toBeLessThan(1e-6);
-    character.update(state, 91, 1); character.applyRideContacts(); expect(character.getState().clip).toBe('dismount');
-    for (let tick = 92; tick <= 120; tick++) { character.position.set(0, 0, 0); character.update(state, tick, 1); character.applyRideContacts(); }
+    const gaze = character.getObjectByName('head')!.getWorldQuaternion(new Quaternion());
+    for (let tick = 91; tick <= 150; tick++) {
+      character.position.set(0, 0, 0); character.quaternion.identity(); character.update(state, tick, 1, { pedal: 90 * .075, steer: 0 }); character.applyRideContacts(targets); character.updateMatrixWorld(true);
+      expect(character.getObjectByName('head')!.getWorldQuaternion(new Quaternion()).angleTo(gaze)).toBeLessThan(.001);
+    }
+    character.update(state, 151, 1); character.applyRideContacts(); expect(character.getState().clip).toBe('dismount');
+    for (let tick = 152; tick <= 180; tick++) { character.position.set(0, 0, 0); character.update(state, tick, 1); character.applyRideContacts(); }
     expect(character.getState().rideWeight).toBe(0); expect(character.getState().clip).toBe('idle');
   } finally { character.dispose(); loader.mockRestore(); }
 });

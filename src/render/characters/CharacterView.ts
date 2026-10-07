@@ -37,6 +37,7 @@ export class CharacterView extends Group {
   private readonly contactRotation = new Quaternion();
   private readonly gripRotation = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), Math.PI / 2);
   private readonly riderLean = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), -.7);
+  private readonly riderGaze = this.riderLean.clone().invert();
   private readonly mountOffset = new Vector3();
   private contactEvaluation = -1;
   private readonly appliedOffset = new Vector3();
@@ -156,6 +157,7 @@ export class CharacterView extends Group {
     } else if (weight > 0) this.position.addScaledVector(this.mountOffset, weight);
     if (weight > 0) {
       character.rig.torso.quaternion.slerp(this.riderLean, weight);
+      character.rig.head.quaternion.premultiply(this.contactRotation.identity().slerp(this.riderGaze, weight));
       this.updateMatrixWorld(true);
       const c = this.lastContacts, scale = this.scale.y;
       this.contactRotation.copy(c.orientation).multiply(this.gripRotation);

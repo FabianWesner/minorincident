@@ -46,8 +46,11 @@ export class KeyframeAnimator {
   private rideChangedAt = -1;
   rideWeight = 0;
   private readonly ground: GroundContacts | undefined;
+  private readonly torsoPose = new Quaternion();
+  private readonly headPose = new Quaternion();
   constructor(private readonly rig: CharacterRig, clipSource?: typeof skinClips) {
     this.skin = clipSource === skinClips;
+    this.torsoPose.copy(rig.torso.quaternion); this.headPose.copy(rig.head.quaternion);
     if (this.skin) this.ground = new GroundContacts(rig);
     this.strides = clipSource === skinClips ? { ...strides, ...Object.fromEntries(Object.entries(skinGait).map(([k, g]) => [k, g.stride])) } : strides;
     this.mixer = new AnimationMixer(rig.root);
@@ -158,8 +161,10 @@ export class KeyframeAnimator {
     // Constant clip translations may be skipped by mixer bindings. Undo the
     // pilot's last lunge before sampling so a kick cannot accumulate root drift.
     if (this.skin) { this.rig.hip.position.x -= this.lungeOffset; this.lungeOffset = 0; }
+    if (this.skin) { this.rig.torso.quaternion.copy(this.torsoPose); this.rig.head.quaternion.copy(this.headPose); }
     this.ground?.restore();
     this.mixer.update(dt);
+    if (this.skin) { this.torsoPose.copy(this.rig.torso.quaternion); this.headPose.copy(this.rig.head.quaternion); }
     if (this.ground) {
       if (loco && !ride && groundWeight > .05) this.ground.update(this.phase, groundStride, groundRun, groundWeight);
       else this.ground.reset();
