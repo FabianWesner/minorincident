@@ -238,7 +238,8 @@ export class CharacterView extends Group {
   /** Presentation heading eases aim changes while the sim keeps its exact hit direction. */
   /** `striking` snaps the body onto the attack direction (QA1-06: strikes read side-on when the
    * 6 rad/s locomotion turn lags a 0.27 s jab); locomotion keeps the bounded turn. */
-  face(yaw: number, time: number, striking = false, frame?: Quaternion): void {
+  /** `spin` (radians) is a presentation-only turn on top of the tracked heading (bat roundhouse, 00 §6.2). */
+  face(yaw: number, time: number, striking = false, frame?: Quaternion, spin = 0): void {
     if (frame) { this.quaternion.copy(frame); this.facing = yaw; this.facingTime = time; this.turn = 0; return; }
     // Facing is tracked as a scalar heading. Reading it back from `rotation.y` (an XYZ Euler decomposed from the
     // slerped quaternion) wraps beyond +-90 deg, which made the turn rate flip sign and the courier wobble while walking
@@ -249,7 +250,7 @@ export class CharacterView extends Group {
     if (!striking && Math.abs(delta) < .006) delta = 0;
     this.turn = Math.abs(delta) > .12 ? Math.sign(delta) : 0;
     const amount = Math.abs(delta) > 0 ? Math.min(1 - Math.exp(-(striking ? 60 : 24) * dt), (striking ? 40 : 6) * dt / Math.abs(delta)) : 1;
-    this.facing += delta * amount; this.quaternion.setFromAxisAngle(this.facingAxis, this.facing); this.facingTime = time;
+    this.facing += delta * amount; this.quaternion.setFromAxisAngle(this.facingAxis, this.facing + spin); this.facingTime = time;
   }
   private facing = 0;
   /** Held views borrow these nodes; CharacterView retains ownership of the rig. */
