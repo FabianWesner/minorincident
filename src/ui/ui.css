@@ -188,3 +188,11 @@ body:not(.debug-ui) [data-input-hint]{display:none!important}
 .menus>.menu-panel{position:relative;z-index:1}
 @media(orientation:portrait){.full-ui[data-ui-screen=title] .menus{align-items:start;padding-top:max(20px,4vh)}.full-ui[data-ui-screen=title] .menu-title{padding:18px 16px;gap:8px}.full-ui[data-ui-screen=title] .menu-title button{min-height:48px}}
 .lock-hint{margin:0;padding:8px 12px;border-radius:10px;background:#3a2a1f;border:2px solid #bc9c70;color:#ffe1a9;font-weight:700;text-align:center}
+
+/* Pause = a compact bar on top over the fully visible, undimmed scene (PO: pause is for screenshots). */
+body[data-ui-screen=pause] .menus{background:none;backdrop-filter:none;pointer-events:none;place-items:start center;padding-top:max(10px,env(safe-area-inset-top))}
+body[data-ui-screen=pause] .menu-pause{pointer-events:auto;width:auto;max-width:calc(100vw - 24px);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 10px;padding:8px 12px;border-radius:16px;background:#182333f0;border-width:2px;box-shadow:0 4px 0 #10182488}
+body[data-ui-screen=pause] .menu-pause h1{font-size:calc(16px * var(--text-scale));margin:0 6px 0 2px}
+body[data-ui-screen=pause] .menu-pause p{order:9;flex-basis:100%;margin:0;text-align:center;font-size:calc(13px * var(--text-scale));color:#e9d9bb}
+body[data-ui-screen=pause] .menu-pause button{min-height:44px;padding:0 14px}
+body.ui-hidden .menus,body.ui-hidden .hud,body.ui-hidden .mission-ui,body.ui-hidden [data-touch-controls],body.ui-hidden .hud-stick-zone,body.ui-hidden [data-testid=pause-button]{display:none!important}
