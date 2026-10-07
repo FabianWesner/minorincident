@@ -27,6 +27,17 @@ test('T-E09-controls @E09 keyboard WASD uses local driving axes', async ({ page 
   const car = await page.evaluate(() => window.__SS__!.getEntity(2)!); expect(car.vehicle!.speed).toBeGreaterThan(4); expect(car.transform.yaw).toBeLessThan(-.1);
   await page.keyboard.up('KeyW'); await page.keyboard.up('KeyA');
 });
+test('T-E09-arrow-drift @E09 arrows drive locally and RIGHT holds the rear handbrake', async ({ page }) => {
+  await boot(page); await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('drive-course'); a.pause(); await a.step(36); });
+  await page.keyboard.down('ArrowUp'); await page.keyboard.down('ArrowLeft'); await page.evaluate(() => window.__SS__!.step(90));
+  const car = await page.evaluate(() => window.__SS__!.getEntity(2)!);
+  expect(car.vehicle!.speed).toBeGreaterThan(4); expect(car.transform.yaw).toBeLessThan(-.1);
+  await page.keyboard.down('KeyK'); await page.evaluate(() => window.__SS__!.step(1));
+  expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.braking)).toBe(true);
+  await page.keyboard.up('KeyK'); await page.evaluate(() => window.__SS__!.step(1));
+  expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.braking)).toBe(false);
+  await page.keyboard.up('ArrowUp'); await page.keyboard.up('ArrowLeft');
+});
 
 test('T-E09-touch @E09 touch stick accelerates, LEFT holds boost, releasing stick brakes, ACTION exits', async ({ page, context }) => {
   await page.setViewportSize({ width: 390, height: 844 }); await boot(page);
@@ -39,6 +50,13 @@ test('T-E09-touch @E09 touch stick accelerates, LEFT holds boost, releasing stic
   await touch('touchStart', [{ id: 1, x: 80, y: 400 }]); await touch('touchMove', [{ id: 1, x: 140, y: 400 }]);
   await page.evaluate(async () => { await window.__SS__!.step(120); });
   expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.speed)).toBeGreaterThan(3);
+  const drift = await page.locator('[data-touch-action=right]').boundingBox(); expect(drift).not.toBeNull();
+  await touch('touchStart', [{ id: 1, x: 140, y: 400 }, { id: 4, x: drift!.x + drift!.width / 2, y: drift!.y + drift!.height / 2 }]);
+  await page.evaluate(() => window.__SS__!.step(1));
+  expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.braking)).toBe(true);
+  await touch('touchEnd', [{ id: 1, x: 140, y: 400 }]);
+  await page.evaluate(() => window.__SS__!.step(1));
+  expect(await page.evaluate(() => window.__SS__!.getEntity(2)!.vehicle!.braking)).toBe(false);
   const horn = await page.locator('[data-touch-action=left]').boundingBox(); expect(horn).not.toBeNull();
   await touch('touchStart', [{ id: 1, x: 140, y: 400 }, { id: 3, x: horn!.x + horn!.width / 2, y: horn!.y + horn!.height / 2 }]);
   await page.evaluate(async () => { await window.__SS__!.step(6); });
