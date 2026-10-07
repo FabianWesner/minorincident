@@ -9,7 +9,13 @@ for (const skin of [0, 1]) test(`courier skin=${skin} arrival remains idle besid
   for (const target of [{ x: -66.4, z: 5.5 }, { x: -67.5, z: 3.2 }]) {
     const point = await page.evaluate(p => window.__SS__!.input.project(p), target);
     await page.mouse.click(point.x, point.y);
-    await page.evaluate(async () => { const a = window.__SS__!; await a.step(300); await a.screenshotReady(); });
+    await page.evaluate(async () => {
+      const a = window.__SS__!; await a.step(1);
+      // Render the approach too: one 300-tick jump makes the animator see an
+      // averaged displacement after the sim has already stopped.
+      for (let i = 0; i < 300 && a.getState().render.moveMarker!.visible; i++) await a.step(1);
+      for (let i = 0; i < 30; i++) await a.step(1); // Complete the normal stop blend.
+    });
     // Sample every rendered fixed tick for 3 s, then fractional live render frames below.
     const frames = await page.evaluate(async () => {
       const api = window.__SS__!, frames = [];
