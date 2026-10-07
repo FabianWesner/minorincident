@@ -11,6 +11,7 @@ import { RiderContacts, useSkinnedCourier } from '../../../src/render/characters
 import { skinClips } from '../../../src/render/characters/clips';
 import type { SurvivorState } from '../../../src/data/survivor';
 import type { Materials } from '../../../src/render/Materials';
+import { meleeMoves } from '../../../src/data/meleeCombos';
 
 async function model(path: string) {
   const file = readFileSync(path);
@@ -34,7 +35,7 @@ test.each(['female', 'male'] as const)('skin rollout plants %s stance feet with 
     actor.position.x += speed / 60; state.velocity.x = speed; animator.update(state, tick); actor.updateMatrixWorld(true);
     const gait = (animator as unknown as { actions: Map<string, AnimationAction> }).actions.get(speed > 2.5 ? 'run' : 'walk')!;
     const phase = gait.time / gait.getClip().duration, foot = rig.footL.getWorldPosition(new Vector3());
-    const stance = speed > 2.5 ? .25 : .5 - .25 * ((2 - 1.9) / (3.3 - 1.9)) ** 2 * (3 - 2 * (2 - 1.9) / (3.3 - 1.9));
+    const stance = speed > 2.5 ? .22 : .5 - .28 * ((2 - 1.9) / (3.3 - 1.9)) ** 2 * (3 - 2 * (2 - 1.9) / (3.3 - 1.9));
     if (tick > 90 && previous && phase > previousPhase && phase < stance && previousPhase < stance) { samples++; maxSlide = Math.max(maxSlide, foot.distanceTo(previous)); }
     if (tick > 90) maxCadence = Math.max(maxCadence, ((phase - previousPhase + 1) % 1) * 60);
     previousPhase = phase; previous = foot;
@@ -130,4 +131,51 @@ test.each(['female', 'male'] as const)('skin rollout %s keeps knees, turn reach 
     if (tick > 360) expect(feet[0].distanceTo(feet[1])).toBeLessThan(.23);
   }
   expect(reach).toBeLessThan((rig.shinL.position.length() + rig.footL.position.length()) * 1.001); expect(separation, `largest separation at ${worstTick}`).toBeLessThan(.56);
+});
+
+test.each(['female', 'male'] as const)('courier %s has continuous swing feet and bounded pelvis through the speed range @E04', async variant => {
+  for (const speed of [.3, .8, 1.4, 2, 2.7, 3.3, 4.5]) {
+    const scene = await model(`public/assets/models/char.courier-${variant}.skin.glb`); alignSkeleton(scene);
+    const rig = resolveRig(scene), actor = new Group(); actor.add(scene);
+    const animator = new KeyframeAnimator(rig, skinClips), state = pose(); state.variant = variant;
+    let previous: Vector3[] | undefined, lastHip = 0, peakHipStep = 0, peakFootStep = 0;
+    for (let tick = 1; tick <= 240; tick++) {
+      actor.position.x += speed / 60; state.velocity.x = speed; animator.update(state, tick); actor.updateMatrixWorld(true);
+      const feet = [rig.footL, rig.footR].map(n => n.getWorldPosition(new Vector3()));
+      const hip = rig.hip.getWorldPosition(new Vector3()).y;
+      if (tick > 90 && previous) {
+        peakFootStep = Math.max(peakFootStep, ...feet.map((f, i) => f.distanceTo(previous![i])));
+        peakHipStep = Math.max(peakHipStep, Math.abs(hip - lastHip));
+        // Stance stays at anatomical hip width; the pilot swung into a wide lunge.
+        expect(Math.abs(feet[0].z - feet[1].z)).toBeLessThan(.23);
+      }
+      previous = feet; lastHip = hip;
+    }
+    // The old sign-changing swing limiter jumped 24 cm in one 60 Hz frame.
+    expect(peakFootStep, `${variant} ${speed} m/s`).toBeLessThan(.17);
+    expect(peakHipStep, `${variant} ${speed} m/s`).toBeLessThan(.023);
+  }
+});
+
+test.each(['female', 'male'] as const)('courier %s chains every melee beat on the sim contact tick and freezes exactly @E04', async variant => {
+  const scene = await model(`public/assets/models/char.courier-${variant}.skin.glb`); alignSkeleton(scene);
+  const rig = resolveRig(scene), animator = new KeyframeAnimator(rig, skinClips), state = pose(); state.variant = variant;
+  let tick = 1;
+  for (const actionId of ['weapon.fists', 'weapon.bat']) for (const [combo, move] of meleeMoves[actionId].entries()) {
+    const start = tick, end = start + move.windup + move.active + move.recovery;
+    state.animation = 'swing'; state.animationTick = start;
+    state.attack = { actionId, combo, started: start, activeAt: start + move.windup, recoveryAt: start + move.windup + move.active, endsAt: end };
+    for (; tick < end; tick++) {
+      animator.update(state, tick);
+      if (tick === state.attack.activeAt - 1) {
+        const action = (animator as unknown as { actions: Map<string, AnimationAction> }).actions.get(animator.clip)!;
+        expect(action.time / action.getClip().duration).toBeCloseTo(.2, 5);
+        expect(action.getEffectiveWeight()).toBeCloseTo(1, 5);
+        const frozen = Object.values(rig).map(n => [...n.position.toArray(), ...n.quaternion.toArray()]);
+        animator.update(state, tick);
+        expect(Object.values(rig).map(n => [...n.position.toArray(), ...n.quaternion.toArray()])).toEqual(frozen);
+      }
+    }
+  }
+  expect(animator.missingClips).toBe(0);
 });

@@ -17,6 +17,7 @@ export class GroundContacts {
   private readonly sole: number;
   private readonly hipRest: number;
   private heightOffset = 0;
+  private pelvisHeight: number | undefined;
   private heading: number | undefined;
   private turnBlend = 1;
   private stopTime = 0;
@@ -36,7 +37,7 @@ export class GroundContacts {
       return { ik: new LimbIK(upper, middle, end), a, b, rest, target: new Vector3(), planted: new Vector3(), stop: end.getWorldPosition(new Vector3()), start: end.getWorldPosition(new Vector3()), phase: -1, plantHeading: 0 };
     });
   }
-  reset(): void { for (const foot of this.feet) foot.phase = -1; this.heading = undefined; this.moving = false; }
+  reset(): void { for (const foot of this.feet) foot.phase = -1; this.heading = undefined; this.moving = false; this.pelvisHeight = undefined; }
   update(phase: number, stride: number, run: number, weight: number, speed: number, dt: number): void {
     const rig = this.rig;
     rig.root.updateWorldMatrix(true, true);
@@ -51,7 +52,7 @@ export class GroundContacts {
     if (stopped) { this.stopTime = 0; for (const foot of this.feet) foot.stop.copy(foot.target); }
     if (started) { this.startTime = 0; for (const foot of this.feet) foot.start.copy(foot.target); }
     this.moving = moving; this.stopTime += dt; this.startTime += dt;
-    const stance = .5 - .25 * run, lift = (.008 + .02 * run) * this.scale.y;
+    const stance = .5 - .28 * run, lift = (.008 + .02 * run) * this.scale.y;
     for (const [index, foot] of this.feet.entries()) {
       const p = (phase + index * .5) % 1;
       this.previousTarget.copy(foot.target);
@@ -91,24 +92,31 @@ export class GroundContacts {
         foot.target.lerp(foot.start, 1 - u * u * (3 - 2 * u));
       }
       // Release a stale plant before it can create a lunge, including a teleported root.
-      const maximum = (foot.a + foot.b) * this.scale.y * .55;
+      const maximum = (foot.a + foot.b) * this.scale.y * (moving && !turning && p > stance ? .8 : .55);
       const along = this.offset.copy(foot.target).sub(neutral).dot(this.forward);
       if (Math.abs(along) > maximum) {
         foot.target.addScaledVector(this.forward, Math.sign(along) * maximum - along);
-        foot.planted.copy(foot.target); foot.phase = -1;
+        foot.planted.copy(foot.target);
       }
     }
     // Highest pelvis that keeps both legs reachable. Aim for a soft 10° support
     // knee; unlike the pilot, swing lift never lowers the whole cycle's pelvis.
-    let height = Infinity;
-    const support = moving && !turning && this.feet.some(foot => foot.phase <= stance);
+    let height = Infinity, minimumHeight = -Infinity, maximumHeight = Infinity;
+    const support = moving && !turning && this.feet.some(foot => foot.phase >= 0 && foot.phase <= stance);
     for (const foot of this.feet) {
       if (support && foot.phase > stance) continue;
       foot.ik.upper.getWorldPosition(this.joint);
       const dx = foot.target.x - this.joint.x, dz = foot.target.z - this.joint.z;
-      const length = Math.sqrt(foot.a ** 2 + foot.b ** 2 + 2 * foot.a * foot.b * Math.cos(10 * Math.PI / 180)) * this.scale.y;
+      const compression = support ? Math.sin(Math.PI * Math.max(0, foot.phase) / stance) ** 2 : 0;
+      const supportKnee = (10 + 35 * run * compression) * Math.PI / 180;
+      const length = Math.sqrt(foot.a ** 2 + foot.b ** 2 + 2 * foot.a * foot.b * Math.cos(supportKnee)) * this.scale.y;
       const desired = foot.target.y + Math.sqrt(Math.max(.001, length * length - dx * dx - dz * dz));
-      height = Math.min(height, desired - (this.joint.y - rig.hip.getWorldPosition(this.delta).y));
+      const offset = this.joint.y - rig.hip.getWorldPosition(this.delta).y;
+      height = Math.min(height, desired - offset);
+      const minLength = Math.sqrt(foot.a ** 2 + foot.b ** 2 + 2 * foot.a * foot.b * Math.cos((moving ? 25 + 20 * run : 50) * Math.PI / 180)) * this.scale.y;
+      const maxLength = (foot.a + foot.b) * this.scale.y * .999;
+      minimumHeight = Math.max(minimumHeight, foot.target.y + Math.sqrt(Math.max(.001, minLength * minLength - dx * dx - dz * dz)) - offset);
+      maximumHeight = Math.min(maximumHeight, foot.target.y + Math.sqrt(Math.max(.001, maxLength * maxLength - dx * dx - dz * dz)) - offset);
     }
     if (moving && !turning && !support && stance < .49) {
       // During running flight neither ankle supports the pelvis. Lowering it
@@ -120,6 +128,10 @@ export class GroundContacts {
         + this.hipRest * this.scale.y + Math.sqrt(reach * reach - half * half)
         + Math.sin(Math.PI * u) ** 2 * .02 * run;
     }
+    const filtered = this.pelvisHeight === undefined ? height : this.origin.y + this.pelvisHeight
+      + (height - this.origin.y - this.pelvisHeight) * (1 - Math.exp(-dt / .035));
+    height = moving && !turning && !support ? filtered : Math.min(maximumHeight, Math.max(minimumHeight, filtered));
+    this.pelvisHeight = height - this.origin.y;
     rig.hip.getWorldPosition(this.joint);
     const parentScale = rig.hip.parent!.getWorldScale(this.delta).y;
     this.heightOffset = (height - this.joint.y) / parentScale * weight;
