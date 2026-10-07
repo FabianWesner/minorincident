@@ -2,6 +2,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
 import { l1v2 } from '../../src/data/l1v2';
 import { l1AccidentEvents } from '../../src/sim/outbreak/types';
+import { storyLines } from '../../src/sim/missions/L1Story';
 import { validateMission } from '../../src/sim/missions/schema';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadL1, runDuel, runL1, type L1Report } from '../../tools/sim-runner/l1Bots';
@@ -86,7 +87,10 @@ describe('L1 v2 mission', () => {
       const bitten = new Set<number>(), born = new Set<number>();
       w.events.on('outbreak.bite', e => { if (e.type === 'outbreak.bite' && e.turns) bitten.add(e.targetId); });
       w.events.on('outbreak.infection', e => { if (e.type === 'outbreak.infection' && e.phase === 'infected') born.add(e.entityId); });
-      runs.push(runL1(w, mission, 'idle', { seed, maxSeconds: 400 }));
+      let exitTick = 0;
+      runs.push(runL1(w, mission, 'idle', { seed, maxSeconds: 400,
+        onExit: () => { exitTick = w.tick; }, stopWhen: () => exitTick > 0 && w.tick > exitTick + 240 * 60,
+      }));
       for (const id of born) if (!mission.state.l1!.exitIds.includes(id)) expect(bitten.has(id), `seed ${seed}, infected ${id}`).toBe(true);
       expect(w.npcs!.civilians.outbreak!.stats.hordeSpawned).toBe(0);
       expect(mission.state.l1!.routeSpawns).toBe(0);
@@ -127,7 +131,7 @@ describe('L1 v2 mission', () => {
       w.events.on('outbreak.bite', () => { bites++; });
       runL1(w, mission, 'idle', { seed, stopWhen: m => m.state.l1!.exitIds.length > 0 });
       w.entities.get(mission.state.l1!.exitIds[victim])!.health.current = 0;
-      for (let i = 0; i < 60 * 60; i++) w.update();
+      for (let i = 0; i < 60 * 60 && !bites; i++) w.update();
       runs.push({ seed, victim, bites });
       w.dispose(); world = undefined;
     }
@@ -253,6 +257,7 @@ describe('L1 v2 mission', () => {
     expect(run.outcome).toBe('complete');
     expect(mission.state.gates['fire-shutter']).toBe(false);
     expect(mission.def.cinematics.twist.caption).toBe('Delivery complete. Outbreak: not contained.');
+    expect(storyLines['firestation.caption']).toBe(mission.def.cinematics.twist.caption);
     expect(mission.state.result).toMatchObject({ delivered: true, turned: expect.any(Number), escaped: expect.any(Number), infected: expect.any(Number) });
   }, HEAVY);
 
