@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
 import { l1v2 } from '../../src/data/l1v2';
 import { l1AccidentEvents } from '../../src/sim/outbreak/types';
@@ -6,20 +6,16 @@ import { validateMission } from '../../src/sim/missions/schema';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadL1, runDuel, runL1, type L1Report } from '../../tools/sim-runner/l1Bots';
 
-/** Lane E: L1 v2 mission graph, story beats, bots, checkpoints (specs/epic-19, section 9). */
+/** L1 v2 mission graph, story beats, full seed batteries and checkpoints (epic-19 section 9). */
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
 const seeds = Array.from({ length: l1v2.bots.seeds }, (_, i) => i + 1);
 const median = (values: number[]) => { const v = [...values].sort((a, b) => a - b); return v[Math.floor(v.length / 2)]; };
-/** The skeleton layout has no placements: bot travel times there are not representative (section 9 AC02/AC03 windows). */
-const realMap = (JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as { placements: unknown[] }).placements.length > 0;
-/** Systemic spread and robust start need lane C (perception) and lane D (bite -> turn chain, src/sim/outbreak/*) merged. */
-const systemic = existsSync('src/sim/ai/Perception.ts') && readdirSync('src/sim/outbreak').some(f => f !== 'types.ts');
 const HEAVY = 3_600_000;
-/** The spread tests run 400 s of sim per seed (pedestrian sight costs ~4 ms/tick): 8 seeds by default, L1_SEEDS=20 for the full battery. */
-const spreadSeeds = seeds.slice(0, Number(process.env.L1_SEEDS ?? 8));
-/** An invulnerable idler at the door would hold every chaser: after the exit he is moved to the garage so pedestrians are the targets. */
-function leaveForecourt(w: SimWorld, mission: { def: { anchors: Record<string, { x: number; z: number }> } }) { const g = mission.def.anchors['garage-door'], me = w.entities.get(1)!.transform; Object.assign(me, { x: g.x, z: g.z }); w.physics.playerBody!.setTranslation(me, true); w.spatial.set(1, g.x, g.z); }
+function record(name: string, value: unknown) {
+  mkdirSync('test-results/epics/E19', { recursive: true });
+  writeFileSync(`test-results/epics/E19/${name}.json`, JSON.stringify(value, null, 2) + '\n');
+}
 async function load(seed = 1) { const l = await loadL1(seed); world = l.world; return l; }
 const maxSeparatedHeadings = (headings: number[], minDeg: number) => {
   let best = 0;
@@ -48,20 +44,22 @@ describe('L1 v2 mission', () => {
   test('T-E19-02 @E19 @E19-AC02 complete bot finishes 20/20 seeds, median 4:00-6:00', async () => {
     const runs: L1Report[] = [];
     for (const seed of seeds) { const { world: w, mission } = await loadL1(seed); runs.push(runL1(w, mission, 'complete', { seed })); w.dispose(); }
+    record('complete-bots', runs);
     expect(runs.filter(r => r.outcome === 'complete')).toHaveLength(seeds.length);
     const t = median(runs.map(r => r.simSeconds));
     expect(t).toBeLessThanOrEqual(l1v2.bots.completeMedianS[1]);
-    if (realMap) expect(t).toBeGreaterThanOrEqual(l1v2.bots.completeMedianS[0]);
+    expect(t).toBeGreaterThanOrEqual(l1v2.bots.completeMedianS[0]);
   }, HEAVY);
 
   test('T-E19-03 @E19 @E19-AC03 newbie bot finishes >= 18/20, median 4:30-7:00, deaths <= 1', async () => {
     const runs: L1Report[] = [];
     for (const seed of seeds) { const { world: w, mission } = await loadL1(seed); runs.push(runL1(w, mission, 'newbie', { seed })); w.dispose(); }
+    record('newbie-bots', runs);
     expect(runs.filter(r => r.outcome === 'complete').length).toBeGreaterThanOrEqual(l1v2.bots.newbieMinSeeds);
     expect(median(runs.map(r => r.deaths))).toBeLessThanOrEqual(l1v2.bots.newbieMaxMedianDeaths);
     const t = median(runs.filter(r => r.outcome === 'complete').map(r => r.simSeconds));
     expect(t).toBeLessThanOrEqual(l1v2.bots.newbieMedianS[1]);
-    if (realMap) expect(t).toBeGreaterThanOrEqual(l1v2.bots.newbieMedianS[0]);
+    expect(t).toBeGreaterThanOrEqual(l1v2.bots.newbieMedianS[0]);
   }, HEAVY);
 
   test('T-E19-10 @E19 the weapon objective and its garage-door marker are live right after the exits, zombies keep acting', async () => {
@@ -81,15 +79,25 @@ describe('L1 v2 mission', () => {
     expect(run.outcome).toBe('complete'); expect(attacks).toBe(0);
   }, HEAVY);
 
-  test.runIf(systemic)('T-E19-06 @E19 @E19-AC06 idle bot: systemic spread 5 -> >= 15 at +120 s, >= 25 at +240 s', async () => {
+  test('T-E19-06 @E19 @E19-AC06 idle bot: systemic spread 5 -> >= 15 at +120 s, >= 25 at +240 s', async () => {
     const runs: L1Report[] = [];
-    for (const seed of spreadSeeds) { const { world: w, mission } = await loadL1(seed); w.combat!.damage.god = true; runs.push(runL1(w, mission, 'idle', { seed, maxSeconds: 400, onExit: leaveForecourt, stopWhen: m => !!m.state.l1!.exitIds.length && w.tick / 60 > 400 })); w.dispose(); }
+    for (const seed of seeds) {
+      const { world: w, mission } = await loadL1(seed); world = w; w.combat!.damage.god = true;
+      const bitten = new Set<number>(), born = new Set<number>();
+      w.events.on('outbreak.bite', e => { if (e.type === 'outbreak.bite' && e.turns) bitten.add(e.targetId); });
+      w.events.on('outbreak.infection', e => { if (e.type === 'outbreak.infection' && e.phase === 'infected') born.add(e.entityId); });
+      runs.push(runL1(w, mission, 'idle', { seed, maxSeconds: 400 }));
+      for (const id of born) if (!mission.state.l1!.exitIds.includes(id)) expect(bitten.has(id), `seed ${seed}, infected ${id}`).toBe(true);
+      expect(w.npcs!.civilians.outbreak!.stats.hordeSpawned).toBe(0);
+      expect(mission.state.l1!.routeSpawns).toBe(0);
+      w.dispose(); world = undefined;
+    }
+    record('forecourt-spread', runs);
     const at = (s: number) => runs.map(r => r.infectedAfterExit[s] ?? 0);
     expect(median(at(0))).toBe(l1v2.accident.infectedCount);
     expect(median(at(120))).toBeGreaterThanOrEqual(l1v2.bots.idleSpread.at120s);
     expect(median(at(240))).toBeGreaterThanOrEqual(l1v2.bots.idleSpread.at240s);
-    // Per-seed floor (18/20 reach >= 12): depends on pedestrian placement near the facility, so it is judged on the real map only.
-    if (realMap) expect(at(120).filter(n => n >= l1v2.bots.idleSpread.floorAt120s).length).toBeGreaterThanOrEqual(Math.round(l1v2.bots.idleSpread.floorSeeds * spreadSeeds.length / seeds.length));
+    expect(at(120).filter(n => n >= l1v2.bots.idleSpread.floorAt120s).length).toBeGreaterThanOrEqual(l1v2.bots.idleSpread.floorSeeds);
   }, HEAVY);
 
   test('T-E19-07 @E19 @E19-AC07 accident releases exactly 5 infected, >= 3 headings, technician entity', async () => {
@@ -112,17 +120,19 @@ describe('L1 v2 mission', () => {
     }
   }, HEAVY);
 
-  test.runIf(systemic)('T-E19-07b @E19 @E19-AC07 robust start: killing any one exit infected within 5 s still leads to a bite within 60 s', async () => {
-    for (const seed of spreadSeeds) {
+  test('T-E19-07b @E19 @E19-AC07 robust start: each of the five exit victims leaves a bite within 60 s on 20 seeds', async () => {
+    const runs: { seed: number; victim: number; bites: number }[] = [];
+    for (const seed of seeds) for (let victim = 0; victim < 5; victim++) {
       const { world: w, mission } = await loadL1(seed); world = w; w.combat!.damage.god = true; let bites = 0;
-      w.events.on('outbreak.bite', () => { bites++; }); w.events.on('civilian.turned', () => { bites++; });
+      w.events.on('outbreak.bite', () => { bites++; });
       runL1(w, mission, 'idle', { seed, stopWhen: m => m.state.l1!.exitIds.length > 0 });
-      w.entities.get(mission.state.l1!.exitIds[seed % 5])!.health.current = 0;
-      leaveForecourt(w, mission);
+      w.entities.get(mission.state.l1!.exitIds[victim])!.health.current = 0;
       for (let i = 0; i < 60 * 60; i++) w.update();
-      expect(bites, `seed ${seed}`).toBeGreaterThan(0);
+      runs.push({ seed, victim, bites });
       w.dispose(); world = undefined;
     }
+    record('robust-start', runs);
+    for (const r of runs) expect(r.bites, `seed ${r.seed}, exit victim ${r.victim}`).toBeGreaterThan(0);
   }, HEAVY);
 
   test('T-E19-15 @E19 @E19-AC15 bat only via the garage interaction, empty starting loadout', async () => {

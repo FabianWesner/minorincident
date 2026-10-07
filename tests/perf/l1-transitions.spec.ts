@@ -15,7 +15,7 @@ interface Recording { frames: Frame[]; stopped: boolean; previous: number }
 declare global { interface Window { hitchRecording?: Recording; hitchGlCalls?: GlCall[] } }
 for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
   test.use(mode === 'mobile' ? { userAgent: devices['Pixel 7'].userAgent, isMobile: true, hasTouch: true, viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } : {});
-  test(`@E19 @perf M1-22 L1 transition frame budget ${mode}`, async ({ page, context }) => {
+  test(`@E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget ${mode}`, async ({ page, context }) => {
     test.setTimeout(240_000); mkdirSync(output, { recursive: true });
     await page.addInitScript(() => {
       window.hitchGlCalls = [];
