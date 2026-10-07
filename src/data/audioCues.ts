@@ -81,7 +81,7 @@ for (const variant of ['male', 'female'])
 for (const id of ['warning', 'happy', 'hurt', 'pant'])
     cue(`corgi.${id}`, 'barks', 'vocal', 0.4, 450, { caption: id === 'warning' ? 'Corgi warning bark' : undefined });
 for (const [id, text] of [['radio', 'Emergency broadcast: proceed to the safe zone.'], ['emergency', 'This is an emergency broadcast.'], ['safe-zone', 'Safe zone ahead. Keep moving.']])
-    cue(`dialogue.${id}`, 'dialogue', 'vocal', 3, 185, { gain: 1, antiSpam: 0, rateSpread: 0, caption: text });
+    cue(`dialogue.${id}`, 'dialogue', 'vocal', 3, 185, { gain: 0.7, antiSpam: 0, rateSpread: 0, caption: text });
 for (const id of ['click', 'switch', 'pickup', 'respawn', 'death', 'tick'])
     cue(`ui.${id}`, 'ui', 'tone', 0.1, 700, { gain: id === 'tick' ? 0 : 0.1 });
 cue('civilian.hey', 'barks', 'vocal', .75, 200, { gain: .5, antiSpam: .3, caption: 'Hey!' });

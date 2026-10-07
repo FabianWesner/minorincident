@@ -4,11 +4,11 @@ import { test, expect } from '../fixtures';
 import { menuUrl } from '../ui-helpers';
 import { pcm, rmsDb, loudness } from '../../../tools/audio/measure';
 
-const previewRoot = process.env.AUDIO_PREVIEW_DIR ?? '/private/tmp/claude-501/-Users-fabianwesner-Workspace-suburban-survivors/88be267a-0002-4cac-aeec-a7e79e9db694/scratchpad/audio-preview';
+const previewRoot = process.env.AUDIO_PREVIEW_DIR ?? 'test-results/audio-preview';
 interface Capture { start(): void; stop(): { wav: string; time: number; duration: number }; }
 declare global { interface Window { __audioCapture: Capture; } }
 
-test('@E16 recorded diner incident and store fight: live PCM tap, streaming, mix and stinger timing', async ({ page }) => {
+test('@E16 recorded L1 accident incident and bat fight: live PCM tap, streaming, mix and stinger timing', async ({ page }) => {
     test.setTimeout(180000);
     mkdirSync(previewRoot, { recursive: true });
     await page.addInitScript(() => {
@@ -93,20 +93,24 @@ test('@E16 recorded diner incident and store fight: live PCM tap, streaming, mix
     await page.evaluate(() => window.__audioCapture.start());
     await page.waitForTimeout(8000);
     await stop('01-morning');
-    // Encounter setup only: the authored diner volume, attack/turn chain and audio are real.
-    await page.evaluate(() => { const a = window.__SS__!; a.pause(); a.teleport('player', { x: 42, z: -6.5 }); a.audio.clearLog(); window.__audioCapture.start(); a.resume(); });
-    const diner = await page.evaluate(() => window.__SS__!.input.project({ x: 42, z: -6.5 }));
-    await page.mouse.click(diner.x, diner.y);
+    // L1 v2 has no diner: the incident is the accident at the Medical Annex. Start from the authored accident checkpoint
+    // (exit of the first infected); the escape objective, recorded stinger, screams and chaos layer are all real.
+    await page.evaluate(async () => { const a = window.__SS__!; a.pause(); await a.loadLevel('L1', { checkpoint: 'accident' }); a.cheats.god(true); await a.audio.unlock(); a.audio.clearLog(); window.__audioCapture.start(); a.resume(); });
     await page.waitForTimeout(24000);
-    const incident = await stop('02-diner-incident');
-    expect(incident.audio.cues.some(c => c.cue === 'stinger.elite')).toBe(true);
+    const incident = await stop('02-accident-incident');
+    // The checkpoint restores the escape objective, whose recorded objective stinger marks the start of the incident.
+    expect(incident.audio.cues.some(c => c.cue === 'l1.blast' || c.cue === 'l1.scream')).toBe(true);
     expect(incident.audio.cues.some(c => c.cue === 'civilian.scream' || c.cue === 'civilian.transform')).toBe(true);
-    const sting = incident.audio.cues.find(c => c.cue === 'stinger.elite')!;
+    expect(incident.audio.music.state).toBe('tension');
+    const sting = incident.audio.cues.find(c => c.cue === 'stinger.objective' || c.cue === 'stinger.elite')!;
+    expect(sting).toBeDefined();
     expect(sting.time - incident.capture.time).toBeLessThan(2);
-    // Store checkpoint avoids repeating the walk; actual display interaction equips the bat.
-    await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L1', { checkpoint: 'melee' }); a.teleport('player', { x: 70, z: -7 }); a.cheats.god(true); a.resume(); });
-    await page.getByTestId('choose-bat').click();
-    await page.keyboard.press('f');
+    // The bat checkpoint (weapon objective done, bat granted in L1 v2) avoids repeating the walk; LMB swings the bat.
+    await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L1', { checkpoint: 'bat' }); a.setLoadout(['weapon.bat'], ['weapon.fists']); a.cheats.god(true);
+        // The v2 crowd is not guaranteed to be within reach of the checkpoint: put a pack of chasers beside the player.
+        const p = a.getState().player!.transform;
+        for (let i = 0; i < 5; i++) a.spawn('infected.runner', { x: p.x + 2 + i * 0.4, z: p.z + (i % 2 ? 1 : -1) }, { state: 'chase' });
+        a.resume(); });
     await page.waitForTimeout(500);
     await page.evaluate(() => { window.__SS__!.audio.clearLog(); window.__audioCapture.start(); });
     const deadline = Date.now() + 28000;

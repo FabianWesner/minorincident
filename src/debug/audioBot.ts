@@ -43,9 +43,12 @@ export async function runAudioL1Bot(game: Game): Promise<{
     for (const d of districts.districts)
         for (const objective of d.gameplay.objectives) {
             const local = resolvePosition(objective.position, d.layout), target: Point = [local[0] + d.origin[0], local[1] + d.origin[1]], player = world.entities.get(1)!.transform;
-            for (const [x, z] of route(world.districts!.nav, [player.x, player.z], target)) {
+            const path = route(world.districts!.nav, [player.x, player.z], target);
+            for (const [index, [x, z]] of path.entries()) {
+                // A recipient or prop body can stand on the objective itself: arriving beside it is enough.
+                const arrive = index === path.length - 1 ? 1 : 0.22;
                 let remaining = 100;
-                while (Math.hypot(x - player.x, z - player.z) > 0.22 && remaining--) {
+                while (Math.hypot(x - player.x, z - player.z) > arrive && remaining--) {
                     const dx = x - player.x, dz = z - player.z, len = Math.hypot(dx, dz), speed = Math.min(1, len * 2);
                     game.input.inject({ move: { x: dx / len * speed, z: dz / len * speed } });
                     const beforeX = player.x, beforeZ = player.z;
@@ -54,7 +57,7 @@ export async function runAudioL1Bot(game: Game): Promise<{
                     distance += Math.hypot(player.x - beforeX, player.z - beforeZ);
                 }
                 if (remaining <= 0)
-                    throw new Error(`Audio bot blocked near ${x},${z}`);
+                    throw new Error(`Audio bot blocked near ${x},${z} at ${player.x.toFixed(2)},${player.z.toFixed(2)}`);
             }
             visited.push(`${d.id}/${objective.id}`);
         }
