@@ -11,6 +11,18 @@ async function start(page: import('@playwright/test').Page, scenario = 'horde-ar
     await page.mouse.click(200, 250);
     await page.evaluate(async (scenario) => { const a = window.__SS__!; await a.loadScenario(scenario); a.pause(); await a.audio.unlock(); a.cheats.god(true); a.audio.clearLog(); }, scenario);
 }
+test('@E16 L1 completion plays a single recorded outro without the second completion overlay', async ({ page }) => {
+    await start(page, 'survivor');
+    const cues = await page.evaluate(() => {
+        const a = window.__SS__!;
+        a.audio.clearLog();
+        a.audio.emit({ type: 'level.completed', tick: 0, id: 'L1', result: { time: 1, kills: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] } });
+        return a.audio.snapshot().cues.map(c => c.cue);
+    });
+    expect(cues.filter(c => c === 'l1.outro.sting')).toHaveLength(1);
+    expect(cues).not.toContain('stinger.complete');
+    expect(cues).not.toContain('stinger.dawn');
+});
 test('T-E16-01b @E16 @E16-AC01 every production cue decodes in both native Opus and AAC', async ({ page }) => {
     await boot(page);
     const formats = await page.evaluate(async () => ({ opus: await window.__SS__!.audio.decode('webm'), aac: await window.__SS__!.audio.decode('m4a') }));
