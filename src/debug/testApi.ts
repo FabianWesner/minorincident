@@ -100,6 +100,8 @@ export interface SSTestApi {
   debug: { simulateFrameCost(ms: number): void; renderQuality(tier: 'high' | 'low'): void };
   perf(): ReturnType<Game['perf']>;
   screenshotReady(): Promise<void>;
+  /** E25 light field: the E27 transient hook and its counters (null outside lit scenes). */
+  lights: { addTransient(position: { x: number; z: number }, color: string, intensity: number, radius: number, ttl: number): void; state(): ReturnType<import('../render/LightField').LightField['snapshot']> | null };
 }
 declare global { interface Window { __SS__?: SSTestApi } }
 
@@ -118,6 +120,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     campaign: {state:()=>structuredClone(game.campaign),menu:()=>game.campaignUI.showMenu(game.saves.load()),save:()=>game.saveCampaign(),restore:save=>{if(!validateSave(save))throw new Error('Invalid campaign');game.campaign=structuredClone(save);game.applyCampaign();}},
     pause: () => game.clock.pause(), resume: () => game.clock.resume(),
     step: (ticks) => game.step(ticks), setTimeScale: (scale) => game.clock.setTimeScale(scale), tick: () => game.world.tick,
+    lights: { addTransient: (position, color, intensity, radius, ttl) => { game.view.lightField?.addTransient(position, color, intensity, radius, ttl); }, state: () => game.view.lightField?.snapshot() ?? null },
     loadLevel: (id, opts) => {
       return game.loadLevel(id, opts);
     },
