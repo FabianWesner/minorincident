@@ -66,11 +66,13 @@ export class Explosions {
     // Copy once: hit events chain into hazards that query neighbours themselves.
     for (const id of [...world.spatial.query(this.area, this.nearby)]) {
       const target = world.entities.get(id);
-      if (!target || id === sourceId || target.health.current <= 0 || target.hidden || target.attachedTo !== undefined) continue;
+      if (!target || id === sourceId || target.barricade || target.health.current <= 0 || target.hidden || target.attachedTo !== undefined) continue;
       const dx = target.transform.x - at.x, dz = target.transform.z - at.z, distance = Math.hypot(dx, dz);
       if (distance > r || (query && !this.visible(query, at, target.transform, target.id))) continue;
       const amount = blastDamage(d, distance, r), scale = d.damage ? amount / d.damage : 0;
       if (target.vehicle) { world.vehicles?.damage(id, apply ? amount * d.vehicle : 0); continue; }
+      // Unbreakable movable props (cones, carts, benches) are launched by the impulse instead of vanishing at 0 HP.
+      if (target.kind === 'physics-prop' && !world.props?.items.find(i => i.entityId === id)?.metadata.breakable) continue;
       if (!apply || !damage || amount <= 0) continue;
       damage.apply({ attackId: 0, actionId: d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: id, origin: at, direction: { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }, base: amount, multiplier: 1, type: 'explosive', radius: r, knockback: d.knockback * scale, stagger: d.stagger });
     }
@@ -83,12 +85,13 @@ export class Explosions {
       if (amount > 0) damage.apply({ attackId: 0, actionId: d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: e.id, origin: at, direction: { x: 0, z: 0 }, base: amount, multiplier: 1, type: 'explosive', knockback: 0, stagger: 0 });
     }
   }
-  /** Full cover between blast and target shields it; cover the blast starts inside (a stack of tanks) does not. */
+  /** Full cover (static walls, braced barricades) between blast and target shields it; loose props and other explosives
+   * do not (a stack of tanks still chains), nor does cover the blast starts inside. */
   private visible(query: import('./HitQuery').HitQuery, at: { x: number; z: number }, to: { x: number; z: number }, targetId: number): boolean {
     const dx = to.x - at.x, dz = to.z - at.z, distance = Math.hypot(dx, dz);
     if (distance < 1e-6) return true;
     for (const walls of [query.walls, query.dynamicWalls]) for (const w of walls) {
-      if (w.entityId === targetId || w.y - w.halfY > .7 || w.y + w.halfY < .7 || (Math.abs(at.x - w.x) <= w.halfX && Math.abs(at.z - w.z) <= w.halfZ)) continue;
+      if (w.entityId === targetId || (w.entityId !== undefined && !this.world.entities.get(w.entityId)?.barricade) || w.y - w.halfY > .7 || w.y + w.halfY < .7 || (Math.abs(at.x - w.x) <= w.halfX && Math.abs(at.z - w.z) <= w.halfZ)) continue;
       let near = 0, far = distance;
       for (const [o, d, c, half] of [[at.x, dx / distance, w.x, w.halfX], [at.z, dz / distance, w.z, w.halfZ]]) {
         if (Math.abs(d) < 1e-12) { if (o < c - half || o > c + half) { far = -1; break; } continue; }

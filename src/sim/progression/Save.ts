@@ -20,7 +20,7 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   for(const [key,value]of Object.entries(save.settings)){
     if(key==='textSize'){if(![1,1.25,1.5].includes(value as number))return false;continue;}
     const enums:Record<string,string[]>={gore:['Off','Reduced','Full'],quality:['high','low','auto'],aimAssist:['Off','Low','Default','High']};
-    if(Object.hasOwn(enums,key)?!enums[key].includes(String(value)):!['cameraShake','flashReduction','muted','captions','noiseRings','mono','haptics','tinnitus','bloom','cheapDof','vfx','colorblind'].includes(key)||typeof value!=='boolean')return false;
+    if(Object.hasOwn(enums,key)?!enums[key].includes(String(value)):!['cameraShake','flashReduction','muted','captions','noiseRings','mono','haptics','tinnitus','bloom','cheapDof','vfx','colorblind','slowMotion'].includes(key)||typeof value!=='boolean')return false;
   }
   if(Object.entries(save.usage).some(([id,n])=>!Object.hasOwn(catalog,id)||!Number.isSafeInteger(n)||n<0))return false;
   const prefix={...save,upgrades:[] as string[]};
