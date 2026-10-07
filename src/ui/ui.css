@@ -196,3 +196,14 @@ body[data-ui-screen=pause] .menu-pause h1{font-size:calc(16px * var(--text-scale
 body[data-ui-screen=pause] .menu-pause p{order:9;flex-basis:100%;margin:0;text-align:center;font-size:calc(13px * var(--text-scale));color:#e9d9bb}
 body[data-ui-screen=pause] .menu-pause button{min-height:44px;padding:0 14px}
 body.ui-hidden .menus,body.ui-hidden .hud,body.ui-hidden .mission-ui,body.ui-hidden [data-touch-controls],body.ui-hidden .hud-stick-zone,body.ui-hidden [data-testid=pause-button]{display:none!important}
+/* The pause bar sits centred between the vitals (left, ~320 px) and the minimap (right, ~190 px); narrow screens and phones drop it below the top HUD row. */
+body[data-ui-screen=pause] .menu-pause{max-width:min(640px,calc(100vw - 760px))}
+@media(max-width:1100px),(pointer:coarse){
+  body[data-ui-screen=pause] .menus{padding-top:max(150px,calc(env(safe-area-inset-top) + 140px))}
+  body[data-ui-screen=pause] .menu-pause{max-width:calc(100vw - 24px)}
+}
+@media(max-height:500px) and (orientation:landscape){
+  body[data-ui-screen=pause] .menus{padding-top:max(10px,env(safe-area-inset-top))}
+  body[data-ui-screen=pause] .menus{justify-items:start}
+  body[data-ui-screen=pause] .menu-pause{margin-left:308px;max-width:calc(100vw - 340px - 120px)}
+}

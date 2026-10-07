@@ -6,7 +6,14 @@ import math, sys, json
 from pathlib import Path
 import bmesh, bpy
 from mathutils import Matrix, Vector
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+from sslib.lod import hard_normals, refresh_normals
+
 HERE = Path(__file__).resolve().parent
+if '--normals-only' in sys.argv:
+    refresh_normals(HERE, Path(sys.argv[sys.argv.index('--lod-input-directory') + 1]))
+    sys.exit(0)
+
 ARGS = sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
 def arg(name, default=None):
     return ARGS[ARGS.index(name)+1] if name in ARGS else default
@@ -460,6 +467,7 @@ if arg('--glb'):
             o.data=me.copy();bpy.context.view_layer.objects.active=o
             d=o.modifiers.new('LOD','DECIMATE');d.ratio=ratio;bpy.ops.object.modifier_apply(modifier=d.name)
             clean_mesh(o)
+        for obj in meshes: hard_normals(obj)
         export_glb(HERE/f'model.lod{level}.glb')
         for o,me in original.items():o.data=me
 
