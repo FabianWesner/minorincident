@@ -21,7 +21,7 @@ const sides = await Promise.all(labels.map(async label => {
   if (data.skin) alignSkeleton(model);
   const rig = resolveRig(model), actor = new Group(); actor.add(model); scene.add(actor);
   const bike = (await loader.loadAsync('/assets/models/veh.courier-bike.glb')).scene; bike.scale.setScalar(.6); scene.add(bike);
-  const bat = (await loader.loadAsync('/assets/models/wpn.baseball-bat.glb')).scene; bat.scale.setScalar(.6); rig.weaponSocketR.add(bat); bat.visible = scenario === 'bat';
+  const bat = (await loader.loadAsync('/assets/models/wpn.baseball-bat.glb')).scene; bat.updateMatrixWorld(true); bat.position.sub(bat.getObjectByName('grip')!.getWorldPosition(new Vector3())); rig.weaponSocketR.add(bat); bat.visible = scenario === 'bat';
   for (let row = 0; row < 2; row++) { const tag = document.createElement('div'); tag.className = 'label'; tag.style.left = `${labels.indexOf(label) * 50}%`; tag.style.top = `${row * 50}%`; document.querySelector('#labels')!.append(tag); }
   return { data, actor, rig, bike, scene };
 }));
