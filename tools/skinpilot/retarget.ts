@@ -52,9 +52,14 @@ const specs: Spec[] = [
   { name: 'run', source: 'Run_Female', loop: true, exaggerate: 1.2, bob: 1.1 },
   { name: 'carry', source: 'Walk_Carry', loop: true, exaggerate: 1 },
   { name: 'hurt', source: 'Hit_Chest', exaggerate: 1.4 },
+  // Calm seated upper body; runtime contacts solve the saddle, grips and pedals.
+  { name: 'ride', source: 'Idle_A', loop: true },
   // Strikes: contact (max hand reach) is re-timed onto 20 % of the clip, the KeyframeAnimator contract.
   { name: 'unarmed-jab', source: 'Punch_Jab', exaggerate: 1.15, strike: 'l' },
   { name: 'unarmed-cross', source: 'Punch_Cross', exaggerate: 1.15, strike: 'r' },
+  { name: 'bat-1', source: 'Sword_Regular_A', exaggerate: 1.05, strike: 'r' },
+  { name: 'bat-2', source: 'Sword_Regular_B', exaggerate: 1.05, strike: 'r' },
+  { name: 'bat-3', source: 'Sword_Regular_C', exaggerate: 1.1, strike: 'r' },
 ];
 
 const scaleQ = (q: Quaternion, k: number) => { if (k === 1) return q; const w = Math.min(1, Math.max(-1, q.w)), angle = 2 * Math.acos(Math.abs(w)), s = Math.sqrt(1 - w * w); if (s < 1e-6) return q; const axis = new Vector3(q.x, q.y, q.z).divideScalar(s).multiplyScalar(Math.sign(w) || 1); return q.setFromAxisAngle(axis, angle * k); };
@@ -104,7 +109,7 @@ for (const spec of specs) {
       sample(Math.min(clip.duration, i / fps));
       for (const side of ['l', 'r'] as const) { const d = bone(`hand_${side}`).getWorldPosition(new Vector3()).sub(bone('pelvis').getWorldPosition(new Vector3())).applyQuaternion(R).x; reach[side] = Math.max(reach[side], d); if (side === spec.strike && d > best) { best = d; contact = i; } }
     }
-    if (reach[spec.strike] < reach[spec.strike === 'l' ? 'r' : 'l']) throw new Error(`${spec.source}: striking hand is not ${spec.strike}`);
+    if (spec.name.startsWith('unarmed-') && reach[spec.strike] < reach[spec.strike === 'l' ? 'r' : 'l']) throw new Error(`${spec.source}: striking hand is not ${spec.strike}`);
   }
   const pelvis0 = sourceRest.get('pelvis')!.p;
   const tracks = new Map<string, number[]>(), times: number[] = [];
@@ -117,6 +122,7 @@ for (const spec of specs) {
     world.clear();
     const delta = (src: string) => R.clone().multiply(bone(src).getWorldQuaternion(new Quaternion()).multiply(sourceRest.get(src)!.q.clone().invert())).multiply(Ri);
     for (const [node, src] of Object.entries(deltaMap)) world.set(node, delta(src));
+    if (spec.name === 'ride') { world.get('hip')!.identity(); world.get('torso')!.identity(); }
     for (const [node, [a, b]] of Object.entries(dirMap)) {
       const dir = bone(b).getWorldPosition(new Vector3()).sub(bone(a).getWorldPosition(new Vector3())).applyQuaternion(R).normalize();
       // Chibi torso is wide: keep the upper arm at least as far out as our rest abduction.
@@ -145,7 +151,7 @@ for (const spec of specs) {
   const first = hipPositions[0], last = hipPositions[hipPositions.length - 1];
   const mean = hipPositions.reduce((a, p, i) => a.add(p.clone().sub(last.clone().sub(first).multiplyScalar(i / (hipPositions.length - 1)))), new Vector3()).divideScalar(hipPositions.length);
   const hip: number[] = [];
-  hipPositions.forEach((p, i) => { const k = i / (hipPositions.length - 1), q = p.clone(); if (spec.loop) q.sub(last.clone().sub(first).multiplyScalar(k)); if (spec.loop) q.sub(mean); else q.sub(first); q.y *= spec.bob ?? 1; hip.push(+q.x.toFixed(5), +q.y.toFixed(5), +q.z.toFixed(5)); });
+  hipPositions.forEach((p, i) => { const k = i / (hipPositions.length - 1), q = p.clone(); if (spec.loop) q.sub(last.clone().sub(first).multiplyScalar(k)); if (spec.loop) q.sub(mean); else q.sub(first); q.y *= spec.bob ?? 1; if (spec.name === 'ride') q.set(0, 0, 0); hip.push(+q.x.toFixed(5), +q.y.toFixed(5), +q.z.toFixed(5)); });
   const out = [{ node: 'hip', path: 'translation', times, values: hip }];
   for (const [node, values] of tracks) out.push({ node, path: 'rotation', times, values: values.map(v => +v.toFixed(5)) });
   // Loops must close exactly.
