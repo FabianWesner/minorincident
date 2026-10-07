@@ -1,5 +1,5 @@
 import { AnimationMixer, LoopOnce, Quaternion, Vector3, type AnimationAction, type Object3D } from 'three';
-import { retargetClip, strides, strideScale } from './clips';
+import { cadenceStride, retargetClip, strides, strideScale } from './clips';
 
 /** E19 §5.8 corgi warning, sim-owned by the companion (lane F: `companion.warn`), plus
  * the threat's position for the head look (the caller resolves `warn.threat`). */
@@ -41,8 +41,7 @@ export class QuadrupedAnimator {
       if (name === 'corgi-sit' || name === 'corgi-stiffen' || name === 'corgi-bark') { this.action.setLoop(LoopOnce, 1); this.action.clampWhenFinished = true; }
       previous?.crossFadeTo(this.action, name === 'corgi-bark' || name === 'corgi-stiffen' ? .08 : .16, false); this.clip = name;
     }
-    { const __g = (globalThis as unknown as { __gait?: unknown[] }).__gait; if (__g && strides[name]) __g.push(['dog:' + name, speed, strides[name] * strideScale(this.root)]); }
-    if (strides[name]) { this.action.time = distance / (strides[name] * strideScale(this.root)) % 1 * this.action.getClip().duration; this.action.setEffectiveTimeScale(0); }
+    if (strides[name]) { this.action.time = distance / cadenceStride(name, strideScale(this.root), speed) % 1 * this.action.getClip().duration; this.action.setEffectiveTimeScale(0); }
     else this.action.setEffectiveTimeScale(1);
     this.mixer.update(dt);
     // Head look: yaw toward the threat, capped at ±50°, eased over ~200 ms.
