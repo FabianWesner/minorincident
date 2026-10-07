@@ -11,7 +11,7 @@ export const storyLines: Record<string, string> = {
   'handover.tech': '…Thanks. Don’t hang around.',
   'garage.courier': 'This’ll do.',
   'firestation.firefighter': 'In here! Quick!',
-  'firestation.caption': 'The fire station shutter holds, for now.',
+  'firestation.caption': 'Delivery complete. Outbreak: not contained.',
 };
 /** PO: reading time per bubble, max(2.5 s, 1 s + 70 ms per character), in ticks. */
 export const readTicks = (text: string): number => Math.ceil(Math.max(2.5, 1 + .07 * [...text].length) * TICKS);

@@ -41,31 +41,44 @@ test.describe('L1 v2 real-input playthrough', () => {
     const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);
     const mission = () => page.evaluate(() => window.__SS__!.missions.state()!);
     const player = () => page.evaluate(() => window.__SS__!.getState().player!);
-    const snap = async (name: string, focus?: { x: number; z: number }) => {
+    const snap = async (name: string, focus?: { x: number; z: number }, reverse = false) => {
       if (!assisted) return;
+      if (name === 'l1-accident') await page.evaluate(() => { for (let i = 0; i < 4; i++) window.__SS__!.vfx.stepRender(1); });
       await page.evaluate(n => window.__SS__!.camera.preset('D-GROVE/W0/' + n), name);
-      if (focus) await page.evaluate(p => {
+      if (focus) await page.evaluate(({ p, reverse }) => {
         const a = window.__SS__!;
-        a.camera.cinematic({ position: [p.x + 22, 26, p.z + 22], target: [p.x, 0, p.z] }); a.vfx.stepRender(1.1);
-      }, focus);
+        a.camera.cinematic({ position: [p.x + (reverse ? -22 : 22), 26, p.z + (reverse ? -22 : 22)], target: [p.x, 0, p.z] });
+      }, { p: focus, reverse });
       await page.evaluate(() => window.__SS__!.screenshotReady());
       await page.screenshot({ path: `${output}/${name}.png` }); await page.evaluate(() => window.__SS__!.camera.follow()); await step(1);
     };
-    /** Click-to-move toward a world point: real mouse clicks on the ground, the game paths around obstacles. */
+    const waitBeat = async () => {
+      for (let i = 0; i < 120 && (await mission()).l1!.beat; i++) await step(30);
+    };
+    /** Click the actual destination once; nearby intermediate clicks can select the near side of a whole block. */
     const go = async (target: { x: number; z: number }, stop = 1.2) => {
+      await waitBeat();
+      const start = (await player()).transform;
+      if (Math.hypot(target.x - start.x, target.z - start.z) <= stop) return;
+      // Frame both ends for a real ground click. This changes presentation only; routing remains the game's own.
+      await page.evaluate(({ start, target }) => {
+        const a = window.__SS__!, x = (start.x + target.x) / 2, z = (start.z + target.z) / 2;
+        const radius = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
+        a.camera.preset('D-GROVE/W0/l1-morning');
+        a.camera.cinematic({ position: [x + radius, radius * 1.2, z + radius], target: [x, 0, z] });
+      }, { start, target });
+      const point = await page.evaluate(q => window.__SS__!.input.project(q), target);
+      const view = page.viewportSize()!;
+      expect(point.x).toBeGreaterThan(20); expect(point.x).toBeLessThan(view.width - 20);
+      expect(point.y).toBeGreaterThan(20); expect(point.y).toBeLessThan(view.height - 20);
+      await page.mouse.click(point.x, point.y);
+      await page.evaluate(() => window.__SS__!.camera.follow());
       for (let i = 0; i < 400; i++) {
-        const p = (await player()).transform, d = Math.hypot(target.x - p.x, target.z - p.z);
-        if (d <= stop || (await mission()).phase !== 'playing') return;
-        // Click on screen only: 6 m toward the goal can project below the viewport at the follow camera (it then
-        // never reaches the canvas, which read as "click-to-move stalls"). Shorten the step until it is visible.
-        let k = Math.min(6, d) / d, point = await page.evaluate(q => window.__SS__!.input.project(q), { x: p.x + (target.x - p.x) * k, z: p.z + (target.z - p.z) * k });
-        const view = page.viewportSize()!;
-        for (let shrink = 0; shrink < 6 && (point.x < 20 || point.y < 20 || point.x > view.width - 20 || point.y > view.height - 20); shrink++) {
-          k *= .7; point = await page.evaluate(q => window.__SS__!.input.project(q), { x: p.x + (target.x - p.x) * k, z: p.z + (target.z - p.z) * k });
-        }
-        await page.mouse.click(point.x, point.y); await step(30);
+        await step(30);
+        const p = (await player()).transform;
+        if (Math.hypot(target.x - p.x, target.z - p.z) <= stop || (await mission()).phase !== 'playing' || (await mission()).l1!.beat?.id === 'firestation') return;
       }
-      throw new Error(`Could not walk to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
+      throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
     };
     const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(1); };
     const fightNearby = async (page: Page) => {
@@ -85,6 +98,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     await snap('l1-morning');
 
     const mount = async () => {
+      await waitBeat();
       const bike = await page.evaluate(() => window.__SS__!.query({ kind: 'bicycle' })[0]);
       await go(bike.transform, 1.4);
       if (!(await player()).riding) await interact();
@@ -117,7 +131,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     // Beat 6: five infected exit; get away.
     for (let i = 0; i < 40 && (await mission()).l1!.exitIds.length === 0; i++) await step(30);
     expect((await mission()).l1!.exitIds).toHaveLength(5);
-    await step(assisted ? 300 : 60); await snap('l1-escape');
+    await step(assisted ? 300 : 60); await snap('l1-escape', at('lab-door'));
 
     // Beats 7 to 10: follow the objective, fight what blocks the way, interact at the garage, reach the fire station.
     const shots = new Set<string>(); let guard = 0;
@@ -140,10 +154,16 @@ test.describe('L1 v2 real-input playthrough', () => {
       if (!active) { await step(30); continue; }
       if (await fightNearby(page)) continue;
       if (assisted && active === 'firestation' && !shots.has('l1-horde')) {
-        await step(600); shots.add('l1-horde'); await snap('l1-horde');
+        await waitBeat(); await go(at('photo-l1-horde'), 1.5); await step(1200);
+        shots.add('l1-horde'); await snap('l1-horde', (await player()).transform, true);
       }
       const goal = at(goals[active]);
       await go(goal, active === 'weapon' ? 1.2 : active === 'firestation' ? 2.5 : 1.5);
+      if (assisted && active === 'firestation' && (await mission()).l1!.beat?.id === 'firestation') {
+        for (let i = 0; i < 120 && (await mission()).l1!.say?.text !== caption; i++) await step(10);
+        expect((await mission()).l1!.say?.text).toBe(caption);
+        shots.add('l1-safe'); await snap('l1-safe'); await waitBeat();
+      }
       if (active === 'weapon') {
         await interact(); await step(40);
         if (!shots.has('l1-garage')) { shots.add('l1-garage'); await snap('l1-garage'); }
@@ -156,7 +176,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.bat');
     await step(2);
     await expect(page.getByTestId('mission-subtitle')).toHaveText(caption);
-    await snap('l1-safe');
+    if (!shots.has('l1-safe')) await snap('l1-safe');
     for (let i = 0; i < 40 && (await mission()).phase !== 'result'; i++) await step(30);
     expect((await mission()).phase).toBe('result');
     await expect(page.getByTestId('mission-heading')).toHaveText(caption);
