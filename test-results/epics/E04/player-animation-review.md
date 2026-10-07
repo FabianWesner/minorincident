@@ -24,6 +24,6 @@ Fixed-time side/game-angle inspection shows upright gait, narrow stop stance and
 
 ## Checks and limits
 
-Typecheck/lint/build PASS; full unit 266/266, targeted animation 14/14; skin-off and skin-on smoke each 5 simulation + 22 browser PASS. Final E04 rerun pending; see full report for final counts and retained build-race failures.
+Typecheck/lint/build PASS; full unit 266/266, targeted animation 14/14; skin-off and skin-on smoke each 5 simulation + 22 browser PASS. Final E04 rerun PASS: 43 unit/simulation + 27 browser, zero failures/flakes. See full report for final counts and retained build-race failures.
 
 L1 skin A/B final player/simulation state is identical, with zero console/request errors or missing clips. Skin saves 30 draw calls in each sampled scene. No new dependencies or asset licenses. Existing rigid bag straps/bulky sole geometry remain visible in close crops. Mount/dismount remain authored transitions; running cadence is brisk on short legs. WebGPU parity and final subjective motion approval remain manual.
