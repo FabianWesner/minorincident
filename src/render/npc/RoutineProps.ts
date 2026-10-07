@@ -20,6 +20,8 @@ export class RoutineProps extends Group {
       bag: [part(new BoxGeometry(.26, .34, .18), '#ba8c53', 0, -.22), ring(.085, .012, 0, -.04, 0, '#6e5537'), part(new CylinderGeometry(.028, .035, .23, 8), '#76a14e', .07, -.045)],
       phone: [part(new BoxGeometry(.065, .12, .018), '#292537'), part(new BoxGeometry(.05, .085, .004), '#75b8cf', 0, .008, -.011)],
       cane: [part(new CylinderGeometry(.018, .021, .73, 8), '#71513e', .05, -.36), part(new BoxGeometry(.15, .035, .035), '#493d34'), part(new CylinderGeometry(.027, .027, .035, 8), '#292537', .05, -.735)],
+      // E19 story beats: the courier parcel (cardboard, teal Sunset Grove tape), held at the hands.
+      parcel: [part(new BoxGeometry(.3, .24, .26), '#b98a55', .02, -.06, -.1), part(new BoxGeometry(.31, .045, .08), '#2aa198', .02, .065, -.1), part(new BoxGeometry(.12, .006, .09), '#f3efe2', .02, .062, -.02)],
       'watering-can': [part(new CylinderGeometry(.13, .13, .22, 12), '#68a093', 0, -.17), ring(.14, .018, 0, -.04, 0, '#426b60'), part(new CylinderGeometry(.033, .045, .3, 8).rotateZ(-.85), '#68a093', .19, -.10), part(new CylinderGeometry(.065, .025, .05, 10).rotateZ(-.85), '#bec9ba', .30, -.01)],
     };
     for (const [name, parts] of Object.entries(shapes)) {

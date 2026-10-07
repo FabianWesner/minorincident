@@ -385,6 +385,24 @@ for name,wind,strike,follow,twist in unarmed:
         # Kicks hold the full extension (QA1-06: readable at the game camera) before the follow-through.
         ([(.34,contact),(.46,through),(.72,{**guard,'torso':(0,twist*.12,0)})] if 'kick' in name else [(.36,through),(.66,{**guard,'torso':(0,twist*.12,0)})])+[(1,guard)])
 
+# ---- PO UAT story beats (lane G): clerk give/wave, technician glance/sign, firefighter wave-in, courier receive/rack grab.
+# Kept before the shared rest-ending clips (export samples frame 1 as each node's rest).
+hold_box=p(armL=z(30),foreArmL=z(86),armR=z(30),foreArmR=z(86),handL=z(-12),handR=z(-12))
+reach_out=p(hip=hip(y=-.02),torso=z(-10),head=z(-6),armL=z(74),foreArmL=z(22),armR=z(74),foreArmR=z(22),handL=z(-18),handR=z(-18))
+action('npc-give',.9,[(0,hold_box),(.35,reach_out),(.62,{**reach_out,'head':z(-12)}),(.85,p(armL=z(18),foreArmL=z(30),armR=z(18),foreArmR=z(30))),(1,p(armL=z(8),foreArmL=z(18),armR=z(8),foreArmR=z(18)))])
+action('receive',.9,[(0,p()),(.3,reach_out),(.5,{**reach_out,'torso':z(-6)}),(.72,{**hold_box,'head':z(-14),'torso':z(2)}),(.86,{**hold_box,'head':z(6)}),(1,hold_box)])
+wave_up=p(armR=(-55,0,35),foreArmR=(0,0,95),head=(0,-12,6),torso=(0,-6,0))
+action('npc-wave',.7,[(0,p()),(.18,wave_up),(.34,{**wave_up,'foreArmR':(-28,0,95)}),(.5,{**wave_up,'foreArmR':(28,0,95)}),(.66,{**wave_up,'foreArmR':(-28,0,95)}),(.82,wave_up),(1,p())])
+nervous=p(hip=hip(y=-.02),torso=(0,0,-8),armL=(10,0,20),foreArmL=z(60),armR=(-10,0,20),foreArmR=z(60))
+action('npc-glance',1.2,[(0,{**nervous,'head':(0,0,4)}),(.12,{**nervous,'head':(0,42,2)}),(.3,{**nervous,'head':(0,40,2)}),(.38,{**nervous,'head':(0,-45,4)}),(.6,{**nervous,'head':(0,-42,4)}),(.7,{**nervous,'head':(8,10,-6),'torso':(0,8,-8)}),(.86,{**nervous,'head':(0,-8,2)}),(1,{**nervous,'head':(0,0,4)})])
+clip=p(armL=z(46),foreArmL=z(92),handL=z(-30),head=z(-22),torso=z(-6))
+action('npc-sign',.9,[(0,p()),(.15,{**clip,'armR':z(40),'foreArmR':z(98)}),(.28,{**clip,'armR':z(42),'foreArmR':(0,12,100)}),(.4,{**clip,'armR':z(40),'foreArmR':(0,-12,98)}),(.52,{**clip,'armR':z(42),'foreArmR':(0,10,100)}),(.72,reach_out),(1,hold_box)])
+beckon=p(torso=(0,-15,-4),head=(0,15,4),armR=(-25,0,95),foreArmR=z(20),armL=(10,0,10))
+action('npc-wave-in',1,[(0,beckon),(.3,{**beckon,'armR':(-25,35,70),'foreArmR':z(70)}),(.5,{**beckon,'armR':(-25,45,55),'foreArmR':z(95)}),(.75,{**beckon,'armR':(-25,10,90),'foreArmR':z(30)}),(1,beckon)])
+action('rack-grab',2,[(0,p()),(.14,p(armR=(0,0,150),foreArmR=z(20),head=z(22),torso=z(6),hip=hip(y=.02))),(.26,p(armR=(0,0,158),foreArmR=z(28),head=z(24),torso=z(8))),
+    (.42,p(armR=z(80),foreArmR=z(60),head=z(-6),armL=z(40),foreArmL=z(60))),(.58,p(hip=hip(y=-.04,twist=-14),torso=(0,-40,6),armR=(0,-40,62),foreArmR=z(95),handR=z(0),armL=(20,-55,56),foreArmL=z(72))),
+    (.68,p(hip=hip(x=.06,y=-.03,twist=14),torso=(0,32,-10),armR=(10,45,90),foreArmR=z(8),handR=z(-90),armL=(-10,30,84),foreArmL=z(14))),(.82,p(armR=(0,-20,40),foreArmR=z(125),head=z(4))),(1,p())])
+
 action('swing',.5,[(0,p()),(.1,p(armR=z(-30),torso=(0,-30,5))),(.2,p(armR=(0,55,100),foreArmR=z(8),torso=(0,35,-10))),(.5,p(armR=(0,85,100),torso=(0,45,-5))),(1,p())])
 action('kick',.65,[(0,p(armL=z(35),foreArmL=z(50))),(.12,p(hip=hip(y=-.03),legR=z(68),shinR=z(-110),torso=z(12))),
     (.20,p(hip=hip(x=.06,y=.02),legR=z(98),shinR=z(-8),footR=z(-25),torso=z(18),armL=z(55),armR=z(-35),legL=z(-8))),

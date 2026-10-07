@@ -31,6 +31,10 @@ export class Hud {
   private readonly bark = node('div', 'corgi-bark', 'Woof!');
   private readonly civilianBark = node('div', 'civilian-bark', 'Hey!');
   private civilianBarkUntil = -1;
+  /** E19 story beat line above the speaker (one at a time, follows the speaker). */
+  private readonly storyBubble = node('div', 'story-bubble', '');
+  private storyUntil = -1;
+  private storySpeaker = 0;
   private readonly interaction = node('div', 'interaction-ring');
   private readonly stops: (() => void)[] = [];
   private damagedUntil = -1;
@@ -39,6 +43,7 @@ export class Hud {
   constructor(private readonly game: Game) {
     this.onboarding = new Onboarding(game.world, game.input.bindings);
     this.civilianBark.className = 'hud-panel'; this.civilianBark.style.cssText = 'position:absolute;pointer-events:none'; this.civilianBark.hidden = true; this.root.append(this.civilianBark);
+    this.storyBubble.className = 'hud-panel story-bubble'; this.storyBubble.style.cssText = 'position:absolute;pointer-events:none;transform:translate(-50%,-100%);max-width:280px;padding:6px 10px;border-radius:10px;font:600 14px system-ui,sans-serif;white-space:normal'; this.storyBubble.hidden = true; this.root.append(this.storyBubble);
     this.root.className = 'hud'; this.root.hidden = true;
     const vitals = node('div', 'vitals'); vitals.className = 'hud-vitals hud-panel';
     this.portrait.className = 'hud-portrait'; this.portrait.setAttribute('aria-label', 'Survivor portrait');
@@ -101,14 +106,15 @@ export class Hud {
   clear(): void { for (const stop of this.stops) stop(); this.stops.length = 0; this.onboarding.clear(); this.detail.close(); this.root.hidden = true; }
   loaded(): void {
     this.clear();
-    this.damagedUntil = this.barkUntil = this.civilianBarkUntil = -1;
+    this.damagedUntil = this.barkUntil = this.civilianBarkUntil = this.storyUntil = -1;
     this.loadedScenario = this.game.world.scenario;
     if (!this.loadedScenario) return;
     this.onboarding.reset();
-    for (const type of ['combat.hit', 'corgi.sound', 'civilian.bark'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
+    for (const type of ['combat.hit', 'corgi.sound', 'civilian.bark', 'story.say'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
   }
   private readonly event = (event: GameEvent): void => {
-    if (event.type === 'civilian.bark') {
+    if (event.type === 'story.say') { this.storyBubble.textContent = event.text; this.storySpeaker = event.id; this.storyUntil = this.game.world.tick + 150; }
+    else if (event.type === 'civilian.bark') {
       const p = this.game.view.project(event.position.x, 1.8, event.position.z);
       this.civilianBark.style.left = `${(p[0] + 1) * 50}%`; this.civilianBark.style.top = `${(1 - p[1]) * 50}%`;
       this.civilianBarkUntil = this.game.world.tick + 72;
@@ -208,6 +214,9 @@ export class Hud {
     if (device) { this.interaction.style.background = `conic-gradient(#64dccc ${device.progress * 360}deg,#182333 0)`; text(this.interaction, device.hint || `${device.label} · ${Math.round(device.progress * 100)}%`); this.interaction.dataset.progress = String(device.progress); }
     this.damage.hidden = world.tick > this.damagedUntil; this.bark.hidden = world.tick > this.barkUntil;
     this.civilianBark.hidden = world.tick > this.civilianBarkUntil;
+    const speaker = world.entities.get(this.storySpeaker);
+    this.storyBubble.hidden = world.tick > this.storyUntil || !speaker || !!speaker.hidden;
+    if (!this.storyBubble.hidden && speaker) { const p = this.game.view.project(speaker.transform.x, 2.1, speaker.transform.z); this.storyBubble.style.left = `${(p[0] + 1) * 50}%`; this.storyBubble.style.top = `${(1 - p[1]) * 50}%`; }
     this.onboarding.update(this.game.input.scheme, visible);
   }
   dispose(): void { this.clear(); this.onboarding.dispose(); this.root.remove(); }

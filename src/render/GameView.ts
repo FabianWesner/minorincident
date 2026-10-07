@@ -49,6 +49,9 @@ export class GameView implements Lifecycle {
   private missionUI: MissionUI | null = null;
   private marker: ObjectiveMarker | null = null;
   private cinematicId: string | null = null;
+  private storyFraming = false;
+  private readonly storyFocus = new Vector3();
+  private readonly storyOffset = new Vector3();
   readonly view = new View();
   readonly camera = this.view.camera;
   renderer: Renderer;
@@ -313,6 +316,14 @@ export class GameView implements Lifecycle {
     const player = this.world.entities.get(1);
     if (player) {
       this.view.driving = this.world.vehicles?.active != null;
+      // E19 story beats: ease the game camera onto the beat (between courier and the other actor, a little closer),
+      // then back to the follow camera; no cut, same isometric angle.
+      const beat = this.world.missions?.state.l1?.beat;
+      if (beat && this.world.storyLock && !this.view.spot) {
+        this.storyFocus.set(beat.fx, .8, beat.fz); this.storyOffset.setFromSphericalCoords(13, this.view.polar, this.view.azimuth);
+        this.view.cinematic({ position: this.storyFocus.clone().add(this.storyOffset).toArray() as [number, number, number], target: this.storyFocus.toArray() as [number, number, number] });
+        this.storyFraming = true;
+      } else if (this.storyFraming) { this.storyFraming = false; this.view.follow(); }
       this.view.update(player.transform, seconds);
       this.playerPosition.set(player.transform.x, player.transform.y - 0.5, player.transform.z);
       if (this.lookdev) this.occlusion.update(this.camera, this.playerPosition, seconds, this.lookdev.playerMeshes);
