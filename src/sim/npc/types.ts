@@ -40,6 +40,7 @@ export type NpcEvent =
   | { tick: number; type: 'corgi.fetched'; id: number; pickupId: number }
   /** E19 story beat line (speech bubble above the speaker). */
   | { tick: number; type: 'story.say'; id: number; text: string; position: Point }
+  | { tick: number; type: 'story.thud'; position: Point }
   /** L1 v2 warning without UI text: stiffen (20 m), growl (14 m), bark (9 m, 1 per 2 s), then nervous idle (6 s). */
   | { tick: number; type: 'corgi.warn'; id: number; stage: Exclude<CorgiWarnStage, 'none'>; threatId: number; direction: Point; distance: number }
   | { tick: number; type: 'escort.order'; id: number; order: 'wait' | 'follow' }

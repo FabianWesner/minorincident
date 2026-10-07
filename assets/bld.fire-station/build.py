@@ -10,6 +10,7 @@ import random
 import sys
 from pathlib import Path
 import bpy
+import bmesh
 from mathutils import Matrix, Vector
 
 HERE = Path(__file__).resolve().parent
@@ -473,6 +474,16 @@ def merge(objects, prefix=''):
         merged.append(o)
     return merged
 
+def outward_normals(objects):
+    # Mirroring evaluated meshes leaves the bevels' custom normals stale for AO.
+    for o in objects:
+        if o.data.has_custom_normals:
+            o.data.normals_split_custom_set([(0, 0, 0)] * len(o.data.loops))
+        bm = bmesh.new(); bm.from_mesh(o.data)
+        bmesh.ops.recalc_face_normals(bm, faces=list(bm.faces))
+        bm.to_mesh(o.data); bm.free(); o.data.update()
+
+outward_normals(parts)
 meshes=merge(parts)
 
 def light_references(objects):
@@ -520,7 +531,7 @@ def build_lod(level):
         if level==2:
             token=data.materials[0].name.removeprefix('pal_')
             token={'foliage':'grass','woodWarm':'brick','sidewalk':'picketWhite',
-                   'asphalt':'uiDark','survivorRed':'brick','backpackTeal':'uiDark'}.get(token,token)
+                   'survivorRed':'brick','backpackTeal':'uiDark'}.get(token,token)
             if token in M:data.materials[0]=M[token]
         o=bpy.data.objects.new('lod_'+name,data);asset.objects.link(o)
         o.parent=parent;o.matrix_parent_inverse=parent.matrix_world.inverted()
@@ -539,7 +550,15 @@ def build_lod(level):
         data.materials.append(M['woodWarm'])
         o=bpy.data.objects.new('lod_roof_cap',data);asset.objects.link(o)
         o.parent=roof;o.matrix_parent_inverse=roof.matrix_world.inverted();objects.append(o)
+    outward_normals(objects)
     return merge(objects,'lod'+str(level)+'_')
+
+def bake_ao(objects):
+    ao.bake_all(objects, samples=32)
+    # Keep the direct-light palette readable; AO represents contact shadows.
+    for o in objects:
+        for color in o.data.color_attributes['ao'].data:
+            color.color = tuple(.35 + .65 * max(0, min(1, c)) for c in color.color[:3]) + (1,)
 
 if args.glb:
     output=Path(args.glb).resolve();output.parent.mkdir(parents=True,exist_ok=True)
@@ -547,11 +566,11 @@ if args.glb:
         bpy.ops.object.select_all(action='DESELECT')
         for o in asset.objects:o.select_set(o.type=='EMPTY' or o in objects)
         bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_vertex_color='ACTIVE',export_all_vertex_colors=False,export_cameras=False,export_lights=False)
-    ao.bake_all(meshes,samples=32);stats=statistics();export(output,meshes)
+    bake_ao(meshes);stats=statistics();export(output,meshes)
     lods={}
     for o in meshes:asset.objects.unlink(o)
     for level in [1,2]:
-        low=build_lod(level);light_references(low);ao.bake_all(low,samples=32)
+        low=build_lod(level);light_references(low);bake_ao(low)
         lods['lod'+str(level)]=statistics(low)
         export(output.with_name(output.stem+'.lod'+str(level)+'.glb'),low)
         for o in low:bpy.data.objects.remove(o,do_unlink=True)

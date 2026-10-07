@@ -35,7 +35,7 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       def.anchors['fire-bay-trigger'].radius = 3;
       // Doors that director infected emerge from (spec PO request 2026-10-07).
       for (let i = 1; i <= 80; i++) { try { anchor(`refuge-door-${i}`, 'D-GROVE', `refuge-door-${i}`); } catch { break; } }
-      def.items.push('parcel', 'bat'); def.states.push('delivered', 'exited', 'away'); def.checkpoints.push('accident', 'bat');
+      def.items.push('parcel', 'bat'); def.states.push('delivered', 'exited', 'away', 'safe'); def.checkpoints.push('accident', 'bat');
       def.gates['fire-shutter'] = { anchor: 'fire-bay-door', open: true };
       const pickup = interact('pickup', 'Pick up the package at the courier depot', 'parcel-counter', 1);
       pickup.onComplete = [{ kind: 'grant', item: 'parcel' }, { kind: 'radio', id: 'L1.pickedUp' }];
@@ -49,7 +49,9 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       // The marker sits at the garage door (visible from the street), the interaction itself stays at the bench.
       bat.onStart = [{ kind: 'marker', anchor: 'garage-door' }];
       bat.onComplete = [{ kind: 'grant', item: 'bat' }, { kind: 'checkpoint', id: 'bat' }];
-      const fire = reach('firestation', 'Reach the fire station', 'fire-bay-trigger');
+      // PO: the ending plays in-engine (firefighter, run-in, shutter slam, thuds, caption, fade) before the result: the
+      // story sets `safe` when it is over.
+      const fire = step('firestation', 'custom', 'Reach the fire station', 'fire-bay-trigger', { kind: 'state', key: 'safe', equals: true });
       fire.onStart = [{ kind: 'radio', id: 'L1.fire' }]; fire.onComplete = [{ kind: 'gate', id: 'fire-shutter', open: false }];
       end = fire.id; break;
     }
