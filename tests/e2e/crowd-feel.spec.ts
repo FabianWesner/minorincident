@@ -99,9 +99,13 @@ test('20 infected corpses remain drawn after walking 60 m away and returning @sm
     a.input.set({ moveTarget: { x: 0, z: 0 }, walk: true }); await a.step(3000); a.input.clear();
     const returned = a.getEntity(1)!.transform;
     a.camera.cinematic({ position: [13, 12, 14], target: [5, .5, 0] }); await a.screenshotReady();
-    return { first: first.length, final: ids.filter(id => a.crowdFigures().some(f => f.id === id && f.drawn)).length, retained: ids.filter(id => a.getEntity(id)?.corpse).length, awayDistance: Math.hypot(away.x, away.z), waitedDistance: Math.hypot(waited.x, waited.z), awayY: waited.y, returnedDistance: Math.hypot(returned.x, returned.z) };
+    a.settings.set({ gore: 'Off' }); await a.step(0); await a.screenshotReady();
+    const goreOffVisible = ids.filter(id => a.crowdFigures().some(f => f.id === id && f.drawn)).length;
+    a.settings.set({ gore: 'Full' }); await a.step(0); await a.screenshotReady();
+    return { first: first.length, final: ids.filter(id => a.crowdFigures().some(f => f.id === id && f.drawn)).length, retained: ids.filter(id => a.getEntity(id)?.corpse).length, goreOffVisible, awayDistance: Math.hypot(away.x, away.z), waitedDistance: Math.hypot(waited.x, waited.z), awayY: waited.y, returnedDistance: Math.hypot(returned.x, returned.z) };
   });
   expect(proof).toMatchObject({ first: 20, final: 20, retained: 20 });
+  expect(proof.goreOffVisible).toBe(20);
   expect(proof.awayDistance).toBeGreaterThanOrEqual(60); expect(proof.waitedDistance).toBeGreaterThanOrEqual(60);
   expect(proof.awayY).toBeGreaterThan(.5); expect(proof.returnedDistance).toBeLessThan(.2);
   mkdirSync(output, { recursive: true }); writeFileSync(`${output}/permanence.json`, JSON.stringify(proof, null, 2));
