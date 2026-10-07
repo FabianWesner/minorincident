@@ -157,5 +157,5 @@ export class CharacterView extends Group {
     return { bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
       evaluations: character?.animator.evaluations ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
   }
-  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.characters.clear(); this.bloodMaterials.length = 0; this.clear(); }
+  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.parcel?.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); }); this.parcel = null; this.characters.clear(); this.bloodMaterials.length = 0; this.clear(); }
 }

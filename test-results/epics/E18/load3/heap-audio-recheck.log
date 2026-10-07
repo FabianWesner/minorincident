@@ -1,0 +1,150 @@
+
+Running 6 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (5.7s)
+  ✓  2 [chromium] › tests/e2e/audio/smoke.spec.ts:91:1 › T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend (1.1s)
+  ✓  3 [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources (1.2m)
+  ✘  4 [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-low @E18-AC05 @perf five L1/L6 loads release heap and GPU resources (40.8s)
+  ✘  5 [webkit] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (3.1s)
+  ✓  6 [webkit] › tests/e2e/audio/smoke.spec.ts:91:1 › T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend (9.1s)
+
+
+  1) [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-low @E18-AC05 @perf five L1/L6 loads release heap and GPU resources 
+
+    Error: heapBytes
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 82961124.4
+    Received:    83034540
+
+      16 |   const first = loads[0], last = loads[4];
+      17 |   mkdirSync('test-results/epics/E18', { recursive: true }); writeFileSync(`test-results/epics/E18/memory-${tier}.json`, JSON.stringify(loads, null, 2));
+    > 18 |   for (const key of ['heapBytes', 'geometries', 'textures'] as const) expect(last[key], key).toBeLessThanOrEqual(first[key] * 1.1);
+         |                                                                                              ^
+      19 |   for (const load of loads.filter(l => l.id === 'L6')) expect(load.heapBytes).toBeLessThanOrEqual(qualityBudgets[tier].heapMB * 1_000_000);
+      20 | });
+      21 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/load3/tests/perf/e18-memory.spec.ts:18:94
+
+    Error Context: test-results/playwright/run-3385/perf-e18-memory-T-E18-05-l-13b3b-ease-heap-and-GPU-resources-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3385/perf-e18-memory-T-E18-05-l-13b3b-ease-heap-and-GPU-resources-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3385/perf-e18-memory-T-E18-05-l-13b3b-ease-heap-and-GPU-resources-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [webkit] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 79
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cue": "music.L1.base",
+    +     "gain": 0,
+    +     "position": undefined,
+    +     "rate": 1,
+    +     "sourceId": undefined,
+    +     "tick": 0,
+    +     "time": 0.42000000000000004,
+    +     "variant": "music.L1.base",
+    +     "voice": 1,
+    +   },
+    +   Object {
+    +     "cue": "music.L1.pulse",
+    +     "gain": 0,
+    +     "position": undefined,
+    +     "rate": 1,
+    +     "sourceId": undefined,
+    +     "tick": 0,
+    +     "time": 0.42000000000000004,
+    +     "variant": "music.L1.pulse",
+    +     "voice": 2,
+    +   },
+    +   Object {
+    +     "cue": "music.L1.drive",
+    +     "gain": 0,
+    +     "position": undefined,
+    +     "rate": 1,
+    +     "sourceId": undefined,
+    +     "tick": 0,
+    +     "time": 0.42000000000000004,
+    +     "variant": "music.L1.drive",
+    +     "voice": 3,
+    +   },
+    +   Object {
+    +     "cue": "music.L1.peak",
+    +     "gain": 0,
+    +     "position": undefined,
+    +     "rate": 1,
+    +     "sourceId": undefined,
+    +     "tick": 0,
+    +     "time": 0.42000000000000004,
+    +     "variant": "music.L1.peak",
+    +     "voice": 4,
+    +   },
+    +   Object {
+    +     "cue": "bed.birds",
+    +     "gain": 0.18000000715255737,
+    +     "position": undefined,
+    +     "rate": 0.9742308855056763,
+    +     "sourceId": undefined,
+    +     "tick": 0,
+    +     "time": 0.4,
+    +     "variant": "bed.birds",
+    +     "voice": 5,
+    +   },
+    +   Object {
+    +     "cue": "bed.wind",
+    +     "gain": 0.18000000715255737,
+    +     "position": undefined,
+    +     "rate": 0.9890089631080627,
+    +     "sourceId": undefined,
+    +     "tick": 0,
+    +     "time": 0.4,
+    +     "variant": "bed.wind",
+    +     "voice": 6,
+    +   },
+    +   Object {
+    +     "cue": "bed.traffic",
+    +     "gain": 0.18000000715255737,
+    +     "position": undefined,
+    +     "rate": 0.9757539629936218,
+    +     "sourceId": undefined,
+    +     "tick": 0,
+    +     "time": 0.4,
+    +     "variant": "bed.traffic",
+    +     "voice": 7,
+    +   },
+    + ]
+
+      69 |             await page.waitForTimeout(500);
+      70 |             const after = await page.evaluate(() => ({ snapshot: window.__SS__!.audio.snapshot(), tick: window.__SS__!.tick() }));
+    > 71 |             expect(after.snapshot.cues).toEqual([]);
+         |                                         ^
+      72 |             expect(after.tick).toBe(before.tick);
+      73 |             if (muted)
+      74 |                 expect(after.snapshot.master).toBe(0);
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/load3/tests/e2e/audio/smoke.spec.ts:71:41
+
+    Error Context: test-results/playwright/run-3385/e2e-audio-smoke-S-11-T-E16-bca6b-te-and-discards-queued-cues-webkit/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3385/e2e-audio-smoke-S-11-T-E16-bca6b-te-and-discards-queued-cues-webkit/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3385/e2e-audio-smoke-S-11-T-E16-bca6b-te-and-discards-queued-cues-webkit/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-low @E18-AC05 @perf five L1/L6 loads release heap and GPU resources 
+    [webkit] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues 
+  4 passed (2.2m)

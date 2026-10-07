@@ -1,0 +1,246 @@
+{
+  "fullVerify": {
+    "unitSim": {
+      "passed": 18,
+      "skipped": 583,
+      "failed": 0
+    },
+    "headless": {
+      "passed": 29,
+      "failed": 8,
+      "skipped": 0
+    },
+    "gpu": {
+      "passed": 2,
+      "failed": 1,
+      "skipped": 4
+    }
+  },
+  "rechecks": {
+    "highMemory": "passed",
+    "lowMemory": "passed",
+    "audioSuspensionChromium": "passed",
+    "audioSuspensionWebkit": "passed"
+  },
+  "tests": [
+    {
+      "stage": "unit/sim",
+      "title": "T-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms",
+      "status": "passed",
+      "evidence": "verify-E18-release.log"
+    },
+    {
+      "stage": "unit/sim",
+      "title": "T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms",
+      "status": "passed",
+      "evidence": "verify-E18-release.log"
+    },
+    {
+      "stage": "unit/sim",
+      "title": "T-E18-02-100 @E18-AC02 @perf Node sim p95 100 living infected <= 6ms",
+      "status": "passed",
+      "evidence": "verify-E18-release.log"
+    },
+    {
+      "stage": "unit/sim",
+      "title": "T-E18-tier-cap @E18-AC04 degradation defers distant ambient infected without awarding kills",
+      "status": "passed",
+      "evidence": "verify-E18-release.log"
+    },
+    {
+      "stage": "unit/sim",
+      "title": "E18 @E18 mobile GLB selection prefers declared .low export, preserves lod1 and releases its cache",
+      "status": "passed",
+      "evidence": "verify-E18-release.log"
+    },
+    {
+      "stage": "unit/sim",
+      "title": "E18 @E18 recording validation rejects emulation declarations, incorrect scenarios and invented summaries",
+      "status": "passed",
+      "evidence": "verify-E18-release.log"
+    },
+    {
+      "stage": "unit/sim",
+      "title": "E18 @E18-AC08 emulation evidence requires the authorized CPU profile and cannot masquerade as physical hardware",
+      "status": "passed",
+      "evidence": "verify-E18-release.log"
+    },
+    {
+      "stage": "unit/sim",
+      "title": "E18 @E18 low tier keeps at most 30 active gibs and resets removed physics slots",
+      "status": "passed",
+      "evidence": "verify-E18-release.log"
+    },
+    {
+      "stage": "unit/sim",
+      "title": "E18 @E18-AC05 level layouts retain shared districts and release documents outside the active level",
+      "status": "passed",
+      "evidence": "verify-E18-release.log"
+    },
+    {
+      "stage": "unit/sim",
+      "title": "T-E18-04 @E18-AC04 adapts within 6 seconds and recovers only at next level start",
+      "status": "passed",
+      "evidence": "verify-E18-release.log"
+    },
+    {
+      "stage": "unit/sim",
+      "title": "T-E18-04b @E18-AC04 defers degradation through a cinematic, ignores spikes and honors explicit settings",
+      "status": "passed",
+      "evidence": "verify-E18-release.log"
+    },
+    {
+      "stage": "unit/sim",
+      "title": "T-E18-04c @E18-AC04 an exact budget cadence does not degrade due to Float32 rounding",
+      "status": "passed",
+      "evidence": "verify-E18-release.log"
+    },
+    {
+      "stage": "unit/sim",
+      "title": "T-E18-07 @E18-AC07 selects low for mobile profiles and enforces distinct tier budgets",
+      "status": "passed",
+      "evidence": "verify-E18-release.log"
+    },
+    {
+      "stage": "headless",
+      "title": "Pixel 7 / T-E18-07-Pixel 7 @E18-AC07 @vision L1 touch gameplay, auto low, portrait/landscape and safe areas",
+      "project": "chromium",
+      "status": "passed"
+    },
+    {
+      "stage": "headless",
+      "title": "iPhone 14 / T-E18-07-iPhone 14 @E18-AC07 @vision L1 touch gameplay, auto low, portrait/landscape and safe areas",
+      "project": "chromium",
+      "status": "passed"
+    },
+    {
+      "stage": "headless",
+      "title": "T-E18-04-browser @E18-AC04 auto drops high to low within 6s and only upgrades at level start",
+      "project": "chromium",
+      "status": "passed"
+    },
+    {
+      "stage": "headless",
+      "title": "T-E18-06 @E18-AC06 real WEBGL_lose_context restores draws in 3s while simulation remains paused",
+      "project": "chromium",
+      "status": "passed"
+    },
+    {
+      "stage": "headless",
+      "title": "T-E18-visibility @E18-AC07 background pauses and releases held input",
+      "project": "chromium",
+      "status": "passed"
+    },
+    {
+      "stage": "headless",
+      "title": "E18 @E18 perf overlay uses real counters and teardown leaves no scenario resources",
+      "project": "chromium",
+      "status": "passed"
+    },
+    {
+      "stage": "headless",
+      "title": "T-E18-01-high-perf-horde-200 @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+      "project": "chromium",
+      "status": "passed"
+    },
+    {
+      "stage": "headless",
+      "title": "T-E18-01-high-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+      "project": "chromium",
+      "status": "failed",
+      "error": "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 600\nReceived:    729\n\n  16 |     expect(proof.first.drawCalls).toBe(proof.second.drawCalls); expect(proof.first.triangles).toBe(proof.second.triangles);\n  17 |     expect(proof.second.quality.tier).toBe(tier); expect(proof.state.render.lighting!.shadowSize).toBe(qualityBudgets[tier"
+    },
+    {
+      "stage": "headless",
+      "title": "T-E18-01-high-perf-l5-bridge @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+      "project": "chromium",
+      "status": "failed",
+      "error": "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 1500000\nReceived:    3112327\n\n  16 |     expect(proof.first.drawCalls).toBe(proof.second.drawCalls); expect(proof.first.triangles).toBe(proof.second.triangles);\n  17 |     expect(proof.second.quality.tier).toBe(tier); expect(proof.state.render.lighting!.shadowSize).toBe(qualityBudg"
+    },
+    {
+      "stage": "headless",
+      "title": "T-E18-01-low-perf-horde-200 @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+      "project": "chromium",
+      "status": "passed"
+    },
+    {
+      "stage": "headless",
+      "title": "T-E18-01-low-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+      "project": "chromium",
+      "status": "failed",
+      "error": "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 300\nReceived:    577\n\n  16 |     expect(proof.first.drawCalls).toBe(proof.second.drawCalls); expect(proof.first.triangles).toBe(proof.second.triangles);\n  17 |     expect(proof.second.quality.tier).toBe(tier); expect(proof.state.render.lighting!.shadowSize).toBe(qualityBudgets[tier"
+    },
+    {
+      "stage": "headless",
+      "title": "T-E18-01-low-perf-l5-bridge @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+      "project": "chromium",
+      "status": "failed",
+      "error": "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 300\nReceived:    465\n\n  16 |     expect(proof.first.drawCalls).toBe(proof.second.drawCalls); expect(proof.first.triangles).toBe(proof.second.triangles);\n  17 |     expect(proof.second.quality.tier).toBe(tier); expect(proof.state.render.lighting!.shadowSize).toBe(qualityBudgets[tier"
+    },
+    {
+      "stage": "headless",
+      "title": "T-E18-03 @E18-AC03 @perf production initial network payload <=15MB gzip through level.started",
+      "project": "chromium",
+      "status": "passed"
+    },
+    {
+      "stage": "headless",
+      "title": "T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources",
+      "project": "chromium",
+      "status": "passed",
+      "previousStatus": "failed",
+      "evidence": "heap-audio-recheck.log"
+    },
+    {
+      "stage": "headless",
+      "title": "T-E18-05-low @E18-AC05 @perf five L1/L6 loads release heap and GPU resources",
+      "project": "chromium",
+      "status": "passed",
+      "previousStatus": "failed",
+      "evidence": "heap-audio-final.log"
+    },
+    {
+      "stage": "gpu",
+      "title": "T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms",
+      "project": "chromium",
+      "status": "failed",
+      "error": "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 16.7\nReceived:    26.6\n\n  25 |   expect(proof.perf.paused).toBe(false); expect(proof.ticks).toBeGreaterThanOrEqual(300); expect(proof.renderedFrames).toBeGreaterThanOrEqual(600); expect(proof.count).toBe(200); expect(proof.perf.quality.tier).toBe('high');\n  26 |   // Subtracting RA"
+    },
+    {
+      "stage": "gpu",
+      "title": "E18 @E18 WebGPU low tier parity compiles two-mip bloom and capped crowds",
+      "project": "chromium",
+      "status": "skipped"
+    },
+    {
+      "stage": "gpu",
+      "title": "T-E18-08-physical @E18-AC08 @manual physical iOS and Android recordings at final verification",
+      "project": "chromium",
+      "status": "skipped"
+    },
+    {
+      "stage": "gpu",
+      "title": "Pixel 7 / T-E18-08-android-webgl @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps",
+      "project": "chromium",
+      "status": "passed"
+    },
+    {
+      "stage": "gpu",
+      "title": "Pixel 7 / T-E18-08-android-webgpu @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps",
+      "project": "chromium",
+      "status": "skipped"
+    },
+    {
+      "stage": "gpu",
+      "title": "iPhone 14 / T-E18-08-ios-webgl @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps",
+      "project": "chromium",
+      "status": "passed"
+    },
+    {
+      "stage": "gpu",
+      "title": "iPhone 14 / T-E18-08-ios-webgpu @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps",
+      "project": "chromium",
+      "status": "skipped"
+    }
+  ]
+}
