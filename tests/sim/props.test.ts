@@ -115,8 +115,11 @@ describe('E26 authored pushable props', () => {
     expect(prop.pose).toEqual(prop.home);
     world.props!.restore(saved);
     expect(prop.pose).toEqual(pose);
-    world.setTier(1);
-    const rebuilt = world.props!.items.find(i => i.id === prop.id);
-    if (rebuilt) { expect(rebuilt.pose.p).toEqual(pose.p); expect(rebuilt.body.translation().x).toBeCloseTo(pose.p[0], 4); }
+    for (const tier of [1, 2, 3, 4, 5] as const) {
+      world.setTier(tier);
+      const rebuilt = world.props!.items.find(i => i.id === prop.id)!;
+      expect(rebuilt).toBeDefined(); expect(rebuilt.entityId).toBe(prop.entityId);
+      expect(rebuilt.pose.p).toEqual(pose.p); expect(rebuilt.body.translation().x).toBeCloseTo(pose.p[0], 4);
+    }
   });
 });
