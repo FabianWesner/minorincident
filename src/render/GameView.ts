@@ -379,6 +379,8 @@ export class GameView implements Lifecycle {
         const group = new Group(); group.position.set(door.x, ground, door.z);
         const shutter = new Mesh(new BoxGeometry(3.6, 3.2, .12), this.materials.fromColor('story:shutter', new Color('#b44a3e')));
         shutter.position.y = 1.9; shutter.name = 'bay-shutter'; shutter.castShadow = true;
+        // Face the shutter across the door -> trigger (inward) axis: the bay may open east or north.
+        const inside = mission.def.anchors['fire-bay-trigger']; if (inside) group.rotation.y = Math.atan2(inside.x - door.x, inside.z - door.z);
         group.add(shutter); this.shutter = group; this.scene.add(group);
       }
     } else if (this.shutter) {
