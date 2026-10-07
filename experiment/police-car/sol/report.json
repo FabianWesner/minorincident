@@ -1,0 +1,23 @@
+{
+  "slug": "police-car",
+  "iterations": 5,
+  "triangles": 83438,
+  "meshes": 456,
+  "glb_bytes": 2354816,
+  "webgpu_ok": true,
+  "webgl2_ok": true,
+  "self_fidelity_0_1": 0.68,
+  "matches": [
+    "Black hood, trunk and fenders with white roof and doors",
+    "Four-door sedan silhouette and bilateral POLICE/911 lettering",
+    "Push bumper, spotlight, mirrors, antenna and red-blue LED lightbar",
+    "Cut-out steel-wheel vents, treaded tyres and named wheel pivots",
+    "Both sides and rear detailed with lamps, plates and handles"
+  ],
+  "gaps": [
+    "Body and cabin surfaces are more angular than the reference",
+    "Badge ornament and grille pattern are simplified",
+    "Tinted glazing reveals only a simplified interior"
+  ],
+  "notes": "Built entirely with bpy, refined through five render comparisons, and validated in both Three.js backends; hero rendered at 1600x900 with 96 samples."
+}
