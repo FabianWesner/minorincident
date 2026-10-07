@@ -15,7 +15,7 @@ export interface BicycleState {
   standTicks: number; armed: boolean; lockUntil: number;
 }
 const ARCHETYPE = 'veh.courier-bike';
-const { speedMs, accelToMs, accelS, minTurnRadiusM, mountInteractS } = l1v2.bicycle;
+const { speedMs, accelToMs, accelS, mountInteractS } = l1v2.bicycle;
 const MOUNT_RANGE = 1.5, BUMP_RANGE = 1.15;
 const inPolygon = (p: Vec2, poly: readonly Vec2[]): boolean => {
   let inside = false;

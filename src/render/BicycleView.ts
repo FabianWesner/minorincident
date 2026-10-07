@@ -83,7 +83,8 @@ export class BicycleView extends Group {
     if (!bike?.bicycle) return;
     if (!this.rig) { void this.build(); return; }
     const rig = this.rig, b = bike.bicycle, t = bike.transform;
-    rig.root.visible = true; rig.root.position.set(t.x, 0, t.z); rig.root.rotation.y = t.yaw;
+    const ground = b.mounted ? (this.world.entities.get(1)?.transform.y ?? .705) - .705 : 0; // ride over curbs and steps with the rider
+    rig.root.visible = true; rig.root.position.set(t.x, Math.max(0, ground), t.z); rig.root.rotation.y = t.yaw;
     if (rig.last) { const d = Math.hypot(t.x - rig.last.x, t.z - rig.last.z); rig.wheelAngle += d; }
     rig.last = { x: t.x, z: t.z };
     if (rig.wheelF) { rig.wheelF.rotation.z = -rig.wheelAngle / (WHEEL_R.F * SCALE); rig.wheelF.rotation.y = b.steer * .4; }
