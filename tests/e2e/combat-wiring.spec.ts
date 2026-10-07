@@ -59,3 +59,31 @@ test('T-E05-browser @E05 arena placeholder scene, cheats, settings, screenshot a
   });
   for (const result of resets.results) { expect(result.entities).toBe(0); expect(result.geometries).toBe(resets.baseline.geometries); expect(result.textures).toBe(resets.baseline.textures); }
 });
+
+for (const weapon of ['weapon.fists', 'weapon.bat']) {
+  test(`@E05 real released clicks chain ${weapon} and hit a downed target`, async ({ page }) => {
+    await boot(page);
+    const id = await page.evaluate(async weapon => {
+      const a = window.__SS__!; await a.loadScenario('combat-arena', { seed: 1 }); a.pause();
+      a.setLoadout([weapon], ['weapon.kick']);
+      const id = a.spawn('infected.runner', { x: 1.2, z: 0 }, { hp: 40 });
+      a.input.set({ right: { down: true, held: false, up: true }, aim: { x: 1, z: 0 } });
+      await a.step(10); a.input.clear();
+      // Keep the kicked target within reach while it is down; damage/pose remain real.
+      a.teleport(id, { x: 1.2, z: 0 }); return id;
+    }, weapon);
+    for (let click = 0; click < 10; click++) {
+      const target = await page.evaluate(id => window.__SS__!.getEntity(id), id);
+      if (!target || target.health.current <= 0) break;
+      const point = await page.evaluate(id => {
+        const a = window.__SS__!, t = a.getEntity(id)!.transform;
+        return a.input.project({ x: t.x, z: t.z });
+      }, id);
+      await page.mouse.click(point.x, point.y); await page.evaluate(() => window.__SS__!.step(12));
+    }
+    const result = await page.evaluate(id => ({ health: window.__SS__!.getEntity(id)!.health.current,
+      hits: window.__SS__!.events().filter(e => e.type === 'combat.hit' && e.targetId === id && e.actionId !== 'weapon.kick') }), id);
+    expect(result.health).toBe(0); expect(result.hits.length).toBe(weapon === 'weapon.bat' ? 1 : 3);
+    expect(result.hits[0].tick).toBeLessThan(80);
+  });
+}

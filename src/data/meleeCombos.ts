@@ -8,27 +8,27 @@ export interface MeleeMove {
   name: string; windup: number; active: number; recovery: number;
   damage?: number; knockback?: number; stagger?: number; range?: number; arc?: number; maxTargets?: number;
   /** Render-only impact freeze on a connecting hit (E19 §5.6 feel, 00 §6.3). */
-  hitStopMs?: number;
+  hitStopMs?: number; knockdown?: boolean;
 }
 const move = (name: string, windup: number, active: number, recovery: number, extra: Omit<MeleeMove, 'name' | 'windup' | 'active' | 'recovery'> = {}): MeleeMove => ({ name, windup, active, recovery, ...extra });
 
-/** E19 §5.6: unarmed is one 7-move style with equal damage (9 of 9–11 → 5 hits per 40 HP
- * infected, never a one-shot); punches flinch (0.15–0.25 s, 0.3–0.7 m so the hit reads), kicks shove 1.5–2.5 m with a 0.4 s
- * stagger. The bat lands 22, its overhead finisher 30 (2 hits) with 2.5–3.5 m knockback. */
+/** Unarmed stays at 9 damage (5 hits per common infected); bat stays at 22 (2 hits).
+ * Normal beats use brief flinches and small displacement (00 §6.2). Only the
+ * explicit bat overhead finisher knocks down; unarmed kicks are normal beats. */
 export const meleeMoves: Readonly<Record<string, readonly MeleeMove[]>> = {
   'weapon.fists': [
-    move('jab', 3, 3, 10, { knockback: .3, stagger: .15, hitStopMs: 45 }),
-    move('cross', 4, 4, 10, { knockback: .45, stagger: .2, hitStopMs: 50 }),
-    move('front-kick', 6, 5, 17, { knockback: 2, stagger: .4, range: 1.55, arc: 60, hitStopMs: 90 }),
-    move('roundhouse-kick', 7, 5, 18, { knockback: 1.7, stagger: .4, range: 1.6, arc: 110, maxTargets: 2, hitStopMs: 90 }),
-    move('uppercut', 6, 5, 12, { knockback: .7, stagger: .25, hitStopMs: 50 }),
-    move('knee', 4, 4, 10, { knockback: .45, stagger: .2, range: 1.15, hitStopMs: 50 }),
-    move('spinning-backfist', 8, 5, 14, { knockback: .7, stagger: .2, range: 1.4, arc: 120, maxTargets: 2, hitStopMs: 60 }),
+    move('jab', 3, 3, 10, { knockback: .15, stagger: .15, hitStopMs: 45 }),
+    move('cross', 4, 4, 10, { knockback: .2, stagger: .2, hitStopMs: 50 }),
+    move('front-kick', 6, 5, 17, { knockback: .3, stagger: .2, range: 1.55, arc: 60, hitStopMs: 60 }),
+    move('roundhouse-kick', 7, 5, 18, { knockback: .3, stagger: .2, range: 1.6, arc: 110, maxTargets: 2, hitStopMs: 60 }),
+    move('uppercut', 6, 5, 12, { knockback: .25, stagger: .25, hitStopMs: 50 }),
+    move('knee', 4, 4, 10, { knockback: .2, stagger: .2, range: 1.45, hitStopMs: 50 }),
+    move('spinning-backfist', 8, 5, 14, { knockback: .25, stagger: .2, range: 1.4, arc: 120, maxTargets: 2, hitStopMs: 60 }),
   ],
   'weapon.bat': [
-    move('forehand', 5, 4, 11, { damage: 22, knockback: 2.6, stagger: .4, hitStopMs: 42 }),
-    move('backhand', 4, 4, 10, { damage: 22, knockback: 2.8, stagger: .4, hitStopMs: 42 }),
-    move('overhead', 9, 5, 14, { damage: 30, knockback: 3.3, stagger: .6, arc: 70, hitStopMs: 67 }),
+    move('forehand', 5, 4, 11, { damage: 22, knockback: .25, stagger: .2, hitStopMs: 42 }),
+    move('backhand', 4, 4, 10, { damage: 22, knockback: .3, stagger: .2, hitStopMs: 42 }),
+    move('overhead', 9, 5, 14, { damage: 30, knockback: 3.3, stagger: .6, knockdown: true, arc: 70, hitStopMs: 67 }),
   ],
 };
 
@@ -47,12 +47,13 @@ export function comboDefinition(def: ActionDef, combo: number): ActionDef {
     return { ...def, windup, active, recovery, cooldown: windup + active + recovery,
       damage: authored.damage === undefined ? def.damage : authored.damage * damage, knockback: authored.knockback === undefined ? def.knockback : authored.knockback * knockback, stagger: authored.stagger ?? def.stagger,
       range: authored.range ?? def.range, arc: authored.arc ?? def.arc, maxTargets: authored.maxTargets ?? def.maxTargets,
+      knockdown: authored.knockdown ?? def.knockdown,
       ...(authored.hitStopMs === undefined ? {} : { hitStopMs: authored.hitStopMs }) };
   }
   if (!meleeChains[def.id] || combo === 0) return def;
   const finisher = combo === 2;
   const duration = Math.round(Math.round((def.windup + def.active + def.recovery) * 60) * (finisher ? 1.08 : .92)) / 60;
   return { ...def, windup: duration * .2, active: .1, recovery: duration * .8 - .1, cooldown: duration,
-    damage: def.damage, range: def.range + (finisher ? .12 : .04),
+    knockdown: def.knockdown || finisher, damage: def.damage, range: def.range + (finisher ? .12 : .04),
     arc: Math.min(150, def.arc + (finisher ? -8 : 10)), knockback: def.knockback * (finisher ? 1.5 : 1), stagger: def.stagger * (finisher ? 1.5 : 1) };
 }

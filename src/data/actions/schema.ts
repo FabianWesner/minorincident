@@ -7,6 +7,8 @@ export interface ActionDef {
   effect?: ActionEffect | null; pellets?: number; distanceFalloff?: { start: number; end: number; minimum: number } | null;
   /** Render-only impact freeze for a connecting melee hit; absent = 50 ms. */
   hitStopMs?: number;
+  /** Explicit heavy finisher/special; ordinary damage never implies a knockdown. */
+  knockdown?: boolean;
   id: string; category: 'melee' | 'ranged' | 'throwable' | 'ability'; sideAgnostic: true;
   damage: number; range: number; arc: number; spread: number; maxTargets: number;
   windup: number; active: number; recovery: number; cooldown: number; fireRate: number;
@@ -25,6 +27,7 @@ export function validateAction(def: ActionDef): ActionDef {
     if (!Number.isFinite(def[key]) || def[key] < 0) throw new Error(`Invalid ${def.id}.${key}`);
   }
   for (const key of ['projectile', 'splash', 'status'] as const) if (def[key] === undefined) throw new Error(`Missing ${key}`);
+  if (def.knockdown !== undefined && typeof def.knockdown !== 'boolean') throw new Error('Invalid knockdown');
   if (def.pellets !== undefined && (!Number.isInteger(def.pellets) || def.pellets < 1 || def.pellets > 32)) throw new Error('Invalid pellets');
   if (def.distanceFalloff && (!Number.isFinite(def.distanceFalloff.start) || !Number.isFinite(def.distanceFalloff.end) || def.distanceFalloff.start < 0 || def.distanceFalloff.end <= def.distanceFalloff.start || !Number.isFinite(def.distanceFalloff.minimum) || def.distanceFalloff.minimum < 0 || def.distanceFalloff.minimum > 1)) throw new Error('Invalid distance falloff');
   if (def.effect && (!['fire', 'lure', 'smoke', 'shield', 'adrenaline', 'turret'].includes(def.effect.kind) || !Number.isFinite(def.effect.radius) || def.effect.radius <= 0 || !Number.isFinite(def.effect.duration) || def.effect.duration <= 0)) throw new Error('Invalid action effect');
