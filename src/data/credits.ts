@@ -78,6 +78,16 @@ export const audioCredits: readonly Credit[] = [
         ]
     },
     {
+        "title": "Jazz Brunch",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700074",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Jazz Brunch.mp3"
+        ]
+    },
+    {
         "title": "Zombies sound pack",
         "author": "artisticdude",
         "url": "https://opengameart.org/content/zombies-sound-pack",
