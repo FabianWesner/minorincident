@@ -113,7 +113,7 @@ export class CrowdView extends Group {
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback), capacity = role === 'crow' ? 800 : 350;
       const locomotion = new CrowdLocomotion(model, baked.clip);
-      const probe = new CrowdFigureProbe();
+      const probe = new CrowdFigureProbe(); probe.lod = lod;
       // Baking expands rigid parts to triangle soup. Index identical vertices before
       // instanced attributes are attached: same surfaces, fewer animated vertices.
       deinterleaveGeometry(baked.geometry);
@@ -209,7 +209,7 @@ export class CrowdView extends Group {
     }
     // One background tier per role protects the largest visible silhouette and
     // avoids a third active draw for every archetype in a mixed horde.
-    for (const [role, pixels] of this.rolePixels) this.roleLods.set(role, crowdLod(pixels, this.roleLods.get(role), false));
+    for (const [role, pixels] of this.rolePixels) this.roleLods.set(role, crowdLod(pixels, this.roleLods.get(role)));
     for (const e of this.nearest) heroes.add(e.id);
     for (const e of this.world.entities.iterate()) {
       if (e.id === 1 || e.faction !== 'infected' || !e.combat) continue;
