@@ -69,7 +69,9 @@ export class BicycleView extends Group {
     for (const [w, h, d, color, y] of [[.3, .24, .26, '#b98a55', .12], [.31, .045, .08, '#2aa198', .24]] as const) { const m = new Mesh(new BoxGeometry(w, h, d), new MeshBasicNodeMaterial({ color })); m.position.y = y; m.castShadow = true; parcel.add(m); }
     lean.add(parcel);
     const glint = new Mesh(new OctahedronGeometry(.22), new MeshBasicNodeMaterial({ color: '#58ffe0', depthTest: false, transparent: true, opacity: .9 })); glint.renderOrder = 80; root.add(glint);
-    this.rig = { seat: find('seat') ?? find('driverSeat'), kickstand: find('kickstand'), kick: 0, parcel, top, glint, placed: 0, root, model, wheelF, wheelR, handlebar: find('handlebar'), crank: find('crank'), pedals: [find('pedalL') ?? find('pedal_l'), find('pedalR') ?? find('pedal_r')].filter((n): n is Object3D => !!n), lean, offset: 0, wheelAngle: 0, last: null, leanAngle: 0 };
+    const seat = find('seat') ?? find('driverSeat'), saddle = new Vector3();
+    if (seat) { seat.getWorldPosition(saddle); lean.worldToLocal(saddle); }
+    this.rig = { seat: find('seat') ?? find('driverSeat'), kickstand: find('kickstand'), kick: 0, parcel, top, glint, placed: 0, root, model, wheelF, wheelR, handlebar: find('handlebar'), crank: find('crank'), pedals: [find('pedalL') ?? find('pedal_l'), find('pedalR') ?? find('pedal_r')].filter((n): n is Object3D => !!n), lean, offset: -saddle.x, wheelAngle: 0, last: null, leanAngle: 0 };
   }
   /** World position of the saddle (the `seat` node); the rider's pelvis is placed here every frame. */
   seatWorld(out: Vector3): boolean {
@@ -83,6 +85,7 @@ export class BicycleView extends Group {
     if (!bike?.bicycle) return;
     if (!this.rig) { void this.build(); return; }
     const rig = this.rig, b = bike.bicycle, t = bike.transform;
+    rig.model.position.x = b.mounted ? rig.offset : 0;
     const ground = b.mounted ? (this.world.entities.get(1)?.transform.y ?? .705) - .705 : 0; // ride over curbs and steps with the rider
     rig.root.visible = true; rig.root.position.set(t.x, Math.max(0, ground), t.z); rig.root.rotation.y = t.yaw;
     if (rig.last) { const d = Math.hypot(t.x - rig.last.x, t.z - rig.last.z); rig.wheelAngle += d; }
@@ -94,14 +97,14 @@ export class BicycleView extends Group {
     // Toy feel: lean into the turn and bob slightly with every pedal stroke while riding.
     const riding = b.mounted, speed = b.speed / 7.5;
     // Kickstand folds up while riding and is down when parked (`kickstand` node of the rebuilt model; absent on the old one).
-    rig.kick = lerp(rig.kick, riding ? 1 : 0, .2); if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * Math.PI / 2;
+    rig.kick = riding ? lerp(rig.kick, 1, .2) : 0; if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * Math.PI / 2;
     rig.leanAngle = lerp(rig.leanAngle, riding ? -b.steer * speed * .32 : 0, .2);
     rig.lean.rotation.x = rig.leanAngle; rig.lean.position.y = riding ? Math.abs(Math.sin(b.pedal * 2)) * .012 * speed : 0;
     // Parcel in the cargo box: she carries it (sim `survivor.carrying`) and is riding; it drops in over ~0.35 s.
     const carrying = !!this.world.entities.get(1)?.survivor?.carrying;
     rig.placed = riding && carrying ? Math.min(1, rig.placed + 1 / 21) : 0;
     rig.parcel.visible = rig.placed > 0;
-    if (rig.parcel.visible) { const k = rig.placed, e = 1 - (1 - k) ** 2; rig.parcel.position.set(rig.top.x, rig.top.y + (1 - e) * .7, rig.top.z); rig.parcel.scale.setScalar(.6 + .4 * e); }
+    if (rig.parcel.visible) { const k = rig.placed, e = 1 - (1 - k) ** 2; rig.parcel.position.set(rig.top.x + rig.model.position.x, rig.top.y + (1 - e) * .7, rig.top.z); rig.parcel.scale.setScalar(.6 + .4 * e); }
     // Parked bike: floating teal glint (readable from the start) and a ride prompt when close.
     const player = this.world.entities.get(1)?.transform, dist = player ? Math.hypot(player.x - t.x, player.z - t.z) : Infinity;
     rig.glint.visible = !riding && dist < 30; rig.glint.position.set(0, 1.5 + Math.sin(this.world.tick / 20) * .08, 0); rig.glint.rotation.y = this.world.tick / 25;
