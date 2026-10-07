@@ -237,7 +237,7 @@ describe('L1 v2 infected perception', () => {
     expect(searched).toBeGreaterThanOrEqual(6);
   }, 120_000);
 
-  test('T-E19-herd @E19 @E19-AC25 herd cue: an infected that sees a chasing infected turns to its heading and acquires the victim (sight only)', async () => {
+  test('T-E19-herd @E19 @E19-AC26 herd cue: an infected that sees a chasing infected turns to its heading and acquires the victim (sight only)', async () => {
     const times: number[] = [];
     for (const seed of seeds) for (const blocked of [false, true]) {
       const { w, humans } = await l1World(seed);
