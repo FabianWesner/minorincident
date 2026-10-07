@@ -85,6 +85,29 @@ test('T-E09-09b @E09-AC09 commanded stuck car starts reverse recovery after a th
     expect(s.car.entity.transform.x).toBeLessThan(0);
   } finally { s.world.dispose(); }
 });
+test('T-E09-flip-owner @E09 overturned driver recovers even with no throttle; parked cars stay put', async () => {
+  const s = await fixture();
+  try {
+    s.car.physics.body.setRotation({ x: 1, y: 0, z: 0, w: 0 }, true);
+    s.car.physics.body.setTranslation({ x: 0, y: .4, z: 0 }, true);
+    const parked = s.world.vehicles!.cars.get(3)!;
+    parked.physics.body.setRotation({ x: 1, y: 0, z: 0, w: 0 }, true);
+    parked.physics.body.setTranslation({ x: 0, y: .4, z: 12 }, true);
+    s.tick(179); expect(s.world.events.events().some(e => e.type === 'vehicle.recovering')).toBe(false);
+    s.tick(601);
+    expect(s.world.events.events().some(e => e.type === 'vehicle.recovering' && e.sourceId === 2)).toBe(true);
+    expect(s.car.physics.upsideDown).toBe(false); expect(parked.physics.upsideDown).toBe(true);
+  } finally { s.world.dispose(); }
+});
+test('T-E09-stuck-idle @E09 idle and handbraking drivers never trigger reverse recovery', async () => {
+  const s = await fixture();
+  try {
+    s.tick(240);
+    const frame = emptyInput(); frame.drive = { throttle: 1, steer: 0 }; frame.handbrake = true;
+    s.world.applyInput(frame, 'keyboard'); s.tick(240);
+    expect(s.world.events.events().some(e => e.type === 'vehicle.recovering')).toBe(false);
+  } finally { s.world.dispose(); }
+});
 
 test('T-E09-06b @E09-AC06 a boxed-in driver is forcibly ejected and attached infected are released', async () => {
   const s = await fixture();
