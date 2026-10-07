@@ -187,3 +187,4 @@ body:not(.debug-ui) [data-input-hint]{display:none!important}
 .full-ui[data-ui-screen=title] .menus{background:#162032}
 .menus>.menu-panel{position:relative;z-index:1}
 @media(orientation:portrait){.full-ui[data-ui-screen=title] .menus{align-items:start;padding-top:max(20px,4vh)}.full-ui[data-ui-screen=title] .menu-title{padding:18px 16px;gap:8px}.full-ui[data-ui-screen=title] .menu-title button{min-height:48px}}
+.lock-hint{margin:0;padding:8px 12px;border-radius:10px;background:#3a2a1f;border:2px solid #bc9c70;color:#ffe1a9;font-weight:700;text-align:center}

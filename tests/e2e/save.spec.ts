@@ -7,7 +7,7 @@ test('@E13 @E14 full menus start a saved campaign, restore settings and hand res
   test.setTimeout(180_000);
   await page.goto(`${testUrl}&ui=1`);
   await page.getByTestId('start-game').click();await page.getByTestId('character-male').click();
-  await expect(page.getByTestId('level-L2')).toBeDisabled();await page.getByTestId('level-L1').click();
+  await expect(page.getByTestId('level-L2')).toHaveAttribute('aria-disabled','true');await page.getByTestId('level-L1').click();
   await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});
   await page.getByRole('button',{name:'Begin mission',exact:true}).click();
   await page.getByTestId('pause-button').click();await page.getByTestId('pause-settings').click();
@@ -76,7 +76,7 @@ for(const scheme of ['mouse','keyboard','touch']as const)test(`T-E13-09-${scheme
   }finally{if(guard){guard.dispose();expect(guard.errors).toEqual([]);}await context?.close();}
 });
 test('@E13 level select disables locked levels and can replay an unlocked level',async({page})=>{
-  test.setTimeout(180_000);await boot(page);const save=preset('L2-default');await page.evaluate(save=>{window.__SS__!.campaign.restore(save);window.__SS__!.campaign.save();window.__SS__!.campaign.menu();},save);await page.getByRole('button',{name:'Level select',exact:true}).click();await expect(page.getByRole('button',{name:'Level 3',exact:true})).toBeDisabled();await page.getByRole('button',{name:'Level 1',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});expect(await page.evaluate(()=>window.__SS__!.getState().scenario)).toBe('L1');
+  test.setTimeout(180_000);await boot(page);const save=preset('L2-default');await page.evaluate(save=>{window.__SS__!.campaign.restore(save);window.__SS__!.campaign.save();window.__SS__!.campaign.menu();},save);await page.getByRole('button',{name:'Level select',exact:true}).click();await expect(page.getByRole('button',{name:/^Level 3, locked/})).toHaveAttribute('aria-disabled','true');await page.getByRole('button',{name:'Level 1',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});expect(await page.evaluate(()=>window.__SS__!.getState().scenario)).toBe('L1');
 });
 // Reward screens removed (PO decision 2026-10-07); the data model is kept.
 test.fixme('@E13 offered cards survive reload and continue without reroll',async({page})=>{
