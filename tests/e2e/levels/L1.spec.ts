@@ -14,8 +14,24 @@ test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enabl
 test.describe('L1 v2 real-input playthrough', () => {
   test.fixme('T-E19-13 @E19 @E19-AC13 walk modifier: run by default, hold Walk at 2.0 m/s on keyboard and mouse', async () => {});
 
+  test('T-E19-unlock @E19 result screen, real click on Continue: the unlock panel shows the bat, not a crowbar', async ({ page }) => {
+    test.setTimeout(300_000); page.setDefaultTimeout(60_000); mkdirSync(output, { recursive: true });
+    await menuStart(page);
+    await page.evaluate(() => window.__SS__!.pause());
+    // Objectives are advanced with the test cheat (the walk is covered by the playthrough); the screens are real clicks.
+    for (let i = 0; i < 12; i++) {
+      const phase = await page.evaluate(() => window.__SS__!.missions.state()!.phase);
+      if (phase === 'cinematic' || phase === 'result') break;
+      await page.evaluate(() => window.__SS__!.cheats.completeObjective());
+    }
+    for (let i = 0; i < 40 && (await page.evaluate(() => window.__SS__!.missions.state()!.phase)) !== 'result'; i++) await page.evaluate(() => window.__SS__!.step(30));
+    await page.getByRole('button', { name: 'Continue', exact: true }).click();
+    await expect(page.locator('body')).toContainText(/bat/i);
+    await expect(page.locator('body')).not.toContainText(/crowbar/i);
+  });
+
   test('T-E19-22 @E19 @E19-AC22 headless real-input playthrough from title to result, 9 photo spots, end caption', async ({ page }) => {
-    test.setTimeout(900_000); page.setDefaultTimeout(45_000); mkdirSync(output, { recursive: true }); // local headless preview needs ~19 s from Begin mission to the playable L1
+    test.setTimeout(900_000); page.setDefaultTimeout(60_000); mkdirSync(output, { recursive: true }); // local headless preview needs ~19 s from Begin mission to the playable L1
     await menuStart(page);
     await page.evaluate(() => { window.__SS__!.pause(); window.__SS__!.cheats.god(true); }); // survival aid only: all movement, interaction and combat input stays real
     const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);

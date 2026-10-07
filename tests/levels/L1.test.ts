@@ -139,6 +139,22 @@ describe('L1 v2 mission', () => {
     }
   }, HEAVY);
 
+  test('T-E19-respawn @E19 death at the door after the exits respawns at a safe street point with 2 s invulnerability', async () => {
+    for (const seed of [1, 2, 3]) {
+      const { world: w, mission } = await loadL1(seed); world = w;
+      runL1(w, mission, 'idle', { seed, stopWhen: m => m.state.l1!.exitIds.length > 0 });
+      w.player!.damage(1000, w.tick);
+      for (let i = 0; i < 400 && !w.events.events().some(e => e.type === 'checkpoint.restored'); i++) w.update();
+      const p = w.entities.get(1)!;
+      expect(w.events.events().some(e => e.type === 'checkpoint.restored'), `seed ${seed}`).toBe(true);
+      expect(p.health.current).toBe(p.health.max);
+      expect(p.survivor!.invulnerableUntil).toBeGreaterThan(w.tick + 60);
+      const close = w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 8);
+      expect(close, `seed ${seed}`).toHaveLength(0);
+      w.dispose(); world = undefined;
+    }
+  }, HEAVY);
+
   test('T-E19-09 @E19 beat 9 the director produces >= 6 infected near the garage exit and a stream ahead on the route', async () => {
     const { world: w, mission } = await load(2); w.combat!.damage.god = true;
     runL1(w, mission, 'complete', { seed: 2, stopWhen: m => m.state.steps.weapon.status === 'completed' });
