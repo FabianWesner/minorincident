@@ -73,6 +73,9 @@ export interface L1State {
   turnedIds: number[]; escapedIds: number[];
   /** Beat 9: the horde near the garage was produced; further streams spawned along the route to the fire station. */
   graceUntil: number; hordeDone: boolean; routeSpawns: number; routeNextAt: number;
+  /** PO UAT story beats: the running beat (camera framing + input lock), finished beats and the beat actors. */
+  beat?: { id: 'pickup' | 'handover' | 'garage' | 'firestation'; start: number; until: number; actor: number; fx: number; fz: number; ax: number; az: number; mx: number; mz: number } | null;
+  beatsDone?: string[]; clerkId?: number; firefighterId?: number;
 }
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number }
 export interface MissionState {

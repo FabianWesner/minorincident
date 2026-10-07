@@ -80,6 +80,7 @@ export class CharacterView extends Group {
       attachment(4, character.rig.head, [0.08, 0.11, 0.16], [0.18, 0.005, 0], 'uiDark');
       this.characters.set(variant, { ...character, animator: new KeyframeAnimator(character.rig), gear, sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
+    this.makeParcel(materials);
   }
   update(pose: SurvivorState, tick: number, alpha: number, ride?: RidePose): void {
     this.variant = pose.variant; this.tier = pose.gearTier;
@@ -88,6 +89,25 @@ export class CharacterView extends Group {
       for (const gear of character.gear) gear.visible = gear.userData.tier <= pose.gearTier;
       if (character.model.visible) character.animator.update(pose, tick, alpha, this.turn, ride);
     }
+    // E19 story: the courier parcel sits between her hands while she carries it.
+    const character = this.characters.get(this.variant);
+    if (this.parcel) this.parcel.visible = !!pose.carrying && !!character;
+    if (this.parcel?.visible && character) {
+      this.updateMatrixWorld(true);
+      const l = character.rig.handL.getWorldPosition(this.scratchA), r = character.rig.handR.getWorldPosition(this.scratchB);
+      this.parcel.position.copy(this.worldToLocal(l.add(r).multiplyScalar(.5))); this.parcel.position.y += .04;
+    }
+  }
+  private parcel: Group | null = null;
+  private readonly scratchA = new Vector3();
+  private readonly scratchB = new Vector3();
+  /** Cardboard parcel with the teal depot tape (matches the clerk's hand prop). */
+  private makeParcel(materials: Materials): void {
+    const group = new Group(); group.name = 'carried-parcel'; group.visible = false;
+    const box = new Mesh(new BoxGeometry(.3, .24, .26), materials.fromColor('parcel:card', new Color('#b98a55')));
+    const tape = new Mesh(new BoxGeometry(.31, .045, .08), materials.fromColor('parcel:tape', new Color('#2aa198'))); tape.position.y = .12;
+    for (const mesh of [box, tape]) { mesh.castShadow = true; group.add(mesh); }
+    this.parcel = group; this.add(group);
   }
   setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; }
   /** Presentation heading eases aim changes while the sim keeps its exact hit direction. */
