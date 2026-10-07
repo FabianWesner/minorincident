@@ -119,6 +119,6 @@ export function resolveCampaignMission(id: MissionId, world: DistrictWorld): Mis
   return campaignMission(id, (district, name) => {
     const d = world.districts.find(d => d.id === district), a = d?.layout.anchors[name];
     if (!d || !a) throw new Error(`Missing mission anchor: ${district}/${name}`);
-    return { x: a.position[0]+d.origin[0], z: a.position[2]+d.origin[1], radius: 2 };
+    return { x: a.position[0]+d.origin[0], z: a.position[2]+d.origin[1], radius: 2, ...a.position[1] ? { y: a.position[1] } : {} };
   });
 }
