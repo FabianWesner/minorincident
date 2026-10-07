@@ -8,7 +8,7 @@ import { resolveRig } from '../../../src/render/characters/rig';
 import { KeyframeAnimator } from '../../../src/render/characters/KeyframeAnimator';
 import { CharacterView } from '../../../src/render/characters/CharacterView';
 import { RiderContacts, useSkinnedCourier } from '../../../src/render/characters/RiderContacts';
-import { skinClips } from '../../../src/render/characters/clips';
+import { retargetClip, skinClips } from '../../../src/render/characters/clips';
 import type { SurvivorState } from '../../../src/data/survivor';
 import type { Materials } from '../../../src/render/Materials';
 import { meleeMoves } from '../../../src/data/meleeCombos';
@@ -172,12 +172,18 @@ test.each(['female', 'male'] as const)('courier %s chains every melee beat on th
   const scene = await model(`public/assets/models/char.courier-${variant}.skin.glb`); alignSkeleton(scene);
   const rig = resolveRig(scene), animator = new KeyframeAnimator(rig, skinClips), state = pose(); state.variant = variant;
   let tick = 1;
+  const legs = [rig.legL, rig.shinL, rig.legR, rig.shinR];
+  let previous: Quaternion[] | undefined;
   for (const actionId of ['weapon.fists', 'weapon.bat']) for (const [combo, move] of meleeMoves[actionId].entries()) {
     const start = tick, end = start + move.windup + move.active + move.recovery;
     state.animation = 'swing'; state.animationTick = start;
     state.attack = { actionId, combo, started: start, activeAt: start + move.windup, recoveryAt: start + move.windup + move.active, endsAt: end };
     for (; tick < end; tick++) {
       animator.update(state, tick);
+      if (previous) for (const [i, leg] of legs.entries()) {
+        expect(leg.quaternion.angleTo(previous[i]) * 180 / Math.PI, `${variant} ${actionId} ${combo} tick ${tick}`).toBeLessThan(60);
+      }
+      previous = legs.map(leg => leg.quaternion.clone());
       if (tick === state.attack.activeAt - 1) {
         const action = (animator as unknown as { actions: Map<string, AnimationAction> }).actions.get(animator.clip)!;
         expect(action.time / action.getClip().duration).toBeCloseTo(.2, 5);
@@ -189,4 +195,17 @@ test.each(['female', 'male'] as const)('courier %s chains every melee beat on th
     }
   }
   expect(animator.missingClips).toBe(0);
+});
+
+test('courier authored anticipation repair preserves the exact contact pose @E04', async () => {
+  const scene = await model('public/assets/models/char.courier-female.skin.glb'); alignSkeleton(scene);
+  for (const name of ['unarmed-front-kick', 'unarmed-roundhouse-kick', 'unarmed-knee', 'unarmed-spinning-backfist']) {
+    const before = retargetClip(scene, name), after = retargetClip(scene, name, false, skinClips);
+    for (const track of after.tracks.filter(t => t.name.endsWith('.quaternion'))) {
+      const source = before.tracks.find(t => t.name === track.name)!;
+      const a = new Quaternion().fromArray(source.InterpolantFactoryMethodLinear().evaluate(before.duration * .2));
+      const b = new Quaternion().fromArray(track.InterpolantFactoryMethodLinear().evaluate(after.duration * .2));
+      expect(a.normalize().angleTo(b.normalize()), `${name} ${track.name}`).toBeLessThan(1e-5);
+    }
+  }
 });
