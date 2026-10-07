@@ -46,6 +46,8 @@ export interface AssetDef {
   animatedNodes: string[];
   sockets: string[];
   budget: { triangles: number; materials: number; fileKB: number; drawCalls: number };
+  /** LOD0 cap for authored decay exports; base hero meshes retain their own budget. */
+  decayTriangleBudget?: number;
   decayVariants: string[];
 }
 export function atLeast(status: AssetStatus, minimum: AssetStatus): boolean {

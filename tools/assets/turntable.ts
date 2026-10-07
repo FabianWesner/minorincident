@@ -40,6 +40,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     const page = await browser.newPage({ viewport: {width:1600,height:900} });
     const target = process.argv[2];
     const lodContact = process.argv.includes('--lod-contact');
+    const decayIndex = process.argv.indexOf('--decay');
+    const decay = decayIndex >= 0 ? process.argv[decayIndex + 1] : undefined;
+    if (decayIndex >= 0 && !decay) throw new Error('--decay requires a variant');
     const outputIndex = process.argv.indexOf('--output');
     const output = outputIndex >= 0 ? process.argv[outputIndex + 1] : 'test-results/assets';
     if (!output) throw new Error('--output requires a directory');
@@ -49,9 +52,15 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     if (!selected.length && target !== '--changed') throw new Error('Usage: npm run assets:turntable -- <id>|--all|--changed (preview server must be running)');
     for (const {id} of selected) {
       if (lodContact) {
-        const directory = `${output}/${id}`; mkdirSync(directory, { recursive: true });
+        const directory = `${output}/${id}${decay ? `.${decay}` : ''}`; mkdirSync(directory, { recursive: true });
         await page.setViewportSize({ width: 480, height: 360 });
         await page.goto(`http://127.0.0.1:${process.env.E2E_PORT ?? 3313}/preview/?asset=${encodeURIComponent(id)}&test=1&renderer=webgl&production=1&inspection=1`);
+        if (decay) {
+          const select = page.locator('#decay');
+          await page.waitForFunction(() => !!window.__ASSET__);
+          await page.evaluate(() => window.__ASSET__!.ready);
+          await select.evaluate((el, value) => { (el as HTMLSelectElement).value = value; }, decay);
+        }
         await page.waitForFunction(() => !!window.__ASSET__);
         await page.evaluate(() => window.__ASSET__!.ready);
         await page.locator('#toolbar').evaluate(el => { el.style.display = 'none'; });
@@ -63,16 +72,16 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
             const info = await page.evaluate(() => window.__ASSET__!.info());
             if (info.placeholder) throw new Error(`${id}:${quality}: placeholder`);
             views.push({ quality, azimuth, triangles: info.triangles });
-            await page.evaluate(({ id, quality, azimuth }) => {
+            await page.evaluate(({ id, quality, azimuth, decay }) => {
               let label = document.querySelector<HTMLDivElement>('#lod-label');
               if (!label) { label = document.createElement('div'); label.id = 'lod-label'; label.style.cssText = 'position:fixed;top:0;left:0;color:white;background:#17151bcc;font:14px sans-serif;padding:5px'; document.body.append(label); }
-              label.textContent = `${id} ${quality === 'high' ? 'lod0' : quality} · ${azimuth}°`;
-            }, { id, quality, azimuth });
+              label.textContent = `${id}${decay ? `.${decay}` : ''} ${quality === 'high' ? 'lod0' : quality} · ${azimuth}°`;
+            }, { id, quality, azimuth, decay });
             PNG.bitblt(PNG.sync.read(await page.screenshot()), sheet, 0, 0, 480, 360, column * 480, row * 360);
           }
         }
         writeFileSync(`${directory}/lod-contact.png`, PNG.sync.write(sheet));
-        writeFileSync(`${directory}/lod-contact.json`, JSON.stringify({ id, views }, null, 2) + '\n');
+        writeFileSync(`${directory}/lod-contact.json`, JSON.stringify({ id, decay, views }, null, 2) + '\n');
         console.log(`${directory}/lod-contact.png`);
         continue;
       }
