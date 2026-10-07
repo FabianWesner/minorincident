@@ -29,7 +29,7 @@ const pos = () => { const t = world.entities.get(1)!.transform; return { x: t.x,
 describe('L1 v2 bicycle', () => {
   test('T-E19-16a @E19 @E19-AC16 mount by interact, 7.5 m/s above every infected tier, dismount keeps the bicycle in place', async () => {
     await grove();
-    const start = anchor('bike-start'); expect(bike().entity?.bicycle?.mounted).toBe(false);
+    const start = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }; expect(bike().entity?.bicycle?.mounted).toBe(false);
     teleport({ x: start.x + 1, z: start.z }); step(2); press();
     expect(bike().riding).toBe(true);
     world.setInput({ move: { x: 1, z: 0 } });
@@ -49,7 +49,7 @@ describe('L1 v2 bicycle', () => {
   });
   test('T-E19-16b @E19 @E19-AC16 stand still next to it for 0.4 s to mount; attacks are disabled while riding', async () => {
     await grove();
-    const start = anchor('bike-start'); teleport({ x: start.x + 1, z: start.z }); step(20); expect(bike().riding).toBe(false); step(10); expect(bike().riding).toBe(true);
+    const start = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }; teleport({ x: start.x + 1, z: start.z }); step(20); expect(bike().riding).toBe(false); step(10); expect(bike().riding).toBe(true);
     world.setInput({ left: { down: true, held: true, up: false }, move: { x: 1, z: 0 } }); step(30);
     expect(world.entities.get(1)!.survivor!.animation).not.toBe('attack');
   });
@@ -66,7 +66,7 @@ describe('L1 v2 bicycle', () => {
   });
   test('T-E19-16d @E19 @E19-AC16 an infected touching the rider stops the bicycle and dismounts, with zero damage', async () => {
     await grove(); world.enableInfected();
-    const start = anchor('bike-start'); teleport({ x: start.x + 1, z: start.z }); step(2); press();
+    const start = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }; teleport({ x: start.x + 1, z: start.z }); step(2); press();
     world.setInput({ move: { x: 1, z: 0 } }); step(40);
     const hp = world.entities.get(1)!.health.current, p = pos();
     world.infected!.spawn('infected.runner', { x: p.x + 1.2, z: p.z }, { state: 'idle' }); step(40);
