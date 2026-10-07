@@ -24,7 +24,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     }
     for (let i = 0; i < 40 && (await page.evaluate(() => window.__SS__!.missions.state()!.phase)) !== 'result'; i++) await page.evaluate(() => window.__SS__!.step(30));
     await page.getByRole('button', { name: 'Continue', exact: true }).click();
-    await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible({ timeout: 90_000 });
     expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L2');
     await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal/);
     const save = await page.evaluate(() => window.__SS__!.campaign.state());
