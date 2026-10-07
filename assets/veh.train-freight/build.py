@@ -167,6 +167,11 @@ for x in (1.95,9.5,-9.275,-3.325):
 box('engine hood',(4.48,0,2.82),(8.52,2.42,2.54),'slate',.085)
 box('long hood roof',(4.5,0,4.13),(8.6,2.5,.16),'slate',.06)
 for s in (-1,1):
+    if DISTANCE == 2:
+        # Preserve the broad paint bands with six closed boxes at far distance.
+        box('hood lower red band',(4.2025,s*1.265,2.08),(8.038,.045,.58),'red',0)
+        box('hood gold band',(4.2025,s*1.293,2.61),(8.038,.055,.5),'yellow',0)
+        box('hood upper red band',(4.2025,s*1.265,3.07),(8.038,.045,.42),'red',0)
     for i in range(10):
         x=.58+i*.805
         box('engine access panel',(x,s*1.23,2.61),(.78,.046,1.98),'slate',.023)
