@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { getBounds } from '@gltf-transform/functions';
+import { MeshoptEncoder, MeshoptDecoder } from 'meshoptimizer';
 import { expect, test } from 'vitest';
 import { assetIO } from '../../../tools/assets/io';
 import { validateDocument } from '../../../tools/assets/validate';
@@ -170,4 +171,49 @@ test('T-E17-aircraft @E17-AC02 helicopter preserves authored scale and rotor piv
     expect(validateDocument(doc,def,0).errors.filter(e=>e.startsWith('dimensions.') || e.startsWith('animated '))).toEqual([]);
     for(const name of ['mainRotor','tailRotor']) expect(doc.getRoot().listNodes().some(n=>n.getName()===name),`${path}:${name}`).toBe(true);
   }
+});
+
+test.each([12,14])('LOD0 budget precision %i preserves shared-accessor mesh variants and joint pivots', async bits => {
+  const {doc,def}=fixture(), body=doc.getRoot().listNodes()[0], mesh=body.getMesh()!;
+  body.setExtras({...body.getExtras(),lod0_position_bits:bits});
+  doc.getRoot().listNodes().find(n=>n.getName()==='front')!.setTranslation([6,0,0]);
+  const variant=doc.createMesh('palette variant');
+  for (const primitive of mesh.listPrimitives()) variant.addPrimitive(primitive.clone().setMaterial(doc.createMaterial('pal_variant')));
+  const node=doc.createNode('variant').setMesh(variant).setTranslation([3,1,2]);
+  doc.getRoot().listScenes()[0].addChild(node);
+  def.requiredNodes.push('variant'); def.animatedNodes.push('variant');
+  const bounds=getBounds(doc.getRoot().listScenes()[0]), pivot=node.getWorldTranslation();
+  await optimizeDocument(doc,def);
+  const io=await assetIO(), result=await io.readBinary(await io.writeBinary(doc));
+  const actual=getBounds(result.getRoot().listScenes()[0]);
+  for (const edge of ['min','max'] as const) for (let axis=0;axis<3;axis++) expect(Math.abs(actual[edge][axis]-bounds[edge][axis])).toBeLessThan(.003);
+  expect(result.getRoot().listNodes().find(n=>n.getName()==='variant')!.getWorldTranslation()).toEqual(pivot);
+  expect(result.getRoot().listMeshes().flatMap(m=>m.listPrimitives()).every(p=>p.getAttribute('POSITION')?.getNormalized()===true)).toBe(true);
+});
+
+
+test('LOD0 welding preserves every shipped normal while retaining hard seams', async () => {
+  const {doc,def}=fixture(), body=doc.getRoot().listNodes()[0];
+  body.setExtras({lod0_position_bits:14});
+  const primitive=body.getMesh()!.listPrimitives()[0], position=primitive.getAttribute('POSITION')!;
+  position.setArray(new Float32Array([0,0,0,1,0,0,0,1,1, 0,0,0,1,0,0,0,1,1, 0,0,0,1,0,0,0,1,1]));
+  const values=new Float32Array([0,0,1,0,0,1,0,0,1, .6,0,.8,.6,0,.8,.6,0,.8, .0000001,0,1,.0000002,0,1,.0000003,0,1]);
+  primitive.setAttribute('NORMAL',doc.createAccessor().setType('VEC3').setArray(values).setBuffer(position.getBuffer()));
+  const padded=new Float32Array(36);
+  for(let i=0;i<9;i++) padded.set([...values.slice(i*3,i*3+3),0],i*4);
+  const io=await assetIO();
+  const filtered=MeshoptEncoder.encodeFilterOct(padded,9,4,8), decoded=new Uint8Array(36);
+  MeshoptDecoder.decodeVertexBuffer(decoded,9,4,MeshoptEncoder.encodeVertexBuffer(filtered,9,4),'OCTAHEDRAL');
+  const expected=new Int8Array(decoded.buffer);
+  await optimizeDocument(doc,def);
+  const shipped=await io.readBinary(await io.writeBinary(doc));
+  const actual=shipped.getRoot().listMeshes()[0].listPrimitives()[0], normal=actual.getAttribute('NORMAL')!, indices=actual.getIndices()!;
+  expect(actual.getAttribute('POSITION')!.getCount()).toBe(6);
+  // Reordering may reorder triangles. Compare the normal signature of each face.
+  const signatures=[];
+  for(let face=0;face<9;face+=3) {
+    const value:number[]=[];normal.getElement(indices.getScalar(face),value);
+    signatures.push(value.map(v=>Math.round(v*127)).join(','));
+  }
+  expect(signatures.sort()).toEqual([0,3,6].map(i=>Array.from(expected.slice(i*4,i*4+3)).join(',')).sort());
 });
