@@ -8,7 +8,7 @@ export class ControlIntent {
   moveTarget: Vec2 | null = null;
   private readonly route = { path: [] as number[], goal: -1, pathIndex: 0 };
   private readonly waypoint = { x: 0, z: 0 };
-  private attack: { id: number; side: 'LEFT' | 'RIGHT'; started: boolean; until?: number } | null = null;
+  private attack: { id: number; side: 'LEFT' | 'RIGHT'; started: boolean; mouseAttack?: boolean; until?: number } | null = null;
   constructor(private readonly world: SimWorld) {}
   snapshot() { return this.moveTarget || this.attack ? structuredClone({ moveTarget: this.moveTarget, attack: this.attack }) : null; }
   attacked(side: 'LEFT' | 'RIGHT'): void { if (this.attack?.side === side) this.attack.started = true; }
@@ -34,7 +34,7 @@ export class ControlIntent {
     }
     if (raw.attackTarget) {
       const running = this.world.combat?.runner.running[raw.attackTarget.side];
-      this.attack = { ...raw.attackTarget, started: false, ...(running && this.world.tick < running.endsAt ? { until: this.world.tick + 12 } : {}) };
+      this.attack = { ...raw.attackTarget, started: false, ...(raw.mouseAttack ? { mouseAttack: true } : {}), ...(running && this.world.tick < running.endsAt ? { until: this.world.tick + 12 } : {}) };
       this.moveTarget = null;
     }
     if (!this.moveTarget && !this.attack && !raw.pointerGround && !raw.pointerTarget && raw.aimSource !== 'assist') return raw;
@@ -48,7 +48,9 @@ export class ControlIntent {
       if (!target || target.health.current <= 0 || target.hidden || target.infected?.hidden || (attack.started && !button.held) || (attack.until !== undefined && this.world.tick > attack.until && !button.held)) this.attack = null;
       else {
         const p = player.transform, t = target.transform, dx = t.x - p.x, dz = t.z - p.z, distance = Math.hypot(dx, dz);
-        const def = action(combat.runner.loadout.current(attack.side).id), range = def.range * .85;
+        const actionId = combat.runner.loadout.current(attack.side).id;
+        frame.mouseAttack = attack.mouseAttack;
+        const def = action(attack.mouseAttack && actionId === 'weapon.kick' ? 'weapon.fists' : actionId), range = def.range * .85;
         frame.aim = { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }; frame.aimPoint = { x: t.x, z: t.z };
         frame.selectorSide = attack.side;
         button.down = button.held = false;
