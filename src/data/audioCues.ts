@@ -176,7 +176,7 @@ export const eventCues = {
     'dialogue.line': 'dialogue.radio',
     'entity.spawned': 'ui.tick',
     'escort.rescued': 'stinger.objective',
-    'gate.changed': 'ui.tick',
+    'gate.changed': 'l1.crash',
     'hazard.armed': 'explosion.tell',
     'hazard.electrified': 'lamp.power-on',
     'hazard.exploded': 'explosion.boom',
