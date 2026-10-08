@@ -16,6 +16,25 @@ async function load(url: string) {
   const file = readFileSync(`public${url}`);
   return (await loader.parseAsync(file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength), '')).scene;
 }
+test('chair distance LODs preserve the reviewed solid slats instead of decimating them into spikes', async () => {
+  for (const id of ['prop.broken-chair', 'prop.lawn-chair-a', 'prop.lawn-chair-b']) {
+    const def = manifest.find(a => a.id === id)!;
+    const counts: number[] = [];
+    for (const path of [def.glb, def.lods!.lod1!, def.lods!.lod2!]) {
+      const model = await load(path.replace('public', ''));
+      let triangles = 0;
+      model.traverse(node => {
+        if (!(node instanceof Mesh)) return;
+        triangles += (node.geometry.index?.count ?? node.geometry.getAttribute('position').count) / 3;
+        node.geometry.dispose();
+        for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose();
+      });
+      counts.push(triangles);
+    }
+    expect(counts[0]).toBeGreaterThan(1000);
+    expect(counts, id).toEqual([counts[0], counts[0], counts[0]]);
+  }
+});
 test('production runtime exports are integrated, while missing exports retain their status @E17-AC09', () => {
   const files = new Set(execFileSync('git', ['ls-files', '-z'], { encoding: 'utf8' }).split('\0'));
   for (const def of manifest) if ('sourceGlb' in def && def.sourceGlb && files.has(def.sourceGlb) && files.has(def.glb)) expect(def.status, def.id).toBe('integrated');

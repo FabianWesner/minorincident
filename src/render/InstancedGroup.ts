@@ -1,5 +1,5 @@
 // Adapted from folio-2025 InstancedGroup.js by Bruno Simon (MIT), commit 41046b5.
-import { Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Mesh, Object3D } from 'three/webgpu';
+import { Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Mesh, Object3D, Vector3 } from 'three/webgpu';
 
 /** One batch per prototype mesh; nested child transforms are preserved. Geometry/material ownership stays with the caller. */
 export class InstancedGroup extends Group {
@@ -21,6 +21,18 @@ export class InstancedGroup extends Group {
       this.batches.push({ mesh, local, ...(door ? { door, base: local.clone() } : {}) }); this.add(mesh);
     });
     this.update();
+  }
+  private points?: Vector3[];
+  /** Prototype vertices in placement space, cached for drawn-ground contact probes. */
+  contactPoints(): readonly Vector3[] {
+    if (!this.points) {
+      this.points = [];
+      for (const batch of this.batches) {
+        const position = batch.mesh.geometry.getAttribute('position');
+        for (let i = 0; i < position.count; i++) this.points.push(new Vector3().fromBufferAttribute(position, i).applyMatrix4(batch.local));
+      }
+    }
+    return this.points;
   }
   /** Call only for dirty placements; no work in the render loop for static props. */
   update(indices?: readonly number[]): void {
