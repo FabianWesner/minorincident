@@ -1,23 +1,68 @@
 {
   "id": "bld.bus-stop",
-  "tier": "Side",
-  "triangles": 10930,
-  "draw_calls": 10,
-  "materials": [
-    "pal_asphalt",
-    "pal_uiDark",
-    "pal_woodWarm",
-    "pal_backpackTeal",
-    "pal_picketWhite",
-    "pal_schoolBusYellow",
-    "pal_survivorRed"
-  ],
-  "nodes_ok": true,
-  "within_budget": true,
-  "rounds": 5,
-  "webgpu_ok": true,
-  "webgl2_ok": true,
-  "gaps": [
-    "Fine mottled reference weathering simplified to geometric chips and scars."
+  "tiers": [
+    {
+      "tier": "lod0",
+      "path": "public/assets/models/bld.bus-stop.glb",
+      "triangles": 4030,
+      "materials": 6,
+      "draws": 8,
+      "bytes": 67348,
+      "bounds": {
+        "min": [
+          -1.0206976990189416,
+          1.0998182040422577e-05,
+          -2.484600067138672
+        ],
+        "max": [
+          1.0206976990189416,
+          2.6750332227824143,
+          2.484600067138672
+        ]
+      },
+      "hash": "6577bee86fdef05510e29377fba601cbb1146f2536d9bfa40713ac638aaa440c"
+    },
+    {
+      "tier": "lod1",
+      "path": "public/assets/models/bld.bus-stop.lod1.glb",
+      "triangles": 1438,
+      "materials": 6,
+      "draws": 8,
+      "bytes": 23512,
+      "bounds": {
+        "min": [
+          -1.0206976990189416,
+          1.0998182040422577e-05,
+          -2.484600067138672
+        ],
+        "max": [
+          1.0206976990189416,
+          2.6750332227824143,
+          2.484600067138672
+        ]
+      },
+      "hash": "73ceb381d44a78bc9b74300394f2546a3e3c348294b1f157ff43b24d34551bd5"
+    },
+    {
+      "tier": "lod2",
+      "path": "public/assets/models/bld.bus-stop.lod2.glb",
+      "triangles": 1230,
+      "materials": 6,
+      "draws": 8,
+      "bytes": 21496,
+      "bounds": {
+        "min": [
+          -1.0206976990189416,
+          1.0998182040422577e-05,
+          -2.484600067138672
+        ],
+        "max": [
+          1.0206976990189416,
+          2.6750332227824143,
+          2.484600067138672
+        ]
+      },
+      "hash": "83fd68ce0eb41034a12d0ea4bb3f294aa1f9dac09eea5ca12e8d0dd2f4975d99"
+    }
   ]
 }
