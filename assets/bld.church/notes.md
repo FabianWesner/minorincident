@@ -36,3 +36,5 @@ Large pieces are beveled at LOD0. LOD1 removes masonry relief and bevels, keeps 
 Run sequentially: `npm run assets:build -- <id>`, `npm run assets:pack -- <id>`, `npm run assets:validate -- --ids <id>`. Packing preserves authored files; do not use --regenerate.
 
 QA: `test-results/l4-fairhaven-civic-buildings/<id>/comparison.png`, `lod-contact.png`, `game-reference-peer.png`, `cutaway.png`. Independent orchestrator acceptance remains outstanding.
+
+Rework 10-08 (orchestrator QA): bell tower now 18.1 m tall (was 13.8; manifest dimensions.y updated, plan footprint 18 x 10.65 and all documented anchors unchanged, roof_cutaway stays at 9.66), arched open belfry with dark inner shade, steep red tile spire with cross, khaki ashlar block coursing, lit tall arched windows (shared windowGlow batch plus light:nave anchor), arched wooden door, stepped entry. Rework also fixes arch trim on negative-facing walls that used to be buried in the wall.

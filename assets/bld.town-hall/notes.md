@@ -33,3 +33,5 @@ Large pieces are beveled at LOD0. LOD1 removes masonry relief and bevels, keeps 
 Run sequentially: `npm run assets:build -- <id>`, `npm run assets:pack -- <id>`, `npm run assets:validate -- --ids <id>`. Packing preserves authored files; do not use --regenerate.
 
 QA: `test-results/l4-fairhaven-civic-buildings/<id>/comparison.png`, `lod-contact.png`, `game-reference-peer.png`, `cutaway.png`. Independent orchestrator acceptance remains outstanding.
+
+Rework 10-08 (orchestrator QA): clock cupola enlarged (4.4 m drum, four 3 m clock faces, corner quoins, cornice, pyramid roof; total height 15.35, manifest dimensions.y updated), four-column portico with entablature and tall pediment, alternating quoins, string course, ridge-along-Y hipped slate roof with courses, warm lit windows. Footprint and anchors unchanged.
