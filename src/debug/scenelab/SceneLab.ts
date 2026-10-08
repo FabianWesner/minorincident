@@ -14,8 +14,8 @@ import { seatAnchor } from '../../sim/npc/seats';
 import { CrowdFigureProbe } from '../../render/characters/CrowdFigureProbe';
 import type { TimeOfDay } from '../../data/timeOfDay';
 import { buildScene, validateSpec, type Action, type ActorSpec, type BuiltScene, type CameraSpec, type EffectSpec, type PropSpec, type SceneSpec } from './spec';
-import { boneClipping, boxOf, staticClipping, type Bone, type BoneHit, type StaticClip, type TriangleSet, type Vec3 } from './geometry';
-import { footYaw, summarizeMotion, torsoPitch, type FootSample, type MotionFrame } from './motion';
+import { bodyOverlap, boneClipping, boxOf, staticClipping, type Bone, type BoneHit, type StaticClip, type TriangleSet, type Vec3 } from './geometry';
+import { footYaw, summarizeMotion, torsoPitch, unplantedClips, type FootSample, type MotionFrame } from './motion';
 
 const assets = new Map((manifest as AssetDef[]).map(a => [a.id, a]));
 const rad = (deg: number) => deg * Math.PI / 180;
@@ -41,9 +41,13 @@ export class SceneLab {
   frame = 0;
   readonly actors = new Map<string, LabActor>();
   readonly vehicles = new Map<string, number>();
+  /** `trace`: per-frame vehicle samples (frame, x, y, z, yaw deg, pitch/roll deg of the presented body, ground under it). */
+  private vehicleTrack = new Map<string, number[][]>();
   private camera: CameraSpec | null = null;
   private perf: { drawCalls: number; triangles: number; shadowDrawCalls: number; shadowTriangles: number; stepMs: number; categories: Record<string, number> }[] = [];
   private hits = new Map<string, Hit>();
+  /** Actor pairs whose torsos/heads interpenetrate (worst depth, frame, sampled-frame count). */
+  private bodies = new Map<string, { a: string; b: string; depthCm: number; frame: number; count: number }>();
   private staticSets: TriangleSet[] | null = null;
   private staticClips: StaticClip[] | null = null;
   private visible: { frame: number; sim: Record<string, number>; drawn: Record<string, number> } | null = null;
@@ -63,7 +67,7 @@ export class SceneLab {
       if (!response.ok) throw new Error(`Layout ${spec.layout.district} not found`);
       source = await response.json() as DistrictLayout;
     }
-    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0;
+    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     await this.game.loadLevel('scene-lab', { seed: spec.seed ?? 1, tier: spec.tier, source: { composition: built.composition, layouts: [built.layout] }, setup: world => this.setup(world, spec) });
     this.game.clock.pause();
@@ -318,10 +322,11 @@ export class SceneLab {
     const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
     const sim: Record<string, number> = {}, drawn: Record<string, number> = {};
     const clip = this.frame % 3 === 0 && this.staticSets;
+    const torsos: { id: string; bones: Bone[] }[] = [];
     for (const actor of this.actors.values()) {
       const e = this.world.entities.get(actor.entity);
       sim[actor.kind] = (sim[actor.kind] ?? 0) + (e && !e.hidden && e.health.current > 0 ? 1 : 0);
-      let feet: FootSample[] = [], joints: Record<string, number[]> | null = null, forward: number[] = [1, 0, 0], lod = 'lod0', visible = false, clipName: string | undefined;
+      let feet: FootSample[] = [], joints: Record<string, number[]> | null = null, forward: number[] = [1, 0, 0], lod = 'lod0', visible = false, clipName: string | undefined, label: string | undefined;
       if (actor.kind === 'courier') {
         const c = probes.character; visible = !!c?.visible;
         const node = (name: Parameters<NonNullable<typeof c>['node']>[0]) => c?.node(name);
@@ -334,7 +339,7 @@ export class SceneLab {
           forward = [Math.cos(c.getState().yaw), 0, -Math.sin(c.getState().yaw)]; clipName = c.getState().clip;
         }
       } else if (actor.kind === 'corgi') {
-        const root = probes.npcs?.heroRoot(actor.entity); visible = !!root?.visible;
+        const root = probes.npcs?.heroRoot(actor.entity); visible = !!root?.visible; label = probes.npcs?.heroClip(actor.entity);
         if (root) { root.updateMatrixWorld(true); feet = ['legFL', 'legFR', 'legBL', 'legBR'].flatMap(n => { const leg = root.getObjectByName(n); if (!leg) return []; const paw = this.paw(leg); return [{ heel: paw, toe: paw, yaw: 0 }]; }); }
       } else {
         const f = figures.get(actor.entity);
@@ -350,12 +355,28 @@ export class SceneLab {
       if (visible) { actor.drawn++; drawn[actor.kind] = (drawn[actor.kind] ?? 0) + 1; actor.lod[lod] = (actor.lod[lod] ?? 0) + 1; }
       const shoulders = joints?.armL && joints.armR ? joints.armL.map((v, k) => (v + joints!.armR[k]) / 2) : undefined;
       const motion = e?.motion?.speed ?? Math.hypot(e?.survivor?.velocity?.x ?? 0, e?.survivor?.velocity?.z ?? 0);
-      actor.track.push({ frame: this.frame, floor: e ? this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0 : undefined, clip: clipName ?? (e?.civilian?.state === 'calm' && e.civilian.schedule?.[e.civilian.scheduleStep ?? 0]?.activity === 'sit' && e.civilian.activityUntil ? 'sit' : undefined), feet, speed: motion, torsoPitchDeg: joints?.hip && shoulders ? torsoPitch(joints.hip, shoulders, forward) : undefined });
+      actor.track.push({ frame: this.frame, floor: e ? this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0 : undefined, clip: clipName ?? (e?.civilian?.state === 'calm' && e.civilian.schedule?.[e.civilian.scheduleStep ?? 0]?.activity === 'sit' && e.civilian.activityUntil ? 'sit' : undefined), feet, speed: motion, ...(label ? { label } : {}), ...(this.spec?.trace && e ? { at: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)] } : {}), torsoPitchDeg: joints?.hip && shoulders ? torsoPitch(joints.hip, shoulders, forward) : undefined });
+      if (this.frame % 3 === 0 && joints?.hip && joints.head && shoulders && visible && e && e.health.current > 0 && !(clipName && unplantedClips.test(clipName))) {
+        // Torso, neck and the (chibi) head above its pivot: body-vs-body contact between actors (crowding, melee rings).
+        const head = joints.head, top: Vec3 = [head[0], head[1] + .2, head[2]];
+        torsos.push({ id: actor.id, bones: [{ name: 'spine', a: joints.hip as Vec3, b: shoulders as Vec3, radius: .1 }, { name: 'neck', a: shoulders as Vec3, b: head as Vec3, radius: .06 }, { name: 'head', a: head as Vec3, b: top, radius: .11 }] });
+      }
       if (clip && joints && visible) for (const h of boneClipping(this.bones(joints, shoulders), this.near(joints.hip ?? Object.values(joints)[0]), (this.spec?.clipping?.slackCm ?? 2) / 100)) {
         const key = `${actor.id}|${h.prop}|${h.bone}`, old = this.hits.get(key);
         if (!old) this.hits.set(key, { ...h, actor: actor.id, frame: this.frame, count: 1 });
         else { old.count++; if (h.crossing && !old.crossing || h.clearanceCm < old.clearanceCm) Object.assign(old, h, { frame: this.frame }); }
       }
+    }
+    if (this.spec?.trace) for (const [id, entity] of this.vehicles) {
+      const v = this.world.entities.get(entity); if (!v) continue;
+      const list = this.vehicleTrack.get(id) ?? []; this.vehicleTrack.set(id, list);
+      list.push([this.frame, +v.transform.x.toFixed(3), +v.transform.y.toFixed(3), +v.transform.z.toFixed(3), +(v.transform.yaw * 180 / Math.PI).toFixed(1), +(this.world.districts?.pavingHeight(v.transform.x, v.transform.z) ?? 0).toFixed(3)]);
+    }
+    for (let i = 0; i < torsos.length; i++) for (let j = i + 1; j < torsos.length; j++) {
+      const depth = bodyOverlap(torsos[i].bones, torsos[j].bones); if (depth <= .02) continue;   // 2 cm slack: soft contact
+      const key = `${torsos[i].id}|${torsos[j].id}`, old = this.bodies.get(key), depthCm = Math.round(depth * 1000) / 10;
+      if (!old) this.bodies.set(key, { a: torsos[i].id, b: torsos[j].id, depthCm, frame: this.frame, count: 1 });
+      else { old.count++; if (depthCm > old.depthCm) Object.assign(old, { depthCm, frame: this.frame }); }
     }
     // Sim-vs-drawn for everything in the world, not only lab actors (pooled or reanimated infected included).
     const all: Record<string, number> = {};
@@ -424,9 +445,11 @@ export class SceneLab {
     const q = (a: number[], p: number) => a.length ? Math.round(a.slice().sort((x, y) => x - y)[Math.floor((a.length - 1) * p)] * 100) / 100 : null;
     const band = (pick: (p: SceneLab['perf'][number]) => number) => { const a = this.perf.map(pick); return { p50: q(a, .5), p95: q(a, .95), max: q(a, 1) }; };
     const actors = Object.fromEntries([...this.actors.values()].map(a => { const e = this.world.entities.get(a.entity); return [a.id, { kind: a.kind, entity: a.entity, position: e ? [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)] : null, yawDeg: e ? +(e.transform.yaw * 180 / Math.PI).toFixed(1) : null,
-      state: e?.civilian?.state ?? e?.infected?.state ?? e?.companion?.state ?? (a.kind === 'courier' ? e?.survivor?.animation : undefined) ?? null, drawnFrames: a.drawn, inViewFrames: a.inView, missedInViewFrames: a.missed, lod: a.lod, motion: summarizeMotion(a.track) }]; }));
+      state: e?.civilian?.state ?? e?.infected?.state ?? e?.companion?.state ?? (a.kind === 'courier' ? e?.survivor?.animation : undefined) ?? null, drawnFrames: a.drawn, inViewFrames: a.inView, missedInViewFrames: a.missed, lod: a.lod, motion: summarizeMotion(a.track), ...(this.spec?.trace ? { track: a.track.map(f => ({ ...f, feet: f.feet.map(c => ({ heel: c.heel.map(v => +v.toFixed(3)), toe: c.toe.map(v => +v.toFixed(3)) })) })) } : {}) }]; }));
     const clipping = this.staticSets ? await this.clipping() : null;
+    const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
     return { scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
+      bodies, ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack) } : {}),
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), health: Math.round(e.health.current), speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),

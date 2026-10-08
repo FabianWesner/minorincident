@@ -1,5 +1,5 @@
 // Runtime adaptation of E17 bake-crowd.ts and Bruno InstancedGroup.js (MIT).
-import { BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, type Group, type Object3D, type MeshBasicMaterial } from 'three';
+import { BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { characterNodes } from '../../data/survivor';
 import { authoredClips, sampleClip, strideScale } from './clips';
@@ -10,6 +10,9 @@ export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'w
 export const civilianClips = [...infectedClips, 'npc-sit', 'npc-sit-down', 'npc-stand-up', 'npc-gesture', 'npc-look-around', 'npc-water', 'npc-carry', 'npc-cane',
   'npc-give', 'npc-wave', 'npc-glance', 'npc-sign', 'npc-wave-in'] as const;
 export const framesPerClip = 24;
+/** Clips whose feet legitimately leave the floor plane (seated, knocked down, rising, dying): Scene Lab's rule. */
+const unplantedClips = /death|die|knockdown|flung|get-up|crawl|collapse|rise|sit|stand-up|grabbed|bitten|down/;
+const sole = new Vector3();
 /** Bake once at level load: merged color geometry, part indices and the shared authored glTF rigid-part actions. */
 export function bakeInfected(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips) {
   const rig = {} as CharacterRig;
@@ -23,13 +26,24 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
   const rest = parts.map((part) => ({ position: part.position.clone(), rotation: part.rotation.clone() }));
   const matrices = new Float32Array(clipNames.length * framesPerClip * parts.length * 16);
   let matrixOffset = 0;
+  // Standing and gait frames keep both soles on the floor (QA: infected feet 2-6 cm under the floor in the hunched
+  // idle and lurch): retargeted onto shorter or differently proportioned rigs, the authored crouch can put a heel or toe
+  // under the ground. Same heel/toe points as the footwork solver and CrowdFigureProbe; the pelvis rises by the deficit.
+  const feet = [rig.footL, rig.footR], soleHeight = (root.updateMatrixWorld(true), rig.footL.getWorldPosition(sole).y / rig.hip.parent!.getWorldScale(sole).y);
+  const lowestSole = () => Math.min(...feet.flatMap(foot => [-.05, .085].map(x => sole.set(x, -soleHeight, 0).applyMatrix4(foot.matrixWorld).y)));
+  const floor = lowestSole(), animalRig = !!root.getObjectByName('body');
   for (const clip of clipNames) for (let frame = 0; frame < framesPerClip; frame++) {
     for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
     const t = frame / (framesPerClip - 1);
     const animal = !!root.getObjectByName('body');
     const name = animal ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : root.getObjectByName('wingL') ? 'infected-flight' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
     sampleClip(root, name, t * authoredClips.get(name)!.duration);
-    root.updateMatrixWorld(true); for (const part of parts) { part.matrixWorld.toArray(matrices, matrixOffset); matrixOffset += 16; }
+    root.updateMatrixWorld(true);
+    if (!animalRig && soleHeight > 0 && !unplantedClips.test(clip)) {
+      const deficit = floor - lowestSole();
+      if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; root.updateMatrixWorld(true); }
+    }
+    for (const part of parts) { part.matrixWorld.toArray(matrices, matrixOffset); matrixOffset += 16; }
   }
   for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
   root.updateMatrixWorld(true);

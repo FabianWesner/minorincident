@@ -52,7 +52,7 @@ export class QuadrupedAnimator {
     if (strides[name]) { this.action.time = phase * this.action.getClip().duration; this.action.setEffectiveTimeScale(0); }
     else this.action.setEffectiveTimeScale(1);
     this.contacts.restore(); this.mixer.update(dt);
-    if (strides[name]) this.contacts.update(phase, cadenceStride(name, strideScale(this.root), speed), name); else this.contacts.reset();
+    if (strides[name]) this.contacts.update(phase, cadenceStride(name, strideScale(this.root), speed), name, dt); else this.contacts.hold(dt);
     // Head look: yaw toward the threat, capped at ±50°, eased over ~200 ms.
     let target = 0;
     if (warning?.toward && warning.stage !== 'nervous' && warning.stage !== 'none') {
