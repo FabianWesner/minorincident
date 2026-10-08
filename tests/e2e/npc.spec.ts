@@ -21,10 +21,19 @@ test('T-E08-10-browser @E08 @E08-AC10 placeholder corgi turntable and runtime no
   }
 });
 test('@E08 ambient civilian rendering stays instanced and inside frame geometry budgets', async ({ page }) => {
-  await boot(page); await page.evaluate(async () => { const api = window.__SS__!; await api.loadScenario('civ-street'); api.pause(); await api.screenshotReady(); });
-  const result = await page.evaluate(() => ({ crowd: window.__SS__!.getState().render.npcs!.civilians, perf: window.__SS__!.perf() }));
-  expect(result.crowd.instances).toBe(30); expect(result.crowd.draws).toBeLessThanOrEqual(4); expect(result.perf.drawCalls).toBeLessThan(600); expect(result.perf.triangles).toBeLessThan(1500000);
-  writeFileSync(`${output}/render-perf.json`, JSON.stringify(result, null, 2));
+  // The 30 street civilians stand in a 90 m grid north of the default view; since E18 the crowd frustum-culls, so the
+  // camera looks at the street and every civilian in view must be drawn (the old count of 30 included culled figures).
+  await boot(page); await page.evaluate(async () => { const api = window.__SS__!; await api.loadScenario('civ-street'); api.pause(); api.camera.cinematic({ position: [-2, 70, 16], target: [-2, 0, -34] }, true); await api.screenshotReady(); });
+  const result = await page.evaluate(() => {
+    const api = window.__SS__!, civilians = api.query({ kind: 'civilian' });
+    const inView = civilians.filter(e => { const p = api.camera.project(e.transform.x, e.transform.y, e.transform.z); return Math.abs(p[0]) < .95 && Math.abs(p[1]) < .95 && p[2] < 1; }).length;
+    return { civilians: civilians.length, inView, models: new Set(civilians.map(e => e.civilian?.model)).size, crowd: api.getState().render.npcs!.civilians, perf: api.perf() };
+  });
+  expect(result.civilians).toBe(30); expect(result.inView, 'civilians in the street view').toBeGreaterThanOrEqual(20);
+  expect(result.crowd.instances).toBeGreaterThanOrEqual(result.inView); expect(result.crowd.instances).toBeLessThanOrEqual(30);
+  // One instanced draw per silhouette and pixel band (E18 near/far LOD), never one per person.
+  expect(result.crowd.draws).toBeLessThanOrEqual(result.models * 2); expect(result.perf.drawCalls).toBeLessThan(600); expect(result.perf.triangles).toBeLessThan(1500000);
+  writeFileSync(`${output}/render-perf.json`, JSON.stringify({ ...result, crowd: { ...result.crowd, figures: result.crowd.figures.length } }, null, 2));
 });
 test('T-E08-16 @E08 @E08-AC16 five down/veins/eyes/rising frames show civilian turning', async ({ page }) => {
   await boot(page); const setup = await page.evaluate(async () => {
