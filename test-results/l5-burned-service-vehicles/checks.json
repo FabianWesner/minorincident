@@ -9,5 +9,12 @@
   "budgetProbe": "passed",
   "determinism": "4/4 geometry hashes match",
   "runtimeGameplayChanges": false,
-  "unit": "remote run pending"
+  "unit": {
+    "status": "blocked before test execution",
+    "testsRun": 0,
+    "remoteCommand": "sh tools/remote/run.sh . -- npm run test:unit -- --maxWorkers=4",
+    "rescheduledCommand": "MI_SCALE_WAIT=1 sh tools/remote/run.sh . -- npm run test:unit -- --maxWorkers=4",
+    "localFallbackCommand": "sh tools/sim-lock.sh npm run test:unit -- --maxWorkers=2",
+    "reason": "All remote slots occupied; expansion rejected with Primary IP limit exceeded. Both local simulation slots held by other jobs for approximately 50 and 39 minutes. Only this lane queued attempts were canceled; no limit bypassed and no other jobs stopped."
+  }
 }

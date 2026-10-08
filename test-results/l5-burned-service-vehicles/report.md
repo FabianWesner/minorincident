@@ -42,9 +42,11 @@ npm run assets:validate
 npm run typecheck
 npm run lint
 sh tools/remote/run.sh . -- npm run test:unit -- --maxWorkers=4
+MI_SCALE_WAIT=1 sh tools/remote/run.sh . -- npm run test:unit -- --maxWorkers=4
+sh tools/sim-lock.sh npm run test:unit -- --maxWorkers=2
 ```
 
-Final full asset validation: **862 tier reports passed, zero failed**. All 12 new burned tiers pass their 15k/6k/2k and eight-draw caps. Typecheck and lint pass. Each raw geometry hash matches its repeat Blender build (4/4); both final glazing recipes were rebuilt after the correction. A direct GLB audit checks total draws including wheels, materials, bytes, dark light state and inherited anchor positions against each integrated native tier. A deliberate zero-draw burned-only police budget rejects all three burned tiers while leaving six intact/wrecked tiers valid. Unit result is recorded below when the queued remote run completes. Smoke and epic verification do not apply to this asset-only delivery.
+Final full asset validation: **862 tier reports passed, zero failed**. All 12 new burned tiers pass their 15k/6k/2k and eight-draw caps. Typecheck and lint pass. Each raw geometry hash matches its repeat Blender build (4/4); both final glazing recipes were rebuilt after the correction. A direct GLB audit checks total draws including wheels, materials, bytes, dark light state and inherited anchor positions against each integrated native tier. A deliberate zero-draw burned-only police budget rejects all three burned tiers while leaving six intact/wrecked tiers valid. The unit suite was attempted remotely and via the shared local lock, but neither obtained capacity; see the blocker below. Smoke and epic verification do not apply to this asset-only delivery.
 
 ## Evidence
 
@@ -88,7 +90,12 @@ Population minimums remain level placements. The bus's survivor cue/interaction 
 - `9f5d558f` — per-variant delivery budget enforcement.
 - `3845387b` — native-derived burned meshes, wrappers and registration.
 - `6a798078` — remaining bus/ambulance pane removal and lane reviews.
+- `ed74e7ff` — retained QA sheets and delivery audits.
 
 ## Unit result
 
-Pending remote runner slot.
+**Blocked before execution: zero unit tests run.**
+
+The first complete remote attempt spent 807 seconds waiting after its 188-second sync; no test process started. It was canceled only for this lane and rescheduled through the existing four-runner pool with a reduced scale-up wait. The cloud provider rejected expansion in all offered regions with `resource_limit_exceeded: Primary IP limit exceeded`. A conservative local fallback through `tools/sim-lock.sh` with two workers also could not acquire capacity: existing holders on both simulation slots had elapsed times of about 50 and 39 minutes (PIDs 9751 and 19408). Those jobs were left untouched. This lane's own pending attempts were canceled to avoid unowned background work after handoff.
+
+Required next check when shared capacity is available: `sh tools/remote/run.sh . -- npm run test:unit -- --maxWorkers=4` (or the locked two-worker fallback if remote capacity remains unavailable). This is an outstanding validation blocker; the suite is not claimed green. No asset delivery blocker remains, but complete validation and independent orchestrator visual acceptance are pending.
