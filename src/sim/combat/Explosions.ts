@@ -1,5 +1,6 @@
 // Radial impulse with upward bias, mass-scaled linear falloff, applied one tick later, and bullet time:
 // adapted from Bruno Simon folio-2025 Explosions.js + Time.js bulletTime (MIT, 41046b5). Ticker waits become sim ticks.
+import { downed } from './Damage';
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { SimPhase } from '../../core/EventBus';
 import { blastDamage, explosionDef, type BlastClass, type ExplosionDef } from '../../data/explosions';
@@ -66,7 +67,7 @@ export class Explosions {
     // Copy once: hit events chain into hazards that query neighbours themselves.
     for (const id of [...world.spatial.query(this.area, this.nearby)]) {
       const target = world.entities.get(id);
-      if (!target || id === sourceId || target.barricade || target.health.current <= 0 || target.hidden || target.attachedTo !== undefined) continue;
+      if (!target || id === sourceId || target.barricade || (target.health.current <= 0 && !downed(target)) || target.hidden || target.attachedTo !== undefined) continue;
       const dx = target.transform.x - at.x, dz = target.transform.z - at.z, distance = Math.hypot(dx, dz);
       if (distance > r || (query && !this.visible(query, at, target.transform, target.id))) continue;
       const amount = blastDamage(d, distance, r), scale = d.damage ? amount / d.damage : 0;

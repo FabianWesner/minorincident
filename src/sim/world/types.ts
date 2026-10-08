@@ -67,7 +67,7 @@ export type GameEvent = import('../interact/Barricades').BarricadeEvent
   | { tick: number; type: 'infected.prop-thrown'; sourceId: number; propId: number; attackId: number }
   | { tick: number; type: 'telegraph'; sourceId: number; attackId: number; special: string; duration: number }
   | { tick: number; type: 'infected.attack'; sourceId: number; attackId: number; targetId: number; special: string; amount: number }
-  | { tick: number; type: 'infected.revived' | 'infected.leg-lost'; sourceId: number; targetId: number }
+  | { tick: number; type: 'infected.revived' | 'infected.leg-lost' | 'infected.groan' | 'infected.recovered'; sourceId: number; targetId: number }
 
   | import('../missions/events').MissionEvent
   | import('../outbreak/types').OutbreakEvent
@@ -99,7 +99,7 @@ export type GameEvent = import('../interact/Barricades').BarricadeEvent
   | { tick: number; type: 'combat.effect'; sourceId: number; actionId: string; kind: import('../../data/actions/schema').ActionEffect['kind']; position: { x: number; y: number; z: number }; radius: number; expires: number }
   | { tick: number; type: 'pickup.collected'; sourceId: number; pickupId: number; side: import('../../data/actions/schema').Side; actionId: string; replaced: string | null }
   | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; combo?: number; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number }; style?: 'roundhouse' }
-  | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number; direction?: { x: number; z: number }; knockback?: number; cause?: 'vehicle'; damageType?: import('../combat/Damage').DamageEvent['type'] }
+  | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number; direction?: { x: number; z: number }; knockback?: number; cause?: 'vehicle'; damageType?: import('../combat/Damage').DamageEvent['type']; /** combat.kill of an infected that only went down (PO "Infected recover"): it gets up at this tick. */ downed?: number }
   | { tick: number; type: 'combat.hit-stop'; sourceId: number; durationMs: number }
   | { tick: number; type: 'loadout.switched'; sourceId: number; side: import('../../data/actions/schema').Side; actionId: string }
   | { tick: number; type: 'combat.landed'; sourceId: number; attackId: number; position: { x: number; y: number; z: number } }
