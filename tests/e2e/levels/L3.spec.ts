@@ -46,8 +46,9 @@ function helpers(page: Page) {
     await click();
     for (let i = 0; i < 600; i++) {
       await step(20);
+      if (done && await done()) return;
       const p = (await player()).transform;
-      if (Math.hypot(target.x - p.x, target.z - p.z) <= stop || (done && await done())) return;
+      if (Math.hypot(target.x - p.x, target.z - p.z) <= stop) return;
       if ((await player()).health.current > 0 && await fightNearby(range)) await click();
       else if (i % 10 === 9) await click();
     }
@@ -87,7 +88,8 @@ test.describe('L3 The Police Collapse in the browser', () => {
     for (let i = 0; i < 400 && !(await mission()).l3!.fallbackAt; i++) {
       if (!await fightNearby(14)) await step(15);
       const m = await mission();
-      if (!attackShot && m.l3!.waveIds.length >= 12) { await snap('l3-station-attack'); attackShot = true; }
+      const inYard = await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && e.transform.x > -160 && e.transform.x < -118 && Math.abs(e.transform.z) < 24).length);
+      if (!attackShot && m.l3!.waveIds.length >= 12 && inYard >= 5) { await snap('l3-station-attack'); attackShot = true; }
     }
     if (!attackShot) await snap('l3-station-attack');
     expect((await mission()).l3!.fallbackAt).toBeGreaterThan(0);
@@ -96,18 +98,22 @@ test.describe('L3 The Police Collapse in the browser', () => {
     const route: P[] = [{ x: -126, z: 0 }];
     for (let x = -110; x <= 120; x += 15) route.push({ x, z: 0 });
     route.push({ x: 129, z: 0 }, { x: 143.5, z: 0 });
+    // Crossing the zone line ends L3 and the campaign hands over to L4: keep the last L3 state, stop touching the world then.
+    const inL3 = () => page.evaluate(() => window.__SS__!.getState().scenario === 'L3' && window.__SS__!.missions.state()?.phase === 'playing');
+    let last = await mission();
     for (const wp of route) {
-      await go(wp, 2, async () => { const m = await mission(); return m.phase !== 'playing'; }, 9);
+      await go(wp, 2, async () => { if (!await inL3()) return true; last = await mission(); return false; }, 9);
+      if (!await inL3()) break;
       const m = await mission(), p = (await player()).transform;
       if (!h.shots.has('l3-squad-strong') && p.x > -100 && p.x < -80) await snap('l3-squad-strong');
       if (!h.shots.has('l3-commerce-street') && p.x > 5) { await snap('l3-commerce-street'); await snap('l3-oak-avenue'); await snap('l3-grove-boulevard'); }
       if (!h.shots.has('l3-alone') && p.x > 90 && m.l3!.squad.length <= 1) await snap('l3-alone');
       if (!h.shots.has('l3-army-checkpoint') && p.x > 126) await snap('l3-army-checkpoint');
-      if (m.phase !== 'playing') break;
     }
-    for (const name of ['l3-squad-strong', 'l3-alone', 'l3-army-checkpoint']) if (!h.shots.has(name)) await snap(name);
-    for (let i = 0; i < 60 && (await mission()).phase === 'playing'; i++) await step(15);
-    const final = await mission();
+    for (const name of ['l3-squad-strong', 'l3-alone', 'l3-army-checkpoint']) if (!h.shots.has(name) && await inL3()) await snap(name);
+    for (let i = 0; i < 60 && await inL3(); i++) { last = await mission(); await step(15); }
+    const scenario = await page.evaluate(() => window.__SS__!.getState().scenario), now = await mission();
+    const final = scenario === 'L3' ? now : { ...last, phase: now && scenario === 'L4' ? 'progression' : last.phase, l3: { ...last.l3!, crossedAt: last.l3!.crossedAt || (scenario === 'L4' ? 1 : 0) } };
     writeFileSync(`${output}/browser-real-input.json`, JSON.stringify({ phase: final.phase, stats: final.stats, l3: { fallbackCause: final.l3!.fallbackCause, squadLost: final.l3!.lost, squad: final.l3!.squad.length }, shots: [...h.shots] }, null, 2) + '\n');
     expect(['result', 'progression']).toContain(final.phase);
     expect(final.l3!.crossedAt).toBeGreaterThan(0);

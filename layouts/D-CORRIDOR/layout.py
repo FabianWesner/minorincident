@@ -83,6 +83,10 @@ def lots(x0, x1, outer=False):
 
 # ------------------------------------------------------------------------------------------------ shop rows
 SHOPS = [('bld.mainstreet-brick', 1.0), ('bld.joes-diner', 1.0), ('bld.maple-hardware', 1.0)]
+# Rows on the camera side of a street (their fronts face north, toward the street and away from the camera) stay low so the
+# game camera, which looks from the south-east, sees the carriageway over them (pharmacies, a supermarket, the corner cafe).
+LOW_SHOPS = [('bld.pharmacy', 1.0), ('bld.supermarket', 1.0), ('bld.pharmacy', 1.0), ('bld.cafe-corner', 1.0)]
+LOW_BLVD = [('bld.pharmacy', 1.0), ('bld.supermarket', 1.0)]
 def shop_row(street, x0, x1, facing, line, rear, assets=SHOPS, gap=.1, seed=0, outer=False):
     """Shops facing N or S with their front on `line`, side by side. `rear`: z of the back line. The row is one solid
     terrace: brick party walls fill the slots between the shops' collision footprints and the lot ends, and a low brick
@@ -123,7 +127,8 @@ def shop_row(street, x0, x1, facing, line, rear, assets=SHOPS, gap=.1, seed=0, o
             if e1 - e0 <= 1.4:
                 g.solid('party-wall', 'brick', [e1 - e0 + .04, 3.0, zb - za], [(e0 + e1) / 2, 1.5, (za + zb) / 2])
             else:
-                g.fence('privacy', e0 + (.36 if e0 <= lx0 + .01 else .1), front + sgn * .2, e1 - (.36 if e1 >= lx1 - .01 else .1), front + sgn * .2)
+                # clear of the neighbour's visual box too (eaves and signs overhang its collision footprint)
+                g.fence('privacy', e0 + .36, front + sgn * .2, e1 - .36, front + sgn * .2)
                 g.fence('privacy', lx0 + .15 if e0 <= lx0 + .01 else lx1 - .15, za, lx0 + .15 if e0 <= lx0 + .01 else lx1 - .15, zb)
         # overgrown back gardens between each footprint's back and the rear line (low shrub mass, not walkable)
         for xs0, xs1, back in prints:
@@ -140,13 +145,13 @@ HOUSE = {  # kind -> (asset, scale, door local x, door local z)   (as D-GROVE)
     'e': ('bld.house-e', .85, 4.7 * .85 + .2, 0.0),
 }
 KINDS = ['a', 'd', 'e', 'c', 'e', 'a', 'd', 'c']
-def house_row(x0, x1, facing, line, rear, seed=0):
+def house_row(x0, x1, facing, line, rear, seed=0, outer=False):
     """Houses on fenced lots facing N or S: picket front fence with a gap at the door path, privacy fences on lot lines and the
     rear line, lawns and a tree behind. Fewer garden toys than L1: the gardens are trampled (W2/W3)."""
     sgn = 1 if facing == 'N' else -1
     yaw = FACE_YAW[facing]
     out = []
-    for lx0, lx1 in lots(x0, x1):
+    for lx0, lx1 in lots(x0, x1, outer):
         span = lx1 - lx0
         ks, widths = [], []
         k = seed
@@ -194,15 +199,15 @@ NORTH = [('bld.maple-hardware', 1.0), ('bld.mainstreet-brick', 1.0), ('bld.super
 shop_row('blvd', XS + 4.6, EAST, 'S', BN, -45.3, NORTH, seed=0, outer=True)
 g.fence('privacy', XS + 4.6, -45.6, EAST, -45.6)
 # Block N: Boulevard south side (facing N) back to back with Commerce north side (facing S); one service fence between.
-shop_row('blvd', XS + 4.6, EAST, 'N', BS, -13.7, SHOPS, seed=1)
+shop_row('blvd', XS + 4.6, EAST, 'N', BS, -13.7, LOW_BLVD, seed=1)
 shop_row('commerce', XS + 4.6, EAST, 'S', CN, -13.3, SHOPS, seed=2)
 for lx0, lx1 in lots(XS + 4.6, EAST):
     g.fence('privacy', lx0 + .3, -13.5, lx1 - .3, -13.5)
 # Block S: Commerce south side (facing N) back to back with Oak north houses (facing S).
-shop_row('commerce', XS + 4.6, EAST, 'N', CS, 14.2, SHOPS, seed=0)
+shop_row('commerce', XS + 4.6, EAST, 'N', CS, 14.2, LOW_SHOPS, seed=0)
 house_row(XS + 4.6, EAST, 'S', ON, 14.4, seed=0)
 # South of Oak: houses facing north.
-house_row(XS + 4.6, EAST, 'N', OS, 45.5, seed=3)
+house_row(XS + 4.6, EAST, 'N', OS, 45.5, seed=3, outer=True)
 
 # ------------------------------------------------------------------------------------------------ the station yard (west)
 YX0, YX1, YZ0, YZ1 = -160.0, -126.0, -22.0, 22.0
@@ -220,7 +225,7 @@ G.security_fence(g, YX1, YZ0, YX1, -5.0)
 G.security_fence(g, YX1, 5.0, YX1, YZ1)
 G.security_fence(g, YX0, YZ0, YX0, -5.0)
 G.security_fence(g, YX0, 5.0, YX0, YZ1)
-g.path(-148.0, 4.5, -128.0, 20.0, 'uiDark')                # parking apron south of Commerce
+g.path(-148.0, 4.5, -128.0, 20.0, 'asphalt')               # parking apron south of Commerce
 g.path(ST_X + sdx / 2, -4.5, -128.0, -20.0, 'sidewalk')    # forecourt in front of the station
 # Bridge gate (closed behind the player): the L2 checkpoint seen from the inside.
 g.collide_only('bridge-gate', [.3, 2.2, 10.6], [-161.0, 1.1, 0.0])
@@ -274,6 +279,9 @@ g.fence('privacy', AX + .6, -45.6, 172.0, -45.6)
 g.fence('privacy', AX + .6, 45.6, 172.0, 45.6)
 g.place('kit.highway-onramp', 157.5, 31.0, 0.0, 1.0, check=False)
 g.fence('privacy', 171.4, -45.6, 171.4, 21.8)
+# the on-ramp leaves the map: a fence along its foot and its low end closes the corner under it
+g.fence('privacy', 143.0, 21.3, 171.1, 21.3)
+g.fence('privacy', 143.0, 21.6, 143.0, 45.3)
 
 # ------------------------------------------------------------------------------------------------ north/south/east edges
 # rear fences of the outer rows already close z = +-45; close the strips between the rows and the bounds at the street ends
