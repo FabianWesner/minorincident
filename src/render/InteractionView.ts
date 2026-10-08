@@ -21,7 +21,8 @@ export function isMissionInteraction(world: SimWorld, entity: EntitySnapshot): b
   const mission = world.missions;
   if (!mission || mission.state.phase !== 'playing') return false;
   return mission.def.steps.some(step => {
-    if (step.optional || mission.state.steps[step.id]?.status !== 'active' || step.complete.kind !== 'interact') return false;
+    const axeRack = step.id === 'axe' && step.complete.kind === 'interact' && step.complete.anchor === 'l2-axe-rack';
+    if ((step.optional && !axeRack) || mission.state.steps[step.id]?.status !== 'active' || step.complete.kind !== 'interact') return false;
     const anchor = mission.def.anchors[step.complete.anchor];
     return !!anchor && Math.hypot(anchor.x - entity.transform.x, anchor.z - entity.transform.z) <= 0.75;
   });

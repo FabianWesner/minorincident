@@ -7,18 +7,21 @@ test('parked car interactables get no easter-egg ring while the active objective
   // PO requested that optional car and other easter-egg interactions stop drawing ground rings.
   const world = {
     missions: {
-      state: { phase: 'playing', steps: { board: { status: 'active' }, optional: { status: 'active' } } },
+      state: { phase: 'playing', steps: { board: { status: 'active' }, optional: { status: 'active' }, axe: { status: 'active' } } },
       def: {
         steps: [
           { id: 'board', complete: { kind: 'interact', anchor: 'truck' } },
           { id: 'optional', complete: { kind: 'interact', anchor: 'car' }, optional: true },
+          { id: 'axe', complete: { kind: 'interact', anchor: 'l2-axe-rack' }, optional: true },
         ],
-        anchors: { truck: { x: 4, z: 2 }, car: { x: -8, z: 0 } },
+        anchors: { truck: { x: 4, z: 2 }, car: { x: -8, z: 0 }, 'l2-axe-rack': { x: 14, z: 0 } },
       },
     },
   } as unknown as SimWorld;
   const car = { transform: { x: -8, z: 0 } } as EntitySnapshot;
   const objective = { transform: { x: 4, z: 2 } } as EntitySnapshot;
+  const axeRack = { transform: { x: 14, z: 0 } } as EntitySnapshot;
   expect(isMissionInteraction(world, car)).toBe(false);
   expect(isMissionInteraction(world, objective)).toBe(true);
+  expect(isMissionInteraction(world, axeRack)).toBe(true);
 });
