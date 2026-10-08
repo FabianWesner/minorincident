@@ -122,6 +122,24 @@ export class BicycleView extends Group {
     if (!rig || !l || !r) return false;
     rig.root.updateMatrixWorld(true); l.getWorldPosition(left); r.getWorldPosition(right); return true;
   }
+  /** Crank, steer, lean and speed step once per sim tick: present them between the last two ticks at the render alpha
+   * (unsampled ticks of a multi-tick frame reconstructed linearly, as in MotionPresentation). */
+  private readonly rideTicks = { tick: -1, from: { pedal: 0, steer: 0, lean: 0, speed: 0 }, to: { pedal: 0, steer: 0, lean: 0, speed: 0 } };
+  private readonly rideFrame = { pedal: 0, steer: 0, lean: 0, speed: 0 };
+  private presentRide(b: { pedal: number; steer: number; lean?: number; speed: number }, alpha: number) {
+    const s = this.rideTicks, tick = this.world.tick, now = { pedal: b.pedal, steer: b.steer, lean: b.lean ?? 0, speed: b.speed };
+    if (s.tick < 0 || tick < s.tick || tick - s.tick > 10) { Object.assign(s.from, now); Object.assign(s.to, now); s.tick = tick; }
+    else if (tick !== s.tick) {
+      const k = (tick - s.tick - 1) / (tick - s.tick);
+      for (const key of ['pedal', 'steer', 'lean', 'speed'] as const) s.from[key] = s.to[key] + (now[key] - s.to[key]) * k;
+      Object.assign(s.to, now); s.tick = tick;
+    }
+    const a = Math.max(0, Math.min(1, alpha));
+    for (const key of ['pedal', 'steer', 'lean', 'speed'] as const) this.rideFrame[key] = lerp(s.from[key], s.to[key], a);
+    return this.rideFrame;
+  }
+  /** Crank phase and steer as presented this frame (the rider's pedalling clip follows the drawn crank). */
+  get presentedRide(): { pedal: number; steer: number } | null { return this.rideTicks.tick < 0 ? null : this.rideFrame; }
   private readonly prompt = document.createElement('div');
   private readonly projection = new Vector3();
   private readonly presented = { x: 0, y: 0, z: 0, yaw: 0 };
@@ -130,8 +148,12 @@ export class BicycleView extends Group {
     if (!bike?.bicycle) return;
     if (!this.rig) { void this.build(); return; }
     // Ridden, the sim pins the bike onto the rider after physics: render it at the rider's interpolated transform.
-    const rig = this.rig, b = bike.bicycle, from = b.mounted ? this.world.previousPlayer : null, to = bike.transform;
-    const t = from ? Object.assign(this.presented, { x: lerp(from.x, to.x, alpha), y: to.y, z: lerp(from.z, to.z, alpha), yaw: from.yaw + Math.atan2(Math.sin(to.yaw - from.yaw), Math.cos(to.yaw - from.yaw)) * alpha }) : to;
+    // The pin runs before the rider's post-physics sync, so `bike.transform` trails her by a tick: interpolate between the
+    // rider's own last two ticks (as the courier and the camera do). Lerping previousPlayer -> bike.transform spanned ~0 m,
+    // so bike and rider snapped per tick and juddered whenever frames ran 0/2 ticks (PO: flicker on the bike after a pause).
+    const rig = this.rig, b = bike.bicycle, rider = this.world.entities.get(1)?.transform, from = b.mounted && rider ? this.world.previousPlayer : null, to = bike.transform;
+    const t = from && rider ? Object.assign(this.presented, { x: lerp(from.x, rider.x, alpha), y: to.y, z: lerp(from.z, rider.z, alpha), yaw: from.yaw + Math.atan2(Math.sin(to.yaw - from.yaw), Math.cos(to.yaw - from.yaw)) * alpha }) : to;
+    const ride = this.presentRide(b, alpha);
     rig.model.position.x = b.mounted ? rig.offset : 0;
     // Each wheel rests on the paving under its own contact point (kerbs, crosswalk slabs): the frame pitches between them.
     const districts = this.world.districts, fx = Math.cos(t.yaw), fz = -Math.sin(t.yaw);
@@ -141,17 +163,17 @@ export class BicycleView extends Group {
     rig.root.visible = true; rig.root.position.set(t.x, gR - xR * Math.sin(pitch), t.z); rig.root.rotation.y = t.yaw;
     if (rig.last) { const d = Math.hypot(t.x - rig.last.x, t.z - rig.last.z); rig.wheelAngle += d; }
     rig.last = { x: t.x, z: t.z };
-    const steering = b.steer * bicycleHandling.maxSteering / (1 + b.speed / l1v2.bicycle.speedMs);
+    const steering = ride.steer * bicycleHandling.maxSteering / (1 + ride.speed / l1v2.bicycle.speedMs);
     if (rig.wheelF) { rig.wheelF.rotation.z = -rig.wheelAngle / (WHEEL_R.F * SCALE); rig.wheelF.rotation.y = -steering; }
     if (rig.wheelR) rig.wheelR.rotation.z = -rig.wheelAngle / (WHEEL_R.R * SCALE);
     if (rig.handlebar) rig.handlebar.rotation.y = -steering;
-    if (rig.crank) { rig.crank.rotation.z = -b.pedal; for (const p of rig.pedals) p.rotation.z = b.pedal; }
+    if (rig.crank) { rig.crank.rotation.z = -ride.pedal; for (const p of rig.pedals) p.rotation.z = ride.pedal; }
     // Toy feel: lean into the turn and bob slightly with every pedal stroke while riding.
-    const riding = b.mounted, speed = b.speed / 7.5;
+    const riding = b.mounted, speed = ride.speed / 7.5;
     // Kickstand folds up while riding and is down when parked (`kickstand` node of the rebuilt model; absent on the old one).
     rig.kick = riding ? lerp(rig.kick, 1, .2) : 0; if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * Math.PI / 2;
-    rig.leanAngle = riding ? b.lean ?? 0 : 0;
-    rig.lean.rotation.x = rig.leanAngle; rig.lean.rotation.z = pitch; rig.lean.position.y = riding ? Math.abs(Math.sin(b.pedal * 2)) * .008 * speed : 0;
+    rig.leanAngle = riding ? ride.lean : 0;
+    rig.lean.rotation.x = rig.leanAngle; rig.lean.rotation.z = pitch; rig.lean.position.y = riding ? Math.abs(Math.sin(ride.pedal * 2)) * .008 * speed : 0;
     // Parcel in the cargo box: she carries it (sim `survivor.carrying`) and is riding; it drops in over ~0.35 s.
     const carrying = !!this.world.entities.get(1)?.survivor?.carrying;
     rig.placed = riding && carrying ? Math.min(1, rig.placed + 1 / 21) : 0;
