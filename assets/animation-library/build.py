@@ -404,6 +404,37 @@ clip=p(armL=z(46),foreArmL=z(92),handL=z(-30),head=z(-22),torso=z(-6))
 action('npc-sign',.9,[(0,p()),(.15,{**clip,'armR':z(40),'foreArmR':z(98)}),(.28,{**clip,'armR':z(42),'foreArmR':(0,12,100)}),(.4,{**clip,'armR':z(40),'foreArmR':(0,-12,98)}),(.52,{**clip,'armR':z(42),'foreArmR':(0,10,100)}),(.72,reach_out),(1,hold_box)])
 beckon=p(torso=(0,-15,-4),head=(0,15,4),armR=(-25,0,95),foreArmR=z(20),armL=(10,0,10))
 action('npc-wave-in',1,[(0,beckon),(.3,{**beckon,'armR':(-25,35,70),'foreArmR':z(70)}),(.5,{**beckon,'armR':(-25,45,55),'foreArmR':z(95)}),(.75,{**beckon,'armR':(-25,10,90),'foreArmR':z(30)}),(1,beckon)])
+# ---- E20 rescue set piece (PO 10-08 "no emergency"): trapped civilians behind the market glass and the crew forcing the doors.
+# All loop (first key == last key); the mission desyncs them with seeded start offsets.
+def fists(side, up):
+    s = -1 if side == 'R' else 1
+    return {'arm'+side: (s*8, 0, 60 if up else 84), 'foreArm'+side: z(92 if up else 34), 'hand'+side: z(-18)}
+bang_base = p(hip=hip(y=-.012), torso=z(-7), head=z(-4))
+action('npc-bang',.8,[(0,{**bang_base,**fists('L',False),**fists('R',True),'torso':(0,7,-9)}),(.25,{**bang_base,**fists('L',True),**fists('R',True)}),
+    (.5,{**bang_base,**fists('L',True),**fists('R',False),'torso':(0,-7,-9)}),(.75,{**bang_base,**fists('L',True),**fists('R',True)}),(1,{**bang_base,**fists('L',False),**fists('R',True),'torso':(0,7,-9)})])
+def overhead(r, l, bounce=0):
+    return p(hip=hip(y=-.008+bounce), torso=z(3), head=(0, 0, 10), armR=(-r, 0, 14), foreArmR=z(22), armL=(l, 0, 14), foreArmL=z(22))
+action('npc-plead',1.1,[(0,overhead(128,162)),(.25,overhead(146,146,.012)),(.5,overhead(162,128)),(.75,overhead(146,146,.012)),(1,overhead(128,162))])
+def press(lean, head_turn):
+    return p(hip=hip(x=.025, y=-.018), torso=z(-12-lean), head=(0, head_turn, -2), armL=(6, 0, 78+lean), foreArmL=z(28-lean), handL=z(-55), armR=(-6, 0, 78+lean), foreArmR=z(28-lean), handR=z(-55))
+action('npc-press',1.1,[(0,press(0,18)),(.22,press(5,16)),(.4,press(0,-4)),(.6,press(5,-22)),(.8,press(0,-14)),(1,press(0,18))])
+# Crouched with the hands over the face, rocking (crying). Thigh 80 deg forward, shin -40 deg absolute, feet flat.
+def cower(rock, shake=0):
+    return p(hip=hip(y=-.255), legL=z(80), shinL=z(-120), footL=z(40), legR=z(76), shinR=z(-116), footR=z(40),
+        torso=(0, shake, -28-rock), head=(0, -shake, -22), armL=(-12, 0, 40), foreArmL=z(128), handL=z(-20), armR=(12, 0, 40), foreArmR=z(128), handR=z(-20))
+action('npc-cower',1.6,[(0,cower(0)),(.25,cower(8,4)),(.5,cower(0,-4)),(.75,cower(8,4)),(1,cower(0))])
+# Holding a child against the body, glancing back over the shoulder into the shop.
+hold_child = p(hip=hip(y=-.03), torso=z(-14), head=z(-18), armL=(-22, 0, 42), foreArmL=z(78), armR=(22, 0, 42), foreArmR=z(78))
+action('npc-hug',1.4,[(0,hold_child),(.3,{**hold_child,'head':z(-20),'torso':(0,4,-15)}),(.45,{**hold_child,'head':(0,58,2),'torso':(0,16,-10)}),(.62,{**hold_child,'head':(0,52,0),'torso':(0,14,-10)}),(.8,hold_child),(1,hold_child)])
+# Firefighter heaving on a halligan bar wedged at chest height: push in, heave back, strain, reset.
+def pry(lean, back, arm, fore):
+    return p(hip=hip(x=back, y=-.05, twist=-6), legL=z(26), shinL=z(-30), legR=z(-12), shinR=z(-12), torso=(0, 6, lean), head=(0, -6, -lean*.4),
+        armL=(-14, 0, arm), foreArmL=z(fore), handL=z(-10), armR=(14, 0, arm-6), foreArmR=z(fore+6), handR=z(-10))
+action('ff-pry',.9,[(0,pry(-18,.03,70,24)),(.3,pry(10,-.045,46,30)),(.45,pry(13,-.055,44,28)),(.55,pry(10,-.045,46,32)),(.8,pry(-8,.0,60,26)),(1,pry(-18,.03,70,24))])
+# Firefighter waving the people back from the glass: palm out, pumping.
+def stand_back(arm, lean):
+    return p(torso=z(lean), head=(0, -10, 6), armR=(-8, 0, arm), foreArmR=z(10), handR=z(-70), armL=(22, 0, 32), foreArmL=z(44))
+action('npc-stand-back',.8,[(0,stand_back(82,-4)),(.3,stand_back(98,2)),(.5,stand_back(84,-3)),(.75,stand_back(98,2)),(1,stand_back(82,-4))])
 action('rack-grab',2,[(0,p()),(.14,p(armR=(0,0,150),foreArmR=z(20),head=z(22),torso=z(6),hip=hip(y=.02))),(.26,p(armR=(0,0,158),foreArmR=z(28),head=z(24),torso=z(8))),
     (.42,p(armR=z(80),foreArmR=z(60),head=z(-6),armL=z(40),foreArmL=z(60))),(.58,p(hip=hip(y=-.04,twist=-14),torso=(0,-40,6),armR=(0,-40,62),foreArmR=z(95),handR=z(0),armL=(20,-55,56),foreArmL=z(72))),
     (.68,p(hip=hip(x=.06,y=-.03,twist=14),torso=(0,32,-10),armR=(10,45,90),foreArmR=z(8),handR=z(-90),armL=(-10,30,84),foreArmL=z(14))),(.82,p(armR=(0,-20,40),foreArmR=z(125),head=z(4))),(1,p())])

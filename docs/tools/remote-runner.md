@@ -20,7 +20,9 @@ sh tools/remote/status.sh        # servers, slots, queue, load, price
 * Synced: tracked + untracked-not-ignored files. Not synced: `node_modules`, `dist`, `.git`, `test-results/`, `initial-drafts/`, `experiment/`, `references/`, `drafts-pipeline/`, `epics-pipeline/`, `folio-2025/`, and `assets/**/*.{blend,wav,ogg,mp3,webm,mp4}`. Use `--with <path>` to add one.
 * `node_modules` is installed with `npm ci` only when `package.json`/`package-lock.json` changed (cached by hash on the runner, hardlinked into each workspace).
 * The remote workspace is a commit-less git repo (index only), because some tests call `git ls-files`. `git log/diff` do not work there.
-* Workspaces live in `/srv/mi/ws/<worktree>-<hash>`; the first sync of a new worktree seeds from the newest one (hardlinks), later syncs send only changes.
+* Per-worktree sync cache: `/srv/mi/ws/<worktree>-<hash>`. The first sync of a new worktree seeds from the newest cache (hardlinks); later syncs send only changes. The cache is only written by rsync and the manifest update, under a local sync lock.
+* Every run gets its own job dir `/srv/mi/jobs/<worktree>-<hash>-<pid>-<time>`: a full `cp -a` of the cache (about 270 MB of source, a few seconds). Parallel runs from the same worktree therefore never write into each other's files. Results (`--pull`) are copied back first, then the job dir is deleted, even when the command fails. Job dirs older than 24 h left by a dropped run are removed at the next sync.
+* ssh and rsync use `ServerAliveInterval=15`, `ServerAliveCountMax=8`. The sync steps (connect, rsync, manifest, job copy) are retried up to 3 times when ssh exits 255. The remote command itself is never retried.
 * Never put secrets in the command or `--env`. The runner has no `.env`.
 
 ## Pool and scaling
