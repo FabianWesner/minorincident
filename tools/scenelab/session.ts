@@ -110,5 +110,7 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('torsoPitchMaxDeg', Math.max(0, ...motion.map(m => Math.max(Math.abs(m.torsoPitchMaxDeg ?? 0), Math.abs(m.torsoPitchMinDeg ?? 0)))), e.torsoPitchMaxDeg);
   add('drawCallsMax', metrics.perf.drawCalls.max ?? 0, e.drawCallsMax);
   add('trianglesMax', metrics.perf.triangles.max ?? 0, e.trianglesMax);
+  add('actorHitsMax', clipping.actors.length, e.actorHitsMax);
+  add('doorClosedFramesMax', Math.max(0, ...Object.values(metrics.doors ?? {}).map(d => d.closedFrames)), e.doorClosedFramesMax);
   return { pass: checks.every(c => c.pass), checks };
 }
