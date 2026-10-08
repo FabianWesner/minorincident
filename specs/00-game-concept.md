@@ -62,6 +62,8 @@ One model for every platform: **move, aim, left action, right action, selector**
 
 Doors, cars, generators, and rescue targets use **stand-to-interact**. Standing inside the interaction ring fills a radial meter (0.6 s for doors and cars, longer for objectives). Moving out cancels it. Interaction can also be completed **instantly** with `E` on the keyboard or with a **middle-click (wheel click)** on the mouse, if the mouse has one. This keeps the game fully playable with any mouse (even without a wheel button) or by touch.
 
+**UI/HUD rule (PO, verbatim):** “These circles around cars and other interactive places are not needed. This isn't relevant for gameplay, so let the user find these easter eggs on its own.” Show ground rings only for the current mission objective interaction and the optional L2 fire-axe rack; keep the in-range interaction prompt for every interactable.
+
 ### 5.3 Bindings
 
 Classic action-RPG controls (product owner decision, 2026-10-06). The survivor only moves when the player asks it to; attacks never cause movement except the short melee lunge in §6.
