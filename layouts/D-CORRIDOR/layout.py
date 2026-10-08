@@ -86,7 +86,7 @@ SHOPS = [('bld.mainstreet-brick', 1.0), ('bld.joes-diner', 1.0), ('bld.maple-har
 # Rows on the camera side of a street (their fronts face north, toward the street and away from the camera) stay low so the
 # game camera, which looks from the south-east, sees the carriageway over them (pharmacies, a supermarket, the corner cafe).
 LOW_SHOPS = [('bld.pharmacy', 1.0), ('bld.supermarket', 1.0), ('bld.pharmacy', 1.0), ('bld.cafe-corner', 1.0)]
-LOW_BLVD = [('bld.pharmacy', 1.0), ('bld.supermarket', 1.0)]
+LOW_BLVD = [('bld.cafe-corner', 1.0), ('bld.pharmacy', 1.0)]
 def shop_row(street, x0, x1, facing, line, rear, assets=SHOPS, gap=.1, seed=0, outer=False):
     """Shops facing N or S with their front on `line`, side by side. `rear`: z of the back line. The row is one solid
     terrace: brick party walls fill the slots between the shops' collision footprints and the lot ends, and a low brick
