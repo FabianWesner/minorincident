@@ -77,7 +77,7 @@ export class L2RescueProps extends Group {
       }
       this.faceBox(this.frames, f++, door, (door.from + door.to) / 2, HEIGHT + .08, 0, door.to - door.from, .16, .14);
       // The chain: an X of links through both handles and a padlock; it jerks on each heave and lies on the ground once cut.
-      const heave = forcing ? Math.max(0, Math.sin(t * Math.PI * 2 / .95 + d)) : 0, jerk = forcing ? Math.sin(tick * 1.7 + d * 3) * .03 * heave : 0;
+      const heave = forcing ? Math.max(0, Math.sin(t * Math.PI * 2 / .9 + d)) : 0, jerk = forcing ? Math.sin(tick * 1.7 + d * 3) * .03 * heave : 0;
       const at = (u: number, y: number, n: number) => door.axis === 'z' ? new Vector3(door.face + n, y, u) : new Vector3(u, y, door.face + n);
       if (!open) {
         for (const [y0, y1] of [[CHAIN_Y + .22, CHAIN_Y - .2], [CHAIN_Y - .2, CHAIN_Y + .22]]) {
@@ -105,7 +105,7 @@ export class L2RescueProps extends Group {
     if (forcing) for (const id of s.crewIds) {
       const e = this.world.entities.get(id); if (!e || e.hidden || e.civilian?.story?.clip !== 'ff-pry') continue;
       const door = e.transform.x > -52 ? DOORS[0] : DOORS[1], fx = Math.cos(e.transform.yaw), fz = -Math.sin(e.transform.yaw);
-      const reach = .45 + .1 * Math.sin(((tick - e.civilian.story.start) / 60) * Math.PI * 2);
+      const reach = .45 + .1 * Math.sin(((tick - e.civilian.story.start) / 60 / .9) * Math.PI * 2);
       const hands = new Vector3(e.transform.x + fx * reach, 1.02, e.transform.z + fz * reach);
       const chain = door.axis === 'z' ? new Vector3(door.face + .2, CHAIN_Y, door.centre + (e.transform.z - door.centre) * .25) : new Vector3(door.centre + (e.transform.x - door.centre) * .25, CHAIN_Y, door.face + .2);
       this.segment(this.bars, b++, hands, chain, .05);
