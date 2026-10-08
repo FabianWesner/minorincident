@@ -14,6 +14,7 @@ import type { AssetQuality } from './types';
 import { dinerSign } from '../render/DinerSign';
 import { attribute } from 'three/tsl';
 import { staticBatch, staticBatchAsync } from './staticBatch';
+import { buildingDoors } from '../data/buildingDoors';
 import { loadGate, loadGltf } from './loadGate';
 import { productionIds } from './productionIds';
 /** Deduplicated runtime URLs for the placement tiers requested by HTTP prefetch. */
@@ -125,6 +126,7 @@ export class DistrictAssets {
       }
       // While a level is playable, batching is sliced over frames (one gate slot per slice).
       if (ROOFED.has(id)) asset.userData.splitRoof = true;
+      const leaves = buildingDoors[id]?.leaves; if (leaves?.length) asset.userData.splitDoors = leaves.map(l => l.node);
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
       this.share(root);
       if (id === 'bld.joes-diner') {

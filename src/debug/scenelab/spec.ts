@@ -76,7 +76,11 @@ export type Action =
   | { mountBike: string }
   | { dismount: true }
   | { chase: string }
-  | { flee: Point };
+  | { flee: Point }
+  /** Pedestrian: the L1 hand-over choreography (src/sim/missions/doorRoute.ts) - out of `building`'s street door (a
+   * placement id or asset id), carrying the parcel to `meet` (a point, or an actor id: arm's length in front of it), a
+   * `pauseS` give/wave, then back in the same way. `legacy` replays the pre-2026-10-08 straight-line walk (A/B only). */
+  | { handover: { building: string; meet: Point | string; pauseS?: number; legacy?: boolean } };
 export type ScriptStep = { frame: number } & ({ actor: string; do: Action } | { effect: EffectSpec } | { camera: CameraSpec } | { time: TimeOfDay });
 export type EffectSpec =
   | { blast: string; at: Point }
@@ -104,6 +108,11 @@ export interface Expectations {
   torsoPitchMaxDeg?: number;
   drawCallsMax?: number;
   trianglesMax?: number;
+  /** Frames a living actor stood in a door aperture or leaf sweep (src/data/buildingDoors.ts) while that door was not
+   * fully open (`metrics.doors`). */
+  doorClosedFramesMax?: number;
+  /** Most bone-vs-prop clipping hits (`clipping.actors`, see `clipping` options). */
+  actorHitsMax?: number;
 }
 
 const rad = (deg: number | undefined) => (deg ?? 0) * Math.PI / 180;
