@@ -27,10 +27,11 @@ export class ControlIntent {
     if (raw.cancelMove || Math.hypot(raw.move.x, raw.move.z) > 0 || raw.interact || (!raw.attackTarget && !raw.pointerGround && (raw.left.down || raw.right.down))) this.reset();
     if (this.world.vehicles?.active != null || player.health.current <= 0) { this.reset(); return raw; }
     if (raw.moveTarget) {
+      const click = this.world.missions?.interactSnap(raw.moveTarget) ?? raw.moveTarget;
       const nav = this.world.infected?.nav;
-      const cell = nav?.nearestCell(raw.moveTarget.x, raw.moveTarget.z);
-      const point = nav ? nav.clear(raw.moveTarget.x, raw.moveTarget.z, survivor.radius) ? [raw.moveTarget.x, raw.moveTarget.z] : cell !== undefined && cell >= 0 ? [nav.x(cell), nav.z(cell)] : this.world.districts?.nav.clamp([raw.moveTarget.x, raw.moveTarget.z]) : this.world.districts?.nav.clamp([raw.moveTarget.x, raw.moveTarget.z]);
-      this.moveTarget = point ? { x: point[0], z: point[1] } : { ...raw.moveTarget }; this.attack = null;
+      const cell = nav?.nearestCell(click.x, click.z);
+      const point = nav ? nav.clear(click.x, click.z, survivor.radius) ? [click.x, click.z] : cell !== undefined && cell >= 0 ? [nav.x(cell), nav.z(cell)] : this.world.districts?.nav.clamp([click.x, click.z]) : this.world.districts?.nav.clamp([click.x, click.z]);
+      this.moveTarget = point ? { x: point[0], z: point[1] } : { x: click.x, z: click.z }; this.attack = null;
     }
     if (raw.attackTarget) {
       const running = this.world.combat?.runner.running[raw.attackTarget.side];
