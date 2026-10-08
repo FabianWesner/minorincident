@@ -57,6 +57,10 @@ export class CourierGroundContacts {
   /** Diagnostics for tests and evidence: pivot clamps on locked feet, steps taken. */
   pivots = 0;
   steps = 0;
+  /** Roundhouse pivot (set by the animator for the spin): the lead (left) foot stays planted and turns on its ball
+   * with the body; the right foot lifts and circles with the hips, landing as a short step when the spin ends. */
+  pivot = false;
+  private pivoting = false;
   /** `scaleNode` carries the leg-length world scale (crowd skeletons keep the asset scale below the instance frame). */
   constructor(private rig: CharacterRig, private scaleNode: Object3D = rig.root) {
     rig.root.updateWorldMatrix(true, true);
@@ -78,7 +82,7 @@ export class CourierGroundContacts {
     (['L', 'R'] as const).forEach((side, i) => { this.feet[i].ik = new LimbIK(rig[`leg${side}`], rig[`shin${side}`], rig[`foot${side}`]); });
   }
   /** Contacts resume from the clip pose on the next grounded frame. */
-  reset(): void { for (const foot of this.feet) { foot.locked = false; foot.fresh = true; foot.swing = undefined; foot.phase = -1; } this.heading = undefined; this.moving = false; this.pelvisHeight = undefined; this.shift = 0; }
+  reset(): void { this.pivoting = false; for (const foot of this.feet) { foot.locked = false; foot.fresh = true; foot.swing = undefined; foot.phase = -1; } this.heading = undefined; this.moving = false; this.pelvisHeight = undefined; this.shift = 0; }
   /** Ankle target (world), yaw, pitch and lock state of foot `index`, for tests and evidence. */
   contact(index: number): { target: Vector3; yaw: number; locked: boolean; pitch: number } { const f = this.feet[index]; return { target: f.target, yaw: f.yaw, locked: f.locked, pitch: f.pitch }; }
   update(phase: number, stride: number, run: number, weight: number, speed: number, dt: number, style?: GaitStyle): void {
@@ -157,9 +161,19 @@ export class CourierGroundContacts {
       foot.swing = { from: foot.target.clone(), fromYaw: foot.yaw, fromPitch: foot.pitch, offset: new Vector3(), start: this.time, duration, gait: false, u: 0, knee0: kneeNow(foot), dip: 0, land: undefined, releaseP: 0 };
       foot.locked = false; this.steps++;
     };
+    if (candidate && this.pivot) candidate = undefined;
+    if (this.pivot) {
+      const trail = this.feet[1];
+      if (!trail.swing) step(trail, .2);
+    } else if (this.pivoting) {
+      // Spin over: the circling foot finishes as the second half of a short step onto its neutral plant.
+      const swing = this.feet[1].swing;
+      if (swing) Object.assign(swing, { gait: false, start: this.time - .1, duration: .2, from: this.feet[1].target.clone() });
+    }
+    this.pivoting = this.pivot;
     if (candidate) step(candidate, moving ? .14 : .17);
     // Crowds never pivot a planted foot: past the pivot limit it hops onto the new heading (a quick step, even mid-stride).
-    if (style?.maxSwing) for (const foot of this.feet) if (foot.locked && Math.abs(wrap(heading + toeOut * foot.side - foot.plantYaw)) > twistPivot) step(foot, .12);
+    if (!this.pivot && style?.maxSwing) for (const foot of this.feet) if (foot.locked && Math.abs(wrap(heading + toeOut * foot.side - foot.plantYaw)) > twistPivot) step(foot, .12);
     const toe = .085 * s, heel = .05 * s, soleDepth = this.sole * s;
     /** Ankle offset (foot frame) when the foot rests on its heel, pitched `phi` toes-up. */
     const strikeDelta = (phi: number, out: Vector3): Vector3 => out.set(heel * Math.cos(phi) - soleDepth * Math.sin(phi) - heel, heel * Math.sin(phi) + soleDepth * Math.cos(phi) - soleDepth, 0);
@@ -167,7 +181,12 @@ export class CourierGroundContacts {
       const p = (phase + index * .5) % 1, previous = foot.phase;
       foot.phase = moving ? p : -1;
       const landYaw = heading + toeOut * foot.side;
-      if (foot.swing) {
+      if (this.pivot && foot.swing && foot === this.feet[1]) {
+        // Mid-air, following its neutral spot round the body (u held at the knee-peak half of a step).
+        const swing = foot.swing;
+        neutralOf(foot, foot.target); swing.land = (swing.land ?? new Vector3()).copy(foot.target);
+        foot.yaw = landYaw; foot.pitch = 0; swing.dip = 0; swing.u = .5;
+      } else if (foot.swing) {
         const swing = foot.swing;
         let u: number, landed: boolean;
         if (swing.gait) {
@@ -235,6 +254,8 @@ export class CourierGroundContacts {
         }
       }
       if (foot.locked) {
+        // Roundhouse: the planted lead foot turns with the body on the spot.
+        if (this.pivot) foot.plantYaw = landYaw;
         // Hold the plant; only the pivot clamp lets a planted foot yaw (counted).
         let twist = wrap(landYaw - foot.plantYaw);
         if (Math.abs(twist) > twistPivot) { foot.plantYaw += twist - Math.sign(twist) * twistPivot; this.pivots++; twist = Math.sign(twist) * twistPivot; }
@@ -278,6 +299,10 @@ export class CourierGroundContacts {
       // Flight (running): hold the pelvis on its arc with a slight rise; the reaching foot brings it down for heel strike.
       height = Math.min(height, this.origin.y + this.pelvisHeight + .2 * dt);
     }
+    // No foot to stand on and no pelvis yet (a crowd figure whose footwork starts mid-run with both feet in swing):
+    // keep the clip's hip height. Infinity here made the filter Infinity - Infinity = NaN, and the NaN pelvis then
+    // stuck, so the figure drew no pixels while the sim kept it biting (PO "invisible zombie").
+    if (height === Infinity) height = this.pelvisHeight === undefined ? rig.hip.getWorldPosition(this.joint).y : this.origin.y + this.pelvisHeight;
     // Settle down quickly (heel strike), rise smoothly.
     const current = this.pelvisHeight === undefined ? height : this.origin.y + this.pelvisHeight;
     const filtered = current + (height - current) * (1 - Math.exp(-dt / (height < current ? .03 : .05)));

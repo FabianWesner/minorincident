@@ -1,4 +1,5 @@
-/** Offline: retarget Mesh2Motion CC0 human clips onto our 16-joint chibi rig (skin pilot).
+/** Offline: retarget Mesh2Motion CC0 human clips onto the courier skeleton v2 (21 animated joints, 1:1 Mesh2Motion
+ * names for pelvis, spine_01..03, neck_01, head, clavicles, limbs).
  * Output: src/render/characters/library.skin.json (same schema as library.json: rest-relative local
  * rotations, hip translation deltas). No runtime dependency on Mesh2Motion; data is CC0.
  *   MESH2MOTION_SOURCE=/private/tmp/motion-lib-mesh2motion npx tsx tools/skinpilot/retarget.ts
@@ -26,10 +27,13 @@ async function load(path: string) {
 }
 
 // Our rig (glTF asset frame, +X forward, identity rest frames), from char.courier-female.
+// Skeleton v2 inserts the Mesh2Motion chain: torso = spine_01, spine = spine_02, chest = spine_03, neck = neck_01,
+// clavicle* = clavicle_* (positions from assets/char.courier-female-skin/build.py; world joint positions unchanged).
 const joints: [string, string | null, [number, number, number]][] = [
-  ['hip', null, [0, .62, 0]], ['torso', 'hip', [0, .052, 0]], ['head', 'torso', [0, .292, 0]],
-  ['armL', 'torso', [0, .258, -.186]], ['foreArmL', 'armL', [.012, -.145, -.046]], ['handL', 'foreArmL', [.012, -.137, -.03]],
-  ['armR', 'torso', [0, .258, .186]], ['foreArmR', 'armR', [.012, -.145, .046]], ['handR', 'foreArmR', [.012, -.137, .03]],
+  ['hip', null, [0, .62, 0]], ['torso', 'hip', [0, .052, 0]], ['spine', 'torso', [0, .0876, 0]], ['chest', 'spine', [0, .0876, 0]],
+  ['neck', 'chest', [0, .0818, 0]], ['head', 'neck', [0, .035, 0]],
+  ['clavicleL', 'chest', [0, .0708, -.045]], ['armL', 'clavicleL', [0, .012, -.141]], ['foreArmL', 'armL', [.012, -.145, -.046]], ['handL', 'foreArmL', [.012, -.137, -.03]],
+  ['clavicleR', 'chest', [0, .0708, .045]], ['armR', 'clavicleR', [0, .012, .141]], ['foreArmR', 'armR', [.012, -.145, .046]], ['handR', 'foreArmR', [.012, -.137, .03]],
   ['legL', 'hip', [0, -.045, -.1]], ['shinL', 'legL', [.012, -.22, -.012]], ['footL', 'shinL', [-.018, -.177, -.013]],
   ['legR', 'hip', [0, -.045, .1]], ['shinR', 'legR', [.012, -.22, .012]], ['footR', 'shinR', [-.018, -.177, .013]],
 ];
@@ -42,7 +46,7 @@ const childOf: Record<string, string> = { armL: 'foreArmL', foreArmL: 'handL', a
 const ourLeg = restWorld('legL').y - restWorld('footL').y;
 
 // Source mapping: whole-bone world deltas, or limb directions (bone → child joint).
-const deltaMap: Record<string, string> = { hip: 'pelvis', torso: 'spine_03', head: 'head', handL: 'hand_l', handR: 'hand_r', footL: 'foot_l', footR: 'foot_r' };
+const deltaMap: Record<string, string> = { hip: 'pelvis', torso: 'spine_01', spine: 'spine_02', chest: 'spine_03', neck: 'neck_01', head: 'head', clavicleL: 'clavicle_l', clavicleR: 'clavicle_r', handL: 'hand_l', handR: 'hand_r', footL: 'foot_l', footR: 'foot_r' };
 const dirMap: Record<string, [string, string]> = { armL: ['upperarm_l', 'lowerarm_l'], foreArmL: ['lowerarm_l', 'hand_l'], armR: ['upperarm_r', 'lowerarm_r'], foreArmR: ['lowerarm_r', 'hand_r'], legL: ['thigh_l', 'calf_l'], shinL: ['calf_l', 'foot_l'], legR: ['thigh_r', 'calf_r'], shinR: ['calf_r', 'foot_r'] };
 
 interface Spec { name: string; source: string; loop?: boolean; exaggerate?: number; bob?: number; strike?: 'l' | 'r' }
@@ -62,6 +66,8 @@ const specs: Spec[] = [
   { name: 'bat-3', source: 'Sword_Regular_C', exaggerate: 1.1, strike: 'r' },
 ];
 
+/** Limit the rotation of `q` relative to `reference` (both world) to `max` radians, in place. */
+const clampQ = (q: Quaternion, max: number, reference: Quaternion) => { const relative = reference.clone().invert().multiply(q), angle = 2 * Math.acos(Math.min(1, Math.abs(relative.w))); if (angle > max) q.copy(reference).multiply(new Quaternion().slerp(relative, max / angle)); return q; };
 const scaleQ = (q: Quaternion, k: number) => { if (k === 1) return q; const w = Math.min(1, Math.max(-1, q.w)), angle = 2 * Math.acos(Math.abs(w)), s = Math.sqrt(1 - w * w); if (s < 1e-6) return q; const axis = new Vector3(q.x, q.y, q.z).divideScalar(s).multiplyScalar(Math.sign(w) || 1); return q.setFromAxisAngle(axis, angle * k); };
 
 const base = await load(`${checkout}/static/animations/human-base-animations.glb`);
@@ -122,7 +128,7 @@ for (const spec of specs) {
     world.clear();
     const delta = (src: string) => R.clone().multiply(bone(src).getWorldQuaternion(new Quaternion()).multiply(sourceRest.get(src)!.q.clone().invert())).multiply(Ri);
     for (const [node, src] of Object.entries(deltaMap)) world.set(node, delta(src));
-    if (spec.name === 'ride') { world.get('hip')!.identity(); world.get('torso')!.identity(); }
+    if (spec.name === 'ride') for (const node of ['hip', 'torso', 'spine', 'chest', 'clavicleL', 'clavicleR']) world.get(node)!.identity();
     for (const [node, [a, b]] of Object.entries(dirMap)) {
       const dir = bone(b).getWorldPosition(new Vector3()).sub(bone(a).getWorldPosition(new Vector3())).applyQuaternion(R).normalize();
       // Chibi torso is wide: keep the upper arm at least as far out as our rest abduction.
@@ -134,8 +140,11 @@ for (const spec of specs) {
     // Arms carry the cartoon exaggeration; pelvis/chest twist stays at the mocap amount (a twisted
     // chibi torso reads as wobble, the bag swings with it).
     for (const node of ['armL', 'armR', 'foreArmL', 'foreArmR']) scaleQ(world.get(node)!, spec.exaggerate ?? 1);
-    // Chibi heads are ~1/3 of the figure: keep the face readable (half the source head motion).
-    scaleQ(world.get('head')!, .5);
+    // Chibi heads are ~1/3 of the figure: keep the face readable (half the source head motion). The neck carries
+    // 45 % of the head's turn relative to the chest, so large bat-swing head turns spread over the neck skin.
+    // Shoulders shrug at half the source clavicle motion, at most 20° (wide chibi torso).
+    scaleQ(world.get('head')!, .5); world.get('neck')!.copy(world.get('chest')!).slerp(world.get('head')!, .45);
+    for (const node of ['clavicleL', 'clavicleR']) clampQ(scaleQ(world.get(node)!, .5), 20 * Math.PI / 180, new Quaternion());
     // Local = parentWorld^-1 * world (rest frames are identity in the asset frame).
     for (const [name, parent] of joints.map(j => [j[0], j[1]] as const)) {
       const local = (parent ? world.get(parent)!.clone().invert() : new Quaternion()).multiply(world.get(name)!).normalize();
@@ -153,7 +162,8 @@ for (const spec of specs) {
   const hip: number[] = [];
   hipPositions.forEach((p, i) => { const k = i / (hipPositions.length - 1), q = p.clone(); if (spec.loop) q.sub(last.clone().sub(first).multiplyScalar(k)); if (spec.loop) q.sub(mean); else q.sub(first); q.y *= spec.bob ?? 1; if (spec.name === 'ride') q.set(0, 0, 0); hip.push(+q.x.toFixed(5), +q.y.toFixed(5), +q.z.toFixed(5)); });
   const out = [{ node: 'hip', path: 'translation', times, values: hip }];
-  for (const [node, values] of tracks) out.push({ node, path: 'rotation', times, values: values.map(v => +v.toFixed(5)) });
+  // 1e-4 per quaternion component (≈ 0.01°): the 21-joint library stays small enough for its chunk.
+  for (const [node, values] of tracks) out.push({ node, path: 'rotation', times, values: values.map(v => +v.toFixed(4)) });
   // Loops must close exactly.
   library.push({ name: spec.name, duration: frames / fps, source: `mesh2motion:${spec.source}`, tracks: out });
   console.log(spec.name, '←', spec.source, frames, 'frames', 'shift', shift, 'contact', contact);

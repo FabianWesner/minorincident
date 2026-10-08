@@ -1,5 +1,6 @@
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
+import { seatAnchor } from './seats';
 import type { CivilianActivity, Point } from './types';
 
 /** A clear lawn pocket can still be fenced off. Author only cells connected to the sidewalk network. */
@@ -72,12 +73,13 @@ export function populateMorning(world: SimWorld): void {
     // Benches come from placements; flowers come from the reproducible layout's dressing anchors.
     const bench = layout.placements.filter(p => p.assetId === 'prop.bench')[district.id === 'D-MAIN' ? 8 : 0];
     if (bench) {
-      const seat = point(bench.position[0], bench.position[2]);
+      const anchored = seatAnchor(bench.assetId, bench.position, bench.yaw, bench.scale, { x: origin[0], z: origin[1] });
+      const seat = anchored ?? point(bench.position[0], bench.position[2]), seatLift = anchored?.lift;
       const front = { x: Math.cos(bench.yaw), z: -Math.sin(bench.yaw) };
       const target = { x: seat.x + front.x * .9, z: seat.z + front.z * .9 };
       spawn('cashier', 'npc.civilian-man-b', [
-        { activity: 'sit', anchor: bench.id, target, seat, facing: { x: seat.x + front.x * 3, z: seat.z + front.z * 3 }, ticks: 600, prop: 'coffee' },
-        { activity: 'stand', anchor: bench.id, target, seat, facing: { x: seat.x + front.x * 3, z: seat.z + front.z * 3 }, ticks: 36, prop: 'coffee' },
+        { activity: 'sit', anchor: bench.id, target, seat, seatLift, facing: { x: seat.x + front.x * 3, z: seat.z + front.z * 3 }, ticks: 600, prop: 'coffee' },
+        { activity: 'stand', anchor: bench.id, target, seat, seatLift, facing: { x: seat.x + front.x * 3, z: seat.z + front.z * 3 }, ticks: 36, prop: 'coffee' },
         walk(point(bench.position[0], -3.6), 'sidewalk/bench-exit', 'coffee'),
         walk(point(bench.position[0] + 3, -3.6), 'sidewalk/bench-loop', 'coffee'), walk(target, bench.id, 'coffee'),
       ]);
@@ -138,10 +140,11 @@ export function dinerCustomer(world: SimWorld, index: number, diner: Point): num
   const a = safe({ x: diner.x + (index - 1) * 3.2, z: diner.z + 2.4 });
   let schedule: CivilianActivity[];
   if (index === 0 && bench && district) {
-    const seat = { x: bench.position[0] + district.origin[0], z: bench.position[2] + district.origin[1] };
+    const anchored = seatAnchor(bench.assetId, bench.position, bench.yaw, bench.scale, { x: district.origin[0], z: district.origin[1] });
+    const seat = anchored ?? { x: bench.position[0] + district.origin[0], z: bench.position[2] + district.origin[1] }, seatLift = anchored?.lift;
     const target = safe({ x: seat.x, z: seat.z - .9 });
-    schedule = [{ activity: 'sit', anchor: bench.id, target, seat, facing: { x: seat.x, z: seat.z - 3 }, ticks: 540, prop: 'coffee' },
-      { activity: 'stand', anchor: bench.id, target, seat, facing: { x: seat.x, z: seat.z - 3 }, ticks: 36, prop: 'coffee' },
+    schedule = [{ activity: 'sit', anchor: bench.id, target, seat, seatLift, facing: { x: seat.x, z: seat.z - 3 }, ticks: 540, prop: 'coffee' },
+      { activity: 'stand', anchor: bench.id, target, seat, seatLift, facing: { x: seat.x, z: seat.z - 3 }, ticks: 36, prop: 'coffee' },
       { activity: 'walk', anchor: 'diner/sidewalk', target: safe({ x: seat.x, z: -3.6 + district.origin[1] }), ticks: 1, prop: 'coffee' },
       { activity: 'walk', anchor: 'diner/sidewalk', target: a, ticks: 1, prop: 'coffee' }];
   } else {
