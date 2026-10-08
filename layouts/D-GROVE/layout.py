@@ -591,6 +591,9 @@ fx0, fz0 = anchors['fire-bay-door']
 l.zone('fire-nobike-zone', [(_fx0, _fz0 - .5), (_fx1 + 3.0, _fz0 - .5), (_fx1 + 3.0, _fz1), (_fx0, _fz1)])
 l.zone('carwash-bay', [(CW_X - cwx / 2, CW_Z - cwz / 2), (CW_X + cwx / 2, CW_Z - cwz / 2), (CW_X + cwx / 2, CW_Z + cwz / 2), (CW_X - cwx / 2, CW_Z + cwz / 2)])
 
+# Clearance pass: flowerbeds, clutter, lamps and edge barriers are nudged off whatever they still touch (no hand-patched JSON)
+for _m in G.clear_contacts(g): print('clearance', *_m)
+
 # Plausibility problems (overlaps) are written next to the build cache and fail the build in tests/unit/layouts/d-grove.test.ts
 from pathlib import Path
 out = Path(__file__).resolve().parents[2] / '.cache/layouts'
