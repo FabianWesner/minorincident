@@ -1,0 +1,88 @@
+{
+ "name": "qa-handover-annex",
+ "note": "L1 delivery hand-over (PO 2026-10-08 'door stays closed while the person goes out and in'): the lab technician comes out of the annex glass doors (both leaves swing open and close behind him), signs at the courier and goes back in.",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    58,
+    -24
+   ],
+   [
+    74,
+    -6
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    66.4,
+    -11.7
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "recipient",
+   "kind": "pedestrian",
+   "at": [
+    69.0,
+    -12.2
+   ],
+   "look": {
+    "model": "npc.lab-tech-a",
+    "tint": "#f1f1ec",
+    "role": "delivery-driver"
+   },
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 10,
+   "actor": "recipient",
+   "do": {
+    "handover": {
+     "building": "bld.clinic-annex",
+     "meet": "courier",
+     "pauseS": 2.2,
+     "standoff": 1.4
+    }
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   66.2,
+   1.0,
+   -13.6
+  ],
+  "radius": 8
+ },
+ "frames": 470,
+ "shots": [
+  0,
+  40,
+  70,
+  110,
+  200,
+  290,
+  330,
+  360,
+  420,
+  470
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "actorHitsMax": 0,
+  "doorClosedFramesMax": 0,
+  "bodyOverlapMaxCm": 2
+ }
+}

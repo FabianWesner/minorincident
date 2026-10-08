@@ -1,0 +1,85 @@
+{
+ "name": "qa-handover-depot-side",
+ "note": "L1 pickup hand-over with the courier off to the A-frame side of the counter (the PO screenshot's approach): the clerk still leaves through the door lane and walks round to the courier.",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    -45,
+    -45
+   ],
+   [
+    -31,
+    -33
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -39.1,
+    -36.3
+   ],
+   "yaw": 45
+  },
+  {
+   "id": "recipient",
+   "kind": "pedestrian",
+   "at": [
+    -34.6,
+    -36.2
+   ],
+   "look": {
+    "model": "npc.depot-clerk",
+    "tint": "#3f7f9a",
+    "role": "cashier"
+   },
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 10,
+   "actor": "recipient",
+   "do": {
+    "handover": {
+     "building": "bld.courier-depot",
+     "meet": "courier",
+     "pauseS": 2.2
+    }
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   -37.4,
+   0.9,
+   -38.2
+  ],
+  "radius": 7.5
+ },
+ "frames": 470,
+ "shots": [
+  0,
+  60,
+  110,
+  160,
+  250,
+  330,
+  400,
+  470
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "actorHitsMax": 0,
+  "doorClosedFramesMax": 0,
+  "bodyOverlapMaxCm": 2
+ }
+}

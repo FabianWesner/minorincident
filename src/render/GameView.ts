@@ -415,6 +415,10 @@ export class GameView implements Lifecycle {
     while (this.playSeconds < 4 && this.params.get('test') !== '1') await new Promise(resolve => setTimeout(resolve, 250));
     await loadGate.wait();
   }
+  /** Living, shown people (courier, pedestrians, story actors, infected) for the automatic street doors. */
+  private *doorBodies(): Generator<{ x: number; z: number }> {
+    for (const e of this.world.entities.iterate()) if (!e.hidden && e.health.current > 0 && (e.id === 1 || e.civilian || e.infected)) yield e.transform;
+  }
   advance(seconds: number): void {
     this.districts?.advance(seconds);
     const player = this.world.entities.get(1);
@@ -613,6 +617,7 @@ export class GameView implements Lifecycle {
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
     this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
+    if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies());
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;

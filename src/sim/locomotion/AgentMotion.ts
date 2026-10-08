@@ -23,6 +23,12 @@ export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGri
   e.transform.yaw = faceMotion(state, e.transform.yaw, actualX, actualZ);
   if (e.companion) Object.assign(e.companion.velocity ??= { x: 0, z: 0 }, { x: actualX, z: actualZ });
 }
+/** Scripted story walks (L1 hand-overs) cross shop steps without the crowd foot solver's ground probe: support the body
+ * on the highest ground under either foot (0.22 m fore and aft), so the trailing foot never sinks into the step edge. */
+function stepSupport(world: SimWorld, e: EntitySnapshot): number {
+  const d = world.districts!, x = e.transform.x, z = e.transform.z, fx = Math.cos(e.transform.yaw) * .22, fz = -Math.sin(e.transform.yaw) * .22;
+  return Math.max(d.groundHeight(x, z), d.groundHeight(x + fx, z + fz), d.groundHeight(x - fx, z - fz));
+}
 function actor(e: EntitySnapshot): boolean { return !e.corpse && !!(e.infected || e.civilian || e.companion || e.escort); }
 // Corgi hiding still follows at the survivor's heels; it must retain its response.
 function forced(e: EntitySnapshot, tick: number, world: SimWorld): boolean {
@@ -48,7 +54,7 @@ export function installAgentMotion(world: SimWorld): void {
   world.events.on('sim.tick', () => {
     for (const e of world.entities.iterate()) if (actor(e)) {
       const p = previous.get(e.id); if (!p) continue;
-      if (world.districts && !e.infected) e.transform.y = (e.companion || e.civilian?.pet ? .3 : .7) + world.districts.groundHeight(e.transform.x, e.transform.z);
+      if (world.districts && !e.infected) e.transform.y = (e.companion || e.civilian?.pet ? .3 : .7) + (e.civilian?.story ? stepSupport(world, e) : world.districts.groundHeight(e.transform.x, e.transform.z));
       const dx = e.transform.x - p.x, dz = e.transform.z - p.z, distance = Math.hypot(dx, dz);
       const motion = e.motion ??= { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: e.id * .137 };
       motion.velocity.x = dx / FIXED_DT; motion.velocity.z = dz / FIXED_DT; motion.speed = distance / FIXED_DT;

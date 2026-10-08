@@ -94,6 +94,7 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 | `"infect"` / `{ "infect": { "by": "<infected id>", "instant": false } }` | pedestrian | The 3 s transformation; the same entity turns into an infected. |
 | `{ "flee": [x, z] }` | pedestrian | Flee from that point. |
 | `{ "mountBike": "<vehicle id>" }`, `{ "dismount": true }` | courier | A real interact press next to the bike. |
+| `{ "handover": { "building": "<placement or asset id>", "meet": "courier" or [x, z], "pauseS": 2.2 } }` | pedestrian | The L1 hand-over walk (`src/sim/missions/doorRoute.ts`): out of the building's street door (`src/data/buildingDoors.ts`) with the parcel, to arm's length in front of `meet`, give and wave, back in the same way. `"legacy": true` replays the pre-2026-10-08 straight-line walk (A/B with `--query doors=0`, which also freezes the animated doors). |
 
 ### Vehicles
 
@@ -138,6 +139,8 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `torsoPitchMaxDeg`
 - `drawCallsMax`
 - `trianglesMax`
+- `actorHitsMax` (bone-vs-prop hits only, `clipping.actors`; static layout pairs are not counted)
+- `doorClosedFramesMax` (frames a living actor stood in a door aperture or leaf sweep while that animated door was not fully open; see `metrics.doors`). Animated door leaves are left out of the bone clipping because they swing at runtime.
 
 `clipping` takes these options:
 
