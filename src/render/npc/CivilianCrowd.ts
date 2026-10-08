@@ -213,7 +213,7 @@ class CivilianBatch extends Group {
       this.transform.makeRotationY(presented.yaw + (down && c.state !== 'finished' ? Math.sin(this.world.tick * .9 + e.id) * Math.max(c.veins, e.infection ? .4 : 0) * (e.infection ? .09 : .012) : 0)); if (!c.adult) this.transform.scale(this.childScale); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
       if ((performing || noticingSeated) && activity?.seat) {
         const seatBlend = noticingSeated ? Math.max(0, 1 - noticeElapsed / .6) : activity.activity === 'stand' ? Math.max(0, 1 - elapsed / .6) : Math.min(1, elapsed / .6);
-        this.transform.setPosition(presented.x + (activity.seat.x - presented.x) * seatBlend, presented.y - .7, presented.z + (activity.seat.z - presented.z) * seatBlend);
+        this.transform.setPosition(presented.x + (activity.seat.x - presented.x) * seatBlend, presented.y - .7 + (activity.seatLift ?? 0) * seatBlend, presented.z + (activity.seat.z - presented.z) * seatBlend);
       }
       let frame = civilianClips.indexOf(clip) * framesPerClip + (storyFrame ?? phase) * (framesPerClip - 1);
       const sourceFrame = frame;
