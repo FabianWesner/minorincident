@@ -2,6 +2,8 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import { SimPhase } from '../../core/EventBus';
 
+/** Infected-to-human centre spacing (m); must stay below the 1.1 m infected attack range (InfectedSystem). */
+export const meleeRing = 1.08;
 function radius(e: EntitySnapshot): number {
   if (e.infectionRise || e.hidden || e.health.current <= 0 || e.attachedTo !== undefined || (e.infected && (e.infected.hidden || e.transform.y > 2)) || e.companion?.state === 'hide' || e.civilian?.state === 'down' || e.civilian?.state === 'rising') return 0;
   if (e.companion) return .65;
@@ -20,7 +22,7 @@ export function installCharacterSeparation(world: SimWorld): void {
     for (let pass = 0; pass < 3; pass++) for (const e of world.entities.iterate()) {
       const r = radii.get(e.id)!; if (!r || e.survivor || e.civilian?.state === 'grabbed') continue;
       if (world.districts && e.infected && !e.infected.perched && e.infected.special !== 'cling' && e.archetype !== 'infected.crow') e.transform.y = .7 + world.districts.groundHeight(e.transform.x, e.transform.z);
-      query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + .3;
+      query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + .45; // covers the largest gap below
       world.spatial.query(query, neighbors, false);
       for (const id of neighbors) {
         const other = world.entities.get(id); if (!other || other === e) continue;
@@ -30,7 +32,10 @@ export function installCharacterSeparation(world: SimWorld): void {
         // melee/grab range). Infected among themselves keep a small air gap (E19-AC23: a horde reads as separate bodies,
         // not one blob) yet stay a dense group; everyone else keeps body contact.
         const infected = (e.infected ? 1 : 0) + (other.infected ? 1 : 0);
-        const gap = infected === 1 ? Math.max(.015, Math.min(.3, 1.05 - r - otherRadius)) : infected === 2 ? .22 : .015;
+        // Melee ring: an infected stands 1.08 m from a standard human fighter (centre to centre), just inside its 1.1 m
+        // attack range. At 1.0 m the hunched (~0.5 m forward) torso plus the 0.22 m attack lunge drove heads and arms
+        // into the courier's body (QA qa-courier-attack-bat: "the five infected pile up inside the courier's body").
+        const gap = infected === 1 ? Math.max(.015, Math.min(.45, meleeRing - r - otherRadius)) : infected === 2 ? .22 : .015;
         const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, reach = r + otherRadius + gap;
         if (dx * dx + dz * dz >= reach * reach) continue;
         const distance = Math.hypot(dx, dz), overlap = reach - distance;
