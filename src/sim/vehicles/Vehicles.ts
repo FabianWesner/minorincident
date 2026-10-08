@@ -19,6 +19,8 @@ interface Car { entity: EntitySnapshot; physics: VehicleBody; doorTicks: number;
 export class Vehicles {
   readonly cars = new Map<number, Car>();
   active: number | null = null;
+  /** Debug/Scene Lab driverless cars: sets the drive intent of an unoccupied car before its physics step. */
+  readonly autopilot = new Map<number, (intent: import('./VehicleBody').DriveIntent, entity: EntitySnapshot) => void>();
   progressionArmor = 0;
   progressionBoost = 1;
   readonly obstacles: Obstacles;
@@ -54,6 +56,7 @@ export class Vehicles {
       const state = car.entity.vehicle!, drive = car.physics.intent;
       car.physics.boostScale = this.progressionBoost;
       drive.throttle = drive.steer = 0; drive.brake = true; drive.boost = drive.handbrake = false;
+      if (this.active !== car.entity.id) this.autopilot.get(car.entity.id)?.(drive, car.entity);
       if (this.active === car.entity.id && frame.interact) this.exit(car);
       if (car.entity.health.current > 0 && this.active === car.entity.id) {
         if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
