@@ -11681,24 +11681,40 @@
   {
     "id": "prop.tent",
     "category": "prop",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
+    "script": "assets/prop.tent/build.py",
+    "sourceGlb": "assets/prop.tent/model.glb",
+    "sourceForward": "+X",
     "glb": "public/assets/models/prop.tent.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.tent.lod1.glb",
+      "lod2": "public/assets/models/prop.tent.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
     "dimensions": {
-      "x": 3,
-      "y": 2,
-      "z": 3,
+      "x": 3.94,
+      "y": 2.51,
+      "z": 3.027,
       "tolerance": 0.1
     },
     "forward": "+X",
-    "frontNodes": [],
-    "requiredNodes": [],
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
-      "triangles": 10000,
+      "triangles": 1500,
       "materials": 8,
-      "fileKB": 512,
+      "fileKB": 300,
       "drawCalls": 8
     },
     "decayVariants": [],
@@ -16496,6 +16512,206 @@
     "authoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.tank",
+    "category": "vehicle",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/veh.tank/build.py",
+    "sourceGlb": "assets/veh.tank/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/veh.tank.glb",
+    "lods": {
+      "lod1": "public/assets/models/veh.tank.lod1.glb",
+      "lod2": "public/assets/models/veh.tank.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "dimensions": {
+      "x": 9.67,
+      "y": 3.509,
+      "z": 3.56,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "body",
+      "turret",
+      "gun",
+      "muzzle",
+      "front",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "turret",
+      "gun"
+    ],
+    "sockets": [
+      "muzzle"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 8,
+      "fileKB": 1500,
+      "drawCalls": 8
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "veh.helicopter-military",
+    "category": "vehicle",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/veh.helicopter-military/build.py",
+    "sourceGlb": "assets/veh.helicopter-military/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/veh.helicopter-military.glb",
+    "lods": {
+      "lod1": "public/assets/models/veh.helicopter-military.lod1.glb",
+      "lod2": "public/assets/models/veh.helicopter-military.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "dimensions": {
+      "x": 11.109,
+      "y": 4.301,
+      "z": 9.661,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "body",
+      "mainRotor",
+      "tailRotor",
+      "doorGun",
+      "doorGunR",
+      "muzzle",
+      "muzzleR",
+      "front",
+      "lightsFront",
+      "lightsBrake"
+    ],
+    "animatedNodes": [
+      "mainRotor",
+      "tailRotor",
+      "doorGun",
+      "doorGunR"
+    ],
+    "sockets": [
+      "muzzle",
+      "muzzleR",
+      "driverSeat",
+      "exitL",
+      "exitR"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 8,
+      "fileKB": 1500,
+      "drawCalls": 8
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.hmg-nest",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.hmg-nest/build.py",
+    "sourceGlb": "assets/prop.hmg-nest/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/prop.hmg-nest.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.hmg-nest.lod1.glb",
+      "lod2": "public/assets/models/prop.hmg-nest.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
+    "dimensions": {
+      "x": 2.92,
+      "y": 1.64,
+      "z": 2.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "body",
+      "gun",
+      "muzzle",
+      "front"
+    ],
+    "animatedNodes": [
+      "gun"
+    ],
+    "sockets": [
+      "muzzle",
+      "gunnerSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 8
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.reception-plaza",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/kit.reception-plaza/build.py",
+    "sourceGlb": "assets/kit.reception-plaza/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/kit.reception-plaza.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.reception-plaza.lod1.glb",
+      "lod2": "public/assets/models/kit.reception-plaza.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "dimensions": {
+      "x": 12.6,
+      "y": 3.03,
+      "z": 10.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "fileKB": 1500,
+      "drawCalls": 8
     },
     "decayVariants": []
   }
