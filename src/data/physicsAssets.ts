@@ -3674,5 +3674,67 @@ export default {
     ],
     "source": "public/assets/models/decay.makeshift-barricade.glb",
     "hash": "1c633cbd17b3134ee25607695b62f74501238d33912114b6c17fbfd38a247045"
+  },
+  "decay.burned-facade.brick": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.012499988079071045,
+      2.0850000381469727,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.625,
+          0,
+          -2.200000047683716
+        ],
+        "max": [
+          0.6499999761581421,
+          4.170000076293945,
+          2.200000047683716
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.burned-facade.brick.glb",
+    "hash": "c914fefbeb8dd62e22f7ebc30c8fe1c967e3d8c856c596314e5a87e15adb6b6e"
+  },
+  "decay.burned-facade.diner": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.012499988079071045,
+      2.194999933242798,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.625,
+          0,
+          -2.200000047683716
+        ],
+        "max": [
+          0.6499999761581421,
+          4.389999866485596,
+          2.200000047683716
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.burned-facade.diner.glb",
+    "hash": "489be847586ddc2925c60a1057aa0bebe4c9369fd17d1d6c8e9a5029342ca237"
   }
 };
