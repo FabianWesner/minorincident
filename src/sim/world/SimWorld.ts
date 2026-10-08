@@ -36,6 +36,8 @@ import { emptyInput, type EntityFilter, type EntitySnapshot, type GameEvent, typ
 
 /** Headless composition root: survivor gameplay and the preserved E01/E02 cube fixtures. */
 export class SimWorld implements Lifecycle {
+  /** Explicit inspection courier option; false for every normal game and bot run. */
+  inspectionGhost = false;
   readonly physics = new Physics();
   readonly events = new EventBus<GameEvent>();
   readonly entities = new EntityStore();
@@ -68,6 +70,8 @@ export class SimWorld implements Lifecycle {
   barricades: Barricades | null = null;
   pickups: Pickups | null = null;
   missions: Mission | null = null;
+  /** Borrowed input before controls resolve it; shared browser/headless bot policies use this. */
+  get deviceInput(): InputFrame { return this.input; }
   get inputFrame(): InputFrame { return this.effectiveInput; }
   /** Attach a validated mission after scenario/composition assembly. */
   loadMission(def: MissionDef): Mission { const next=new Mission(this,def);this.missions?.dispose();this.missions=next;if(def.id==='L3' && this.districts)installLevelThree(this,next);return next; }
@@ -214,7 +218,7 @@ export class SimWorld implements Lifecycle {
     installCampaignNpcs(this);
     if (districts.districts.some(d => d.layout.anchors['bike-start'] || d.layout.anchors['alarm-car-1'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
     this.events.on('sim.tick',()=>{
-      if(this.tick%60!==0)return;
+      if(this.tick%60!==0 || this.inspectionGhost)return;
       const player=this.entities.get(1)!;
       for(const fire of this.districts!.fires)if((player.transform.x-fire.x)**2+(player.transform.z-fire.z)**2<=fire.radius**2)this.player!.damage(fire.damagePerSecond,this.tick);
     },SimPhase.combat);
@@ -298,6 +302,7 @@ export class SimWorld implements Lifecycle {
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
   }
   reset(): void {
+    this.inspectionGhost = false;
     this.vehicles?.dispose(); this.vehicles = null;
     this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();

@@ -144,6 +144,9 @@ export class InfectedSystem {
       if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; continue; }
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
       if (b.l1) { this.updateL1(e, b, b.l1); continue; }
+      if (this.world.inspectionGhost && b.targetId <= 1 && !['idle', 'wander', 'migration'].includes(b.state)) {
+        b.state = 'idle'; b.grabUntil = 0; e.combat!.attacking = false;
+      }
       const lure = e.noiseTarget && this.world.tick < e.noiseTarget.until ? this.world.entities.get(e.noiseTarget.id) : undefined;
       if (lure && b.state !== 'migration' && !Status.stunned(e, this.world.tick)) {
         b.state = 'chase'; e.combat!.attacking = false;
@@ -156,14 +159,14 @@ export class InfectedSystem {
         this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
       if (b.grabUntil > this.world.tick && ((b.special === 'grab' && b.grabHits >= 3) || (b.special === 'cling' && Math.hypot(player.transform.x - b.grabX, player.transform.z - b.grabZ) >= 3))) b.grabUntil = 0;
-      if (b.special === 'dive') {
+      if (b.special === 'dive' && !this.world.inspectionGhost) {
         updateFlock(e, this.world.tick, player.transform);
         if (this.world.tick < b.scatterUntil) { b.state = 'scatter'; continue; }
         if (b.state === 'scatter') b.state = 'chase';
       }
       const dx = player.transform.x - e.transform.x, dz = player.transform.z - e.transform.z, distance = Math.hypot(dx, dz);
       if (b.special === 'cling' && b.hidden) {
-        if (distance > 5) continue;
+        if (distance > 5 || this.world.inspectionGhost) continue;
         b.hidden = false; b.perched = false; b.state = 'chase'; e.transform.y = 0.7;
       }
       if (b.grabUntil > this.world.tick && b.special === 'cling') {
@@ -171,7 +174,7 @@ export class InfectedSystem {
         e.transform.x = player.transform.x; e.transform.y = player.transform.y + 0.3; e.transform.z = player.transform.z; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
       if (b.state === 'idle' || b.state === 'wander') {
-        if (distance <= 14 && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180)) && this.world.combat!.query.visible(e.transform, player.transform) && !this.world.combat!.effects.smokeBlocks(e.transform, player.transform)) this.alert(e);
+        if (!this.world.inspectionGhost && distance <= 14 && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180)) && this.world.combat!.query.visible(e.transform, player.transform) && !this.world.combat!.effects.smokeBlocks(e.transform, player.transform)) this.alert(e);
         if (b.state === 'wander') {
           moveAgent(e, b.dx * b.speed / 2, b.dz * b.speed / 2, this.nav, this.world.tick); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
           if (this.world.tick >= b.until) b.state = 'idle';

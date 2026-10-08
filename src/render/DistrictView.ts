@@ -66,6 +66,7 @@ export class DistrictView extends Group {
   private cameraRotation = [Infinity, Infinity, Infinity, Infinity];
   private cameraAspect = 0;
   private cameraHeight = 0;
+  private cameraGameLod = false;
 
   private readonly grass: Grass[] = [];
   private readonly foliage: Foliage;
@@ -462,11 +463,11 @@ export class DistrictView extends Group {
     const p = view.camera.position;
     const rotation = view.camera.quaternion.toArray();
     if (Math.hypot(p.x - this.cameraPosition[0], p.y - this.cameraPosition[1], p.z - this.cameraPosition[2]) < .5
-      && rotation.every((value, i) => Math.abs(value - this.cameraRotation[i]) < .0001) && this.cameraAspect === view.camera.aspect && this.cameraHeight === view.viewportHeight) {
+      && rotation.every((value, i) => Math.abs(value - this.cameraRotation[i]) < .0001) && this.cameraAspect === view.camera.aspect && this.cameraHeight === view.viewportHeight && this.cameraGameLod === view.inspectionGameLod) {
       for (const entry of this.dirtyEntries) this.partition(entry, view);
       this.dirtyEntries.clear(); return;
     }
-    this.cameraPosition = p.toArray(); this.cameraRotation = rotation; this.cameraAspect = view.camera.aspect; this.cameraHeight = view.viewportHeight;
+    this.cameraPosition = p.toArray(); this.cameraRotation = rotation; this.cameraAspect = view.camera.aspect; this.cameraHeight = view.viewportHeight; this.cameraGameLod = view.inspectionGameLod;
     this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     for (const entry of this.lodBatches) this.partition(entry, view);
     this.dirtyEntries.clear();
@@ -480,15 +481,15 @@ export class DistrictView extends Group {
       const x = ref.position.x + origin[0], z = ref.position.z + origin[1];
       this.bounds.center.set(x, ref.position.y + height * ref.scale.y / 2, z); this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
       if (!this.frustum.intersectsSphere(this.bounds)) continue;
-      const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
+      const distance = view.inspectionPose && !view.inspectionGameLod ? view.camera.position.distanceTo(this.bounds.center) : Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
       // Bound detail by distance and projected size; preserve the independent low-tier policy.
       const detailDistance = distance / (worldAssets[entry.id].category === 'prop' ? Math.min(1, radius / 5) : 1);
       let band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' || heavyOnLow(entry.id) ? 'lod2' : 'lod1') : pickLod(detailDistance, entry.bands[index], entry.id === 'prop.privacy-fence' ? privacyFenceLodPolicy : undefined);
       if (!this.low && !foliage && worldAssets[entry.id].category === 'prop') {
         const size = worldAssets[entry.id].dimensions;
         const extent = Math.max(size.x * ref.scale.x, size.y * ref.scale.y, size.z * ref.scale.z);
-        this.viewPoint.copy(this.bounds.center).applyMatrix4(view.camera.matrixWorldInverse);
-        const pixels = extent * view.camera.projectionMatrix.elements[5] * view.viewportHeight / (2 * Math.max(.1, -this.viewPoint.z));
+        this.viewPoint.copy(this.bounds.center).applyMatrix4(view.lodCamera.matrixWorldInverse);
+        const pixels = extent * view.lodCamera.projectionMatrix.elements[5] * view.viewportHeight / (2 * Math.max(.1, -this.viewPoint.z));
         const screenBand = propLod(pixels, entry.bands[index]);
         if (screenBand > band) band = screenBand;
       }
