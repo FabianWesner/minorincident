@@ -5,7 +5,7 @@ Build: `npm run assets:build -- veh.sedan-red --decay burned`, then pack the bas
 Source recipe: `tools/blender/sslib/civilian_burned.py`, derived from the base's
 closed authored native LOD1 for near/mid and LOD2 for far. No decimation, fit,
 scale changes, dependencies or textures. Near/mid split only native painted
-panels for authored heat buckling; far omits subdivisions and seat remnants,
+panels for authored heat buckling; far uses one broad panel split pass and omits seat remnants,
 and substitutes explicit eight-sided collapsed tyres with six-sided hubs.
 
 Retains original livery, body profile, axle/door/seat/exit sockets and collider
@@ -23,3 +23,7 @@ sound and gameplay. Existing anchor positions are unchanged. The native
 collider remains a stable coarse vehicle envelope for static dressing.
 
 Evidence: `test-results/l5-burned-civilian-cars/veh.sedan-red.burned/`.
+
+Anchor audit uses the shipped integrated base: all wheel, door, seat, exit
+and collider world transforms are restored exactly in every tier. Glass
+faces sharing low chassis material batches are removed independently.
