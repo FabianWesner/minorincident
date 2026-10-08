@@ -204,7 +204,10 @@ describe('L2 The Failed Rescue', () => {
       expect(m.state.checkpoint).toBe(id);
       const snap = { tick: w.tick, infected: w.infected!.active.filter(e => e.health.current > 0).map(e => e.id).sort(), crew: m.state.l2!.crewIds.map(c => { const e = w.entities.get(c)!; return `${c}:${e.kind}:${e.health.current > 0}`; }), weapons: w.entities.get(1)!.weapons!.LEFT.rack.map(r => r.id), doors: m.state.l2!.doorsOpenAt > 0, phase: m.state.l2!.phase, stats: w.npcs!.civilians.outbreak!.stats.turned };
       for (let i = 0; i < 90; i++) w.update();
-      const p = w.entities.get(1)!; w.player!.damage(p.health.current, w.tick);
+      // A hit just before the kill leaves her invulnerable for a few ticks and the lethal damage would be ignored
+      // (no death, no restore; seen at 'escape' once the melee ring shifted the fight's timing).
+      const p = w.entities.get(1)!; while (w.tick < p.survivor!.invulnerableUntil) w.update();
+      w.player!.damage(p.health.current, w.tick);
       for (let i = 0; i < 400 && m.state.checkpoint === id && w.entities.get(1)!.health.current <= 0; i++) w.update();
       expect(m.state.checkpoint).toBe(id);
       // Within tolerance: the restore lands mid-tick, so a turning civilian may rise or a grabbed one fall in that same tick.
