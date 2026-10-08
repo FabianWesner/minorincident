@@ -15,3 +15,5 @@ W3: jagged dark glazing voids, local soot patches and angled damaged sill trim. 
 Interface: roofs/interiors remain independently addressable; door hinges, light groups and collider anchors remain base-compatible. District placement, navigation, doors state changes and electrical switching belong to runtime lanes.
 
 QA sheets: `test-results/l3-oak-houses-abc/bld.house-a.w3/lod-contact.png`, `comparison.png`, `game-camera.png`, `footprint.png`; detailed measurements are in `delivery.json`. The near mesh intentionally uses the simpler integrated native forms: individual shingles/flowers are omitted. Far trim and foliage are visibly simplified. No runtime/gameplay behavior changes.
+
+Final checks: assets:validate 739 checks / 0 failures; typecheck and lint pass; unit tests 340/340 across 97 files. Full batch report: `test-results/l3-oak-houses-abc/report.md`.
