@@ -1,0 +1,10 @@
+{
+  "name": "house",
+  "ground": "grass",
+  "size": 30,
+  "props": [{ "id": "house", "asset": "bld.house-a", "at": [0, 0], "yaw": 0 }],
+  "camera": { "mode": "orbit", "target": [0, 2, 0], "radius": 30, "azimuth": 45, "polar": 60 },
+  "frames": 30,
+  "shots": [0, 30],
+  "expect": { "consoleErrors": 0, "clippingMax": 0 }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "bench-sitter",
+  "ground": "sidewalk",
+  "size": 20,
+  "props": [{ "id": "bench", "asset": "prop.bench", "at": [0, 0], "yaw": 90, "scale": [0.95, 0.551, 0.95] }],
+  "actors": [
+    { "id": "sitter", "kind": "pedestrian", "at": [2.5, -3], "yaw": 180,
+      "look": { "model": "npc.civilian-man-b", "tint": "#d8b04a", "handProp": "coffee" },
+      "state": { "sit": "bench" } }
+  ],
+  "camera": { "mode": "close", "target": [0, 0.7, 0], "radius": 5, "azimuth": 150 },
+  "frames": 300,
+  "shots": [0, 300],
+  "expect": { "consoleErrors": 0, "clippingMax": 0 }
+}

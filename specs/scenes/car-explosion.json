@@ -1,0 +1,21 @@
+{
+  "name": "car-explosion",
+  "ground": "asphalt",
+  "size": 40,
+  "props": [
+    { "id": "bin", "asset": "prop.trash-bin", "at": [3.5, 3], "yaw": 90 },
+    { "id": "lamp", "asset": "prop.street-lamp", "at": [-3.5, 3.2] },
+    { "id": "bench", "asset": "prop.bench", "at": [1.5, -4.5], "yaw": 90 },
+    { "id": "hydrant", "asset": "prop.fire-hydrant", "at": [-2.5, -3.5] }
+  ],
+  "vehicles": [
+    { "id": "sedan", "asset": "vehicle.sedan", "at": [0, 0], "yaw": 0 },
+    { "id": "pickup", "asset": "vehicle.pickup", "at": [-16, 8], "yaw": 0, "path": [[16, 8]] }
+  ],
+  "script": [{ "frame": 20, "effect": { "wreck": "sedan" } }],
+  "camera": { "mode": "game", "target": [0, 1], "zoom": 1.15 },
+  "frames": 330,
+  "shots": [0, 200, 215, 330],
+  "video": 5,
+  "expect": { "consoleErrors": 0 }
+}
