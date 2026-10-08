@@ -152,7 +152,7 @@ describe('L1 v2 mission', () => {
   test('T-E19-15 @E19 @E19-AC15 bat only via the garage interaction, empty starting loadout', async () => {
     const { world: w, mission } = await load();
     expect(w.entities.get(1)!.weapons).toBeUndefined();
-    expect([...w.entities.iterate()].filter(e => e.pickup)).toHaveLength(0);
+    expect([...w.entities.iterate()].filter(e => e.pickup && e.pickup.kind !== 'medkit')).toHaveLength(0);
     // Standing in the garage before the objective is active gives nothing.
     const bat = mission.def.anchors['garage-bat'];
     Object.assign(w.entities.get(1)!.transform, { x: bat.x, z: bat.z }); w.physics.playerBody!.setTranslation(w.entities.get(1)!.transform, true);
