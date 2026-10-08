@@ -1,5 +1,6 @@
 import { action } from '../../data/actions/catalog';
 import { survivor } from '../../data/survivor';
+import { downed } from '../combat/Damage';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import type { SimWorld } from '../world/SimWorld';
 
@@ -8,7 +9,9 @@ export class ControlIntent {
   moveTarget: Vec2 | null = null;
   private readonly route = { path: [] as number[], goal: -1, pathIndex: 0 };
   private readonly waypoint = { x: 0, z: 0 };
-  private attack: { id: number; side: 'LEFT' | 'RIGHT'; started: boolean; mouseAttack?: boolean; until?: number } | null = null;
+  private attack: { id: number; side: 'LEFT' | 'RIGHT'; started: boolean; mouseAttack?: boolean; until?: number; ground?: boolean } | null = null;
+  /** The infected the current click command attacks (melee resolves it first, so a downed target takes the ground hit). */
+  get targetId(): number | null { return this.attack?.id ?? null; }
   constructor(private readonly world: SimWorld) {}
   snapshot() { return this.moveTarget || this.attack ? structuredClone({ moveTarget: this.moveTarget, attack: this.attack }) : null; }
   attacked(side: 'LEFT' | 'RIGHT'): void { if (this.attack?.side === side) this.attack.started = true; }
@@ -33,8 +36,13 @@ export class ControlIntent {
       this.moveTarget = point ? { x: point[0], z: point[1] } : { ...raw.moveTarget }; this.attack = null;
     }
     if (raw.attackTarget) {
-      const running = this.world.combat?.runner.running[raw.attackTarget.side];
-      this.attack = { ...raw.attackTarget, started: false, ...(raw.mouseAttack ? { mouseAttack: true } : {}), ...(running && this.world.tick < running.endsAt ? { until: this.world.tick + 12 } : {}) };
+      const runner = this.world.combat?.runner, running = runner?.running[raw.attackTarget.side], target = this.world.entities.get(raw.attackTarget.id);
+      // Diablo-style input buffer: a click during a swing queues the next one on that target. It stays valid until the
+      // running swing (and the weapon's cooldown) is over plus the 200 ms melee buffer, so no click in recovery is lost.
+      const busy = running && this.world.tick < running.endsAt, ready = runner ? runner.loadout.current(raw.attackTarget.side).readyAt : 0;
+      this.attack = { ...raw.attackTarget, started: false, ...(raw.mouseAttack ? { mouseAttack: true } : {}), ...(busy ? { until: Math.max(this.world.tick, running.endsAt, ready) + 12 } : {}),
+        // A click on a downed infected is one ground hit (it restarts the down time, PO 10-08).
+        ...(target && downed(target) ? { ground: true } : {}) };
       this.moveTarget = null;
     }
     // Resolve the destination outside solid parked frames' capsule clearance, so steering
@@ -55,7 +63,7 @@ export class ControlIntent {
     if (attack && combat) {
       const target = this.world.entities.get(attack.id), button = attack.side === 'LEFT' ? frame.left : frame.right;
       // One click approaches and attacks once; holding repeats until released or retargeted.
-      if (!target || target.health.current <= 0 || target.hidden || target.infected?.hidden || (attack.started && !button.held) || (attack.until !== undefined && this.world.tick > attack.until && !button.held)) this.attack = null;
+      if (!target || (target.health.current <= 0 && !(attack.ground && downed(target))) || target.hidden || target.infected?.hidden || (attack.started && (!button.held || attack.ground)) || (attack.until !== undefined && this.world.tick > attack.until && !button.held)) this.attack = null;
       else {
         const p = player.transform, t = target.transform, dx = t.x - p.x, dz = t.z - p.z, distance = Math.hypot(dx, dz);
         const actionId = combat.runner.loadout.current(attack.side).id;
@@ -66,7 +74,8 @@ export class ControlIntent {
         button.down = button.held = false;
         // Approach toward 85 % of the reach but strike as soon as the target is inside 95 % of it: the
         // arrival slowdown plus the bounded locomotion response otherwise creeps for seconds before a swing.
-        if (distance > Math.max(range + .08, def.range * .95)) this.walk(frame, t, distance - range);
+        // Out of reach: the click becomes an approach-and-strike command; the recovery-buffer expiry no longer applies.
+        if (distance > Math.max(range + .08, def.range * .95)) { delete attack.until; this.walk(frame, t, distance - range); }
         else {
           // Stop at range rather than drifting through the target during wind-up.
           frame.navigation = true; frame.move = { x: 0, z: 0 };

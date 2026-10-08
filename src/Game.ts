@@ -68,6 +68,12 @@ export class Game {
     this.clock = new Clock(params.get('test') === '1' ? 20 : 5);
     this.view = this.services.add(new GameView(this.world, params, this.quality.tier));
     this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera, delta => this.view.view.zoom(delta)));
+    this.input.reach = () => {
+      const combat = this.world.combat, weapons = this.world.entities.get(1)?.weapons;
+      if (!combat || !weapons) return null;
+      const def = combat.runner.loadout.definition(combat.runner.loadout.current(weapons.selectedSide).id);
+      return def.category === 'melee' ? def.range : null;
+    };
     this.audio = this.services.add(new AudioService(this.world, {
       settingsChanged: patch => this.campaignSettings(patch),
       pause: () => { this.clock.pause(); this.ui?.pause(); }, resume: () => { this.ticker.reset(); this.clock.resume(); this.ui?.show(null); },

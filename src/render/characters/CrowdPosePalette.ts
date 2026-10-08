@@ -76,6 +76,12 @@ export class CrowdPosePalette {
     for (let i = row * this.width, end = i + this.width; i < end; i++) if (!Number.isFinite(this.rows[i])) return false;
     return true;
   }
+  /** One rig part's matrix of a drawn pose (click picking); same blend as pose(). */
+  part(frame: number, outgoing: number, weight: number, part: number, out: Matrix4): Matrix4 {
+    const e = out.elements, base = part * 16;
+    for (let i = 0; i < 16; i++) e[i] = this.component(frame, base + i) * weight + this.rows[outgoing * this.width + base + i] * (1 - weight);
+    return out;
+  }
   /** CPU counterpart of the shader for regression probes. */
   pose(frame: number, outgoing: number, weight: number): Float32Array {
     const result = new Float32Array(this.width);
