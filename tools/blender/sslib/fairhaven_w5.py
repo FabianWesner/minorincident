@@ -20,6 +20,9 @@ def difference(obj, cutter):
     confuse a Boolean into deleting remote tower / finial geometry."""
     bm=bmesh.new();bm.from_mesh(obj.data)
     bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=1e-6)
+    # Imported distance shells contain inward-facing triangles. Booleans need
+    # consistent outward winding before the cut, otherwise remote walls vanish.
+    bmesh.ops.recalc_face_normals(bm, faces=list(bm.faces))
     bm.verts.ensure_lookup_table();seen=set();components=[]
     for v in bm.verts:
         if v in seen:continue
@@ -127,11 +130,13 @@ def damage(asset, directory, lod):
     def scar(axis,fixed,c,z,w,h):
         pts=[(c-w,z),(c-w*.9,z+h*.5),(c-w*.35,z+h),(c+w*.25,z+h*.86),(c+w,z+h*.28),(c+w*.6,z)]
         vertices=[(fixed,a,b) if axis=='x' else (a,fixed,b) for a,b in pts]
-        o=s.mesh('sootTongue',vertices,[tuple(range(len(vertices)))],'uiDark')
+        # The authored outline is clockwise in (horizontal, height). Reverse it
+        # so +X and -Y street faces survive the runtime's backface culling.
+        o=s.mesh('sootTongue',vertices,[tuple(range(len(vertices)-1,-1,-1))],'uiDark')
         # A broad masonry-colored halo fades from char to the base wall color.
         halo=[(c-w*1.35,z-.12),(c-w*1.28,z+h*.55),(c-w*.38,z+h*1.15),(c+w*.35,z+h),(c+w*1.35,z+h*.30),(c+w*.80,z-.12),(c,z+h*.35)]
         hv=[(fixed-.003,a,b) if axis=='x' else (a,fixed+.003,b) for a,b in halo]
-        s.mesh('sootGradient',hv,[(6,i,(i+1)%6) for i in range(6)],material)
+        s.mesh('sootGradient',hv,[(6,(i+1)%6,i) for i in range(6)],material)
         for i,v in enumerate(hv):soot_colors[tuple(round(a,6) for a in v)]=(.12 if i==6 else .82 if i in (2,3) else .45)
         return o
     for axis,fixed,c,z,w,h in ([('x',wall+.065,2.0,3.0,1.1,3.8),('x',wall+.065,-1.2,6.7,.6,2.5),
