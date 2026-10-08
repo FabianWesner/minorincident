@@ -11,6 +11,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
 from sslib.distance import tier_argument, export_variant, build_native_lods
 DISTANCE = tier_argument()
 
+# Damage deliveries reuse these native primitives before batching.
+from sslib.commerce_damage import consume_arguments, build_variants, finish_native
+COMMERCE = consume_arguments(DISTANCE)
+if COMMERCE and COMMERCE['dispatch']:
+    build_variants(Path(__file__), COMMERCE['decay'], COMMERCE['output'], COMMERCE['tierOnly'])
+    sys.exit(0)
+
+if COMMERCE: DISTANCE = 2 if COMMERCE['tier'] == 2 else 1
 HERE = Path(__file__).resolve().parent
 
 parser = argparse.ArgumentParser()
@@ -366,6 +374,10 @@ for x in [-2.5,-.91,.85,2.49]:
 
 if DISTANCE==2:
     box('distance forecourt',(0,-.13,.265),(6.5,8.42,.13),'sidewalk',bevel=0)
+if COMMERCE:
+    finish_native(Path(__file__), COMMERCE)
+    sys.exit(0)
+
 if DISTANCE:
     export_variant(Path(__file__).parent, DISTANCE, omit=('stucco_chip',), far_omit=('floor_tile', 'slogan_lettering','chalk_cup','paving','front_brick','side_brick','checker_tile','leaf', 'flower', 'cup', 'plate', 'utensil', 'stool', 'pebble','louver','pipe_clamp','sign_border','access_screw','planter_brick','sign_garden_kerb'))
 
