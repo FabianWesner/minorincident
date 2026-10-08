@@ -10,6 +10,7 @@ import type { EntitySnapshot } from '../../sim/world/types';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import { installL1Outbreak } from '../../sim/outbreak/install';
+import { seatAnchor } from '../../sim/npc/seats';
 import { CrowdFigureProbe } from '../../render/characters/CrowdFigureProbe';
 import type { TimeOfDay } from '../../data/timeOfDay';
 import { buildScene, validateSpec, type Action, type ActorSpec, type BuiltScene, type CameraSpec, type EffectSpec, type PropSpec, type SceneSpec } from './spec';
@@ -200,14 +201,16 @@ export class SceneLab {
     if ('turn' in a) e.transform.yaw = rad(a.turn);
     else if ('moveTo' in a) this.teleport(e, toPoint(a.moveTo));
   }
-  /** Sit on a placement id (or the nearest placement of an asset id), the same seat rule as MorningRoutines/L1. */
+  /** Sit on a placement id (or the nearest placement of an asset id), the same seat rule as MorningRoutines/Population. */
   private sitSchedule(target: string, seconds = 600): CivilianActivity[] {
     const placements = this.built!.placements;
     const bench = placements.find(p => p.id === target) ?? placements.filter(p => p.assetId === target).sort((a, b) => Math.hypot(a.position[0], a.position[2]) - Math.hypot(b.position[0], b.position[2]))[0];
     if (!bench) throw new Error(`sit: no placement ${target}`);
-    const seat = { x: bench.position[0], z: bench.position[2] }, front = { x: Math.cos(bench.yaw), z: -Math.sin(bench.yaw) };
+    // Authored seat anchor (src/sim/npc/seats.ts) where one exists: hip over the seat, root lifted by `seatLift`.
+    const anchored = seatAnchor(bench.assetId, bench.position, bench.yaw, bench.scale);
+    const seat = anchored ?? { x: bench.position[0], z: bench.position[2] }, front = { x: Math.cos(bench.yaw), z: -Math.sin(bench.yaw) };
     const approach = { x: seat.x + front.x * .9, z: seat.z + front.z * .9 }, facing = { x: seat.x + front.x * 3, z: seat.z + front.z * 3 };
-    return [{ activity: 'sit', anchor: bench.id, target: approach, seat, facing, ticks: ticks(seconds) }];
+    return [{ activity: 'sit', anchor: bench.id, target: approach, seat: { x: seat.x, z: seat.z }, seatLift: anchored?.lift, facing, ticks: ticks(seconds) }];
   }
   private hit(e: EntitySnapshot, hit: { from?: string | Point; heavy?: boolean; amount?: number }): void {
     const from = typeof hit.from === 'string' ? this.world.entities.get(this.actors.get(hit.from)?.entity ?? 1)!.transform : hit.from ? toPoint(hit.from) : { x: e.transform.x - 1, z: e.transform.z };
