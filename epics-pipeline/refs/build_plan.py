@@ -241,7 +241,7 @@ descriptions['amb.pigeon']='One healthy gray pigeon from the lower healthy flock
 descriptions['amb.zebra']='One healthy black-and-white zebra from the crop, complete hooves and tail'
 descriptions['amb.elephant']='One healthy gray elephant from the crop, rounded chunky body, trunk and large ears'
 descriptions['prop.picnic-table']='One wooden picnic table with attached bench seats from the crop'
-descriptions['kit.house-variants']='One detached garage module from the crop, use the complete closed-door version as the hero; retain its chunky suburban trim'
+descriptions['kit.house-variants']='One detached garage module from the crop, use the complete closed-door version in the reference; retain its chunky suburban trim'
 descriptions['house.porch-a']='One porch furniture assembly: two wooden rocking chairs with flower pots as shown, not a building'
 descriptions['house.porch-b']='One porch accessory assembly: bikes, small wagon and ball as shown, not a building'
 descriptions['kit.edge-roadwork']='One coherent roadwork kit assembly with the barricade, orange fence and small excavator from the crop'
@@ -288,7 +288,7 @@ for id,a in sorted(assets.items()):
  entry={'id':id,'category':a['category'],'source':'text','sheet':None,'box':None,'description':description}
  if id in existing:
   source=existing[id]
-  if not (dest/'existing.png').exists() or (dest/'existing.png').stat().st_size!=source.stat().st_size: shutil.copy2(source,dest/'existing.png')
+  (dest/'existing.png').unlink(missing_ok=True)
   (dest/'crop.png').unlink(missing_ok=True)
   entry.update(source='existing',existing=str(source))
  elif id in M:
@@ -297,30 +297,32 @@ for id,a in sorted(assets.items()):
   assert 0<=box[0]<box[2]<=w and 0<=box[1]<box[3]<=h,(id,box)
   im.crop(box).save(dest/'crop.png');entry.update(source='sheet',sheet=str(source),box=box)
  plan.append(entry)
+ if entry['source']=='existing':
+  (OUT/'briefs'/f'{id}.md').unlink(missing_ok=True)
+  continue
  matching=entry['sheet'] or str(ROOT/'initial-drafts'/f'{style[a["category"]]}.png')
- context=f'load the matching sheet {matching} with view_image for style context'
- if entry['source']=='sheet':context+=', and crop.png for the exact design (do NOT redesign, only clarify). The crop may include neighboring objects, repeated views or scenery: use only the named asset; do not reproduce the whole crop as a scene'
- elif entry['source']=='existing':context+=f', and {entry["existing"]} (also copied to existing.png) with view_image for the exact design; preserve the same design and only derive the single isolated three-quarter hero from it; do NOT regenerate turnarounds'
+ sample={'vehicle':'veh.sedan-red','building':'bld.house-d','character':'char.survivor-male','infected':'inf.common-worker','weapon':'wpn.fire-axe','prop':'prop.dumpster'}[a['category']]
+ sample_reference=ROOT/'assets'/sample/'reference-upscaled.png'
+ context=f'load the matching sheet {matching} and the existing turnaround {sample_reference} with view_image for style context'
+ if entry['source']=='sheet':context+=', and crop.png for the exact design (do NOT redesign, only clarify). The crop may include neighboring objects, repeated views or scenery: use only the named asset'
  else:context+='; this is a new text design, follow the asset description'
- # Variants anchor on intact reference first, to preserve footprint and identity.
  base=next((id[:-len(suffix)] for suffix in ['.w2','.w3','.w5','.aftermath','.wrecked'] if id.endswith(suffix) and id[:-len(suffix)] in assets),None)
- anchor=f'\nFor this variant first view {OUT/base}/hero.png if available, otherwise its crop.png or existing.png if present; preserve the base footprint, proportions and identity.' if base else ''
- if id.startswith('npc.shelter-survivor.'): anchor+='\nKeep the explicitly requested resting/injured pose in every view; it overrides the default standing A-pose.'
- required='(a) hero.png — ONE view of the object, three-quarter front from slightly above (≈30°), the whole object centred with ~10 % margin, plain light-neutral background (#d9d6d0) or transparent, no ground shadow clutter, no text/labels, even soft lighting, ≥ 1536 px on the long side (upscale if needed). This is the image-to-3D input: single isolated object, clean silhouette.'
- if entry['source']=='existing':required+='\nOnly hero.png is required for this existing reference. Do not generate a turnaround; return "turnaround": null.'
- else:required+='\n(b) turnaround.png — front, side, back and three-quarter views side by side, same scale, same style (characters: relaxed A-pose-ish stance, arms slightly away from the body).'
- prompt=f'''# Task: clean reference images for {id} (for image-to-3D)
-Work ONLY in {dest}/. Asset: {description}. Style: the game's stylized chunky low-poly toy look (warm saturated colours, soft light, slight bevels) — {context}.{anchor}
-Use the built-in imagegen tool. For interiors use an isolated roofless room cutaway. For kits/sets use ONE compact coherent assembly with components visibly connected or supported on a small neutral base; never a contact sheet of loose objects in hero.png. Produce:
-{required}
-Generate once; regenerate once only if clearly wrong (wrong design, cropped, cluttered background). Copy chosen files from $CODEX_HOME/generated_images. Write prompt.md with the prompts used and today's date. Inspect saved image dimensions and report actual pixel size. Preserve provided crop.png and existing.png. Never modify game code, manifest, specs or source sheets. Do not push, merge or deploy.
-Final message = one JSON object: {{"id":"{id}","hero":"<path>","turnaround":"<path or null>","hero_px":[w,h],"attempts":n,"notes":"..."}}
+ anchor=''
+ if base:
+  reference=existing.get(base)
+  anchor=f'\nFor this variant first view {reference if reference else OUT/base/"turnaround.png"} if available, otherwise {OUT/base/"crop.png"} if present; preserve the base footprint, proportions and identity.'
+ if id.startswith('npc.shelter-survivor.'):anchor+='\nKeep the explicitly requested resting/injured pose in every view; it overrides the default standing A-pose.'
+ prompt=f'''# Task: Blender modelling turnaround reference for {id}
+Work ONLY in {dest}/. Asset: {description}. Style: the game's stylized chunky low-poly toy look (warm saturated colours, soft light, slight bevels), matching the established reference-upscaled.png files — {context}.{anchor}
+Use the built-in imagegen tool. Produce turnaround.png ONLY: front, side, back and three-quarter views side by side, consistent design, materials and scale. Show the whole asset in each view with ~10 % margin and clear spacing, plain light-neutral background (#d9d6d0), even soft lighting, no background scenery or shadow clutter. At least 1536 px on the long side (upscale if needed); retain enough detail to guide Blender modelling. Characters: relaxed A-pose-ish stance, arms slightly away from the body. Interiors: an isolated roofless room cutaway. Kits/sets: the same coherent assembly in every view, components supported on a small neutral base. This is a modelling reference sheet for Blender; no hero.png or image-to-3D input is requested.
+Generate once; regenerate once only if clearly wrong (wrong design, cropped, cluttered background). Copy the chosen file from $CODEX_HOME/generated_images. Write prompt.md with the prompt used and today's date. Inspect the saved turnaround and report actual pixel dimensions. Preserve provided crop.png. Never modify game code, manifest, specs, restored references or source sheets. Do not push, merge or deploy.
+Final message = one JSON object: {{"id":"{id}","turnaround":"<path>","turnaround_px":[w,h],"attempts":n,"notes":"..."}}
 '''
  (OUT/'briefs'/f'{id}.md').write_text(prompt)
 (OUT/'plan.json').write_text(json.dumps(plan,indent=2)+'\n')
-jobs=[{'slug':'ref-'+p['id'].replace('.','_'),'prompt_file':'briefs/'+p['id']+'.md','workspace':str(ROOT),'model':'gpt-6.1-sol','effort':'low','sandbox':'danger-full-access','max_seconds':1500} for p in plan]
+jobs=[{'slug':'ref-'+p['id'].replace('.','_'),'prompt_file':'briefs/'+p['id']+'.md','workspace':str(ROOT),'model':'gpt-6.1-sol','effort':'low','sandbox':'danger-full-access','max_seconds':1500} for p in plan if p['source']!='existing']
 (OUT/'jobs.json').write_text(json.dumps(jobs,indent=2)+'\n')
-summary={'total':len(plan),'categories':dict(collections.Counter(p['category'] for p in plan)),'sources':dict(collections.Counter(p['source'] for p in plan)),'unclassified':[],'excluded':excluded,'origins':origins}
+summary={'total':len(plan),'jobs':len(jobs),'categories':dict(collections.Counter(p['category'] for p in plan)),'sources':dict(collections.Counter(p['source'] for p in plan)),'unclassified':[],'excluded':excluded,'origins':origins}
 summary['excluded_restored_references']=[f.parent.name for f in (ROOT/'assets').glob('*/reference.png') if f.parent.name not in assets]
 (OUT/'coverage.json').write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps({k:v for k,v in summary.items() if k not in ['origins','excluded']},indent=2))
