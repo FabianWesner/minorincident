@@ -95,7 +95,7 @@ export const l3Anchors: Record<string, P> = {
   'l3-soldier-5': [149.0, -7.0], 'l3-soldier-6': [149.0, 7.0], 'l3-soldier-7': [152.0, -2.4], 'l3-soldier-8': [139.0, -20.0],
   'photo-l3-station-yard': [-140, 2], 'photo-l3-station-attack': [-136, 0], 'photo-l3-squad-strong': [-92, 0],
   'photo-l3-oak-avenue': [-22, 28], 'photo-l3-commerce-street': [8, 0], 'photo-l3-grove-boulevard': [18, -28],
-  'photo-l3-alone': [96, 0], 'photo-l3-army-checkpoint': [132, 0],
+  'photo-l3-alone': [96, 0], 'photo-l3-army-checkpoint': [146, 0],
 };
 /** Photo spots (section 6): name and camera offset, same framing scale as the L2 spots. */
 export const l3PhotoSpots: readonly (readonly [string, readonly [number, number, number]])[] = [

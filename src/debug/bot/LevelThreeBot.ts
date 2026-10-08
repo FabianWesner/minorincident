@@ -35,11 +35,14 @@ export class LevelThreeBot {
   private decidedAt: number | null = null;
   private waiting = false;
   private waitedSince = 0;
+  private readonly waitedTotal = [0, 0];
   constructor(private readonly world: SimWorld, readonly profile: L3Profile = 'complete', readonly forced: L3StreetChoice = 'auto') {
     this.rng = new Rng(world.seed, `l3-bot-${profile}-${forced}`);
     this.street = forced === 'auto' ? 'commerce' : forced;
   }
   /** Infected the player can see (line of sight on the walk grid), nearest first. */
+  /** Internal state for traces (tools/l3). */
+  debug() { return { street: this.street, detour: this.detour, waiting: this.waiting, medkit: this.medkit, decidedAt: this.decidedAt, stuck: this.stuck.n }; }
   private threats(p: P, radius: number): EntitySnapshot[] {
     const w = this.world;
     return (w.infected?.active ?? []).filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && !e.infectionRise && dist(e.transform, p) <= radius && w.infected!.nav.visible(p, e.transform, 0))
@@ -110,7 +113,7 @@ export class LevelThreeBot {
     // A jammed walker (crowd, wreck or corner) steps aside along a connected route.
     if (w.tick >= this.stuck.next) {
       this.stuck.next = w.tick + 60;
-      if (this.stuck.at && dist(this.stuck.at, p) < .6 && !near.length && !frame.attackTarget) this.stuck.n++; else this.stuck.n = 0;
+      if (this.stuck.at && dist(this.stuck.at, p) < .6 && !near.length && !frame.attackTarget && !this.waiting) this.stuck.n++; else this.stuck.n = 0;
       this.stuck.at = { x: p.x, z: p.z };
       if (this.stuck.n >= 3) { const at = this.walker.detour(w, { x: p.x + 10, z: p.z }); this.detour = at ? { ...at, until: w.tick + 150 } : null; this.stuck.n = 0; }
     }
@@ -128,11 +131,13 @@ export class LevelThreeBot {
     if (this.profile === 'complete' && s.squad.length && p.x < 50 && p.x > -100) {
       const lag = Math.max(...s.squad.map(q => { const e = w.entities.get(q.id); return e ? dist(e.transform, p) : 0; }));
       // A careful courier waits a few seconds for a straggler, not forever (an officer stuck on a wreck is left behind).
-      if (lag <= 7) this.waiting = false;
-      else if (!this.threats(p, 20).some(e => this.chasing(e))) {
+      // At most 5 s at a time and 20 s per segment: the courier does not wait for an officer who cannot get through.
+      const seg = p.x < l3.map.segments[0][1] ? 0 : 1;
+      if (lag <= 7) { if (this.waiting) this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false; }
+      else if (!this.threats(p, 20).some(e => this.chasing(e)) && this.waitedTotal[seg] < 1200) {
         if (!this.waiting) { this.waiting = true; this.waitedSince = w.tick; }
         if (w.tick - this.waitedSince < 300) return frame;
-      }
+      } else if (this.waiting) { this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false; }
     }
     // Forward: along the street, then up On-ramp Road to the checkpoint lane and through the zone line.
     const zone = a['l3-zone'];

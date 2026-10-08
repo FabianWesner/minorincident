@@ -178,8 +178,8 @@ export class DistrictView extends Group {
           if (!references.has(key)) references.set(key, []);
           references.get(key)!.push(reference);
         });
-        // L3 authors parking and emergency dressing in its loaded layout. Its
-        // references must use those positions, rather than the unchanged baked GLB.
+        // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
+        // references must use those placements, rather than the unchanged baked GLB empties.
         if (this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
           references.clear();
           // Scene Lab: crowns follow the kept placements (layout.py `place` writes the same markers).
@@ -334,13 +334,6 @@ export class DistrictView extends Group {
     // Low preserves building/vehicle/hero shadows and omits detailed prop shadow casters.
     for (const batch of this.batches) if (worldAssets[batch.name.slice(5)].category === 'prop') batch.traverse(node => {
       if (node instanceof Mesh) { node.userData.qualityCastShadow ??= node.castShadow; node.castShadow = tier === 'high' && node.userData.qualityCastShadow; }
-    });
-  }
-  /** L3 collapse extinguishes Civic emissives; ordinary checkpoint restore powers them again. */
-  setEmergencyPower(powered: boolean): void {
-    const root = this.children.find(child => child.name === 'D-CIVIC');
-    root?.traverse(node => {
-      if (node instanceof Mesh && !Array.isArray(node.material) && (node.name === 'window-light' || node.material.name.startsWith('emi_'))) node.visible = powered;
     });
   }
   setFoliageReveal(enabled: boolean): void { this.foliage.reveal = enabled; }
