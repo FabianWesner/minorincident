@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite';
+import { execFileSync } from 'node:child_process';
 import { assetVersionsDefine, rapierWasmFile } from './tools/build/load-plugins';
+let buildCommit = 'unknown';
+try { buildCommit = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { encoding: 'utf8' }).trim(); } catch { /* Source archives may not include Git metadata. */ }
 export default defineConfig({
+  define: { __BUILD_COMMIT__: JSON.stringify(buildCommit) },
   cacheDir: '.vite-cache',
   plugins: [rapierWasmFile(), assetVersionsDefine()],
   resolve: { dedupe: ['three'] },
