@@ -3,7 +3,7 @@ import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { StaticCorpses } from '../characters/StaticCorpses';
 import { CrowdFootwork, CrowdLocomotion } from '../characters/CrowdLocomotion';
-import { InfectedMoves } from '../characters/InfectedMoves';
+import { InfectedMoves, getUpSpan } from '../characters/InfectedMoves';
 import { infectedDefinitions } from '../../data/infected';
 import { GaitPhase } from '../characters/GaitPhase';
 import { CrowdFigureProbe } from '../characters/CrowdFigureProbe';
@@ -268,7 +268,7 @@ class CivilianBatch extends Group {
     const heavy = !!reaction?.heavy && tick < reaction.until && b.state !== 'dead';
     if (heavy) clip = age < .7 ? 'knockdown' : 'get-up';
     const duration = authoredClips.get(clip)!.duration, renderTick = Math.max(0, tick + alpha - 1);
-    const phase = b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / .64) : heavy ? Math.min(1, age / .7) : strides[clip] ? this.gait.sample(e.id, Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), clip, this.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
+    const phase = b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction!)) : heavy ? Math.min(1, age / .7) : strides[clip] ? this.gait.sample(e.id, Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), clip, this.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
     const presented = this.presentation.sample(e.id, e.transform, tick, alpha);
     // Hunched silhouette: the whole body leans forward (pivot at the feet) on top of the tier gait's arms-forward pose.
     // QA2b: the read holds in every state - standing/searching infected sway and twitch on top of the hunch.
