@@ -173,7 +173,7 @@ def build_burned(directory, output):
                     modifier = obj.modifiers.new('authoredHeatOpening', 'BOOLEAN')
                     modifier.operation = 'DIFFERENCE'
                     modifier.solver = 'EXACT'
-                    modifier.use_self = lod < 2
+                    modifier.use_self = True
                     modifier.use_hole_tolerant = True
                     modifier.object = cutter
                     bpy.ops.object.modifier_apply(modifier=modifier.name)
