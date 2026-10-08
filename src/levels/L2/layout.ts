@@ -68,6 +68,25 @@ const SUPERSEDED: readonly (readonly [asset: string, x: number, z: number])[] = 
   ['prop.privacy-fence', 80.37, 26.44], ['prop.privacy-fence', 80.37, 28.81], ['prop.privacy-fence', 80.37, 31.19], ['prop.privacy-fence', 80.37, 33.56], ['prop.privacy-fence', 81.5, 35],
 ];
 const supersededIds = (layout: DistrictLayout): Set<string> => new Set(layout.placements.filter(p => SUPERSEDED.some(([asset, x, z]) => p.id.startsWith(`${asset}:`) && Math.abs(p.position[0] - x) < .05 && Math.abs(p.position[2] - z) < .05)).map(p => p.id));
+/**
+ * Interaction rings are keep-out zones for props (PO 10-08: a hydrant beside the boarding ring made it hard to enter): the courier
+ * must be able to walk straight in from the apron. Ring + `CLEAR_M` around the three station rings and a corridor of the same
+ * half-width along the apron approaches. Buildings and fences stay; loose street props (hydrants, lamps, crates) are dropped.
+ */
+export const RING_CLEAR_M = 1.2;
+const RINGS: readonly (readonly [string, number])[] = [['l2-board', 1.8], ['l2-axe-rack', 1.5], ['l2-start', 1.2]];
+const CORRIDORS: readonly (readonly [string, string])[] = [['l2-start', 'l2-axe-rack'], ['l2-start', 'l2-board'], ['l2-axe-rack', 'l2-board']];
+const segDist = (px: number, pz: number, [ax, az]: readonly number[], [bx, bz]: readonly number[]) => {
+  const dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((px - ax) * dx + (pz - az) * dz) / (dx * dx + dz * dz)));
+  return Math.hypot(px - (ax + dx * t), pz - (az + dz * t));
+};
+/** Distance from a point to the nearest station ring edge or approach corridor centre line (minus the ring/clearance radius). */
+export function stationKeepOutGap(x: number, z: number): number {
+  const ring = Math.min(...RINGS.map(([n, r]) => Math.hypot(x - l2Anchors[n][0], z - l2Anchors[n][1]) - r));
+  const corridor = Math.min(...CORRIDORS.map(([a, b]) => segDist(x, z, l2Anchors[a], l2Anchors[b]) - .6));
+  return Math.min(ring, corridor);
+}
+const looseProp = (assetId: string) => assetId.startsWith('prop.') && !assetId.includes('fence');
 /** The supermarket (Grove Market) replaces the eastern Main Row shop: its open east and south sides are the front and loading doors. */
 const MARKET: Placement = { id: 'l2-market', assetId: 'bld.supermarket', position: [-55.6, 0, -42.2], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'block-2', visualAabb: { min: [-59.8, 0, -46.7], max: [-51.4, 3.5, -37.7] } };
 
@@ -87,6 +106,9 @@ export function levelTwoLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     const superseded = supersededIds(layout);
     layout.placements = layout.placements.filter(p => !superseded.has(p.id));
     layout.colliders = layout.colliders.filter(c => !superseded.has(c.id));
+    const blocking = new Set(layout.placements.filter(p => looseProp(p.assetId) && stationKeepOutGap(p.position[0], p.position[2]) < RING_CLEAR_M + 1.5).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !blocking.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !blocking.has(c.id));
     layout.placements.push(MARKET);
     for (const [i, d] of l2Dressing.entries()) {
       if (d.entity) continue;
