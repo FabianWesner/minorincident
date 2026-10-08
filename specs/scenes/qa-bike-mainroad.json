@@ -1,0 +1,18 @@
+{
+ "name": "qa-bike-mainroad",
+ "note": "Flicker lane 10-08: single-frame paving-height pops on the ridden bike (0 -> 0.079 -> 0, and 0.029 <-> 0.268 near (-52, -5)) on the D-GROVE main road. Rides the main road over lane marks, drain grates and both kerbs; gates tyre contact with the drawn ground and one-frame hub spikes.",
+ "ground": "district",
+ "layout": { "district": "D-GROVE", "bbox": [[-62, -8], [-28, 8]] },
+ "clipping": { "ignoreFoliage": true },
+ "vehicles": [{ "id": "bike", "asset": "vehicle.bicycle", "at": [-58, 3.5], "yaw": 0 }],
+ "actors": [{ "id": "courier", "kind": "courier", "at": [-59.2, 3.5], "yaw": 0, "god": true }],
+ "script": [
+  { "frame": 20, "actor": "courier", "do": { "mountBike": "bike" } },
+  { "frame": 60, "actor": "courier", "do": { "run": [[-54, 1], [-36, 0.6], [-34, -1.2], [-50, -1.8], [-56, -2.1], [-52, -3.6], [-50, -3.6]] } }
+ ],
+ "camera": { "mode": "orbit", "target": "courier", "radius": 6, "polar": 93, "azimuth": 0, "spin": 0 },
+ "frames": 760,
+ "shots": [40, 200, 400, 560, 700],
+ "trace": true,
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "wheelSinkMaxCm": 0.5, "wheelFloatMaxCm": 1, "wheelSpikeMaxCm": 1 }
+}
