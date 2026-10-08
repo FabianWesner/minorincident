@@ -13,6 +13,13 @@ from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+# Base-owned standing twins reuse the reviewed native geometry and pivots.
+if '--decay' in sys.argv:
+    from sslib.house_decay import build_house
+    distance_tier = int(sys.argv[sys.argv.index('--distance-tier')+1]) if '--distance-tier' in sys.argv else None
+    build_house(Path(__file__).resolve().parent, sys.argv[sys.argv.index('--glb')+1], sys.argv[sys.argv.index('--decay')+1], distance_tier)
+    raise SystemExit(0)
+
 from sslib.distance import tier_argument, export_variant, build_native_lods
 DISTANCE = tier_argument()
 
