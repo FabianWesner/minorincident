@@ -890,7 +890,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.military-truck.glb",
-    "hash": "91bddd70b7165b0f24d2e0c9f853cc9959a8ab30fbadd7a9e1d0c1bcd35feba5"
+    "hash": "d571e3b1f777d301a16ba130e2598afdcd387fe5596115fdc039fd6d5abc7792"
   },
   "veh.box-truck": {
     "class": "heavy",
