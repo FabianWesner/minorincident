@@ -8,6 +8,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
 from sslib.distance import tier_argument, export_variant, build_native_lods
 DISTANCE = tier_argument()
 
+# Damage deliveries reuse these native primitives before batching.
+from sslib.commerce_damage import consume_arguments, build_variants, finish_native
+COMMERCE = consume_arguments(DISTANCE)
+if COMMERCE and COMMERCE['dispatch']:
+    build_variants(Path(__file__), COMMERCE['decay'], COMMERCE['output'], COMMERCE['tierOnly'])
+    sys.exit(0)
+
+if COMMERCE: DISTANCE = 2 if COMMERCE['tier'] == 2 else 1
 HERE = Path(__file__).resolve().parent
 if '--lod-only' in sys.argv:
     build_native_lods(__file__)
@@ -347,6 +355,10 @@ for y in [-1.6,2.4]:box('shop_counter',(1.3,y,.94),(.65,1.8,.95),'woodWarm',inte
 # Collision stays an empty and never contributes rendering geometry.
 collider=empty('col:building',(0,0,3.88),root)
 collider['collider']='cuboid'; collider['size']=[5.5,8,7]; collider['shape']='cuboid'
+if COMMERCE:
+    finish_native(Path(__file__), COMMERCE)
+    sys.exit(0)
+
 if DISTANCE:
     export_variant(Path(__file__).parent, DISTANCE, omit=('face_brick', 'side_brick', 'pier_course', 'cupcake', 'pastry', 'bread_score'), far_omit=('leaf_cluster', 'planter_bloom', 'sill_joint', 'wall_joint', 'face_brick', 'side_brick', 'pier_course', 'cupcake', 'pastry', 'coping_stone', 'roof_membrane_seam', 'chimney_course', 'rear_course', 'right_course', 'box_access', 'service_conduit','window_pot','window_plant','fan_','bakery_scallop','pharmacy_scallop','window_mullion','lintel_keystone','bread','loaf','medicine_bottle','bottle_cap','display_shelf','pharmacy_shelf','hvac_bolt','rear_mullion','rear_jamb'))
 
