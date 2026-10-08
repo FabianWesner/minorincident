@@ -14,6 +14,17 @@ export class InfectedMoves {
   private readonly strikes = new Map<number, number>();
   private readonly layers: CrowdLayers = {};
   private readonly style: GaitStyle = {};
+  /**
+   * PO "Infected recover": a knocked-down infected is down, not dead. Once its fall has settled it stirs in short irregular
+   * twitches (the end of the fall clip rewound a few percent), stronger in the last 2 s before it gets up. Returns the phase
+   * to subtract from the fall clip; 0 for the living and for permanent corpses.
+   */
+  static stir(e: EntitySnapshot, renderTick: number, fallSeconds: number): number {
+    const b = e.infected; if (!b || b.state !== 'dead' || b.recoverAt < 0 || e.health.current > 0) return 0;
+    const lying = (renderTick - b.deadAt) / 60 - fallSeconds; if (lying <= 0) return 0;
+    const t = renderTick / 60 + e.id * .61, twitch = Math.max(0, Math.sin(t * 2.3) * Math.sin(t * 5.9 + e.id)) ** 3;
+    return Math.min(1, lying) * twitch * ((b.recoverAt - renderTick) / 60 < 2 ? .14 : .06);
+  }
   /** Flinch weight 0..1 for a light (non-heavy) reaction, 0 otherwise. */
   static flinch(e: EntitySnapshot, renderTick: number): number {
     const r = e.combat?.reaction;

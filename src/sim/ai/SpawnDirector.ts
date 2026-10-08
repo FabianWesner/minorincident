@@ -34,6 +34,8 @@ export class SpawnDirector {
     this.tier = tier;
   }
   get cap(): number { return this.tier === 'low' ? Math.floor(this.levelCap / 2) : this.levelCap; }
+  /** Living infected only: a knocked-down infected (PO "Infected recover") frees its slot while down, so authored
+   * populations still emerge; the cap bounds new spawns, recoveries may briefly exceed it. */
   get count(): number {
     let count = 0; for (const e of this.ai.active) if (e.health.current > 0) count += e.archetype === 'infected.crow' ? e.infected!.birds * 0.25 : 1; return count;
   }

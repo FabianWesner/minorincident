@@ -105,6 +105,7 @@ export class Npcs {
       const l1 = e.civilian?.l1; if (l1) { l1.repickAt += delta; if (l1.noticed >= 0) l1.noticed += delta; if (l1.graceUntil) l1.graceUntil += delta; if (l1.progressAt !== undefined) l1.progressAt += delta; if (l1.doorAt !== undefined) l1.doorAt += delta; }
       if (e.infection) { e.infection.startedTick += delta; e.infection.endsTick += delta; }
       if (e.infected) for (const key of ['until', 'cooldown', 'activeUntil', 'grabUntil', 'grabNextTick', 'scatterUntil'] as const) if (e.infected[key]) e.infected[key] += delta;
+      if (e.infected && e.infected.recoverAt >= 0) { e.infected.recoverAt += delta; e.infected.deadAt += delta; }
     }
     this.civilians.restore(); this.civilians.outbreak?.restore(delta);
     this.companion.respawnNear();

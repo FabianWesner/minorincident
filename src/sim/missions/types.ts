@@ -67,7 +67,7 @@ export interface MissionDef {
   finish: string[]; onStart: ScriptAction[]; onComplete: ScriptAction[];
 }
 export interface MissionResult {
-  time: number; kills: number; damage: number; deaths: number; rescued: number; optionalObjectives: string[];
+  time: number; kills: number; knockdowns: number; damage: number; deaths: number; rescued: number; optionalObjectives: string[];
   /** L1 v2 result screen: the job is done, and the outbreak is not contained. */
   delivered?: boolean; infected?: number; turned?: number; escaped?: number;
 }
