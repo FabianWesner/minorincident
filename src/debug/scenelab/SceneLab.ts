@@ -26,7 +26,7 @@ type Plan =
   | { type: 'turn'; yaw: number }
   | { type: 'attack'; target: string; until: number }
   | { type: 'mount'; bike: string; at: number };
-interface LabActor { id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; sole?: number }
+interface LabActor { id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number }
 interface Hit extends BoneHit { actor: string; frame: number; count: number }
 const toPoint = (p: Point | number[]) => Array.isArray(p) ? { x: p[0], z: p[1] } : p;
 
@@ -123,7 +123,7 @@ export class SceneLab {
         if (a.at) this.teleport(dog, at);
         dog.transform.yaw = yaw;
       }
-      const actor: LabActor = { id, kind: a.kind, entity, spec: a, plan: null, track: [], lod: {}, drawn: 0 };
+      const actor: LabActor = { id, kind: a.kind, entity, spec: a, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0 };
       this.actors.set(id, actor); ids.push(id);
       if (a.state) this.command(id, a.state);
     }
@@ -252,7 +252,7 @@ export class SceneLab {
       for (const s of this.spec?.script ?? []) if (s.frame === this.frame) {
         if ('actor' in s) this.command(s.actor, s.do);
         else if ('effect' in s) this.effect(s.effect);
-        else if ('camera' in s) this.camera = s.camera;
+        else if ('camera' in s) { this.camera = s.camera; this.applyCamera(); }
         else if ('time' in s) this.setTime(s.time);
       }
       this.drivePlayer();
@@ -343,6 +343,10 @@ export class SceneLab {
           if (f.soles?.length === 4) feet = [[f.soles[0], f.soles[1]], [f.soles[2], f.soles[3]]].map(([heel, toe]) => ({ heel, toe, yaw: footYaw(heel, toe) }));
         }
       }
+      if (e && !e.hidden && e.health.current > 0 && !e.corpse && !(e.civilian?.state === 'infected')) {
+        const q = this.game.view.project(e.transform.x, e.transform.y + .9, e.transform.z);
+        if (Math.abs(q[0]) < .95 && Math.abs(q[1]) < .95 && q[2] < 1) { actor.inView++; if (!visible) actor.missed++; }
+      }
       if (visible) { actor.drawn++; drawn[actor.kind] = (drawn[actor.kind] ?? 0) + 1; actor.lod[lod] = (actor.lod[lod] ?? 0) + 1; }
       const shoulders = joints?.armL && joints.armR ? joints.armL.map((v, k) => (v + joints!.armR[k]) / 2) : undefined;
       const motion = e?.motion?.speed ?? Math.hypot(e?.survivor?.velocity?.x ?? 0, e?.survivor?.velocity?.z ?? 0);
@@ -400,7 +404,8 @@ export class SceneLab {
   async clipping() {
     await this.prepareClipping();
     const ignore = this.spec?.clipping?.ignore ?? [];
-    const skip = (a: TriangleSet, b: TriangleSet) => !this.spec?.clipping?.sameAsset && a.assetId === b.assetId || ignore.some(([x, y]) => [a.id, a.assetId].includes(x) && [b.id, b.assetId].includes(y) || [a.id, a.assetId].includes(y) && [b.id, b.assetId].includes(x));
+    const foliage = (t: TriangleSet) => this.spec?.clipping?.ignoreFoliage === true && /^prop\.(street-tree|garden-bush|hedge)/.test(t.assetId);
+    const skip = (a: TriangleSet, b: TriangleSet) => !this.spec?.clipping?.sameAsset && a.assetId === b.assetId || foliage(a) || foliage(b) || ignore.some(([x, y]) => [a.id, a.assetId].includes(x) && [b.id, b.assetId].includes(y) || [a.id, a.assetId].includes(y) && [b.id, b.assetId].includes(x));
     this.staticClips ??= staticClipping(this.staticSets!, skip);
     const actors = [...this.hits.values()].sort((a, b) => Number(b.crossing) - Number(a.crossing) || a.clearanceCm - b.clearanceCm);
     return { static: this.staticClips, actors, summary: { staticPairs: this.staticClips.length, actorHits: actors.length, piercing: actors.filter(h => h.crossing).length } };
@@ -419,7 +424,7 @@ export class SceneLab {
     const q = (a: number[], p: number) => a.length ? Math.round(a.slice().sort((x, y) => x - y)[Math.floor((a.length - 1) * p)] * 100) / 100 : null;
     const band = (pick: (p: SceneLab['perf'][number]) => number) => { const a = this.perf.map(pick); return { p50: q(a, .5), p95: q(a, .95), max: q(a, 1) }; };
     const actors = Object.fromEntries([...this.actors.values()].map(a => { const e = this.world.entities.get(a.entity); return [a.id, { kind: a.kind, entity: a.entity, position: e ? [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)] : null, yawDeg: e ? +(e.transform.yaw * 180 / Math.PI).toFixed(1) : null,
-      state: e?.civilian?.state ?? e?.infected?.state ?? e?.companion?.state ?? (a.kind === 'courier' ? e?.survivor?.animation : undefined) ?? null, drawnFrames: a.drawn, lod: a.lod, motion: summarizeMotion(a.track) }]; }));
+      state: e?.civilian?.state ?? e?.infected?.state ?? e?.companion?.state ?? (a.kind === 'courier' ? e?.survivor?.animation : undefined) ?? null, drawnFrames: a.drawn, inViewFrames: a.inView, missedInViewFrames: a.missed, lod: a.lod, motion: summarizeMotion(a.track) }]; }));
     const clipping = this.staticSets ? await this.clipping() : null;
     return { scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),

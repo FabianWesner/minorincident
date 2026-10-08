@@ -1,0 +1,69 @@
+{
+ "name": "qa-grove-gas",
+ "note": "Gas station, forecourt, hedges",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    -55,
+    22
+   ],
+   [
+    -22,
+    52
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "camera": {
+  "mode": "game",
+  "target": [
+   -38.5,
+   37.0
+  ],
+  "zoom": 1.1
+ },
+ "script": [
+  {
+   "frame": 8,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     -38.5,
+     0.5,
+     37.0
+    ],
+    "radius": 36,
+    "azimuth": 215,
+    "polar": 42
+   }
+  },
+  {
+   "frame": 16,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     -38.5,
+     0.5,
+     37.0
+    ],
+    "radius": 31,
+    "azimuth": 320,
+    "polar": 60
+   }
+  }
+ ],
+ "frames": 26,
+ "shots": [
+  0,
+  12,
+  24
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

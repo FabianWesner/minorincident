@@ -1,0 +1,120 @@
+{
+ "name": "qa-ped-sit-all",
+ "note": "Sitters on every seat type: bench, lawn-chair-a, lawn-chair-b (L1 seat rule and authored squash).",
+ "ground": "sidewalk",
+ "size": 24,
+ "props": [
+  {
+   "id": "bench",
+   "asset": "prop.bench",
+   "at": [
+    0,
+    -4
+   ],
+   "yaw": 90,
+   "scale": [
+    0.95,
+    0.551,
+    0.95
+   ]
+  },
+  {
+   "id": "chair-a",
+   "asset": "prop.lawn-chair-a",
+   "at": [
+    0,
+    2
+   ],
+   "yaw": 90,
+   "scale": [
+    1,
+    0.68,
+    1
+   ]
+  },
+  {
+   "id": "chair-b",
+   "asset": "prop.lawn-chair-b",
+   "at": [
+    0,
+    6
+   ],
+   "yaw": 90,
+   "scale": [
+    1,
+    0.68,
+    1
+   ]
+  }
+ ],
+ "actors": [
+  {
+   "id": "s1",
+   "kind": "pedestrian",
+   "at": [
+    3,
+    -4
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.civilian-man-b",
+    "handProp": "coffee"
+   },
+   "state": {
+    "sit": "bench"
+   }
+  },
+  {
+   "id": "s2",
+   "kind": "pedestrian",
+   "at": [
+    3,
+    2
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.civilian-woman-a"
+   },
+   "state": {
+    "sit": "chair-a"
+   }
+  },
+  {
+   "id": "s3",
+   "kind": "pedestrian",
+   "at": [
+    3,
+    6
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.civilian-elderly",
+    "handProp": "cane"
+   },
+   "state": {
+    "sit": "chair-b"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   0,
+   0.6,
+   2
+  ],
+  "radius": 8,
+  "azimuth": 150
+ },
+ "frames": 300,
+ "shots": [
+  60,
+  200,
+  290
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "undrawnFramesMax": 0
+ }
+}

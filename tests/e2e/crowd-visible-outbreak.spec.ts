@@ -35,10 +35,14 @@ for (const renderer of ['webgl', 'webgpu'] as const) {
       while (performance.now() - began < seconds * 1000) {
         await new Promise(requestAnimationFrame); frames++;
         const player = a.getEntity(1)!.transform;
+        // Until an infected has struck the courier (at most 15 s) she walks into the nearest infected without swinging: with the
+        // L1 balance (bat roundhouse, varied speeds) an eager courier kills every attacker before the first strike lands
+        // and the strike precondition below flakes; standing still instead lets them go for the walkers.
         if (frames % 20 === 0) {
+          const struck = a.events(start).some(e => e.type === 'infected.attack' && e.targetId === 1) || performance.now() - began > 15000;
           const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && !e.corpse).map(e => ({ e, d: Math.hypot(e.transform.x - player.x, e.transform.z - player.z) })).sort((x, y) => x.d - y.d)[0];
-          if (near && near.d < 5) a.input.set({ attackTarget: { id: near.e.id, side: 'LEFT' } });
-          else if (near && frames % 120 === 0) a.input.set({ moveTarget: { x: near.e.transform.x, z: near.e.transform.z } });
+          if (near && near.d < 5 && struck) a.input.set({ attackTarget: { id: near.e.id, side: 'LEFT' } });
+          else if (near && (frames % 120 === 0 || !struck && near.d > 1.5)) a.input.set({ moveTarget: { x: near.e.transform.x, z: near.e.transform.z } });
         }
         // Live crowd figures drawn last frame (static corpse pages carry an instanceKey and never count).
         const drawn = new Map<number, number[][][]>();

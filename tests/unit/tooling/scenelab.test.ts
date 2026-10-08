@@ -81,6 +81,8 @@ describe('Scene Lab motion metrics', () => {
     expect(summarizeMotion(sliding).slideMaxCm).toBeCloseTo(9, 0);
     // A foot 3 cm through the ground still counts as planted and is reported as sink.
     expect(summarizeMotion(Array.from({ length: 5 }, (_, i) => step(i, 0, -.03)))).toMatchObject({ contacts: 1, sinkMaxCm: 3 });
+    // The first three frames are the spawn settle and never count as sink.
+    expect(summarizeMotion(Array.from({ length: 5 }, (_, i) => step(i, 0, i < 3 ? -.2 : 0))).sinkMaxCm).toBe(0);
     // Seated clips are excluded from contact metrics.
     expect(summarizeMotion(sliding.map(f => ({ ...f, clip: 'npc-sit' }))).contacts).toBe(0);
   });

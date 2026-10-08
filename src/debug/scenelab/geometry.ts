@@ -90,24 +90,24 @@ export function staticClipping(sets: TriangleSet[], ignore: (a: TriangleSet, b: 
 
 /** A rig bone as a capsule centre line; `radius` approximates the limb's flesh thickness. */
 export interface Bone { name: string; a: Vec3; b: Vec3; radius: number }
-export interface BoneHit { bone: string; prop: string; asset: string; crossing: boolean; clearanceCm: number }
+export interface BoneHit { bone: string; prop: string; asset: string; crossing: boolean; clearanceCm: number; /** World point where the bone centre line pierces the surface, in metres. */ at?: Vec3 }
 /** Bone centre lines that pierce a prop surface, or pass closer than the bone radius minus `slack` (skin inside the prop). */
 export function boneClipping(bones: Bone[], sets: TriangleSet[], slack = .02): BoneHit[] {
   const hits: BoneHit[] = [];
   for (const set of sets) for (const bone of bones) {
     const box: Box = { min: [0, 1, 2].map(k => Math.min(bone.a[k], bone.b[k]) - bone.radius) as Vec3, max: [0, 1, 2].map(k => Math.max(bone.a[k], bone.b[k]) + bone.radius) as Vec3 };
     if (!boxesOverlap(box, set.box)) continue;
-    let crossing = false, best = Infinity;
+    let crossing = false, best = Infinity, at: Vec3 | undefined;
     for (let i = 0; i < set.tris.length; i += 9) {
       if (!boxesOverlap(triBox(set.tris, i), box)) continue;
-      if (!crossing && segmentTriangle(bone.a[0], bone.a[1], bone.a[2], bone.b[0], bone.b[1], bone.b[2], set.tris, i) >= 0) crossing = true;
+      if (!crossing) { const t = segmentTriangle(bone.a[0], bone.a[1], bone.a[2], bone.b[0], bone.b[1], bone.b[2], set.tris, i); if (t >= 0) { crossing = true; at = [0, 1, 2].map(k => Math.round((bone.a[k] + (bone.b[k] - bone.a[k]) * t) * 1000) / 1000) as Vec3; } }
       for (let s = 0; s <= 4; s++) {
         const u = s / 4, d = pointTriangleDistance2(bone.a[0] + (bone.b[0] - bone.a[0]) * u, bone.a[1] + (bone.b[1] - bone.a[1]) * u, bone.a[2] + (bone.b[2] - bone.a[2]) * u, set.tris, i);
         if (d < best) best = d;
       }
     }
     const clearance = Math.sqrt(best);
-    if (crossing || clearance < bone.radius - slack) hits.push({ bone: bone.name, prop: set.id, asset: set.assetId, crossing, clearanceCm: Math.round(clearance * 1000) / 10 });
+    if (crossing || clearance < bone.radius - slack) hits.push({ bone: bone.name, prop: set.id, asset: set.assetId, crossing, clearanceCm: Math.round(clearance * 1000) / 10, at });
   }
   return hits;
 }

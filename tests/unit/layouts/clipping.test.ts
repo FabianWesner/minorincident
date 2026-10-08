@@ -59,3 +59,26 @@ describe('layout clipping guard (L1 + L2)', () => {
     });
   }
 });
+
+/**
+ * Scene Lab QA sweep (specs/scenes/qa-grove-clipping-all.json): small contacts the 8 cm guard above lets through. The visual
+ * boxes of these pairs must not overlap at all: flowerbeds against the picket fence and mailboxes, the edge roadwork kit
+ * against the perimeter fence, clutter and lamps against privacy fences.
+ */
+describe('layout small contacts (Scene Lab qa-grove-clipping-all)', () => {
+  const pairs: [RegExp, RegExp][] = [
+    [/^prop\.flower-bed\.large$/, /^prop\.(picket-fence|mailbox-blue)$/], [/^kit\.edge-roadwork$/, /^prop\.privacy-fence$/],
+    [/^prop\.(carpet|crates|hose-reel|street-lamp)$/, /^prop\.privacy-fence$/],
+  ];
+  test('@clipping D-GROVE visual boxes of the listed pairs do not overlap', () => {
+    const layout = JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as DistrictLayout;
+    const hits: string[] = [];
+    for (const a of layout.placements) for (const b of layout.placements) {
+      if (a === b || !pairs.some(([x, y]) => x.test(a.assetId) && y.test(b.assetId))) continue;
+      const dx = Math.min(a.visualAabb.max[0], b.visualAabb.max[0]) - Math.max(a.visualAabb.min[0], b.visualAabb.min[0]);
+      const dz = Math.min(a.visualAabb.max[2], b.visualAabb.max[2]) - Math.max(a.visualAabb.min[2], b.visualAabb.min[2]);
+      if (dx > 0.002 && dz > 0.002) hits.push(`${a.id} / ${b.id} (${dx.toFixed(2)} x ${dz.toFixed(2)})`);
+    }
+    expect(hits).toEqual([]);
+  });
+});

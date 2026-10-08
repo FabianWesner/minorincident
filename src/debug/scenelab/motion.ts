@@ -28,7 +28,7 @@ export function summarizeMotion(frames: MotionFrame[], grounded = .012): MotionS
     const close = () => { slides.push(slide); drifts.push(drift); if (slide > worst) { worst = slide; worstFrame = started; } slide = 0; drift = 0; startYaw = undefined; previous = undefined; };
     for (const f of used) {
       const c = f.feet[i]; if (!c) continue;
-      const floor = floorOf(f), lowest = Math.min(c.heel[1], c.toe[1]); lift = Math.max(lift, lowest - floor); sink = Math.max(sink, floor - lowest);
+      const floor = floorOf(f), lowest = Math.min(c.heel[1], c.toe[1]); lift = Math.max(lift, lowest - floor); if (f.frame >= 3) sink = Math.max(sink, floor - lowest);   // frames 0-2 are the spawn settle
       if (lowest < floor + grounded) {
         if (startYaw === undefined) { startYaw = c.yaw; started = f.frame; }
         else if (previous) {
