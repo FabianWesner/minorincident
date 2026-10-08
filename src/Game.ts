@@ -1,3 +1,5 @@
+import type { Inspection } from './debug/Inspection';
+import { LevelOneBot } from './debug/bot/LevelOneBot';
 import { LevelThreeBot } from './debug/bot/LevelThreeBot';
 import type { LevelTwoBot } from './debug/bot/LevelTwoBot';
 import { GameUI } from './ui/GameUI';
@@ -47,7 +49,8 @@ export class Game {
   readonly saves = new SaveStore({ getItem: key => localStorage.getItem(key), setItem: (key,value) => localStorage.setItem(key,value), removeItem: key => localStorage.removeItem(key) });
   campaignUI!: CampaignUI;
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
-  driver: Driver | LevelThreeBot | LevelTwoBot | null = null;
+  inspect: Inspection | null = null;
+  driver: LevelOneBot | Driver | LevelThreeBot | LevelTwoBot | null = null;
   frameMs = 0;
   simMs = 0;
   private readonly spawnFrustum = new Matrix4();
@@ -103,14 +106,15 @@ export class Game {
       if (!this.loading && !this.view.contextLost && this.view.warming) this.view.update(1);
       else if (!this.loading && !this.view.contextLost) {
         if (document.hidden) this.clock.pause();
-        if (!this.clock.paused) this.quality.observe(Math.max(this.frameMs, this.simulatedFrameMs), seconds, Boolean(this.world.missions?.state.cinematic));
+        if (!this.clock.paused && !this.inspect?.enabled) this.quality.observe(Math.max(this.frameMs, this.simulatedFrameMs), seconds, Boolean(this.world.missions?.state.cinematic));
         // E27 bullet time: big blasts near the player slow the presentation and the fixed-step clock together.
         const slow = this.clock.paused ? 1 : this.view.vfx?.blasts.timeScale(seconds) ?? 1;
         if (!this.clock.paused) this.view.frame(seconds * slow);
         const start = performance.now();
         this.clock.advance(seconds * slow, () => this.simTick());
         this.simMs = performance.now() - start;
-        if (!this.clock.paused || this.restoredWhilePaused) this.view.update(this.clock.paused ? 1 : this.clock.alpha);
+        this.inspect?.update(seconds);
+        if (!this.clock.paused || this.restoredWhilePaused || this.inspect?.enabled) this.view.update(this.clock.paused ? 1 : this.clock.alpha);
       }
       this.ui.update();
       this.overlay?.update(seconds);
@@ -130,7 +134,7 @@ export class Game {
       this.speculative = null; this.levelStart = null; this.view.missionHidden = false; this.view.unfreeze();
       this.loading = true; this.restoredWhilePaused = false;
       try {
-        await this.audioLoad; this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
+        await this.audioLoad; this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
         if (name !== null) { this.world.loadScenario(name, seed); this.quality.startLevel(); this.applyQuality(); if (name === 'mission-sandbox') this.world.loadMission(missionSandbox()); await this.view.load(); }
         else this.view.update();
         this.renderedDistricts=this.world.districts;
@@ -176,7 +180,7 @@ export class Game {
         const {composition,layouts}=opts?.source??await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(assetUrl(url));if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
         const data=loadMeasure('level:layouts',start);
         const cosmetic=this.world.entities.get(1)?.survivor;
-        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
+        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
@@ -249,7 +253,7 @@ export class Game {
     if (!this.clock.paused) throw new Error('step requires pause()');
     if (!this.world.scenario) throw new Error('step requires a loaded scenario');
     for (let i = 0; i < ticks; i++) this.simTick();
-    await this.refreshView(); this.view.update(1); this.ui.update();
+    await this.refreshView(); this.inspect?.update(0); this.view.update(1); this.ui.update();
   }
   private wasDead = false;
   private simTick(): void {
@@ -263,6 +267,7 @@ export class Game {
     if (this.wasDead && !dead) { this.input.release(); this.world.controls.reset(); }
     this.wasDead = dead;
     if (this.driver) this.world.applyInput(this.driver.sample(), 'keyboard');
+    else if (this.inspect?.enabled) this.world.clearInput();
     else if (player) {
       const frame = this.input.sample(player, 1 / 60, this.world.entities.iterate());
       if (frame.pause && this.ui.enabled) { this.ui.pause(); return; }
@@ -270,7 +275,7 @@ export class Game {
     }
     if (this.world.infected) {
       // The director sees the tick pose, never a render-rate interpolated one (determinism across displays).
-      this.view.view.present(1);
+      this.view.view.present(1, true);
       this.spawnFrustum.multiplyMatrices(this.view.camera.projectionMatrix, this.view.camera.matrixWorldInverse);
       this.world.infected.director.setFrustum(this.spawnFrustum.elements, this.view.camera.position);
     }
@@ -307,5 +312,5 @@ export class Game {
     const restore = this.levelQueue.then(async () => { this.loading = true; try { await this.view.restoreContext(); this.restoredWhilePaused = true; } finally { this.loading = false; this.clock.pause(); this.ticker.reset(); } });
     this.levelQueue = restore.catch(error => console.error(error));
   };
-  dispose(): void { this.campaignUI?.dispose(); this.ui.dispose(); document.removeEventListener('visibilitychange', this.visibility); this.view.renderer.domElement.removeEventListener('webglcontextlost', this.contextLost); this.view.renderer.domElement.removeEventListener('webglcontextrestored', this.contextRestored); this.overlay?.dispose(); this.quality.dispose(); this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); }
+  dispose(): void { this.inspect?.dispose(); if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.campaignUI?.dispose(); this.ui.dispose(); document.removeEventListener('visibilitychange', this.visibility); this.view.renderer.domElement.removeEventListener('webglcontextlost', this.contextLost); this.view.renderer.domElement.removeEventListener('webglcontextrestored', this.contextRestored); this.overlay?.dispose(); this.quality.dispose(); this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); }
 }

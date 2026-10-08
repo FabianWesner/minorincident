@@ -22,6 +22,16 @@ export class View {
   zoom(delta: number): void {
     if (Number.isFinite(delta) && !this.blendTarget) this.targetZoom = Math.max(zoomLimits[0], Math.min(zoomLimits[1], this.targetZoom * Math.exp(delta)));
   }
+  inspectionPose: CameraPose | null = null;
+  inspectionGameLod = false;
+  private readonly inspectionLodCamera = new PerspectiveCamera();
+  /** A virtual camera at the standard game radius; culling still uses the actual camera. */
+  get lodCamera(): PerspectiveCamera {
+    if (!this.inspectionPose || !this.inspectionGameLod) return this.camera;
+    const camera = this.inspectionLodCamera;
+    camera.copy(this.camera); camera.position.copy(this.cameraTarget).add(new Vector3().setFromSphericalCoords(19, this.polar, this.azimuth));
+    camera.lookAt(this.cameraTarget); camera.updateMatrixWorld(); return camera;
+  }
   driving = false;
   cameraShake = true;
   spot: string | null = null;
@@ -110,7 +120,11 @@ export class View {
   }
   /** Render pose between the last two tick poses (alpha 0..1), matching the interpolated characters;
    * a tick-rate camera stair-steps on displays faster than 60 Hz or with uneven frame pacing. */
-  present(alpha: number): void {
+  present(alpha: number, gameCamera = false): void {
+    if (this.inspectionPose && !gameCamera) {
+      this.camera.position.fromArray(this.inspectionPose.position); this.cameraTarget.fromArray(this.inspectionPose.target);
+      this.camera.lookAt(this.cameraTarget); this.camera.updateMatrixWorld(); return;
+    }
     const t = Math.max(0, Math.min(1, alpha));
     this.camera.position.lerpVectors(this.previousPosition, this.tickPosition, t);
     this.camera.quaternion.slerpQuaternions(this.previousQuaternion, this.tickQuaternion, t);

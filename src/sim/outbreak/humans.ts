@@ -25,7 +25,7 @@ export class HumanTargets implements HumanTargetQuery {
     if (this.tick === this.world.tick) return;
     this.tick = this.world.tick; this.list.length = 0; this.byId.clear();
     for (const e of this.world.entities.iterate()) {
-      if (!isLiveHuman(e)) continue;
+      if (!isLiveHuman(e) || e.id === 1 && this.world.inspectionGhost) continue;
       const target: HumanTarget = { id: e.id, kind: e.id === 1 ? 'player' : 'civilian', position: { x: e.transform.x, z: e.transform.z }, facing: e.transform.yaw };
       this.list.push(target);
     }
