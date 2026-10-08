@@ -16063,5 +16063,237 @@
       "lod2": 4000
     },
     "decayVariants": []
+  },
+  {
+    "id": "bld.apartment-block-a",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.apartment-block-a/build.py",
+    "sourceGlb": "assets/bld.apartment-block-a/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/bld.apartment-block-a.glb",
+    "dimensions": {
+      "x": 10.3002,
+      "y": 12.85,
+      "z": 12.6002,
+      "tolerance": 0.015
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof",
+      "interior",
+      "door_front",
+      "doorway",
+      "nav_entry",
+      "roof_cutaway",
+      "stairwell",
+      "light:entry",
+      "body_emi_windowGlow"
+    ],
+    "animatedNodes": [
+      "door_front"
+    ],
+    "sockets": [
+      "doorway",
+      "nav_entry",
+      "roof_cutaway",
+      "stairwell"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "fileKB": 1500,
+      "drawCalls": 8
+    },
+    "lods": {
+      "lod1": "public/assets/models/bld.apartment-block-a.lod1.glb",
+      "lod2": "public/assets/models/bld.apartment-block-a.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.apartment-block-b",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.apartment-block-b/build.py",
+    "sourceGlb": "assets/bld.apartment-block-b/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/bld.apartment-block-b.glb",
+    "dimensions": {
+      "x": 9.9602,
+      "y": 15.95,
+      "z": 12.6,
+      "tolerance": 0.015
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof",
+      "interior",
+      "door_front",
+      "doorway",
+      "nav_entry",
+      "roof_cutaway",
+      "stairwell",
+      "light:entry",
+      "body_emi_windowGlow"
+    ],
+    "animatedNodes": [
+      "door_front"
+    ],
+    "sockets": [
+      "doorway",
+      "nav_entry",
+      "roof_cutaway",
+      "stairwell"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "fileKB": 1500,
+      "drawCalls": 8
+    },
+    "lods": {
+      "lod1": "public/assets/models/bld.apartment-block-b.lod1.glb",
+      "lod2": "public/assets/models/bld.apartment-block-b.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.town-hall",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.town-hall/build.py",
+    "sourceGlb": "assets/bld.town-hall/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/bld.town-hall.glb",
+    "dimensions": {
+      "x": 12.08,
+      "y": 12.4001,
+      "z": 16,
+      "tolerance": 0.015
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof",
+      "interior",
+      "door_front",
+      "doorway",
+      "nav_entry",
+      "roof_cutaway",
+      "stairwell",
+      "light:entry",
+      "body_emi_windowGlow"
+    ],
+    "animatedNodes": [
+      "door_front"
+    ],
+    "sockets": [
+      "doorway",
+      "nav_entry",
+      "roof_cutaway",
+      "stairwell"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "fileKB": 1500,
+      "drawCalls": 8
+    },
+    "lods": {
+      "lod1": "public/assets/models/bld.town-hall.lod1.glb",
+      "lod2": "public/assets/models/bld.town-hall.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "bld.church",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.church/build.py",
+    "sourceGlb": "assets/bld.church/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/bld.church.glb",
+    "dimensions": {
+      "x": 18,
+      "y": 13.7999,
+      "z": 10.6499,
+      "tolerance": 0.015
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof",
+      "interior",
+      "door_front",
+      "doorway",
+      "nav_entry",
+      "roof_cutaway",
+      "stairwell",
+      "vestry_door",
+      "vestry_hide",
+      "sign_of_life"
+    ],
+    "animatedNodes": [
+      "door_front"
+    ],
+    "sockets": [
+      "doorway",
+      "nav_entry",
+      "roof_cutaway",
+      "stairwell",
+      "vestry_door",
+      "vestry_hide",
+      "sign_of_life"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "fileKB": 1500,
+      "drawCalls": 8
+    },
+    "lods": {
+      "lod1": "public/assets/models/bld.church.lod1.glb",
+      "lod2": "public/assets/models/bld.church.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": []
   }
 ]
