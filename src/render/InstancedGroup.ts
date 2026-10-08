@@ -3,7 +3,7 @@ import { Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Mesh, O
 
 /** One batch per prototype mesh; nested child transforms are preserved. Geometry/material ownership stays with the caller. */
 export class InstancedGroup extends Group {
-  private readonly batches: { mesh: InstancedMesh; local: Matrix4 }[] = [];
+  private readonly batches: { mesh: InstancedMesh; local: Matrix4; base?: Matrix4; door?: string }[] = [];
   private readonly scratch = new Matrix4();
   private readonly tinted: boolean;
   private readonly color = new Color();
@@ -17,7 +17,8 @@ export class InstancedGroup extends Group {
       mesh.count = references.length;
       if (this.tinted) mesh.instanceColor = new InstancedBufferAttribute(new Float32Array(capacity * 3).fill(1), 3);
       mesh.name = child.name; mesh.castShadow = child.castShadow; mesh.receiveShadow = child.receiveShadow;
-      this.batches.push({ mesh, local: new Matrix4().multiplyMatrices(inverse, child.matrixWorld) }); this.add(mesh);
+      const local = new Matrix4().multiplyMatrices(inverse, child.matrixWorld), door = child.userData.door as string | undefined;
+      this.batches.push({ mesh, local, ...(door ? { door, base: local.clone() } : {}) }); this.add(mesh);
     });
     this.update();
   }
@@ -30,6 +31,17 @@ export class InstancedGroup extends Group {
       batch.mesh.instanceMatrix.needsUpdate = true; if (batch.mesh.instanceColor) batch.mesh.instanceColor.needsUpdate = true; batch.mesh.computeBoundingSphere();
     }
   }
+  /** Swing a split door leaf (staticBatch `splitDoors`) on every instance: yaw about its hinge's +Y. */
+  pose(door: string, yaw: number): void {
+    const indices: number[] = [];
+    for (let i = 0; i < this.references.length; i++) indices.push(i);
+    for (const batch of this.batches) if (batch.door === door && batch.base) {
+      batch.local.copy(batch.base).multiply(this.scratch.makeRotationY(yaw));
+      for (const i of indices) this.write(batch, i);
+      batch.mesh.instanceMatrix.needsUpdate = true; batch.mesh.computeBoundingSphere();
+    }
+  }
+  get doors(): string[] { return this.batches.flatMap(b => b.door ? [b.door] : []); }
   private write(batch: { mesh: InstancedMesh; local: Matrix4 }, i: number): void {
     this.references[i].updateWorldMatrix(true, false);
     this.scratch.multiplyMatrices(this.references[i].matrixWorld, batch.local); batch.mesh.setMatrixAt(i, this.scratch);

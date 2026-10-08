@@ -1,5 +1,5 @@
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
-import { Box3, BufferAttribute, BufferGeometry, Color, Sphere, Vector3, Group, MathUtils, Matrix3, type Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
+import { Box3, BufferAttribute, BufferGeometry, Color, Sphere, Vector3, Group, MathUtils, Matrix3, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
 import { attribute, luminance, varying } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Materials } from '../render/Materials';
@@ -78,6 +78,9 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
   source.updateMatrixWorld(true);
   const world = source.userData.paletteWorld !== false;
   const buckets = new Map<number, Part[]>(), meshes: Mesh[] = [], split = source.userData.splitRoof === true;
+  // Animated door leaves (src/data/buildingDoors.ts) stay separate meshes in their hinge frame, so the view can swing them.
+  const doorNames: string[] = Array.isArray(source.userData.splitDoors) ? source.userData.splitDoors : [];
+  const doorNodes = doorNames.map(name => source.getObjectByName(name) ?? null), hinge = new Matrix4(), leafFrame = new Matrix4();
   source.traverse(node => {
     if (!(node instanceof Mesh) || node.userData.foliageProxy) return;
     for (let parent: Object3D | null = node; parent; parent = parent.parent) if (!parent.visible || parent.userData.foliageProxy) return;
@@ -87,10 +90,11 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     const material = (Array.isArray(node.material) ? node.material[0] : node.material) as Material & { color: import('three').Color; vertexColors: boolean };
     // Enterable buildings keep their roof as a separate mesh so the view can lift it while the player is inside.
     let roof = false; if (split) for (let parent: Object3D | null = node; parent; parent = parent.parent) if (parent.name === 'roof') roof = true;
+    let door = -1; if (doorNodes.length) for (let parent: Object3D | null = node; parent && door < 0; parent = parent.parent) door = doorNodes.indexOf(parent);
     const emissive = material.name.startsWith('emi_') || material.userData.emissiveStrength > 0;
     // Decode quantized attributes before applying transforms (integer arrays clamp).
     const position = yield* decode(node.geometry.getAttribute('position')), normal = yield* decode(node.geometry.getAttribute('normal'));
-    yield* transform(position, normal, node.matrixWorld);
+    yield* transform(position, normal, door >= 0 ? leafFrame.multiplyMatrices(hinge.copy(doorNodes[door]!.matrixWorld).invert(), node.matrixWorld) : node.matrixWorld);
     const count = position.length / 3, colors = new Float32Array(count * 3), indices = new Float32Array(count), vertexColor = node.geometry.getAttribute('color');
     // Per-mesh constants are hoisted: this loop runs for every vertex of every district prototype.
     const base = material.color.toArray(), dim = emissive && !lit ? .08 : 1;
@@ -116,13 +120,13 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
       indices[i] = (quantize ? perVertex ? swatch(r, g, b) : constant : tokenIndex) - hydrantShift;
       if (i % slice === slice - 1) yield;
     }
-    const bucket = (emissive ? 1 : 0) + (roof ? 2 : 0);
+    const bucket = (emissive ? 1 : 0) + (roof ? 2 : 0) + (door >= 0 ? 4 * (door + 1) : 0);
     if (!buckets.has(bucket)) buckets.set(bucket, []);
     buckets.get(bucket)!.push({ position, normal, color: colors, palette: indices, index: node.geometry.index ? node.geometry.index.array : null });
   }
   const result = new Group();
   for (const [bucket, parts] of buckets) {
-    const emissive = (bucket & 1) === 1, isRoof = bucket >= 2;
+    const emissive = (bucket & 1) === 1, isRoof = (bucket & 2) === 2, door = (bucket >> 2) - 1;
     // Keep shared vertices: expanding detailed meshes to triangle soup triples
     // the retained position/normal/color arrays. Normalize only mixed primitives.
     const geometry = yield* merge(parts);
@@ -132,6 +136,7 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     material.userData.emissiveStrength = emissive && lit ? 2 : 0;
     material.name = emissive ? 'emi_static-windows' : 'pal_static-colors';
     const mesh = new Mesh(geometry, material); mesh.name = isRoof ? (emissive ? 'roof-light' : 'roof') : emissive ? 'window-light' : 'static-body';
+    if (door >= 0) { mesh.userData.door = doorNames[door]; doorNodes[door]!.matrixWorld.decompose(mesh.position, mesh.quaternion, mesh.scale); }
     mesh.castShadow = !emissive; mesh.receiveShadow = true; result.add(mesh);
   }
   return result;

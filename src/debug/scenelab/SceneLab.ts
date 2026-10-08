@@ -13,6 +13,8 @@ import { installL1Outbreak } from '../../sim/outbreak/install';
 import { seatAnchor } from '../../sim/npc/seats';
 import { CrowdFigureProbe } from '../../render/characters/CrowdFigureProbe';
 import type { TimeOfDay } from '../../data/timeOfDay';
+import { buildingDoors, doorwayOf, inDoorway, type Doorway } from '../../data/buildingDoors';
+import { doorRoute, routeAt, routeLength } from '../../sim/missions/doorRoute';
 import { buildScene, validateSpec, type Action, type ActorSpec, type BuiltScene, type CameraSpec, type EffectSpec, type PropSpec, type SceneSpec } from './spec';
 import { bodyOverlap, boneClipping, boxOf, staticClipping, type Bone, type BoneHit, type StaticClip, type TriangleSet, type Vec3 } from './geometry';
 import { footYaw, summarizeMotion, torsoPitch, unplantedClips, type FootSample, type MotionFrame } from './motion';
@@ -48,6 +50,10 @@ export class SceneLab {
   private hits = new Map<string, Hit>();
   /** Actor pairs whose torsos/heads interpenetrate (worst depth, frame, sampled-frame count). */
   private bodies = new Map<string, { a: string; b: string; depthCm: number; frame: number; count: number }>();
+  /** Hand-over choreographies in progress (actor id -> route, start frame, pause). */
+  private handovers = new Map<string, { route: { x: number; z: number }[]; length: number; start: number; pause: number }>();
+  /** Door gate per doored placement: frames an actor stood in the aperture/leaf sweep while the door was not fully open. */
+  private doors = new Map<string, { way: Doorway; closedFrames: number; firstClosedFrame: number | null; inDoorwayFrames: number; maxOpen: number }>();
   private staticSets: TriangleSet[] | null = null;
   private staticClips: StaticClip[] | null = null;
   private visible: { frame: number; sim: Record<string, number>; drawn: Record<string, number> } | null = null;
@@ -67,8 +73,9 @@ export class SceneLab {
       if (!response.ok) throw new Error(`Layout ${spec.layout.district} not found`);
       source = await response.json() as DistrictLayout;
     }
-    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0;
+    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0;
     const built = this.built = buildScene(spec, assets, source);
+    for (const p of built.placements) { const way = buildingDoors[p.assetId]?.leaves.length ? doorwayOf(p) : null; if (way) this.doors.set(p.id, { way, closedFrames: 0, firstClosedFrame: null, inDoorwayFrames: 0, maxOpen: 0 }); }
     await this.game.loadLevel('scene-lab', { seed: spec.seed ?? 1, tier: spec.tier, source: { composition: built.composition, layouts: [built.layout] }, setup: world => this.setup(world, spec) });
     this.game.clock.pause();
     this.game.view.settings({ cameraShake: false, cheapDof: spec.dof ?? true, timeOfDay: spec.time ?? 'L1' });
@@ -189,6 +196,7 @@ export class SceneLab {
       else if ('flee' in a) { c.threat.x = a.flee[0]; c.threat.z = a.flee[1]; c.state = 'flee'; c.entered = world.tick; }
       else if ('infect' in a) { const by = a.infect.by ? this.actors.get(a.infect.by)?.entity ?? 0 : 0; if (a.infect.instant) world.npcs!.civilians.outbreak!.turnNow(e); else world.npcs!.civilians.outbreak!.infect(e, by); }
       else if ('hit' in a) this.hit(e, a.hit);
+      else if ('handover' in a) this.startHandover(actor, e, a.handover);
       return;
     }
     if (actor.kind === 'infected') {
@@ -204,6 +212,51 @@ export class SceneLab {
     // Corgi: it always follows the courier (Companion); turn/teleport are the only overrides.
     if ('turn' in a) e.transform.yaw = rad(a.turn);
     else if ('moveTo' in a) this.teleport(e, toPoint(a.moveTo));
+  }
+  /** L1 hand-over: the same door route as L1Story.pickup / LevelOneOutbreak.handover, driven by the frame counter. */
+  private startHandover(actor: LabActor, e: EntitySnapshot, h: { building: string; meet: Point | string; pauseS?: number; legacy?: boolean }): void {
+    const placements = this.built!.placements, p = placements.find(q => q.id === h.building) ?? placements.find(q => q.assetId === h.building);
+    const way = p && doorwayOf(p); if (!way) throw new Error(`handover: no doored building ${h.building} (src/data/buildingDoors.ts)`);
+    let meet: { x: number; z: number };
+    if (typeof h.meet === 'string') {
+      const t = this.world.entities.get(this.actors.get(h.meet)?.entity ?? -1); if (!t) throw new Error(`handover: unknown actor ${h.meet}`);
+      const dx = way.door.x - t.transform.x, dz = way.door.z - t.transform.z, d = Math.hypot(dx, dz) || 1;
+      meet = { x: t.transform.x + dx / d * 1.05, z: t.transform.z + dz / d * 1.05 };
+    } else meet = toPoint(h.meet);
+    let route = doorRoute(this.world.infected!.nav, way, meet);
+    if (h.legacy && typeof h.meet === 'string') {
+      // Pre-fix geometry (A/B evidence; run with `--query doors=0`): the depot clerk from "behind the counter" on the
+      // courier's line (L1Story before 2026-10-08), the technician spawn -> lab-exit-front -> meeting point in straight lines.
+      const t = this.world.entities.get(this.actors.get(h.meet)!.entity)!.transform, counter = { x: way.door.x + way.out.x * 2, z: way.door.z + way.out.z * 2 };
+      if (p.assetId === 'bld.courier-depot') {
+        const dx = counter.x - t.x, dz = counter.z - t.z, d = Math.hypot(dx, dz) || 1, k = Math.max(2.6, d + 1.4), behind = { x: t.x + dx / d * k, z: t.z + dz / d * k };
+        const mx = t.x - behind.x, mz = t.z - behind.z, md = Math.hypot(mx, mz) || 1;
+        route = [behind, { x: t.x - mx / md * 1.05, z: t.z - mz / md * 1.05 }];
+      } else {
+        const exit = { x: way.centre.x + way.out.x * 2.2, z: way.centre.z + way.out.z * 2.2 }, dx = t.x - exit.x, dz = t.z - exit.z, d = Math.hypot(dx, dz) || 1;
+        route = [{ x: way.centre.x - way.out.x * 1.6, z: way.centre.z - way.out.z * 1.6 }, exit, { x: t.x - dx / d * 1.4, z: t.z - dz / d * 1.4 }];
+      }
+    }
+    const c = e.civilian!;
+    c.ambient = false; c.pauseUntil = Number.MAX_SAFE_INTEGER; c.routine = 'staff'; c.state = 'calm'; c.schedule = [this.stand(route[0], e.transform.yaw)]; c.scheduleStep = 0; c.path.length = 0; c.goal = -1;
+    this.teleport(e, route[0]);
+    this.handovers.set(actor.id, { route, length: routeLength(route), start: this.frame, pause: ticks(h.pauseS ?? 2.2) });
+    this.log.push(`handover ${actor.id}: ${route.map(q => `${q.x.toFixed(2)},${q.z.toFixed(2)}`).join(' > ')}`);
+  }
+  private driveHandovers(): void {
+    for (const [id, h] of this.handovers) {
+      const actor = this.actors.get(id), e = actor && this.world.entities.get(actor.entity); if (!e?.civilian) { this.handovers.delete(id); continue; }
+      const walk = Math.max(1, Math.round(h.length / 1.6 * 60)), t = this.frame - h.start, c = e.civilian;
+      const present = (clip: string, prop?: 'parcel') => { if (c.story?.clip !== clip || c.story.prop !== prop) c.story = { clip, start: this.world.tick, ...(prop ? { prop } : {}) }; };
+      const put = (m: number, forward: boolean) => {
+        const q = routeAt(h.route, m); e.transform.x = q.x; e.transform.z = q.z; this.world.spatial.set(e.id, q.x, q.z);
+        if (Math.hypot(q.dx, q.dz) > 1e-6) e.transform.yaw = -Math.atan2(forward ? q.dz : -q.dz, forward ? q.dx : -q.dx);
+      };
+      if (t < walk) { put(t / walk * h.length, true); present('npc-carry', 'parcel'); }
+      else if (t < walk + h.pause) { put(h.length, true); present(t - walk < h.pause / 2 ? 'npc-give' : 'npc-wave', t - walk < h.pause / 3 ? 'parcel' : undefined); }
+      else if (t < 2 * walk + h.pause) { put(h.length - (t - walk - h.pause) / walk * h.length, false); present('npc-walk'); }
+      else { put(0, false); c.story = null; this.handovers.delete(id); }
+    }
   }
   /** Sit on a placement id (or the nearest placement of an asset id), the same seat rule as MorningRoutines/Population. */
   private sitSchedule(target: string, seconds = 600): CivilianActivity[] {
@@ -259,7 +312,7 @@ export class SceneLab {
         else if ('camera' in s) { this.camera = s.camera; this.applyCamera(); }
         else if ('time' in s) this.setTime(s.time);
       }
-      this.drivePlayer();
+      this.drivePlayer(); this.driveHandovers();
       if (this.camera?.mode === 'follow' || this.camera?.mode === 'orbit' && this.camera.spin || typeof (this.camera as { target?: unknown })?.target === 'string') this.applyCamera();
       const start = performance.now();
       this.nextRenderFrame();
@@ -378,6 +431,15 @@ export class SceneLab {
       if (!old) this.bodies.set(key, { a: torsos[i].id, b: torsos[j].id, depthCm, frame: this.frame, count: 1 });
       else { old.count++; if (depthCm > old.depthCm) Object.assign(old, { depthCm, frame: this.frame }); }
     }
+    if (this.doors.size) {
+      const state = this.game.view.labProbes().districts?.doorState() ?? [];
+      for (const [pid, d] of this.doors) {
+        const p = this.built!.placements.find(q => q.id === pid)!, open = state.find(s => s.assetId === p.assetId && Math.hypot(s.position[0] - p.position[0], s.position[2] - p.position[2]) < .01)?.open ?? 0;
+        d.maxOpen = Math.max(d.maxOpen, open);
+        const inside = [...this.actors.values()].some(a => { const e = this.world.entities.get(a.entity); return !!e && !e.hidden && e.health.current > 0 && inDoorway(d.way, e.transform); });
+        if (inside) { d.inDoorwayFrames++; if (open < .95) { d.closedFrames++; d.firstClosedFrame ??= this.frame; } }
+      }
+    }
     // Sim-vs-drawn for everything in the world, not only lab actors (pooled or reanimated infected included).
     const all: Record<string, number> = {};
     for (const e of this.world.entities.iterate()) if (!e.hidden && e.health.current > 0 && (e.infected || e.civilian || e.companion || e.vehicle || e.traffic)) { const k = e.infected ? 'infected' : e.civilian ? 'pedestrian' : e.companion ? 'corgi' : 'vehicle'; all[k] = (all[k] ?? 0) + 1; }
@@ -408,9 +470,11 @@ export class SceneLab {
     for (const p of this.built.placements) {
       const root = await this.registry.loadAsset(p.assetId, 'lod0');
       const holder = new Object3D(); holder.position.fromArray(p.position); holder.rotation.y = p.yaw; holder.scale.fromArray(p.scale); holder.add(root); holder.updateMatrixWorld(true);
-      const tris: number[] = [];
+      const tris: number[] = [], leaves = buildingDoors[p.assetId]?.leaves.map(l => l.node) ?? [];
       root.traverse(node => {
         if (!(node instanceof Mesh) || !node.visible || node.name.startsWith('stump_')) return;
+        // Animated door leaves swing at runtime: the door gate (metrics.doors) checks them, not the rest pose.
+        for (let q: Object3D | null = node; q; q = q.parent) if (leaves.includes(q.name)) return;
         const position = node.geometry.getAttribute('position') as BufferAttribute | InterleavedBufferAttribute, index = node.geometry.index;
         matrix.copy(node.matrixWorld);
         const count = index ? index.count : position.count;
@@ -453,7 +517,8 @@ export class SceneLab {
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), health: Math.round(e.health.current), speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
-      actors, visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null, log: [...this.log] };
+      actors, visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
+      doors: Object.fromEntries([...this.doors].map(([id, d]) => [id, { closedFrames: d.closedFrames, firstClosedFrame: d.firstClosedFrame, inDoorwayFrames: d.inDoorwayFrames, maxOpen: +d.maxOpen.toFixed(2) }])), log: [...this.log] };
   }
   describe() {
     return { name: this.spec?.name ?? null, frame: this.frame, placements: this.built?.placements.map(p => ({ id: p.id, asset: p.assetId, at: [p.position[0], p.position[2]], yawDeg: Math.round(p.yaw * 1800 / Math.PI) / 10 })) ?? [],
