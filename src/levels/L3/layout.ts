@@ -68,10 +68,10 @@ export const l3Dressing: readonly L3Dressing[] = [
     .map(([x, z, assetId], i) => d('garden', 'oak', assetId, x, z, { yaw: i * 1.7 })),
   corpse('oak', -66, 24.6, 'npc.civilian-man-b', 1.9), corpse('oak', -20, 31.6, 'npc.civilian-woman-a', .3), corpse('oak', 18.4, 31.4, 'npc.civilian-elderly', 4.4),
   corpse('oak', 60, 24.2, 'npc.civilian-man-a', 2.8), corpse('oak', 102, 31.6, 'npc.civilian-woman-b', 5.6),
-  ...([[-70, 24.4, 'decal.blood-trail'], [16, 31.2, 'decal.blood-pool'], [100, 24.6, 'decal.blood-trail']] as const).map(([x, z, assetId], i) => d('blood', 'oak', assetId, x, z, { yaw: i * 1.4 })),
+  ...([[-67.6, 26.2, 'decal.blood-trail'], [18.6, 31.6, 'decal.blood-pool'], [100, 24.4, 'decal.blood-trail']] as const).map(([x, z, assetId], i) => d('blood', 'oak', assetId, x, z, { yaw: i * 1.4 })),
   fire('oak', 14, 29.4, 1.1), fire('oak', -72, 26.8, .9),
   // Fires deep inside the blocks (unreachable service strips): their smoke columns stand over every street.
-  d('smoke', 'commerce', 'fx.fire', -18, -13.5, { scale: 1.6, entity: true }), d('smoke', 'oak', 'fx.fire', 30, 13.4, { scale: 1.6, entity: true }), d('smoke', 'blvd', 'fx.fire', 88, -13.5, { scale: 1.6, entity: true }),
+  d('smoke', 'commerce', 'fx.fire', -18, -13.5, { scale: 1.6, entity: true }), d('smoke', 'oak', 'fx.fire', -44, 13.4, { scale: 1.6, entity: true }), d('smoke', 'oak', 'fx.fire', 30, 13.4, { scale: 1.6, entity: true }), d('smoke', 'blvd', 'fx.fire', 88, -13.5, { scale: 1.6, entity: true }),
   // ---------------------------------------------------------------- the station yard and the bridgehead (W1, organized)
   d('station', 'yard', 'prop.armory-table', -140.6, -8.4, { yaw: H }),
   d('station', 'yard', 'veh.police-sedan', -148, 10.4, { yaw: .1, lit: true }), d('station', 'yard', 'veh.police-suv', -140.6, 12.6, { yaw: -.2, lit: true }),
@@ -89,7 +89,7 @@ export const l3Dressing: readonly L3Dressing[] = [
 
 /** Commerce Street shop fronts: broken glass at every frontage (E21 section 5.8), one per shop door. */
 export function commerceFrontages(layout: DistrictLayout): { x: number; z: number; facing: 1 | -1 }[] {
-  return layout.placements.filter(p => /^bld\.(mainstreet-brick|joes-diner|maple-hardware)$/.test(p.assetId) && l3Street(p.position[2]) === 'commerce')
+  return layout.placements.filter(p => /^bld\.(mainstreet-brick|joes-diner|maple-hardware|pharmacy|supermarket|cafe-corner)$/.test(p.assetId) && l3Street(p.position[2]) === 'commerce')
     .map(p => ({ x: p.position[0], z: p.position[2] < 0 ? -3.6 : 3.6, facing: p.position[2] < 0 ? 1 : -1 }));
 }
 

@@ -74,7 +74,10 @@ export type Action =
   | { mountBike: string }
   | { dismount: true }
   | { chase: string }
-  | { flee: Point };
+  | { flee: Point }
+  /** E21 allied fighter v2 (pedestrians only): an officer or soldier with a handgun/rifle who holds its post and shoots
+   * visible infected, or (with `follow`) joins the courier's squad at the given slot (0-3), exactly as the L3 squad. */
+  | { ally: { role?: 'officer' | 'soldier'; follow?: string; slot?: number } };
 export type ScriptStep = { frame: number } & ({ actor: string; do: Action } | { effect: EffectSpec } | { camera: CameraSpec } | { time: TimeOfDay });
 export type EffectSpec =
   | { blast: string; at: Point }
