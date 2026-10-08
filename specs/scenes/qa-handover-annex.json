@@ -51,7 +51,8 @@
     "handover": {
      "building": "bld.clinic-annex",
      "meet": "courier",
-     "pauseS": 2.2
+     "pauseS": 2.2,
+     "standoff": 1.4
     }
    }
   }
@@ -65,7 +66,7 @@
   ],
   "radius": 8
  },
- "frames": 420,
+ "frames": 470,
  "shots": [
   0,
   40,
@@ -75,7 +76,8 @@
   290,
   330,
   360,
-  420
+  420,
+  470
  ],
  "expect": {
   "consoleErrors": 0,

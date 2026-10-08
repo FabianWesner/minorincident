@@ -9,6 +9,7 @@ import type { CivilianActivity } from '../../sim/npc/types';
 import type { EntitySnapshot } from '../../sim/world/types';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
+import { SimPhase } from '../../core/EventBus';
 import { installL1Outbreak } from '../../sim/outbreak/install';
 import { seatAnchor } from '../../sim/npc/seats';
 import { CrowdFigureProbe } from '../../render/characters/CrowdFigureProbe';
@@ -51,7 +52,7 @@ export class SceneLab {
   /** Actor pairs whose torsos/heads interpenetrate (worst depth, frame, sampled-frame count). */
   private bodies = new Map<string, { a: string; b: string; depthCm: number; frame: number; count: number }>();
   /** Hand-over choreographies in progress (actor id -> route, start frame, pause). */
-  private handovers = new Map<string, { route: { x: number; z: number }[]; length: number; start: number; pause: number }>();
+  private handovers = new Map<string, { route: { x: number; z: number }[]; length: number; start: number; pause: number; face?: number }>();
   /** Door gate per doored placement: frames an actor stood in the aperture/leaf sweep while the door was not fully open. */
   private doors = new Map<string, { way: Doorway; closedFrames: number; firstClosedFrame: number | null; inDoorwayFrames: number; maxOpen: number }>();
   private staticSets: TriangleSet[] | null = null;
@@ -90,6 +91,8 @@ export class SceneLab {
   private setup(world: SimWorld, spec: SceneSpec): void {
     const outbreak = installL1Outbreak(world, { civilians: 0 });
     void outbreak;
+    // Hand-overs move in the missions phase, like the L1 story beats, so AgentMotion publishes their walking speed.
+    world.events.on('sim.tick', () => this.driveHandovers(), SimPhase.missions);
     world.combat!.damage.god = true;
     const player = world.entities.get(1)!;
     const courier = spec.actors?.find(a => a.kind === 'courier');
@@ -214,14 +217,14 @@ export class SceneLab {
     else if ('moveTo' in a) this.teleport(e, toPoint(a.moveTo));
   }
   /** L1 hand-over: the same door route as L1Story.pickup / LevelOneOutbreak.handover, driven by the frame counter. */
-  private startHandover(actor: LabActor, e: EntitySnapshot, h: { building: string; meet: Point | string; pauseS?: number; legacy?: boolean }): void {
+  private startHandover(actor: LabActor, e: EntitySnapshot, h: { building: string; meet: Point | string; pauseS?: number; standoff?: number; legacy?: boolean }): void {
     const placements = this.built!.placements, p = placements.find(q => q.id === h.building) ?? placements.find(q => q.assetId === h.building);
     const way = p && doorwayOf(p); if (!way) throw new Error(`handover: no doored building ${h.building} (src/data/buildingDoors.ts)`);
     let meet: { x: number; z: number };
     if (typeof h.meet === 'string') {
       const t = this.world.entities.get(this.actors.get(h.meet)?.entity ?? -1); if (!t) throw new Error(`handover: unknown actor ${h.meet}`);
       const dx = way.door.x - t.transform.x, dz = way.door.z - t.transform.z, d = Math.hypot(dx, dz) || 1;
-      meet = { x: t.transform.x + dx / d * 1.05, z: t.transform.z + dz / d * 1.05 };
+      meet = { x: t.transform.x + dx / d * (h.standoff ?? 1.05), z: t.transform.z + dz / d * (h.standoff ?? 1.05) };
     } else meet = toPoint(h.meet);
     let route = doorRoute(this.world.infected!.nav, way, meet);
     if (h.legacy && typeof h.meet === 'string') {
@@ -234,26 +237,29 @@ export class SceneLab {
         route = [behind, { x: t.x - mx / md * 1.05, z: t.z - mz / md * 1.05 }];
       } else {
         const exit = { x: way.centre.x + way.out.x * 2.2, z: way.centre.z + way.out.z * 2.2 }, dx = t.x - exit.x, dz = t.z - exit.z, d = Math.hypot(dx, dz) || 1;
-        route = [{ x: way.centre.x - way.out.x * 1.6, z: way.centre.z - way.out.z * 1.6 }, exit, { x: t.x - dx / d * 1.4, z: t.z - dz / d * 1.4 }];
+        route = [{ x: way.centre.x - way.out.x * 1.6, z: way.centre.z - way.out.z * 1.6 }, exit, { x: t.x - dx / d * (h.standoff ?? 1.4), z: t.z - dz / d * (h.standoff ?? 1.4) }];
       }
     }
     const c = e.civilian!;
     c.ambient = false; c.pauseUntil = Number.MAX_SAFE_INTEGER; c.routine = 'staff'; c.state = 'calm'; c.schedule = [this.stand(route[0], e.transform.yaw)]; c.scheduleStep = 0; c.path.length = 0; c.goal = -1;
     this.teleport(e, route[0]);
-    this.handovers.set(actor.id, { route, length: routeLength(route), start: this.frame, pause: ticks(h.pauseS ?? 2.2) });
+    this.handovers.set(actor.id, { route, length: routeLength(route), start: this.world.tick + 1, pause: ticks(h.pauseS ?? 2.2), ...(typeof h.meet === 'string' ? { face: this.actors.get(h.meet)!.entity } : {}) });
     this.log.push(`handover ${actor.id}: ${route.map(q => `${q.x.toFixed(2)},${q.z.toFixed(2)}`).join(' > ')}`);
   }
   private driveHandovers(): void {
     for (const [id, h] of this.handovers) {
       const actor = this.actors.get(id), e = actor && this.world.entities.get(actor.entity); if (!e?.civilian) { this.handovers.delete(id); continue; }
-      const walk = Math.max(1, Math.round(h.length / 1.6 * 60)), t = this.frame - h.start, c = e.civilian;
+      const walk = Math.max(1, Math.round(h.length / 1.6 * 60)), t = this.world.tick - h.start, c = e.civilian;
       const present = (clip: string, prop?: 'parcel') => { if (c.story?.clip !== clip || c.story.prop !== prop) c.story = { clip, start: this.world.tick, ...(prop ? { prop } : {}) }; };
       const put = (m: number, forward: boolean) => {
         const q = routeAt(h.route, m); e.transform.x = q.x; e.transform.z = q.z; this.world.spatial.set(e.id, q.x, q.z);
         if (Math.hypot(q.dx, q.dz) > 1e-6) e.transform.yaw = -Math.atan2(forward ? q.dz : -q.dz, forward ? q.dx : -q.dx);
       };
       if (t < walk) { put(t / walk * h.length, true); present('npc-carry', 'parcel'); }
-      else if (t < walk + h.pause) { put(h.length, true); present(t - walk < h.pause / 2 ? 'npc-give' : 'npc-wave', t - walk < h.pause / 3 ? 'parcel' : undefined); }
+      else if (t < walk + h.pause) {
+        put(h.length, true);
+        const f = h.face !== undefined ? this.world.entities.get(h.face) : undefined; if (f) e.transform.yaw = -Math.atan2(f.transform.z - e.transform.z, f.transform.x - e.transform.x);
+        present(t - walk < h.pause / 2 ? 'npc-give' : 'npc-wave', t - walk < h.pause / 3 ? 'parcel' : undefined); }
       else if (t < 2 * walk + h.pause) { put(h.length - (t - walk - h.pause) / walk * h.length, false); present('npc-walk'); }
       else { put(0, false); c.story = null; this.handovers.delete(id); }
     }
@@ -312,7 +318,7 @@ export class SceneLab {
         else if ('camera' in s) { this.camera = s.camera; this.applyCamera(); }
         else if ('time' in s) this.setTime(s.time);
       }
-      this.drivePlayer(); this.driveHandovers();
+      this.drivePlayer();
       if (this.camera?.mode === 'follow' || this.camera?.mode === 'orbit' && this.camera.spin || typeof (this.camera as { target?: unknown })?.target === 'string') this.applyCamera();
       const start = performance.now();
       this.nextRenderFrame();

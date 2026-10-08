@@ -80,7 +80,7 @@ export type Action =
   /** Pedestrian: the L1 hand-over choreography (src/sim/missions/doorRoute.ts) - out of `building`'s street door (a
    * placement id or asset id), carrying the parcel to `meet` (a point, or an actor id: arm's length in front of it), a
    * `pauseS` give/wave, then back in the same way. `legacy` replays the pre-2026-10-08 straight-line walk (A/B only). */
-  | { handover: { building: string; meet: Point | string; pauseS?: number; legacy?: boolean } };
+  | { handover: { building: string; meet: Point | string; pauseS?: number; /** Arm's length in front of an actor `meet` (default 1.05 m, the L1 clerk; the technician uses 1.4). */ standoff?: number; legacy?: boolean } };
 export type ScriptStep = { frame: number } & ({ actor: string; do: Action } | { effect: EffectSpec } | { camera: CameraSpec } | { time: TimeOfDay });
 export type EffectSpec =
   | { blast: string; at: Point }
