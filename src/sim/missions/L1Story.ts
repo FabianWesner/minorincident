@@ -2,6 +2,7 @@ import type { Mission } from './Mission';
 import type { L1State } from './types';
 import type { EntitySnapshot } from '../world/types';
 import type { CivilianProp } from '../npc/types';
+import { doorRoute, findDoorway, routeAt, routeLength } from './doorRoute';
 
 const TICKS = 60;
 type BeatId = NonNullable<L1State['beat']>['id'];
@@ -78,16 +79,28 @@ export class L1Story {
     e.civilian.state = 'calm'; e.civilian.pauseUntil = Number.MAX_SAFE_INTEGER;
   }
 
-  /** Beat 1: the clerk walks out from behind the counter with the parcel, hands it over, waves and goes back in. */
+  /** Beat 1: the clerk walks out of the depot door with the parcel, hands it over, waves and goes back in the same way. */
   pickup(): void {
     const world = this.world, player = world.entities.get(1)!, counter = this.anchor('parcel-counter');
-    const dx = counter.x - player.transform.x, dz = counter.z - player.transform.z, d = Math.hypot(dx, dz) || 1;
-    const behind = { x: player.transform.x + dx / d * Math.max(2.6, d + 1.4), z: player.transform.z + dz / d * Math.max(2.6, d + 1.4) };
-    const id = this.pedestrian(behind, 'npc.depot-clerk', 'cashier', '#3f7f9a');
-    this.l1.clerkId = id; this.l1.carrying = false;
-    this.start('pickup', id, behind);
-    const b = this.l1.beat!, mdx = player.transform.x - behind.x, mdz = player.transform.z - behind.z, md = Math.hypot(mdx, mdz) || 1;
-    b.mx = player.transform.x - mdx / md * 1.05; b.mz = player.transform.z - mdz / md * 1.05;
+    const nav = world.infected?.nav, way = findDoorway(world, 'bld.courier-depot', counter);
+    let route: { x: number; z: number }[];
+    if (nav && way) {
+      // PO 2026-10-08 "the woman walks through the walls instead of door": out through the door aperture, around the
+      // apron props on the walk grid, to arm's length in front of the courier.
+      const dx = way.door.x - player.transform.x, dz = way.door.z - player.transform.z, d = Math.hypot(dx, dz) || 1;
+      route = doorRoute(nav, way, { x: player.transform.x + dx / d * 1.05, z: player.transform.z + dz / d * 1.05 });
+    } else {
+      // No depot placement (synthetic worlds): the old straight walk from behind the counter.
+      const dx = counter.x - player.transform.x, dz = counter.z - player.transform.z, d = Math.hypot(dx, dz) || 1;
+      const behind = { x: player.transform.x + dx / d * Math.max(2.6, d + 1.4), z: player.transform.z + dz / d * Math.max(2.6, d + 1.4) };
+      const mdx = player.transform.x - behind.x, mdz = player.transform.z - behind.z, md = Math.hypot(mdx, mdz) || 1;
+      route = [behind, { x: player.transform.x - mdx / md * 1.05, z: player.transform.z - mdz / md * 1.05 }];
+    }
+    const home = route[0], meet = route[route.length - 1];
+    const id = this.pedestrian(home, 'npc.depot-clerk', 'cashier', '#3f7f9a');
+    this.l1.clerkId = id; this.l1.carrying = false; this.l1.clerkRoute = route;
+    this.start('pickup', id, way?.door ?? home);
+    const b = this.l1.beat!; b.ax = home.x; b.az = home.z; b.mx = meet.x; b.mz = meet.z;
     this.say(id, 'pickup.clerk');
   }
   /** Beat 3: reach up to the wall rack, lift the bat off, test swing. */
@@ -111,19 +124,24 @@ export class L1Story {
     if (b.id === 'pickup') this.updatePickup(t, !!lock?.skip);
     else if (b.id === 'garage') { if (t >= beat.garageTicks && !this.reading || lock?.skip) this.finish(); }
     else if (b.id === 'handover') { if (lock?.skip) this.finish(); }
-    if (l1.beat && tick >= l1.beat.until && !this.reading) this.finish();
+    // The pickup ends itself once the clerk is back inside (a long walk round the apron props outlasts the 5 s frame).
+    if (l1.beat && l1.beat.id !== 'pickup' && tick >= l1.beat.until && !this.reading) this.finish();
   }
 
   private updatePickup(t: number, skip: boolean): void {
     const l1 = this.l1, b = l1.beat!, world = this.world, clerk = world.entities.get(l1.clerkId ?? 0), player = world.entities.get(1)!;
     if (!clerk) { l1.carrying = true; this.finish(); return; }
-    const home = { x: b.ax, z: b.az }, meet = { x: b.mx, z: b.mz };
-    const walk = Math.max(1, Math.round(Math.hypot(meet.x - home.x, meet.z - home.z) / beat.clerkWalkMs * TICKS));
+    const home = { x: b.ax, z: b.az }, meet = { x: b.mx, z: b.mz }, route = l1.clerkRoute ?? [home, meet], length = routeLength(route);
+    const walk = Math.max(1, Math.round(length / beat.clerkWalkMs * TICKS));
     const give = walk, contact = give + beat.contactTicks, bye = give + beat.giveTicks, back = bye + beat.byeTicks, gone = back + walk;
     if (skip && t < back) { b.start -= back - t; t = back; }
     // Keep waving until the clerk's line has been read.
     if (t === back && this.reading) { b.start++; t--; }
-    if (t < give) { const k = t / walk; this.place(clerk, home.x + (meet.x - home.x) * k, home.z + (meet.z - home.z) * k, meet); this.present(clerk, 'npc-carry', 'parcel'); }
+    const walkTo = (m: number, forward: boolean) => {
+      const p = routeAt(route, m), s = forward ? 1 : -1;
+      this.place(clerk, p.x, p.z, Math.hypot(p.dx, p.dz) > 1e-6 ? { x: p.x + p.dx * s, z: p.z + p.dz * s } : forward ? meet : home);
+    };
+    if (t < give) { walkTo(t / walk * length, true); this.present(clerk, 'npc-carry', 'parcel'); }
     else if (t < bye) {
       this.place(clerk, meet.x, meet.z, player.transform);
       if (t === give) world.player?.act('receive', world.tick);
@@ -132,8 +150,8 @@ export class L1Story {
     } else if (t < back) { l1.carrying = true; this.place(clerk, meet.x, meet.z, player.transform); this.present(clerk, 'npc-wave'); }
     else if (t < gone) {
       l1.carrying = true; this.release();
-      const k = (t - back) / walk; this.place(clerk, meet.x + (home.x - meet.x) * k, meet.z + (home.z - meet.z) * k, home); this.present(clerk, 'npc-walk');
-    } else { clerk.hidden = true; if (clerk.civilian) clerk.civilian.story = null; this.place(clerk, home.x, home.z, home); l1.clerkId = 0; this.finish(); }
+      walkTo(length - (t - back) / walk * length, false); this.present(clerk, 'npc-walk');
+    } else { clerk.hidden = true; if (clerk.civilian) clerk.civilian.story = null; this.place(clerk, home.x, home.z, home); l1.clerkId = 0; l1.clerkRoute = null; this.finish(); }
   }
 
   /** A doorway invitation, never a beat: controls and infected AI remain live until actual entry. */
