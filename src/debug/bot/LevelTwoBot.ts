@@ -55,8 +55,11 @@ export class LevelTwoBot {
     if (player.health.current <= 0 || s.seated) return frame;
     const go = (target: P, stop: number, key: string) => { const dir = this.walker.step(w, target, stop, key); if (dir) frame.move = dir; return !dir; };
     const strike = (target: EntitySnapshot) => { frame.attackTarget = { id: target.id, side: 'LEFT' }; frame.left.held = true; frame.move = { x: 0, z: 0 }; };
-    // Calm and alarm: wait in the bay; at the alarm take the axe (optional) and board the truck.
-    if (s.phase === 'calm') { if (this.takesAxe) go(a['l2-axe-rack'], 1, 'axe-wait'); return frame; }
+    // Calm and alarm: take the optional axe during the calm beat, then board after the alarm.
+    if (s.phase === 'calm') {
+      if (this.takesAxe && !s.axe && go(a['l2-axe-rack'], .5, 'axe-wait')) frame.interact = true;
+      return frame;
+    }
     if (s.phase === 'alarm') {
       if (this.takesAxe && m.state.steps.axe.status === 'active') { if (go(a['l2-axe-rack'], .5, 'axe')) frame.interact = !newbie || this.rng.next() < .5; return frame; }
       if (go(a['l2-board'], .5, 'board')) frame.interact = !newbie || this.rng.next() < .5;
