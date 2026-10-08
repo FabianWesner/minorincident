@@ -30,3 +30,25 @@ export function tyreRing(profile: Profile, scale: number): Vector3[] {
   }
   return out;
 }
+
+/** Drawn tyre face contacts in wheel-local space, including edges and face centres at paving boundaries. */
+export function tyreSurface(wheel: Object3D): Vector3[] {
+  wheel.updateWorldMatrix(true, true);
+  const inverse = new Matrix4().copy(wheel.matrixWorld).invert(), m = new Matrix4(), points = new Map<string, Vector3>();
+  const a = new Vector3(), b = new Vector3(), c = new Vector3(), p = new Vector3();
+  wheel.traverse(n => {
+    if (!(n instanceof Mesh) || !n.visible) return;
+    m.multiplyMatrices(inverse, n.matrixWorld);
+    const position = n.geometry.getAttribute('position') as BufferAttribute, index = n.geometry.index, count = index ? index.count : position.count;
+    for (let i = 0; i + 2 < count; i += 3) {
+      a.fromBufferAttribute(position, index ? index.getX(i) : i).applyMatrix4(m);
+      b.fromBufferAttribute(position, index ? index.getX(i + 1) : i + 1).applyMatrix4(m);
+      c.fromBufferAttribute(position, index ? index.getX(i + 2) : i + 2).applyMatrix4(m);
+      for (const [u, v] of [[1, 0], [0, 1], [0, 0], [.5, .5], [.5, 0], [0, .5], [1 / 3, 1 / 3]]) {
+        p.set(0, 0, 0).addScaledVector(a, u).addScaledVector(b, v).addScaledVector(c, 1 - u - v);
+        points.set(`${p.x.toFixed(5)},${p.y.toFixed(5)},${p.z.toFixed(5)}`, p.clone());
+      }
+    }
+  });
+  return [...points.values()];
+}

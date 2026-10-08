@@ -87,7 +87,9 @@ function truckPath(): TruckPathPoint[] {
   const path: TruckPathPoint[] = [];
   const add = (x: number, z: number, yaw: number, curvature: number, section: TruckPathPoint['section']) => {
     const prev = path.at(-1), s = prev ? prev.s + Math.hypot(x - prev.x, z - prev.z) : 0;
-    const limit = Math.abs(curvature) > .01 ? Math.min(l2.ride.cornerMs, l2.ride.yawRateDegS * Math.PI / 180 / Math.abs(curvature) * .97) : l2.ride.cruiseMs;
+    const corner = section === 'apron' || section === 'junction';
+    // Leave room for the Rapier rotation reconstruction at the fixed-step boundary.
+    const limit = Math.min(corner ? l2.ride.cornerMs : l2.ride.cruiseMs, Math.abs(curvature) > .001 ? l2.ride.yawRateDegS * Math.PI / 180 / Math.abs(curvature) * .95 : Infinity);
     path.push({ x, z, yaw, curvature, s, limit, section });
   };
   const line = (ax: number, az: number, bx: number, bz: number, section: TruckPathPoint['section']) => {
