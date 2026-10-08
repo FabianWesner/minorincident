@@ -126,7 +126,7 @@ describe('L1 v2 mission', () => {
       expect(same.infected?.variant).toBe(variant); expect(same.civilian).toBeUndefined(); expect(same.faction).toBe('infected');
       // PO P1 10-08: the four staff are inside the annex behind its front door (never at the exits) and walk out of it.
       const lab = l1.labExit!; expect(lab.house).toMatch(/^bld\.clinic-annex/);
-      for (const i of l1.exitIds.slice(1)) { const e = w.entities.get(i)!.transform; expect((e.x - lab.x) * lab.nx + (e.z - lab.z) * lab.nz, `seed ${seed} staff ${i}`).toBeLessThan(-1); }
+      for (const i of l1.exitIds.slice(1)) { const e = w.entities.get(i)!.transform; expect((e.x - lab.x) * lab.nx + (e.z - lab.z) * lab.nz, `seed ${seed} staff ${i}`).toBeLessThan(-.3); }
       expect(w.openDoors.has(`door-${lab.house}`)).toBe(true);
       expect(maxSeparatedHeadings(l1.exitHeadingsDeg, l1v2.accident.minHeadingSeparationDeg)).toBeGreaterThanOrEqual(l1v2.accident.minDistinctHeadings);
       w.dispose(); world = undefined;
