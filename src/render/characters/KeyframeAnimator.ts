@@ -100,13 +100,15 @@ export class KeyframeAnimator {
     else if (time < this.transitionUntil) name = this.clip === 'start' ? 'start' : 'stop';
     if (!moving && turn) name = turn > 0 ? 'turn-left' : 'turn-right';
     const combat = pose.attack;
+    // Bat roundhouse (00 §6.2): the forehand held at full extension while the body turns a full circle (GameView spin).
+    const roundhouse = combat?.style === 'roundhouse' && ['swing', 'kick', 'shoot', 'throw'].includes(pose.animation);
     let strike: string | undefined;
     if (['swing','kick','shoot','throw'].includes(pose.animation)) {
       const weapon = combat?.actionId.replace('weapon.', '') ?? 'swing';
       const combo = combat?.combo ?? 0, unarmed = `unarmed-${meleeChains['weapon.fists'][combo] ?? 'jab'}`;
-      strike = weapon === 'fists' ? this.actions.has(unarmed) ? unarmed : `fists-${combo % 3 + 1}` : pose.animation === 'kick' ? combo === 1 ? 'spin-kick' : 'kick' : ['bat','crowbar','machete'].includes(weapon) ? `${weapon}-${combo + 1}` : pose.animation;
+      strike = roundhouse ? this.actions.has(`${weapon}-1`) ? `${weapon}-1` : 'bat-1' : weapon === 'fists' ? this.actions.has(unarmed) ? unarmed : `fists-${combo % 3 + 1}` : pose.animation === 'kick' ? combo === 1 ? 'spin-kick' : 'kick' : ['bat','crowbar','machete'].includes(weapon) ? `${weapon}-${combo + 1}` : pose.animation;
     }
-    const upper = strike && moving && pose.animation !== 'kick' && !/kick|knee/.test(strike);
+    const upper = strike && moving && !roundhouse && pose.animation !== 'kick' && !/kick|knee/.test(strike);
     if (strike && !upper) name = strike;
     else if (!strike && !['idle','walk','run'].includes(pose.animation)) name = pose.animation;
     // E19 courier: seated pedalling while riding (mount/dismount play as actions).
@@ -159,12 +161,17 @@ export class KeyframeAnimator {
       // Render time trails the sim by one tick (alpha interpolation); land contact on the frame that
       // shows the damage tick, so the hit-stop freezes the contact pose rather than the coil.
       const u = tick + alpha - 1 - combat.started, a = Math.max(1, combat.activeAt - combat.started - 1), e = Math.max(a + 1, combat.endsAt - combat.started - 1);
-      const phase = u < a ? .2 * Math.max(0, u) / a : Math.min(1, .2 + .8 * (u - a) / (e - a));
+      const r = Math.max(a + 1, combat.recoveryAt - combat.started - 1);
+      // Roundhouse: coil to contact over the windup, hold the bat out through the spin, follow through in recovery.
+      const phase = roundhouse ? u < a ? .2 * Math.max(0, u) / a : u < r ? .2 + .08 * (u - a) / (r - a) : Math.min(1, .28 + .72 * (u - r) / Math.max(1, e - r))
+        : u < a ? .2 * Math.max(0, u) / a : Math.min(1, .2 + .8 * (u - a) / (e - a));
       struck.time = phase * struck.getClip().duration; struck.setEffectiveTimeScale(0);
       // Lunge step into the target (research §5: attacker step 0.10–0.25 m) so strikes read at the
       // game camera: in over the anticipation, held through contact, eased back in recovery.
-      this.lunge = phase < .2 ? phase / .2 : phase < .4 ? 1 : Math.max(0, 1 - (phase - .4) / .5);
-    } else this.lunge = 0;
+      this.lunge = roundhouse ? 0 : phase < .2 ? phase / .2 : phase < .4 ? 1 : Math.max(0, 1 - (phase - .4) / .5);
+      // The feet pivot through the spin (lead foot turns on its ball, the other circles off the ground).
+      if (this.ground) this.ground.pivot = roundhouse && u < r + 3;
+    } else { this.lunge = 0; if (this.ground) this.ground.pivot = false; }
     this.attackTick = strike ? pose.animationTick : -1;
     // Restore every mixer input before sampling: Three skips unchanged bindings,
     // while our contacts, carry and bicycle layers modify those same nodes.

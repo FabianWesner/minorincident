@@ -1,8 +1,9 @@
-import { expect, test } from 'vitest';
+import { expect, onTestFinished, test } from 'vitest';
 import { arena, dummy, equip, fire, health, step } from './helpers';
 import { action } from '../../../src/data/actions/fixtures';
 import { Status } from '../../../src/sim/combat/Status';
-import { action as rosterAction } from '../../../src/data/actions/catalog';
+import { action as rosterAction, catalog } from '../../../src/data/actions/catalog';
+import type { ActionDef } from '../../../src/data/actions/schema';
 import { comboDefinition } from '../../../src/data/meleeCombos';
 /** The roster bat's opening beat (E19 §5.6 forehand: 22 damage, 0.25 m knockback). */
 const forehand = () => comboDefinition(rosterAction('weapon.bat'), 0);
@@ -36,6 +37,9 @@ test('T-E05-02 @E05 @E05-AC02 selected rack wraps both ways, locks for 15 ticks 
 });
 
 test('T-E05-03 @E05 @E05-AC03 bat arc/range/maxTargets boundaries, once per swing', async () => {
+  // The frontal swing's geometry; seven dummies in reach would otherwise trigger the crowd roundhouse (roundhouse.test.ts).
+  const bat = catalog['weapon.bat'] as ActionDef, sweep = bat.roundhouse; delete bat.roundhouse;
+  onTestFinished(() => { bat.roundhouse = sweep; });
   const w = await arena(); equip(w);
   const inside = [dummy(w, 1), dummy(w, 1.9 * Math.cos(49 * Math.PI / 180), 1.9 * Math.sin(49 * Math.PI / 180)), dummy(w, 1.9 * Math.cos(-50 * Math.PI / 180), 1.9 * Math.sin(-50 * Math.PI / 180))];
   const outside = [dummy(w, 1.91), dummy(w, Math.cos(51 * Math.PI / 180), Math.sin(51 * Math.PI / 180)), dummy(w, -1)];
