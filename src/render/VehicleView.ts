@@ -2,7 +2,7 @@ import { tyreSurface } from './TyreContact';
 import { modelLod } from './lodPolicy';
 import { paletteTokens } from '../data/palette';
 // Adapted from Bruno Simon folio-2025 VisualVehicle.js (MIT, 41046b5): wheel pivots/suspension and lamps.
-import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
+import { BoxGeometry, Group, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
 import { productionObstacleAssets } from './EntityAssets';
 import { AssetRegistry } from '../assets/registry';
 import { atLeast } from '../assets/types';
@@ -18,7 +18,7 @@ import { lerp } from '../core/maths';
 import { anchorsFor } from './WorldLights';
 import { footprint, type LightField } from './LightField';
 const lampPosition = new Vector3(), lampDirection = new Vector3();
-interface Record { lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
+interface Record { lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[]; contactPose: Matrix4; contactOffset: number; contactGround: VehicleView['ground'] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
 export class VehicleView extends Group {
   private readonly registry: AssetRegistry;
@@ -66,7 +66,7 @@ export class VehicleView extends Group {
       return copy;
     }; node.material = Array.isArray(node.material) ? node.material.map(convert) : convert(node.material); });
     const parent = new Group(); parent.add(model); this.add(parent); model.position.y = -(def.suspension + def.wheelRadius + .15);
-    const wheels = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR'].map(name => { const node = model.getObjectByName(name)!; node.rotation.order = 'YXZ'; return { node, y: node.position.y, steer: node.rotation.y, spin: node.rotation.z, contacts: tyreSurface(node) }; });
+    const wheels = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR'].map(name => { const node = model.getObjectByName(name)!; node.rotation.order = 'YXZ'; return { node, y: node.position.y, steer: node.rotation.y, spin: node.rotation.z, contacts: tyreSurface(node), contactPose: new Matrix4(), contactOffset: 0, contactGround: null }; });
     const lamp = (name: string, color: string) => {
       const material = new MeshBasicNodeMaterial({ color });
       model.getObjectByName(name)?.traverse(child => { if (child instanceof Mesh) child.material = material; }); return material;
@@ -115,6 +115,13 @@ export class VehicleView extends Group {
         // Tyre faces can meet a paving edge between mesh vertices, especially with steering and body lean.
         record.parent.updateMatrixWorld(true);
         for (const wheel of record.wheels) {
+          // Parked wheels meet the same immutable ground every frame. Reuse their correction until the pose changes;
+          // the matrix tolerance is below a micron, so this also covers sleeping physics jitter without visible sink.
+          if (wheel.contactGround === this.ground && wheel.contactPose.elements.every((v, i) => Math.abs(v - wheel.node.matrixWorld.elements[i]) < 1e-7)) {
+            wheel.node.position.y += wheel.contactOffset; continue;
+          }
+          wheel.contactPose.copy(wheel.node.matrixWorld); wheel.contactGround = this.ground;
+          const baseY = wheel.node.position.y;
           // Moving a wheel along a leaning chassis also moves its tread sideways. Recheck the contact after settling:
           // at the station's paving boundary that small shift can put a face over a different ground triangle.
           for (let pass = 0; pass < 3; pass++) {
@@ -129,6 +136,7 @@ export class VehicleView extends Group {
             const vertical = wheel.node.parent!.matrixWorld.elements[5];
             if (vertical > .1) wheel.node.position.y -= (gap - .001) / vertical;
           }
+          wheel.contactOffset = wheel.node.position.y - baseY;
         }
       }
       record.brake.color.set('#ff2d2d').multiplyScalar(state.braking ? 4 : .15);
