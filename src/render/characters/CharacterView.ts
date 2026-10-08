@@ -254,7 +254,7 @@ export class CharacterView extends Group {
   private facing = 0;
   /** Held views borrow these nodes; CharacterView retains ownership of the rig. */
   /** Rig node of the visible variant (kick trails follow the foot). */
-  node(name: 'footR' | 'shinR') { return this.characters.get(this.variant)?.rig[name]; }
+  node(name: keyof LoadedCharacter['rig']) { return this.characters.get(this.variant)?.rig[name]; }
   socket(side: 'LEFT' | 'RIGHT') { return this.characters.get(this.variant)!.sockets[side]; }
   getState() {
     const character = this.characters.get(this.variant);
