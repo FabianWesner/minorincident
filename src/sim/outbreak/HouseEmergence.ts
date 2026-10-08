@@ -32,6 +32,8 @@ export interface HouseDoor {
 export interface HouseEmergence extends HouseDoor {
   /** Tick of the next resident; `ids` the residents out (or on their way out) so far. */
   next: number; ids: number[];
+  /** Walk-out pace (m/s), default `emergeSpeedMs` (a stumble); the lab staff burst out running. */
+  speedMs?: number;
   /** Residents still on their scripted walk out of the door: release timeout tick, and the route leg (-1 = porch). */
   walking?: { id: number; until: number; leg: number; lane?: number }[];
 }
@@ -126,7 +128,7 @@ export function emergeResident(world: SimWorld, house: HouseEmergence, tick: num
   e.transform.yaw = -Math.atan2(house.nz, house.nx);
   let walk = (opts.inside ?? emergeInsideM) + Math.hypot(house.sx - house.x, house.sz - house.z), from: [number, number] = [house.sx, house.sz];
   for (const p of house.route) { walk += Math.hypot(p[0] - from[0], p[1] - from[1]); from = p; }
-  walk /= emergeSpeedMs;
+  walk /= house.speedMs ?? emergeSpeedMs;
   const until = tick + Math.ceil(walk * 60) + 60;
   // Stunned = no AI at all (InfectedSystem.updateL1); `emerging` = no body separation (it would snap the body onto
   // the nearest nav cell and reset its height): the scripted walk owns the body until the doorstep.
@@ -150,7 +152,7 @@ function place(world: SimWorld, house: HouseDoor, e: { id: number; transform: { 
  * tick (the caller hands them to the AI).
  */
 export function walkResidents(world: SimWorld, house: HouseEmergence, tick: number): number[] {
-  const done: number[] = [], walking = house.walking ?? [], end = (house.sx - house.x) * house.nx + (house.sz - house.z) * house.nz, step = emergeSpeedMs / 60;
+  const done: number[] = [], walking = house.walking ?? [], end = (house.sx - house.x) * house.nx + (house.sz - house.z) * house.nz, step = (house.speedMs ?? emergeSpeedMs) / 60;
   for (let i = walking.length - 1; i >= 0; i--) {
     const w = walking[i], e = world.entities.get(w.id);
     if (!e?.infected || e.health.current <= 0) { if (e) e.emerging = undefined; walking.splice(i, 1); continue; }
