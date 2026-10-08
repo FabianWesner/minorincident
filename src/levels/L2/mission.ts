@@ -19,15 +19,16 @@ export function levelTwoMission(resolve: (district: DistrictId, name: string) =>
   for (const name of names) def.anchors[name] = resolve('D-GROVE', name);
   for (let i = 1; i <= 80; i++) { try { def.anchors[`refuge-door-${i}`] = resolve('D-GROVE', `refuge-door-${i}`); } catch { break; } }
   def.anchors['l2-gate-inside'].radius = 3;
-  def.anchors['l2-board'].radius = 1.2; def.anchors['l2-axe-rack'].radius = 1.2;
+  // Forgiving rings (PO 10-08: the axe took several tries): standing anywhere in them counts.
+  def.anchors['l2-board'].radius = 1.8; def.anchors['l2-axe-rack'].radius = 1.5;
   const step = (id: string, type: ObjectiveDef['type'], text: string, anchor: string, complete: Trigger, start: ObjectiveDef['start']): ObjectiveDef => {
     const s: ObjectiveDef = { id, type, text, anchor, start, complete, fail: [] }; def.steps.push(s); return s;
   };
   const after = (...ids: string[]): ObjectiveDef['start'] => ({ kind: 'objectives', ids, mode: 'all' });
   const state = (key: string): Trigger => ({ kind: 'state', key, equals: true });
-  step('calm', 'custom', 'Catch your breath at Fire Station 3', 'l2-start', state('alarm'), { kind: 'start' });
+  step('calm', 'custom', 'Wait for the alarm at Fire Station 3', 'l2-start', state('alarm'), { kind: 'start' });
   step('board', 'interact', 'Get on the fire truck', 'l2-board', { kind: 'interact', anchor: 'l2-board', seconds: l2.ride.boardInteractS }, after('calm'));
-  const axe = step('axe', 'interact', 'Optional: grab the fire axe from the rack by the station door', 'l2-axe-rack', { kind: 'interact', anchor: 'l2-axe-rack', seconds: .6 }, after('calm'));
+  const axe = step('axe', 'interact', 'Optional: grab the fire axe from the rack by the station door', 'l2-axe-rack', { kind: 'interact', anchor: 'l2-axe-rack', seconds: .6 }, { kind: 'start' });
   axe.optional = true; axe.onComplete = [{ kind: 'grant', item: 'axe' }];
   step('ride', 'custom', 'Ride with Engine 3 to Grove Market', 'l2-truck-stop', state('arrived'), after('board'));
   step('doors', 'custom', 'Cover the firefighters while they force the doors', 'l2-forecourt', state('doors-open'), after('ride'));
