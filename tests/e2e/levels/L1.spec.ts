@@ -98,16 +98,22 @@ test.describe('L1 v2 real-input playthrough', () => {
         if (!assisted && (await player()).weapons && await fightNearby(page)) await clickDestination();
         else if (i % 12 === 11) await clickDestination();
       }
-      throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify(await player())}; bicycle=${JSON.stringify(await page.evaluate(() => window.__SS__!.query({ kind: 'bicycle' })))} `);
+      const around = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 4).map(e => ({ id: e.id, x: +e.transform.x.toFixed(2), z: +e.transform.z.toFixed(2), hp: e.health.current, state: e.infected?.state, mode: e.infected?.l1?.mode })); });
+      throw new Error(`Could not travel to ${JSON.stringify(target)}; infected within 4 m ${JSON.stringify(around)} from ${JSON.stringify((await player()).transform)}; bicycle=${JSON.stringify(await page.evaluate(() => window.__SS__!.query({ kind: 'bicycle' })))} `);
     };
     const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(1); };
+    /** Like a player, give up on an infected the strikes do not reach (e.g. across the lab fence): no HP lost in 3 tries. */
+    const futile = new Map<number, { hp: number; tries: number }>();
     const fightNearby = async (page: Page) => {
-      const target = await page.evaluate(() => {
+      const skip = [...futile].filter(([, f]) => f.tries >= 3).map(([id]) => id);
+      const target = await page.evaluate(skip => {
         const a = window.__SS__!, p = a.getState().player!.transform;
-        const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 2.6).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
-        return near ? a.input.project(near.transform) : null;
-      });
+        const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !skip.includes(e.id) && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 2.6).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
+        return near ? { id: near.id, hp: near.health.current, ...a.input.project(near.transform) } : null;
+      }, skip);
       if (!target) return false;
+      const seen = futile.get(target.id);
+      futile.set(target.id, { hp: target.hp, tries: seen && seen.hp <= target.hp ? seen.tries + 1 : 0 });
       // Shift attack-in-place: stand and strike the infected under the cursor.
       await page.keyboard.down('Shift'); await page.mouse.move(target.x, target.y); await page.mouse.down(); await step(24); await page.mouse.up(); await page.keyboard.up('Shift');
       return true;
@@ -185,22 +191,26 @@ test.describe('L1 v2 real-input playthrough', () => {
       if (!assisted && await fightNearby(page)) continue;
       if (assisted && active === 'firestation' && !shots.has('l1-horde')) {
         await waitBeat(); await go(at('photo-l1-horde'), 1.5);
-        // The horde converges from the house doors around the garage: photograph it arriving on the street (>= 12 within 16 m), not after it
+        // The residents of one house near the garage come out one by one (1.5-4 s apart, ~25 s for all ten) and bite their way up: photograph it arriving on the street (>= 12 within 16 m), not after it
         // has piled onto the immortal courier. Game camera at the widest zoom the player can choose.
         const crowd = () => page.evaluate(() => {
           const a = window.__SS__!, p = a.getState().player!.transform, live = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden);
           const d = (e: { transform: { x: number; z: number } }) => Math.hypot(e.transform.x - p.x, e.transform.z - p.z);
-          return { within2m: live.filter(e => d(e) < 2).length, within16m: live.filter(e => d(e) < 16).length, within25m: live.filter(e => d(e) < 25).length, live: live.length,
+          return { within2m: live.filter(e => d(e) < 2).length, within8m: live.filter(e => d(e) < 8).length, within16m: live.filter(e => d(e) < 16).length, within25m: live.filter(e => d(e) < 25).length, live: live.length,
             bearingsDeg: live.filter(e => d(e) < 25).map(e => Math.round(Math.atan2(e.transform.z - p.z, e.transform.x - p.x) * 180 / Math.PI)) };
         });
-        for (let i = 0; i < 40 && (await crowd()).within16m < 12; i++) await step(30);
+        // PO rule 2026-10-07: the ten residents come out of one house 1.5-4 s apart (~25 s for all), so give the snowball up to 40 s.
+        // Snap as the crowd closes in around the courier (>= 8 within 8 m, >= 12 within 16 m), framed on the courier at the north kerb.
+        for (let i = 0; i < 160; i++) { const c = await crowd(); if (c.within16m >= 12 && c.within8m >= 8) break; await step(15); }
         shots.add('l1-horde'); const scene = await crowd(); await snap('l1-horde', (await player()).transform, false, 1.45);
         writeFileSync(`${output}/horde-scene.json`, JSON.stringify(scene, null, 2) + '\n');
       }
       if (active === 'firestation') {
-        const door = at('fire-bay-door');
+        // The bay opens east toward the game camera (PO 2026-10-07): approach 5 m outside along the door -> trigger axis.
+        const door = at('fire-bay-door'), inside = at('fire-bay-trigger'), len = Math.hypot(inside.x - door.x, inside.z - door.z);
+        const outside = { x: door.x - (inside.x - door.x) / len * 5, z: door.z - (inside.z - door.z) / len * 5 };
         if (!assisted && Math.hypot((await player()).transform.x - at('garage-bat').x, (await player()).transform.z - at('garage-bat').z) < 8) await go(at('garage-door'), 1.2);
-        await go({ x: door.x, z: door.z - 5 }, 1);
+        await go(outside, 1);
         await step(20);
         expect((await mission()).phase).toBe('playing');
         expect((await mission()).l1!.beat).toBeFalsy();
@@ -211,7 +221,7 @@ test.describe('L1 v2 real-input playthrough', () => {
           for (let i = 0; i < 8 && await page.evaluate(() => window.__SS__!.tick() - window.__SS__!.missions.state()!.l1!.say!.at > 30); i++) await step(30);
           await step(10); // Let the normal ten-tick speech fade-in finish.
           await expect(page.getByText('Get in!', { exact: true }).first()).toBeVisible();
-          await page.evaluate(p => window.__SS__!.camera.cinematic({ position: [p.x - 18, 20, p.z - 18], target: [p.x, 0, p.z] }, true), door);
+          await page.evaluate(p => window.__SS__!.camera.cinematic({ position: [p.x + 18, 20, p.z + 18], target: [p.x, 0, p.z] }, true), door);
           await page.evaluate(() => window.__SS__!.screenshotReady());
           await page.screenshot({ path: `${output}/firestation-invitation.png` });
           await page.evaluate(() => window.__SS__!.camera.follow());
@@ -231,7 +241,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.bat');
     await step(2);
     await expect(page.getByTestId('mission-subtitle')).toHaveText(caption);
-    if (!shots.has('l1-safe')) await snap('l1-safe', at('fire-bay-door'), true);
+    if (!shots.has('l1-safe')) await snap('l1-safe', at('fire-bay-door'));
     for (let i = 0; i < 40 && (await mission()).phase !== 'result'; i++) await step(30);
     expect((await mission()).phase).toBe('result');
     await expect(page.getByTestId('mission-heading')).toHaveText(caption);
