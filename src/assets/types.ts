@@ -54,6 +54,8 @@ export interface AssetDef {
   decayBudget?: Partial<AssetDef["budget"]>;
   /** Ruin variants may be shorter (collapsed tower/cupola); footprint axes stay on the base value. */
   decayDimensions?: Partial<{ x: number; y: number; z: number }>;
+  /** Limits for a specific decay sibling, overriding the shared decay limits. */
+  decayBudgets?: Record<string, Partial<AssetDef["budget"]>>;
   decayAuthoredLodTriangles?: { lod1: number; lod2: number };
   decayVariants: string[];
 }
