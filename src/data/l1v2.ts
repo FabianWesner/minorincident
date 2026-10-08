@@ -40,7 +40,7 @@ export const l1v2 = {
   player: { runMs: 4.5, walkMs: 2.0, walkReleaseToRunS: 0.2, touchWalkStickBelow: 0.5, staminaInL1: false, hp: 100 },
   /** Section 5.6 / AC14. */
   combat: {
-    unarmedDamage: [9, 11], unarmedHitsToKill: [4, 5], unarmedKnockbackM: [1.5, 2.5], unarmedStaggerS: 0.4,
+    unarmedDamage: [6, 6], unarmedHitsToKill: [6, 7], unarmedKnockbackM: [1.5, 2.5], unarmedStaggerS: 0.4,
     batDamage: 22, batFinisherDamage: 30, batHitsToKill: 2, batKnockbackM: [2.5, 3.5],
   },
   /** Section 5.8 / AC17. */

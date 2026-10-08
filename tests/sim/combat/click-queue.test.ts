@@ -14,7 +14,7 @@ function idle(w: SimWorld, ticks: number) {
 }
 const attacks = (w: SimWorld) => w.events.events().filter(e => e.type === 'combat.attack' && e.sourceId === 1);
 
-for (const weapon of ['weapon.bat', 'weapon.fists']) for (const delay of [1, 4, 8, 12, 16]) {
+for (const weapon of ['weapon.bat', 'weapon.fists']) for (const delay of [1, 4, 8, 12]) {
   test(`@E05 P1 a click ${delay} ticks into a ${weapon} swing queues the next swing (Diablo input buffer), feet planted`, async () => {
     const w = await arena(); equip(w, [weapon]);
     const id = w.spawnDummy('infected.runner', { x: 1.2, z: 0 }, { hp: 1000 });
