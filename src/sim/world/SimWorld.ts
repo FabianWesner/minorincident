@@ -1,4 +1,5 @@
 import { levelThreeLayouts } from '../../levels/L3/layout';
+import { levelTwoLayouts } from '../../levels/L2/layout';
 import { installLevelThree } from '../../levels/L3/encounters';
 import { ControlIntent } from '../entities/ControlIntent';
 import { installCampaignNpcs, rebuildNpcNavigation, prepareNpcNavigation } from '../npc/install';
@@ -192,7 +193,7 @@ export class SimWorld implements Lifecycle {
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
   loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1):void {
-    const districts=new DistrictWorld(composition,composition.id==='L3'?levelThreeLayouts(layouts):layouts,seed);
+    const districts=new DistrictWorld(composition,composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts):layouts,seed);
     this.loadScenario('survivor',seed);this.scenario=composition.id;this.districts=districts;
     this.player!.locomotion.groundHeight = (x, z) => this.districts?.groundHeight(x, z) ?? 0;
     this.interactables!.nav = districts.nav;
@@ -211,7 +212,7 @@ export class SimWorld implements Lifecycle {
     for (const slot of campaignBarricadeSlots(districts)) this.barricades!.spawn(slot);
     for (const d of districts.districts) for (const slot of d.gameplay.barricades ?? []) this.barricades!.spawn({ ...slot, a: { x: slot.a.x + d.origin[0], z: slot.a.z + d.origin[1] }, b: { x: slot.b.x + d.origin[0], z: slot.b.z + d.origin[1] } });
     installCampaignNpcs(this);
-    if (districts.districts.some(d => d.layout.anchors['bike-start'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
+    if (districts.districts.some(d => d.layout.anchors['bike-start'] || d.layout.anchors['alarm-car-1'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
     this.events.on('sim.tick',()=>{
       if(this.tick%60!==0)return;
       const player=this.entities.get(1)!;
@@ -225,7 +226,7 @@ export class SimWorld implements Lifecycle {
     const walls = this.districts.districts.flatMap(d => d.decay.colliders.filter(c => !c.walkable).map(c => c.aabb).concat(d.blockers).map(a => ({
       y: (a.min[1]+a.max[1])/2, halfY: (a.max[1]-a.min[1])/2, x: (a.min[0]+a.max[0])/2+d.origin[0], z: (a.min[2]+a.max[2])/2+d.origin[1], halfX: (a.max[0]-a.min[0])/2, halfZ: (a.max[2]-a.min[2])/2,
     })));
-    if (this.combat) (this.combat.query.walls as import('../combat/HitQuery').CoverWall[]).push(...walls);
+    if (this.combat) { (this.combat.query.walls as import('../combat/HitQuery').CoverWall[]).push(...walls); this.combat.query.invalidate(); }
     this.infected = new InfectedSystem(this, { name:'L1', infected:true, ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}}, player:this.entities.get(1)!.transform, walls });
     this.infected.director.levelCap = 15;
     this.events.on('sim.tick', () => this.infected!.update(), SimPhase.ai);

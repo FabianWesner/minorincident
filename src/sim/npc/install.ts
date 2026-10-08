@@ -10,7 +10,11 @@ import { inside } from '../../levels/districts/validate';
 export function installCampaignNpcs(world: SimWorld): void {
   const districts = world.districts!;
   // L1 v2 (D-GROVE): systems + corgi only; `installL1Outbreak` adds the pedestrians (lane D).
-  if (districts.districts.some(d => d.id === 'D-GROVE')) { installNpcSystems(world); world.npcs!.companion.spawn(); return; }
+  // L2 also plays on D-GROVE: keep the level for the per-level density/cap tables (E08-AC11 fixture: L2 = 40).
+  if (districts.districts.some(d => d.id === 'D-GROVE')) {
+    installNpcSystems(world); if (/^L[1-6]$/.test(districts.composition.id)) world.npcs!.civilians.level = Number(districts.composition.id[1]);
+    world.npcs!.companion.spawn(); return;
+  }
   if (!/^L[1-6]$/.test(districts.composition.id)) return;
   installNpcSystems(world); const { min, max } = districts.nav;
   world.npcs!.configure(Number(districts.composition.id[1])); world.npcs!.companion.spawn();
@@ -45,7 +49,7 @@ function campaignWalls(world: SimWorld, districts: DistrictWorld = world.distric
 export function rebuildNpcNavigation(world: SimWorld): void {
   if (!world.npcs || !world.infected || !world.districts) return;
   const walls = world.combat!.definition.walls!;
-  walls.splice(0, walls.length, ...campaignWalls(world)); world.infected.nav.rebake(world.preparedNpcNavigation.get(world.districts.composition.tier));
+  walls.splice(0, walls.length, ...campaignWalls(world)); world.combat!.query.invalidate(); world.infected.nav.rebake(world.preparedNpcNavigation.get(world.districts.composition.tier));
   for (const e of world.entities.iterate()) {
     const brain = e.civilian ?? e.escort ?? e.companion ?? e.infected;
     if (brain) { brain.path.length = 0; brain.goal = -1; }

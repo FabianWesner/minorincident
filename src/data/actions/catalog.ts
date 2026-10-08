@@ -23,8 +23,8 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   { ...melee('nail-bat', 'wpn.nail-bat', 38, 2, 100, 0.55, 1), upgradeHooks: ['damage', 'knockback', 'status'] },
   melee('shovel', 'wpn.shovel', 40, 2.2, 110, 0.75, 1, 0.4),
   melee('police-baton', 'wpn.police-baton', 22, 1.7, 85, 0.35, 1, 0.3),
-  // E20 §5.3: the same crowd sweep, stronger: >= 3 within 2.5 m, 25 damage each, 2.5 m push, 0.8 s stagger, 1.0 s total.
-  { ...melee('fire-axe', 'wpn.fire-axe', 65, 2.1, 100, 0.85, 2, 0.4), roundhouse: { threshold: 3, radius: 2.5, maxTargets: 1000, damage: 25, knockback: 2.5, stagger: .8, windup: .25, active: .25, recovery: .5, cooldown: 1, hitStopMs: 60 } },
+  // E20 §5.3: single swing 45 (one hit per 40 HP infected), 100°, 2.1 m, 0.75 s; the same crowd sweep as the bat, stronger: >= 3 within 2.5 m, 25 damage each, 2.5 m push, 0.8 s stagger, 1.0 s total.
+  { ...melee('fire-axe', 'wpn.fire-axe', 45, 2.1, 100, 0.75, 2, 0.4), roundhouse: { threshold: 3, radius: 2.5, maxTargets: 1000, damage: 25, knockback: 2.5, stagger: .8, windup: .25, active: .25, recovery: .5, cooldown: 1, hitStopMs: 60 } },
   melee('katana', 'wpn.katana', 48, 2.3, 130, 0.45, 2, 0.2),
   fixtures['weapon.pistol'],
   { ...gun('shotgun', 150, 18, 2, 6, 2, 12), pellets: 8, distanceFalloff: { start: 4, end: 12, minimum: 0.1 }, maxTargets: 8, knockback: 0, stagger: 0.3 },

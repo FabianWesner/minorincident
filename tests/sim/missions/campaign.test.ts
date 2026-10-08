@@ -17,6 +17,8 @@ for (const id of missionIds) test(`T-E12-07-${id} @E12 @E12-AC07 every cheat adv
   while(api.state()!.phase === 'playing') {
     const before=api.state()!.completedObjectives.length; api.completeObjective(); expect(api.state()!.completedObjectives.length).toBe(before+1); expect(++calls).toBeLessThan(100);
   }
+  // E20: L2 ends on the closing gate with no cinematic or reward screen; the campaign continues straight into L3.
+  if (id === 'L2') { expect(api.state()!.phase).toBe('progression'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true); return; }
   expect(api.state()!.phase).toBe('cinematic'); world.setInput({ interact: true }); for(let i=0;i<30;i++)world.update();
   expect(api.state()!.phase).toBe('result'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true);
 });

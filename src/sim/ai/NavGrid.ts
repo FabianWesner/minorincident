@@ -1,5 +1,7 @@
 import type { ScenarioDefinition } from '../../levels/loader';
 type Wall = NonNullable<ScenarioDefinition['walls']>[number];
+/** Coarse look-ahead offsets (path nodes) for budgeted NPC steering. */
+const lookAhead = [40, 30, 22, 15, 10, 6, 3, 1, 0];
 /** 0.5 m collider-baked district grid. Fixed workspaces serve budgeted A* and shared reverse flow fields. */
 export class NavGrid {
   readonly cellSize = 0.5;
@@ -39,7 +41,20 @@ export class NavGrid {
   }
   /** Player clearance is smaller than AI clearance. Route to the nearest walkable
    * cell when the player hugs a collider, then use direct movement once visible. */
+  /** Memo of recent `nearestCell` answers (fixed targets such as refuges are asked every tick by every fleeing agent;
+   * a blocked target cell costs up to 169 line tests). Cleared whenever blocked cells change. */
+  private readonly nearestMemo: { x: number; z: number; r: number; cell: number }[] = [];
+  private nearestNext = 0;
   nearestCell(x: number, z: number, radius?: number): number {
+    const r = radius ?? -1;
+    for (const m of this.nearestMemo) if (m.x === x && m.z === z && m.r === r) return m.cell;
+    const cell = this.nearestCellUncached(x, z, radius);
+    const slot = { x, z, r, cell };
+    if (this.nearestMemo.length < 16) this.nearestMemo.push(slot); else this.nearestMemo[this.nearestNext] = slot;
+    this.nearestNext = (this.nearestNext + 1) % 16;
+    return cell;
+  }
+  private nearestCellUncached(x: number, z: number, radius?: number): number {
     const reachable = (cell: number) => radius === undefined || this.visible({ x, z }, { x: this.x(cell), z: this.z(cell) }, radius);
     const cell=this.cell(x,z);if(cell<0||!this.blocked[cell] && reachable(cell))return cell;
     let nearest=-1,distance=Infinity;
@@ -82,7 +97,7 @@ export class NavGrid {
       this.blocked.set(prepared);
       for (const wall of this.blockers.values()) this.updateBlockerCells(wall);
     } else for (let cell = 0; cell < this.blocked.length; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), this.clearance));
-    this.target = -1; this.searching = false; this.head = this.tail = 0;
+    this.target = -1; this.searching = false; this.head = this.tail = 0; this.nearestMemo.length = 0;
   }
   /** E11 doors and broken props invalidate only their affected cells and cached searches. */
   setBlocker(id: number, wall: Wall, blocked: boolean): void {
@@ -90,7 +105,7 @@ export class NavGrid {
     if (blocked) this.blockers.set(id, wall); else this.blockers.delete(id);
     if (previous && previous !== wall) this.updateBlockerCells(previous);
     this.updateBlockerCells(wall);
-    this.target = -1; this.searching = false;
+    this.target = -1; this.searching = false; this.nearestMemo.length = 0;
   }
   private updateBlockerCells(wall: Wall): void {
     const pad = this.clearance + this.cellSize;
@@ -184,8 +199,11 @@ export class NavGrid {
   }
   /** Shared string-pulled route: skip all visible waypoints, so actors do not zig-zag on the grid. */
   /** `nearest`: when the target is unreachable (a click into a fenced yard), route to the reachable cell closest to it. */
-  steer(position: { x: number; z: number }, target: { x: number; z: number }, route: { path: number[]; goal: number; pathIndex: number }, radius: number, waypoint: { x: number; z: number }, budget = 1600, nearest = false): boolean {
-    if (this.visible(position, target, radius)) { route.path.length = 0; route.goal = -1; Object.assign(waypoint, target); return true; }
+  steer(position: { x: number; z: number }, target: { x: number; z: number }, route: { path: number[]; goal: number; pathIndex: number; hold?: number }, radius: number, waypoint: { x: number; z: number }, budget = 1600, nearest = false): boolean {
+    // Budgeted NPC steering skips the direct sweep to far targets (a 100 m refuge line test per agent per tick); the
+    // routed look-ahead below covers them.
+    const far = Number.isFinite(budget) && Math.abs(target.x - position.x) + Math.abs(target.z - position.z) > 30;
+    if (!far && this.visible(position, target, radius)) { route.path.length = 0; route.goal = -1; Object.assign(waypoint, target); return true; }
     const to = this.nearestCell(target.x, target.z, radius);
     if (to !== route.goal || route.pathIndex >= route.path.length) {
       let from = this.nearestCell(position.x, position.z, radius);
@@ -202,7 +220,7 @@ export class NavGrid {
       if (!(nearest ? this.reachPath(from, target, route.path, budget) : this.path(from, to, route.path, budget))) return false;
       // Align with that visible start before rounding the first corner.
       if (from >= 0) route.path.unshift(from);
-      route.goal = to; route.pathIndex = 0;
+      route.goal = to; route.pathIndex = 0; route.hold = 0;
     }
     while (route.pathIndex < route.path.length && Math.hypot(position.x - this.x(route.path[route.pathIndex]), position.z - this.z(route.path[route.pathIndex])) < .12) {
       const next = route.path[route.pathIndex + 1];
@@ -210,6 +228,31 @@ export class NavGrid {
       route.pathIndex++;
     }
     // Look ahead a bounded window: line tests over a whole cross-district path cost ~30 ms per call.
+    // NPC steering (finite budget) samples the window coarsely: forty line tests per agent per tick dominated crowded
+    // scenes (E20 rescue: ~16 ms/tick); bots and vehicles (infinite budget) keep the exact farthest-visible node.
+    if (Number.isFinite(budget)) {
+      // Walking the straight segment toward the chosen node keeps it visible: re-run the look-ahead every fourth tick.
+      if (route.hold && route.pathIndex < route.path.length) { route.hold--; waypoint.x = this.x(route.path[route.pathIndex]); waypoint.z = this.z(route.path[route.pathIndex]); return true; }
+      const last = route.path.length - 1;
+      let above = Math.min(last, route.pathIndex + 40) + 1;
+      for (const k of lookAhead) {
+        const i = Math.min(last, route.pathIndex + k); if (i >= above) continue;
+        waypoint.x = this.x(route.path[i]); waypoint.z = this.z(route.path[i]);
+        if (this.visible(position, waypoint, radius)) {
+          // Bisect between the visible sample and the blocked one above it, so corners are cut (nearly) as tightly as
+          // the exact scan at a few extra line tests.
+          let lo = i, hi = above;
+          while (hi - lo > 1) {
+            const mid = (lo + hi) >> 1; waypoint.x = this.x(route.path[mid]); waypoint.z = this.z(route.path[mid]);
+            if (this.visible(position, waypoint, radius)) lo = mid; else hi = mid;
+          }
+          waypoint.x = this.x(route.path[lo]); waypoint.z = this.z(route.path[lo]);
+          route.pathIndex = lo; route.hold = 3; return true;
+        }
+        above = i;
+      }
+      route.goal = -1; return false;
+    }
     for (let i = Math.min(route.path.length - 1, route.pathIndex + 40); i >= route.pathIndex; i--) {
       waypoint.x = this.x(route.path[i]); waypoint.z = this.z(route.path[i]);
       if (this.visible(position, waypoint, radius)) { route.pathIndex = i; return true; }
