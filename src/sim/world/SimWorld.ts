@@ -240,7 +240,7 @@ export class SimWorld implements Lifecycle {
     this.physics.load({name:next.composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:player.transform});
     for(const d of next.districts)for(const aabb of d.decay.colliders.map(c=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
     for (const boundary of next.boundaries) this.physics.addStatic(boundary, [0, 0]);
-    this.props?.install(next, props);
+    this.props?.install(next, props, true);
     this.vehicles?.rebuild(true);
     this.hazards?.debris.reset(true); this.explosions?.reset(true); this.interactables?.rebuildBlockers(next.nav, true);
     this.barricades?.rebuild(); this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step(); rebuildNpcNavigation(this);

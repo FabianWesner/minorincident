@@ -2,8 +2,8 @@
   "id": "prop.broken-chair",
   "triangles": {
     "lod0": 2624,
-    "lod1": 312,
-    "lod2": 76
+    "lod1": 2624,
+    "lod2": 2624
   },
   "dimensions_blender": [
     0.6533132791519165,
@@ -30,24 +30,24 @@
   ],
   "delivery": {
     "model.glb": {
-      "bytes": 81416,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 118528,
+      "meshopt": false,
+      "quantized": false
     },
     "model.lod1.glb": {
-      "bytes": 14516,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 118528,
+      "meshopt": false,
+      "quantized": false
     },
     "model.lod2.glb": {
-      "bytes": 8860,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 118528,
+      "meshopt": false,
+      "quantized": false
     }
   },
   "lod_ratios": {
-    "lod1": 0.11890243902439024,
-    "lod2": 0.028963414634146343
+    "lod1": 1,
+    "lod2": 1
   },
   "within_budget": true,
   "nodes_ok": true,

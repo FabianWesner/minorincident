@@ -54,6 +54,10 @@ function laneOverlap(
   }
   return true;
 }
+/** Same drivable lane footprint used by layout validation, independent of allowRoad. */
+export function overlapsRoad(layout: DistrictLayout, aabb: Aabb): boolean {
+  return layout.roads.edges.some(e => e.points.slice(1).some((b, i) => laneOverlap(aabb, e.points[i], b, e.laneWidth / 2)));
+}
 export function validateLayout(
   layout: DistrictLayout,
   manifest: Record<string, unknown>,
