@@ -1,0 +1,29 @@
+# kit.metro-tunnel
+
+Repeatable 12 m local track module, not the 200–260 m level layout. Exterior width 7.6 m, clear bore 6.9 m. Repeat at 12 m along X. Three far-side portals are real 2.2 m openings; two near-side cross passages are also open. Each side portal provides a service-gate anchor and 2.2 m brace slot: these are three local choke interfaces, not a claim that E24's main retreat route already has three placed chokepoints. Layout lane chooses side-room/cross-passage links and inserts prop.service-gate and adjacent barricade props. The middle arch is offset to x=2, on a solid pier, leaving the middle opening clear. Roof owner contains solid arched ribs and the far half vault; near half is permanently cut away. Runtime can hide roof for further visibility. Rails have closed foot/web/crown, and chunky sleepers remain in every LOD.
+
+Source reference inspected visually: `/Users/wesner/Workspace/minorincident/assets/kit.metro-tunnel/reference-upscaled.png`. Uses sslib.fairhaven (reviewed authoring, batching, deterministic vertex AO and export); follows rescue_assets.py rigid-owner conventions. No decimation, no new dependencies or textures. Metres; glTF Y=0 is ground; no sourceScale correction. Measured tolerance is 3%, with identical AABBs across all three tiers.
+
+## Interface anchors (glTF X/Y/Z, metres)
+
+| Node | Position | Contract |
+| --- | --- | --- |
+| sidePassage-3.8Socket | (-3.8, 0.52, -3.8) | {"clearWidth":2.2,"clearHeight":2.6,"route":"maintenance"} |
+| sidePassage0Socket | (0, 0.52, -3.8) | {"clearWidth":2.2,"clearHeight":2.6,"route":"maintenance"} |
+| sidePassage3.8Socket | (3.8, 0.52, -3.8) | {"clearWidth":2.2,"clearHeight":2.6,"route":"maintenance"} |
+| gate-3.8Socket | (-3.8, 0.52, -3.8) | {"clearWidth":2.2,"clearHeight":2.6,"asset":"prop.service-gate"} |
+| gate0Socket | (0, 0.52, -3.8) | {"clearWidth":2.2,"clearHeight":2.6,"asset":"prop.service-gate"} |
+| gate3.8Socket | (3.8, 0.52, -3.8) | {"clearWidth":2.2,"clearHeight":2.6,"asset":"prop.service-gate"} |
+| brace-3.8Socket | (-3.8, 0.52, -3.8) | {"coverage":"[2.2, 2.6]"} |
+| brace0Socket | (0, 0.52, -3.8) | {"coverage":"[2.2, 2.6]"} |
+| brace3.8Socket | (3.8, 0.52, -3.8) | {"coverage":"[2.2, 2.6]"} |
+| crossPassage-3.7Socket | (-3.7, 0.52, 3.8) | {"clearWidth":2.2,"clearHeight":2.6,"route":"cross-passage"} |
+| crossPassage3.7Socket | (3.7, 0.52, 3.8) | {"clearWidth":2.2,"clearHeight":2.6,"route":"cross-passage"} |
+| tunnelStartSocket | (-6, 0.25, 0) | {"clearWidth":6.9,"clearHeight":2.6,"moduleLength":12} |
+| tunnelEndSocket | (6, 0.25, 0) | {"clearWidth":6.9,"clearHeight":2.6,"moduleLength":12} |
+
+## Delivery
+
+Explicit tier recipes retain all openings, stairs, silhouette, semantic empties, light mounts and motion pivots. LOD1 omits bevels/fine trim; LOD2 also reduces radial sides, tread/sleeper density and small controls. Closed solids replace no outlines through triangle collapse. Static meshes are merged by palette and rigid owner; emissive refs survive as body_emi_* batches.
+
+Main/emergency fixtures export valid ss_light records; strips use metro-main and fluorescent flicker, emergency lamps use metro-emergency. Fixed root physics includes mass=0, friction=.8, restitution=.05, pushable=false, kickable=false and stone impact sounds. col:* proxies are empties. District placement, switching, sounds, NPC routines, mission logic and independent prop gates are external interfaces.

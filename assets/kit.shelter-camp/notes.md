@@ -1,0 +1,23 @@
+# kit.shelter-camp
+
+Repeatable four-adult rest cluster, 5.6 m square, with a 1.4 m central aisle and space to approach the water-sharing point. Four quilted octagonal mats, pillows, folded blankets, capped water bottles on a wooden pallet and two guarded lanterns. No NPC geometry, animation or behavior is baked into the kit. Rest sockets support healthy living survivors supplied by the NPC lane. Lamp group shelter-camp is independent of metro-main and metro-emergency; level lane keeps warm shelter light during calm/breach staging. The complete diorama is fixed; dynamic standalone supplies remain the prop/runtime lane's responsibility.
+
+Source reference inspected visually: `/Users/wesner/Workspace/minorincident/assets/kit.shelter-camp/reference-upscaled.png`. Uses sslib.fairhaven (reviewed authoring, batching, deterministic vertex AO and export); follows rescue_assets.py rigid-owner conventions. No decimation, no new dependencies or textures. Metres; glTF Y=0 is ground; no sourceScale correction. Measured tolerance is 3%, with identical AABBs across all three tiers.
+
+## Interface anchors (glTF X/Y/Z, metres)
+
+| Node | Position | Contract |
+| --- | --- | --- |
+| rest-1.25-1.35Socket | (-1.25, 0.35, 1.35) | {"adult":true,"routine":"rest"} |
+| rest-1.251.1Socket | (-1.25, 0.35, -1.1) | {"adult":true,"routine":"rest"} |
+| rest1.25-1.35Socket | (1.25, 0.35, 1.35) | {"adult":true,"routine":"rest"} |
+| rest1.251.1Socket | (1.25, 0.35, -1.1) | {"adult":true,"routine":"rest"} |
+| waterShareSocket | (0, 0.13, -1.55) | {"routine":"share"} |
+| aisleStartSocket | (0, 0.12, 2.8) | {"clearWidth":1.4} |
+| aisleEndSocket | (0, 0.12, -1.6) | {"clearWidth":1.4} |
+
+## Delivery
+
+Explicit tier recipes retain all openings, stairs, silhouette, semantic empties, light mounts and motion pivots. LOD1 omits bevels/fine trim; LOD2 also reduces radial sides, tread/sleeper density and small controls. Closed solids replace no outlines through triangle collapse. Static meshes are merged by palette and rigid owner; emissive refs survive as body_emi_* batches.
+
+Main/emergency fixtures export valid ss_light records; strips use metro-main and fluorescent flicker, emergency lamps use metro-emergency. Fixed root physics includes mass=0, friction=.8, restitution=.05, pushable=false, kickable=false and stone impact sounds. col:* proxies are empties. District placement, switching, sounds, NPC routines, mission logic and independent prop gates are external interfaces.
