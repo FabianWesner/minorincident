@@ -3,7 +3,7 @@ import { motionResponse } from '../locomotion/MotionResponse';
 import { installCharacterSeparation } from './CharacterSeparation';
 import { noise } from '../../data/noise';
 // Zone enter/alert pattern adapted from Bruno Simon folio-2025 Zones.js (MIT, 41046b5).
-import { infectedDef, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
+import { infectedDef, l1ReactionS, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
 import { groveDistrictId } from '../../levels/districts/types';
 import type { DistractionEvent, HumanTarget, HumanTargetQuery } from '../outbreak/types';
@@ -383,7 +383,7 @@ export class InfectedSystem {
     const u = (this.tierStart[tier] + this.tierCount[tier]++ * 0.6180339887498949) % 1, rng = this.l1Rng!;
     const brain: L1Brain = e.infected!.l1 ?? { mode: 'wander', tier, runSpeed: 0, wanderSpeed: 0, targetId: 0, seenX: 0, seenZ: 0, seenTick: 0, headingX: 0, headingZ: 0, looking: false, lookYaw: 0, pauseUntil: 0, goalX: 0, goalZ: 0, hasGoal: false, search: searchPlan(), episodes: 0, distractionId: 0, biteTargetId: 0, direct: false, directTick: -1, directX: 0, directZ: 0, homeX: 0, homeZ: 0, cueUntil: 0, cueYaw: 0, cueSource: 0, stuckX: 0, stuckZ: 0, stuckTick: 0, stuckCount: 0, ignoreId: 0, ignoreUntil: 0 };
     const [low, high] = l1v2.infected.wanderSpeed;
-    Object.assign(brain, { mode: 'wander', leashM: 0, tier, runSpeed: l1TierSpeed(tier, u), wanderSpeed: low + rng.next() * (high - low), targetId: 0, headingX: 0, headingZ: 0, looking: true, lookYaw: e.transform.yaw, pauseUntil: this.world.tick + 20 + Math.floor(rng.next() * 40), hasGoal: false, episodes: 0, distractionId: 0, biteTargetId: 0, directTick: -1, homeX: e.transform.x, homeZ: e.transform.z, cueUntil: 0, stuckTick: this.world.tick, stuckCount: 0, ignoreId: 0, ignoreUntil: 0 });
+    Object.assign(brain, { mode: 'wander', leashM: 0, tier, runSpeed: l1TierSpeed(tier, u), reaction: Math.round(l1ReactionS(u) * 60), wanderSpeed: low + rng.next() * (high - low), targetId: 0, headingX: 0, headingZ: 0, looking: true, lookYaw: e.transform.yaw, pauseUntil: this.world.tick + 20 + Math.floor(rng.next() * 40), hasGoal: false, episodes: 0, distractionId: 0, biteTargetId: 0, directTick: -1, homeX: e.transform.x, homeZ: e.transform.z, cueUntil: 0, stuckTick: this.world.tick, stuckCount: 0, ignoreId: 0, ignoreUntil: 0 });
     brain.search.until = 0;
     e.infected!.l1 = brain; e.infected!.speed = brain.runSpeed; e.infected!.state = 'wander';
   }
@@ -488,7 +488,7 @@ export class InfectedSystem {
     } else {
       // A fresh sighting from calm: a brief readable "notice" beat (stop, snap toward the human), then the run.
       // Searching infected are already hunting and re-acquire without it.
-      if (brain.mode === 'wander' || (brain.mode === 'search' && brain.distractionId !== 0) || brain.mode === 'attracted') { brain.pauseUntil = tick + 12; brain.looking = true; brain.lookYaw = -Math.atan2(seen.position.z - e.transform.z, seen.position.x - e.transform.x); }
+      if (brain.mode === 'wander' || (brain.mode === 'search' && brain.distractionId !== 0) || brain.mode === 'attracted') { brain.pauseUntil = tick + 12 + (brain.reaction ?? 0); brain.looking = true; brain.lookYaw = -Math.atan2(seen.position.z - e.transform.z, seen.position.x - e.transform.x); }
       brain.headingX = brain.headingZ = 0; brain.distractionId = 0; brain.cueUntil = 0;
       this.world.events.emit({ type: 'ai.alerted', tick, sourceId: seen.id, targetId: e.id, cause: 'sight', position: { ...e.transform } });
     }
@@ -716,7 +716,13 @@ export class InfectedSystem {
       brain.ignoreId = brain.targetId; brain.ignoreUntil = tick + l1Ticks(6);
       this.startSearch(e.infected!, brain, { x: e.transform.x, z: e.transform.z }, { x: 0, z: 0 });
     } else if (brain.mode === 'search') { brain.search.next++; brain.search.legTicks = 0; }
-    else if (brain.mode === 'attracted') this.startSearch(e.infected!, brain, { x: e.transform.x, z: e.transform.z }, { x: 0, z: 0 });
+    else if (brain.mode === 'attracted') {
+      // Blocked short of the sound (e.g. against the alarmed car): search around the source until the attraction ends,
+      // as on arrival, rather than a fresh 10-18 s search that could end while the alarm still sounds.
+      const plan = brain.search;
+      planSearch(plan, this.l1Rng!, this.nav, tick, { x: plan.originX, z: plan.originZ }, { x: 0, z: 0 }, Math.max(1, plan.until - tick), [3, 7]);
+      plan.next = 0; brain.mode = 'search'; e.infected!.state = 'attracted';
+    }
     else brain.hasGoal = false;
   }
   private seek(e: EntitySnapshot, target: { x: number; z: number }): void {

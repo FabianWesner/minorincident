@@ -197,6 +197,8 @@ export class Vfx extends Group {
     } else if (event.type === 'combat.hit-stop') this.hitStop.hit(this.time, event.durationMs / 1000);
     else if (event.type === 'combat.attack') {
       const def = actions[event.actionId];
+      // Bat/axe roundhouse: a quick ground swoosh at the sweep radius under the spinning trail.
+      if (event.style === 'roundhouse') this.waves.spawn(this.time, .32, event.position.x, .03, event.position.z, 0, 0, 0, (def?.roundhouse?.radius ?? 2.2) * 2, 1, 0xfff0ba, 1);
       if (def?.category === 'ranged') {
         const p = event.position;
         this.burst(p.x + event.direction.x * 0.7, 0.9, p.z + event.direction.z * 0.7, 0xffe7a0, 6, 0.25, 0.06, 0);

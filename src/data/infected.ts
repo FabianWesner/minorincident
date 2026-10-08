@@ -44,12 +44,16 @@ export function l1SpeedTier(asset: string): InfectedSpeedTier {
   return frailAssets.test(asset) ? 'frail' : athleticAssets.test(asset) ? 'athletic' : 'average';
 }
 /**
- * Run speed of an L1 infected from its tier and a uniform sample `u` in [0, 1): base * (1 +/- jitter). The lower jitter
- * bound is raised so every spawn outruns the running player by >= 0.5 % (the spec's frail tuning clause: >= 95 % above
- * player run; this gives 100 %).
+ * Run speed of an L1 infected from its tier and a uniform sample `u` in [0, 1): base x (max - (max - low) * u^skew), where low =
+ * max(max - spread, minMs / base) (specs/epic-19 section 5.4, PO 2026-10-07). Most infected run a little below today's tier base, a few at the old
+ * maximum; some are slower than the running player, so a crowd strings out and fleeing works against part of it.
  */
 export function l1TierSpeed(tier: InfectedSpeedTier, u: number): number {
-  const base = l1v2.speedTiers[tier].baseMs, jitter = l1v2.speedTiers.jitter;
-  const low = Math.max(-jitter, l1v2.player.runMs * 1.005 / base - 1);
-  return base * (1 + low + (jitter - low) * u);
+  const f = l1v2.speedTiers.factor, base = l1v2.speedTiers[tier].baseMs, low = Math.max(f.max - f.spread, f.minMs / base);
+  return base * (f.max - (f.max - low) * u ** f.skew);
+}
+/** Per-entity reaction delay (seconds) on a fresh sighting, derived from the same per-spawn sample (no extra RNG draw). */
+export function l1ReactionS(u: number): number {
+  const [low, high] = l1v2.speedTiers.factor.reactionS;
+  return low + (high - low) * ((u * 7.31) % 1);
 }

@@ -26,8 +26,6 @@ export interface OutbreakOptions {
   /** Named positions for anchor-only accident events (`l1.blast` at `lab-door`, ...). */
   anchors?: Record<string, Vec2>;
   tier?: 'high' | 'low';
-  /** Section 5.9 civilian top-up from the edges (L1). L2 disables it: its population is authored. */
-  topUp?: boolean;
 }
 export interface PedestrianOptions {
   role?: string; model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: SpeedTier;

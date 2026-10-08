@@ -59,7 +59,7 @@ export class LevelTwoRescue {
     const tier = world.infected.director.tier;
     // Refuges are the town edges only: houses near the rescue are locked, so fleeing people run long streets.
     const edges = l2.rescue.refuges.map(id => ({ id, ...this.anchor(id) }));
-    const outbreak = world.npcs.civilians.outbreak ?? new Outbreak(world, { refuges: edges, entries: edges, tier, topUp: false });
+    const outbreak = world.npcs.civilians.outbreak ?? new Outbreak(world, { refuges: edges, tier });
     world.npcs.civilians.outbreak = outbreak;
     world.infected.director.levelCap = l2.escape.caps.high;
     world.npcs.setAmbient(0);

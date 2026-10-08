@@ -51,6 +51,13 @@ import { auraLight, pickupLight } from './LightField';
 import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
+/** Bat roundhouse body turn (presentation only; the sim sweep strikes each target as this angle passes it):
+ * a short coil against the swing in the windup, the full circle linearly over the active window. */
+export function roundhouseSpin(attack: { started: number; activeAt: number; recoveryAt: number }, time: number): number {
+  const u = time - attack.started, a = attack.activeAt - attack.started, r = attack.recoveryAt - attack.started;
+  if (u < a) { const t = Math.max(0, u) / Math.max(1, a); return -.45 * t * t * (3 - 2 * t); }
+  return u >= r ? 0 : -.45 + (Math.PI * 2 + .45) * (u - a) / Math.max(1, r - a);
+}
 export class GameView implements Lifecycle {
   readonly scene = new Scene();
   private missionUI: MissionUI | null = null;
@@ -544,7 +551,6 @@ export class GameView implements Lifecycle {
       const striking = !!survivor.attack && this.world.tick < survivor.attack.endsAt;
       const riding = this.world.entities.get(1)?.riding;
       const mountedFrame = riding !== undefined && this.bicycle?.frameOrientation(this.bikeOrientation);
-      this.character.face(mountedFrame ? current.yaw : from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60, striking, mountedFrame ? this.bikeOrientation : undefined);
       const stopped = this.vfx?.hitStop.active(this.vfx.time) ?? false;
       if (stopped && this.vfx!.hitStop.started !== this.frozenStarted && this.frozenPose) {
         this.frozenStarted = this.vfx!.hitStop.started; this.hitStopTick = this.world.tick;
@@ -553,6 +559,8 @@ export class GameView implements Lifecycle {
         this.frozenPose.velocity = velocity; Object.assign(velocity, survivor.velocity);
         this.frozenPose.checkpoint = checkpoint; Object.assign(checkpoint, survivor.checkpoint);
       }
+      this.character.face(mountedFrame ? current.yaw : from + Math.atan2(Math.sin(current.yaw - from), Math.cos(current.yaw - from)) * alpha, (this.world.tick + alpha) / 60, striking, mountedFrame ? this.bikeOrientation : undefined,
+        striking && survivor.attack!.style === 'roundhouse' ? roundhouseSpin(survivor.attack!, (stopped ? this.hitStopTick : this.world.tick) + (stopped ? 1 : alpha) - 1) : 0);
       // E19 courier: the bicycle sim (lane F) marks the rider; the bike's crank/steer drive the pose.
       const bike = riding === undefined ? undefined : (this.world.entities.get(riding) as { bicycle?: { pedal: number; steer: number } } | undefined)?.bicycle;
       this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
