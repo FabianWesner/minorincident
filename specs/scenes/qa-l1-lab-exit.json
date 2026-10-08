@@ -8,9 +8,9 @@
   "actors": [
     { "id": "courier", "kind": "courier", "at": [66, -8], "yaw": 90, "loadout": ["weapon.fists", "weapon.fists"] }
   ],
-  "emerge": { "house": "bld.clinic-annex:791", "count": 4, "staggerS": 0.7, "frame": 30 },
+  "emerge": { "house": "bld.clinic-annex:791", "count": 4, "staggerS": 0.35, "frame": 30, "speedMs": 5.3 },
   "camera": { "mode": "game", "target": [66, -12] },
   "frames": 420,
-  "shots": [28, 50, 80, 120, 180, 300],
+  "shots": [28, 40, 52, 64, 90, 180],
   "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "emergeOutsideMax": 0, "doorClosedFramesMax": 0, "farLodCloseMax": 0 }
 }

@@ -42,7 +42,7 @@ export interface SceneSpec {
   /** L1 beat 9 house emergence (HouseEmergence, the game's own code): from `frame` (default 30) `count` (default 3)
    * residents come out of `house`'s front door (a placement id in the scene), `staggerS` apart (default [1.5, 4]), and
    * chase the courier. Residents are actors `<id>-0` .. (default id `resident`). */
-  emerge?: { house: string; count?: number; staggerS?: number | [number, number]; frame?: number; id?: string };
+  emerge?: { house: string; count?: number; staggerS?: number | [number, number]; frame?: number; id?: string; /** Walk-out pace m/s (default the 1.25 m/s house stumble; the L1 lab staff run out at 5.3). */ speedMs?: number };
 }
 export interface PropSpec { id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; scale?: number | [number, number, number]; tint?: string }
 export type ActorKind = 'courier' | 'pedestrian' | 'infected' | 'corgi';
