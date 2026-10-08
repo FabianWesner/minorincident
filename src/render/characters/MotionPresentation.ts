@@ -18,7 +18,14 @@ export class MotionPresentation {
     const edited = state && tick === state.tick && (transform.x !== state.to.x || transform.y !== state.to.y || transform.z !== state.to.z || transform.yaw !== state.to.yaw);
     if (!state || edited || tick < state.tick || Math.hypot(transform.x - state.to.x, transform.z - state.to.z) > 3) {
       state = { tick, from: { ...transform }, to: { ...transform }, yaw: edited ? state!.yaw : undefined, time: edited ? state!.time : undefined }; this.states.set(id, state);
-    } else if (tick !== state.tick) { state.from = state.to; state.to = { ...transform }; state.tick = tick; }
+    } else if (tick !== state.tick) {
+      // Render frames can run several sim ticks (60 Hz vsync jitter alternates 0/2, hitches more). Interpolate from the
+      // previous tick, not from the last sampled one: the old span was n ticks long and made every presented figure
+      // jump ahead and back on screen. Unsampled ticks are reconstructed linearly (exact for steady motion).
+      const n = tick - state.tick, k = (n - 1) / n, last = state.to;
+      state.from = n === 1 ? last : { x: last.x + (transform.x - last.x) * k, y: last.y + (transform.y - last.y) * k, z: last.z + (transform.z - last.z) * k, yaw: last.yaw + wrap(transform.yaw - last.yaw) * k };
+      state.to = { ...transform }; state.tick = tick;
+    }
     const t = Math.max(0, Math.min(1, alpha));
     this.from.setFromAxisAngle(up, state.from.yaw); this.to.setFromAxisAngle(up, state.to.yaw); this.from.slerp(this.to, t);
     this.result.x = state.from.x + (state.to.x - state.from.x) * t;
