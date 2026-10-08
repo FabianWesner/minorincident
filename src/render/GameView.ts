@@ -333,8 +333,8 @@ export class GameView implements Lifecycle {
     if (this.character && this.world.combat) this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!);
     if (this.world.props && !this.world.districts && this.materials) { this.fixtureProps = new PropFixtureView(this.world, this.materials); this.scene.add(this.fixtureProps); }
     if (this.world.interactables && this.materials) { this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); }
-    if (this.world.vehicles?.cars.size && this.materials) this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low');
-    if (this.world.vehicles?.bicycle.entity && this.materials) this.bicycle = new BicycleView(this.world, this.materials);
+    if (this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; }
+    if (this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.bicycle.ground = this.drawnGround; }
     const actions = this.actions;
     return Promise.all([this.npcs?.init(), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
   }
@@ -414,6 +414,10 @@ export class GameView implements Lifecycle {
     // Test mode keeps deterministic readiness (paused clocks would otherwise hold swaps forever).
     while (this.playSeconds < 4 && this.params.get('test') !== '1') await new Promise(resolve => setTimeout(resolve, 250));
     await loadGate.wait();
+  }
+  /** Living, shown people (courier, pedestrians, story actors, infected) for the automatic street doors. */
+  private *doorBodies(): Generator<{ x: number; z: number }> {
+    for (const e of this.world.entities.iterate()) if (!e.hidden && e.health.current > 0 && (e.id === 1 || e.civilian || e.infected)) yield e.transform;
   }
   advance(seconds: number): void {
     this.districts?.advance(seconds);
@@ -512,7 +516,9 @@ export class GameView implements Lifecycle {
   project(x: number, y: number, z: number): number[] { return this.projection.set(x, y, z).project(this.camera).toArray(); }
   crowdFigures() { return [...(this.crowd?.getState().figures ?? []), ...(this.npcs?.snapshot().civilians.figures ?? [])]; }
   /** Scene Lab probes (src/debug/scenelab): the presentation objects it measures. Test/debug use only. */
-  labProbes() { return { districts: this.districts, character: this.character, npcs: this.npcs }; }
+  /** Drawn ground of the current district view (roads 5 cm above the sim plane, paving, road paint) for tyre contacts. */
+  private readonly drawnGround = (x: number, z: number) => this.districts?.groundAt(x, z) ?? null;
+  labProbes() { return { districts: this.districts, character: this.character, npcs: this.npcs, bicycle: this.bicycle, vehicles: this.vehicles }; }
   getState() {
     const materialInventory = new Map<string, { name: string; palette: boolean; plainLit: boolean; emissive: number }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial, plainLit: (material instanceof MeshLambertNodeMaterial || material instanceof MeshStandardMaterial) && !(material instanceof PaletteMaterial), emissive: material.userData.emissiveStrength ?? 0 }); });
@@ -555,7 +561,7 @@ export class GameView implements Lifecycle {
     this.syncMission();
     const current = this.world.entities.get(1)?.transform, previous = this.world.previousPlayer;
     const survivor = this.world.entities.get(1)?.survivor;
-    if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.scene.add(this.bicycle); }
+    if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.bicycle.ground = this.drawnGround; this.scene.add(this.bicycle); }
     this.bicycle?.update(this.camera, alpha); // Sample one bike frame for its saddle, lean and rider.
     if (this.character && current && survivor) {
       // Portrait hero readability supplements the seven-metre camera floor; collision stays in metres.
@@ -578,7 +584,7 @@ export class GameView implements Lifecycle {
       // E19 courier: the bicycle sim (lane F) marks the rider; the bike's crank/steer drive the pose.
       const bike = riding === undefined ? undefined : (this.world.entities.get(riding) as { bicycle?: { pedal: number; steer: number } } | undefined)?.bicycle;
       this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
-        riding === undefined ? undefined : { pedal: bike?.pedal ?? this.world.tick * .12, steer: bike?.steer ?? 0 });
+        riding === undefined ? undefined : { pedal: this.bicycle?.presentedRide?.pedal ?? bike?.pedal ?? this.world.tick * .12, steer: this.bicycle?.presentedRide?.steer ?? bike?.steer ?? 0 });
       if (this.character.skinActive) this.character.glanceAt(this.threat(current));
       // Riding: the pelvis sits on the saddle, measured from the bike's `seat` node every frame (any heading, lean or turn).
       if (this.character.skinActive) this.character.applyRideContacts(riding !== undefined ? this.bicycle?.riderContacts() : undefined);
@@ -598,7 +604,7 @@ export class GameView implements Lifecycle {
       this.occlusion.update(this.camera, this.playerPosition, 0, this.lookdev.playerMeshes);
     }
     if (this.character) this.character.visible = !this.world.entities.get(1)?.hidden;
-    if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.vehicles); }
+    if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; this.scene.add(this.vehicles); }
     this.vehicles?.update(alpha); this.l2Props?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
@@ -613,6 +619,7 @@ export class GameView implements Lifecycle {
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
     this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
+    if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies());
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;

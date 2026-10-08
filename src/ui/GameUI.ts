@@ -85,12 +85,19 @@ export class GameUI {
     levels.append(lockHint);
     levels.append(button('levels-back', 'Back', () => this.show('character')));
     // PO: pausing freezes the game but leaves the scene fully visible; the menu is a compact bar on top (screenshots).
-    const pause = this.panel('pause', 'Paused', 'P / Esc to resume · H hides the UI for screenshots');
+    const pause = this.panel('pause', 'Paused', 'P / Esc to resume · R to restart · H hides the UI for screenshots');
     pause.setAttribute('aria-modal', 'false');
     pause.append(button('resume-game', 'Resume', () => this.resume()),
       button('pause-settings', 'Settings', () => { this.back = 'pause'; this.show('settings'); }),
+      button('pause-restart', 'Restart level', () => this.askRestart()),
       button('pause-hide-ui', 'Hide UI (H)', () => this.hideUi(true)),
       button('pause-title', 'Title screen', () => this.show('title')));
+    // In-page confirmation (no browser confirm()): replaces the bar buttons until answered.
+    const confirm = node('div', 'restart-confirm'); confirm.className = 'restart-confirm'; confirm.hidden = true; confirm.setAttribute('role', 'alertdialog');
+    confirm.setAttribute('aria-labelledby', 'restart-confirm-text');
+    const confirmText = node('span', 'restart-confirm-text', ''); confirmText.id = 'restart-confirm-text';
+    confirm.append(confirmText, button('restart-confirm-yes', 'Restart', () => { void this.restart(); }), button('restart-confirm-cancel', 'Cancel', () => this.cancelRestart()));
+    pause.append(confirm);
     const credits = this.panel('credits', 'Credits & Licenses', 'Minor Incident · Every third-party library, recording and technology reference, with its license.');
     // Generated from package.json and the audio ledger (tools/credits/generate.ts), so the list stays complete.
     const list = node('div', 'credits-list'); list.className = 'credits-list';
@@ -229,6 +236,7 @@ export class GameUI {
         if (locked) { b.title = `Complete Level ${i - 1} first`; b.setAttribute('aria-label', `Level ${i}, locked. Complete Level ${i - 1} first`); } else { b.removeAttribute('title'); b.removeAttribute('aria-label'); }
       }
     }
+    if (screen === 'pause') this.setRestartConfirm(false);
     for (const [name, panel] of this.screens) panel.hidden = name !== screen;
     this.root.hidden = screen === null;
     if (screen === null && this.root.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();
@@ -239,6 +247,33 @@ export class GameUI {
       this.screens.get(screen)?.querySelector<HTMLElement>('button, select, input')?.focus({ preventScroll: true });
     }
     this.pauseButton.hidden = screen !== null;
+  }
+  private restartPending(): boolean { return !this.screens.get('pause')!.querySelector<HTMLElement>('[data-testid=restart-confirm]')!.hidden; }
+  private setRestartConfirm(on: boolean): void {
+    const pause = this.screens.get('pause')!;
+    pause.querySelector<HTMLElement>('[data-testid=restart-confirm]')!.hidden = !on;
+    pause.classList.toggle('is-confirming', on);
+    for (const child of Array.from(pause.querySelectorAll<HTMLElement>(':scope > button'))) child.hidden = on;
+    pause.querySelector<HTMLElement>('[data-testid=pause-restart]')!.hidden = on || !this.game.canRestartLevel;
+  }
+  private askRestart(): void {
+    if (!this.game.canRestartLevel) return;
+    const id = this.game.world.missions?.def.id ?? 'L1';
+    this.root.querySelector('[data-testid=restart-confirm-text]')!.textContent = `Restart Level ${id.slice(1)}? Progress since the level start is lost.`;
+    this.setRestartConfirm(true);
+    this.root.querySelector<HTMLElement>('[data-testid=restart-confirm-cancel]')!.focus({ preventScroll: true });
+  }
+  private cancelRestart(): void { this.setRestartConfirm(false); this.root.querySelector<HTMLElement>('[data-testid=pause-restart]')?.focus({ preventScroll: true }); }
+  private async restart(): Promise<void> {
+    this.setRestartConfirm(false); this.show('loading');
+    try {
+      await this.game.restartLevel();
+      this.applySettings(); this.show(null);
+      if (!this.game.audio.snapshot().background) this.game.clock.resume();
+      this.game.view.update(1);
+    } catch (error) {
+      console.error(error); this.show('pause');
+    }
   }
   /** Clean screenshots: hides every HUD element and the pause bar; any key or click brings the bar back. */
   hideUi(hidden: boolean): void {
@@ -288,11 +323,12 @@ export class GameUI {
     if (!event.repeat && this.game.input.bindings.action(event.code) === 'pause' && !(event.target as HTMLElement)?.closest('input,select,textarea')) {
       event.preventDefault(); event.stopImmediatePropagation();
       // P and Esc toggle: pause, back out of settings, resume (a background auto-pause still needs the Resume button).
-      if (this.screen === null) this.pause(); else if (this.screen === 'settings') this.show(this.back); else if (this.screen === 'pause') this.resume();
+      if (this.screen === null) this.pause(); else if (this.screen === 'settings') this.show(this.back); else if (this.screen === 'pause') { if (this.restartPending()) this.cancelRestart(); else this.resume(); }
       return;
     }
     if (this.screen === 'pause' && !event.repeat && !(event.target as HTMLElement)?.closest('input,select,textarea')) {
       if (document.body.classList.contains('ui-hidden')) { event.preventDefault(); this.hideUi(false); return; }
+      if (event.code === 'KeyR' && !this.restartPending()) { event.preventDefault(); this.askRestart(); return; }
       if (event.code === 'KeyH') { event.preventDefault(); this.hideUi(true); return; }
     }
     if (event.code !== 'Tab') return;

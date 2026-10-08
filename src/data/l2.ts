@@ -76,8 +76,8 @@ export const l2Truck = truck;
 /** Named world points authored into the L2 layout copy (resolved through the ordinary mission anchor lookup). */
 export const l2Anchors: Record<string, P> = {
   'l2-start': stationPoint(3.8, 2.7),   // on the apron in front of the left bay, clear of the centre pier and its bollards
-  // On the back wall of the left bay (the rack mounts on the wall behind it, see L2Props).
-  'l2-axe-rack': stationPoint(-3.9, 3.0),
+  // Stand-to-interact point of the axe rack on the station front, 1.05 m out from the facade (see L2Props).
+  'l2-axe-rack': stationPoint(2.6, -.8),
   'l2-truck': [truck.x, truck.z],
   // Crew door on the station side of the cab.
   'l2-board': truckPoint(-.5, 1.95),

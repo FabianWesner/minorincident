@@ -61,16 +61,13 @@ export const l2Dressing: readonly Dressing[] = [
   ...([[86.6, 30.2]] as const).map(([x, z]) => ({ kind: 'river' as const, assetId: 'bld.river-bridge', x: x + 8, z, yaw: 0 })),
 ];
 
-/**
- * D-GROVE placements L2 removes, by asset and position (placement ids are build indices and shift whenever the layout changes):
- * the eastern Main Row shop (the market takes its lot), the courier van and bench in front of it, and the Elm Street east-end
- * road-work barrier with its plank fence and the south wing piece (the bridge checkpoint opens there).
- */
-const SUPERSEDED: readonly (readonly [string, number, number])[] = [
-  ['bld.mainstreet-brick', -55.644, -42.194], ['veh.courier-van', -48.793, -37.15], ['prop.bench', -53.5, -37.5], ['kit.edge-roadwork', 82.8, 30],
-  ...[26.438, 28.812, 31.188, 33.562].map(z => ['prop.privacy-fence', 80.373, z] as const), ['prop.privacy-fence', 81.505, 35],
+/** D-GROVE placements the L2 dressing replaces, matched by asset and position: the numeric suffix of a placement id shifts
+ * whenever the generator adds or removes a prop before it (a regenerated layout moved all of these by four). */
+const SUPERSEDED: readonly (readonly [asset: string, x: number, z: number])[] = [
+  ['bld.mainstreet-brick', -55.64, -42.19], ['kit.edge-roadwork', 82.8, 30], ['veh.courier-van', -48.79, -37.15], ['prop.bench', -53.5, -37.5],
+  ['prop.privacy-fence', 80.37, 26.44], ['prop.privacy-fence', 80.37, 28.81], ['prop.privacy-fence', 80.37, 31.19], ['prop.privacy-fence', 80.37, 33.56], ['prop.privacy-fence', 81.5, 35],
 ];
-const superseded = (p: Placement) => SUPERSEDED.some(([asset, x, z]) => p.assetId === asset && Math.abs(p.position[0] - x) < .01 && Math.abs(p.position[2] - z) < .01);
+const supersededIds = (layout: DistrictLayout): Set<string> => new Set(layout.placements.filter(p => SUPERSEDED.some(([asset, x, z]) => p.id.startsWith(`${asset}:`) && Math.abs(p.position[0] - x) < .05 && Math.abs(p.position[2] - z) < .05)).map(p => p.id));
 /** The supermarket (Grove Market) replaces the eastern Main Row shop: its open east and south sides are the front and loading doors. */
 const MARKET: Placement = { id: 'l2-market', assetId: 'bld.supermarket', position: [-55.6, 0, -42.2], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'block-2', visualAabb: { min: [-59.8, 0, -46.7], max: [-51.4, 3.5, -37.7] } };
 
@@ -87,9 +84,9 @@ export function levelTwoLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // Extra toys for the escape: a dumpster at the alley neck off Larch Street and the car alarm by the cluster.
     layout.anchors['dumpster-3'] = { position: [53.2, 0, 15], yaw: 0 }; layout.anchors['dumpster-3-end'] = { position: [55.8, 0, 15], yaw: 0 };
     layout.anchors['alarm-car-5'] = { position: [48.6, 0, 12.4], yaw: 0 };
-    const gone = new Set(layout.placements.filter(superseded).map(p => p.id));
-    layout.placements = layout.placements.filter(p => !gone.has(p.id));
-    layout.colliders = layout.colliders.filter(c => !gone.has(c.id));
+    const superseded = supersededIds(layout);
+    layout.placements = layout.placements.filter(p => !superseded.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !superseded.has(c.id));
     layout.placements.push(MARKET);
     for (const [i, d] of l2Dressing.entries()) {
       if (d.entity) continue;
