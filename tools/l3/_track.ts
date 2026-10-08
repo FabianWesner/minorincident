@@ -12,6 +12,6 @@ for (let t = 0; t < 600 * 60 && !bot.finished; t++) {
   if (sec >= from && sec <= to && world.tick % every === 0) {
     const p = world.entities.get(1)!.transform, s = mission.state.l3!, inf = world.infected!.active.filter(e => e.health.current > 0);
     const near = (r: number) => inf.filter(e => Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < r).length;
-    console.log(`${sec.toFixed(1)} ${s.phase} p=${p.x.toFixed(1)},${p.z.toFixed(1)} hp=${world.entities.get(1)!.health.current.toFixed(0)} n4=${near(4)} n10=${near(10)} squad=${s.squad.length} cnt=${world.infected!.director.count} move=${f.move.x.toFixed(2)},${f.move.z.toFixed(2)} att=${f.attackTarget ? f.attackTarget.side : '-'}`);
+    console.log(`${sec.toFixed(1)} ${s.phase} p=${p.x.toFixed(1)},${p.z.toFixed(1)} hp=${world.entities.get(1)!.health.current.toFixed(0)} n4=${near(4)} n10=${near(10)} squad=${s.squad.length} cnt=${world.infected!.director.count} move=${f.move.x.toFixed(2)},${f.move.z.toFixed(2)} att=${f.attackTarget ? f.attackTarget.side : '-'} bot=${JSON.stringify(bot.debug())}`);
   }
 }

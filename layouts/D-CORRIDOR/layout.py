@@ -114,17 +114,22 @@ def shop_row(street, x0, x1, facing, line, rear, assets=SHOPS, gap=.1, seed=0, o
             x += width * scale + gap; k += 1
         seed += 1
         if not prints: continue
-        # party walls: lot start, between footprints, lot end (front line to rear line)
+        # party walls between neighbouring footprints (narrow slots); a wider gap at a lot end gets a fence across the
+        # frontage and one down the lot line instead (the notch behind it is closed, never a walkable pocket)
         edges = [(lx0, prints[0][0])] + [(a[1], b[0]) for a, b in zip(prints, prints[1:])] + [(prints[-1][1], lx1)]
         za, zb = sorted((front, rear))
         for e0, e1 in edges:
-            if e1 - e0 > .02:
+            if e1 - e0 <= .02: continue
+            if e1 - e0 <= 1.4:
                 g.solid('party-wall', 'brick', [e1 - e0 + .04, 3.0, zb - za], [(e0 + e1) / 2, 1.5, (za + zb) / 2])
-        # back-yard blocks between each footprint's back and the rear line
+            else:
+                g.fence('privacy', e0 + (.36 if e0 <= lx0 + .01 else .1), front + sgn * .2, e1 - (.36 if e1 >= lx1 - .01 else .1), front + sgn * .2)
+                g.fence('privacy', lx0 + .15 if e0 <= lx0 + .01 else lx1 - .15, za, lx0 + .15 if e0 <= lx0 + .01 else lx1 - .15, zb)
+        # overgrown back gardens between each footprint's back and the rear line (low shrub mass, not walkable)
         for xs0, xs1, back in prints:
             a0, a1 = sorted((back, rear))
             if a1 - a0 > .05:
-                g.solid('yard-wall', 'sidewalk', [xs1 - xs0 + .04, 2.2, a1 - a0 + .04], [(xs0 + xs1) / 2, 1.1, (a0 + a1) / 2])
+                g.solid('back-garden', 'foliageDark', [xs1 - xs0 + .04, .7, a1 - a0 + .04], [(xs0 + xs1) / 2, .35, (a0 + a1) / 2])
     return placed
 
 # ------------------------------------------------------------------------------------------------ house rows

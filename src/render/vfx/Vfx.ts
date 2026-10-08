@@ -27,7 +27,7 @@ export interface VfxTargets {
   /** E25 light field transient pools (fires, blast flashes, mega tint). */
   light?: import('./Blasts').BlastLight;
 }
-const eventTypes = ['combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
+const eventTypes = ['ally.attack', 'combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
 const limbs = 5;
 const heavyBlade = /machete|axe|katana|shovel/;
 const telegraphShapes = { lunge: 3, charge: 2, splash: 1, bloated: 4 } as const;
@@ -207,6 +207,11 @@ export class Vfx extends Group {
         for (let i = 1; i <= 12; i++) this.particles.spawn(this.time, 0.08, p.x + event.direction.x * i * 0.7, 0.9, p.z + event.direction.z * i * 0.7, 0, 0, 0, 0.06, 0, 0xffe7a0);
         if (this.quality === 'high') this.burst(p.x, 0.9, p.z, 0xd7af65, 1, 0.08, 2);
       }
+    } else if (event.type === 'ally.attack' && event.from && event.to) {
+      // E21 officers and soldiers: a muzzle flash and a short tracer toward the target (hit or miss), as the courier's handgun.
+      const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, d = Math.hypot(dx, dz) || 1, ux = dx / d, uz = dz / d;
+      this.burst(event.from.x + ux * .6, 1.2, event.from.z + uz * .6, 0xffe7a0, 4, .2, .05, 0);
+      for (let i = 1; i <= Math.min(10, Math.floor(d / .9)); i++) this.particles.spawn(this.time, .07, event.from.x + ux * i * .9, 1.15, event.from.z + uz * i * .9, 0, 0, 0, .05, 0, 0xffe7a0);
     } else if (event.type === 'combat.exploded') {
       if (event.radius > 0) this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
     } else if (event.type === 'explosion') {
