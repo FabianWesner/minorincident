@@ -149,8 +149,11 @@ def pick():
         waited = time.time() - t0
         if not ss:
             log("no runner exists; creating one"); s = create(); print(ip(s)); return
-        if waited > SCALE_WAIT and len(ss) < MAX and booting == 0:
-            log(f"all {len(sts)} runner(s) full for {int(waited)}s; adding one"); create(); continue
+        if waited > SCALE_WAIT and len(ss) < MAX and booting == 0 and time.time() > globals().get("_no_scale_until", 0):
+            log(f"all {len(sts)} runner(s) full for {int(waited)}s; adding one")
+            try: create(); continue
+            except SystemExit as e:  # e.g. Hetzner "Primary IP limit exceeded": keep queueing on the existing runners
+                log(f"could not add a runner ({e}); waiting for a free slot instead"); globals()["_no_scale_until"] = time.time() + 1800
         if not announced or int(waited) % 60 < 5:
             log(f"all runners full ({', '.join(x['name'] + ':' + str(x['running']) + '/' + str(SLOTS) + '+' + str(x['waiting']) + 'q' for x in sts)}); waiting {int(waited)}s"); announced = True
         time.sleep(5)
