@@ -110,23 +110,60 @@ def build_burned(directory, output):
                     v.co.z = low.z + (v.co.z - low.z) * (.67 if wheel == 'wheelFL' else .81)
                     v.co.x += .025 * math.sin((v.co.z - pivot.z) * 15)
                 continue
-            # Conforming splits only in heat damaged panels, explicitly tiered.
-            zone = lambda p: p.z > low.z + .70 * H or p.x > high.x - .32 * L
-            if lod < 2 and obj.data.materials[0].name == 'pal_' + paint:
-                refine(obj, [.20, .45][lod], zone, passes=[3, 2][lod])
-            bm = bmesh.new()
-            bm.from_mesh(obj.data)
-            # Real holes in the native hood/roof, kept clear of pillars/borders.
-            torn = []
-            for f in bm.faces:
-                c = f.calc_center_median()
-                hood = high.x - .30 * L < c.x < high.x - .12 * L and -.24 * W < c.y < .12 * W and low.z + .42 * H < c.z < low.z + .70 * H
-                roof = -.16 * L < c.x < .02 * L and abs(c.y) < .19 * W and c.z > low.z + .87 * H
-                if obj.data.materials[0].name == 'pal_' + paint and abs(f.normal.z) > .55 and (hood or roof):
-                    torn.append(f)
-            bmesh.ops.delete(bm, geom=torn, context='FACES')
-            bm.to_mesh(obj.data)
-            bm.free()
+            # Cut bounded, closed openings rather than deleting whole native
+            # triangles: continuous roof/hood borders survive even at distance.
+            if obj.data.materials[0].name == 'pal_' + paint:
+                # glTF splits vertices at normal seams. Restore the native
+                # closed solids before a boolean so cutters cannot become caps.
+                bm = bmesh.new()
+                bm.from_mesh(obj.data)
+                bmesh.ops.remove_doubles(bm, verts=list(bm.verts), dist=.00001)
+                bmesh.ops.recalc_face_normals(bm, faces=list(bm.faces))
+                bm.to_mesh(obj.data)
+                bm.free()
+                for center, size in [
+                    ((-.06*L, 0, low.z+.96*H), (.14*L, .28*W, .28*H)),
+                    ((high.x-.22*L, -.05*W, low.z+.56*H), (.14*L, .26*W, .24*H)),
+                ]:
+                    if lod == 2 and center[0] > high.x-.4*L:
+                        # Far retains a folded hood, roof hole and missing glass;
+                        # omit the complex multi-panel engine-bay cut outline.
+                        continue
+                    cutter = box('heatTearCutter', center, size, 'uiDark')
+                    bpy.context.view_layer.update()
+                    bpy.ops.object.select_all(action='DESELECT')
+                    obj.select_set(True)
+                    bpy.context.view_layer.objects.active = obj
+                    modifier = obj.modifiers.new('authoredHeatOpening', 'BOOLEAN')
+                    modifier.operation = 'DIFFERENCE'
+                    modifier.solver = 'EXACT'
+                    modifier.use_self = lod < 2
+                    modifier.use_hole_tolerant = True
+                    modifier.object = cutter
+                    bpy.ops.object.modifier_apply(modifier=modifier.name)
+                    bpy.data.objects.remove(cutter, do_unlink=True)
+                # Heat ripples and broad soot fields have explicit near/mid
+                # density; distant panels retain the bounded cut outline.
+                if lod < 2:
+                    zone = lambda p: p.z > low.z + .70*H or p.x > high.x-.32*L
+                    refine(obj, [.20, .55][lod], zone, passes=[3, 1][lod])
+            if lod == 2:
+                # Fuse coplanar triangulated static panels without moving any
+                # vertex or changing holes/borders (same as native distance.py).
+                bm = bmesh.new()
+                bm.from_mesh(obj.data)
+                bmesh.ops.dissolve_limit(bm, angle_limit=.001, verts=list(bm.verts),
+                    edges=list(bm.edges), use_dissolve_boundaries=False, delimit={'MATERIAL'})
+                bm.to_mesh(obj.data)
+                bm.free()
+            if obj.data.materials[0].name == 'pal_' + paint:
+                # Large material soot islands remain legible even on the far
+                # tier's sparse vertices; vertex tint feathers surviving paint.
+                obj.data.materials.append(palette.mat('uiDark'))
+                for face in obj.data.polygons:
+                    c = face.center
+                    if n3(c, 2.4, 3.3) > .06 or (c.z > low.z+.72*H and n3(c, 1.7, 6.1) > .05):
+                        face.material_index = 1
             for v in obj.data.vertices:
                 x, y, z = v.co
                 t = smooth(high.x - .33 * L, high.x, x)
@@ -164,6 +201,12 @@ def build_burned(directory, output):
             for k in range(4 if lod == 0 else 2):
                 add('fallenBurnedTrim', (high.x-.40*L+k*.14, -.33*W, low.z+.035), (.18, .10, .045), 'uiDark', (0, 0, .6*k))
         for obj, wheel in info.items():
+            if lod == 0 and not wheel:
+                bevel = obj.modifiers.new('nearSilhouetteBevel', 'BEVEL')
+                bevel.width = .012
+                bevel.segments = 1
+                bevel.limit_method = 'ANGLE'
+                bevel.angle_limit = .75
             owner = bpy.data.objects[wheel] if wheel else body
             obj.parent = owner
             obj.matrix_parent_inverse = owner.matrix_world.inverted()
@@ -197,7 +240,7 @@ def build_burned(directory, output):
                     # Broad heat/soot fields retain livery islands at game scale.
                     patch = smooth(-.28, .28, n3(w, 3.8, 7))
                     hot = smooth(.02, .40, n3(w, 1.6, 2) + .12)
-                    char = .22 + .64*patch
+                    char = .12 + .85*patch
                     factor = tuple((1-char)*(1-hot*.32)*v for v in (1, .86, .76))
                 else:
                     factor = (.37, .29, .25) if obj.data.materials[0].name == 'pal_sidewalk' else (.7, .65, .65)
