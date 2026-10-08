@@ -4921,5 +4921,268 @@ export default {
     ],
     "source": "public/assets/models/bld.church.glb",
     "hash": "e1990a41ecb215411ceebb3b06f80da09fd5d132b6ea30fdd4409fb3b3ffd6a0"
+  },
+  "veh.tank": {
+    "class": "heavy",
+    "mass": 28000,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1.1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -3.550000000745058,
+          0,
+          -1.65
+        ],
+        "max": [
+          3.449999999254942,
+          2,
+          1.65
+        ]
+      }
+    ],
+    "source": "public/assets/models/veh.tank.glb",
+    "hash": "229c951bd48c1b4bb4a6c37f8f4a68f5b9d1f20bf4076912785d0cfd03f29256"
+  },
+  "veh.helicopter-military": {
+    "class": "heavy",
+    "mass": 2400,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1.8,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": true,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -2.069999986886978,
+          0.6799999475479126,
+          -1.15
+        ],
+        "max": [
+          2.7300000131130218,
+          2.6799999475479126,
+          1.15
+        ]
+      },
+      {
+        "min": [
+          -5.799999952316284,
+          2.1600000762939455,
+          -0.26
+        ],
+        "max": [
+          -1.7999999523162842,
+          2.680000076293945,
+          0.26
+        ]
+      }
+    ],
+    "source": "public/assets/models/veh.helicopter-military.glb",
+    "hash": "a73ce14e6166551bbc1c7ba1dfd96228a8d88cfa8318d1dce1677171ba52bfe0"
+  },
+  "prop.hmg-nest": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.5,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          0.77,
+          5.960464455334602e-9,
+          -0.9
+        ],
+        "max": [
+          1.23,
+          0.8000000059604645,
+          0.9
+        ]
+      },
+      {
+        "min": [
+          -1,
+          0.17000000596046447,
+          -1.4199999809265136
+        ],
+        "max": [
+          1,
+          0.6300000059604645,
+          -0.6199999809265136
+        ]
+      },
+      {
+        "min": [
+          -1,
+          0.17000000596046447,
+          0.6199999809265136
+        ],
+        "max": [
+          1,
+          0.6300000059604645,
+          1.4199999809265136
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.hmg-nest.glb",
+    "hash": "975d5ba48fb195370fdd0a5dbbae93558eec3033aec70ee98de6da62b0dea419"
+  },
+  "kit.reception-plaza": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.wood-medium",
+    "boxes": [
+      {
+        "min": [
+          -1.1500000029802322,
+          0.09999998927116394,
+          2.6
+        ],
+        "max": [
+          0.7499999970197677,
+          0.859999989271164,
+          3.4
+        ]
+      },
+      {
+        "min": [
+          1.3499999523162842,
+          0.09999998927116394,
+          2.6
+        ],
+        "max": [
+          3.2499999523162844,
+          0.859999989271164,
+          3.4
+        ]
+      },
+      {
+        "min": [
+          3.850000190734863,
+          0.09999998927116394,
+          2.6
+        ],
+        "max": [
+          5.7500001907348635,
+          0.859999989271164,
+          3.4
+        ]
+      },
+      {
+        "min": [
+          -5.949999904632568,
+          -0.19000000953674312,
+          2.1249999523162844
+        ],
+        "max": [
+          -2.2499999046325683,
+          2.709999990463257,
+          4.474999952316284
+        ]
+      },
+      {
+        "min": [
+          -5.949999904632568,
+          -0.19000000953674312,
+          -4.474999952316284
+        ],
+        "max": [
+          -2.2499999046325683,
+          2.709999990463257,
+          -2.1249999523162844
+        ]
+      },
+      {
+        "min": [
+          2.2500000476837156,
+          -0.27000005245208736,
+          -4.6
+        ],
+        "max": [
+          5.150000047683716,
+          2.6299999475479128,
+          -2.4
+        ]
+      },
+      {
+        "min": [
+          -1.899999988079071,
+          -0.3200000107288361,
+          -4.499999904632569
+        ],
+        "max": [
+          0.5000000119209289,
+          1.279999989271164,
+          -3.6999999046325684
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.reception-plaza.glb",
+    "hash": "6dd3249e7eda6b5d9d6613ee6d44fbd554afb25289c1c5c7e076eb1b1b7dffae"
+  },
+  "prop.tent": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.9,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": true,
+    "sounds": "prop.wood-medium",
+    "boxes": [
+      {
+        "min": [
+          -1.5,
+          0.00500001907348635,
+          -1.45
+        ],
+        "max": [
+          1.5,
+          1.9550000190734864,
+          1.45
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.tent.glb",
+    "hash": "7e09c53008957938d9e46fe5e77e1bea95d4d6fa933fbe5ba6e774a84be5d298"
   }
 };
