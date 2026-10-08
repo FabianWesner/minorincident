@@ -26,7 +26,7 @@ export function truckBodyOverlap(p: TruckPose, length: number, width: number, e:
     const drawnWidth = Math.max(car?.physics.def.width ?? 1.8, ...boxes.map(b => Math.max(Math.abs(b.min[2]), Math.abs(b.max[2])) * 2));
     return truckBoxOverlap(p, length + margin * 2, width + margin * 2, e.transform, drawnLength, drawnWidth);
   }
-  const prop = world.props?.items.find(p => p.entityId === e.id);
+  const prop = e.kind === 'physics-prop' ? world.props?.items.find(p => p.entityId === e.id) : undefined;
   if (prop) {
     const centre = prop.collider.translation(), q = prop.collider.rotation();
     // Project the actual cuboid into X/Z: a tipped bin's height becomes part of its footprint.
@@ -81,9 +81,22 @@ export class L2TruckDrive {
   step(): boolean {
     const { world, state: s } = this, car = world.vehicles!.cars.get(s.truckId); if (!car) return false;
     const def = car.physics.def, old = s.rideV, brake = l2.ride.brakeMs2;
-    const bodies = [...world.entities.iterate()].filter(e => e.id !== s.truckId && !e.hidden && (e.civilian || e.infected || e.companion || e.vehicle || e.traffic || e.kind === 'physics-prop'));
     const reach = old * old / (2 * brake) + 12;
     const t = car.entity.transform;
+    const truckRadius = Math.hypot(def.length, def.width) / 2;
+    const bodies = [...world.entities.iterate()].filter(e => {
+      if (e.id === s.truckId || e.hidden || !(e.civilian || e.infected || e.companion || e.vehicle || e.traffic || e.kind === 'physics-prop')) return false;
+      const prop = e.kind === 'physics-prop' ? world.props?.items.find(p => p.entityId === e.id) : undefined;
+      const other = world.vehicles!.cars.get(e.id);
+      const boxes = other || e.traffic ? staticCollision[other?.physics.def.asset ?? e.archetype ?? '']?.boxes ?? [] : [];
+      const radius = prop ? Math.hypot(...prop.half) : other || e.traffic ? Math.hypot(
+        Math.max((other?.physics.def.length ?? 4.2) / 2, ...boxes.map(b => Math.max(Math.abs(b.min[0]), Math.abs(b.max[0])))),
+        Math.max((other?.physics.def.width ?? 1.8) / 2, ...boxes.map(b => Math.max(Math.abs(b.min[2]), Math.abs(b.max[2])))),
+      ) : e.civilian?.state === 'finished' ? .85 : e.combat?.radius ?? .35;
+      const centre = prop?.collider.translation() ?? e.transform;
+      // Every upcoming pose is at most `reach` away in a straight line. Bounding spheres also enclose tipped props.
+      return Math.hypot(centre.x - t.x, centre.z - t.z) <= reach + truckRadius + radius + .4;
+    });
     const walls = world.infected!.nav.walls.filter(w => Math.abs(w.x - t.x) < reach + w.halfX + 5 && Math.abs(w.z - t.z) < reach + w.halfZ + 5);
     let gap = Infinity;
     for (let ds = 0; ds <= reach; ds += .2) {
