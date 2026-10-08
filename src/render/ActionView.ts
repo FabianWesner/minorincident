@@ -39,6 +39,8 @@ export class ActionView extends Group {
   private readonly trailPositions = new Float32Array(16 * 18);
   private readonly trailMaterial = new MeshBasicNodeMaterial({ color: '#fff0ba', transparent: true, opacity: .75, blending: AdditiveBlending, depthWrite: false, side: DoubleSide });
   private readonly trail = new Mesh(this.trailGeometry, this.trailMaterial);
+  /** Roundhouse ribbon state: unwrapped bat-tip heading around the courier, sampled every frame. */
+  private readonly arc = { id: -1, start: 0, angle: 0, raw: 0, inner: .5, outer: 1.2, y: .9, until: -1 };
   private readonly trailHistory = Array.from({ length: 16 }, () => ({ tick: -Infinity, tip: new Vector3(), grip: new Vector3() }));
   private trailCursor = 0;
   private trailTick = -1;
@@ -159,12 +161,13 @@ export class ActionView extends Group {
     const attack = Object.values(this.world.combat!.runner.running).find(a => a.def.category === 'melee' && (!['weapon.fists','weapon.kick'].includes(a.def.id) || kick(a)));
     const tick = this.world.tick;
     if (attack && attack.id !== this.trailAttack) { this.trailAttack = attack.id; for (const point of this.trailHistory) point.tick = -Infinity; }
+    if (attack?.style === 'roundhouse' || this.arc.until > tick) { this.updateArc(attack, tick); return; }
     if (attack && tick !== this.trailTick && tick >= attack.activeAt - 3 && tick < attack.recoveryAt + 8) {
       const model = this.held[attack.side]?.model, foot = kick(attack), tip = foot ? this.character.node('footR') : model?.getObjectByName('tip'), grip = foot ? this.character.node('shinR') : model?.getObjectByName('grip');
       if (tip && grip) { this.character.updateMatrixWorld(true); const point = this.trailHistory[this.trailCursor++ % 16]; point.tick = tick; tip.getWorldPosition(point.tip); grip.getWorldPosition(point.grip); }
     }
     this.trailTick = tick; this.trailVertices = 0;
-    let previous: typeof this.trailHistory[number] | undefined;
+    let previous: ActionView["trailHistory"][number] | undefined;
     for (let i = 0; i < 16; i++) {
       const point = this.trailHistory[(this.trailCursor + i) % 16];
       if (tick - point.tick > 9) continue;
@@ -175,6 +178,34 @@ export class ActionView extends Group {
       }
       previous = point;
     }
+    this.trail.visible = this.trailVertices > 0; this.trailGeometry.setDrawRange(0, this.trailVertices); this.trailGeometry.getAttribute('position').needsUpdate = true;
+  }
+  /** Bat roundhouse (00 §6.2): one wide, smooth ribbon that follows the bat tip round the courier through the spin,
+   * tapering at its tail and fading out over a few ticks of the follow-through. */
+  private updateArc(attack: { id: number; side: 'LEFT' | 'RIGHT'; activeAt: number; recoveryAt: number; style?: 'roundhouse' } | undefined, tick: number): void {
+    const arc = this.arc, origin = this.character.position, tip = attack && this.held[attack.side]?.model.getObjectByName('tip'), grip = attack && this.held[attack.side]?.model.getObjectByName('grip');
+    this.trailVertices = 0;
+    if (attack?.style === 'roundhouse' && tip && grip && tick >= attack.activeAt - 1 && tick < attack.recoveryAt + 2) {
+      this.character.updateMatrixWorld(true); tip.getWorldPosition(this.handPosition); grip.getWorldPosition(this.gripPosition);
+      const raw = Math.atan2(this.handPosition.z - origin.z, this.handPosition.x - origin.x);
+      if (arc.id !== attack.id) { arc.id = attack.id; arc.start = arc.angle = arc.raw = raw; }
+      arc.angle += Math.atan2(Math.sin(raw - arc.raw), Math.cos(raw - arc.raw)); arc.raw = raw;
+      arc.outer = Math.max(1.3, Math.hypot(this.handPosition.x - origin.x, this.handPosition.z - origin.z) * 1.15);
+      arc.inner = Math.max(.35, Math.min(arc.outer - .35, Math.hypot(this.gripPosition.x - origin.x, this.gripPosition.z - origin.z)));
+      arc.y = this.handPosition.y * .6 + this.gripPosition.y * .4; arc.until = attack.recoveryAt + 8;
+    }
+    const fade = arc.id === attack?.id && tick < (attack?.recoveryAt ?? 0) + 2 ? 1 : Math.max(0, (arc.until - tick) / 6);
+    // The sweep turns clockwise from above (atan2 falls), so the tail lies at larger angles than the head.
+    const span = Math.min(Math.abs(arc.angle - arc.start), Math.PI * 1.75) * fade, sign = arc.angle < arc.start ? 1 : -1, n = 15;
+    if (span > .05) for (let i = 0; i < n; i++) {
+      const a = arc.angle + sign * span * i / n, b = arc.angle + sign * span * (i + 1) / n;
+      const ta = 1 - i / n, tb = 1 - (i + 1) / n, ia = arc.outer - (arc.outer - arc.inner) * ta, ib = arc.outer - (arc.outer - arc.inner) * tb;
+      const ox = origin.x, oz = origin.z, y = arc.y;
+      const quad = [[ox + Math.cos(a) * ia, y, oz + Math.sin(a) * ia], [ox + Math.cos(a) * arc.outer, y, oz + Math.sin(a) * arc.outer], [ox + Math.cos(b) * arc.outer, y, oz + Math.sin(b) * arc.outer],
+        [ox + Math.cos(a) * ia, y, oz + Math.sin(a) * ia], [ox + Math.cos(b) * arc.outer, y, oz + Math.sin(b) * arc.outer], [ox + Math.cos(b) * ib, y, oz + Math.sin(b) * ib]];
+      for (const v of quad) { this.trailPositions.set(v, this.trailVertices * 3); this.trailVertices++; }
+    }
+    this.trailTick = tick;
     this.trail.visible = this.trailVertices > 0; this.trailGeometry.setDrawRange(0, this.trailVertices); this.trailGeometry.getAttribute('position').needsUpdate = true;
   }
   setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; }

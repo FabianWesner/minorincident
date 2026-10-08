@@ -61,10 +61,17 @@ export class Combat {
   update(frame: InputFrame): void {
     const player = this.world.entities.get(1)!;
     if (!player.weapons) return;
-    this.runner.update(frame, this.world.tick, player.health.current > 0 && !Status.stunned(player, this.world.tick), this.started, this.resolve);
+    this.runner.update(frame, this.world.tick, player.health.current > 0 && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd);
     this.updateProjectiles();
     this.effects.update(); this.pickups.update();
   }
+  /** Living infected a sweep of `radius` reaches from the player now (cover blocks; civilians never count). */
+  private readonly crowd = (radius: number): number => {
+    const player = this.world.entities.get(1)!;
+    let count = 0;
+    for (const target of this.query.melee(1, player.transform, this.direction, radius, 360, 1000)) if (target.faction === 'infected' && !target.hidden && !target.infected?.hidden) count++;
+    return count;
+  };
   private readonly switched = (side: 'LEFT' | 'RIGHT', actionId: string): void => { this.world.events.emit({ type: 'loadout.switched', tick: this.world.tick, sourceId: 1, side, actionId }); };
   private readonly started = (attack: Attack): void => {
     this.world.controls.attacked(attack.side);
@@ -76,9 +83,9 @@ export class Combat {
         attack.aim.x = Math.cos(angle); attack.aim.z = Math.sin(angle);
       }
     }
-    this.world.events.emit({ type: 'combat.attack', tick: this.world.tick, attackId: attack.id, actionId: attack.def.id, combo: attack.combo, sourceId: source.id, side: attack.side, position: { ...source.transform }, direction: { ...attack.aim } });
+    this.world.events.emit({ type: 'combat.attack', tick: this.world.tick, attackId: attack.id, actionId: attack.def.id, combo: attack.combo, sourceId: source.id, side: attack.side, position: { ...source.transform }, direction: { ...attack.aim }, ...(attack.style ? { style: attack.style } : {}) });
     if (attack.def.category === 'ranged') this.effects.noise(source.transform, attack.def.noiseRadius, attack.def.id);
-    if (source.survivor) source.survivor.attack = { actionId: attack.def.id, combo: attack.combo, started: attack.started, activeAt: attack.activeAt, recoveryAt: attack.recoveryAt, endsAt: attack.endsAt };
+    if (source.survivor) source.survivor.attack = { actionId: attack.def.id, combo: attack.combo, started: attack.started, activeAt: attack.activeAt, recoveryAt: attack.recoveryAt, endsAt: attack.endsAt, ...(attack.style ? { style: attack.style } : {}) };
     this.world.player?.act(attack.def.id === 'weapon.kick' ? 'kick' : attack.def.category === 'melee' || attack.def.category === 'ability' ? 'swing' : attack.def.category === 'throwable' ? 'throw' : 'shoot', this.world.tick, attack.endsAt - attack.started);
   };
   private hit(attack: Attack, target: EntitySnapshot, origin: Vec2, type: 'melee' | 'bullet' | 'explosive', falloff = 1): void {
@@ -92,7 +99,7 @@ export class Combat {
     const def = attack.def, distanceFalloff = def.distanceFalloff;
     if (distanceFalloff) falloff *= 1 - (1 - distanceFalloff.minimum) * Math.max(0, Math.min(1, (distance - distanceFalloff.start) / (distanceFalloff.end - distanceFalloff.start)));
     const alive = target.health.current > 0;
-    const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, direction: this.direction, base: def.damage * falloff, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, radius: def.splash?.radius ?? def.range, spread: def.spread, knockback: def.knockback * falloff, stagger: def.stagger, knockdown: def.knockdown, ...(def.hitStopMs === undefined ? {} : { hitStopMs: def.hitStopMs }) });
+    const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, direction: this.direction, base: def.damage * falloff, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, radius: def.splash?.radius ?? def.range, spread: def.spread, knockback: def.knockback * falloff, stagger: def.stagger, knockdown: def.knockdown, ...(attack.style ? { sweep: true } : {}), ...(def.hitStopMs === undefined ? {} : { hitStopMs: def.hitStopMs }) });
     if (alive && target.health.current === 0 && def.category === 'melee') this.effects.noise(origin, def.noiseRadius, def.id);
     if (alive && target.faction === 'infected' && (amount || def.damage === 0) && def.status) this.status.apply(target, def.status, attack.sourceId, def.id, attack.id);
   }
@@ -123,6 +130,7 @@ export class Combat {
       }
       this.projectiles.push({ attack, x: source.transform.x, y: 0.7, z: source.transform.z, from: { x: source.transform.x, z: source.transform.z }, landing, flightTicks: landing ? Math.max(1, ticks(Math.hypot(landing.x - source.transform.x, landing.z - source.transform.z) / (def.projectile?.speed ?? 12))) : 0, travelled: 0, landed: false });
     } else if (def.splash) this.splash(attack, source.transform);
+    else if (attack.style === 'roundhouse') this.sweep(attack, source);
     else if (def.category === 'melee' || def.category === 'ability') {
       for (const target of this.query.melee(source.id, source.transform, attack.aim, def.range, def.arc, def.maxTargets, attack.inPlace)) this.hit(attack, target, source.transform, 'melee');
     } else if ((def.pellets ?? 1) > 1) {
@@ -140,6 +148,24 @@ export class Combat {
       if (target) this.hit(attack, target, source.transform, 'bullet');
     }
   };
+  /** Roundhouse: the bat turns a full circle over the active window (the facing yaw grows from the aim, so the
+   * sim angle atan2(z, x) falls); each infected in the radius is struck on the tick the sweep passes it. */
+  private sweep(attack: Attack, source: EntitySnapshot): void {
+    const def = attack.def, window = Math.max(1, attack.recoveryAt - attack.activeAt);
+    const swept = Math.PI * 2 * Math.min(1, (this.world.tick - attack.activeAt + 1) / window), start = Math.atan2(attack.aim.z, attack.aim.x);
+    // The sweep connects with the nearest few only (PO: fight a few, never the whole crowd at once).
+    if (!attack.sweep) {
+      const d = (e: EntitySnapshot) => Math.hypot(e.transform.x - source.transform.x, e.transform.z - source.transform.z);
+      attack.sweep = this.query.melee(source.id, source.transform, attack.aim, def.range, 360, 1000).filter(e => e.faction === 'infected')
+        .sort((a, b) => d(a) - d(b) || a.id - b.id).slice(0, def.maxTargets).map(e => e.id);
+    }
+    for (const id of attack.sweep) {
+      const target = this.world.entities.get(id);
+      if (!target || attack.hit.has(id) || target.health.current <= 0) continue;
+      const angle = Math.atan2(target.transform.z - source.transform.z, target.transform.x - source.transform.x);
+      if ((((start - angle) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) <= swept + 1e-9) this.hit(attack, target, source.transform, 'melee');
+    }
+  }
   private updateProjectiles(): void {
     for (let i = this.projectiles.length - 1; i >= 0; i--) {
       const p = this.projectiles[i], def = p.attack.def, age = this.world.tick - p.attack.activeAt;

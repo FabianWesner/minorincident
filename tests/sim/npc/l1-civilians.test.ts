@@ -14,8 +14,8 @@ describe('L1 v2 civilians and infection', () => {
       const { w } = await groveWorld(seed);
       const people = civilians(w);
       expect(people.length).toBeGreaterThanOrEqual(l1v2.civilians.countMin); expect(people.length).toBeLessThanOrEqual(l1v2.civilians.countMax);
-      // Flee speed is below the slowest possible infected (frail base -6 %), on every seed.
-      const slowest = l1v2.speedTiers.frail.baseMs * (1 - l1v2.speedTiers.jitter);
+      // Flee speed is below the slowest possible infected (the per-entity speed floor), on every seed.
+      const slowest = l1v2.speedTiers.factor.minMs;
       for (const e of people) { expect(e.civilian!.l1!.fleeSpeed).toBeGreaterThanOrEqual(l1v2.civilians.fleeSpeed[0] * .9 - 1e-9); expect(e.civilian!.l1!.fleeSpeed).toBeLessThan(slowest); }
       // No identical silhouette+tint pair within 20 m at the start.
       for (const a of people) for (const b of people) if (a.id < b.id && Math.hypot(a.transform.x - b.transform.x, a.transform.z - b.transform.z) < 20)
@@ -96,7 +96,7 @@ describe('L1 v2 civilians and infection', () => {
       const now = w.entities.get(victim.id) as EntitySnapshot;
       expect(now).toBe(victim); expect(now.infected).toBeDefined(); expect(now.faction).toBe('infected'); expect(ai.active).toContain(now);
       expect(now.appearance).toEqual({ ...look, handProp: null }); expect(keepsLook(now)).toBe(true);
-      const tier = l1v2.speedTiers[look.tier]; expect(Math.abs(now.infected!.speed / tier.baseMs - 1)).toBeLessThanOrEqual(l1v2.speedTiers.jitter + 1e-9);
+      const tier = l1v2.speedTiers[look.tier], f = l1v2.speedTiers.factor; expect(now.infected!.speed).toBeGreaterThanOrEqual(f.minMs - 1e-9); expect(now.infected!.speed).toBeLessThanOrEqual(tier.baseMs * f.max + 1e-9);
       // The newborn is a real infected: it takes damage and dies like any other.
       w.combat!.damage.apply({ sourceId: 1, targetId: now.id, attackId: 9, actionId: 'test', origin: now.transform, direction: { x: 1, z: 0 }, base: 999, multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
       expect(now.health.current).toBe(0);
