@@ -73,3 +73,33 @@ test('@E17-AC01 wreck builds preserve authored distance meshes and validate all 
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test('@E17-AC01 decay build rejects the stricter draw budget before publishing', async () => {
+  const original = manifest.find(a => a.id === 'veh.sedan-red')! as AssetDef;
+  const directory = mkdtempSync('.cache/assets/house-unit-');
+  const def: AssetDef = { ...original, glb: `${directory}/house.glb`, decayBudget: { drawCalls: 0 } };
+  vi.mocked(spawnSync).mockImplementation(() => {
+    writeFileSync(`.cache/assets/${def.id}.glb`, readFileSync(`assets/${def.id}/model.wrecked.glb`));
+    return { status: 0 } as ReturnType<typeof spawnSync>;
+  });
+  try {
+    await expect(buildAsset(def, { decay: 'wrecked' })).rejects.toThrow('static drawCalls:');
+    expect(existsSync(`${directory}/house.wrecked.glb`)).toBe(false);
+  } finally {
+    vi.mocked(spawnSync).mockReset();
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test('@E17-AC02 commerce decay caps are enforced independently of the integrated base', async () => {
+  const original = manifest.find(a => a.id === 'bld.mainstreet-brick')! as AssetDef;
+  const reports = await validateAssets([{ ...original, decayBudget: { triangles: 1, materials: 0, drawCalls: 0, fileKB: 1 } }]);
+  expect(reports.filter(r => /^bld\.mainstreet-brick:/.test(r.id)).flatMap(r => r.errors)).toEqual([]);
+  for (const decay of ['w2', 'w3']) {
+    const report = reports.find(r => r.id === `bld.mainstreet-brick.${decay}:lod0`)!;
+    expect(report.errors.join(';')).toContain('triangles:');
+    expect(report.errors.join(';')).toContain('static drawCalls:');
+    expect(report.errors.join(';')).toContain('materials:');
+  }
+  expect(original.budget.triangles).toBe(100000);
+});

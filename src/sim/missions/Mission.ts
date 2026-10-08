@@ -40,7 +40,7 @@ export class Mission {
       actors: {}, items: [], states: Object.fromEntries(def.states.map(id => [id, false])), counters: Object.fromEntries(def.counters.map(id => [id, 0])),
       gates: Object.fromEntries(Object.entries(def.gates).map(([id, gate]) => [id, gate.open])), marker: null, checkpoint: null, tier: world.districts?.composition.tier ?? null, timeOfDay: null,
       subtitle: null, cinematic: null, failure: null,
-      stats: { time: 0, kills: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] }, result: null,
+      stats: { time: 0, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] }, result: null,
     };
     world.mission = this.state; this.rebuildGates();
     for (const step of def.steps) {this.registerZones(step.complete); for(const fail of step.fail)this.registerZones(fail.trigger);}
@@ -188,7 +188,8 @@ export class Mission {
     if (event.type === 'player.died') { this.state.stats.deaths++; this.l1?.noteDeath(); }
     if (event.type === 'combat.kill') {
       const entity = this.world.entities.get(event.targetId);
-      if (entity?.faction === 'infected' && event.sourceId === 1) this.state.stats.kills++;
+      // PO "Infected recover": a knockdown is not a kill; only explosives and fire kill for good.
+      if (entity?.faction === 'infected' && event.sourceId === 1) { if (event.downed !== undefined) this.state.stats.knockdowns++; else this.state.stats.kills++; }
       for (const [id, actor] of Object.entries(this.state.actors)) if (actor === event.targetId && this.def.actors[id]?.boss && !this.deadBosses.has(id)) {this.deadBosses.add(id);this.state.killedBosses.push(id);}
       for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(event.targetId)) step.kills.push(event.targetId);
     }
@@ -304,7 +305,7 @@ export class Mission {
     if (!this.world.npcs && this.world.infected) {
       const ai=this.world.infected;
       ai.active.length=0; ai.director.queue.length=0;
-      for (const entity of this.world.entities.iterate()) if (entity.infected) { if(entity.infected.until)entity.infected.until+=delta;if(entity.infected.cooldown)entity.infected.cooldown+=delta;entity.infected.path.length=0;if (!entity.corpse) ai.active.push(entity); }
+      for (const entity of this.world.entities.iterate()) if (entity.infected) { if(entity.infected.until)entity.infected.until+=delta;if(entity.infected.cooldown)entity.infected.cooldown+=delta;if(entity.infected.recoverAt>=0){entity.infected.recoverAt+=delta;entity.infected.deadAt+=delta;}entity.infected.path.length=0;if (!entity.corpse) ai.active.push(entity); }
       this.world.player!.locomotion.crowd=[];
     } this.world.spatial.reset();
     for (const entity of this.world.entities.iterate()) this.world.spatial.set(entity.id, entity.transform.x, entity.transform.z);

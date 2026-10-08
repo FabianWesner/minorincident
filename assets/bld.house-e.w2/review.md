@@ -1,0 +1,11 @@
+# bld.house-e.w2 · lane visual review
+
+Reviewed reference, four sides, authored LOD0/1/2, and the game camera at 122–131 px model height. Headless Chromium, Metal WebGL2, FOV25°, azimuth45°, polar54°. Images use the production GLBs and game palette renderer. Independent orchestrator acceptance is pending.
+
+Boards and an entry-clutter color block survive all tiers. The preserved house roof/door/porch silhouette is readable. Fine flowers, tile seams and individual nails are absent at game scale; the far garden is intentionally faceted.
+
+Concrete limitations: textureless roof decks are smoother than the reference; foliage/flower density is reduced to protect distance budgets. House E has no garage in the integrated base; the exact existing porch and roof forms take precedence over adding one. The burned facade reference depicts a devastated whole building, while the L3 contract calls for localized standing fire damage.
+
+Technical checks: triangle/draw/material/byte table is in test-results/l3-oak-houses-de/report.md. House anchor matrices match the original base exactly; projected footprints meet IoU >=0.9977 in every tier. Named doors, roof/interior groups and entrance/collider anchors survive. No generic decimation, texture atlas or new dependency.
+
+Evidence: test-results/l3-oak-houses-de/bld.house-e.w2/lod-contact.png, comparison.png and game-camera.png. For houses, footprint.png and cutaway.png also verify placement and roof-off ownership.

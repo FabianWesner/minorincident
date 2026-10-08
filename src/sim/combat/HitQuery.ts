@@ -1,3 +1,4 @@
+import { downed } from './Damage';
 import type { EntityStore } from '../world/EntityStore';
 import type { EntitySnapshot } from '../world/types';
 import type { SpatialHash } from '../spatial/SpatialHash';
@@ -105,7 +106,7 @@ export class HitQuery {
     this.hits.length = 0;
     for (const id of this.nearby(origin, radius)) {
       const entity = this.entities.get(id)!;
-      if (entity.health.current > 0 && this.visible(origin, entity.transform, entity.id) && (entity.transform.x - origin.x) ** 2 + (entity.transform.z - origin.z) ** 2 + (entity.transform.y - 0.7) ** 2 <= radius * radius + 1e-8) this.hits.push(entity);
+      if ((entity.health.current > 0 || downed(entity)) && this.visible(origin, entity.transform, entity.id) && (entity.transform.x - origin.x) ** 2 + (entity.transform.z - origin.z) ** 2 + (entity.transform.y - 0.7) ** 2 <= radius * radius + 1e-8) this.hits.push(entity);
     }
     return this.hits;
   }

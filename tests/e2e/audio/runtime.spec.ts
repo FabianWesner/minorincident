@@ -16,7 +16,7 @@ test('@E16 L1 completion plays a single recorded outro without the second comple
     const cues = await page.evaluate(() => {
         const a = window.__SS__!;
         a.audio.clearLog();
-        a.audio.emit({ type: 'level.completed', tick: 0, id: 'L1', result: { time: 1, kills: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] } });
+        a.audio.emit({ type: 'level.completed', tick: 0, id: 'L1', result: { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [] } });
         return a.audio.snapshot().cues.map(c => c.cue);
     });
     expect(cues.filter(c => c === 'l1.outro.sting')).toHaveLength(1);

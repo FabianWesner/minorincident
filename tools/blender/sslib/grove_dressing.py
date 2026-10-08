@@ -416,3 +416,100 @@ def security_fence(g, x0, z0, x1, z1, gaps=(), height=1.9):
             l.box('sec-bar', 'silver', [.025, height - .3, .025], pos(s0 + (s1 - s0) * i / k, height / 2))
         size = [s1 - s0, height, .12] if ax == 0 else [.12, height, s1 - s0]
         g.collide_only('sec-fence', size, pos(mid, height / 2))
+
+
+# ---- clearance pass (Scene Lab qa-grove-clipping-all, tests/unit/layouts/clipping.test.ts "small contacts") ------------------
+# The placement helpers tolerate OVERLAP_TOLERANCE of visual overlap. These props must not touch the hard props around them at all,
+# so after the district is dressed every one of them is nudged the shortest way out of whatever it overlaps. Rules, not coordinates.
+CLEAR_MARGIN = .03
+CLEAR_RADIUS = .6                     # never far enough to hop over a fence or into the next lot
+CLEAR_STEP = .02
+NUDGE = ('prop.flower-bed.large', 'prop.carpet', 'prop.crates', 'prop.hose-reel', 'prop.flamingo', 'prop.street-lamp')
+SHRINK = ('kit.edge-roadwork',)        # barrier runs: shortened at the end that touches a fence, never moved
+FLUSH_WALLS = ('bld.house-d',)        # houses whose visual box is the wall; the others have porch roofs/eaves overhanging it (baked walls count)
+SOFT = re.compile(r'^prop\.(street-tree|tree|garden-bush|hedge|flower$|flower-patch|carpet)|^veh\.')
+
+
+def _overlap(a, b, pad=0.0):
+    return min(a['max'][0], b['max'][0]) - max(a['min'][0], b['min'][0]) > pad and min(a['max'][2], b['max'][2]) - max(a['min'][2], b['min'][2]) > pad
+
+
+def clear_contacts(g):
+    """Nudge/shorten small props off the hard props they overlap (visual boxes), keeping placements, colliders and GLB empties in sync."""
+    l = g.l
+    placements = l.data['placements']
+    empties = {o.name: o for o in l.empties}
+    moved = []
+
+    def sync(index, p):
+        o = empties.get(f'inst:{p["assetId"]}:{index + 1}')
+        if o is not None:
+            o.location = (p['position'][0], -p['position'][2], p['position'][1])
+            o.scale = (p['scale'][0], p['scale'][2], p['scale'][1])
+
+    def shift(p, dx, dz):
+        p['position'][0] = round(p['position'][0] + dx, 4); p['position'][2] = round(p['position'][2] + dz, 4)
+        a = p['visualAabb']
+        for k, d in ((0, dx), (2, dz)):
+            a['min'][k] = round(a['min'][k] + d, 4); a['max'][k] = round(a['max'][k] + d, 4)
+
+    def hard(p):
+        return not SOFT.match(p['assetId']) and p['visualAabb']['max'][1] > .1
+
+    cache = {}
+    def solid(q):
+        """Boxes a prop must keep out of: the visual box, except for buildings whose porch roofs and eaves overhang (their baked walls)."""
+        if q['id'] not in cache:
+            if q['assetId'].startswith('bld.') and q['assetId'] not in FLUSH_WALLS:
+                bx = g.footprint(q['assetId'], q['position'][0], q['position'][2], q['yaw'], tuple(q['scale']))
+                cache[q['id']] = [{'min': [b[0], 0, b[1]], 'max': [b[2], b[4], b[3]]} for b in bx]
+            else:
+                cache[q['id']] = [q['visualAabb']]
+        return cache[q['id']]
+    def touches(box, q, pad=0.0):
+        return any(_overlap(box, b, pad) for b in solid(q))
+
+    for i, p in enumerate(placements):
+        asset = p['assetId']
+        a = p['visualAabb']
+        if asset in NUDGE:
+            wide = {'min': [a['min'][0] - CLEAR_RADIUS - 1, 0, a['min'][2] - CLEAR_RADIUS - 1], 'max': [a['max'][0] + CLEAR_RADIUS + 1, 0, a['max'][2] + CLEAR_RADIUS + 1]}
+            near = [q for q in placements if q is not p and hard(q) and touches(wide, q)]
+            def clear(dx, dz, scale=1.0, margin=CLEAR_MARGIN):
+                hx, hz = (a['max'][0] - a['min'][0]) / 2 * scale, (a['max'][2] - a['min'][2]) / 2 * scale
+                cx, cz = (a['min'][0] + a['max'][0]) / 2 + dx, (a['min'][2] + a['max'][2]) / 2 + dz
+                box = {'min': [cx - hx - margin, 0, cz - hz - margin], 'max': [cx + hx + margin, 0, cz + hz + margin]}
+                return not any(touches(box, q) for q in near)
+            if not any(touches(a, q, 0.002) for q in near):
+                continue
+            n = int(CLEAR_RADIUS / CLEAR_STEP)
+            offsets = sorted(((dx * CLEAR_STEP, dz * CLEAR_STEP) for dx in range(-n, n + 1) for dz in range(-n, n + 1)), key=lambda o: (math.hypot(*o), abs(o[0]) * abs(o[1])))
+            hit = None
+            for scale, margin in ((1.0, CLEAR_MARGIN), (.9, .015), (.8, .015)):   # a slimmer prop only when nothing fits at full size (hose reel between house and fence)
+                hit = next((o for o in offsets if clear(o[0], o[1], scale, margin)), None)
+                if hit: break
+            if not hit:
+                g.problems.append(f'no clearance for {p["id"]} at {p["position"][0]:.1f},{p["position"][2]:.1f}')
+                continue
+            if scale != 1.0:
+                for k in range(3): p['scale'][k] = round(p['scale'][k] * scale, 4)
+                for k in (0, 2):
+                    c, half = (a['min'][k] + a['max'][k]) / 2, (a['max'][k] - a['min'][k]) / 2 * scale
+                    a['min'][k] = round(c - half, 4); a['max'][k] = round(c + half, 4)
+                a['max'][1] = round(a['max'][1] * scale, 4)
+            shift(p, *hit); sync(i, p); moved.append((p['id'], hit, scale))
+        elif asset in SHRINK:
+            k = 0 if a['max'][0] - a['min'][0] > a['max'][2] - a['min'][2] else 2      # world axis of the run (local z)
+            lo, hi, length = a['min'][k], a['max'][k], a['max'][k] - a['min'][k]
+            for q in placements:
+                if q is p or not hard(q): continue
+                for c in (b for b in solid(q) if _overlap(a, b, 0.002)):
+                    if (c['min'][k] + c['max'][k]) / 2 > (lo + hi) / 2: hi = min(hi, c['min'][k] - CLEAR_MARGIN)
+                    else: lo = max(lo, c['max'][k] + CLEAR_MARGIN)
+            if hi - lo < length - 1e-6:
+                f = (hi - lo) / length
+                p['scale'][2] = round(p['scale'][2] * f, 4)
+                p['position'][k] = round(p['position'][k] + (lo + hi) / 2 - (a['min'][k] + a['max'][k]) / 2, 4)
+                a['min'][k], a['max'][k] = round(lo, 4), round(hi, 4)
+                sync(i, p); moved.append((p['id'], 'shrink', round(f, 4)))
+    return moved

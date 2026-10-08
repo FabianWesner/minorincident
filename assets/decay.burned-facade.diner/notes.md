@@ -1,0 +1,23 @@
+# decay.burned-facade.diner
+
+Standing shallow frontage dressing: 4.4 m wide, about 4.2 m high and 1.275 m deep,
+metres, ground Y=0, +X frontage. Two shop apertures, surviving jambs/cornice,
+closed triangular glazing remnants, local soot and a solid sloped awning.
+The diner has a red awning and crowned DINER fascia.
+
+Three explicitly authored recipes: LOD0 bevels + masonry joints + scattered
+glass; LOD1 removes small courses and reduces glazing fragments; LOD2 preserves
+the two apertures, standing piers, solid awning and sign/cornice silhouette.
+No generic decimation. Static parts merge per shared palette material.
+
+Fixed root `ss_physics`, `col:body` proxy and +X `front` empty. No lights or
+emissives. Place root alongside the parent shop; fire/smoke and gameplay remain
+runtime concerns. This section is separate dressing and never alters the base
+building's footprint or navigation anchors.
+
+The standard turntable's 10% coverage guard rejects the narrow side profiles
+(~6–7% coverage), after saving the all-side sheet. The asset is intentionally a
+shallow section; 3/4 and game-camera captures show the complete frontage.
+
+## Rebuild 2026-10-08 (orchestrator QA reject of the flat panel)
+Real broken masonry: stair-stepped/diagonal collapsed parapets on every pier and header, open window holes with a dark interior, charred lintels and posts, soot tongues, red/white slat awning, broken sign slab, rubble and fallen beams on the pavement. Palette folded to 8 materials. Tiers 1500/600/200 unchanged.

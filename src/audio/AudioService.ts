@@ -742,6 +742,12 @@ export class AudioService implements Lifecycle {
                 this.play('infected.bite', { position: this.world.entities.get(event.targetId)?.transform ?? position }, source);
             return;
         }
+        if (event.type === 'infected.groan' || event.type === 'infected.recovered') {
+            const body = this.world.entities.get(event.sourceId);
+            if (body && voicedInfected.has(body.archetype))
+                this.play(eventCues[event.type], { position: body.transform, gain: event.type === 'infected.groan' ? 0.7 : 1 }, body.id);
+            return;
+        }
         if (event.type === 'ai.alerted') {
             // One shared anti-spam key: a gunshot that alerts a whole street yields a few snarls, not a wall.
             if (voicedInfected.has(this.world.entities.get(event.targetId)?.archetype ?? ''))

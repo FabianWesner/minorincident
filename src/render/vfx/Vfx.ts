@@ -174,7 +174,9 @@ export class Vfx extends Group {
       if (event.damageType === 'melee' && event.sourceId === 1) this.targets.shake(this.flashReduction ? .012 : event.actionId === 'weapon.kick' || event.amount >= 30 ? .055 : .028);
       this.pulse(event.targetId);
     } else if (event.type === 'combat.kill') {
-      this.kills++; this.blood(event, true);
+      // A knocked-down infected (PO "Infected recover") bleeds like a hard hit, without the kill pool or lost limbs: it gets up again.
+      const down = event.downed !== undefined;
+      this.kills++; this.blood(event, !down);
       const def = actions[event.actionId], melee = def?.category === 'melee';
       if (melee && this.gore !== 'Off' && event.sourceId === 1) { this.coverage = Math.min(1, this.coverage + 0.025); this.targets.blood(this.coverage); }
       const explosive = Boolean(def?.splash) && def?.effect?.kind !== 'fire' || event.actionId.includes('explos') || event.actionId.includes('rocket');
@@ -183,7 +185,7 @@ export class Vfx extends Group {
       const vehicle = event.cause === 'vehicle' || event.actionId === 'vehicle.high-speed';
       if (vehicle) { const car = this.world.vehicles?.cars.get(event.sourceId); if (car) this.updateVehicle(car.entity.id, Math.min(1, (this.vehicles.get(car.entity.id)?.blood ?? 0) + .08)); }
       // Draw on every eligible kill, independent of the gore toggle; never consume the sim RNG.
-      const detach = explosive || shotgun || vehicle || heavy && this.goreRng.next() < 0.35;
+      const detach = !down && (explosive || shotgun || vehicle || heavy && this.goreRng.next() < 0.35);
       if (this.gore === 'Full' && detach) {
         this.dismemberedKills++;
         const n = explosive ? limbs : 1, first = Math.floor(this.rng.next() * limbs);

@@ -25,6 +25,8 @@ def box(name, token, size, pos):
     bpy.ops.object.modifier_apply(modifier=bevel.name)
     return o
 
+DOOR_LANE = 3.0   # m kept free of entrance hedges in front of a building door
+
 def empty(name, pos, yaw=0, scale=(1,1,1)):
     o = bpy.data.objects.new(name, None); bpy.context.collection.objects.link(o)
     o.location = (pos[0], -pos[2], pos[1]); o.rotation_euler.z = -yaw; o.scale = (scale[0], scale[2], scale[1])
@@ -154,7 +156,8 @@ class Layout:
             tree_scale=min(1,(abs(tx)-max(e['laneWidth'] for e in self.data['roads']['edges'])/2-.1)/(self.manifest['prop.tree']['dimensions']['x']/2))
             self.place('prop.tree',[tx,0,z],scale=(tree_scale,1,tree_scale))
             for dz in [-2,2]: self.place('prop.garden-bush-small',[x+side*(width*.65),0,z+dz])
-            self.place('prop.hedge',[x+side*(width*.34),0,front+.55])
+            # Entrance hedges keep a DOOR_LANE-wide lane clear in front of the door (the door anchor must stay on walkable nav cells).
+            self.place('prop.hedge',[x+side*max(width*.34,DOOR_LANE/2+self.manifest['prop.hedge']['dimensions']['x']/2),0,front+.55])
             for j in range(8): self.place('prop.flower',[x+side*(width*.32)+j*.25-.9,0,front+1.2])
         self.data['lawns'].append(dict(min=[x-width*.5,front+1.5],max=[x+width*.5,front+2.7]))
         self.box('burned-facade', 'uiDark', [width*.8,height*.5,.035], [x,height*.32,aabb['max'][2]+.055],3)
