@@ -3,7 +3,7 @@ import { motionResponse } from '../locomotion/MotionResponse';
 import { installCharacterSeparation } from './CharacterSeparation';
 import { noise } from '../../data/noise';
 // Zone enter/alert pattern adapted from Bruno Simon folio-2025 Zones.js (MIT, 41046b5).
-import { infectedDef, l1ReactionS, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
+import { infectedDef, infectedRecovery, l1ReactionS, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
 import { groveDistrictId } from '../../levels/districts/types';
 import type { DistractionEvent, HumanTarget, HumanTargetQuery } from '../outbreak/types';
@@ -61,7 +61,7 @@ export class InfectedSystem {
     installCharacterSeparation(world); installAgentMotion(world);
     validateInfected(); this.rng = new Rng(world.seed, 'infected'); this.nav = new NavGrid(definition.ground, definition.walls ?? [], definition.navigationClearance ?? 0.65, definition.ground.center); this.navigation = new DistrictNavigation(definition, this.nav); this.director = new SpawnDirector(this); this.props = new PropThrows(world);
     for (let i = 0; i < 350; i++) {
-      const brain: InfectedState = { state: 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: 0, until: 0, cooldown: 0, attackId: 0, special: '', hidden: false, deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: 0, packIndex: 0, birds: 0, birdPositions: new Array(60).fill(0), birdAlive: new Array(20).fill(0), scatterUntil: 0, variant: '', path: [], pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: false };
+      const brain: InfectedState = { state: 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: 0, until: 0, cooldown: 0, attackId: 0, special: '', hidden: false, deadAt: -1, recoverAt: -1, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: 0, packIndex: 0, birds: 0, birdPositions: new Array(60).fill(0), birdAlive: new Array(20).fill(0), scatterUntil: 0, variant: '', path: [], pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: false };
       this.pool.push({ id: 0, kind: 'infected', archetype: '', faction: 'infected', health: { current: 0, max: 0 }, transform: { x: 0, y: 0.7, z: 0, yaw: 0 }, infected: brain, combat: { radius: 0.35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } }); this.counters.allocated++;
     }
     for (const wall of world.interactables?.walls ?? []) if (wall.entityId !== undefined) { this.nav.setBlocker(wall.entityId, wall, true); for (const d of this.navigation.districts) d.grid.setBlocker(wall.entityId, wall, true); }
@@ -111,7 +111,7 @@ export class InfectedSystem {
     entity.archetype = id; entity.health.current = entity.health.max = def.hp;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
-    Object.assign(entity.infected!, { state: opts.state ?? 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
+    Object.assign(entity.infected!, { state: opts.state ?? 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, recoverAt: -1, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
     for (let bird = 0; bird < 20; bird++) { entity.infected!.birdAlive[bird] = Number(bird < entity.infected!.birds); entity.infected!.birdPositions[bird * 3] = position.x + Math.cos(bird * 2.399963) * 2; entity.infected!.birdPositions[bird * 3 + 1] = 3; entity.infected!.birdPositions[bird * 3 + 2] = position.z + Math.sin(bird * 2.399963) * 2; }
     if (id === 'infected.crow') entity.health.current = entity.health.max = entity.infected!.birds;
     if (this.l1 && def.special === 'lunge') this.initL1(entity, opts.tier ?? l1SpeedTier(entity.infected!.variant)); else delete entity.infected!.l1;
@@ -228,7 +228,7 @@ export class InfectedSystem {
     // and return the costly brain to the warm pool. Bodies live until level unload.
     for (let i = this.active.length - 1; i >= 0; i--) {
       const e = this.active[i];
-      if (e.health.current > 0 || this.world.tick - e.infected!.deadAt < 120) continue;
+      if (e.health.current > 0 || e.infected!.recoverAt >= 0 || this.world.tick - e.infected!.deadAt < 120) continue;
       const body = structuredClone(e); body.corpse = true;
       delete body.locomotion; delete body.motion; delete body.combat!.reaction;
       delete body.infected!.l1; body.infected!.path.length = 0;
@@ -291,7 +291,7 @@ export class InfectedSystem {
           this.world.entities.replace(record); this.active.push(record); this.counters.reused++;
           this.world.spatial.set(record.id, record.transform.x, record.transform.z); downed = record;
         }
-        downed.health.current = downed.health.max; downed.infected!.revived = true; downed.infected!.deadAt = -1; downed.infected!.state = 'chase'; b.reviveUsed = true; this.world.events.emit({ type: 'infected.revived', tick: this.world.tick, sourceId: e.id, targetId: downed.id }); return true;
+        downed.health.current = downed.health.max; downed.infected!.recoverAt = -1; downed.infected!.revived = true; downed.infected!.deadAt = -1; downed.infected!.state = 'chase'; b.reviveUsed = true; this.world.events.emit({ type: 'infected.revived', tick: this.world.tick, sourceId: e.id, targetId: downed.id }); return true;
       }
     }
     if (b.special === 'prop-throw' && this.props.launch(e, b.attackId)) return true;
@@ -323,8 +323,42 @@ export class InfectedSystem {
     const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId: 1, origin: e.transform, direction: { x: b.dx, z: b.dz }, base: damage, multiplier: e.combat!.damageMultiplier, type: 'melee', knockback: b.special === 'charge' ? 3.2 : 0, stagger: 0 });
     this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId: 1, special: b.special, amount });
   }
+  /** PO "Infected recover" is on by default; a level whose scripted encounters still need kills (L3 defense waves) turns it off. */
+  recovery = true;
+  /**
+   * PO "Infected recover": called by Damage on the hit that drops an infected to 0 HP. Returns the tick it gets up, or -1
+   * when it is dead for good (explosives, a lethal burn, a bursting bloater, a crow flock, an already settled corpse).
+   * The down time is a deterministic per-entity draw (seed, id, knockdown count) that never consumes a shared stream.
+   */
+  down(e: EntitySnapshot, permanent: boolean): number {
+    const b = e.infected!;
+    if (permanent || !this.recovery || e.corpse || b.special === 'explode' || e.archetype === 'infected.crow') return b.recoverAt = -1;
+    const [low, high] = infectedRecovery.downS, u = new Rng(this.world.seed, `infected-recover:${e.id}:${b.downs++}`).next();
+    return b.recoverAt = this.world.tick + Math.round((low + (high - low) * u) * 60);
+  }
+  /** Downed infected stay active and groan once on the ground; at `recoverAt` they get up at full health and hunt by sight again. */
+  private recover(e: EntitySnapshot): void {
+    const b = e.infected!, c = e.combat!, tick = this.world.tick, getUp = Math.round(infectedRecovery.getUpS * 60);
+    e.health.current = e.health.max; b.recoverAt = -1; b.deadAt = -1; b.grabUntil = 0; b.until = 0; b.cooldown = tick + getUp; b.targetId = 0;
+    c.attacking = false; c.statuses.length = 0; c.staggerUntil = tick + getUp;
+    // The CrowdView heavy reaction plays `get-up` from its 0.7 s mark: start the reaction there and hold still meanwhile.
+    c.reaction = { index: c.reaction?.index ?? 0, started: tick - 42, until: tick + getUp, direction: { x: 0, z: 0 }, from: { x: e.transform.x, z: e.transform.z }, to: { x: e.transform.x, z: e.transform.z }, heavy: true };
+    const brain = b.l1;
+    if (brain) {
+      // Back to calm wandering at the spot it lay: only a fresh sighting (cone + LOS) starts a chase again, never a memory.
+      Object.assign(brain, { mode: 'wander', targetId: 0, biteTargetId: 0, distractionId: 0, cueUntil: 0, hasGoal: false, looking: true, lookYaw: e.transform.yaw, pauseUntil: tick + getUp, homeX: e.transform.x, homeZ: e.transform.z, headingX: 0, headingZ: 0, directTick: -1, stuckTick: tick, stuckCount: 0 });
+      brain.search.until = 0; b.state = 'wander';
+    } else b.state = 'idle';
+    b.path.length = 0; b.goal = -1;
+    this.world.events.emit({ type: 'infected.recovered', tick, sourceId: e.id, targetId: e.id });
+  }
   private dead(e: EntitySnapshot): void {
     const b = e.infected!;
+    if (b.recoverAt >= 0) {
+      if (this.world.tick >= b.recoverAt) { this.recover(e); return; }
+      // One groan from the ground roughly halfway through the down time: "down, not dead".
+      if (b.state === 'dead' && this.world.tick === b.deadAt + ((b.recoverAt - b.deadAt) >> 1)) this.world.events.emit({ type: 'infected.groan', tick: this.world.tick, sourceId: e.id, targetId: e.id });
+    }
     if (b.state !== 'dead') {
       b.state = 'dead'; b.deadAt = this.world.tick; b.grabUntil = 0;
       // A killed ambusher is a visible ground body, even if it died on a perch

@@ -175,6 +175,8 @@ export const eventCues = {
     'corgi.bark': 'corgi.warning', 'corgi.warn': 'corgi.warning', 'corgi.fetched': 'ui.pickup', 'escort.order': 'ui.switch', 'escort.downed': 'ui.tick', 'escort.revived': 'stinger.objective',
     'civilian.grabbed': 'telegraph.civilian', 'infected.prop-thrown': 'prop.wood', 'telegraph': 'telegraph.runner',
     'infected.attack': 'infected.vocal', 'infected.revived': 'telegraph.nurse', 'infected.leg-lost': 'gore.bone',
+    // PO "Infected recover": a downed infected groans once on the ground and snarls as it gets up.
+    'infected.groan': 'infected.hurt', 'infected.recovered': 'infected.alert',
     noise: 'action.weapon.pistol', 'ai.alerted': 'ui.tick', 'combat.effect': 'ui.tick', 'pickup.collected': 'ui.pickup',
     'combat.attack': 'action.weapon.fists', 'combat.hit': 'gore.squelch', 'combat.kill': 'gore.bone', 'combat.hit-stop': 'ui.tick',
     'loadout.switched': 'ui.switch', 'combat.landed': 'gore.splat', 'combat.exploded': 'explosion.boom',
