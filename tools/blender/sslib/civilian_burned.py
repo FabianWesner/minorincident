@@ -59,7 +59,19 @@ def build_burned(directory, output):
             glass = not wheel and (token == 'backpackTeal' or 'glass' in obj.name.lower())
             # White sedan's window panes share asphalt, isolated from low chassis.
             if not wheel and token == 'asphalt' and asset != 'veh.suv-dark':
-                glass = all((obj.matrix_world @ v.co).z > low.z + .55 * H for v in obj.data.vertices)
+                # Glazing and low underbody can share one imported primitive.
+                # Remove the high glazing faces, retaining the low chassis.
+                bm = bmesh.new()
+                bm.from_mesh(obj.data)
+                panes = [f for f in bm.faces if all(
+                    (obj.matrix_world @ v.co).z > low.z + .55 * H for v in f.verts)]
+                glass_points.extend(obj.matrix_world @ v.co for f in panes for v in f.verts)
+                bmesh.ops.delete(bm, geom=panes, context='FACES')
+                bm.to_mesh(obj.data)
+                bm.free()
+                if not obj.data.polygons:
+                    bpy.data.objects.remove(obj, do_unlink=True)
+                    continue
             if glass:
                 glass_points.extend(obj.matrix_world @ v.co for v in obj.data.vertices)
                 bpy.data.objects.remove(obj, do_unlink=True)
@@ -164,6 +176,10 @@ def build_burned(directory, output):
                     edges=list(bm.edges), use_dissolve_boundaries=False, delimit={'MATERIAL'})
                 bm.to_mesh(obj.data)
                 bm.free()
+            if lod == 2 and obj.data.materials[0].name == 'pal_' + paint:
+                # One explicit split pass gives broad soot islands on the far
+                # hood/roof, rather than tinting an entire sparse panel at once.
+                refine(obj, .85, lambda p: p.z > low.z + .65 * H, passes=1)
             if obj.data.materials[0].name == 'pal_' + paint:
                 # Large material soot islands remain legible even on the far
                 # tier's sparse vertices; vertex tint feathers surviving paint.
