@@ -58,6 +58,8 @@ export interface MissionDef {
   l1?: boolean;
   /** L2 "The Failed Rescue" set-piece controller (station calm, alarm, truck ride, doors, ambush, checkpoint); see LevelTwoRescue. */
   l2?: boolean;
+  /** L3 "The Police Collapse" controller (armory, station attack, fallback, squad, corridor, army checkpoint); see LevelThreeCollapse. */
+  l3?: boolean;
   /** Global gameplay deadline; checkpoints capture the remaining ticks. */
   deadline?: { seconds: number; retryGraceSeconds: number };
   id: string; briefing: string; anchors: Record<string, Anchor>; actors: Record<string, ActorDef>;
@@ -108,12 +110,36 @@ export interface L2State {
   pending: { id: number; door: string; at: number; home: { x: number; z: number }; x?: number; z?: number; seen?: boolean }[]; escapeIds: number[]; clusterIds: number[];
   escapeSpawned: boolean; clusterSpawned: boolean; clusterReached: boolean;
 }
+/** Serializable L3 controller state. Ticks are sim ticks, 0 = not yet. */
+export interface L3State {
+  phase: 'yard' | 'attack' | 'fallback' | 'corridor' | 'done';
+  handgunAt: number; attackAt: number; fallbackAt: number; fallbackCause: '' | 'time' | 'turned' | 'inside'; crossedAt: number; doneAt: number;
+  /** Tick the officers left in the yard pulled its gates shut behind the squad (0 = open). */
+  gatesClosedAt: number;
+  /** All police (posts + squad designates), the squad designates, soldiers and medkit pickups. */
+  officerIds: number[]; squadIds: number[]; soldierIds: number[]; medkitIds: number[];
+  /** The live squad after the fallback (`farSince`: tick it first strayed beyond 40 m) and every loss with its cause. */
+  squad: { id: number; farSince: number }[]; lost: { id: number; cause: 'bite' | 'kill' | 'separated'; tick: number }[];
+  turnedOfficers: number[];
+  /** Station waves still waiting at their emergence points (`id` 0 = not yet out). */
+  waves: { id: number; dir: 'river' | 'blvd' | 'oak'; at: number; wave: number }[]; waveIds: number[]; wavesSpawned: number;
+  /** Corridor population: segments populated, the planned emergences (with their first visible point for the audit) and ids. */
+  populated: boolean[]; pending: { id: number; door: string; home: { x: number; z: number }; segment: number; at: number; x?: number; z?: number; seen?: boolean; horde?: boolean }[]; segmentIds: number[][];
+  /** Forward pressure: furthest progress (x) and when it last grew; emergences behind it. */
+  furthest: number; furthestAt: number; pressureAt: number; pressureIds: number[];
+  /** Highest segment entered (-1 yard), squad size at each segment end, last gunshot tick per shooter, infected retired out of view. */
+  segment: number; segmentSquad: number[]; lastShot: Record<number, number>; retired: number;
+  /** Side-street spills per cross-link (count, last tick) and the infected they brought out. */
+  spills: Record<string, { n: number; at: number }>; spillIds: number[];
+}
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number; driveArrived?: boolean; holds?: Record<string, number> }
 export interface MissionState {
   /** L1 v2 story state (technician, accident timeline, infected exits, result counters). */
   l1?: L1State;
   /** L2 set-piece state; checkpoints snapshot it (ticks are shifted on restore). */
   l2?: L2State;
+  /** L3 controller state; checkpoints snapshot it (ticks are shifted on restore). */
+  l3?: L3State;
   id: string; phase: 'briefing' | 'playing' | 'cinematic' | 'retry' | 'result' | 'progression';
   /** Remaining global gameplay time (cinematics and retry screens pause it). */
   deadlineTicks: number | null;
