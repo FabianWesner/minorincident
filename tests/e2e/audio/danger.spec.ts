@@ -57,6 +57,26 @@ for (const level of ['L1', 'L2']) test(`@E16 ${level} visible outbreak encounter
     writeFileSync(`test-results/epics/E16/danger-${level}.json`, JSON.stringify({ onsetMs: samples.find(s => (s.music.streamed.decks.find(d => d.state === 'combat')?.gain ?? 0) > 0.5)?.ms, releaseMs, samples }, null, 2));
 });
 
+test('@E16 starting a player attack engages danger without nearby infected', async ({ page }) => {
+    await boot(page); await page.mouse.click(200, 250);
+    await page.evaluate(async () => {
+        const a = window.__SS__!;
+        await a.loadLevel('L1'); a.missions.begin(); a.pause(); a.cheats.god(true);
+        a.teleport('player', { x: 0, z: 0 }); a.cheats.killAll();
+        a.setLoadout(['weapon.bat'], ['weapon.fists']);
+        await a.audio.unlock(); a.resume();
+    });
+    await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.streamed.decks.find(d => d.state === 'calm')?.gain ?? 0), { timeout: 8000 }).toBeGreaterThan(0.45);
+    await page.evaluate(async () => {
+        const a = window.__SS__!;
+        a.pause();
+        a.input.set({ left: { down: true, held: false, up: true }, aim: { x: 1, z: 0 }, attackInPlace: true });
+        await a.step(1); a.input.clear(); a.resume();
+    });
+    expect(await page.evaluate(() => window.__SS__!.events().some(e => e.type === 'combat.attack' && e.sourceId === 1))).toBe(true);
+    await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.streamed.decks.find(d => d.state === 'combat')?.gain ?? 0), { timeout: 1500, intervals: [50] }).toBeGreaterThan(0.5);
+});
+
 test('@E16 L2 escape keeps dramatic rock with zero nearby infected until the safe checkpoint', async ({ page }) => {
     await boot(page); await page.mouse.click(200, 250);
     await page.evaluate(async () => {
