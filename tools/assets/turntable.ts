@@ -1,5 +1,6 @@
 import { chromium, type Page } from '@playwright/test';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { PNG } from 'pngjs';
 import { spawnSync } from 'node:child_process';
@@ -14,14 +15,19 @@ export function coverage(bytes: Buffer): number {
 export function referenceFor(id: string): string {
   const local = `assets/${id}/reference-upscaled.png`;
   if (existsSync(local)) return local;
-  const main = '/Users/fabianwesner/Workspace/suburban-survivors';
+  const common = spawnSync('git', ['rev-parse', '--git-common-dir'], { encoding: 'utf8' }).stdout.trim();
+  const main = resolve(common, '..');
   return id === 'veh.fire-engine' ? `${main}/assets/fire-engine/reference-upscaled.png` : `${main}/assets/${id}/reference-upscaled.png`;
 }
-export async function captureTurntable(page: Page, id: string, directory: string, baseURL: string): Promise<number[]> {
+export async function captureTurntable(page: Page, id: string, directory: string, baseURL: string, decay?: string): Promise<number[]> {
   mkdirSync(directory, { recursive: true });
-  await page.goto(`${baseURL}/preview/?asset=${encodeURIComponent(id)}&test=1&renderer=webgl`);
+  await page.goto(`${baseURL}/preview/?asset=${encodeURIComponent(id)}&test=1&renderer=webgl&production=1`);
   await page.waitForFunction(() => !!window.__ASSET__);
   await page.evaluate(() => window.__ASSET__!.ready);
+  if (decay) {
+    await page.locator('#decay').evaluate((el, value) => { (el as HTMLSelectElement).value = value; }, decay);
+    await page.evaluate(() => window.__ASSET__!.inspectionView!('high', 45));
+  }
   await page.locator('#toolbar').evaluate((toolbar) => { toolbar.style.visibility = 'hidden'; });
   const images: string[] = [], occupancies: number[] = [];
   for (let i=0;i<5;i++) {
@@ -30,7 +36,7 @@ export async function captureTurntable(page: Page, id: string, directory: string
     const png = await page.locator('canvas').screenshot({ path });
     images.push(path); occupancies.push(coverage(png));
   }
-  await comparison(images, referenceFor(id), `${directory}/comparison.png`);
+  await comparison(images, referenceFor(`${id}${decay ? `.${decay}` : ''}`), `${directory}/comparison.png`);
   writeFileSync(`${directory}/turntable.json`,JSON.stringify({ id, coverage: occupancies, ...await page.evaluate(() => window.__ASSET__!.info()) },null,2)+'\n');
   return occupancies;
 }
@@ -85,7 +91,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
         console.log(`${directory}/lod-contact.png`);
         continue;
       }
-      const values = await captureTurntable(page,id,`${output}/${id}`,`http://127.0.0.1:${process.env.E2E_PORT ?? 3313}`);
+      const values = await captureTurntable(page,id,`${output}/${id}${decay ? `.${decay}` : ''}`,`http://127.0.0.1:${process.env.E2E_PORT ?? 3313}`,decay);
       if (values.some((v)=>v<.1||v>.8)) throw new Error(`Object coverage outside 10–80%: ${values}`);
     }
   } finally { await browser.close(); }
