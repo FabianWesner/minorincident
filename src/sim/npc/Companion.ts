@@ -1,6 +1,7 @@
 import { infectedDef } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
 import { npcs } from '../../data/npcs';
+import { motionLimits } from '../locomotion/MotionResponse';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 const approaching = new Set(['chase', 'attack', 'alerted', 'migration']);
@@ -83,9 +84,15 @@ export class Companion {
         const riding = this.world.vehicles?.bicycle.riding === true, frozen = this.safe && this.warn(e, c, player.transform) && distance < 6;
         if (frozen) {
           if (c.velocity) c.velocity.x = c.velocity.z = 0;
-          // Only a standing corgi looks at the threat; a moving one always faces its travel direction.
-          const threat = this.world.entities.get(c.warn!.threat);
-          if (threat) e.transform.yaw = -Math.atan2(threat.transform.z - e.transform.z, threat.transform.x - e.transform.x);
+          // Only a standing corgi looks at the threat; a moving one always faces its travel direction. Freezing does not stop it
+          // dead: it brakes (motion response) for ~0.7 s and up to 2.5 m, so it keeps facing that slide and turns to the threat
+          // (bounded, like a step-around) once it stands. Snapping toward the threat here made it trot backwards to the courier.
+          const threat = this.world.entities.get(c.warn!.threat), l = e.locomotion;
+          if (l && Math.hypot(l.vx, l.vz) > .5) this.faceTravel(e, l.vx, l.vz);
+          else if (threat) {
+            const look = -Math.atan2(threat.transform.z - e.transform.z, threat.transform.x - e.transform.x), delta = Math.atan2(Math.sin(look - e.transform.yaw), Math.cos(look - e.transform.yaw));
+            e.transform.yaw += Math.sign(delta) * Math.min(Math.abs(delta), motionLimits.turnSpeed / 60); if (l) l.omega = 0;
+          }
         }
         // While the player rides, the corgi's speed cap rises to 7.5 m/s (a short 15 % catch-up when it falls > 4 m behind) and it runs alongside (spec 5.10).
         else if (c.following) this.world.npcs!.move(e, riding ? this.riderSide(player.transform) : player.transform, riding ? Math.min(l1v2.corgi.riderSpeedCapMs * (distance > 4 ? 1.15 : 1), l1v2.corgi.riderSpeedCapMs * .9 + Math.max(0, distance - 3) * 2) : Math.min(8, 4.5 + Math.max(0, distance - 4) * 2), c, riding ? 1.5 : 2);
@@ -99,12 +106,19 @@ export class Companion {
       }
       // The presented heading always follows the actual travel direction: never run backwards while the bounded turn catches up.
       // The bounded turn (faceMotion) does the smoothing; this only caps its lag at 0.3 rad (17 degrees) so it never crab-walks.
-      const v = c.velocity; if (v && Math.hypot(v.x, v.z) > .5) {
-        const heading = -Math.atan2(v.z, v.x), error = Math.atan2(Math.sin(heading - e.transform.yaw), Math.cos(heading - e.transform.yaw));
-        if (Math.abs(error) > .3) { e.transform.yaw = heading - Math.sign(error) * .3; if (e.locomotion) e.locomotion.omega = 0; }
+      const v = c.velocity; if (v && Math.hypot(v.x, v.z) > .5) this.faceTravel(e, v.x, v.z);
+      // Shoved without moving itself (the courier walks into the standing corgi): it turns round quickly (12 rad/s) and
+      // trots ahead instead of sliding backwards while still facing her.
+      else if (e.motion && e.motion.speed > .5) {
+        const heading = -Math.atan2(e.motion.velocity.z, e.motion.velocity.x), delta = Math.atan2(Math.sin(heading - e.transform.yaw), Math.cos(heading - e.transform.yaw));
+        e.transform.yaw += Math.sign(delta) * Math.min(Math.abs(delta), 12 / 60); if (e.locomotion) e.locomotion.omega = 0;
       }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
+  }
+  private faceTravel(e: EntitySnapshot, vx: number, vz: number): void {
+    const heading = -Math.atan2(vz, vx), error = Math.atan2(Math.sin(heading - e.transform.yaw), Math.cos(heading - e.transform.yaw));
+    if (Math.abs(error) > .3) { e.transform.yaw = heading - Math.sign(error) * .3; if (e.locomotion) e.locomotion.omega = 0; }
   }
   /** While riding, the corgi runs alongside at a fixed lateral offset (right of the heading, slightly behind), never in the cargo box. */
   private readonly side = { x: 0, z: 0 };
