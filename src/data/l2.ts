@@ -59,7 +59,7 @@ export const l2 = {
 /** Named world points authored into the L2 layout copy (resolved through the ordinary mission anchor lookup). */
 export const l2Anchors: Record<string, P> = {
   'l2-start': [-73.6, 44.6],
-  'l2-axe-rack': [-69.4, 46.6],
+  'l2-axe-rack': [-74.4, 41.7],
   'l2-truck': [-70.6, 36.7],
   'l2-board': [-72.55, 37.2],
   'l2-bench-1': [-75.7, 45.0], 'l2-bench-2': [-75.7, 43.2], 'l2-bench-3': [-69.0, 43.6],
