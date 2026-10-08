@@ -1,6 +1,6 @@
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { Rng } from '../../core/Rng';
-import { l2, l2TruckRoute } from '../../data/l2';
+import { l2, l2Station, l2StationLooks, l2Truck, l2TruckRoute } from '../../data/l2';
 import { Outbreak } from '../outbreak/Outbreak';
 import { allyState } from '../outbreak/Allies';
 import { l2Dressing } from '../../levels/L2/layout';
@@ -79,7 +79,7 @@ export class LevelTwoRescue {
 
   // ---------------------------------------------------------------------------------------------------------- setup
   private spawnTruck(): void {
-    const v = this.world.vehicles!, a = this.anchor('l2-truck'), id = v.spawn('vehicle.fire-engine', a, Math.PI / 2);
+    const v = this.world.vehicles!, a = this.anchor('l2-truck'), id = v.spawn('vehicle.fire-engine', a, l2Truck.yaw);
     this.s.truckId = id; this.kinematic();
     this.parkNav(true);
   }
@@ -98,9 +98,9 @@ export class LevelTwoRescue {
     return [{ activity: kind, anchor: 'l2/station', target: at, facing, ticks: 60 * 60, ...(seat ? { seat } : {}) }];
   }
   private spawnStation(): void {
-    const o = this.outbreak(), truck = this.anchor('l2-truck');
+    const o = this.outbreak();
     // Six named firefighters: checking gear, washing the truck, eating, chatting. Allies, not protected.
-    const looks: Point[] = [{ x: -70.6, z: 47.6 }, { x: -72.4, z: 47.6 }, { x: -73.6, z: 42 }, { x: -74.6, z: 42.4 }, truck, truck];
+    const looks: Point[] = l2StationLooks.map(([x, z]) => ({ x, z }));
     for (let i = 1; i <= 6; i++) {
       const p = this.snap(this.anchor(`l2-crew-${i}`));
       const id = o.spawnPedestrian(p, { role: 'firefighter', model: 'npc.firefighter-alive', tint: ['#c4473d', '#d4ad32', '#c4473d', '#2f4858', '#d4ad32', '#c4473d'][i - 1], tier: 'average', schedule: this.schedule(p, looks[i - 1], i === 3 || i === 4 ? 'chat' : i === 5 ? 'water' : 'look') });
@@ -110,8 +110,9 @@ export class LevelTwoRescue {
     }
     // Three to five frightened, lightly injured civilians on the benches.
     for (let i = 1; i <= l2.calm.civiliansOnBenches; i++) {
-      const bench = this.anchor(`l2-bench-${Math.min(3, i)}`), seat = { x: bench.x, z: bench.z + (i === 4 ? 1.2 : 0) }, p = this.snap(seat, .35);
-      const id = o.spawnPedestrian(p, { tier: 'frail', schedule: this.schedule(p, { x: -72.3, z: p.z }, 'sit', seat) });
+      // Seated facing out of the bays (station-local +x).
+      const bench = this.anchor(`l2-bench-${Math.min(4, i)}`), seat = { x: bench.x, z: bench.z }, p = this.snap(seat, .35);
+      const id = o.spawnPedestrian(p, { tier: 'frail', schedule: this.schedule(p, { x: p.x + Math.cos(l2Station.yaw) * 3, z: p.z - Math.sin(l2Station.yaw) * 3 }, 'sit', seat) });
       this.s.benchIds.push(id);
     }
   }

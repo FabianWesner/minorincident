@@ -8,15 +8,17 @@ type P = readonly [number, number];
 export const l2 = {
   /** Beat 1-2: the calm in the bay, then the alarm (seeded inside the window). */
   calm: { alarmAtS: [20, 30] as P, crewToTruckMaxS: 8, crewRunMs: 4.2, civiliansOnBenches: 4 },
-  /** Beat 3: the truck ride (kinematic route through Elm -> Juniper -> Main Row). */
-  ride: { cruiseMs: 7.6, cornerMs: 4.2, accelMs2: 2.6, zoomOut: 1.15, exitWithinS: 4, controlWithinS: .5, boardInteractS: .6 },
+  /** Beat 3: the truck ride (kinematic route, Main Row west from the station since 2026-10-08: 83 m, so it cruises at 5.6 m/s
+   * through the wrecks instead of 7.6 m/s over the old 150 m Elm -> Juniper -> Main Row loop; the ride stays 15-25 s). */
+  ride: { cruiseMs: 5.6, cornerMs: 4.2, accelMs2: 2.6, zoomOut: 1.15, exitWithinS: 4, controlWithinS: .5, boardInteractS: .6 },
   /** Beat 4-5: arrival, doors, release and the ambush reveal. */
   rescue: {
     forceDoorsS: 4, trapped: { high: 30, low: 20 }, releaseOverS: 11, ambush: 24, crewHp: 100,
     /** Emergence points of the ambush (refuge doors 26-38 m from the front door, three directions >= 60 degrees apart). */
-    ambushDoors: [['refuge-door-1', 8], ['refuge-door-17', 8], ['refuge-door-8', 8]] as readonly (readonly [string, number])[],
+    // Numbers follow the D-GROVE door order (sorted by position); renumbered 2026-10-08 when the station moved (same three doors).
+    ambushDoors: [['refuge-door-2', 8], ['refuge-door-19', 8], ['refuge-door-10', 8]] as readonly (readonly [string, number])[],
     /** Where each ambush street runs: the loading door, the forecourt, Main Row in front of the market. */
-    ambushRush: { 'refuge-door-1': [-50, -36], 'refuge-door-17': [-46, -38], 'refuge-door-8': [-48, -34] } as Record<string, P>,
+    ambushRush: { 'refuge-door-2': [-50, -36], 'refuge-door-19': [-46, -38], 'refuge-door-10': [-48, -34] } as Record<string, P>,
     /** Fleeing people run for the north and east town edges (the nearby houses are locked); the south stays the courier's way out. */
     refuges: ['edge-in-3', 'edge-in-4'] as readonly string[],
     /** Trapped people visible at the open storefront before the release (x, z, yaw): east glass and south glass. */
@@ -56,14 +58,33 @@ export const l2 = {
   bots: { seeds: 20, completeMedianS: [105, 210] as P, newbieMedianS: [120, 240] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 1 },
 } as const;
 
+/**
+ * Fire Station 3, where L1 ends and L2 starts: the D-GROVE placement frame (position, yaw; a unit test keeps it equal to the
+ * layout). Moved 2026-10-08 from the south-west corner to Main Row (PO L1 route). Station-local metres: x points out of the
+ * bays, z along the facade (the right bay with the L1 trigger at z -1.23); the interior is x -4.5..1.5, the apron 1.5..5.85.
+ */
+export const l2Station = { x: 38.8, z: -41.05, yaw: -Math.PI / 2 } as const;
+/** Station-local (x out of the bays, z along the facade) to world, same rotation as the layout placements. */
+export const stationPoint = (lx: number, lz: number): P => [
+  l2Station.x + lx * Math.cos(l2Station.yaw) + lz * Math.sin(l2Station.yaw), l2Station.z - lx * Math.sin(l2Station.yaw) + lz * Math.cos(l2Station.yaw)];
+/** The engine waits on Main Row in front of the open bays, nose west toward Grove Market. */
+const truck = { x: 40.0, z: -31.8, yaw: Math.PI } as const;
+/** Truck-local (x forward, z to the right of the cab: north while the nose points west) to world. */
+const truckPoint = (lx: number, lz: number): P => [truck.x + Math.cos(truck.yaw) * lx + Math.sin(truck.yaw) * lz, truck.z - Math.sin(truck.yaw) * lx + Math.cos(truck.yaw) * lz];
+export const l2Truck = truck;
+
 /** Named world points authored into the L2 layout copy (resolved through the ordinary mission anchor lookup). */
 export const l2Anchors: Record<string, P> = {
-  'l2-start': [-73.6, 44.6],
-  'l2-axe-rack': [-69.4, 46.6],
-  'l2-truck': [-70.6, 36.7],
-  'l2-board': [-72.55, 37.2],
-  'l2-bench-1': [-75.7, 45.0], 'l2-bench-2': [-75.7, 43.2], 'l2-bench-3': [-69.0, 43.6],
-  'l2-crew-1': [-71.0, 45.6], 'l2-crew-2': [-72.4, 46.4], 'l2-crew-3': [-74.6, 42.4], 'l2-crew-4': [-73.6, 42.0], 'l2-crew-5': [-68.6, 38.2], 'l2-crew-6': [-73.0, 39.0],
+  'l2-start': stationPoint(3.4, 2.1),
+  // On the back wall of the left bay (the rack mounts on the wall behind it, see L2Props).
+  'l2-axe-rack': stationPoint(-3.9, 3.0),
+  'l2-truck': [truck.x, truck.z],
+  // Crew door on the station side of the cab.
+  'l2-board': truckPoint(-.5, 1.95),
+  // Two seats on the bench by the open bay, two on the bench deeper in the left bay.
+  'l2-bench-1': stationPoint(1.3, 2.5), 'l2-bench-2': stationPoint(1.3, .7), 'l2-bench-3': stationPoint(-1.3, 3.8), 'l2-bench-4': stationPoint(-1.3, 2.0),
+  'l2-crew-1': stationPoint(6.0, 3.1), 'l2-crew-2': stationPoint(4.6, 3.9), 'l2-crew-3': stationPoint(2.4, -.1), 'l2-crew-4': stationPoint(3.4, -.5),
+  'l2-crew-5': truckPoint(-2.0, 1.9), 'l2-crew-6': stationPoint(4.0, -3.5),
   'l2-truck-stop': [-43.0, -30.4],
   'l2-market': [-55.6, -42.2],
   'l2-door-front': [-50.7, -42.2],
@@ -74,9 +95,12 @@ export const l2Anchors: Record<string, P> = {
   'l2-cluster': [48, 30],
   'l2-cluster-alarm': [48.6, 12.4],
   'l2-side-gate': [81.5, 35.8],
-  'photo-l2-station-calm': [-72.5, 44.5], 'photo-l2-alarm': [-72.5, 43], 'photo-l2-truck-ride': [-30, 0],
+  'photo-l2-station-calm': stationPoint(4.5, 2.0), 'photo-l2-alarm': stationPoint(4.5, .5), 'photo-l2-truck-ride': [-30, 0],
   'photo-l2-doors-open': [-50, -40], 'photo-l2-collapse': [-48, -36], 'photo-l2-streets-w1': [-37.8, -35.0],
   'photo-l2-cluster': [49, 29], 'photo-l2-bridge-checkpoint': [78, 30],
 };
-/** Truck route (centre line), station apron -> Elm -> Juniper west -> Main Row -> Grove Market forecourt. */
-export const l2TruckRoute: readonly P[] = [[-70.6, 36.7], [-70.6, 30.6], [-30.6, 30.6], [-30.6, -30.4], [-43.0, -30.4]];
+/** What the crew look at while they wait (gear, the truck), and the alarm beacons above the two bays (x, z). */
+export const l2StationLooks: readonly P[] = [stationPoint(6.4, 5.1), stationPoint(4.6, 5.1), stationPoint(3.4, -.5), stationPoint(2.4, -.1), [truck.x, truck.z], [truck.x, truck.z]];
+export const l2Beacons: readonly P[] = [stationPoint(1.1, 1.9), stationPoint(1.1, -1.9)];
+/** Truck route (centre line): Main Row west from the station, in the westbound lane past the W1 wrecks, to the Grove Market forecourt. */
+export const l2TruckRoute: readonly P[] = [[truck.x, truck.z], [-26.0, -31.8], [-43.0, -30.4]];
