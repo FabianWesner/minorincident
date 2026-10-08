@@ -142,7 +142,10 @@ export class L1Story {
     const player = world.entities.get(1)!;
     if (Math.hypot(player.transform.x - door.x, player.transform.z - door.z) > beat.fireTriggerM) return;
     const dx = trigger.x - door.x, dz = trigger.z - door.z, d = Math.hypot(dx, dz) || 1;
-    const waving = { x: door.x - dz / d * 1.45 - dx / d * .6, z: door.z + dx / d * 1.45 - dz / d * .6 };
+    // Beside the bay mouth, 0.6 m outside, on the side away from the game camera (it looks from +X +Z), so she never stands
+    // between the camera and the floor ring, whichever way the station faces (south onto Main Row since 2026-10-08).
+    const px = -dz / d, pz = dx / d, side = px + pz > 0 ? -1.1 : 1.1;
+    const waving = { x: door.x + px * side - dx / d * .6, z: door.z + pz * side - dz / d * .6 };
     if (!this.l1.firefighterId) this.l1.firefighterId = this.pedestrian(waving, 'npc.firefighter-alive', 'firefighter', '#b5332b');
     const ff = world.entities.get(this.l1.firefighterId ?? 0);
     if (!ff) return;

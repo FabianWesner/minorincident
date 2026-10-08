@@ -4,7 +4,7 @@ export const dialogue: Record<string, string> = {
   'L1.pickedUp': 'Sealed and signed. The Medical Annex is on Larch Street. Take the bike, it is quicker.',
   'L1.delivered': 'Delivered ✓',
   'L1.bang': 'What was that bang? …Hey, are you okay? Get off the street — grab anything you can!',
-  'L1.fire': 'The fire station on Birch — they’ve got a shutter door. Go!',
+  'L1.fire': 'The fire station up on Main Row — they’ve got a shutter door. Go!',
   'L1.twist': 'Delivery complete. Outbreak: not contained.',
   'L2.briefing': 'Fire Station 3, a few hours later. Organized help still exists — for now.',
   'L2.captain': 'Grab some water. You’re safe here — for now.',
