@@ -1,12 +1,20 @@
 """Maple Hardware — deterministic geometry-only Hero building, metres, +X front.
 All signage has >= 3 mm clearance. Root, roof and interior are visibility
 assemblies; door_front and the three lamps retain their joint origins.
-Run only through experiment/tools/blender_run.py.
+Run through tools/blender/build.py with the headless asset pipeline.
 """
 import argparse, json, math, random, subprocess, sys
 from pathlib import Path
 import bpy, bmesh
 from mathutils import Vector, Matrix
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+# Damage deliveries reuse these native primitives before batching.
+from sslib.commerce_damage import consume_arguments, build_variants, finish_native
+COMMERCE = consume_arguments()
+if COMMERCE and COMMERCE['dispatch']:
+    build_variants(Path(__file__), COMMERCE['decay'], COMMERCE['output'], COMMERCE['tierOnly'])
+    sys.exit(0)
 
 HERE = Path(__file__).resolve().parent
 p = argparse.ArgumentParser()
@@ -17,7 +25,7 @@ a = p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 bpy.ops.wm.read_factory_settings(use_empty=True)
 scene = bpy.context.scene
 rng = random.Random(731)
-DISTANT = False
+DISTANT = bool(COMMERCE)
 COLORS = {'woodWarm':'c18440','schoolBusYellow':'e8b568','sidewalk':'c6afa0',
           'asphalt':'756577','uiDark':'34303e','picketWhite':'f2dfc6',
           'brick':'a8483a','backpackTeal':'2f6e6a','windowGlow':'ffb344'}
@@ -46,7 +54,7 @@ lamps=[empty('lamp_'+str(i),(2.91,y,4.94),root) for i,y in enumerate([-4.1,0,4.1
 def finish(o,name,mat,parent=root,bevel=0):
     o.name=name;o.data.materials.append(M[mat])
     bpy.context.view_layer.objects.active=o
-    if bevel:
+    if bevel and not COMMERCE:
         mod=o.modifiers.new('soft edges','BEVEL');mod.width=bevel;mod.segments=2 if bevel>=.025 and not DISTANT else 1
         bpy.ops.object.modifier_apply(modifier=mod.name)
         mod=o.modifiers.new('weighted normals','WEIGHTED_NORMAL');mod.keep_sharp=True
@@ -60,7 +68,7 @@ def box(name,loc,size,mat,parent=root,bevel=.025):
     return finish(o,name,mat,parent,min(bevel,min(size)*.35))
 
 def cyl(name,loc,r,depth,mat,parent=root,axis='z',n=20):
-    bpy.ops.mesh.primitive_cylinder_add(vertices=n,radius=r,depth=depth,location=loc)
+    bpy.ops.mesh.primitive_cylinder_add(vertices=min(n, 8 if COMMERCE and COMMERCE['tier']==2 else 12) if COMMERCE else n,radius=r,depth=depth,location=loc)
     o=bpy.context.object
     if axis=='x':o.rotation_euler.y=math.pi/2
     if axis=='y':o.rotation_euler.x=math.pi/2
@@ -293,6 +301,10 @@ tube('rear_conduit',[(-2.879,-2.14,.39),(-2.879,-2.14,2.78),(-2.879,-1.84,2.78)]
 
 for group in lamps: group.location.z += .28
 empty('front',(3.05,0,2.5),root)
+
+if COMMERCE:
+    finish_native(Path(__file__), COMMERCE)
+    sys.exit(0)
 
 # Material batching stays inside independently controlled assemblies.
 parents=[root,roof,inside,door]+lamps+cart_wheels
