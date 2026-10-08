@@ -7,7 +7,7 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
-import { meshopt } from '@gltf-transform/functions';
+import { getBounds, meshopt } from '@gltf-transform/functions';
 import { MeshoptDecoder, MeshoptEncoder } from 'meshoptimizer';
 import { Box3, Mesh, type Object3D } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -36,7 +36,9 @@ export async function compressLayoutGlb(path: string): Promise<{ before: number;
   const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder, 'meshopt.encoder': MeshoptEncoder });
   const document = await io.readBinary(input);
   if (document.getRoot().listExtensionsUsed().some(e => e.extensionName === 'EXT_meshopt_compression')) return { before: input.length, after: input.length, skipped: true };
-  await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'medium' }));
+  // Long districts (the 344 m L3 corridor) need 16-bit positions to stay within the tolerance below.
+  const bounds = document.getRoot().listScenes().map(scene => getBounds(scene)), extent = Math.max(0, ...bounds.flatMap(b => [0, 2].map(a => b.max[a] - b.min[a])));
+  await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'medium', ...(extent > 200 ? { quantizePosition: 16 } : {}) }));
   const output = await io.writeBinary(document);
   const [a, b] = [signature(await parse(input)), signature(await parse(output))];
   // Quantization inserts no nodes; it rescales mesh nodes. Compare by traversal order and name.

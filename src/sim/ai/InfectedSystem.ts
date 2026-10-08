@@ -5,7 +5,7 @@ import { noise } from '../../data/noise';
 // Zone enter/alert pattern adapted from Bruno Simon folio-2025 Zones.js (MIT, 41046b5).
 import { infectedDef, infectedRecovery, l1ReactionS, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
-import { groveDistrictId } from '../../levels/districts/types';
+import { isOutbreakDistrict } from '../../levels/districts/types';
 import type { DistractionEvent, HumanTarget, HumanTargetQuery } from '../outbreak/types';
 import { Perception, WorldHumans } from './Perception';
 import { planSearch, searchPlan, wanderGoal, type L1Brain } from './Search';
@@ -73,7 +73,7 @@ export class InfectedSystem {
     });
     world.events.on('noise', (event) => { if (event.type === 'noise') this.noise(event.position, event.radius, event.radius >= 25, event.sourceId); });
     world.events.on('outbreak.distraction', (event) => { if (event.type === 'outbreak.distraction') this.distraction(event); });
-    if (world.districts?.districts.some((d) => d.id === groveDistrictId)) this.configureL1v2();
+    if (world.districts?.districts.some((d) => isOutbreakDistrict(d.id))) this.configureL1v2();
     world.events.on('combat.hit', (event) => {
       if (event.type !== 'combat.hit' || event.amount <= 0) return;
       const target = world.entities.get(event.targetId);
