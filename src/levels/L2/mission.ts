@@ -19,7 +19,8 @@ export function levelTwoMission(resolve: (district: DistrictId, name: string) =>
   for (const name of names) def.anchors[name] = resolve('D-GROVE', name);
   for (let i = 1; i <= 80; i++) { try { def.anchors[`refuge-door-${i}`] = resolve('D-GROVE', `refuge-door-${i}`); } catch { break; } }
   def.anchors['l2-gate-inside'].radius = 3;
-  def.anchors['l2-board'].radius = 1.2; def.anchors['l2-axe-rack'].radius = 1.2;
+  // Forgiving rings (PO 10-08: the axe took several tries): standing anywhere in them counts.
+  def.anchors['l2-board'].radius = 1.8; def.anchors['l2-axe-rack'].radius = 1.5;
   const step = (id: string, type: ObjectiveDef['type'], text: string, anchor: string, complete: Trigger, start: ObjectiveDef['start']): ObjectiveDef => {
     const s: ObjectiveDef = { id, type, text, anchor, start, complete, fail: [] }; def.steps.push(s); return s;
   };

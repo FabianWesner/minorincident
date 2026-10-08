@@ -13,6 +13,8 @@ import type { FailReason, MissionCheckpoint, MissionDef, MissionState, Objective
 
 type Unticked<E> = E extends { tick: number } ? Omit<E, 'tick'> : never;
 /** Level-owned objective graph, script actions, checkpoints and result counters. */
+/** Hold timers survive stepping this far outside an interact ring; a click this close to a ring walks to its centre. */
+const INTERACT_SLACK_M = 0.5, CLICK_SNAP_M = 1.5;
 export class Mission {
   readonly state: MissionState;
   private readonly stops: (() => void)[] = [];
@@ -71,8 +73,18 @@ export class Mission {
     if (t.kind === 'all' || t.kind === 'any') t.triggers.forEach(child => this.registerZones(child));
   }
   private entity(actor: string): EntitySnapshot | undefined { return this.world.entities.get(this.state.actors[actor]); }
-  private inside(anchor: string, entity: EntitySnapshot | null | undefined = this.world.entities.get(1)): boolean {
-    const a = this.def.anchors[anchor]; return !!entity && (entity.transform.x - a.x) ** 2 + (entity.transform.z - a.z) ** 2 <= a.radius ** 2;
+  private inside(anchor: string, entity: EntitySnapshot | null | undefined = this.world.entities.get(1), slack = 0): boolean {
+    const a = this.def.anchors[anchor]; return !!entity && (entity.transform.x - a.x) ** 2 + (entity.transform.z - a.z) ** 2 <= (a.radius + slack) ** 2;
+  }
+  /** A click near an active stand-to-interact ring (its rack, its truck door) walks to the ring centre instead of stopping against the prop. */
+  interactSnap(p: { x: number; z: number }): { x: number; z: number } {
+    if (this.state.phase !== 'playing') return p;
+    for (const def of this.def.steps) {
+      if (this.state.steps[def.id].status !== 'active' || def.complete.kind !== 'interact' || def.complete.actor) continue;
+      const a = this.def.anchors[def.complete.anchor];
+      if (Math.hypot(p.x - a.x, p.z - a.z) <= a.radius + CLICK_SNAP_M) return { x: a.x, z: a.z };
+    }
+    return p;
   }
   /** True while the player stands in an active step's interact ring: an `E` press belongs to the objective
    * (E19 QA1-01: pick up the parcel without also leaving the bicycle). */
@@ -127,7 +139,8 @@ export class Mission {
       const visit = (t: Trigger): void => { if (t.kind === 'hold') holds.add(t.anchor); else if (t.kind === 'all' || t.kind === 'any') t.triggers.forEach(visit); };
       visit(def.complete);
       for (const anchor of holds) { step.holds ??= {}; step.holds[anchor] = alive && this.inside(anchor) ? (step.holds[anchor] ?? 0) + 1 : 0; }
-      step.interaction = alive && this.inside(def.anchor) ? step.interaction + 1 : 0;
+      // Stand-to-interact tolerates a small drift past the ring edge (a shove, the corgi, a turn): the hold only resets when she really leaves.
+      step.interaction = !alive ? 0 : this.inside(def.anchor) ? step.interaction + 1 : def.complete.kind === 'interact' && this.inside(def.anchor, undefined, INTERACT_SLACK_M) ? step.interaction : 0;
       const failure = def.fail.find(f => this.satisfied(f.trigger, step));
       if (failure) { this.fail(failure.reason, def); break; }
       if (def.timer !== undefined && this.world.tick - step.started >= Math.ceil(def.timer * 60)) { this.fail('timeout', def); break; }
