@@ -31,7 +31,7 @@ export async function encounter(seed: number, count: number, weapon: string, pol
       const e = w.entities.get(id)!; e.transform.yaw = Math.atan2(e.transform.z, -e.transform.x); ids.push(id);
     }
     const hits: EncounterHit[] = []; let lastSwing = -999, clicks = 0, swings = 0, clicked = 0; const windups = new Map<number, number>();
-    w.events.on('telegraph', e => { if (e.type === 'telegraph') windups.set(e.sourceId, e.tick); });
+    w.events.on('telegraph', e => { if (e.type === 'telegraph' && e.sourceId !== undefined) windups.set(e.sourceId, e.tick); });
     w.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1) { lastSwing = e.tick; swings++; } });
     w.events.on('infected.attack', e => {
       if (e.type !== 'infected.attack' || e.targetId !== 1 || !e.amount) return;
