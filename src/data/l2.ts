@@ -101,6 +101,6 @@ export const l2Anchors: Record<string, P> = {
 };
 /** What the crew look at while they wait (gear, the truck), and the alarm beacons above the two bays (x, z). */
 export const l2StationLooks: readonly P[] = [stationPoint(6.4, 5.1), stationPoint(4.6, 5.1), stationPoint(3.4, -.5), stationPoint(2.4, -.1), [truck.x, truck.z], [truck.x, truck.z]];
-export const l2Beacons: readonly P[] = [stationPoint(1.1, 1.9), stationPoint(1.1, -1.9)];
+export const l2Beacons: readonly P[] = [stationPoint(1.7, -3.1), stationPoint(1.7, 1.7)];
 /** Truck route (centre line): Main Row west from the station, in the westbound lane past the W1 wrecks, to the Grove Market forecourt. */
 export const l2TruckRoute: readonly P[] = [[truck.x, truck.z], [-26.0, -31.8], [-43.0, -30.4]];
