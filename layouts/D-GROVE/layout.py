@@ -174,17 +174,19 @@ def row(name, x0, x1, facing, line, rear, kinds, drives=None, gate_at=None):
         gx = (lx0 + 1.7) if door[0] > hx else (lx1 - 1.7)   # clutter on the side away from the door path
         gz = line + sgn * 2.6
         face = yaw
-        g.place('prop.flower-bed.large', door[0] - 2.7, line + sgn * .75, yaw + PI / 2, 1.0, soft=True)
+        # long side parallel to the picket fence and clear of it; try both sides of the door path, skip when neither fits
+        for bed_dx in (-2.7, 2.7):
+            if g.place('prop.flower-bed.large', door[0] + bed_dx, line + sgn * .8, yaw, 1.0, soft=True): break
         if variant == 0:
             g.place('prop.gnome', gx, gz, face, 1.0, soft=True); g.place('prop.flamingo', gx + .7, gz + .2, face, 1.0, soft=True)
         elif variant == 1:
-            g.place('prop.bbq', gx, gz, face, 1.0, soft=True); g.place('prop.lawn-chair-a', gx + 1.0, gz, face + .5, 1.0, soft=True); g.place('prop.lawn-chair-b', gx + 1.0, gz + 1.0, face - .3, 1.0, soft=True)
+            g.place('prop.bbq', gx, gz, face, 1.0, soft=True); g.place('prop.lawn-chair-a', gx + 1.0, gz, face + .5, (1.0, D.SEAT_SY['lawn-chair'], 1.0), soft=True, margin=.06); g.place('prop.lawn-chair-b', gx + 1.0, gz + 1.0, face - .3, (1.0, D.SEAT_SY['lawn-chair'], 1.0), soft=True, margin=.06)
         elif variant == 2:
             g.place('prop.kiddie-pool', gx + .5, gz, 0, 1.0, soft=True); g.place('prop.sprinkler', gx - 1.0, gz, 0, 1.0, soft=True)
         elif variant == 3:
             g.place('prop.wheelbarrow', gx, gz, face + .4, 1.0, soft=True); g.place('prop.hose-reel', gx + 1.1, gz, face, 1.0, soft=True)
         else:
-            g.place('prop.bench', gx + .3, gz, face, .95, soft=True); planter(gx + 2.0, gz)
+            g.place('prop.bench', gx + .3, gz, face, (.95, .95 * D.SEAT_SY['bench'], .95), soft=True); planter(gx + 2.0, gz)
     return out
 
 # Residential blocks (R0 north of the axis, R1 south of it), two rows each with an alley between the back fences
@@ -246,8 +248,8 @@ g.hedge(GX0 + 3.0, GZ0 + 1.9, GX1 - 2.5, GZ0 + 1.9, scale=1.15)
 g.hedge(GX0 + .8, GZ0 + 2.2, GX0 + .8, GZ1 - 1.5, scale=1.15)
 g.path(-79, -22, -72, -22.6)
 g.path(-76.4, -23, -75.6, -7.5)
-g.place('prop.bench', -77.4, -16.5, FACE_YAW['E'], .95, soft=True)
-g.place('prop.bench', -74.6, -12.5, FACE_YAW['W'], .95, soft=True)
+g.place('prop.bench', -77.4, -16.5, FACE_YAW['E'], (.95, .95 * D.SEAT_SY['bench'], .95), soft=True)
+g.place('prop.bench', -74.6, -12.5, FACE_YAW['W'], (.95, .95 * D.SEAT_SY['bench'], .95), soft=True)
 planter(-78.5, -7.0)
 g.place('prop.trash-bin', -73.2, -7.2, FACE_YAW['E'], .55, soft=True)
 g.place('prop.garden-bush', -81.5, -16.0, 0, 1.0, soft=True)
@@ -281,7 +283,7 @@ g.path(PASS_X - 3.2, SHOP_FRONT - .1, PASS_X + 3.2, SHOP_FRONT + 3.0, 'uiDark') 
 g.place('veh.courier-van', PASS_X, SHOP_FRONT + 1.7 - .35, 0, 1.0, soft=True)
 # shop-front dressing: A-frame / vending / bench between the planters, lamps come with the kerb line below
 g.path(depot_x - 4.0, SHOP_FRONT - .2, depot_x + 4.0, ZN - 4.5, 'sidewalk')     # open paved plaza in front of the counter (>= 3 m clear)
-g.place('prop.bench', -53.5, SHOP_FRONT + 1.0, FACE_YAW['S'], .9, soft=True)
+g.place('prop.bench', -53.5, SHOP_FRONT + 1.0, FACE_YAW['S'], (.9, .9 * D.SEAT_SY['bench'], .9), soft=True)
 # service strip behind the shops (accessible through the passage): crates, bins, fence line
 for x in (-78, -69, -60):
     g.place('prop.trash-bin', x, -46.4, FACE_YAW['N'], .55, soft=True)
@@ -339,8 +341,8 @@ for (x, z) in [(60, -44), (68, -40), (76, -45), (80, -36), (58, -35)]:
     g.place('prop.street-tree' if (x + z) % 2 else 'prop.street-tree-blossom', x, z, 0, 1.0, soft=True)
 g.hedge(54.8, -34.0, 63.0, -34.0, scale=1.15)
 g.hedge(70.0, -34.0, 83.2, -34.0, scale=1.15)
-g.place('prop.bench', 66.5, -36.5, FACE_YAW['N'], .95, soft=True)
-g.place('prop.bench', 70.5, -41.0, FACE_YAW['W'], .95, soft=True)
+g.place('prop.bench', 66.5, -36.5, FACE_YAW['N'], (.95, .95 * D.SEAT_SY['bench'], .95), soft=True)
+g.place('prop.bench', 70.5, -41.0, FACE_YAW['W'], (.95, .95 * D.SEAT_SY['bench'], .95), soft=True)
 planter(66.0, -32.2)
 g.flowers(56, -48, 82, -34, 50)
 
@@ -537,7 +539,7 @@ for bx, bz, bf in [(-68.0, cafe_z - 4.2, 'E'), (-68.0, cafe_z + 4.2, 'E'), (-68.
                    (-45.0, -3.8, 'S'), (-12.0, 3.8, 'N'), (30.0, -3.8, 'S'), (-48.0, 3.8, 'N'), (6.0, -3.8, 'S'), (40.0, 3.8, 'N'),
                    (-20.0, ZS - 3.8, 'S'), (-48.0, SHOP_FRONT + 1.0, 'S'), (30.0, ZS + 3.8, 'N'), (62.0, 3.8, 'N')]:
     if any(abs(bx - d[0]) < 2.6 and abs(bz - d[1]) < 3.5 for d in doors): continue   # never in front of a door path
-    g.place('prop.bench', bx, bz, FACE_YAW[bf], .95, soft=True)
+    g.place('prop.bench', bx, bz, FACE_YAW[bf], (.95, .95 * D.SEAT_SY['bench'], .95), soft=True)
 
 # car wash approach lane, queue cones, hedge behind the bay, vending machine at the fuel corner
 g.path(CW_X - 1.8, SFRONT, CW_X + 1.8, CW_Z - 5.0, 'uiDark')

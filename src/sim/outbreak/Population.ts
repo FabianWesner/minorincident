@@ -1,4 +1,5 @@
 import { l1Pedestrians } from '../../data/npcs';
+import { seatAnchor } from '../npc/seats';
 import type { CivilianActivity, CivilianProp, Point } from '../npc/types';
 import type { Outbreak, PedestrianOptions } from './Outbreak';
 import type { Vec2 } from './types';
@@ -53,9 +54,9 @@ export function populateGrove(outbreak: Outbreak, count = 60): number[] {
   const free = (p: Point | null): Point | null => p && keepClear.every(c => Math.hypot(c.x - p.x, c.z - p.z) >= 4) ? p : null;
   // Seats from the layout (benches, patio and garden sets) for sit/stand routines with coffee.
   const seats = layout.placements.filter(q => /^prop\.(bench|cafe-patio-set|garden-set|lawn-chair-[ab])$/.test(q.assetId)).map(q => {
-    const seat = { x: q.position[0] + ox, z: q.position[2] + oz }, front = { x: Math.cos(q.yaw), z: -Math.sin(q.yaw) };
-    return { seat, target: snap({ x: seat.x + front.x * .9, z: seat.z + front.z * .9 }, 1.5), facing: { x: seat.x + front.x * 3, z: seat.z + front.z * 3 }, used: false };
-  }).filter((q): q is { seat: Point; target: Point; facing: Point; used: boolean } => !!free(q.target));
+    const anchored = seatAnchor(q.assetId, q.position, q.yaw, q.scale, { x: ox, z: oz }), seat = anchored ?? { x: q.position[0] + ox, z: q.position[2] + oz }, front = { x: Math.cos(q.yaw), z: -Math.sin(q.yaw) };
+    return { seat, seatLift: anchored?.lift, target: snap({ x: seat.x + front.x * .9, z: seat.z + front.z * .9 }, 1.5), facing: { x: seat.x + front.x * 3, z: seat.z + front.z * 3 }, used: false };
+  }).filter((q): q is { seat: Point; seatLift: number | undefined; target: Point; facing: Point; used: boolean } => !!free(q.target));
   const seatNear = (p: Point | null, radius: number) => p ? seats.find(q => !q.used && Math.hypot(q.seat.x - p.x, q.seat.z - p.z) <= radius) : undefined;
   /** A facing circle of 2-3 people chatting (gestures) around `center`. */
   const circle = (center: Point | null, n: number, props: (string | null)[], role?: string) => {
@@ -75,8 +76,8 @@ export function populateGrove(outbreak: Outbreak, count = 60): number[] {
     const q = seatNear(near, 14); if (!q) return false; q.used = true;
     const stroll = snap({ x: q.target.x + (rng.next() - .5) * 8, z: q.target.z + (rng.next() - .5) * 8 }, 3) ?? q.target;
     plans.push({ at: q.target, handProp: 'coffee', yaw: -Math.atan2(q.facing.z - q.seat.z, q.facing.x - q.seat.x), schedule: [
-      { activity: 'sit', anchor: 'l1/seat', target: q.target, seat: q.seat, facing: q.facing, ticks: t(10, 20), prop: 'coffee' },
-      { activity: 'stand', anchor: 'l1/seat', target: q.target, seat: q.seat, facing: q.facing, ticks: 36, prop: 'coffee' },
+      { activity: 'sit', anchor: 'l1/seat', target: q.target, seat: q.seat, seatLift: q.seatLift, facing: q.facing, ticks: t(10, 20), prop: 'coffee' },
+      { activity: 'stand', anchor: 'l1/seat', target: q.target, seat: q.seat, seatLift: q.seatLift, facing: q.facing, ticks: 36, prop: 'coffee' },
       walk(stroll, 'coffee'), look(stroll, q.seat, 'coffee', [2, 4]), walk(q.target, 'coffee')] });
     return true;
   };
