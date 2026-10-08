@@ -42,6 +42,24 @@ test('@E16 dead/downed, offscreen and wall-obscured infected never count as musi
     expect(isMusicThreat(entity, listener, clear, clear)).toBe(false);
 });
 
+test('@E16 a downed infected does not renew the hold, but getting up restores danger', () => {
+    const music = new MusicDirector('L1');
+    const entity = { transform: { x: 4, z: 0 }, health: { current: 100 }, infected: { state: 'chase', recoverAt: -1 } } as EntitySnapshot;
+    const update = (time: number) => music.update(time, {
+        alerted: 0, danger: isMusicThreat(entity, { x: 0, z: 0 }, () => true, () => true),
+    });
+    update(0);
+    expect(music.state).toBe('combat');
+    entity.health.current = 0; entity.infected!.state = 'dead'; entity.infected!.recoverAt = 600;
+    update(6.9);
+    expect(music.state).toBe('combat');
+    update(7);
+    expect(music.state).toBe('calm');
+    entity.health.current = 100; entity.infected!.state = 'chase'; entity.infected!.recoverAt = -1;
+    update(10);
+    expect(music.state).toBe('combat');
+});
+
 test('@E16 story escalation sustains dramatic music without infected and only a calm beat releases it', () => {
     const music = new MusicDirector('L2');
     music.update(0, { alerted: 0, danger: false, minimum: 0 });
