@@ -2,7 +2,7 @@
   "name": "bench-sitter",
   "ground": "sidewalk",
   "size": 20,
-  "props": [{ "id": "bench", "asset": "prop.bench", "at": [0, 0], "yaw": 90, "scale": 0.95 }],
+  "props": [{ "id": "bench", "asset": "prop.bench", "at": [0, 0], "yaw": 90, "scale": [0.95, 0.551, 0.95] }],
   "actors": [
     { "id": "sitter", "kind": "pedestrian", "at": [2.5, -3], "yaw": 180,
       "look": { "model": "npc.civilian-man-b", "tint": "#d8b04a", "handProp": "coffee" },
