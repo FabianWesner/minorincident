@@ -57,6 +57,8 @@ export class Game {
   /** Level loaded behind the title/menus (load lane): consumed by the matching loadLevel. */
   private speculative: { id: string; seed: number } | null = null;
   private speculativeRunning = false;
+  /** How the current mission level was started (restart replays it; campaign is the state at level start). */
+  private levelStart: { id: string; seed?: number; tier?: Tier; campaign: CampaignSave | null } | null = null;
   /** A level pick may arrive before the menu preload finishes its layout/audio awaits. */
   private preloadForeground = false;
   /** Boot-time sound bank load that runs after the title is shown; awaited before the next audio reset. */
@@ -125,7 +127,7 @@ export class Game {
   loadScenario(name: string | null, seed = 1, deferAudio = false): Promise<void> {
     if (name && performanceLevels[name]) return this.loadLevel(performanceLevels[name].level, { seed }, name);
     const load = this.levelQueue.then(async () => {
-      this.speculative = null; this.view.missionHidden = false; this.view.unfreeze();
+      this.speculative = null; this.levelStart = null; this.view.missionHidden = false; this.view.unfreeze();
       this.loading = true; this.restoredWhilePaused = false;
       try {
         await this.audioLoad; this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
@@ -152,7 +154,7 @@ export class Game {
       // A level already loaded behind the menus only needs the campaign, audio and UI steps it skipped.
       const ready = this.speculative;
       if (!speculative && ready && ready.id === id && (opts?.seed ?? 1) === ready.seed && !opts?.tier && !opts?.checkpoint && !opts?.progression && !performanceScenario && this.world.missions?.def.id === id) {
-        this.speculative = null;
+        this.speculative = null; this.noteLevelStart(id, opts);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if (quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
         if (this.campaign) { this.applyCampaign(); if (id === 'L1') this.world.combat?.clearLoadout(); this.watchCampaign(); }
@@ -165,6 +167,7 @@ export class Game {
       this.loading=true; this.restoredWhilePaused = false;
       try{
         if(opts?.progression)this.campaign=preset(opts.progression);
+        if (!speculative && !(opts?.checkpoint && this.levelStart?.id === id)) this.noteLevelStart(id, opts, !!performanceScenario);
         if(opts?.checkpoint && this.world.missions?.def.id === id) { this.world.missions.loadCheckpoint(opts.checkpoint); this.view.update(1); return; }
         if (!speculative) this.campaignUI.reset();
         // Keep the current picture (title backdrop) on screen while the level loads and warms up.
@@ -194,6 +197,16 @@ export class Game {
       }catch(error){ this.view.unfreeze(); this.view.missionHidden = false; throw error; }
       finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
+  }
+  private noteLevelStart(id: string, opts?: { seed?: number; tier?: Tier; source?: unknown; setup?: unknown }, perf = false): void {
+    this.levelStart = !perf && !opts?.source && !opts?.setup && missionIds.includes(id as MissionId) ? { id, seed: opts?.seed, tier: opts?.tier, campaign: this.campaign ? structuredClone(this.campaign) : null } : null;
+  }
+  get canRestartLevel(): boolean { return this.levelStart !== null && !this.loading; }
+  /** Restart the current level from its very beginning: same level, campaign state and options as at level start (a seedless level draws a new run seed). */
+  restartLevel(): Promise<void> {
+    const start = this.levelStart; if (!start) return Promise.reject(new Error('No level to restart'));
+    if (start.campaign) this.campaign = structuredClone(start.campaign);
+    return this.loadLevel(start.id, { seed: start.seed, tier: start.tier });
   }
   async startCampaign(character:SurvivorVariant):Promise<void> {
     this.campaign=newCampaign(character,Number(this.params.get('seed')??1));this.campaign.settings={...this.audio.settings};this.saveCampaign();await this.loadLevel('L1');
