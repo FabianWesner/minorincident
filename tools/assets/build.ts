@@ -13,7 +13,7 @@ import { normalizeForward, normalizeScale, generateStumpCaps, optimizeAsset } fr
 export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'low'; decay?: string } = {}): Promise<string> {
   if (!def.script) throw new Error(`No build script for ${def.id}`);
   if (options.decay && !def.decayVariants.includes(options.decay)) throw new Error(`Unknown decay variant ${options.decay}`);
-  if (options.decay) def = { ...def, budget: { ...def.budget, triangles: def.decayTriangleBudget ?? def.budget.triangles, ...def.decayBudget }, authoredLodTriangles: def.decayAuthoredLodTriangles ?? def.authoredLodTriangles };
+  if (options.decay) def = { ...def, budget: { ...def.budget, triangles: def.decayTriangleBudget ?? def.budget.triangles, ...def.decayBudget }, dimensions: { ...def.dimensions, ...def.decayDimensions }, authoredLodTriangles: def.decayAuthoredLodTriangles ?? def.authoredLodTriangles };
   const raw = `.cache/assets/${def.id}.glb`;
   mkdirSync('.cache/assets', { recursive: true });
   const args = ['tools/blender/run.py', 'tools/blender/build.py', '--asset', def.id, '--output', raw, '--quality', options.quality ?? 'high', '--bake-ao'];

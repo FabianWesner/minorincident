@@ -74,3 +74,19 @@ All sheets are at most 1600 px wide. Required JPG copies are in /private/tmp/cla
 - b417082f — verify exact collider/physics preservation at all tiers.
 
 Deviations: final unit workers reduced from four to two per recovery note; remote smoke was scoped to Chromium (including its WebGPU crowd probe), with three slow WebGL tests retried sequentially; the only non-W5 data update refreshes stale metadata for merged chairs. Specs and runtime gameplay were not authored in this lane. No push, deployment or merge into main.
+
+
+## Rework v2 (devastation pass, orchestrator rejection "too mild")
+
+`tools/blender/sslib/fairhaven_w5.py` now applies a second, much larger collapse stage on top of the base-derived cut (COLLAPSE table): upper-corner/roof-section cutters (apartments, town hall), nave roof gap and broken belfry stump (church), cupola/pyramid removed (town hall), exposed/tilted floor slabs, sagging balconies, leaning charred beams, heaped rubble at the breach foot, soot tongues above openings, dead black window panes on ~70% of camera-facing windows, and a cold dust-grey vertex tint. Dead emissive panes are now black (uiDark) instead of blue glass. Footprints, anchors, colliders and sockets are unchanged (measure.mts: matrices exact, footprint IoU 1.0, physicsUnchanged true). Added chunks are fitted into the base AABB, so rubble heaps sit on the plinth edge rather than past the lot.
+
+New manifest field `decayDimensions` (types.ts, validate.ts, build.ts): the ruin may be shorter than the intact base (broken tower/cupola); church y 12.9 (was 18.075), town hall y 12.0 (was 15.35). x/z stay on the base value and tolerance.
+
+| Variant | LOD0 tris/draws | LOD1 | LOD2 |
+| --- | --- | --- | --- |
+| bld.apartment-block-a.w5 | 26,258 / 8 | 6,129 / 8 | 3,167 / 8 |
+| bld.apartment-block-b.w5 | 14,146 / 8 | 6,094 / 8 | 3,592 / 8 |
+| bld.town-hall.w5 | 12,688 / 7 | 4,762 / 7 | 2,709 / 7 |
+| bld.church.w5 | 15,335 / 8 | 5,128 / 8 | 2,953 / 8 |
+
+Validation v2: assets:validate 0 errors (862 tiers), typecheck, lint pass, measure.mts pass. New capture sheets: game-reference-peer.png per asset (rendered from this worktree via its own preview server on port 3358, stopped afterwards).

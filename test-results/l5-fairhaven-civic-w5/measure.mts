@@ -30,7 +30,7 @@ for(const id of ids){const def=manifest.find((x:any)=>x.id===id);const tiers=[];
  for(let lod=0;lod<3;lod++){
   const suffix=lod?`.lod${lod}`:'';const src=`assets/${id}/model${suffix}.glb`,variant=`assets/${id}/model.w5${suffix}.glb`,production=`public/assets/models/${id}.w5${suffix}.glb`;
   const base=await io.read(src),raw=await io.read(variant),doc=await io.read(production);
-  const v=validateDocument(doc,{...def,id:id+'.w5',sourceGlb:variant},statSync(production).size,lod,raw);if(v.errors.length)throw new Error(v.errors.join(';'));
+  const v=validateDocument(doc,{...def,dimensions:{...def.dimensions,...def.decayDimensions},id:id+'.w5',sourceGlb:variant},statSync(production).size,lod,raw);if(v.errors.length)throw new Error(v.errors.join(';'));
   if(v.triangles>[30000,12000,4000][lod] || v.drawCalls>8)throw new Error(`${id}:${lod}: batch budget`);
   const rootA=base.getRoot().listNodes().find((n:any)=>n.getName()==='root')!,rootB=raw.getRoot().listNodes().find((n:any)=>n.getName()==='root')!;
   if(JSON.stringify(rootA.getExtras().ss_physics)!==JSON.stringify(rootB.getExtras().ss_physics))throw new Error(`${id}:${lod}: changed physics`);
