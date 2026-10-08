@@ -40,8 +40,9 @@ export class Damage {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
     if (target.health.current <= 0) {
-      // Explosives and fire finish a downed infected for good; any other hit on it changes nothing (no timer reset).
-      if (downed(target) && lethal(hit) && damageAmount(hit, target) > 0) {
+      // Explosives and fire finish a downed infected for good; any other damaging hit restarts its down time (PO 10-08).
+      if (downed(target) && damageAmount(hit, target) > 0) {
+        if (!lethal(hit)) { this.world.infected!.down(target, false); return 0; }
         this.world.infected!.down(target, true);
         this.world.events.emit({ type: 'combat.kill', tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback: hit.knockback, amount: 0, damageType: hit.type });
       }

@@ -1,21 +1,7 @@
-# Sunset Grove bus stop
+# bld.bus-stop
 
-Reference proportions: long barrel canopy, four square posts and stepped feet,
-open back rails, three seat and three back slats, framed slogan and route map.
-Model is approximately 4.97 m wide, 2.04 m deep and 2.68 m tall. Entrance is +X;
-all feet rest on z=0. Roof can be hidden through its named parent. No moving
-parts or light emitters are present in the reference, so no animation/light
-anchors are needed. Static geometry joins by material within roof/body groups.
+Repaired authored base plus base-owned W2/W3 twins. Visually inspected the intact and both variant references in the main checkout. Reuses the original native roof arc, posts, bench and poster coordinates, 1.23 width factor and +90° author-to-production rotation. AABB is 2.0414 × 2.675 × 4.9692 m at every tier; feet stay at the original ground/origin. Roof lips and splice boss extrema are retained explicitly. No rescaling/AABB fitting of decay variants. 24/12/8 closed roof arc segments; distance recipes reduce map blocks and omit the small discarded board. Eight palette-owner batches per tier including hideable roof. The previous script's generic decimated tiers and loose manifest budgets are replaced.
 
-Five visual rounds: detailed blockout; wider silhouette and simpler lettering;
-bold font, reduced small-part bevels, geometry wear and vertex AO; closed roof
-end caps; increased canopy-chip clearance after the final game-camera review. Poster paper, map layers, lettering and paint wear
-have at least 3 mm separation from their supporting surfaces. Materials are
-exact palette tokens with scalar Principled BSDF shading and no image textures.
-Reference surface wear is represented by broad geometric chips and slat scars;
-fine mottled paint scratches are deliberately omitted at the Side tier.
+W2: two intact rear panes, one jagged broken pane, boarded poster and abandoned teal bag/parcel. W3: every rear pane smashed, torn side pane, damaged route plate, broad side/bench soot and roof scorch. Roof and bench stand in both stages; no rubble or collapse. Glass remnants are explicit closed profiles around missing space, not perforated decimation. Shared nav/door/root transforms remain unchanged. entranceSocket (.94,0,0), benchSocket (0,0,.57), navSocket (1.1,0,0) in Blender units. Fixed ss_physics and end/bench collider proxies. Fixture-free shelter.
 
-Build/render only with experiment/tools/blender_run.py, using slug
-../assets/bld.bus-stop. Font uses macOS DIN Condensed Bold when installed,
-otherwise Blender's built-in font. Exported GLB contains geometry only, so the
-font is not a runtime dependency. Vertex AO bake uses 32 samples and seed 17.
+Deliveries: assets/bld.bus-stop/model.w2[.lod1/.lod2].glb and model.w3[.lod1/.lod2].glb, corresponding public variants. No separate dotted runtime registration. Per-ID wrapper scripts delegate to the base recipe. Projected footprint IoU=1.0 on all six base/twin tier comparisons.
