@@ -42,6 +42,8 @@ export class LevelThreeBot {
   }
   /** Infected the player can see (line of sight on the walk grid), nearest first. */
   /** Internal state for traces (tools/l3). */
+  /** A forced-street run never leaves its avenue: a detour point on another avenue is dropped. */
+  private keep<T extends P>(at: T | null | undefined): T | null { return at && (this.forced === 'auto' || l3Street(at.z) === this.street) ? at : null; }
   debug() { return { street: this.street, detour: this.detour, waiting: this.waiting, medkit: this.medkit, decidedAt: this.decidedAt, stuck: this.stuck.n }; }
   private threats(p: P, radius: number): EntitySnapshot[] {
     const w = this.world;
@@ -116,12 +118,12 @@ export class LevelThreeBot {
       this.stuck.next = w.tick + 60;
       if (this.stuck.at && dist(this.stuck.at, p) < .6 && !near.length && !frame.attackTarget && !this.waiting) this.stuck.n++; else this.stuck.n = 0;
       this.stuck.at = { x: p.x, z: p.z };
-      if (this.stuck.n >= 3) { const at = this.walker.detour(w, { x: p.x + 10, z: p.z }); this.detour = at ? { ...at, until: w.tick + 150 } : null; this.stuck.n = 0; }
+      if (this.stuck.n >= 3) { const at = this.keep(this.walker.detour(w, { x: p.x + 10, z: p.z })); this.detour = at ? { ...at, until: w.tick + 150 } : null; this.stuck.n = 0; }
     }
     if (this.detour && (w.tick > this.detour.until || dist(p, this.detour) < 1)) { this.detour = null; this.walker.reset(); }
     const crowd = this.threats(p, 4.5), many = this.threats(p, 9).filter(e => this.chasing(e)).length;
     // Fight a few, flee from many: a crowd closing in (or a losing fight) means breaking away forward, not standing.
-    if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.walker.detour(w, { x: p.x + 12, z: l3.map.streets[this.street] }, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform); if (at) this.detour = { ...at, until: w.tick + 90 }; }
+    if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.keep(this.walker.detour(w, { x: p.x + 12, z: l3.map.streets[this.street] }, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform)); if (at) this.detour = { ...at, until: w.tick + 90 }; }
     if (newbie && !this.detour && this.rng.next() < .0015) this.detour = { x: p.x - 6 + this.rng.next() * 8, z: p.z + (this.rng.next() - .5) * 12, until: w.tick + 180 };
     if (this.detour) { if (crowd.length < 2 && fight(5)) return frame; go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
     // With a strong squad in the first segment a careful courier lets the officers shoot (only close threats are its own).
@@ -152,7 +154,7 @@ export class LevelThreeBot {
     if (go(target, .8, `route-${this.street}-${target.x}`) && dist(p, target) > 1.6) {
       // No route to that point (a closed pocket): take the next street over, or step aside when the street is forced.
       if (this.forced === 'auto') { this.street = STREETS[(STREETS.indexOf(this.street) + 1) % 3]; this.walker.reset(); }
-      else { const at = this.walker.detour(w, { x: p.x + 10, z }); if (at) this.detour = { ...at, until: w.tick + 120 }; }
+      else { const at = this.keep(this.walker.detour(w, { x: p.x + 10, z })); if (at) this.detour = { ...at, until: w.tick + 120 }; }
     }
     return frame;
   }

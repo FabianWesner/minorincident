@@ -61,7 +61,7 @@ export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opt
   const s0 = mission.state.l3!, officers = new Set(s0.officerIds);
   const timeline: L3Report['timeline'] = [], deathsAt: string[] = [];
   const gun: number[] = [], melee: number[] = [];
-  let squadAtFallback = 0, handgunShots = 0, turnedDuring = 0, turnedInCorridor = 0, sameLook = true;
+  let firstGun = -1, squadAtFallback = 0, handgunShots = 0, turnedDuring = 0, turnedInCorridor = 0, sameLook = true;
   const s1 = { officerKills: 0, playerKills: 0, damage: 0 };
   const audit = { sightViolations: 0, nonSightAlerts: 0, emerged: 0, emergeSeen: 0 };
   const streets = new Set<string>();
@@ -74,6 +74,8 @@ export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opt
     world.events.on('l3.fallback', e => { if (e.type === 'l3.fallback') { squadAtFallback = e.squad.length; for (const id of e.squad) squadIds.add(id); } }),
     world.events.on('checkpoint.restored', () => lastPos.clear()),
     world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.pistol') handgunShots++; }),
+    // First acquisition (a later checkpoint restore shifts the stored tick with the timeline).
+    world.events.on('l3.handgun', e => { if (firstGun < 0) firstGun = e.tick; }),
     world.events.on('pickup.collected', e => { if (e.type === 'pickup.collected' && 'kind' in e && e.kind === 'medkit') medkits++; }),
     world.events.on('outbreak.infection', e => {
       const s = mission.state.l3!;
@@ -127,7 +129,7 @@ export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opt
   return {
     profile, street: opts.street ?? 'auto', seed: opts.seed ?? world.seed, outcome: mission.state.phase === 'result' || mission.state.phase === 'progression' ? 'complete' : 'timeout',
     simSeconds: mission.state.stats.time, deaths: mission.state.stats.deaths, kills: mission.state.stats.kills, knockdowns: mission.state.stats.knockdowns, damage: mission.state.stats.damage,
-    timeline, handgunS: s.handgunAt ? (s.handgunAt - start) / 60 : null, handgunShots,
+    timeline, handgunS: firstGun >= 0 ? (firstGun - start) / 60 : s.handgunAt ? (s.handgunAt - start) / 60 : null, handgunShots,
     attack: s.attackAt ? { officers: officersAtStart, directions: [...dirs], turnedDuring, sameLook, fallbackCause: s.fallbackCause, fallbackAfterS: s.fallbackAt ? (s.fallbackAt - s.attackAt) / 60 : -1 } : null,
     squad: s.fallbackAt ? { atFallback: squadAtFallback, segmentEnds: [0, 1, 2].map(k => s.segmentSquad[k] ?? -1), atCheckpoint: s.crossedAt ? s.squad.length : -1, losses: s.lost.map(l => ({ cause: l.cause, t: (l.tick - start) / 60 })), turnedInCorridor, protected: protectedFlags, maxJumpM: maxJump, near8Share: calmTicks ? nearTicks / calmTicks : 1 } : null,
     s1: s.fallbackAt ? s1 : null,
