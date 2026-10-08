@@ -1,4 +1,5 @@
 // Adapted from Bruno Simon folio-2025 Objects.js (MIT): sleeping dynamic bodies, sync only while awake, reset when fallen.
+import { overlapsRoad } from '../../levels/districts/validate';
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { pushableProps } from '../../data/pushableProps';
 import type { Placement } from '../../levels/districts/types';
@@ -35,13 +36,23 @@ export class PropSystem {
     });
   }
   /** (Re)create every pushable of the district set in its placement order; `saved` poses survive a tier rebuild/checkpoint. */
-  install(districts: DistrictWorld, saved?: PropSnapshot): void {
+  install(districts: DistrictWorld, saved?: PropSnapshot, preserveDisplaced = false): void {
     const previousItems = this.items.slice();
     const ids = new Map(this.items.map(i => [i.id, i.entityId]));
     this.items.length = 0;
     this.rebuildingIds = ids;
     const poses = new Map(saved?.map(s => [s.id, s]));
-    for (const d of districts.districts) for (const placement of d.pushables) this.spawn(placement, d.origin, poses.get(`${d.id}/${placement.id}`), `${d.id}/${placement.id}`);
+    for (const d of districts.districts) for (const placement of d.pushables) {
+      const id = `${d.id}/${placement.id}`, savedPose = poses.get(id);
+      // Level assembly rejects displaced furniture on roads. Checkpoint restore below keeps gameplay poses.
+      if (savedPose && districts.composition.id === 'L2' && !preserveDisplaced) {
+        const dx = savedPose.p[0] - d.origin[0] - placement.position[0], dz = savedPose.p[2] - d.origin[1] - placement.position[2];
+        const box = { min: [...placement.visualAabb.min] as [number, number, number], max: [...placement.visualAabb.max] as [number, number, number] };
+        for (const k of ['min', 'max'] as const) { box[k][0] += dx; box[k][2] += dz; }
+        if (overlapsRoad(d.layout, box)) poses.delete(id);
+      }
+      this.spawn(placement, d.origin, poses.get(id), id);
+    }
     for (const previous of previousItems) if (!this.items.some(p => p.id === previous.id)) { this.world.spatial.delete(previous.entityId); this.world.entities.delete(previous.entityId); }
     this.settle(poses); this.rebuildingIds.clear();
     for (const p of this.items) p.body.setEnabled((this.world.entities.get(p.entityId)?.health.current ?? 0) > 0);

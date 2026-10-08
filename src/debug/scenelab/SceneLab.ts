@@ -1,4 +1,5 @@
 import { Box3, Matrix4, Mesh, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute } from 'three';
+import { levelTwoLayouts } from '../../levels/L2/layout';
 import manifest from '../../assets/manifest.json';
 import type { AssetDef } from '../../assets/types';
 import { AssetRegistry } from '../../assets/registry';
@@ -61,6 +62,8 @@ export class SceneLab {
   private visible: { frame: number; sim: Record<string, number>; drawn: Record<string, number> } | null = null;
   /** Drawn tyre bottom against the drawn ground per vehicle wheel: `${vehicle}|${wheel}` -> gap range (spawn frames 0-2 excluded). */
   private wheels = new Map<string, { vehicle: string; wheel: number; gapMinCm: number; gapMaxCm: number; minFrame: number; maxFrame: number; at: number[]; samples: number; surface: string | null; rayCheckCm: number }>();
+  private propSinkMaxCm = 0;
+  private propGroundSamples = 0;
   private wheelTrack = new Map<string, (number | string)[][]>();
   /** Hub heights of every wheel over the last two frames, the worst one-frame spike (up then down, or down then up: the smaller
    * of the two moves) and the largest one-frame move, per `${vehicle}|${wheel}`. */
@@ -82,7 +85,9 @@ export class SceneLab {
       const response = await fetch(assetUrl(`/assets/layouts/${spec.layout.district}.layout.json`));
       if (!response.ok) throw new Error(`Layout ${spec.layout.district} not found`);
       source = await response.json() as DistrictLayout;
+      if (spec.layout.level === 'L2') [source] = levelTwoLayouts([source]);
     }
+    this.propSinkMaxCm = 0; this.propGroundSamples = 0;
     this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     for (const p of built.placements) { const way = buildingDoors[p.assetId]?.leaves.length ? doorwayOf(p) : null; if (way) this.doors.set(p.id, { way, closedFrames: 0, firstClosedFrame: null, inDoorwayFrames: 0, maxOpen: 0 }); }
@@ -98,6 +103,11 @@ export class SceneLab {
   }
   /** Sim assembly before the view loads: systems, actors and vehicles exist when the presentation is built. */
   private setup(world: SimWorld, spec: SceneSpec): void {
+    for (const prop of spec.props ?? []) if (prop.rotation) {
+      const item = world.props?.items.find(p => p.id.endsWith(`/${prop.id}`));
+      if (!item) throw new Error(`Rotation fixture needs a pushable id: ${prop.id}`);
+      world.props!.place(item, { p: [...item.pose.p], q: prop.rotation });
+    }
     const outbreak = installL1Outbreak(world, { civilians: 0 });
     void outbreak;
     // Hand-overs move in the missions phase, like the L1 story beats, so AgentMotion publishes their walking speed.
@@ -338,6 +348,9 @@ export class SceneLab {
       this.perf.push(profile.length ? { drawCalls: view.reduce((n, [, v]) => n + v.drawCalls, 0), triangles: view.reduce((n, [, v]) => n + v.triangles, 0), shadowDrawCalls: shadow?.drawCalls ?? 0, shadowTriangles: shadow?.triangles ?? 0, stepMs, categories: Object.fromEntries(profile.map(([k, v]) => [k, v.drawCalls])) } : { drawCalls: info.drawCalls, triangles: info.triangles, shadowDrawCalls: 0, shadowTriangles: 0, stepMs, categories: {} });
       this.frame++;
       this.sample();
+      const gaps = this.game.view.labProbes().districts?.propGroundGaps() ?? [];
+      this.propGroundSamples += gaps.length;
+      this.propSinkMaxCm = Math.max(this.propSinkMaxCm, 0, ...gaps.map(g => -g.gapCm));
     }
     return this.frame;
   }
@@ -601,6 +614,7 @@ export class SceneLab {
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
     return { scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
+      props: { sinkMaxCm: this.propSinkMaxCm, samples: this.propGroundSamples, gaps: this.game.view.labProbes().districts?.propGroundGaps() ?? [] },
       bodies, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
