@@ -1,0 +1,5 @@
+# decay.burned-facade
+
+Generic reference is missing, as declared in the brief. Visually inspected assets/decay.burned-facade.brick/reference-upscaled.png, .diner and .house in the main checkout. The generic fallback uses their shared standing damaged window/door frontage language: brick piers, chipped parapet, broad charred header/frame, missing glazing with pale glass tips and local burned awning trim. This is a reusable flat dressing profile, not a replacement for the three specific building designs.
+
+Dimensions 1.6 m deep × 4.8 m wide × 3.8 m tall. +X forward, Y-up ground after export, root/body/front and attachSocket (-.21,0,0) retained at every tier. Fixed ss_physics, col:wall proxy. Explicit 1362/330/198 triangle tiers; the far tier omits awning/brick joints but retains standing walls, chipped silhouette, black char frame and missing-window openings. Fine soot irregularity and brick-course texture from the references are simplified into broad palette regions. No active fire/emissive fixture or rubble; level/runtime supplies fire/smoke dressing.
