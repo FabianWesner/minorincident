@@ -37,7 +37,7 @@ test('T-E07-12-native @E07 @E07-AC12 native WebGPU renders the same instanced in
   writeFileSync('test-results/epics/E07/webgpu.json', JSON.stringify(proof, null, 2) + '\n');
 });
 
-test('T-E11-webgpu @E11 @E11-AC09 native WebGPU renders the interaction ring and prompt within the district draw budget', async ({ page }) => {
+test('T-E11-webgpu @E11 @E11-AC09 native WebGPU renders the in-range interaction prompt within the district draw budget', async ({ page }) => {
   test.setTimeout(120_000);
   await page.goto(testUrl.replace('&renderer=webgl', ''));
   await page.waitForFunction(() => Boolean(window.__SS__));
@@ -52,6 +52,7 @@ test('T-E11-webgpu @E11 @E11-AC09 native WebGPU renders the interaction ring and
     return { ...api.perf(), rafMsMedian: frames[60], rafMsP95: frames[114], frames: frames.length };
   });
   expect(metrics.backend).toBe('webgpu'); expect(metrics.drawCalls).toBeLessThanOrEqual(250);
+  // PO request: optional interactables no longer draw ground rings; keep the in-range prompt visible.
   await expect(page.getByTestId('interaction-prompt')).toContainText('Start generator');
   await expect(page.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '38');
   mkdirSync('test-results/epics/E11', { recursive: true });
