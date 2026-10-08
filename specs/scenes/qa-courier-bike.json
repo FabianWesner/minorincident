@@ -1,0 +1,104 @@
+{
+ "name": "qa-courier-bike",
+ "note": "Mount the bike at its L1 start, ride over the kerb to the road and back, dismount.",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    -84,
+    -4
+   ],
+   [
+    -52,
+    20
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "vehicles": [
+  {
+   "id": "bike",
+   "asset": "vehicle.bicycle",
+   "at": [
+    -68.1,
+    7.2
+   ],
+   "yaw": 0
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -69.3,
+    7.2
+   ],
+   "yaw": 0,
+   "god": true
+  }
+ ],
+ "script": [
+  {
+   "frame": 20,
+   "actor": "courier",
+   "do": {
+    "mountBike": "bike"
+   }
+  },
+  {
+   "frame": 80,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      -62,
+      7.2
+     ],
+     [
+      -62,
+      0
+     ],
+     [
+      -66,
+      0
+     ],
+     [
+      -70,
+      7.2
+     ]
+    ]
+   }
+  },
+  {
+   "frame": 520,
+   "actor": "courier",
+   "do": {
+    "dismount": true
+   }
+  }
+ ],
+ "camera": {
+  "mode": "follow",
+  "actor": "courier",
+  "zoom": 0.5
+ },
+ "frames": 620,
+ "shots": [
+  10,
+  60,
+  140,
+  240,
+  340,
+  440,
+  540,
+  610
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}

@@ -1,0 +1,104 @@
+{
+ "name": "qa-infected-attack-knockdown",
+ "note": "Infected reach the standing courier and strike; the courier then knocks one down with a heavy hit; it rises.",
+ "ground": "asphalt",
+ "size": 36,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.fists"
+   ]
+  },
+  {
+   "id": "z-1",
+   "kind": "infected",
+   "at": [
+    5.73,
+    1.77
+   ],
+   "yaw": 162.8,
+   "state": "chase"
+  },
+  {
+   "id": "z-2",
+   "kind": "infected",
+   "at": [
+    -1.77,
+    5.73
+   ],
+   "yaw": 72.8,
+   "state": "chase"
+  },
+  {
+   "id": "z-3",
+   "kind": "infected",
+   "at": [
+    -5.73,
+    -1.77
+   ],
+   "yaw": -17.2,
+   "state": "chase"
+  },
+  {
+   "id": "z-4",
+   "kind": "infected",
+   "at": [
+    1.77,
+    -5.73
+   ],
+   "yaw": -107.2,
+   "state": "chase"
+  }
+ ],
+ "script": [
+  {
+   "frame": 200,
+   "actor": "z-1",
+   "do": {
+    "hit": {
+     "from": "courier",
+     "heavy": true
+    }
+   }
+  },
+  {
+   "frame": 230,
+   "actor": "z-2",
+   "do": {
+    "hit": {
+     "from": "courier",
+     "heavy": true
+    }
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": "courier",
+  "radius": 8,
+  "azimuth": 40
+ },
+ "frames": 420,
+ "shots": [
+  60,
+  120,
+  180,
+  205,
+  235,
+  270,
+  330,
+  410
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}

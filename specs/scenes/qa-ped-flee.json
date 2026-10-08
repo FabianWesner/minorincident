@@ -1,0 +1,122 @@
+{
+ "name": "qa-ped-flee",
+ "note": "Pedestrians standing in a group flee from an approaching infected.",
+ "ground": "asphalt",
+ "size": 44,
+ "actors": [
+  {
+   "id": "p",
+   "kind": "pedestrian",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.civilian-man-a"
+   },
+   "state": "idle"
+  },
+  {
+   "id": "q",
+   "kind": "pedestrian",
+   "at": [
+    1.4,
+    1.2
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.civilian-woman-b"
+   },
+   "state": "idle"
+  },
+  {
+   "id": "r",
+   "kind": "pedestrian",
+   "at": [
+    -1.2,
+    1.6
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.civilian-elderly",
+    "tier": "frail"
+   },
+   "state": "idle"
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "at": [
+    -14,
+    0
+   ],
+   "yaw": 0,
+   "state": "chase"
+  },
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    12,
+    12
+   ],
+   "yaw": 0
+  }
+ ],
+ "script": [
+  {
+   "frame": 60,
+   "actor": "p",
+   "do": {
+    "flee": [
+     -14,
+     0
+    ]
+   }
+  },
+  {
+   "frame": 60,
+   "actor": "q",
+   "do": {
+    "flee": [
+     -14,
+     0
+    ]
+   }
+  },
+  {
+   "frame": 60,
+   "actor": "r",
+   "do": {
+    "flee": [
+     -14,
+     0
+    ]
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   0,
+   0.9,
+   0
+  ],
+  "radius": 16,
+  "azimuth": 40
+ },
+ "frames": 420,
+ "shots": [
+  30,
+  100,
+  180,
+  260,
+  340,
+  410
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}

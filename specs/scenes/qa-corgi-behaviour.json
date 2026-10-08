@@ -1,0 +1,108 @@
+{
+ "name": "qa-corgi-behaviour",
+ "note": "Corgi follows a walking and running courier, stops with her, warns at an infected, and is run into.",
+ "ground": "asphalt",
+ "size": 44,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -10,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "corgi",
+   "kind": "corgi",
+   "at": [
+    -12,
+    1
+   ]
+  },
+  {
+   "id": "threat",
+   "kind": "infected",
+   "at": [
+    16,
+    6
+   ],
+   "yaw": 180,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 30,
+   "actor": "courier",
+   "do": {
+    "walk": [
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "frame": 240,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      10,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "frame": 420,
+   "actor": "courier",
+   "do": {
+    "idle": true
+   }
+  },
+  {
+   "frame": 560,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      -10,
+      0
+     ],
+     [
+      10,
+      0
+     ],
+     [
+      -10,
+      0
+     ]
+    ]
+   }
+  }
+ ],
+ "camera": {
+  "mode": "follow",
+  "actor": "courier",
+  "zoom": 0.6
+ },
+ "frames": 900,
+ "shots": [
+  60,
+  180,
+  330,
+  430,
+  520,
+  620,
+  720,
+  860
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "name": "qa-grove-west-fire",
+ "note": "Cafe corner, fire station, bike start, hydrants",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    -85,
+    0
+   ],
+   [
+    -50,
+    52
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "camera": {
+  "mode": "game",
+  "target": [
+   -67.5,
+   26.0
+  ],
+  "zoom": 1.1
+ },
+ "script": [
+  {
+   "frame": 8,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     -67.5,
+     0.5,
+     26.0
+    ],
+    "radius": 57,
+    "azimuth": 215,
+    "polar": 42
+   }
+  },
+  {
+   "frame": 16,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     -67.5,
+     0.5,
+     26.0
+    ],
+    "radius": 49,
+    "azimuth": 320,
+    "polar": 60
+   }
+  }
+ ],
+ "frames": 26,
+ "shots": [
+  0,
+  12,
+  24
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

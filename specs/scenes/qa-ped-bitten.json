@@ -1,0 +1,103 @@
+{
+ "name": "qa-ped-bitten",
+ "note": "An infected bites two pedestrians; each turns on the spot (3 s) and then chases.",
+ "ground": "asphalt",
+ "size": 40,
+ "actors": [
+  {
+   "id": "p",
+   "kind": "pedestrian",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.civilian-man-a",
+    "tint": "#6aa0d8"
+   },
+   "state": "idle"
+  },
+  {
+   "id": "q",
+   "kind": "pedestrian",
+   "at": [
+    3,
+    3
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.civilian-woman-a",
+    "tint": "#c46a8a",
+    "accessories": [
+     "backpack"
+    ]
+   },
+   "state": "idle"
+  },
+  {
+   "id": "z",
+   "kind": "infected",
+   "at": [
+    -3,
+    0
+   ],
+   "yaw": 0,
+   "state": "idle"
+  },
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    12,
+    8
+   ],
+   "yaw": 0
+  }
+ ],
+ "script": [
+  {
+   "frame": 30,
+   "actor": "p",
+   "do": {
+    "infect": {
+     "by": "z"
+    }
+   }
+  },
+  {
+   "frame": 150,
+   "actor": "q",
+   "do": {
+    "infect": {
+     "by": "z"
+    }
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   1.5,
+   0.9,
+   1.5
+  ],
+  "radius": 9,
+  "azimuth": 40
+ },
+ "frames": 480,
+ "shots": [
+  20,
+  60,
+  120,
+  200,
+  260,
+  330,
+  420,
+  470
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}
