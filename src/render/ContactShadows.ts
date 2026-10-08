@@ -1,6 +1,7 @@
 import { InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry } from 'three/webgpu';
 import { color, uv, vec4 } from 'three/tsl';
 import type { SimWorld } from '../sim/world/SimWorld';
+import { MotionPresentation } from './characters/MotionPresentation';
 
 /** A smooth radial footprint, shared by all figure types; one draw for companions and humans. */
 export function contactShadowMaterial(): MeshBasicNodeMaterial {
@@ -17,17 +18,23 @@ export class ContactShadows extends InstancedMesh {
     super(geometry, contactShadowMaterial(), 512);
     this.name = 'figure-contact-shadows'; this.frustumCulled = false; this.count = 0;
   }
-  update(): void {
+  private readonly presentation = new MotionPresentation();
+  /** Footprints sit under the presented (alpha-interpolated) figures, not their tick transforms, or they stair-step under them. */
+  update(alpha = 1): void {
     this.count = 0;
     for (const entity of this.world.entities.iterate()) {
       // Infected use CrowdView's pooled footprint (including its culling and corpse policy).
       if (entity.hidden || entity.faction === 'infected' || !(entity.survivor || entity.civilian || entity.escort || entity.companion) || this.count === 512) continue;
       const pet = entity.companion || entity.civilian?.pet;
       this.transform.makeScale(pet ? .85 : 1, 1, pet ? .6 : .8);
-      this.transform.setPosition(entity.transform.x, (this.world.districts?.groundHeight(entity.transform.x, entity.transform.z) ?? 0) + .022, entity.transform.z);
+      const previous = entity.id === 1 ? this.world.previousPlayer : null, t = entity.transform;
+      const at = previous ? { x: previous.x + (t.x - previous.x) * alpha, z: previous.z + (t.z - previous.z) * alpha } : this.presentation.sample(entity.id, t, this.world.tick, alpha);
+      this.transform.setPosition(at.x, (this.world.districts?.groundHeight(at.x, at.z) ?? 0) + .022, at.z);
       this.setMatrixAt(this.count++, this.transform);
     }
     this.visible = this.count > 0; if (this.count) this.instanceMatrix.needsUpdate = true;
   }
+  /** First footprints' world positions (x, z), for presentation tests. */
+  getState() { return Array.from({ length: Math.min(this.count, 8) }, (_, i) => { this.getMatrixAt(i, this.transform); return [this.transform.elements[12], this.transform.elements[14]]; }); }
   dispose(): void { this.geometry.dispose(); (this.material as MeshBasicNodeMaterial).dispose(); super.dispose(); }
 }
