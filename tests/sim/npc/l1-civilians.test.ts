@@ -65,7 +65,6 @@ describe('L1 v2 civilians and infection', () => {
       // Every infected beyond the initial five rose from a bite, as the same entity that was bitten.
       for (const id of born) expect(bitten.has(id)).toBe(true);
       expect(infectedCount(w)).toBeLessThanOrEqual(5 + born.size);
-      expect(outbreak.stats.hordeSpawned).toBe(0);
       w.dispose();
     }
     console.log(`AC06 infected at +120 s: ${at120.join(' ')}; at +240 s: ${at240.join(' ')}`);
@@ -127,15 +126,9 @@ describe('L1 v2 civilians and infection', () => {
     step(w, 300); expect(victim.civilian!.state).toBe('finished'); expect(ai.director.count).toBe(l1v2.director.capLow); w.dispose();
   });
 
-  test('@E19 @E19-AC06 horde guarantee and scripted turns keep the pedestrian look (section 5.9)', async () => {
+  // PO rule 2026-10-07: the off-screen horde guarantee (`ensureHorde`) is gone; the house residents are covered in tests/levels/L1.test.ts.
+  test('@E19 @E19-AC18 scripted turns keep the pedestrian look', async () => {
     const { w, outbreak } = await groveWorld(5, { civilians: 50 }); park(w);
-    const exit = anchor('garage-door'), entry = anchor('elm-horde-entry');
-    const spawned = outbreak.ensureHorde(exit, entry);
-    expect(spawned).toBe(l1v2.director.hordeMinInfectedNearGarage);
-    const horde = w.infected!.active.filter(e => keepsLook(e));
-    expect(horde).toHaveLength(spawned);
-    for (const e of horde) { expect(e.civilian).toBeUndefined(); expect(e.appearance!.asset).toMatch(/^npc\.civilian-/); }
-    expect(outbreak.ensureHorde(entry, entry)).toBe(0);
     // Scripted out-of-sight turn (lab technician): same id and look, not counted as a bite.
     const tech = w.entities.get(outbreak.spawnPedestrian({ x: anchor('lab-exit-front').x, z: anchor('lab-exit-front').z + 2 }))!;
     const look = structuredClone(tech.appearance); outbreak.turnNow(tech, 'average');

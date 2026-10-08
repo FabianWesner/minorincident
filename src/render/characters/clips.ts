@@ -18,10 +18,19 @@ export const skinGait: Record<string, { stride: number; stance: number; lift: nu
 /** Keep short authored strides from buzzing at speed; longer strides preserve planted feet as speed rises. */
 export function cadenceStride(name: string, scale: number, speed: number): number {
   const authored = (strides[name] ?? 0) * scale;
-  const cyclesPerSecond = name.startsWith('corgi-') ? name === 'corgi-walk' ? 2 : 2.7
-    : name === 'run' || name === 'infected-run' || name === 'infected-sprint' || name === 'civ-flee' ? 2.7 : 2;
-  return Math.max(authored, Math.max(0, speed) / cyclesPerSecond);
+  const cyclesPerSecond = name.startsWith('corgi-') ? name === 'corgi-walk' ? 2 : 2.7 : crowdRunCadence[name] ?? (name === 'run' ? 2.7 : 2);
+  // Crowd walks also keep a minimum cadence: a slow figure takes shorter steps instead of over-long strides its legs cannot plant.
+  const slowest = minimumCadence[name];
+  const stride = slowest ? Math.min(authored, Math.max(.35 * scale, Math.max(0, speed) / slowest)) : authored;
+  // Crowd figures with shorter legs (children, short rigs) step faster rather than further (Froude scaling).
+  const legs = slowest || crowdRunCadence[name] ? Math.sqrt(Math.min(1, Math.max(.4, scale))) : 1;
+  return Math.max(stride, Math.max(0, speed) / (cyclesPerSecond / legs));
 }
+/** Crowd running cadence caps (cycles/s): above them strides lengthen. Chibi legs cannot plant a 2.5 m stride, so the
+ * tier gaits run at 3+ steps-pairs per second (frail chops quickest) and the stance stays within reach. */
+const crowdRunCadence: Record<string, number> = { 'infected-run': 3, 'infected-sprint': 3, 'civ-flee': 3, 'infected-lurch': 3, 'infected-frail': 3.3 };
+/** Minimum crowd gait cadence (cycles/s) per clip. */
+const minimumCadence: Record<string, number> = { shamble: 1.5, 'npc-walk': 1.6, 'npc-walk-relaxed': 1.5, 'npc-carry': 1.5, 'npc-cane': 1.3, 'infected-frail': 2.2 };
 /** Planted support per gait: stance fraction of the cycle and swing-foot lift (m). */
 export const gaitShape: Record<string, { stance: number; lift: number }> = {
   walk: { stance: .6, lift: .055 }, shamble: { stance: .6, lift: .055 }, 'npc-walk': { stance: .6, lift: .055 }, 'npc-walk-relaxed': { stance: .6, lift: .055 },

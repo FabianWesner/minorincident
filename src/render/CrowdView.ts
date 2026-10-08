@@ -3,7 +3,8 @@ import { CrowdVisibility } from './CrowdVisibility';
 import { simplifyCrowdLod } from './characters/crowdLodGeometry';
 import { crowdLod } from './lodPolicy';
 import { StaticCorpses } from './characters/StaticCorpses';
-import { CrowdLocomotion } from './characters/CrowdLocomotion';
+import { CrowdFootwork, CrowdLocomotion } from './characters/CrowdLocomotion';
+import { InfectedMoves } from './characters/InfectedMoves';
 import { GaitPhase } from './characters/GaitPhase';
 import { CrowdFigureProbe } from './characters/CrowdFigureProbe';
 import { contactShadowMaterial } from './ContactShadows';
@@ -25,7 +26,7 @@ import { bakeInfected, framesPerClip, infectedClips } from './characters/bakeInf
 import { loadGate } from '../assets/loadGate';
 import { authoredClips, strides } from './characters/clips';
 import { CrowdPosePalette } from './characters/CrowdPosePalette';
-import { MotionPresentation } from './characters/MotionPresentation';
+import { MotionPresentation, crowdTurnRate } from './characters/MotionPresentation';
 import { MotionPhase } from './characters/MotionPhase';
 import { loadMeasure } from '../assets/loadTiming';
 import { keepsLook } from '../sim/outbreak/appearance';
@@ -57,9 +58,14 @@ export class CrowdView extends Group {
   private disposed = false;
   private readonly batches = new Map<string, Batch>();
   private readonly transform = new Matrix4();
-  private readonly presentation = new MotionPresentation();
+  /** Displayed turn rate cap (rad/s): sim facing snaps become stepped turns. */
+  private readonly presentation = new MotionPresentation(crowdTurnRate);
   private readonly motion = new MotionPhase();
   private readonly gait = new GaitPhase();
+  /** Courier footwork for the infected inside the close pixel band (budgeted per frame; phones solve fewer). */
+  private readonly footwork = new CrowdFootwork(40);
+  private readonly footBands = new Map<number, 'lod1' | 'lod2'>();
+  private readonly moves = new InfectedMoves();
   /** Corpses persist until a level/checkpoint resets their sim IDs. */
   private get corpseTicks(): number { return Infinity; }
   private readonly staticCorpses = new StaticCorpses();
@@ -70,7 +76,7 @@ export class CrowdView extends Group {
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
   private goreEnabled = true;
   private cullDistance = 60;
-  setQuality(tier: QualityTier): void { this.cullDistance = qualityBudgets[tier].cullDistance; this.low = tier === 'low'; }
+  setQuality(tier: QualityTier): void { this.cullDistance = qualityBudgets[tier].cullDistance; this.low = tier === 'low'; this.footwork.cap = this.low ? 12 : 40; }
   private readonly logs: { id: string; reason: string }[] = [];
   constructor(private readonly world: SimWorld, private low = false, private readonly shading?: Materials) {
     super(); this.name = 'infected-crowd'; this.add(this.staticCorpses);
@@ -112,8 +118,8 @@ export class CrowdView extends Group {
       if (this.disposed) return;
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback), capacity = role === 'crow' ? 800 : 350;
-      const locomotion = new CrowdLocomotion(model, baked.clip);
-      const probe = new CrowdFigureProbe(); probe.lod = lod;
+      const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
+      const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole;
       // Baking expands rigid parts to triangle soup. Index identical vertices before
       // instanced attributes are attached: same surfaces, fewer animated vertices.
       deinterleaveGeometry(baked.geometry);
@@ -178,6 +184,7 @@ export class CrowdView extends Group {
     this.staticCorpses.begin(id => this.world.entities.get(id));
     for (const [id, pose] of this.corpses) if (!this.world.entities.get(id)?.infected || this.world.entities.get(id)!.health.current > 0 || this.world.tick - pose.deadAt > this.corpseTicks) this.corpses.delete(id);
     for (const batch of this.batches.values()) { batch.count = 0; batch.probe.begin(); }
+    this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60);
     for (const mesh of this.telegraphs) mesh.count = 0; this.shadows.count = 0; this.caps.count = 0;
     for (const [id, feedback] of this.feedback) { const e = this.world.entities.get(id); if (!e?.combat || e.hidden || e.infected?.hidden) this.feedback.delete(id); else if (e.health.current > 0) feedback.mask = 0; }
     const player = this.world.entities.get(1)!;
@@ -250,7 +257,9 @@ export class CrowdView extends Group {
       const age = reaction ? (this.world.tick - reaction.started) / 60 : Infinity;
       const death = e.archetype === 'infected.crawler' ? 'death-side' : 'death-back';
       let clip: typeof infectedClips[number] = b.state === 'dead' ? death : (b.legLost || e.archetype === 'infected.crawler') && motion.speed <= .06 ? 'crawl' : b.state === 'attack' && motion.speed <= .06 ? this.world.tick < b.until ? 'windup' : 'swing' : motion.speed > 2 ? tierGait(b as { speed?: number; tier?: string; l1?: { tier: string } }) : motion.speed > .06 ? 'shamble' : (b.state as string) === 'search' || (b.state as string) === 'attracted' ? 'infected-search' : 'infected-idle';
-      if (reaction && tick < reaction.until && b.state !== 'dead' && motion.speed <= .06) clip = reaction.heavy ? age < .48 ? reaction.index % 2 ? 'knockdown' : 'flung' : age < .7 ? 'knockdown' : 'get-up' : reaction.index % 2 ? 'stagger-left' : 'stagger-right';
+      // Heavy reactions (deaths, finishers, kicks, blasts) knock down and get up, also while knocked back; light hits only flinch (InfectedMoves).
+      const heavy = !!reaction?.heavy && tick < reaction.until && b.state !== 'dead';
+      if (heavy) clip = age < .48 ? reaction!.index % 2 ? 'knockdown' : 'flung' : age < .7 ? 'knockdown' : 'get-up';
       if (e.infectionRise) clip = 'infection-rise';
       if (b.special === 'dive') clip = 'run';
       const duration = authoredClips.get(clip)!.duration;
@@ -277,7 +286,12 @@ export class CrowdView extends Group {
           this.staticCorpses.place(e, `${key}:${death}:${mask}`, batch.mesh.geometry, batch.mesh.material as MeshLambertNodeMaterial, batch.poses.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], String(e.id), hiddenParts);
           continue;
         }
-        if (strides[clip] && motion.speed > .06) { frame = batch.poses.correct(e.id, frame, ...blend, pose => batch.locomotion.correct(e.id, pose, this.transform, phase, clip, batch.strideScale, motion.speed)); blend[1] = 1; } else { batch.locomotion.reset(e.id); if (blend[1] < 1) { frame = batch.poses.correct(e.id, frame, ...blend, () => {}); blend[1] = 1; } }
+        // Close pixel band (hysteresis): the courier's footwork plus the zombie move set; further out stance plants only.
+        const band = crowdLod(this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, dimensions.y), this.footBands.get(e.id)); this.footBands.set(e.id, band);
+        const crawling = b.legLost || e.archetype === 'infected.crawler' || clip === 'crawl', moving = !!strides[clip] && motion.speed > .06;
+        const { layers, style } = this.moves.sample(e, b.state, b.until, batch.windup, renderTick, presented.yaw, motion.speed, moving ? clip : undefined);
+        const layered = !crawling && (layers.lunge || layers.flinch || layers.lurch) ? layers : undefined;
+        frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, band === 'lod1' && !crawling, layered, style);
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend);
         batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZW(batch.count, tint.r, tint.g, tint.b, blend[0] * 2 + blend[1]); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), feedback?.mask ?? 0, (feedback?.strength ?? 0) + Math.round(fade * 255) * 2);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); }

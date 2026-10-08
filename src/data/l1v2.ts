@@ -45,8 +45,13 @@ export const l1v2 = {
   },
   /** Section 5.8 / AC17. */
   corgi: { stiffenM: 20, growlM: 14, barkM: 9, barkIntervalS: 2, nervousS: 6, riderSpeedCapMs: 7.5 },
-  /** Section 5.9 / AC06, AC25. Beat 9 tops the garage group up to 12 (AC23 "too many - run"), from doors spread around it. */
-  director: { topUpBelowCivilians: 25, topUpUntilS: 210, hordeMinInfectedNearGarage: 6, hordeTargetNearGarage: 20, hordeMinDoorSeparationDeg: 50, emergeDoorPreferM: 14, emergePerDoor: 3, hordeLeaveGarageM: 5, routeStreamSize: 4, hordeRadiusM: 35, capHigh: 60, capLow: 30, spawnFrustumMargin: 0.1 },
+  /**
+   * Section 5.9 caps and the PO rule (2026-10-07): no director top-ups or streams. The only infected that enter the world
+   * unbitten after the lab exits are `house.count` residents of ONE house near the garage, one by one through its door, when
+   * the courier leaves the garage with the bat (beat 9). Growth from there is bites only.
+   */
+  director: { hordeMinInfectedNearGarage: 6, hordeLeaveGarageM: 5, hordeRadiusM: 35, capHigh: 60, capLow: 30, spawnFrustumMargin: 0.1 },
+  house: { count: 10, staggerS: [1.5, 4], firstAfterS: 0.5, doorM: [6, 25], stumbleOutM: 2.2 },
   /** Section 5.10 / AC16. */
   bicycle: { speedMs: 7.5, accelToMs: 7, accelS: 1.5, minTurnRadiusM: 2.5, mountInteractS: 0.4, damage: 0 },
   /** Section 5.11 / AC20. */

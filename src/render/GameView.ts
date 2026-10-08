@@ -386,6 +386,8 @@ export class GameView implements Lifecycle {
         const group = new Group(); group.position.set(door.x, ground, door.z);
         const shutter = new Mesh(new BoxGeometry(3.6, 3.2, .12), this.materials.fromColor('story:shutter', new Color('#b44a3e')));
         shutter.position.y = 1.9; shutter.name = 'bay-shutter'; shutter.castShadow = true;
+        // Face the shutter across the door -> trigger (inward) axis: the bay may open east or north.
+        const inside = mission.def.anchors['fire-bay-trigger']; if (inside) group.rotation.y = Math.atan2(inside.x - door.x, inside.z - door.z);
         group.add(shutter); this.shutter = group; this.scene.add(group);
       }
     } else if (this.shutter) {
@@ -526,11 +528,13 @@ export class GameView implements Lifecycle {
       if (target) this.destination.position.set(target.x, .12, target.z);
     }
     const profileStart = this.renderer.profile ? performance.now() : 0;
+    // The rig steps with the sim; render it between the last two tick poses like every other transform.
+    this.view.present(alpha);
     this.syncMission();
     const current = this.world.entities.get(1)?.transform, previous = this.world.previousPlayer;
     const survivor = this.world.entities.get(1)?.survivor;
     if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.scene.add(this.bicycle); }
-    this.bicycle?.update(this.camera); // Sample one bike frame for its saddle, lean and rider.
+    this.bicycle?.update(this.camera, alpha); // Sample one bike frame for its saddle, lean and rider.
     if (this.character && current && survivor) {
       // Portrait hero readability supplements the seven-metre camera floor; collision stays in metres.
       this.character.scale.setScalar(this.camera.aspect < 1 ? 1.25 : 1);
