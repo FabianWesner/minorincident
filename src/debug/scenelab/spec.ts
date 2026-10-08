@@ -21,7 +21,7 @@ export interface SceneSpec {
   /** Depth of field as in L1 (default true). */
   dof?: boolean;
   /** Copy placements from a shipped district layout. Positions stay in district coordinates unless `recenter`. */
-  layout?: { district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; recenter?: boolean };
+  layout?: { level?: 'L2'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; recenter?: boolean };
   props?: PropSpec[];
   actors?: ActorSpec[];
   vehicles?: VehicleSpec[];
@@ -44,7 +44,7 @@ export interface SceneSpec {
    * chase the courier. Residents are actors `<id>-0` .. (default id `resident`). */
   emerge?: { house: string; count?: number; staggerS?: number | [number, number]; frame?: number; id?: string; /** Walk-out pace m/s (default the 1.25 m/s house stumble; the L1 lab staff run out at 5.3). */ speedMs?: number };
 }
-export interface PropSpec { id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; scale?: number | [number, number, number]; tint?: string }
+export interface PropSpec { id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; /** Initial quaternion for a displaced pushable fixture. */ rotation?: [number, number, number, number]; scale?: number | [number, number, number]; tint?: string }
 export type ActorKind = 'courier' | 'pedestrian' | 'infected' | 'corgi';
 export interface Look { model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: 'frail' | 'average' | 'athletic'; role?: string }
 export interface ActorSpec {
@@ -125,6 +125,10 @@ export interface Expectations {
   actorHitsMax?: number;
   /** Deepest drawn tyre point below the drawn ground (raycast against the district's rendered meshes), in cm, for the bike and cars (`metrics.wheels`). */
   wheelSinkMaxCm?: number;
+  /** Deepest drawn pushable mesh below the drawn ground. */
+  propSinkMaxCm?: number;
+  /** Require actual prop contact samples, preventing an empty scene passing. */
+  propGroundSamplesMin?: number;
   /** Highest drawn tyre bottom above the drawn ground, in cm (a floating wheel). */
   wheelFloatMaxCm?: number;
   /** Worst one-frame hub height spike of any wheel (up then straight back down), in cm: a height pop, not a real step. */

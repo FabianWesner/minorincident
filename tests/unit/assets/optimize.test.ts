@@ -148,7 +148,7 @@ test('T-E17-lanes @E17-AC02 road vehicle envelopes including mirrors fit distric
   for(const def of manifest as AssetDef[]) {
     // Aircraft retain their authored rotor span; the separate aircraft contract checks all LODs.
     // Freight trains use rails, so road-lane widths do not constrain their authored gauge.
-    if(def.category!=='vehicle' || ['veh.helicopter','veh.train-freight'].includes(def.id) || (!def.sourceGlb && def.status!=='integrated')) continue;
+    if(def.category!=='vehicle' || ['veh.helicopter','veh.helicopter-military','veh.train-freight'].includes(def.id) || (!def.sourceGlb && def.status!=='integrated')) continue;
     // Check each actual placement district. Future heavy vehicles use the unchanged
     // civic arterial; L1's sedans must also fit the narrower residential/commercial streets.
     const used = layouts.filter(l => l.placements.some(p => p.assetId === def.id));
