@@ -1,3 +1,11 @@
+import sys
+from pathlib import Path
+if "--decay" in sys.argv and sys.argv[sys.argv.index("--decay") + 1] == "wrecked":
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
+    from sslib.military_wrecks import build_wreck
+    build_wreck(Path(__file__).resolve().parent, sys.argv[sys.argv.index("--glb") + 1])
+    raise SystemExit(0)
+
 """veh.tank: authored LODs (0/1/2) from explicit recipes; see sslib/army_tank.py."""
 import shutil
 import sys

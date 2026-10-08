@@ -1223,6 +1223,73 @@ export default {
     "source": "public/assets/models/decay.burned-facade.glb",
     "hash": "e90071e27f8310e920fb84035945b4cb2b4f98337076c99542dbd1fb9ba7ab4b"
   },
+  "decay.abandoned-checkpoint": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.5,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          0.24000002145767213,
+          -0.1400000023841858,
+          1.3800000524520875
+        ],
+        "max": [
+          0.8400000214576722,
+          0.5199999976158143,
+          1.7600000524520873
+        ]
+      },
+      {
+        "min": [
+          -2.8749999046325683,
+          2.384185793236071e-8,
+          -1.3750000238418578
+        ],
+        "max": [
+          -2.3249999046325684,
+          1.200000023841858,
+          -0.8250000238418579
+        ]
+      },
+      {
+        "min": [
+          -2.65,
+          -0.23999999761581425,
+          1.1400000476837158
+        ],
+        "max": [
+          -0.3500000000000001,
+          0.8600000023841858,
+          1.7600000476837159
+        ]
+      },
+      {
+        "min": [
+          -0.03000004768371589,
+          -0.35999999582767483,
+          -1.389999966621399
+        ],
+        "max": [
+          2.6299999523162843,
+          0.8200000041723251,
+          -0.9299999666213989
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.abandoned-checkpoint.glb",
+    "hash": "8b2e32b808f616f3dabbe9987d64a4c5f2a1e852351c44ab3b962365095a7f65"
+  },
   "prop.light-tower-trailer": {
     "class": "heavy",
     "centerOfMass": [
