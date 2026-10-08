@@ -1,0 +1,20 @@
+{
+  "name": "qa-l2-truck-ride-corner",
+  "note": "L2 beat 3 corner at Main Row (route corner -30.6,-30.4, origin here). The red sedan sits at its relocated spot (-35.2,-27.4 in world, off the lane). The engine waits at the lane start (Scene Lab cannot run the kinematic L2 ride; the autopilot did not move it), the elderly pedestrian waits on the kerb: this scene checks the layout (no body or car on the lane, bodyOverlapMaxCm 0). The ride gate is tests/sim/missions/l2-ride-clearance.test.ts.",
+  "ground": "asphalt",
+  "size": 44,
+  "props": [
+    { "id": "bags", "asset": "prop.trash-bags", "at": [0, -5.4], "yaw": 23 }
+  ],
+  "vehicles": [
+    { "id": "red-sedan", "asset": "vehicle.sedan", "at": [-4.6, 3.0], "yaw": 187 },
+    { "id": "engine", "asset": "vehicle.fire-engine", "at": [0, 22], "yaw": -90, "path": [[0, 0], [-16, 0]] }
+  ],
+  "actors": [
+    { "id": "elder", "kind": "pedestrian", "at": [4.2, 8], "look": { "model": "npc.civilian-elderly", "accessories": ["cap"] }, "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": [-3, 8], "zoom": 2.2 },
+  "frames": 420,
+  "shots": [0, 150, 260, 420],
+  "expect": { "consoleErrors": 0, "bodyOverlapMaxCm": 0 }
+}
