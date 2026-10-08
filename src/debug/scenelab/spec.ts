@@ -104,6 +104,10 @@ export interface Expectations {
   torsoPitchMaxDeg?: number;
   drawCallsMax?: number;
   trianglesMax?: number;
+  /** Deepest drawn tyre point below the drawn ground (raycast against the district's rendered meshes), in cm, for the bike and cars (`metrics.wheels`). */
+  wheelSinkMaxCm?: number;
+  /** Highest drawn tyre bottom above the drawn ground, in cm (a floating wheel). */
+  wheelFloatMaxCm?: number;
 }
 
 const rad = (deg: number | undefined) => (deg ?? 0) * Math.PI / 180;

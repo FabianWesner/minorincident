@@ -25,6 +25,8 @@ import type { PushProp } from "../sim/interact/PropSystem";
 import { ROOFED, type DistrictAssets } from "../assets/DistrictAssets";
 import type { Materials } from "./Materials";
 import { worldAssets } from "../assets/worldDefinitions";
+import manifest from "../assets/manifest.json";
+import type { AssetDef } from "../assets/types";
 import { InstancedGroup } from "./InstancedGroup";
 import { Grass, windPhase } from "./Grass";
 import { resolvePosition } from "../levels/districts/validate";
@@ -32,6 +34,7 @@ import type { CameraPose } from "./View";
 import type { View } from './View';
 import { AmbientLife } from './AmbientLife';
 import { Foliage } from './Foliage';
+import { GroundField } from './GroundField';
 import { pickLod, propLod, initialDistrictLods, type Lod } from './lodPolicy';
 import { seeThrough } from './SeeThrough';
 import type { PaletteToken } from '../data/palette';
@@ -67,6 +70,8 @@ export class DistrictView extends Group {
   private readonly foliage: Foliage;
   private ambient?: AmbientLife;
   private readonly districtRoots: { root: Group; bounds: Box3 }[] = [];
+  /** The drawn ground (baked roads, paving, lawns) for tyre contacts: see GroundField. */
+  readonly ground = new GroundField();
   private readonly ownedGeometry: BufferGeometry[] = [];
   private readonly ownedMaterials: Material[] = [];
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
@@ -108,6 +113,7 @@ export class DistrictView extends Group {
         const plane = new PlaneGeometry(Math.max(...xs) - Math.min(...xs), Math.max(...zs) - Math.min(...zs)); this.ownedGeometry.push(plane);
         const slab = new Mesh(plane, this.materials.get(lab.ground)); slab.name = 'scene-ground'; slab.rotation.x = -Math.PI / 2; slab.receiveShadow = true;
         slab.position.set(d.origin[0] + (Math.max(...xs) + Math.min(...xs)) / 2, .002, d.origin[1] + (Math.max(...zs) + Math.min(...zs)) / 2); this.add(slab);
+        slab.updateMatrixWorld(true); this.ground.add(slab);
       }
     }
     for (const fence of lab && !lab.perimeter ? [] : this.world.boundaries) {
@@ -151,6 +157,9 @@ export class DistrictView extends Group {
           });
           root.add(clone);
         }
+        // Base paving (tier 0): roads top out at 5 cm, road paint and kerbs above them; decay-removed nodes are not ground.
+        root.updateMatrixWorld(true);
+        root.children.at(-scenes.length)?.traverse(o => { if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') this.ground.add(o); });
         const references = new Map<string, Object3D[]>();
         const crowns = new Map<string, Object3D[]>();
         const base = scenes[0];
@@ -201,6 +210,8 @@ export class DistrictView extends Group {
             references.get(key)!.push(reference);
           }
         }
+        // Static vehicles (parked cars, wrecks, the APC) are authored on the y = 0 plane: rest them on the drawn road or paving under their wheels.
+        for (const [key, refs] of references) if (/^veh\./.test(key)) for (const ref of refs) this.restOnGround(ref, key.split(':')[0], d.origin);
         for (const [colors, refs] of crowns) this.foliage.addCrowns(refs, crownTokens.get(colors) ?? ['foliageDark', 'foliageLight'], d.origin);
         await Promise.all(
           [...references].map(async ([key, refs]) => {
@@ -295,6 +306,17 @@ export class DistrictView extends Group {
     }
   }
 
+  /** Drawn ground at a world point (null outside the baked district ground). */
+  groundAt(x: number, z: number): number | null { return this.ground.height(x, z); }
+  private restOnGround(ref: Object3D, id: string, origin: [number, number]): void {
+    const size = (manifest as AssetDef[]).find(a => a.id === id)?.dimensions; if (!size || ref.position.y > .01 || /^veh\.(train|helicopter)/.test(id)) return;
+    const hx = size.x * ref.scale.x * .32, hz = size.z * ref.scale.z * .4, c = Math.cos(ref.rotation.y), s = Math.sin(ref.rotation.y);
+    const heights = [[hx, hz], [hx, -hz], [-hx, hz], [-hx, -hz]].map(([x, z]) => this.ground.height(origin[0] + ref.position.x + x * c + z * s, origin[1] + ref.position.z - x * s + z * c)).filter((h): h is number => h !== null).sort((a, b) => a - b);
+    if (heights.length < 2) return;
+    // Median of the four wheel spots: a lane stripe or a kerb under one wheel does not lift the whole car.
+    const middle = heights.length / 2, ground = heights.length % 2 ? heights[Math.floor(middle)] : (heights[middle - 1] + heights[middle]) / 2;
+    ref.position.y = Math.max(ref.position.y, ground);
+  }
   private box(
     root: Group,
     token: import("../data/palette").PaletteToken,

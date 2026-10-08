@@ -1,4 +1,4 @@
-import { Box3, Matrix4, Mesh, Object3D, Vector3, type BufferAttribute, type InterleavedBufferAttribute } from 'three';
+import { Box3, Matrix4, Mesh, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute } from 'three';
 import manifest from '../../assets/manifest.json';
 import type { AssetDef } from '../../assets/types';
 import { AssetRegistry } from '../../assets/registry';
@@ -11,6 +11,7 @@ import type { SimWorld } from '../../sim/world/SimWorld';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import { installL1Outbreak } from '../../sim/outbreak/install';
 import { seatAnchor } from '../../sim/npc/seats';
+import { inside } from '../../levels/districts/validate';
 import { CrowdFigureProbe } from '../../render/characters/CrowdFigureProbe';
 import type { TimeOfDay } from '../../data/timeOfDay';
 import { buildScene, validateSpec, type Action, type ActorSpec, type BuiltScene, type CameraSpec, type EffectSpec, type PropSpec, type SceneSpec } from './spec';
@@ -51,6 +52,11 @@ export class SceneLab {
   private staticSets: TriangleSet[] | null = null;
   private staticClips: StaticClip[] | null = null;
   private visible: { frame: number; sim: Record<string, number>; drawn: Record<string, number> } | null = null;
+  /** Drawn tyre bottom against the drawn ground per vehicle wheel: `${vehicle}|${wheel}` -> gap range (spawn frames 0-2 excluded). */
+  private wheels = new Map<string, { vehicle: string; wheel: number; gapMinCm: number; gapMaxCm: number; minFrame: number; maxFrame: number; at: number[]; samples: number; surface: string | null; rayCheckCm: number }>();
+  private wheelTrack = new Map<string, (number | string)[][]>();
+  private groundMeshes: Mesh[] | null = null;
+  private readonly ray = new Raycaster();
   private readonly registry = new AssetRegistry(() => {});
   private readonly log: string[] = [];
   private readonly point = new Vector3();
@@ -67,7 +73,7 @@ export class SceneLab {
       if (!response.ok) throw new Error(`Layout ${spec.layout.district} not found`);
       source = await response.json() as DistrictLayout;
     }
-    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0;
+    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     await this.game.loadLevel('scene-lab', { seed: spec.seed ?? 1, tier: spec.tier, source: { composition: built.composition, layouts: [built.layout] }, setup: world => this.setup(world, spec) });
     this.game.clock.pause();
@@ -372,6 +378,7 @@ export class SceneLab {
       const list = this.vehicleTrack.get(id) ?? []; this.vehicleTrack.set(id, list);
       list.push([this.frame, +v.transform.x.toFixed(3), +v.transform.y.toFixed(3), +v.transform.z.toFixed(3), +(v.transform.yaw * 180 / Math.PI).toFixed(1), +(this.world.districts?.pavingHeight(v.transform.x, v.transform.z) ?? 0).toFixed(3)]);
     }
+    if (this.frame > 2) this.sampleWheels();
     for (let i = 0; i < torsos.length; i++) for (let j = i + 1; j < torsos.length; j++) {
       const depth = bodyOverlap(torsos[i].bones, torsos[j].bones); if (depth <= .02) continue;   // 2 cm slack: soft contact
       const key = `${torsos[i].id}|${torsos[j].id}`, old = this.bodies.get(key), depthCm = Math.round(depth * 1000) / 10;
@@ -384,6 +391,71 @@ export class SceneLab {
     const drawnAll: Record<string, number> = { vehicle: this.game.view.getState().vehicles.length };
     for (const f of figures.values()) if (f.drawn) { const e = this.world.entities.get(f.id); const k = e?.infected ? 'infected' : 'pedestrian'; drawnAll[k] = (drawnAll[k] ?? 0) + 1; }
     this.visible = { frame: this.frame, sim: { ...all, ...sim, actors: this.actors.size }, drawn: { ...drawnAll, ...drawn } };
+  }
+  /** Height of the ground the district actually draws under (x, z): a ray against its static meshes (baked layout GLB roads,
+   * paving, lawns, the Scene Lab slab and the backdrop). Instanced props, foliage and grass blades are not ground. */
+  renderedGround(x: number, z: number, from = 1): number | null {
+    if (!this.groundMeshes) {
+      const list: Mesh[] = [];
+      this.game.view.labProbes().districts?.traverse(o => { if ((o as Mesh).isMesh && !(o as InstancedMesh).isInstancedMesh && o.userData.assetId === undefined) list.push(o as Mesh); });
+      this.groundMeshes = list;
+    }
+    const shown = (o: Object3D | null): boolean => !o || o.visible && shown(o.parent);
+    this.ray.set(this.point.set(x, from, z), new Vector3(0, -1, 0)); this.ray.far = from + 1;
+    const hit = this.ray.intersectObjects(this.groundMeshes, false).find(h => shown(h.object));
+    return hit ? hit.point.y : null;
+  }
+  /** Clearance of every drawn tyre (bike and cars) over the rendered ground: the smallest height of its vertices above
+   * the district's drawn height field (DistrictView.groundAt, the highest baked face over each point). Negative: the tyre
+   * cuts into the road; positive: the whole wheel floats. A wheel climbing a kerb touches the kerb edge, not the road below
+   * its lowest point, so it is taken per vertex. `rayCheckCm` is the worst disagreement between that field and a ray
+   * against the drawn meshes at the lowest tyre point (the field must be what is rendered). */
+  private sampleWheels(): void {
+    const probes = this.game.view.labProbes(), sets: [string, Object3D[]][] = [], field = probes.districts;
+    if (!field) return;
+    const bike = [...this.vehicles].find(([, e]) => this.world.entities.get(e)?.bicycle);
+    if (bike && probes.bicycle) sets.push([bike[0], probes.bicycle.wheelNodes()]);
+    const cars = probes.vehicles?.wheelNodes();
+    for (const [id, entity] of this.vehicles) { const nodes = cars?.get(entity); if (nodes) sets.push([id, nodes]); }
+    const v = new Vector3(), lowest = new Vector3(), contact = new Vector3();
+    for (const [id, nodes] of sets) nodes.forEach((node, index) => {
+      node.updateWorldMatrix(true, true);
+      let gap = Infinity, ground = 0, low = Infinity;
+      const meshes: Mesh[] = []; node.traverse(n => { if ((n as Mesh).isMesh && n.visible) meshes.push(n as Mesh); });
+      for (const mesh of meshes) { const position = mesh.geometry.getAttribute('position') as BufferAttribute; for (let i = 0; i < position.count; i++) { v.fromBufferAttribute(position, i).applyMatrix4(mesh.matrixWorld); if (v.y < low) { low = v.y; lowest.copy(v); } } }
+      // The drawn tyre is its faces, not only its vertices (about 6 cm apart on the tread): sample the lower faces at
+      // their corners, edge midpoints and centre, so a kerb corner between two vertices is still found.
+      const a = new Vector3(), b = new Vector3(), c = new Vector3();
+      for (const mesh of meshes) {
+        const position = mesh.geometry.getAttribute('position') as BufferAttribute, index = mesh.geometry.index, count = index ? index.count : position.count;
+        for (let i = 0; i + 2 < count; i += 3) {
+          a.fromBufferAttribute(position, index ? index.getX(i) : i).applyMatrix4(mesh.matrixWorld);
+          b.fromBufferAttribute(position, index ? index.getX(i + 1) : i + 1).applyMatrix4(mesh.matrixWorld);
+          c.fromBufferAttribute(position, index ? index.getX(i + 2) : i + 2).applyMatrix4(mesh.matrixWorld);
+          if (Math.min(a.y, b.y, c.y) > low + .1) continue;
+          for (const [u, w] of [[1, 0], [0, 1], [0, 0], [.5, .5], [.5, 0], [0, .5], [1 / 3, 1 / 3]]) {
+            v.set(0, 0, 0).addScaledVector(a, u).addScaledVector(b, w).addScaledVector(c, 1 - u - w);
+            const g = field.groundAt(v.x, v.z); if (g !== null && v.y - g < gap) { gap = v.y - g; ground = g; contact.copy(v); }
+          }
+        }
+      }
+      if (!Number.isFinite(gap)) return;
+      const ray = this.renderedGround(lowest.x, lowest.z, lowest.y + .5), drawn = field.groundAt(lowest.x, lowest.z);
+      const rayCheck = ray !== null && drawn !== null ? Math.round(Math.abs(ray - drawn) * 1000) / 10 : 0;
+      gap = Math.round(gap * 1000) / 10;
+      const key = `${id}|${index}`, old = this.wheels.get(key), surface = this.surfaceAt(contact.x, contact.z);
+      if (this.spec?.trace) { const list = this.wheelTrack.get(key) ?? []; this.wheelTrack.set(key, list); list.push([this.frame, +contact.x.toFixed(3), +contact.z.toFixed(3), +contact.y.toFixed(4), +ground.toFixed(4), gap, surface ?? '']); }
+      const at = [+contact.x.toFixed(2), +contact.z.toFixed(2)];
+      if (!old) { this.wheels.set(key, { vehicle: id, wheel: index, gapMinCm: gap, gapMaxCm: gap, minFrame: this.frame, maxFrame: this.frame, at, samples: 1, surface, rayCheckCm: rayCheck }); return; }
+      old.samples++; old.rayCheckCm = Math.max(old.rayCheckCm, rayCheck);
+      if (gap < old.gapMinCm) Object.assign(old, { gapMinCm: gap, minFrame: this.frame, at, surface });
+      if (gap > old.gapMaxCm) Object.assign(old, { gapMaxCm: gap, maxFrame: this.frame });
+    });
+  }
+  private surfaceAt(x: number, z: number): string | null {
+    let found: string | null = null;
+    for (const d of this.world.districts?.districts ?? []) for (const s of d.layout.surfaces) if (inside([x - d.origin[0], z - d.origin[1]], s.polygon)) found = s.surface + (s.height !== undefined ? `@${s.height}` : '');
+    return found;
   }
   private readonly paws = new WeakMap<Object3D, Vector3>();
   /** Lowest point of a leg's meshes in leg space (PawContacts rule), returned in world metres. */
@@ -449,7 +521,7 @@ export class SceneLab {
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
     return { scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
-      bodies, ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack) } : {}),
+      bodies, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id)])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), health: Math.round(e.health.current), speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),

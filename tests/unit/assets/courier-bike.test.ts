@@ -5,7 +5,10 @@ import { CharacterView } from '../../../src/render/characters/CharacterView';
 import { resolveRig, type CharacterRig } from '../../../src/render/characters/rig';
 import { sampleClip } from '../../../src/render/characters/clips';
 import { expect, test, vi } from 'vitest';
-import { Group, Mesh, Vector3 } from 'three/webgpu';
+import { Group, Mesh, Raycaster, Vector3 } from 'three/webgpu';
+import { GroundField } from '../../../src/render/GroundField';
+import { inside } from '../../../src/levels/districts/validate';
+import type { DistrictLayout } from '../../../src/levels/districts/types';
 import type { Node } from '@gltf-transform/core';
 import { AssetRegistry } from '../../../src/assets/registry';
 import { BicycleView } from '../../../src/render/BicycleView';
@@ -117,37 +120,71 @@ test('courier bike riding retracts the stand and aligns the saddle with the ride
   } finally { view.dispose(); vi.restoreAllMocks(); vi.unstubAllGlobals(); }
 });
 
-// QA: both wheels sank into raised paving (crosswalk slabs, kerbs) because the whole bike took the height under the rider's centre.
-test('@regression courier bike wheels rest on the paving under each wheel standing, riding, leaning and over kerbs', async () => {
-  const document = await (await assetIO()).read('public/assets/models/veh.courier-bike.glb');
-  const model = new Group();
-  for (const node of document.getRoot().listScenes()[0].listChildren()) model.add(assemble(node));
-  // Road at 0, a 0.05 m crosswalk slab (x 4..6) and a 0.13 m kerb with sidewalk (x > 10).
-  const paving = (x: number) => x > 10 ? .13 : x >= 4 && x <= 6 ? .05 : 0;
+// QA 10-08 (PO, verbatim): "wheels are still sunken". The earlier test compared the tyres with the layout paving height,
+// which is 0 on asphalt, while the baked road boxes top out at 5.15 cm: on plain road both tyres were 5 cm inside the
+// asphalt. This one rides the real D-GROVE ground (layout GLB) and measures the drawn tyre against the drawn surface.
+test('@regression courier bike tyres touch the drawn D-GROVE road, paving, kerbs and road paint (-0.5..+1 cm)', async () => {
+  const load = async (path: string) => { const bytes = readFileSync(path); return (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene; };
+  const [model, district] = await Promise.all([load('public/assets/models/veh.courier-bike.glb'), load('public/assets/layouts/D-GROVE.base.glb')]);
+  district.updateMatrixWorld(true);
+  const meshes: Mesh[] = [], field = new GroundField();
+  district.traverse(o => { if (o instanceof Mesh && typeof o.userData.assetId !== 'string') { meshes.push(o); field.add(o); } });
+  const layout = JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as DistrictLayout;
+  const ray = new Raycaster(), down = new Vector3(0, -1, 0);
+  // Reference: a ray against the GLB meshes themselves (independent of GroundField).
+  const drawn = (x: number, z: number, from: number) => { ray.set(new Vector3(x, from, z), down); return ray.intersectObjects(meshes, false)[0]?.point.y ?? null; };
+  const paving = (x: number, z: number) => layout.surfaces.reduce((h, s) => s.height !== undefined && inside([x, z], s.polygon) ? Math.max(h, s.height) : h, 0);
+  // Root cause, pinned: the drawn asphalt is 5 cm above the layout paving height the bike used to stand on.
+  expect(drawn(-72, 0, 1)! - paving(-72, 0)).toBeGreaterThan(.045);
   const bicycle = { mounted: false, speed: 0, steer: 0, pedal: 0, lean: 0 };
-  const transform = { x: 0, y: 0, z: 0, yaw: 0 };
-  const world = { tick: 0, districts: { pavingHeight: (x: number) => paving(x) }, vehicles: { bicycle: { entity: { bicycle, transform } } },
+  const transform = { x: -67.5, y: .13, z: 10, yaw: Math.PI / 2 };
+  const world = { tick: 0, districts: { pavingHeight: paving }, vehicles: { bicycle: { entity: { bicycle, transform } } },
     entities: { get: () => ({ transform: { x: 0, z: 0 }, survivor: {} }) } } as unknown as SimWorld;
   vi.stubGlobal('document', { createElement: () => ({ dataset: {}, style: {}, remove: () => {} }), querySelector: () => null });
   vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockResolvedValue(model);
-  const view = new BicycleView(world, {} as Materials);
+  const view = new BicycleView(world, {} as Materials); view.ground = (x, z) => field.height(x, z);
   try {
     await view.load();
-    let worst = 0, samples = 0;
+    const tyres = view.wheelNodes(); expect(tyres).toHaveLength(2);
+    let worst = { sink: 0, float: 0 }, samples = 0;
+    const surfaces = new Set<string>();
+    let rayCheck = 0, where = '';
     const check = () => {
-      view.update();
-      // A leaned or steered tire touches a few cm beside the sampled hub line: skip the paving edges themselves.
-      for (const wheel of view.snapshot()!.wheels) if ([4, 6, 10].every(edge => Math.abs(wheel![0] - edge) > .15)) { worst = Math.max(worst, Math.abs(wheel![1] - paving(wheel![0]))); samples++; }
+      view.update(); view.updateMatrixWorld(true);
+      for (const tyre of tyres) {
+        // Clearance per vertex over the drawn height field (a kerb-climbing tyre touches the kerb edge, not the road below its lowest point).
+        let gap = Infinity, low: Vector3 | null = null;
+        tyre.traverse(n => { if (n instanceof Mesh) { const p = n.geometry.getAttribute('position'); for (let i = 0; i < p.count; i++) {
+          const v = new Vector3().fromBufferAttribute(p, i).applyMatrix4(n.matrixWorld), g = field.height(v.x, v.z);
+          if (g !== null) gap = Math.min(gap, v.y - g); if (!low || v.y < low.y) low = v;
+        } } });
+        const bottom = low as unknown as Vector3;
+        // The field is what the GLB draws: a ray against its meshes at the lowest tyre point agrees.
+        rayCheck = Math.max(rayCheck, Math.abs(drawn(bottom.x, bottom.z, bottom.y + .5)! - field.height(bottom.x, bottom.z)!));
+        surfaces.add(layout.surfaces.filter(s => inside([bottom.x, bottom.z], s.polygon)).at(-1)?.surface ?? 'none');
+        if (-gap > worst.sink || gap > worst.float) where = `${transform.x.toFixed(2)},${transform.z.toFixed(2)} lean ${bicycle.lean.toFixed(2)} gap ${(gap * 100).toFixed(2)} cm`;
+        worst = { sink: Math.max(worst.sink, -gap), float: Math.max(worst.float, gap) }; samples++;
+      }
     };
-    check(); // parked on the road
+    check(); // parked on the sidewalk
     bicycle.mounted = true;
-    for (let i = 0; i < 400; i++) {
-      // Ride east over the slab and kerb with weaving steering and lean, then circle back on the road side.
-      const k = i / 400; transform.x = -2 + 16 * k; transform.z = Math.sin(k * 12) * 2; transform.yaw = Math.sin(k * 12) * .8 - (i > 300 ? 2 : 0);
-      Object.assign(bicycle, { speed: 6, steer: Math.sin(k * 12), lean: Math.cos(k * 12) * .35, pedal: i * .3 });
-      check();
+    // Off the sidewalk over the 13 cm kerb, down the side street, through the junction's road paint, along the main road
+    // with weaving steering and lean, then back up onto the sidewalk.
+    const route: [number, number][] = [[-67.5, 10], [-64, 10], [-64, .4], [-80, .4], [-80, -1.4], [-62, -1.4], [-62, 3.5], [-62, 8]];
+    for (let leg = 1; leg < route.length; leg++) {
+      const [ax, az] = route[leg - 1], [bx, bz] = route[leg], steps = Math.ceil(Math.hypot(bx - ax, bz - az) / .09);
+      for (let i = 0; i < steps; i++) {
+        const k = i / steps, w = Math.sin(i * .15);
+        Object.assign(transform, { x: ax + (bx - ax) * k, z: az + (bz - az) * k, yaw: Math.atan2(-(bz - az), bx - ax) + w * .15 });
+        Object.assign(bicycle, { speed: 6, steer: w, lean: w * .3, pedal: i * .3 });
+        if (i % 3 === 0) check();
+      }
     }
-    expect(samples).toBeGreaterThan(700);
-    expect(worst).toBeLessThanOrEqual(.01);
+    bicycle.speed = 0; bicycle.lean = 0; bicycle.steer = 0; check(); // stopped
+    expect(samples).toBeGreaterThan(300);
+    expect([...surfaces]).toEqual(expect.arrayContaining(['tile', 'asphalt']));
+    expect(worst.sink, `deepest tyre point below the drawn ground (m), worst at ${where}`).toBeLessThanOrEqual(.005);
+    expect(worst.float, `tyre clearance above the drawn ground (m), worst at ${where}`).toBeLessThanOrEqual(.01);
+    expect(rayCheck, 'height field vs ray against the drawn meshes (m)').toBeLessThan(.002);
   } finally { view.dispose(); vi.restoreAllMocks(); vi.unstubAllGlobals(); }
 });
