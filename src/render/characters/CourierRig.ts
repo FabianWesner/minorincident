@@ -200,7 +200,7 @@ export class CourierLiving {
     if (velocity.lengthSq() > 400) velocity.copy(this.bagVelocity); // teleport or seat snap
     this.bagAccel.copy(velocity).sub(this.bagVelocity).divideScalar(dt);
     this.bagVelocity.copy(velocity); this.bagAnchor.copy(anchor);
-    socket.parent!.getWorldQuaternion(this.frame).invert(); this.bagAccel.applyQuaternion(this.frame).clampScalar(-30, 30);
+    socket.parent!.getWorldQuaternion(this.frame).invert(); this.bagAccel.applyQuaternion(this.frame).clampScalar(-12, 12);
   }
   /** 2-DOF bag pendulum about its strap anchor, driven by the anchor's acceleration; the hip side is a collider. */
   private stepBag(h: number): void {
@@ -209,9 +209,9 @@ export class CourierLiving {
     this.bagPitchVelocity += (-k * this.bagPitch - c * this.bagPitchVelocity - accel.x / .22) * h;
     this.bagRollVelocity += (-k * this.bagRoll - c * this.bagRollVelocity + accel.z / .22) * h;
     this.bagPitch += this.bagPitchVelocity * h; this.bagRoll += this.bagRollVelocity * h;
-    // Collider: the bag hangs behind the hip; it may swing out 35° but only 3° in toward the body.
+    // Collider: the bag hangs behind the hip; it may swing out 25° but only 3° in toward the body.
     if (this.bagPitch > 3 * DEG) { this.bagPitch = 3 * DEG; this.bagPitchVelocity = Math.min(0, this.bagPitchVelocity); }
-    if (this.bagPitch < -35 * DEG) { this.bagPitch = -35 * DEG; this.bagPitchVelocity = Math.max(0, this.bagPitchVelocity); }
+    if (this.bagPitch < -25 * DEG) { this.bagPitch = -25 * DEG; this.bagPitchVelocity = Math.max(0, this.bagPitchVelocity); }
     if (Math.abs(this.bagRoll) > 20 * DEG) { this.bagRoll = Math.sign(this.bagRoll) * 20 * DEG; this.bagRollVelocity = 0; }
   }
   private applyBag(): void {
