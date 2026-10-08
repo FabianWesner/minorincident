@@ -1,0 +1,19 @@
+#cloud-config
+# Boot config for a fresh runner (no snapshot yet). __PUB__ is replaced by pool.py with ~/.ssh/mi-runner.pub.
+package_update: true
+packages: [git, rsync, curl, ca-certificates, unattended-upgrades, xz-utils, util-linux, build-essential, python3]
+users:
+  - name: runner
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - __PUB__
+write_files:
+  - path: /etc/apt/apt.conf.d/20auto-upgrades
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+runcmd:
+  - fallocate -l 4G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && echo '/swapfile none swap sw 0 0' >> /etc/fstab
+  - curl -fsSL https://nodejs.org/dist/v26.0.0/node-v26.0.0-linux-x64.tar.xz | tar -xJ -C /usr/local --strip-components=1
+  - mkdir -p /srv/mi && chown runner:runner /srv/mi
