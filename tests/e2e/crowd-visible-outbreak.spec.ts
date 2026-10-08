@@ -26,6 +26,12 @@ for (const renderer of ['webgl', 'webgpu'] as const) {
       a.pause(); a.cheats.god(true); a.camera.follow(); a.setLoadout(['weapon.bat'], ['weapon.fists']);
       // Walkers (not seated routines, whose figure slides to its seat) gather in front of the courier: the infected
       // bite them, they turn on screen, the courier bats the infected into corpses.
+      // The infected wander the whole map (the nearest is ~90 m away at the start) and a courier who has to run to them
+      // arrives late and at a time that depends on the machine: begin the fight beside the nearest living infected.
+      const me0 = a.getEntity(1)!.transform;
+      const first = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && !e.corpse && e.archetype !== 'infected.crow')
+        .sort((x, y) => Math.hypot(x.transform.x - me0.x, x.transform.z - me0.z) - Math.hypot(y.transform.x - me0.x, y.transform.z - me0.z))[0];
+      if (first) a.teleport(1, { x: first.transform.x - 4, z: first.transform.z });
       const me = a.getEntity(1)!.transform;
       const walkers = a.query({ kind: 'civilian' }).filter(e => !e.hidden && e.health.current > 0 && !e.civilian?.pet && !e.civilian?.schedule?.some(s => s.seat));
       for (const [i, c] of walkers.slice(0, 16).entries()) a.teleport(c.id, { x: me.x + 3 + i % 4 * 1.5, z: me.z - 4 + Math.floor(i / 4) * 1.5 });
@@ -39,7 +45,7 @@ for (const renderer of ['webgl', 'webgpu'] as const) {
         // L1 balance (bat roundhouse, varied speeds) an eager courier kills every attacker before the first strike lands
         // and the strike precondition below flakes; standing still instead lets them go for the walkers.
         if (frames % 20 === 0) {
-          const struck = a.events(start).some(e => e.type === 'infected.attack' && e.targetId === 1) || performance.now() - began > 15000;
+          const struck = a.events(start).some(e => e.type === 'infected.attack' && e.targetId === 1) || a.tick() - start > 900;
           const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && !e.corpse).map(e => ({ e, d: Math.hypot(e.transform.x - player.x, e.transform.z - player.z) })).sort((x, y) => x.d - y.d)[0];
           if (near && near.d < 5 && struck) a.input.set({ attackTarget: { id: near.e.id, side: 'LEFT' } });
           else if (near && (frames % 120 === 0 || !struck && near.d > 1.5)) a.input.set({ moveTarget: { x: near.e.transform.x, z: near.e.transform.z } });
