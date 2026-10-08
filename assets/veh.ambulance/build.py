@@ -4,6 +4,14 @@ Surface details have >=3 mm clearance. Motion groups retain joint origins;
 all other geometry is merged by palette material before GLB export.
 Run through experiment/tools/blender_run.py, never directly.
 """
+import sys
+from pathlib import Path
+if '--decay' in sys.argv and sys.argv[sys.argv.index('--decay') + 1] == 'wrecked':
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+    from sslib.traffic_wrecks import build_wreck
+    build_wreck(Path(__file__).resolve().parent, sys.argv[sys.argv.index('--glb') + 1])
+    raise SystemExit(0)
+
 import math
 import sys
 import json

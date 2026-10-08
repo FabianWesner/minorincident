@@ -46,6 +46,8 @@ export interface AssetDef {
   animatedNodes: string[];
   sockets: string[];
   budget: { triangles: number; materials: number; fileKB: number; drawCalls: number };
+  /** One-line reason for a per-asset budget override above the standard caps. */
+  budgetNote?: string;
   /** LOD0 cap for authored decay exports; base hero meshes retain their own budget. */
   decayTriangleBudget?: number;
   /** Stricter delivery limits for damage siblings; unset fields inherit the integrated base budget. */

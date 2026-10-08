@@ -1,6 +1,14 @@
 """Deterministic hero SUV. +X forward, +Z up; all dimensions in metres.
 Build/render through experiment/tools/blender_run.py (see asset prompt).
 """
+import sys
+from pathlib import Path
+if '--decay' in sys.argv and sys.argv[sys.argv.index('--decay') + 1] == 'wrecked':
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+    from sslib.traffic_wrecks import build_wreck
+    build_wreck(Path(__file__).resolve().parent, sys.argv[sys.argv.index('--glb') + 1])
+    raise SystemExit(0)
+
 import argparse
 import json
 import math

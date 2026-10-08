@@ -1,0 +1,111 @@
+{
+  "id": "veh.military-apc",
+  "baseId": "veh.military-apc",
+  "decay": null,
+  "delivery": "blocked-total-draw-cap",
+  "source": {
+    "lod0": {
+      "triangles": 9804,
+      "meshes": 11,
+      "bytes": 692776
+    },
+    "lod1": {
+      "triangles": 2204,
+      "meshes": 11,
+      "bytes": 147716
+    },
+    "lod2": {
+      "triangles": 1068,
+      "meshes": 11,
+      "bytes": 78908
+    }
+  },
+  "production": [
+    {
+      "id": "veh.military-apc",
+      "lod": 0,
+      "path": "public/assets/models/veh.military-apc.glb",
+      "bytes": 166552,
+      "triangles": 9804,
+      "materials": 3,
+      "draws": 11,
+      "dimensions": [
+        5.690000057220459,
+        3.281472979600907,
+        3.110014207815543
+      ],
+      "errors": []
+    },
+    {
+      "id": "veh.military-apc",
+      "lod": 1,
+      "path": "public/assets/models/veh.military-apc.lod1.glb",
+      "bytes": 42088,
+      "triangles": 2204,
+      "materials": 3,
+      "draws": 11,
+      "dimensions": [
+        5.690000057220459,
+        3.264130066979473,
+        3.110011783799945
+      ],
+      "errors": []
+    },
+    {
+      "id": "veh.military-apc",
+      "lod": 2,
+      "path": "public/assets/models/veh.military-apc.lod2.glb",
+      "bytes": 28740,
+      "triangles": 1068,
+      "materials": 3,
+      "draws": 11,
+      "dimensions": [
+        5.690000057220459,
+        3.264130066979473,
+        3.110011783799945
+      ],
+      "errors": []
+    }
+  ],
+  "pixelSizes": [
+    {
+      "lod": 0,
+      "pixelBounds": [
+        167,
+        118,
+        314,
+        253
+      ],
+      "maxPixels": 147
+    },
+    {
+      "lod": 1,
+      "pixelBounds": [
+        167,
+        118,
+        314,
+        252
+      ],
+      "maxPixels": 147
+    },
+    {
+      "lod": 2,
+      "pixelBounds": [
+        167,
+        135,
+        314,
+        252
+      ],
+      "maxPixels": 147
+    }
+  ],
+  "contactSheets": [
+    "test-results/l3-traffic-and-army-vehicles/veh.military-apc/comparison.png",
+    "test-results/l3-traffic-and-army-vehicles/veh.military-apc/lod-contact.png",
+    "test-results/l3-traffic-and-army-vehicles/veh.military-apc/game-camera.png"
+  ],
+  "interfaces": [
+    "six wheel owners; turret yaw; gun elevation; muzzle; driverSeat, exitL, exitR; front; col:hull; four ss_light anchors"
+  ],
+  "visualFaults": "Self-review: geometry identity passes; delivery is BLOCKED on total draw cap.\n\nInspected the supplied reference before editing the imported source and reviewed the all-side LOD and 147px game-camera sheets. The APC remains a low wide armored transport with six chunky wheels, sloped armor and a mounted HMG. LOD2 removes fittings and shows octagonal tires, while the defining silhouette survives.\n\n11 material draws at every tier, cap 8. Status remains modeled. Required moving pivots and light emission were preserved; no budget was widened. The existing static-only draw validator does not enforce this batch's total draw requirement.\n"
+}
