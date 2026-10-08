@@ -12,8 +12,8 @@ Measured production tiers (after packing):
 
 | Tier | Triangles | Draws | Materials | Bytes | Dimensions X/Y/Z m |
 | --- | ---: | ---: | ---: | ---: | --- |
-| LOD0 | 4794 | 8 | 5 | 98820 | 7.501 / 3.457 / 3.419 |
-| LOD1 | 4180 | 8 | 5 | 89184 | 7.501 / 3.457 / 3.419 |
-| LOD2 | 1670 | 8 | 5 | 43080 | 7.487 / 3.382 / 3.424 |
+| LOD0 | 4694 | 8 | 5 | 98112 | 7.501 / 3.457 / 3.419 |
+| LOD1 | 4088 | 8 | 5 | 88504 | 7.501 / 3.457 / 3.419 |
+| LOD2 | 1618 | 8 | 5 | 42544 | 7.487 / 3.382 / 3.424 |
 
 Hard caps: 15,000 / 6,000 / 2,000 triangles; eight total draws including wheels, at every tier. Base dimensions/tolerance and contracts are inherited unchanged. `delivery.json` audits anchors against the corresponding integrated native tier.
