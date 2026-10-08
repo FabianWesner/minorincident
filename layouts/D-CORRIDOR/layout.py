@@ -128,7 +128,7 @@ def shop_row(street, x0, x1, facing, line, rear, assets=SHOPS, gap=.1, seed=0, o
                 g.solid('party-wall', 'brick', [e1 - e0 + .04, 3.0, zb - za], [(e0 + e1) / 2, 1.5, (za + zb) / 2])
             else:
                 # clear of the neighbour's visual box too (eaves and signs overhang its collision footprint)
-                g.fence('privacy', e0 + .36, front + sgn * .2, e1 - .36, front + sgn * .2)
+                g.fence('privacy', e0 + .5, front + sgn * .2, e1 - .5, front + sgn * .2)
                 g.fence('privacy', lx0 + .15 if e0 <= lx0 + .01 else lx1 - .15, za, lx0 + .15 if e0 <= lx0 + .01 else lx1 - .15, zb)
         # overgrown back gardens between each footprint's back and the rear line (low shrub mass, not walkable)
         for xs0, xs1, back in prints:

@@ -40,8 +40,8 @@ export const l3 = {
   gunfire: { radiusM: 20, holdS: 6, minGapS: .5 },
   /** Section 5.6: pre-populated wanderers per segment (groups: x, street, size), forward pressure, caps. */
   density: {
-    /** Spec defaults 10 / 25 / 40 (+-20 %); segment 3 sits at the top of the band (48) so the squad is overwhelmed there. */
-    targets: [10, 25, 48] as readonly number[],
+    /** Spec defaults 10 / 25 / 40 (+-20 %); segment 3 sits above the default (44 incl. the horde) so the squad is overwhelmed there. */
+    targets: [10, 25, 44] as readonly number[],
     groups: [
       // S1 (x -126..-40): about 10, spread thin; the squad shoots most of them.
       [[-98, 'blvd', 2], [-84, 'oak', 2], [-70, 'commerce', 2], [-60, 'blvd', 2], [-48, 'oak', 2]],
@@ -52,8 +52,9 @@ export const l3 = {
     ] as readonly (readonly (readonly [number, 'blvd' | 'commerce' | 'oak', number])[])[],
     /** A segment is populated (out of view) once the player is this far before its start. */
     populateAheadM: 55,
-    /** Segment 3 also holds a horde (part of its 48) that streams west down one avenue (seeded) from the on-ramp end. */
-    horde: { size: 12, fromX: 121, toX: 72 },
+    /** Segment 3 also holds a horde (part of its 44) that streams west from the on-ramp end down the avenue of the first shot fired in
+     * segment 3 (seeded avenue when the courier reaches quietX without a shot). */
+    horde: { size: 8, fromX: 121, toX: 72, quietX: 96 },
     leashM: 9,
     /** Side streets spill: a shot within `nearM` of a cross-link in S2/S3 brings `size[seg]` out of the doors along it. */
     spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [3, 5] as P, maxPerLink: 2, cooldownS: 18 },

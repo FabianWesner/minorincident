@@ -90,14 +90,14 @@ export class LevelThreeBot {
     const hp = player.health.current / player.health.max;
     // Medkits when hurt: the nearest one ahead or close by that is still there.
     // A newbie grabs every medkit it passes once it has lost a little health; the complete bot waits until it needs one.
-    if (!this.medkit && hp <= (newbie ? .8 : .65)) {
+    if (!this.medkit && hp <= (newbie ? .9 : .65)) {
       const kit = s.medkitIds.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.pickup && 'kind' in e.pickup && !e.pickup.collected)
-        .filter(e => dist(e.transform, p) < 24 && e.transform.x > p.x - 10).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0];
+        .filter(e => dist(e.transform, p) < (newbie ? 40 : 24) && e.transform.x > p.x - 10).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0];
       if (kit) this.medkit = kit.id;
     }
     if (this.medkit) {
       const kit = w.entities.get(this.medkit);
-      if (!kit?.pickup || !('kind' in kit.pickup) || kit.pickup.collected || hp > .95) this.medkit = 0;
+      if (!kit?.pickup || !('kind' in kit.pickup) || kit.pickup.collected || hp > (newbie ? .99 : .95)) this.medkit = 0;
       else { if (fight(8)) return frame; go(kit.transform, .2, `kit-${this.medkit}`); return frame; }
     }
     // Street choice at the cross-links: keep away from the densest group the courier can see ahead.
@@ -126,7 +126,7 @@ export class LevelThreeBot {
     if (this.detour) { if (crowd.length < 2 && fight(5)) return frame; go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
     // With a strong squad in the first segment a careful courier lets the officers shoot (only close threats are its own).
     // Segment 3 is the run-away part: fight only what is about to grab the courier, keep moving otherwise.
-    const range = newbie ? 11 : this.profile === 'complete' && s.squad.length >= 2 && p.x < l3.map.segments[0][1] ? 7 : p.x >= l3.map.segments[2][0] ? 6 : 15;
+    const range = newbie ? 11 : this.profile === 'complete' && s.squad.length >= 2 && p.x < l3.map.segments[0][1] ? 7 : p.x >= l3.map.segments[2][0] ? 9 : 15;
     if (fight(range)) return frame;
     // The first two segments with a squad: a careful courier lets the officers keep up (no waiting in segment 3).
     // A newbie sticks to the police too, but only in the first segment and not for as long.

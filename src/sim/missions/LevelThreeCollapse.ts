@@ -290,6 +290,7 @@ export class LevelThreeCollapse {
     world.events.emit({ type: 'outbreak.distraction', tick: world.tick, id: 300_000 + world.tick * 64 + (sourceId % 64), kind: 'gunfire', position: { x: at.x, z: at.z }, radius: l3.gunfire.radiusM, until: world.tick + ticks(l3.gunfire.holdS) });
     world.events.emit({ type: 'l3.gunfire', tick: world.tick, sourceId, position: { x: at.x, z: at.z } });
     this.spill(at);
+    if (s.populated[2] && !s.hordeStreet && l3Segment(at.x) === 2) this.planHorde(l3Street(at.z));
   }
   /**
    * Section 4 beat 6: "side streets spill infected". A shot near a cross-link mouth in segments 2-3 brings a group out of the
@@ -320,12 +321,18 @@ export class LevelThreeCollapse {
       const near = doors.filter(d => l3Street(d.z) === street).sort((a, b) => dist(a, home) - dist(b, home)).slice(0, 2);
       for (let i = 0; i < Math.ceil(size * scale); i++) s.pending.push({ id: 0, door: near[i % near.length].name, home, segment, at: 0 });
     }
-    if (segment === 2) {
-      // The horde: out of view at the far end of one avenue (seeded, never chosen by where the courier is), heading west.
-      const h = l3.density.horde, street = (['blvd', 'commerce', 'oak'] as const)[Math.floor(new Rng(this.world.seed, 'l3-horde').next() * 3)];
-      const home = this.snap({ x: h.toX, z: l3.map.streets[street] }, .5), near = doors.filter(d => l3Street(d.z) === street).sort((a, b) => Math.abs(a.x - h.fromX) - Math.abs(b.x - h.fromX)).slice(0, 4);
-      for (let i = 0; i < Math.ceil(h.size * scale); i++) s.pending.push({ id: 0, door: near[i % near.length].name, home, segment, at: 0, horde: true });
-    }
+  }
+  /**
+   * The segment-3 horde: out of view at the on-ramp end of one avenue, streaming west. Its avenue is the one where the first
+   * shot in segment 3 is fired (gunfire carries; an event position, like the side-street spills), or a seeded avenue when the
+   * courier reaches x > quietX without a shot. It never reads where the courier is.
+   */
+  private planHorde(street: 'blvd' | 'commerce' | 'oak'): void {
+    const s = this.s; if (s.hordeStreet) return;
+    s.hordeStreet = street;
+    const h = l3.density.horde, scale = this.world.infected!.director.tier === 'low' ? .5 : 1, doors = this.doors();
+    const home = this.snap({ x: h.toX, z: l3.map.streets[street] }, .5), near = doors.filter(d => l3Street(d.z) === street).sort((a, b) => Math.abs(a.x - h.fromX) - Math.abs(b.x - h.fromX)).slice(0, 4);
+    for (let i = 0; i < Math.ceil(h.size * scale); i++) s.pending.push({ id: 0, door: near[i % near.length].name, home, segment: 2, at: 0, horde: true });
   }
   private emergePending(all = false): void {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform;
@@ -385,6 +392,7 @@ export class LevelThreeCollapse {
       if (s.phase === 'fallback' && player.transform.x > l3.map.corridor[0]) s.phase = 'corridor';
       // Populate a segment while the player is still well short of it (out of view, ahead of the squad).
       for (let k = 1; k < 3; k++) if (!s.populated[k] && player.transform.x >= l3.map.segments[k][0] - l3.density.populateAheadM) this.populate(k);
+      if (s.populated[2] && !s.hordeStreet && player.transform.x > l3.density.horde.quietX) this.planHorde((['blvd', 'commerce', 'oak'] as const)[Math.floor(new Rng(this.world.seed, 'l3-horde').next() * 3)]);
       const seg = l3Segment(player.transform.x);
       if (seg > s.segment && seg >= 0) {
         for (let k = Math.max(0, s.segment); k < seg; k++) s.segmentSquad[k] = s.squad.length;
