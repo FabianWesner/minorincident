@@ -38,4 +38,4 @@ The API token `HETZNER_API_KEY` is read from the main checkout's `.env` (never p
 ## Differences on Linux
 * Browsers run SwiftShader, not Metal: slower rendering, `--use-angle=swiftshader` (see `playwright.config.ts`). Visual goldens captured on macOS may differ in pixels; run golden/visual specs on the Mac.
 * x86_64 vs arm64: Node/V8 uses its own math library, sim results are expected identical (checked by comparing test results).
-* The runner CPUs are shared vCPUs and slower per core than the Mac when the Mac is idle, but unaffected by the Mac's load.
+* The runner is about 2x slower per job than an idle-ish Mac core (measured: unit suite 122 s vs 60 s, story-bots 166 s vs 74 s with the Mac at load 7), so use it for throughput and to keep the Mac free, not for a single quick run. Very long files (tests/levels/L1.test.ts ran > 60 min at 100% of one core) stay slow either way.
