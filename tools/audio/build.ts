@@ -48,13 +48,21 @@ function master(id: string): string {
 /** `level`: active-part RMS target in dBFS for voice pools; a gentle compressor evens crest factors first, and the slice peak stays below the sprite ceiling. */
 interface Recipe { source: string; start: number; filter?: string; level?: number; }
 function recording(recipe: Recipe, duration: number, loop = false, music = false): Float32Array {
-    const key = `${recipe.source}:${recipe.start}:${duration}:${recipe.filter ?? ''}:${recipe.level ?? ''}:${music}`;
+    const key = `${recipe.source}:${recipe.start}:${duration}:${recipe.filter ?? ''}:${recipe.level ?? ''}:${music}:${loop}`;
     if (!pcmCache.has(key)) {
         // Sample trimming also works for older tiny FLACs whose seek tables are broken.
-        const raw = run(['-i', master(recipe.source), '-t', String(duration),
-            '-af', `atrim=start=${recipe.start}:duration=${duration},asetpts=PTS-STARTPTS,${recipe.filter ? `${recipe.filter},` : ''}${recipe.level !== undefined ? 'acompressor=threshold=0.06:ratio=3:attack=5:release=80,' : ''}${music ? 'loudnorm=I=-18:TP=-2:LRA=9,' : ''}apad,atrim=duration=${duration}`,
+        // Recorded loops read `seam` seconds past their end and blend that continuation into the head (equal power):
+        // the loop point is then continuous, so a 2 s voice bed no longer dips to silence every period ("hu-hu-hu").
+        const seam = loop && !music ? Math.min(0.5, duration / 4) : 0, total = duration + seam;
+        const raw = run(['-i', master(recipe.source), '-t', String(total),
+            '-af', `atrim=start=${recipe.start}:duration=${total},asetpts=PTS-STARTPTS,${recipe.filter ? `${recipe.filter},` : ''}${recipe.level !== undefined ? 'acompressor=threshold=0.06:ratio=3:attack=5:release=80,' : ''}${music ? 'loudnorm=I=-18:TP=-2:LRA=9,' : ''}apad,atrim=duration=${total}`,
             '-ac', '1', '-ar', String(rate), '-f', 'f32le', '-']);
         let samples = new Float32Array(raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.byteLength));
+        const body = Math.round(duration * rate), blend = Math.round(seam * rate);
+        if (blend > 0 && samples.length >= body + blend) {
+            for (let i = 0; i < blend; i++) { const a = Math.PI / 2 * i / blend; samples[i] = samples[i] * Math.sin(a) + samples[body + i] * Math.cos(a); }
+            samples = samples.slice(0, body);
+        }
         // Short recordings (single hits) are zero-padded to the cue length; only an empty decode is an error.
         if (samples.length < Math.round(duration * rate)) { const padded = new Float32Array(Math.round(duration * rate)); padded.set(samples); samples = padded; }
         let peak = 0;
@@ -69,7 +77,7 @@ function recording(recipe: Recipe, duration: number, loop = false, music = false
             const rms = 10 * Math.log10(active.reduce((a, b) => a + b, 0) / active.length);
             trim *= Math.min(10 ** ((recipe.level - rms) / 20), 0.59 / 0.5);
         }
-        const fade = Math.min(Math.round((loop ? 0.04 : 0.004) * rate), Math.floor(samples.length / 8));
+        const fade = Math.min(Math.round((seam > 0 ? 0 : loop ? 0.04 : 0.004) * rate), Math.floor(samples.length / 8));
         for (let i = 0; i < samples.length; i++)
             samples[i] *= trim * Math.min(1, i / Math.max(1, fade), (samples.length - 1 - i) / Math.max(1, fade));
         pcmCache.set(key, samples);
@@ -106,7 +114,7 @@ try {
             }
             if (!category.startsWith('music')) capPeak(samples, 0.6); // sprite ceiling: about -4.4 dBFS before Opus/AAC overshoot, so every file stays under -1 dBTP
             // Streamed stereo score is 96k. Compact mono sprites keep both codecs below 4MB.
-            encode(category, samples, category === 'ambience' ? '32k' : category.startsWith('music-') ? '48k' : '64k');
+            encode(category, samples, category === 'ambience' ? '32k' : category === 'l1arc' ? '48k' : category.startsWith('music-') ? '48k' : '64k');
             pcmCache.clear();
         }
         for (const ext of ['webm', 'm4a']) {
