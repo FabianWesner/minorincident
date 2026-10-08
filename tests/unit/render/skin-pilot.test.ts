@@ -281,8 +281,9 @@ test('courier authored anticipation repair preserves the exact contact pose @E04
   for (const name of ['unarmed-front-kick', 'unarmed-roundhouse-kick', 'unarmed-knee', 'unarmed-spinning-backfist']) {
     const before = retargetClip(scene, name), after = retargetClip(scene, name, false, skinClips);
     for (const track of after.tracks.filter(t => t.name.endsWith('.quaternion'))) {
-      const source = before.tracks.find(t => t.name === track.name)!;
-      const a = new Quaternion().fromArray(source.InterpolantFactoryMethodLinear().evaluate(before.duration * .2));
+      // Skeleton v2 chain joints (spine, chest, neck, clavicles) are not authored: they hold the rest pose.
+      const source = before.tracks.find(t => t.name === track.name);
+      const a = source ? new Quaternion().fromArray(source.InterpolantFactoryMethodLinear().evaluate(before.duration * .2)) : scene.getObjectByName(track.name.split('.')[0])!.quaternion.clone();
       const b = new Quaternion().fromArray(track.InterpolantFactoryMethodLinear().evaluate(after.duration * .2));
       expect(a.normalize().angleTo(b.normalize()), `${name} ${track.name}`).toBeLessThan(1e-5);
     }
@@ -310,7 +311,9 @@ test.each(['female', 'male'] as const)('courier %s chest and head stay over the 
         if (scenario === 'run' && tick > 90) { expect(pitch).toBeGreaterThanOrEqual(8); expect(pitch).toBeLessThanOrEqual(12); }
       }
       if (tick > 90 && ['idle', 'walk', 'run'].includes(scenario)) for (const side of ['L', 'R'] as const) {
-        const facing = new Vector3(1, 0, 0).applyQuaternion(rig.hip.quaternion.clone().multiply(rig.torso.quaternion));
+        // The chest (skeleton v2 spine_03; the torso joint on older rigs) is what reads as body twist.
+        const chestNode = scene.getObjectByName('chest') ?? rig.torso;
+        const facing = new Vector3(1, 0, 0).applyQuaternion(actor.quaternion.clone().invert().multiply(chestNode.getWorldQuaternion(new Quaternion())));
         expect(Math.abs(Math.atan2(-facing.z, facing.x)) * 180 / Math.PI).toBeLessThan(13);
         const upper = rig[`foreArm${side}`].getWorldPosition(new Vector3()).sub(rig[`arm${side}`].getWorldPosition(new Vector3()));
         const lower = rig[`hand${side}`].getWorldPosition(new Vector3()).sub(rig[`foreArm${side}`].getWorldPosition(new Vector3()));

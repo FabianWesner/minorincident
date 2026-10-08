@@ -3,6 +3,7 @@ import type { AnimationState } from '../../data/survivor';
 import library from './library.json';
 import skinLibrary from './library.skin.json';
 import type { CharacterRig } from './rig';
+import { chainNodes, courierBones, shoulderOffset } from './CourierRig';
 
 /** Blender GLB samplers compiled by tools/assets/animation-library.ts. */
 export const authoredClips = new Map(library.map(clip => [clip.name, clip]));
@@ -55,7 +56,7 @@ export function strideScale(root: Object3D): number {
   return frame.getWorldScale(worldScale).y * strideProportion(root);
 }
 const groundClips = /^(die|death-|knockdown|flung|get-up|crawl|infection-collapse|infection-rise)/;
-const upperBody = /^(torso|head|arm|foreArm|hand)/;
+const upperBody = /^(torso|spine|chest|neck|clavicle|head|arm|foreArm|hand)/;
 
 /** Retarget by name, preserving model rest TRS. Additive clips contain upper-body
  * offsets so the locomotion action retains control of planted feet. */
@@ -75,7 +76,7 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
   const hipHeight = root.getObjectByName('hip')?.position.y ?? .705;
   const skinLocomotion = !!gait;
   const skinPlanted = skinned && /^(unarmed-(jab|cross|uppercut)|bat-|hurt)/.test(name);
-  const contract = name === 'infected-flight' || name === 'animal-death' ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR','wingL','wingR'] : name.startsWith('corgi-') ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR'] : ['root','hip','torso','head','armL','armR','foreArmL','foreArmR','handL','handR','legL','legR','shinL','shinR','footL','footR','backpackSocket'];
+  const contract = name === 'infected-flight' || name === 'animal-death' ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR','wingL','wingR'] : name.startsWith('corgi-') ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR'] : ['root','hip','torso','head','armL','armR','foreArmL','foreArmR','handL','handR','legL','legR','shinL','shinR','footL','footR','backpackSocket', ...skinned ? ['spine','chest','neck','clavicleL','clavicleR'] : []];
   for (const nodeName of contract) {
     const node = root.getObjectByName(nodeName);
     if (!node || additive && !upperBody.test(nodeName)) continue;
@@ -121,40 +122,66 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
  * line, keeping source twist/roll, and fit pitch and relaxed arms in that frame.
  * Baked once per rig: the mixer still owns fades, phase and frozen evaluations. */
 function fitCourierLocomotion(root: Object3D, name: string, duration: number, tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[]): void {
-  const rotation = (node: string) => tracks.find(t => t.name === `${node}.quaternion`)!;
-  const hip = rotation('hip').InterpolantFactoryMethodLinear(), torso = rotation('torso').InterpolantFactoryMethodLinear(), head = rotation('head').InterpolantFactoryMethodLinear();
-  const chestOffset = root.getObjectByName('armL')!.position.clone().add(root.getObjectByName('armR')!.position).multiplyScalar(.5);
+  const rotation = (node: string) => tracks.find(t => t.name === `${node}.quaternion`);
+  const sampler = (node: string) => rotation(node)?.InterpolantFactoryMethodLinear();
+  const hip = sampler('hip')!, torso = sampler('torso')!, head = sampler('head')!;
+  const rig = Object.fromEntries(['torso', 'armL', 'armR'].map(n => [n, root.getObjectByName(n)!])) as unknown as CharacterRig;
+  // Skeleton v2: the spine/chest/clavicle source motion stays; the fit acts on the whole chain above the waist.
+  const bones = courierBones(root), chain = bones ? new Map(chainNodes(bones).map(node => [node, sampler(node.name)])) : undefined;
+  const local = new Map<Object3D, Quaternion>();
+  const sampled = (node: Object3D) => local.get(node) ?? node.quaternion;
   const spineOffset = root.getObjectByName('torso')!.position;
   const sourceHip = skinClips.get(name === 'mount' || name === 'dismount' ? 'idle' : name)!.tracks.find(t => t.node === 'hip' && t.path === 'rotation')!;
   const unscaledHip = new QuaternionKeyframeTrack('hip', sourceHip.times, sourceHip.values).InterpolantFactoryMethodLinear();
-  const times: number[] = [], values = new Map(['torso', 'head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR'].map(n => [n, [] as number[]]));
-  const h = new Quaternion(), q = new Quaternion(), correction = new Quaternion(), axis = new Vector3(0, 0, 1);
+  const times: number[] = [], values = new Map(['torso', 'neck', 'head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR'].map(n => [n, [] as number[]]));
+  const h = new Quaternion(), q = new Quaternion(), correction = new Quaternion(), axis = new Vector3(0, 0, 1), above = new Quaternion(), neck = new Quaternion();
+  const chestOffset = new Vector3();
   const frames = Math.round(duration * 60);
   for (let i = 0; i <= frames; i++) {
     const time = i / frames * duration, phase = i / frames * Math.PI * 2;
     times.push(time); h.fromArray(hip.evaluate(time)); q.fromArray(torso.evaluate(time));
+    // Chain above the torso joint (spine * chest), and the shoulder midpoint in the torso frame.
+    above.identity();
+    if (bones && chain) {
+      for (const [node, track] of chain) local.set(node, new Quaternion().fromArray(track ? track.evaluate(time) : [0, 0, 0, 1]).normalize());
+      above.copy(local.get(bones.spine)!).multiply(local.get(bones.chest)!);
+    }
+    shoulderOffset(rig, bones, chestOffset, sampled);
     // Local spine counter-rotation was authored against the full pelvis. Keep
     // that relationship before reducing torso twist for the courier proportions.
-    const originalWorld = new Quaternion().fromArray(unscaledHip.evaluate(time)).multiply(q);
+    const originalWorld = new Quaternion().fromArray(unscaledHip.evaluate(time)).multiply(q).multiply(above);
     const world = originalWorld.clone(), forward = new Vector3(1, 0, 0).applyQuaternion(world);
     world.premultiply(new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), -.6 * Math.atan2(-forward.z, forward.x)));
-    const base = spineOffset.clone().applyQuaternion(h), chest = chestOffset.clone().applyQuaternion(world);
+    const inverseAbove = above.clone().invert();
+    const base = spineOffset.clone().applyQuaternion(h), chest = chestOffset.clone().applyQuaternion(inverseAbove).applyQuaternion(world);
     const target = (name === 'run' ? 10 + Math.cos(phase * 2) : name === 'walk' ? 4 + .7 * Math.cos(phase * 2) : 2.5 + .7 * Math.sin(phase)) * Math.PI / 180;
     const angle = Math.atan2(chest.x, chest.y) - target + Math.asin(Math.max(-1, Math.min(1, (base.x * Math.cos(target) - base.y * Math.sin(target)) / Math.hypot(chest.x, chest.y))));
     correction.setFromAxisAngle(axis, angle);
-    q.copy(h).invert().multiply(correction).multiply(world).toArray(values.get('torso')!, i * 4);
-    // Keep the large face looking ahead while the spine inclines.
-    q.copy(world).invert().multiply(correction.clone().invert()).multiply(originalWorld).multiply(new Quaternion().fromArray(head.evaluate(time))).toArray(values.get('head')!, i * 4);
+    q.copy(h).invert().multiply(correction).multiply(world).multiply(inverseAbove).toArray(values.get('torso')!, i * 4);
+    // Keep the large face looking ahead while the spine inclines; v2 spreads that head turn over the neck (45 %).
+    const face = world.clone().invert().multiply(correction.clone().invert()).multiply(originalWorld);
+    if (bones) {
+      const sourceNeck = new Quaternion().fromArray(sampler('neck')?.evaluate(time) ?? [0, 0, 0, 1]).normalize();
+      face.multiply(sourceNeck).multiply(new Quaternion().fromArray(head.evaluate(time)));
+      neck.identity().slerp(face, .45).toArray(values.get('neck')!, i * 4);
+      neck.invert().multiply(face).toArray(values.get('head')!, i * 4);
+    } else face.multiply(new Quaternion().fromArray(head.evaluate(time))).toArray(values.get('head')!, i * 4);
     for (const [side, sign] of [['L', 1], ['R', -1]] as const) {
       const swing = -Math.cos(phase) * sign;
       const shoulder = name === 'run' ? -12 + swing * 30 : name === 'walk' ? swing * 22 : -4 + 2 * Math.sin(phase + sign * .4);
       const elbow = name === 'run' ? 72 + 8 * swing : name === 'walk' ? 24 + 8 * swing : 20 + 3 * Math.sin(phase + sign);
-      new Quaternion().setFromAxisAngle(axis, shoulder * Math.PI / 180).toArray(values.get(`arm${side}`)!, i * 4);
+      // Shoulder swing is authored in the chest frame; v2 arms hang from the clavicle.
+      const arm = new Quaternion().setFromAxisAngle(axis, shoulder * Math.PI / 180);
+      if (bones) arm.premultiply(local.get(bones[`clavicle${side}`])!.clone().invert());
+      arm.toArray(values.get(`arm${side}`)!, i * 4);
       new Quaternion().setFromAxisAngle(axis, elbow * Math.PI / 180).toArray(values.get(`foreArm${side}`)!, i * 4);
       new Quaternion().toArray(values.get(`hand${side}`)!, i * 4);
     }
   }
-  for (const [node, v] of values) tracks[tracks.indexOf(rotation(node))] = new QuaternionKeyframeTrack(`${node}.quaternion`, times, v);
+  for (const [node, v] of values) {
+    const index = tracks.findIndex(t => t.name === `${node}.quaternion`);
+    if (index >= 0) tracks[index] = new QuaternionKeyframeTrack(`${node}.quaternion`, times, v);
+  }
 }
 
 /** Authored fallback kicks exported a held guard then a 100+ degree chamber

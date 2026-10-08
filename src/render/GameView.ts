@@ -70,6 +70,7 @@ export class GameView implements Lifecycle {
   private vehicles: VehicleView | null = null;
   private bicycle: BicycleView | null = null;
   private readonly seat = new Vector3();
+  private readonly glance = new Vector3();
   private readonly gripL = new Vector3();
   private readonly gripR = new Vector3();
   private actions: ActionView | null = null;
@@ -512,6 +513,17 @@ export class GameView implements Lifecycle {
     else if (!cinematic && this.cinematicId) { this.cinematicId = null; this.view.follow(); }
     if (mission?.state.timeOfDay && this.lighting?.preset !== mission.state.timeOfDay) this.lighting?.set(mission.state.timeOfDay);
   }
+  /** Presentation glance target for the courier: the locked attack target within 8 m, else the nearest live infected within 6 m (head height). */
+  private threat(player: { x: number; z: number }): Vector3 | null {
+    const locked = this.world.controls.snapshot()?.attack, lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
+    let best = lockedEntity && lockedEntity.health.current > 0 && Math.hypot(lockedEntity.transform.x - player.x, lockedEntity.transform.z - player.z) < 8 ? lockedEntity : undefined, distance = 36;
+    if (!best) for (const e of this.world.entities.iterate()) {
+      if (e.id === 1 || e.faction !== 'infected' || e.hidden || e.infected?.hidden || e.corpse || e.health.current <= 0 || e.archetype === 'infected.crow') continue;
+      const d = (e.transform.x - player.x) ** 2 + (e.transform.z - player.z) ** 2;
+      if (d < distance) { distance = d; best = e; }
+    }
+    return best ? this.glance.set(best.transform.x, best.transform.y + .4, best.transform.z) : null;
+  }
   update(alpha = 1): void {
     if (this.missionHidden && this.missionUI) this.missionUI.root.hidden = true;
     if (this.warming || this.frozenFrame) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
@@ -549,6 +561,7 @@ export class GameView implements Lifecycle {
       const bike = riding === undefined ? undefined : (this.world.entities.get(riding) as { bicycle?: { pedal: number; steer: number } } | undefined)?.bicycle;
       this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
         riding === undefined ? undefined : { pedal: bike?.pedal ?? this.world.tick * .12, steer: bike?.steer ?? 0 });
+      if (this.character.skinActive) this.character.glanceAt(this.threat(current));
       // Riding: the pelvis sits on the saddle, measured from the bike's `seat` node every frame (any heading, lean or turn).
       if (this.character.skinActive) this.character.applyRideContacts(riding !== undefined ? this.bicycle?.riderContacts() : undefined);
       else if (riding !== undefined && this.bicycle?.seatWorld(this.seat)) {
