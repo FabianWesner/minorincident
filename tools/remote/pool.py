@@ -187,6 +187,8 @@ def status():
 
 def snapshot(name):
     s = next((x for x in servers() if x["name"] == name), None) or sys.exit(f"no server {name}")
+    st = state(s)
+    if not st or st["running"] or st["waiting"]: sys.exit("pool.py: runner is busy; snapshot cleans workspaces, retry when idle")
     rsh(ip(s), "rm -rf /srv/mi/ws/* /srv/mi/queue/* /srv/mi/locks/*; cd /srv/mi/nm && ls -t | tail -n +3 | xargs -r rm -rf; sync", 120)
     old = api("GET", f"/images?type=snapshot&label_selector=role%3Drunner-base,{LABEL}")["images"]
     r = api("POST", f"/servers/{s['id']}/actions/create_image", {"type": "snapshot", "description": "mi-runner base " + time.strftime("%F %H:%M"),
