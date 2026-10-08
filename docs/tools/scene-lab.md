@@ -132,6 +132,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `clippingMax`
 - `footSlideMaxCm`
 - `footSinkMaxCm` (deepest sole below the floor, spawn frames 0-2 excluded)
+- `footJitterRunMax` (courier only: longest run of consecutive frames with a vertical sole zig-zag of at least 0.8 cm, a one-frame bob; a gait touchdown gives 1-2)
 - `undrawnFramesMax` (frames a living actor was inside the camera frustum but not drawn: invisible-but-active)
 - `bodyOverlapMaxCm` (deepest torso/neck/head interpenetration between two living, standing actors; see `metrics.bodies`)
 - `yawDriftMaxDeg`
@@ -161,6 +162,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
   - `yawDriftMaxDeg`: foot rotation while planted. Turning on the spot shows up here.
   - `liftMaxCm`: highest step.
   - `sinkMaxCm`: feet below the ground.
+  - `jitterRunMax`: longest run of consecutive frames in which a sole reverses vertically by at least 0.8 cm.
   - `torsoPitchMinDeg` and `torsoPitchMaxDeg`: hip to shoulders against vertical, positive leaning forward. The courier runs at about 3–11°. L1 infected lurch at 20–30° and hunch at about 50° when idle.
   - Seated, knocked-down and rising clips are excluded from the foot metrics. The corgi has paws: slide only, no yaw drift. A paw that skims within 1.2 cm of the ground during its swing counts as sliding, so the corgi's slide also catches paws dragging through the floor (see `sinkMaxCm`).
 - **`metrics.bodies`.** Actor pairs whose torso (hip to shoulders, 10 cm), neck (6 cm) and head (a 20 cm capsule above the head pivot, 11 cm) capsules interpenetrate by more than 2 cm, sampled every third frame: `a`, `b`, the worst `depthCm`, its `frame` and `count`. Seated, knocked-down and dying actors are skipped. It catches crowds and melee rings piling into each other (qa-courier-attack-bat had 15.8 cm before the 1.08 m melee ring; a hit contact reads 4-6 cm).
