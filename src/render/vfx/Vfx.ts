@@ -210,8 +210,10 @@ export class Vfx extends Group {
     } else if (event.type === 'ally.attack' && event.from && event.to) {
       // E21 officers and soldiers: a muzzle flash and a short tracer toward the target (hit or miss), as the courier's handgun.
       const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, d = Math.hypot(dx, dz) || 1, ux = dx / d, uz = dz / d;
-      this.burst(event.from.x + ux * .6, 1.2, event.from.z + uz * .6, 0xffe7a0, 4, .2, .05, 0);
-      for (let i = 1; i <= Math.min(10, Math.floor(d / .9)); i++) this.particles.spawn(this.time, .07, event.from.x + ux * i * .9, 1.15, event.from.z + uz * i * .9, 0, 0, 0, .05, 0, 0xffe7a0);
+      // PO 2026-10-08 (L2 checkpoint): the firing must read from the game camera, so the tracer spans the whole shot and lingers.
+      this.burst(event.from.x + ux * .6, 1.2, event.from.z + uz * .6, 0xfff1b8, 8, .3, .16, 0);
+      const spacing = this.quality === 'high' ? .35 : .7, lift = (1.15 - .9) / d;
+      for (let i = 1; i <= Math.min(64, Math.floor(d / spacing)); i++) this.particles.spawn(this.time, .18 - i * .001, event.from.x + ux * i * spacing, 1.15 - lift * i * spacing, event.from.z + uz * i * spacing, 0, 0, 0, .28, 0, 0xfff6c8);
     } else if (event.type === 'combat.exploded') {
       if (event.radius > 0) this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
     } else if (event.type === 'explosion') {

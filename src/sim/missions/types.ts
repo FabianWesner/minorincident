@@ -109,6 +109,8 @@ export interface L2State {
   /** `x/z/seen`: where it first appeared and whether that point was inside the camera volume then (omniscience audit). */
   pending: { id: number; door: string; at: number; home: { x: number; z: number }; x?: number; z?: number; seen?: boolean }[]; escapeIds: number[]; clusterIds: number[];
   escapeSpawned: boolean; clusterSpawned: boolean; clusterReached: boolean;
+  /** Checkpoint gunfire: last loud event per officer, and the two barks (ticks, 0 = not yet). */
+  lastShot?: Record<number, number>; keepBackAt?: number; runKidAt?: number;
 }
 /** Serializable L3 controller state. Ticks are sim ticks, 0 = not yet. */
 export interface L3State {
