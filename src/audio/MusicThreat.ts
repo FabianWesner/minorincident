@@ -5,7 +5,7 @@ import type { SoundPosition } from '../data/audioEvents';
 export function isMusicThreat(entity: EntitySnapshot, listener: SoundPosition,
     inView: (position: SoundPosition) => boolean,
     lineOfSight: (from: SoundPosition, to: SoundPosition) => boolean): boolean {
-    return !!entity.infected && entity.health.current > 0 && entity.infected.state !== 'dead'
+    return !entity.hidden && !!entity.infected && entity.health.current > 0 && entity.infected.state !== 'dead'
         && Math.hypot(entity.transform.x - listener.x, entity.transform.z - listener.z) <= 12
         && inView(entity.transform) && lineOfSight(listener, entity.transform);
 }
