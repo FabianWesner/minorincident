@@ -3502,7 +3502,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "sourceGlb": "assets/veh.sedan-white/model.glb",
     "lods": {
       "lod1": "public/assets/models/veh.sedan-white.lod1.glb",
@@ -3514,6 +3516,16 @@
       "solid": false
     },
     "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayTriangleBudget": 15000,
+    "decayBudget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 8
+    },
+    "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
     }
@@ -3567,10 +3579,22 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "sourceForward": "+X",
     "sourceScale": 0.91666669,
     "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayTriangleBudget": 15000,
+    "decayBudget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 8
+    },
+    "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
     }
@@ -3618,7 +3642,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "sourceGlb": "assets/veh.suv-dark/model.glb",
     "script": "assets/veh.suv-dark/build.py",
     "sourceForward": "+X",
@@ -3631,6 +3657,16 @@
       "solid": false
     },
     "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayTriangleBudget": 15000,
+    "decayBudget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 8
+    },
+    "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
     }
@@ -3684,13 +3720,25 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "sourceForward": "+X",
     "world": {
       "token": "survivorRed",
       "solid": false
     },
     "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayTriangleBudget": 15000,
+    "decayBudget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 8
+    },
+    "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
     }
@@ -4048,9 +4096,21 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "sourceForward": "+X",
     "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayTriangleBudget": 15000,
+    "decayBudget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 8
+    },
+    "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
     }

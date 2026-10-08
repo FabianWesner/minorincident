@@ -2,6 +2,14 @@
 Static geometry merges by material; moving doors, wheels and lamps retain pivots.
 All applied trim is at least 3 mm proud. No image textures are exported.
 """
+import sys
+from pathlib import Path
+if '--decay' in sys.argv and sys.argv[sys.argv.index('--decay') + 1] == 'wrecked':
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+    from sslib.traffic_wrecks import build_wreck
+    build_wreck(Path(__file__).resolve().parent, sys.argv[sys.argv.index('--glb') + 1])
+    raise SystemExit(0)
+
 import math, sys, json
 from pathlib import Path
 import bmesh, bpy
